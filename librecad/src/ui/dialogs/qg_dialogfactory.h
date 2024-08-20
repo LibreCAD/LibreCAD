@@ -149,7 +149,7 @@ public:
     bool requestHatchDialog(RS_Hatch* hatch) override;
     int requestOptionsGeneralDialog() override;
     void requestKeyboardShortcutsDialog(LC_ActionGroupManager *pManager) override;
-    void requestOptionsDrawingDialog(RS_Graphic& graphic) override;
+    int requestOptionsDrawingDialog(RS_Graphic& graphic) override;
     bool requestOptionsMakerCamDialog() override;
 
     QString requestFileSaveAsDialog(const QString& caption = QString(),

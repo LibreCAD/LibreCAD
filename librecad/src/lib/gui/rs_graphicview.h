@@ -163,6 +163,9 @@ public:
     void setRelativeZeroColor(const RS_Color &c);
     void setPreviewReferenceEntitiesColor(const RS_Color& c);
     void setPreviewReferenceHighlightedEntitiesColor(const RS_Color& c);
+    void setXAxisExtensionColor(const RS_Color& c);
+    void setYAxisExtensionColor(const RS_Color& c);
+
 /* Sets the hidden state for the relative-zero marker. */
     void setRelativeZeroHiddenState(bool isHidden);
     bool isRelativeZeroHidden();
@@ -256,6 +259,7 @@ public:
     virtual void drawGrid(RS_Painter *painter);
     virtual void drawMetaGrid(RS_Painter *painter);
     virtual void drawOverlay(RS_Painter *painter);
+    virtual void loadSettings();
     /**
      * @brief drawDraftSign     Display "Draft" at corners if the draft mode is turned on
      * @param painter           Painter assumed to be non-nullptr
@@ -366,15 +370,16 @@ protected:
   */
     RS2::SnapRestriction defaultSnapRes;
     RS2::DrawingMode drawingMode;
+
+    bool extendAxisLines = false;
+    int gridType = 0;
 /**
   * Delete mode. If true, all drawing actions will delete in background color
   * instead.
   */
     bool deleteMode = false;
     LC_Rect view_rect;
-
     void drawEntityReferencePoints(RS_Painter *painter, const RS_Entity *e) const;
-
 private:
 
     bool zoomFrozen = false;

@@ -38,12 +38,12 @@ In order to perform such snaps, specific keyboard modifier (CTRL or SHIFT key) s
 
 ### Preview With Reference entities
 
-Preview for all actions was reworked in order make drawing operations more intuitive and understandable to the user and to provide the user with:
-1) Better visual feedback for already performed operation (say, previously selected points);
+Preview mode for all actions was extended by drasing additional reference points and entities that are part of drawing operation. The puprpose is to  make drawing operations more intuitive and understandable to the user (especially new one) and to provide the user with:
+1) Better visual feedback for already performed operation (say, previously specified points);
 2) Indication of interim calculations which are part of the action (like axes and reference points of ellipse to be created);
-3) Projected results of action's execution (like expected positions of reference points);
+3) Projected results of action's execution (like expected positions of reference points or created entities positions);
 
-An additional options were added to application options dialog for: 
+An additional options were added to the Application Options dialog for: 
 
 1) Enabling/disabling displaying reference entities on preview;
 2) Specifying shape/size for temporary reference points shown during preview;
@@ -119,8 +119,10 @@ Selected entities count/length is updated on layer hiding/displaying to reflect 
 Now the user may assign keyboard shortcuts to actions via UI  - using Keyboard Shortcuts options dialog. 
 It is possible to manage shortcuts, as well as export and import them.
 
+While this functionality is quite operational, the overall application-wise processing of keyboard shortcuts requires additional review and improvements. 
+
 ### Keyboard Shortcuts in options tooltips
-An option was added to Application Preferences dialog that allows to control whether keyboard shortcuts should be shown as part of the action's tooltip or not. 
+An option was added to Application Preferences dialog that allows to control whether keyboard shortcuts should be shown as part of the action's tooltip or not.
 
 ### Implementation notes
 The existing code base (for actions) historically contains lots of code duplications and is quite redundant.

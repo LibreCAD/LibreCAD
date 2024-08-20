@@ -1068,10 +1068,11 @@ void QG_DialogFactory::requestKeyboardShortcutsDialog(LC_ActionGroupManager *pMa
 /**
  * Shows dialog for drawing options.
  */
-void QG_DialogFactory::requestOptionsDrawingDialog(RS_Graphic& graphic) {
+int QG_DialogFactory::requestOptionsDrawingDialog(RS_Graphic& graphic) {
     QG_DlgOptionsDrawing dlg(parent);
     dlg.setGraphic(&graphic);
-    dlg.exec();
+    int result = dlg.exec();
+    return result;
 }
 
 bool QG_DialogFactory::requestOptionsMakerCamDialog() {

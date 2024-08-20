@@ -67,7 +67,7 @@ public:
 	bool requestHatchDialog(RS_Hatch*) override {return false;}
 	int requestOptionsGeneralDialog() override {return -1;}
     void requestKeyboardShortcutsDialog([[maybe_unused]]LC_ActionGroupManager *pManager) override{}
-	void requestOptionsDrawingDialog(RS_Graphic&) override {}
+	int requestOptionsDrawingDialog(RS_Graphic&) override {return -1;}
 	bool requestOptionsMakerCamDialog() override {return false;}
 	QString requestFileSaveAsDialog(const QString&, const QString&, const QString&, QString*) override {return {};}
 	void updateCoordinateWidget(const RS_Vector& , const RS_Vector& , bool =false) override {}

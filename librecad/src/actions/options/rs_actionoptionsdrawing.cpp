@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <QDialog>
 #include "rs_actionoptionsdrawing.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
@@ -42,10 +43,13 @@ void RS_ActionOptionsDrawing::init(int status) {
 
 void RS_ActionOptionsDrawing::trigger() {
     if (graphic) {
-        RS_DIALOGFACTORY->requestOptionsDrawingDialog(*graphic);
-        updateCoordinateWidgetFormat();
-        graphicView->redraw(RS2::RedrawGrid);
-        graphicView->redraw(RS2::RedrawDrawing); 
+        int dialogResult = RS_DIALOGFACTORY->requestOptionsDrawingDialog(*graphic);
+        if (dialogResult == QDialog::Accepted){
+            updateCoordinateWidgetFormat();
+            graphicView->loadSettings();
+            graphicView->redraw(RS2::RedrawGrid);
+            graphicView->redraw(RS2::RedrawDrawing);
+        }
     }
     finish(false);
 }

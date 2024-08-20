@@ -79,6 +79,10 @@ struct RS_GraphicView::ColorData {
     /** Relative-zero marker color */
     RS_Color relativeZeroColor;
 
+    /** colors for axis extensions */
+    RS_Color xAxisExtensionColor;
+    RS_Color yAxisExtensionColor;
+
     /* Relative-zero hidden state */
     bool hideRelativeZero = false;
 };
@@ -95,9 +99,20 @@ RS_GraphicView::RS_GraphicView(QWidget *parent, Qt::WindowFlags f)
     savedViews(16),
     previousViewTime{std::make_unique<QDateTime>(QDateTime::currentDateTime())} {
 
+    loadSettings();
+}
+
+void RS_GraphicView::loadSettings() {
+    LC_GROUP("Appearance");
+    {
+        this->m_colorData->hideRelativeZero = LC_GET_BOOL("hideRelativeZero");
+        extendAxisLines = LC_GET_BOOL("ExtendAxisLines", false);
+        gridType = LC_GET_INT("GridType", 0);
+    }
+    LC_GROUP_END();
     LC_GROUP_GUARD("Colors");
     {
-        RS_GraphicView::setBackground(QColor(LC_GET_STR("background", RS_Settings::background)));
+        setBackground(QColor(LC_GET_STR("background", RS_Settings::background)));
         setGridColor(QColor(LC_GET_STR("grid", RS_Settings::grid)));
         setMetaGridColor(QColor(LC_GET_STR("meta_grid", RS_Settings::meta_grid)));
         setSelectedColor(QColor(LC_GET_STR("select", RS_Settings::select)));
@@ -108,9 +123,9 @@ RS_GraphicView::RS_GraphicView(QWidget *parent, Qt::WindowFlags f)
         setRelativeZeroColor(QColor(LC_GET_STR("relativeZeroColor", RS_Settings::relativeZeroColor)));
         setPreviewReferenceEntitiesColor(QColor(LC_GET_STR("previewReferencesColor", RS_Settings::previewRefColor)));
         setPreviewReferenceHighlightedEntitiesColor(QColor(LC_GET_STR("previewReferencesHighlightColor", RS_Settings::previewRefHighlightColor)));
+        setXAxisExtensionColor(QColor(LC_GET_STR("xAxisExtColor", "red")));
+        setYAxisExtensionColor(QColor(LC_GET_STR("yAxisExtColor", "green")));
     }
-
-    m_colorData->hideRelativeZero = LC_GET_ONE_BOOL("Appearance", "hideRelativeZero");
 }
 
 RS_GraphicView::~RS_GraphicView(){
@@ -1337,11 +1352,10 @@ const RS_LineTypePattern *RS_GraphicView::getPattern(RS2::LineType t) {
 void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
     int const zr = 20;
 
-    // fixme - sand -  move colors for axis extensions to settings!!!
-    RS_Pen pen_xAxis (RS_Color(255,0,0), RS2::Width00, RS2::SolidLine);
+    RS_Pen pen_xAxis (m_colorData->xAxisExtensionColor, RS2::Width00, RS2::SolidLine);
     pen_xAxis.setScreenWidth(0);
 
-    RS_Pen pen_yAxis (RS_Color(0,255,0), RS2::Width00, RS2::SolidLine);
+    RS_Pen pen_yAxis (m_colorData->yAxisExtensionColor, RS2::Width00, RS2::SolidLine);
     pen_yAxis.setScreenWidth(0);
 
     auto originPoint = toGui(RS_Vector(0,0));
@@ -1349,14 +1363,11 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
     if (((originPoint.x + zr) < 0) || ((originPoint.x - zr) > getWidth()))  return;
     if (((originPoint.y + zr) < 0) || ((originPoint.y - zr) > getHeight())) return;
 
-    // fixme - sand - remove reading settings from drawing code! With cashing of settings the cast of the call is less important, yet still...
-    const bool extendAxisLines = LC_GET_ONE_BOOL("Appearance", "ExtendAxisLines", false);
 
     double xAxisPoints [2];
     double yAxisPoints [2];
 
-    if (extendAxisLines)
-    {
+    if (extendAxisLines){
         xAxisPoints [0] = 0.0;
         xAxisPoints [1] = getWidth();
 
@@ -1539,15 +1550,9 @@ void RS_GraphicView::drawGrid(RS_Painter *painter){
 
     painter->setPen({m_colorData->gridColor, RS2::Width00, RS2::SolidLine});
 
-    // fixme - checking settings in draw?? Try to move it outside to field!
+    bool gridTypeSolid = gridType == 1;
 
-    bool gridTypeSolid = LC_GET_ONE_INT("Appearance", "GridType", 0) == 1;
-
-    if (!gridTypeSolid) {
-        //grid->updatePointArray();
-        auto const &pts = grid->getPoints();
-        for (auto const &v: pts) painter->drawGridPoint(toGui(v));
-    } else {
+    if (gridTypeSolid) {
         const RS_Vector cellSize = grid->getCellVector();
 
         auto const &mx = grid->getMetaX();
@@ -1565,6 +1570,10 @@ void RS_GraphicView::drawGrid(RS_Painter *painter){
                 painter->drawLine(RS_Vector(0, toGuiY(subY)), RS_Vector(getWidth(), toGuiY(subY)));
             }
         }
+    } else {
+        //grid->updatePointArray();
+        auto const &pts = grid->getPoints();
+        for (auto const &v: pts) painter->drawGridPoint(toGui(v));
     }
 
 
@@ -1595,9 +1604,8 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 
     RS_Pen pen;
     RS2::LineType penLineType;
-    // fixme - settings in draw?? Try to move it outside to field!
 
-    bool gridTypeSolid = LC_GET_ONE_INT("Appearance", "GridType", 0) == 1;
+    bool gridTypeSolid = gridType == 1;
     penLineType = gridTypeSolid ? RS2::SolidLine : RS2::DotLine;
 
     painter->setPen({m_colorData->metaGridColor, RS2::Width00, penLineType});
@@ -2072,6 +2080,15 @@ void RS_GraphicView::setPreviewReferenceEntitiesColor(const RS_Color &c) {
 void RS_GraphicView::setPreviewReferenceHighlightedEntitiesColor(const RS_Color &c) {
     m_colorData->previewReferenceHighlightedEntitiesColor = c;
 }
+
+void RS_GraphicView::setXAxisExtensionColor(const RS_Color &c){
+    m_colorData->xAxisExtensionColor = c;
+}
+
+void RS_GraphicView::setYAxisExtensionColor(const RS_Color &c){
+    m_colorData->yAxisExtensionColor = c;
+}
+
 
 /* Sets the color for the relative-zero marker. */
 void RS_GraphicView::setRelativeZeroColor(const RS_Color &c) {
