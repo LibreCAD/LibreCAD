@@ -534,7 +534,7 @@ void RS_ActionInterface::commandMessage(const QString &msg) const{
 }
 
 void RS_ActionInterface::updateSnapAngleStep() {
-    int stepType = LC_GET_INT("AngleSnapStep", 3);
+    int stepType = LC_GET_ONE_INT("Defaults", "AngleSnapStep", 3);
     switch (stepType){
         case 0:
             snapToAngleStep = 1.0;

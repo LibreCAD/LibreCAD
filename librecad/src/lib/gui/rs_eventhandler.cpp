@@ -217,7 +217,7 @@ void RS_EventHandler::mouseEnterEvent() {
     if(hasAction()){
         cleanUp();
         debugActions();
-        LC_ERR<<__func__<<"(): resume: "<<currentActions.last()->getName();
+//        LC_ERR<<__func__<<"(): resume: "<<currentActions.last()->getName();
         currentActions.last()->resume();
     } else {
         if (defaultAction) {
@@ -638,7 +638,7 @@ void RS_EventHandler::debugActions() const{
 }
 
 void RS_EventHandler::setQAction(QAction *action) {
-    LC_ERR << __func__ << "()";
+//    LC_ERR << __func__ << "()";
     debugActions();
     if (q_action) {
         q_action->setChecked(false);

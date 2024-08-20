@@ -839,7 +839,7 @@ void RS_GraphicView::zoomPage() {
     centerOffsetX();
     centerOffsetY();
     // fixme - remove debug code
-    LC_ERR << "Normal Zoom " << offsetX << " , " << offsetY << " Factor: " << fx;;
+//    LC_ERR << "Normal Zoom " << offsetX << " , " << offsetY << " Factor: " << fx;;
     adjustOffsetControls();
     adjustZoomControls();
 //    updateGrid();
@@ -906,8 +906,8 @@ void RS_GraphicView::zoomPageEx() {
         (int) ((getHeight() - borderTop - borderBottom - printAreaSizeInViewCoordinates.y * fy) / 2.0 + paperInsertionBase.y * fy / paperScale) + borderBottom;
 
 // fixme - remove debug code
-    LC_ERR << " Zoom Ex " << offsetX << " , " << offsetY << " Factor: " << fx << "  Paper Scale: " << paperScale;
-    LC_ERR << "PIB:" << paperInsertionBase.x << " , " << paperInsertionBase.y;
+//    LC_ERR << " Zoom Ex " << offsetX << " , " << offsetY << " Factor: " << fx << "  Paper Scale: " << paperScale;
+//    LC_ERR << "PIB:" << paperInsertionBase.x << " , " << paperInsertionBase.y;
 
     redraw();
 }
@@ -1116,7 +1116,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter, RS_Entity *e, double &
         if (inOverlay || inOverlayDrawing) {
             if (e->isHighlighted()) {    // Glowing effects on mouse hovering: use the "selected" color
                 // for glowing effects on mouse hovering, draw solid lines
-                pen.setColor(m_colorData->selectedColor);
+                pen.setColor(m_colorData->selectedColor); // fixme - use separate color for highlighting, or use color for highlights?
                 pen.setLineType(RS2::SolidLine);
             }
         } else {

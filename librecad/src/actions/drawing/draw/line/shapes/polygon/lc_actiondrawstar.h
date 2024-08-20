@@ -27,26 +27,25 @@
 #define STAR_MIN_RAYS 3
 #define STAR_MAX_RAYS 99
 
-
 // fixme - add center point on preview
 class LC_ActionDrawStar:public LC_AbstractActionWithPreview{
    Q_OBJECT
 public:
     LC_ActionDrawStar(RS_EntityContainer &container,RS_GraphicView &graphicView);
     QStringList getAvailableCommands() override;
-    double getRadiusInner() const{return innerRadius;};
+    double getRadiusInner() const {return innerRadius;};
     void setRadiusInner(double d);
-    double getRadiusOuter() const{return outerRadius;};
+    double getRadiusOuter() const {return outerRadius;};
     void setRadiusOuter(double d);
-    int getRaysNumber() const{return raysNumber;};
+    int getRaysNumber() const {return raysNumber;};
     void setRaysNumber(int i);
-    bool isOuterRounded() const{return outerRadiusRounded;};
+    bool isOuterRounded() const {return outerRadiusRounded;};
     void setOuterRounded(bool value);
-    bool isInnerRounded() const{return innerRadiusRounded;};
+    bool isInnerRounded() const {return innerRadiusRounded;};
     void setInnerRounded(bool value);
-    bool isPolyline() const{return createPolyline;};
+    bool isPolyline() const {return createPolyline;};
     void setPolyline(bool value);
-    bool isSymmetric() const{return symmetric;};
+    bool isSymmetric() const {return symmetric;};
     void setSymmetric(bool value);
 protected:
     /**

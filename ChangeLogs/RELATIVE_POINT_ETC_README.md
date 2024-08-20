@@ -26,7 +26,7 @@ For providing the user with additional hint that keyboard operations are availab
 
 If support of keyboard modifier is supported by the current state of active action, appropriate icon is shown as part of Mouse Widget. 
 
-Hint on that icon provides description for details of operation that may be performed with pressed key. 
+Hint on that icon provides description for details of operation that may be performed with corresponding pressed key. 
 
 ### Support of Snap to Relative Point and Angle Snap
 
@@ -48,6 +48,22 @@ An additional options were added to application options dialog for:
 1) Enabling/disabling displaying reference entities on preview;
 2) Specifying shape/size for temporary reference points shown during preview;
 3) Specifying color for reference entities;
+
+Highlighting of entities in preview mode also takes into account whether the entity that the user tries to select is suitable for current operation. Only entities that are valid for the current context are highlighted.
+ 
+### Drawing Actions
+
+Preview for drawing actions may include additional important points that are used for building specific entity (centers of circles, tangent points, user selections points etc.).
+Support of key modifiers is action and context (action state) dependent.
+
+Some improvements for actions: 
+
+1) "chordlen" command for DrawArc - creation of arch with specified horde
+2) Parallel Through Point option - now it's possible to create parallels that are placed in both sides symmetrically to selected entity.
+
+### Polyline Actions
+
+Preview for polyline editing actions improved and allows to perform such operations like deleting node, delete betwen nodes in more vidual and understandable way.
 
 ### New Info Actions
 
@@ -100,11 +116,11 @@ Now switching tab or creation of new drawing finishes current active action, so 
 Selected entities count/length is updated on layer hiding/displaying to reflect only visible selected entities.
 
 ### Keyboard Shortcuts Editing - UI
-Now the user may assign keyboard shortcuts to actions via UI  - using Keyboard Shortcuts options dialog.  
+Now the user may assign keyboard shortcuts to actions via UI  - using Keyboard Shortcuts options dialog. 
+It is possible to manage shortcuts, as well as export and import them.
 
 ### Keyboard Shortcuts in options tooltips
 An option was added to Application Preferences dialog that allows to control whether keyboard shortcuts should be shown as part of the action's tooltip or not. 
-
 
 ### Implementation notes
 The existing code base (for actions) historically contains lots of code duplications and is quite redundant.
@@ -125,6 +141,6 @@ I'm not aware of any functional regressions, so end users should be not affected
 
 The functionality is stable enough and may be a good candidate at least for night build for wide user testing. 
 
-However, the changes in the code base are quite significant and most probably the process of comparing/reviewing changes may be challenging. 
+However, the changes in the code base are, well, quite significant and most probably the process of comparing/reviewing changes may be challenging. 
 
-It might be also practical to make a new tag for this changes. 
+It might be also practical to make a new tag for this PR. 

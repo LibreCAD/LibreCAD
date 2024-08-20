@@ -136,7 +136,6 @@ void LC_ShortcutsManager::updateActionShortcutTooltips(const QMap<QString, QActi
                 // code that is outside actions factory.
                 // in any case, just ignore that key
                 LC_ERR << "Action is null in map, key "  << key;
-                LC_ERR << "Action is null in map, key "  << key;
             }
         }
     }
