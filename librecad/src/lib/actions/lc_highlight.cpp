@@ -56,8 +56,9 @@ void LC_Highlight::clear(){
 }
 
 void LC_Highlight::addEntitiesToContainer(RS_EntityContainer *container){
-        foreach (auto e, entities) {
-            e->reparent(container);
-            container->addEntity(e);
-        }
+    // fixme - sand - review foreach cycles and replace to range-based
+    for (const auto e: std::as_const(entities)) {
+        e->reparent(container);
+        container->addEntity(e);
+    }
 }
