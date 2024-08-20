@@ -28,7 +28,7 @@
 #include <iostream>
 
 #include <QMessageBox>
-#include <QStringList>
+
 
 #include "qg_dlgoptionsdrawing.h"
 
@@ -37,13 +37,16 @@
 #include "dxf_format.h"
 #include "lc_defaults.h"
 #include "rs_debug.h"
-#include "rs_filterdxfrw.h"
 #include "rs_font.h"
-#include "rs_graphic.h"
 #include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
-#include "rs_vector.h"
+#include "rs_graphic.h"
+#include "rs_settings.h"
+#include "rs_filterdxfrw.h"
+
+#include "qg_dlgoptionsdrawing.h"
+
 
 /*
  *  Constructs a QG_DlgOptionsDrawing as a child of 'parent', with the
@@ -151,7 +154,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
     graphic = g;
 
     if (graphic == nullptr) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, " QG_DlgOptionsDrawing::setGraphic(nullptr)\n");
+        RS_DEBUG->print(" QG_DlgOptionsDrawing::setGraphic(nullptr)\n");
         return;
     }
 
@@ -213,9 +216,18 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
     rbIsometricGrid->setChecked(graphic->isIsometricGrid());
     rbOrthogonalGrid->setChecked(!rbIsometricGrid->isChecked());
 
+    // FIXME _ MERGE
+    RS_SETTINGS->beginGroup("/Appearance");
+    const bool extendAxisLines_isChecked { (bool) RS_SETTINGS->readNumEntry("/ExtendAxisLines", 0) };
+    cbExtendAxisLines->setChecked(extendAxisLines_isChecked);
 
-    rbIsometricGrid->setDisabled(!cbGridOn->isChecked());
-    rbOrthogonalGrid->setDisabled(!cbGridOn->isChecked());
+    const int gridType_comboboxIndex { RS_SETTINGS->readNumEntry("/GridType", 0) };
+    cbGridType->setCurrentIndex(gridType_comboboxIndex);
+    RS_SETTINGS->endGroup();
+
+    rbIsometricGrid->setDisabled  ( ! cbGridOn->isChecked() || (gridType_comboboxIndex != 0));
+    rbOrthogonalGrid->setDisabled ( ! cbGridOn->isChecked() || (gridType_comboboxIndex != 0));
+
     RS2::CrosshairType chType = graphic->getCrosshairType();
     switch (chType) {
         case RS2::LeftCrosshair:
@@ -553,6 +565,11 @@ void QG_DlgOptionsDrawing::validate() {
 			spacing->y = cbYSpacing->currentText().toDouble();
         }
 		graphic->addVariable("$GRIDUNIT", *spacing, 10);
+// fixme - MERGE
+        RS_SETTINGS->beginGroup("/Appearance");
+        RS_SETTINGS->writeEntry("/ExtendAxisLines", (int) cbExtendAxisLines->isChecked());
+        RS_SETTINGS->writeEntry("/GridType", cbGridType->currentIndex());
+        RS_SETTINGS->endGroup();
 
         // dim:
         bool ok1 = true;
@@ -1065,6 +1082,15 @@ void QG_DlgOptionsDrawing::on_cbGridOn_toggled(bool checked)
     rbCrosshairRight->setEnabled(checked && rbIsometricGrid->isChecked());
     cbXSpacing->setEnabled(checked && rbOrthogonalGrid->isChecked());
     cbYSpacing->setEnabled(checked);
+    cbGridType->setEnabled(checked);
+    cbExtendAxisLines->setEnabled(checked);
+}
+
+
+void QG_DlgOptionsDrawing::on_cbGridType_currentIndexChanged(int index)
+{
+    rbIsometricGrid->setEnabled(!index);
+    rbOrthogonalGrid->setEnabled(!index);
 }
 
 
