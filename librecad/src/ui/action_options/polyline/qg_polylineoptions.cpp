@@ -67,6 +67,10 @@ void QG_PolylineOptions::doSaveSettings(){
     save("Reversed", ui->rbNeg->isChecked());
 }
 
+bool QG_PolylineOptions::checkActionRttiValid(RS2::ActionType actionType) {
+    return actionType == RS2::ActionDrawPolyline || actionType == RS2::ActionPolylineAppend;
+}
+
 void QG_PolylineOptions::doSetAction(RS_ActionInterface *a, bool update){
     action = dynamic_cast<RS_ActionDrawPolyline *>(a);
     QString radius, angle;
@@ -79,7 +83,6 @@ void QG_PolylineOptions::doSetAction(RS_ActionInterface *a, bool update){
         mode = action->getMode();
         reversed = action->isReversed();
     } else {
-
         radius = load("Radius", "1.0");
         angle = load("Angle", "180.0");
         mode = loadInt("Mode", 0);
@@ -92,7 +95,6 @@ void QG_PolylineOptions::doSetAction(RS_ActionInterface *a, bool update){
     }
     ui->leRadius->setText(radius);
     ui->leAngle->setText(angle);
-
 
     setAngleToActionAndView(angle);
     setRadiusToActionAndView(radius);
