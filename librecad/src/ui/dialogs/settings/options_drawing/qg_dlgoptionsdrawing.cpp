@@ -998,16 +998,16 @@ void QG_DlgOptionsDrawing::updatePaperPreview() {
     int previewW = gvPaperPreview->width() - 10;
     int previewH = gvPaperPreview->height() - 10;
     double scale = qMin(previewW / paperW, previewH / paperH);
-    int lMargin = qRound(RS_Math::eval(leMarginLeft->text()) * scale);
+    int lMargin = qRound(RS_Math::eval(leMarginLeft->text(),-1) * scale);
     if (lMargin < 0.0)
         lMargin = graphic->getMarginLeftInUnits();
-    int tMargin = qRound(RS_Math::eval(leMarginTop->text()) * scale);
+    int tMargin = qRound(RS_Math::eval(leMarginTop->text(),-1) * scale);
     if (tMargin < 0.0)
         tMargin = graphic->getMarginTopInUnits();
-    int rMargin = qRound(RS_Math::eval(leMarginRight->text()) * scale);
+    int rMargin = qRound(RS_Math::eval(leMarginRight->text(),-1) * scale);
     if (rMargin < 0.0)
         rMargin = graphic->getMarginRightInUnits();
-    int bMargin = qRound(RS_Math::eval(leMarginBottom->text()) * scale);
+    int bMargin = qRound(RS_Math::eval(leMarginBottom->text(),-1) * scale);
     if (bMargin < 0.0)
         bMargin = graphic->getMarginBottomInUnits();
     int printAreaW = qRound(paperW*scale) - lMargin - rMargin;

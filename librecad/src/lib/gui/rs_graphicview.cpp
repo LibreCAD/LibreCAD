@@ -874,9 +874,13 @@ void RS_GraphicView::zoomPageEx() {
         return;
     }
 
+    RS2::Unit dest = graphic->getUnit();
+    double marginsWidth = RS_Units::convert(graphic->getMarginLeft() + graphic->getMarginRight(), RS2::Millimeter, dest);
+    double marginsHeight = RS_Units::convert(graphic->getMarginTop() +graphic->getMarginBottom(), RS2::Millimeter, dest);
+
     const RS_Vector &printAreaSize = graphic->getPrintAreaSize(true);
     double paperScale = graphic->getPaperScale();
-    RS_Vector printAreaSizeInViewCoordinates = printAreaSize / paperScale;
+    RS_Vector printAreaSizeInViewCoordinates = (printAreaSize + RS_Vector(marginsWidth, marginsHeight, 0)) / paperScale;
 
     double fx, fy;
 
@@ -912,13 +916,15 @@ void RS_GraphicView::zoomPageEx() {
 
     const RS_Vector &paperInsertionBase = graphic->getPaperInsertionBase();
 
-    offsetX = (int) ((getWidth() - borderLeft - borderRight - printAreaSizeInViewCoordinates.x * factor.x) / 2.0 +
+
+
+    offsetX = (int) ((getWidth() - borderLeft - borderRight - (printAreaSizeInViewCoordinates.x) * factor.x) / 2.0 +
                      (paperInsertionBase.x * factor.x / paperScale)) + borderLeft;
 
     fy = factor.y;
 
     offsetY =
-        (int) ((getHeight() - borderTop - borderBottom - printAreaSizeInViewCoordinates.y * fy) / 2.0 + paperInsertionBase.y * fy / paperScale) + borderBottom;
+        (int) ((getHeight() - borderTop - borderBottom - (printAreaSizeInViewCoordinates.y) * fy) / 2.0 + paperInsertionBase.y * fy / paperScale) + borderBottom;
 
 // fixme - remove debug code
 //    LC_ERR << " Zoom Ex " << offsetX << " , " << offsetY << " Factor: " << fx << "  Paper Scale: " << paperScale;

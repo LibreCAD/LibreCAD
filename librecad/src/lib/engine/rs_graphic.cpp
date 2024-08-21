@@ -866,8 +866,7 @@ void RS_Graphic::centerToPage() {
 /**
  * Fits drawing on page. Affects DXF variable $PINSBASE.
  */
- // fixme - add support of fit to specified pages (say, 2x2)
- // fixme - check margins support in single and tiled modes - looks like they are shown differently
+  // fixme - check margins support in single and tiled modes - looks like they are shown differently
 bool RS_Graphic::fitToPage() {
     bool ret = true;
     RS_Vector ps = getPrintAreaSize(false);

@@ -42,7 +42,7 @@ void RS_ActionOptionsDrawing::init(int status) {
 }
 
 void RS_ActionOptionsDrawing::trigger() {
-    if (graphic) {
+    if (graphic != nullptr) {
         int dialogResult = RS_DIALOGFACTORY->requestOptionsDrawingDialog(*graphic);
         if (dialogResult == QDialog::Accepted){
             updateCoordinateWidgetFormat();
