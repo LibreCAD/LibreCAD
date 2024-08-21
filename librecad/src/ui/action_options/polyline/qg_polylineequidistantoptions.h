@@ -47,8 +47,8 @@ public:
 
 public slots:
     void languageChange() override;
-    void on_leDist_editingFinished();
-    void on_sbNumber_valueChanged(int number);
+    void onDistEditingFinished();
+    void onNumberValueChanged(int number);
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;

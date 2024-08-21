@@ -37,10 +37,11 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_CircleOptions::QG_CircleOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionNone, "/Draw", "/Circle")
+    : LC_ActionOptionsWidgetBase(RS2::ActionNone, "Draw", "Circle")
     , ui(std::make_unique<Ui::Ui_CircleOptions>())
 {
 	ui->setupUi(this);
+    connect(ui->leRadius, &QLineEdit::editingFinished, this, &QG_CircleOptions::onRadiusEditingFinished);
 }
 
 /*
@@ -86,6 +87,6 @@ void QG_CircleOptions::setRadiusToActionAndVIew(QString val){
     }
 }
 
-void QG_CircleOptions::on_leRadius_editingFinished(){
+void QG_CircleOptions::onRadiusEditingFinished(){
     setRadiusToActionAndVIew(ui->leRadius->text());
 }

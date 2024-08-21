@@ -116,24 +116,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections>
-  <connection>
-   <sender>sbNumber</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>Ui_LineParallelThroughOptions</receiver>
-   <slot>updateNumber(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>updateNumber(int)</slot>
  </slots>

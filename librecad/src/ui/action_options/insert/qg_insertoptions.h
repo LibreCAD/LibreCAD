@@ -43,12 +43,12 @@ public:
 
 protected slots:
     void languageChange() override;
-    void on_leAngle_editingFinished();
-    void on_leFactor_editingFinished();
-    void on_leColumnSpacing_editingFinished();
-    void on_leRowSpacing_editingFinished();
-    void on_sbRows_valueChanged(int number);
-    void on_sbColumns_valueChanged(int number);
+    void onAngleEditingFinished();
+    void onFactorEditingFinished();
+    void onColumnSpacingEditingFinished();
+    void onRowSpacingEditingFinished();
+    void onRowsValueChanged(int number);
+    void onColumnsValueChanged(int number);
 protected:
     RS_ActionBlocksInsert* action;
     void doSaveSettings() override;

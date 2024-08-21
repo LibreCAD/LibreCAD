@@ -52,10 +52,10 @@ bool LC_SliceDivideOptions::checkActionRttiValid(RS2::ActionType actionType){
 
 QString LC_SliceDivideOptions::getSettingsOptionNamePrefix(){
     if (forCircle){
-      return "/SliceDivideCircle";
+      return "SliceDivideCircle";
     }
     else{
-        return "/SliceDivideLine";
+        return "SliceDivideLine";
     }
 }
 
@@ -279,5 +279,3 @@ void LC_SliceDivideOptions::setCircleStartAngleToActionAndView(const QString &va
 void LC_SliceDivideOptions::languageChange(){
     ui->retranslateUi(this);
 }
-
-

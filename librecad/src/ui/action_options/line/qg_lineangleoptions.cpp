@@ -50,9 +50,13 @@ namespace {
  *  name 'name' and widget flags set to 'f'.
  */
 QG_LineAngleOptions::QG_LineAngleOptions()
-    : LC_ActionOptionsWidgetBase( RS2::ActionNone, "/Draw", "/LineAngle")
+    : LC_ActionOptionsWidgetBase( RS2::ActionNone, "Draw", "LineAngle")
     , ui(std::make_unique<Ui::Ui_LineAngleOptions>()){
     ui->setupUi(this);
+
+    connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_LineAngleOptions::onAngleEditingFinished);
+    connect(ui->leLength, &QLineEdit::editingFinished, this, &QG_LineAngleOptions::onLengthEditingFinished);
+    connect(ui->cbSnapPoint, &QComboBox::currentIndexChanged, this, &QG_LineAngleOptions::onSnapPointCurrentIndexChanged);
 }
 
 /*
@@ -122,14 +126,14 @@ void QG_LineAngleOptions::doSaveSettings() {
     save("SnapPoint", ui->cbSnapPoint->currentIndex());
 }
 
-void QG_LineAngleOptions::on_cbSnapPoint_currentIndexChanged(int number){
+void QG_LineAngleOptions::onSnapPointCurrentIndexChanged(int number){
     setSnapPointToActionAndView(number);
 }
 
-void QG_LineAngleOptions::on_leLength_editingFinished(){
+void QG_LineAngleOptions::onLengthEditingFinished(){
     setLengthToActionAndVeiw(ui->leLength->text());
 }
-void QG_LineAngleOptions::on_leAngle_editingFinished(){
+void QG_LineAngleOptions::onAngleEditingFinished(){
     setAngleToActionAndView(ui->leAngle->text());
 }
 
@@ -153,4 +157,3 @@ void QG_LineAngleOptions::setLengthToActionAndVeiw(QString val){
         ui->leLength->setText(fromDouble(len));
     }
 }
-

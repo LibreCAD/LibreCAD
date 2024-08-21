@@ -51,13 +51,13 @@ protected:
     void setDistanceFixedToActionAndView(bool val);
 protected slots:
     void languageChange() override;
-    void on_leDist_editingFinished();
-    void on_cbFixedDistance_clicked(bool val);
+    void onDistEditingFinished();
+    void onFixedDistanceClicked(bool val);
     void cbKeepOriginalsClicked(bool val);
     void cbMultipleCopiesClicked(bool val);
     void cbUseCurrentAttributesClicked(bool val);
     void cbUseCurrentLayerClicked(bool val);
-    void on_sbNumberOfCopies_valueChanged(int number);
+    void onNumberOfCopiesValueChanged(int number);
 private:
     std::unique_ptr<Ui::Ui_ModifyOffsetOptions> ui;
     RS_ActionModifyOffset* action = nullptr;

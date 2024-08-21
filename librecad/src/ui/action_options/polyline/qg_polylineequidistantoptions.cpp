@@ -35,9 +35,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   *@Author Dongxu Li
  */
 QG_PolylineEquidistantOptions::QG_PolylineEquidistantOptions()
-    :LC_ActionOptionsWidgetBase(RS2::ActionPolylineEquidistant, "/Draw", "/PolylineEquidistant"),
+    :LC_ActionOptionsWidgetBase(RS2::ActionPolylineEquidistant, "Draw", "PolylineEquidistant"),
     ui{new Ui::PolylineEquidistantOptions{}}{
     ui->setupUi(this);
+    connect(ui->leDist, &QLineEdit::editingFinished, this, &QG_PolylineEquidistantOptions::onDistEditingFinished);
+    connect(ui->sbNumber, &QSpinBox::valueChanged, this, &QG_PolylineEquidistantOptions::onNumberValueChanged);
 }
 
 /*
@@ -79,11 +81,11 @@ void QG_PolylineEquidistantOptions::doSaveSettings(){
     save("Copies", ui->sbNumber->value());
 }
 
-void QG_PolylineEquidistantOptions::on_sbNumber_valueChanged(int number){
+void QG_PolylineEquidistantOptions::onNumberValueChanged(int number){
     setNumberToActionAndView(number);
 }
 
-void QG_PolylineEquidistantOptions::on_leDist_editingFinished(){
+void QG_PolylineEquidistantOptions::onDistEditingFinished(){
     setDistanceToActionAndView(ui->leDist->text());
 }
 
@@ -99,4 +101,3 @@ void QG_PolylineEquidistantOptions::setDistanceToActionAndView(QString strVal){
         ui->leDist->setText(fromDouble(val));
     }
 }
-

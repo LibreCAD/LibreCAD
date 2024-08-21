@@ -36,10 +36,11 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_LineParallelOptions::QG_LineParallelOptions(RS2::ActionType actionType)
-    :LC_ActionOptionsWidgetBase(actionType, "/Draw", "/LineParallel"),
+    :LC_ActionOptionsWidgetBase(actionType, "Draw", "LineParallel"),
      ui(new Ui::Ui_LineParallelOptions{}) {
     ui->setupUi(this);
-    // fixme - slots - correct in UI
+    connect(ui->leDist, &QLineEdit::editingFinished, this, &QG_LineParallelOptions::onDistEditingFinished);
+    connect(ui->sbNumber, &QSpinBox::valueChanged, this, &QG_LineParallelOptions::onNumberValueChanged);
 }
 
 /*
@@ -82,11 +83,11 @@ void QG_LineParallelOptions::doSetAction(RS_ActionInterface *a, bool update) {
     setNumberToActionAndView(copiesNumber);
 }
 
-void QG_LineParallelOptions::on_sbNumber_valueChanged(int number) {
+void QG_LineParallelOptions::onNumberValueChanged(int number) {
     setNumberToActionAndView(number);
 }
 
-void QG_LineParallelOptions::on_leDist_editingFinished() {
+void QG_LineParallelOptions::onDistEditingFinished() {
     setDistanceToActionAndView(ui->leDist->text());
 }
 

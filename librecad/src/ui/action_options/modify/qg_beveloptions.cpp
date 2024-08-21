@@ -36,9 +36,12 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_BevelOptions::QG_BevelOptions()
-    :LC_ActionOptionsWidgetBase(RS2::ActionModifyBevel,"/Modify", "/Bevel"),
+    :LC_ActionOptionsWidgetBase(RS2::ActionModifyBevel,"Modify", "Bevel"),
     ui(std::make_unique<Ui::Ui_BevelOptions>()){
     ui->setupUi(this);
+    connect(ui->cbTrim, &QCheckBox::toggled, this, &QG_BevelOptions::onTrimToggled);
+    connect(ui->leLength1, &QLineEdit::editingFinished, this, &QG_BevelOptions::onLength1EditingFinished);
+    connect(ui->leLength2, &QLineEdit::editingFinished, this, &QG_BevelOptions::onLength2EditingFinished);
 }
 
 /*
@@ -80,15 +83,15 @@ void QG_BevelOptions::doSetAction(RS_ActionInterface *a, bool update){
         setTrimToActionAndView(trim);
 }
 
-void QG_BevelOptions::on_cbTrim_toggled(bool checked){
+void QG_BevelOptions::onTrimToggled(bool checked){
     setTrimToActionAndView(checked);
 }
 
-void QG_BevelOptions::on_leLength1_editingFinished(){
+void QG_BevelOptions::onLength1EditingFinished(){
     setLength1ToActionAndView(ui->leLength1->text());
 }
 
-void QG_BevelOptions::on_leLength2_editingFinished(){
+void QG_BevelOptions::onLength2EditingFinished(){
     setLength2ToActionAndView(ui->leLength2->text());
 }
 
@@ -116,7 +119,3 @@ void QG_BevelOptions::setTrimToActionAndView(bool val){
     action->setTrim(val);
     ui->cbTrim->setChecked(val);
 }
-
-
-
-

@@ -35,7 +35,7 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_SplineOptions::QG_SplineOptions()
-    :LC_ActionOptionsWidgetBase(RS2::ActionNone, "/Draw", "/Spline"),
+    :LC_ActionOptionsWidgetBase(RS2::ActionNone, "Draw", "Spline"),
     action(nullptr), ui(new Ui::Ui_SplineOptions{}){
     ui->setupUi(this);
 
@@ -112,4 +112,3 @@ void QG_SplineOptions::setDegreeToActionAndView(int degree){
 void QG_SplineOptions::languageChange(){
     ui->retranslateUi(this);
 }
-

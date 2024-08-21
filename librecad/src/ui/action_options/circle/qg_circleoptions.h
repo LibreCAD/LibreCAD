@@ -43,7 +43,7 @@ public:
     ~QG_CircleOptions() override;
 public slots:
     virtual void languageChange();
-    void on_leRadius_editingFinished();
+    void onRadiusEditingFinished();
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;

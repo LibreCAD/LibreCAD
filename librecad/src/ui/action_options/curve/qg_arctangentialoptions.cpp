@@ -40,15 +40,13 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_ArcTangentialOptions::QG_ArcTangentialOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionDrawArcTangential, "/Draw", "/ArcTangential")
-    , ui(new Ui::Ui_ArcTangentialOptions{})
-{
+    : LC_ActionOptionsWidgetBase(RS2::ActionDrawArcTangential, "Draw", "ArcTangential")
+    , ui(new Ui::Ui_ArcTangentialOptions{}){
     ui->setupUi(this);
-    connect(ui->rbRadius, &QRadioButton::clicked, this, &QG_ArcTangentialOptions::on_rbRadius_clicked);
-    connect(ui->rbAngle, &QRadioButton::clicked, this, &QG_ArcTangentialOptions::on_rbAngle_clicked);
-    // fixme - slots !!
-    connect(ui->leRadius, SIGNAL(editingFinished()), this, SLOT(on_leRadius_editingFinished));
-    connect(ui->leAngle, SIGNAL(editingFinished()), this, SLOT(on_leAngle_editingFinished));
+    connect(ui->rbRadius, &QRadioButton::clicked, this, &QG_ArcTangentialOptions::onRadiusClicked);
+    connect(ui->rbAngle, &QRadioButton::clicked, this, &QG_ArcTangentialOptions::onAngleClicked);
+    connect(ui->leRadius, &QLineEdit::editingFinished, this, &QG_ArcTangentialOptions::onRadiusEditingFinished);
+    connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_ArcTangentialOptions::onAngleEditingFinished);
 }
 
 QG_ArcTangentialOptions::~QG_ArcTangentialOptions() = default;
@@ -121,19 +119,19 @@ void QG_ArcTangentialOptions::setByRadiusToActionAndView(bool byRadius) {
     ui->leAngle->setEnabled(!byRadius);
 }
 
-void QG_ArcTangentialOptions::on_leRadius_editingFinished(){
+void QG_ArcTangentialOptions::onRadiusEditingFinished(){
     setRadiusToActionAndView(ui->leRadius->text());
 }
 
-void QG_ArcTangentialOptions::on_leAngle_editingFinished(){
+void QG_ArcTangentialOptions::onAngleEditingFinished(){
     setAngleToActionAndView(ui->leAngle->text());
 }
 
-void QG_ArcTangentialOptions::on_rbRadius_clicked(bool /*checked*/){
+void QG_ArcTangentialOptions::onRadiusClicked(bool /*checked*/){
     setByRadiusToActionAndView(true);
 }
 
-void QG_ArcTangentialOptions::on_rbAngle_clicked(bool /*checked*/){
+void QG_ArcTangentialOptions::onAngleClicked(bool /*checked*/){
     setByRadiusToActionAndView(false);
 }
 

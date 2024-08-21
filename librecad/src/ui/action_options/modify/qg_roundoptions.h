@@ -45,8 +45,8 @@ public:
 
 public slots:
     void languageChange() override;
-    void on_cbTrim_toggled(bool checked);
-    void on_leRadius_editingFinished();
+    void onTrimToggled(bool checked);
+    void onRadiusEditingFinished();
 protected:
     RS_ActionModifyRound* action = nullptr;
     void doSetAction(RS_ActionInterface *a, bool update) override;
@@ -54,7 +54,7 @@ protected:
 private:
     std::unique_ptr<Ui::Ui_RoundOptions> ui;
     void setTrimToActionAndView(bool checked);
-    void setRadiusToActionAndView(QString val);
+    void setRadiusToActionAndView(const QString &val);
 };
 
 #endif // QG_ROUNDOPTIONS_H

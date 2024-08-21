@@ -35,7 +35,7 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_ArcOptions::QG_ArcOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionDrawArc, "/Draw","/Arc")
+    : LC_ActionOptionsWidgetBase(RS2::ActionDrawArc, "Draw","Arc")
     , ui(std::make_unique<Ui::Ui_ArcOptions>())
 {
 	ui->setupUi(this);

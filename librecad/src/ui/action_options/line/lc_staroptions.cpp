@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "ui_lc_staroptions.h"
 
 LC_StarOptions::LC_StarOptions() :
-    LC_ActionOptionsWidgetBase(RS2::ActionDrawStar, "/Draw","/Star"),
+    LC_ActionOptionsWidgetBase(RS2::ActionDrawStar, "Draw","Star"),
     ui(new Ui::LC_StarOptions),
     action(nullptr){
     ui->setupUi(this);

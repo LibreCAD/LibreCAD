@@ -36,10 +36,11 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_LineBisectorOptions::QG_LineBisectorOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionDrawLineBisector, "/Draw", "/LineBisector")
+    : LC_ActionOptionsWidgetBase(RS2::ActionDrawLineBisector, "Draw", "LineBisector")
 	, ui(new Ui::Ui_LineBisectorOptions{}){
-	ui->setupUi(this);
-    // fixme - slots - correct in UI
+    ui->setupUi(this);
+    connect(ui->leLength, &QLineEdit::editingFinished, this, &QG_LineBisectorOptions::onLengthEditingFinished);
+    connect(ui->sbNumber, &QSpinBox::valueChanged, this, &QG_LineBisectorOptions::onNumberValueChanged);
 }
 
 /*
@@ -77,11 +78,11 @@ void QG_LineBisectorOptions::doSetAction(RS_ActionInterface *a, bool update){
     setNumberToActionAndView(number);
 }
 
-void QG_LineBisectorOptions::on_sbNumber_valueChanged(int number){
+void QG_LineBisectorOptions::onNumberValueChanged(int number){
     setNumberToActionAndView(number);
 }
 
-void QG_LineBisectorOptions::on_leLength_editingFinished(){
+void QG_LineBisectorOptions::onLengthEditingFinished(){
     setLengthToActionAndView(ui->leLength->text());
 }
 

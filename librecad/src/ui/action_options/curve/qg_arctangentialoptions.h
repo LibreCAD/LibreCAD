@@ -43,10 +43,10 @@ public:
     QG_ArcTangentialOptions();
     ~QG_ArcTangentialOptions() override;
 public slots:
-    virtual void on_leRadius_editingFinished();
-    virtual void on_leAngle_editingFinished();
-    virtual void on_rbRadius_clicked(bool checked);
-    virtual void on_rbAngle_clicked(bool checked);
+    virtual void onRadiusEditingFinished();
+    virtual void onAngleEditingFinished();
+    virtual void onRadiusClicked(bool checked);
+    virtual void onAngleClicked(bool checked);
     void languageChange() override;
 public:
     void updateRadius(double d);

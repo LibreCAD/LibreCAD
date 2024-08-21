@@ -51,9 +51,11 @@ namespace {
  *  name 'name' and widget flags set to 'f'.
  */
 QG_LineRelAngleOptions::QG_LineRelAngleOptions()
-    :LC_ActionOptionsWidgetBase(RS2::ActionNone, "/Draw", "/LineRelAngleAngle"),
+    :LC_ActionOptionsWidgetBase(RS2::ActionNone, "Draw", "LineRelAngleAngle"),
      ui(std::make_unique<Ui::Ui_LineRelAngleOptions>()){
     ui->setupUi(this);
+    connect(ui->leLength, &QLineEdit::editingFinished, this, &QG_LineRelAngleOptions::onLengthEditingFinished);
+    connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_LineRelAngleOptions::onAngleEditingFinished);
 }
 
 /*
@@ -110,11 +112,11 @@ void QG_LineRelAngleOptions::doSetAction(RS_ActionInterface *a, bool update){
     setLengthToActionAndView(length);
 }
 
-void QG_LineRelAngleOptions::on_leLength_editingFinished(){
+void QG_LineRelAngleOptions::onLengthEditingFinished(){
     setLengthToActionAndView(ui->leLength->text());
 }
 
-void QG_LineRelAngleOptions::on_leAngle_editingFinished(){
+void QG_LineRelAngleOptions::onAngleEditingFinished(){
     setAngleToActionAndView(ui->leAngle->text());
 }
 

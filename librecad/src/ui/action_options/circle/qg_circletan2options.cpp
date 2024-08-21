@@ -33,9 +33,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *  name 'name' and widget flags set to 'f'.
  */
 QG_CircleTan2Options::QG_CircleTan2Options()
-    : LC_ActionOptionsWidgetBase(RS2::ActionDrawCircleTan2,"/Draw", "/CircleTan2")
+    : LC_ActionOptionsWidgetBase(RS2::ActionDrawCircleTan2,"Draw", "CircleTan2")
 	 , ui(new Ui::Ui_CircleTan2Options{}){
-	ui->setupUi(this);
+    ui->setupUi(this);
+    connect(ui->leRadius, &QLineEdit::editingFinished, this, &QG_CircleTan2Options::onRadiusEditingFinished);
 }
 
 /*
@@ -76,6 +77,6 @@ void QG_CircleTan2Options::setRadiusToActionAndView(QString val){
     }
 }
 
-void QG_CircleTan2Options::on_leRadius_editingFinished(){
+void QG_CircleTan2Options::onRadiusEditingFinished(){
     setRadiusToActionAndView(ui->leRadius->text());
 }

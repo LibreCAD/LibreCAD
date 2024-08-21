@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "ui_lc_modifygapoptions.h"
 
 LC_ModifyGapOptions::LC_ModifyGapOptions() :
-    LC_ActionOptionsWidgetBase(RS2::ActionModifyLineGap, "/Modify", "/LineGap"),
+    LC_ActionOptionsWidgetBase(RS2::ActionModifyLineGap, "Modify", "LineGap"),
     ui(new Ui::LC_ModifyGapOptions)
 {
     ui->setupUi(this);

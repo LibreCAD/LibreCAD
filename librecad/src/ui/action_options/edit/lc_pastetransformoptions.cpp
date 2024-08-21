@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 
 LC_PasteTransformOptions::LC_PasteTransformOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionEditPasteTransform, "/Edit", "/PasteTransform")
+    : LC_ActionOptionsWidgetBase(RS2::ActionEditPasteTransform, "Edit", "PasteTransform")
     , ui(new Ui::LC_PasteTransformOptions){
     ui->setupUi(this);
 

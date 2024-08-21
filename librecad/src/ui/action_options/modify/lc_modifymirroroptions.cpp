@@ -2,7 +2,7 @@
 #include "ui_lc_modifymirroroptions.h"
 
 LC_ModifyMirrorOptions::LC_ModifyMirrorOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionModifyMirror,"/Modify", "/Mirror")
+    : LC_ActionOptionsWidgetBase(RS2::ActionModifyMirror,"Modify", "Mirror")
     , ui(new Ui::LC_ModifyMirrorOptions), action(nullptr){
     ui->setupUi(this);
 

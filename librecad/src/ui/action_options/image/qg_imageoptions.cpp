@@ -36,7 +36,7 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_ImageOptions::QG_ImageOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionDrawImage, "/Image", "/Image")
+    : LC_ActionOptionsWidgetBase(RS2::ActionDrawImage, "Image", "Image")
     , ui(new Ui::Ui_ImageOptions)
 {
     ui->setupUi(this);
@@ -128,11 +128,3 @@ void QG_ImageOptions::setFactorToActionAndView(const QString& val) {
         action->setFactor(factor);
     }
 }
-
-
-
-
-
-
-
-

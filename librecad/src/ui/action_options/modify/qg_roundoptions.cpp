@@ -36,9 +36,11 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_RoundOptions::QG_RoundOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionModifyRound, "/Modify", "/Round")
+    : LC_ActionOptionsWidgetBase(RS2::ActionModifyRound, "Modify", "Round")
 	, ui(new Ui::Ui_RoundOptions{}){
 	ui->setupUi(this);
+ connect(ui->leRadius, &QLineEdit::editingFinished, this, &QG_RoundOptions::onRadiusEditingFinished);
+ connect(ui->cbTrim, &QCheckBox::toggled, this, &QG_RoundOptions::onTrimToggled);
 }
 
 /*
@@ -75,11 +77,11 @@ void QG_RoundOptions::doSetAction(RS_ActionInterface *a, bool update) {
     setRadiusToActionAndView(radius);
 }
 
-void QG_RoundOptions::on_leRadius_editingFinished(){
+void QG_RoundOptions::onRadiusEditingFinished(){
     setRadiusToActionAndView(ui->leRadius->text());
 }
 
-void QG_RoundOptions::on_cbTrim_toggled(bool checked){
+void QG_RoundOptions::onTrimToggled(bool checked){
     setTrimToActionAndView(checked);
 }
 
@@ -88,7 +90,7 @@ void QG_RoundOptions::setTrimToActionAndView(bool checked){
     action->setTrim(checked);
 }
 
-void QG_RoundOptions::setRadiusToActionAndView(QString strValue){
+void QG_RoundOptions::setRadiusToActionAndView(const QString &strValue){
     double radius;
     if (toDouble(strValue, radius, 1.0, false)){
         action->setRadius(radius);

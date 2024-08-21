@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
 LC_Rectangle1PointOptions::LC_Rectangle1PointOptions() :
-    LC_ActionOptionsWidgetBase(RS2::ActionDrawRectangle1Point, "/Draw","/Rectangle1Point"),
+    LC_ActionOptionsWidgetBase(RS2::ActionDrawRectangle1Point, "Draw","Rectangle1Point"),
     ui(new Ui::LC_Rectangle1PointOptions),
     action(nullptr){
     ui->setupUi(this);

@@ -45,9 +45,9 @@ public slots:
     virtual void close(); // fixme - rename
     virtual void undo();
     virtual void setModeToActionAndView(int m );
-    void on_leAngle_editingFinished();
-    void on_leRadius_editingFinished();
-    void on_rbNeg_toggled(bool checked);
+    void onAngleEditingFinished();
+    void onRadiusEditingFinished();
+    void onNegToggled(bool checked);
     void languageChange() override;
 protected:
     RS_ActionDrawPolyline* action;

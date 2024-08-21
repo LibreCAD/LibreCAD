@@ -42,7 +42,7 @@ public:
     ~QG_CircleTan2Options();
 public slots:
     void languageChange() override;
-    void on_leRadius_editingFinished();
+    void onRadiusEditingFinished();
 protected:
     RS_ActionDrawCircleTan2* action;
     std::unique_ptr<Ui::Ui_CircleTan2Options> ui;

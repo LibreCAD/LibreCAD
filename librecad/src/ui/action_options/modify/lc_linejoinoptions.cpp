@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
 LC_LineJoinOptions::LC_LineJoinOptions() :
-    LC_ActionOptionsWidgetBase(RS2::ActionModifyLineJoin, "/Modify", "/LineJoin"),
+    LC_ActionOptionsWidgetBase(RS2::ActionModifyLineJoin, "Modify", "LineJoin"),
     ui(new Ui::LC_LineJoinOptions),
     action(nullptr){
     ui->setupUi(this);

@@ -42,9 +42,9 @@ public:
     ~QG_BevelOptions() override;
 public slots:
     virtual void languageChange();
-    void on_cbTrim_toggled(bool checked);
-    void on_leLength1_editingFinished();
-    void on_leLength2_editingFinished();
+    void onTrimToggled(bool checked);
+    void onLength1EditingFinished();
+    void onLength2EditingFinished();
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;

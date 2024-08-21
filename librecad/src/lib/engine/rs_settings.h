@@ -107,8 +107,8 @@ public:
 
     // RAII style group guard: endGroup() is called automatically at the end of lifetime of the returned object
     std::unique_ptr<GroupGuard> beginGroupGuard(QString group);
-    void beginGroup(QString group) ;
-    void endGroup() ;
+    void beginGroup(QString group);
+    void endGroup();
 
     bool write(const QString& key, int value);
     bool write(const QString& key, double value);

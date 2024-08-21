@@ -79,7 +79,7 @@ protected:
      * Default name for settings group name
      * @return name of group
      */
-    virtual QString getSettingsGroupName(){return "/Draw";};
+    virtual QString getSettingsGroupName(){return "Draw";};
 
     /**
      * Default name for prefix for settings. It assumes that all settings for the action starts with the same prefix.

@@ -36,8 +36,11 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_TrimAmountOptions::QG_TrimAmountOptions()
-    :LC_ActionOptionsWidgetBase(RS2::ActionModifyTrimAmount,"/Modify","/Trim"), ui(new Ui::Ui_TrimAmountOptions{}){
+    :LC_ActionOptionsWidgetBase(RS2::ActionModifyTrimAmount,"Modify","Trim"), ui(new Ui::Ui_TrimAmountOptions{}){
     ui->setupUi(this);
+    connect(ui->leDist, &QLineEdit::editingFinished, this, &QG_TrimAmountOptions::onDistEditingFinished);
+    connect(ui->cbSymmetric, &QCheckBox::toggled, this, &QG_TrimAmountOptions::onSymmetricToggled);
+    connect(ui->cbTotalLength, &QCheckBox::toggled, this, &QG_TrimAmountOptions::onTotalLengthToggled);
  }
 
 /*
@@ -84,15 +87,15 @@ void QG_TrimAmountOptions::doSetAction(RS_ActionInterface *a, bool update){
         setDistanceSymmetricToActionAndView(symmetric);
 }
 
-void QG_TrimAmountOptions::on_leDist_editingFinished(){
+void QG_TrimAmountOptions::onDistEditingFinished(){
     setDistanceToActionAndView(ui->leDist->text());
 }
 
-void QG_TrimAmountOptions::on_cbTotalLength_toggled(bool checked){
+void QG_TrimAmountOptions::onTotalLengthToggled(bool checked){
     setByTotalToActionAndView(checked);
 }
 
-void QG_TrimAmountOptions::on_cbSymmetric_toggled(bool checked){
+void QG_TrimAmountOptions::onSymmetricToggled(bool checked){
     setDistanceSymmetricToActionAndView(checked);
 }
 

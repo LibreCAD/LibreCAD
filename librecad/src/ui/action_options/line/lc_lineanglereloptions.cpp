@@ -105,7 +105,7 @@ void LC_LineAngleRelOptions::doSetAction(RS_ActionInterface *a, bool update){
 
 
 QString LC_LineAngleRelOptions::getSettingsOptionNamePrefix(){
-    return fixedAngle ? "/LineOrthogonalRel" : "/LineAngleRel";
+    return fixedAngle ? "LineOrthogonalRel" : "LineAngleRel";
 }
 
 void LC_LineAngleRelOptions::doSaveSettings(){
@@ -243,9 +243,3 @@ void LC_LineAngleRelOptions::onDivideClicked(bool clicked){
         setDivideToActionAndView(clicked);
     }
 }
-
-
-
-
-
-

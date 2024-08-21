@@ -12,7 +12,7 @@
  *  name 'name' and widget flags set to 'f'.
  */
 LC_LineOptions::LC_LineOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionDrawSnakeLine, "/Draw","/LineSnake")
+    : LC_ActionOptionsWidgetBase(RS2::ActionDrawSnakeLine, "Draw","LineSnake")
     , ui(new Ui::Ui_LineOptionsRel{})
 {
     ui->setupUi(this);

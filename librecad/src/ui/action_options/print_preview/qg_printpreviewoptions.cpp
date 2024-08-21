@@ -51,7 +51,7 @@ namespace {
  *  name 'name' and widget flags set to 'f'.
  */
 QG_PrintPreviewOptions::QG_PrintPreviewOptions()
-    :LC_ActionOptionsWidgetBase(RS2::ActionFilePrintPreview, "/PrintPreview", "/")
+    :LC_ActionOptionsWidgetBase(RS2::ActionFilePrintPreview, "PrintPreview", "")
     , defaultScalesStartIndex{0}
     , ui(new Ui::Ui_PrintPreviewOptions{})
 {

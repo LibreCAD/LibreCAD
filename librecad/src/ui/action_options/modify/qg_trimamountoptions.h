@@ -46,9 +46,9 @@ protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
 public slots:
     void languageChange() override;
-    void on_cbTotalLength_toggled(bool checked);
-    void on_cbSymmetric_toggled(bool checked);
-    void on_leDist_editingFinished();
+    void onTotalLengthToggled(bool checked);
+    void onSymmetricToggled(bool checked);
+    void onDistEditingFinished();
 private:
     RS_ActionModifyTrimAmount *action;
     std::unique_ptr<Ui::Ui_TrimAmountOptions> ui;

@@ -36,7 +36,8 @@
 QG_SnapDistOptions::QG_SnapDistOptions(QWidget* parent)
     : QWidget(parent)
 	, ui(new Ui::Ui_SnapDistOptions{}){
-	ui->setupUi(this);
+    ui->setupUi(this);
+    connect(ui->leDist, &QLineEdit::editingFinished, this, &QG_SnapDistOptions::onDistEditingFinished);
 }
 
 /*
@@ -49,7 +50,7 @@ QG_SnapDistOptions::~QG_SnapDistOptions() = default;
  *  language.
  */
 void QG_SnapDistOptions::languageChange(){
-	ui->retranslateUi(this);
+    ui->retranslateUi(this);
 }
 
 void QG_SnapDistOptions::saveSettings() {
@@ -65,7 +66,7 @@ void QG_SnapDistOptions::useSnapDistanceValue(double* d) {
     ui->leDist->setText(value);
 }
 
-void QG_SnapDistOptions::on_leDist_editingFinished() {
+void QG_SnapDistOptions::onDistEditingFinished() {
     if (dist) {
         QString value = ui->leDist->text();
         *dist = RS_Math::eval(value, 1.0);

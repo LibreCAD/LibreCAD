@@ -119,40 +119,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections>
-  <connection>
-   <sender>leAngle</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_LineRelAngleOptions</receiver>
-   <slot>updateAngle(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leLength</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_LineRelAngleOptions</receiver>
-   <slot>updateLength(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>updateAngle(QString)</slot>
   <slot>updateLength(QString)</slot>

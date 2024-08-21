@@ -167,7 +167,7 @@
       <string/>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="topMargin">

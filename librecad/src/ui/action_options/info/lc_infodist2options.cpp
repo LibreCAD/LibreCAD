@@ -26,7 +26,7 @@ void LC_InfoDist2Options::doSetAction(RS_ActionInterface *a, bool update){
 }
 
 QString LC_InfoDist2Options::getSettingsOptionNamePrefix(){
-    return "/InfoDist2";
+    return "InfoDist2";
 }
 
 void LC_InfoDist2Options::doSaveSettings(){

@@ -9,7 +9,7 @@
 // fixme - think and decide which way of setting secondary angle is more convenient...
 
 LC_Rotate2Options::LC_Rotate2Options()
-    : LC_ActionOptionsWidgetBase(RS2::ActionModifyRotate2, "/Modify", "/Rotate2")
+    : LC_ActionOptionsWidgetBase(RS2::ActionModifyRotate2, "Modify", "Rotate2")
     , ui(new Ui::LC_Rotate2Options)
 {
     ui->setupUi(this);
@@ -196,4 +196,3 @@ void LC_Rotate2Options::cbAnglesMirroredClicked(bool checked) {
 void LC_Rotate2Options::on_sbNumberOfCopies_valueChanged(int number) {
     setCopiesNumberToActionAndView(number);
 }
-

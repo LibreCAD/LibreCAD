@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "ui_lc_duplicateoptions.h"
 
 LC_DuplicateOptions::LC_DuplicateOptions():
-    LC_ActionOptionsWidgetBase(RS2::ActionModifyDuplicate, "/Modify","/Duplicate"),
+    LC_ActionOptionsWidgetBase(RS2::ActionModifyDuplicate, "Modify","Duplicate"),
     ui(new Ui::LC_DuplicateOptions),
     action(nullptr){
     ui->setupUi(this);

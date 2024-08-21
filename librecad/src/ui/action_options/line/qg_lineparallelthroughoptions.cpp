@@ -35,7 +35,7 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_LineParallelThroughOptions::QG_LineParallelThroughOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionDrawLineParallelThrough, "/Draw", "/LineParallel")
+    : LC_ActionOptionsWidgetBase(RS2::ActionDrawLineParallelThrough, "Draw", "LineParallel")
 	, ui(new Ui::Ui_LineParallelThroughOptions{}){
 	ui->setupUi(this);
 }

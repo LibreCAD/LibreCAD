@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 
 LC_Rectangle3PointsOptions::LC_Rectangle3PointsOptions() :
-    LC_ActionOptionsWidgetBase(RS2::ActionDrawRectangle3Points, "/Draw", "/Rectangle3Points"),
+    LC_ActionOptionsWidgetBase(RS2::ActionDrawRectangle3Points, "Draw", "Rectangle3Points"),
     action(nullptr),
     ui(new Ui::LC_Rectangle3PointsOptions){
     ui->setupUi(this);

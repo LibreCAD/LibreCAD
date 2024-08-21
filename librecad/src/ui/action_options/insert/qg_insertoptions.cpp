@@ -37,9 +37,15 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_InsertOptions::QG_InsertOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionBlocksInsert, "/Insert", "/Insert")
+    : LC_ActionOptionsWidgetBase(RS2::ActionBlocksInsert, "Insert", "Insert")
 	, ui(new Ui::Ui_InsertOptions{}){
-	ui->setupUi(this);
+    ui->setupUi(this);
+    connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_InsertOptions::onAngleEditingFinished);
+    connect(ui->leFactor, &QLineEdit::editingFinished, this, &QG_InsertOptions::onFactorEditingFinished);
+    connect(ui->leColumnSpacing, &QLineEdit::editingFinished, this, &QG_InsertOptions::onColumnSpacingEditingFinished);
+    connect(ui->leRowSpacing, &QLineEdit::editingFinished, this, &QG_InsertOptions::onRowSpacingEditingFinished);
+    connect(ui->sbRows, &QSpinBox::valueChanged, this, &QG_InsertOptions::onRowsValueChanged);
+    connect(ui->sbColumns, &QSpinBox::valueChanged, this, &QG_InsertOptions::onColumnsValueChanged);
 }
 
 /*
@@ -128,26 +134,26 @@ void QG_InsertOptions::setAngleToActionAndView(QString val) {
     action->setAngle(RS_Math::deg2rad(RS_Math::eval(val)));
 }
 
-void QG_InsertOptions::on_leAngle_editingFinished(){
+void QG_InsertOptions::onAngleEditingFinished(){
     setAngleToActionAndView(ui->leAngle->text());
 }
 
-void QG_InsertOptions::on_leFactor_editingFinished(){
+void QG_InsertOptions::onFactorEditingFinished(){
     setAngleToActionAndView(ui->leFactor->text());
 }
 
-void QG_InsertOptions::on_leColumnSpacing_editingFinished() {
+void QG_InsertOptions::onColumnSpacingEditingFinished() {
     setColumnSpacingActionAndView(ui->leColumnSpacing->text());
 }
 
-void QG_InsertOptions::on_leRowSpacing_editingFinished() {
+void QG_InsertOptions::onRowSpacingEditingFinished() {
     setRowSpacingToActionAndView(ui->leRowSpacing->text());
 }
 
-void QG_InsertOptions::on_sbRows_valueChanged( [[maybe_unused]]int number) {
+void QG_InsertOptions::onRowsValueChanged([[maybe_unused]]int number) {
     setRowsToActionAndView(ui->sbRows->value());
 }
 
-void QG_InsertOptions::on_sbColumns_valueChanged( [[maybe_unused]]int number) {
+void QG_InsertOptions::onColumnsValueChanged([[maybe_unused]]int number) {
     setColumnsToActionAndView(ui->sbColumns->value());
 }

@@ -43,8 +43,8 @@ public:
     ~QG_LineRelAngleOptions() override;
 public slots:
     void languageChange() override;
-    void on_leLength_editingFinished();
-    void on_leAngle_editingFinished();
+    void onLengthEditingFinished();
+    void onAngleEditingFinished();
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;

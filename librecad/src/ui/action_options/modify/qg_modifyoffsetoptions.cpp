@@ -36,13 +36,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *  Constructs a QG_ModifyOffsetOptions
  */
 QG_ModifyOffsetOptions::QG_ModifyOffsetOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionModifyOffset, "/Draw", "/ModifyOffset")
+    : LC_ActionOptionsWidgetBase(RS2::ActionModifyOffset, "Draw", "ModifyOffset")
     , ui(new Ui::Ui_ModifyOffsetOptions{}){
     ui->setupUi(this);
     connect(ui->cbKeepOriginals, &QCheckBox::clicked, this, &QG_ModifyOffsetOptions::cbKeepOriginalsClicked);
     connect(ui->cbMultipleCopies, &QCheckBox::clicked, this, &QG_ModifyOffsetOptions::cbMultipleCopiesClicked);
     connect(ui->cbCurrentAttr, &QCheckBox::clicked, this, &QG_ModifyOffsetOptions::cbUseCurrentAttributesClicked);
     connect(ui->cbCurrentLayer, &QCheckBox::clicked, this, &QG_ModifyOffsetOptions::cbUseCurrentLayerClicked);
+    connect(ui->leDist, &QLineEdit::editingFinished, this, &QG_ModifyOffsetOptions::onDistEditingFinished);
+    connect(ui->sbNumberOfCopies, &QSpinBox::valueChanged, this, &QG_ModifyOffsetOptions::onNumberOfCopiesValueChanged);
+    connect(ui->cbFixedDistance, &QCheckBox::clicked, this, &QG_ModifyOffsetOptions::onFixedDistanceClicked);
 }
 
 /*
@@ -107,11 +110,11 @@ void QG_ModifyOffsetOptions::doSetAction(RS_ActionInterface *a, bool update) {
     setKeepOriginalsToActionAndView(keepOriginals);
 }
 
-void QG_ModifyOffsetOptions::on_leDist_editingFinished() {
+void QG_ModifyOffsetOptions::onDistEditingFinished() {
     setDistanceToActionAndView(ui->leDist->text());
 }
 
-void QG_ModifyOffsetOptions::on_cbFixedDistance_clicked(bool val) {
+void QG_ModifyOffsetOptions::onFixedDistanceClicked(bool val) {
     setDistanceFixedToActionAndView(val);
 }
 
@@ -174,6 +177,6 @@ void QG_ModifyOffsetOptions::cbUseCurrentLayerClicked(bool val) {
     setUseCurrentLayerToActionAndView(val);
 }
 
-void QG_ModifyOffsetOptions::on_sbNumberOfCopies_valueChanged(int number) {
+void QG_ModifyOffsetOptions::onNumberOfCopiesValueChanged(int number) {
     setCopiesNumberToActionAndView(number);
 }

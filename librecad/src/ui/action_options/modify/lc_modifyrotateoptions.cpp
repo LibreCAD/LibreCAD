@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 
 LC_ModifyRotateOptions::LC_ModifyRotateOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionModifyRotate, "/Modify", "/Rotate")
+    : LC_ActionOptionsWidgetBase(RS2::ActionModifyRotate, "Modify", "Rotate")
     , ui(new Ui::LC_ModifyRotateOptions){
     ui->setupUi(this);
 

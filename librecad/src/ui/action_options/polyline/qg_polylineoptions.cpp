@@ -37,9 +37,12 @@ using wLists = std::initializer_list<QWidget*>;
  *  name 'name' and widget flags set to 'f'.
  */
 QG_PolylineOptions::QG_PolylineOptions()
-    :LC_ActionOptionsWidgetBase(RS2::ActionDrawPolyline, "/Draw", "/Polyline"),
+    :LC_ActionOptionsWidgetBase(RS2::ActionDrawPolyline, "Draw", "Polyline"),
     ui(new Ui::Ui_PolylineOptions{}){
     ui->setupUi(this);
+    connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_PolylineOptions::onAngleEditingFinished);
+    connect(ui->leRadius, &QLineEdit::editingFinished, this, &QG_PolylineOptions::onRadiusEditingFinished);
+    connect(ui->rbNeg, &QRadioButton::toggled, this, &QG_PolylineOptions::onNegToggled);
 }
 
 /*
@@ -65,30 +68,30 @@ void QG_PolylineOptions::doSaveSettings(){
 }
 
 void QG_PolylineOptions::doSetAction(RS_ActionInterface *a, bool update){
-        action = dynamic_cast<RS_ActionDrawPolyline *>(a);
-        QString radius, angle;
-        int mode;
-        bool reversed;
+    action = dynamic_cast<RS_ActionDrawPolyline *>(a);
+    QString radius, angle;
+    int mode;
+    bool reversed;
 
-        if (update){
-            radius = fromDouble(action->getRadius());
-            angle = fromDouble(action->getAngle());
-            mode = action->getMode();
-            reversed = action->isReversed();
-        } else {
+    if (update){
+        radius = fromDouble(action->getRadius());
+        angle = fromDouble(action->getAngle());
+        mode = action->getMode();
+        reversed = action->isReversed();
+    } else {
 
-            radius = load("Radius", "1.0");
-            angle = load("Angle", "180.0");
-            mode = loadInt("Mode", 0);
-            reversed = loadBool("Reversed", false);
+        radius = load("Radius", "1.0");
+        angle = load("Angle", "180.0");
+        mode = loadInt("Mode", 0);
+        reversed = loadBool("Reversed", false);
 
-            action->setRadius(radius.toDouble());
-            action->setAngle(angle.toDouble());
-            action->setMode((RS_ActionDrawPolyline::SegmentMode) mode);
-            action->setReversed(reversed);
-        }
-        ui->leRadius->setText(radius);
-        ui->leAngle->setText(angle);
+        action->setRadius(radius.toDouble());
+        action->setAngle(angle.toDouble());
+        action->setMode((RS_ActionDrawPolyline::SegmentMode) mode);
+        action->setReversed(reversed);
+    }
+    ui->leRadius->setText(radius);
+    ui->leAngle->setText(angle);
 
 
     setAngleToActionAndView(angle);
@@ -144,7 +147,7 @@ void QG_PolylineOptions::setModeToActionAndView(int m){
 ////	RadAngCenp
 //    };
 
-    RS_ActionDrawPolyline::SegmentMode segmentMode = (RS_ActionDrawPolyline::SegmentMode) m;
+    auto segmentMode = (RS_ActionDrawPolyline::SegmentMode) m;
 
     action->setMode(segmentMode);
     ui->cbMode->setCurrentIndex(m);
@@ -152,23 +155,26 @@ void QG_PolylineOptions::setModeToActionAndView(int m){
     switch (segmentMode) {
         case RS_ActionDrawPolyline::Line:
         case RS_ActionDrawPolyline::Tangential:
-        default:
+        default: {
             for (QWidget *p: wLists{ui->leRadius, ui->leAngle, ui->lRadius, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
                 p->hide();
             break;
-        case RS_ActionDrawPolyline::TanRad:
+        }
+        case RS_ActionDrawPolyline::TanRad: {
             for (QWidget *p: wLists{ui->leAngle, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
                 p->hide();
             for (QWidget *p: wLists{ui->leRadius, ui->lRadius})
                 p->show();
             break;
+        }
             //        case TanAng:
-        case RS_ActionDrawPolyline::Ang:
+        case RS_ActionDrawPolyline::Ang: {
             for (QWidget *p: wLists{ui->leRadius, ui->lRadius})
                 p->hide();
             for (QWidget *p: wLists{ui->leAngle, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
                 p->show();
             break;
+        }
             /*        case TanRadAng:
             case RadAngEndp:
             case RadAngCenp:
@@ -180,14 +186,14 @@ void QG_PolylineOptions::setModeToActionAndView(int m){
     }
 }
 
-void QG_PolylineOptions::on_leAngle_editingFinished(){
+void QG_PolylineOptions::onAngleEditingFinished(){
     setAngleToActionAndView(ui->leAngle->text());
 }
 
-void QG_PolylineOptions::on_leRadius_editingFinished(){
+void QG_PolylineOptions::onRadiusEditingFinished(){
     setRadiusToActionAndView(ui->leRadius->text());
 }
 
-void QG_PolylineOptions::on_rbNeg_toggled(bool checked){
+void QG_PolylineOptions::onNegToggled(bool checked){
     setReversedToActionAndView(!checked);
 }

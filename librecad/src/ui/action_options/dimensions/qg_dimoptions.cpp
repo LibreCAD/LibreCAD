@@ -37,9 +37,12 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_DimOptions::QG_DimOptions()
-    :LC_ActionOptionsWidgetBase(RS2::ActionNone, "/Draw", "/Dim"),
+    :LC_ActionOptionsWidgetBase(RS2::ActionNone, "Draw", "Dim"),
     ui(std::make_unique<Ui::Ui_DimOptions>()){
     ui->setupUi(this);
+    connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_DimOptions::onAngleEditingFinished);
+    connect(ui->bHor, &QToolButton::clicked, this, &QG_DimOptions::onHorClicked);
+    connect(ui->bVer, &QToolButton::clicked, this, &QG_DimOptions::onVerClicked);
 }
 
 /*
@@ -146,16 +149,16 @@ void QG_DimOptions::updateAngle(const QString & a) {
     dimLinearAction->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
 }
 
-void QG_DimOptions::on_bHor_clicked(){
+void QG_DimOptions::onHorClicked(){
     ui->leAngle->setText("0");
     updateAngle("0");
 }
 
-void QG_DimOptions::on_bVer_clicked(){
+void QG_DimOptions::onVerClicked(){
     ui->leAngle->setText("90");
     updateAngle("90");
 }
 
-void QG_DimOptions::on_leAngle_editingFinished(){
+void QG_DimOptions::onAngleEditingFinished(){
     updateAngle(ui->leAngle->text());
 }

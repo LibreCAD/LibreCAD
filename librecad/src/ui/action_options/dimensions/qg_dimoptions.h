@@ -46,9 +46,9 @@ public slots:
     void updateLabel();
     void insertSign( const QString & c );
     void languageChange() override;
-    void on_leAngle_editingFinished();
-    void on_bHor_clicked();
-    void on_bVer_clicked();
+    void onAngleEditingFinished();
+    void onHorClicked();
+    void onVerClicked();
 protected:
     void updateAngle( const QString& a );
     void doSaveSettings() override;

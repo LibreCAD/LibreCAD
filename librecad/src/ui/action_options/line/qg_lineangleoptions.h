@@ -46,9 +46,9 @@ protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
 public slots:
-    void on_leAngle_editingFinished();
-    void on_leLength_editingFinished();
-    void on_cbSnapPoint_currentIndexChanged(int number);
+    void onAngleEditingFinished();
+    void onLengthEditingFinished();
+    void onSnapPointCurrentIndexChanged(int number);
     void languageChange() override;
 private:
     std::unique_ptr<Ui::Ui_LineAngleOptions> ui;

@@ -42,8 +42,8 @@ public:
     ~QG_LibraryInsertOptions() override;
 protected slots:
     void languageChange() override;
-    void on_leAngle_editingFinished();
-    void on_leFactor_editingFinished();
+    void onAngleEditingFinished();
+    void onFactorEditingFinished();
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;

@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "ui_lc_modifybreakdivideoptions.h"
 
 LC_ModifyBreakDivideOptions::LC_ModifyBreakDivideOptions() :
-    LC_ActionOptionsWidgetBase(RS2::ActionModifyBreakDivide, "/Modify", "/BreakDivide"),
+    LC_ActionOptionsWidgetBase(RS2::ActionModifyBreakDivide, "Modify", "BreakDivide"),
     ui(new Ui::LC_ModifyBreakDivideOptions)
 {
     ui->setupUi(this);

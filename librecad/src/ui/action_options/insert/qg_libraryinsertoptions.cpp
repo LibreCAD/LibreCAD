@@ -37,9 +37,11 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_LibraryInsertOptions::QG_LibraryInsertOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionLibraryInsert, "/LibraryInsert", "/LibraryInsert")
+    : LC_ActionOptionsWidgetBase(RS2::ActionLibraryInsert, "LibraryInsert", "LibraryInsert")
 	, ui(new Ui::Ui_LibraryInsertOptions{}){
-	ui->setupUi(this);
+    ui->setupUi(this);
+    connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_LibraryInsertOptions::onAngleEditingFinished);
+    connect(ui->leFactor, &QLineEdit::editingFinished, this, &QG_LibraryInsertOptions::onFactorEditingFinished);
 }
 
 /*
@@ -86,10 +88,10 @@ void QG_LibraryInsertOptions::setFactorToActionAndView(QString val) {
     action->setFactor(RS_Math::eval(val));
 }
 
-void QG_LibraryInsertOptions::on_leAngle_editingFinished() {
+void QG_LibraryInsertOptions::onAngleEditingFinished() {
     setAngleToActionAndView(ui->leAngle->text());
 }
 
-void QG_LibraryInsertOptions::on_leFactor_editingFinished() {
+void QG_LibraryInsertOptions::onFactorEditingFinished() {
     setFactorToActionAndView(ui->leFactor->text());
 }

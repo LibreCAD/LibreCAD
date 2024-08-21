@@ -43,8 +43,8 @@ public:
     ~QG_LineBisectorOptions() override;
 public slots:
     void languageChange() override;
-    void on_sbNumber_valueChanged(int number);
-    void on_leLength_editingFinished();
+    void onNumberValueChanged(int number);
+    void onLengthEditingFinished();
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;

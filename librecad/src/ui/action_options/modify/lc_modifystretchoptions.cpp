@@ -2,7 +2,7 @@
 #include "ui_lc_modifystretchoptions.h"
 
 LC_ModifyStretchOptions::LC_ModifyStretchOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionModifyStretch, "/Modify", "/Stretch")
+    : LC_ActionOptionsWidgetBase(RS2::ActionModifyStretch, "Modify", "Stretch")
     , ui(new Ui::LC_ModifyStretchOptions){
     ui->setupUi(this);
 

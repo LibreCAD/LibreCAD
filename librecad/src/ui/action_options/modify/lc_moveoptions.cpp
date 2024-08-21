@@ -2,7 +2,7 @@
 #include "ui_lc_moveoptions.h"
 
 LC_MoveOptions::LC_MoveOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionModifyMove, "/Modify", "/Move")
+    : LC_ActionOptionsWidgetBase(RS2::ActionModifyMove, "Modify", "Move")
     , ui(new Ui::LC_MoveOptions){
     ui->setupUi(this);
     connect(ui->cbKeepOriginals, &QCheckBox::clicked, this, &LC_MoveOptions::cbKeepOriginalsClicked);

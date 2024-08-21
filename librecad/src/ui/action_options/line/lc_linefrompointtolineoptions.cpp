@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
 LC_LineFromPointToLineOptions::LC_LineFromPointToLineOptions() :
-    LC_ActionOptionsWidgetBase(RS2::ActionDrawLineFromPointToLine, "/Draw", "/LinePointToLine"),
+    LC_ActionOptionsWidgetBase(RS2::ActionDrawLineFromPointToLine, "Draw", "LinePointToLine"),
     action(nullptr),
     ui(new Ui::LC_LineFromPointToLineOptions){
     ui->setupUi(this);

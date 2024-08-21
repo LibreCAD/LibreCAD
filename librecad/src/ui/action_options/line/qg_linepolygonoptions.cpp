@@ -33,7 +33,7 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_LinePolygonOptions::QG_LinePolygonOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionNone, "/Draw", "/LinePolygon")
+    : LC_ActionOptionsWidgetBase(RS2::ActionNone, "Draw", "LinePolygon")
 	    , ui(new Ui::Ui_LinePolygonOptions{}){
 	ui->setupUi(this);
 }
@@ -94,5 +94,3 @@ void QG_LinePolygonOptions::setNumberToActionAndView(int number){
 void QG_LinePolygonOptions::on_sbNumber_valueChanged( [[maybe_unused]]int number){
     setNumberToActionAndView(ui->sbNumber->value());
 }
-
-

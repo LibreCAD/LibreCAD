@@ -47,7 +47,7 @@ protected:
 
 protected slots:
     virtual void languageChange();
-    void on_leDist_editingFinished();
+    void onDistEditingFinished();
 private:
     void saveSettings();
     std::unique_ptr<Ui::Ui_SnapDistOptions> ui;

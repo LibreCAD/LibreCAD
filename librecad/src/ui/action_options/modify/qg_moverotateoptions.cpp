@@ -36,7 +36,7 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_MoveRotateOptions::QG_MoveRotateOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionModifyMoveRotate, "/Modify","/MoveRotate")
+    : LC_ActionOptionsWidgetBase(RS2::ActionModifyMoveRotate, "Modify","MoveRotate")
 	, ui(new Ui::Ui_MoveRotateOptions{}){
     ui->setupUi(this);
     connect(ui->cbKeepOriginals, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbKeepOriginalsClicked);

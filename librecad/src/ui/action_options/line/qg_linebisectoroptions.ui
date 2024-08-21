@@ -110,40 +110,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections>
-  <connection>
-   <sender>leLength</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_LineBisectorOptions</receiver>
-   <slot>updateLength(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>sbNumber</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>Ui_LineBisectorOptions</receiver>
-   <slot>updateNumber(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>updateLength(QString)</slot>
   <slot>updateNumber(int)</slot>
