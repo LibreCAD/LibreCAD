@@ -44,7 +44,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/icons/icons.qrc">
+      <iconset resource="../../../../res/icons/icons.qrc">
        <normaloff>:/icons/page_landscape.svg</normaloff>:/icons/page_landscape.svg</iconset>
      </property>
      <property name="checkable">
@@ -61,7 +61,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/icons/icons.qrc">
+      <iconset resource="../../../../res/icons/icons.qrc">
        <normaloff>:/icons/page_portait.svg</normaloff>:/icons/page_portait.svg</iconset>
      </property>
      <property name="checkable">
@@ -78,7 +78,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/icons/icons.qrc">
+      <iconset resource="../../../../res/icons/icons.qrc">
        <normaloff>:/icons/drawing_settings.svg</normaloff>:/icons/drawing_settings.svg</iconset>
      </property>
     </widget>
@@ -172,7 +172,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/icons/icons.qrc">
+      <iconset resource="../../../../res/icons/icons.qrc">
        <normaloff>:/icons/scaleLineWidth.svg</normaloff>:/icons/scaleLineWidth.svg</iconset>
      </property>
      <property name="iconSize">
@@ -201,7 +201,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/icons/icons.qrc">
+      <iconset resource="../../../../res/icons/icons.qrc">
        <normaloff>:/icons/black_n_white_mode.svg</normaloff>:/icons/black_n_white_mode.svg</iconset>
      </property>
      <property name="iconSize">
@@ -237,7 +237,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/icons/icons.qrc">
+      <iconset resource="../../../../res/icons/icons.qrc">
        <normaloff>:/icons/center_to_page.svg</normaloff>:/icons/center_to_page.svg</iconset>
      </property>
      <property name="iconSize">
@@ -263,7 +263,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/icons/icons.qrc">
+      <iconset resource="../../../../res/icons/icons.qrc">
        <normaloff>:/icons/zoom_auto.svg</normaloff>:/icons/zoom_auto.svg</iconset>
      </property>
     </widget>
@@ -290,7 +290,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/icons/icons.qrc">
+      <iconset resource="../../../../res/icons/icons.qrc">
        <normaloff>:/icons/fit_to_page.svg</normaloff>:/icons/fit_to_page.svg</iconset>
      </property>
      <property name="iconSize">
@@ -360,7 +360,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../../res/icons/icons.qrc">
+         <iconset resource="../../../../res/icons/icons.qrc">
           <normaloff>:/icons/multi_pages.svg</normaloff>:/icons/multi_pages.svg</iconset>
         </property>
         <property name="iconSize">
@@ -391,8 +391,8 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../../res/icons/icons.qrc"/>
-  <include location="../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>
 </ui>

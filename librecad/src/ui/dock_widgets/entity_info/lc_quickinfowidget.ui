@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>358</width>
+    <width>367</width>
     <height>234</height>
    </rect>
   </property>
@@ -61,7 +61,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../../res/extui/extui.qrc">
+            <iconset resource="../../../../res/extui/extui.qrc">
              <normaloff>:/extui/menuselect.png</normaloff>:/extui/menuselect.png</iconset>
            </property>
           </widget>
@@ -75,7 +75,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../../res/icons/icons.qrc">
+            <iconset resource="../../../../res/icons/icons.qrc">
              <normaloff>:/icons/select_entity.svg</normaloff>:/icons/select_entity.svg</iconset>
            </property>
           </widget>
@@ -89,7 +89,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../../res/ui/ui.qrc">
+            <iconset resource="../../../../res/ui/ui.qrc">
              <normaloff>:/ui/blockedit.png</normaloff>:/ui/blockedit.png</iconset>
            </property>
           </widget>
@@ -106,7 +106,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../../res/icons/icons.qrc">
+            <iconset resource="../../../../res/icons/icons.qrc">
              <normaloff>:/icons/copy.svg</normaloff>:/icons/copy.svg</iconset>
            </property>
           </widget>
@@ -120,7 +120,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../../res/main/main.qrc">
+            <iconset resource="../../../../res/main/main.qrc">
              <normaloff>:/main/editclear.png</normaloff>:/main/editclear.png</iconset>
            </property>
           </widget>
@@ -137,7 +137,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../../res/extui/extui.qrc">
+            <iconset resource="../../../../res/extui/extui.qrc">
              <normaloff>:/extui/polylineadd.png</normaloff>:/extui/polylineadd.png</iconset>
            </property>
           </widget>
@@ -220,7 +220,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../../res/icons/icons.qrc">
+            <iconset resource="../../../../res/icons/icons.qrc">
              <normaloff>:/icons/settings.svg</normaloff>:/icons/settings.svg</iconset>
            </property>
           </widget>
@@ -265,11 +265,11 @@ p, li { white-space: pre-wrap; }
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../res/ui/ui.qrc"/>
-  <include location="../../res/main/main.qrc"/>
-  <include location="../../res/icons/icons.qrc"/>
-  <include location="../../res/icons/icons.qrc"/>
-  <include location="../../res/extui/extui.qrc"/>
+  <include location="../../../../res/extui/extui.qrc"/>
+  <include location="../../../../res/main/main.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/ui/ui.qrc"/>
  </resources>
  <connections/>
 </ui>

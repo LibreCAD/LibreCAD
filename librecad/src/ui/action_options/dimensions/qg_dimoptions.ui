@@ -78,7 +78,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/char_diameter.png</normaloff>:/extui/char_diameter.png</iconset>
      </property>
      <property name="checkable">
@@ -148,7 +148,7 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/tolerance1.png</normaloff>:/extui/tolerance1.png</iconset>
      </property>
     </widget>
@@ -175,7 +175,7 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/tolerance2.png</normaloff>:/extui/tolerance2.png</iconset>
      </property>
     </widget>
@@ -258,7 +258,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/dimhor.png</normaloff>:/extui/dimhor.png</iconset>
      </property>
     </widget>
@@ -281,7 +281,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/dimver.png</normaloff>:/extui/dimver.png</iconset>
      </property>
     </widget>
@@ -303,7 +303,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../../res/extui/extui.qrc"/>
+  <include location="../../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -39,6 +39,7 @@ QG_LineParallelOptions::QG_LineParallelOptions(RS2::ActionType actionType)
     :LC_ActionOptionsWidgetBase(actionType, "/Draw", "/LineParallel"),
      ui(new Ui::Ui_LineParallelOptions{}) {
     ui->setupUi(this);
+    // fixme - slots - correct in UI
 }
 
 /*
@@ -101,6 +102,3 @@ void QG_LineParallelOptions::setNumberToActionAndView(int number) {
     action->setNumber(number);
     ui->sbNumber->setValue(number);
 }
-
-
-

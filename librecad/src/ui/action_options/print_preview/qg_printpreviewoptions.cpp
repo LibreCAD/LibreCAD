@@ -85,6 +85,7 @@ QG_PrintPreviewOptions::QG_PrintPreviewOptions()
     connect(ui->sbPagessHorizontal, &QSpinBox::valueChanged, this, &QG_PrintPreviewOptions::onHorizontalPagesValueChanges);
 
     ui->cbTiledPrint->setChecked(false);
+    ui->wTiledPrint->setVisible(false);
 
     //make sure user scale is accepted
     ui->cbScale->setInsertPolicy(QComboBox::NoInsert);
@@ -117,7 +118,6 @@ void QG_PrintPreviewOptions::doSetAction(RS_ActionInterface *a, bool update) {
     bool paperScaleFixed;
     bool blackAndWhiteMode;
     bool scaleLineWidth;
-
 
     if (update) {
         paperScaleFixed = action->isPaperScaleFixed();
@@ -461,12 +461,6 @@ bool QG_PrintPreviewOptions::isUseImperialScales() {
     RS2::Unit u = action->getUnit();
     bool result = u == RS2::Inch || u == RS2::Foot || u == RS2::Microinch || u ==  RS2::Mil || u == RS2::Yard;
     return result;
-}
-
-// fixme - remove debug method
-void QG_PrintPreviewOptions::hideOptions() {
-    LC_ActionOptionsWidget::hideOptions();
-    LC_ERR << " PREVIEW - HIDE OPTIONS";
 }
 
 void QG_PrintPreviewOptions::updateUI(int mode) {

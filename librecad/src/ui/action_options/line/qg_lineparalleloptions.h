@@ -33,7 +33,7 @@
 class RS_ActionInterface;
 class RS_ActionDrawLineParallel;
 namespace Ui {
-class Ui_LineParallelOptions;
+    class Ui_LineParallelOptions;
 }
 
 class QG_LineParallelOptions : public LC_ActionOptionsWidgetBase{

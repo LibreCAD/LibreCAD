@@ -203,9 +203,9 @@ bool RS_PreviewActionInterface::trySnapToRelZeroCoordinateEvent(const QMouseEven
     return result;
 }
 
-RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const QMouseEvent *e, const RS_Vector& basepoint, const RS_Vector& pos, bool drawMark){
+RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const QMouseEvent *e, const RS_Vector& basepoint, const RS_Vector& pos, bool drawMark, bool force){
     RS_Vector result = pos;
-    if (isShift(e)){
+    if (force){
         RS_Vector freePosition  = toGraph(e); // fixme = test, review and decide whether free snap is actually needed there. May be use snapMode instead of free?
         // todo -  if there are restrictions or snap to grid, snap to angle will not work in snapper... yet this is double calc!
         if(!(snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid)){
@@ -216,6 +216,10 @@ RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const QMouseEvent *e
         }
     }
     return result;
+}
+
+RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const QMouseEvent *e, const RS_Vector& basepoint, const RS_Vector& pos, bool drawMark){
+    return getSnapAngleAwarePoint(e, basepoint, pos, drawMark, isShift(e));
 }
 
 RS_Vector RS_PreviewActionInterface::getRelZeroAwarePoint(const QMouseEvent *e, const RS_Vector& pos){

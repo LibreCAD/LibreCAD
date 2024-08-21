@@ -46,8 +46,8 @@ public:
         MODE_UPDATE_PAGE_NUMBERS
     };
 
-    void updateUI(int mode) override;
 public slots:
+    void updateUI(int mode) override;
     void onCenterClicked();
     void onZoomToPageClicked();
     void onScaleLineClicked(bool state);
@@ -58,7 +58,6 @@ public slots:
     /** print scale fixed to saved value **/
     void onScaleFixedClicked(bool fixed);
     void onCalcPagesNumClicked();
-    void hideOptions() override;
     void onTiledPrintClicked();
     void onSettingsClicked();
     void onPortraitClicked();

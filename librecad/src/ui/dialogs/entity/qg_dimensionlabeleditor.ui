@@ -23,7 +23,7 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
+   <property name="margin" stdset="0">
     <number>0</number>
    </property>
    <item>
@@ -73,7 +73,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/extui/extui.qrc">
+             <iconset resource="../../../../res/extui/extui.qrc">
               <normaloff>:/extui/char_diameter.png</normaloff>:/extui/char_diameter.png</iconset>
             </property>
             <property name="checkable">
@@ -183,7 +183,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../../res/extui/extui.qrc"/>
+  <include location="../../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -203,4 +203,7 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>insertSign(QString)</slot>
+ </slots>
 </ui>

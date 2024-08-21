@@ -53,7 +53,7 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../../res/extui/extui.qrc">
        <normaloff>:/extui/dlgmodifymirror.png</normaloff>:/extui/dlgmodifymirror.png</iconset>
      </property>
      <property name="iconSize">
@@ -131,7 +131,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../../res/extui/extui.qrc"/>
+  <include location="../../../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

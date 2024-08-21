@@ -76,7 +76,7 @@ void LC_ActionInfo3PointsAngle::mouseMoveEvent(QMouseEvent *e) {
         }
         case SetPoint2:{
             if (!trySnapToRelZeroCoordinateEvent(e)) {
-                mouse = getSnapAngleAwarePoint(e, point1, mouse, true);
+                mouse = getSnapAngleAwarePoint(e, point1, mouse, true, isControl(e));
                 previewRefPoint(point1);
                 if (showRefEntitiesOnPreview) {
                     previewRefSelectablePoint(mouse);
@@ -87,7 +87,7 @@ void LC_ActionInfo3PointsAngle::mouseMoveEvent(QMouseEvent *e) {
         }
         case SetPoint3:{
             if (!trySnapToRelZeroCoordinateEvent(e)) {
-                mouse = getSnapAngleAwarePoint(e, point2, mouse, true);
+                mouse = getSnapAngleAwarePoint(e, point2, mouse, true, isControl(e));
 
                 previewRefPoint(point1);
                 previewRefPoint(point2);
@@ -163,11 +163,11 @@ void LC_ActionInfo3PointsAngle::onMouseLeftButtonRelease(int status, QMouseEvent
             break;
         }
         case SetPoint2: {
-            snapped = getSnapAngleAwarePoint(e, point1, snapped);
+            snapped = getSnapAngleAwarePoint(e, point1, snapped, false,isControl(e));
             break;
         }
         case SetPoint3:{
-            snapped = getSnapAngleAwarePoint(e, point2, snapped);
+            snapped = getSnapAngleAwarePoint(e, point2, snapped, false, isControl(e));
             break;
         }
         default:

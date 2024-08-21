@@ -39,6 +39,7 @@ QG_LineBisectorOptions::QG_LineBisectorOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionDrawLineBisector, "/Draw", "/LineBisector")
 	, ui(new Ui::Ui_LineBisectorOptions{}){
 	ui->setupUi(this);
+    // fixme - slots - correct in UI
 }
 
 /*
@@ -96,7 +97,3 @@ void QG_LineBisectorOptions::setNumberToActionAndView(int number){
     action->setNumber(number);
     ui->sbNumber->setValue(number);
 }
-
-
-
-

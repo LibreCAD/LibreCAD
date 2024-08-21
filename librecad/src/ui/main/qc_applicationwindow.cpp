@@ -555,8 +555,9 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
     } else {
         RS_DEBUG->print("QC_ApplicationWindow::doClose closing graphic");
     }
-        foreach (auto &&child, w->getChildWindows()) // block editors and print previews; just force these closed
-            doClose(child, false); // they belong to the document (changes already saved there)
+    for (auto &&child : std::as_const(w->getChildWindows())) {// block editors and print previews; just force these closed
+        doClose(child, false); // they belong to the document (changes already saved there)
+    }
     w->getChildWindows().clear();
     mdiAreaCAD->removeSubWindow(w);
     window_list.removeOne(w);
@@ -2431,7 +2432,12 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
     if (!on) {
         RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): off");
 
-        if (parent->getGraphicView()->isPrintPreview()) {
+        QG_GraphicView *graphicView = parent->getGraphicView();
+        if (graphicView->isPrintPreview()) {
+            RS_ActionInterface *currentAction = graphicView->getCurrentAction();
+            if (currentAction != nullptr){
+                currentAction->hideOptions();
+            }
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): close");
             updateActionsAndWidgetsForPrintPreview(false);
             doClose(parent);
@@ -2456,7 +2462,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                 //generate a new print preview
                 RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): create");
 
-                QC_MDIWindow *w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, {});
+                auto *w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, {});
                 mdiAreaCAD->addSubWindow(w);
                 parent->addChildWindow(w);
 

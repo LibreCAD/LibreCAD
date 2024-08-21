@@ -41,7 +41,7 @@
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset resource="../../../res/extui/extui.qrc">
+        <iconset resource="../../../../../res/extui/extui.qrc">
          <normaloff>:/extui/dlgmodifymoverotate.png</normaloff>:/extui/dlgmodifymoverotate.png</iconset>
        </property>
        <property name="iconSize">
@@ -215,7 +215,7 @@
   <tabstop>cbCurrentLayer</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../res/extui/extui.qrc"/>
+  <include location="../../../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

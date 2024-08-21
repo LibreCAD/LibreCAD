@@ -191,7 +191,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../../res/extui/extui.qrc">
+         <iconset resource="../../../../res/extui/extui.qrc">
           <normaloff>:/extui/dirneg.png</normaloff>:/extui/dirneg.png</iconset>
         </property>
        </widget>
@@ -205,7 +205,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../../res/extui/extui.qrc">
+         <iconset resource="../../../../res/extui/extui.qrc">
           <normaloff>:/extui/dirpos.png</normaloff>:/extui/dirpos.png</iconset>
         </property>
         <property name="checked">
@@ -233,7 +233,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../../res/extui/extui.qrc"/>
+  <include location="../../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

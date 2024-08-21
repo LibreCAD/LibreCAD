@@ -319,7 +319,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/icons/icons.qrc">
+               <iconset resource="../../../../res/icons/icons.qrc">
                 <normaloff>:/icons/mtext_align_topright.svg</normaloff>:/icons/mtext_align_topright.svg</iconset>
               </property>
               <property name="checkable">
@@ -351,7 +351,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/icons/icons.qrc">
+               <iconset resource="../../../../res/icons/icons.qrc">
                 <normaloff>:/icons/mtext_align_topleft.svg</normaloff>:/icons/mtext_align_topleft.svg</iconset>
               </property>
               <property name="checkable">
@@ -383,7 +383,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/icons/icons.qrc">
+               <iconset resource="../../../../res/icons/icons.qrc">
                 <normaloff>:/icons/mtext_align_middleleft.svg</normaloff>:/icons/mtext_align_middleleft.svg</iconset>
               </property>
               <property name="checkable">
@@ -415,7 +415,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/icons/icons.qrc">
+               <iconset resource="../../../../res/icons/icons.qrc">
                 <normaloff>:/icons/mtext_align_middlecenter.svg</normaloff>:/icons/mtext_align_middlecenter.svg</iconset>
               </property>
               <property name="checkable">
@@ -447,7 +447,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/icons/icons.qrc">
+               <iconset resource="../../../../res/icons/icons.qrc">
                 <normaloff>:/icons/mtext_align_middleright.svg</normaloff>:/icons/mtext_align_middleright.svg</iconset>
               </property>
               <property name="checkable">
@@ -479,7 +479,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/icons/icons.qrc">
+               <iconset resource="../../../../res/icons/icons.qrc">
                 <normaloff>:/icons/mtext_align_bottomleft.svg</normaloff>:/icons/mtext_align_bottomleft.svg</iconset>
               </property>
               <property name="checkable">
@@ -511,7 +511,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/icons/icons.qrc">
+               <iconset resource="../../../../res/icons/icons.qrc">
                 <normaloff>:/icons/mtext_align_bottomright.svg</normaloff>:/icons/mtext_align_bottomright.svg</iconset>
               </property>
               <property name="checkable">
@@ -543,7 +543,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/icons/icons.qrc">
+               <iconset resource="../../../../res/icons/icons.qrc">
                 <normaloff>:/icons/mtext_align_bottomcenter.svg</normaloff>:/icons/mtext_align_bottomcenter.svg</iconset>
               </property>
               <property name="checkable">
@@ -575,7 +575,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/icons/icons.qrc">
+               <iconset resource="../../../../res/icons/icons.qrc">
                 <normaloff>:/icons/mtext_align_topcenter.svg</normaloff>:/icons/mtext_align_topcenter.svg</iconset>
               </property>
               <property name="checkable">
@@ -720,7 +720,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../res/icons/icons.qrc">
+            <iconset resource="../../../../res/icons/icons.qrc">
              <normaloff>:/icons/new.svg</normaloff>:/icons/new.svg</iconset>
            </property>
           </widget>
@@ -734,7 +734,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../res/icons/icons.qrc">
+            <iconset resource="../../../../res/icons/icons.qrc">
              <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
            </property>
           </widget>
@@ -748,7 +748,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../res/icons/icons.qrc">
+            <iconset resource="../../../../res/icons/icons.qrc">
              <normaloff>:/icons/save.svg</normaloff>:/icons/save.svg</iconset>
            </property>
           </widget>
@@ -762,7 +762,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../res/icons/icons.qrc">
+            <iconset resource="../../../../res/icons/icons.qrc">
              <normaloff>:/icons/cut.svg</normaloff>:/icons/cut.svg</iconset>
            </property>
           </widget>
@@ -776,7 +776,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../res/icons/icons.qrc">
+            <iconset resource="../../../../res/icons/icons.qrc">
              <normaloff>:/icons/copy.svg</normaloff>:/icons/copy.svg</iconset>
            </property>
           </widget>
@@ -790,7 +790,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../res/icons/icons.qrc">
+            <iconset resource="../../../../res/icons/icons.qrc">
              <normaloff>:/icons/paste.svg</normaloff>:/icons/paste.svg</iconset>
            </property>
           </widget>
@@ -1560,6 +1560,11 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
+   <class>QG_FontBox</class>
+   <extends>QWidget</extends>
+   <header>qg_fontbox.h</header>
+  </customwidget>
+  <customwidget>
    <class>QG_WidgetPen</class>
    <extends>QWidget</extends>
    <header>qg_widgetpen.h</header>
@@ -1568,11 +1573,6 @@
    <class>QG_LayerBox</class>
    <extends>QWidget</extends>
    <header>qg_layerbox.h</header>
-  </customwidget>
-  <customwidget>
-   <class>QG_FontBox</class>
-   <extends>QWidget</extends>
-   <header>qg_fontbox.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -1605,8 +1605,8 @@
   <tabstop>bPaste</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../res/icons/icons.qrc"/>
-  <include location="../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -1994,4 +1994,22 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>setAlignmentTL()</slot>
+  <slot>setAlignmentTC()</slot>
+  <slot>setAlignmentTR()</slot>
+  <slot>setAlignmentML()</slot>
+  <slot>setAlignmentMC()</slot>
+  <slot>setAlignmentMR()</slot>
+  <slot>setAlignmentBL()</slot>
+  <slot>setAlignmentBC()</slot>
+  <slot>setAlignmentBR()</slot>
+  <slot>defaultChanged(bool)</slot>
+  <slot>loadText()</slot>
+  <slot>saveText()</slot>
+  <slot>updateUniCharComboBox(int)</slot>
+  <slot>insertChar()</slot>
+  <slot>updateUniCharButton(int)</slot>
+  <slot>insertSymbol(int)</slot>
+ </slots>
 </ui>

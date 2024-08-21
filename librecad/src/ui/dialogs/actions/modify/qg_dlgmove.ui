@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>220</width>
-    <height>165</height>
+    <width>286</width>
+    <height>186</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -133,7 +133,7 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../../res/extui/extui.qrc">
        <normaloff>:/extui/dlgmove1.png</normaloff>:/extui/dlgmove1.png</iconset>
      </property>
      <property name="iconSize">
@@ -148,7 +148,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../../res/extui/extui.qrc"/>
+  <include location="../../../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

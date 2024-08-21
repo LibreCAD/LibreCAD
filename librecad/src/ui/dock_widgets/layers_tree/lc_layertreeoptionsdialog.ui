@@ -417,7 +417,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../res/ui/ui.qrc">
+          <iconset resource="../../../../res/ui/ui.qrc">
            <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
          </property>
         </widget>
@@ -493,7 +493,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../res/ui/ui.qrc">
+          <iconset resource="../../../../res/ui/ui.qrc">
            <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
          </property>
         </widget>
@@ -520,7 +520,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../res/ui/ui.qrc">
+          <iconset resource="../../../../res/ui/ui.qrc">
            <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
          </property>
         </widget>
@@ -551,7 +551,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../res/ui/ui.qrc">
+          <iconset resource="../../../../res/ui/ui.qrc">
            <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
          </property>
         </widget>
@@ -565,7 +565,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../res/ui/ui.qrc">
+          <iconset resource="../../../../res/ui/ui.qrc">
            <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
          </property>
         </widget>
@@ -652,7 +652,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../res/ui/ui.qrc"/>
+  <include location="../../../../res/ui/ui.qrc"/>
  </resources>
  <connections>
   <connection>

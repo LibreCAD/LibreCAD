@@ -48,7 +48,7 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/icons/icons.qrc">
+      <iconset resource="../../../../res/icons/icons.qrc">
        <normaloff>:/icons/options.svg</normaloff>:/icons/options.svg</iconset>
      </property>
      <property name="iconSize">
@@ -144,8 +144,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../res/icons/icons.qrc"/>
-  <include location="../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>
 </ui>

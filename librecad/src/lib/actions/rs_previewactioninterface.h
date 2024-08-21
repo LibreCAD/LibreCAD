@@ -84,6 +84,7 @@ protected:
     bool trySnapToRelZeroCoordinateEvent(const QMouseEvent *e);
     RS_Vector getRelZeroAwarePoint(const QMouseEvent *e, const RS_Vector &pos);
     RS_Vector getSnapAngleAwarePoint(const QMouseEvent *e, const RS_Vector &basepoint, const RS_Vector &pos, bool drawMark = false);
+    RS_Vector getSnapAngleAwarePoint(const QMouseEvent *e, const RS_Vector &basepoint, const RS_Vector &pos, bool drawMark, bool force);
     RS_Vector getFreeSnapAwarePoint(const QMouseEvent *e, const RS_Vector &pos) const;
     RS_Vector getFreeSnapAwarePointAlt(const QMouseEvent *e, const RS_Vector &pos) const;
 

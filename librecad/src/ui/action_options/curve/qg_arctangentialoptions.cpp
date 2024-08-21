@@ -46,6 +46,7 @@ QG_ArcTangentialOptions::QG_ArcTangentialOptions()
     ui->setupUi(this);
     connect(ui->rbRadius, &QRadioButton::clicked, this, &QG_ArcTangentialOptions::on_rbRadius_clicked);
     connect(ui->rbAngle, &QRadioButton::clicked, this, &QG_ArcTangentialOptions::on_rbAngle_clicked);
+    // fixme - slots !!
     connect(ui->leRadius, SIGNAL(editingFinished()), this, SLOT(on_leRadius_editingFinished));
     connect(ui->leAngle, SIGNAL(editingFinished()), this, SLOT(on_leAngle_editingFinished));
 }

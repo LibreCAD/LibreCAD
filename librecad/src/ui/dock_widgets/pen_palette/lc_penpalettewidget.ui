@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>371</width>
-    <height>202</height>
+    <height>204</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -49,7 +49,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../res/extui/extui.qrc">
+        <iconset resource="../../../../res/extui/extui.qrc">
          <normaloff>:/extui/relzeromove.png</normaloff>:/extui/relzeromove.png</iconset>
        </property>
       </widget>
@@ -63,7 +63,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../res/extui/extui.qrc">
+        <iconset resource="../../../../res/extui/extui.qrc">
          <normaloff>:/extui/selectsingle.png</normaloff>:/extui/selectsingle.png</iconset>
        </property>
       </widget>
@@ -77,7 +77,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../res/extui/extui.qrc">
+        <iconset resource="../../../../res/extui/extui.qrc">
          <normaloff>:/extui/selectinvert.png</normaloff>:/extui/selectinvert.png</iconset>
        </property>
       </widget>
@@ -91,7 +91,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../res/extui/extui.qrc">
+        <iconset resource="../../../../res/extui/extui.qrc">
          <normaloff>:/extui/selectinters.png</normaloff>:/extui/selectinters.png</iconset>
        </property>
       </widget>
@@ -108,7 +108,7 @@
         <string>Save</string>
        </property>
        <property name="icon">
-        <iconset resource="../../res/actions/actions.qrc">
+        <iconset resource="../../../../res/actions/actions.qrc">
          <normaloff>:/actions/filesave.png</normaloff>:/actions/filesave.png</iconset>
        </property>
       </widget>
@@ -122,7 +122,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../res/extui/extui.qrc">
+        <iconset resource="../../../../res/extui/extui.qrc">
          <normaloff>:/extui/selectdoubles.png</normaloff>:/extui/selectdoubles.png</iconset>
        </property>
       </widget>
@@ -136,7 +136,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../res/actions/actions.qrc">
+        <iconset resource="../../../../res/actions/actions.qrc">
          <normaloff>:/actions/editredo.png</normaloff>:/actions/editredo.png</iconset>
        </property>
       </widget>
@@ -150,7 +150,7 @@
         <string>to current</string>
        </property>
        <property name="icon">
-        <iconset resource="../../res/actions/actions.qrc">
+        <iconset resource="../../../../res/actions/actions.qrc">
          <normaloff>:/actions/editundo.png</normaloff>:/actions/editundo.png</iconset>
        </property>
       </widget>
@@ -164,7 +164,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../res/extui/extui.qrc">
+        <iconset resource="../../../../res/extui/extui.qrc">
          <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
        </property>
       </widget>
@@ -178,7 +178,7 @@
         <string>Pick from Active Layer</string>
        </property>
        <property name="icon">
-        <iconset resource="../../res/extui/extui.qrc">
+        <iconset resource="../../../../res/extui/extui.qrc">
          <normaloff>:/extui/selectlayer.png</normaloff>:/extui/selectlayer.png</iconset>
        </property>
       </widget>
@@ -192,7 +192,7 @@
         <string>Apply To Layer</string>
        </property>
        <property name="icon">
-        <iconset resource="../../res/ui/ui.qrc">
+        <iconset resource="../../../../res/ui/ui.qrc">
          <normaloff>:/ui/layeredit.png</normaloff>:/ui/layeredit.png</iconset>
        </property>
       </widget>
@@ -206,7 +206,7 @@
         <string>Delete Pen</string>
        </property>
        <property name="icon">
-        <iconset resource="../../res/icons/icons.qrc">
+        <iconset resource="../../../../res/icons/icons.qrc">
          <normaloff>:/icons/remove.svg</normaloff>:/icons/remove.svg</iconset>
        </property>
       </widget>
@@ -321,7 +321,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QG_WidthBox" name="cbWidth" native="true"/>
+      <widget class="QG_WidthBox" name="cbWidth"/>
      </item>
      <item>
       <spacer name="horizontalSpacer_2">
@@ -407,7 +407,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QG_ColorBox" name="cbColor" native="true"/>
+      <widget class="QG_ColorBox" name="cbColor"/>
      </item>
      <item>
       <spacer name="horizontalSpacer">
@@ -443,7 +443,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../res/actions/actions.qrc">
+      <iconset resource="../../../../res/actions/actions.qrc">
        <normaloff>:/actions/configure.png</normaloff>:/actions/configure.png</iconset>
      </property>
     </widget>
@@ -511,13 +511,13 @@
  <customwidgets>
   <customwidget>
    <class>QG_ColorBox</class>
-   <extends>QWidget</extends>
-   <header>qg_colorbox.h</header>
+   <extends>QComboBox</extends>
+   <header>../ui/components/comboboxes/qg_colorbox.h</header>
   </customwidget>
   <customwidget>
    <class>QG_WidthBox</class>
-   <extends>QWidget</extends>
-   <header>qg_widthbox.h</header>
+   <extends>QComboBox</extends>
+   <header>../ui/components/comboboxes/qg_widthbox.h</header>
   </customwidget>
   <customwidget>
    <class>QG_LineTypeBox</class>
@@ -526,11 +526,11 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../res/actions/actions.qrc"/>
-  <include location="../../res/icons/icons.qrc"/>
-  <include location="../../res/icons/icons.qrc"/>
-  <include location="../../res/ui/ui.qrc"/>
-  <include location="../../res/extui/extui.qrc"/>
+  <include location="../../../../res/extui/extui.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/ui/ui.qrc"/>
+  <include location="../../../../res/actions/actions.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -112,7 +112,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../res/extui/extui.qrc">
+        <iconset resource="../../../../../res/extui/extui.qrc">
          <normaloff>:/extui/modifyscale.png</normaloff>:/extui/modifyscale.png</iconset>
        </property>
       </widget>
@@ -125,7 +125,7 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../../res/extui/extui.qrc">
        <normaloff>:/extui/dlgmodifyscale.png</normaloff>:/extui/dlgmodifyscale.png</iconset>
      </property>
      <property name="iconSize">
@@ -226,7 +226,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../../res/extui/extui.qrc"/>
+  <include location="../../../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

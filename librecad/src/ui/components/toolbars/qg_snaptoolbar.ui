@@ -50,7 +50,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/snapendpoint.png</normaloff>:/extui/snapendpoint.png</iconset>
      </property>
      <property name="checkable">
@@ -67,7 +67,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/snapmiddle.png</normaloff>:/extui/snapmiddle.png</iconset>
      </property>
      <property name="checkable">
@@ -84,7 +84,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/snapcenter.png</normaloff>:/extui/snapcenter.png</iconset>
      </property>
      <property name="checkable">
@@ -101,7 +101,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/snapintersection.png</normaloff>:/extui/snapintersection.png</iconset>
      </property>
      <property name="checkable">
@@ -118,7 +118,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/snaponentity.png</normaloff>:/extui/snaponentity.png</iconset>
      </property>
      <property name="checkable">
@@ -135,7 +135,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/snapdist.png</normaloff>:/extui/snapdist.png</iconset>
      </property>
      <property name="checkable">
@@ -152,7 +152,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/snapintersectionm.png</normaloff>:/extui/snapintersectionm.png</iconset>
      </property>
      <property name="checkable">
@@ -169,7 +169,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/snapgrid.png</normaloff>:/extui/snapgrid.png</iconset>
      </property>
      <property name="checkable">
@@ -186,7 +186,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/restricthorizontal.png</normaloff>:/extui/restricthorizontal.png</iconset>
      </property>
      <property name="checkable">
@@ -203,7 +203,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/restrictvertical.png</normaloff>:/extui/restrictvertical.png</iconset>
      </property>
      <property name="checkable">
@@ -220,7 +220,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/relzeromove.png</normaloff>:/extui/relzeromove.png</iconset>
      </property>
      <property name="checkable">
@@ -237,7 +237,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
+      <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/relzerolock.png</normaloff>:/extui/relzerolock.png</iconset>
      </property>
      <property name="checkable">
@@ -262,7 +262,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../../res/extui/extui.qrc"/>
+  <include location="../../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -458,4 +458,18 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>snapGrid()</slot>
+  <slot>snapEndpoint()</slot>
+  <slot>snapOnEntity()</slot>
+  <slot>snapCenter()</slot>
+  <slot>snapMiddle()</slot>
+  <slot>snapDist()</slot>
+  <slot>snapIntersection()</slot>
+  <slot>setRelativeZero()</slot>
+  <slot>lockRelativeZero(bool)</slot>
+  <slot>restrictHorizontal()</slot>
+  <slot>restrictVertical()</slot>
+  <slot>snapIntersectionManual()</slot>
+ </slots>
 </ui>
