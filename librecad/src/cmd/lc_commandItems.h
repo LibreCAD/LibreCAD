@@ -213,11 +213,9 @@ const LC_CommandItem g_commandList[] = {
         // draw parallel line
         {
             {{"linepar", QObject::tr("linepar", "create parallel")},
-             {"offset", QObject::tr("offset", "create parallel")},
              {"parallel", QObject::tr("parallel", "create parallel")},
              {"lineoff", QObject::tr("lineoff", "create parallel")}},
             {{"pa", QObject::tr("pa", "create parallel")},
-             {"o", QObject::tr("o", "create parallel")},
              {"ll", QObject::tr("ll", "create parallel")}},
             RS2::ActionDrawLineParallel
         },
@@ -662,7 +660,9 @@ const LC_CommandItem g_commandList[] = {
         },
         // offset
         {
-            {{"modoffset", QObject::tr("modoffset", "modify - offset")}},
+            {{"modoffset", QObject::tr("modoffset", "modify - offset")},
+             {"offset", QObject::tr("offset", "modify - offset")}
+         },
             {{"mo", QObject::tr("mo", "modify - offset")},   // - v2.2.0r2
              {"moff", QObject::tr("moff", "modify - offset")}},
             RS2::ActionModifyOffset
