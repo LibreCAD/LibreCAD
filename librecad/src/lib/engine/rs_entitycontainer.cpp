@@ -1201,16 +1201,20 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(
     RS_Vector point;                // endpoint found
 
     for (RS_Entity *en: entities) {
-
-        if (en->isVisible()
-            && !en->getParent()->ignoredOnModification()
-            ) {//no end point for Insert, text, Dim
-            point = en->getNearestEndpoint(coord, &curDist);
-            if (point.valid && curDist < minDist) {
-                closestPoint = point;
-                minDist = curDist;
-                if (dist) {
-                    *dist = minDist;
+        if (en->isVisible()){
+            auto parent = en->getParent();
+            bool checkForEndpoint = true;
+            if (parent != nullptr){
+                checkForEndpoint = !parent->ignoredOnModification();
+            }
+            if (checkForEndpoint) {//no end point for Insert, text, Dim
+                point = en->getNearestEndpoint(coord, &curDist);
+                if (point.valid && curDist < minDist) {
+                    closestPoint = point;
+                    minDist = curDist;
+                    if (dist) {
+                        *dist = minDist;
+                    }
                 }
             }
         }
