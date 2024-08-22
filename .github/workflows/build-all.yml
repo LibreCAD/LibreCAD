@@ -118,7 +118,6 @@ jobs:
       - name: Install dependencies
         run: |
           rm -f /usr/local/bin/2to3
-          brew link --overwrite python@3.12
           brew uninstall --ignore-dependencies freetype
           brew install boost freetype
           
