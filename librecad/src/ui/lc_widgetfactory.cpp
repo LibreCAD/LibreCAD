@@ -751,7 +751,7 @@ QMenu*  LC_WidgetFactory::menuTR(const char* title, QMenuBar* parent){
     QString name(title);
     name.remove(' ');
     name.remove('&');
-    result->setObjectName(name + "_menu");
+    result->setObjectName(name.toLower() + "_menu");
     result->setTearOffEnabled(true);
     return result;
 }
@@ -777,7 +777,7 @@ QMenu *LC_WidgetFactory::doCreateSubMenuTR(QMenu *parent, const char *title, con
     QString name(title);
     name.remove(' ');
     name.remove('&');
-    sub_menu->setObjectName(title);
+    sub_menu->setObjectName(name.toLower() + "_menu");
     return sub_menu;
 }
 

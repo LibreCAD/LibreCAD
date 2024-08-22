@@ -2935,7 +2935,7 @@ void QC_ApplicationWindow::updateWindowTitle(QWidget *w) {
             w->setWindowTitle(w->windowTitle() + draft_string);
     }
 }
-
+// fixme - sand -  potentially, relay is obsolete and should be removed
 void QC_ApplicationWindow::relayAction(QAction *q_action) {
     // author: ravas
 
@@ -2962,16 +2962,16 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
 QMenu *QC_ApplicationWindow::createPopupMenu() {
     // author: ravas
 
-    QMenu *context_menu = new QMenu("Context");
+    auto *context_menu = new QMenu("Context");
     context_menu->setAttribute(Qt::WA_DeleteOnClose);
-
-    QMenu *tb_menu = menuBar()->findChild<QMenu *>("toolbars_menu");
-    QMenu *temp_tb_menu = new QMenu(tr("Toolbars"), context_menu);
+    // todo - a bit ugly way to find them by name... review whether direct reference may be use
+    auto *tb_menu = menuBar()->findChild<QMenu *>("toolbars_menu");
+    auto *temp_tb_menu = new QMenu(tr("Toolbars"), context_menu);
     temp_tb_menu->addActions(tb_menu->actions());
     context_menu->addMenu(temp_tb_menu);
 
-    QMenu *dw_menu = menuBar()->findChild<QMenu *>("dockwidgets_menu");
-    QMenu *temp_dw_menu = new QMenu(tr("Dockwidgets"), context_menu);
+    auto *dw_menu = menuBar()->findChild<QMenu *>("dockwidgets_menu");
+    auto *temp_dw_menu = new QMenu(tr("Dockwidgets"), context_menu);
     temp_dw_menu->addActions(dw_menu->actions());
     context_menu->addMenu(temp_dw_menu);
 
