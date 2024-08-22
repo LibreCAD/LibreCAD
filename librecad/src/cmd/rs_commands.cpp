@@ -203,18 +203,27 @@ void RS_Commands::updateAlias()
             // Read alias
             static QRegularExpression re(R"(\s)");
             QStringList txtList = line.split(re,Qt::SkipEmptyParts);
-            if (txtList.size()> 1 && ! txtList[0].startsWith('#')) {
-                const QString& alias = txtList[0];
-                const QString& cmd = txtList[1];
-                if (validateCmd(cmd)) {
-                    if (commandToAction(alias) != commandToAction(cmd)) {
-                        LC_ERR<<__func__<<"(): cannot overwrite existing alias: "<<alias<<"="<<m_actionToCommand.at(commandToAction(alias))<<": with "<<alias<<"=" << cmd;
-                    } else {
-                        aliasList[alias] = m_actionToCommand[commandToAction(cmd)];
-                    }
-                } else {
-                    LC_ERR<<__func__<<"(): invalid alias, command not found: "<<line;
+            if (txtList.size() < 2 || txtList[0].startsWith('#'))
+                continue;
+
+            const QString& alias = txtList[0];
+            const QString& cmd = txtList[1];
+            if (validateCmd(cmd)) {
+                const RS2::ActionType action = commandToAction(cmd);
+                if (action == RS2::ActionNone) {
+                    LC_ERR<<__func__<<"(): requesting alias("<<alias<<") for unknown command: "<<cmd;
+                    continue;
                 }
+                if (m_actionToCommand.count(action) == 0)
+                    m_actionToCommand[action] = cmd;
+                const RS2::ActionType actionAlias = commandToAction(alias);
+                if (actionAlias != action &&  actionAlias != RS2::ActionNone) {
+                    LC_ERR<<__func__<<"(): cannot overwrite existing alias: "<<alias<<"="<<m_actionToCommand.at(action)<<": with "<<alias<<"=" << cmd;
+                } else {
+                    aliasList[alias] = m_actionToCommand[commandToAction(cmd)];
+                }
+            } else {
+                LC_ERR<<__func__<<"(): invalid alias, command not found: "<<line;
             }
         }
         f.close();
