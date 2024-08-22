@@ -1202,6 +1202,10 @@ set(SOURCES
 		librecad/src/ui/actions/lc_shortcutinfo.cpp
 		librecad/src/ui/actions/lc_shortcuts_manager.cpp
 		librecad/src/ui/actions/lc_shortcuts_manager.h
+		librecad/src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.h
+		librecad/src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp
+		librecad/src/ui/action_options/ellipse/lc_ellipse1pointoptions.h
+		librecad/src/ui/action_options/ellipse/lc_ellipse1pointoptions.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

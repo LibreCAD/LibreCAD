@@ -1200,17 +1200,20 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(
     RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
 
-    for (RS_Entity *en: entities) {
-
-        if (en->isVisible()
-            && !en->getParent()->ignoredOnModification()
-            ) {//no end point for Insert, text, Dim
-            point = en->getNearestEndpoint(coord, &curDist);
-            if (point.valid && curDist < minDist) {
-                closestPoint = point;
-                minDist = curDist;
-                if (dist) {
-                    *dist = minDist;
+    for (RS_Entity *en: std::as_const(entities)) {
+        if (en->isVisible()){
+            RS_EntityContainer *parent = en->getParent();
+            // fixme - check the logic of this check... if parent is null, should we return nearest endpoint or not?
+            if (parent != nullptr){
+                if (!parent->ignoredOnModification()) {//no end point for Insert, text, Dim
+                    point = en->getNearestEndpoint(coord, &curDist);
+                    if (point.valid && curDist < minDist) {
+                        closestPoint = point;
+                        minDist = curDist;
+                        if (dist) {
+                            *dist = minDist;
+                        }
+                    }
                 }
             }
         }
