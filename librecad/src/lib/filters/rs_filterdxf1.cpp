@@ -1950,8 +1950,6 @@ RS2::LineWidth RS_FilterDXF1::numberToWidth(int num) {
     return (RS2::LineWidth)num;
 }
 
-
-
 /**
  * Converts a RS2::LineWidth into an int width.
  */
@@ -1972,17 +1970,3 @@ int RS_FilterDXF1::widthToNumber(RS2::LineWidth width) {
     }
     return (int)width;
 }
-
-
-// EOF
-
-
-
-
-
-
-
-
-
-
-

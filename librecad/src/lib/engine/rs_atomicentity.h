@@ -132,7 +132,7 @@ public:
      * Implementation must create offset of the entity to
      * the given direction and distance
      */
-	bool offset(const RS_Vector& /*position*/, const double& /*distance*/) override;
+	bool offset(const RS_Vector& /*position*/, const double& /*distance*/) override {return false;};
 
     /**
      * Implementation must move the startpoint of the entity to

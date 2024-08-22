@@ -30,17 +30,21 @@
 
 #include <QObject>
 #include <QtCore/QtContainerFwd>
+#include <QKeyEvent>
+#include <QInputEvent>
+#include <QMouseEvent>
 
+#include "rs.h"
 #include "rs_snapper.h"
-#include "lc_actionoptionswidget.h"
+#include "lc_modifiersinfo.h"
 
 class RS_CommandEvent;
 class RS_CoordinateEvent;
 class RS_Graphic;
 class RS_Document;
 class QAction;
-class QKeyEvent;
 class QString;
+class LC_ActionOptionsWidget; // todo - think about depencency - options in in ui, while this action in lib... quite artificial separation, actually
 
 /**
  * This is the interface that must be implemented for all
@@ -51,6 +55,8 @@ class QString;
  *
  * @author Andrew Mustun
  */
+//fixme - actually, inheritance from snapper is rather bad design... not all actions (say, file open or print-preview) should be
+// inherited from snapper - only ones that really work with drawing should be snap-aware
 class RS_ActionInterface : public QObject, public RS_Snapper {
     Q_OBJECT
 public:
@@ -58,17 +64,16 @@ public:
                        RS_EntityContainer& container,
                        RS_GraphicView& graphicView,
                        RS2::ActionType actionType = RS2::ActionNone);
-	   virtual ~RS_ActionInterface();
+	   ~RS_ActionInterface() override;
 
     virtual RS2::ActionType rtti() const;
 
     void setName(const char* _name);
     QString getName();
 
-    virtual void init(int status=0);
+    virtual void init(int status);
     virtual void mouseMoveEvent(QMouseEvent*);
     virtual void mousePressEvent(QMouseEvent*);
-
     virtual void mouseReleaseEvent(QMouseEvent*);
     virtual void keyPressEvent(QKeyEvent* e);
     virtual void keyReleaseEvent(QKeyEvent* e);
@@ -76,26 +81,16 @@ public:
     virtual void commandEvent(RS_CommandEvent*);
     virtual QStringList getAvailableCommands();
     virtual void setStatus(int status);
-    virtual int getStatus() const;
+    int getStatus() const;
     virtual void trigger();
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
     virtual bool isFinished() const;
     virtual void setFinished();
     virtual void finish(bool updateTB = true );
     virtual void setPredecessor(RS_ActionInterface* pre);
     void suspend() override;
     void resume() override;
-    void hideOptions() override;
-    void showOptions() override;
-    void setActionType(RS2::ActionType actionType);
-    bool checkCommand(const QString& cmd, const QString& str,
-                             RS2::ActionType action=RS2::ActionNone);
-    QString command(const QString& cmd);
-    QString msgAvailableCommands();
-    // Accessor for drawing keys
-    int getGraphicVariableInt(const QString& key, int def) const;
-
+    virtual void hideOptions();
+    virtual void showOptions();
 private:
     /**
      * Current status of the action. After an action has
@@ -107,7 +102,6 @@ private:
      * corner (status 1).
      */
     int status = 0;
-
 protected:
     /** Action name. Used internally for debugging */
     QString name;
@@ -125,49 +119,73 @@ protected:
     RS_Graphic *graphic = nullptr;
 
     /**
-         * Pointer to the document (graphic or block) or NULL.
-         */
+    * Pointer to the document (graphic or block) or NULL.
+    */
+
     RS_Document *document = nullptr;
-
-    /**
-     * Pointer to the default mouse cursor for this action or NULL.
-     */
-    //RS2::CursorType cursor;
-
     /**
      * Predecessor of this action or NULL.
      */
     RS_ActionInterface* predecessor = nullptr;
 
-    /**
-     * String prepended to the help text for currently available commands.
-     */
-    //static QString msgAvailableCommands;
 
-    /**
-     * Command used for showing help for every action.
-     */
-    //static QString cmdHelp;
-
-    /**
-     * Command for answering yes to a question.
-     */
-    //static QString cmdYes;
-    //static QString cmdYes2;
-
-     /**
-     * Command for answering no to a question.
-     */
-    //static QString cmdNo;
-    //static QString cmdNo2;
     RS2::ActionType actionType = RS2::ActionNone;
 
     std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
 
-    virtual void createOptionsWidget();
+    double snapToAngleStep = 15.0;
+
+    QString msgAvailableCommands();
+    void setActionType(RS2::ActionType actionType);
+    // Accessor for drawing keys
+    int getGraphicVariableInt(const QString& key, int def) const;
+
+    void updateSelectionWidget() const;
+    void updateSelectionWidget(int countSelected, double selectedLength) const;
+
+    virtual LC_ActionOptionsWidget* createOptionsWidget();
     void updateOptions();
     void updateOptionsUI(int mode);
+
+    virtual RS2::CursorType doGetMouseCursor(int status);
+    void updateMouseCursor();
+    void setMouseCursor(const RS2::CursorType &cursor);
+
+    virtual void updateMouseButtonHints();
+
+    // simplified mouse widget and command message operations
+    void updateMouseWidgetTRBack(const QString &msg,const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
+    void updateMouseWidgetTRCancel(const QString &msg,const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
+    void updateMouseWidget(const QString& = QString(),const QString& = QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
+
+
+    static bool isControl(const QInputEvent *e);
+    static bool isShift(const QInputEvent *e);
+
+    virtual void onMouseLeftButtonRelease(int status, QMouseEvent * e);
+    virtual void onMouseRightButtonRelease(int status, QMouseEvent * e);
+
+    void updateSnapAngleStep();
+    /**
+ * Method should be overridden in inherited actions to process command. Should return true if command event should be accepted.
+ * @param status status
+ * @param c command
+ * @return true if event should be accepted, false otherwise
+ */
+    virtual bool doProcessCommand([[maybe_unused]]int status, const QString &command);
+
+    bool checkCommand(const QString& cmd, const QString& str,
+                      RS2::ActionType action=RS2::ActionNone);
+    QString command(const QString& cmd);
+    virtual QString getAdditionalHelpMessage();
+    virtual QString prepareCommand(RS_CommandEvent *e) const;
+
+    void commandMessage(const QString &msg) const;
+
+    void fireCoordinateEvent(const RS_Vector& coord);
+    void fireCoordinateEventForSnap(QMouseEvent *e);
+
+    virtual void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos);
+    void initPrevious(int status);
 };
-
-
 #endif

@@ -23,6 +23,7 @@ class QG_ActionHandler;
 class QG_LibraryWidget;
 class QG_CommandWidget;
 class LC_CustomToolbar;
+class LC_DockWidget;
 class QC_ApplicationWindow;
 class LC_ActionGroupManager;
 
@@ -63,7 +64,7 @@ public:
 
     QMenu* file_menu = nullptr;
     QMenu* windows_menu = nullptr;
-
+    QList<QAction*> actionsToDisableInPrintPreview;
 
 private:
     QC_ApplicationWindow* main_window = nullptr;
@@ -84,6 +85,23 @@ private:
     QList<QAction*> layer_actions;
     QList<QAction*> block_actions;
     QList<QAction*> pen_actions;
+
+    LC_DockWidget *leftDocWidgetTR(const char *title, const QList<QAction *> &actions, int columns, int iconSize);
+    QToolBar *createGenericToolbarTR(const char *title, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames);
+    void addToTop(QToolBar *toolbar);
+    void addToBottom(QToolBar *toolbar);
+    void addToLeft(QToolBar *toolbar);
+    QToolButton *toolButtonTR(QToolBar *toolbar, const char *tooltip, const char *icon, const QList<QAction *>& actions);
+    void fillActionsList(QList<QAction *> &list,  const std::vector<const char *> &actionNames);
+    QToolBar *toolbarWithActionsTR(const char *title, QSizePolicy toolBarPolicy, const QList<QAction *> &actions);
+    QMenu* subMenuWithActionsTR(QMenu *parent, const char *title, const char *icon, const QList<QAction *> &actions);
+    QMenu* menuTR(const char* title, QMenuBar* parent);
+    QMenu *menu(const char *title, QMenuBar *parent, const std::vector<QString> &actionNames);
+    QMenu *doCreateSubMenuTR(QMenu *parent, const char *title, const char *icon) const;
+    void addActions(QMenu *result, const std::vector<QString> &actionNames);
+    QMenu *subMenuTR(QMenu *parent, const char *title, const char *icon, const std::vector<QString> &actionNames);
+    QAction* urlActionTR(const char *title, const char *url);
+    void addAction(QMenu *menu, const char *actionName);
 };
 
 #endif // LC_WIDGETFACTORY_H

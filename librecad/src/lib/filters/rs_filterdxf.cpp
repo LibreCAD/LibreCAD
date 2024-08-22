@@ -3273,8 +3273,6 @@ RS2::Unit RS_FilterDXF::numberToUnit(int num) {
     return RS2::None;
 }
 
-
-
 /**
  * Converts a unit enum into a DXF unit number e.g. for INSUNITS.
  */
@@ -3349,8 +3347,6 @@ int RS_FilterDXF::unitToNumber(RS2::Unit unit) {
     return 0;
 }
 
-
-
 /**
  * Checks if the given variable is two-dimensional (e.g. $LIMMIN).
  */
@@ -3367,6 +3363,3 @@ bool RS_FilterDXF::isVariableTwoDimensional(const QString& var) {
         return false;
     }
 }
-
-// EOF
-

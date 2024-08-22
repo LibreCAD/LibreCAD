@@ -398,5 +398,3 @@ bool RS_Commands::checkCommand(const QString& cmd, const QString& str,
 QString RS_Commands::msgAvailableCommands() {
     return QObject::tr("Available commands:");
 }
-
-// EOF

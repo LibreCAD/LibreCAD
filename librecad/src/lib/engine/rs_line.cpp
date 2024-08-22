@@ -90,26 +90,6 @@ void RS_Line::calculateBorders() {
 }
 
 
-bool RS_Line::toggleSelected()
-{
-    if (!isSelected())
-    {
-        highlightedVertex = getNearestEndpoint(QC_ApplicationWindow::getAppWindow()->getMouseAbsolutePosition());
-
-        QC_ApplicationWindow::getAppWindow()->getGraphicView()->moveRelativeZero(highlightedVertex);
-    }
-
-    return this->setSelected(!isSelected());
-}
-
-
-RS_Vector RS_Line::getHighlightedVertex()
-{
-    return highlightedVertex;
-}
-
-
-
 RS_VectorSolutions RS_Line::getRefPoints() const
 {
 	return RS_VectorSolutions({data.startpoint, data.endpoint});
@@ -460,7 +440,12 @@ bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
     if(RS_Vector::dotP(direction,vp)<0.) {
         direction *= -1.;
     }
-    direction*=distance;
+    double dist = distance;
+/*    if (coord.x < 0){
+//        direction *= -1.;
+        dist = -dist;
+    }*/
+    direction*=dist;
     move(direction);
     return true;
 }
@@ -697,5 +682,3 @@ std::ostream& operator << (std::ostream& os, const RS_Line& l) {
     os << " Line: " << l.getData() << "\n";
     return os;
 }
-
-

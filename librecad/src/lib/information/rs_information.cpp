@@ -74,72 +74,67 @@ bool RS_Information::isDimension(RS2::EntityType type) {
 	}
 }
 
-
-
 /**
  * @retval true the entity can be trimmed.
  * i.e. it is in a graphic or in a polyline.
  */
-bool RS_Information::isTrimmable(RS_Entity* e) {
-	if (e) {
-		if (e->getParent()) {
-			switch(e->getParent()->rtti()){
-			case RS2::EntityPolyline:
-			case RS2::EntityContainer:
-			case RS2::EntityGraphic:
-			case RS2::EntityBlock:
-				return true;
-			default:
-				return false;
-			}
+bool RS_Information::isTrimmable(RS_Entity *e){
+    if (e){
+        if (e->getParent()){
+            switch (e->getParent()->rtti()) {
+                case RS2::EntityPolyline:
+                case RS2::EntityContainer:
+                case RS2::EntityGraphic:
+                case RS2::EntityBlock:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 
     return false;
 }
-
-
+// fixme - return more meaningful information regarding why two entities are not trimmable and show it in UI by action
 /**
  * @retval true the two entities can be trimmed to each other;
  * i.e. they are in a graphic or in the same polyline.
  */
-bool RS_Information::isTrimmable(RS_Entity* e1, RS_Entity* e2) {
-	if (e1 && e2) {
-		if (e1->getParent() && e2->getParent()) {
-            if (e1->getParent()->rtti()==RS2::EntityPolyline &&
-                    e2->getParent()->rtti()==RS2::EntityPolyline &&
-                    e1->getParent()==e2->getParent()) {
+bool RS_Information::isTrimmable(RS_Entity *e1, RS_Entity *e2){
+    if (e1 && e2){
+        if (e1->getParent() && e2->getParent()){
+            if (e1->getParent()->rtti() == RS2::EntityPolyline &&
+                e2->getParent()->rtti() == RS2::EntityPolyline &&
+                e1->getParent() == e2->getParent()){
 
                 // in the same polyline
-                RS_Polyline* pl = static_cast<RS_Polyline *>(e1->getParent());
+                auto *pl = dynamic_cast<RS_Polyline *>(e1->getParent());
                 int idx1 = pl->findEntity(e1);
                 int idx2 = pl->findEntity(e2);
                 RS_DEBUG->print("RS_Information::isTrimmable: "
                                 "idx1: %d, idx2: %d", idx1, idx2);
-                if (abs(idx1-idx2)==1 ||
-					(pl->isClosed() && abs(idx1-idx2)==int(pl->count()-1))) {
+                bool adjacentSegments = abs(idx1 - idx2) == 1;
+                if (adjacentSegments ||
+                    (pl->isClosed() && abs(idx1 - idx2) == int(pl->count() - 1))){
                     // directly following entities
                     return true;
-                }
-                else {
+                } else {
                     // not directly following entities
                     return false;
                 }
-            }
-            else if ((e1->getParent()->rtti()==RS2::EntityContainer ||
-                      e1->getParent()->rtti()==RS2::EntityGraphic ||
-                      e1->getParent()->rtti()==RS2::EntityBlock) &&
-                     (e2->getParent()->rtti()==RS2::EntityContainer ||
-                      e2->getParent()->rtti()==RS2::EntityGraphic ||
-                      e2->getParent()->rtti()==RS2::EntityBlock)) {
+            } else if ((e1->getParent()->rtti() == RS2::EntityContainer ||
+                        e1->getParent()->rtti() == RS2::EntityGraphic ||
+                        e1->getParent()->rtti() == RS2::EntityBlock) &&
+                       (e2->getParent()->rtti() == RS2::EntityContainer ||
+                        e2->getParent()->rtti() == RS2::EntityGraphic ||
+                        e2->getParent()->rtti() == RS2::EntityBlock)){
 
                 // normal entities:
                 return true;
             }
-        }
-        else {
+        } else {
             // independent entities with the same parent:
-            return (e1->getParent()==e2->getParent());
+            return (e1->getParent() == e2->getParent());
         }
     }
 
@@ -156,8 +151,7 @@ bool RS_Information::isTrimmable(RS_Entity* e1, RS_Entity* e2) {
  * if there are no elements at all in this graphics
  * container.
  */
-RS_Vector RS_Information::getNearestEndpoint(const RS_Vector& coord,
-        double* dist) const {
+RS_Vector RS_Information::getNearestEndpoint(const RS_Vector& coord,double* dist) const {
     return container->getNearestEndpoint(coord, dist);
 }
 
@@ -201,8 +195,6 @@ RS_Entity* RS_Information::getNearestEntity(const RS_Vector& coord,
 
     return container->getNearestEntity(coord, dist, level);
 }
-
-
 
 /**
  * Calculates the intersection point(s) between two entities.

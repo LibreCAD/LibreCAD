@@ -150,7 +150,7 @@ void LC_DimArc::arrow( const RS_Vector& point,
 
         const RS_Vector tickVector = RS_Vector::polar(getTickSize() * getGeneralScale(), midAngle - deg45);
 
-        RS_Line* tick = new RS_Line(this, point - tickVector, point + tickVector);
+        auto* tick = new RS_Line(this, point - tickVector, point + tickVector);
         tick->setPen(pen);
         tick->setLayer(nullptr);
         addEntity(tick);

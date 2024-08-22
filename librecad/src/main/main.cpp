@@ -91,11 +91,13 @@ int main(int argc, char** argv)
     QCoreApplication::setApplicationName("LibreCAD");
     QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
 
+    RS_Settings::init(app.organizationName(), app.applicationName());
+
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
     QGuiApplication::setDesktopFileName("librecad.desktop");
 #endif
 
-    QSettings settings;
+    QSettings settings; // fixme - direct invocation of settings
 
     bool first_load = settings.value("Startup/FirstLoad", 1).toBool();
 
@@ -219,7 +221,7 @@ int main(int argc, char** argv)
 
     QFileInfo prgInfo( QFile::decodeName(argv[0]) );
     QString prgDir(prgInfo.absolutePath());
-    RS_SETTINGS->init(app.organizationName(), app.applicationName());
+
     RS_SYSTEM->init(app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), prgDir);
 
     // parse command line arguments that might not need a launched program:
@@ -228,17 +230,13 @@ int main(int argc, char** argv)
     QString unit = settings.value("Defaults/Unit", "Invalid").toString();
 
     // show initial config dialog:
-    if (first_load)
-    {
+    if (first_load){
         RS_DEBUG->print("main: show initial config dialog..");
         QG_DlgInitial di(nullptr);
         QPixmap pxm(":/main/intro_librecad.png");
         di.setPixmap(pxm);
-        if (di.exec())
-        {
-            RS_SETTINGS->beginGroup("/Defaults");
-            unit = RS_SETTINGS->readEntry("/Unit", "None");
-            RS_SETTINGS->endGroup();
+        if (di.exec()) {
+            unit = LC_GET_ONE_STR("Defaults", "Unit", "None");
         }
         RS_DEBUG->print("main: show initial config dialog: OK");
     }
@@ -247,8 +245,7 @@ int main(int argc, char** argv)
 
     bool show_splash = settings.value("Startup/ShowSplash", 1).toBool();
 
-    if (show_splash)
-    {
+    if (show_splash){
         QPixmap pixmap(":/main/splash_librecad.png");
         splash->setPixmap(pixmap);
         splash->setAttribute(Qt::WA_DeleteOnClose);
@@ -335,11 +332,15 @@ int main(int argc, char** argv)
 
     // reopen files that we open during last close of application
     // we'll reopen them if no explicit files to open are provided in command line
-    RS_SETTINGS->beginGroup("/Startup");
-    bool reopenLastFiles = RS_SETTINGS->readNumEntry("/OpenLastOpenedFiles", 0) == 1;
-    QString lastFiles = RS_SETTINGS->readEntry("/LastOpenFilesList", "");
-    QString activeFile = RS_SETTINGS->readEntry("/LastOpenFilesActive", "");
-    RS_SETTINGS->endGroup();
+    bool reopenLastFiles;
+    QString lastFiles;
+    QString activeFile;
+    LC_GROUP_GUARD("Startup");
+    {
+        reopenLastFiles = LC_GET_BOOL("OpenLastOpenedFiles");
+        lastFiles = LC_GET_STR("LastOpenFilesList", "");
+        activeFile = LC_GET_STR("LastOpenFilesActive", "");
+    }
 
     if (reopenLastFiles && fileList.isEmpty() && !lastFiles.isEmpty()){
         foreach(const QString& filename, lastFiles.split(";")) {
@@ -349,10 +350,8 @@ int main(int argc, char** argv)
     }
 
     bool files_loaded = false;
-    for (QStringList::Iterator it = fileList.begin(); it != fileList.end(); ++it )
-    {
-        if (show_splash)
-        {
+    for (QStringList::Iterator it = fileList.begin(); it != fileList.end(); ++it ) {
+        if (show_splash){
             splash->showMessage(QObject::tr("Loading File %1..")
                     .arg(QDir::toNativeSeparators(*it)),
             Qt::AlignRight|Qt::AlignBottom, Qt::black);
@@ -367,8 +366,7 @@ int main(int argc, char** argv)
     }
     RS_DEBUG->print("main: loading files: OK");
 
-    if (!files_loaded)
-    {
+    if (!files_loaded) {
         appWin.slotFileNewNew();
     }
 

@@ -47,7 +47,7 @@ RS_LayerData::RS_LayerData(const QString& name,
 RS_Layer::RS_Layer(const QString& name):
     data(name, RS_Pen(Qt::black, name == "0" ? RS2::Width07 : RS2::Width00,RS2::SolidLine), false, false)
 {
-    LC_ERR<<name;
+//    LC_ERR<<name;
 }
 
 RS_Layer* RS_Layer::clone() const{
@@ -232,4 +232,3 @@ std::ostream& operator << (std::ostream& os, const RS_Layer& l) {
     << std::endl;
     return os;
 }
-

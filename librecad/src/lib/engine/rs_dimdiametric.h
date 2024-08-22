@@ -37,18 +37,14 @@ struct RS_DimDiametricData {
     /**
 	 * Default constructor
      */
-	RS_DimDiametricData();
-
+    RS_DimDiametricData();
     /**
      * Constructor with initialisation.
      *
      * @param definitionPoint Definition point of the diametric dimension.
      * @param leader Leader length.
      */
-    RS_DimDiametricData(const RS_Vector& definitionPoint,
-					 double leader);
-
-
+    RS_DimDiametricData(const RS_Vector &definitionPoint,double leader);
     /** Definition point. */
     RS_Vector definitionPoint;
     /** Leader length. */

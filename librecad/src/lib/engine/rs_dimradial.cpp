@@ -88,11 +88,12 @@ RS_Entity* RS_DimRadial::clone() const {
 QString RS_DimRadial::getMeasuredLabel() {
 
     // Definitive dimension line:
-	double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
+    double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
 
-    RS_SETTINGS->beginGroup("/Appearance");
-    if (RS_SETTINGS->readNumEntry("/UnitlessGrid", 1) != 1) dist = RS_Units::convert(dist);
-    RS_SETTINGS->endGroup();
+    // fixme - try to read settings once during action lifecycle
+    if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true) ) {
+        dist = RS_Units::convert(dist);
+    }
 
     RS_Graphic* graphic = getGraphic();
 
@@ -116,7 +117,6 @@ QString RS_DimRadial::getMeasuredLabel() {
 
     return ret;
 }
-
 
 RS_VectorSolutions RS_DimRadial::getRefPoints() const
 {

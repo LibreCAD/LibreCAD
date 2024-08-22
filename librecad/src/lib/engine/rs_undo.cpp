@@ -412,4 +412,3 @@ bool RS_Undo::test() {
 
 }
 #endif
-

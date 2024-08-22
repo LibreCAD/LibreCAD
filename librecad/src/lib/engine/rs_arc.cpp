@@ -132,7 +132,7 @@ bool RS_Arc::createFrom2PDirectionRadius(const RS_Vector& startPoint,
         const RS_Vector& endPoint,
         double direction1, double radius) {
 
-	RS_Vector ortho = RS_Vector::polar(radius, direction1 + M_PI_2);
+	   RS_Vector ortho = RS_Vector::polar(radius, direction1 + M_PI_2);
     RS_Vector center1 = startPoint + ortho;
     RS_Vector center2 = startPoint - ortho;
 
@@ -163,44 +163,45 @@ bool RS_Arc::createFrom2PDirectionRadius(const RS_Vector& startPoint,
  * @retval true Successfully created arc
  * @retval false Cannot create arc (radius to small or endpoint to far away)
  */
-bool RS_Arc::createFrom2PDirectionAngle(const RS_Vector& startPoint,
-                                        const RS_Vector& endPoint,
-										double direction1, double angleLength) {
-	if (angleLength <= RS_TOLERANCE_ANGLE || angleLength > 2. * M_PI - RS_TOLERANCE_ANGLE) return false;
-	RS_Line l0 {nullptr, startPoint, startPoint - RS_Vector{direction1}};
-	double const halfA = 0.5 * angleLength;
-	l0.rotate(startPoint, halfA);
+bool RS_Arc::createFrom2PDirectionAngle(
+    const RS_Vector &startPoint,
+    const RS_Vector &endPoint,
+    double direction1, double angleLength){
+    if (angleLength <= RS_TOLERANCE_ANGLE || angleLength > 2. * M_PI - RS_TOLERANCE_ANGLE) return false;
+    RS_Line l0{nullptr, startPoint, startPoint - RS_Vector{direction1}};
+    double const halfA = 0.5 * angleLength;
+    l0.rotate(startPoint, halfA);
 
-	double d0;
-	RS_Vector vEnd0 = l0.getNearestPointOnEntity(endPoint, false, &d0);
-	RS_Line l1 = l0;
-	l1.rotate(startPoint, -angleLength);
-	double d1;
-	RS_Vector vEnd1 = l1.getNearestPointOnEntity(endPoint, false, &d1);
-	if (d1 < d0) {
-		vEnd0 = vEnd1;
-		l0 = l1;
-	}
+    double d0;
+    RS_Vector vEnd0 = l0.getNearestPointOnEntity(endPoint, false, &d0);
+    RS_Line l1 = l0;
+    l1.rotate(startPoint, -angleLength);
+    double d1;
+    RS_Vector vEnd1 = l1.getNearestPointOnEntity(endPoint, false, &d1);
+    if (d1 < d0){
+        vEnd0 = vEnd1;
+        l0 = l1;
+    }
 
-	l0.rotate((startPoint + vEnd0) * 0.5, M_PI_2);
+    l0.rotate((startPoint + vEnd0) * 0.5, M_PI_2);
 
-	l1 = RS_Line{nullptr, startPoint, startPoint + RS_Vector{direction1 + M_PI_2}};
+    l1 = RS_Line{nullptr, startPoint, startPoint + RS_Vector{direction1 + M_PI_2}};
 
-	auto const sol = RS_Information::getIntersection(&l0, &l1, false);
-	if (sol.size()==0) return false;
+    auto const sol = RS_Information::getIntersection(&l0, &l1, false);
+    if (sol.size() == 0) return false;
 
-	data.center = sol.at(0);
+    data.center = sol.at(0);
 
-	data.radius = data.center.distanceTo(startPoint);
+    data.radius = data.center.distanceTo(startPoint);
     data.angle1 = data.center.angleTo(startPoint);
     data.reversed = false;
 
-    double diff = RS_Math::correctAngle(getDirection1()-direction1);
-    if (fabs(diff-M_PI)<1.0e-1) {
-    data.angle2 = RS_Math::correctAngle(data.angle1 -angleLength);
+    double diff = RS_Math::correctAngle(getDirection1() - direction1);
+    if (fabs(diff - M_PI) < 1.0e-1){
+        data.angle2 = RS_Math::correctAngle(data.angle1 - angleLength);
         data.reversed = true;
-    }else{
-    data.angle2 = RS_Math::correctAngle(data.angle1 +angleLength);
+    } else {
+        data.angle2 = RS_Math::correctAngle(data.angle1 + angleLength);
     }
     calculateBorders();
 
@@ -591,17 +592,30 @@ void RS_Arc::moveEndpoint(const RS_Vector& pos) {
   *Author: Dongxu Li
   */
 bool RS_Arc::offset(const RS_Vector& coord, const double& distance) {
-    double r0(coord.distanceTo(getCenter()));
-    if(r0 > getRadius()){
-        //external
-        r0 = getRadius()+ fabs(distance);
-    }else{
-        r0 = getRadius()- fabs(distance);
-        if(r0<RS_TOLERANCE) {
+  /*  bool increase = coord.x > 0;
+    double newRadius;
+    if (increase){
+        newRadius = getRadius() + std::abs(distance);
+    }
+    else{
+        newRadius = getRadius() - std::abs(distance);
+        if(newRadius < RS_TOLERANCE) {
             return false;
         }
     }
-    setRadius(r0);
+    */
+    double dist(coord.distanceTo(getCenter()));
+    double newRadius;
+    if(dist> getRadius()){
+        //external
+        newRadius = getRadius()+ fabs(distance);
+    }else{
+        newRadius = getRadius()- fabs(distance);
+        if(newRadius<RS_TOLERANCE) {
+            return false;
+        }
+    }
+    setRadius(newRadius);
     calculateBorders();
     return true;
 }

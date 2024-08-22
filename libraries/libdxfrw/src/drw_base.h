@@ -508,6 +508,3 @@ public:
 };
 
 #endif
-
-// EOF
-

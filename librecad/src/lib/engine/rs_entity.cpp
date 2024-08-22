@@ -175,7 +175,7 @@ bool RS_Entity::toggleSelected() {
  */
 bool RS_Entity::isSelected() const {
 	//bug 557, Selected entities in invisible layers are deleted
-	return isVisible() && getFlag(RS2::FlagSelected);
+	return getFlag(RS2::FlagSelected) && isVisible();
 }
 
 
@@ -445,6 +445,18 @@ void RS_Entity::setHighlighted(bool on) {
         setFlag(RS2::FlagHighlighted);
     } else {
         delFlag(RS2::FlagHighlighted);
+    }
+}
+
+bool RS_Entity::isTransparent() const{
+    return getFlag(RS2::FlagTransparent);
+}
+
+void RS_Entity::setTransparent(bool on) {
+    if (on) {
+        setFlag(RS2::FlagTransparent);
+    } else {
+        delFlag(RS2::FlagTransparent);
     }
 }
 
@@ -1027,11 +1039,11 @@ bool RS_Entity::trimmable() const
 {
     switch(rtti()){
     case RS2::EntityArc:
-    case RS2::EntityCircle:
+    case RS2::EntityCircle: // fixme - check whether prepareTrim() is supported there?
     case RS2::EntityEllipse:
     case RS2::EntityLine:
     case RS2::EntityParabola:
-    case RS2::EntitySplinePoints:
+    case RS2::EntitySplinePoints: // fixme - check whether prepareTrim() is supported there?
         return true;
     default:
         return false;
@@ -1142,3 +1154,6 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
     return os;
 }
 
+bool RS_Entity::isParentIgnoredOnModifications() const {
+     return parent != nullptr && parent->ignoredOnModification();
+}
