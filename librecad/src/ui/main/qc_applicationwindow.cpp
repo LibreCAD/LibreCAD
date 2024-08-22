@@ -324,6 +324,8 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
             this, SLOT(slotPenChanged(const RS_Pen&)));
 
+    // fixme - sand - remove hardcoded shortcuts!!!
+    // fixme - review the entire keyboard support
     auto ctrl_l = new QShortcut(QKeySequence("Ctrl+L"), this);
     connect(ctrl_l, SIGNAL(activated()), actionHandler, SLOT(slotLayersAdd()));
 
@@ -993,6 +995,12 @@ void QC_ApplicationWindow::slotFocusCommandLine() {
     commandWidget->show();
     commandWidget->setFocus();
 //    }
+}
+
+void QC_ApplicationWindow::slotFocusOptionsWidget(){
+    if (optionWidget != nullptr){
+        optionWidget->setFocus();
+    }
 }
 
 

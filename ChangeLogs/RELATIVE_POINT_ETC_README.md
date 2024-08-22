@@ -156,7 +156,10 @@ Support of keyboard was slightly improved, so:
 1) Now the user may assign keyboard shortcuts to actions via UI  - using Keyboard Shortcuts options dialog. Withing this dialog, now it is possible to manage shortcuts, as well as export and import them.
 2) An option was added to Application Preferences dialog that allows to control whether keyboard shortcuts should be shown as part of the action's tooltip or not.
 
-While this functionality is quite operational, the overall application-wise processing of keyboard shortcuts requires additional review and improvements and will be added later.
+While this functionality is quite operational, some actions may be not invoked by keyboard. 
+
+The overall application-wise processing of keyboard shortcuts and keyboard support requires additional review and improvements. 
+It will be added later.
 
 ### Other
 

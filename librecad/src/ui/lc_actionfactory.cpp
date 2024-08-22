@@ -415,7 +415,7 @@ void LC_ActionFactory::createFileActionsUncheckable(QMap<QString, QAction *> &ma
         {"FilePrintPDF",     SLOT(slotFilePrintPDF()),     tr("Export as PDF"),      ":/icons/export_pdf.svg"},
         {"BlocksImport",     SLOT(slotImportBlock()),      tr("&Block"),             ":/icons/insert_active_block.svg"},
         {"FileNew",          SLOT(slotFileNewNew()),       tr("&New"),               ":/icons/new.svg",               "document-new"},
-        {"FileNewTemplate",  SLOT(slotFileNewTemplate()),  tr("New From &Template"), ":/icons/new_from_template.svg", "document-new"},// fixme
+        {"FileNewTemplate",  SLOT(slotFileNewTemplate()),  tr("New From &Template"), ":/icons/new_from_template.svg", "document-new"},// fixme - check
         {"FileOpen",         SLOT(slotFileOpen()),         tr("&Open..."),           ":/icons/open.svg",              "document-open"},
         {"FileSave",         SLOT(slotFileSave()),         tr("&Save"),              ":/icons/save.svg",              "document-save"},
         {"FileSaveAs",       SLOT(slotFileSaveAs()),       tr("Save &as..."),        ":/icons/save_as.svg",           "document-save-as"},
@@ -447,6 +447,7 @@ void LC_ActionFactory::createWidgetActionsUncheckable(QMap<QString, QAction *> &
 
 void LC_ActionFactory::createViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
     createAction_MW("FocusCommand",SLOT(slotFocusCommandLine()), tr("Focus on &Command Line"), ":/main/editclear.png", nullptr, group, map);
+    createAction_MW("FocusOptions",SLOT(slotFocusOptionsWidget()), tr("Focus on &Options Widget"), ":/main/contents.png", nullptr, group, map);
 
     createActionHandlerActions(map, group, {
         {"ZoomIn",       RS2::ActionZoomIn,       tr("Zoom &In"),       ":/icons/zoom_in.svg",       "zoom-in"},

@@ -119,6 +119,7 @@ public slots:
     void slotKillAllActions();
     void slotEnter();
     void slotFocusCommandLine();
+    void slotFocusOptionsWidget();
     void slotError(const QString& msg);
 
     void slotWindowActivated(int);
