@@ -625,7 +625,7 @@ void RS_ActionDefault::goToNeutralStatus(){
 }
 
 // fixme - review and cleanup
-void RS_ActionDefault::commandEvent(RS_CommandEvent *e){
+void RS_ActionDefault::commandEvent( [[maybe_unused]] RS_CommandEvent *e){
 //    QString c = e->getCommand().toLower();
 
     // if the current action can't deal with the command,

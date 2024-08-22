@@ -613,8 +613,7 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
                 aV.y *= -1.;
                 for (auto &v: sol) {
                     v.rotate(aV);
-                }
-                RS_Vector vp;
+                }               
                 const RS_Vector &center = cir->getCenter();
                 switch (sol.size()) {
                     case 0:

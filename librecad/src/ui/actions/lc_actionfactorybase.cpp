@@ -76,18 +76,18 @@ QAction *LC_ActionFactoryBase::justCreateAction(QMap<QString, QAction *> &a_map,
 
 
 void LC_ActionFactoryBase::createActions(QMap<QString, QAction *> &map, QActionGroup *group, const std::vector<ActionInfo> &actionList) const {
-    for (const LC_ActionFactoryBase::ActionInfo a: actionList){
+    for (const LC_ActionFactoryBase::ActionInfo &a: actionList){
         justCreateAction(map, a.key, a.text, a.iconName,a.themeIconName, group);
     }
 }
 void LC_ActionFactoryBase::createActionHandlerActions(QMap<QString, QAction *> &map, QActionGroup *group, const std::vector<ActionInfo> &actionList) const {
-    for (const LC_ActionFactoryBase::ActionInfo a: actionList){
+    for (const LC_ActionFactoryBase::ActionInfo &a: actionList){
         createAction_AH(a.key, a.actionType, a.text, a.iconName,a.themeIconName, group, map);
     }
 }
 
 void LC_ActionFactoryBase::createMainWindowActions(QMap<QString, QAction *> &map, QActionGroup *group, const std::vector<ActionInfo> &actionList, bool useToggled) const {
-    for (const LC_ActionFactoryBase::ActionInfo a: actionList){
+    for (const LC_ActionFactoryBase::ActionInfo &a: actionList){
         createAction_MW(a.key, a.slot, a.text, a.iconName, a.themeIconName, group, map, useToggled);
     }
 }

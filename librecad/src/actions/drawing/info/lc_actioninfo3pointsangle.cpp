@@ -180,6 +180,6 @@ void LC_ActionInfo3PointsAngle::onMouseRightButtonRelease([[maybe_unused]]int st
     setStatus(getStatus() - 1);
 }
 
-RS2::CursorType LC_ActionInfo3PointsAngle::doGetMouseCursor(int status) {
+RS2::CursorType LC_ActionInfo3PointsAngle::doGetMouseCursor([[maybe_unused]] int status) {
     return RS2::CadCursor;
 }
