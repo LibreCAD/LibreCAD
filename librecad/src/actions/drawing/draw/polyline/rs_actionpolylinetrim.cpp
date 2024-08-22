@@ -128,7 +128,6 @@ void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionPolylineTrim::mouseMoveEvent end");
 }
 
-// fixme - complete refactoring
 void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case ChooseEntity: {

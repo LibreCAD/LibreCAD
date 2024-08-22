@@ -107,9 +107,10 @@ void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
                 double scale = graphic->getPaperScale();
                 graphic->setPaperInsertionBase(pinsbase - pPoints->v2 * scale + pPoints->v1 * scale);
                 
-                //fixme - remove debug code
-//                const RS_Vector &pib = graphic->getPaperInsertionBase();
-//                LC_ERR << "PIB:" <<  pib.x << " , " << pib.y;
+#ifdef DEBUG_PAPER_INSERTION_BASE
+                const RS_Vector &pib = graphic->getPaperInsertionBase();
+                LC_ERR << "PIB:" <<  pib.x << " , " << pib.y;
+#endif
             }
             pPoints->v1 = pPoints->v2;
             graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items

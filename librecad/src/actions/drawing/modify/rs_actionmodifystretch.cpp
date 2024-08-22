@@ -105,7 +105,7 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
                 deletePreview();
                 mouse= getSnapAngleAwarePoint(e, pPoints->referencePoint, mouse, true);
                 pPoints->targetPoint = mouse;
-
+                // fixme - isn't it more reliable to rely on RS_Modification::stretch there?
                 preview->addStretchablesFrom(*container, pPoints->firstCorner, pPoints->secondCorner);
                 //preview->move(targetPoint-referencePoint);
                 preview->stretch(pPoints->firstCorner, pPoints->secondCorner,
@@ -156,7 +156,7 @@ void RS_ActionModifyStretch::onMouseLeftButtonRelease([[maybe_unused]]int status
         fireCoordinateEventForSnap(e);
     }
 }
-// fixme - default back - remove as well as from other actions
+// fixme - default back - remove as well as from other actions and rely to parent class
 void RS_ActionModifyStretch::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     initPrevious(status);

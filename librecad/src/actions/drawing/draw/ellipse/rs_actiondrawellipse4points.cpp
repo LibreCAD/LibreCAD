@@ -87,7 +87,6 @@ void RS_ActionDrawEllipse4Points::trigger(){
 void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent *e){
 //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent begin");
 
-// fixme - review?
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
     if (status == SetPoint1){

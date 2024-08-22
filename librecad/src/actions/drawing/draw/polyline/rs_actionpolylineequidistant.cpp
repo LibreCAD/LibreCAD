@@ -38,7 +38,6 @@
 #include "rs_polyline.h"
 #include "qg_polylineequidistantoptions.h"
 
-// fixme - options
 RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(RS_EntityContainer& container,
 														   RS_GraphicView& graphicView)
 	:RS_PreviewActionInterface("Create Equidistant Polylines",

@@ -88,7 +88,7 @@ RS_Entity* RS_DimRadial::clone() const {
 QString RS_DimRadial::getMeasuredLabel() {
 
     // Definitive dimension line:
-	double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
+    double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
 
     // fixme - try to read settings once during action lifecycle
     if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true) ) {

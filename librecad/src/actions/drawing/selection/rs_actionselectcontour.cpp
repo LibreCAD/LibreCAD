@@ -56,7 +56,7 @@ void RS_ActionSelectContour::mouseMoveEvent(QMouseEvent *event){
 
 void RS_ActionSelectContour::trigger(){
     if (en){
-        if (en->isAtomic()){ // fixme - why so??? why it's not suitable to select, say, polyline here too?
+        if (en->isAtomic()){ // fixme - why it is so??? why it's not suitable to select, say, polyline here too?
             RS_Selection s(*container, graphicView);
             s.selectContour(en);
             updateSelectionWidget();

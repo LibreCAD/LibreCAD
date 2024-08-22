@@ -143,7 +143,7 @@ void RS_ActionInterface::mouseMoveEvent(QMouseEvent*) {}
  * This function can be overwritten by the implementing action.
  * The default implementation does nothing.
  */
-// fixme - add default implementation
+// todo - add default implementation?
 void RS_ActionInterface::mousePressEvent(QMouseEvent*) {}
 
 /**
@@ -493,9 +493,6 @@ void RS_ActionInterface::setMouseCursor(const RS2::CursorType &cursor){
         graphicView->setMouseCursor(cursor);
     }
 }
-
-// fixme/todo - add methods that will provide action an ability to set hint for specific key modifier in mouse widget...
-
 
 /**
  * Just a shortcut for updating mouse widgets with message that should be translated

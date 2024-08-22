@@ -78,9 +78,9 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
 
     restrictNothing = justAddAction("RestrictNothing", actionsMap);
     connect(restrictNothing, &QAction::triggered, this, &QG_SnapToolBar::slotRestrictNothing);
-    // fixme - in general, restrict nothing has no practical sense at all - as buttons are toggled, the amount of clicks is the same
-    // fixme - so probably, it's better to keep it hidden for now.
-    // todo - However, it may be practical, if restrict to angle will be implemented
+    // todo - in general, restrict nothing has no practical sense at all - as buttons are toggled, the amount of clicks is the same
+    // todo - so probably, it's better to keep it hidden for now.
+    // todo - However, it may be practical, if "restrict to angle" will be implemented
     restrictNothing->setVisible(false);
 
     addSeparator();

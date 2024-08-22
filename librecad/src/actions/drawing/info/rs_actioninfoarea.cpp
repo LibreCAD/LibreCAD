@@ -65,8 +65,8 @@ void RS_ActionInfoArea::trigger() {
 
     init(SetFirstPoint);
 }
-// fixme - consider displaying information in EntityInfo widget
-// fixme - add area info to entity info widget for coordinates mode
+// fixme - sand - consider displaying information in EntityInfo widget
+// fixme - sand - add area info to entity info widget for coordinates mode
 //todo: we regenerate the whole preview, it's possible to generate needed lines only
 /** display area circumference and preview of polygon **/
 void RS_ActionInfoArea::display(){
@@ -129,7 +129,7 @@ void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
             break;
         }
         case SetNextPoint: {
-            mouse = getSnapAngleAwarePoint(e, ia->back(), mouse); // fixme - delete preview....
+            mouse = getSnapAngleAwarePoint(e, ia->back(), mouse, true);
             ia->push_back(mouse);
             display();
             ia->pop_back();

@@ -48,7 +48,7 @@ public:
     virtual void addSelectionFrom(RS_EntityContainer& container);
     virtual void addAllFrom(RS_EntityContainer& container);
     virtual void addStretchablesFrom(RS_EntityContainer& container,
-                                     const RS_Vector& v1, const RS_Vector& v2); // // fixme - sand -  check whether this method is really needed here..
+                                     const RS_Vector& v1, const RS_Vector& v2);
     void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
     void addReferenceEntitiesToContainer(RS_EntityContainer* container);
     void clear() override;

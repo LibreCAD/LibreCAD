@@ -80,13 +80,13 @@ void RS_Grid::updatePointArray() {
 
     RS_Graphic* graphic = graphicView->getGraphic();
 
-// auto scale grid?
+    // auto scale grid?
     LC_GROUP("Appearance"); // fixme settings
     bool scaleGrid = LC_GET_BOOL("ScaleGrid", true);
-// get grid setting
+    // get grid setting
     RS_Vector userGrid;
     if (graphic) {
-//$ISOMETRICGRID == $SNAPSTYLE
+    //$ISOMETRICGRID == $SNAPSTYLE
         isometric = static_cast<bool>(graphic->getVariableInt("$SNAPSTYLE",0));
         crosshairType=graphic->getCrosshairType();
         userGrid = graphic->getVariableVector("$GRIDUNIT",
@@ -100,15 +100,11 @@ void RS_Grid::updatePointArray() {
     int minGridSpacing = LC_GET_INT("MinGridSpacing", 10);
     LC_GROUP_END();
 
-// std::cout<<"Grid userGrid="<<userGrid<<std::endl;
-
     pt.clear();
     metaX.clear();
     metaY.clear();
 
-// RS_DEBUG->print("RS_Grid::update: 001");
-
-// find out unit:
+    // find out unit:
     RS2::Unit unit = RS2::None;
     RS2::LinearFormat format = RS2::Decimal;
     if (graphic) {
@@ -117,36 +113,28 @@ void RS_Grid::updatePointArray() {
     }
 
     RS_Vector gridWidth;
-// RS_Vector metaGridWidth;
-
-// RS_DEBUG->print("RS_Grid::update: 002");
-
-// init grid spacing:
-// metric grid:
+    // init grid spacing:
+    // metric grid:
     if (RS_Units::isMetric(unit) || unit==RS2::None ||
         format==RS2::Decimal || format==RS2::Engineering) {
-//metric grid
+        //metric grid
         gridWidth = getMetricGridWidth(userGrid, scaleGrid, minGridSpacing);
 
     }else {
-// imperial grid:
+        // imperial grid:
         gridWidth = getImperialGridWidth(userGrid, scaleGrid, minGridSpacing);
 
     }
 
-// RS_DEBUG->print("RS_Grid::update: 013");
-
-// for grid info:
+    // for grid info:
     spacing = gridWidth.x;
     metaSpacing = metaGridWidth.x;
-//std::cout<<"Grid spacing="<<spacing<<std::endl;
-//std::cout<<"Grid metaSpacing="<<metaSpacing<<std::endl;
 
     if (gridWidth.x>minimumGridWidth && gridWidth.y>minimumGridWidth &&
         graphicView->toGuiDX(gridWidth.x)>2 &&
         graphicView->toGuiDY(gridWidth.y)>2) {
 
-// find grid boundaries
+        // find grid boundaries
         double left = (int)(graphicView->toGraphX(0) / gridWidth.x)
                       * gridWidth.x;
         double right = (int)(graphicView->toGraphX(graphicView->getWidth()) /
@@ -163,21 +151,17 @@ void RS_Grid::updatePointArray() {
         top += gridWidth.y;
         bottom -= gridWidth.y;
 
-//top/bottom is reversed with RectF definition
+        //top/bottom is reversed with RectF definition
         LC_Rect const rect{{left, bottom}, {right, top}};
 
-// populate grid points and metaGrid line positions: pts, metaX, metaY
+        // populate grid points and metaGrid line positions: pts, metaX, metaY
         if(isometric){
             createIsometricGrid(rect, gridWidth);
         }else{
             createOrthogonalGrid(rect, gridWidth);
 
         }
-
-// RS_DEBUG->print("RS_Grid::update: 015");
     }
-
-// RS_DEBUG->print("RS_Grid::update: OK");
 }
 
 
@@ -195,12 +179,9 @@ RS_Vector RS_Grid::getMetricGridWidth(RS_Vector const &userGrid, bool scaleGrid,
     } else {
         gridWidth.y = minimumGridWidth;
     }
-
-// RS_DEBUG->print("RS_Grid::update: 003");
-
 // auto scale grid
-//scale grid by drawing setting as well, bug#3416862
-// std::cout<<"RS_Grid::updatePointArray(): userGrid="<<userGrid<<std::endl;
+    //scale grid by drawing setting as well, bug#3416862
+    // std::cout<<"RS_Grid::updatePointArray(): userGrid="<<userGrid<<std::endl;
     if (scaleGrid || userGrid.x <= minimumGridWidth || userGrid.y <= minimumGridWidth) {
         if (scaleGrid || userGrid.x <= minimumGridWidth) {
             while (graphicView->toGuiDX(gridWidth.x) < minGridSpacing) {
@@ -213,17 +194,17 @@ RS_Vector RS_Grid::getMetricGridWidth(RS_Vector const &userGrid, bool scaleGrid,
             }
         }
     }
-// std::cout<<"RS_Grid::updatePointArray(): gridWidth="<<gridWidth<<std::endl;
+    // std::cout<<"RS_Grid::updatePointArray(): gridWidth="<<gridWidth<<std::endl;
     metaGridWidth.x = gridWidth.x * 10;
     metaGridWidth.y = gridWidth.y * 10;
 
-// RS_DEBUG->print("RS_Grid::update: 004");
+    // RS_DEBUG->print("RS_Grid::update: 004");
     return gridWidth;
 }
 
 RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGrid, int minGridSpacing) {
     RS_Vector gridWidth;
-// RS_DEBUG->print("RS_Grid::update: 005");
+    // RS_DEBUG->print("RS_Grid::update: 005");
 
     if (userGrid.x > 0.0) {
         gridWidth.x = userGrid.x;
@@ -236,7 +217,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
     } else {
         gridWidth.y = 1.0 / 1024.0;
     }
-// RS_DEBUG->print("RS_Grid::update: 006");
+    // RS_DEBUG->print("RS_Grid::update: 006");
 
     RS2::Unit unit = RS2::None;
 //	RS2::LinearFormat format = RS2::Decimal;
@@ -244,14 +225,14 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
 
     if (graphic) {
         unit = graphic->getUnit();
-//		format = graphic->getLinearFormat();
+    //		format = graphic->getLinearFormat();
     }
 
     if (unit == RS2::Inch) {
-// RS_DEBUG->print("RS_Grid::update: 007");
+    // RS_DEBUG->print("RS_Grid::update: 007");
 
-// auto scale grid
-//scale grid by drawing setting as well, bug#3416862
+    // auto scale grid
+        //scale grid by drawing setting as well, bug#3416862
         if (scaleGrid || userGrid.x <= minimumGridWidth || userGrid.y <= minimumGridWidth) {
             if (scaleGrid || userGrid.x <= minimumGridWidth) {
                 while (graphicView->toGuiDX(gridWidth.x) < minGridSpacing) {

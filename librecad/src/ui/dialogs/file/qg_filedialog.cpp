@@ -411,7 +411,7 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
     RS_DEBUG->print("QG_FileDialog::getOpenFileName");
 
     // read default settings:
-    LC_GROUP("Paths"); // fixme - settings
+    LC_GROUP("Paths");
     QString defDir = LC_GET_STR("Open",
                                           RS_SYSTEM->getHomeDir());
     //QString defFilter = RS_SETTINGS->readEntry("/OpenFilter",

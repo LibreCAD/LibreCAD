@@ -926,10 +926,6 @@ void RS_GraphicView::zoomPageEx() {
     offsetY =
         (int) ((getHeight() - borderTop - borderBottom - (printAreaSizeInViewCoordinates.y) * fy) / 2.0 + paperInsertionBase.y * fy / paperScale) + borderBottom;
 
-// fixme - remove debug code
-//    LC_ERR << " Zoom Ex " << offsetX << " , " << offsetY << " Factor: " << fx << "  Paper Scale: " << paperScale;
-//    LC_ERR << "PIB:" << paperInsertionBase.x << " , " << paperInsertionBase.y;
-
     redraw();
 }
 
@@ -1029,7 +1025,7 @@ void RS_GraphicView::setPenForOverlayEntity(RS_Painter *painter, RS_Entity *e, d
         case RS2::EntityRefLine:
         case RS2::EntityRefCircle:
         case RS2::EntityRefArc: {
-            // fixme - if not ref point are enabled, draw as transparent?
+            // todo - if not ref point are enabled, draw as transparent? Actually, if actions are correct, we should not be there..
             RS_Pen pen = e->getPen(true);
             if (e->isHighlighted()) {
                 pen.setColor(m_colorData->previewReferenceHighlightedEntitiesColor);
@@ -1522,7 +1518,6 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
 
 
 #ifdef DEBUG_PRINT_PREVIEW_POINTS
-    // fixme - remove debug code!!!
     // drawing zero
     const RS_Vector &zero = RS_Vector(0, 0);
     RS_Vector zeroGui = toGui(RS_Vector(zero) / scale);

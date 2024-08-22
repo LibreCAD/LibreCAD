@@ -41,13 +41,11 @@ RS_ActionPolylineAppend::RS_ActionPolylineAppend(
     actionType = RS2::ActionPolylineAppend;
 }
 
-// fixme - add options similar to draw polyline (for selecting arc etc)
-
 void RS_ActionPolylineAppend::trigger(){
 
     RS_DEBUG->print("RS_ActionPolylineAppend::trigger()");
 
-    RS_PreviewActionInterface::trigger();
+    RS_ActionDrawPolyline::trigger();
 
     if (!getPolyline()){
         return;

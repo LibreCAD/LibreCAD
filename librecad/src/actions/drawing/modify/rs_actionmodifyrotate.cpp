@@ -38,8 +38,8 @@
 #include "rs_arc.h"
 #include "lc_modifyrotateoptions.h"
 
-// fixme - options for point selection mode
-// fixme - sand - NAVIGATE TO OPTIONS WIDGET BY KEYBOARD (FOCUS from action, TABS) - so it should be possible not to move mouse to change some option
+// fixme - sand - add options for point selection mode (ref point/center)? Or just remove center selection first and have one way?
+// fixme - sand - GENERAL: NAVIGATE TO OPTIONS WIDGET BY KEYBOARD (FOCUS from action, TABS) - so it should be possible not to move mouse to change some option
 
 RS_ActionModifyRotate::RS_ActionModifyRotate(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -230,7 +230,7 @@ void RS_ActionModifyRotate::previewRotationCircleAndPoints(const RS_Vector &cent
         }
     }
 }
-// fixme - sand -  support for focus of options widgets by keyboard...
+// fixme - sand -  support for focus of options widgets by keyboard...this should be removed as it may potentially may conflict with some shortcut. We need separate action for this..
 void RS_ActionModifyRotate::keyPressEvent(QKeyEvent *e) {
     int key = e->key();
     switch (key) {

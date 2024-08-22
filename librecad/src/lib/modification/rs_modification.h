@@ -148,7 +148,7 @@ struct RS_Rotate2Data : public LC_ModifyOperationFlags{
     double angle1 = 0.;
     double angle2 = 0.;
     bool mirrorAngles = false;
-    bool sameAngle2ForCopies = false; // fixme - remove later
+    bool sameAngle2ForCopies = false;
 };
 
 

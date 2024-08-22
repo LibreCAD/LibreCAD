@@ -43,9 +43,6 @@ LC_ActionFactory::LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandle
     : LC_ActionFactoryBase(parent, a_handler){
 }
 // todo - add explanations for commands for actions (probably mix with commandItems) as it was mentioned in issue #570
-// todo fixme - review and add proper support of shortcuts, add shortcut management UI
-
-// fixme - cleanup c action handler slots if no issues with ActionType based setup will be discovered, and get rid of template method
 
 void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm, bool useTheme){
     using_theme = useTheme;

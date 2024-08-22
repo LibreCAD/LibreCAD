@@ -72,7 +72,7 @@ void LC_ShortcutsTreeView::setup(LC_ShortcutsTreeModel *treeModel) {
     setItemDelegate(delegate);
 }
 
-// fixme - duplicated code from LayerTreeView. Most probably, need separate tree widget that supports expanded state
+// todo - duplicated code from LayerTreeView. Most probably, need separate tree widget that supports expanded state
 
 QStringList LC_ShortcutsTreeView::saveTreeExpansionState(){
     QStringList treeExpansionState;

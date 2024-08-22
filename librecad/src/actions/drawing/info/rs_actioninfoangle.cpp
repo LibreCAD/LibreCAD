@@ -47,7 +47,7 @@ struct RS_ActionInfoAngle::Points {
 	RS_Vector intersection;
 };
 
-// fixme - adding information about angle to entity view
+// fixme - sand - adding information about angle to entity info view
 
 RS_ActionInfoAngle::RS_ActionInfoAngle(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)

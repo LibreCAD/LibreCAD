@@ -328,12 +328,13 @@ void LC_ActionModifyBreakDivide::createEntitiesForCircle(RS_Circle *circle, RS_V
 
             // for circle divide mode, add visual indication of divide points if we're creating preview
             if (preview){
-                // fixme - refpoints visibility
-                RS_Vector dividePoint1 = center.relative(radius, data->snapSegmentStartAngle);
-                createRefSelectablePoint(dividePoint1, list);
+                // todo - ignore refpoints visibility for divide?
+                 RS_Vector dividePoint1 = center.relative(radius, data->snapSegmentStartAngle);
+                 createRefSelectablePoint(dividePoint1, list);
 
-                RS_Vector dividePoint2 = center.relative(radius, data->snapSegmentEndAngle);
-                createRefSelectablePoint(dividePoint2, list);
+                 RS_Vector dividePoint2 = center.relative(radius, data->snapSegmentEndAngle);
+                 createRefSelectablePoint(dividePoint2, list);
+
             }
         }
         // don't need temporary data, so delete it

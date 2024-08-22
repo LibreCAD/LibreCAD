@@ -192,15 +192,9 @@ void RS_ActionModifyRotate2::previewRefPointsForMultipleCopies( [[maybe_unused]]
 
         double angleSum = angle1ForCopy + angle2ForCopy;
         previewSnapAngleMark(center2, angleSum);
-// fixme - cleanup
-//                RS_Vector center1 = data->center1;
-//                center1.rotate(center2, angle2ForCopy);
-
-//                previewRefPoint(center1);
         if (i == 1) {
             previewRefLine(data->center1, center2);
             previewRefPoint(center2);
-//                    previewRefLine(center2, center1);
         }
     }
 }

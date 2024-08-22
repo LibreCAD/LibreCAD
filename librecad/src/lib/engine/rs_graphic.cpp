@@ -475,7 +475,7 @@ bool RS_Graphic::loadTemplate(const QString &filename, RS2::FormatType type) {
     setModified(false);
     layerList.setModified(false);
     blockList.setModified(false);
-    QFileInfo finfo; // fixme - REVIEW LATER - it looks suspicious, for which file info last modified is used???
+    QFileInfo finfo;
     modifiedTime = finfo.lastModified();
 
     RS_DEBUG->print("RS_Graphic::loadTemplate(%s): OK", filename.toLatin1().data());

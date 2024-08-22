@@ -271,7 +271,8 @@ void RS_ActionDrawArcTangential::updateMouseButtonHints() {
     }
 }
 
-// fixme - add suport of commands
+// fixme - add suport of commands?
+
 RS2::CursorType RS_ActionDrawArcTangential::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;
 }

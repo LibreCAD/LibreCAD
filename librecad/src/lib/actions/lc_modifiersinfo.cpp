@@ -30,8 +30,6 @@ const QString LC_ModifiersInfo::MSG_MIRROR_ANGLE = QObject::tr("Use Mirrored Ang
 const QString LC_ModifiersInfo::MSG_REL_ZERO = QObject::tr("Snap to Relative Zero");
 const QString LC_ModifiersInfo::MSG_NONE = "";
 
-// fixme - restore translation
-
 LC_ModifiersInfo LC_ModifiersInfo::SHIFT_ANGLE_SNAP(){
     return SHIFT(MSG_ANGLE_SNAP);
 }

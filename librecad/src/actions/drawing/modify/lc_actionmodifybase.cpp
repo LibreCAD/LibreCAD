@@ -34,7 +34,7 @@ void LC_ActionModifyBase::selectionCompleted([[maybe_unused]] bool singleEntity,
 #define SHOW_MODIFICATION_DIALOGS  false;
 
 bool LC_ActionModifyBase::isShowModifyActionDialog() {
-    return SHOW_MODIFICATION_DIALOGS; // fixme - add options support?
+    return SHOW_MODIFICATION_DIALOGS; // fixme - add options support? or just remove dialogs later?
 }
 
 void LC_ActionModifyBase::setUseCurrentLayer(bool b) {

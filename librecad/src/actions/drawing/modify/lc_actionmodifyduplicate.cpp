@@ -268,10 +268,8 @@ RS2::CursorType LC_ActionModifyDuplicate::doGetMouseCursor([[maybe_unused]]int s
 
 RS_Vector LC_ActionModifyDuplicate::doGetMouseSnapPoint(QMouseEvent *e){
     RS_Vector snapped = snapPoint(e);
-    // Snapping to angle(15*) if shift key is pressed
     if (getStatus() == SetOffsetDirection){
-        // fixme - angle snap mark
-        snapped = getSnapAngleAwarePoint(e, getEntityCenterPoint(selectedEntity), snapped);
+        snapped = getSnapAngleAwarePoint(e, getEntityCenterPoint(selectedEntity), snapped, isMouseMove(e));
     }
     return snapped;
 }

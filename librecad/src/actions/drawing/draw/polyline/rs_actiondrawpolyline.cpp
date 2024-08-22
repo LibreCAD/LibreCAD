@@ -177,8 +177,7 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
 
 void RS_ActionDrawPolyline::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
 
-    // fixme - correct snap coordinate for line segment drawing!!!!
-    RS_Vector mouse = snapPoint(e);
+     RS_Vector mouse = snapPoint(e);
     if (status == SetNextPoint && m_mode == Line){
         mouse = getSnapAngleAwarePoint(e, pPoints->point, mouse, true);
     }

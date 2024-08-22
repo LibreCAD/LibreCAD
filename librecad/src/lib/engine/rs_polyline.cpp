@@ -466,7 +466,7 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
     double dist;
     //find the nearest one
     int length=count();
-		std::vector<RS_Vector> intersections(length);
+    std::vector<RS_Vector> intersections(length);
     if(length>1){//sort the polyline entity start/end point order
         int i(0);
         double d0,d1;
@@ -479,7 +479,7 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
         en1->getNearestEndpoint(vEnd,&d1);
         if(d0<d1) en0->revertDirection();
         for(i=1;i<length;i++){
-                //linked to head-tail chain
+            //linked to head-tail chain
             en1=entityAt(i);
             vStart=en1->getStartpoint();
             vEnd=en1->getEndpoint();
@@ -489,14 +489,14 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
             intersections[i-1]=(en0->getEndpoint()+en1->getStartpoint())*0.5;
             en0=en1;
         }
-		if (isClosed()) {
-			en1=entityAt(0);
+        if (isClosed()) {
+            en1=entityAt(0);
             intersections[length-1]=(en0->getEndpoint()+en1->getStartpoint())*0.5;
-		}
+        }
 
     }
     RS_Entity* en(getNearestEntity(coord, &dist, RS2::ResolveNone));
-	if(!en) return false;
+    if(!en) return false;
     int indexNearest=findEntity(en);
     //        RS_Vector vp(en->getNearestPointOnEntity(coord,false));
     //        RS_Vector direction(en->getTangentDirection(vp));
@@ -507,7 +507,7 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
     //        move(vp1);
     //        return true;
 
-    RS_Polyline* pnew= static_cast<RS_Polyline*>(clone());
+    auto* pnew= static_cast<RS_Polyline*>(clone());
     int i=indexNearest;
     int previousIndex(i);
     pnew->entityAt(i)->offset(coord,distance);
@@ -519,12 +519,12 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 //        RS_VectorSolutions sol1;
         double dmax(RS_TOLERANCE15);
         RS_Vector trimP(false);
-		for(const RS_Vector& vp: sol0){
+        for(const RS_Vector& vp: sol0){
 
-			double d0( (vp - pnew->entityAt(previousIndex)->getStartpoint()).squared());//potential bug, need to trim better
+            double d0( (vp - pnew->entityAt(previousIndex)->getStartpoint()).squared());//potential bug, need to trim better
             if(d0>dmax) {
                 dmax=d0;
-				trimP=vp;
+                trimP=vp;
             }
         }
         if(trimP.valid){
@@ -545,11 +545,11 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 //        RS_VectorSolutions sol1;
         double dmax(RS_TOLERANCE15);
         RS_Vector trimP(false);
-		for(const RS_Vector& vp: sol0){
-			double d0( (vp - pnew->entityAt(previousIndex)->getEndpoint()).squared());//potential bug, need to trim better
+        for(const RS_Vector& vp: sol0){
+            double d0( (vp - pnew->entityAt(previousIndex)->getEndpoint()).squared());//potential bug, need to trim better
             if(d0>dmax) {
                 dmax=d0;
-				trimP=vp;
+                trimP=vp;
             }
         }
         if(trimP.valid){
@@ -566,20 +566,20 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
     //trim
     //connect and trim        RS_Modification m(*container, graphicView);
     for(i=0;i<length;i++){
-		RS_Entity* en0;
-		RS_Entity* en1;
-		if (i<length-1){
-			en0=pnew->entityAt(i);
-			en1=pnew->entityAt(i+1);
-		}else{
-			if (isClosed()) {
-				en0=pnew->entityAt(i);
-				en1=pnew->entityAt(0);
-			}else{
-				break;			
-			}
-		}
-		RS_VectorSolutions sol0=RS_Information::getIntersection(en0,en1,true);
+        RS_Entity* en0;
+        RS_Entity* en1;
+        if (i<length-1){
+            en0=pnew->entityAt(i);
+            en1=pnew->entityAt(i+1);
+        }else{
+            if (isClosed()) {
+                en0=pnew->entityAt(i);
+                en1=pnew->entityAt(0);
+            }else{
+                break;
+            }
+        }
+        RS_VectorSolutions sol0=RS_Information::getIntersection(en0,en1,true);
         if(sol0.getNumber()==0){
             sol0=RS_Information::getIntersection(en0,en1);
 //            RS_Vector vp0(pnew->entityAt(i)->getEndpoint());
@@ -587,16 +587,16 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 //            double a0(intersections.at(i).angleTo(vp0));
 //            double a1(intersections.at(i).angleTo(vp1));
             RS_VectorSolutions sol1;
-			//This lead result isn't connected.
-			//for(const RS_Vector& vp: sol0){
-			//	if(!RS_Math::isAngleBetween(intersections.at(i).angleTo(vp),
+//This lead result isn't connected.
+//for(const RS_Vector& vp: sol0){
+//	if(!RS_Math::isAngleBetween(intersections.at(i).angleTo(vp),
             //                               pnew->entityAt(i)->getDirection2(),
             //                               pnew->entityAt(i+1)->getDirection1(),
-			//							   false)){
-			//		sol1.push_back(vp);
+//							   false)){
+//		sol1.push_back(vp);
             //    }
             //}
-			sol1=sol0;
+            sol1=sol0;
             if(sol1.getNumber()==0) continue;
             RS_Vector trimP(sol1.getClosest(intersections.at(i)));
             static_cast<RS_AtomicEntity*>(en0)->trimEndpoint(trimP);

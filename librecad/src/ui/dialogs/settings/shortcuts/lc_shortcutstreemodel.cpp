@@ -312,7 +312,7 @@ const QMap<QString, LC_ShortcutInfo *> &LC_ShortcutsTreeModel::getShortcuts() co
 void LC_ShortcutsTreeModel::setFilterForConflicts(bool filter) {
     filterForConflicts = filter;
 }
-// fixme - thinks about the way how shortcuts should be stored..
+
 void LC_ShortcutsTreeModel::collectShortcuts(QList<LC_ShortcutInfo *> &items, bool includeEmpty) {
     for (auto shortcut : shortcuts){
         if (shortcut->hasKey() || includeEmpty){

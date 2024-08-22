@@ -54,8 +54,6 @@ QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, Qt::WindowFlag
     lRightButton->setText("");
     lMousePixmap->setPixmap( QPixmap(":/icons/mouse.svg").scaled( height, height));
 
-    // fixme modifiers setup
-
     int halfHeight = height/2 - 2;
     lblCtrl->setMinimumSize(halfHeight, halfHeight);
     lblCtrl->setMaximumSize(halfHeight, halfHeight);
