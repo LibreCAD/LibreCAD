@@ -392,6 +392,11 @@ const LC_CommandItem g_commandList[] = {
             {{"ae", QObject::tr("ae", "arc ellipse")}},
             RS2::ActionDrawEllipseArcAxis
         },
+        {
+            {{"arcellc1ax", QObject::tr("arcellc1ax", "arc ellipse 1 point")}},
+            {{"ae1", QObject::tr("ae1", "arc ellipse 1 point")}},
+            RS2::ActionDrawEllipseArc1Point
+        },
         // draw parabola by 4 points - v2.2.1
         {
             {{"parabola4p", QObject::tr("parabola4p", "Parabola 4 points")}},
@@ -418,6 +423,11 @@ const LC_CommandItem g_commandList[] = {
             {{"ellipsec2p", QObject::tr("ellipsec2p", "ellipse axis")}},
             {{"ea", QObject::tr("ea", "ellipse axis")}},
             RS2::ActionDrawEllipseAxis
+        },
+        {
+            {{"ellipsec1p", QObject::tr("ellipsec1p", "ellipse 1 point")}},
+            {{"ea1", QObject::tr("ea1", "ellipse 1 point")}},
+            RS2::ActionDrawEllipse1Point
         },
         // draw ellipse by foci point - v2.2.0r2
         {

@@ -28,6 +28,9 @@
    </property>
    <item row="0" column="7">
     <widget class="QCheckBox" name="cbFreeAngle">
+     <property name="toolTip">
+      <string>If checked, major radius angle is specified by mouse</string>
+     </property>
      <property name="text">
       <string>Free</string>
      </property>
@@ -54,6 +57,9 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Length of major radius of ellipse</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="6">
@@ -69,6 +75,9 @@
        <width>60</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Value of angle for major radius</string>
      </property>
     </widget>
    </item>
@@ -88,6 +97,9 @@
    </item>
    <item row="0" column="5">
     <widget class="QCheckBox" name="cbAngle">
+     <property name="toolTip">
+      <string>If checked, angle for major radius may be specified</string>
+     </property>
      <property name="text">
       <string>Base Angle:</string>
      </property>
@@ -106,6 +118,9 @@
        <width>60</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Length of minor radius of ellipse</string>
      </property>
     </widget>
    </item>

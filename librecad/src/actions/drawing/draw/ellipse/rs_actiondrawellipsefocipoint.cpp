@@ -129,7 +129,7 @@ void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){
                                 pPoints->focus2.distanceTo(pPoints->point));
             if (pPoints->d > pPoints->c + RS_TOLERANCE){
                 auto ellipse = previewEllipse({pPoints->center, pPoints->major * pPoints->d, findRatio(), 0., 0., false});
-                previewEllipseReferencePoints(ellipse, true, mouse);
+                previewEllipseReferencePoints(ellipse, true, false, mouse);
             }
 
             if (showRefEntitiesOnPreview) {

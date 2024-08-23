@@ -58,6 +58,8 @@ protected:
     void setAngleToActionAndView(QString val);
     void setAngleIsFreeToActionAndView(bool val);
     void setUseAngleAngleToActionAndView(bool val);
+
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
 };
 
 #endif // LC_ELLIPSE1POINTOPTIONS_H

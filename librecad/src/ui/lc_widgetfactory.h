@@ -79,6 +79,7 @@ private:
     QList<QAction*> polyline_actions;
     QList<QAction*> select_actions;
     QList<QAction*> dimension_actions;
+    QList<QAction*> other_drawing_actions;
     QList<QAction*> modify_actions;
     QList<QAction*> order_actions;
     QList<QAction*> info_actions;
@@ -86,21 +87,21 @@ private:
     QList<QAction*> block_actions;
     QList<QAction*> pen_actions;
 
-    LC_DockWidget *leftDocWidgetTR(const char *title, const QList<QAction *> &actions, int columns, int iconSize);
-    QToolBar *createGenericToolbarTR(const char *title, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames);
+    LC_DockWidget *leftDocWidget(const QString& title, const char* name, const QList<QAction *> &actions, int columns, int iconSize);
+    QToolBar *createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames);
     void addToTop(QToolBar *toolbar);
     void addToBottom(QToolBar *toolbar);
     void addToLeft(QToolBar *toolbar);
-    QToolButton *toolButtonTR(QToolBar *toolbar, const char *tooltip, const char *icon, const QList<QAction *>& actions);
+    QToolButton *toolButton(QToolBar *toolbar, const QString &tooltip, const char *icon, const QList<QAction *>& actions);
     void fillActionsList(QList<QAction *> &list,  const std::vector<const char *> &actionNames);
-    QToolBar *toolbarWithActionsTR(const char *title, QSizePolicy toolBarPolicy, const QList<QAction *> &actions);
-    QMenu* subMenuWithActionsTR(QMenu *parent, const char *title, const char *icon, const QList<QAction *> &actions);
-    QMenu* menuTR(const char* title, QMenuBar* parent);
-    QMenu *menu(const char *title, QMenuBar *parent, const std::vector<QString> &actionNames);
-    QMenu *doCreateSubMenuTR(QMenu *parent, const char *title, const char *icon) const;
+    QToolBar *toolbarWithActions(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction *> &actions);
+    QMenu* subMenuWithActions(QMenu *parent, const QString& title, const QString& name, const char *icon, const QList<QAction *> &actions);
+    QMenu* menu(const QString& title, const QString& name, QMenuBar* parent);
+    QMenu *menu(const QString& title, const QString& name,  QMenuBar *parent, const std::vector<QString> &actionNames);
+    QMenu *doCreateSubMenu(QMenu *parent, const QString& title, const QString& name, const char *icon) const;
     void addActions(QMenu *result, const std::vector<QString> &actionNames);
-    QMenu *subMenuTR(QMenu *parent, const char *title, const char *icon, const std::vector<QString> &actionNames);
-    QAction* urlActionTR(const char *title, const char *url);
+    QMenu *subMenu(QMenu *parent, const QString& title, const QString& name, const char *icon, const std::vector<QString> &actionNames);
+    QAction* urlActionTR(const QString& title, const char *url);
     void addAction(QMenu *menu, const char *actionName);
 };
 

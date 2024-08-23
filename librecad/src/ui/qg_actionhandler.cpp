@@ -199,6 +199,7 @@
 #include "lc_actioninfopickcoordinates.h"
 #include "lc_actioneditpastetransform.h"
 #include "lc_actioninfo3pointsangle.h"
+#include "lc_actiondrawellipse1point.h"
 
 /**
  * Constructor
@@ -631,6 +632,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionDrawEllipseArcAxis:
             a = new RS_ActionDrawEllipseAxis(*document, *view, true, id);
+            break;
+        case RS2::ActionDrawEllipse1Point:
+            a = new LC_ActionDrawEllipse1Point(*document, *view, false);
+            break;
+        case RS2::ActionDrawEllipseArc1Point:
+            a = new LC_ActionDrawEllipse1Point(*document, *view, true);
             break;
         case RS2::ActionDrawParabola4Points:
             a = new LC_ActionDrawParabola4Points(*document, *view);

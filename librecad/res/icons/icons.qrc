@@ -259,5 +259,7 @@
         <file>page_landscape.svg</file>
         <file>page_portait.svg</file>
         <file>shortcuts_settings.svg</file>
+        <file>ellipse_1_point.svg</file>
+        <file>ellipse_arc_1_point.svg</file>
     </qresource>
 </RCC>

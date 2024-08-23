@@ -40,6 +40,10 @@ LC_Ellipse1PointOptions::~LC_Ellipse1PointOptions(){
     delete ui;
 }
 
+bool LC_Ellipse1PointOptions::checkActionRttiValid(RS2::ActionType actionType) {
+    return actionType == RS2::ActionDrawEllipse1Point || RS2::ActionDrawEllipseArc1Point;
+}
+
 void LC_Ellipse1PointOptions::doSaveSettings() {
     save("MajorRadius", ui->leMajorRadius->text());
     save("MinorRadius", ui->leMinorRadius->text());

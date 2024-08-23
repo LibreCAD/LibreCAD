@@ -164,7 +164,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                                                0., pPoints->isArc ? 2. * M_PI : 0., false});
 
                 if (showRefEntitiesOnPreview) {
-                    previewEllipseReferencePoints(ellipse, true, mouse);
+                    previewEllipseReferencePoints(ellipse, true, false, mouse);
                 }
                 drawPreview();
             }
@@ -191,6 +191,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->center);
                     previewRefSelectablePoint(ellipse->getStartpoint());
+                    previewEllipseReferencePoints(ellipse, false, true, mouse);
                 }
             }
             drawPreview();
@@ -218,6 +219,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                     point.rotate(pPoints->center, /*-*/ pPoints->m_vMajorP.angle());
                     previewRefPoint(point);
                     previewRefSelectablePoint(ellipse->getEndpoint());
+                    previewEllipseReferencePoints(ellipse, false, true, mouse);
                 }
             }
             drawPreview();

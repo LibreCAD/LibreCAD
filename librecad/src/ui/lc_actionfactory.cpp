@@ -181,7 +181,9 @@ void LC_ActionFactory::createDrawCurveActions(QMap<QString, QAction*>& map, QAct
 }
 
 void LC_ActionFactory::createDrawEllipseActions(QMap<QString, QAction *> &map, QActionGroup *group) {
-    createActionHandlerActions(map, group,{
+    createActionHandlerActions(map, group, {
+        {"DrawEllipse1Point",        RS2::ActionDrawEllipse1Point,        tr("&Ellipse (1 Point)"),           ":/icons/ellipse_1_point.svg"},
+        {"DrawEllipseArc1Point",     RS2::ActionDrawEllipseArc1Point,     tr("&Ellipse Arc (1 Point)"),       ":/icons/ellipse_arc_1_point.svg"},
         {"DrawEllipseAxis",          RS2::ActionDrawEllipseAxis,          tr("&Ellipse (Axis)"),              ":/icons/ellipse_axis.svg"},
         {"DrawEllipseArcAxis",       RS2::ActionDrawEllipseArcAxis,       tr("Ellipse &Arc (Axis)"),          ":/icons/ellipse_arc_axis.svg"},
         {"DrawEllipseFociPoint",     RS2::ActionDrawEllipseFociPoint,     tr("Ellipse &Foci Point"),          ":/icons/ellipse_foci_point.svg"},
