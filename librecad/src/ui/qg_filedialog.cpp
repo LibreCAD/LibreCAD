@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include "qg_filedialog.h"
-
 #include <QMessageBox>
 #include <QSettings>
 #ifdef Q_OS_LINUX
@@ -33,34 +31,70 @@
     #include <QStyle>
 #endif
 
+#include "qg_filedialog.h"
+#include "rs_debug.h"
 #include "rs_settings.h"
 #include "rs_system.h"
-#include "rs_debug.h"
 
-void QG_FileDialog::getType(const QString filter)
+namespace {
+QString getExtension (RS2::FormatType type)
+{
+    switch (type) {
+    case RS2::FormatLFF:
+        return QString(".lff");
+    case RS2::FormatJWW:
+        return QString(".jww");
+    case RS2::FormatCXF:
+        return QString(".cxf");
+#ifdef DWGSUPPORT
+    case RS2::FormatDWG:
+        return QString(".dwg");
+#endif
+    default:
+        return QString(".dxf");
+    }
+}
+
+/**
+ * @brief hasExtension whether the file name as proper extension for the the format type
+ * @param fileName - file name
+ * @param type - the format type
+ * @return bool - true, if the file name extension matches the format
+ */
+bool hasExtension(const QString& fileName, RS2::FormatType ftype)
+{
+    QString extension = getExtension(ftype);
+    QStringList supported = {".cxf", ".dxf", ".lff"};
+    auto testExt = [&fileName, ftype](const QString& ext) {
+        return getExtension(ftype) == ext && fileName.endsWith(ext, Qt::CaseInsensitive);};
+    return std::any_of(supported.cbegin(), supported.cend(), testExt);
+}
+} // anonymouse namespace
+
+RS2::FormatType QG_FileDialog::getType(const QString& filter) const
 {
     if (filter== fLff) {
-        ftype = RS2::FormatLFF;
+        return  RS2::FormatLFF;
     } else if (filter == fCxf) {
-        ftype = RS2::FormatCXF;
+        return  RS2::FormatCXF;
     } else if (filter == fDxfrw2007 || filter == fDxfrw) {
-        ftype = RS2::FormatDXFRW;
+        return  RS2::FormatDXFRW;
     } else if (filter == fDxfrw2004) {
-        ftype = RS2::FormatDXFRW2004;
+        return  RS2::FormatDXFRW2004;
     } else if (filter == fDxfrw2000) {
-        ftype = RS2::FormatDXFRW2000;
+        return  RS2::FormatDXFRW2000;
     } else if (filter == fDxfrw14) {
-        ftype = RS2::FormatDXFRW14;
+        return  RS2::FormatDXFRW14;
     } else if (filter == fDxfrw12) {
-        ftype = RS2::FormatDXFRW12;
+        return  RS2::FormatDXFRW12;
 #ifdef DWGSUPPORT
     } else if (filter == fDwg) {
-        ftype = RS2::FormatDWG;
+        return  RS2::FormatDWG;
 #endif
     } else if (filter == fJww) {
-        ftype = RS2::FormatJWW;
+        return  RS2::FormatJWW;
     } else if (filter == fDxf1) {
-        ftype = RS2::FormatDXF1;
+        return  RS2::FormatDXF1;
     }
 }
 
@@ -107,26 +141,6 @@ QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f, FileType type)
     }
 }
 
-QG_FileDialog::~QG_FileDialog(){
-}
-
-QString QG_FileDialog::getExtension (RS2::FormatType type) const{
-    switch (type) {
-    case RS2::FormatLFF:
-        return QString(".lff");
-    case RS2::FormatJWW:
-        return QString(".jww");
-    case RS2::FormatCXF:
-        return QString(".cxf");
-#ifdef DWGSUPPORT
-    case RS2::FormatDWG:
-        return QString(".dwg");
-#endif
-    default:
-        return QString(".dxf");
-    }
-}
-
 QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
 //    bool fileAccepted = false;
     setAcceptMode ( QFileDialog::AcceptOpen );
@@ -169,10 +183,9 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
         }
         fn = QDir::toNativeSeparators( QFileInfo(fn).absoluteFilePath() );
 
-        if (type) {
-            getType(selectedNameFilter());
+        ftype = getType(selectedNameFilter());
+        if (type)
             *type = ftype;
-        }
 
     // store new default settings:
         RS_SETTINGS->beginGroup("/Paths");
@@ -252,19 +265,17 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
 
     QFileInfo fi = QFileInfo( fl[0] );
     fn = QDir::toNativeSeparators( fi.absoluteFilePath() );
-    getType(selectedNameFilter());
+    ftype = getType(selectedNameFilter());
     if (type)
         *type = ftype;
 
     // append default extension:
-	if (!fi.fileName().endsWith(".dxf",Qt::CaseInsensitive))
+    if (!hasExtension(fi.fileName(), ftype))
         fn += getExtension(ftype);
 
     // store new default settings:
-    RS_SETTINGS->beginGroup("/Paths");
+    auto settingGuard = RS_SETTINGS->beginGroupGuard("/Paths");
     RS_SETTINGS->writeEntry("/Save", fi.absolutePath());
-    //RS_SETTINGS->writeEntry("/SaveFilter", fileDlg->selectedFilter());
-    RS_SETTINGS->endGroup();
 
     return fn;
 }
