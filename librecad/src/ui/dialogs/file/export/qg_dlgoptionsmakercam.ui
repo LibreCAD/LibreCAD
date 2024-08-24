@@ -34,6 +34,12 @@
    </property>
    <item alignment="Qt::AlignTop">
     <widget class="QGroupBox" name="gbLayers">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="title">
       <string>Layers</string>
      </property>
@@ -44,6 +50,12 @@
          <layout class="QHBoxLayout" name="hLayoutDefaultElementWidth">
           <item>
            <widget class="QLabel" name="lbDefaultElementWidth">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Default width of elements, mm</string>
             </property>

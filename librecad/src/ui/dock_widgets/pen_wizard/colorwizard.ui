@@ -35,7 +35,7 @@
    <item>
     <widget class="QFrame" name="frame_0">
      <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+      <enum>QFrame::NoFrame</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
@@ -62,7 +62,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="../../../res/extui/extui.qrc">
+         <iconset>
           <normaloff>:/extui/char_pm.png</normaloff>:/extui/char_pm.png</iconset>
         </property>
         <property name="iconSize">
@@ -86,7 +86,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="../../../res/ui/ui.qrc">
+         <iconset>
           <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
         </property>
         <property name="iconSize">
