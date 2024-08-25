@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>389</width>
-    <height>251</height>
+    <width>300</width>
+    <height>282</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -26,6 +26,18 @@
    <string>Arc</string>
   </property>
   <layout class="QVBoxLayout" name="gfdgf">
+   <property name="leftMargin">
+    <number>9</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>9</number>
+   </property>
+   <property name="bottomMargin">
+    <number>9</number>
+   </property>
    <item>
     <widget class="QLabel" name="lId">
      <property name="text">
@@ -74,12 +86,42 @@
      </item>
      <item>
       <widget class="QGroupBox" name="buttonGroup8">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="title">
         <string>Geometry</string>
        </property>
-       <layout class="QGridLayout">
+       <layout class="QGridLayout" columnstretch="0,0">
+        <property name="topMargin">
+         <number>9</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>9</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>6</number>
+        </property>
         <item row="2" column="0">
          <widget class="QLabel" name="lEndX">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>22</height>
+           </size>
+          </property>
           <property name="text">
            <string>Radius:</string>
           </property>
@@ -90,16 +132,34 @@
         </item>
         <item row="2" column="1">
          <widget class="QLineEdit" name="leRadius">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>64</width>
-            <height>0</height>
+            <height>22</height>
            </size>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="lCenterY">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>22</height>
+           </size>
+          </property>
           <property name="text">
            <string>Center (y):</string>
           </property>
@@ -110,16 +170,34 @@
         </item>
         <item row="1" column="1">
          <widget class="QLineEdit" name="leCenterY">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>64</width>
-            <height>0</height>
+            <height>22</height>
            </size>
           </property>
          </widget>
         </item>
         <item row="0" column="0">
          <widget class="QLabel" name="lCenterX">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>22</height>
+           </size>
+          </property>
           <property name="text">
            <string>Center (x):</string>
           </property>
@@ -130,16 +208,34 @@
         </item>
         <item row="0" column="1">
          <widget class="QLineEdit" name="leCenterX">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>64</width>
-            <height>0</height>
+            <height>22</height>
            </size>
           </property>
          </widget>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="lAngle1">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>22</height>
+           </size>
+          </property>
           <property name="text">
            <string>Start Angle:</string>
           </property>
@@ -150,26 +246,50 @@
         </item>
         <item row="3" column="1">
          <widget class="QLineEdit" name="leAngle1">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>64</width>
-            <height>0</height>
+            <height>22</height>
            </size>
           </property>
          </widget>
         </item>
         <item row="4" column="1">
          <widget class="QLineEdit" name="leAngle2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>64</width>
-            <height>0</height>
+            <height>22</height>
            </size>
           </property>
          </widget>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="lAngle2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>22</height>
+           </size>
+          </property>
           <property name="text">
            <string>End Angle:</string>
           </property>

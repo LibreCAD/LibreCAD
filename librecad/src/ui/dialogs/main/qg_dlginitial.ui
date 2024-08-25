@@ -31,7 +31,7 @@
         </sizepolicy>
        </property>
        <property name="frameShape">
-        <enum>QFrame::WinPanel</enum>
+        <enum>QFrame::NoFrame</enum>
        </property>
        <property name="frameShadow">
         <enum>QFrame::Sunken</enum>
@@ -64,7 +64,9 @@
           <string>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
-Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
+Please choose the unit you want to use for new drawings
+&lt;br&gt;
+and your preferred language for Ui and Command.&lt;br&gt;
 (You can changes these settings later.)</string>
          </property>
          <property name="alignment">
@@ -72,6 +74,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
          </property>
          <property name="wordWrap">
           <bool>true</bool>
+         </property>
+         <property name="indent">
+          <number>-1</number>
          </property>
         </widget>
        </item>
@@ -168,4 +173,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>ok()</slot>
+ </slots>
 </ui>
