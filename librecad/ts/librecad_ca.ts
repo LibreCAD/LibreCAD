@@ -886,7 +886,7 @@ la distància entre els punts=%2 és més gran que el diàmetre=%3</translation>
     <name>LC_ActionLayersExport</name>
     <message>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Desar capa &quot;%1&quot; com &quot;%2&quot; </translation>
+        <translation>S&apos;està desant la capa «%1» com a «%2» </translation>
     </message>
 </context>
 <context>
