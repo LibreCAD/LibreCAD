@@ -260,7 +260,7 @@ void LC_ActionDrawDimBaseline::onMouseLeftButtonRelease(int status, QMouseEvent 
     fireCoordinateEvent(snap);
 }
 
-void LC_ActionDrawDimBaseline::onCoordinateEvent(int status, bool isZero, const RS_Vector &mouse) {
+void LC_ActionDrawDimBaseline::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     switch (status){
         case SetExtPoint1: {
             auto dimCandidate = RS_Snapper::catchEntity(mouse, dimEntityTypes, RS2::ResolveNone);
@@ -401,7 +401,7 @@ QStringList LC_ActionDrawDimBaseline::getAvailableCommands() {
 
 void LC_ActionDrawDimBaseline::updateMouseButtonHints() {
     int status = getStatus();
-    switch (getStatus()) {
+    switch (status) {
         case SetExtPoint1:
             updateMouseWidgetTRCancel(tr("Select base linear/aligned dimension"), MOD_CTRL("Select distant extension point"));
             break;

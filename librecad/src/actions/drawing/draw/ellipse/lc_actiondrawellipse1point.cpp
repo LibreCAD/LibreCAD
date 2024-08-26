@@ -20,11 +20,11 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "qg_graphicview.h"
+#include "rs_graphicview.h"
+#include "rs_math.h"
 #include "lc_actiondrawellipse1point.h"
 #include "lc_ellipse1pointoptions.h"
 #include "lc_linemath.h"
-#include "rs_math.h"
 
 struct LC_ActionDrawEllipse1Point::Points {
 /** Center of ellipse */
@@ -190,12 +190,12 @@ void LC_ActionDrawEllipse1Point::onMouseLeftButtonRelease(int status, QMouseEven
     fireCoordinateEvent(snap);
 }
 
-void LC_ActionDrawEllipse1Point::onMouseRightButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionDrawEllipse1Point::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }
 
-void LC_ActionDrawEllipse1Point::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
+void LC_ActionDrawEllipse1Point::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     switch (status){
         case SetPoint:{
             pPoints->center = pos;
@@ -368,7 +368,6 @@ void LC_ActionDrawEllipse1Point::toSetPointStatus() {
         this->setStatus(SetPoint);
     }
 }
-
 
 LC_ActionOptionsWidget *LC_ActionDrawEllipse1Point::createOptionsWidget() {
     return new LC_Ellipse1PointOptions();

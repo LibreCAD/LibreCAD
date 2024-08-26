@@ -152,6 +152,7 @@ INCLUDEPATH += \
     ui/action_options/insert \
     ui/action_options/line \
     ui/action_options/modify \
+    ui/action_options/ellipse \
     ui/action_options/other \
     ui/action_options/polyline \
     ui/action_options/print_preview \

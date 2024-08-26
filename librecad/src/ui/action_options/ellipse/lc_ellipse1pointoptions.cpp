@@ -32,8 +32,8 @@ LC_Ellipse1PointOptions::LC_Ellipse1PointOptions()
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_Ellipse1PointOptions::onAngleEditingFinished);
     connect(ui->leMajorRadius, &QLineEdit::editingFinished, this, &LC_Ellipse1PointOptions::onMajorRadiusEditingFinished);
     connect(ui->leMinorRadius, &QLineEdit::editingFinished, this, &LC_Ellipse1PointOptions::onMinorRadiusEditingFinished);
-    connect(ui->cbAngle, &QCheckBox::clicked, this, &LC_Ellipse1PointOptions::onUseAngleClicked);
-    connect(ui->cbFreeAngle, &QCheckBox::clicked, this, &LC_Ellipse1PointOptions::onFreeAngleClicked);
+    connect(ui->cbAngle, &QCheckBox::toggled, this, &LC_Ellipse1PointOptions::onUseAngleClicked);
+    connect(ui->cbFreeAngle, &QCheckBox::toggled, this, &LC_Ellipse1PointOptions::onFreeAngleClicked);
 }
 
 LC_Ellipse1PointOptions::~LC_Ellipse1PointOptions(){
@@ -41,7 +41,7 @@ LC_Ellipse1PointOptions::~LC_Ellipse1PointOptions(){
 }
 
 bool LC_Ellipse1PointOptions::checkActionRttiValid(RS2::ActionType actionType) {
-    return actionType == RS2::ActionDrawEllipse1Point || RS2::ActionDrawEllipseArc1Point;
+    return actionType == RS2::ActionDrawEllipse1Point || actionType == RS2::ActionDrawEllipseArc1Point;
 }
 
 void LC_Ellipse1PointOptions::doSaveSettings() {
@@ -134,10 +134,10 @@ void LC_Ellipse1PointOptions::onMinorRadiusEditingFinished() {
     setMinorRadiusToActionAndView(ui->leMinorRadius->text());
 }
 
-void LC_Ellipse1PointOptions::onUseAngleClicked(bool val) {
+void LC_Ellipse1PointOptions::onUseAngleClicked([[maybe_unused]]bool val) {
     setUseAngleAngleToActionAndView(ui->cbAngle->isChecked());
 }
 
-void LC_Ellipse1PointOptions::onFreeAngleClicked(bool val) {
+void LC_Ellipse1PointOptions::onFreeAngleClicked([[maybe_unused]]bool val) {
     setAngleIsFreeToActionAndView(ui->cbFreeAngle->isChecked());
 }

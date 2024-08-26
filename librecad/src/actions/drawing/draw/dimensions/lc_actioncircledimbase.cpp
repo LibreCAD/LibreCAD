@@ -30,8 +30,8 @@
 LC_ActionCircleDimBase::LC_ActionCircleDimBase(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView, RS2::ActionType type)
   : RS_ActionDimension(name, container,  graphicView)
     , entity(nullptr)
-    , pos(std::make_unique<RS_Vector>())
-    , lastStatus(SetEntity){
+    , lastStatus(SetEntity)
+    , pos(std::make_unique<RS_Vector>()){
     actionType = type;
 }
 
@@ -142,7 +142,7 @@ void LC_ActionCircleDimBase::onMouseLeftButtonRelease(int status, QMouseEvent *e
     }
 }
 
-void LC_ActionCircleDimBase::onMouseRightButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionCircleDimBase::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }
