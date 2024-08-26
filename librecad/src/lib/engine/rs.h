@@ -337,6 +337,8 @@ namespace RS2 {
         ActionDimAngular,
         ActionDimArc,
         ActionDimLeader,
+        ActionDimBaseline,
+        ActionDimContinue,
 
         ActionModifyAttributes,
         ActionModifyDelete,

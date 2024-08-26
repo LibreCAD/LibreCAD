@@ -25,12 +25,13 @@
 **********************************************************************/
 #include "qg_dimoptions.h"
 
-#include "rs_settings.h"
 #include "rs_debug.h"
 #include "ui_qg_dimoptions.h"
 #include "rs_actiondimension.h"
 #include "rs_actiondimlinear.h"
 #include "rs_math.h"
+#include "lc_linemath.h"
+#include "lc_actiondrawdimbaseline.h"
 
 /*
  *  Constructs a QG_DimOptions as a child of 'parent', with the
@@ -41,8 +42,18 @@ QG_DimOptions::QG_DimOptions()
     ui(std::make_unique<Ui::Ui_DimOptions>()){
     ui->setupUi(this);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_DimOptions::onAngleEditingFinished);
-    connect(ui->bHor, &QToolButton::clicked, this, &QG_DimOptions::onHorClicked);
-    connect(ui->bVer, &QToolButton::clicked, this, &QG_DimOptions::onVerClicked);
+    connect(ui->bHor, &QToolButton::toggled, this, &QG_DimOptions::onHorClicked);
+    connect(ui->bVer, &QToolButton::toggled, this, &QG_DimOptions::onVerClicked);
+
+    connect(ui->leBaselineDistance, &QLineEdit::textChanged, this, &QG_DimOptions::onBaselineDistanceTextChanged);
+    connect(ui->cbFreeBaselineDistance, &QCheckBox::toggled, this, &QG_DimOptions::onBaselineDistanceFreeClicked);
+
+    connect(ui->leTol1, &QLineEdit::textChanged, this, &QG_DimOptions::updateLabel);
+    connect(ui->leTol2, &QLineEdit::textChanged, this, &QG_DimOptions::updateLabel);
+    connect(ui->leLabel, &QLineEdit::textChanged, this, &QG_DimOptions::updateLabel);
+
+    connect(ui->bDiameter, &QCheckBox::toggled, this, &QG_DimOptions::updateLabel);
+    connect(ui->cbSymbol, &QComboBox::currentTextChanged, this, &QG_DimOptions::insertSign);
 }
 
 /*
@@ -75,6 +86,10 @@ void QG_DimOptions::doSaveSettings(){
     else if (rtti == RS2::ActionDimLinear){
         save("Angle", ui->leAngle->text());
     }
+    else if (rtti == RS2::ActionDimBaseline){
+        save("BaselineDistanceFree", ui->cbFreeBaselineDistance->isChecked());
+        save("BaselineDistance", ui->leBaselineDistance->text());
+    }
 }
 
 void QG_DimOptions::doSetAction(RS_ActionInterface *a, bool update){
@@ -85,7 +100,11 @@ void QG_DimOptions::doSetAction(RS_ActionInterface *a, bool update){
     QString sa;
     bool diam = false;
     bool radial = false;
-    bool isDimLinear = action->rtti() == RS2::ActionDimLinear;
+    RS2::ActionType type = action->rtti();
+    bool isDimLinear = type == RS2::ActionDimLinear;
+    bool baseline = type == RS2::ActionDimBaseline;
+    bool freeBaseLineDistance = false;
+    QString baselineDistance;
     if (update){
         st = action->getLabel();
         stol1 = action->getTol1();
@@ -96,6 +115,12 @@ void QG_DimOptions::doSetAction(RS_ActionInterface *a, bool update){
             auto dimLinearAction = dynamic_cast<RS_ActionDimLinear *>(action); 
             sa = fromDouble(RS_Math::rad2deg(dimLinearAction->getAngle()));
         }
+        else if (baseline){
+            auto dimBaselineAction = dynamic_cast<LC_ActionDrawDimBaseline *>(action);
+            baselineDistance = fromDouble((dimBaselineAction->getBaselineDistance()));
+            freeBaseLineDistance = dimBaselineAction->isFreeBaselineDistance();
+        }
+
     } else {
         //st = "";
         st = load("Label", "");
@@ -106,16 +131,25 @@ void QG_DimOptions::doSetAction(RS_ActionInterface *a, bool update){
         if (isDimLinear){
             sa = load("Angle", "0.0");
         }
+        else if (baseline){
+            freeBaseLineDistance = loadBool("BaselineDistanceFree", false);
+            baselineDistance = load("BaselineDistance", "20");
+        }
     }
 
-    RS2::ActionType type = action->rtti();
+
     if (type == RS2::ActionDimRadial){
         ui->bDiameter->setIcon({});
         ui->bDiameter->setText(tr("R", "Radial dimension prefix"));
         ui->bDiameter->setChecked(radial);
         action->setDiameter(radial);
-    } else {
+    } else if (type == RS2::ActionDimDiametric){
         ui->bDiameter->setChecked(diam);
+    }
+    else if (baseline){
+        ui->cbFreeBaselineDistance->setChecked(freeBaseLineDistance);
+        ui->leBaselineDistance->setText(baselineDistance);
+        ui->leBaselineDistance->setEnabled(!freeBaseLineDistance);
     }
     ui->leLabel->setText(st);
     ui->leTol1->setText(stol1);
@@ -129,6 +163,10 @@ void QG_DimOptions::doSetAction(RS_ActionInterface *a, bool update){
     if (isDimLinear){
         ui->leAngle->setText(sa);
     }
+    
+    ui->lblBaselineDistance->setVisible(baseline);
+    ui->leBaselineDistance->setVisible(baseline);
+    ui->cbFreeBaselineDistance->setVisible(baseline);
 }
 
 void QG_DimOptions::updateLabel(){
@@ -146,7 +184,12 @@ void QG_DimOptions::insertSign(const QString &c){
 
 void QG_DimOptions::updateAngle(const QString & a) {
     auto dimLinearAction = dynamic_cast<RS_ActionDimLinear *>(action);
-    dimLinearAction->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
+    double angleDegrees = RS_Math::eval(a);
+    dimLinearAction->setAngle(RS_Math::deg2rad(angleDegrees));
+    bool checkVert = !LC_LineMath::isMeaningfulAngle(90-angleDegrees);
+    ui->bVer->setChecked(checkVert);
+    bool checkHor = !LC_LineMath::isMeaningfulAngle(angleDegrees);
+    ui->bHor->setChecked(checkHor);
 }
 
 void QG_DimOptions::onHorClicked(){
@@ -161,4 +204,37 @@ void QG_DimOptions::onVerClicked(){
 
 void QG_DimOptions::onAngleEditingFinished(){
     updateAngle(ui->leAngle->text());
+}
+
+void QG_DimOptions::onBaselineDistanceFreeClicked() {
+    bool freeDistance = ui->cbFreeBaselineDistance->isChecked();
+    ui->leBaselineDistance->setEnabled(!freeDistance);
+    auto dimBaselineAction = dynamic_cast<LC_ActionDrawDimBaseline *>(action);
+    dimBaselineAction->setFreeBaselineDistance(freeDistance);
+}
+
+void QG_DimOptions::onBaselineDistanceTextChanged() {
+    QString distance = ui->leBaselineDistance->text();
+    double len;
+    if (toDouble(distance, len, 0.0, true)){
+        auto dimBaselineAction = dynamic_cast<LC_ActionDrawDimBaseline *>(action);
+        dimBaselineAction->setBaselineDistance(len);
+        ui->leBaselineDistance->blockSignals(true);
+        ui->leBaselineDistance->setText(fromDouble(len));
+        ui->leBaselineDistance->blockSignals(false);
+    }
+}
+
+void QG_DimOptions::updateUI(int mode) {
+    switch (mode){
+        case UI_UPDATE_BASELINE_DISTANCE:{
+            auto dimBaselineAction = dynamic_cast<LC_ActionDrawDimBaseline *>(action);
+//            ui->leBaselineDistance->blockSignals(true);
+            ui->leBaselineDistance->setText(fromDouble(dimBaselineAction->getCurrentBaselineDistance()));
+//            ui->leBaselineDistance->blockSignals(false);
+            break;
+        }
+        default:
+            break;
+    }
 }

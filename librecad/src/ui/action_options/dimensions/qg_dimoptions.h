@@ -42,6 +42,11 @@ class QG_DimOptions : public LC_ActionOptionsWidgetBase{
 public:
     QG_DimOptions();
     ~QG_DimOptions() override;
+
+    enum UIUpdateMode{
+        UI_UPDATE_BASELINE_DISTANCE
+    };
+
 public slots:
     void updateLabel();
     void insertSign( const QString & c );
@@ -49,6 +54,10 @@ public slots:
     void onAngleEditingFinished();
     void onHorClicked();
     void onVerClicked();
+    void onBaselineDistanceFreeClicked();
+    void onBaselineDistanceTextChanged();
+    void updateUI(int mode) override;
+
 protected:
     void updateAngle( const QString& a );
     void doSaveSettings() override;

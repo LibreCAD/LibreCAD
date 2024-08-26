@@ -226,7 +226,9 @@ void LC_ActionFactory::createDrawDimensionsActions(QMap<QString, QAction *> &map
         {"DimDiametric", RS2::ActionDimDiametric, tr("&Diametric"),  ":/icons/dim_diametric.svg"},
         {"DimAngular",   RS2::ActionDimAngular,   tr("&Angular"),    ":/icons/dim_angular.svg"},
         {"DimArc",       RS2::ActionDimArc,       tr("&Arc"),        ":/icons/dim_arc.svg"},
-        {"DimLeader",    RS2::ActionDimLeader,    tr("&Leader"),     ":/icons/dim_leader.svg"}
+        {"DimLeader",    RS2::ActionDimLeader,    tr("&Leader"),     ":/icons/dim_leader.svg"},
+        {"DimBaseline",  RS2::ActionDimBaseline,  tr("&Baseline"),  ":/icons/dim_baseline.svg"},
+        {"DimContinue",  RS2::ActionDimContinue,  tr("&Continue"),  ":/icons/dim_continue.svg"}
     });
 }
 

@@ -261,5 +261,7 @@
         <file>shortcuts_settings.svg</file>
         <file>ellipse_1_point.svg</file>
         <file>ellipse_arc_1_point.svg</file>
+        <file>dim_baseline.svg</file>
+        <file>dim_continue.svg</file>
     </qresource>
 </RCC>

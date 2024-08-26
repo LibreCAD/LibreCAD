@@ -52,7 +52,7 @@ RS_ActionDimLinear::RS_ActionDimLinear(
     :LC_ActionDimLinearBase("Draw linear dimensions",container, graphicView),
      edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), angle, 0.)),
      fixedAngle(_fixedAngle), lastStatus(SetExtPoint1){
-    actionType = /*RS2::ActionDimLinear*/ type;
+    actionType = type;
     reset();
 }
 
@@ -61,8 +61,9 @@ RS_ActionDimLinear::~RS_ActionDimLinear() = default;
 void RS_ActionDimLinear::reset(){
     RS_ActionDimension::reset();
 
-    *edata = {{}, {}, fixedAngle ? edata->angle : 0.0, 0.0};
-    updateOptions();
+    double oldAngle = edata->angle; // keep selected angle
+
+    *edata = {{}, {}, fixedAngle ? edata->angle :oldAngle, 0.0};
 }
 
 void RS_ActionDimLinear::preparePreview(){

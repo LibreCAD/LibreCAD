@@ -200,6 +200,7 @@
 #include "lc_actioneditpastetransform.h"
 #include "lc_actioninfo3pointsangle.h"
 #include "lc_actiondrawellipse1point.h"
+#include "lc_actiondrawdimbaseline.h"
 
 /**
  * Constructor
@@ -711,6 +712,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionDimLeader:
             a = new RS_ActionDimLeader(*document, *view);
+            break;
+        case RS2::ActionDimBaseline:
+            a = new LC_ActionDrawDimBaseline(*document, *view, RS2::ActionDimBaseline);
+            break;
+        case RS2::ActionDimContinue:
+            a = new LC_ActionDrawDimBaseline(*document, *view, RS2::ActionDimContinue);
             break;
 
             // Modifying actions:
