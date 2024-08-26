@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1021</width>
+    <width>1147</width>
     <height>24</height>
    </rect>
   </property>
@@ -322,6 +322,36 @@
     <widget class="QCheckBox" name="cbFreeBaselineDistance">
      <property name="toolTip">
       <string>If checked, distance between dimenions is defined by mouse</string>
+     </property>
+     <property name="text">
+      <string>Free</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblAngleCircle">
+     <property name="text">
+      <string>Angle:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="leAngleCircle">
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Angle for dimension</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="cbAngleCircleFree">
+     <property name="toolTip">
+      <string>If checked, angle for dimension is defined by mouse</string>
      </property>
      <property name="text">
       <string>Free</string>

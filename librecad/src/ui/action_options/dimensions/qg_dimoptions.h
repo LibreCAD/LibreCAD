@@ -44,7 +44,8 @@ public:
     ~QG_DimOptions() override;
 
     enum UIUpdateMode{
-        UI_UPDATE_BASELINE_DISTANCE
+        UI_UPDATE_BASELINE_DISTANCE,
+        UI_UPDATE_CIRCLE_ANGLE
     };
 
 public slots:
@@ -55,7 +56,9 @@ public slots:
     void onHorClicked();
     void onVerClicked();
     void onBaselineDistanceFreeClicked();
+    void onAngleCircleFreeClicked();
     void onBaselineDistanceTextChanged();
+    void onAngleCircleTextChanged();
     void updateUI(int mode) override;
 
 protected:

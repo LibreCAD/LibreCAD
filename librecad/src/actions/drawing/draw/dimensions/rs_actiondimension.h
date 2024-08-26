@@ -45,7 +45,6 @@ Q_OBJECT
 public:
     RS_ActionDimension(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~RS_ActionDimension() override;
-    virtual void reset();
     void init(int status) override;
 
     QString getText() const;
@@ -81,6 +80,7 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     bool previewShowsFullDimension = false;
     void readSettings();
+    virtual void reset();
 };
 
 #endif

@@ -32,6 +32,7 @@
 #include "rs_math.h"
 #include "lc_linemath.h"
 #include "lc_actiondrawdimbaseline.h"
+#include "lc_actioncircledimbase.h"
 
 /*
  *  Constructs a QG_DimOptions as a child of 'parent', with the
@@ -47,6 +48,9 @@ QG_DimOptions::QG_DimOptions()
 
     connect(ui->leBaselineDistance, &QLineEdit::textChanged, this, &QG_DimOptions::onBaselineDistanceTextChanged);
     connect(ui->cbFreeBaselineDistance, &QCheckBox::toggled, this, &QG_DimOptions::onBaselineDistanceFreeClicked);
+
+    connect(ui->leAngleCircle, &QLineEdit::textChanged, this, &QG_DimOptions::onAngleCircleTextChanged);
+    connect(ui->cbAngleCircleFree, &QCheckBox::toggled, this, &QG_DimOptions::onAngleCircleFreeClicked);
 
     connect(ui->leTol1, &QLineEdit::textChanged, this, &QG_DimOptions::updateLabel);
     connect(ui->leTol2, &QLineEdit::textChanged, this, &QG_DimOptions::updateLabel);
@@ -73,16 +77,21 @@ bool QG_DimOptions::checkActionRttiValid(RS2::ActionType actionType){
     return RS_ActionDimension::isDimensionAction(actionType);
 }
 
-void QG_DimOptions::doSaveSettings(){
+void QG_DimOptions::doSaveSettings() {
     save("Label", ui->leLabel->text());
     save("Tol1", ui->leTol1->text());
     save("Tol2", ui->leTol2->text());
 
     RS2::ActionType rtti = action->rtti();
-    if (rtti == RS2::ActionDimRadial)
+    if (rtti == RS2::ActionDimRadial) {
         save("Radial", ui->bDiameter->isChecked());
-    else if (rtti == RS2::ActionDimDiametric)
+        save("RadialAngle", ui->leAngleCircle->text());
+        save("RadialAngleFree", ui->cbAngleCircleFree->isChecked());
+    } else if (rtti == RS2::ActionDimDiametric){
         save("Diameter", ui->bDiameter->isChecked());
+        save("DiameterAngle", ui->leAngleCircle->text());
+        save("DiameterAngleFree", ui->cbAngleCircleFree->isChecked());
+    }
     else if (rtti == RS2::ActionDimLinear){
         save("Angle", ui->leAngle->text());
     }
@@ -103,7 +112,10 @@ void QG_DimOptions::doSetAction(RS_ActionInterface *a, bool update){
     RS2::ActionType type = action->rtti();
     bool isDimLinear = type == RS2::ActionDimLinear;
     bool baseline = type == RS2::ActionDimBaseline;
+    bool circleDim = type == RS2::ActionDimDiametric || type == RS2::ActionDimRadial;
     bool freeBaseLineDistance = false;
+    bool circleAngleFree = false;
+    QString circleAngle;
     QString baselineDistance;
     if (update){
         st = action->getLabel();
@@ -120,6 +132,11 @@ void QG_DimOptions::doSetAction(RS_ActionInterface *a, bool update){
             baselineDistance = fromDouble((dimBaselineAction->getBaselineDistance()));
             freeBaseLineDistance = dimBaselineAction->isFreeBaselineDistance();
         }
+        else if (circleDim){
+            auto dimAction = dynamic_cast<LC_ActionCircleDimBase *>(action);
+            circleAngle = fromDouble(RS_Math::rad2deg(dimAction->getAngle()));
+            circleAngleFree  = dimAction->isAngleIsFree();
+        }
 
     } else {
         //st = "";
@@ -135,16 +152,28 @@ void QG_DimOptions::doSetAction(RS_ActionInterface *a, bool update){
             freeBaseLineDistance = loadBool("BaselineDistanceFree", false);
             baselineDistance = load("BaselineDistance", "20");
         }
+        else if (type == RS2::ActionDimDiametric){
+            circleAngle = load("DiameterAngle", "45");
+            circleAngleFree = loadBool("DiameterAngleFree", true);
+        }
+        else if (type == RS2::ActionDimRadial){
+            circleAngle = load("RadialAngle", "45");
+            circleAngleFree = loadBool("RadialAngleFree", true);
+        }
     }
 
-
     if (type == RS2::ActionDimRadial){
-        ui->bDiameter->setIcon({});
+            ui->bDiameter->setIcon({});
         ui->bDiameter->setText(tr("R", "Radial dimension prefix"));
         ui->bDiameter->setChecked(radial);
         action->setDiameter(radial);
+
+        ui->cbAngleCircleFree->setChecked(circleAngleFree);
+        ui->leAngleCircle->setText(circleAngle);
     } else if (type == RS2::ActionDimDiametric){
         ui->bDiameter->setChecked(diam);
+        ui->cbAngleCircleFree->setChecked(circleAngleFree);
+        ui->leAngleCircle->setText(circleAngle);
     }
     else if (baseline){
         ui->cbFreeBaselineDistance->setChecked(freeBaseLineDistance);
@@ -167,6 +196,9 @@ void QG_DimOptions::doSetAction(RS_ActionInterface *a, bool update){
     ui->lblBaselineDistance->setVisible(baseline);
     ui->leBaselineDistance->setVisible(baseline);
     ui->cbFreeBaselineDistance->setVisible(baseline);
+
+    ui->lblAngleCircle->setVisible(circleDim);
+    ui->cbAngleCircleFree->setVisible(circleDim);
 }
 
 void QG_DimOptions::updateLabel(){
@@ -213,6 +245,13 @@ void QG_DimOptions::onBaselineDistanceFreeClicked() {
     dimBaselineAction->setFreeBaselineDistance(freeDistance);
 }
 
+void QG_DimOptions::onAngleCircleFreeClicked() {
+    bool freeAngle = ui->cbAngleCircleFree->isChecked();
+    ui->leAngleCircle->setEnabled(!freeAngle);
+    auto dimAction = dynamic_cast<LC_ActionCircleDimBase *>(action);
+    dimAction->setAngleIsFree(freeAngle);
+}
+
 void QG_DimOptions::onBaselineDistanceTextChanged() {
     QString distance = ui->leBaselineDistance->text();
     double len;
@@ -225,6 +264,18 @@ void QG_DimOptions::onBaselineDistanceTextChanged() {
     }
 }
 
+void QG_DimOptions::onAngleCircleTextChanged() {
+    QString distance = ui->leAngleCircle->text();
+    double len;
+    if (toDoubleAngle(distance, len, 45, false)){
+        auto dimAction = dynamic_cast<LC_ActionCircleDimBase *>(action);
+        dimAction->setAngle(RS_Math::deg2rad(len)   );
+        ui->leAngleCircle->blockSignals(true);
+        ui->leAngleCircle->setText(fromDouble(len));
+        ui->leAngleCircle->blockSignals(false);
+    }
+}
+
 void QG_DimOptions::updateUI(int mode) {
     switch (mode){
         case UI_UPDATE_BASELINE_DISTANCE:{
@@ -232,6 +283,11 @@ void QG_DimOptions::updateUI(int mode) {
 //            ui->leBaselineDistance->blockSignals(true);
             ui->leBaselineDistance->setText(fromDouble(dimBaselineAction->getCurrentBaselineDistance()));
 //            ui->leBaselineDistance->blockSignals(false);
+            break;
+        }
+        case UI_UPDATE_CIRCLE_ANGLE:{
+            auto dimAction = dynamic_cast<LC_ActionCircleDimBase *>(action);
+            ui->leAngleCircle->setText(fromDouble(RS_Math::rad2deg(dimAction->getCurrentAngle())));
             break;
         }
         default:

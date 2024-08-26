@@ -48,8 +48,7 @@ RS_ActionDimension::RS_ActionDimension(
     const char *name,
     RS_EntityContainer &container,
     RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface(name,
-                               container, graphicView){
+    :RS_PreviewActionInterface(name,container, graphicView){
     reset();
     readSettings();
 }

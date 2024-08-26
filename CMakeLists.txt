@@ -1209,6 +1209,8 @@ set(SOURCES
 		librecad/src/ui/action_options/ellipse/lc_ellipse1pointoptions.cpp
 		librecad/src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.h
 		librecad/src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp
+		librecad/src/actions/drawing/draw/dimensions/lc_actioncircledimbase.h
+		librecad/src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

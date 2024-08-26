@@ -211,6 +211,7 @@ RESOURCES += ../../licenses/licenses.qrc
 # ################################################################################
 # Library
 HEADERS += \
+    actions/drawing/draw/dimensions/lc_actioncircledimbase.h \
     actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.h \
     actions/drawing/draw/ellipse/lc_actiondrawellipse1point.h \
     lib/actions/lc_highlight.h \
@@ -325,6 +326,7 @@ HEADERS += \
     ui/action_options/ellipse/lc_ellipse1pointoptions.h
     
 SOURCES += \
+    actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp \
     actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp \
     actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp \
     lib/actions/lc_highlight.cpp \
