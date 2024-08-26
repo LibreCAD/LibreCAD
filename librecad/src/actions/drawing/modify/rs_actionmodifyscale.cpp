@@ -181,7 +181,10 @@ void RS_ActionModifyScale::mouseMoveEventSelected(QMouseEvent* e) {
 
 RS_Vector RS_ActionModifyScale::getTargetPoint(QMouseEvent* e){
     if (pPoints->data.isotropicScaling) {
-        RS_Vector mouse = toGraph(e);
+        RS_Vector mouse = snapPoint(e);
+        if (isControl(e)){
+            mouse = toGraph(e);
+        }
         // project mouse to the line (center, source)
         RS_Line centerSourceLine{nullptr, {pPoints->data.referencePoint, pPoints->sourcePoint}};
         RS_Vector projected = centerSourceLine.getNearestPointOnEntity(mouse, false);
@@ -358,7 +361,7 @@ void RS_ActionModifyScale::updateMouseButtonHintsForSelected(int status) {
             updateMouseWidgetTRCancel(tr("Specify source point"), pPoints->data.isotropicScaling ? MOD_NONE: MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetTargetPoint:
-            updateMouseWidgetTRCancel(tr("Specify target point"), pPoints->data.isotropicScaling ? MOD_NONE: MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRCancel(tr("Specify target point"), pPoints->data.isotropicScaling ? MOD_CTRL(tr("Free snap")): MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();
