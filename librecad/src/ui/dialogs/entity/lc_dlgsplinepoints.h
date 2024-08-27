@@ -3,6 +3,7 @@
 
 #include<memory>
 #include <QDialog>
+#include "lc_dialog.h"
 
 class LC_SplinePoints;
 
@@ -10,12 +11,11 @@ namespace Ui {
 class DlgSplinePoints;
 }
 
-class LC_DlgSplinePoints : public QDialog
-{
+class LC_DlgSplinePoints : public LC_Dialog{
 	Q_OBJECT
 public:
-	LC_DlgSplinePoints(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
-	virtual ~LC_DlgSplinePoints();
+	LC_DlgSplinePoints(QWidget* parent = nullptr);
+	~LC_DlgSplinePoints() override;
 
 public slots:
 	virtual void setSpline(LC_SplinePoints& b);

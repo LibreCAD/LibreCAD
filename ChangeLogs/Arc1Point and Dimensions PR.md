@@ -47,3 +47,9 @@ There are some minor fixes well as corrections that address the following issues
 1) #1854 - for print preview, white color is used instead of foreground color for color correction and previewing black/white colors
 2) #1847 - actually, #1847 is just visual effect of more serious bug in settings system, were negative int values were stored in settings incorrectly. That bug was a side effect of #PR1461
 3) #1858 - subtle improvement for snap point on Modify Scale action for isotropic scaling
+
+### Persistent Dialogs Positions
+
+If corresponding setting is enabled in Action Preferences Dialog, position and size of the dialog is saved.
+
+On next invocation the dialog will be shown with stored dimensions and (optionally) in previous position.  

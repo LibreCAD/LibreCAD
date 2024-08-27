@@ -29,17 +29,17 @@
 #include<memory>
 #include <QGraphicsScene>
 #include "ui_qg_dlgoptionsdrawing.h"
+#include "lc_dialog.h"
 
 
 class RS_Graphic;
 class RS_Vector;
 
-class QG_DlgOptionsDrawing : public QDialog, public Ui::QG_DlgOptionsDrawing
-{
+class QG_DlgOptionsDrawing : public LC_Dialog, public Ui::QG_DlgOptionsDrawing{
     Q_OBJECT
 
 public:
-    QG_DlgOptionsDrawing(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
+    QG_DlgOptionsDrawing(QWidget* parent = nullptr);
 	~QG_DlgOptionsDrawing();
 
 public slots:

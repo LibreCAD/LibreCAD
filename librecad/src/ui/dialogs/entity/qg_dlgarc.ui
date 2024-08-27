@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>282</height>
+    <height>285</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -91,6 +91,12 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>216</width>
+         <height>0</height>
+        </size>
        </property>
        <property name="title">
         <string>Geometry</string>

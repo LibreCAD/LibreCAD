@@ -38,12 +38,9 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgHatch::QG_DlgHatch(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_DlgHatch::QG_DlgHatch(QWidget* parent)
+    : LC_Dialog(parent, "HatchProperties"){
     setupUi(this);
-
     init();
 }
 
@@ -53,8 +50,7 @@ QG_DlgHatch::~QG_DlgHatch() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgHatch::languageChange()
-{
+void QG_DlgHatch::languageChange(){
     retranslateUi(this);
 }
 
@@ -63,21 +59,18 @@ void QG_DlgHatch::init() {
     gvPreview->setContainer(preview.get());
     gvPreview->setBorders(15,15,15,15);
     gvPreview->addScrollbars();
-
     cbPattern->init();
-
 }
 
 void QG_DlgHatch::polish() {
-    QDialog::ensurePolished();
+    LC_Dialog::ensurePolished();
     gvPreview->zoomAuto();
 }
 
 void QG_DlgHatch::showEvent ( QShowEvent * e) {
-    QDialog::showEvent(e);
+    LC_Dialog::showEvent(e);
     gvPreview->zoomAuto();
 }
-
 
 void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
     hatch = &h;
@@ -136,7 +129,6 @@ void QG_DlgHatch::showArea(){
     }
 }
 
-
 void QG_DlgHatch::setPattern(const QString& p) {
     if (!RS_PATTERNLIST->contains(p)) {
         cbPattern->addItem(p);
@@ -174,11 +166,11 @@ void QG_DlgHatch::updatePreview() {
 
     preview->clear();
 
-    RS_Hatch* prevHatch = new RS_Hatch(preview.get(),
+    auto* prevHatch = new RS_Hatch(preview.get(),
                                        RS_HatchData(isSolid, scale, angle, patName));
     prevHatch->setPen(hatch->getPen());
 
-    RS_EntityContainer* loop = new RS_EntityContainer(prevHatch);
+    auto* loop = new RS_EntityContainer(prevHatch);
     loop->setPen(RS_Pen(RS2::FlagInvalid));
     loop->addRectangle({0., 0.}, {prevSize,prevSize});
     prevHatch->addEntity(loop);

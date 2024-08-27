@@ -31,11 +31,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 #include "ui_LC_DlgParabola.h"
 
-LC_DlgParabola::LC_DlgParabola(QWidget* parent, bool modal, Qt::WindowFlags fl)
-	: QDialog(parent, fl)
-    , ui(std::make_unique<Ui::DlgParabola>())
-{
-	setModal(modal);
+LC_DlgParabola::LC_DlgParabola(QWidget* parent)
+	: LC_Dialog(parent, "ParabolaProperties")
+    , ui(std::make_unique<Ui::DlgParabola>()){
+//	setModal(modal);
 	ui->setupUi(this);
 }
 
@@ -64,49 +63,47 @@ void LC_DlgParabola::setParabola(LC_Parabola& b)
 	updatePoints();
 }
 
-void LC_DlgParabola::updatePoints()
-{
+void LC_DlgParabola::updatePoints(){
     auto const& bData = parabola->getData();
     auto const& pts = bData.controlPoints;
-	auto model = new QStandardItemModel(pts.size(), 2, this);
-	model->setHorizontalHeaderLabels({"x", "y"});
+    auto model = new QStandardItemModel(pts.size(), 2, this);
+    model->setHorizontalHeaderLabels({"x", "y"});
 
     //set control data
-	for (size_t row = 0; row < pts.size(); ++row) {
-		auto const& vp = pts.at(row);
-		QStandardItem* x = new QStandardItem(QString::number(vp.x));
-		model->setItem(row, 0, x);
-		QStandardItem* y = new QStandardItem(QString::number(vp.y));
-		model->setItem(row, 1, y);
-	}
+    for (size_t row = 0; row < pts.size(); ++row) {
+        auto const& vp = pts.at(row);
+        auto* x = new QStandardItem(QString::number(vp.x));
+        model->setItem(row, 0, x);
+        auto* y = new QStandardItem(QString::number(vp.y));
+        model->setItem(row, 1, y);
+    }
     model->setRowCount(pts.size());
-	ui->tvPoints->setModel(model);
+    ui->tvPoints->setModel(model);
     //connect(model, itemChanged(QStandardItem), this, &LC_DlgParabola::updateParabola);
 }
 
-void LC_DlgParabola::updateParabola()
-{
+void LC_DlgParabola::updateParabola(){
     if (parabola == nullptr)
         return;
 
-	//update pen
+//update pen
     parabola->setPen(ui->wPen->getPen());
-	//update layer
+//update layer
     parabola->setLayer(ui->cbLayer->currentText());
-	//update Spline Points
-	auto model = static_cast<QStandardItemModel*>(ui->tvPoints->model());
+//update Spline Points
+    auto model = static_cast<QStandardItemModel*>(ui->tvPoints->model());
     model->setRowCount(3);
 
-	//update points
+//update points
     std::array<RS_Vector, 3> vps;
-	//update points
+//update points
     for (size_t i = 0; i < 3; ++i) {
         auto& vp = vps.at(i);
-		auto const& vpx = model->item(i, 0)->text();
-		vp.x = RS_Math::eval(vpx, vp.x);
-		auto const& vpy = model->item(i, 1)->text();
-		vp.y = RS_Math::eval(vpy, vp.y);
-	}
+        auto const& vpx = model->item(i, 0)->text();
+        vp.x = RS_Math::eval(vpx, vp.x);
+        auto const& vpy = model->item(i, 1)->text();
+        vp.y = RS_Math::eval(vpy, vp.y);
+    }
     if (std::abs(std::remainder(vps.front().angleTo(vps[1]) - vps.back().angleTo(vps[1]), M_PI)) < RS_TOLERANCE_ANGLE)
     {
         RS_DIALOGFACTORY->commandMessage(tr("Parabola control points cannot be collinear"));
@@ -117,5 +114,3 @@ void LC_DlgParabola::updateParabola()
 
     parabola->update();
 }
-
-

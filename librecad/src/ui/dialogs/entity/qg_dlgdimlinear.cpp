@@ -36,19 +36,15 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgDimLinear::QG_DlgDimLinear(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_DlgDimLinear::QG_DlgDimLinear(QWidget* parent)
+    : LC_Dialog(parent, "DimLinearProperties"){
     setupUi(this);
-
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgDimLinear::~QG_DlgDimLinear()
-{
+QG_DlgDimLinear::~QG_DlgDimLinear(){
     // no need to delete child widgets, Qt does it all for us
 }
 
@@ -56,8 +52,7 @@ QG_DlgDimLinear::~QG_DlgDimLinear()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgDimLinear::languageChange()
-{
+void QG_DlgDimLinear::languageChange(){
     retranslateUi(this);
 }
 
@@ -85,4 +80,3 @@ void QG_DlgDimLinear::updateDim() {
     dim->setPen(wPen->getPen());
     dim->setLayer(cbLayer->currentText());
 }
-

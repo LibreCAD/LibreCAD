@@ -28,15 +28,14 @@
 
 #include "ui_qg_dlgtext.h"
 #include "rs_text.h"
+#include "lc_dialog.h"
 
-class QG_DlgText : public QDialog, public Ui::QG_DlgText
-{
+class QG_DlgText : public LC_Dialog, public Ui::QG_DlgText{
     Q_OBJECT
 
 public:
-    QG_DlgText(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
+    QG_DlgText(QWidget* parent = nullptr);
     ~QG_DlgText();
-
     virtual int getAlignment();
 
 public slots:

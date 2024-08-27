@@ -29,17 +29,16 @@
 #include <memory>
 
 #include "ui_qg_dlghatch.h"
+#include "lc_dialog.h"
 
 class RS_Hatch;
 
-class QG_DlgHatch : public QDialog, public Ui::QG_DlgHatch
-{
+class QG_DlgHatch : public LC_Dialog, public Ui::QG_DlgHatch{
     Q_OBJECT
 
 public:
-    QG_DlgHatch(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
-    ~QG_DlgHatch();
-
+    QG_DlgHatch(QWidget* parent = nullptr);
+    ~QG_DlgHatch() override;
     void saveSettings();
 
 public slots:

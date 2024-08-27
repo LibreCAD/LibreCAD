@@ -38,19 +38,15 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgCircle::QG_DlgCircle(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_DlgCircle::QG_DlgCircle(QWidget* parent)
+    : LC_Dialog(parent, "CircleProperties"){
     setupUi(this);
-
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgCircle::~QG_DlgCircle()
-{
+QG_DlgCircle::~QG_DlgCircle(){
     // no need to delete child widgets, Qt does it all for us
 }
 
@@ -58,19 +54,18 @@ QG_DlgCircle::~QG_DlgCircle()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgCircle::languageChange()
-{
+void QG_DlgCircle::languageChange(){
     retranslateUi(this);
 }
 
 void QG_DlgCircle::setCircle(RS_Circle& c) {
     circle = &c;
 
-    RS_Graphic* graphic = circle->getGraphic();
+    RS_Graphic *graphic = circle->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = circle->getLayer(false);
+    RS_Layer *lay = circle->getLayer(false);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
@@ -95,4 +90,3 @@ void QG_DlgCircle::updateCircle() {
     circle->setLayer(cbLayer->currentText());
     circle->calculateBorders();
 }
-

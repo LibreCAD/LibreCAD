@@ -27,16 +27,16 @@
 #define QG_DLGDIMENSION_H
 
 #include "ui_qg_dlgdimension.h"
+#include "lc_dialog.h"
 
 class RS_Dimension;
 
-class QG_DlgDimension : public QDialog, public Ui::QG_DlgDimension
-{
+class QG_DlgDimension : public LC_Dialog, public Ui::QG_DlgDimension{
     Q_OBJECT
 
 public:
-    QG_DlgDimension(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
-    ~QG_DlgDimension();
+    QG_DlgDimension(QWidget* parent = nullptr);
+    ~QG_DlgDimension() override;
 
 public slots:
     virtual void setDim(RS_Dimension & d );

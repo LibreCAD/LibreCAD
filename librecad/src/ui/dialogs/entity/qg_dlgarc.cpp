@@ -36,27 +36,21 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgArc::QG_DlgArc(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_DlgArc::QG_DlgArc(QWidget* parent)
+    : LC_Dialog(parent, "ArcProperties"){
     setupUi(this);
-
 }
 
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgArc::languageChange()
-{
+void QG_DlgArc::languageChange(){
     retranslateUi(this);
 }
 
 void QG_DlgArc::setArc(RS_Arc& a) {
     arc = &a;
-
-
     RS_Graphic* graphic = arc->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -85,15 +79,14 @@ void QG_DlgArc::setArc(RS_Arc& a) {
 
 void QG_DlgArc::updateArc() {
     arc->setCenter(RS_Vector(RS_Math::eval(leCenterX->text()),
-                                  RS_Math::eval(leCenterY->text())));
+                             RS_Math::eval(leCenterY->text())));
     arc->setRadius(RS_Math::eval(leRadius->text()));
     arc->setAngle1(RS_Math::deg2rad(RS_Math::eval(leAngle1->text())));
     arc->setAngle2(RS_Math::deg2rad(RS_Math::eval(leAngle2->text())));
-    if (arc->isReversed() != cbReversed->isChecked())
+    if (arc->isReversed() != cbReversed->isChecked()) {
         arc->revertDirection();
-
+    }
     arc->setPen(wPen->getPen());
-	arc->setLayer(cbLayer->currentText());
+    arc->setLayer(cbLayer->currentText());
     arc->calculateBorders();
 }
-

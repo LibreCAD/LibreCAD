@@ -36,12 +36,9 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgInsert::QG_DlgInsert(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_DlgInsert::QG_DlgInsert(QWidget* parent)
+    : LC_Dialog(parent, "InsertProperties"){
     setupUi(this);
-
 }
 
 /*
@@ -110,4 +107,3 @@ void QG_DlgInsert::updateInsert() {
     insert->setPen(wPen->getPen());
     insert->setLayer(cbLayer->currentText());
 }
-

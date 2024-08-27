@@ -29,14 +29,13 @@
 class RS_Insert;
 
 #include "ui_qg_dlginsert.h"
+#include "lc_dialog.h"
 
-class QG_DlgInsert : public QDialog, public Ui::QG_DlgInsert
-{
+class QG_DlgInsert : public LC_Dialog, public Ui::QG_DlgInsert{
     Q_OBJECT
-
 public:
-    QG_DlgInsert(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
-    ~QG_DlgInsert();
+    QG_DlgInsert(QWidget* parent = nullptr);
+    ~QG_DlgInsert() override;
 
 public slots:
     virtual void setInsert( RS_Insert & i );

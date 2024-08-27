@@ -36,19 +36,15 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgPoint::QG_DlgPoint(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_DlgPoint::QG_DlgPoint(QWidget* parent)
+    : LC_Dialog(parent, "PointProperties"){
     setupUi(this);
-
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgPoint::~QG_DlgPoint()
-{
+QG_DlgPoint::~QG_DlgPoint(){
     // no need to delete child widgets, Qt does it all for us
 }
 
@@ -56,14 +52,12 @@ QG_DlgPoint::~QG_DlgPoint()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgPoint::languageChange()
-{
+void QG_DlgPoint::languageChange(){
     retranslateUi(this);
 }
 
 void QG_DlgPoint::setPoint(RS_Point& p) {
     point = &p;
-
 
     RS_Graphic* graphic = point->getGraphic();
     if (graphic) {
@@ -89,4 +83,3 @@ void QG_DlgPoint::updatePoint() {
     point->setPen(wPen->getPen());
     point->setLayer(cbLayer->currentText());
 }
-

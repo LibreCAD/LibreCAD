@@ -35,12 +35,9 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_ImageOptionsDialog::QG_ImageOptionsDialog(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_ImageOptionsDialog::QG_ImageOptionsDialog(QWidget* parent)
+    : LC_Dialog(parent, "ImageOptions"){
     setupUi(this);
-
     init();
 }
 

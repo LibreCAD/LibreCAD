@@ -29,14 +29,15 @@
 class RS_Circle;
 
 #include "ui_qg_dlgcircle.h"
+#include "lc_dialog.h"
 
-class QG_DlgCircle : public QDialog, public Ui::QG_DlgCircle
+class QG_DlgCircle : public LC_Dialog, public Ui::QG_DlgCircle
 {
     Q_OBJECT
 
 public:
-    QG_DlgCircle(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
-    ~QG_DlgCircle();
+    QG_DlgCircle(QWidget* parent = nullptr);
+    ~QG_DlgCircle() override;
 
 public slots:
     virtual void setCircle( RS_Circle & c );
@@ -47,7 +48,6 @@ protected slots:
 
 private:
     RS_Circle* circle;
-
 };
 
 #endif // QG_DLGCIRCLE_H

@@ -32,19 +32,15 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgAttributes::QG_DlgAttributes(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_DlgAttributes::QG_DlgAttributes(QWidget* parent)
+    : LC_Dialog(parent, "EntityAttributes"){
     setupUi(this);
-
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgAttributes::~QG_DlgAttributes()
-{
+QG_DlgAttributes::~QG_DlgAttributes(){
     // no need to delete child widgets, Qt does it all for us
 }
 
@@ -52,8 +48,7 @@ QG_DlgAttributes::~QG_DlgAttributes()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgAttributes::languageChange()
-{
+void QG_DlgAttributes::languageChange(){
     retranslateUi(this);
 }
 
@@ -86,4 +81,3 @@ void QG_DlgAttributes::updateData() {
 
     data->applyBlockDeep = cbBlockDeep->isChecked();
 }
-

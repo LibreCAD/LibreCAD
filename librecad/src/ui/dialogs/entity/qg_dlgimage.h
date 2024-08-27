@@ -27,15 +27,16 @@
 
 #include <memory>
 #include "ui_qg_dlgimage.h"
+#include "lc_dialog.h"
 
 class RS_Image;
 
-class QG_DlgImage : public QDialog, public Ui::QG_DlgImage
+class QG_DlgImage : public LC_Dialog, public Ui::QG_DlgImage
 {
     Q_OBJECT
 
 public:
-    QG_DlgImage(QWidget *parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
+    QG_DlgImage(QWidget *parent = nullptr);
 
 public slots:
     virtual void setImage( RS_Image & e );

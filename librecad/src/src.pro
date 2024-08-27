@@ -325,7 +325,8 @@ HEADERS += \
     lib/printing/lc_printing.h \
     main/lc_application.h \
     ui/action_options/curve/lc_ellipsearcoptions.h \
-    ui/action_options/ellipse/lc_ellipse1pointoptions.h
+    ui/action_options/ellipse/lc_ellipse1pointoptions.h \
+    ui/dialogs/lc_dialog.h
     
 SOURCES += \
     actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp \
@@ -430,7 +431,8 @@ SOURCES += \
     lib/printing/lc_printing.cpp \
     main/lc_application.cpp \
     ui/action_options/curve/lc_ellipsearcoptions.cpp \
-    ui/action_options/ellipse/lc_ellipse1pointoptions.cpp
+    ui/action_options/ellipse/lc_ellipse1pointoptions.cpp \
+    ui/dialogs/lc_dialog.cpp
 
 # ################################################################################
 # Command
