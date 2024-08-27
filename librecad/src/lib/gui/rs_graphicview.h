@@ -215,7 +215,7 @@ public:
     void back();
     void enter();
     void commandEvent(RS_CommandEvent *e);
-    virtual void keyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *event) override;
     void enableCoordinateInput();
     void disableCoordinateInput();
     virtual void zoomIn(double f = 1.5, const RS_Vector &center = RS_Vector(false));
