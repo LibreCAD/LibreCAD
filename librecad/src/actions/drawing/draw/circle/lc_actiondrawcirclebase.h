@@ -33,7 +33,7 @@ public:
     ~LC_ActionDrawCircleBase() override;
     void init(int status) override;
     virtual bool isReversed() const{return false;}
-    virtual void setReversed (bool b) const{};
+    virtual void setReversed ([[maybe_unused]]bool b) const{};
 protected:
     virtual void reset();
     bool moveRelPointAtCenterAfterTrigger = true; // todo - move to options?
