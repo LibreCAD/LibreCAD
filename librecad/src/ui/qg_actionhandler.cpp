@@ -629,10 +629,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionDrawArcTangential(*document, *view);
             break;
         case RS2::ActionDrawEllipseAxis:
-            a = new RS_ActionDrawEllipseAxis(*document, *view, false, id);
+            a = new RS_ActionDrawEllipseAxis(*document, *view, false);
             break;
         case RS2::ActionDrawEllipseArcAxis:
-            a = new RS_ActionDrawEllipseAxis(*document, *view, true, id);
+            a = new RS_ActionDrawEllipseAxis(*document, *view, true);
             break;
         case RS2::ActionDrawEllipse1Point:
             a = new LC_ActionDrawEllipse1Point(*document, *view, false);

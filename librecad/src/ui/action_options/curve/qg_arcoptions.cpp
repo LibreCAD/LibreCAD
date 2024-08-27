@@ -36,11 +36,10 @@
  */
 QG_ArcOptions::QG_ArcOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionDrawArc, "Draw","Arc")
-    , ui(std::make_unique<Ui::Ui_ArcOptions>())
-{
-	ui->setupUi(this);
-    connect(ui->rbPos, SIGNAL(toggled(bool)), this, SLOT(onDirectionChanged(bool)));
-    connect(ui->rbNeg, SIGNAL(toggled(bool)), this, SLOT(onDirectionChanged(bool)));
+    , ui(std::make_unique<Ui::Ui_ArcOptions>()){
+    ui->setupUi(this);
+    connect(ui->rbPos, &QRadioButton::toggled, this, &QG_ArcOptions::onDirectionChanged);
+    connect(ui->rbNeg,  &QRadioButton::toggled, this, &QG_ArcOptions::onDirectionChanged);
 }
 
 /*
@@ -78,15 +77,6 @@ void QG_ArcOptions::setReversedToActionAndView(bool reversed){
     ui->rbNeg->setChecked(reversed);
     action->setReversed(reversed);
 }
-
-/*void QG_ArcOptions::init() {
-	data = nullptr;
-    LC_GROUP("Draw");
-    bool reversed = RS_SETTINGS->readNumEntry("/ArcReversed", 0);
-    LC_GROUP_END();
-
-    rbNeg->setChecked(reversed);
-}*/
 
 /*void QG_ArcOptions::setData(RS_ArcData* d) {
     data = d;

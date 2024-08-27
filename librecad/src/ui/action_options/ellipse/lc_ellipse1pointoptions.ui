@@ -26,39 +26,10 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="0" column="7">
-    <widget class="QCheckBox" name="cbFreeAngle">
-     <property name="toolTip">
-      <string>If checked, major radius angle is specified by mouse</string>
-     </property>
+   <item row="0" column="2">
+    <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Free</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="4">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="leMajorRadius">
-     <property name="minimumSize">
-      <size>
-       <width>30</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>60</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Length of major radius of ellipse</string>
+      <string>Minor Radius:</string>
      </property>
     </widget>
    </item>
@@ -81,10 +52,63 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="2">
-    <widget class="QLabel" name="label_2">
+   <item row="0" column="5">
+    <widget class="QCheckBox" name="cbAngle">
+     <property name="toolTip">
+      <string>If checked, angle for major radius may be specified</string>
+     </property>
      <property name="text">
-      <string>Minor Radius:</string>
+      <string>Base Angle:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="8">
+    <widget class="QRadioButton" name="rbPos">
+     <property name="toolTip">
+      <string>Counterclockwise</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/extui/extui.qrc">
+       <normaloff>:/extui/dirpos.png</normaloff>:/extui/dirpos.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
+    <widget class="QCheckBox" name="cbFreeAngle">
+     <property name="toolTip">
+      <string>If checked, major radius angle is specified by mouse</string>
+     </property>
+     <property name="text">
+      <string>Free</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="leMajorRadius">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Length of major radius of ellipse</string>
      </property>
     </widget>
    </item>
@@ -95,15 +119,18 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="5">
-    <widget class="QCheckBox" name="cbAngle">
-     <property name="toolTip">
-      <string>If checked, angle for major radius may be specified</string>
+   <item row="0" column="10">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-     <property name="text">
-      <string>Base Angle:</string>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
      </property>
-    </widget>
+    </spacer>
    </item>
    <item row="0" column="3">
     <widget class="QLineEdit" name="leMinorRadius">
@@ -124,21 +151,24 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="8">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+   <item row="0" column="9">
+    <widget class="QRadioButton" name="rbNeg">
+     <property name="toolTip">
+      <string>Clockwise</string>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
+     <property name="text">
+      <string/>
      </property>
-    </spacer>
+     <property name="icon">
+      <iconset resource="../../../../res/extui/extui.qrc">
+       <normaloff>:/extui/dirneg.png</normaloff>:/extui/dirneg.png</iconset>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../../res/extui/extui.qrc"/>
+ </resources>
  <connections/>
 </ui>

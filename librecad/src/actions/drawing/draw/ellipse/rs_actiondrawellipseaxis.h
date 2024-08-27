@@ -37,12 +37,16 @@ class RS_ActionDrawEllipseAxis : public LC_ActionDrawCircleBase {
 public:
     RS_ActionDrawEllipseAxis(RS_EntityContainer& container,
                              RS_GraphicView& graphicView,
-                             bool isArc,
-                             RS2::ActionType actionType);
+                             bool isArc);
     ~RS_ActionDrawEllipseAxis() override;
     void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
+
+    bool isReversed() const override;
+
+    void setReversed(bool b) const override;
+
 protected:
     /**
      * Action States.
@@ -62,5 +66,7 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
+
+    LC_ActionOptionsWidget *createOptionsWidget() override;
 };
 #endif

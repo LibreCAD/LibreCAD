@@ -1211,6 +1211,7 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp
 		librecad/src/actions/drawing/draw/dimensions/lc_actioncircledimbase.h
 		librecad/src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp
+		librecad/src/ui/action_options/curve/lc_ellipsearcoptions.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

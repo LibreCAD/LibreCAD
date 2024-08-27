@@ -45,6 +45,7 @@ protected slots:
     void onMinorRadiusEditingFinished();
     void onUseAngleClicked(bool val);
     void onFreeAngleClicked(bool val);
+    void onDirectionChanged(bool val);
 
 protected:
     void doSaveSettings() override;

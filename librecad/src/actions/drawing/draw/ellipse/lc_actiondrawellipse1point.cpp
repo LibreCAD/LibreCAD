@@ -37,6 +37,7 @@ struct LC_ActionDrawEllipse1Point::Points {
     double angle1 = 0.;
     double angle2 = 0.;
     bool isArc = false;
+    bool reversed = false;
 
     double getMajorAngle(){
         return hasAngle ? majorRadiusAngle : 0.0;
@@ -70,7 +71,7 @@ void LC_ActionDrawEllipse1Point::trigger() {
     double ratio = pPoints->getRatio();
     auto *ellipse = new RS_Ellipse{container,
                                    {pPoints->center, pPoints->getMajorP(), ratio,
-                                    pPoints->angle1, pPoints->angle2, false}
+                                    pPoints->angle1, pPoints->angle2, pPoints->reversed}
     };
     // todo - code belos is similar to DrawEllipseAxis action.. should we make it common for all ellipse actions?
     if (ratio > 1.){
@@ -128,7 +129,9 @@ void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {
             mouse = getSnapAngleAwarePoint(e, pPoints->center, mouse, true);
 
             RS_Vector m = mouse;
-            m.rotate(pPoints->center, -pPoints->majorRadiusAngle);
+            if (hasAngle()) {
+                m.rotate(pPoints->center, -pPoints->majorRadiusAngle);
+            }
             RS_Vector v = m - pPoints->center;
             v.y /= pPoints->getRatio();
             pPoints->angle1 = v.angle();
@@ -136,7 +139,7 @@ void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {
             previewRefLine(pPoints->center, mouse);
 
             auto ellipse = previewEllipse({pPoints->center, pPoints->getMajorP(), pPoints->getRatio(),
-                                           pPoints->angle1, pPoints->angle1 + 1.0, false});
+                                           pPoints->angle1, pPoints->angle1 + 1.0, pPoints->reversed});
 
             if (showRefEntitiesOnPreview) {
                 previewRefPoint(pPoints->center);
@@ -150,12 +153,16 @@ void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {
             mouse = getSnapAngleAwarePoint(e, pPoints->center, mouse, true);
 
             RS_Vector m = mouse;
-            m.rotate(pPoints->center, -pPoints->getMajorAngle());
+            if (hasAngle()) {
+                m.rotate(pPoints->center, -pPoints->getMajorAngle());
+            }
+
             RS_Vector v = m - pPoints->center;
             v.y /= pPoints->getRatio();
             pPoints->angle2 = v.angle(); // + m_vMajorP.angle();
 
-            auto ellipse = previewEllipse({pPoints->center, pPoints->getMajorP(), pPoints->getRatio(), pPoints->angle1, pPoints->angle2, false});
+            auto ellipse = previewEllipse({pPoints->center, pPoints->getMajorP(), pPoints->getRatio(),
+                                           pPoints->angle1, pPoints->angle2, pPoints->reversed});
 
             if (showRefEntitiesOnPreview) {
                 previewRefLine(pPoints->center, mouse);
@@ -371,4 +378,12 @@ void LC_ActionDrawEllipse1Point::toSetPointStatus() {
 
 LC_ActionOptionsWidget *LC_ActionDrawEllipse1Point::createOptionsWidget() {
     return new LC_Ellipse1PointOptions();
+}
+
+void LC_ActionDrawEllipse1Point::setReversed(bool b) const{
+   pPoints->reversed = b;
+}
+
+bool LC_ActionDrawEllipse1Point::isReversed() const{
+    return pPoints->reversed;
 }

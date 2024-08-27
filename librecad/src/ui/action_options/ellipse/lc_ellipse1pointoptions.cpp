@@ -34,6 +34,8 @@ LC_Ellipse1PointOptions::LC_Ellipse1PointOptions()
     connect(ui->leMinorRadius, &QLineEdit::editingFinished, this, &LC_Ellipse1PointOptions::onMinorRadiusEditingFinished);
     connect(ui->cbAngle, &QCheckBox::toggled, this, &LC_Ellipse1PointOptions::onUseAngleClicked);
     connect(ui->cbFreeAngle, &QCheckBox::toggled, this, &LC_Ellipse1PointOptions::onFreeAngleClicked);
+    connect(ui->rbPos, &QRadioButton::toggled, this, &LC_Ellipse1PointOptions::onDirectionChanged);
+    connect(ui->rbNeg, &QRadioButton::toggled, this, &LC_Ellipse1PointOptions::onDirectionChanged);
 }
 
 LC_Ellipse1PointOptions::~LC_Ellipse1PointOptions(){
@@ -50,6 +52,9 @@ void LC_Ellipse1PointOptions::doSaveSettings() {
     save("UseAngle", ui->cbAngle->isChecked());
     save("Angle", ui->leAngle->text());
     save("FreeAngle", ui->cbFreeAngle->isChecked());
+    if (action->rtti() == RS2::ActionDrawEllipseArc1Point){
+        save("ArcReversed", ui->rbNeg->isChecked());
+    }
 }
 
 void LC_Ellipse1PointOptions::doSetAction(RS_ActionInterface *a, bool update) {
@@ -59,12 +64,17 @@ void LC_Ellipse1PointOptions::doSetAction(RS_ActionInterface *a, bool update) {
     QString angle;
     bool useAngle;
     bool freeAngle;
+    bool negativeDirection;
+    bool arcAction = action->rtti() == RS2::ActionDrawEllipseArc1Point;
     if (update){
         majorRadius = fromDouble(action->getMajorRadius());
         minorRadius = fromDouble(action->getMinorRadius());
         angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
         useAngle = action->hasAngle();
         freeAngle = action->isAngleFree();
+        if (arcAction){
+            negativeDirection = action->isReversed();
+        }
     }
     else{
         majorRadius = load("MajorRadius", "1.0");
@@ -72,6 +82,9 @@ void LC_Ellipse1PointOptions::doSetAction(RS_ActionInterface *a, bool update) {
         useAngle = loadBool("UseAngle", false);
         angle = load("Angle", "1.0");
         freeAngle = loadBool("FreeAngle", false);
+        if (arcAction){
+            negativeDirection = loadBool("ArcReversed", false);
+        }
     }
 
     setMajorRadiusToActionAndView(majorRadius);
@@ -79,6 +92,12 @@ void LC_Ellipse1PointOptions::doSetAction(RS_ActionInterface *a, bool update) {
     setAngleToActionAndView(angle);
     setAngleIsFreeToActionAndView(freeAngle);
     setUseAngleAngleToActionAndView(useAngle);
+
+    ui->rbNeg->setChecked(negativeDirection);
+    ui->rbPos->setChecked(!negativeDirection);
+
+    ui->rbNeg->setVisible(arcAction);
+    ui->rbPos->setVisible(arcAction);
 }
 
 void LC_Ellipse1PointOptions::languageChange() {
@@ -140,4 +159,10 @@ void LC_Ellipse1PointOptions::onUseAngleClicked([[maybe_unused]]bool val) {
 
 void LC_Ellipse1PointOptions::onFreeAngleClicked([[maybe_unused]]bool val) {
     setAngleIsFreeToActionAndView(ui->cbFreeAngle->isChecked());
+}
+
+void LC_Ellipse1PointOptions::onDirectionChanged([[maybe_unused]] bool val) {
+    bool negative = ui->rbNeg->isChecked();
+    action->setReversed(negative);
+    
 }

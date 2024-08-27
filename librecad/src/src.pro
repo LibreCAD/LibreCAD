@@ -324,6 +324,7 @@ HEADERS += \
     lib/engine/lc_undosection.h \
     lib/printing/lc_printing.h \
     main/lc_application.h \
+    ui/action_options/curve/lc_ellipsearcoptions.h \
     ui/action_options/ellipse/lc_ellipse1pointoptions.h
     
 SOURCES += \
@@ -428,6 +429,7 @@ SOURCES += \
     lib/engine/rs.cpp \
     lib/printing/lc_printing.cpp \
     main/lc_application.cpp \
+    ui/action_options/curve/lc_ellipsearcoptions.cpp \
     ui/action_options/ellipse/lc_ellipse1pointoptions.cpp
 
 # ################################################################################
@@ -1167,6 +1169,7 @@ SOURCES += ui/action_options/circle/lc_circlebyarcoptions.cpp \
 FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/action_options/circle/qg_circleoptions.ui \
        ui/action_options/circle/qg_circletan2options.ui \
+       ui/action_options/curve/lc_ellipsearcoptions.ui \
        ui/action_options/curve/qg_arcoptions.ui \
        ui/action_options/curve/qg_arctangentialoptions.ui \
        ui/action_options/curve/qg_splineoptions.ui \

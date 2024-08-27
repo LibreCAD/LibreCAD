@@ -33,6 +33,10 @@ public:
 
     ~LC_ActionDrawEllipse1Point() override;
 
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void trigger() override;
+    void init(int status) override;
+
     double getMajorRadius();
     double getMinorRadius();
     double getAngle();
@@ -43,11 +47,8 @@ public:
     void setAngle(double val);
     void setHasAngle(bool val);
     void setAngleFree(bool val);
-    void mouseMoveEvent(QMouseEvent *event) override;
-    void trigger() override;
-
-    void init(int status) override;
-
+    bool isReversed() const override;
+    void setReversed(bool b) const override;
 protected:
     struct Points;
 
