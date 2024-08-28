@@ -969,11 +969,13 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
             painter->setPen(pen);
         }
 
+        if (grid && isGridOn()) {
 //only drawGrid updates the grid layout (updatePointArray())
-        drawMetaGrid(painter);
+            drawMetaGrid(painter);
 //draw grid after metaGrid to avoid overwriting grid points by metaGrid lines
 //bug# 3430258
-        drawGrid(painter);
+            drawGrid(painter);
+        }
 
         if (isDraftMode())
             drawDraftSign(painter);
@@ -1550,11 +1552,8 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
  * @see drawIt()
  */
 void RS_GraphicView::drawGrid(RS_Painter *painter){
-    if (!(grid && isGridOn())) return;
 
 // draw grid:
-//painter->setPen(Qt::gray);
-	//painter->setPen(gridColor);
 
     painter->setPen({m_colorData->gridColor, RS2::Width00, RS2::SolidLine});
 
@@ -1581,9 +1580,10 @@ void RS_GraphicView::drawGrid(RS_Painter *painter){
     } else {
         //grid->updatePointArray();
         auto const &pts = grid->getPoints();
-        for (auto const &v: pts) painter->drawGridPoint(toGui(v));
+        for (auto const &v: pts) {
+            painter->drawGridPoint(toGui(v));
+        }
     }
-
 
 // draw grid info:
 //painter->setPen(Qt::white);
@@ -1591,7 +1591,7 @@ void RS_GraphicView::drawGrid(RS_Painter *painter){
 //info = QString("%1 / %2")
 //       .arg(grid->getSpacing())
 //       .arg(grid->getMetaSpacing());
-
+    // fixme - UPDATING UI WIDGET ON EACH DRAW!!!!! FiX THIS
     updateGridStatusWidget(info);
 }
 
@@ -1602,10 +1602,6 @@ void RS_GraphicView::drawGrid(RS_Painter *painter){
  */
 void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 
-    if (!(grid && isGridOn()) /*|| grid->getMetaSpacing()<0.0*/) {
-        return;
-    }
-
 //draw grid after metaGrid to avoid overwriting grid points by metaGrid lines
 //bug# 3430258
     grid->updatePointArray();
@@ -1614,9 +1610,9 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
     RS2::LineType penLineType;
 
     bool gridTypeSolid = gridType == 1;
-    penLineType = gridTypeSolid ? RS2::SolidLine : RS2::DotLine;
+    penLineType = gridTypeSolid ? RS2::SolidLine : RS2::DotLineTiny;
 
-    painter->setPen({m_colorData->metaGridColor, RS2::Width00, penLineType});
+    painter->setPen({m_colorData->metaGridColor, RS2::Width01, penLineType});
 
     RS_Vector dv = grid->getMetaGridWidth().scale(factor);
     double dx = std::abs(dv.x);
@@ -1664,7 +1660,6 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
         }
 
     } else {//orthogonal
-
         for (auto const &y: my) {
             painter->drawLine(RS_Vector(0, toGuiY(y)),
                               RS_Vector(getWidth(), toGuiY(y)));

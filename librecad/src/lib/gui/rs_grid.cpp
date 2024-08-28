@@ -81,7 +81,7 @@ void RS_Grid::updatePointArray() {
     RS_Graphic* graphic = graphicView->getGraphic();
 
     // auto scale grid?
-    LC_GROUP("Appearance"); // fixme settings
+    LC_GROUP("Appearance"); // fixme settings, FIX - REMOVE FROM PAINTING
     bool scaleGrid = LC_GET_BOOL("ScaleGrid", true);
     // get grid setting
     RS_Vector userGrid;
@@ -408,7 +408,7 @@ void RS_Grid::createOrthogonalGrid(LC_Rect const &rect, RS_Vector const &gridWid
         }
     }
 }
-
+// fixme - modify building grid in such way that grid points are not drawn in metagrid positions
 void RS_Grid::createIsometricGrid(LC_Rect const &rect, RS_Vector const &gridWidth) {
     double const left = rect.minP().x;
     double const right = rect.maxP().x;
