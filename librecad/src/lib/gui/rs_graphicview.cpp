@@ -1303,7 +1303,6 @@ void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity *e, double &
         return;
     }
 
-	e->draw(painter, this, patternOffset);
     e->draw(painter, this, patternOffset);
 }
 
