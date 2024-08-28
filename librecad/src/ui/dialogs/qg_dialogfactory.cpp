@@ -498,7 +498,8 @@ RS_BlockData QG_DialogFactory::requestBlockAttributesDialog(RS_BlockList* blockL
     // Block for parameter livery
     //block = blockList->getActive();
 
-    QG_BlockDialog dlg(parent, "Rename Block");
+//    QG_BlockDialog dlg(parent, "Rename Block");
+    QG_BlockDialog dlg(parent);
     dlg.setBlockList(blockList);
     if (dlg.exec()) {
         //dlg.updateBlock();
@@ -594,13 +595,9 @@ QList<RS_Block*> QG_DialogFactory::requestSelectedBlocksRemovalDialog(
 
     // blocks added, show confirmation dialog
 
-    QString title(
-                QMessageBox::tr("Remove %n block(s)", "", blocks.size())
-                );
+    QString title(QMessageBox::tr("Remove %n block(s)", "", blocks.size()));
 
-    QString text(
-                QMessageBox::tr("Listed blocks and all their entities will be removed.")
-                );
+    QString text(QMessageBox::tr("Listed blocks and all their entities will be removed."));
 
     QStringList detail_lines = {
         QMessageBox::tr("Blocks for removal:"),
@@ -849,7 +846,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
         break;
 
     case RS2::EntityParabola: {
-        LC_DlgParabola dlg(nullptr, false);
+        LC_DlgParabola dlg;
         dlg.setParabola(*static_cast<LC_Parabola*>(entity));
         if (dlg.exec()) {
             dlg.updateParabola();
@@ -859,7 +856,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
         break;
 
     case RS2::EntitySpline: {
-        QG_DlgSpline dlg(nullptr, false);
+        QG_DlgSpline dlg;
         dlg.setSpline(*((RS_Spline*)entity));
         if (dlg.exec()) {
             dlg.updateSpline();
@@ -869,7 +866,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
         break;
 
     case RS2::EntitySplinePoints: {
-        LC_DlgSplinePoints dlg(nullptr, false);
+        LC_DlgSplinePoints dlg;
         dlg.setSpline(*static_cast<LC_SplinePoints*>(entity));
         if (dlg.exec()) {
             dlg.updateSpline();
@@ -879,7 +876,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
         break;
 
     case RS2::EntityInsert: {
-        QG_DlgInsert dlg(parent);
+        QG_DlgInsert dlg;
         dlg.setInsert(*((RS_Insert*)entity));
         if (dlg.exec()) {
             dlg.updateInsert();

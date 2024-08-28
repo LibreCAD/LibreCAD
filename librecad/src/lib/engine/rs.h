@@ -271,6 +271,8 @@ namespace RS2 {
         ActionDrawEllipse4Points,
         ActionDrawEllipseCenter3Points,
         ActionDrawEllipseInscribe,
+        ActionDrawEllipse1Point,
+        ActionDrawEllipseArc1Point,
 
         ActionDrawParabola4Points,
         ActionDrawParabolaFD,
@@ -335,6 +337,8 @@ namespace RS2 {
         ActionDimAngular,
         ActionDimArc,
         ActionDimLeader,
+        ActionDimBaseline,
+        ActionDimContinue,
 
         ActionModifyAttributes,
         ActionModifyDelete,

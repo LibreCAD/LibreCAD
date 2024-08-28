@@ -39,20 +39,16 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgText::QG_DlgText(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl), saveSettings(true)
-{
-    setModal(modal);
+QG_DlgText::QG_DlgText(QWidget* parent)
+    : LC_Dialog(parent, "TextProperties"), saveSettings(true){
     setupUi(this);
-
     init();
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgText::~QG_DlgText()
-{
+QG_DlgText::~QG_DlgText(){
     destroy();
     // no need to delete child widgets, Qt does it all for us
 }
@@ -61,8 +57,7 @@ QG_DlgText::~QG_DlgText()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgText::languageChange()
-{
+void QG_DlgText::languageChange(){
     retranslateUi(this);
 }
 

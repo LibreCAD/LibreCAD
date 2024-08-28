@@ -36,10 +36,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_BlockDialog::QG_BlockDialog(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_BlockDialog::QG_BlockDialog(QWidget* parent)
+    : LC_Dialog(parent, "BlockProperties"){
     setupUi(this);
 }
 
@@ -47,20 +45,19 @@ QG_BlockDialog::QG_BlockDialog(QWidget* parent, bool modal, Qt::WindowFlags fl)
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_BlockDialog::languageChange()
-{
+void QG_BlockDialog::languageChange(){
     retranslateUi(this);
 }
 
 void QG_BlockDialog::setBlockList(RS_BlockList* l) {
-        RS_DEBUG->print("QG_BlockDialog::setBlockList");
+    RS_DEBUG->print("QG_BlockDialog::setBlockList");
 
     blockList = l;
-	if (blockList) {
+    if (blockList) {
         RS_Block* block = blockList->getActive();
-		if (block) {
+        if (block) {
             leName->setText(block->getName());
-		}
+        }
     }
 }
 
@@ -72,14 +69,14 @@ void QG_BlockDialog::validate() {
     QString name = leName->text();
 
     if (!name.isEmpty()) {
-		if (blockList && !blockList->find(name)) {
+        if (blockList && !blockList->find(name)) {
             accept();
         } else {
             QMessageBox::warning( this, tr("Renaming Block"),
                                   tr("Could not name block. A block named \"%1\" "
                                      "already exists.").arg(leName->text()));
         }
-	}
+    }
 }
 
 void QG_BlockDialog::cancel() {

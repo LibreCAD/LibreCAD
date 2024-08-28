@@ -27,6 +27,7 @@
 #ifndef RS_ACTIONDIMENSION_H
 #define RS_ACTIONDIMENSION_H
 
+#include "rs_constructionline.h"
 #include "rs_previewactioninterface.h"
 
 struct RS_DimensionData;
@@ -39,10 +40,11 @@ struct RS_DimensionData;
 class RS_ActionDimension:public RS_PreviewActionInterface {
 Q_OBJECT
 
+    void resume() override;
+
 public:
     RS_ActionDimension(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~RS_ActionDimension() override;
-    virtual void reset();
     void init(int status) override;
 
     QString getText() const;
@@ -76,6 +78,9 @@ protected:
     */
 
     RS2::CursorType doGetMouseCursor(int status) override;
+    bool previewShowsFullDimension = false;
+    void readSettings();
+    virtual void reset();
 };
 
 #endif

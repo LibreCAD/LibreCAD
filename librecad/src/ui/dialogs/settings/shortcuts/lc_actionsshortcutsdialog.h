@@ -29,12 +29,13 @@
 #include "lc_shortcutstreemodel.h"
 #include "lc_actiongroupmanager.h"
 #include "lc_shortcutstreeview.h"
+#include "lc_dialog.h"
 
 namespace Ui {
     class LC_ActionsShortcutsDialog;
 }
 
-class LC_ActionsShortcutsDialog : public QDialog{
+class LC_ActionsShortcutsDialog : public LC_Dialog{
     Q_OBJECT
 
 public:
@@ -70,8 +71,6 @@ protected:
     void editItem(LC_ShortcutTreeItem *item);
     bool keySequenceIsValid(const QKeySequence &sequence) const;
     void rebuildModel(bool restoreSelection);
-    void saveDialogPosition() const;
-    void loadDialogPosition();
     static QFlags<QFileDialog::Option> getFileDialogOptions();
     static void showIOInfoDialog(bool forImport, bool ok, const QString &message);
     bool checkHasCollisions(LC_ShortcutInfo *shortcutInfo);

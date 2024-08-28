@@ -48,9 +48,9 @@
 
 int QG_DlgOptionsGeneral::current_tab = 0;
 
-QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl){
-    setModal(modal);
+QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
+    : LC_Dialog(parent, "OptionsGeneral"){
+    setModal(false);
     setupUi(this);
     tabWidget->setCurrentIndex(current_tab);
     init();
@@ -70,6 +70,10 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::Wind
 
     connect(cbVisualizeHovering, &QCheckBox::stateChanged,
             this, &QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked);
+
+    connect(cbPersistentDialogs, &QCheckBox::stateChanged,
+            this, &QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked);
+
 
     connect(tbShortcuts, &QToolButton::clicked, this, &QG_DlgOptionsGeneral::setShortcutsMappingsFoler);
 }
@@ -145,6 +149,13 @@ void QG_DlgOptionsGeneral::init() {
 
         bool visualizePreviewRefPoints = LC_GET_BOOL("VisualizePreviewRefPoints", true);
         cbDisplayRefPoints->setChecked(visualizePreviewRefPoints);
+
+        bool persistDialogs = LC_GET_BOOL("PersistDialogPositions", false);
+        cbPersistentDialogs->setChecked((persistDialogs));
+        cbPersistentDialogSizeOnly->setEnabled(persistDialogs);
+
+        bool persistSizeOnly = LC_GET_BOOL("PersistDialogRestoreSizeOnly", false);
+        cbPersistentDialogSizeOnly->setChecked(persistSizeOnly);
 
         // scale grid:
         QString scaleGrid = LC_GET_STR("ScaleGrid", "1");
@@ -309,6 +320,8 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("Autopanning", cb_autopanning->isChecked());
             LC_SET("ScrollBars", scrollbars_check_box->isChecked());
             LC_SET("ShowKeyboardShortcutsInTooltips", cbShowKeyboardShortcutsInToolTips->isChecked());
+            LC_SET("PersistDialogPositions", cbPersistentDialogs->isChecked());
+            LC_SET("PersistDialogRestoreSizeOnly", cbPersistentDialogSizeOnly->isChecked());
         }
         LC_GROUP_END();
 
@@ -542,6 +555,10 @@ void QG_DlgOptionsGeneral::setLibraryPath() {
 
 void QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked() {
     cbShowRefPointsOnHovering->setEnabled(cbVisualizeHovering->isChecked());
+}
+
+void QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked() {
+    cbPersistentDialogSizeOnly->setEnabled(cbPersistentDialogs->isChecked());
 }
 
 void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state) {

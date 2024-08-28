@@ -27,16 +27,17 @@
 #define QG_LAYERDIALOG_H
 
 #include "ui_qg_layerdialog.h"
+#include "lc_dialog.h"
 
 class RS_Layer;
 class RS_LayerList;
 
-class QG_LayerDialog : public QDialog, public Ui::QG_LayerDialog
+class QG_LayerDialog : public LC_Dialog, public Ui::QG_LayerDialog
 {
     Q_OBJECT
 
 public:
-    QG_LayerDialog(QWidget* parent = 0, QString name = 0, bool modal = false, Qt::WindowFlags fl = {});
+    QG_LayerDialog(QWidget* parent = nullptr, QString name = 0);
 	~QG_LayerDialog()=default;
 
 public slots:

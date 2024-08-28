@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>537</width>
+    <width>1147</width>
     <height>24</height>
    </rect>
   </property>
@@ -254,12 +254,18 @@
        <height>19</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Horizontal Dimension</string>
+     </property>
      <property name="text">
       <string/>
      </property>
      <property name="icon">
       <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/dimhor.png</normaloff>:/extui/dimhor.png</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -277,12 +283,78 @@
        <height>19</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Vertical Dimension</string>
+     </property>
      <property name="text">
       <string/>
      </property>
      <property name="icon">
       <iconset resource="../../../../res/extui/extui.qrc">
        <normaloff>:/extui/dimver.png</normaloff>:/extui/dimver.png</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblBaselineDistance">
+     <property name="text">
+      <string>Distance:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="leBaselineDistance">
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Distance between dimensions in baseline</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="cbFreeBaselineDistance">
+     <property name="toolTip">
+      <string>If checked, distance between dimenions is defined by mouse</string>
+     </property>
+     <property name="text">
+      <string>Free</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblAngleCircle">
+     <property name="text">
+      <string>Angle:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="leAngleCircle">
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Angle for dimension</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="cbAngleCircleFree">
+     <property name="toolTip">
+      <string>If checked, angle for dimension is defined by mouse</string>
+     </property>
+     <property name="text">
+      <string>Free</string>
      </property>
     </widget>
    </item>
@@ -305,88 +377,7 @@
  <resources>
   <include location="../../../../res/extui/extui.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>leLabel</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_DimOptions</receiver>
-   <slot>updateLabel()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bDiameter</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>Ui_DimOptions</receiver>
-   <slot>updateLabel()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leTol1</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_DimOptions</receiver>
-   <slot>updateLabel()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leTol2</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_DimOptions</receiver>
-   <slot>updateLabel()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbSymbol</sender>
-   <signal>activated(QString)</signal>
-   <receiver>Ui_DimOptions</receiver>
-   <slot>insertSign(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>updateLabel()</slot>
   <slot>insertSign(QString)</slot>

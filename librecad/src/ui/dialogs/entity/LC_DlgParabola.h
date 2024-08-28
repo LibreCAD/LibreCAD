@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include<memory>
 #include <QDialog>
+#include "lc_dialog.h"
 
 class LC_Parabola;
 
@@ -33,12 +34,12 @@ namespace Ui {
 class DlgParabola;
 }
 
-class LC_DlgParabola : public QDialog
+class LC_DlgParabola : public LC_Dialog
 {
 	Q_OBJECT
 public:
-    LC_DlgParabola(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
-    virtual ~LC_DlgParabola();
+    LC_DlgParabola(QWidget* parent=nullptr);
+    ~LC_DlgParabola() override;
 
 public slots:
     virtual void setParabola(LC_Parabola& b);

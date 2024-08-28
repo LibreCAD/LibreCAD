@@ -36,6 +36,8 @@
 #include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_preview.h"
+#include "qg_arcoptions.h"
+#include "lc_ellipsearcoptions.h"
 
 struct RS_ActionDrawEllipseAxis::Points {
 	/** Center of ellipse */
@@ -50,6 +52,8 @@ struct RS_ActionDrawEllipseAxis::Points {
     double angle2 = 0.;
 	/** Do we produce an arc (true) or full ellipse (false) */
     bool isArc = false;
+    // is arc reversed?
+    bool reversed = false;
 };
 
 /**
@@ -61,8 +65,7 @@ struct RS_ActionDrawEllipseAxis::Points {
 RS_ActionDrawEllipseAxis::RS_ActionDrawEllipseAxis(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView,
-		bool isArc,
-        [[maybe_unused]]RS2::ActionType actionType)
+		bool isArc)
 	:LC_ActionDrawCircleBase("Draw ellipse with axis",
                                container, graphicView)
     ,pPoints(std::make_unique<Points>()){
@@ -98,7 +101,7 @@ void RS_ActionDrawEllipseAxis::trigger(){
 
     auto *ellipse = new RS_Ellipse{container,
                                    {pPoints->center, pPoints->m_vMajorP, pPoints->ratio,
-                                    pPoints->angle1, pPoints->angle2, false}
+                                    pPoints->angle1, pPoints->angle2, pPoints->reversed}
     };
     if (pPoints->ratio > 1.){
         ellipse->switchMajorMinor();
@@ -164,7 +167,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                                                0., pPoints->isArc ? 2. * M_PI : 0., false});
 
                 if (showRefEntitiesOnPreview) {
-                    previewEllipseReferencePoints(ellipse, true, mouse);
+                    previewEllipseReferencePoints(ellipse, true, false, mouse);
                 }
                 drawPreview();
             }
@@ -186,11 +189,12 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                 previewRefLine(pPoints->center, mouse);
 
                 auto ellipse = previewEllipse({pPoints->center, pPoints->m_vMajorP, pPoints->ratio,
-                                               pPoints->angle1, pPoints->angle1 + 1.0, false});
+                                               pPoints->angle1, pPoints->angle1 + 1.0, pPoints->reversed});
 
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->center);
                     previewRefSelectablePoint(ellipse->getStartpoint());
+                    previewEllipseReferencePoints(ellipse, false, true, mouse);
                 }
             }
             drawPreview();
@@ -208,7 +212,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                 v.y /= pPoints->ratio;
                 pPoints->angle2 = v.angle(); // + m_vMajorP.angle();
 
-                auto ellipse = previewEllipse({pPoints->center, pPoints->m_vMajorP, pPoints->ratio, pPoints->angle1, pPoints->angle2, false});
+                auto ellipse = previewEllipse({pPoints->center, pPoints->m_vMajorP, pPoints->ratio, pPoints->angle1, pPoints->angle2, pPoints->reversed});
 
                 if (showRefEntitiesOnPreview) {
                     previewRefLine(pPoints->center, mouse);
@@ -218,6 +222,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                     point.rotate(pPoints->center, /*-*/ pPoints->m_vMajorP.angle());
                     previewRefPoint(point);
                     previewRefSelectablePoint(ellipse->getEndpoint());
+                    previewEllipseReferencePoints(ellipse, false, true, mouse);
                 }
             }
             drawPreview();
@@ -300,6 +305,14 @@ void RS_ActionDrawEllipseAxis::onCoordinateEvent(int status, [[maybe_unused]] bo
     }
 }
 
+bool RS_ActionDrawEllipseAxis::isReversed() const {
+    return pPoints->reversed;
+}
+
+void RS_ActionDrawEllipseAxis::setReversed(bool b) const {
+    pPoints->reversed = b;
+}
+
 bool RS_ActionDrawEllipseAxis::doProcessCommand(int status, const QString &c) {
     bool accept = false;
     switch (status) {
@@ -367,4 +380,11 @@ void RS_ActionDrawEllipseAxis::updateMouseButtonHints(){
             updateMouseWidget();
             break;
     }
+}
+
+LC_ActionOptionsWidget *RS_ActionDrawEllipseAxis::createOptionsWidget() {
+    if (pPoints->isArc) {
+        return new LC_EllipseArcOptions();
+    }
+    return nullptr;
 }

@@ -94,6 +94,9 @@ std::unique_ptr<RS_Settings::GroupGuard> RS_Settings::beginGroupGuard(QString gr
 bool RS_Settings::write(const QString &key, int value) {
     return writeSingle(m_group, key, value);
 }
+bool RS_Settings::writeColor(const QString &key, int value) {    ;
+    return writeEntry(key, QVariant(value % 0x80000000));
+}
 
 bool RS_Settings::writeSingle(const QString& group, const QString &key, int value) {
     return writeEntrySingle(group, key, QVariant(value));
@@ -181,6 +184,24 @@ QString RS_Settings::readStrSingle(const QString& group, const QString &key,cons
     return value.toString();
 }
 
+int RS_Settings::readColor(const QString &key, int def) {
+    return readColorSingle(m_group, key, def);
+}
+
+
+int RS_Settings::readColorSingle(const QString& group, const QString &key, int def) {
+    QString fullName = getFullName(group, key);
+    QVariant value = readEntryCache(fullName);
+    if (!value.isValid()) {
+        value = settings->value(fullName, QVariant(def));
+        cache[fullName] = value;
+    }
+    unsigned long long uValue = value.toULongLong();
+    uValue = uValue % 0x80000000ull;
+    int result = int(uValue);
+    return result;
+}
+
 int RS_Settings::readInt(const QString &key, int def) {
     return readIntSingle(m_group, key, def);
 }
@@ -192,9 +213,8 @@ int RS_Settings::readIntSingle(const QString& group, const QString &key, int def
         value = settings->value(fullName, QVariant(def));
         cache[fullName] = value;
     }
-    unsigned long long uValue = value.toULongLong();
-    uValue = uValue % 0x80000000ull;
-    return int(uValue);
+    int result = value.toInt();
+    return result;
 }
 
 QVariant RS_Settings::readEntryCache(const QString &key) {

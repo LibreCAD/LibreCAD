@@ -36,19 +36,15 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgEllipse::QG_DlgEllipse(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_DlgEllipse::QG_DlgEllipse(QWidget* parent)
+    : LC_Dialog(parent, "EllipseProperties"){
     setupUi(this);
-
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgEllipse::~QG_DlgEllipse()
-{
+QG_DlgEllipse::~QG_DlgEllipse(){
     // no need to delete child widgets, Qt does it all for us
 }
 
@@ -56,15 +52,12 @@ QG_DlgEllipse::~QG_DlgEllipse()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgEllipse::languageChange()
-{
+void QG_DlgEllipse::languageChange(){
     retranslateUi(this);
 }
 
 void QG_DlgEllipse::setEllipse(RS_Ellipse& e) {
     ellipse = &e;
-
-
     RS_Graphic* graphic = ellipse->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -112,4 +105,3 @@ void QG_DlgEllipse::updateEllipse() {
     ellipse->setPen(wPen->getPen());
     ellipse->setLayer(cbLayer->currentText());
 }
-

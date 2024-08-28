@@ -46,8 +46,8 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
-    bool isReversed() const;
-    void setReversed(bool r) const;
+    bool isReversed() const override;
+    void setReversed(bool r) const override;
 protected:
     /**
  * Action States.

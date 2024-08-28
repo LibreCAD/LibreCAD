@@ -29,13 +29,12 @@
 class RS_Line;
 
 #include "ui_qg_dlgline.h"
+#include "lc_dialog.h"
 
-class QG_DlgLine : public QDialog, public Ui::QG_DlgLine
-{
+class QG_DlgLine : public LC_Dialog, public Ui::QG_DlgLine{
     Q_OBJECT
-
 public:
-    QG_DlgLine(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
+    QG_DlgLine(QWidget* parent = nullptr);
 
 public slots:
     virtual void setLine( RS_Line & l );

@@ -28,13 +28,13 @@
 class RS_Polyline;
 
 #include "ui_qg_dlgpolyline.h"
+#include "lc_dialog.h"
 
-class QG_DlgPolyline : public QDialog, public Ui::QG_DlgPolyline
-{
+class QG_DlgPolyline : public LC_Dialog, public Ui::QG_DlgPolyline{
     Q_OBJECT
 
 public:
-    QG_DlgPolyline(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
+    QG_DlgPolyline(QWidget* parent = nullptr);
     ~QG_DlgPolyline();
 
 public slots:

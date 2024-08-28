@@ -123,7 +123,10 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent *e){
             case SetPoint4: {
                 if (pPoints->evalid) {
                     auto ellipse = previewEllipse(pPoints->eData);
-                    previewEllipseReferencePoints(ellipse, true);
+                    if (showRefEntitiesOnPreview) {
+                        previewEllipseReferencePoints(ellipse, true);
+                        previewRefSelectablePoint(mouse);
+                    }
                 }
                 break;
             }

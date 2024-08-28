@@ -113,7 +113,7 @@ void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){
             case SetPoint2:
             case SetPoint3: {
                 auto ellipse = previewEllipse(pPoints->eData);
-                previewEllipseReferencePoints(ellipse, true);
+                    previewEllipseReferencePoints(ellipse, true, false);
                 break;
             }
             default:

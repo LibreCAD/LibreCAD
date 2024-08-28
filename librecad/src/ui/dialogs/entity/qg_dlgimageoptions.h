@@ -28,14 +28,13 @@
 
 #include "ui_qg_dlgimageoptions.h"
 #include "rs_vector.h"
+#include "lc_dialog.h"
 
-class QG_ImageOptionsDialog : public QDialog, public Ui::QG_ImageOptionsDialog
-{
+class QG_ImageOptionsDialog : public LC_Dialog, public Ui::QG_ImageOptionsDialog{
     Q_OBJECT
-
 public:
-    QG_ImageOptionsDialog(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
-    virtual ~QG_ImageOptionsDialog() = default;
+    QG_ImageOptionsDialog(QWidget* parent = nullptr);
+    ~QG_ImageOptionsDialog() override = default;
 
     virtual QSize getSize();
     virtual QSize getBorders();

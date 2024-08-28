@@ -28,14 +28,15 @@
 
 #include "ui_qg_dlgattributes.h"
 #include "rs_modification.h"
+#include "lc_dialog.h"
 
-class QG_DlgAttributes : public QDialog, public Ui::QG_DlgAttributes
+class QG_DlgAttributes : public LC_Dialog, public Ui::QG_DlgAttributes
 {
     Q_OBJECT
 
 public:
-    QG_DlgAttributes(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
-    ~QG_DlgAttributes();
+    QG_DlgAttributes(QWidget* parent = nullptr);
+    ~QG_DlgAttributes() override;
 
 public slots:
     virtual void setData( RS_AttributesData * data, RS_LayerList & layerList );
@@ -43,7 +44,6 @@ public slots:
 
 protected slots:
     virtual void languageChange();
-
 private:
     RS_Pen pen;
     RS_AttributesData* data;

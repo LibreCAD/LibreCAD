@@ -37,7 +37,6 @@ void LC_QuickInfoOptions::load(){
         RS_Color color = QColor(LC_GET_STR("penHighlightColor", "red"));
         RS2::LineType lineType = static_cast<RS2::LineType> (LC_GET_INT("penHighlightLineType", RS2::LineType::SolidLine));
         RS2::LineWidth lineWidth = static_cast<RS2::LineWidth> (LC_GET_INT("penHighlightLineWidth", RS2::LineWidth::WidthDefault));
-
         highlightPen = RS_Pen(color, lineWidth, lineType);
     }
 

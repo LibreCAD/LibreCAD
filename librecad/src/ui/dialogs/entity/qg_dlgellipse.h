@@ -29,13 +29,13 @@
 class RS_Ellipse;
 
 #include "ui_qg_dlgellipse.h"
+#include "lc_dialog.h"
 
-class QG_DlgEllipse : public QDialog, public Ui::QG_DlgEllipse
-{
+class QG_DlgEllipse : public LC_Dialog, public Ui::QG_DlgEllipse{
     Q_OBJECT
 
 public:
-    QG_DlgEllipse(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
+    QG_DlgEllipse(QWidget* parent = nullptr);
     ~QG_DlgEllipse();
 
 public slots:

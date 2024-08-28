@@ -29,14 +29,14 @@
 class RS_Point;
 
 #include "ui_qg_dlgpoint.h"
+#include "lc_dialog.h"
 
-class QG_DlgPoint : public QDialog, public Ui::QG_DlgPoint
-{
+class QG_DlgPoint : public LC_Dialog, public Ui::QG_DlgPoint{
     Q_OBJECT
 
 public:
-    QG_DlgPoint(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
-    ~QG_DlgPoint();
+    explicit QG_DlgPoint(QWidget* parent = nullptr);
+    ~QG_DlgPoint() override;
 
 public slots:
     virtual void setPoint( RS_Point & p );

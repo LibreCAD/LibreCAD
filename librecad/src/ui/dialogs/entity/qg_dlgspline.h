@@ -29,14 +29,13 @@
 class RS_Spline;
 
 #include "ui_qg_dlgspline.h"
+#include "lc_dialog.h"
 
-class QG_DlgSpline : public QDialog, public Ui::QG_DlgSpline
-{
+class QG_DlgSpline : public LC_Dialog, public Ui::QG_DlgSpline{
     Q_OBJECT
 
 public:
-    QG_DlgSpline(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
-
+    QG_DlgSpline(QWidget* parent = nullptr);
 public slots:
     virtual void setSpline( RS_Spline & e );
     virtual void updateSpline();

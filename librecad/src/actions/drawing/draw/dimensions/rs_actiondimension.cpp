@@ -24,6 +24,16 @@
 **
 **********************************************************************/
 
+#include "rs_settings.h"
+#include "lc_actiondimlinearbase.h"
+#include <QMouseEvent>
+#include "rs_constructionline.h"
+#include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+#include "rs_dimlinear.h"
+#include "rs_math.h"
+#include "rs_dimaligned.h"
 #include "rs_actiondimension.h"
 #include "rs_dialogfactory.h"
 #include "rs_dimension.h"
@@ -38,9 +48,9 @@ RS_ActionDimension::RS_ActionDimension(
     const char *name,
     RS_EntityContainer &container,
     RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface(name,
-                               container, graphicView){
+    :RS_PreviewActionInterface(name,container, graphicView){
     reset();
+    readSettings();
 }
 
 RS_ActionDimension::~RS_ActionDimension() = default;
@@ -77,6 +87,8 @@ bool RS_ActionDimension::isDimensionAction(RS2::ActionType type){
         case RS2::ActionDimDiametric:
         case RS2::ActionDimRadial:
         case RS2::ActionDimArc:
+        case RS2::ActionDimBaseline:
+        case RS2::ActionDimContinue:
             return true;
         default:
             return false;
@@ -152,4 +164,13 @@ void RS_ActionDimension::setDiameter(bool d){
 
 LC_ActionOptionsWidget* RS_ActionDimension::createOptionsWidget(){
     return new QG_DimOptions();
+}
+
+void RS_ActionDimension::readSettings() {
+    previewShowsFullDimension = LC_GET_ONE_BOOL("Appearance", "PreviewFullDimOnExt2", true);
+}
+
+void RS_ActionDimension::resume() {
+    RS_PreviewActionInterface::resume();
+    readSettings();
 }

@@ -1087,6 +1087,10 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter, RS_Entity *e, double &
 //   This is the standard (AutoCAD like) behaviour.
 // bug# 3437941
 // ------------------------------------------------------------
+    bool inPrintingMode = isPrinting();
+    bool inPrintPreview = isPrintPreview();
+
+    RS_Color &backgroundColor = m_colorData->background;
     if (!draftMode) {
         double uf = 1.0; // Unit factor.
         double wf = 1.0; // Width factor.
@@ -1096,18 +1100,19 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter, RS_Entity *e, double &
         if (graphic) {
             uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
 
-            if ((isPrinting() || isPrintPreview()) &&
+            if ((inPrintingMode || inPrintPreview) &&
                 graphic->getPaperScale() > RS_TOLERANCE) {
                 if (scaleLineWidth) {
                     wf = graphic->getVariableDouble("$DIMSCALE", 1.0);
                 } else {
                     wf = 1.0 / graphic->getPaperScale();
                 }
-
             }
         }
 
-        if (pen.getAlpha() == 1.0) pen.setScreenWidth(toGuiDX(w / 100.0 * uf * wf));
+        if (pen.getAlpha() == 1.0) {
+            pen.setScreenWidth(toGuiDX(w / 100.0 * uf * wf));
+        }
     } else {
 //		pen.setWidth(RS2::Width00);
         pen.setScreenWidth(0);
@@ -1121,15 +1126,18 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter, RS_Entity *e, double &
     // prevent background color on background drawing
     // and enhance visibility of black lines on dark backgrounds
     RS_Color penColor{pen.getColor().stripFlags()};
-    if (penColor == m_colorData->background.stripFlags()
-        || (penColor.toIntColor() == RS_Color::Black
-            && penColor.colorDistance(m_colorData->background) < RS_Color::MinColorDistance)) {
+
+    if (inPrintPreview /*|| inPrintingMode*/){ //  todo - should we change color for printer mode too?
+        backgroundColor = RS_Color(255, 255, 255); // same color as used for drawing print area in drawPaper
+    }
+    if (penColor == backgroundColor.stripFlags() || (penColor.toIntColor() == RS_Color::Black
+            && penColor.colorDistance(backgroundColor) < RS_Color::MinColorDistance)) {
         pen.setColor(m_colorData->foreground);
     }
 
     pen.setDashOffset(patternOffset);
 
-    if (!isPrinting() && !isPrintPreview()) {
+    if (!inPrintingMode && !inPrintPreview) {
         if (inOverlay || inOverlayDrawing) {
             if (e->isHighlighted()) {    // Glowing effects on mouse hovering: use the "selected" color
                 // for glowing effects on mouse hovering, draw solid lines
@@ -1150,13 +1158,13 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter, RS_Entity *e, double &
         }
 
         if (e->isTransparent()) {
-            pen.setColor(m_colorData->background);
+            pen.setColor(backgroundColor);
         }
     }
 
 // deleting not drawing:
     if (getDeleteMode()) {
-        pen.setColor(m_colorData->background);
+        pen.setColor(backgroundColor);
     }
 // LC_ERR << "PEN " << pen.getColor().name() << "Width: " << pen.getWidth() <<  " | " << pen.getScreenWidth() << " LT " << pen.getLineType();
     painter->setPen(pen);

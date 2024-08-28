@@ -155,11 +155,11 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
 }
 
 void QG_ColorBox::readCustomColorSettings(){
-    LC_GROUP_GUARD("/ColorBox");
+    LC_GROUP_GUARD("ColorBox");
     {
         for (size_t i = 0; i < Max_Custom_Colors; i++) {
             QString colorName = customColorName.arg(i);
-            int color = LC_GET_INT(colorName, -1);
+            int color = LC_GET_COLOR(colorName, -1);
             if (color < 0) {
                 break;
             }
@@ -169,14 +169,14 @@ void QG_ColorBox::readCustomColorSettings(){
 }
 
 void QG_ColorBox::writeCustomColorSettings(){
-    LC_GROUP_GUARD("/ColorBox");
+    LC_GROUP_GUARD("ColorBox");
     {
         int customIndex = 0;
         for (int cIndex = colorIndexStart; cIndex < count(); cIndex++) {
             if (itemText(cIndex) == customItemText) {
-                QColor itemColor = itemData(cIndex).value<QColor>();
+                auto itemColor = itemData(cIndex).value<QColor>();
                 QString colorName = customColorName.arg(customIndex++);
-                LC_SET(std::move(colorName), QString("%1").arg(itemColor.rgb() % 0x80000000));
+                LC_SET_COLOR(colorName, itemColor.rgb());
             }
         }
     }

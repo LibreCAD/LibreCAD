@@ -36,20 +36,16 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgLine::QG_DlgLine(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_DlgLine::QG_DlgLine(QWidget* parent)
+    : LC_Dialog(parent, "LineProperties"){
     setupUi(this);
-
 }
 
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgLine::languageChange()
-{
+void QG_DlgLine::languageChange(){
     retranslateUi(this);
 }
 
@@ -96,4 +92,3 @@ void QG_DlgLine::updateLine() {
     line->setPen(wPen->getPen());
     line->setLayer(cbLayer->currentText());
 }
-

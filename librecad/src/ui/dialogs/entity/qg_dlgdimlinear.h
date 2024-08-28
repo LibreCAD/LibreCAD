@@ -27,15 +27,16 @@
 #define QG_DLGDIMLINEAR_H
 
 #include "ui_qg_dlgdimlinear.h"
+#include "lc_dialog.h"
+
 class RS_DimLinear;
 
-class QG_DlgDimLinear : public QDialog, public Ui::QG_DlgDimLinear
-{
+class QG_DlgDimLinear : public LC_Dialog, public Ui::QG_DlgDimLinear{
     Q_OBJECT
 
 public:
-    QG_DlgDimLinear(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
-    ~QG_DlgDimLinear();
+    QG_DlgDimLinear(QWidget* parent = nullptr);
+    ~QG_DlgDimLinear() override;
 
 public slots:
     virtual void setDim( RS_DimLinear & d );

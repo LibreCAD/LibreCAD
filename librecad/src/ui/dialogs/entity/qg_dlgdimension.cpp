@@ -35,12 +35,9 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgDimension::QG_DlgDimension(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_DlgDimension::QG_DlgDimension(QWidget* parent)
+    : LC_Dialog(parent, "DimensionProperties"){
     setupUi(this);
-
 }
 
 /*
@@ -52,8 +49,7 @@ QG_DlgDimension::~QG_DlgDimension() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgDimension::languageChange()
-{
+void QG_DlgDimension::languageChange(){
     retranslateUi(this);
 }
 
@@ -80,4 +76,3 @@ void QG_DlgDimension::updateDim() {
     dim->setPen(wPen->getPen());
     dim->setLayer(cbLayer->currentText());
 }
-

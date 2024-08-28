@@ -26,10 +26,8 @@
 #include <QFileDialog>
 
 LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
-    : QDialog(parent)
-{
+    : LC_Dialog(parent, "WidgetOptions"){
     setupUi(this);
-
     connect(stylesheet_button, SIGNAL(released()),
             this, SLOT(chooseStyleSheet()));
 }

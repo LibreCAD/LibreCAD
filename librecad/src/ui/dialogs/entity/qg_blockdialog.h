@@ -27,17 +27,18 @@
 #define QG_BLOCKDIALOG_H
 
 #include "ui_qg_blockdialog.h"
+#include "lc_dialog.h"
 
 class RS_BlockList;
 struct RS_BlockData;
 
-class QG_BlockDialog : public QDialog, public Ui::QG_BlockDialog
+class QG_BlockDialog : public LC_Dialog, public Ui::QG_BlockDialog
 {
     Q_OBJECT
 
 public:
-    QG_BlockDialog(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
-	~QG_BlockDialog()=default;
+    QG_BlockDialog(QWidget* parent = nullptr);
+	~QG_BlockDialog() override =default;
 
     virtual RS_BlockData getBlockData();
 

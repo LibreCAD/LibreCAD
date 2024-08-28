@@ -133,6 +133,7 @@ include_directories(librecad/src/ui/action_options/line)
 include_directories(librecad/src/ui/action_options/circle)
 include_directories(librecad/src/ui/action_options/polyline)
 include_directories(librecad/src/ui/action_options/curve)
+include_directories(librecad/src/ui/action_options/ellipse)
 include_directories(librecad/src/ui/action_options/dimensions)
 include_directories(librecad/src/ui/action_options/selection)
 include_directories(librecad/src/ui/action_options/snap)
@@ -1202,6 +1203,17 @@ set(SOURCES
 		librecad/src/ui/actions/lc_shortcutinfo.cpp
 		librecad/src/ui/actions/lc_shortcuts_manager.cpp
 		librecad/src/ui/actions/lc_shortcuts_manager.h
+		librecad/src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.h
+		librecad/src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp
+		librecad/src/ui/action_options/ellipse/lc_ellipse1pointoptions.h
+		librecad/src/ui/action_options/ellipse/lc_ellipse1pointoptions.cpp
+		librecad/src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.h
+		librecad/src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp
+		librecad/src/actions/drawing/draw/dimensions/lc_actioncircledimbase.h
+		librecad/src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp
+		librecad/src/ui/action_options/curve/lc_ellipsearcoptions.cpp
+		librecad/src/ui/dialogs/lc_dialog.h
+		librecad/src/ui/dialogs/lc_dialog.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

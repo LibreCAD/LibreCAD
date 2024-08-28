@@ -59,12 +59,11 @@ namespace {
     int current_tab = 0;
 }
 
-QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent)
+    : LC_Dialog(parent, "OptionsDrawing")
     , listPrec1(std::make_unique<QStringList>())
     ,paperScene{new QGraphicsScene(parent)}
     ,spacing{std::make_unique<RS_Vector>()}{
-    setModal(modal);
     setupUi(this);
     tabWidget->setCurrentIndex(current_tab);
     init();
@@ -1022,12 +1021,12 @@ void QG_DlgOptionsDrawing::updatePaperPreview() {
 
 void QG_DlgOptionsDrawing::resizeEvent(QResizeEvent* event) {
     updatePaperPreview();
-    QDialog::resizeEvent(event);
+    LC_Dialog::resizeEvent(event);
 }
 
 void QG_DlgOptionsDrawing::showEvent(QShowEvent* event) {
     updatePaperPreview();
-    QDialog::showEvent(event);
+    LC_Dialog::showEvent(event);
 }
 
 void QG_DlgOptionsDrawing::on_rbIsometricGrid_clicked(){

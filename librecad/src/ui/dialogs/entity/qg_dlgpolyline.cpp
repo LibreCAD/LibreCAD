@@ -37,19 +37,15 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgPolyline::QG_DlgPolyline(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_DlgPolyline::QG_DlgPolyline(QWidget* parent)
+    : LC_Dialog(parent, "PolylineProperties"){
     setupUi(this);
-
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgPolyline::~QG_DlgPolyline()
-{
+QG_DlgPolyline::~QG_DlgPolyline(){
     // no need to delete child widgets, Qt does it all for us
 }
 
@@ -57,8 +53,7 @@ QG_DlgPolyline::~QG_DlgPolyline()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgPolyline::languageChange()
-{
+void QG_DlgPolyline::languageChange(){
     retranslateUi(this);
 }
 
@@ -76,11 +71,8 @@ void QG_DlgPolyline::setPolyline(RS_Polyline& e) {
     }
 
     wPen->setPen(polyline,lay, "Pen");
-	
     cbClosed->setChecked(polyline->isClosed());
 }
-
-
 
 void QG_DlgPolyline::updatePolyline() {
     polyline->setClosed(cbClosed->isChecked());
@@ -88,4 +80,3 @@ void QG_DlgPolyline::updatePolyline() {
     polyline->setLayer(cbLayer->currentText());
         polyline->update();
 }
-

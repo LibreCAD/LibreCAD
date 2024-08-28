@@ -26,31 +26,25 @@
 #ifndef QG_DLGARC_H
 #define QG_DLGARC_H
 
-
 #include <QDialog>
 
 #include "ui_qg_dlgarc.h"
+#include "lc_dialog.h"
 
 class RS_Arc;
 
-class QG_DlgArc : public QDialog, public Ui::QG_DlgArc
-{
+class QG_DlgArc : public LC_Dialog, public Ui::QG_DlgArc{
     Q_OBJECT
-
 public:
-    QG_DlgArc(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
-    virtual ~QG_DlgArc() = default;
-
+    QG_DlgArc(QWidget* parent = nullptr);
+    ~QG_DlgArc() override = default;
 public slots:
     virtual void setArc(RS_Arc& a);
     virtual void updateArc();
-
 protected slots:
     virtual void languageChange();
-
 private:
     RS_Arc* arc = nullptr;
-
 };
 
 #endif // QG_DLGARC_H

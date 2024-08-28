@@ -41,10 +41,12 @@ class QSettings;
 
 #define RS_SETTINGS RS_Settings::instance()
 #define LC_SET RS_Settings::instance()->write
+#define LC_SET_COLOR RS_Settings::instance()->writeColor
 #define LC_SET_ONE RS_Settings::instance()->writeSingle
 #define LC_GET_STR RS_Settings::instance()->readStr
 #define LC_GET_ONE_STR RS_Settings::instance()->readStrSingle
 #define LC_GET_INT RS_Settings::instance()->readInt
+#define LC_GET_COLOR RS_Settings::instance()->readColor
 #define LC_GET_ONE_INT RS_Settings::instance()->readIntSingle
 #define LC_GET_BOOL RS_Settings::instance()->readBool
 #define LC_GET_ONE_BOOL RS_Settings::instance()->readBoolSingle
@@ -111,6 +113,7 @@ public:
     void endGroup();
 
     bool write(const QString& key, int value);
+    bool writeColor(const QString& key, int value);
     bool write(const QString& key, double value);
     bool writeEntry(const QString& key, const QVariant& value);
     bool write(const QString& key, const QString& value);
@@ -122,6 +125,8 @@ public:
 
     int readInt(const QString& key, int def= 0);
     int readIntSingle(const QString &group, const QString &key, int def);
+    int readColor(const QString& key, int def= 0);
+    int readColorSingle(const QString &group, const QString &key, int def);
     QString readStrSingle(const QString &group, const QString &key, const QString &def);
     QString readStr(const QString& key,const QString& def = QString());
     bool readBool(const QString &key, bool defaultValue = false);

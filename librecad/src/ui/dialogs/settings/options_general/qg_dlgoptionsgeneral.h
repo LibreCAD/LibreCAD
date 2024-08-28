@@ -28,16 +28,17 @@
 
 #include <QDialog>
 #include "ui_qg_dlgoptionsgeneral.h"
+#include "lc_dialog.h"
 
 class QColor;
 class QComboBox;
 class QString;
 
-class QG_DlgOptionsGeneral : public QDialog, public Ui::QG_DlgOptionsGeneral{
+class QG_DlgOptionsGeneral : public LC_Dialog, public Ui::QG_DlgOptionsGeneral{
     Q_OBJECT
 public:
-    QG_DlgOptionsGeneral(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
-    virtual ~QG_DlgOptionsGeneral() = default;
+    QG_DlgOptionsGeneral(QWidget* parent = nullptr);
+    ~QG_DlgOptionsGeneral() override = default;
     static int current_tab;
     void set_color(QComboBox* combo, QColor custom);
 
@@ -46,6 +47,7 @@ public slots:
     virtual void ok();
     void onAutoBackupChanged(int state);
     void on_cbVisualizeHoveringClicked();
+    void on_cbPersistentDialogsClicked();
 
 protected slots:
     void languageChange();

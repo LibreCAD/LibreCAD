@@ -55,7 +55,7 @@ void LC_ActionDrawCircleBase::reset(){
 
 }
 
-void LC_ActionDrawCircleBase::previewEllipseReferencePoints(const RS_Ellipse *ellipse, bool drawAxises, RS_Vector mouse){
+void LC_ActionDrawCircleBase::previewEllipseReferencePoints(const RS_Ellipse *ellipse, bool drawAxises, bool allPointsNotSelectable, RS_Vector mouse){
     if (showRefEntitiesOnPreview) {
         RS_Vector center = ellipse->getCenter();
         RS_Vector majorP = ellipse->getMajorP();
@@ -63,8 +63,14 @@ void LC_ActionDrawCircleBase::previewEllipseReferencePoints(const RS_Ellipse *el
         const RS_Vector &major2 = center + majorP;
         const RS_Vector &minor1 = ellipse->getMinorPoint();
         const RS_Vector &minor2 = center - RS_Vector(-majorP.y, majorP.x) * ellipse->getRatio();
-        previewRefSelectablePoint(minor1);
-        previewRefSelectablePoint(minor2);
+        if (allPointsNotSelectable){
+            previewRefPoint(minor1);
+            previewRefPoint(minor2);
+        }
+        else {
+            previewRefSelectablePoint(minor1);
+            previewRefSelectablePoint(minor2);
+        }
         previewRefPoint(center);
 
 
@@ -89,8 +95,14 @@ void LC_ActionDrawCircleBase::previewEllipseReferencePoints(const RS_Ellipse *el
             }
 
         } else {
-            previewRefSelectablePoint(major1);
-            previewRefSelectablePoint(major2);
+            if (allPointsNotSelectable){
+                previewRefPoint(major1);
+                previewRefPoint(major2);
+            }
+            else {
+                previewRefSelectablePoint(major1);
+                previewRefSelectablePoint(major2);
+            }
         }
     }
 }

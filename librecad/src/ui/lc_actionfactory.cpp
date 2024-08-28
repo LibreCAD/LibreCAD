@@ -181,7 +181,9 @@ void LC_ActionFactory::createDrawCurveActions(QMap<QString, QAction*>& map, QAct
 }
 
 void LC_ActionFactory::createDrawEllipseActions(QMap<QString, QAction *> &map, QActionGroup *group) {
-    createActionHandlerActions(map, group,{
+    createActionHandlerActions(map, group, {
+        {"DrawEllipse1Point",        RS2::ActionDrawEllipse1Point,        tr("&Ellipse (1 Point)"),           ":/icons/ellipse_1_point.svg"},
+        {"DrawEllipseArc1Point",     RS2::ActionDrawEllipseArc1Point,     tr("&Ellipse Arc (1 Point)"),       ":/icons/ellipse_arc_1_point.svg"},
         {"DrawEllipseAxis",          RS2::ActionDrawEllipseAxis,          tr("&Ellipse (Axis)"),              ":/icons/ellipse_axis.svg"},
         {"DrawEllipseArcAxis",       RS2::ActionDrawEllipseArcAxis,       tr("Ellipse &Arc (Axis)"),          ":/icons/ellipse_arc_axis.svg"},
         {"DrawEllipseFociPoint",     RS2::ActionDrawEllipseFociPoint,     tr("Ellipse &Foci Point"),          ":/icons/ellipse_foci_point.svg"},
@@ -224,7 +226,9 @@ void LC_ActionFactory::createDrawDimensionsActions(QMap<QString, QAction *> &map
         {"DimDiametric", RS2::ActionDimDiametric, tr("&Diametric"),  ":/icons/dim_diametric.svg"},
         {"DimAngular",   RS2::ActionDimAngular,   tr("&Angular"),    ":/icons/dim_angular.svg"},
         {"DimArc",       RS2::ActionDimArc,       tr("&Arc"),        ":/icons/dim_arc.svg"},
-        {"DimLeader",    RS2::ActionDimLeader,    tr("&Leader"),     ":/icons/dim_leader.svg"}
+        {"DimLeader",    RS2::ActionDimLeader,    tr("&Leader"),     ":/icons/dim_leader.svg"},
+        {"DimBaseline",  RS2::ActionDimBaseline,  tr("&Baseline"),  ":/icons/dim_baseline.svg"},
+        {"DimContinue",  RS2::ActionDimContinue,  tr("&Continue"),  ":/icons/dim_continue.svg"}
     });
 }
 

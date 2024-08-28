@@ -58,7 +58,7 @@ void LC_ActionDimArc::reset(){
 
     selectedArcEntity = nullptr;
 
-    updateOptions();
+    updateOptions(); // fixme - check whether it's necessary there
 }
 
 void LC_ActionDimArc::trigger(){

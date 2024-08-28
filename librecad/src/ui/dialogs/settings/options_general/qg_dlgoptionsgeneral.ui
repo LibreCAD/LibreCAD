@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -400,7 +400,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/ui/ui.qrc">
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -432,7 +432,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/ui/ui.qrc">
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -575,7 +575,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/ui/ui.qrc">
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -625,7 +625,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/ui/ui.qrc">
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -642,7 +642,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/ui/ui.qrc">
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -747,7 +747,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/ui/ui.qrc">
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -764,7 +764,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/ui/ui.qrc">
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -781,7 +781,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/ui/ui.qrc">
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -798,7 +798,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/ui/ui.qrc">
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -851,7 +851,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/ui/ui.qrc">
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -901,7 +901,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/ui/ui.qrc">
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -918,7 +918,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/ui/ui.qrc">
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -1284,6 +1284,23 @@
            <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
             <property name="text">
              <string>Show keyboard shortcuts in actions tooltips</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbPersistentDialogs">
+            <property name="text">
+             <string>Persistent dialogs location and size</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
+            </property>
+            <property name="text">
+             <string>Persist dialog size only</string>
             </property>
            </widget>
           </item>
@@ -2586,7 +2603,7 @@
  <resources>
   <include location="../../../../../res/icons/icons.qrc"/>
   <include location="../../../../../res/icons/icons.qrc"/>
-  <include location="../../../../../res/icons/icons.qrc"/>
+  <include location="../../../../../res/ui/ui.qrc"/>
  </resources>
  <connections>
   <connection>

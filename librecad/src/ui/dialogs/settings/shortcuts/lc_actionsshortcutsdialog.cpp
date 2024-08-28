@@ -35,7 +35,7 @@
 
 LC_ActionsShortcutsDialog::LC_ActionsShortcutsDialog(
     QWidget *parent, LC_ActionGroupManager *pManager)
-    : QDialog(parent)
+    : LC_Dialog(parent, "Shortcuts")
     , ui(new Ui::LC_ActionsShortcutsDialog)
     ,actionGroupManager(pManager){
     ui->setupUi(this);
@@ -66,7 +66,6 @@ LC_ActionsShortcutsDialog::LC_ActionsShortcutsDialog(
 
     ui->gbShortcut->setVisible(false);
 
-    loadDialogPosition();
 }
 
 LC_ActionsShortcutsDialog::~LC_ActionsShortcutsDialog(){
@@ -399,7 +398,6 @@ void LC_ActionsShortcutsDialog::accept() {
         rebuildModel(false);
     }
     else{
-        saveDialogPosition();
         if (mappingTreeModel->isModified()) {
             QMap<QString, LC_ShortcutInfo *> shortcuts = mappingTreeModel->getShortcuts();
             int saveResult = actionGroupManager->saveShortcuts(shortcuts);
@@ -408,54 +406,18 @@ void LC_ActionsShortcutsDialog::accept() {
                 reportSaveResult(saveResult);
             }
         }
-        QDialog::accept();
+        LC_Dialog::accept();
     }
 }
 
 void LC_ActionsShortcutsDialog::reject() {
-    saveDialogPosition();
     bool canClose = true;
     if (mappingTreeModel->isModified()){
-        canClose = QMessageBox::Yes == QMessageBox::question(this, "Confirmation", tr("Some mappings are modified.\nAre you sure you are going to discard changes?"),
+        canClose = QMessageBox::Yes == QMessageBox::question(this, "Confirmation",
+                                                             tr("Some mappings are modified.\nAre you sure you are going to discard changes?"),
                                                       QMessageBox::Yes | QMessageBox::No);
     }
     if (canClose) {
-        QDialog::reject();
-    }
-}
-
-void LC_ActionsShortcutsDialog::saveDialogPosition() const {
-    LC_GROUP_GUARD("ShortcutsDialog");
-    {
-        LC_SET("CustomPosition", true);
-
-        const QPoint &point = pos();
-        const QSize &size = QWidget::size();
-
-        int x = point.x();
-        int y = point.y();
-        int h = size.height();
-        int w = size.width();
-        LC_SET("CustomX", x);
-        LC_SET("CustomY", y);
-        LC_SET("CustomHeight", h);
-        LC_SET("CustomWidth", w);
-    }
-}
-
-void LC_ActionsShortcutsDialog::loadDialogPosition() {
-    LC_GROUP_GUARD("ShortcutsDialog");
-    {
-        bool hasSettings = LC_GET_BOOL("CustomPosition");
-        if (hasSettings) {
-            int x = LC_GET_INT("CustomX", 0);
-            int y = LC_GET_INT("CustomY", 0);
-            int h = LC_GET_INT("CustomHeight", 0);
-            int w = LC_GET_INT("CustomWidth", 0);
-            if (x > 0 && y > 0 && h > 0 && w > 0) {
-                move(x, y);
-                resize(w, h);
-            }
-        }
+        LC_Dialog::reject();
     }
 }

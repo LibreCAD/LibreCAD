@@ -58,15 +58,14 @@ public:
         double angle = 0.0, bool fixedAngle = false,
         RS2::ActionType type = RS2::ActionDimLinear);
     ~RS_ActionDimLinear() override;
-    void reset() override;
     void preparePreview() override;
     QStringList getAvailableCommands() override;
 //    void showOptions() override;
     double getAngle() const;
     void setAngle(double a);
     bool hasFixedAngle() const;
-
 protected:
+
     /**
      * Aligned dimension data.
      */
@@ -77,6 +76,7 @@ protected:
     bool fixedAngle = false;
 /** Last status before entering text or angle. */
     Status lastStatus = SetExtPoint1;
+    void reset() override;
     RS_Vector getExtensionPoint1() override;
     RS_Vector getExtensionPoint2() override;
     double getDimAngle() override;

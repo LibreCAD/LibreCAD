@@ -281,7 +281,7 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
                             getTextStyle(),
                             textAngle);
 
-    RS_MText* text = new RS_MText(this, textData);
+    auto* text = new RS_MText(this, textData);
     text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
     text->setLayer(nullptr);
 
@@ -469,7 +469,7 @@ void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
            RS2::LineByBlock);
 
     // Create dimension line:
-    RS_Line* dimensionLine = new RS_Line{this, p1, p2};
+    auto* dimensionLine = new RS_Line{this, p1, p2};
     dimensionLine->setPen(pen);
     dimensionLine->setLayer(nullptr);
     addEntity(dimensionLine);
@@ -510,7 +510,7 @@ void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
                             getTextStyle(),
                             textAngle);
 
-    RS_MText* text = new RS_MText(this, textData);
+    auto text = new RS_MText(this, textData);
     text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
     text->setLayer(nullptr);
 

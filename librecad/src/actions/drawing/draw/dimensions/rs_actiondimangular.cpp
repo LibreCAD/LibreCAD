@@ -120,8 +120,8 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e){
                     }
                 }
 
-                previewEntity(d);
                 d->update();
+                previewEntity(d);
                 drawPreview();
             }
             break;

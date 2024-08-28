@@ -39,20 +39,16 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgSpline::QG_DlgSpline(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_DlgSpline::QG_DlgSpline(QWidget* parent)
+    : LC_Dialog(parent, "SplineProperties"){
     setupUi(this);
-
 }
 
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgSpline::languageChange()
-{
+void QG_DlgSpline::languageChange(){
     retranslateUi(this);
 }
 
@@ -78,12 +74,10 @@ void QG_DlgSpline::setSpline(RS_Spline& e) {
     lId->setText(QString("ID: %1").arg(spline->getId()));
 }
 
-
-
 void QG_DlgSpline::updateSpline() {
     spline->setDegree(RS_Math::round(RS_Math::eval(cbDegree->currentText())));
     spline->setClosed(cbClosed->isChecked());
     spline->setPen(wPen->getPen());
     spline->setLayer(cbLayer->currentText());
-	spline->update();
+    spline->update();
 }

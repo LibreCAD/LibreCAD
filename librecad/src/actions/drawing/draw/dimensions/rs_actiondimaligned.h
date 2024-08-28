@@ -46,7 +46,6 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     ~RS_ActionDimAligned() override;
-    void reset() override;
     void preparePreview() override;
     QStringList getAvailableCommands() override;
 protected:
@@ -56,6 +55,7 @@ protected:
     std::unique_ptr<RS_DimAlignedData> edata;
 /** Last status before entering text. */
     Status lastStatus = SetExtPoint1;
+    void reset() override;
     void setExtensionPoint1(RS_Vector p) override;
     void setExtensionPoint2(RS_Vector p) override;
     RS_Entity *createDim(RS_EntityContainer* parent) override;

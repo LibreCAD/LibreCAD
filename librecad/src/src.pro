@@ -152,6 +152,7 @@ INCLUDEPATH += \
     ui/action_options/insert \
     ui/action_options/line \
     ui/action_options/modify \
+    ui/action_options/ellipse \
     ui/action_options/other \
     ui/action_options/polyline \
     ui/action_options/print_preview \
@@ -211,6 +212,9 @@ RESOURCES += ../../licenses/licenses.qrc
 # ################################################################################
 # Library
 HEADERS += \
+    actions/drawing/draw/dimensions/lc_actioncircledimbase.h \
+    actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.h \
+    actions/drawing/draw/ellipse/lc_actiondrawellipse1point.h \
     lib/actions/lc_highlight.h \
     lib/actions/lc_modifiersinfo.h \
     lib/actions/rs_actioninterface.h \
@@ -319,9 +323,15 @@ HEADERS += \
     lib/engine/lc_rect.h \
     lib/engine/lc_undosection.h \
     lib/printing/lc_printing.h \
-    main/lc_application.h 
+    main/lc_application.h \
+    ui/action_options/curve/lc_ellipsearcoptions.h \
+    ui/action_options/ellipse/lc_ellipse1pointoptions.h \
+    ui/dialogs/lc_dialog.h
     
 SOURCES += \
+    actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp \
+    actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp \
+    actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp \
     lib/actions/lc_highlight.cpp \
     lib/actions/lc_modifiersinfo.cpp \
     lib/actions/rs_actioninterface.cpp \
@@ -419,7 +429,10 @@ SOURCES += \
     lib/engine/lc_undosection.cpp \
     lib/engine/rs.cpp \
     lib/printing/lc_printing.cpp \
-    main/lc_application.cpp
+    main/lc_application.cpp \
+    ui/action_options/curve/lc_ellipsearcoptions.cpp \
+    ui/action_options/ellipse/lc_ellipse1pointoptions.cpp \
+    ui/dialogs/lc_dialog.cpp
 
 # ################################################################################
 # Command
@@ -1158,11 +1171,13 @@ SOURCES += ui/action_options/circle/lc_circlebyarcoptions.cpp \
 FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/action_options/circle/qg_circleoptions.ui \
        ui/action_options/circle/qg_circletan2options.ui \
+       ui/action_options/curve/lc_ellipsearcoptions.ui \
        ui/action_options/curve/qg_arcoptions.ui \
        ui/action_options/curve/qg_arctangentialoptions.ui \
        ui/action_options/curve/qg_splineoptions.ui \
        ui/action_options/dimensions/qg_dimoptions.ui \
        ui/action_options/edit/lc_pastetransformoptions.ui \
+       ui/action_options/ellipse/lc_ellipse1pointoptions.ui \
        ui/action_options/image/qg_imageoptions.ui \
        ui/action_options/info/lc_infodist2options.ui \
        ui/action_options/insert/qg_insertoptions.ui \

@@ -28,14 +28,13 @@
 
 #include "ui_qg_dlgmtext.h"
 #include "rs_mtext.h"
+#include "lc_dialog.h"
 
-class QG_DlgMText : public QDialog, public Ui::QG_DlgMText
-{
+class QG_DlgMText : public LC_Dialog, public Ui::QG_DlgMText{
     Q_OBJECT
-
 public:
-    QG_DlgMText(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
-    ~QG_DlgMText();
+    QG_DlgMText(QWidget* parent = nullptr);
+    ~QG_DlgMText() override;
 
     virtual int getAlignment();
 

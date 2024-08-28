@@ -37,14 +37,11 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_LayerDialog::QG_LayerDialog(QWidget* parent, QString name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_LayerDialog::QG_LayerDialog(QWidget* parent, QString name)
+    : LC_Dialog(parent, "LayerProperties"){
+
     setObjectName(name);
     setupUi(this);
-
-
     init();
 }
 
@@ -53,14 +50,13 @@ QG_LayerDialog::QG_LayerDialog(QWidget* parent, QString name, bool modal, Qt::Wi
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_LayerDialog::languageChange()
-{
+void QG_LayerDialog::languageChange(){
     retranslateUi(this);
 }
 
 void QG_LayerDialog::setLayer(RS_Layer* l) {
-    layer = l;	
-	layerName = layer->getName();
+    layer = l;
+    layerName = layer->getName();
     leName->setText(layerName);
     wPen->setPen(layer->getPen(), false, false, tr("Default Pen"));
     cbConstructionLayer->setChecked(l->isConstruction());
@@ -77,25 +73,25 @@ void QG_LayerDialog::updateLayer() {
 }
 
 void QG_LayerDialog::validate() {
-	if (layerList &&
-                (editLayer == false || layerName != leName->text())) {
-                RS_Layer* l = layerList->find(leName->text());
-		if (l) {
-			QMessageBox::information(parentWidget(),
-									 QMessageBox::tr("Layer Properties"),
-									 QMessageBox::tr("Layer with a name \"%1\" "
-													 "already exists. Please specify "
-													 "a different name.")
-                                                                         .arg(leName->text()),
-									 QMessageBox::Ok);
-			leName->setFocus();
-			leName->selectAll();
-		}
-		else
-			accept();
-	}
-	else	
-		accept();
+    if (layerList &&
+        (editLayer == false || layerName != leName->text())) {
+        RS_Layer* l = layerList->find(leName->text());
+        if (l) {
+            QMessageBox::information(parentWidget(),
+                                     QMessageBox::tr("Layer Properties"),
+                                     QMessageBox::tr("Layer with a name \"%1\" "
+                                                     "already exists. Please specify "
+                                                     "a different name.")
+                                         .arg(leName->text()),
+                                     QMessageBox::Ok);
+            leName->setFocus();
+            leName->selectAll();
+        }
+        else
+            accept();
+    }
+    else
+        accept();
 }
 
 void QG_LayerDialog::setLayerList( RS_LayerList * ll ){

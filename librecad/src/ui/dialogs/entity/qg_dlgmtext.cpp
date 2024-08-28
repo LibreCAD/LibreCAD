@@ -46,13 +46,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgMText::QG_DlgMText(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
-    setModal(modal);
+QG_DlgMText::QG_DlgMText(QWidget* parent)
+    : LC_Dialog(parent,"MTextProperties"){
     setupUi(this);
     alignmentButtons = {{bTL, bTC, bTR, bML, bMC, bMR, bBL, bBC, bBR}};
-
     init();
 }
 

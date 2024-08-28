@@ -413,7 +413,7 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
     // search in various directories for translations
     QStringList lst = getDirectoryList( "qm");
 
-    LC_GROUP( "/Paths");// fixme settings
+    LC_GROUP( "Paths");
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
     lst += (LC_GET_STR("Translations", "")).split(";", Qt::SkipEmptyParts);
 #else
@@ -638,7 +638,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 
     // Individual directories:
     {
-        LC_GROUP_GUARD( "/Paths");
+        LC_GROUP_GUARD( "Paths");
         {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
             auto option = Qt::SkipEmptyParts;

@@ -30,9 +30,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_constructionline.h"
 #include <QMouseEvent>
 #include "lc_actiondimlinearbase.h"
+#include "rs_settings.h"
+#include "rs_actiondimension.h"
 
 LC_ActionDimLinearBase::LC_ActionDimLinearBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView):
-   RS_ActionDimension(name, container,  graphicView){}
+   RS_ActionDimension(name, container,  graphicView){
+}
 
 LC_ActionDimLinearBase::~LC_ActionDimLinearBase() = default;
 
@@ -77,10 +80,24 @@ void LC_ActionDimLinearBase::mouseMoveEvent(QMouseEvent *e){
                 deletePreview();
                 mouse = getSnapAngleAwarePoint(e, extPoint1, mouse, true);
 
-                previewLine(extPoint1, mouse);
+                data->definitionPoint = mouse;
+                setExtensionPoint2(mouse);
+
                 if (showRefEntitiesOnPreview) {
                     previewRefLine(extPoint1, mouse);
                     previewRefSelectablePoint(mouse);
+                }
+                if (previewShowsFullDimension) {
+                    preparePreview();
+                    RS_Entity *dim = createDim(preview.get());
+                    dim->update();
+                    previewEntity(dim);
+                }
+                else if (showRefEntitiesOnPreview) {
+                    previewRefLine(extPoint1, mouse);
+                }
+                else{
+                    previewLine(extPoint1, mouse);
                 }
 
                 drawPreview();
@@ -98,7 +115,7 @@ void LC_ActionDimLinearBase::mouseMoveEvent(QMouseEvent *e){
                 data->definitionPoint = mouse;
                 preparePreview();
                 RS_Entity* dim = createDim(preview.get());
-
+                dim->update();
                 previewEntity(dim);
 #ifdef DEBUG_DIM_SNAP
                 RS_Vector p1;
@@ -108,7 +125,6 @@ void LC_ActionDimLinearBase::mouseMoveEvent(QMouseEvent *e){
                 addReferencePointToPreview(p1);
                 addReferencePointToPreview(p2);
 #endif
-                dim->update();
                 drawPreview();
                 break;
             }

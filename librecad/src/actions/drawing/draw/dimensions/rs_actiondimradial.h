@@ -29,6 +29,7 @@
 
 #include "rs_actiondimension.h"
 #include "rs_dimradial.h"
+#include "lc_actioncircledimbase.h"
 
 struct RS_DimRadialData;
 
@@ -37,40 +38,19 @@ struct RS_DimRadialData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDimRadial:public RS_ActionDimension {
+class RS_ActionDimRadial:public LC_ActionCircleDimBase {
 Q_OBJECT
 public:
     RS_ActionDimRadial(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     ~RS_ActionDimRadial() override;
-    void reset() override;
-    void trigger() override;
-    void mouseMoveEvent(QMouseEvent *e) override;
-    QStringList getAvailableCommands() override;
 protected:
-    enum Status {
-        SetEntity,     /**< Choose entity. */
-        SetPos,      /**< Choose point. */
-        SetText        /**< Setting text label in the command line. */
-    };
 
-    /** Chosen entity (arc / circle) */
-    RS_Entity *entity = nullptr;
-/** Chosen position */
-    std::unique_ptr<RS_Vector> pos;
     /** Data of new dimension */
     std::unique_ptr<RS_DimRadialData> edata;
-/** Last status before entering text. */
-    Status lastStatus = SetEntity;
-
-    RS_DimRadial *createDim(RS_EntityContainer *parent) const;
-    const RS_Vector &getDefinitionPoint() const;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-    bool doProcessCommand(int status, const QString &command) override;
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
-    void preparePreview();
+    void reset() override;
+    RS_Dimension *createDim(RS_EntityContainer *parent) const override;
+    RS_Vector preparePreview(RS_Entity *en, RS_Vector &position, bool forcePosition) override;
 };
 #endif
