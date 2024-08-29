@@ -23,7 +23,7 @@ public slots:
 	void updatePoints();
 
 protected slots:
-	virtual void languageChange();
+    virtual void languageChange();
 
 private:
 	LC_DlgSplinePoints(LC_DlgSplinePoints const&) = delete;

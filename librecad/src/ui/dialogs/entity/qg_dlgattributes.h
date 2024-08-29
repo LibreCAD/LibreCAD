@@ -46,7 +46,7 @@ protected slots:
     virtual void languageChange();
 private:
     RS_Pen pen;
-    RS_AttributesData* data;
+    RS_AttributesData* data = nullptr;
 
 };
 

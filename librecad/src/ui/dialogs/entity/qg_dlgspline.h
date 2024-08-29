@@ -26,10 +26,10 @@
 #ifndef QG_DLGSPLINE_H
 #define QG_DLGSPLINE_H
 
-class RS_Spline;
-
 #include "ui_qg_dlgspline.h"
 #include "lc_dialog.h"
+
+class RS_Spline;
 
 class QG_DlgSpline : public LC_Dialog, public Ui::QG_DlgSpline{
     Q_OBJECT

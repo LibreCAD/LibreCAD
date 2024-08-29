@@ -46,7 +46,7 @@ protected slots:
     virtual void languageChange();
 
 private:
-    RS_DimLinear* dim;
+    RS_DimLinear* dim = nullptr;
 
 };
 

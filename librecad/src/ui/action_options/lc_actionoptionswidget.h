@@ -105,7 +105,7 @@ protected:
     bool toDoubleAngle(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
 
 protected slots:
-    virtual void languageChange(){};
+    virtual void languageChange() {}
 
 };
 

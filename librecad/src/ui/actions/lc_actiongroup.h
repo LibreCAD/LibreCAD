@@ -26,6 +26,8 @@
 #include <QActionGroup>
 
 class LC_ActionGroup:public QActionGroup {
+    Q_OBJECT
+
 public:
     LC_ActionGroup(QObject *parent, const QString &name, const QString &description, const char* icon);
 

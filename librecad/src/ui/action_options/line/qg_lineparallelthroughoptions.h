@@ -44,7 +44,7 @@ public:
 protected slots:
     void on_cbSymmetric_toggled(bool checked);
     void on_sbNumber_valueChanged(int number);
-    virtual void languageChange() override;
+    void languageChange() override;
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;

@@ -47,7 +47,7 @@ public slots:
     virtual void updateParabola();
 
 protected slots:
-	virtual void languageChange();
+    virtual void languageChange();
 
 private:
     LC_DlgParabola(LC_DlgParabola const&) = delete;
