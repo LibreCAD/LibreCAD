@@ -66,6 +66,7 @@ void RS_ActionModifyCut::trigger() {
 		cutEntity = nullptr;
 		*cutCoord = RS_Vector(false);
         setStatus(ChooseCutEntity);
+        deleteSnapper();
 
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
