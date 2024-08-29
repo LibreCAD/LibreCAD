@@ -61,6 +61,7 @@ void RS_ActionModifyCut::trigger(){
         RS_Modification m(*container, graphicView);
         m.cut(*cutCoord, (RS_AtomicEntity *) cutEntity);
 
+        deleteSnapper();
         cutEntity = nullptr;
         *cutCoord = RS_Vector(false);
         setStatus(ChooseCutEntity);
