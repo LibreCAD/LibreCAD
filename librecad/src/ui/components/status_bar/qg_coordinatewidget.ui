@@ -66,6 +66,9 @@
      </property>
      <item>
       <widget class="QLabel" name="lCoord1">
+       <property name="toolTip">
+        <string>Absolute Coordinates (Cartesian)</string>
+       </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
@@ -82,6 +85,9 @@
      </item>
      <item>
       <widget class="QLabel" name="lCoord1b">
+       <property name="toolTip">
+        <string>Absolute Cordinates (Polar)</string>
+       </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
@@ -127,6 +133,9 @@
      </property>
      <item>
       <widget class="QLabel" name="lCoord2">
+       <property name="toolTip">
+        <string>Relative Coordinates (Cartesian)</string>
+       </property>
        <property name="text">
         <string>Coordinates</string>
        </property>
@@ -137,6 +146,9 @@
      </item>
      <item>
       <widget class="QLabel" name="lCoord2b">
+       <property name="toolTip">
+        <string>Relative Coordinates (Polar)</string>
+       </property>
        <property name="text">
         <string>Coordinates</string>
        </property>
