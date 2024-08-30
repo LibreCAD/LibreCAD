@@ -35,8 +35,7 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_CoordinateWidget::QG_CoordinateWidget(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-{
+    : QWidget(parent, fl){
     setObjectName(name);
     setupUi(this);
 
@@ -64,17 +63,16 @@ QG_CoordinateWidget::~QG_CoordinateWidget()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_CoordinateWidget::languageChange()
-{
+void QG_CoordinateWidget::languageChange(){
     retranslateUi(this);
 }
 
 void QG_CoordinateWidget::setGraphic(RS_Graphic* graphic) {
     this->graphic = graphic;
-
-    setCoordinates(RS_Vector(0.0,0.0), RS_Vector(0.0,0.0), true);
+    if (graphic != nullptr) {
+        setCoordinates(RS_Vector(0.0, 0.0), RS_Vector(0.0, 0.0), true);
+    }
 }
-
 
 void QG_CoordinateWidget::setCoordinates(const RS_Vector& abs,
                                          const RS_Vector& rel, bool updateFormat) {
@@ -88,11 +86,10 @@ void QG_CoordinateWidget::clearContent(){
     lCoord2b->setText("@  0 < 0");
 }
 
-
 void QG_CoordinateWidget::setCoordinates(double x, double y,
         double rx, double ry, bool updateFormat) {
 
-    if (graphic) {
+    if (graphic != nullptr) {
         if (updateFormat) {
             format = graphic->getLinearFormat();
             prec = graphic->getLinearPrecision();
@@ -150,15 +147,11 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
         relativeCoordinates = RS_Vector(rx, ry, 0.0);
     }
 }
-
-
-RS_Vector QG_CoordinateWidget::getAbsoluteCoordinates()
-{
+// fixme - sand - check whether these methods are really needed
+RS_Vector QG_CoordinateWidget::getAbsoluteCoordinates(){
     return absoluteCoordinates;
 }
 
-
-RS_Vector QG_CoordinateWidget::getRelativeCoordinates()
-{
+RS_Vector QG_CoordinateWidget::getRelativeCoordinates(){
     return relativeCoordinates;
 }

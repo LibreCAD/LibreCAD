@@ -40,6 +40,7 @@ public:
     QG_CoordinateWidget(QWidget *parent = 0, const char *name = 0, Qt::WindowFlags fl = {});
     ~QG_CoordinateWidget();
 
+    // fixme - sand - check whether these methods are really needed
     RS_Vector getAbsoluteCoordinates();
     RS_Vector getRelativeCoordinates();
 
@@ -47,12 +48,11 @@ public:
 
 public slots:
     virtual void setGraphic( RS_Graphic * graphic );
-    virtual void setCoordinates( const RS_Vector & abs, const RS_Vector & rel, bool updateFormat );
-    virtual void setCoordinates( double x, double y, double rx, double ry, bool updateFormat );
+    virtual void setCoordinates( const RS_Vector & abs, const RS_Vector & rel, bool updateFormat ); // fixme - check why updateFormat is always true
 
 protected slots:
     virtual void languageChange();
-
+    virtual void setCoordinates( double x, double y, double rx, double ry, bool updateFormat );
 private:
     RS_Graphic* graphic = nullptr;
     int prec = 0;

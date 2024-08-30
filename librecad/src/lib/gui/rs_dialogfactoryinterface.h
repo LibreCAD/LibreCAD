@@ -31,6 +31,7 @@
 #include "rs.h"
 #include "lc_modifiersinfo.h"
 #include "lc_actiongroupmanager.h"
+#include "lc_relzerocoordinateswidget.h"
 #include <QString>
 
 class QWidget;
@@ -435,10 +436,11 @@ public:
     virtual void commandMessage(const QString& message) = 0;
     virtual void command(const QString& message) = 0;
 
-	virtual void setMouseWidget(QG_MouseWidget*) = 0;
-	virtual void setCoordinateWidget(QG_CoordinateWidget* ) = 0;
-	virtual void setSelectionWidget(QG_SelectionWidget* ) = 0;
-	virtual void setCommandWidget(QG_CommandWidget* ) = 0;
+    virtual void setMouseWidget(QG_MouseWidget*) = 0;
+    virtual void setCoordinateWidget(QG_CoordinateWidget* ) = 0;
+    virtual void setRelativeZeroCoordinatesWidget(LC_RelZeroCoordinatesWidget* )=0;
+    virtual void setSelectionWidget(QG_SelectionWidget* ) = 0;
+    virtual void setCommandWidget(QG_CommandWidget* ) = 0;
 };
 
 

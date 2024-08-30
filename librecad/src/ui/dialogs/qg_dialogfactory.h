@@ -64,6 +64,11 @@ public:
         coordinateWidget = cw;
     }
 
+    void setRelativeZeroCoordinatesWidget(LC_RelZeroCoordinatesWidget *widget) override {
+        relZeroCoordinatesWidget = widget;
+    }
+
+
 /**
  * Links this dialog factory to a mouse widget.
  */
@@ -189,6 +194,7 @@ protected:
     QG_SelectionWidget* selectionWidget = nullptr;
 //! Pointer to the command line widget
     QG_CommandWidget* commandWidget = nullptr;
+    LC_RelZeroCoordinatesWidget *relZeroCoordinatesWidget;
     QG_SnapToolBar* snapToolbar = nullptr;
     LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
 };

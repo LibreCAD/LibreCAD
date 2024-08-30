@@ -78,7 +78,8 @@ public:
  void command([[maybe_unused]]const QString& message) override{};
 	void setMouseWidget(QG_MouseWidget*) override {}
 	void setCoordinateWidget(QG_CoordinateWidget* ) override {}
-	void setSelectionWidget(QG_SelectionWidget* ) override {}
+ void setRelativeZeroCoordinatesWidget(LC_RelZeroCoordinatesWidget *widget) override {}
+ void setSelectionWidget(QG_SelectionWidget* ) override {}
 	void setCommandWidget(QG_CommandWidget* ) override {}
 	void displayBlockName(const QString&, const bool&) override {}
  void hideSnapOptions() override {};
