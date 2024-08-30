@@ -71,14 +71,10 @@ void QG_DlgCircle::setCircle(RS_Circle& c) {
     }
 
     wPen->setPen(circle, lay, "Pen");
-    QString s;
-    s.setNum(circle->getCenter().x, 'g', 10);
-    leCenterX->setText(s);
-    s.setNum(circle->getCenter().y, 'g', 10);
-    leCenterY->setText(s);
-    s.setNum(circle->getRadius(), 'g', 10);
+    leCenterX->setText(asString(circle->getCenter().x));
+    leCenterY->setText(asString(circle->getCenter().y));
+    leRadius->setText(asString(circle->getRadius()));
 //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgCircle::setCircle, leRadius->setText '%s'",qPrintable(s));
-    leRadius->setText(s);
 }
 
 void QG_DlgCircle::updateCircle() {

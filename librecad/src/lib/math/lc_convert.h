@@ -20,31 +20,18 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#ifndef LC_DIALOG_H
-#define LC_DIALOG_H
+#ifndef LC_CONVERT_H
+#define LC_CONVERT_H
 
-#include <QDialog>
+#include <QString>
 
-class LC_Dialog : public QDialog{
-public:
-    LC_Dialog(QWidget *parent, const QString &dlgName);
-    void accept() override;
-    void reject() override;
-protected:
-    QString dialogName;
-    bool positionLoaded = false;
-    void saveDialogPosition() const;
-    void loadDialogPosition();
-    QString getPositionSettingsGroupName() const;
-    void showEvent(QShowEvent *event) override;
-
+namespace LC_Convert{
     QString asString(double value);
+    QString asStringAngle(double value);
+    QString asStringAngleDeg(double value);
     bool toDouble(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
     bool toDoubleAngle(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
-
-    QString asStringAngleDeg(double value);
-
-    QString asStringAngle(double value);
+    bool toDoubleAngleRad(const QString &strValue, double& res, double notMeaningful, bool positiveOnly);
 };
 
-#endif // LC_DIALOG_H
+#endif // LC_CONVERT_H
