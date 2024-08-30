@@ -73,13 +73,13 @@ void QG_DlgLine::setLine(RS_Line& l) {
     wPen->setPen(lineResolvedPen, lay, "Pen");
 //    wPen->setPen(linePen,lay, "Pen");
     QString s;
-    s.setNum(line->getStartpoint().x);
+    s.setNum(line->getStartpoint().x, 'g', 10);
     leStartX->setText(s);
-    s.setNum(line->getStartpoint().y);
+    s.setNum(line->getStartpoint().y, 'g', 10);
     leStartY->setText(s);
-    s.setNum(line->getEndpoint().x);
+    s.setNum(line->getEndpoint().x, 'g', 10);
     leEndX->setText(s);
-    s.setNum(line->getEndpoint().y);
+    s.setNum(line->getEndpoint().y, 'g', 10);
     leEndY->setText(s);
     lId->setText(QString("ID: %1").arg(line->getId()));
 }

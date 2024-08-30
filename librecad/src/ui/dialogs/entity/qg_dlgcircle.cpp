@@ -62,21 +62,21 @@ void QG_DlgCircle::setCircle(RS_Circle& c) {
     circle = &c;
 
     RS_Graphic *graphic = circle->getGraphic();
-    if (graphic) {
+    if (graphic != nullptr) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer *lay = circle->getLayer(false);
-    if (lay) {
+    if (lay != nullptr) {
         cbLayer->setLayer(*lay);
     }
 
     wPen->setPen(circle, lay, "Pen");
     QString s;
-    s.setNum(circle->getCenter().x);
+    s.setNum(circle->getCenter().x, 'g', 10);
     leCenterX->setText(s);
-    s.setNum(circle->getCenter().y);
+    s.setNum(circle->getCenter().y, 'g', 10);
     leCenterY->setText(s);
-    s.setNum(circle->getRadius());
+    s.setNum(circle->getRadius(), 'g', 10);
 //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgCircle::setCircle, leRadius->setText '%s'",qPrintable(s));
     leRadius->setText(s);
 }

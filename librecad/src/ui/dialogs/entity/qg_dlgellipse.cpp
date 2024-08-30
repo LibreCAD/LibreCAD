@@ -69,19 +69,19 @@ void QG_DlgEllipse::setEllipse(RS_Ellipse& e) {
 
     wPen->setPen(ellipse, lay, "Pen");
     QString s;
-    s.setNum(ellipse->getCenter().x);
+    s.setNum(ellipse->getCenter().x, 'g', 10);
     leCenterX->setText(s);
-    s.setNum(ellipse->getCenter().y);
+    s.setNum(ellipse->getCenter().y, 'g', 10);
     leCenterY->setText(s);
-    s.setNum(ellipse->getMajorP().magnitude());
+    s.setNum(ellipse->getMajorP().magnitude(), 'g', 10);
     leMajor->setText(s);
-    s.setNum(ellipse->getMajorP().magnitude()*ellipse->getRatio());
+    s.setNum(ellipse->getMajorP().magnitude()*ellipse->getRatio(), 'g', 10);
     leMinor->setText(s);
-    s.setNum(RS_Math::rad2deg(ellipse->getMajorP().angle()));
+    s.setNum(RS_Math::rad2deg(ellipse->getMajorP().angle()), 'g', 10);
     leRotation->setText(s);
-    s.setNum(RS_Math::rad2deg(ellipse->getAngle1()));
+    s.setNum(RS_Math::rad2deg(ellipse->getAngle1()), 'g', 10);
     leAngle1->setText(s);
-    s.setNum(RS_Math::rad2deg(ellipse->getAngle2()));
+    s.setNum(RS_Math::rad2deg(ellipse->getAngle2()), 'g', 10);
     leAngle2->setText(s);
     cbReversed->setChecked(ellipse->isReversed());
     lId->setText(QString("ID: %1").arg(ellipse->getId()));
