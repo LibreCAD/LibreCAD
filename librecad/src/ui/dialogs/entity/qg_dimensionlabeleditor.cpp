@@ -104,9 +104,11 @@ QString QG_DimensionLabelEditor::getLabel() {
     // TODO: an extra '&' shouldn't be added
     // TODO: fix the the root cause
     QString l = leLabel->text();
+    LC_LOG << __LINE__ << ": leLabel->text()"<<l;
+    LC_LOG << __LINE__ << ": bDiameter->checked: "<<bDiameter->isChecked();
     if (l.startsWith('&'))
         l.erase(l.begin());
-    QString prefix = bDiameter->text();
+    QString prefix = bDiameter->isVisible() ? bDiameter->text() : QString{};
     if (prefix.startsWith('&'))
         prefix.erase(prefix.begin());
 
@@ -131,6 +133,8 @@ QString QG_DimensionLabelEditor::getLabel() {
         }
     }
 
+    LC_LOG << __LINE__ << ": leLabel->text()"<<l;
+    LC_LOG << __LINE__ << ": bDiameter->checked: "<<bDiameter->isChecked();
     if (leTol1->text().isEmpty() && leTol2->text().isEmpty()) {
         return l;
     }
