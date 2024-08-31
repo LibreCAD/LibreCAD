@@ -108,6 +108,9 @@ void RS_GraphicView::loadSettings() {
         this->m_colorData->hideRelativeZero = LC_GET_BOOL("hideRelativeZero");
         extendAxisLines = LC_GET_BOOL("ExtendAxisLines", false);
         gridType = LC_GET_INT("GridType", 0);
+        entityHandleHalfSize = LC_GET_INT("EntityHandleSize", 4) / 2;
+        relativeZeroRadius = LC_GET_INT("RelZeroMarkerRadius", 5);
+        zeroShortAxisMarkSize = LC_GET_INT("ZeroShortAxisMarkSize", 20);
     }
     LC_GROUP_END();
     LC_GROUP_GUARD("Colors");
@@ -123,8 +126,8 @@ void RS_GraphicView::loadSettings() {
         setRelativeZeroColor(QColor(LC_GET_STR("relativeZeroColor", RS_Settings::relativeZeroColor)));
         setPreviewReferenceEntitiesColor(QColor(LC_GET_STR("previewReferencesColor", RS_Settings::previewRefColor)));
         setPreviewReferenceHighlightedEntitiesColor(QColor(LC_GET_STR("previewReferencesHighlightColor", RS_Settings::previewRefHighlightColor)));
-        setXAxisExtensionColor(QColor(LC_GET_STR("xAxisExtColor", "red")));
-        setYAxisExtensionColor(QColor(LC_GET_STR("yAxisExtColor", "green")));
+        setXAxisExtensionColor(QColor(LC_GET_STR("grid_x_axisColor", "red")));
+        setYAxisExtensionColor(QColor(LC_GET_STR("grid_y_axisColor", "green")));
     }
 }
 
@@ -1221,8 +1224,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
     }
     if (isPrintPreview() || isPrinting()) {
 // do not draw construction layer on print preview or print
-        if (!e->isPrint()
-            || e->isConstruction())
+        if (!e->isPrint() || e->isConstruction())
             return;
     }
 
@@ -1243,7 +1245,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
         switch (e->rtti()) {
             case RS2::EntityMText:
             case RS2::EntityText:
-                painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
+                e->drawDraft(painter, this, patternOffset);
                 break;
             case RS2::EntityImage:
                 // all images as rectangles:
@@ -1274,9 +1276,9 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
 
 void RS_GraphicView::drawEntityReferencePoints(RS_Painter *painter, const RS_Entity *e) const {
     RS_VectorSolutions const &s = e->getRefPoints();
-
+//    int sz = -1;
+    int sz = entityHandleHalfSize;
     for (size_t i = 0; i < s.getNumber(); ++i) {
-        int sz = -1;
         RS_Color col = this->m_colorData->handleColor;
         if (i == 0) {
             col = this->m_colorData->startHandleColor;
@@ -1297,7 +1299,7 @@ void RS_GraphicView::drawEntityReferencePoints(RS_Painter *painter, const RS_Ent
  * The painter must be initialized and all the attributes (pen) must be set.
  */
 void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity *e, double &patternOffset) {
-    if (!e) {
+    if (!e) { // fixme - sand -  remove check after insuring that there is same check up in calls chain
         return;
     }
 
@@ -1361,7 +1363,7 @@ const RS_LineTypePattern *RS_GraphicView::getPattern(RS2::LineType t) {
  * @see drawIt()
  */
 void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
-    int const zr = 20;
+    int const zr = zeroShortAxisMarkSize;
 
     RS_Pen pen_xAxis (m_colorData->xAxisExtensionColor, RS2::Width00, RS2::SolidLine);
     pen_xAxis.setScreenWidth(0);
@@ -1370,10 +1372,6 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
     pen_yAxis.setScreenWidth(0);
 
     auto originPoint = toGui(RS_Vector(0,0));
-
-    if (((originPoint.x + zr) < 0) || ((originPoint.x - zr) > getWidth()))  return;
-    if (((originPoint.y + zr) < 0) || ((originPoint.y - zr) > getHeight())) return;
-
 
     double xAxisPoints [2];
     double yAxisPoints [2];
@@ -1387,6 +1385,8 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
     }
     else
     {
+        if (((originPoint.x + zr) < 0) || ((originPoint.x - zr) > getWidth())) return;
+        if (((originPoint.y + zr) < 0) || ((originPoint.y - zr) > getHeight())) return;
         xAxisPoints [0] = originPoint.x - zr;
         xAxisPoints [1] = originPoint.x + zr;
 
@@ -1424,7 +1424,7 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
     p.setScreenWidth(0);
     painter->setPen(p);
 
-    int const zr = 5;
+    int const zr = relativeZeroRadius*2;
     auto vp = toGui(relativeZero);
     if (vp.x + zr < 0 || vp.x - zr > getWidth()) return;
     if (vp.y + zr < 0 || vp.y - zr > getHeight()) return;
@@ -1436,7 +1436,7 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
                       RS_Vector(vp.x, vp.y + zr)
     );
 
-    painter->drawCircle(vp, 5);
+    painter->drawCircle(vp, relativeZeroRadius);
 }
 
 #define DEBUG_PRINT_PREVIEW_POINTS_NO
@@ -1612,7 +1612,7 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
     bool gridTypeSolid = gridType == 1;
     penLineType = gridTypeSolid ? RS2::SolidLine : RS2::DotLineTiny;
 
-    painter->setPen({m_colorData->metaGridColor, RS2::Width01, penLineType});
+    painter->setPen({m_colorData->metaGridColor,  gridTypeSolid ? RS2::Width00: RS2::Width01, penLineType});
 
     RS_Vector dv = grid->getMetaGridWidth().scale(factor);
     double dx = std::abs(dv.x);

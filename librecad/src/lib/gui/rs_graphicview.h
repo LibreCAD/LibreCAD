@@ -373,6 +373,9 @@ protected:
 
     bool extendAxisLines = false;
     int gridType = 0;
+    int entityHandleHalfSize = 2;
+    int relativeZeroRadius = 5;
+    int zeroShortAxisMarkSize = 20;
 /**
   * Delete mode. If true, all drawing actions will delete in background color
   * instead.
