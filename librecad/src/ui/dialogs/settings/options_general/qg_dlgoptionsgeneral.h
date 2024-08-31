@@ -40,19 +40,18 @@ public:
     QG_DlgOptionsGeneral(QWidget* parent = nullptr);
     ~QG_DlgOptionsGeneral() override = default;
     static int current_tab;
-    void set_color(QComboBox* combo, QColor custom);
 
-public slots:
-    virtual void setRestartNeeded();
-    virtual void ok();
-    void onAutoBackupChanged(int state);
-    void on_cbVisualizeHoveringClicked();
-    void on_cbPersistentDialogsClicked();
 
 protected slots:
+    void ok();
     void languageChange();
     void setTemplateFile();
     void setLibraryPath();
+    void setRestartNeeded();
+    void onAutoBackupChanged(int state);
+    void on_cbVisualizeHoveringClicked();
+    void on_cbPersistentDialogsClicked();
+    void on_cbGridExtendAxisLinesToggled();
 
 private slots:
     void on_tabWidget_currentChanged(int index);
@@ -71,13 +70,23 @@ private slots:
     void on_pb_previewRefColor_clicked();
     void on_pb_previewRefHighlightColor_clicked();
     void on_rbRelSize_toggled(bool checked);
+    void on_pb_axis_X_clicked();
+    void on_pb_axis_Y_clicked();
     void setVariableFile();
     void setFontsFolder();
     void setTranslationsFolder();
     void setHatchPatternsFolder();
     void setShortcutsMappingsFoler();
+    bool checkRestartNeeded();
+
+    void set_color(QComboBox* combo, QColor custom);
 private:
     bool restartNeeded=false;
+
+    QString originalLibraryPath;
+    bool originalUseClassicToolbar;
+    bool originalAllowsMenusTearOff;
+
     void init();
     void initComboBox(QComboBox* cb, const QString& text);
     void destroy();

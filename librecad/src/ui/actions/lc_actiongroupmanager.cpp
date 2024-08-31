@@ -157,7 +157,7 @@ void LC_ActionGroupManager::assignShortcutsToActions(QMap<QString, QAction *> &m
 }
 
 int LC_ActionGroupManager::loadShortcuts(const QMap<QString, QAction *> &map) {
-    a_map = map;
+//    a_map = map;
     int loadResult = shortcutsManager.loadShortcuts(a_map);
     return loadResult;
 }
@@ -179,4 +179,12 @@ int LC_ActionGroupManager::saveShortcuts(QMap<QString, LC_ShortcutInfo *> shortc
 
 const QString LC_ActionGroupManager::getShortcutsMappingsFolder() {
     return shortcutsManager.getShortcutsMappingsFolder();
+}
+
+QMap<QString, QAction *> &LC_ActionGroupManager::getActionsMap() {
+    return a_map;
+}
+
+QAction *LC_ActionGroupManager::getActionByName(const QString& name) {
+    return a_map[name];
 }

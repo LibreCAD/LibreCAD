@@ -468,8 +468,6 @@ RS_BlockData QG_DialogFactory::requestNewBlockDialog(RS_BlockList* blockList) {
     return ret;
 }
 
-
-
 /**
  * Shows a dialog for renaming the currently active block.
  *
@@ -725,8 +723,6 @@ bool QG_DialogFactory::requestRotateDialog(RS_RotateData& data) {
     return false;
 }
 
-
-
 /**
  * Shows scale options dialog presenting the given data.
  */
@@ -739,8 +735,6 @@ bool QG_DialogFactory::requestScaleDialog(RS_ScaleData& data) {
     }
     return false;
 }
-
-
 
 /**
  * Shows mirror options dialog presenting the given data.
@@ -755,8 +749,6 @@ bool QG_DialogFactory::requestMirrorDialog(RS_MirrorData& data) {
     return false;
 }
 
-
-
 /**
  * Shows move/rotate options dialog presenting the given data.
  */
@@ -770,8 +762,6 @@ bool QG_DialogFactory::requestMoveRotateDialog(RS_MoveRotateData& data) {
     return false;
 }
 
-
-
 /**
  * Shows rotate around two centers options dialog presenting the given data.
  */
@@ -784,7 +774,6 @@ bool QG_DialogFactory::requestRotate2Dialog(RS_Rotate2Data& data) {
     }
     return false;
 }
-
 
 /**
  * Shows a dialog to edit the given entity.
@@ -1010,7 +999,6 @@ bool QG_DialogFactory::requestMTextDialog(RS_MText* text) {
     return false;
 }
 
-
 /**
  * Shows a dialog to edit the attributes of the given text entity.
  */
@@ -1026,7 +1014,6 @@ bool QG_DialogFactory::requestTextDialog(RS_Text* text) {
 
     return false;
 }
-
 
 /**
  * Shows a dialog to edit pattern / hatch attributes of the given entity.
@@ -1060,7 +1047,6 @@ void QG_DialogFactory::requestKeyboardShortcutsDialog(LC_ActionGroupManager *pMa
     LC_ActionsShortcutsDialog dlg(parent, pManager);
     dlg.exec();
 }
-
 
 /**
  * Shows dialog for drawing options.
@@ -1108,6 +1094,12 @@ void QG_DialogFactory::updateMouseWidget(const QString& left,
     }
 }
 
+void QG_DialogFactory::updateMouseWidgetIcon(const QIcon &icon) {
+   if (mouseWidget != nullptr){
+       mouseWidget->setActionIcon(icon);
+   }
+}
+
 /**
  * Called whenever the selection changed.
  */
@@ -1117,8 +1109,6 @@ void QG_DialogFactory::updateSelectionWidget(int num, double length) {
         selectionWidget->setTotalLength(length);
     }
 }
-
-
 
 void QG_DialogFactory::displayBlockName(const QString& blockName, const bool& display)
 {
@@ -1130,7 +1120,6 @@ void QG_DialogFactory::displayBlockName(const QString& blockName, const bool& di
                                        display);
     }
 }
-
 
 /**
  * Called when an action needs to communicate 'message' to the user.
@@ -1150,8 +1139,6 @@ void QG_DialogFactory::command(const QString& message) {
     }
     RS_DEBUG->print("QG_DialogFactory::command: OK");
 }
-
-
 
 /**
  * Converts an extension to a format description.

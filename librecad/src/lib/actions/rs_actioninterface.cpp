@@ -521,6 +521,10 @@ void RS_ActionInterface::updateMouseWidget(const QString& left,const QString& ri
     RS_DIALOGFACTORY->updateMouseWidget(left, right, modifiers);
 }
 
+void RS_ActionInterface::updateMouseWidgetIcon(const QIcon &icon){
+    RS_DIALOGFACTORY->updateMouseWidgetIcon(icon);
+}
+
 
 /**
  * Shortcut for displaying command message string

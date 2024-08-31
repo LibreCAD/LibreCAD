@@ -157,7 +157,7 @@ protected:
     void updateMouseWidgetTRBack(const QString &msg,const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
     void updateMouseWidgetTRCancel(const QString &msg,const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
     void updateMouseWidget(const QString& = QString(),const QString& = QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
-
+    void updateMouseWidgetIcon(const QIcon &icon);
 
     static bool isControl(const QInputEvent *e);
     static bool isShift(const QInputEvent *e);

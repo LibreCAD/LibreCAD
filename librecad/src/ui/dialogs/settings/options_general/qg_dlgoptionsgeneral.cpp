@@ -74,6 +74,8 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
     connect(cbPersistentDialogs, &QCheckBox::stateChanged,
             this, &QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked);
 
+    connect(cbGridExtendAxisLines, &QCheckBox::toggled, this, &QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled);
+
 
     connect(tbShortcuts, &QToolButton::clicked, this, &QG_DlgOptionsGeneral::setShortcutsMappingsFoler);
 }
@@ -87,6 +89,7 @@ void QG_DlgOptionsGeneral::languageChange() {
 }
 
 void QG_DlgOptionsGeneral::init() {
+    gbGridDefaults->setVisible(false);
     // Fill combobox with languages:
     QStringList languageList = RS_SYSTEM->getLanguageList();
     languageList.sort();
@@ -175,12 +178,34 @@ void QG_DlgOptionsGeneral::init() {
         checked = LC_GET_INT("ScrollBars");
         scrollbars_check_box->setChecked(checked);
 
+        checked = LC_GET_BOOL("ExtendAxisLines", false);
+        cbGridExtendAxisLines->setChecked(checked);
+
+        int gridType = LC_GET_INT("GridType", 0);
+        cbGridType->setCurrentIndex(gridType);
+
         // preview:
         initComboBox(cbMaxPreview, LC_GET_STR("MaxPreview", "100"));
 
         checked = LC_GET_BOOL("ShowKeyboardShortcutsInTooltips", true);
         cbShowKeyboardShortcutsInToolTips->setChecked(checked);
+
+        int handleSize = LC_GET_INT("EntityHandleSize", 4);
+        sbHandleSize->setValue(handleSize);
+
+        int relZeroRadius = LC_GET_INT("RelZeroMarkerRadius",5);
+        sbRelZeroRadius->setValue(relZeroRadius);
+
+        int axisSize = LC_GET_INT("ZeroShortAxisMarkSize", 20);
+        sbAxisSize->setValue(axisSize);
+
+        originalAllowsMenusTearOff = LC_GET_BOOL("AllowMenusTearOff", true);
+        cbAllowMenusDetaching->setChecked(originalAllowsMenusTearOff);
+
     }
+    LC_GROUP_END();
+
+    LC_GROUP("NewDrawingDefaults");
     LC_GROUP_END();
 
     LC_GROUP("Colors");
@@ -198,6 +223,9 @@ void QG_DlgOptionsGeneral::init() {
         initComboBox(cbPreviewRefHighlightColor,
                      LC_GET_STR("previewReferencesHighlightColor", RS_Settings::previewRefHighlightColor));
         initComboBox(cb_snap_color, LC_GET_STR("snap_indicator", RS_Settings::snap_indicator));
+
+        initComboBox(cbAxisXColor, LC_GET_STR("grid_x_axisColor", RS_Settings::xAxisColor));
+        initComboBox(cbAxisYColor, LC_GET_STR("grid_y_axisColor", RS_Settings::yAxisColor));
     }
     LC_GROUP_END();
 
@@ -206,7 +234,8 @@ void QG_DlgOptionsGeneral::init() {
         lePathTranslations->setText(LC_GET_STR("Translations", ""));
         lePathHatch->setText(LC_GET_STR("Patterns", ""));
         lePathFonts->setText(LC_GET_STR("Fonts", ""));
-        lePathLibrary->setText(LC_GET_STR("Library", "").trimmed());
+        originalLibraryPath = LC_GET_STR("Library", "").trimmed();
+        lePathLibrary->setText(originalLibraryPath);
         leTemplate->setText(LC_GET_STR("Template", "").trimmed());
         variablefile_field->setText(LC_GET_STR("VariableFile", "").trimmed());
         leShortcutsMappingDirectory->setText(LC_GET_STR("ShortcutsMappings", "").trimmed());
@@ -234,7 +263,7 @@ void QG_DlgOptionsGeneral::init() {
         cbWheelScrollInvertH->setChecked(LC_GET_BOOL("WheelScrollInvertH"));
         cbWheelScrollInvertV->setChecked(LC_GET_BOOL("WheelScrollInvertV"));
         cbInvertZoomDirection->setChecked(LC_GET_BOOL("InvertZoomDirection"));
-        cbAngleSnap->setCurrentIndex(LC_GET_INT("AngleSnapStep", 3));
+        cbAngleSnapStep->setCurrentIndex(LC_GET_INT("AngleSnapStep", 3));
     }
     LC_GROUP_END();
 
@@ -261,6 +290,8 @@ void QG_DlgOptionsGeneral::init() {
         left_sidebar_checkbox->setChecked(LC_GET_BOOL("EnableLeftSidebar", true));
         cad_toolbars_checkbox->setChecked(LC_GET_BOOL("EnableCADToolbars", true));
         cbOpenLastFiles->setChecked(LC_GET_BOOL("OpenLastOpenedFiles", true));
+        originalUseClassicToolbar = LC_GET_BOOL("UseClassicStatusBar", false);
+        cbClassicStatusBar->setChecked(originalUseClassicToolbar);
     }
     LC_GROUP_END();
 
@@ -322,6 +353,12 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("ShowKeyboardShortcutsInTooltips", cbShowKeyboardShortcutsInToolTips->isChecked());
             LC_SET("PersistDialogPositions", cbPersistentDialogs->isChecked());
             LC_SET("PersistDialogRestoreSizeOnly", cbPersistentDialogSizeOnly->isChecked());
+            LC_SET("GridType", cbGridType->currentIndex());
+            LC_SET("ExtendAxisLines", cbGridExtendAxisLines->isChecked());
+            LC_SET("EntityHandleSize", sbHandleSize->value());
+            LC_SET("RelZeroMarkerRadius", sbRelZeroRadius->value());
+            LC_SET("ZeroShortAxisMarkSize", sbAxisSize->value());
+            LC_SET("AllowMenusTearOff", cbAllowMenusDetaching->isChecked());
         }
         LC_GROUP_END();
 
@@ -339,18 +376,21 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("previewReferencesColor", cbPreviewRefColor->currentText());
             LC_SET("previewReferencesHighlightColor", cbPreviewRefHighlightColor->currentText());
             LC_SET("snap_indicator", cb_snap_color->currentText());
+            LC_SET("grid_x_axisColor", cbAxisXColor->currentText());
+            LC_SET("grid_y_axisColor", cbAxisYColor->currentText());
         }
         LC_GROUP_END();
 
         LC_GROUP("Paths");
         {
-            LC_SET("Translations", lePathTranslations->text());
-            LC_SET("Patterns", lePathHatch->text());
-            LC_SET("Fonts", lePathFonts->text());
-            LC_SET("Library", lePathLibrary->text());
-            LC_SET("Template", leTemplate->text());
+            // fixme - well, it's also good to check that specified directories does exsit
+            LC_SET("Translations", lePathTranslations->text().trimmed());
+            LC_SET("Patterns", lePathHatch->text().trimmed());
+            LC_SET("Fonts", lePathFonts->text().trimmed());
+            LC_SET("Library", lePathLibrary->text().trimmed());
+            LC_SET("Template", leTemplate->text().trimmed());
             LC_SET("VariableFile", variablefile_field->text());
-            LC_SET("ShortcutsMappings", leShortcutsMappingDirectory->text());
+            LC_SET("ShortcutsMappings", leShortcutsMappingDirectory->text().trimmed());
         }
         LC_GROUP_END();
 
@@ -363,7 +403,8 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("WheelScrollInvertH", cbWheelScrollInvertH->isChecked());
             LC_SET("WheelScrollInvertV", cbWheelScrollInvertV->isChecked());
             LC_SET("InvertZoomDirection", cbInvertZoomDirection->isChecked());
-            LC_SET("AngleSnapStep", cbAngleSnap->currentIndex());
+            LC_SET("AngleSnapStep", cbAngleSnapStep->currentIndex());
+
         }
         LC_GROUP_END();
 
@@ -388,6 +429,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("EnableLeftSidebar", left_sidebar_checkbox->isChecked());
             LC_SET("EnableCADToolbars", cad_toolbars_checkbox->isChecked());
             LC_SET("OpenLastOpenedFiles", cbOpenLastFiles->isChecked());
+            LC_SET("UseClassicStatusBar", cbClassicStatusBar->isChecked());
         }
         LC_GROUP_END();
 
@@ -400,11 +442,18 @@ void QG_DlgOptionsGeneral::ok(){
         saveReferencePoints();
     }
     RS_SETTINGS->emitOptionsChanged();
-    if (restartNeeded == true) {
+    if (checkRestartNeeded()) {
         QMessageBox::warning(this, tr("Preferences"),
                              tr("Please restart the application to apply all changes."));
     }
     accept();
+}
+
+bool QG_DlgOptionsGeneral::checkRestartNeeded() {
+    bool result = originalUseClassicToolbar != cbClassicStatusBar->isChecked() ||
+                  originalLibraryPath != lePathLibrary->text().trimmed() ||
+                  originalAllowsMenusTearOff != cbAllowMenusDetaching->isChecked();
+    return result;
 }
 
 void QG_DlgOptionsGeneral::on_tabWidget_currentChanged(int index){
@@ -469,6 +518,14 @@ void QG_DlgOptionsGeneral::on_pb_previewRefColor_clicked() {
 
 void QG_DlgOptionsGeneral::on_pb_previewRefHighlightColor_clicked() {
     set_color(cbPreviewRefHighlightColor, QColor(RS_Settings::previewRefHighlightColor));
+}
+
+void QG_DlgOptionsGeneral::on_pb_axis_X_clicked() {
+    set_color(cbAxisXColor, QColor(RS_Settings::xAxisColor));
+}
+
+void QG_DlgOptionsGeneral::on_pb_axis_Y_clicked() {
+    set_color(cbAxisYColor, QColor(RS_Settings::yAxisColor));
 }
 
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked() {
@@ -542,6 +599,7 @@ QString QG_DlgOptionsGeneral::selectFolder(const char* title) {
     return folder;
 }
 
+// fixme - sand - this function is called by signal, but but if the user changes path manually - no restart. Rework this.
 void QG_DlgOptionsGeneral::setLibraryPath() {
     QG_FileDialog dlg(this);
     dlg.setFileMode(QFileDialog::Directory);
@@ -559,6 +617,10 @@ void QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked() {
 
 void QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked() {
     cbPersistentDialogSizeOnly->setEnabled(cbPersistentDialogs->isChecked());
+}
+
+void QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled() {
+    sbAxisSize->setEnabled(!cbGridExtendAxisLines->isChecked());
 }
 
 void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state) {

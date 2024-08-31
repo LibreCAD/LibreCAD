@@ -41,7 +41,6 @@
 #include <QPagedPaintDevice>
 #include <QPluginLoader>
 #include <QRegularExpression>
-#include <QSplitter>
 #include <QStatusBar>
 #include <QStyleFactory>
 #include <QSysInfo>
@@ -148,6 +147,8 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     QSettings settings;
 
+
+
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
     setWindowIcon(QIcon(QC_APP_ICON));
 
@@ -156,38 +157,14 @@ QC_ApplicationWindow::QC_ApplicationWindow():
             pen_wiz, &LC_PenWizard::setEnabled);
     addDockWidget(Qt::RightDockWidgetArea, pen_wiz);
 
-    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
-    QStatusBar* status_bar = statusBar();
-    coordinateWidget = new QG_CoordinateWidget(status_bar, "coordinates");
-    status_bar->addWidget(coordinateWidget);
-    mouseWidget = new QG_MouseWidget(status_bar, "mouse info");
-    status_bar->addWidget(mouseWidget);
-    selectionWidget = new QG_SelectionWidget(status_bar, "selections");
-    status_bar->addWidget(selectionWidget);
-    m_pActiveLayerName = new QG_ActiveLayerName(this);
-    status_bar->addWidget(m_pActiveLayerName);
-    grid_status = new TwoStackedLabels(status_bar);
-    grid_status->setTopLabel(tr("Grid Status"));
-    status_bar->addWidget(grid_status);
+    LC_ActionFactory a_factory(this, actionHandler);
+    bool using_theme = settings.value("Widgets/AllowTheme", 0).toBool();
+    a_factory.fillActionContainer(ag_manager, using_theme);
 
-    settings.beginGroup("Widgets");
-    int allow_statusbar_fontsize = settings.value("AllowStatusbarFontSize", 0).toInt();
-    int allow_statusbar_height = settings.value("AllowStatusbarHeight", 0).toInt();
+    LC_WidgetFactory widget_factory(this, ag_manager);
 
-    if (allow_statusbar_fontsize)
-    {
-        int fontsize = settings.value("StatusbarFontSize", 12).toInt();
-        QFont font;
-        font.setPointSize(fontsize);
-        status_bar->setFont(font);
-    }
-    int height {64};
-    if (allow_statusbar_height) {
-        height = settings.value( "StatusbarHeight", 64).toInt();
-    }
-    status_bar->setMinimumHeight( height);
-    status_bar->setMaximumHeight( height);
-    settings.endGroup();
+    widget_factory.initStatusBar();
+
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
 
@@ -227,11 +204,9 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     if (custom_size)
         setIconSize(QSize(icon_size, icon_size));
 
-    LC_ActionFactory a_factory(this, actionHandler);
-    bool using_theme = settings.value("Widgets/AllowTheme", 0).toBool();
-    a_factory.fillActionContainer(a_map, ag_manager, using_theme);
 
-    LC_WidgetFactory widget_factory(this, a_map, ag_manager);
+
+
     if (enable_left_sidebar){
         int leftSidebarColumnsCount = settings.value("Widgets/LeftToolbarColumnsCount", 5).toInt();
         widget_factory.createLeftSidebar(leftSidebarColumnsCount, icon_size);
@@ -241,8 +216,6 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     widget_factory.createRightSidebar(actionHandler);
     widget_factory.createCategoriesToolbar();
     widget_factory.createStandardToolbars(actionHandler);
-
-
 
     foreach(auto action, widget_factory.snap_toolbar->actions())
     {
@@ -257,9 +230,8 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     {
         auto toolbar = new QToolBar(key, this);
         toolbar->setObjectName(key);
-        foreach (auto action, settings.value(key).toStringList())
-        {
-            toolbar->addAction(a_map[action]);
+        foreach (auto actionName, settings.value(key).toStringList()){
+            toolbar->addAction(getAction(actionName));
         }
         addToolBar(toolbar);
     }
@@ -276,9 +248,8 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
         auto toolbar = new QToolBar("DefaultCustom", this);
         toolbar->setObjectName("DefaultCustom");
-        foreach (auto& action, list)
-        {
-            toolbar->addAction(a_map[action]);
+        foreach (auto& actionName, list){
+            toolbar->addAction(getAction(actionName));
         }
         settings.setValue("CustomToolbars/DefaultCustom", list);
         addToolBar(Qt::LeftToolBarArea, toolbar);
@@ -286,15 +257,15 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     widget_factory.createMenus(menuBar());
 
-    undoButton = a_map["EditUndo"];
-    redoButton = a_map["EditRedo"];
-    previousZoom = a_map["ZoomPrevious"];
+    undoButton = getAction("EditUndo");
+    redoButton = getAction("EditRedo");
+    previousZoom = getAction("ZoomPrevious");
 
-    dock_areas.left = a_map["LeftDockAreaToggle"];
-    dock_areas.right = a_map["RightDockAreaToggle"];
-    dock_areas.top = a_map["TopDockAreaToggle"];
-    dock_areas.bottom = a_map["BottomDockAreaToggle"];
-    dock_areas.floating = a_map["FloatingDockwidgetsToggle"];
+    dock_areas.left = getAction("LeftDockAreaToggle");
+    dock_areas.right = getAction("RightDockAreaToggle");
+    dock_areas.top = getAction("TopDockAreaToggle");
+    dock_areas.bottom = getAction("BottomDockAreaToggle");
+    dock_areas.floating = getAction("FloatingDockwidgetsToggle");
 
     snapToolBar = widget_factory.snap_toolbar;
     penToolBar = widget_factory.pen_toolbar;
@@ -318,8 +289,7 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     actionsToDisableInPrintPreview = widget_factory.actionsToDisableInPrintPreview;
 
-    connect(a_map["FileClose"], SIGNAL(triggered(bool)),
-            mdiAreaCAD, SLOT(closeActiveSubWindow()));
+    connect(getAction("FileClose"), &QAction::triggered, mdiAreaCAD, &QMdiArea::closeActiveSubWindow);
 
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
             this, SLOT(slotPenChanged(const RS_Pen&)));
@@ -380,14 +350,12 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
 }
 
-void QC_ApplicationWindow::startAutoSave(bool startAutoBackup)
-{
-    if (startAutoBackup)
-    {
+void QC_ApplicationWindow::startAutoSave(bool startAutoBackup) {
+    if (startAutoBackup) {
         if (m_autosaveTimer == nullptr) {
             m_autosaveTimer = std::make_unique<QTimer>(this);
             m_autosaveTimer->setObjectName("autosave");
-            connect(m_autosaveTimer.get(), SIGNAL(timeout()), this, SLOT(slotFileAutoSave()));
+            connect(m_autosaveTimer.get(), &QTimer::timeout, this, &QC_ApplicationWindow::slotFileAutoSave);
         }
         if (!m_autosaveTimer->isActive()) {
             // autosaving has been turned on. Make a backup immediately
@@ -408,8 +376,7 @@ void QC_ApplicationWindow::startAutoSave(bool startAutoBackup)
  * @brief QC_ApplicationWindow::getAppWindow() accessor for the application window singleton instance
  * @return QC_ApplicationWindow* the application window instance
  */
-std::unique_ptr<QC_ApplicationWindow>& QC_ApplicationWindow::getAppWindow()
-{
+std::unique_ptr<QC_ApplicationWindow>& QC_ApplicationWindow::getAppWindow(){
     static auto instance = std::unique_ptr<QC_ApplicationWindow>(new QC_ApplicationWindow);
     // singleton could be reset: cannot be called after reseting
     Q_ASSERT(instance != nullptr);
@@ -430,7 +397,7 @@ QMenu *QC_ApplicationWindow::findMenu(const QString &searchMenu, const QObjectLi
     QList<QObject*>::const_iterator i=thisMenuList.begin();
     while (i != thisMenuList.end()) {
         if ((*i)->inherits ("QMenu")) {
-            QMenu *ii=(QMenu*)*i;
+            auto *ii=(QMenu*)*i;
             if (QMenu *foundMenu=findMenu(searchMenu, ii->children(), currentEntry+"/"+ii->objectName().replace("&", ""))) {
                 return foundMenu;
             }
@@ -580,6 +547,7 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
 
         blockWidget->setBlockList(nullptr);
         coordinateWidget->setGraphic(nullptr);
+        relativeZeroCoordinatesWidget->setGraphicView(nullptr);
     }
 
     if (penPaletteWidget != nullptr) {
@@ -655,23 +623,23 @@ int QC_ApplicationWindow::showCloseDialog(QC_MDIWindow *w, bool showSaveAll) {
  */
 void QC_ApplicationWindow::enableFileActions(QC_MDIWindow *w) {
     if (!w || w->getDocument()->getFilename().isEmpty()) {
-        a_map["FileSave"]->setText(tr("&Save"));
-        a_map["FileSaveAs"]->setText(tr("Save &as..."));
+        getAction("FileSave")->setText(tr("&Save"));
+        getAction("FileSaveAs")->setText(tr("Save &as..."));
     } else {
         QString name = format_filename_caption(w->getDocument()->getFilename());
-        a_map["FileSave"]->setText(tr("&Save %1").arg(name));
-        a_map["FileSaveAs"]->setText(tr("Save %1 &as...").arg(name));
+        getAction("FileSave")->setText(tr("&Save %1").arg(name));
+        getAction("FileSaveAs")->setText(tr("Save %1 &as...").arg(name));
     }
-    a_map["FileSave"]->setEnabled(w);
-    a_map["FileSaveAs"]->setEnabled(w);
-    a_map["FileSaveAll"]->setEnabled(w && window_list.count() > 1);
-    a_map["FileExportMakerCam"]->setEnabled(w);
-    a_map["FilePrintPDF"]->setEnabled(w);
-    a_map["FileExport"]->setEnabled(w);
-    a_map["FilePrint"]->setEnabled(w);
-    a_map["FilePrintPreview"]->setEnabled(w);
-    a_map["FileClose"]->setEnabled(w);
-    a_map["FileCloseAll"]->setEnabled(w && window_list.count() > 1);
+    getAction("FileSave")->setEnabled(w);
+    getAction("FileSaveAs")->setEnabled(w);
+    getAction("FileSaveAll")->setEnabled(w && window_list.count() > 1);
+    getAction("FileExportMakerCam")->setEnabled(w);
+    getAction("FilePrintPDF")->setEnabled(w);
+    getAction("FileExport")->setEnabled(w);
+    getAction("FilePrint")->setEnabled(w);
+    getAction("FilePrintPreview")->setEnabled(w);
+    getAction("FileClose")->setEnabled(w);
+    getAction("FileCloseAll")->setEnabled(w && window_list.count() > 1);
 }
 
 /**
@@ -915,7 +883,7 @@ void QC_ApplicationWindow::initSettings() {
         style_sheet_path = sheet_path;
     settings.endGroup();
 
-    a_map["ViewDraft"]->setChecked(settings.value("Appearance/DraftMode", 0).toBool());
+    getAction("ViewDraft")->setChecked(settings.value("Appearance/DraftMode", 0).toBool());
 }
 
 
@@ -1038,6 +1006,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
         enableWidget(commandWidget, false);
         RS_DIALOGFACTORY->hideSnapOptions();
         coordinateWidget->clearContent();
+        relativeZeroCoordinatesWidget->clearContent();
         // todo - check which other widgets in status bar or so should be cleared if no files..
         emit windowsChanged(false);
         activedMdiSubWindow = w;
@@ -1115,6 +1084,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
         }
 
         coordinateWidget->setGraphic(activatedGraphic);
+        relativeZeroCoordinatesWidget->setGraphicView(activatedGraphicView);
         blockWidget->setBlockList(activatedDocument->getBlockList());
 
         // Update all inserts in this graphic (blocks might have changed):
@@ -1579,7 +1549,7 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
             auto menu = new QMenu(activator, view);
             menu->setObjectName(menu_name);
                 foreach (auto key, a_list) {
-                    menu->addAction(a_map[key]);
+                    menu->addAction(getAction(key));
                 }
             view->setMenu(activator, menu);
         }
@@ -1600,7 +1570,7 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
     // fixme - settings
     if (settings.value("Appearance/DraftMode", 0).toBool()) {
         QString draft_string = " [" + tr("Draft Mode") + "]";
-        w->getGraphicView()->setDraftMode(true);
+        view->setDraftMode(true);
         QString title = w->windowTitle();
         w->setWindowTitle(title + draft_string);
     }
@@ -1647,12 +1617,16 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
         graphic->addBlockListListener(blockWidget);
     }
 // Link the dialog factory to the coordinate widget:
-    if (coordinateWidget) {
+    if (coordinateWidget != nullptr) {
         coordinateWidget->setGraphic(graphic);
+    }
+    if (relativeZeroCoordinatesWidget != nullptr){
+        relativeZeroCoordinatesWidget->setGraphicView(view);
     }
 // Link the dialog factory to the mouse widget:
     QG_DIALOGFACTORY->setMouseWidget(mouseWidget);
     QG_DIALOGFACTORY->setCoordinateWidget(coordinateWidget);
+    QG_DIALOGFACTORY->setRelativeZeroCoordinatesWidget(relativeZeroCoordinatesWidget);
     QG_DIALOGFACTORY->setSelectionWidget(selectionWidget);
 // Link the dialog factory to the option widget:
 //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
@@ -1688,7 +1662,8 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
     qApp->processEvents(QEventLoop::AllEvents, 1000);
 
     // link the layer widget to the new document:
-    RS_LayerList *layerList = w->getDocument()->getLayerList();
+    RS_Document *document = w->getDocument();
+    RS_LayerList *layerList = document->getLayerList();
     layerWidget->setLayerList(layerList, false);
     if (layerTreeWidget != nullptr)
         layerTreeWidget->setLayerList(layerList);
@@ -1699,9 +1674,11 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
 
 
     // link the block widget to the new document:
-    blockWidget->setBlockList(w->getDocument()->getBlockList());
+    blockWidget->setBlockList(document->getBlockList());
+    auto graphic = w->getGraphic();
     // link coordinate widget to graphic
-    coordinateWidget->setGraphic(w->getGraphic());
+    coordinateWidget->setGraphic(graphic);
+    relativeZeroCoordinatesWidget->setGraphicView(w->getGraphicView());
 
     qApp->processEvents(QEventLoop::AllEvents, 1000);
 
@@ -1734,8 +1711,8 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
         commandWidget->appendHistory(message);
         statusBar()->showMessage(message, 2000);
     }
-    if (w->getGraphic()) {
-        emit(gridChanged(w->getGraphic()->isGridOn()));
+    if (graphic) {
+        emit(gridChanged(graphic->isGridOn()));
     }
 
     QApplication::restoreOverrideCursor();
@@ -1878,8 +1855,7 @@ format_filename_caption(const QString &qstring_in) {
  *	Returns:			void
  *	Notes:			Menu file -> open.
  *	*/
-void QC_ApplicationWindow::
-slotFileOpen(const QString &fileName, RS2::FormatType type) {
+void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType type) {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen(..)");
 
     QSettings settings;
@@ -1898,12 +1874,13 @@ slotFileOpen(const QString &fileName, RS2::FormatType type) {
         QRect geo;
         //bool maximized=false;
 
-        QC_MDIWindow *w = slotFileNew(nullptr);
+        auto w = slotFileNew(nullptr);
         // RVT_PORT qApp->processEvents(1000);
         qApp->processEvents(QEventLoop::AllEvents, 1000);
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: linking layer list");
-        RS_LayerList *layerList = w->getDocument()->getLayerList();
+        auto document = w->getDocument();
+        auto layerList = document->getLayerList();
         // link the layer widget to the new document:
 
         layerWidget->setLayerList(layerList, false);
@@ -1913,9 +1890,12 @@ slotFileOpen(const QString &fileName, RS2::FormatType type) {
             penPaletteWidget->setLayerList(layerList);
         }
         // link the block widget to the new document:
-        blockWidget->setBlockList(w->getDocument()->getBlockList());
+        blockWidget->setBlockList(document->getBlockList());
         // link coordinate widget to graphic
-        coordinateWidget->setGraphic(w->getGraphic());
+        auto graphic = w->getGraphic();
+        auto graphicView = w->getGraphicView();
+        coordinateWidget->setGraphic(graphic);
+        relativeZeroCoordinatesWidget->setGraphicView(graphicView);
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: open file");
 
@@ -1932,8 +1912,7 @@ slotFileOpen(const QString &fileName, RS2::FormatType type) {
             success = w->slotFileOpen(fileName, type);
         } else {
             QString msg = tr("Cannot open the file\n%1\nPlease "
-                             "check its existence and permissions.")
-                .arg(fileName);
+                             "check its existence and permissions.").arg(fileName);
             commandWidget->appendHistory(msg);
             QMessageBox::information(this, QMessageBox::tr("Warning"), msg, QMessageBox::Ok);
         }
@@ -1960,7 +1939,7 @@ slotFileOpen(const QString &fileName, RS2::FormatType type) {
         if (layerTreeWidget != nullptr)
             layerTreeWidget->slotFilteringMaskChanged();
 
-        auto graphic = w->getGraphic();
+        
         if (graphic) {
             if (int objects_removed = graphic->clean()) {
                 auto msg = QObject::tr("Invalid objects removed:");
@@ -1987,15 +1966,16 @@ slotFileOpen(const QString &fileName, RS2::FormatType type) {
             doArrangeWindows(RS2::CurrentMode);
 
 
-        if (LC_GET_ONE_BOOL("CADPreferences","AutoZoomDrawing")) {
-            w->getGraphicView()->zoomAuto(false);
+        
+        if (LC_GET_ONE_BOOL("CADPreferences", "AutoZoomDrawing")) {
+            graphicView->zoomAuto(false);
         }
 
 // fixme - settings inconsistent call
         if (settings.value("Appearance/DraftMode", 0).toBool()) {
             QString draft_string = " [" + tr("Draft Mode") + "]";
-            w->getGraphicView()->setDraftMode(true);
-            w->getGraphicView()->redraw();
+            graphicView->setDraftMode(true);
+            graphicView->redraw();
             QString title = w->windowTitle();
             w->setWindowTitle(title + draft_string);
         }
@@ -2500,8 +2480,10 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
 
                 // Link the graphic view to the mouse widget:
                 QG_DIALOGFACTORY->setMouseWidget(mouseWidget);
+                // fixme - sand - check whether coordinates, selection and relzero are really necessary for print preview!!!
                 // Link the graphic view to the coordinate widget:
                 QG_DIALOGFACTORY->setCoordinateWidget(coordinateWidget);
+                QG_DIALOGFACTORY->setRelativeZeroCoordinatesWidget(relativeZeroCoordinatesWidget);
                 QG_DIALOGFACTORY->setSelectionWidget(selectionWidget);
                 // Link the graphic view to the option widget:
                 //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
@@ -2662,7 +2644,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
     int dialogResult = RS_DIALOGFACTORY->requestOptionsGeneralDialog();
 
     if (dialogResult == QDialog::Accepted){
-
+        // fixme - check this signal, probably it's better to rely on settings change
         bool hideRelativeZero = LC_GET_ONE_BOOL("Appearance", "hideRelativeZero");
         emit signalEnableRelativeZeroSnaps(!hideRelativeZero);
 
@@ -2673,6 +2655,9 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
                 QG_GraphicView *gv = m->getGraphicView();
                 if (gv != nullptr) {
                     gv->loadSettings();
+                    if (m == activedMdiSubWindow) {
+                        gv->redraw();
+                    }
                 }
             }
         }
@@ -2947,6 +2932,7 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
     }
 
     view->setCurrentQAction(q_action);
+    mouseWidget->setCurrentQAction(q_action);
 
     const QString commands(q_action->data().toString());
     if (!commands.isEmpty()) {
@@ -2975,7 +2961,7 @@ QMenu *QC_ApplicationWindow::createPopupMenu() {
     temp_dw_menu->addActions(dw_menu->actions());
     context_menu->addMenu(temp_dw_menu);
 
-    context_menu->addAction(a_map["ViewStatusBar"]);
+    context_menu->addAction(getAction("ViewStatusBar"));
 
     return context_menu;
 }
@@ -3230,9 +3216,9 @@ void QC_ApplicationWindow::createToolbar(const QString &toolbar_name) {
         addToolBar(Qt::BottomToolBarArea, toolbar);
     }
 
-        foreach (auto key, a_list) {
-            toolbar->addAction(a_map[key]);
-        }
+    foreach (auto key, a_list) {
+        toolbar->addAction(getAction(key));
+    }
 }
 
 void QC_ApplicationWindow::destroyToolbar(const QString &toolbar_name) {
@@ -3369,7 +3355,7 @@ void QC_ApplicationWindow::assignMenu(const QString &activator, const QString &m
             auto menu = new QMenu(activator, view);
             menu->setObjectName(menu_name);
                 foreach (auto key, a_list) {
-                    menu->addAction(a_map[key]);
+                    menu->addAction(getAction(key));
                 }
             view->setMenu(activator, menu);
         }
@@ -3393,7 +3379,7 @@ void QC_ApplicationWindow::updateMenu(const QString &menu_name) {
                         auto menu = new QMenu(activator, view);
                         menu->setObjectName(menu_name);
                             foreach (auto key, a_list) {
-                                menu->addAction(a_map[key]);
+                                menu->addAction(getAction(key));
                             }
                         view->setMenu(activator, menu);
                     }
@@ -3497,17 +3483,16 @@ void QC_ApplicationWindow::showBlockActivated(const RS_Block *block) {
 }
 
 QAction *QC_ApplicationWindow::getAction(const QString &actionName) const {
-    if (a_map.count(actionName) == 0)
-        return nullptr;
-    return a_map[actionName];
+    return ag_manager->getActionByName(actionName);
 }
 
+// fixme - remove this methods
 RS_Vector QC_ApplicationWindow::getMouseAbsolutePosition() {
     if (coordinateWidget != nullptr)
         return coordinateWidget->getAbsoluteCoordinates();
     return RS_Vector(false);
 }
-
+// fixme - remove this methods
 RS_Vector QC_ApplicationWindow::getMouseRelativePosition() {
     if (coordinateWidget != nullptr)
         return coordinateWidget->getRelativeCoordinates();
@@ -3523,6 +3508,16 @@ void QC_ApplicationWindow::updateActionsAndWidgetsForPrintPreview(bool printPrev
             a->setEnabled(enable);
         }
     }
+
+    coordinateWidget->setEnabled(!printPreviewOn);
+    selectionWidget->setEnabled(!printPreviewOn);
+    m_pActiveLayerName->setEnabled(!printPreviewOn);
+    grid_status->setEnabled(!printPreviewOn);
+    relativeZeroCoordinatesWidget->setEnabled(!printPreviewOn);
+    if (printPreviewOn){
+        mouseWidget->setActionIcon(QIcon());
+    }
+
 //    LC_ERR << "Preview Changed " << (printPreviewOn ? " +ON" : " -OFF");
     emit printPreviewChanged(printPreviewOn);
 }
@@ -3545,6 +3540,8 @@ void QC_ApplicationWindow::enableWidgets(bool enable) {
         // fixme - command widget should be aware of print preview mode and do not support other commands...
         enableWidget(commandWidget, enable);
     }
+
+    // fixme - disable widgets from status bar
 }
 
 void QC_ApplicationWindow::enableWidget(QWidget *w, bool enable) {

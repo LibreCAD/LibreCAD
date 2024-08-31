@@ -32,6 +32,7 @@
 #include <memory>
 
 #include <QMap>
+#include <QSettings>
 
 #include "rs.h"
 #include "rs_pen.h"
@@ -299,18 +300,15 @@ public:
     void redrawAll();
     void updateGrids();
 
-    QG_BlockWidget* getBlockWidget(void)
-    {
+    QG_BlockWidget* getBlockWidget(void){
         return blockWidget;
     }
 
-    QG_SnapToolBar* getSnapToolBar(void)
-    {
+    QG_SnapToolBar* getSnapToolBar(void){
         return snapToolBar;
     }
 
-    QG_SnapToolBar const* getSnapToolBar(void) const
-    {
+    QG_SnapToolBar const* getSnapToolBar(void) const{
         return snapToolBar;
     }
 
@@ -356,10 +354,10 @@ private:
 
     QString format_filename_caption(const QString &qstring_in);
     /** Helper function for Menu file -> New & New.... */
-	bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = nullptr);
+	   bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = nullptr);
 	// more helpers
     void setTabLayout(RS2::TabShape s, RS2::TabPosition p);
-	void doActivate(QMdiSubWindow* w);
+	   void doActivate(QMdiSubWindow* w);
     void enableFileActions(QC_MDIWindow* w);
 
     /**
@@ -423,6 +421,7 @@ private:
     // --- Statusbar ---
     /** Coordinate widget */
     QG_CoordinateWidget* coordinateWidget {nullptr};
+    LC_RelZeroCoordinatesWidget* relativeZeroCoordinatesWidget {nullptr};
     /** Mouse widget */
     QG_MouseWidget* mouseWidget {nullptr};
     /** Selection Status */
@@ -471,6 +470,10 @@ private:
     QList<QAction*> actionsToDisableInPrintPreview;
 
     void enableWidgets(bool enable);
+
+    void initStatusBar();
+
+    friend class LC_WidgetFactory;
 };
 
 #ifdef _WINDOWS

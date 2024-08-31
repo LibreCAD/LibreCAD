@@ -41,7 +41,7 @@ class LC_ActionFactory : public LC_ActionFactoryBase{
     Q_OBJECT
 public:
     LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler);
-    void fillActionContainer(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm, bool useTheme);
+    void fillActionContainer(LC_ActionGroupManager* agm, bool useTheme);
 private:
 
     void createDrawLineActions(QMap<QString, QAction *> &map, QActionGroup *group);

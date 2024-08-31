@@ -17,6 +17,7 @@ class LC_ActionGroupManager : public QObject
 
 
 
+
 public:
     explicit LC_ActionGroupManager(QC_ApplicationWindow *parent);
 
@@ -52,16 +53,18 @@ public:
     int saveShortcuts(QMap<QString, LC_ShortcutInfo *> map);
     int saveShortcuts(const QList<LC_ShortcutInfo *> &shortcutsList, const QString &fileName);
     const QString getShortcutsMappingsFolder();
+    QMap<QString, QAction *> &getActionsMap();
+    QAction *getActionByName(const QString &name);
 public slots:
     void toggleExclusiveSnapMode(bool state);
     void toggleTools(bool state);
+
     void onOptionsChanged();
+
 private:
     QMap<QString, QAction*> a_map; // should be initialized by action factory by call of loadShortcuts()
     LC_ShortcutsManager shortcutsManager;
     QList<bool> snap_memory;
-
-
 };
 
 #endif // LC_ACTIONGROUPMANAGER_H

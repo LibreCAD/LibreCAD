@@ -78,7 +78,9 @@ public:
     static constexpr char const* handle            = "Blue";
     static constexpr char const* end_handle        = "Blue";
     static constexpr char const* relativeZeroColor = "Red";
-    static constexpr char const* previewRefColor = "Yellow";
+    static constexpr char const* xAxisColor        = "Red";
+    static constexpr char const* yAxisColor        = "Green";
+    static constexpr char const* previewRefColor   = "Yellow";
     static constexpr char const* previewRefHighlightColor = "Green";
 
     // Used to have RAII style GroupGuard: endGroup is called automatically whenever a unique_ptr<GroupGuard>

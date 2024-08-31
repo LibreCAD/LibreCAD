@@ -1214,6 +1214,10 @@ set(SOURCES
 		librecad/src/ui/action_options/curve/lc_ellipsearcoptions.cpp
 		librecad/src/ui/dialogs/lc_dialog.h
 		librecad/src/ui/dialogs/lc_dialog.cpp
+		librecad/src/ui/components/status_bar/lc_relzerocoordinateswidget.h
+		librecad/src/ui/components/status_bar/lc_relzerocoordinateswidget.cpp
+		librecad/src/lib/math/lc_convert.h
+		librecad/src/lib/math/lc_convert.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

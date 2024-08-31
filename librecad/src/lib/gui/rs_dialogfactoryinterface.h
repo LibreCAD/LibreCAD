@@ -441,6 +441,7 @@ public:
     virtual void setRelativeZeroCoordinatesWidget(LC_RelZeroCoordinatesWidget* )=0;
     virtual void setSelectionWidget(QG_SelectionWidget* ) = 0;
     virtual void setCommandWidget(QG_CommandWidget* ) = 0;
+    virtual void updateMouseWidgetIcon(const QIcon &icon) =0;
 };
 
 

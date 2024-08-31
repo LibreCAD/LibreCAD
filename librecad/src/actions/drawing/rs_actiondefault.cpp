@@ -649,7 +649,7 @@ QStringList RS_ActionDefault::getAvailableCommands(){
     return cmd;
 }
 
-void RS_ActionDefault::updateMouseButtonHints(){
+void RS_ActionDefault::updateMouseButtonHints(){    
     switch (getStatus()) {
         case Moving:{
             updateMouseWidgetTRCancel(tr("Set new position"), MOD_SHIFT_ANGLE_SNAP);
@@ -705,6 +705,8 @@ void RS_ActionDefault::clearHighLighting(){
 }
 
 void RS_ActionDefault::resume(){
+    const QIcon icon = QIcon();
+    updateMouseWidgetIcon(icon);
     clearHighLighting();
     checkSupportOfQuickEntityInfo();
     BASE_CLASS::resume();

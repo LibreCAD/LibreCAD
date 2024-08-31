@@ -153,6 +153,7 @@ void RS_PreviewActionInterface::deleteHighlights(){
     if (!graphicView->isCleanUp()){
         RS_EntityContainer *overlayContainer = graphicView->getOverlayContainer(RS2::OverlayEffects);
         overlayContainer->clear();
+//        graphicView->setToolTip(""); // fixme - sand - remove test code
     }
 }
 
@@ -170,6 +171,11 @@ void RS_PreviewActionInterface::highlightHoverWithRefPoints(RS_Entity* e, bool v
 
 void RS_PreviewActionInterface::highlightHover(RS_Entity* e){
     highlight->addEntity(e, highlightEntitiesRefPointsOnHover);
+// fixme - sand - remove test code
+//    QString toolTip = QString("Name: <b>").append(QString::number(e->getId())).append("</b><br>")
+//        .append("Min: <b>").append(QString::number(e->getMin().x)).append(",").append(QString::number(e->getMin().y)).append("</b><br>")
+//        .append("Min: <b>").append(QString::number(e->getMin().x)).append(",").append(QString::number(e->getMin().y)).append("</b><br>");
+//    graphicView->setToolTip(toolTip);
 }
 
 
