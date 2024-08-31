@@ -26,9 +26,9 @@
 #include <QString>
 
 namespace LC_Convert{
-    QString asString(double value);
-    QString asStringAngle(double value);
-    QString asStringAngleDeg(double value);
+    QString asString(double value, int precision = 10);
+    QString asStringAngle(double value, int precision = 10);
+    QString asStringAngleDeg(double value, int precision = 10);
     bool toDouble(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
     bool toDoubleAngle(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
     bool toDoubleAngleRad(const QString &strValue, double& res, double notMeaningful, bool positiveOnly);

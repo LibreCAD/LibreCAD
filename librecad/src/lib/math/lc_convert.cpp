@@ -24,18 +24,18 @@
 #include "rs_math.h"
 #include "lc_linemath.h"
 
-
-QString LC_Convert::asString(double value){
-    return QString::number(value, 'g', 10);
+// fixme - sand - review the entire codebase and insure uniform string/double and vice-versa conversion
+QString LC_Convert::asString(double value, int precision){
+    return QString::number(value, 'g', precision);
 }
 
-QString LC_Convert::asStringAngle(double value){
-    return QString::number(value, 'g', 10);
+QString LC_Convert::asStringAngle(double value, int precision){
+    return QString::number(value, 'g', precision);
 }
 
-QString LC_Convert::asStringAngleDeg(double value){
+QString LC_Convert::asStringAngleDeg(double value, int precision){
     double angleDeg = RS_Math::rad2deg(value);
-    return QString::number(angleDeg, 'g', 10);
+    return QString::number(angleDeg, 'g', precision);
 }
 
 

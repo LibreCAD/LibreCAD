@@ -44,8 +44,9 @@ LC_ActionFactory::LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandle
 }
 // todo - add explanations for commands for actions (probably mix with commandItems) as it was mentioned in issue #570
 
-void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm, bool useTheme){
+void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useTheme){
     using_theme = useTheme;
+    QMap<QString, QAction *> &a_map = agm->getActionsMap();
     createSelectActions(a_map, agm->select);
     createDrawLineActions(a_map, agm->line);
     createDrawCircleActions(a_map, agm->circle);
@@ -66,8 +67,10 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     createRestrictActions(a_map, agm->restriction);
     createOtherActions(a_map, agm->other);
 
-    for (QAction* value: a_map){
-       value->setCheckable(true);
+    for (QAction* value: std::as_const(a_map)){
+        if (value != nullptr) {
+            value->setCheckable(true);
+        }
     }
 
     // not checkable actions
