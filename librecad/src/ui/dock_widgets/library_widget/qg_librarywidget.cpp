@@ -434,33 +434,32 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     painter.setBackground(RS_Color(255,255,255));
     painter.eraseRect(0,0, 128,128);
 
-    RS_StaticGraphicView gv(128,128, &painter);
+    RS_StaticGraphicView gv(128, 128, &painter);
     RS_Graphic graphic;
-    if (graphic.open(dxfPath, RS2::FormatUnknown)) {
-        gv.setContainer(&graphic);
-        gv.zoomAuto(false);
-        // gv.drawEntity(&graphic, true);
-
-        for (RS_Entity* e=graphic.firstEntity(RS2::ResolveAll);
-                e; e=graphic.nextEntity(RS2::ResolveAll)) {
-            if (e->rtti() != RS2::EntityHatch){
-                RS_Pen pen = e->getPen();
-                pen.setColor(Qt::black);
-                e->setPen(pen);
-            }
-            gv.drawEntity(&painter, e);
-        }
-
-        // Write to PNG
-        writePng(pngPath, std::move(buffer));
-    } else {
+    if (!graphic.open(dxfPath, RS2::FormatUnknown)) {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_LibraryWidget::getPathToPixmap: Cannot open file: '%s'",
                         dxfPath.toLatin1().data());
+        return {};
+    }
+    gv.setContainer(&graphic);
+    gv.zoomAuto(false);
+
+    for (RS_Entity *e = graphic.firstEntity(RS2::ResolveAll); e;
+         e = graphic.nextEntity(RS2::ResolveAll)) {
+        if (e != nullptr && e->rtti() != RS2::EntityHatch) {
+            RS_Pen pen = e->getPen();
+            pen.setColor(Qt::black);
+            e->setPen(pen);
+        }
+        gv.drawEntity(&painter, e);
     }
 
     // GraphicView deletes painter
     painter.end();
 
+    // Write to PNG
+    writePng(pngPath, std::move(buffer));
+    LC_LOG << "Writing to " << pngPath << " OK";
     return pngPath;
 }
