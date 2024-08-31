@@ -104,13 +104,11 @@ QString QG_DimensionLabelEditor::getLabel() {
     // TODO: an extra '&' shouldn't be added
     // TODO: fix the the root cause
     QString l = leLabel->text();
-    LC_LOG << __LINE__ << ": leLabel->text()"<<l;
-    LC_LOG << __LINE__ << ": bDiameter->checked: "<<bDiameter->isChecked();
     if (l.startsWith('&'))
-        l.erase(l.begin());
-    QString prefix = bDiameter->isVisible() ? bDiameter->text() : QString{};
+        l = l.mid(1);
+    QString prefix = m_hasDiameter ? bDiameter->text() : QString{};
     if (prefix.startsWith('&'))
-        prefix.erase(prefix.begin());
+        prefix = prefix.mid(1);
 
     QRegularExpression re{QString{R"(^\s*%1)"}.arg(prefix)};
     // diameter:
@@ -133,8 +131,6 @@ QString QG_DimensionLabelEditor::getLabel() {
         }
     }
 
-    LC_LOG << __LINE__ << ": leLabel->text()"<<l;
-    LC_LOG << __LINE__ << ": bDiameter->checked: "<<bDiameter->isChecked();
     if (leTol1->text().isEmpty() && leTol2->text().isEmpty()) {
         return l;
     }
@@ -152,7 +148,7 @@ void QG_DimensionLabelEditor::updatePrefix(bool isChecked)
 {
     QString prefix = bDiameter->text();
     if (prefix.startsWith('&'))
-        prefix.erase(prefix.begin());
+        prefix = prefix.mid(1);
     QRegularExpression re{QString{R"(^\s*%1)"}.arg(prefix)};
     QString label = leLabel->text();
     auto match = re.match(label);
@@ -168,18 +164,21 @@ void QG_DimensionLabelEditor::setRadialType(const RS_Dimension& dim)
         bDiameter->setText(tr("R", "Radial dimesnion prefix"));
         bDiameter->setCheckable(true);
         bDiameter->setVisible(true);
+	m_hasDiameter = true;
         break;
     case RS2::EntityDimDiametric:
         bDiameter->setIcon({});
         bDiameter->setText({{QChar(g_diametericPrefix)}});
         bDiameter->setCheckable(true);
         bDiameter->setVisible(true);
+	m_hasDiameter = true;
         break;
     default:
         bDiameter->setIcon({});
         bDiameter->setText({});
         bDiameter->setChecked(false);
         bDiameter->setVisible(false);
+	m_hasDiameter = false;
         break;
     }
 }

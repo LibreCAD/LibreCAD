@@ -44,6 +44,8 @@ public slots:
 protected slots:
     virtual void languageChange();
 
+private:
+    bool m_hasDiameter = false;
 };
 
 #endif // QG_DIMENSIONLABELEDITOR_H
