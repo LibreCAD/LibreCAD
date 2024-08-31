@@ -23,6 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include <QComboBox>
 #include <QRegularExpression>
 
 #include "qg_dimensionlabeleditor.h"
@@ -44,6 +45,9 @@ QG_DimensionLabelEditor::QG_DimensionLabelEditor(QWidget* parent, Qt::WindowFlag
 
     connect(bDiameter, &QAbstractButton::toggled, this, &QG_DimensionLabelEditor::updatePrefix);
 
+    // Initialize the symbol selection
+    cbSymbol->setCurrentIndex(-1);
+    connect(cbSymbol, &QComboBox::currentTextChanged, this, &QG_DimensionLabelEditor::insertSign);
 }
 
 /*
@@ -131,17 +135,19 @@ QString QG_DimensionLabelEditor::getLabel() {
         }
     }
 
-    if (leTol1->text().isEmpty() && leTol2->text().isEmpty()) {
-        return l;
+    if (!leTol1->text().isEmpty() || !leTol2->text().isEmpty()) {
+        l += "\\S" + leTol1->text() + "^ " + leTol2->text() + ";";
     }
-    else {
-        return l + "\\S" + leTol1->text() +
-            "^ " + leTol2->text() + ";";
-    }
+    return l;
 }
 
 void QG_DimensionLabelEditor::insertSign(const QString& s) {
-    leLabel->insert(s.left(1));
+    const QString prefix = s.left(1);
+    const QString &current = leLabel->text();
+    if (current.isEmpty())
+        leLabel->setText(prefix + R"(<>)");
+    else if (!current.startsWith(prefix))
+        leLabel->setText(prefix + current);
 }
 
 void QG_DimensionLabelEditor::updatePrefix(bool isChecked)

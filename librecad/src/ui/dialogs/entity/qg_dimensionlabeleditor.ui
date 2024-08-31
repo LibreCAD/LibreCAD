@@ -152,6 +152,11 @@
           </item>
           <item>
            <property name="text">
+            <string>R (Radial)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
             <string>° (Degree)</string>
            </property>
           </item>
@@ -188,24 +193,7 @@
  <resources>
   <include location="../../../../res/extui/extui.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>cbSymbol</sender>
-   <signal>activated(QString)</signal>
-   <receiver>QG_DimensionLabelEditor</receiver>
-   <slot>insertSign(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>insertSign(QString)</slot>
  </slots>
