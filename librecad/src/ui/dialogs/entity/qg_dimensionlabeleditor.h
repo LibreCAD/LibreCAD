@@ -39,6 +39,7 @@ public:
 public slots:
     virtual void setLabel( const QString & l );
     virtual void insertSign( const QString & s );
+    virtual void updatePrefix(bool isChecked);
 
 protected slots:
     virtual void languageChange();
