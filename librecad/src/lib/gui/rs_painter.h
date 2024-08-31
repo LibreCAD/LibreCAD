@@ -63,7 +63,7 @@ public:
         drawingMode = RS2::ModeFull;
         drawSelectedEntities=false;
     }
-	virtual ~RS_Painter() = default;
+    virtual ~RS_Painter() = default;
 
     /**
      * Sets the drawing mode.
@@ -150,15 +150,11 @@ public:
     virtual int getWidth() const= 0;
     virtual int getHeight() const= 0;
     virtual double getDpmm() const= 0;
-
-    virtual void setOffset(const RS_Vector& o) {
-        offset = o;
-    }
-
+    virtual void setOffset(const RS_Vector& o) {offset = o;}
     virtual void setClipRect(int x, int y, int w, int h) = 0;
     virtual void resetClipping() = 0;
-	int toScreenX(double x) const;
-	int toScreenY(double y) const;
+    int toScreenX(double x) const;
+    int toScreenY(double y) const;
 
 protected:
     /**
@@ -172,8 +168,6 @@ protected:
 
     // When set to true, only selected entities should be drawn
     bool drawSelectedEntities = false;
-
-
 };
 
 #endif

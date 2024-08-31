@@ -2575,6 +2575,13 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
 
     for (QC_MDIWindow *win: window_list) {
         win->getGraphicView()->setDraftMode(toggle);
+
+        QC_MDIWindow *ppv = win->getPrintPreview();
+        if (ppv != nullptr){
+            QG_GraphicView *printPreviewGraphicView = ppv->getGraphicView();
+            printPreviewGraphicView->setDraftMode(toggle);
+            printPreviewGraphicView->redraw();
+        }
         QString title = win->windowTitle();
 
         if (toggle && !title.contains(draft_string)) {

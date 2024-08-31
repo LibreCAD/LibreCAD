@@ -202,6 +202,9 @@ void QG_DlgOptionsGeneral::init() {
         originalAllowsMenusTearOff = LC_GET_BOOL("AllowMenusTearOff", true);
         cbAllowMenusDetaching->setChecked(originalAllowsMenusTearOff);
 
+        int minTextHeight = LC_GET_INT("MinRenderableTextHeightPx", 4);
+        sbTextMinHeight->setValue(minTextHeight);
+
     }
     LC_GROUP_END();
 
@@ -359,6 +362,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("RelZeroMarkerRadius", sbRelZeroRadius->value());
             LC_SET("ZeroShortAxisMarkSize", sbAxisSize->value());
             LC_SET("AllowMenusTearOff", cbAllowMenusDetaching->isChecked());
+            LC_SET("MinRenderableTextHeightPx", sbTextMinHeight->value());
         }
         LC_GROUP_END();
 

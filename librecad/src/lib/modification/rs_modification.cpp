@@ -2002,7 +2002,7 @@ bool RS_Modification::rotate(RS_RotateData& data, const std::vector<RS_Entity*> 
     for (auto e: entitiesList) {
         for (int num = 1; num <= numberOfCopies; num++) {
 
-            RS_Entity *ec = e->clone();
+            RS_Entity *ec = e->cloneProxy();
             ec->setSelected(false);
 
             double rotationAngle = data.angle * num;

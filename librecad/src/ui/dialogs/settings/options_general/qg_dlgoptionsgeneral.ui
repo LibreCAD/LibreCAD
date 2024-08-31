@@ -32,7 +32,7 @@
    <item row="3" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -48,58 +48,13 @@
           </sizepolicy>
          </property>
          <property name="title">
-          <string>Behavior</string>
+          <string>General</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_15">
-          <item row="5" column="0">
-           <widget class="QCheckBox" name="cbWheelScrollInvertV">
-            <property name="toolTip">
-             <string>Inverts scrolling direction when using mouse wheel with Ctrl key.</string>
-            </property>
-            <property name="text">
-             <string>Invert vertical scrolling direction</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
            <widget class="QCheckBox" name="scrollbars_check_box">
             <property name="text">
              <string>Scrollbars</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QCheckBox" name="cbWheelScrollInvertH">
-            <property name="toolTip">
-             <string>Inverts scrolling direction when using mouse wheel with Shift key.</string>
-            </property>
-            <property name="text">
-             <string>Invert horizontal scrolling direction</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1">
-           <widget class="QComboBox" name="cbSelectedColor">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#A54747</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QCheckBox" name="cbInvertZoomDirection">
-            <property name="toolTip">
-             <string>Inverts zoom direction when using mouse wheel.</string>
-            </property>
-            <property name="text">
-             <string>Invert zoom direction</string>
             </property>
            </widget>
           </item>
@@ -120,13 +75,6 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="cb_antialiasing">
-            <property name="text">
-             <string>Anti-aliasing</string>
-            </property>
-           </widget>
-          </item>
           <item row="8" column="0">
            <widget class="QLabel" name="lSelectedColor">
             <property name="text">
@@ -140,13 +88,6 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="cb_autopanning">
-            <property name="text">
-             <string>Auto-panning</string>
-            </property>
-           </widget>
-          </item>
           <item row="7" column="0">
            <widget class="QLabel" name="lBackground">
             <property name="text">
@@ -157,6 +98,33 @@
             </property>
             <property name="buddy">
              <cstring>cbBackgroundColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="cbWheelScrollInvertV">
+            <property name="toolTip">
+             <string>Inverts scrolling direction when using mouse wheel with Ctrl key.</string>
+            </property>
+            <property name="text">
+             <string>Invert vertical scrolling direction</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QCheckBox" name="cbInvertZoomDirection">
+            <property name="toolTip">
+             <string>Inverts zoom direction when using mouse wheel.</string>
+            </property>
+            <property name="text">
+             <string>Invert zoom direction</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cb_autopanning">
+            <property name="text">
+             <string>Auto-panning</string>
             </property>
            </widget>
           </item>
@@ -191,6 +159,16 @@
             </item>
            </widget>
           </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="cbWheelScrollInvertH">
+            <property name="toolTip">
+             <string>Inverts scrolling direction when using mouse wheel with Shift key.</string>
+            </property>
+            <property name="text">
+             <string>Invert horizontal scrolling direction</string>
+            </property>
+           </widget>
+          </item>
           <item row="7" column="2">
            <widget class="QPushButton" name="pb_background">
             <property name="sizePolicy">
@@ -205,6 +183,57 @@
             <property name="icon">
              <iconset resource="../../../../../res/ui/ui.qrc">
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="cb_antialiasing">
+            <property name="text">
+             <string>Anti-aliasing</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QComboBox" name="cbSelectedColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#A54747</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Minimal height of rendered text</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QSpinBox" name="sbTextMinHeight">
+            <property name="toolTip">
+             <string>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</string>
+            </property>
+            <property name="suffix">
+             <string>px</string>
+            </property>
+            <property name="prefix">
+             <string/>
+            </property>
+            <property name="minimum">
+             <number>4</number>
+            </property>
+            <property name="maximum">
+             <number>15</number>
+            </property>
+            <property name="singleStep">
+             <number>1</number>
             </property>
            </widget>
           </item>

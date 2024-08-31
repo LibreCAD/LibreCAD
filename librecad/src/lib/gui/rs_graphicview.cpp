@@ -111,6 +111,7 @@ void RS_GraphicView::loadSettings() {
         entityHandleHalfSize = LC_GET_INT("EntityHandleSize", 4) / 2;
         relativeZeroRadius = LC_GET_INT("RelZeroMarkerRadius", 5);
         zeroShortAxisMarkSize = LC_GET_INT("ZeroShortAxisMarkSize", 20);
+        minRenderableTextHeightInPx = LC_GET_INT("MinRenderableTextHeightPx", 4);
     }
     LC_GROUP_END();
     LC_GROUP_GUARD("Colors");
@@ -473,7 +474,6 @@ void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
 
     RS_DEBUG->print("RS_GraphicView::zoomAuto");
 
-
     if (container) {
         container->calculateBorders();
 
@@ -639,7 +639,7 @@ void RS_GraphicView::zoomAutoY(bool axis) {
         for (auto e: *container) {
 
             if (e->rtti() == RS2::EntityLine) {
-                RS_Line *l = (RS_Line *) e;
+                auto *l = (RS_Line *) e;
                 double x1, x2;
                 x1 = toGuiX(l->getStartpoint().x);
                 x2 = toGuiX(l->getEndpoint().x);
@@ -2113,4 +2113,8 @@ RS2::EntityType RS_GraphicView::getTypeToSelect() const {
 
 void RS_GraphicView::setTypeToSelect(RS2::EntityType mType) {
     typeToSelect = mType;
+}
+
+int RS_GraphicView::getMinRenderableTextHeightInPx() const {
+    return minRenderableTextHeightInPx;
 }

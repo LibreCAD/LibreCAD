@@ -47,8 +47,8 @@ void RS_ActionOptionsDrawing::trigger() {
         if (dialogResult == QDialog::Accepted){
             updateCoordinateWidgetFormat();
             graphicView->loadSettings();
-            graphicView->redraw(RS2::RedrawGrid);
-            graphicView->redraw(RS2::RedrawDrawing);
+            graphicView->redraw(RS2::RedrawAll);
+            graphicView->repaint();
         }
     }
     finish(false);

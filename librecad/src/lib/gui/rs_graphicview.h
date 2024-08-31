@@ -350,6 +350,7 @@ public:
     RS2::EntityType getTypeToSelect() const;
     void setTypeToSelect(RS2::EntityType mType);
 
+    int getMinRenderableTextHeightInPx() const;
 protected:
 
     RS_EntityContainer *container = nullptr; // Holds a pointer to all the enties
@@ -376,6 +377,7 @@ protected:
     int entityHandleHalfSize = 2;
     int relativeZeroRadius = 5;
     int zeroShortAxisMarkSize = 20;
+    int minRenderableTextHeightInPx = 4;
 /**
   * Delete mode. If true, all drawing actions will delete in background color
   * instead.
