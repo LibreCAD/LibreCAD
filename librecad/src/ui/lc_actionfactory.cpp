@@ -36,1631 +36,538 @@
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
 #include "rs_settings.h"
-
+#include "lc_shortcutinfo.h"
+#include "lc_shortcuts_manager.h"
 
 LC_ActionFactory::LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler)
-    : QObject(parent)
-    , main_window(parent)
-    , action_handler(a_handler)
-{
+    : LC_ActionFactoryBase(parent, a_handler){
 }
-
-void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm)
-{
-    QAction* action;
-
-    // <[~ Zoom ~]>
-
-    action = new QAction(tr("Zoom &Panning"), agm->other);
-    action->setIcon(QIcon(":/icons/zoom_pan.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotZoomPan()));
-    action->setObjectName("ZoomPan");
-    a_map["ZoomPan"] = action;
-
-    // <[~ Select ~]>
-
-    action = new QAction(tr("Select Entity"), agm->select);
-    action->setIcon(QIcon(":/icons/select_entity.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotSelectSingle()));
-    action->setObjectName("SelectSingle");
-    a_map["SelectSingle"] = action;
-
-    action = new QAction(tr("Select Window"), agm->select);
-    action->setIcon(QIcon(":/icons/select_window.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotSelectWindow()));
-    action->setObjectName("SelectWindow");
-    a_map["SelectWindow"] = action;
-
-    action = new QAction(tr("Deselect Window"), agm->select);
-    action->setIcon(QIcon(":/icons/deselect_window.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDeselectWindow()));
-    action->setObjectName("DeselectWindow");
-    a_map["DeselectWindow"] = action;
-
-    action = new QAction(tr("(De-)Select &Contour"), agm->select);
-    action->setIcon(QIcon(":/icons/deselect_contour.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotSelectContour()));
-    action->setObjectName("SelectContour");
-    a_map["SelectContour"] = action;
-
-    action = new QAction(tr("Select Intersected Entities"), agm->select);
-    action->setIcon(QIcon(":/icons/select_intersected_entities.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotSelectIntersected()));
-    action->setObjectName("SelectIntersected");
-    a_map["SelectIntersected"] = action;
-
-    action = new QAction(tr("Deselect Intersected Entities"), agm->select);
-    action->setIcon(QIcon(":/icons/deselect_intersected_entities.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDeselectIntersected()));
-    action->setObjectName("DeselectIntersected");
-    a_map["DeselectIntersected"] = action;
-
-    action = new QAction(tr("(De-)Select Layer"), agm->select);
-    action->setIcon(QIcon(":/icons/deselect_layer.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotSelectLayer()));
-    action->setObjectName("SelectLayer");
-    a_map["SelectLayer"] = action;
-
-    // <[~ Draw ~]>
-
-    action = new QAction(tr("&Points"), agm->other);
-    action->setIcon(QIcon(":/icons/points.svg"));
-
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawPoint()));
-    action->setObjectName("DrawPoint");
-    a_map["DrawPoint"] = action;
-
-    // <[~ Line ~]>
-
-    action = new QAction(tr("&2 Points"), agm->line);
-    action->setIcon(QIcon(":/icons/line_2p.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLine()));
-    action->setObjectName("DrawLine");
-    a_map["DrawLine"] = action;
-
-    action = new QAction(tr("&Angle"), agm->line);
-    action->setIcon(QIcon(":/icons/line_angle.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLineAngle()));
-    action->setObjectName("DrawLineAngle");
-    a_map["DrawLineAngle"] = action;
-
-    action = new QAction(tr("&Horizontal"), agm->line);
-    action->setIcon(QIcon(":/icons/line_horizontal.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLineHorizontal()));
-    action->setObjectName("DrawLineHorizontal");
-    a_map["DrawLineHorizontal"] = action;
-
-    action = new QAction(tr("Vertical"), agm->line);
-    action->setIcon(QIcon(":/icons/line_vertical.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLineVertical()));
-    action->setObjectName("DrawLineVertical");
-    a_map["DrawLineVertical"] = action;
-
-//    action = new QAction(tr("Vertical"), agm->line);
-//    connect(action, SIGNAL(triggered()),
-//    action_handler, SLOT(slotDrawLineHorVert()));
-//    action->setObjectName("DrawLineHorVert");
-//    a_map["DrawLineHorVert"] = action;
-
-    action = new QAction(tr("&Freehand Line"), agm->line);
-    action->setIcon(QIcon(":/icons/line_freehand.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLineFree()));
-    action->setObjectName("DrawLineFree");
-    a_map["DrawLineFree"] = action;
-
-    action = new QAction(tr("&Parallel"), agm->line);
-    action->setIcon(QIcon(":/icons/line_parallel.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLineParallel()));
-    action->setObjectName("DrawLineParallel");
-    a_map["DrawLineParallel"] = action;
-
-    action = new QAction(tr("Parallel through point"), agm->line);
-    action->setIcon(QIcon(":/icons/line_parallel_p.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLineParallelThrough()));
-    action->setObjectName("DrawLineParallelThrough");
-    a_map["DrawLineParallelThrough"] = action;
-
-    action = new QAction(tr("Rectangle"), agm->line);
-    action->setIcon(QIcon(":/icons/line_rectangle.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLineRectangle()));
-    action->setObjectName("DrawLineRectangle");
-    a_map["DrawLineRectangle"] = action;
-
-    action = new QAction(tr("Bisector"), agm->line);
-    action->setIcon(QIcon(":/icons/line_bisector.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLineBisector()));
-    action->setObjectName("DrawLineBisector");
-    a_map["DrawLineBisector"] = action;
-
-    action = new QAction(tr("Tangent (P,C)"), agm->line);
-    action->setIcon(QIcon(":/icons/line_tangent_pc.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLineTangent1()));
-    action->setObjectName("DrawLineTangent1");
-    a_map["DrawLineTangent1"] = action;
-
-    action = new QAction(tr("Tangent (C,C)"), agm->line);
-    action->setIcon(QIcon(":/icons/line_tangent_cc.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLineTangent2()));
-    action->setObjectName("DrawLineTangent2");
-    a_map["DrawLineTangent2"] = action;
-
-    action = new QAction(tr("Tangent &Orthogonal"), agm->line);
-    action->setIcon(QIcon(":/icons/line_tangent_perpendicular.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLineOrthTan()));
-    action->setObjectName("DrawLineOrthTan");
-    a_map["DrawLineOrthTan"] = action;
-
-    action = new QAction(tr("Orthogonal"), agm->line);
-    action->setIcon(QIcon(":/icons/line_perpendicular.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLineOrthogonal()));
-    action->setObjectName("DrawLineOrthogonal");
-    a_map["DrawLineOrthogonal"] = action;
-
-    action = new QAction(tr("Relative angle"), agm->line);
-    action->setIcon(QIcon(":/icons/line_relative_angle.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLineRelAngle()));
-    action->setObjectName("DrawLineRelAngle");
-    a_map["DrawLineRelAngle"] = action;
-
-    action = new QAction(tr("Pol&ygon (Cen,Cor)"), agm->line);
-    action->setIcon(QIcon(":/icons/line_polygon_cen_cor.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLinePolygon()));
-    action->setObjectName("DrawLinePolygonCenCor");
-    a_map["DrawLinePolygonCenCor"] = action;
-
-    action = new QAction(tr("Pol&ygon (Cen,Tan)"), agm->line);  //20161223 added by txmy
-    action->setIcon(QIcon(":/icons/line_polygon_cen_tan.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLinePolygon3()));
-    action->setObjectName("DrawLinePolygonCenTan");
-    a_map["DrawLinePolygonCenTan"] = action;
-
-    action = new QAction(tr("Polygo&n (Cor,Cor)"), agm->line);
-    action->setIcon(QIcon(":/icons/line_polygon_cor_cor.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawLinePolygon2()));
-    action->setObjectName("DrawLinePolygonCorCor");
-    a_map["DrawLinePolygonCorCor"] = action;
-
-    // <[~ Circle ~]>
-
-    action = new QAction(tr("Center, &Point"), agm->circle);
-    action->setIcon(QIcon(":/icons/circle_center_point.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawCircle()));
-    action->setObjectName("DrawCircle");
-    a_map["DrawCircle"] = action;
-
-        action = new QAction(tr("Cross"), agm->circle);
-    action->setIcon(QIcon(":/icons/cross_circle1.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawCircleCross()));
-    action->setObjectName("DrawCross");
-    a_map["DrawCross"] = action;
-
-    action = new QAction(tr("Snake"), agm->line);
-    action->setIcon(QIcon(":/icons/line_rel.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineSnake()));
-    action->setObjectName("DrawLineRel");
-    a_map["DrawLineRel"] = action;
-
-    action = new QAction(tr("Snake (X)"), agm->line);
-    action->setIcon(QIcon(":/icons/line_rel_x.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineSnakeX()));
-    action->setObjectName("DrawLineRelX");
-    a_map["DrawLineRelX"] = action;
-
-    action = new QAction(tr("Snake (Y)"), agm->line);
-    action->setIcon(QIcon(":/icons/line_rel_y.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineSnakeY()));
-    action->setObjectName("DrawLineRelY");
-    a_map["DrawLineRelY"] = action;
-
-    action = new QAction(tr("Rectangle (1 Point)"), agm->line);
-    action->setIcon(QIcon(":/icons/rectangle_1_point.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRectangle1Point()));
-    action->setObjectName("DrawLineRectangle1Point");
-    a_map["DrawLineRectangle1Point"] = action;
-
-    action = new QAction(tr("Rectangle (2 Points)"), agm->line);
-    action->setIcon(QIcon(":/icons/rectangle_2_points.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRectangle2Points()));
-    action->setObjectName("DrawLineRectangle2Points");
-    a_map["DrawLineRectangle2Points"] = action;
-
-    action = new QAction(tr("Rectangle (3 Points)"), agm->line);
-    action->setIcon(QIcon(":/icons/rectangle_3_points.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRectangleRel()));
-    action->setObjectName("DrawLineRectangle3Points");
-    a_map["DrawLineRectangle3Points"] = action;
-
-    action = new QAction(tr("Star"), agm->line);
-    action->setIcon(QIcon(":/icons/line_polygon_star.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawStar()));
-    action->setObjectName("DrawStar");
-    a_map["DrawStar"] = action;
-
-    action = new QAction(tr("Break/Divide"), agm->modify);
-    action->setIcon(QIcon(":/icons/break_out_trim.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotModifyBreakDivide()));
-    action->setObjectName("ModifyBreakDivide");
-    a_map["ModifyBreakDivide"] = action;
-
-    action = new QAction(tr("Line Gap"), agm->modify);
-    action->setIcon(QIcon(":/icons/line_gap.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotModifyLineGap()));
-    action->setObjectName("ModifyLineGap");
-    a_map["ModifyLineGap"] = action;
-
-    action = new QAction(tr("Angle From Line"), agm->line);
-    action->setIcon(QIcon(":/icons/line_angle_rel.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineAngleRel()));
-    action->setObjectName("DrawLineAngleRel");
-    a_map["DrawLineAngleRel"] = action;
-
-    action = new QAction(tr("Orthogonal From Line"), agm->line);
-    action->setIcon(QIcon(":/icons/line_ortho_rel.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineOrthogonalRel()));
-    action->setObjectName("DrawLineOrthogonalRel");
-    a_map["DrawLineOrthogonalRel"] = action;
-
-    action = new QAction(tr("From Point To Line"), agm->line);
-    action->setIcon(QIcon(":/icons/line_to_ortho.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineOrthogonalTo()));
-    action->setObjectName("DrawLineFromPointToLine");
-    a_map["DrawLineFromPointToLine"] = action;
-
-    action = new QAction(tr("Slice/Divide Line"), agm->circle);
-    action->setIcon(QIcon(":/icons/slice_divide.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawSliceDivideLine()));
-    action->setObjectName("DrawSliceDivideLine");
-    a_map["DrawSliceDivideLine"] = action;
-
-    action = new QAction(tr("Slice/Divide Circle"), agm->circle);
-    action->setIcon(QIcon(":/icons/slice_divide_circle.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawSliceDivideCircle()));
-    action->setObjectName("DrawSliceDivideCircle");
-    a_map["DrawSliceDivideCircle"] = action;
-
-    action = new QAction(tr("Line of Points"), agm->circle);
-    action->setIcon(QIcon(":/icons/line_points.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLinePoints()));
-    action->setObjectName("DrawLinePoints");
-    a_map["DrawLinePoints"] = action;
-
-    action = new QAction(tr("By Arc"), agm->circle);
-    action->setIcon(QIcon(":/icons/circle_by_arc.svg"));
-    connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotDrawCircleByArc()));
-    action->setObjectName("DrawCircleByArc");
-    a_map["DrawCircleByArc"] = action;
-
-    action = new QAction(tr("Center, &Radius"), agm->circle);
-    action->setIcon(QIcon(":/icons/circle_center_radius.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawCircleCR()));
-    action->setObjectName("DrawCircleCR");
-    a_map["DrawCircleCR"] = action;
-
-    action = new QAction(tr("2 Points"), agm->circle);
-    action->setIcon(QIcon(":/icons/circle_2_points.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawCircle2P()));
-    action->setObjectName("DrawCircle2P");
-    a_map["DrawCircle2P"] = action;
-
-    action = new QAction(tr("2 Points, Radius"), agm->circle);
-    action->setIcon(QIcon(":/icons/circle_2_points_radius.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawCircle2PR()));
-    action->setObjectName("DrawCircle2PR");
-    a_map["DrawCircle2PR"] = action;
-
-    action = new QAction(tr("3 Points"), agm->circle);
-    action->setIcon(QIcon(":/icons/circle_3_points.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawCircle3P()));
-    action->setObjectName("DrawCircle3P");
-    a_map["DrawCircle3P"] = action;
-
-    action = new QAction(tr("&Concentric"), agm->circle);
-    action->setIcon(QIcon(":/icons/circle_concentric.svg"));
-    action->setCheckable(true);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawCircleParallel()));
-    action->setObjectName("DrawCircleParallel");
-    a_map["DrawCircleParallel"] = action;
-
-    action = new QAction(tr("Circle &Inscribed"), agm->circle);
-    action->setIcon(QIcon(":/icons/circle_inscribed.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawCircleInscribe()));
-    action->setObjectName("DrawCircleInscribe");
-    a_map["DrawCircleInscribe"] = action;
-
-    action = new QAction(tr("Tangential 2 Circles, Radius",  "circle tangential with two circles, and given radius"), agm->circle);
-    action->setIcon(QIcon(":/icons/circle_tangential_2circles_radius.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawCircleTan2()));
-    action->setObjectName("DrawCircleTan2");
-    a_map["DrawCircleTan2"] = action;
-
-    action = new QAction(tr("Tangential 2 Circles, 1 Point"), agm->circle);
-    action->setIcon(QIcon(":/icons/circle_tangential_2circles_point.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawCircleTan2_1P()));
-    action->setObjectName("DrawCircleTan2_1P");
-    a_map["DrawCircleTan2_1P"] = action;
-
-    action = new QAction(tr("Tangential &3 Circles"), agm->circle);
-    action->setIcon(QIcon(":/icons/circle_tangential_3entities.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawCircleTan3()));
-    action->setObjectName("DrawCircleTan3");
-    a_map["DrawCircleTan3"] = action;
-
-    action = new QAction(tr("Tangential, 2 P&oints"), agm->circle);
-    action->setIcon(QIcon(":/icons/circle_tangential_2points.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawCircleTan1_2P()));
-    action->setObjectName("DrawCircleTan1_2P");
-    a_map["DrawCircleTan1_2P"] = action;
-
-    // <[~ Arc ~]>
-
-    action = new QAction(tr("&Center, Point, Angles"), agm->curve);
-    action->setIcon(QIcon(":/icons/arc_center_point_angle.svg"));
-    action->setCheckable(true);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawArc()));
-    action->setObjectName("DrawArc");
-    a_map["DrawArc"] = action;
-
-    action = new QAction(tr("&3 Points"), agm->curve);
-    action->setIcon(QIcon(":/icons/arc_3_points.svg"));
-    action->setCheckable(true);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawArc3P()));
-    action->setObjectName("DrawArc3P");
-    a_map["DrawArc3P"] = action;
-
-    action = new QAction(tr("&Concentric"), agm->curve);
-    action->setIcon(QIcon(":/icons/arc_concentric.svg"));
-    action->setCheckable(true);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawArcParallel()));
-    action->setObjectName("DrawArcParallel");
-    a_map["DrawArcParallel"] = action;
-
-    action = new QAction(tr("Arc &Tangential"), agm->curve);
-    action->setIcon(QIcon(":/icons/arc_continuation.svg"));
-    action->setCheckable(true);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawArcTangential()));
-    action->setObjectName("DrawArcTangential");
-    a_map["DrawArcTangential"] = action;
-
-    // <[~ Ellipse ~]>
-
-    action = new QAction(tr("&Ellipse (Axis)"), agm->ellipse);
-    action->setIcon(QIcon(":/icons/ellipse_axis.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawEllipseAxis()));
-    action->setObjectName("DrawEllipseAxis");
-    a_map["DrawEllipseAxis"] = action;
-
-    action = new QAction(tr("Ellipse &Arc (Axis)"), agm->ellipse);
-    action->setIcon(QIcon(":/icons/ellipse_arc_axis.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawEllipseArcAxis()));
-    action->setObjectName("DrawEllipseArcAxis");
-    a_map["DrawEllipseArcAxis"] = action;
-
-    action = new QAction(tr("Ellipse &Foci Point"), agm->ellipse);
-    action->setIcon(QIcon(":/icons/ellipse_foci_point.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawEllipseFociPoint()));
-    action->setObjectName("DrawEllipseFociPoint");
-    a_map["DrawEllipseFociPoint"] = action;
-
-    action = new QAction(tr("Ellipse &4 Point"), agm->ellipse);
-    action->setIcon(QIcon(":/icons/ellipse_4_points.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawEllipse4Points()));
-    action->setObjectName("DrawEllipse4Points");
-    a_map["DrawEllipse4Points"] = action;
-
-    action = new QAction(tr("Ellipse Center and &3 Points"), agm->ellipse);
-    action->setIcon(QIcon(":/icons/ellipse_center_3_points.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawEllipseCenter3Points()));
-    action->setObjectName("DrawEllipseCenter3Points");
-    a_map["DrawEllipseCenter3Points"] = action;
-
-    action = new QAction(tr("Ellipse &Inscribed"), agm->ellipse);
-    action->setIcon(QIcon(":/icons/ellipse_inscribed.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawEllipseInscribe()));
-    action->setObjectName("DrawEllipseInscribe");
-    a_map["DrawEllipseInscribe"] = action;
-
-    // Parabola
-    action = new QAction(tr("Para&bola 4 points"), agm->curve);
-    action->setIcon(QIcon(":/icons/parabola_4_points.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawParabola4Points()));
-    action->setObjectName("DrawParabola4Points");
-    a_map["DrawParabola4Points"] = action;
-
-    action = new QAction(tr("Parabola &Focus Directrix"), agm->curve);
-    action->setIcon(QIcon(":/icons/parabola_focus_directrix.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawParabolaFD()));
-    action->setObjectName("DrawParabolaFD");
-    a_map["DrawParabolaFD"] = action;
-
-    // <[~ Spline ~]>
-
-    action = new QAction(tr("&Spline"), agm->curve);
-    action->setIcon(QIcon(":/icons/spline.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawSpline()));
-    action->setObjectName("DrawSpline");
-    a_map["DrawSpline"] = action;
-
-    action = new QAction(tr("&Spline through points"), agm->curve);
-    action->setIcon(QIcon(":/icons/spline_points.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawSplinePoints()));
-    action->setObjectName("DrawSplinePoints");
-    a_map["DrawSplinePoints"] = action;
-
-    // <[~ Polyline ~]>
-
-    action = new QAction(tr("&Polyline"), agm->polyline);
-    action->setIcon(QIcon(":/icons/polylines_polyline.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawPolyline()));
-    action->setObjectName("DrawPolyline");
-    a_map["DrawPolyline"] = action;
-
-    action = new QAction(tr("&Add node"), agm->polyline);
-    action->setShortcut(QKeySequence());
-    action->setIcon(QIcon(":/icons/insert_node.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotPolylineAdd()));
-    action->setObjectName("PolylineAdd");
-    a_map["PolylineAdd"] = action;
-
-    action = new QAction(tr("A&ppend node"), agm->polyline);
-    action->setShortcut(QKeySequence());
-    action->setIcon(QIcon(":/icons/append_node.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotPolylineAppend()));
-    action->setObjectName("PolylineAppend");
-    a_map["PolylineAppend"] = action;
-
-    action = new QAction(tr("&Delete node"), agm->polyline);
-    action->setShortcut(QKeySequence());
-    action->setIcon(QIcon(":/icons/delete_node.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotPolylineDel()));
-    action->setObjectName("PolylineDel");
-    a_map["PolylineDel"] = action;
-
-    action = new QAction(tr("&Delete a polyline node promptly"), agm->polyline);
-    action->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL | Qt::Key_Delete)
-                                               << QKeySequence(Qt::CTRL | Qt::Key_Backspace));
-    action->setIcon(QIcon(":/icons/delete_node.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDeletePolylineNodePromptly()));
-    action->setObjectName("DeletePolylineNodePromptly");
-    a_map["DeletePolylineNodePromptly"] = action;
-
-    action = new QAction(tr("Delete &between two nodes"), agm->polyline);
-    action->setShortcut(QKeySequence());
-    action->setIcon(QIcon(":/icons/delete_between_nodes.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotPolylineDelBetween()));
-    action->setObjectName("PolylineDelBetween");
-    a_map["PolylineDelBetween"] = action;
-
-    action = new QAction(tr("&Trim segments"), agm->polyline);
-    action->setShortcut(QKeySequence());
-    action->setIcon(QIcon(":/icons/trim.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotPolylineTrim()));
-    action->setObjectName("PolylineTrim");
-    a_map["PolylineTrim"] = action;
-
-    action = new QAction(tr("Create &Equidistant Polylines"), agm->polyline);
-    action->setIcon(QIcon(":/icons/create_equidistant_polyline.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotPolylineEquidistant()));
-    action->setObjectName("PolylineEquidistant");
-    a_map["PolylineEquidistant"] = action;
-
-    action = new QAction(tr("Create Polyline from Existing &Segments"), agm->polyline);
-    action->setIcon(QIcon(":/icons/create_polyline_from_existing_segments.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotPolylineSegment()));
-    action->setObjectName("PolylineSegment");
-    a_map["PolylineSegment"] = action;
-
-    // <[~ Misc ~]>
-
-    action = new QAction(QIcon(":/icons/mtext.svg"), tr("&MText"), agm->other);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawMText()));
-    action->setObjectName("DrawMText");
-    a_map["DrawMText"] = action;
-
-    action = new QAction(tr("&Text"), agm->other);
-    action->setIcon(QIcon(":/icons/text.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawText()));
-    action->setObjectName("DrawText");
-    a_map["DrawText"] = action;
-
-    action = new QAction(tr("&Hatch"), agm->other);
-    action->setIcon(QIcon(":/icons/hatch.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawHatch()));
-    action->setObjectName("DrawHatch");
-    a_map["DrawHatch"] = action;
-
-    action = new QAction(tr("Insert &Image"), agm->other);
-    action->setIcon(QIcon(":/icons/camera.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDrawImage()));
-    action->setObjectName("DrawImage");
-    a_map["DrawImage"] = action;
-
-    // <[~ Dimension ~]>
-
-    action = new QAction(tr("&Aligned"), agm->dimension);
-    action->setIcon(QIcon(":/icons/dim_aligned.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDimAligned()));
-    action->setObjectName("DimAligned");
-    a_map["DimAligned"] = action;
-
-    action = new QAction(tr("&Linear"), agm->dimension);
-    action->setIcon(QIcon(":/icons/dim_linear.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDimLinear()));
-    action->setObjectName("DimLinear");
-    a_map["DimLinear"] = action;
-
-    action = new QAction(tr("&Horizontal"), agm->dimension);
-    action->setIcon(QIcon(":/icons/dim_horizontal.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDimLinearHor()));
-    action->setObjectName("DimLinearHor");
-    a_map["DimLinearHor"] = action;
-
-    action = new QAction(tr("&Vertical"), agm->dimension);
-    action->setIcon(QIcon(":/icons/dim_vertical.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDimLinearVer()));
-    action->setObjectName("DimLinearVer");
-    a_map["DimLinearVer"] = action;
-
-    action = new QAction(tr("&Radial"), agm->dimension);
-    action->setIcon(QIcon(":/icons/dim_radial.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDimRadial()));
-    action->setObjectName("DimRadial");
-    a_map["DimRadial"] = action;
-
-    action = new QAction(tr("&Diametric"), agm->dimension);
-    action->setIcon(QIcon(":/icons/dim_diametric.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDimDiametric()));
-    action->setObjectName("DimDiametric");
-    a_map["DimDiametric"] = action;
-
-    action = new QAction(tr("&Angular"), agm->dimension);
-    action->setIcon(QIcon(":/icons/dim_angular.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDimAngular()));
-    action->setObjectName("DimAngular");
-    a_map["DimAngular"] = action;
-
-    action = new QAction(tr("&Arc"), agm->dimension);
-    action->setIcon(QIcon(":/icons/dim_arc.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDimArc()));
-    action->setObjectName("DimArc");
-    a_map["DimArc"] = action;
-
-    action = new QAction(tr("&Leader"), agm->dimension);
-    action->setIcon(QIcon(":/icons/dim_leader.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDimLeader()));
-    action->setObjectName("DimLeader");
-    a_map["DimLeader"] = action;
-
-    // <[~ Modify ~]>
-
-    action = new QAction(tr("&Attributes"), agm->modify);
-    action->setIcon(QIcon(":/icons/attributes.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyAttributes()));
-    action->setObjectName("ModifyAttributes");
-    action->setData("modifyattr, attr, ma");
-    a_map["ModifyAttributes"] = action;
-
-    action = new QAction(tr("&Delete"), agm->modify);
-    action->setIcon(QIcon(":/icons/delete.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyDelete()));
-    action->setObjectName("ModifyDelete");
-    a_map["ModifyDelete"] = action;
-
-    action = new QAction(tr("Delete Freehand"), agm->modify);
-    action->setIcon(QIcon(":/icons/delete_freehand.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyDeleteFree()));
-    action->setObjectName("ModifyDeleteFree");
-    a_map["ModifyDeleteFree"] = action;
-
-    action = new QAction(tr("&Move / Copy"), agm->modify);
-    action->setIcon(QIcon(":/icons/move_copy.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyMove()));
-    action->setObjectName("ModifyMove");
-    action->setData("move, mv");
-    a_map["ModifyMove"] = action;
-
-    action = new QAction(tr("Re&vert direction"), agm->modify);
-    action->setIcon(QIcon(":/icons/revert_direction.svg"));
-    action->setShortcut(QKeySequence(tr("Ctrl+R")));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotModifyRevertDirection()));
-    action->setObjectName("ModifyRevertDirection");
-    action->setData("revert, rev");
-    a_map["ModifyRevertDirection"] = action;
-
-    action = new QAction(tr("&Rotate"), agm->modify);
-    action->setIcon(QIcon(":/icons/rotate.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyRotate()));
-    action->setObjectName("ModifyRotate");
-    action->setData("rotate, ro");
-    a_map["ModifyRotate"] = action;
-
-    action = new QAction(tr("&Scale"), agm->modify);
-    action->setIcon(QIcon(":/icons/scale.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyScale()));
-    action->setObjectName("ModifyScale");
-    action->setData("scale, sz");
-    a_map["ModifyScale"] = action;
-
-    action = new QAction(tr("&Mirror"), agm->modify);
-    action->setIcon(QIcon(":/icons/mirror.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyMirror()));
-    action->setObjectName("ModifyMirror");
-    action->setData("mirror, mi");
-    a_map["ModifyMirror"] = action;
-
-    action = new QAction(tr("Mo&ve and Rotate"), agm->modify);
-    action->setIcon(QIcon(":/icons/move_rotate.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyMoveRotate()));
-    action->setObjectName("ModifyMoveRotate");
-    a_map["ModifyMoveRotate"] = action;
-
-    action = new QAction(tr("Rotate T&wo"), agm->modify);
-    action->setIcon(QIcon(":/icons/rotate2.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyRotate2()));
-    action->setObjectName("ModifyRotate2");
-    a_map["ModifyRotate2"] = action;
-
-    action = new QAction(tr("&Properties"), agm->modify);
-    action->setIcon(QIcon(":/icons/properties.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyEntity()));
-    action->setObjectName("ModifyEntity");
-    action->setData("properties, prop");
-    a_map["ModifyEntity"] = action;
-
-    action = new QAction(tr("&Trim"), agm->modify);
-    action->setIcon(QIcon(":/icons/trim.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyTrim()));
-    action->setObjectName("ModifyTrim");
-    action->setData("trim, tm");
-    a_map["ModifyTrim"] = action;
-
-    action = new QAction(tr("Tr&im Two"), agm->modify);
-    action->setIcon(QIcon(":/icons/trim2.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyTrim2()));
-    action->setObjectName("ModifyTrim2");
-    action->setData("trim2, tm2");
-    a_map["ModifyTrim2"] = action;
-
-    action = new QAction(tr("&Lengthen"), agm->modify);
-    action->setIcon(QIcon(":/icons/trim_value.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyTrimAmount()));
-    action->setObjectName("ModifyTrimAmount");
-    action->setData("lengthen, le");
-    a_map["ModifyTrimAmount"] = action;
-
-    action = new QAction(tr("O&ffset"),agm->modify);
-    action->setIcon(QIcon(":/icons/offset.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyOffset()));
-    action->setObjectName("ModifyOffset");
-    action->setData("offset, o");
-    a_map["ModifyOffset"] = action;
-
-    action = new QAction(tr("&Divide"), agm->modify);
-    action->setIcon(QIcon(":/icons/divide.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyCut()));
-    action->setObjectName("ModifyCut");
-    action->setData("divide, cut, div");
-    a_map["ModifyCut"] = action;
-
-    action = new QAction(tr("&Stretch"), agm->modify);
-    action->setIcon(QIcon(":/icons/stretch.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyStretch()));
-    action->setObjectName("ModifyStretch");
-    action->setData("stretch, ss");
-    a_map["ModifyStretch"] = action;
-
-    action = new QAction(tr("&Bevel"), agm->modify);
-    action->setIcon(QIcon(":/icons/bevel.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyBevel()));
-    action->setObjectName("ModifyBevel");
-    action->setData("bevel, bev, ch");
-    a_map["ModifyBevel"] = action;
-
-    action = new QAction(tr("&Fillet"), agm->modify);
-    action->setIcon(QIcon(":/icons/fillet.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyRound()));
-    action->setObjectName("ModifyRound");
-    action->setData("fillet, fi");
-    a_map["ModifyRound"] = action;
-
-    action = new QAction(tr("&Explode Text into Letters"), agm->modify);
-    action->setIcon(QIcon(":/icons/explode_text_to_letters.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyExplodeText()));
-    action->setObjectName("ModifyExplodeText");
-    a_map["ModifyExplodeText"] = action;
-
-    action = new QAction(tr("Ex&plode"), agm->modify);
-    action->setIcon(QIcon(":/icons/explode.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotBlocksExplode()));
-    action->setObjectName("BlocksExplode");
-    a_map["BlocksExplode"] = action;
-
-
-    // pen toolbar actions
-
-    action = new QAction(tr("&Pick Pen From Entity"), agm->pen);
-    action->setIcon(QIcon(":/extui/selectsingle.png"));
-    connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotPenPick()));
-    action->setObjectName("PenPick");
-    action->setCheckable(false);
-    a_map["PenPick"] = action;
-
-    action = new QAction(tr("&Pick Pen From Entity (Resolved)"), agm->pen);
-    action->setIcon(QIcon(":/extui/relzeromove.png"));
-    connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotPenPickResolved()));
-    action->setCheckable(false);
-    action->setObjectName("PenPickResolved");
-
-    a_map["PenPickResolved"] = action;
-
-    action = new QAction(tr("Apply Pen to Entity"), agm->pen);
-    action->setIcon(QIcon(":/icons/pen_apply.svg"));
-    connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotPenApply()));
-    action->setObjectName("PenApply");
-
-    a_map["PenApply"] = action;
-
-    action = new QAction(tr("Copy Pen"), agm->pen);
-    action->setIcon(QIcon(":/icons/pen_copy.svg"));
-    connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotPenCopy()));
-    action->setObjectName("PenCopy");
-
-    a_map["PenCopy"] = action;
-
-    action = new QAction(tr("Line Join"), agm->modify);
-    action->setIcon(QIcon(":/icons/line_join.svg"));
-    connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotModifyLineJoin()));
-    action->setObjectName("ModifyLineJoin");
-    a_map["ModifyLineJoin"] = action;
-
-    action = new QAction(tr("Duplicate"), agm->modify);
-    action->setIcon(QIcon(":/icons/duplicate.svg"));
-    connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotModifyDuplicate()));
-    action->setObjectName("ModifyDuplicate");
-    a_map["ModifyDuplicate"] = action;
-
-    // <[~ Info ~]>
-
-    action = new QAction(tr("Point inside contour"), agm->info);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotInfoInside()));
-    action->setObjectName("InfoInside");
-    a_map["InfoInside"] = action;
-
-    action = new QAction(tr("&Distance Point to Point"), agm->info);
-    action->setIcon(QIcon(":/icons/distance_point_to_point.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotInfoDist()));
-    action->setObjectName("InfoDist");
-    a_map["InfoDist"] = action;
-
-    action = new QAction(tr("&Distance Entity to Point"), agm->info);
-    action->setIcon(QIcon(":/icons/distance_point_to_entity.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotInfoDist2()));
-    action->setObjectName("InfoDist2");
-    a_map["InfoDist2"] = action;
-
-    action = new QAction(tr("An&gle between two lines"), agm->info);
-    action->setIcon(QIcon(":/icons/angle_line_to_line.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotInfoAngle()));
-    action->setObjectName("InfoAngle");
-    a_map["InfoAngle"] = action;
-
-    action = new QAction(tr("&Total length of selected entities"), agm->info);
-    action->setIcon(QIcon(":/icons/total_length_selected_entities.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotInfoTotalLength()));
-    action->setObjectName("InfoTotalLength");
-    a_map["InfoTotalLength"] = action;
-
-    action = new QAction(tr("Polygonal &Area"), agm->info);
-    action->setIcon(QIcon(":/icons/polygonal_area.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotInfoArea()));
-    action->setObjectName("InfoArea");
-    a_map["InfoArea"] = action;
-
-
-    action = new QAction(tr("Entity Properties"), agm->info);
-    action->setIcon(QIcon(":/extui/menuselect.png"));
-    action->setToolTip(tr("Select entity for properties view"));
-    connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotEntityInfo()));
-    action->setObjectName("EntityInfo");
-    a_map["EntityInfo"] = action;
-
-    action = new QAction(tr("Collect Coordinates"), agm->info);
-    action->setIcon(QIcon(":/extui/menupoint.png"));
-    connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotPickCoordinates()));
-    action->setObjectName("PickCoordinates");
-    a_map["PickCoordinates"] = action;
-
-
-    foreach (QAction* value, a_map)
-    {
-        value->setCheckable(true);
+// todo - add explanations for commands for actions (probably mix with commandItems) as it was mentioned in issue #570
+
+void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm, bool useTheme){
+    using_theme = useTheme;
+    createSelectActions(a_map, agm->select);
+    createDrawLineActions(a_map, agm->line);
+    createDrawCircleActions(a_map, agm->circle);
+    createDrawCurveActions(a_map, agm->curve);
+    createDrawEllipseActions(a_map, agm->ellipse);
+    createDrawPolylineActions(a_map, agm->polyline);
+    createDrawOtherActions(a_map, agm->other);
+    createDrawDimensionsActions(a_map, agm->dimension);
+    createModifyActions(a_map, agm->modify);
+    createPenActions(a_map, agm->pen);
+    createInfoActions(a_map, agm->info);
+    createViewActions(a_map, agm->view);
+    createWidgetActions(a_map, agm->widgets);
+    createFileActions(a_map, agm->file);
+
+    createSnapActions(a_map, agm->snap);
+    createSnapExtraActions(a_map, agm->snap_extras);
+    createRestrictActions(a_map, agm->restriction);
+    createOtherActions(a_map, agm->other);
+
+    for (QAction* value: a_map){
+       value->setCheckable(true);
     }
 
-    // =============================
-    // <[~ not checkable actions ~]>
-    // =============================
+    // not checkable actions
+    createPenActionsUncheckable(a_map, agm->pen);
+    createOrderActionsUncheckable(a_map, agm->modify);
+    createLayerActionsUncheckable(a_map, agm->layer);
+    createBlockActionsUncheckable(a_map, agm->block);
+    createOptionsActionsUncheckable(a_map, agm->options);
+    createSelectActionsUncheckable(a_map, agm->select);
+    createFileActionsUncheckable(a_map, agm->file);
+    createViewActionsUncheckable(a_map, agm->view);
+    createWidgetActionsUncheckable(a_map, agm->widgets);
+    createEditActionsUncheckable(a_map, agm->edit);
 
 
-    // <[~ Order ~]>
+    setupCreatedActions(a_map);
+    setDefaultShortcuts(a_map, agm);
 
-    action = new QAction(tr("move to bottom"), agm->modify);
-    action->setShortcut(QKeySequence(Qt::Key_End));
-    action->setIcon(QIcon(":/icons/downmost.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotOrderBottom()));
-    action->setObjectName("OrderBottom");
-    a_map["OrderBottom"] = action;
+    agm->loadShortcuts(a_map);
 
-    action = new QAction(tr("lower after entity"), agm->modify);
-    action->setShortcut(QKeySequence(Qt::Key_PageDown));
-    action->setIcon(QIcon(":/icons/down.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotOrderLower()));
-    action->setObjectName("OrderLower");
-    a_map["OrderLower"] = action;
+    // todo - may we report errors somehow there?
 
-    action = new QAction(tr("raise over entity"), agm->modify);
-    action->setShortcut(QKeySequence(Qt::Key_PageUp));
-    action->setIcon(QIcon(":/icons/up.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotOrderRaise()));
-    action->setObjectName("OrderRaise");
-    a_map["OrderRaise"] = action;
+    markNotEditableActionsShortcuts(a_map);
 
-    action = new QAction(tr("move to top"), agm->modify);
-    action->setShortcut(QKeySequence(Qt::Key_Home));
-    action->setIcon(QIcon(":/icons/upmost.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotOrderTop()));
-    action->setObjectName("OrderTop");
-    a_map["OrderTop"] = action;
-
-    // <[~ Layer ~]>
-
-    action = new QAction(tr("&Show all layers"), agm->layer);
-    action->setIcon(QIcon(":/ui/visibleblock.png"));
-    connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotLayersDefreezeAll()));
-    action->setObjectName("LayersDefreezeAll");
-    a_map["LayersDefreezeAll"] = action;
-
-    action = new QAction(tr("&Hide all layers"), agm->layer);
-    action->setIcon(QIcon(":/ui/hiddenblock.png"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotLayersFreezeAll()));
-    action->setObjectName("LayersFreezeAll");
-    a_map["LayersFreezeAll"] = action;
-
-    action = new QAction(tr("&Unlock all"), agm->layer);
-    action->setIcon(QIcon(":/ui/unlockedlayer.png"));
-    connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotLayersUnlockAll()));
-    action->setObjectName("LayersUnlockAll");
-    a_map["LayersUnlockAll"] = action;
-
-    action = new QAction(tr("&Lock all"), agm->layer);
-    action->setIcon(QIcon(":/ui/lockedlayer.png"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotLayersLockAll()));
-    action->setObjectName("LayersLockAll");
-    a_map["LayersLockAll"] = action;
-
-    action = new QAction(tr("&Add Layer"), agm->layer);
-    action->setIcon(QIcon(":/icons/add.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotLayersAdd()));
-    action->setObjectName("LayersAdd");
-    a_map["LayersAdd"] = action;
-
-    action = new QAction(tr("&Remove Layer"), agm->layer);
-    action->setIcon(QIcon(":/icons/remove.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotLayersRemove()));
-    action->setObjectName("LayersRemove");
-    a_map["LayersRemove"] = action;
-
-    action = new QAction(tr("&Edit Layer"), agm->layer);
-    action->setIcon(QIcon(":/icons/attributes.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotLayersEdit()));
-    action->setObjectName("LayersEdit");
-    a_map["LayersEdit"] = action;
-
-    action = new QAction(tr("Toggle Layer Loc&k"), agm->layer);
-    action->setIcon(QIcon(":/icons/locked.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotLayersToggleLock()));
-    action->setObjectName("LayersToggleLock");
-    a_map["LayersToggleLock"] = action;
-
-    action = new QAction(tr("&Toggle Layer Visibility"), agm->layer);
-    action->setIcon(QIcon(":/icons/visible.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotLayersToggleView()));
-    action->setObjectName("LayersToggleView");
-    a_map["LayersToggleView"] = action;
-
-    action = new QAction(tr("Toggle Layer &Print"), agm->layer);
-    action->setIcon(QIcon(":/icons/print.svg"));
-    connect(action, SIGNAL(triggered()), action_handler,
-            SLOT(slotLayersTogglePrint()));
-    action->setObjectName("LayersTogglePrint");
-    a_map["LayersTogglePrint"] = action;
-
-    action = new QAction(tr("Toggle &Construction Layer"), agm->layer);
-    action->setIcon(QIcon(":/icons/construction_layer.svg"));
-    connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotLayersToggleConstruction()));
-    action->setObjectName("LayersToggleConstruction");
-    a_map["LayersToggleConstruction"] = action;
-
-    action = new QAction(tr("&Export Selected Layer(s)"), agm->layer);
-    connect(action, &QAction::triggered, action_handler, &QG_ActionHandler::slotLayersExportSelected);
-    action->setObjectName("LayersExportSelected");
-    a_map["LayersExportSelected"] = action;
-
-    action = new QAction(tr("Export &Visible Layer(s)"), agm->layer);
-    connect(action, &QAction::triggered, action_handler, &QG_ActionHandler::slotLayersExportVisible);
-    action->setObjectName("LayersExportVisible");
-    a_map["LayersExportVisible"] = action;
-
-    // <[~ Block ~]>
-
-    action = new QAction(tr("&Show all blocks"), agm->block);
-    action->setIcon(QIcon(":/ui/blockdefreeze.png"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotBlocksDefreezeAll()));
-    action->setObjectName("BlocksDefreezeAll");
-    a_map["BlocksDefreezeAll"] = action;
-
-    action= new QAction(tr("&Hide all blocks"), agm->block);
-    action->setIcon(QIcon(":/ui/blockfreeze.png"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotBlocksFreezeAll()));
-    action->setObjectName("BlocksFreezeAll");
-    a_map["BlocksFreezeAll"] = action;
-
-    action = new QAction(tr("&Add Block"), agm->block);
-    action->setIcon(QIcon(":/icons/add.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotBlocksAdd()));
-    action->setObjectName("BlocksAdd");
-    a_map["BlocksAdd"] = action;
-
-    action = new QAction(tr("&Remove Block"), agm->block);
-    action->setIcon(QIcon(":/icons/remove.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotBlocksRemove()));
-    action->setObjectName("BlocksRemove");
-    a_map["BlocksRemove"] = action;
-
-    action = new QAction(tr("&Rename Block"), agm->block);
-    action->setIcon(QIcon(":/icons/rename_active_block.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotBlocksAttributes()));
-    action->setObjectName("BlocksAttributes");
-    a_map["BlocksAttributes"] = action;
-
-    action = new QAction(tr("&Edit Block"), agm->block);
-    action->setIcon(QIcon(":/icons/properties.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotBlocksEdit()));
-    action->setObjectName("BlocksEdit");
-    a_map["BlocksEdit"] = action;
-
-    action = new QAction( tr("&Save Block"), agm->block);
-    action->setIcon(QIcon(":/icons/save.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotBlocksSave()));
-    action->setObjectName("BlocksSave");
-    a_map["BlocksSave"] = action;
-
-    action = new QAction(tr("&Insert Block"), agm->block);
-    action->setIcon(QIcon(":/icons/insert_active_block.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotBlocksInsert()));
-    action->setObjectName("BlocksInsert");
-    a_map["BlocksInsert"] = action;
-
-    action = new QAction(tr("Toggle Block &Visibility"), agm->block);
-    action->setIcon(QIcon(":/ui/layertoggle.png"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotBlocksToggleView()));
-    action->setObjectName("BlocksToggleView");
-    a_map["BlocksToggleView"] = action;
-
-    action = new QAction(tr("&Create Block"), agm->block);
-    action->setIcon(QIcon(":/icons/create_block.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotBlocksCreate()));
-    action->setObjectName("BlocksCreate");
-    a_map["BlocksCreate"] = action;
-
-    // <[~ Options ~]>
-
-    action = new QAction(tr("&Application Preferences"), agm->options);
-    action->setIcon(QIcon(":/icons/settings.svg"));
-    connect(action, SIGNAL(triggered()),
-    main_window, SLOT(slotOptionsGeneral()));
-    action->setMenuRole(QAction::NoRole);
-    action->setObjectName("OptionsGeneral");
-    a_map["OptionsGeneral"] = action;
-
-    action = new QAction(tr("Current &Drawing Preferences"), agm->options);
-    action->setIcon(QIcon(":/icons/drawing_settings.svg"));
-    action->setShortcut(QKeySequence::Preferences);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotOptionsDrawing()));
-    action->setObjectName("OptionsDrawing");
-    a_map["OptionsDrawing"] = action;
-    connect( main_window, &QC_ApplicationWindow::windowsChanged, action, &QAction::setEnabled);
-
-    action = new QAction(tr("Widget Options"), agm->options);
-    action->setObjectName("WidgetOptions");
-    a_map["WidgetOptions"] = action;
-    connect(action, SIGNAL(triggered()),
-            main_window, SLOT(widgetOptionsDialog()));
-
-    action = new QAction(tr("Device Options"), agm->options);
-    action->setObjectName("DeviceOptions");
-    a_map["DeviceOptions"] = action;
-    connect(action, SIGNAL(triggered()),
-            main_window, SLOT(showDeviceOptions()));
-
-    // <[~ Modify ~]>
-
-    action = new QAction(tr("&Delete selected"), agm->edit);
-    action->setIcon(QIcon(":/icons/delete.svg"));
-    action->setShortcuts(QList<QKeySequence>() << QKeySequence::Delete << QKeySequence(Qt::Key_Backspace));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotModifyDeleteQuick()));
-    action->setObjectName("ModifyDeleteQuick");
-    a_map["ModifyDeleteQuick"] = action;
-
-    action = new QAction(tr("Select &All"), agm->select);
-    action->setShortcut(QKeySequence::SelectAll);
-    action->setIcon(QIcon(":/icons/select_all.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotSelectAll()));
-    action->setObjectName("SelectAll");
-    a_map["SelectAll"] = action;
-
-    // <[~ Select ~]>
-
-    action = new QAction(tr("Deselect &all"), agm->select);
-    // RVT April 29, 2011 - Added esc key to de-select all entities
-    action->setShortcuts(QList<QKeySequence>() << QKeySequence(tr("Ctrl+K")));
-    action->setIcon(QIcon(":/icons/deselect_all.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDeselectAll()));
-    action->setObjectName("DeselectAll");
-    a_map["DeselectAll"] = action;
-
-    action = new QAction(tr("Invert Selection"), agm->select);
-    action->setIcon(QIcon(":/icons/select_inverted.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotSelectInvert()));
-    action->setObjectName("SelectInvert");
-    a_map["SelectInvert"] = action;
-
-    // <[~ Misc ~]>
-
-    action = new QAction(tr("Export as CA&M/plain SVG..."), agm->file);
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotFileExportMakerCam()));
-    action->setObjectName("FileExportMakerCam");
-    a_map["FileExportMakerCam"] = action;
-
-//    action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
+    // fixme - review why this action is not used, is it really necessary or may be removed?
+    //    action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
 //    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotToolRegenerateDimensions()));
 //    action->setObjectName("ToolRegenerateDimensions");
 //    a_map["ToolRegenerateDimensions"] = action;
-
-
-    // ===========================
-    // <[~ Main Window Actions ~]>
-    // ===========================
-
-
-    action = new QAction(tr("&Export as image"), agm->file);
-    action->setIcon(QIcon(":/icons/export.svg"));
-    connect(action, SIGNAL( triggered()), main_window, SLOT(slotFileExport()));
-    action->setObjectName("FileExport");
-    a_map["FileExport"] = action;
-
-    action = new QAction(tr("&Close"), agm->file);
-    action->setIcon(QIcon(":/icons/close.svg"));
-    action->setShortcut(QKeySequence::Close);
-    action->setShortcutContext(Qt::WidgetShortcut);
-    action->setObjectName("FileClose");
-    a_map["FileClose"] = action;
-
-	action = new QAction(tr("Close All"), agm->file);
-	action->setIcon(QIcon(":/icons/close_all.svg"));
-	QKeySequence shortcut = QKeySequence::Close;
-	action->setShortcut(QKeySequence("Shift+" + shortcut.toString()));
-	connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileCloseAll()));
-	action->setObjectName("FileCloseAll");
-	a_map["FileCloseAll"] = action;
-
-    action = new QAction(tr("Export as PDF"), agm->file);
-    action->setIcon(QIcon(":/icons/export_pdf.svg"));
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFilePrintPDF()));
-    action->setObjectName("FilePrintPDF");
-    a_map["FilePrintPDF"] = action;
-
-    action = new QAction(tr("&Block"), agm->file);
-    action->setIcon(QIcon(":/icons/insert_active_block.svg"));
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotImportBlock()));
-    action->setObjectName("BlocksImport");
-    a_map["BlocksImport"] = action;
-
-    // <[~ View ~]>
-
-    action = new QAction(tr("&Fullscreen"), agm->view);
-    #if defined(Q_OS_LINUX)
-        action->setShortcut(QKeySequence("F11"));
-    #else
-        action->setShortcut(QKeySequence::FullScreen);
-    #endif
-    action->setCheckable(true);
-    connect(action, SIGNAL(toggled(bool)), main_window, SLOT(toggleFullscreen(bool)));
-    action->setObjectName("Fullscreen");
-    a_map["Fullscreen"] = action;
-
-    action = new QAction(tr("&Grid"), agm->view);
-    action->setIcon(QIcon(":/icons/grid.svg"));
-    action->setShortcut(QKeySequence(tr("Ctrl+G", "Toggle Grid")));
-    action->setCheckable(true);
-    action->setChecked(true);
-    connect(main_window, SIGNAL(gridChanged(bool)), action, SLOT(setChecked(bool)));
-    connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slotViewGrid(bool)));
-    action->setObjectName("ViewGrid");
-    a_map["ViewGrid"] = action;
-
-    action = new QAction(tr("&Draft"), agm->view);
-    action->setIcon(QIcon(":/icons/draft.svg"));
-    action->setCheckable(true);
-    action->setShortcut(QKeySequence(tr("Ctrl+D", "Toggle Draft Mode")));
-    connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slotViewDraft(bool)));
-    connect(main_window, SIGNAL(draftChanged(bool)), action, SLOT(setChecked(bool)));
-    action->setObjectName("ViewDraft");
-    a_map["ViewDraft"] = action;
-
-    action = new QAction(tr("&Statusbar"), agm->view);
-    action->setCheckable(true);
-    action->setChecked(true);
-    action->setShortcut(QKeySequence(tr("Ctrl+I", "Hide Statusbar")));
-    connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slotViewStatusBar(bool)));
-    action->setObjectName("ViewStatusBar");
-    a_map["ViewStatusBar"] = action;
-
-    action = new QAction(tr("Focus on &Command Line"), agm->view);
-    action->setIcon(QIcon(":/main/editclear.png"));
-    QList<QKeySequence> commandLineShortcuts;
-    commandLineShortcuts<<QKeySequence(Qt::CTRL | Qt::Key_M)<<QKeySequence(Qt::Key_Colon);
-    if (!RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false))
-        commandLineShortcuts<<QKeySequence(Qt::Key_Space);
-    action->setShortcuts(commandLineShortcuts);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFocusCommandLine()));
-    action->setObjectName("FocusCommand");
-    a_map["FocusCommand"] = action;
-
-    action = new QAction(tr("Left"), agm->widgets);
-    action->setIcon(QIcon(":/icons/dockwidgets_left"));
-    connect(action, SIGNAL(toggled(bool)),
-            main_window, SLOT(toggleLeftDockArea(bool)));
-    action->setCheckable(true);
-    action->setChecked(false);
-    action->setObjectName("LeftDockAreaToggle");
-    a_map["LeftDockAreaToggle"] = action;
-
-    action = new QAction(tr("Right"), agm->widgets);
-    action->setIcon(QIcon(":/icons/dockwidgets_right"));
-    connect(action, SIGNAL(toggled(bool)),
-            main_window, SLOT(toggleRightDockArea(bool)));
-    action->setCheckable(true);
-    action->setChecked(true);
-    action->setObjectName("RightDockAreaToggle");
-    a_map["RightDockAreaToggle"] = action;
-
-    action = new QAction(tr("Top"), agm->widgets);
-    action->setIcon(QIcon(":/icons/dockwidgets_top"));
-    connect(action, SIGNAL(toggled(bool)),
-            main_window, SLOT(toggleTopDockArea(bool)));
-    action->setCheckable(true);
-    action->setChecked(false);
-    action->setObjectName("TopDockAreaToggle");
-    a_map["TopDockAreaToggle"] = action;
-
-    action = new QAction(tr("Bottom"), agm->widgets);
-    action->setIcon(QIcon(":/icons/dockwidgets_bottom"));
-    connect(action, SIGNAL(toggled(bool)),
-            main_window, SLOT(toggleBottomDockArea(bool)));
-    action->setCheckable(true);
-    action->setChecked(false);
-    action->setObjectName("BottomDockAreaToggle");
-    a_map["BottomDockAreaToggle"] = action;
-
-    action = new QAction(tr("Floating"), agm->widgets);
-    action->setIcon(QIcon(":/icons/dockwidgets_floating"));
-    connect(action, SIGNAL(toggled(bool)),
-            main_window, SLOT(toggleFloatingDockwidgets(bool)));
-    action->setCheckable(true);
-    action->setChecked(false);
-    action->setObjectName("FloatingDockwidgetsToggle");
-    a_map["FloatingDockwidgetsToggle"] = action;
-
-    action = new QAction(tr("Reload Style Sheet"), agm->options);
-    action->setShortcut(QKeySequence("Ctrl+T"));
-    connect(action, SIGNAL(triggered()),
-            main_window, SLOT(reloadStyleSheet()));
-    action->setObjectName("ReloadStyleSheet");
-    a_map["ReloadStyleSheet"] = action;
-
-    action = new QAction(tr("Re-dock Widgets"), agm->widgets);
-    connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotRedockWidgets()));
-    action->setObjectName("RedockWidgets");
-    a_map["RedockWidgets"] = action;
-
-    action = new QAction(tr("Menu Creator"), agm->widgets);
-    action->setIcon(QIcon(":/icons/create_menu.svg"));
-    connect(action, SIGNAL(triggered()),
-            main_window, SLOT(invokeMenuCreator()));
-    action->setObjectName("InvokeMenuCreator");
-    a_map["InvokeMenuCreator"] = action;
-
-    action = new QAction(tr("Toolbar Creator"), agm->widgets);
-    action->setIcon(QIcon(":/icons/create_toolbar.svg"));
-    connect(action, SIGNAL(triggered()),
-            main_window, SLOT(invokeToolbarCreator()));
-    action->setObjectName("InvokeToolbarCreator");
-    a_map["InvokeToolbarCreator"] = action;
-
-    commonActions(a_map, agm);
 }
 
-void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm)
-{
-    QAction* action;
-
-    // <[~ Edit ~]>
-
-    action = new QAction(tr("&Selection pointer"), agm->edit);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("go-previous-view", QIcon(":/icons/cursor.svg")));
-    else
-        action->setIcon(QIcon(":/icons/cursor.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotEditKillAllActions()));
-    action->setObjectName("EditKillAllActions");
-    a_map["EditKillAllActions"] = action;
-
-    action = new QAction(tr("&Undo"), agm->edit);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/undo.svg")));
-    else
-        action->setIcon(QIcon(":/icons/undo.svg"));
-    action->setShortcut(QKeySequence::Undo);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotEditUndo()));
-    action->setObjectName("EditUndo");
-    a_map["EditUndo"] = action;
-
-    action = new QAction(tr("&Redo"), agm->edit);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/redo.svg")));
-    else
-        action->setIcon(QIcon(":/icons/redo.svg"));
-    action->setShortcut(QKeySequence::Redo);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotEditRedo()));
-    action->setObjectName("EditRedo");
-    a_map["EditRedo"] = action;
-
-    action = new QAction(tr("Cu&t"), agm->edit);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("edit-cut", QIcon(":/icons/cut.svg")));
-    else
-        action->setIcon(QIcon(":/icons/cut.svg"));
-    action->setShortcut(QKeySequence::Cut);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotEditCut()));
-    action->setObjectName("EditCut");
-    a_map["EditCut"] = action;
-
-    action = new QAction(tr("&Copy"), agm->edit);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("edit-copy", QIcon(":/icons/copy.svg")));
-    else
-        action->setIcon(QIcon(":/icons/copy.svg"));
-    action->setShortcut(QKeySequence::Copy);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotEditCopy()));
-    action->setObjectName("EditCopy");
-    a_map["EditCopy"] = action;
-
-    action = new QAction(tr("&Paste"), agm->edit);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("edit-paste", QIcon(":/icons/paste.svg")));
-    else
-        action->setIcon(QIcon(":/icons/paste.svg"));
-    action->setShortcut(QKeySequence::Paste);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotEditPaste()));
-    action->setObjectName("EditPaste");
-    a_map["EditPaste"] = action;
-
-    // <[~ Zoom ~]>
-
-    action = new QAction(tr("Zoom &In"), agm->view);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/icons/zoom_in.svg")));
-    else
-        action->setIcon(QIcon(":/icons/zoom_in.svg"));
-    action->setShortcut(QKeySequence::ZoomIn);
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomIn()));
-    action->setObjectName("ZoomIn");
-    a_map["ZoomIn"] = action;
-
-    action = new QAction(tr("Zoom &Out"), agm->view);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/icons/zoom_out.svg")));
-    else
-        action->setIcon(QIcon(":/icons/zoom_out.svg"));
-    action->setShortcut(QKeySequence::ZoomOut);
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomOut()));
-    action->setObjectName("ZoomOut");
-    a_map["ZoomOut"] = action;
-
-    action = new QAction(tr("&Auto Zoom"), agm->view);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/icons/zoom_auto.svg")));
-    else
-        action->setIcon(QIcon(":/icons/zoom_auto.svg"));
-    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_F));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomAuto()));
-    action->setObjectName("ZoomAuto");
-    a_map["ZoomAuto"] = action;
-
-    action = new QAction(tr("Previous &View"), agm->view);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("zoom-previous", QIcon(":/icons/zoom_previous.svg")));
-    else
-        action->setIcon(QIcon(":/icons/zoom_previous.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotZoomPrevious()));
-    action->setEnabled(false);
-    action->setObjectName("ZoomPrevious");
-    a_map["ZoomPrevious"] = action;
-
-    action = new QAction(tr("&Redraw"), agm->view);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/icons/redraw.svg")));
-    else
-        action->setIcon(QIcon(":/icons/redraw.svg"));
-    action->setShortcut(QKeySequence::Refresh);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotZoomRedraw()));
-    action->setObjectName("ZoomRedraw");
-    a_map["ZoomRedraw"] = action;
-
-    action = new QAction(tr("&Window Zoom"), agm->other);
-    action->setCheckable(true);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("zoom-select", QIcon(":/icons/zoom_window.svg")));
-    else
-        action->setIcon(QIcon(":/icons/zoom_window.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomWindow()));
-    action->setObjectName("ZoomWindow");
-    a_map["ZoomWindow"] = action;
-
-    // <[~ File ~]>
-
-    action = new QAction(tr("&New"), agm->file);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("document-new", QIcon(":/icons/new.svg")));
-    else
-        action->setIcon(QIcon(":/icons/new.svg"));
-    action->setShortcut(QKeySequence::New);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileNewNew()));
-    action->setObjectName("FileNew");
-    a_map["FileNew"] = action;
-
-    action = new QAction(tr("New From &Template"), agm->file);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("document-new", QIcon(":/icons/new_from_template.svg")));
-    else
-        action->setIcon(QIcon(":/icons/new_from_template.svg"));
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileNewTemplate()));
-    action->setObjectName("FileNewTemplate");
-    a_map["FileNewTemplate"] = action;
-
-    action = new QAction(tr("&Open..."), agm->file);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/open.svg")));
-    else
-        action->setIcon(QIcon(":/icons/open.svg"));
-    action->setShortcut(QKeySequence::Open);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileOpen()));
-    action->setObjectName("FileOpen");
-    a_map["FileOpen"] = action;
-
-    action = new QAction(tr("&Save"), agm->file);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("document-save", QIcon(":/icons/save.svg")));
-    else
-        action->setIcon(QIcon(":/icons/save.svg"));
-    action->setShortcut(QKeySequence::Save);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSave()));
-    action->setObjectName("FileSave");
-    a_map["FileSave"] = action;
-
-    action = new QAction(tr("Save &as..."), agm->file);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("document-save-as", QIcon(":/icons/save_as.svg")));
-    else
-        action->setIcon(QIcon(":/icons/save_as.svg"));
-    action->setShortcut(QKeySequence::SaveAs);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSaveAs()));
-    action->setObjectName("FileSaveAs");
-    a_map["FileSaveAs"] = action;
-
-	action = new QAction(tr("Save A&ll..."), agm->file);
-	action->setIcon(QIcon(":/icons/save_all.svg"));
-	QKeySequence shortcut = QKeySequence::SaveAs; //(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
-	// only define this shortcut for platforms not already using it for save as
-	if (shortcut != QKeySequence::SaveAs)
-		action->setShortcut(shortcut);
-	connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSaveAll()));
-	action->setObjectName("FileSaveAll");
-	a_map["FileSaveAll"] = action;
-
-    action = new QAction(tr("&Print..."), agm->file);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("document-print", QIcon(":/icons/print.svg")));
-    else
-        action->setIcon(QIcon(":/icons/print.svg"));
-    action->setShortcut(QKeySequence::Print);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFilePrint()));
-    connect(main_window, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
-    action->setObjectName("FilePrint");
-    a_map["FilePrint"] = action;
-
-    action = new QAction(tr("Print Pre&view"), agm->file);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("document-print-preview", QIcon(":/icons/print_preview.svg")));
-    else
-        action->setIcon(QIcon(":/icons/print_preview.svg"));
-    action->setCheckable(true);
-    connect(action, SIGNAL(triggered(bool)), main_window, SLOT(slotFilePrintPreview(bool)));
-    connect(main_window, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
-    action->setObjectName("FilePrintPreview");
-    a_map["FilePrintPreview"] = action;
-
-    action = new QAction(tr("&Quit"), agm->file);
-    if (using_theme)
-        action->setIcon(QIcon::fromTheme("application-exit", QIcon(":/icons/quit.svg")));
-    else
-        action->setIcon(QIcon(":/icons/quit.svg"));
-    action->setShortcut(QKeySequence::Quit);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileQuit()));
-    action->setObjectName("FileQuit");
-    a_map["FileQuit"] = action;
 
 
-    action = new QAction(tr("Update Current Pen by Active Layer' Pen"), agm->pen);
-    action->setIcon(QIcon(":/extui/back.png"));
-    connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotPenSyncFromLayer()));
-    action->setObjectName("PenSyncFromLayer");
-    action->setCheckable(false);
-    a_map["PenSyncFromLayer"] = action;
+void LC_ActionFactory::createDrawLineActions(QMap<QString, QAction*>& map, QActionGroup* group){
+    createActionHandlerActions(map, group,{
+        {"DrawPoint",                RS2::ActionDrawPoint,               tr("&Points"),                ":/icons/points.svg"},
+        {"DrawLine",                 RS2::ActionDrawLine,                tr("&2 Points"),              ":/icons/line_2p.svg"},
+        {"DrawLineAngle",            RS2::ActionDrawLineAngle,           tr("&Angle"),                 ":/icons/line_angle.svg"},
+        {"DrawLineHorizontal",       RS2::ActionDrawLineHorizontal,      tr("&Horizontal"),            ":/icons/line_horizontal.svg"},
+        {"DrawLineVertical",         RS2::ActionDrawLineVertical,        tr("Vertical"),               ":/icons/line_vertical.svg"},
+        {"DrawLineFree",             RS2::ActionDrawLineFree,            tr("&Freehand Line"),         ":/icons/line_freehand.svg"},
+        {"DrawLineParallel",         RS2::ActionDrawLineParallel,        tr("&Parallel"),              ":/icons/line_parallel.svg"},
+        {"DrawLineParallelThrough",  RS2::ActionDrawLineParallelThrough, tr("Parallel through point"), ":/icons/line_parallel_p.svg"},
+        {"DrawLineRectangle",        RS2::ActionDrawLineRectangle,       tr("Rectangle"),              ":/icons/line_rectangle.svg"},
+        {"DrawLineBisector",         RS2::ActionDrawLineBisector,        tr("Bisector"),               ":/icons/line_bisector.svg"},
+        {"DrawLineTangent1",         RS2::ActionDrawLineTangent1,        tr("Tangent (P,C)"),          ":/icons/line_tangent_pc.svg"},
+        {"DrawLineTangent2",         RS2::ActionDrawLineTangent2,        tr("Tangent (C,C)"),          ":/icons/line_tangent_cc.svg"},
+        {"DrawLineOrthTan",          RS2::ActionDrawLineOrthTan,         tr("Tangent &Orthogonal"),    ":/icons/line_tangent_perpendicular.svg"},
+        {"DrawLineOrthogonal",       RS2::ActionDrawLineOrthogonal,      tr("Orthogonal"),             ":/icons/line_perpendicular.svg"},
+        {"DrawLineRelAngle",         RS2::ActionDrawLineRelAngle,        tr("Relative angle"),         ":/icons/line_relative_angle.svg"},
+        {"DrawLinePolygonCenCor",    RS2::ActionDrawLinePolygonCenCor,   tr("Pol&ygon (Cen,Cor)"),     ":/icons/line_polygon_cen_cor.svg"},
+        {"DrawLinePolygonCenTan",    RS2::ActionDrawLinePolygonCenTan,   tr("Pol&ygon (Cen,Tan)"),     ":/icons/line_polygon_cen_tan.svg"},
+        {"DrawLinePolygonCorCor",    RS2::ActionDrawLinePolygonCorCor,   tr("Polygo&n (Cor,Cor)"),     ":/icons/line_polygon_cor_cor.svg"},
+        {"DrawLineRel",              RS2::ActionDrawSnakeLine,           tr("Snake"),                  ":/icons/line_rel.svg"},
+        {"DrawLineRelX",             RS2::ActionDrawSnakeLineX,          tr("Snake (X)"),              ":/icons/line_rel_x.svg"},
+        {"DrawLineRelY",             RS2::ActionDrawSnakeLineY,          tr("Snake (Y)"),              ":/icons/line_rel_y.svg"},
+        {"DrawLineRectangle1Point",  RS2::ActionDrawRectangle1Point,     tr("Rectangle (1 Point)"),    ":/icons/rectangle_1_point.svg"},
+        {"DrawLineRectangle2Points", RS2::ActionDrawRectangle2Points,    tr("Rectangle (2 Points)"),   ":/icons/rectangle_2_points.svg"},
+        {"DrawLineRectangle3Points", RS2::ActionDrawRectangle3Points,    tr("Rectangle (3 Points)"),   ":/icons/rectangle_3_points.svg"},
+        {"DrawStar",                 RS2::ActionDrawStar,                tr("Star"),                   ":/icons/line_polygon_star.svg"},
+        {"DrawLineAngleRel",         RS2::ActionDrawLineAngleRel,        tr("Angle From Line"),        ":/icons/line_angle_rel.svg"},
+        {"DrawLineOrthogonalRel",    RS2::ActionDrawLineOrthogonalRel,   tr("Orthogonal From Line"),   ":/icons/line_ortho_rel.svg"},
+        {"DrawLineFromPointToLine",  RS2::ActionDrawLineFromPointToLine, tr("From Point To Line"),     ":/icons/line_to_ortho.svg"},
+        {"DrawCross",                RS2::ActionDrawCross,               tr("Cross"),                  ":/icons/cross_circle1.svg"},
+        {"DrawSliceDivideLine",      RS2::ActionDrawSliceDivideLine,     tr("Slice/Divide Line"),      ":/icons/slice_divide.svg"},
+        {"DrawSliceDivideCircle",    RS2::ActionDrawSliceDivideCircle,   tr("Slice/Divide Circle"),    ":/icons/slice_divide_circle.svg"},
+        {"DrawLinePoints",           RS2::ActionDrawLinePoints,          tr("Line of Points"),         ":/icons/line_points.svg"}
+    });
+}
 
+void LC_ActionFactory::createSelectActions(QMap<QString, QAction*>& map, QActionGroup* group) {
+    createActionHandlerActions(map, group,{
+        {"SelectSingle",        RS2::ActionSelectSingle,        tr("Select Entity"),                 ":/icons/select_entity.svg"},
+        {"SelectWindow",        RS2::ActionSelectWindow,        tr("Select Window"),                 ":/icons/select_window.svg"},
+        {"DeselectWindow",      RS2::ActionDeselectWindow,      tr("Deselect Window"),               ":/icons/deselect_window.svg"},
+        {"SelectContour",       RS2::ActionSelectContour,       tr("(De-)Select &Contour"),          ":/icons/deselect_contour.svg"},
+        {"SelectIntersected",   RS2::ActionSelectIntersected,   tr("Select Intersected Entities"),   ":/icons/select_intersected_entities.svg"},
+        {"DeselectIntersected", RS2::ActionDeselectIntersected, tr("Deselect Intersected Entities"), ":/icons/deselect_intersected_entities.svg"},
+        {"SelectLayer",         RS2::ActionSelectLayer,         tr("(De-)Select Layer"),             ":/icons/deselect_layer.svg"}
+    });
+}
+
+void LC_ActionFactory::createDrawCircleActions(QMap<QString, QAction*>& map, QActionGroup* group) {
+    createActionHandlerActions(map, group,{
+        {"DrawCircle",         RS2::ActionDrawCircle,         tr("Center, &Point"),                ":/icons/circle_center_point.svg"},
+        {"DrawCircleByArc",    RS2::ActionDrawCircleByArc,    tr("By Arc"),                        ":/icons/circle_by_arc.svg"},
+        {"DrawCircleCR",       RS2::ActionDrawCircleCR,       tr("Center, &Radius"),               ":/icons/circle_center_radius.svg"},
+        {"DrawCircle2P",       RS2::ActionDrawCircle2P,       tr("2 Points"),                      ":/icons/circle_2_points.svg"},
+        {"DrawCircle2PR",      RS2::ActionDrawCircle2PR,      tr("2 Points, Radius"),              ":/icons/circle_2_points_radius.svg"},
+        {"DrawCircle3P",       RS2::ActionDrawCircle3P,       tr("3 Points"),                      ":/icons/circle_3_points.svg"},
+        {"DrawCircleParallel", RS2::ActionDrawCircleParallel, tr("&Concentric"),                   ":/icons/circle_concentric.svg"},
+        {"DrawCircleInscribe", RS2::ActionDrawCircleInscribe, tr("Circle &Inscribed"),             ":/icons/circle_inscribed.svg"},
+        {"DrawCircleTan2",     RS2::ActionDrawCircleTan2,     tr("Tangential 2 Circles, Radius"),  ":/icons/circle_tangential_2circles_radius.svg"},
+        {"DrawCircleTan2_1P",  RS2::ActionDrawCircleTan2_1P,  tr("Tangential 2 Circles, 1 Point"), ":/icons/circle_tangential_2circles_point.svg"},
+        {"DrawCircleTan3",     RS2::ActionDrawCircleTan3,     tr("Tangential &3 Circles"),         ":/icons/circle_tangential_3entities.svg"},
+        {"DrawCircleTan1_2P",  RS2::ActionDrawCircleTan1_2P,  tr("Tangential, 2 P&oints"),         ":/icons/circle_tangential_2points.svg"}
+    });
+}
+
+void LC_ActionFactory::createDrawCurveActions(QMap<QString, QAction*>& map, QActionGroup* group) {
+    createActionHandlerActions(map, group,{
+        {"DrawArc",             RS2::ActionDrawArc,             tr("&Center, Point, Angles"),    ":/icons/arc_center_point_angle.svg"},
+        {"DrawArc3P",           RS2::ActionDrawArc3P,           tr("&3 Points"),                 ":/icons/arc_3_points.svg"},
+        {"DrawArcParallel",     RS2::ActionDrawArcParallel,     tr("&Concentric"),               ":/icons/arc_concentric.svg"},     // fixme - why this action is not in list?
+        {"DrawArcTangential",   RS2::ActionDrawArcTangential,   tr("Arc &Tangential"),           ":/icons/arc_continuation.svg"},
+        {"DrawParabola4Points", RS2::ActionDrawParabola4Points, tr("Para&bola 4 points"),        ":/icons/parabola_4_points.svg"},
+        {"DrawParabolaFD",      RS2::ActionDrawParabolaFD,      tr("Parabola &Focus Directrix"), ":/icons/parabola_focus_directrix.svg"},
+        {"DrawSpline",          RS2::ActionDrawSpline,          tr("&Spline"),                   ":/icons/spline.svg"},
+        {"DrawSplinePoints",    RS2::ActionDrawSplinePoints,    tr("&Spline through points"),    ":/icons/spline_points.svg"}
+    });
+}
+
+void LC_ActionFactory::createDrawEllipseActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActionHandlerActions(map, group, {
+        {"DrawEllipse1Point",        RS2::ActionDrawEllipse1Point,        tr("&Ellipse (1 Point)"),           ":/icons/ellipse_1_point.svg"},
+        {"DrawEllipseArc1Point",     RS2::ActionDrawEllipseArc1Point,     tr("&Ellipse Arc (1 Point)"),       ":/icons/ellipse_arc_1_point.svg"},
+        {"DrawEllipseAxis",          RS2::ActionDrawEllipseAxis,          tr("&Ellipse (Axis)"),              ":/icons/ellipse_axis.svg"},
+        {"DrawEllipseArcAxis",       RS2::ActionDrawEllipseArcAxis,       tr("Ellipse &Arc (Axis)"),          ":/icons/ellipse_arc_axis.svg"},
+        {"DrawEllipseFociPoint",     RS2::ActionDrawEllipseFociPoint,     tr("Ellipse &Foci Point"),          ":/icons/ellipse_foci_point.svg"},
+        {"DrawEllipse4Points",       RS2::ActionDrawEllipse4Points,       tr("Ellipse &4 Point"),             ":/icons/ellipse_4_points.svg"},
+        {"DrawEllipseCenter3Points", RS2::ActionDrawEllipseCenter3Points, tr("Ellipse Center and &3 Points"), ":/icons/ellipse_center_3_points.svg"},
+        {"DrawEllipseInscribe",      RS2::ActionDrawEllipseInscribe,      tr("Ellipse &Inscribed"),           ":/icons/ellipse_inscribed.svg"}
+    });
+}
+
+void LC_ActionFactory::createDrawPolylineActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActionHandlerActions(map, group,{
+        {"DrawPolyline",        RS2::ActionDrawPolyline,        tr("&Polyline"),                               ":/icons/polylines_polyline.svg"},
+        {"PolylineAdd",         RS2::ActionPolylineAdd,         tr("&Add node"),                               ":/icons/insert_node.svg"},
+        {"PolylineAppend",      RS2::ActionPolylineAppend,      tr("A&ppend node"),                            ":/icons/append_node.svg"},
+        {"PolylineDel",         RS2::ActionPolylineDel,         tr("&Delete node"),                            ":/icons/delete_node.svg"},
+        {"PolylineDelBetween",  RS2::ActionPolylineDelBetween,  tr("Delete &between two nodes"),               ":/icons/delete_between_nodes.svg"},
+        {"PolylineTrim",        RS2::ActionPolylineTrim,        tr("&Trim segments"),                          ":/icons/trim.svg"},
+        {"PolylineEquidistant", RS2::ActionPolylineEquidistant, tr("Create &Equidistant Polylines"),           ":/icons/create_equidistant_polyline.svg"},
+        {"PolylineSegment",     RS2::ActionPolylineSegment,     tr("Polyline from Existing &Segments"), ":/icons/create_polyline_from_existing_segments.svg"}
+    });
+}
+
+void LC_ActionFactory::createDrawOtherActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActionHandlerActions(map, group,{
+        {"ZoomPan",   RS2::ActionZoomPan,   tr("Zoom &Panning"), ":/icons/zoom_pan.svg"},
+        {"DrawMText", RS2::ActionDrawMText, tr("&MText"),        ":/icons/mtext.svg"},
+        {"DrawText",  RS2::ActionDrawText,  tr("&Text"),         ":/icons/text.svg"},
+        {"DrawHatch", RS2::ActionDrawHatch, tr("&Hatch"),        ":/icons/hatch.svg"},
+        {"DrawImage", RS2::ActionDrawImage, tr("Insert &Image"), ":/icons/camera.svg"}
+    });
+}
+
+void LC_ActionFactory::createDrawDimensionsActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActionHandlerActions(map, group,{
+        {"DimAligned",   RS2::ActionDimAligned,   tr("&Aligned"),    ":/icons/dim_aligned.svg"},
+        {"DimLinear",    RS2::ActionDimLinear,    tr("&Linear"),     ":/icons/dim_linear.svg"},
+        {"DimLinearHor", RS2::ActionDimLinearHor, tr("&Horizontal"), ":/icons/dim_horizontal.svg"},
+        {"DimLinearVer", RS2::ActionDimLinearVer, tr("&Vertical"),   ":/icons/dim_vertical.svg"},
+        {"DimRadial",    RS2::ActionDimRadial,    tr("&Radial"),     ":/icons/dim_radial.svg"},
+        {"DimDiametric", RS2::ActionDimDiametric, tr("&Diametric"),  ":/icons/dim_diametric.svg"},
+        {"DimAngular",   RS2::ActionDimAngular,   tr("&Angular"),    ":/icons/dim_angular.svg"},
+        {"DimArc",       RS2::ActionDimArc,       tr("&Arc"),        ":/icons/dim_arc.svg"},
+        {"DimLeader",    RS2::ActionDimLeader,    tr("&Leader"),     ":/icons/dim_leader.svg"},
+        {"DimBaseline",  RS2::ActionDimBaseline,  tr("&Baseline"),  ":/icons/dim_baseline.svg"},
+        {"DimContinue",  RS2::ActionDimContinue,  tr("&Continue"),  ":/icons/dim_continue.svg"}
+    });
+}
+
+void LC_ActionFactory::createModifyActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    /* action = new QAction(tr("Delete Freehand"), agm->modify);
+     action->setIcon(QIcon(":/icons/delete_freehand.svg"));
+     connect(action, SIGNAL(triggered()),
+     action_handler, SLOT(slotModifyDeleteFree()));
+     action->setObjectName("ModifyDeleteFree");
+     a_map["ModifyDeleteFree"] = action;*/
+    createActionHandlerActions(map, group,{
+        {"ModifyAttributes",      RS2::ActionModifyAttributes,      tr("&Attributes"),                ":/icons/attributes.svg"},
+        {"ModifyDelete",          RS2::ActionModifyDelete,          tr("&Delete"),                    ":/icons/delete.svg"},
+        {"ModifyMove",            RS2::ActionModifyMove,            tr("&Move / Copy"),               ":/icons/move_copy.svg"},
+        {"ModifyRevertDirection", RS2::ActionModifyRevertDirection, tr("Re&vert direction"),          ":/icons/revert_direction.svg"},
+        {"ModifyRotate",          RS2::ActionModifyRotate,          tr("&Rotate"),                    ":/icons/rotate.svg"},
+        {"ModifyScale",           RS2::ActionModifyScale,           tr("&Scale"),                     ":/icons/scale.svg"},
+        {"ModifyMirror",          RS2::ActionModifyMirror,          tr("&Mirror"),                    ":/icons/mirror.svg"},
+        {"ModifyMoveRotate",      RS2::ActionModifyMoveRotate,      tr("Mo&ve and Rotate"),           ":/icons/move_rotate.svg"},
+        {"ModifyRotate2",         RS2::ActionModifyRotate2,         tr("Rotate T&wo"),                ":/icons/rotate2.svg"},
+        {"ModifyEntity",          RS2::ActionModifyEntity,          tr("&Properties"),                ":/icons/properties.svg"},
+        {"ModifyTrim",            RS2::ActionModifyTrim,            tr("&Trim"),                      ":/icons/trim.svg"},
+        {"ModifyTrim2",           RS2::ActionModifyTrim2,           tr("Tr&im Two"),                  ":/icons/trim2.svg"},
+        {"ModifyTrimAmount",      RS2::ActionModifyTrimAmount,      tr("&Lengthen"),                  ":/icons/trim_value.svg"},
+        {"ModifyOffset",          RS2::ActionModifyOffset,          tr("O&ffset"),                    ":/icons/offset.svg"},
+        {"ModifyCut",             RS2::ActionModifyCut,             tr("&Divide"),                    ":/icons/divide.svg"},
+        {"ModifyStretch",         RS2::ActionModifyStretch,         tr("&Stretch"),                   ":/icons/stretch.svg"},
+        {"ModifyBevel",           RS2::ActionModifyBevel,           tr("&Bevel"),                     ":/icons/bevel.svg"},
+        {"ModifyRound",           RS2::ActionModifyRound,           tr("&Fillet"),                    ":/icons/fillet.svg"},
+        {"ModifyExplodeText",     RS2::ActionModifyExplodeText,     tr("&Explode Text into Letters"), ":/icons/explode_text_to_letters.svg"},
+        {"BlocksExplode",         RS2::ActionBlocksExplode,         tr("Ex&plode"),                   ":/icons/explode.svg"},
+        {"ModifyBreakDivide",     RS2::ActionModifyBreakDivide,     tr("Break/Divide"),               ":/icons/break_out_trim.svg"},
+        {"ModifyLineGap",         RS2::ActionModifyLineGap,         tr("Line Gap"),                   ":/icons/line_gap.svg"},
+        {"ModifyLineJoin",        RS2::ActionModifyLineJoin,        tr("Line Join"),                  ":/icons/line_join.svg"},
+        {"ModifyDuplicate",       RS2::ActionModifyDuplicate,       tr("Duplicate"),                  ":/icons/duplicate.svg"}
+    });
+}
+
+void LC_ActionFactory::createPenActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActionHandlerActions(map, group, {
+        {"PenSyncFromLayer", RS2::ActionPenSyncFromLayer, tr("Update Current Pen by Active Layer' Pen"), ":/extui/back.png"}
+    });
+}
+
+void LC_ActionFactory::createPenActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActionHandlerActions(map, group, {
+        {"PenPick",         RS2::ActionPenPick,         tr("&Pick Pen From Entity"),            ":/extui/selectsingle.png"},
+        {"PenPickResolved", RS2::ActionPenPickResolved, tr("&Pick Pen From Entity (Resolved)"), ":/extui/relzeromove.png"},
+        {"PenApply",        RS2::ActionPenApply,        tr("Apply Pen to Entity"),              ":/icons/pen_apply.svg"},
+        {"PenCopy",         RS2::ActionPenCopy,         tr("Copy Pen"),                         ":/icons/pen_copy.svg"}
+    });
+}
+
+void LC_ActionFactory::createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActions(map, group, {
+        {"SnapGrid",         tr("Snap on grid"),       ":/icons/snap_grid.svg"},
+        {"SnapMiddleManual", tr("Snap Middle Manual"), ":/icons/snap_middle_manual.svg"},
+        {"SnapEnd",          tr("Snap on Endpoints"),  ":/icons/snap_endpoints.svg"},
+        {"SnapEntity",       tr("Snap on Entity"),     ":/icons/snap_entity.svg"},
+        {"SnapCenter",       tr("Snap Center"),        ":/icons/snap_center.svg"},
+        {"SnapMiddle",       tr("Snap Middle"),        ":/icons/snap_middle.svg"},
+        {"SnapDistance",     tr("Snap Distance"),      ":/icons/snap_distance.svg"},
+        {"SnapIntersection", tr("Snap Intersection"),  ":/icons/snap_intersection.svg"},
+    });
+}
+
+void LC_ActionFactory::createRestrictActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActions(map, group, {
+        {"RestrictHorizontal", tr("Restrict Horizontal"), ":/icons/restr_hor.svg"},
+        {"RestrictVertical",   tr("Restrict Vertical"),   ":/icons/restr_ver.svg"},
+        {"RestrictOrthogonal", tr("Restrict Orthogonal"), ":/icons/restr_ortho.svg"},
+        {"RestrictNothing",    tr("Restrict Nothing"),    ":/extui/restrictnothing.png"},
+    });
+}
+
+void LC_ActionFactory::createOtherActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActions(map, group, {
+        {"SetRelativeZero",    tr("Set relative zero position"),  ":/icons/set_rel_zero.svg"},
+        {"LockRelativeZero",   tr("Lock relative zero position"), ":/icons/lock_rel_zero.svg"}
+        // todo - add action for hiding/showing related zero
+       //{"RestrictOrthogonal", tr("Restrict Orthogonal"),         ":/icons/restr_ortho.svg"}
+    });
+}
+
+
+void LC_ActionFactory::createSnapExtraActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActions(map, group, {
+        {"ExclusiveSnapMode", tr("Exclusive Snap Mode"), ":/icons/exclusive.svg"},
+        {"SnapFree",          tr("Free Snap"),           ":/icons/snap_free.svg"}
+    });
+}
+
+void LC_ActionFactory::createOrderActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
+
+    createActionHandlerActions(map, group, {
+        {"OrderBottom", RS2::ActionOrderBottom, tr("move to bottom"), ":/icons/downmost.svg"},
+        {"OrderLower",  RS2::ActionOrderLower, tr("lower after entity"), ":/icons/down.svg"},
+        {"OrderRaise",  RS2::ActionOrderRaise, tr("raise over entity"), ":/icons/up.svg"},
+        {"OrderTop",    RS2::ActionOrderTop, tr("move to top"), ":/icons/upmost.svg"}
+    });
+}
+
+void LC_ActionFactory::createInfoActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActionHandlerActions(map, group, {
+        {"InfoInside",       RS2::ActionInfoInside,           tr("Point inside contour"),               ""},
+        {"InfoDist",         RS2::ActionInfoDistPoint2Point,  tr("&Distance Point to Point"),           ":/icons/distance_point_to_point.svg"},
+        {"InfoDist2",        RS2::ActionInfoDistEntity2Point, tr("Distance &Entity to Point"),          ":/icons/distance_entity_to_point.svg"},
+        {"InfoDist3",        RS2::ActionInfoDistPoint2Entity, tr("Distance &Point to Entity"),          ":/icons/distance_point_to_entity.svg"},
+        {"InfoAngle",        RS2::ActionInfoAngle,            tr("An&gle between two lines"),           ":/icons/angle_line_to_line.svg"},
+        {"InfoTotalLength",  RS2::ActionInfoTotalLength,      tr("Total &length of selected entities"), ":/icons/total_length_selected_entities.svg"},
+        {"InfoArea",         RS2::ActionInfoArea,             tr("Polygonal &Area"),                    ":/icons/polygonal_area.svg"},
+        {"EntityInfo",       RS2::ActionInfoProperties,       tr("Entity Pro&perties"),                 ":/extui/menuselect.png"},
+        {"PickCoordinates",  RS2::ActionInfoPickCoordinates,  tr("Collect &Coordinates"),               ":/extui/menupoint.png"},
+        {"InfoAngle3Points", RS2::ActionInfoAngle3Points,     tr("Ang&le between 3 points"),            ":/icons/angle_3_points.svg"}
+    });
+}
+
+void LC_ActionFactory::createViewActions(QMap<QString, QAction*>& map, QActionGroup* group) {
+    createActionHandlerActions(map, group, {
+        {"ZoomWindow",RS2::ActionZoomWindow, tr("&Window Zoom"), ":/icons/zoom_window.svg","zoom-select"}});
+
+    createMainWindowActions(map, group, {
+        {"Fullscreen",    SLOT(toggleFullscreen(bool)),  tr("&Fullscreen")},
+        {"ViewGrid",      SLOT(slotViewGrid(bool)),      tr("&Grid"),  ":/icons/grid.svg"},
+        {"ViewDraft",     SLOT(slotViewDraft(bool)),     tr("&Draft"), ":/icons/draft.svg"},
+        {"ViewStatusBar", SLOT(slotViewStatusBar(bool)), tr("&Statusbar")}
+    }, true);
+}
+
+void LC_ActionFactory::createLayerActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActionHandlerActions(map, group, {
+        {"LayersDefreezeAll",        RS2::ActionLayersDefreezeAll,        tr("&Show all layers"),           ":/ui/visibleblock.png"},
+        {"LayersFreezeAll",          RS2::ActionLayersFreezeAll,          tr("&Hide all layers"),           ":/ui/hiddenblock.png"},
+        {"LayersUnlockAll",          RS2::ActionLayersUnlockAll,          tr("&Unlock all"),                ":/ui/unlockedlayer.png"},
+        {"LayersLockAll",            RS2::ActionLayersLockAll,            tr("&Lock all"),                  ":/ui/lockedlayer.png"},
+        {"LayersAdd",                RS2::ActionLayersAdd,                tr("&Add Layer"),                 ":/icons/add.svg"},
+        {"LayersRemove",             RS2::ActionLayersRemove,             tr("&Remove Layer"),              ":/icons/remove.svg"},
+        {"LayersEdit",               RS2::ActionLayersEdit,               tr("&Edit Layer"),                ":/icons/attributes.svg"},
+        {"LayersToggleLock",         RS2::ActionLayersToggleLock,         tr("Toggle Layer Loc&k"),         ":/icons/locked.svg"},
+        {"LayersToggleView",         RS2::ActionLayersToggleView,         tr("&Toggle Layer Visibility"),   ":/icons/visible.svg"},
+        {"LayersTogglePrint",        RS2::ActionLayersTogglePrint,        tr("Toggle Layer &Print"),        ":/icons/print.svg"},
+        {"LayersToggleConstruction", RS2::ActionLayersToggleConstruction, tr("Toggle &Construction Layer"), ":/icons/construction_layer.svg"},
+        {"LayersExportSelected",     RS2::ActionLayersExportSelected,     tr("&Export Selected Layer(s)")},
+        {"LayersExportVisible",      RS2::ActionLayersExportVisible,      tr("Export &Visible Layer(s)")}
+    });
+}
+
+void LC_ActionFactory::createBlockActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActionHandlerActions(map, group, {
+        {"BlocksDefreezeAll", RS2::ActionBlocksDefreezeAll, tr("&Show all blocks"),         ":/ui/blockdefreeze.png"},
+        {"BlocksFreezeAll",   RS2::ActionBlocksFreezeAll,   tr("&Hide all blocks"),         ":/ui/blockfreeze.png"},
+        {"BlocksAdd",         RS2::ActionBlocksAdd,         tr("&Add Block"),               ":/icons/add.svg"},
+        {"BlocksRemove",      RS2::ActionBlocksRemove,      tr("&Remove Block"),            ":/icons/remove.svg"},
+        {"BlocksAttributes",  RS2::ActionBlocksAttributes,  tr("&Rename Block"),            ":/icons/rename_active_block.svg"},
+        {"BlocksEdit",        RS2::ActionBlocksEdit,        tr("&Edit Block"),              ":/icons/properties.svg"},
+        {"BlocksSave",        RS2::ActionBlocksSave,        tr("&Save Block"),              ":/icons/save.svg"},
+        {"BlocksInsert",      RS2::ActionBlocksInsert,      tr("&Insert Block"),            ":/icons/insert_active_block.svg"},
+        {"BlocksToggleView",  RS2::ActionBlocksToggleView,  tr("Toggle Block &Visibility"), ":/ui/layertoggle.png"},
+        {"BlocksCreate",      RS2::ActionBlocksCreate,      tr("&Create Block"),            ":/icons/create_block.svg"}
+    });
+}
+
+void LC_ActionFactory::createOptionsActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActionHandlerActions(map, group, {
+        {"OptionsDrawing",RS2::ActionOptionsDrawing, "Current &Drawing Preferences", ":/icons/drawing_settings.svg"}
+    });
+
+    createMainWindowActions(map, group, {
+        {"OptionsGeneral",   SLOT(slotOptionsGeneral()), tr("&Application Preferences"), ":/icons/settings.svg"},
+        {"WidgetOptions",    SLOT(widgetOptionsDialog()),    tr("Widget Options")},
+        {"ShortcutsOptions",    SLOT(slotOptionsShortcuts()),    tr("Keyboard Shortcuts"), ":/icons/shortcuts_settings.svg"},
+        {"DeviceOptions",    SLOT(showDeviceOptions()),      tr("Device Options")},
+        {"ReloadStyleSheet", SLOT(reloadStyleSheet()),   tr("Reload Style Sheet")}
+    });
+}
+
+void LC_ActionFactory::createFileActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createMainWindowActions(map, group, {
+        {"FilePrintPreview", SLOT(slotFilePrintPreview(bool)),  "Print Pre&view",     ":/icons/print_preview.svg",     "document-print-preview"},
+    });
+}
+
+void LC_ActionFactory::createFileActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createMainWindowActions(map, group, {
+        {"FileExport",       SLOT(slotFileExport()),       tr("&Export as image"),   ":/icons/export.svg"},
+        {"FileClose", nullptr,                             tr("&Close"),             ":/icons/close.svg"},
+        {"FileCloseAll",     SLOT(slotFileCloseAll()),     tr("Close All"),          ":/icons/close_all.svg"},
+        {"FilePrintPDF",     SLOT(slotFilePrintPDF()),     tr("Export as PDF"),      ":/icons/export_pdf.svg"},
+        {"BlocksImport",     SLOT(slotImportBlock()),      tr("&Block"),             ":/icons/insert_active_block.svg"},
+        {"FileNew",          SLOT(slotFileNewNew()),       tr("&New"),               ":/icons/new.svg",               "document-new"},
+        {"FileNewTemplate",  SLOT(slotFileNewTemplate()),  tr("New From &Template"), ":/icons/new_from_template.svg", "document-new"},// fixme - check
+        {"FileOpen",         SLOT(slotFileOpen()),         tr("&Open..."),           ":/icons/open.svg",              "document-open"},
+        {"FileSave",         SLOT(slotFileSave()),         tr("&Save"),              ":/icons/save.svg",              "document-save"},
+        {"FileSaveAs",       SLOT(slotFileSaveAs()),       tr("Save &as..."),        ":/icons/save_as.svg",           "document-save-as"},
+        {"FileSaveAll",      SLOT(slotFileSaveAll()),      tr("Save A&ll..."),       ":/icons/save_all.svg"},
+        {"FilePrint",        SLOT(slotFilePrint()),        tr("&Print..."),          ":/icons/print.svg",             "document-print"},
+        {"FileQuit",         SLOT(slotFileQuit()),         tr("&Quit"),              ":/icons/quit.svg",              "application-exit"},
+    });
+
+    createAction_AH("FileExportMakerCam",RS2::ActionFileExportMakerCam,  tr("Export as CA&M/plain SVG..."), nullptr, nullptr, group, map);
+}
+
+void LC_ActionFactory::createWidgetActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createMainWindowActions(map, group, {
+        {"LeftDockAreaToggle",        SLOT(toggleLeftDockArea(bool)),        tr("Left"),     ":/icons/dockwidgets_left.svg"},
+        {"RightDockAreaToggle",       SLOT(toggleRightDockArea(bool)),       tr("Right"),    ":/icons/dockwidgets_right.svg"},
+        {"TopDockAreaToggle",         SLOT(toggleTopDockArea(bool)),         tr("Top"),      ":/icons/dockwidgets_top.svg"},
+        {"BottomDockAreaToggle",      SLOT(toggleBottomDockArea(bool)),      tr("Bottom"),   ":/icons/dockwidgets_bottom.svg"},
+        {"FloatingDockwidgetsToggle", SLOT(toggleFloatingDockwidgets(bool)), tr("Floating"), ":/icons/dockwidgets_floating.svg"}
+    }, true);
+}
+
+void LC_ActionFactory::createWidgetActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createMainWindowActions(map, group, {
+        {"RedockWidgets",        SLOT(slotRedockWidgets()),    tr("Re-dock Widgets")},
+        {"InvokeMenuCreator",    SLOT(invokeMenuCreator()),    tr("Menu Creator")},
+        {"InvokeToolbarCreator", SLOT(invokeToolbarCreator()), tr("Toolbar Creator")}
+    });
+}
+
+void LC_ActionFactory::createViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createAction_MW("FocusCommand",SLOT(slotFocusCommandLine()), tr("Focus on &Command Line"), ":/main/editclear.png", nullptr, group, map);
+    createAction_MW("FocusOptions",SLOT(slotFocusOptionsWidget()), tr("Focus on &Options Widget"), ":/main/contents.png", nullptr, group, map);
+
+    createActionHandlerActions(map, group, {
+        {"ZoomIn",       RS2::ActionZoomIn,       tr("Zoom &In"),       ":/icons/zoom_in.svg",       "zoom-in"},
+        {"ZoomOut",      RS2::ActionZoomOut,      tr("Zoom &Out"),      ":/icons/zoom_out.svg",      "zoom-out"},
+        {"ZoomAuto",     RS2::ActionZoomAuto,     tr("&Auto Zoom"),     ":/icons/zoom_auto.svg",     "zoom-fit-best"},
+        {"ZoomPrevious", RS2::ActionZoomPrevious, tr("Previous &View"), ":/icons/zoom_previous.svg", "zoom-previous"},
+        {"ZoomRedraw",   RS2::ActionZoomRedraw,   tr("&Redraw"),        ":/icons/redraw.svg",        "view-refresh"}
+    });
+}
+
+void LC_ActionFactory::createSelectActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActionHandlerActions(map, group, {
+        {"SelectAll",    RS2::ActionSelectAll,    tr("Select &All"),      ":/icons/select_all.svg"},
+        {"DeselectAll",  RS2::ActionDeselectAll,  tr("Deselect &all"),    ":/icons/deselect_all.svg"},
+        {"SelectInvert", RS2::ActionSelectInvert, tr("Invert Selection"), ":/icons/select_inverted.svg"}
+    });
+}
+
+void LC_ActionFactory::createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActionHandlerActions(map, group, {
+        {"EditUndo",           RS2::ActionEditUndo,           tr("&Undo"),              ":/icons/undo.svg",            "edit-undo"},
+        {"EditRedo",           RS2::ActionEditRedo,           tr("&Redo"),              ":/icons/redo.svg",            "edit-redo"},
+        {"EditCut",            RS2::ActionEditCut,            tr("Cu&t"),               ":/icons/cut.svg",             "edit-cut"},
+        {"EditCutQuick",       RS2::ActionEditCutQuick,       tr("Cut Quic&k"),         ":/icons/cut.svg",             "edit-cut"},
+        {"EditCopy",           RS2::ActionEditCopy,           tr("&Copy"),              ":/icons/copy.svg",            "edit-copy"},
+        {"EditCopyQuick",      RS2::ActionEditCopyQuick,      tr("Copy &Quick"),        ":/icons/copy.svg",            "edit-copy"},
+        {"EditPaste",          RS2::ActionEditPaste,          tr("&Paste"),             ":/icons/paste.svg",           "edit-paste"},
+        {"EditPasteTransform", RS2::ActionEditPasteTransform, tr("Paste &Transform"),   ":/icons/paste_transform.svg", "edit-paste"},
+        {"ModifyDeleteQuick",  RS2::ActionModifyDelete,       tr("&Delete Selected"),   ":/icons/delete.svg"},
+        {"EditKillAllActions", RS2::ActionEditKillAllActions, tr("&Selection Pointer"), ":/icons/cursor.svg",          "go-previous-view"}
+    });
+}
+
+void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
+    map["ZoomPrevious"]->setEnabled(false);
+    map["RightDockAreaToggle"]->setChecked(true);
+    map["ViewStatusBar"]->setChecked(true);
+
+    map["OptionsGeneral"]->setMenuRole(QAction::NoRole);
+
+    connect(main_window, SIGNAL(printPreviewChanged(bool)), map["FilePrint"], SLOT(setChecked(bool)));
+    connect(main_window, SIGNAL(printPreviewChanged(bool)), map["FilePrintPreview"], SLOT(setChecked(bool)));
+    connect(main_window, SIGNAL(gridChanged(bool)), map["ViewGrid"], SLOT(setChecked(bool)));
+    connect(main_window, SIGNAL(draftChanged(bool)), map["ViewDraft"], SLOT(setChecked(bool)));
+
+    connect(main_window, &QC_ApplicationWindow::windowsChanged, map["OptionsDrawing"], &QAction::setEnabled);
+}
+
+void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_ActionGroupManager* agm) {
+    QList<QKeySequence> commandLineShortcuts;
+    commandLineShortcuts << QKeySequence(Qt::CTRL | Qt::Key_M) << QKeySequence(Qt::Key_Colon);
+    if (LC_GET_BOOL("Keyboard/ToggleFreeSnapOnSpace"))
+        commandLineShortcuts << QKeySequence(Qt::Key_Space);
+
+    std::vector<LC_ShortcutInfo> shortcutsList = {
+        {"ModifyRevertDirection", QKeySequence(tr("Ctrl+R"))},
+        {"ModifyDuplicate",QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_D)},
+        {"OrderBottom", QKeySequence(Qt::Key_End)},
+        {"OrderLower", QKeySequence(Qt::Key_PageDown)},
+        {"OrderRaise", QKeySequence(Qt::Key_PageUp)},
+        {"OrderTop", QKeySequence(Qt::Key_Home)},
+        {"SelectAll", QKeySequence::SelectAll},
+        // RVT April 29, 2011 - Added esc key to de-select all entities
+        {"DeselectAll", QKeySequence(tr("Ctrl+K"))},
+        {"EditUndo", QKeySequence::Undo},
+        {"EditRedo", QKeySequence::Redo},
+        {"EditCut", QKeySequence::Cut},
+        {"EditCutQuick", QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_X)},
+        {"EditCopy", QKeySequence::Copy},
+        {"EditCopyQuick", QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_C)},
+        {"EditPaste", QKeySequence::Paste},
+        {"EditPasteTransform", QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_V)},
+        {"ZoomIn", QKeySequence::ZoomIn},
+        {"ZoomOut", QKeySequence::ZoomOut},
+        {"ZoomAuto", QKeySequence(Qt::CTRL | Qt::Key_F)},
+        {"ZoomRedraw", QKeySequence::Refresh},
+        {"OptionsDrawing", QKeySequence::Preferences},
+        {"ReloadStyleSheet", QKeySequence("Ctrl+T")},
+        {"FileClose", QKeySequence::Close},
+        {"FileCloseAll", QKeySequence("Shift+" + QKeySequence(QKeySequence::Close).toString())},
+        {"ViewGrid", QKeySequence(tr("Ctrl+G", "Toggle Grid"))},
+        // todo - it's better to replace to something different.... ctrl+d is rather for duplicate
+        {"ViewDraft", QKeySequence(tr("Ctrl+D","Toggle Draft Mode"))},
+        {"ViewStatusBar", QKeySequence(tr("Ctrl+I", "Hide Statusbar"))},
+        {"ModifyDeleteQuick",QKeySequence::Delete  /*QList<QKeySequence>() << QKeySequence::Delete << QKeySequence(Qt::Key_Backspace)*/},
+        {"FileNew", QKeySequence::New},
+        {"FileOpen", QKeySequence::Open},
+        {"FileSave", QKeySequence::Save},
+        {"FileSaveAs", QKeySequence::SaveAs},
+        {"FilePrint", QKeySequence::Print},
+        {"FileQuit", QKeySequence::Quit},
+        {"FocusCommand", QKeySequence(Qt::CTRL | Qt::Key_M)}, // commandLineShortcuts}, // fixme - restore shortcuts for focus command line!!!
+#if defined(Q_OS_LINUX)
+        {"Fullscreen", QKeySequence("F11")},
+#else
+        {"Fullscreen", QKeySequence::FullScreen},
+        {"ExclusiveSnapMode", QKeySequence(Qt::ALT | Qt::Key_X)},
+
+
+#endif
+    };
+
+    map["FileClose"]->setShortcutContext(Qt::WidgetShortcut);
+
+    QKeySequence shortcut = QKeySequence::SaveAs; //(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
+    // only define this shortcut for platforms not already using it for save as
+    if (shortcut != QKeySequence::SaveAs){
+        shortcutsList.push_back({"FileSaveAll", shortcut});
+    }
+
+    agm->assignShortcutsToActions(map, shortcutsList);
+}
+
+void LC_ActionFactory::markNotEditableActionsShortcuts(QMap<QString, QAction *> &map) {
+    // placeholder for exclusion of some actions (by name) from editing in shortcuts mapping dialog
+    makeActionsShortcutsNonEditable(map, {
+        "RestrictNothing"
+    });
 }

@@ -35,13 +35,10 @@
  * Constructor.
  */
 RS_Preview::RS_Preview(RS_EntityContainer* parent)
-        : RS_EntityContainer(parent, true)
-{
-    auto groupGuard = RS_SETTINGS->beginGroupGuard("/Appearance");
-    maxEntities = RS_SETTINGS->readNumEntry("/MaxPreview", 100);
+        : RS_EntityContainer(parent, true){
 
-    groupGuard = RS_SETTINGS->beginGroupGuard("/Colors");
-    RS_Color highLight = QColor(RS_SETTINGS->readEntry("/highlight", RS_Settings::highlight));
+    maxEntities = LC_GET_ONE_INT("Appearance", "MaxPreview", 100);
+    RS_Color highLight = QColor(LC_GET_ONE_STR("Colors", "highlight", RS_Settings::highlight));
     setPen(RS_Pen(highLight, RS2::Width00, RS2::SolidLine));
 }
 
@@ -56,32 +53,43 @@ void RS_Preview::addEntity(RS_Entity* entity) {
 
     // only border preview for complex entities:
 
+    int rtti = entity->rtti();
+
     bool addBorder = false;
+    bool refEntity = false;
 
-    if (entity->rtti()==RS2::EntityImage || entity->rtti()==RS2::EntityHatch ||
-                entity->rtti()==RS2::EntityInsert) {
-
-        addBorder = true;
-    } else {
-        if (entity->isContainer() && entity->rtti()!=RS2::EntitySpline) {
-            if (entity->countDeep() > maxEntities-countDeep()) {
-                addBorder = true;
+    switch (rtti) {
+        case RS2::EntityImage:
+        case RS2::EntityHatch:
+        case RS2::EntityInsert:
+            addBorder = true;
+            break;
+        case RS2::EntityRefPoint:
+        case RS2::EntityRefLine:
+        case RS2::EntityRefCircle:
+        case RS2::EntityRefEllipse:
+        case RS2::EntityRefArc: {
+            refEntity = true;
+            break;
+        }
+        case RS2::EntitySpline:
+            break;
+        default: {
+            if (entity->isContainer()) {
+                if (entity->countDeep() > maxEntities-countDeep()) {
+                    addBorder = true;
+                }
             }
         }
     }
 
-    if (addBorder) {
+    if (addBorder){
         RS_Vector min = entity->getMin();
         RS_Vector max = entity->getMax();
-
-        RS_Line* l1 =
-			new RS_Line(this, {min.x, min.y}, {max.x, min.y});
-        RS_Line* l2 =
-			new RS_Line(this, {max.x, min.y}, {max.x, max.y});
-        RS_Line* l3 =
-			new RS_Line(this, {max.x, max.y}, {min.x, max.y});
-        RS_Line* l4 =
-			new RS_Line(this, {min.x, max.y}, {min.x, min.y});
+        auto l1 = new RS_Line(this, {min.x, min.y}, {max.x, min.y});
+        auto *l2 = new RS_Line(this, {max.x, min.y}, {max.x, max.y});
+        auto *l3 = new RS_Line(this, {max.x, max.y}, {min.x, max.y});
+        auto *l4 = new RS_Line(this, {min.x, max.y}, {min.x, min.y});
 
         RS_EntityContainer::addEntity(l1);
         RS_EntityContainer::addEntity(l2);
@@ -93,9 +101,28 @@ void RS_Preview::addEntity(RS_Entity* entity) {
         entity->setLayer(nullptr);
         entity->setSelected(false);
         entity->reparent(this);
-                // Don't set this pen, let drawing routines decide entity->setPenToActive();
-        RS_EntityContainer::addEntity(entity);
+       // Don't set this pen, let drawing routines decide entity->setPenToActive();
+       if (refEntity){
+           referenceEntities.append(entity);
+           if (autoUpdateBorders) {
+               adjustBorders(entity);
+           }
+       }
+       else{
+           RS_EntityContainer::addEntity(entity);
+       }
     }
+}
+
+void RS_Preview::clear() {
+    if (isOwner()) {
+        while (!referenceEntities.isEmpty()) {
+            delete referenceEntities.takeFirst();
+        }
+    } else {
+        referenceEntities.clear();
+    }
+    RS_EntityContainer::clear();
 }
 
 /**
@@ -115,10 +142,9 @@ void RS_Preview::addCloneOf(RS_Entity* entity) {
  * Adds all entities from 'container' to the preview (unselected).
  */
 void RS_Preview::addAllFrom(RS_EntityContainer& container) {
-	int c=0;
-	for(auto e: container){
-
-        if (c<maxEntities) {
+    unsigned int c=0;
+    for(auto e: container){
+        if (c < maxEntities) {
             RS_Entity* clone = e->clone();
             clone->setSelected(false);
             clone->reparent(this);
@@ -134,9 +160,8 @@ void RS_Preview::addAllFrom(RS_EntityContainer& container) {
  * Adds all selected entities from 'container' to the preview (unselected).
  */
 void RS_Preview::addSelectionFrom(RS_EntityContainer& container) {
-	int c=0;
-	for(auto e: container){
-
+    unsigned int c=0;
+    for(auto e: container){
         if (e->isSelected() && c<maxEntities) {
             RS_Entity* clone = e->clone();
             clone->setSelected(false);
@@ -155,22 +180,18 @@ void RS_Preview::addSelectionFrom(RS_EntityContainer& container) {
  */
 void RS_Preview::addStretchablesFrom(RS_EntityContainer& container,
                                      const RS_Vector& v1, const RS_Vector& v2) {
-    int c=0;
+    unsigned int c=0;
 
-	for(auto e: container){
+    for (auto e: container) {
+        if (e->isVisible() && e->rtti() != RS2::EntityHatch &&
+            ((e->isInWindow(v1, v2)) || e->hasEndpointsWithinWindow(v1, v2)) &&
+            c < maxEntities) {
 
-        if (e->isVisible() &&
-                e->rtti()!=RS2::EntityHatch &&
-                ((e->isInWindow(v1, v2)) ||
-                 e->hasEndpointsWithinWindow(v1, v2)) &&
-
-                c<maxEntities) {
-
-            RS_Entity* clone = e->clone();
+            RS_Entity *clone = e->clone();
             //clone->setSelected(false);
             clone->reparent(this);
 
-            c+=clone->countDeep();
+            c += clone->countDeep();
             addEntity(clone);
             // clone might be nullptr after this point
         }
@@ -184,8 +205,13 @@ void RS_Preview::draw(RS_Painter* painter, RS_GraphicView* view,
         return;
     }
 
-    foreach (auto e, entities)
-    {
+    for (auto e: entities){
         e->draw(painter, view, patternOffset);
+    }
+}
+
+void RS_Preview::addReferenceEntitiesToContainer(RS_EntityContainer *container){
+    for (auto en: referenceEntities){
+        container->addEntity(en);
     }
 }

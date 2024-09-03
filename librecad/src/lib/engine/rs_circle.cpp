@@ -700,17 +700,32 @@ void RS_Circle::move(const RS_Vector& offset) {
   *Author: Dongxu Li
   */
 bool RS_Circle::offset(const RS_Vector& coord, const double& distance) {
-    double r0(coord.distanceTo(getCenter()));
-    if(r0 > getRadius()){
+   /* bool increase = coord.x > 0;
+    double newRadius;
+    if (increase){
+        newRadius = getRadius() + std::abs(distance);
+    }
+    else{
+        newRadius = getRadius() - std::abs(distance);
+        if(newRadius < RS_TOLERANCE) {
+            return false;
+        }
+    }*/
+
+    double dist(coord.distanceTo(getCenter()));
+    double newRadius;
+    if(dist > getRadius()){
         //external
-        r0 = getRadius()+ std::abs(distance);
+        newRadius = getRadius()+ fabs(distance);
     }else{
-        r0 = getRadius()- std::abs(distance);
-        if(r0<RS_TOLERANCE) {
+        newRadius = getRadius()- fabs(distance);
+        if(newRadius<RS_TOLERANCE) {
             return false;
         }
     }
-    setRadius(r0);
+    setRadius(newRadius);
+    calculateBorders();
+    setRadius(newRadius);
     calculateBorders();
     return true;
 }

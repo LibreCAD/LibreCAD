@@ -805,6 +805,19 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
                   interlin,
                   mtext, sty, angle,
                   RS2::NoUpdate);
+    switch(data.alignH) {
+    //case DRW_Text::DrawingDirection::LeftToRight:
+    default:
+        d.drawingDirection=RS_MTextData::MTextDrawingDirection::LeftToRight;
+        break;
+    case 3:
+        d.drawingDirection=RS_MTextData::MTextDrawingDirection::TopToBottom;
+        break;
+    case 5:
+        // FIXME: add style support
+        d.drawingDirection=RS_MTextData::MTextDrawingDirection::RightToLeft;
+        break;
+    }
     RS_MText* entity = new RS_MText(currentContainer, d);
 
     setEntityAttributes(entity, &data);
@@ -4082,6 +4095,3 @@ void RS_FilterDXFRW::printDwgError(int le){
     }
 }
 #endif
-
-// EOF
-

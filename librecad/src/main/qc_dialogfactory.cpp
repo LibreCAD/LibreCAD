@@ -40,8 +40,8 @@
 
 
 
-QC_DialogFactory::QC_DialogFactory(QWidget* parent, QToolBar* ow) :
-  QG_DialogFactory(parent, ow)
+QC_DialogFactory::QC_DialogFactory(QWidget* parent, QToolBar* ow,  LC_SnapOptionsWidgetsHolder *snapOptionsHolder) :
+  QG_DialogFactory(parent, ow, snapOptionsHolder)
 {}
 
 
@@ -124,4 +124,3 @@ void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
 
     RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: OK");
 }
-

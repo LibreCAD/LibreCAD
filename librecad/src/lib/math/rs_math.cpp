@@ -46,8 +46,7 @@
 
 
 namespace {
-constexpr double m_piX2 = M_PI*2; //2*PI
-constexpr double m_halfPI = M_PI/2; //PI/2
+constexpr double g_twoPi = M_PI*2; //2*PI
 const QRegularExpression unitreg(
         R"((?P<sign>^-?))"
         R"((?:(?:(?:(?P<degrees>\d+\.?\d*)(?:degree[s]?|deg|[Dd]|°)))"  // DMS
@@ -169,30 +168,22 @@ bool RS_Math::isAngleBetween(double a,
  * Corrects the given angle to the range of 0 to +PI*2.0.
  */
 double RS_Math::correctAngle(double a) {
-    return std::fmod(M_PI + std::remainder(a - M_PI, m_piX2), m_piX2);
+    return std::fmod(M_PI + std::remainder(a - M_PI, g_twoPi), g_twoPi);
 }
 
 /**
  * Corrects the given angle to the range of -PI to +PI.
  */
-double RS_Math::correctAngle2(double a) {
-    return std::remainder(a, m_piX2);
+double RS_Math::correctAnglePlusMinusPi(double a) {
+    return std::remainder(a, g_twoPi);
 }
 
 /**
  * Returns the given angle as an Unsigned Angle in the range of 0 to +PI.
  */
-double RS_Math::correctAngleU(double a) {
-    return std::abs(std::remainder(a, m_piX2));
+double RS_Math::correctAngle0ToPi(double a) {
+    return std::abs(std::remainder(a, g_twoPi));
 }
-
-/**
- * Returns the given angle as an Unsigned Angle in the range of 0 to +PI.
- */
-double RS_Math::correctAngle3(double a) {
-    return std::remainder(a, m_halfPI);
-}
-
 
 
 /**
@@ -200,13 +191,14 @@ double RS_Math::correctAngle3(double a) {
  *         Always positive and less than 2*pi.
  */
 double RS_Math::getAngleDifference(double a1, double a2, bool reversed) {
-    if(reversed) std::swap(a1, a2);
+    if (reversed)
+        std::swap(a1, a2);
     return correctAngle(a2 - a1);
 }
 
 double RS_Math::getAngleDifferenceU(double a1, double a2)
 {
-    return correctAngleU(a1 - a2);
+    return correctAngle0ToPi(a1 - a2);
 }
 
 
@@ -252,9 +244,9 @@ double RS_Math::makeAngleReadable(double angle, bool readable,
 bool RS_Math::isAngleReadable(double angle) {
     const double tolerance=0.001;
     if (angle>M_PI_2)
-        return std::abs(std::remainder(angle, m_piX2)) < (M_PI_2 - tolerance);
+        return std::abs(std::remainder(angle, g_twoPi)) < (M_PI_2 - tolerance);
     else
-        return std::abs(std::remainder(angle, m_piX2)) < (M_PI_2 + tolerance);
+        return std::abs(std::remainder(angle, g_twoPi)) < (M_PI_2 + tolerance);
 }
 
 /**

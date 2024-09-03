@@ -55,6 +55,8 @@ struct RS_EllipseData {
 
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed);
 
+// fixme - add support of offset operation for ellipse entity!
+
 /**
  * Class for an ellipse entity. All angles are in Rad.
  *
@@ -174,7 +176,7 @@ public:
 	/** : generic quadratic: A x^2 + C xy + B y^2 + D x + E y + F =0 */
 	bool createFromQuadratic(const LC_Quadratic& q);
 	//! \}
-	bool createInscribeQuadrilateral(const std::vector<RS_Line*>& lines);
+	bool createInscribeQuadrilateral(const std::vector<RS_Line*>& lines,std::vector<RS_Vector> &tangent);
 	RS_Vector getMiddlePoint(void)const override;
 	RS_Vector getNearestEndpoint(const RS_Vector& coord,
 										 double* dist = nullptr) const override;

@@ -438,8 +438,8 @@ LC_Quadratic LC_Quadratic::move(const RS_Vector& v)
 LC_Quadratic LC_Quadratic::rotate(const double& angle)
 {
     using namespace boost::numeric::ublas;
-	auto m=rotationMatrix(angle);
-	auto t=trans(m);
+    matrix<double> m=rotationMatrix(angle);
+    matrix<double> t=trans(m);
     m_vLinear = prod(t, m_vLinear);
     if(m_bIsQuadratic){
         m_mQuad=prod(m_mQuad,m);

@@ -29,6 +29,7 @@
 #define RS_PAINTER_H
 
 #include "rs.h"
+#include "qnamespace.h"
 #include "rs_vector.h"
 
 class RS_Color;
@@ -95,10 +96,6 @@ public:
     virtual void drawPoint(const RS_Vector& p, int pdmode, int pdsize) = 0;
     virtual void drawLine(const RS_Vector& p1, const RS_Vector& p2) = 0;
     virtual void drawRect(const RS_Vector& p1, const RS_Vector& p2);
-    virtual void drawArc(const RS_Vector& cp, double radius,
-                         double a1, double a2,
-                         const RS_Vector& p1, const RS_Vector& p2,
-                         bool reversed) = 0;
     virtual void drawArc(const RS_Vector& cp, double radius,
                          double a1, double a2,
                          bool reversed) = 0;

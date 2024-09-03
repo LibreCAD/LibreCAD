@@ -842,7 +842,7 @@ void RS_VectorSolutions::scale( const RS_Vector& factor) {
  * @return vector solution which is the closest to the given coordinate.
  * dist will contain the distance if it doesn't point to NULL (default).
  */
-RS_Vector RS_VectorSolutions::getClosest(const RS_Vector& coord,
+RS_Vector RS_VectorSolutions::getClosest(const RS_Vector &coord,
                                          double* dist, size_t* index) const {
 
     double curDist{0.};
@@ -857,7 +857,7 @@ RS_Vector RS_VectorSolutions::getClosest(const RS_Vector& coord,
             if (curDist<minDist) {
                 closestPoint = vector[i];
                 minDist = curDist;
-                pos=i;
+                pos = i;
             }
         }
     }

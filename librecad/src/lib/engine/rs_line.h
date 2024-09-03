@@ -49,6 +49,10 @@ struct RS_LineData {
         endpoint( point2)
     {}
 
+    void reverse() {
+        std::swap(startpoint, endpoint);
+    }
+
     RS_Vector startpoint;
     RS_Vector endpoint;
 };
@@ -78,10 +82,6 @@ public:
     bool isEdge() const override{
         return true;
     }
-
-    bool toggleSelected() override;
-
-    RS_Vector getHighlightedVertex();
 
     /** @return Copy of data that defines the line. */
     RS_LineData getData() const{

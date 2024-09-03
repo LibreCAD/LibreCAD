@@ -137,7 +137,7 @@ void LC_DimArc::arrow( const RS_Vector& point,
         RS_SolidData dummyVar;
 
         RS_Solid* arrow = new RS_Solid(this, dummyVar);
-        arrow->shapeArrow(point, arrowAngle, getArrowSize());
+        arrow->shapeArrow(point, arrowAngle, getArrowSize()*getGeneralScale());
         arrow->setPen( pen);
         arrow->setLayer(nullptr);
         addEntity(arrow);
@@ -150,7 +150,7 @@ void LC_DimArc::arrow( const RS_Vector& point,
 
         const RS_Vector tickVector = RS_Vector::polar(getTickSize() * getGeneralScale(), midAngle - deg45);
 
-        RS_Line* tick = new RS_Line(this, point - tickVector, point + tickVector);
+        auto* tick = new RS_Line(this, point - tickVector, point + tickVector);
         tick->setPen(pen);
         tick->setLayer(nullptr);
         addEntity(tick);
@@ -216,31 +216,32 @@ void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
         if (((textAngle_preliminary >= -degTolerance) && (textAngle_preliminary <= (M_PI + degTolerance))) 
         ||  ((textAngle_preliminary <= -(M_PI - degTolerance)) && (textAngle_preliminary >= -(deg360 + degTolerance))))
         {
-            textPosOffset.setPolar (getDimensionLineGap(), textAngle_preliminary);
+            textPosOffset.setPolar (getDimensionLineGap() * getGeneralScale(), textAngle_preliminary);
             textAngle = textAngle_preliminary + M_PI + M_PI_2;
         }
         /* With regards to Quadrants #3 and #4 */
         else
         {
-            textPosOffset.setPolar (getDimensionLineGap(), textAngle_preliminary + M_PI);
+            textPosOffset.setPolar (getDimensionLineGap() * getGeneralScale(), textAngle_preliminary + M_PI);
             textAngle = textAngle_preliminary + M_PI_2;
         }
     }
 
     QString dimLabel { getLabel() };
 
-    bool ok;
+    bool ok = false;
 
     const double dummyVar = dimLabel.toDouble(&ok);
 
     if (dummyVar) { /* This is a dummy code, to suppress the unused variable compiler warning. */ }
 
-    if (ok) dimLabel.prepend("∩ ");
+    if (ok)
+        dimLabel.prepend("∩ ");
 
     RS_MTextData textData
     {
         RS_MTextData( textPos, 
-                      getTextHeight(), 
+                      getTextHeight() * getGeneralScale(),
                       30.0, 
                       RS_MTextData::VABottom, 
                       RS_MTextData::HACenter, 
@@ -252,14 +253,14 @@ void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
                       textAngle) 
     };
 
-    RS_MText* text { new RS_MText (this, textData) };
+    auto* text { new RS_MText (this, textData) };
 
     text->setPen (RS_Pen (getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
     text->setLayer (nullptr);
     addEntity (text);
 
-    double halfWidth_plusGap  = (text->getUsedTextWidth() / 2.0) + getDimensionLineGap();
-    double halfHeight_plusGap = (getTextHeight()          / 2.0) + getDimensionLineGap();
+    double halfWidth_plusGap  = (text->getUsedTextWidth() / 2.0) + getDimensionLineGap() * getGeneralScale();
+    double halfHeight_plusGap = (getTextHeight()          / 2.0) + getDimensionLineGap() * getGeneralScale();
 
     text->move(-RS_Vector::polar(getTextHeight() / 2.0, textAngle + M_PI_2));
 
@@ -311,25 +312,11 @@ void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
                   << std::endl;
     }
 
-    const double cornerLeftX
-    {
-        std::min({textRectCorners[0].x, textRectCorners[1].x, textRectCorners[2].x, textRectCorners[3].x})
-    };
+    const auto [cornerLeftX, cornerRightX] = std::minmax(
+        { textRectCorners[0].x, textRectCorners[1].x, textRectCorners[2].x, textRectCorners[3].x});
 
-    const double cornerRightX
-    {
-        std::max({textRectCorners[0].x, textRectCorners[1].x, textRectCorners[2].x, textRectCorners[3].x})
-    };
-
-    const double cornerBottomY
-    {
-        std::min({textRectCorners[0].y, textRectCorners[1].y, textRectCorners[2].y, textRectCorners[3].y})
-    };
-
-    const double cornerTopY
-    {
-        std::max({textRectCorners[0].y, textRectCorners[1].y, textRectCorners[2].y, textRectCorners[3].y})
-    };
+    const auto [cornerBottomY, cornerTopY] = std::minmax(
+        { textRectCorners[0].y, textRectCorners[1].y, textRectCorners[2].y, textRectCorners[3].y});
 
     constexpr double deltaOffset { 1.0E-2 };
 

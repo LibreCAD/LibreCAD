@@ -62,11 +62,9 @@ bool isAngleBetween(double a, double a1, double a2, bool reversed = false);
 //! \brief correct angle to be within [0, +PI*2.0)
 double correctAngle(double a);
 //! \brief correct angle to be within [-PI, +PI)
-double correctAngle2(double a);
-//! \brief correct angle to be within [-PI/2, +PI/2)
-    double correctAngle3(double a);
+double correctAnglePlusMinusPi(double a);
 //! \brief correct angle to be unsigned [0, +PI)
-double correctAngleU(double a);
+double correctAngle0ToPi(double a);
 
 //! \brief angular difference
 double getAngleDifference(double a1, double a2, bool reversed = false);

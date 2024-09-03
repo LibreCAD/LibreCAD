@@ -31,7 +31,7 @@
 #include "rs_dimension.h"
 
 /**
- * Holds the data that defines a linear dimension entity.
+ * Holds the data that defines a linear and aligned dimension entity.
  */
 struct RS_DimLinearData {
     /**
@@ -69,17 +69,17 @@ std::ostream& operator << (std::ostream& os,
  *
  * @author Andrew Mustun
  */
-class RS_DimLinear : public RS_Dimension {
+class RS_DimLinear:public RS_Dimension {
 public:
-    RS_DimLinear(RS_EntityContainer* parent,
-                 const RS_DimensionData& d,
-                 const RS_DimLinearData& ed);
-	virtual ~RS_DimLinear() = default;
-
-    RS_Entity* clone() const override;
+    RS_DimLinear(
+        RS_EntityContainer *parent,
+        const RS_DimensionData &d,
+        const RS_DimLinearData &ed);
+    virtual ~RS_DimLinear() = default;
+    RS_Entity *clone() const override;
 
     /**	@return RS2::EntityDimLinear */
-    RS2::EntityType rtti() const override {
+    RS2::EntityType rtti() const override{
         return RS2::EntityDimLinear;
     }
 
@@ -87,48 +87,47 @@ public:
      * @return Copy of data that defines the linear dimension.
      * @see getData()
      */
-    RS_DimLinearData getEData() const {
+    RS_DimLinearData getEData() const{
         return edata;
     }
 
     RS_VectorSolutions getRefPoints() const override;
-
     QString getMeasuredLabel() override;
+    void updateDim(bool autoText = false) override;
 
-    void updateDim(bool autoText=false) override;
-
-	RS_Vector getExtensionPoint1() const{
+    RS_Vector getExtensionPoint1() const{
         return edata.extensionPoint1;
     }
 
-	RS_Vector getExtensionPoint2() const{
+    RS_Vector getExtensionPoint2() const{
         return edata.extensionPoint2;
     }
 
-	double getAngle() const{
+    double getAngle() const{
         return edata.angle;
     }
 
-	void setAngle(double a);
+    void setAngle(double a);
 
-	double getOblique() const{
+    double getOblique() const{
         return edata.oblique;
     }
 
-    void move(const RS_Vector& offset) override;
-    void rotate(const RS_Vector& center, const double& angle) override;
-    void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
-    void scale(const RS_Vector& center, const RS_Vector& factor) override;
-    void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
-    bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) override;
-    void stretch(const RS_Vector& firstCorner,
-                         const RS_Vector& secondCorner,
-                         const RS_Vector& offset) override;
-    void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_DimLinear& d);
-
+    void move(const RS_Vector &offset) override;
+    void rotate(const RS_Vector &center, const double &angle) override;
+    void rotate(const RS_Vector &center, const RS_Vector &angleVector) override;
+    void scale(const RS_Vector &center, const RS_Vector &factor) override;
+    void mirror(const RS_Vector &axisPoint1, const RS_Vector &axisPoint2) override;
+    bool hasEndpointsWithinWindow(const RS_Vector &v1, const RS_Vector &v2) override;
+    void stretch(
+        const RS_Vector &firstCorner,
+        const RS_Vector &secondCorner,
+        const RS_Vector &offset) override;
+    void moveRef(const RS_Vector &ref, const RS_Vector &offset) override;
+    friend std::ostream &operator<<(
+        std::ostream &os,
+        const RS_DimLinear &d);
+    void getDimPoints(RS_Vector &dimP1, RS_Vector &dimP2);
 protected:
     /** Extended data. */
     RS_DimLinearData edata;

@@ -29,6 +29,8 @@
 #define RS_DIALOGFACTORYINTERFACE_H
 
 #include "rs.h"
+#include "lc_modifiersinfo.h"
+#include "lc_actiongroupmanager.h"
 #include <QString>
 
 class QWidget;
@@ -238,19 +240,9 @@ public:
      */
     virtual QString requestImageOpenDialog() = 0;
 
-    /**
-     * This virtual method must be overwritten and must present
-     * a widget for options for the given action.
-     *
-         * @param action Pointer to the action which needs the options.
-     * @param on true: switch widget on, false: off
-         * @param update true: widget gets data from the action, false:
-         *   widget gets data from config file.
-     */
-    virtual void requestOptions(RS_ActionInterface* action,
-                bool on, bool update = false) = 0;
-
     virtual void addOptionsWidget(QWidget * options) = 0;
+    virtual void removeOptionsWidget(QWidget * options)=0;
+
 
     /**
      * This virtual method must be overwritten and must present
@@ -260,15 +252,10 @@ public:
      *             by the presented widget.
      * @param on true: switch widget on, false: off
      */
-    virtual void requestSnapDistOptions(double& dist, bool on) = 0;
-    virtual void requestSnapMiddleOptions(int& middlePoints, bool on) = 0;
-    /**
-      *This virtual method must overwritten and must present
-      * a widget for actionmodifyoffset distance
-      * @dist, distance of offset
-      * @on, to create the widget if true, and to delete the widget if false
-      */
-    virtual void requestModifyOffsetOptions(double& dist, bool on) = 0;
+    virtual void requestSnapDistOptions(double* dist, bool on) = 0;
+    virtual void requestSnapMiddleOptions(int* middlePoints, bool on) = 0;
+    virtual void hideSnapOptions()=0;
+
 
     /**
      * This virtual method must be overwritten and must present
@@ -371,7 +358,9 @@ public:
      * This virtual method must be overwritten and must present
      * a dialog for general application options.
      */
-    virtual void requestOptionsGeneralDialog() = 0;
+    virtual int requestOptionsGeneralDialog() = 0;
+
+    virtual void requestKeyboardShortcutsDialog(LC_ActionGroupManager *pManager) = 0;
 
     /**
      * This virtual method must be overwritten and must present
@@ -379,7 +368,7 @@ public:
          *
          * @param graphic Graphic document.
      */
-    virtual void requestOptionsDrawingDialog(RS_Graphic& graphic) = 0;
+    virtual int requestOptionsDrawingDialog(RS_Graphic& graphic) = 0;
 
     /**
      * This virtual method must be overwritten and must present
@@ -418,8 +407,8 @@ public:
      * @param right Help text for the right mouse button.
 	 */
 	virtual void updateMouseWidget(const QString& = QString(),
-								   const QString& = QString())=0;
-    virtual void updateArcTangentialOptions(double d, bool byRadius)=0;
+								   const QString& = QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE())=0;
+//    virtual void updateArcTangentialOptions(double d, bool byRadius)=0;
 
     /**
      * This virtual method must be overwritten if the graphic view has
@@ -450,8 +439,8 @@ public:
 	virtual void setCoordinateWidget(QG_CoordinateWidget* ) = 0;
 	virtual void setSelectionWidget(QG_SelectionWidget* ) = 0;
 	virtual void setCommandWidget(QG_CommandWidget* ) = 0;
-
-
 };
+
+
 
 #endif

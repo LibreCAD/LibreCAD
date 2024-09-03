@@ -110,13 +110,12 @@ using EntityTypeList = QList<RS2::EntityType>;
  */
 class RS_Snapper {
 public:
-    RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicView);
-	virtual ~RS_Snapper();
-
+    RS_Snapper(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    virtual ~RS_Snapper();
     void init();
-	//!
-	//! \brief finish stop using snapper
-	//!
+//!
+//! \brief finish stop using snapper
+//!
     void finish();
 
     /**
@@ -126,81 +125,82 @@ public:
      * If the snap mode didn't require an entity (e.g. free, grid) this
      * method will return NULL.
      */
-	RS_Entity* getKeyEntity() const {
+    RS_Entity *getKeyEntity() const{
         return keyEntity;
     }
 
     /** Sets a new snap mode. */
-    void setSnapMode(const RS_SnapMode& snapMode);
-
-	RS_SnapMode const* getSnapMode() const;
-	RS_SnapMode* getSnapMode();
+    void setSnapMode(const RS_SnapMode &snapMode);
+    RS_SnapMode const *getSnapMode() const;
+    RS_SnapMode *getSnapMode();
 
     /** Sets a new snap restriction. */
-    void setSnapRestriction(RS2::SnapRestriction /*snapRes*/) {
+    void setSnapRestriction(RS2::SnapRestriction /*snapRes*/){
         //this->snapRes = snapRes;
     }
 
-        /**
-         * Sets the snap range in pixels for catchEntity().
-         *
-         * @see catchEntity()
-         */
-        void setSnapRange(int r) {
-                catchEntityGuiRange = r;
-        }
+    /**
+     * Sets the snap range in pixels for catchEntity().
+     *
+     * @see catchEntity()
+     */
+    void setSnapRange(int r){
+        catchEntityGuiRange = r;
+    }
 
-        /**manually set snapPoint*/
-    RS_Vector snapPoint(const RS_Vector& coord, bool setSpot = false);
-    RS_Vector snapPoint(QMouseEvent* e);
-    RS_Vector snapFree(QMouseEvent* e);
-
-    RS_Vector snapFree(const RS_Vector& coord);
-    RS_Vector snapGrid(const RS_Vector& coord);
-    RS_Vector snapEndpoint(const RS_Vector& coord);
-    RS_Vector snapOnEntity(const RS_Vector& coord);
-    RS_Vector snapCenter(const RS_Vector& coord);
-    RS_Vector snapMiddle(const RS_Vector& coord);
-    RS_Vector snapDist(const RS_Vector& coord);
-    RS_Vector snapIntersection(const RS_Vector& coord);
+    /**manually set snapPoint*/
+    RS_Vector snapPoint(const RS_Vector &coord, bool setSpot = false);
+    RS_Vector snapPoint(QMouseEvent *e);
+    RS_Vector snapFree(QMouseEvent *e);
+    RS_Vector snapFree(const RS_Vector &coord);
+    RS_Vector snapGrid(const RS_Vector &coord);
+    RS_Vector snapEndpoint(const RS_Vector &coord);
+    RS_Vector snapOnEntity(const RS_Vector &coord);
+    RS_Vector snapCenter(const RS_Vector &coord);
+    RS_Vector snapMiddle(const RS_Vector &coord);
+    RS_Vector snapDist(const RS_Vector &coord);
+    RS_Vector snapIntersection(const RS_Vector &coord);
     //RS_Vector snapDirect(RS_Vector coord, bool abs);
     RS_Vector snapToAngle(const RS_Vector &coord, const RS_Vector &ref_coord, const double ang_res = 15.);
-    RS_Vector snapToRelativeAngle(double baseAngle, const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution  = 15.);
-
-    RS_Vector restrictOrthogonal(const RS_Vector& coord);
-    RS_Vector restrictHorizontal(const RS_Vector& coord);
-    RS_Vector restrictVertical(const RS_Vector& coord);
-
-
+    RS_Vector snapToRelativeAngle(double baseAngle, const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution = 15.);
+    RS_Vector restrictOrthogonal(const RS_Vector &coord);
+    RS_Vector restrictHorizontal(const RS_Vector &coord);
+    RS_Vector restrictVertical(const RS_Vector &coord);
     //RS_Entity* catchLeafEntity(const RS_Vector& pos);
     //RS_Entity* catchLeafEntity(QMouseEvent* e);
-    RS_Entity* catchEntity(const RS_Vector& pos,
-                           RS2::ResolveLevel level=RS2::ResolveNone);
-    RS_Entity* catchEntity(QMouseEvent* e,
-                           RS2::ResolveLevel level=RS2::ResolveNone);
+    RS_Entity *catchEntity(
+        const RS_Vector &pos,
+        RS2::ResolveLevel level = RS2::ResolveNone);
+    RS_Entity *catchEntity(
+        QMouseEvent *e,
+        RS2::ResolveLevel level = RS2::ResolveNone);
     // catch Entity closest to pos and of the given entity type of enType, only search for a particular entity type
-    RS_Entity* catchEntity(const RS_Vector& pos, RS2::EntityType enType,
-                           RS2::ResolveLevel level=RS2::ResolveNone);
-    RS_Entity* catchEntity(QMouseEvent* e, RS2::EntityType enType,
-                           RS2::ResolveLevel level=RS2::ResolveNone);
-	RS_Entity* catchEntity(QMouseEvent* e, const EntityTypeList& enTypeList,
-                           RS2::ResolveLevel level=RS2::ResolveNone);
-
+    RS_Entity *catchEntity(
+        const RS_Vector &pos, RS2::EntityType enType,
+        RS2::ResolveLevel level = RS2::ResolveNone);
+    RS_Entity *catchEntity(
+        QMouseEvent *e, RS2::EntityType enType,
+        RS2::ResolveLevel level = RS2::ResolveNone);
+    RS_Entity *catchEntity(
+        QMouseEvent *e, const EntityTypeList &enTypeList,
+        RS2::ResolveLevel level = RS2::ResolveNone);
+    RS_Entity *catchEntity(
+        const RS_Vector &pos, const EntityTypeList &enTypeList,
+        RS2::ResolveLevel level = RS2::ResolveNone);
     /**
      * Suspends this snapper while another action takes place.
      */
-	virtual void suspend();
+    virtual void suspend();
 
     /**
      * Resumes this snapper after it has been suspended.
      */
-    virtual void resume() {
+    virtual void resume(){
         drawSnapper();
     }
-
-    virtual void hideOptions();
-    virtual void showOptions();
-
+    void hideSnapOptions();
+//    virtual void hideOptions();
+//    virtual void showOptions();
     void drawSnapper();
 
 protected:
@@ -227,10 +227,15 @@ protected:
     int catchEntityGuiRange = 32;
     bool finished{false};
 
-private:
-	struct ImpData;
-	std::unique_ptr<ImpData> pImpData;
+    const RS_Vector toGraph(const QMouseEvent *e) const;
 
+    void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false);
+    void updateCoordinateWidgetByRelZero(const RS_Vector& abs, bool updateFormat=false);
+    void updateCoordinateWidgetFormat();
+
+private:
+    struct ImpData;
+    std::unique_ptr<ImpData> pImpData;
     struct Indicator;
     std::unique_ptr<Indicator> snap_indicator;
 };

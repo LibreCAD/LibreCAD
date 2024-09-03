@@ -103,6 +103,8 @@ private:
 
 public slots:
     void setRelativeZero(const RS_Vector&);
+
+    void checkLastActionCompletedAndUncheckQAction(const std::shared_ptr<RS_ActionInterface> &lastAction);
 };
 
 #endif

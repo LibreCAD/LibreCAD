@@ -41,8 +41,23 @@ class QString;
  * @author  Rallaz
  */
 class QC_ActionGetSelect : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
+    QC_ActionGetSelect(RS_EntityContainer& container,
+                       RS_GraphicView& graphicView);
+
+    QC_ActionGetSelect(RS2::EntityType typeToSelect, RS_EntityContainer& container,
+                       RS_GraphicView& graphicView);
+
+    ~QC_ActionGetSelect() override;
+    void init(int status) override;
+    void mouseReleaseEvent(QMouseEvent* e) override;
+    void keyPressEvent(QKeyEvent* e) override;
+    void setMessage(QString msg);
+    bool isCompleted() const{return completed;}
+    void getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) const;
+    void unselectEntities();
+protected:
     /**
      * Action States.
      */
@@ -50,33 +65,11 @@ public:
         Select
     };
 
-public:
-    QC_ActionGetSelect(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-
-    QC_ActionGetSelect(RS2::EntityType typeToSelect, RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-
-    ~QC_ActionGetSelect() override;
-
-     void init(int status=0) override;
-	
-     void mouseReleaseEvent(QMouseEvent* e) override;
-     void keyPressEvent(QKeyEvent* e) override;
-	
-     void updateMouseButtonHints() override;
-     void updateMouseCursor() override;
-
-    void setMessage(QString msg);
-	bool isCompleted() const{return completed;}
-	void getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) const;
-
-    void unselectEntities();
-
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void updateMouseButtonHints() override;
 private:
     bool completed = false;
     std::unique_ptr<QString> message;
     RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
 };
-
 #endif

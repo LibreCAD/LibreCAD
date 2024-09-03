@@ -39,34 +39,27 @@ class QPointF;
  */
 class QC_ActionGetPoint : public RS_PreviewActionInterface {
 	Q_OBJECT
-
 public:
     QC_ActionGetPoint(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~QC_ActionGetPoint();
+                      RS_GraphicView& graphicView);
+    ~QC_ActionGetPoint();
 
-     void trigger() override;
-	
-     void mouseMoveEvent(QMouseEvent* e) override;
-     void mouseReleaseEvent(QMouseEvent* e) override;
-	
-     void coordinateEvent(RS_CoordinateEvent* e ) override;
-
-     void updateMouseButtonHints() override;
-     void updateMouseCursor() override;
-
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void mouseReleaseEvent(QMouseEvent* e) override;
     void getPoint(QPointF *point);
     void setBasepoint(QPointF* basepoint);
     void setMessage(QString msg);
     bool isCompleted(){return completed;}
     bool wasCanceled(){return canceled;}
-
-private:
+protected:
     bool canceled;
-	bool completed;
-	bool setTargetPoint;
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    bool completed;
+    bool setTargetPoint;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void updateMouseButtonHints() override;
 };
-
 #endif

@@ -214,9 +214,9 @@ bool LC_LineMath::areLinesOnSameRay(const RS_Vector &line1Start, const RS_Vector
 
     // if all points are on the same ray, the angles from first point to remaining 3 points will be the same
 
-    angle1 = RS_Math::correctAngleU(angle1);
-    angle2 = RS_Math::correctAngleU(angle2);
-    angle3 = RS_Math::correctAngleU(angle3);
+    angle1 = RS_Math::correctAngle0ToPi(angle1);
+    angle2 = RS_Math::correctAngle0ToPi(angle2);
+    angle3 = RS_Math::correctAngle0ToPi(angle3);
 
     bool sameLine = false;
     if (std::abs(angle1 - angle2) < RS_TOLERANCE_ANGLE && std::abs(angle1 - angle3) < RS_TOLERANCE_ANGLE){

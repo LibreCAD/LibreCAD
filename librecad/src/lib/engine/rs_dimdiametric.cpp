@@ -71,7 +71,7 @@ RS_DimDiametric::RS_DimDiametric(RS_EntityContainer* parent,
 }
 
 RS_Entity* RS_DimDiametric::clone() const {
-	RS_DimDiametric* d = new RS_DimDiametric(*this);
+	auto* d = new RS_DimDiametric(*this);
 	d->setOwner(isOwner());
 	d->initId();
 	d->detach();
@@ -85,11 +85,12 @@ RS_Entity* RS_DimDiametric::clone() const {
 QString RS_DimDiametric::getMeasuredLabel() {
 
     // Definitive dimension line:
-	double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
+ 	double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
 
-    RS_SETTINGS->beginGroup("/Appearance");
-    if (RS_SETTINGS->readNumEntry("/UnitlessGrid", 1) != 1) dist = RS_Units::convert(dist);
-    RS_SETTINGS->endGroup();
+  // fixme - same code as in rs_dimaligned, dim linear - review usage and try to read it once during action lifecycle
+    if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true)) {
+        dist = RS_Units::convert(dist);
+    }
 
     RS_Graphic* graphic = getGraphic();
 

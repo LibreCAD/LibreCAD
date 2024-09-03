@@ -56,10 +56,6 @@ public:
     //virtual void drawRect(const RS_Vector& p1, const RS_Vector& p2);
     void fillRect ( const QRectF & rectangle, const RS_Color & color ) override;
     void fillRect ( const QRectF & rectangle, const QBrush & brush ) override;
-    void drawArc(const RS_Vector& cp, double radius,
-                         double a1, double a2,
-                         const RS_Vector& p1, const RS_Vector& p2,
-                         bool reversed) override;
 
     void drawArc(const RS_Vector& cp, double radius,
                          double a1, double a2,

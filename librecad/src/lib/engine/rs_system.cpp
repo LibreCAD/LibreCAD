@@ -104,13 +104,13 @@ void RS_System::initLanguageList() {
     RS_DEBUG->print("RS_System::initLanguageList");
     QStringList lst = getFileList("qm", "qm");
 
-    RS_SETTINGS->beginGroup("/Paths");
+    LC_GROUP("Paths"); // fixme settings
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-    lst += (RS_SETTINGS->readEntry("/Translations", "")).split(";", Qt::SkipEmptyParts);
+    lst += (LC_GET_STR("Translations", "")).split(";", Qt::SkipEmptyParts);
 #else
     lst += (RS_SETTINGS->readEntry("/Translations", "")).split(";", QString::SkipEmptyParts);
 #endif
-    RS_SETTINGS->endGroup();
+    LC_GROUP_END();
 
     for (QStringList::Iterator it = lst.begin();
          it != lst.end();
@@ -413,13 +413,13 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
     // search in various directories for translations
     QStringList lst = getDirectoryList( "qm");
 
-    RS_SETTINGS->beginGroup( "/Paths");
+    LC_GROUP( "Paths");
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-    lst += (RS_SETTINGS->readEntry( "/Translations", "")).split( ";", Qt::SkipEmptyParts);
+    lst += (LC_GET_STR("Translations", "")).split(";", Qt::SkipEmptyParts);
 #else
     lst += (RS_SETTINGS->readEntry( "/Translations", "")).split( ";", QString::SkipEmptyParts);
 #endif
-    RS_SETTINGS->endGroup();
+    LC_GROUP_END();
 
     if( tLibreCAD != nullptr) {
         qApp->removeTranslator( tLibreCAD);
@@ -637,42 +637,39 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 #endif
 
     // Individual directories:
-    RS_SETTINGS->beginGroup( "/Paths");
+    {
+        LC_GROUP_GUARD( "Paths");
+        {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-    auto option = Qt::SkipEmptyParts;
+            auto option = Qt::SkipEmptyParts;
 #else
-    auto option = QString::SkipEmptyParts;
+            auto option = QString::SkipEmptyParts;
 #endif
-    if (subDirectory == "fonts") {
-        QString savedFonts = RS_SETTINGS->readEntry( "/Fonts", "");
-        RS_DEBUG->print("saved fonts: %s\n", savedFonts.toUtf8().constData());
-        dirList += (RS_SETTINGS->readEntry( "/Fonts", "")).split( QRegularExpression("[;]"),
+            if (subDirectory == "fonts") {
+                QString savedFonts = LC_GET_STR("Fonts", "");
+                RS_DEBUG->print("saved fonts: %s\n", savedFonts.toUtf8().constData());
+                dirList += (LC_GET_STR("Fonts", "")).split(QRegularExpression("[;]"),
+                                                           option);
+            } else if (subDirectory == "patterns") {
+                dirList += (LC_GET_STR("Patterns", "")).split(QRegularExpression("[;]"),
+                                                              option);
+            } else if (subDirectory.startsWith("scripts")) {
+                dirList += (LC_GET_STR("Scripts", "")).split(QRegularExpression("[;]"),
+                                                             option);
+            } else if (subDirectory.startsWith("library")) {
+                dirList += (LC_GET_STR("Library", "")).split(QRegularExpression("[;]"),
+                                                             option);
+            } else if (subDirectory.startsWith("qm")) {
+                dirList += (LC_GET_STR("Translations", "")).split(QRegularExpression("[;]"),
                                                                   option);
+            }
+        }
     }
-    else if (subDirectory == "patterns") {
-        dirList += (RS_SETTINGS->readEntry( "/Patterns", "")).split( QRegularExpression("[;]"),
-                                                                  option);
-    }
-    else if (subDirectory.startsWith( "scripts")) {
-        dirList += (RS_SETTINGS->readEntry( "/Scripts", "")).split( QRegularExpression("[;]"),
-                                                                  option);
-    }
-    else if (subDirectory.startsWith( "library")) {
-        dirList += (RS_SETTINGS->readEntry( "/Library", "")).split( QRegularExpression("[;]"),
-                                                                  option);
-    }
-    else if (subDirectory.startsWith( "qm")) {
-        dirList += (RS_SETTINGS->readEntry( "/Translations", "")).split( QRegularExpression("[;]"),
-                                                                  option);
-    }
-    RS_SETTINGS->endGroup();
 
     QStringList ret;
 
     RS_DEBUG->print("RS_System::getDirectoryList: Paths:");
-    for (QStringList::Iterator it = dirList.begin();
-         it != dirList.end();
-         ++it ) {
+    for (QStringList::Iterator it = dirList.begin(); it != dirList.end(); ++it ) {
         if (QFileInfo( *it).isDir()) {
             ret += (*it);
             RS_DEBUG->print(*it);
@@ -680,14 +677,11 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     }
 
     for (auto& dir: ret) {
-
-
         RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(dir).toUtf8().constData());
     }
 
     return ret;
 }
-
 
 /**
  * Converts a language string to a symbol (e.g. Deutsch or German to 'de').

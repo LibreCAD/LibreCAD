@@ -54,7 +54,7 @@ int console_dxf2pdf(int argc, char* argv[])
     QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
 
     QFileInfo prgInfo(QFile::decodeName(argv[0]));
-    RS_SETTINGS->init(app.organizationName(), app.applicationName());
+    RS_Settings::init(app.organizationName(), app.applicationName());
     RS_SYSTEM->init( app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), argv[0]);
 
     QCommandLineParser parser;

@@ -52,10 +52,8 @@ public:
 	void requestEditBlockWindow(RS_BlockList*) override{}
 	void closeEditBlockWindow(RS_Block*) override {}
 	QString requestImageOpenDialog() override {return {};}
-	void requestOptions(RS_ActionInterface*, bool, bool) override{}
-	void requestSnapDistOptions(double& , bool) override {}
-	void requestSnapMiddleOptions(int& , bool) override {}
-	void requestModifyOffsetOptions(double& , bool) override {}
+	void requestSnapDistOptions(double* , bool) override {}
+	void requestSnapMiddleOptions(int* , bool) override {}
 	bool requestAttributesDialog(RS_AttributesData&, RS_LayerList&) override{return false;}
 	bool requestMoveDialog(RS_MoveData&) override {return false;}
 	bool requestRotateDialog(RS_RotateData&) override {return false;}
@@ -67,23 +65,25 @@ public:
 	bool requestMTextDialog(RS_MText*) override {return false;}
 	bool requestTextDialog(RS_Text*) override {return false;}
 	bool requestHatchDialog(RS_Hatch*) override {return false;}
-	void requestOptionsGeneralDialog() override {}
-	void requestOptionsDrawingDialog(RS_Graphic&) override {}
+	int requestOptionsGeneralDialog() override {return -1;}
+    void requestKeyboardShortcutsDialog([[maybe_unused]]LC_ActionGroupManager *pManager) override{}
+	int requestOptionsDrawingDialog(RS_Graphic&) override {return -1;}
 	bool requestOptionsMakerCamDialog() override {return false;}
 	QString requestFileSaveAsDialog(const QString&, const QString&, const QString&, QString*) override {return {};}
 	void updateCoordinateWidget(const RS_Vector& , const RS_Vector& , bool =false) override {}
-	void updateMouseWidget(const QString&, const QString&) override{}
+    void updateMouseWidget(const QString&, const QString&,[[maybe_unused]] const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()) override{}
 	void updateSelectionWidget(int, double) override {}
-    void updateArcTangentialOptions(double, bool) override{}
+//    void updateArcTangentialOptions(double, bool) override{}
 	void commandMessage(const QString&) override {}
-        void command([[maybe_unused]]const QString& message) override{};
+ void command([[maybe_unused]]const QString& message) override{};
 	void setMouseWidget(QG_MouseWidget*) override {}
 	void setCoordinateWidget(QG_CoordinateWidget* ) override {}
 	void setSelectionWidget(QG_SelectionWidget* ) override {}
 	void setCommandWidget(QG_CommandWidget* ) override {}
 	void displayBlockName(const QString&, const bool&) override {}
-
-	void addOptionsWidget([[maybe_unused]]QWidget * options) override {}
+ void hideSnapOptions() override {};
+ void removeOptionsWidget([[maybe_unused]]QWidget *options) override {}
+ void addOptionsWidget([[maybe_unused]]QWidget * options) override {}
 };
 
 #endif

@@ -62,16 +62,16 @@ std::ostream& operator << (std::ostream& os, const RS_DimAlignedData& dd);
  *
  * @author Andrew Mustun
  */
-class RS_DimAligned : public RS_Dimension {
+class RS_DimAligned:public RS_Dimension {
 public:
-    RS_DimAligned(RS_EntityContainer* parent,
-                  const RS_DimensionData& d,
-                  const RS_DimAlignedData& ed);
-
-	RS_Entity* clone() const override;
+    RS_DimAligned(
+        RS_EntityContainer *parent,
+        const RS_DimensionData &d,
+        const RS_DimAlignedData &ed);
+    RS_Entity *clone() const override;
 
     /**	@return RS2::EntityDimAligned */
-	RS2::EntityType rtti() const override{
+    RS2::EntityType rtti() const override{
         return RS2::EntityDimAligned;
     }
 
@@ -79,38 +79,32 @@ public:
      * @return Copy of data that defines the aligned dimension.
      * @see getData()
      */
-	RS_DimAlignedData const& getEData() const;
-
-	RS_VectorSolutions getRefPoints() const override;
-
-	QString getMeasuredLabel() override;
-
-	void updateDim(bool autoText=false) override;
-
-	RS_Vector const& getExtensionPoint1() const;
-
-	RS_Vector const& getExtensionPoint2() const;
-
+    RS_DimAlignedData const &getEData() const;
+    RS_VectorSolutions getRefPoints() const override;
+    QString getMeasuredLabel() override;
+    void updateDim(bool autoText = false) override;
+    RS_Vector const &getExtensionPoint1() const;
+    RS_Vector const &getExtensionPoint2() const;
     /**
      * Recalculate the original Dimension Point to remove Dim oblique angle.
      * @author Rallaz
      */
-	void updateDimPoint();
-
-	void move(const RS_Vector& offset) override;
-	void rotate(const RS_Vector& center, const double& angle) override;
-	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
-	void scale(const RS_Vector& center, const RS_Vector& factor) override;
-	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
-	bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) override;
-	void stretch(const RS_Vector& firstCorner,
-                         const RS_Vector& secondCorner,
-						 const RS_Vector& offset) override;
-	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_DimAligned& d);
-
+    void updateDimPoint();
+    void move(const RS_Vector &offset) override;
+    void rotate(const RS_Vector &center, const double &angle) override;
+    void rotate(const RS_Vector &center, const RS_Vector &angleVector) override;
+    void scale(const RS_Vector &center, const RS_Vector &factor) override;
+    void mirror(const RS_Vector &axisPoint1, const RS_Vector &axisPoint2) override;
+    bool hasEndpointsWithinWindow(const RS_Vector &v1, const RS_Vector &v2) override;
+    void stretch(
+        const RS_Vector &firstCorner,
+        const RS_Vector &secondCorner,
+        const RS_Vector &offset) override;
+    void moveRef(const RS_Vector &ref, const RS_Vector &offset) override;
+    friend std::ostream &operator<<(
+        std::ostream &os,
+        const RS_DimAligned &d);
+    void getDimPoints(RS_Vector &dimP1, RS_Vector &dimP2);
 protected:
     /** Extended data. */
     RS_DimAlignedData edata;

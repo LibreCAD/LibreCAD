@@ -30,7 +30,6 @@
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
-#include "rs_debug.h"
 #include "lc_defaults.h"
 
 RS_Point::RS_Point(RS_EntityContainer* parent,
@@ -40,13 +39,12 @@ RS_Point::RS_Point(RS_EntityContainer* parent,
 }
 
 RS_Entity* RS_Point::clone() const {
-	RS_Point* p = new RS_Point(*this);
+	auto* p = new RS_Point(*this);
 	p->initId();
 	return p;
 }
 
-RS2::EntityType RS_Point::rtti() const
-{
+RS2::EntityType RS_Point::rtti() const{
     return RS2::EntityPoint;
 }
 
@@ -64,44 +62,36 @@ RS_Vector RS_Point::getStartpoint() const
     return data.pos;
 }
 
-RS_Vector RS_Point::getEndpoint() const
-{
+RS_Vector RS_Point::getEndpoint() const {
     return data.pos;
 }
 
-RS_PointData RS_Point::getData() const
-{
+RS_PointData RS_Point::getData() const {
     return data;
 }
 
-RS_Vector RS_Point::getPos() const
-{
+RS_Vector RS_Point::getPos() const {
     return data.pos;
 }
 
-RS_Vector RS_Point::getCenter() const
-{
+RS_Vector RS_Point::getCenter() const {
     return data.pos;
 }
 
-double RS_Point::getRadius() const
-{
+double RS_Point::getRadius() const {
     return 0.;
 }
 
-bool RS_Point::isTangent(const RS_CircleData& circleData) const
-{
-    double const dist=data.pos.distanceTo(circleData.center);
-    return fabs(dist - fabs(circleData.radius))<50.*RS_TOLERANCE;
+bool RS_Point::isTangent(const RS_CircleData &circleData) const {
+    double const dist = data.pos.distanceTo(circleData.center);
+    return fabs(dist - fabs(circleData.radius)) < 50. * RS_TOLERANCE;
 }
 
-void RS_Point::setPos(const RS_Vector& pos)
-{
+void RS_Point::setPos(const RS_Vector &pos) {
     data.pos = pos;
 }
 
 RS_Vector RS_Point::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
-
     if (dist) {
         *dist = data.pos.distanceTo(coord);
     }
@@ -145,7 +135,7 @@ RS_Vector RS_Point::getNearestMiddle(const RS_Vector& coord,
 
 RS_Vector RS_Point::getNearestDist(double /*distance*/,
                                    const RS_Vector& /*coord*/,
-								   double* dist) const{
+                                   double* dist) const{
     if (dist) {
         *dist = RS_MAXDOUBLE;
     }
@@ -192,36 +182,46 @@ void RS_Point::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
     calculateBorders();
 }
 
-RS_Entity& RS_Point::shear(double k)
-{
+RS_Entity& RS_Point::shear(double k){
     data.pos.shear(k);
     calculateBorders();
     return *this;
 }
 
 void RS_Point::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternOffset*/) {
-    if (painter==NULL || view==NULL) {
+    if (painter == nullptr || view == nullptr){
         return;
     }
 
-    RS_Graphic* graphic = getGraphic();
-    if (graphic) {
-		int pdmode = getGraphicVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
-		double pdsize = getGraphicVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
-		RS_Vector guiPos = view->toGui(getPos());
+    RS_Graphic *graphic = getGraphic();
 
-		int deviceHeight = painter->getHeight();
-		int screenPDSize;
-		if (pdsize == 0)
-			screenPDSize = deviceHeight / 20;
-		else if (DXF_FORMAT_PDSize_isPercent(pdsize))
-			screenPDSize = (deviceHeight * DXF_FORMAT_PDSize_Percent(pdsize)) / 100;
-		else
-			screenPDSize = view->toGuiDY(pdsize);
+    if (graphic){
+        // fixme - isn't it too ugly to retreive settings within each DRAW!! method??
+        // fixme - that's is definitely candidate for performance improvement, by mode caching or so ...
+        int pdmode = getGraphicVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
+        double pdsize = getGraphicVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
+        int screenPDSize = determinePointSreenSize(painter, view, pdsize);
 
-		//RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Point::draw X = %f, Y = %f, PDMODE = %d, PDSIZE = %f, ScreenPDSize = %i",guiPos.x,guiPos.y,pdmode,pdsize,screenPDSize);
-		painter->drawPoint(guiPos,pdmode,screenPDSize);
-	}
+//		RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Point::draw X = %f, Y = %f, PDMODE = %d, PDSIZE = %f, ScreenPDSize = %i",guiPos.x,guiPos.y,pdmode,pdsize,screenPDSize);
+        RS_Vector guiPos = view->toGui(getPos());
+
+        painter->drawPoint(guiPos, pdmode, screenPDSize);
+    }
+}
+
+int RS_Point::determinePointSreenSize(const RS_Painter *painter, const RS_GraphicView *view, double pdsize) const{
+    int deviceHeight = painter->getHeight();
+    int screenPDSize;
+    if (pdsize == 0){
+        screenPDSize = deviceHeight / 20;
+    }
+    else if (DXF_FORMAT_PDSize_isPercent(pdsize)){
+        screenPDSize = (deviceHeight * DXF_FORMAT_PDSize_Percent(pdsize)) / 100;
+    }
+    else {
+        screenPDSize = view->toGuiDY(pdsize);
+    }
+    return screenPDSize;
 }
 
 /**
@@ -232,10 +232,7 @@ std::ostream& operator << (std::ostream& os, const RS_Point& p) {
     return os;
 }
 
-std::ostream& operator << (std::ostream& os, const RS_PointData& pd)
-{
-        os << "(" << pd.pos << ")";
-        return os;
+std::ostream& operator << (std::ostream& os, const RS_PointData& pd){
+    os << "(" << pd.pos << ")";
+    return os;
 }
-
-// EOF

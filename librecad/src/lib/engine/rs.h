@@ -80,8 +80,9 @@ namespace RS2 {
         FlagSelected1   = 1<<12,
         /** Endpoint selected */
         FlagSelected2   = 1<<13,
-                /** Entity is highlighted temporarily (as a user action feedback) */
-                FlagHighlighted = 1<<14
+        /** Entity is highlighted temporarily (as a user action feedback) */
+        FlagHighlighted = 1<<14,
+        FlagTransparent = 1<<15
     };
 
     /**
@@ -160,7 +161,12 @@ namespace RS2 {
         EntityOverlayBox,    /**< OverlayBox */
         EntityPreview,    /**< Preview Container */
         EntityPattern,
-        EntityOverlayLine
+        EntityOverlayLine,
+        EntityRefPoint,
+        EntityRefLine,
+        EntityRefArc,
+        EntityRefCircle,
+        EntityRefEllipse,
     };
 
 
@@ -190,9 +196,14 @@ namespace RS2 {
         ActionEditRedo,
         ActionEditCut,
         ActionEditCutNoSelect,
+        ActionEditCutQuick,
+        ActionEditCutQuickNoSelect,
         ActionEditCopy,
         ActionEditCopyNoSelect,
+        ActionEditCopyQuick,
+        ActionEditCopyQuickNoSelect,
         ActionEditPaste,
+        ActionEditPasteTransform,
         ActionOrderNoSelect,
         ActionOrderBottom,
         ActionOrderLower,
@@ -260,6 +271,8 @@ namespace RS2 {
         ActionDrawEllipse4Points,
         ActionDrawEllipseCenter3Points,
         ActionDrawEllipseInscribe,
+        ActionDrawEllipse1Point,
+        ActionDrawEllipseArc1Point,
 
         ActionDrawParabola4Points,
         ActionDrawParabolaFD,
@@ -324,27 +337,20 @@ namespace RS2 {
         ActionDimAngular,
         ActionDimArc,
         ActionDimLeader,
+        ActionDimBaseline,
+        ActionDimContinue,
 
         ActionModifyAttributes,
-        ActionModifyAttributesNoSelect,
         ActionModifyDelete,
-        ActionModifyDeleteNoSelect,
         ActionModifyDeleteQuick,
         ActionModifyDeleteFree,
         ActionModifyMove,
-        ActionModifyMoveNoSelect,
         ActionModifyRotate,
-        ActionModifyRotateNoSelect,
         ActionModifyScale,
-        ActionModifyScaleNoSelect,
         ActionModifyMirror,
-        ActionModifyMirrorNoSelect,
         ActionModifyMoveRotate,
-        ActionModifyMoveRotateNoSelect,
-		ActionModifyRevertDirection,
-		ActionModifyRevertDirectionNoSelect,
+        ActionModifyRevertDirection,
         ActionModifyRotate2,
-        ActionModifyRotate2NoSelect,
         ActionModifyEntity,
         ActionModifyTrim,
         ActionModifyTrim2,
@@ -354,7 +360,6 @@ namespace RS2 {
         ActionModifyBevel,
         ActionModifyRound,
         ActionModifyOffset,
-        ActionModifyOffsetNoSelect,
         ActionModifyLineJoin,
         ActionModifyDuplicate,
         ActionModifyBreakDivide,
@@ -381,14 +386,16 @@ namespace RS2 {
         ActionUnlockRelativeZero,
 
         ActionInfoInside,
-        ActionInfoDist,
-        ActionInfoDist2,
+        ActionInfoDistPoint2Point,
+        ActionInfoDistEntity2Point,
+        ActionInfoDistPoint2Entity,
         ActionInfoAngle,
         ActionInfoTotalLength,
         ActionInfoTotalLengthNoSelect,
         ActionInfoArea,
         ActionInfoProperties,
         ActionInfoPickCoordinates,
+        ActionInfoAngle3Points,
 
         ActionLayersDefreezeAll,
         ActionLayersFreezeAll,
@@ -416,12 +423,9 @@ namespace RS2 {
         ActionBlocksCreate,
         ActionBlocksCreateNoSelect,
         ActionBlocksExplode,
-        ActionBlocksExplodeNoSelect,
         ActionBlocksImport,
 
         ActionModifyExplodeText,
-        ActionModifyExplodeTextNoSelect,
-
         ActionLibraryInsert,
 
         ActionOptionsGeneral,
@@ -868,7 +872,8 @@ namespace RS2 {
         DelCursor,            /**< DelCursor - cursor for choosing entities */
         SelectCursor,         /**< SelectCursor - for selecting single entities */
         MagnifierCursor,      /**< MagnifierCursor - a magnifying glass. */
-        MovingHandCursor      /**< Moving hand - a little flat hand. */
+        MovingHandCursor,      /**< Moving hand - a little flat hand. */
+        NoCursorChange        /**< special value to indicate that no cursor change is requested. */
     };
 
     /**
@@ -966,9 +971,9 @@ namespace RS2 {
          * it always shows up
          */
         enum OverlayGraphics: short {
-                ActionPreviewEntity = 0, // Action Entities
-                Snapper = 1, // Snapper
-                OverlayEffects =2 // special effects, like glowing on hover
+                ActionPreviewEntity = 1, // Action Entities
+                Snapper = 2, // Snapper
+                OverlayEffects =0 // special effects, like glowing on hover
         };
 
         //Different re-draw methods to speed up rendering of the screen

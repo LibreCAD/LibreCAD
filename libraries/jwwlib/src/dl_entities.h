@@ -1448,6 +1448,3 @@ struct DL_ImageDefData {
 };
 
 #endif
-
-// EOF
-

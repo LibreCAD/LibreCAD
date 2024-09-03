@@ -250,5 +250,18 @@
         <file>slice_divide_circle.svg</file>
         <file>break_out_trim.svg</file>
         <file>line_gap.svg</file>
+        <file>distance_entity_to_point.svg</file>
+        <file>state-shift_no.svg</file>
+        <file>state-shift_yes.svg</file>
+        <file>state_ctrl_yes.svg</file>
+        <file>paste_transform.svg</file>
+        <file>angle_3_points.svg</file>
+        <file>page_landscape.svg</file>
+        <file>page_portait.svg</file>
+        <file>shortcuts_settings.svg</file>
+        <file>ellipse_1_point.svg</file>
+        <file>ellipse_arc_1_point.svg</file>
+        <file>dim_baseline.svg</file>
+        <file>dim_continue.svg</file>
     </qresource>
 </RCC>
