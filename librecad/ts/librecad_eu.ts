@@ -616,7 +616,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Save Block</source>
-        <translation>&amp;Blokea Gorde</translation>
+        <translation>&amp;Gorde blokea</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
@@ -700,7 +700,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation>Gorde &amp;bezala</translation>
+        <translation>Gorde &amp;honela...</translation>
     </message>
     <message>
         <source>&amp;Export as image</source>
@@ -1247,7 +1247,7 @@ Baimenak ikusi.</translation>
     </message>
     <message>
         <source>Auto-saved drawing</source>
-        <translation>Irudia automatikoki gordea</translation>
+        <translation>Irudia automatikoki gorde da</translation>
     </message>
     <message>
         <source>Cannot auto-save the file
@@ -1257,7 +1257,7 @@ Auto-save disabled.</source>
         <translation>Ezin fitxategia automatikoki gorde
 %1
 Baimenak ikusi.
-</translation>
+Gordetze automatikoa desgaitu da.</translation>
     </message>
     <message>
         <source>Import</source>
@@ -1591,19 +1591,19 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>Save All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Gorde guztiak bertan behera utzi da</translation>
     </message>
     <message>
         <source>Close All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Itxi guztia bertan behera utzi da</translation>
     </message>
     <message>
         <source>The Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodea</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cmd</translation>
     </message>
     <message>
         <source>Float</source>
@@ -1616,15 +1616,15 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Wikia</translation>
     </message>
     <message>
         <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Erabiltzailearen esku-liburua</translation>
     </message>
     <message>
         <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Komandoak</translation>
     </message>
     <message>
         <source>&amp;Style Sheets</source>
@@ -2278,11 +2278,11 @@ This recursively modifies all entities of the Block itself.</source>
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Ongi etorri LibreCADera&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
-Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt;
-(Aldaketa hauek gero ere egin ditzakezu.)</translation>
+Mesedez, aukeratu irudietan erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt;
+(Ezarpen hauek gero alda ditzakezu.)</translation>
     </message>
 </context>
 <context>
@@ -3570,7 +3570,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>Defaults for new drawings</source>
-        <translation type="unfinished"></translation>
+        <translation>Marrazki berrietarako lehenetsiak</translation>
     </message>
     <message>
         <source>&amp;Appearance</source>
@@ -3758,7 +3758,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Gaituta dagoenean, geruza bat aktibatuz gero, hautatutako entitate guztiak geruza berri horretara aldatuko lirateke. Hainbat entitateren geruza aldatzeko: lehenik eta behin hautatu behar diren entitateak; aktibatu geruza bat geruzen trepetan. Honek hautatutako entitate guztiak aldatu egiten ditu geruza berriko kide izateko.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Variable File:</source>
