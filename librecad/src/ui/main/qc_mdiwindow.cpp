@@ -132,8 +132,7 @@ QC_MDIWindow::~QC_MDIWindow()
     RS_DEBUG->print("~QC_MDIWindow: end");
 }
 
-QG_GraphicView* QC_MDIWindow::getGraphicView() const
-{
+QG_GraphicView* QC_MDIWindow::getGraphicView() const{
     return graphicView;
 }
 

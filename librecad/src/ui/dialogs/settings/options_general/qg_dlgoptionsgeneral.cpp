@@ -76,8 +76,11 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
 
     connect(cbGridExtendAxisLines, &QCheckBox::toggled, this, &QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled);
 
+    connect(cbShowMetaGrid, &QCheckBox::toggled, this, &QG_DlgOptionsGeneral::on_cbShowMetaGridToggled);
 
     connect(tbShortcuts, &QToolButton::clicked, this, &QG_DlgOptionsGeneral::setShortcutsMappingsFoler);
+
+
 }
 
 /*
@@ -89,6 +92,7 @@ void QG_DlgOptionsGeneral::languageChange() {
 }
 
 void QG_DlgOptionsGeneral::init() {
+
     gbGridDefaults->setVisible(false);
     // Fill combobox with languages:
     QStringList languageList = RS_SYSTEM->getLanguageList();
@@ -181,6 +185,12 @@ void QG_DlgOptionsGeneral::init() {
         checked = LC_GET_BOOL("ExtendAxisLines", false);
         cbGridExtendAxisLines->setChecked(checked);
 
+        int xAxisExtensionType = LC_GET_INT("ExtendModeXAxis",0);
+        cbXAxisAreas->setCurrentIndex(xAxisExtensionType);
+
+        int yAxisExtensionType = LC_GET_INT("ExtendModeYAxis",0);
+        cbYAxisAreas->setCurrentIndex(yAxisExtensionType);
+
         int gridType = LC_GET_INT("GridType", 0);
         cbGridType->setCurrentIndex(gridType);
 
@@ -204,6 +214,24 @@ void QG_DlgOptionsGeneral::init() {
 
         int minTextHeight = LC_GET_INT("MinRenderableTextHeightPx", 4);
         sbTextMinHeight->setValue(minTextHeight);
+
+        checked = LC_GET_BOOL("metaGridShow", true);
+        cbShowMetaGrid->setChecked(checked);
+
+        wMetaGridLineType->init(false, false, false);
+        wGridLineType->init(false, false, false);
+
+        RS2::LineType metaGridLineType = static_cast<RS2::LineType> (LC_GET_INT("metaGridLineType", RS2::DotLineTiny));
+        wMetaGridLineType->setLineType(metaGridLineType);
+
+        RS2::LineType gridLineType = static_cast<RS2::LineType> (LC_GET_INT("GridLineType", RS2::DotLine));
+        wGridLineType->setLineType(gridLineType);
+
+        int metagridWidthPx = LC_GET_INT("metaGridLineWidth", 1);
+        sbMetaGridWidth->setValue(metagridWidthPx);
+
+        int gridWidthPx = LC_GET_INT("GridLineWidth", 1);
+        sbGridLineWidth->setValue(gridWidthPx);
 
     }
     LC_GROUP_END();
@@ -231,6 +259,8 @@ void QG_DlgOptionsGeneral::init() {
         initComboBox(cbAxisYColor, LC_GET_STR("grid_y_axisColor", RS_Settings::yAxisColor));
     }
     LC_GROUP_END();
+
+
 
     LC_GROUP("Paths");
     {
@@ -358,11 +388,21 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("PersistDialogRestoreSizeOnly", cbPersistentDialogSizeOnly->isChecked());
             LC_SET("GridType", cbGridType->currentIndex());
             LC_SET("ExtendAxisLines", cbGridExtendAxisLines->isChecked());
+            LC_SET("ExtendModeXAxis",cbXAxisAreas->currentIndex());
+            LC_SET("ExtendModeYAxis",cbYAxisAreas->currentIndex());
             LC_SET("EntityHandleSize", sbHandleSize->value());
             LC_SET("RelZeroMarkerRadius", sbRelZeroRadius->value());
             LC_SET("ZeroShortAxisMarkSize", sbAxisSize->value());
             LC_SET("AllowMenusTearOff", cbAllowMenusDetaching->isChecked());
             LC_SET("MinRenderableTextHeightPx", sbTextMinHeight->value());
+
+            LC_SET("metaGridShow", cbShowMetaGrid->isChecked());
+            LC_SET("metaGridLineType", wMetaGridLineType->getLineType());
+            LC_SET("metaGridLineWidth", sbMetaGridWidth->value());
+
+            LC_SET("GridLineType", wGridLineType->getLineType());
+            LC_SET("GridLineWidth", sbGridLineWidth->value());
+
         }
         LC_GROUP_END();
 
@@ -624,7 +664,21 @@ void QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked() {
 }
 
 void QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled() {
-    sbAxisSize->setEnabled(!cbGridExtendAxisLines->isChecked());
+    bool extend = cbGridExtendAxisLines->isChecked();
+    sbAxisSize->setEnabled(!extend);
+    cbXAxisAreas->setEnabled(extend);
+    cbYAxisAreas->setEnabled(extend);
+}
+
+void QG_DlgOptionsGeneral::on_cbShowMetaGridToggled() {
+    bool metagrid = cbShowMetaGrid->isChecked();
+    lMetaGridColor->setEnabled(metagrid);
+    cbMetaGridColor->setEnabled(metagrid);
+    pb_meta->setEnabled(metagrid);
+    wMetaGridLineType->setEnabled(metagrid);
+    lMetaGridLineType->setEnabled(metagrid);
+    lMetaGridLineWidth->setEnabled(metagrid);
+    sbMetaGridWidth->setEnabled(metagrid);
 }
 
 void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state) {

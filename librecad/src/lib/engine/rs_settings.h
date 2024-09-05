@@ -34,6 +34,7 @@
 #include <QString>
 #include <QObject>
 #include <QVariant>
+#include "rs_pen.h"
 
 class QSettings;
 
@@ -50,6 +51,7 @@ class QSettings;
 #define LC_GET_ONE_INT RS_Settings::instance()->readIntSingle
 #define LC_GET_BOOL RS_Settings::instance()->readBool
 #define LC_GET_ONE_BOOL RS_Settings::instance()->readBoolSingle
+#define LC_GET_BARRAY RS_Settings::instance()->readByteArray
 #define LC_GROUP RS_Settings::instance()->beginGroup
 #define LC_GROUP_GUARD auto _guard_settings = RS_Settings::instance()->beginGroupGuard
 #define LC_GROUP_END RS_Settings::instance()->endGroup
@@ -133,6 +135,8 @@ public:
     QString readStr(const QString& key,const QString& def = QString());
     bool readBool(const QString &key, bool defaultValue = false);
     bool readBoolSingle(const QString& group, const QString &key, bool defaultValue = false);
+    const QByteArray &readByteArraySingle(const QString &group, const QString &key);
+    const QByteArray &readByteArray(const QString &key);
 
     void clear_all();
     void clear_geometry();
@@ -140,6 +144,8 @@ public:
 
     void emitOptionsChanged();
 
+    static void writePen(QString name, RS_Pen const &pen);
+    static RS_Pen readPen(QString name, RS_Pen &defaultPen);
 
 signals:
     void optionChanged(const QString& groupName, const QString &propertyName, QVariant oldValue, QVariant newValue);
@@ -158,6 +164,8 @@ protected:
     bool writeEntrySingle(const QString &group, const QString &key, const QVariant &value);
 
     QString getFullName(const QString &group, const QString &key) const;
+
+
 };
 
 #endif
