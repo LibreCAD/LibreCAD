@@ -276,6 +276,7 @@ public:
     void setCrosshairType(RS2::CrosshairType chType);
     RS2::CrosshairType getCrosshairType() const;
     RS_Vector toGui(RS_Vector v) const;
+    RS_Vector toGuiD(RS_Vector v) const;
     double toGuiX(double x) const;
     double toGuiY(double y) const;
     double toGuiDX(double d) const;
@@ -372,7 +373,21 @@ protected:
     RS2::SnapRestriction defaultSnapRes;
     RS2::DrawingMode drawingMode;
 
+        enum ExtendAxisArea{
+        Both,
+        Positive,
+        Negative,
+        None
+    };
+
     bool extendAxisLines = false;
+    int extendAxisModeX = 0;
+    int extendAxisModeY = 0;
+    bool showMetaGrid = true;
+    int metaGridWidthPx = 1;
+    int gridWidthPx = 1;
+    RS2::LineType metagridLineType = RS2::DotLineTiny;
+    RS2::LineType gridLineType = RS2::DotLine;
     int gridType = 0;
     int entityHandleHalfSize = 2;
     int relativeZeroRadius = 5;
@@ -386,7 +401,6 @@ protected:
     LC_Rect view_rect;
     void drawEntityReferencePoints(RS_Painter *painter, const RS_Entity *e) const;
 private:
-
     bool zoomFrozen = false;
     bool draftMode = false;
     RS_Vector factor{1., 1.};

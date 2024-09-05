@@ -836,26 +836,26 @@ RS_Pen RS_PainterQt::getPen() const{
     //return p;
 }
 
-void RS_PainterQt::setPen(const RS_Pen& pen) {
+void RS_PainterQt::setPen(const RS_Pen &pen, int penWidth) {
     lpen = pen;
     switch (drawingMode) {
-    case RS2::ModeBW:
-        lpen.setColor( RS_Color( Qt::black));
-        break;
+        case RS2::ModeBW:
+            lpen.setColor( RS_Color( Qt::black));
+            break;
 
-    case RS2::ModeWB:
-        lpen.setColor( RS_Color( Qt::white));
-        break;
+        case RS2::ModeWB:
+            lpen.setColor( RS_Color( Qt::white));
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 
     QColor pColor { lpen.getColor() };
 
     pColor.setAlphaF(pen.getAlpha());
-    QPen p(pColor, RS_Math::round(lpen.getScreenWidth()),
-           rsToQtLineType(lpen.getLineType()));
+
+    QPen p(pColor, penWidth, rsToQtLineType(lpen.getLineType()));
     if (p.style() == Qt::CustomDashLine)
     {
         auto dashPattern = rsToQDashPattern(lpen.getLineType(),
@@ -869,6 +869,11 @@ void RS_PainterQt::setPen(const RS_Pen& pen) {
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
     QPainter::setPen(p);
+}
+
+void RS_PainterQt::setPen(const RS_Pen& pen) {
+    int penWidth = RS_Math::round(pen.getScreenWidth());
+    setPen(pen, penWidth);
 }
 
 void RS_PainterQt::setPen(const RS_Color& color) {
@@ -1086,4 +1091,3 @@ void RS_PainterQt::drawText(const QRect& rect, const QString& text, QRect* bound
 {
     QPainter::drawText(rect, Qt::AlignTop | Qt::AlignLeft | Qt::TextDontClip, text, boundingBox);
 }
-

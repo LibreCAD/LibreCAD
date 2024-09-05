@@ -100,6 +100,7 @@ public:
 
     RS_Pen getPen() const override;
     void setPen(const RS_Pen& pen) override;
+    void setPen(const RS_Pen& pen, int linewidthPx) override;
     void setPen(const RS_Color& color) override;
     void setPen(int r, int g, int b) override;
     void disablePen() override;
@@ -123,4 +124,3 @@ protected:
 };
 
 #endif
-

@@ -61,6 +61,7 @@
 #include "rs_modification.h"
 #include "rs_painterqt.h"
 #include "rs_settings.h"
+#include "rs_grid.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -246,6 +247,8 @@ struct QG_GraphicView::AutoPanData
     const RS_Vector probedAreaOffset = {50 /* pixels */, 50 /* pixels */};
 };
 
+
+void updateGridPoint();
 
 /**
  * Constructor.
@@ -1229,6 +1232,10 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
     container->calculateBorders();
     container->setSelected(false);
     redraw(RS2::RedrawDrawing);
+}
+
+void QG_GraphicView::updateGridPoints(){
+    getGrid()->updatePointArray(showMetaGrid);
 }
 
 

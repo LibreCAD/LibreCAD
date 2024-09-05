@@ -1218,6 +1218,12 @@ set(SOURCES
 		librecad/src/ui/components/status_bar/lc_relzerocoordinateswidget.cpp
 		librecad/src/lib/math/lc_convert.h
 		librecad/src/lib/math/lc_convert.cpp
+		librecad/src/ui/main/lc_mdiapplicationwindow.h
+		librecad/src/ui/main/lc_mdiapplicationwindow.cpp
+		librecad/src/lib/gui/grid/lc_lattice.h
+		librecad/src/lib/gui/grid/lc_lattice.cpp
+		librecad/src/lib/gui/grid/lc_orthogonalgrid.h
+		librecad/src/lib/gui/grid/lc_orthogonalgrid.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

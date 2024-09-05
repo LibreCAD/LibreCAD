@@ -139,6 +139,7 @@ public:
 
     virtual RS_Pen getPen() const = 0;
     virtual void setPen(const RS_Pen& pen) = 0;
+    virtual void setPen(const RS_Pen& pen, int linewidthPx) = 0;
     virtual void setPen(const RS_Color& color) = 0;
     virtual void setPen(int r, int g, int b) = 0;
     virtual void disablePen() = 0;

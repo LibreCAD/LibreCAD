@@ -65,6 +65,7 @@ public:
 	void setBackground(const RS_Color& bg) override;
 	void setMouseCursor(RS2::CursorType c) override;
 	void updateGridStatusWidget(QString text) override;
+ void updateGridPoints();
 
 	virtual	void getPixmapForView(std::unique_ptr<QPixmap>& pm);
 		

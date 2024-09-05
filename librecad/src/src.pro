@@ -294,6 +294,9 @@ HEADERS += \
     lib/filters/rs_filterjww.h \
     lib/filters/rs_filterlff.h \
     lib/filters/rs_filterinterface.h \
+    lib/gui/grid/lc_lattice.h \
+    lib/gui/grid/lc_metagrid.h \
+    lib/gui/grid/lc_orthogonalgrid.h \
     lib/gui/rs_commandevent.h \
     lib/gui/rs_coordinateevent.h \
     lib/gui/rs_dialogfactory.h \
@@ -310,6 +313,7 @@ HEADERS += \
     lib/information/rs_locale.h \
     lib/information/rs_information.h \
     lib/information/rs_infoarea.h \
+    lib/math/lc_convert.h \
     lib/math/lc_linemath.h \
     lib/modification/rs_modification.h \
     lib/modification/rs_selection.h \
@@ -326,7 +330,9 @@ HEADERS += \
     main/lc_application.h \
     ui/action_options/curve/lc_ellipsearcoptions.h \
     ui/action_options/ellipse/lc_ellipse1pointoptions.h \
-    ui/dialogs/lc_dialog.h
+    ui/components/status_bar/lc_relzerocoordinateswidget.h \
+    ui/dialogs/lc_dialog.h \
+    ui/main/lc_mdiapplicationwindow.h
     
 SOURCES += \
     actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp \
@@ -400,6 +406,9 @@ SOURCES += \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \
     lib/filters/rs_filterlff.cpp \
+    lib/gui/grid/lc_lattice.cpp \
+    lib/gui/grid/lc_metagrid.cpp \
+    lib/gui/grid/lc_orthogonalgrid.cpp \
     lib/gui/rs_dialogfactory.cpp \
     lib/gui/rs_eventhandler.cpp \
     lib/gui/rs_graphicview.cpp \
@@ -411,6 +420,7 @@ SOURCES += \
     lib/information/rs_locale.cpp \
     lib/information/rs_information.cpp \
     lib/information/rs_infoarea.cpp \
+    lib/math/lc_convert.cpp \
     lib/math/lc_linemath.cpp \
     lib/math/rs_math.cpp \
     lib/math/lc_quadratic.cpp \
@@ -432,7 +442,9 @@ SOURCES += \
     main/lc_application.cpp \
     ui/action_options/curve/lc_ellipsearcoptions.cpp \
     ui/action_options/ellipse/lc_ellipse1pointoptions.cpp \
-    ui/dialogs/lc_dialog.cpp
+    ui/components/status_bar/lc_relzerocoordinateswidget.cpp \
+    ui/dialogs/lc_dialog.cpp \
+    ui/main/lc_mdiapplicationwindow.cpp
 
 # ################################################################################
 # Command
@@ -1226,6 +1238,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/components/containers/lc_snapoptionswidgetsholder.ui \
        ui/components/creators/widgetcreator.ui \
        ui/components/pen/qg_widgetpen.ui \
+       ui/components/status_bar/lc_relzerocoordinateswidget.ui \
        ui/components/status_bar/qg_activelayername.ui \
        ui/components/status_bar/qg_coordinatewidget.ui \
        ui/components/status_bar/qg_mousewidget.ui \

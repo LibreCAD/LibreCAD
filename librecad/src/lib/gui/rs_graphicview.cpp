@@ -112,6 +112,16 @@ void RS_GraphicView::loadSettings() {
         relativeZeroRadius = LC_GET_INT("RelZeroMarkerRadius", 5);
         zeroShortAxisMarkSize = LC_GET_INT("ZeroShortAxisMarkSize", 20);
         minRenderableTextHeightInPx = LC_GET_INT("MinRenderableTextHeightPx", 4);
+
+        extendAxisModeX = LC_GET_INT("ExtendModeXAxis",0);
+        extendAxisModeY = LC_GET_INT("ExtendModeYAxis",0);
+
+        showMetaGrid = LC_GET_BOOL("metaGridShow", true);
+        metaGridWidthPx = LC_GET_INT("metaGridLineWidth", 1);
+        metagridLineType =  static_cast<RS2::LineType> (LC_GET_INT("metaGridLineType", RS2::DotLineTiny));
+
+        gridWidthPx = LC_GET_INT("GridLineWidth", 1);
+        gridLineType =  static_cast<RS2::LineType> (LC_GET_INT("GridLineType", RS2::DotLineTiny));
     }
     LC_GROUP_END();
     LC_GROUP_GUARD("Colors");
@@ -974,7 +984,8 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 
         if (grid && isGridOn()) {
 //only drawGrid updates the grid layout (updatePointArray())
-            drawMetaGrid(painter);
+               drawMetaGrid(painter);
+
 //draw grid after metaGrid to avoid overwriting grid points by metaGrid lines
 //bug# 3430258
             drawGrid(painter);
@@ -1373,32 +1384,106 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
 
     auto originPoint = toGui(RS_Vector(0,0));
 
-    double xAxisPoints [2];
-    double yAxisPoints [2];
-
+ 
+    int width = getWidth();
+    int height = getHeight();
     if (extendAxisLines){
-        xAxisPoints [0] = 0.0;
-        xAxisPoints [1] = getWidth();
 
-        yAxisPoints [0] = 0.0;
-        yAxisPoints [1] = getHeight();
+        int xAxisStartPoint;
+        int xAxisEndPoint;
+                
+        switch (extendAxisModeX){
+            case Both:
+                xAxisStartPoint = 0;
+                xAxisEndPoint = width;
+                break;
+            case Positive:
+                xAxisStartPoint = originPoint.x;
+                if (originPoint.x < width){
+                    xAxisEndPoint = width;
+                }
+                else{
+                    xAxisEndPoint = 0;
+                }
+                break;
+            case Negative:
+                xAxisStartPoint  = originPoint.x;
+                if (originPoint.x < width){
+                    xAxisEndPoint = 0;
+                }
+                else{
+                    xAxisEndPoint = width;
+                }
+                break;
+            case None:{ // draw short
+                xAxisStartPoint  = originPoint.x - zr;
+                xAxisEndPoint = originPoint.x + zr;
+                break;
+            }
+            default:
+                break;
+        }
+
+        painter->setPen(pen_xAxis);
+        painter->drawLine(RS_Vector(xAxisStartPoint, originPoint.y), RS_Vector(xAxisEndPoint, originPoint.y));
+
+        int yAxisStartPoint;
+        int yAxisEndPoint;
+        switch (extendAxisModeY){
+            case Both:
+                yAxisStartPoint  = 0;
+                yAxisStartPoint  = height;
+                break;
+            case Positive:
+                yAxisStartPoint = originPoint.y;
+                if (originPoint.y < height){
+                    yAxisEndPoint = 0;
+                }
+                else{
+
+                    yAxisEndPoint = height;
+                }
+                break;
+            case Negative:
+                yAxisStartPoint  = originPoint.y;
+                if (originPoint.y < height){
+                    yAxisEndPoint = height;
+                }
+                else{
+                    yAxisEndPoint = 0;
+                }
+                break;
+            case None:
+                yAxisStartPoint  = originPoint.y - zr;
+                yAxisEndPoint = originPoint.y + zr;
+                break;
+            default:
+                break;
+        }
+
+        painter->setPen(pen_yAxis);
+        painter->drawLine(RS_Vector(originPoint.x, yAxisStartPoint), RS_Vector(originPoint.x, yAxisEndPoint));
     }
     else
     {
-        if (((originPoint.x + zr) < 0) || ((originPoint.x - zr) > getWidth())) return;
-        if (((originPoint.y + zr) < 0) || ((originPoint.y - zr) > getHeight())) return;
+        double xAxisPoints [2];
+        double yAxisPoints [2];
+
+        if (((originPoint.x + zr) < 0) || ((originPoint.x - zr) > width)) return;
+        if (((originPoint.y + zr) < 0) || ((originPoint.y - zr) > height)) return;
         xAxisPoints [0] = originPoint.x - zr;
         xAxisPoints [1] = originPoint.x + zr;
 
         yAxisPoints [0] = originPoint.y - zr;
         yAxisPoints [1] = originPoint.y + zr;
+
+        painter->setPen(pen_xAxis);
+        painter->drawLine(RS_Vector(xAxisPoints[0], originPoint.y), RS_Vector(xAxisPoints[1], originPoint.y));
+
+        painter->setPen(pen_yAxis);
+        painter->drawLine(RS_Vector(originPoint.x, yAxisPoints[0]), RS_Vector(originPoint.x, yAxisPoints[1]));
     }
 
-    painter->setPen(pen_xAxis);
-    painter->drawLine(RS_Vector(xAxisPoints[0], originPoint.y), RS_Vector(xAxisPoints[1], originPoint.y));
-
-    painter->setPen(pen_yAxis);
-    painter->drawLine(RS_Vector(originPoint.x, yAxisPoints[0]), RS_Vector(originPoint.x, yAxisPoints[1]));
 }
 
 /**
@@ -1552,33 +1637,110 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
  * @see drawIt()
  */
 void RS_GraphicView::drawGrid(RS_Painter *painter){
-
 // draw grid:
-
-    painter->setPen({m_colorData->gridColor, RS2::Width00, RS2::SolidLine});
-
     bool gridTypeSolid = gridType == 1;
 
     if (gridTypeSolid) {
-        const RS_Vector cellSize = grid->getCellVector();
+        if (grid->isIsometric()){
 
-        auto const &mx = grid->getMetaX();
-        for (auto const &x: mx) {
-            for (int i = 1; i < 10; i++) {
-                const double subX{x - (i * cellSize.x)};
-                painter->drawLine(RS_Vector(toGuiX(subX), 0), RS_Vector(toGuiX(subX), getHeight()));
-            }
         }
+        else {
+            painter->setPen({m_colorData->gridColor, RS2::Width00, gridLineType}, gridWidthPx);
+            const RS_Vector cellSize = grid->getCellVector();
+            auto const &mx = grid->getMetaX();
 
-        auto const &my = grid->getMetaY();
-        for (auto const &y: my) {
-            for (int j = 1; j < 10; j++) {
-                const double subY{y - (j * cellSize.y)};
-                painter->drawLine(RS_Vector(0, toGuiY(subY)), RS_Vector(getWidth(), toGuiY(subY)));
+            const auto gridMetric = grid->getOrthoGridMetrics();
+
+            const bool drawHorizontalLines = true;
+            const bool drawVerticalLines = true;
+
+            // fixme - potentially - move to update grid?
+            auto metagridWidth = grid->getMetaGridWidth();
+
+            if (drawVerticalLines) {
+                const double mxFirst = mx[0];
+                auto uiFirstMX = toGuiX(mxFirst);
+                auto uiCellSizeX = toGuiDX(cellSize.x);
+                auto uiMetagridWidthX = toGuiDX(metagridWidth.x);
+
+                // draw vertical lines for full metagrid cells
+
+                auto height = getHeight();
+                auto uiMetaGridStartX = uiFirstMX;
+                for (int i = 1; i < gridMetric.numMetaX; i++) {
+                    double uiCurrentX = uiMetaGridStartX;
+                    for (int j = 0; j < gridMetric.numPointsInMetagridX; j++) {
+                        uiCurrentX += uiCellSizeX;
+                        painter->drawLine(RS_Vector(uiCurrentX, 0), RS_Vector(uiCurrentX, height));
+                    }
+                    uiMetaGridStartX += uiMetagridWidthX;
+                }
+                // draw vertical lines for leftmost column
+
+                auto uiCurrentX = uiFirstMX;
+                for (int i = gridMetric.numPointsXLeft; i > 0; i--) {
+                    uiCurrentX -= uiCellSizeX;
+                    painter->drawLine(RS_Vector(uiCurrentX, 0), RS_Vector(uiCurrentX, height));
+                }
+                // draw vertical lines for rightmost column
+                uiCurrentX = uiFirstMX + uiMetagridWidthX * (gridMetric.numMetaX-1);
+                for (int i = 1; i <= gridMetric.numPointsXRight; i++) {
+                    uiCurrentX += uiCellSizeX;
+                    painter->drawLine(RS_Vector(uiCurrentX, 0), RS_Vector(uiCurrentX, height));
+                }
+
+                if (!showMetaGrid){
+                    auto uiCurrentX = uiFirstMX;
+                    for (int i = 1; i < gridMetric.numMetaX; i++) {
+                        painter->drawLine(RS_Vector(uiCurrentX, 0), RS_Vector(uiCurrentX, height));
+                        uiMetaGridStartX += uiMetagridWidthX;
+                    }
+                }
+            }
+            if (drawHorizontalLines) {
+                auto const &my = grid->getMetaY();
+                const double myFirst = my[0];
+                auto uiFirstMY = toGuiY(myFirst);
+                auto uiCellSizeY = toGuiDY(cellSize.y);
+                auto uiMetagridWidthY = toGuiDY(metagridWidth.y);
+
+                // draw horizontal lines for fully visible metagrid cells
+                auto width = getWidth();
+
+                auto uiMetaGridStartY = uiFirstMY;
+
+                for (int i = 0; i < gridMetric.numMetaY-1; i++){
+                    double uiCurrentY = uiMetaGridStartY;
+                    for (int j = 1; j <= gridMetric.numPointsInMetagridY; j++) {
+                        uiCurrentY -= uiCellSizeY;
+                        painter->drawLine(RS_Vector(0, uiCurrentY), RS_Vector(width, uiCurrentY));
+                    }
+                    uiMetaGridStartY -= uiMetagridWidthY;
+                }
+                // draw horizontal lines for bottom (on screen) row
+                auto uiCurrentY = uiFirstMY;
+                for (int i = 1; i <= gridMetric.numPointsYBottom; i++) {
+                    uiCurrentY += uiCellSizeY;
+                    painter->drawLine(RS_Vector(0, uiCurrentY), RS_Vector(width, uiCurrentY));
+                }
+
+                uiCurrentY = uiFirstMY - uiMetagridWidthY * (gridMetric.numMetaY-1);
+               // draw horizontal lines for bottom row
+                for (int i = 1; i <= gridMetric.numPointsYTop; i++) {
+                    uiCurrentY-=uiCellSizeY;
+                    painter->drawLine(RS_Vector(0, uiCurrentY), RS_Vector(width, uiCurrentY));
+                }
+                if (!showMetaGrid){
+                    auto uiCurrentX = uiFirstMY;
+                    for (int i = 1; i < gridMetric.numMetaY; i++) {
+                        painter->drawLine(RS_Vector(uiCurrentX, 0), RS_Vector(uiCurrentX, width));
+                        uiMetaGridStartY += uiMetagridWidthY;
+                    }
+                }
             }
         }
     } else {
-        //grid->updatePointArray();
+        painter->setPen({m_colorData->gridColor, RS2::Width00, RS2::SolidLine});
         auto const &pts = grid->getPoints();
         for (auto const &v: pts) {
             painter->drawGridPoint(toGui(v));
@@ -1595,6 +1757,7 @@ void RS_GraphicView::drawGrid(RS_Painter *painter){
     updateGridStatusWidget(info);
 }
 
+#define DEBUG_META_GRID
 /**
  * Draws the meta grid.
  *
@@ -1604,42 +1767,87 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 
 //draw grid after metaGrid to avoid overwriting grid points by metaGrid lines
 //bug# 3430258
-    grid->updatePointArray();
+    grid->updatePointArray(showMetaGrid);
+    if (!showMetaGrid) {
+        return;
+    }
 
     RS_Pen pen;
-    RS2::LineType penLineType;
+    RS2::LineType penLineType = /* gridTypeSolid ? RS2::SolidLine : /* RS2::DotLineTiny*/ metagridLineType;
 
-    bool gridTypeSolid = gridType == 1;
-    penLineType = gridTypeSolid ? RS2::SolidLine : RS2::DotLineTiny;
+    painter->setPen({m_colorData->metaGridColor, RS2::Width00, penLineType}, metaGridWidthPx);
 
-    painter->setPen({m_colorData->metaGridColor,  gridTypeSolid ? RS2::Width00: RS2::Width01, penLineType});
-
-    RS_Vector dv = grid->getMetaGridWidth().scale(factor);
+    auto metaGridWidth = grid->getMetaGridWidth();
+    auto ortoGridMetrics = grid->getOrthoGridMetrics();
+//    RS_Vector dv = metaGridWidth.scale(factor);
+    RS_Vector dv = metaGridWidth;
+    dv.scale(factor);
     double dx = std::abs(dv.x);
     double dy = std::abs(dv.y); //potential bug, need to recover metaGrid.width
 // draw meta grid:
-    auto mx = grid->getMetaX();
-    for (auto const &x: mx) {
-        painter->drawLine(RS_Vector(toGuiX(x), 0),
-                          RS_Vector(toGuiX(x), getHeight()));
-        if (grid->isIsometric()) {
-            painter->drawLine(RS_Vector(toGuiX(x) + 0.5 * dx, 0),
-                              RS_Vector(toGuiX(x) + 0.5 * dx, getHeight()));
+
+    std::vector<double> mx;
+    std::vector<double> my;
+    double uiFirstMX = 0;
+    double uiFirstMY = 0;
+
+    int height = getHeight();
+
+    int numMetaX = ortoGridMetrics.numMetaX;
+    if (numMetaX > 0) {
+        mx = grid->getMetaX();
+        const double mxFirst = mx[0];
+        uiFirstMX = toGuiX(mxFirst);
+
+
+
+        // draw vertical lines
+
+        auto uiMetagridWidthX = toGuiDX(metaGridWidth.x);
+
+        double uiCurrentX = uiFirstMX;
+        for (int i = 0; i < numMetaX; i++) {
+            // fixme - temporary debug
+            painter->drawLine(RS_Vector(uiCurrentX, 0), RS_Vector(uiCurrentX, height));
+            uiCurrentX += uiMetagridWidthX;
         }
     }
-    auto my = grid->getMetaY();
+
+    int numMetaY = ortoGridMetrics.numMetaY;
+    if (numMetaY > 0) {
+        my = grid->getMetaY();
+        const double myFirst = my[0];
+        uiFirstMY = toGuiY(myFirst);
+    }
+
+
+    int width = getWidth();
     if (grid->isIsometric()) {//isometric metaGrid
         dx = std::abs(dx);
         dy = std::abs(dy);
-        if (!my.size() || dx < 1 || dy < 1) return;
-        RS_Vector baseMeta(toGui(RS_Vector(mx[0], my[0])));
-// x-x0=k*dx, x-remainder(x-x0,dx)
-        RS_Vector vp0(-std::remainder(-baseMeta.x, dx) - dx, getHeight() - remainder(getHeight() - baseMeta.y, dy) + dy);
+        if (my.empty() || dx < 1 || dy < 1) return;
+
+        RS_Vector baseMeta(uiFirstMX, uiFirstMY);
+        painter->drawRect(baseMeta - 2, baseMeta + 2);
+
+        RS_Vector vp0(-std::remainder(-baseMeta.x, dx) - dx, height - remainder(height - baseMeta.y, dy) + dy);
         RS_Vector vp1(vp0);
-        RS_Vector vp2(getWidth() - std::remainder(getWidth() - baseMeta.x, dx) + dx, vp0.y);
+
+        painter->drawRect(vp0 - 5, vp0 + 5);
+
+        RS_Vector vp2(width - std::remainder(width - baseMeta.x, dx) + dx, vp0.y);
+        painter->drawRect(vp2 - 10, vp2 + 10);
+
         RS_Vector vp3(vp2);
+
         int cmx = std::round((vp2.x - vp0.x) / dx);
         int cmy = std::round((vp0.y + std::remainder(-baseMeta.y, dy) + dy) / dy);
+
+        // fixme - temporary scale
+        double factor = 0.3;
+        RS_Vector factorVector = RS_Vector(factor, factor);
+
+        const RS_Vector &center = RS_Vector(height / 2, width / 2);
         for (int i = cmx + cmy + 2; i >= 0; i--) {
             if (i <= cmx) {
                 vp0.x += dx;
@@ -1655,16 +1863,97 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
                 vp1.x += dx;
                 vp3.y -= dy;
             }
-            painter->drawLine(vp0, vp1);
-            painter->drawLine(vp2, vp3);
+
+
+// fixme - temporary scale
+            RS_Vector vp0_ = vp0;
+            RS_Vector vp1_ = vp1;
+            RS_Vector vp2_ = vp2;
+            RS_Vector vp3_ = vp3;
+            vp0_.scale(center, factorVector);
+            vp1_.scale(center, factorVector);
+            vp2_.scale(center, factorVector);
+            vp3_.scale(center, factorVector);
+
+
+            painter->drawLine(vp0_, vp1_); // top left->bottom right
+//            painter->drawLine(vp2_, vp3_); // bottom left->top right
         }
 
+        // fixme - temporary scale
+
+        auto corner1 = RS_Vector(0.0);
+        corner1.scale(center, factorVector);
+
+        auto corner2 = RS_Vector(width, height);
+        corner2.scale(center, factorVector);
+
+        painter->drawRect(corner1, corner2);
+
+        baseMeta.scale(center, factorVector);
+        painter->drawRect(baseMeta - 2, baseMeta + 2);
+
+        double uiCurrentX = uiFirstMX;
+        for (int i = 0; i < numMetaX; i++) {
+            // fixme - temporary debug
+            painter->drawLine(RS_Vector(uiCurrentX, 0).scale(center, factorVector), RS_Vector(uiCurrentX, height).scale(center, factorVector));
+//            uiCurrentX += uiMetagridWidthX;
+        }
+
+
     } else {//orthogonal
-        for (auto const &y: my) {
-            painter->drawLine(RS_Vector(0, toGuiY(y)),
-                              RS_Vector(getWidth(), toGuiY(y)));
+        // draw horizontal line for ortho grid
+        if (numMetaY > 0) {
+            auto uiMetagridWidthY = toGuiDY(metaGridWidth.y);
+            double uiCurrentY = uiFirstMY;
+            for (int i = 0; i < ortoGridMetrics.numMetaY; i++) {
+                painter->drawLine(RS_Vector(0, uiCurrentY), RS_Vector(width, uiCurrentY));
+                uiCurrentY -= uiMetagridWidthY;
+            }
         }
     }
+
+#ifdef DEBUG_META_GRID
+//    // fixme - temporary, remove
+    if (numMetaX > 0) {
+         const double mx0 = mx[0];
+         const double mxLast = mx[mx.size() - 1];
+
+         if (numMetaX > 1) {
+
+             painter->setPen({RS_Color(QColor("red")), RS2::Width01, penLineType}, metaGridWidthPx);
+
+             painter->drawLine(RS_Vector(toGuiX(mx0), 0), RS_Vector(toGuiX(mx0), height));
+
+             painter->setPen({RS_Color(QColor("blue")), RS2::Width01, penLineType}, metaGridWidthPx);
+             painter->drawLine(RS_Vector(toGuiX(mxLast), 0), RS_Vector(toGuiX(mxLast), height));
+         }
+         else {
+             painter->setPen({RS_Color(QColor("yellow")), RS2::Width01, penLineType}, metaGridWidthPx);
+             painter->drawLine(RS_Vector(toGuiX(mx0), 0), RS_Vector(toGuiX(mx0), height));
+         }
+   }
+
+   if (numMetaY > 0) {
+       const double my0 = my[0];
+       const double myLast = my[my.size() - 1];
+
+       if (numMetaY > 1) {
+
+           painter->setPen({RS_Color(QColor("red")), RS2::Width01, penLineType}, metaGridWidthPx);
+           painter->drawLine(RS_Vector(0, toGuiY(my0)), RS_Vector(width, toGuiY(my0)));
+           painter->setPen({RS_Color(QColor("blue")), RS2::Width01, penLineType}, metaGridWidthPx);
+           painter->drawLine(RS_Vector(0, toGuiY(myLast)), RS_Vector(width, toGuiY(myLast)));
+       }
+       else{
+           painter->setPen({RS_Color(QColor("yellow")), RS2::Width01, penLineType}, metaGridWidthPx);
+           painter->drawLine(RS_Vector(0, toGuiY(my0)), RS_Vector(width, toGuiY(my0)));
+       }
+   }
+    painter->setPen({RS_Color(QColor("cyan")), RS2::Width01, penLineType}, metaGridWidthPx);
+    painter->drawRect(ortoGridMetrics.baseMetagridPoint - 5, ortoGridMetrics.baseMetagridPoint + 5);
+
+#endif
 	}
 
 
@@ -1737,6 +2026,10 @@ RS_Vector RS_GraphicView::toGui(RS_Vector v) const {
     return RS_Vector(toGuiX(v.x), toGuiY(v.y));
 }
 
+RS_Vector RS_GraphicView::toGuiD(RS_Vector v) const {
+    return RS_Vector(toGuiDX(v.x), toGuiDY(v.y));
+}
+
 /**
  * Translates a real coordinate in X to a screen coordinate X.
  * @param visible Pointer to a boolean which will contain true
@@ -1766,6 +2059,8 @@ double RS_GraphicView::toGuiDX(double d) const {
 double RS_GraphicView::toGuiDY(double d) const {
     return d * factor.y;
 }
+
+
 
 /**
  * Translates a vector in screen coordinates to a vector in real coordinates.
