@@ -65,9 +65,5 @@ public:
     RS_Pen getDefaultPen(int layerType) const;
     void load();
     void save() const;
-
-private:
-    static void writePen(QString name, RS_Pen const &pen);
-    static RS_Pen readPen(QString name, RS_Pen &defaultPen);
 };
 #endif //QG_LAYERTREEMODEL_OPTIONS_H

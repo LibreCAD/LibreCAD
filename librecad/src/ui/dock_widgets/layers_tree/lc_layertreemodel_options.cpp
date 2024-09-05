@@ -72,27 +72,11 @@ void LC_LayerTreeModelOptions::save() const{
         LC_SET("renameSecondaryOnPrimary", renameSecondaryLayersOnPrimaryRename);
         LC_SET("indentSize", identSize);
 
-        writePen("NormalLayer", defaultPenNormal);
-        writePen("DimensionalLayer", defaultPenDimensional);
-        writePen("InfoLayer", defaultPenInformational);
-        writePen("AltPosLayer", defaultPenAlternatePosition);
+        RS_Settings::writePen("NormalLayer", defaultPenNormal);
+        RS_Settings::writePen("DimensionalLayer", defaultPenDimensional);
+        RS_Settings::writePen("InfoLayer", defaultPenInformational);
+        RS_Settings::writePen("AltPosLayer", defaultPenAlternatePosition);
     }
-}
-
-void LC_LayerTreeModelOptions::writePen(QString name, RS_Pen const &pen){
-    LC_SET("pen" + name + "Color", pen.getColor().name());
-    LC_SET("pen" + name + "LineType", pen.getLineType());
-    LC_SET("pen" + name + "Width", pen.getWidth());
-}
-
-RS_Pen LC_LayerTreeModelOptions::readPen(QString name, RS_Pen &defaultPen){
-    RS_Color color = QColor(LC_GET_STR("pen" + name + "Color", defaultPen.getColor().name()));
-    // FIXME - well, that's a bit ugly - if there is a mess in setting value, cast from int to short will be illegal. Need additional validation there?
-    RS2::LineType lineType = static_cast<RS2::LineType> (LC_GET_INT("pen" + name + "LineType", defaultPen.getLineType()));
-    RS2::LineWidth lineWidth = static_cast<RS2::LineWidth> (LC_GET_INT("pen" + name + "Width", defaultPen.getWidth()));
-
-    RS_Pen result = RS_Pen(color, lineWidth, lineType);
-    return result;
 }
 
 void LC_LayerTreeModelOptions::load(){
@@ -121,9 +105,9 @@ void LC_LayerTreeModelOptions::load(){
 
         identSize = LC_GET_INT("indentSize", identSize);
 
-        defaultPenNormal = readPen("NormalLayer", defaults.defaultPenNormal);
-        defaultPenDimensional = readPen("DimensionalLayer", defaults.defaultPenDimensional);
-        defaultPenInformational = readPen("InfoLayer", defaults.defaultPenInformational);
-        defaultPenAlternatePosition = readPen("AltPosLayer", defaults.defaultPenAlternatePosition);
+        defaultPenNormal = RS_Settings::readPen("NormalLayer", defaults.defaultPenNormal);
+        defaultPenDimensional = RS_Settings::readPen("DimensionalLayer", defaults.defaultPenDimensional);
+        defaultPenInformational = RS_Settings::readPen("InfoLayer", defaults.defaultPenInformational);
+        defaultPenAlternatePosition = RS_Settings::readPen("AltPosLayer", defaults.defaultPenAlternatePosition);
     }
 }
