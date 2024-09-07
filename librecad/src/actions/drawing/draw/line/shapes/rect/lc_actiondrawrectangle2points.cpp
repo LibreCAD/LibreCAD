@@ -272,7 +272,7 @@ void LC_ActionDrawRectangle2Points::doProcessCoordinateEvent(const RS_Vector &co
 void LC_ActionDrawRectangle2Points::doUpdateMouseButtonHints(int status){
     switch (status) {
         case SetPoint2:
-            updateMouseWidgetTRBack(tr("Specify second point"), MOD_SHIFT(tr("Draw Square")));
+            updateMouseWidgetTRBack(tr("Specify second point"), MOD_SHIFT_LC(tr("Draw Square")));
             break;
         case SetPoint1Snap:
             updateMouseWidgetTRBack(tr("Specify point 1 snap [corner|mid-vert|mid-hor|middle]"));

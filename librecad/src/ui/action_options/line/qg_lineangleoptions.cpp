@@ -28,22 +28,9 @@
 #include "rs_actiondrawlineangle.h"
 #include "rs_actioninterface.h"
 #include "rs_debug.h"
-#include "rs_dimension.h"
 #include "rs_math.h"
-#include "rs_settings.h"
 #include "ui_qg_lineangleoptions.h"
 
-namespace {
-// format a number with specified digits after point
-    QString formatNumber(double value, int precision = 8){
-        // fixme - review and move to util or base method
-        precision = std::max(precision, 0);
-        precision = std::min(precision, 16);
-        QString text = QString("%1").arg(value, 0, 'f', precision);
-        RS_Dimension::stripZerosLinear(text, 12);
-        return text;
-    }
-}
 
 /*
  *  Constructs a QG_LineAngleOptions as a child of 'parent', with the
@@ -135,7 +122,7 @@ void QG_LineAngleOptions::onAngleEditingFinished(){
 }
 
 void QG_LineAngleOptions::setAngleToActionAndView(QString val){
-    double angle;
+    double angle = 0.;
     if (toDoubleAngle(val, angle, 1.0, false)){
         action->setAngle(angle);
         ui->leAngle->setText(fromDouble(angle));
@@ -148,7 +135,7 @@ void QG_LineAngleOptions::setSnapPointToActionAndView(int val){
 }
 
 void QG_LineAngleOptions::setLengthToActionAndVeiw(QString val){
-    double len;
+    double len = 0.;
     if (toDouble(val, len, 1.0, false)){
         action->setLength(len);
         ui->leLength->setText(fromDouble(len));

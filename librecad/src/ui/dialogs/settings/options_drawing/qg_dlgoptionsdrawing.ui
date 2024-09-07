@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>5</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab1">
       <attribute name="title">
@@ -597,7 +597,7 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QWidget" name="widget" native="true">
+           <widget class="QWidget" name="widgetGrid" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
               <horstretch>0</horstretch>
@@ -686,7 +686,7 @@
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QWidget" name="widget" native="true">
+           <widget class="QWidget" name="widgetCrosshair" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
               <horstretch>0</horstretch>

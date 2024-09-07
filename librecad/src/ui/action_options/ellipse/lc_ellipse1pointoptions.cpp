@@ -59,12 +59,16 @@ void LC_Ellipse1PointOptions::doSaveSettings() {
 
 void LC_Ellipse1PointOptions::doSetAction(RS_ActionInterface *a, bool update) {
     action = dynamic_cast<LC_ActionDrawEllipse1Point*> (a);
+    assert(action != nullptr);
+    if (action == nullptr)
+        return;
+
     QString majorRadius;
     QString minorRadius;
     QString angle;
-    bool useAngle;
-    bool freeAngle;
-    bool negativeDirection;
+    bool useAngle = false;
+    bool freeAngle = false;
+    bool negativeDirection = false;
     bool arcAction = action->rtti() == RS2::ActionDrawEllipseArc1Point;
     if (update){
         majorRadius = fromDouble(action->getMajorRadius());

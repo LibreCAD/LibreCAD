@@ -27,7 +27,6 @@
 #include <QMouseEvent>
 
 #include "rs_actionselectsingle.h"
-#include "rs_debug.h"
 
 #include "rs_graphicview.h"
 
@@ -46,8 +45,9 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(enum RS2::EntityType typeToSelect,
                                              RS_ActionInterface* action_select,
                                              const QList<RS2::EntityType> &entityTypeList)
     :RS_ActionSelectBase("Select Entities", container, graphicView, entityTypeList)
-    ,actionSelect(action_select),
-    typeToSelect(typeToSelect){
+    ,actionSelect(action_select)
+    ,typeToSelect(typeToSelect)
+{
     actionType = RS2::ActionSelectSingle;
 }
 
