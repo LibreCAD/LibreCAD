@@ -780,7 +780,7 @@ erste Basis, zweite Basis, erstes Ziel, zweites Ziel.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>MUSS eine Linie, ein Kreis oder ein Bogen sein</translation>
     </message>
 </context>
 <context>
@@ -823,12 +823,12 @@ erste Basis, zweite Basis, erstes Ziel, zweites Ziel.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Häkchen - Aus</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Unterbrechungen - Aus</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -853,7 +853,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation type="unfinished"></translation>
+        <translation>Häkchen</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
