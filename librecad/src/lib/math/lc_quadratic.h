@@ -25,11 +25,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_QUADRATIC_H
 #define LC_QUADRATIC_H
 
-
-#include "rs_vector.h"
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
 
+class RS_Vector;
 class RS_VectorSolutions;
 class RS_AtomicEntity;
 
