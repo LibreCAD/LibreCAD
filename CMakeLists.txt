@@ -571,6 +571,8 @@ set(SOURCES
         librecad/src/lib/engine/lc_rect.h
         librecad/src/lib/engine/lc_splinepoints.cpp
         librecad/src/lib/engine/lc_splinepoints.h
+        librecad/src/lib/engine/lc_rtree.cpp
+        librecad/src/lib/engine/lc_rtree.h
         librecad/src/lib/engine/lc_undosection.cpp
         librecad/src/lib/engine/lc_undosection.h
         librecad/src/lib/engine/rs.cpp
