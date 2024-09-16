@@ -68,7 +68,7 @@ public:
 	void updateRecentFilesMenu();
     bool hasMenuEntries() const
     {
-        return recentFilesAction.size() > 0;
+        return !m_recentFilesActions.empty();
     }
 
 private:
@@ -78,9 +78,9 @@ private:
      */
     void saveToSettings() const;
 
-	int const number;
-	QStringList files;
-	QList<QAction*> recentFilesAction;
+    int const m_maxEntries;
+    QStringList m_files;
+    QList<QAction*> m_recentFilesActions;
 };
 
 #endif
