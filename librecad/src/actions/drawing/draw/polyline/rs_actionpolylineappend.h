@@ -38,8 +38,7 @@ class RS_Polyline;
 class RS_ActionPolylineAppend : public RS_ActionDrawPolyline {
 	Q_OBJECT
 public:
-	RS_ActionPolylineAppend(RS_EntityContainer& container,
-						RS_GraphicView& graphicView);
+	RS_ActionPolylineAppend(RS_EntityContainer& container, RS_GraphicView& graphicView);
     void trigger() override;
     void undo() override;
     void mouseMoveEvent(QMouseEvent *e) override;
