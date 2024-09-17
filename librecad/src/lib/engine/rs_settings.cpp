@@ -30,7 +30,8 @@
 #include "rs_debug.h"
 #include "rs_settings.h"
 
-RS_Settings::GroupGuard::GroupGuard(QString group): m_group{std::move(group)}
+RS_Settings::GroupGuard::GroupGuard(QString group)
+    : m_group{std::move(group)}
 {}
 
 RS_Settings::GroupGuard::~GroupGuard()
@@ -41,20 +42,20 @@ RS_Settings::GroupGuard::~GroupGuard()
             RS_SETTINGS->beginGroup(m_group);
         }
     } catch (...) {
-        LC_LOG(RS_Debug::D_CRITICAL)<<"RS_SETTINGS cleanup error";
+        LC_LOG(RS_Debug::D_CRITICAL) << "RS_SETTINGS cleanup error";
     }
 }
 
 bool RS_Settings::save_is_allowed = true;
 
-RS_Settings::RS_Settings():
-	initialized(false)
-{
-}
+RS_Settings::RS_Settings()
+    : initialized(false)
+{}
 
-RS_Settings* RS_Settings::instance() {
-    static RS_Settings* uniqueInstance = new RS_Settings();
-	return uniqueInstance;
+RS_Settings *RS_Settings::instance()
+{
+    static RS_Settings *uniqueInstance = new RS_Settings();
+    return uniqueInstance;
 }
 
 /**
@@ -65,11 +66,10 @@ RS_Settings* RS_Settings::instance() {
  * @param appKey String that identifies the application. Must start
  *        with a "/". E.g. "/LibreCAD"
  */
-void RS_Settings::init(const QString& companyKey,
-                       const QString& appKey) {
-
+void RS_Settings::init(const QString &companyKey, const QString &appKey)
+{
     m_group = "";
-	
+
     this->companyKey = companyKey;
     this->appKey = appKey;
 
@@ -78,34 +78,40 @@ void RS_Settings::init(const QString& companyKey,
     initialized = true;
 }
 
-void RS_Settings::beginGroup(QString group) {
+void RS_Settings::beginGroup(QString group)
+{
     m_group = std::move(group);
 }
 
-void RS_Settings::endGroup() {
+void RS_Settings::endGroup()
+{
     m_group.clear();
 }
 
-std::unique_ptr<RS_Settings::GroupGuard> RS_Settings::beginGroupGuard(QString group) {
+std::unique_ptr<RS_Settings::GroupGuard> RS_Settings::beginGroupGuard(QString group)
+{
     auto guard = std::make_unique<RS_Settings::GroupGuard>(std::move(m_group));
     m_group = std::move(group);
     return guard;
 }
 
-bool RS_Settings::writeEntry(const QString& key, int value) {
+bool RS_Settings::writeEntry(const QString &key, int value)
+{
     return writeEntry(key, QVariant(value));
 }
 
-bool RS_Settings::writeEntry(const QString& key,const QString& value) {
+bool RS_Settings::writeEntry(const QString &key, const QString &value)
+{
     return writeEntry(key, QVariant(value));
 }
 
-bool RS_Settings::writeEntry(const QString& key, double value) {
+bool RS_Settings::writeEntry(const QString &key, double value)
+{
     return writeEntry(key, QVariant(value));
 }
 
-bool RS_Settings::writeEntry(const QString& key, const QVariant& value) {
-
+bool RS_Settings::writeEntry(const QString &key, const QVariant &value)
+{
     // Skip writing operations if the key is found in the cache and
     // its value is the same as the new one (it was already written).
     QVariant ret = readEntryCache(key);
@@ -113,84 +119,77 @@ bool RS_Settings::writeEntry(const QString& key, const QVariant& value) {
         return true;
     }
 
-	QSettings s(companyKey, appKey);
+    QSettings s(companyKey, appKey);
     // RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 
-    s.setValue(QString("%1%2").arg(m_group).arg(key), value);
-	cache[key]=value;
+    s.setValue(QString("%1%2").arg(m_group, key), value);
+    cache[key] = value;
 
     return true;
 }
 
-QString RS_Settings::readEntry(const QString& key,
-                                 const QString& def,
-                                 bool* ok) {
-	
+QString RS_Settings::readEntry(const QString &key, const QString &def, bool *ok)
+{
     // lookup:
     QVariant ret = readEntryCache(key);
     if (!ret.isValid()) {
-				
-        QSettings s(companyKey, appKey);
-    	// RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
-		
-		if (ok) {
-            *ok=s.contains(QString("%1%2").arg(m_group).arg(key));
-		}
-		
-        ret = s.value(QString("%1%2").arg(m_group).arg(key), QVariant(def));
-		cache[key]=ret;
-    }
-
-    return ret.toString();
-
-}
-
-QByteArray RS_Settings::readByteArrayEntry(const QString& key,
-                    const QString& def,
-                    bool* ok) {
-    QVariant ret = readEntryCache(key);
-    if (!ret.isValid()) {
-
         QSettings s(companyKey, appKey);
         // RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 
-                if (ok) {
-                        *ok=s.contains(QString("%1%2").arg(m_group).arg(key));
-                }
+        if (ok) {
+            *ok = s.contains(QString("%1%2").arg(m_group, key));
+        }
 
-        ret = s.value(QString("%1%2").arg(m_group).arg(key), QVariant(def));
-		cache[key]=ret;
+        ret = s.value(QString("%1%2").arg(m_group, key), QVariant(def));
+        cache[key] = ret;
+    }
+
+    return ret.toString();
+}
+
+QByteArray RS_Settings::readByteArrayEntry(const QString &key, const QString &def, bool *ok)
+{
+    QVariant ret = readEntryCache(key);
+    if (!ret.isValid()) {
+        QSettings s(companyKey, appKey);
+        // RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
+
+        if (ok != nullptr) {
+            *ok = s.contains(QString("%1%2").arg(m_group, key));
+        }
+
+        ret = s.value(QString("%1%2").arg(m_group, key), QVariant(def));
+        cache[key] = ret;
     }
 
     return ret.toByteArray();
-
 }
 
-int RS_Settings::readNumEntry(const QString& key, int def)
+int RS_Settings::readNumEntry(const QString &key, int def)
 {
-	QVariant value = readEntryCache(key);
-	if (!value.isValid())
-	{
-		QSettings s(companyKey, appKey);
-        QString str = QString("%1%2").arg(m_group).arg(key);
-		// qDebug() << str;
-		value = s.value(str, QVariant(def));
-		cache[key] = value;
-	}
+    QVariant value = readEntryCache(key);
+    if (!value.isValid()) {
+        QSettings s(companyKey, appKey);
+        QString str = QString("%1%2").arg(m_group, key);
+        // qDebug() << str;
+        value = s.value(str, QVariant(def));
+        cache[key] = value;
+    }
     unsigned long long uValue = value.toULongLong();
     uValue = uValue % 0x80000000ull;
     return int(uValue);
 }
 
-
-QVariant RS_Settings::readEntryCache(const QString& key) {
-	if(!cache.count(key)) return QVariant();
-	return cache[key];
+QVariant RS_Settings::readEntryCache(const QString &key)
+{
+    if (!cache.count(key))
+        return QVariant();
+    return cache[key];
 }
 
-
-void RS_Settings::addToCache(const QString& key, const QVariant& value) {
-    cache[key]=value;
+void RS_Settings::addToCache(const QString &key, const QVariant &value)
+{
+    cache[key] = value;
 }
 
 void RS_Settings::clear_all()
