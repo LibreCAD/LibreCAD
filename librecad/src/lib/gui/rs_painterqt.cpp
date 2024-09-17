@@ -377,7 +377,9 @@ void RS_PainterQt::drawGridPoint(const RS_Vector& p) {
     QPainter::drawPoint(toScreenX(p.x), toScreenY(p.y));
 }
 
-
+void RS_PainterQt::drawGridPoint(const double &x, const double &y) {
+    QPainter::drawPoint(toScreenX(x), toScreenY(y));
+}
 
 /**
  * Draws a point at (x1, y1).
@@ -469,17 +471,17 @@ void RS_PainterQt::drawPoint(const RS_Vector& p, int pdmode, int pdsize) {
 /**
  * Draws a line from (x1, y1) to (x2, y2).
  */
-void RS_PainterQt::drawLine(const RS_Vector& p1, const RS_Vector& p2)
-{
+void RS_PainterQt::drawLine(const RS_Vector& p1, const RS_Vector& p2){
     PainterGuard painterGuard{*this};
     QPainter::drawLine(toScreenX(p1.x), toScreenY(p1.y),
                        toScreenX(p2.x), toScreenY(p2.y));
 }
 
-
-
-
-
+void RS_PainterQt::drawLine(const double &x1, const double &y1, const double &x2, const double &y2){
+    PainterGuard painterGuard{*this};
+    QPainter::drawLine(toScreenX(x1), toScreenY(y1),
+                       toScreenX(x2), toScreenY(y2));
+}
 
 /**
  * Draws a rectangle with corners p1, p2.
@@ -530,7 +532,16 @@ void RS_PainterQt::drawArc( const RS_Vector& cp,
 
     // angles in degrees
     double startAngle = RS_Math::rad2deg(reversed ? a2 : a1);
+    double endAngle = RS_Math::rad2deg(reversed ? a1 : a2);
     double angularLength = RS_Math::rad2deg(RS_Math::getAngleDifference(a1, a2, reversed));
+
+    // brute fix for #1896
+    if (std::abs(angularLength) < RS_TOLERANCE_ANGLE) {
+        // check whether angles are via period
+        if (RS_Math::getPeriodsCount(a1, a2, reversed) != 0) {
+            angularLength = 360; // in degrees
+        }
+    }
 
     QPainterPath path;
     path.arcMoveTo(circleRect, startAngle);
