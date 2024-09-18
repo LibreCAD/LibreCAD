@@ -43,16 +43,16 @@ public:
 	~QG_DlgOptionsDrawing();
 
 public slots:
-    virtual void setGraphic( RS_Graphic * g );
-    virtual void validate();
-    virtual void updateLengthPrecision();
-    virtual void updateAnglePrecision();
-    virtual void updatePreview();
-    virtual void updatePaperSize();
-    virtual void updateUnitLabels();
-    virtual void updateDimLengthPrecision();
-    virtual void updateDimAnglePrecision();
-    virtual void updatePaperPreview();
+    void setGraphic( RS_Graphic * g );
+    void validate();
+    void updateLengthPrecision();
+    void updateAnglePrecision();
+    void updatePreview();
+    void updatePaperSize();
+    void updateUnitLabels();
+    void updateDimLengthPrecision();
+    void updateDimAnglePrecision();
+    void updatePaperPreview();
 
 protected slots:
     virtual void languageChange();
@@ -60,29 +60,20 @@ protected slots:
 private slots:
     void on_rbIsometricGrid_clicked();
 
-    void on_rbCrosshairLeft_toggled(bool checked);
-
-    void on_rbCrosshairTop_toggled(bool checked);
-
-    void on_rbCrosshairRight_toggled(bool checked);
-
     void on_rbOrthogonalGrid_clicked();
 
     void on_cbGridOn_toggled(bool checked);
 
-	void on_rbLandscape_toggled(bool checked);
+	   void onLandscapeToggled(bool checked);
 
-    void on_cbDimFxLon_toggled(bool checked);
+    void onDimFxLonToggled(bool checked);
 
-    void on_tabWidget_currentChanged(int index);
-
-    void on_cbGridType_currentIndexChanged(int index);
-    void on_rbRelSize_toggled(bool checked);
+    void onRelSizeToggled(bool checked);
 
 private:
     void updateCBLengthPrecision(QComboBox* u, QComboBox* l);
     void updateCBAnglePrecision(QComboBox* u, QComboBox* p);
-	void updateLPtSzUnits();
+    void updateLPtSzUnits();
 
 protected:
     void resizeEvent(QResizeEvent* event) override;
@@ -92,7 +83,7 @@ private:
     std::unique_ptr<QStringList> listPrec1;
     RS_Graphic* graphic;
     QGraphicsScene* paperScene;
-	std::unique_ptr<RS_Vector> spacing;
+    std::unique_ptr<RS_Vector> spacing;
     void init();
 };
 
