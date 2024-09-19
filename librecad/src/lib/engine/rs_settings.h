@@ -70,11 +70,14 @@ public:
     // ---------------------------------------------------------------------------
     // Default Settings
     // ---------------------------------------------------------------------------
-    static constexpr char const* snap_indicator    = "#FFC200";
-    static constexpr char const* background        = "Black";
-    static constexpr char const* grid              = "Gray";
-    static constexpr char const* meta_grid         = "#404040";
-    static constexpr char const* select            = "#A54747";
+    static constexpr char const* snap_indicator          = "#FFC200";
+    static constexpr char const* snap_indicator_lines    = "#FFC200";
+    static constexpr char const* background              = "Black";
+    static constexpr char const* color_grid_points       = "Gray";
+    static constexpr char const* color_grid_lines        = "#aeaeff";
+    static constexpr char const* color_meta_grid_points  = "#404040";
+    static constexpr char const* color_meta_grid_lines   = "#55557f";
+    static constexpr char const* select                  = "#A54747";
     static constexpr char const* highlight         = "#739373";
     static constexpr char const* start_handle      = "Cyan";
     static constexpr char const* handle            = "Blue";

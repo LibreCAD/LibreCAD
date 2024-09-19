@@ -303,7 +303,7 @@ void RS_FilterDXFRW::addVport(const DRW_Vport &data) {
     if (name.toLower() == "*active") {
         data.grid == 1? graphic->setGridOn(true):graphic->setGridOn(false);
         graphic->setIsometricGrid(data.snapStyle);
-        graphic->setCrosshairType( (RS2::CrosshairType)data.snapIsopair);
+        graphic->setIsoView( (RS2::IsoGridViewType)data.snapIsopair);
         RS_GraphicView *gv = graphic->getGraphicView();
         if (gv ) {
             double width = data.height * data.ratio;
@@ -2029,7 +2029,7 @@ void RS_FilterDXFRW::writeVports(){
     vp.gridSpacing.x = spacing.x;
     vp.gridSpacing.y = spacing.y;
     vp.snapStyle = graphic->isIsometricGrid();
-    vp.snapIsopair = graphic->getCrosshairType();
+    vp.snapIsopair = graphic->getIsoView();
     if (vp.snapIsopair > 2)
         vp.snapIsopair = 0;
     if (fabs(spacing.x) < 1.0e-6) {

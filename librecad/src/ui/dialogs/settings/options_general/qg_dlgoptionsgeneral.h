@@ -57,8 +57,10 @@ protected slots:
 private slots:
     void on_tabWidget_currentChanged(int index);
     void on_pb_background_clicked();
-    void on_pb_grid_clicked();
-    void on_pb_meta_clicked();
+    void on_pb_gridPoints_clicked();
+    void on_pb_gridLines_clicked();
+    void on_pb_metaPoints_clicked();
+    void on_pb_metaLines_clicked();
     void on_pb_selected_clicked();
     void on_pb_highlighted_clicked();
     void on_pb_start_clicked();
@@ -67,6 +69,7 @@ private slots:
     void on_pb_clear_all_clicked();
     void on_pb_clear_geometry_clicked();
     void on_pb_snap_color_clicked();
+    void on_pb_snap_lines_color_clicked();
     void on_pb_relativeZeroColor_clicked();
     void on_pb_previewRefColor_clicked();
     void on_pb_previewRefHighlightColor_clicked();

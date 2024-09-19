@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>653</width>
-    <height>556</height>
+    <width>556</width>
+    <height>551</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="tab1">
       <attribute name="title">
@@ -314,7 +314,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>0</height>
           </size>
          </property>
         </spacer>
@@ -420,7 +420,7 @@
                 <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
-                  <height>31</height>
+                  <height>0</height>
                  </size>
                 </property>
                </spacer>
@@ -436,7 +436,7 @@
                 <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
-                  <height>31</height>
+                  <height>0</height>
                  </size>
                 </property>
                </spacer>
@@ -497,7 +497,7 @@
                 <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
-                  <height>31</height>
+                  <height>0</height>
                  </size>
                 </property>
                </spacer>
@@ -513,7 +513,7 @@
                 <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
-                  <height>31</height>
+                  <height>0</height>
                  </size>
                 </property>
                </spacer>
@@ -582,85 +582,36 @@
           <string>Grid Settings</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_7">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="cbGridOn">
-            <property name="text">
-             <string>Show Grid</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="cbExtendAxisLines">
-            <property name="text">
-             <string>Extend axis lines</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QWidget" name="widget" native="true">
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="rbIsoLeft">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>80</width>
               <height>0</height>
              </size>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
+            <property name="toolTip">
+             <string>Left crosshair with isometric grid</string>
             </property>
-            <layout class="QGridLayout" name="gridLayout_12">
-             <item row="0" column="0">
-              <widget class="QLabel" name="lGridType">
-               <property name="text">
-                <string>&amp;Grid type:</string>
-               </property>
-               <property name="wordWrap">
-                <bool>false</bool>
-               </property>
-               <property name="buddy">
-                <cstring>cbGridType</cstring>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QComboBox" name="cbGridType">
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="editable">
-                <bool>false</bool>
-               </property>
-               <property name="currentIndex">
-                <number>0</number>
-               </property>
-               <item>
-                <property name="text">
-                 <string>Points</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Lines</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-            </layout>
+            <property name="text">
+             <string>Isometric Left</string>
+            </property>
            </widget>
           </item>
-          <item row="0" column="1">
+          <item row="2" column="0">
            <widget class="QRadioButton" name="rbOrthogonalGrid">
+            <property name="minimumSize">
+             <size>
+              <width>80</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="toolTip">
              <string>Use orthogonal grid</string>
             </property>
@@ -672,126 +623,55 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QRadioButton" name="rbIsometricGrid">
-            <property name="toolTip">
-             <string>Use isometric grid</string>
-            </property>
-            <property name="text">
-             <string>Isometric Grid</string>
-            </property>
-            <property name="autoExclusive">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QWidget" name="widget" native="true">
+          <item row="4" column="0">
+           <widget class="QRadioButton" name="rbIsoTop">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>80</width>
               <height>0</height>
              </size>
             </property>
-            <property name="maximumSize">
+            <property name="toolTip">
+             <string>Top crosshair with isometric grid</string>
+            </property>
+            <property name="text">
+             <string>Isometric Top</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="cbGridOn">
+            <property name="text">
+             <string>Show Grid</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QRadioButton" name="rbIsoRight">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
              <size>
-              <width>350</width>
-              <height>16777215</height>
+              <width>80</width>
+              <height>0</height>
              </size>
             </property>
-            <layout class="QGridLayout" name="gridLayout_6">
-             <item row="1" column="0">
-              <widget class="QRadioButton" name="rbCrosshairLeft">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Left crosshair with isometric grid</string>
-               </property>
-               <property name="text">
-                <string>Left</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QRadioButton" name="rbCrosshairTop">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Top crosshair with isometric grid</string>
-               </property>
-               <property name="text">
-                <string>Top</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QRadioButton" name="rbCrosshairRight">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Right crosshair with isometric grid</string>
-               </property>
-               <property name="text">
-                <string>Right</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="3">
-              <widget class="QLabel" name="lCrosshair">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>70</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Crosshair</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
+            <property name="toolTip">
+             <string>Right crosshair with isometric grid</string>
+            </property>
+            <property name="text">
+             <string>Isometric Right</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -904,7 +784,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>228</width>
+           <width>0</width>
            <height>20</height>
           </size>
          </property>
@@ -918,7 +798,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>71</height>
+           <height>0</height>
           </size>
          </property>
         </spacer>
@@ -930,22 +810,6 @@
        <string>&amp;Dimensions</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="14" column="5">
-        <spacer name="spacer11_2_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>30</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="3" column="2">
         <widget class="QG_FontBox" name="cbDimTxSty" native="true"/>
        </item>
@@ -1142,7 +1006,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>30</height>
+           <height>0</height>
           </size>
          </property>
         </spacer>
@@ -1396,7 +1260,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>0</height>
           </size>
          </property>
         </spacer>
@@ -1672,6 +1536,22 @@
          </property>
         </widget>
        </item>
+       <item row="15" column="5">
+        <spacer name="spacer11_2_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab5">
@@ -1741,7 +1621,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>111</height>
+           <height>0</height>
           </size>
          </property>
         </spacer>
@@ -2868,12 +2748,6 @@
   <tabstop>cbLengthPrecision</tabstop>
   <tabstop>cbAngleFormat</tabstop>
   <tabstop>cbAnglePrecision</tabstop>
-  <tabstop>cbGridOn</tabstop>
-  <tabstop>rbOrthogonalGrid</tabstop>
-  <tabstop>rbIsometricGrid</tabstop>
-  <tabstop>rbCrosshairLeft</tabstop>
-  <tabstop>rbCrosshairTop</tabstop>
-  <tabstop>rbCrosshairRight</tabstop>
   <tabstop>cbXSpacing</tabstop>
   <tabstop>cbYSpacing</tabstop>
   <tabstop>cbDimScale</tabstop>
@@ -2958,278 +2832,6 @@
     <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbLengthFormat</sender>
-   <signal>activated(int)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updateLengthPrecision()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>187</x>
-     <y>150</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbDimLUnit</sender>
-   <signal>activated(int)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updateDimLengthPrecision()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>494</x>
-     <y>241</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbAngleFormat</sender>
-   <signal>activated(int)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updateAnglePrecision()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>495</x>
-     <y>150</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbDimAUnit</sender>
-   <signal>activated(int)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updateDimAnglePrecision()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>494</x>
-     <y>356</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbUnit</sender>
-   <signal>activated(int)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updatePreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>161</x>
-     <y>86</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbAngleFormat</sender>
-   <signal>activated(int)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updatePreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>495</x>
-     <y>150</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbLengthFormat</sender>
-   <signal>activated(QString)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updatePreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>187</x>
-     <y>150</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbAnglePrecision</sender>
-   <signal>activated(int)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updatePreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>495</x>
-     <y>179</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbLengthPrecision</sender>
-   <signal>activated(int)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updatePreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>187</x>
-     <y>179</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbPaperFormat</sender>
-   <signal>activated(int)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updatePaperSize()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>46</x>
-     <y>104</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbUnit</sender>
-   <signal>activated(int)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updatePreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>161</x>
-     <y>86</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leMarginRight</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updatePaperPreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>250</x>
-     <y>312</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>326</x>
-     <y>250</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leMarginLeft</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updatePaperPreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>144</x>
-     <y>341</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>326</x>
-     <y>250</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leMarginBottom</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updatePaperPreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>174</x>
-     <y>341</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>326</x>
-     <y>250</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leMarginTop</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updatePaperPreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>144</x>
-     <y>341</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>326</x>
-     <y>250</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lePaperWidth</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updatePaperPreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>144</x>
-     <y>341</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>326</x>
-     <y>250</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lePaperHeight</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>QG_DlgOptionsDrawing</receiver>
-   <slot>updatePaperPreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>144</x>
-     <y>341</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>326</x>
-     <y>250</y>
     </hint>
    </hints>
   </connection>

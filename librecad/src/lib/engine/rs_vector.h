@@ -40,26 +40,28 @@ class QPointF;
  */
 class RS_Vector {
 public:
-	RS_Vector()=default;
-	RS_Vector(double vx, double vy, double vz=0.0);
+    RS_Vector()=default;
+    RS_Vector(double vx, double vy, double vz=0.0);
     explicit RS_Vector(double angle);
     //RS_Vector(double v[]);
     explicit RS_Vector(bool valid);
     explicit RS_Vector(const QPointF& point);
     ~RS_Vector()=default;
 
-	//!
-	//! \brief operator bool explicit and implicit conversion to bool
-	//!
-	explicit operator bool() const;
+//!
+//! \brief operator bool explicit and implicit conversion to bool
+//!
+    explicit operator bool() const;
 
-	void set(double angle); // set to unit vector by the direction of angle
+    void set(double angle); // set to unit vector by the direction of angle
     void set(double vx, double vy, double vz=0.0);
+    void plus(const RS_Vector& other);
+    void minus(const RS_Vector& other);
     void setPolar(double radius, double angle);
-	//! \{
-	//! construct by cartesian, or polar coordinates
-	static RS_Vector polar(double rho, double theta);
-	//! \}
+//! \{
+//! construct by cartesian, or polar coordinates
+    static RS_Vector polar(double rho, double theta);
+//! \}
 
     double distanceTo(const RS_Vector& v) const;
     double angle() const;
@@ -99,38 +101,38 @@ public:
      * @return          the transformed vector
      */
     RS_Vector& shear(double k);
-	double dotP(const RS_Vector& v1) const;
+    double dotP(const RS_Vector& v1) const;
     RS_Vector normalized() const;
     RS_Vector& normalize();
 
     RS_Vector operator + (const RS_Vector& v) const;
-	RS_Vector operator + (double d) const;
-	RS_Vector operator - (const RS_Vector& v) const;
-	RS_Vector operator - (double d) const;
-	RS_Vector operator * (const RS_Vector& v) const;
-	RS_Vector operator / (const RS_Vector& v) const;
-	RS_Vector operator * (double s) const;
-	RS_Vector operator / (double s) const;
+    RS_Vector operator + (double d) const;
+    RS_Vector operator - (const RS_Vector& v) const;
+    RS_Vector operator - (double d) const;
+    RS_Vector operator * (const RS_Vector& v) const;
+    RS_Vector operator / (const RS_Vector& v) const;
+    RS_Vector operator * (double s) const;
+    RS_Vector operator / (double s) const;
     RS_Vector operator - () const;
 
-	RS_Vector operator += (const RS_Vector& v);
-	RS_Vector operator -= (const RS_Vector& v);
-	RS_Vector operator *= (const RS_Vector& v);
-	RS_Vector operator /= (const RS_Vector& v);
-	RS_Vector operator *= (double s);
-	RS_Vector operator /= (double s);
+    RS_Vector operator += (const RS_Vector& v);
+    RS_Vector operator -= (const RS_Vector& v);
+    RS_Vector operator *= (const RS_Vector& v);
+    RS_Vector operator /= (const RS_Vector& v);
+    RS_Vector operator *= (double s);
+    RS_Vector operator /= (double s);
 
     bool operator == (const RS_Vector& v) const;
     bool operator != (const RS_Vector& v) const {
         return !operator==(v);
     }
-	//!
-	//! \brief operator == comparison of validity with bool
-	//! \param valid boolean parameter
-	//! \return true is the parameter valid is the same as validity
-	//!
-	bool operator == (bool valid) const;
-	bool operator != (bool valid) const;
+//!
+//! \brief operator == comparison of validity with bool
+//! \param valid boolean parameter
+//! \return true is the parameter valid is the same as validity
+//!
+    bool operator == (bool valid) const;
+    bool operator != (bool valid) const;
 
     static RS_Vector minimum(const RS_Vector& v1, const RS_Vector& v2);
     static RS_Vector maximum(const RS_Vector& v1, const RS_Vector& v2);
@@ -152,10 +154,10 @@ public:
 #endif
 
 public:
-	double x=0.;
-	double y=0.;
-	double z=0.;
-	bool valid=false;
+    double x=0.;
+    double y=0.;
+    double z=0.;
+    bool valid=false;
 };
 
 

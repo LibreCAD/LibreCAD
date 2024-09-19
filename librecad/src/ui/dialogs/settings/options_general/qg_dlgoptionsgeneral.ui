@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>686</width>
-    <height>610</height>
+    <height>596</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,14 @@
    <property name="bottomMargin">
     <number>11</number>
    </property>
-   <item row="3" column="0">
+   <item row="5" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>0</number>
@@ -419,15 +426,199 @@
          <property name="title">
           <string>Snap</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_11">
-          <item row="6" column="0" colspan="4">
-           <widget class="QCheckBox" name="cbShowSnapOptionsInSnapBar">
+         <layout class="QGridLayout" name="gridLayout_9">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="indicator_lines_checkbox">
             <property name="text">
-             <string>Show snap options in Snap Selection Toolbar</string>
+             <string>Snap indicator lines</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+S</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
+          <item row="0" column="1" colspan="2">
+           <widget class="QComboBox" name="indicator_lines_combobox">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">Adaptive</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Crosshair</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Spiderweb</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Snap Indicator lines</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="cb_snap_lines_color">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#FFC200</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#1E90FF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="pb_snap_lines_color">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Line Type:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" colspan="2">
+           <widget class="QG_LineTypeBox" name="wSnapLinesLineType" native="true"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Line Width</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="2">
+           <widget class="QSpinBox" name="sbSnapLinesLineWidth">
+            <property name="suffix">
+             <string>px</string>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>10</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="indicator_shape_checkbox">
+            <property name="text">
+             <string>Snap indicator shape</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QComboBox" name="indicator_shape_combobox">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">Circle</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Point</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Square</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Gap</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="lSnapIndicatorColor">
+            <property name="text">
+             <string>Snap indicator:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QComboBox" name="cb_snap_color">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#FFC200</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#1E90FF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QPushButton" name="pb_snap_color">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="lblAngleSnap">
+            <property name="text">
+             <string>Angle snap single step</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
            <widget class="QComboBox" name="cbAngleSnapStep">
             <property name="toolTip">
              <string>Angle between steps for Angle Snap (which is usually by corresponding actions if SHIFT is pressed)</string>
@@ -469,135 +660,25 @@
             </item>
            </widget>
           </item>
-          <item row="1" column="2" colspan="2">
-           <widget class="QComboBox" name="indicator_shape_combobox">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">Circle</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Point</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Square</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="3" column="3">
+          <item row="6" column="2">
            <widget class="QLabel" name="lblAngleSnapUnits">
             <property name="text">
              <string>deg</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="3">
-           <widget class="QPushButton" name="pb_snap_color">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QCheckBox" name="indicator_lines_checkbox">
-            <property name="text">
-             <string>Snap indicator lines</string>
-            </property>
-            <property name="shortcut">
-             <string>Alt+S</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="lSnapIndicatorColor">
-            <property name="text">
-             <string>Snap indicator:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="indicator_shape_checkbox">
-            <property name="text">
-             <string>Snap indicator shape</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="lblAngleSnap">
-            <property name="text">
-             <string>Angle snap single step</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2" colspan="2">
-           <widget class="QComboBox" name="indicator_lines_combobox">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">Crosshair</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Crosshair2</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Isometric</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Spiderweb</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="4">
+          <item row="7" column="0" colspan="2">
            <widget class="QCheckBox" name="cursor_hiding_checkbox">
             <property name="text">
              <string>Hide cursor when snapping</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
-           <widget class="QComboBox" name="cb_snap_color">
-            <property name="accessibleDescription">
-             <string notr="true"/>
+          <item row="8" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbShowSnapOptionsInSnapBar">
+            <property name="text">
+             <string>Show snap options in Snap Selection Toolbar</string>
             </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#FFC200</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>#1E90FF</string>
-             </property>
-            </item>
            </widget>
           </item>
          </layout>
@@ -610,67 +691,384 @@
        <string>Grid</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_8">
-       <item row="3" column="1">
-        <widget class="QGroupBox" name="gbGridDefaults">
-         <property name="title">
-          <string>Defaults for new drawings</string>
+       <item row="2" column="0" colspan="2">
+        <widget class="QTabWidget" name="tabWidget_2">
+         <property name="currentIndex">
+          <number>1</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_9">
-          <item row="1" column="0">
-           <widget class="QRadioButton" name="rbGridOrtho">
-            <property name="text">
-             <string>Orthogonal Grid</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QRadioButton" name="rbGridIsometric">
-            <property name="text">
-             <string>Isometric Grid</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QGroupBox" name="groupBox_12">
-            <property name="title">
-             <string>Crosshair</string>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_14">
-             <item row="0" column="0">
-              <widget class="QRadioButton" name="rbCrossHairLeft">
-               <property name="text">
-                <string>Left</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QRadioButton" name="rbCrosshairTop">
-               <property name="text">
-                <string>Top</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <widget class="QRadioButton" name="rbCrosshairRight">
-               <property name="text">
-                <string>Right</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
+         <widget class="QWidget" name="points">
+          <attribute name="title">
+           <string>Points Grid</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_22">
+           <item row="0" column="0">
+            <widget class="QGroupBox" name="groupBox_8">
+             <property name="title">
+              <string>Grid</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_7">
+              <item row="12" column="1">
+               <widget class="QSpinBox" name="sbGridPointsLineWidth">
+                <property name="suffix">
+                 <string>px</string>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>10</number>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="1">
+               <widget class="QG_LineTypeBox" name="wGridPointsLineType" native="true"/>
+              </item>
+              <item row="9" column="1">
+               <widget class="QComboBox" name="cbGridPointsColor">
+                <property name="accessibleDescription">
+                 <string notr="true"/>
+                </property>
+                <property name="editable">
+                 <bool>true</bool>
+                </property>
+                <item>
+                 <property name="text">
+                  <string notr="true">#736F6E</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="9" column="2">
+               <widget class="QPushButton" name="pb_gridPoints">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../../../../res/ui/ui.qrc">
+                  <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="0">
+               <widget class="QLabel" name="lGridColor">
+                <property name="text">
+                 <string>G&amp;rid Color:</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>false</bool>
+                </property>
+                <property name="buddy">
+                 <cstring>cbGridPointsColor</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="0">
+               <widget class="QLabel" name="lGridLineType">
+                <property name="text">
+                 <string>Line Type</string>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="0">
+               <widget class="QLabel" name="lGridLineWidth">
+                <property name="text">
+                 <string>Line Width</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QGroupBox" name="groupBox_6">
+             <property name="title">
+              <string>Meta Grid</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_20">
+              <item row="2" column="1">
+               <widget class="QG_LineTypeBox" name="wMetaGridPointsLineType" native="true"/>
+              </item>
+              <item row="3" column="1">
+               <widget class="QSpinBox" name="sbMetaGridPointsWidth">
+                <property name="suffix">
+                 <string>px</string>
+                </property>
+                <property name="maximum">
+                 <number>10</number>
+                </property>
+                <property name="value">
+                 <number>1</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="lMetaGridLineType">
+                <property name="text">
+                 <string>Line Type: </string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="lMetaGridLineWidth">
+                <property name="text">
+                 <string>Line Width:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="cbMetaGridPointsColor">
+                <property name="accessibleDescription">
+                 <string notr="true"/>
+                </property>
+                <property name="editable">
+                 <bool>true</bool>
+                </property>
+                <item>
+                 <property name="text">
+                  <string notr="true">#404040</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="lMetaGridColor">
+                <property name="text">
+                 <string>&amp;Meta Grid Color:</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>false</bool>
+                </property>
+                <property name="buddy">
+                 <cstring>cbMetaGridPointsColor</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="pb_metaPoints">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../../../../res/ui/ui.qrc">
+                  <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_2">
+          <attribute name="title">
+           <string>Lines Grid</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_25">
+           <item row="0" column="0">
+            <widget class="QGroupBox" name="groupBox_10">
+             <property name="title">
+              <string>Grid</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_23">
+              <item row="12" column="1">
+               <widget class="QSpinBox" name="sbGridLinesLineWidth">
+                <property name="suffix">
+                 <string>px</string>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>10</number>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="1">
+               <widget class="QG_LineTypeBox" name="wGridLinesLineType" native="true"/>
+              </item>
+              <item row="9" column="1">
+               <widget class="QComboBox" name="cbGridLinesColor">
+                <property name="accessibleDescription">
+                 <string notr="true"/>
+                </property>
+                <property name="editable">
+                 <bool>true</bool>
+                </property>
+                <item>
+                 <property name="text">
+                  <string notr="true">#736F6E</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="9" column="2">
+               <widget class="QPushButton" name="pb_gridLines">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../../../../res/ui/ui.qrc">
+                  <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="0">
+               <widget class="QLabel" name="lGridColor_2">
+                <property name="text">
+                 <string>G&amp;rid Color:</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>false</bool>
+                </property>
+                <property name="buddy">
+                 <cstring>cbGridPointsColor</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="0">
+               <widget class="QLabel" name="lGridLineType_2">
+                <property name="text">
+                 <string>Line Type:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="0">
+               <widget class="QLabel" name="lGridLineWidth_2">
+                <property name="text">
+                 <string>Line Width:</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QGroupBox" name="groupBox_11">
+             <property name="title">
+              <string>Meta Grid</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_24">
+              <item row="2" column="1">
+               <widget class="QG_LineTypeBox" name="wMetaGridLinesLineType" native="true"/>
+              </item>
+              <item row="3" column="1">
+               <widget class="QSpinBox" name="sbMetaGridLinesWidth">
+                <property name="suffix">
+                 <string>px</string>
+                </property>
+                <property name="maximum">
+                 <number>10</number>
+                </property>
+                <property name="value">
+                 <number>1</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="lMetaGridLineType_2">
+                <property name="text">
+                 <string>Line Type: </string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="lMetaGridLineWidth_2">
+                <property name="text">
+                 <string>Line Width:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="cbMetaGridLinesColor">
+                <property name="accessibleDescription">
+                 <string notr="true"/>
+                </property>
+                <property name="editable">
+                 <bool>true</bool>
+                </property>
+                <item>
+                 <property name="text">
+                  <string notr="true">#404040</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="lMetaGridColor_2">
+                <property name="text">
+                 <string>&amp;Meta Grid Color:</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>false</bool>
+                </property>
+                <property name="buddy">
+                 <cstring>cbMetaGridPointsColor</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="pb_metaLines">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../../../../res/ui/ui.qrc">
+                  <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
-       <item row="0" column="0" rowspan="2">
-        <widget class="QGroupBox" name="groupBox_8">
-         <property name="title">
-          <string>Grid</string>
+       <item row="4" column="1">
+        <spacer name="verticalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_7">
-          <item row="7" column="2">
-           <widget class="QPushButton" name="pb_grid">
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="groupBox_9">
+         <property name="title">
+          <string>Axis Lines</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_10">
+          <item row="4" column="2">
+           <widget class="QPushButton" name="pb_axis_X">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -686,81 +1084,52 @@
             </property>
            </widget>
           </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="lYAxisAreas">
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
+            </property>
+            <property name="text">
+             <string>Y-Axis Extension</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="lAxisSize">
+            <property name="text">
+             <string>Short Axis Size</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QPushButton" name="pb_axis_Y">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lXAxisAreas">
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
+            </property>
+            <property name="text">
+             <string>X-Axis Extension</string>
+            </property>
+           </widget>
+          </item>
           <item row="4" column="1">
-           <widget class="QComboBox" name="cbMinGridSpacing">
-            <property name="maximumSize">
-             <size>
-              <width>60</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">0</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">4</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">5</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">6</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">8</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">10</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">15</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">20</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="10" column="0">
-           <widget class="QLabel" name="lGridLineWidth">
-            <property name="text">
-             <string>Line Width</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="lGridType">
-            <property name="text">
-             <string>&amp;Grid type:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbGridType</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QComboBox" name="cbGridColor">
+           <widget class="QComboBox" name="cbAxisXColor">
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -774,109 +1143,141 @@
             </item>
            </widget>
           </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="lGridColor">
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="cbGridExtendAxisLines">
+            <property name="toolTip">
+             <string>If checked, axises will be inifinite lines</string>
+            </property>
             <property name="text">
-             <string>G&amp;rid Color:</string>
+             <string>Extend axis lines</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QComboBox" name="cbAxisYColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#404040</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="lAxisYColor">
+            <property name="text">
+             <string>Y-Axis Color:</string>
             </property>
             <property name="wordWrap">
              <bool>false</bool>
             </property>
             <property name="buddy">
-             <cstring>cbGridColor</cstring>
+             <cstring>cbMetaGridPointsColor</cstring>
             </property>
            </widget>
           </item>
-          <item row="10" column="1">
-           <widget class="QSpinBox" name="sbGridLineWidth">
+          <item row="6" column="0">
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="cbYAxisAreas">
+            <item>
+             <property name="text">
+              <string>Whole Area</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Positive Values Area</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Negative Values Area</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>None</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="1" alignment="Qt::AlignLeft">
+           <widget class="QSpinBox" name="sbAxisSize">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Size of Axis Lines drawn in absolute zero point</string>
+            </property>
             <property name="suffix">
              <string>px</string>
             </property>
             <property name="minimum">
-             <number>1</number>
-            </property>
-            <property name="maximum">
              <number>10</number>
             </property>
            </widget>
           </item>
           <item row="4" column="0">
-           <widget class="QLabel" name="lMinGridSpacing">
+           <widget class="QLabel" name="lAxisXColor">
             <property name="text">
-             <string>Minimal Grid Spacing (p&amp;x):</string>
+             <string>X-Axis Color:</string>
             </property>
             <property name="wordWrap">
              <bool>false</bool>
             </property>
             <property name="buddy">
-             <cstring>cbMinGridSpacing</cstring>
+             <cstring>cbGridPointsColor</cstring>
             </property>
            </widget>
           </item>
-          <item row="9" column="1">
-           <widget class="QG_LineTypeBox" name="wGridLineType" native="true"/>
-          </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="lGridLineType">
-            <property name="text">
-             <string>Line Type</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1">
-           <widget class="QComboBox" name="cbGridType">
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="editable">
-             <bool>false</bool>
-            </property>
-            <property name="currentIndex">
-             <number>0</number>
-            </property>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="cbXAxisAreas">
             <item>
              <property name="text">
-              <string>Points</string>
+              <string>Whole Area</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Lines</string>
+              <string>Positive Values Area</string>
              </property>
             </item>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbScaleGrid">
-            <property name="text">
-             <string>A&amp;utomatically scale grid</string>
-            </property>
-            <property name="shortcut">
-             <string>Alt+U</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="cb_unitless_grid">
-            <property name="text">
-             <string>Unitless grid</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbGridOn">
-            <property name="text">
-             <string>Show Grid</string>
-            </property>
+            <item>
+             <property name="text">
+              <string>Negative Values Area</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>None</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="1" column="1">
         <widget class="QGroupBox" name="gbGVRelZero">
          <property name="title">
           <string>Relative Zero</string>
@@ -962,41 +1363,162 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QGroupBox" name="groupBox_6">
+       <item row="0" column="0" rowspan="2">
+        <widget class="QGroupBox" name="groupBox_7">
          <property name="title">
-          <string>Meta Grid</string>
+          <string>Grid General</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_20">
-          <item row="1" column="1">
-           <widget class="QComboBox" name="cbMetaGridColor">
-            <property name="accessibleDescription">
-             <string notr="true"/>
+         <layout class="QGridLayout" name="gridLayout_21">
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="cbGridOn">
+            <property name="text">
+             <string>Show Grid</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="lMinGridSpacing">
+            <property name="text">
+             <string>Minimal Grid Spacing (p&amp;x):</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbMinGridSpacing</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QCheckBox" name="cb_unitless_grid">
+            <property name="text">
+             <string>Unitless grid</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbDisableGridOnPanning">
+            <property name="toolTip">
+             <string>If checked, grid will not be drawn within view pan by mouse operation</string>
+            </property>
+            <property name="text">
+             <string>Don't draw grid on panning</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbSimpleGridRendring">
+            <property name="toolTip">
+             <string>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</string>
+            </property>
+            <property name="text">
+             <string>Simple Grid Rendering</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QComboBox" name="cbMinGridSpacing">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
             </property>
             <property name="editable">
              <bool>true</bool>
             </property>
             <item>
              <property name="text">
-              <string notr="true">#404040</string>
+              <string notr="true">0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">4</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">5</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">6</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">8</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">10</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">15</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">20</string>
              </property>
             </item>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="lMetaGridColor">
+          <item row="8" column="1">
+           <widget class="QComboBox" name="cbGridType">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="editable">
+             <bool>false</bool>
+            </property>
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <item>
+             <property name="text">
+              <string>Points</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Lines</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbScaleGrid">
             <property name="text">
-             <string>&amp;Meta Grid Color:</string>
+             <string>A&amp;utomatically scale grid</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+U</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="lGridType">
+            <property name="text">
+             <string>&amp;Grid type:</string>
             </property>
             <property name="wordWrap">
              <bool>false</bool>
             </property>
             <property name="buddy">
-             <cstring>cbMetaGridColor</cstring>
+             <cstring>cbGridType</cstring>
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
+          <item row="6" column="0">
            <widget class="QCheckBox" name="cbShowMetaGrid">
             <property name="toolTip">
              <string>If checked, metagrid will be drawn as part of grid drawing.</string>
@@ -1006,284 +1528,18 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="pb_meta">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+          <item row="7" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbDrawVerticalForIsoTop">
+            <property name="toolTip">
+             <string>If unchecked, vertical line will not be drawn for &quot;Top&quot; isometric view</string>
             </property>
             <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+             <string>Draw vertical lines for &quot;Top&quot; isometric grid</string>
             </property>
            </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="lMetaGridLineType">
-            <property name="text">
-             <string>Line Type: </string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="lMetaGridLineWidth">
-            <property name="text">
-             <string>Line Width:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QSpinBox" name="sbMetaGridWidth">
-            <property name="suffix">
-             <string>px</string>
-            </property>
-            <property name="maximum">
-             <number>10</number>
-            </property>
-            <property name="value">
-             <number>1</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QG_LineTypeBox" name="wMetaGridLineType" native="true"/>
           </item>
          </layout>
         </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QGroupBox" name="groupBox_9">
-         <property name="title">
-          <string>Axis Lines</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_10">
-          <item row="4" column="0">
-           <widget class="QLabel" name="lAxisXColor">
-            <property name="text">
-             <string>X-Axis Color:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbGridColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="lAxisYColor">
-            <property name="text">
-             <string>Y-Axis Color:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbMetaGridColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="lYAxisAreas">
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
-            </property>
-            <property name="text">
-             <string>Y-Axis Extension</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QComboBox" name="cbYAxisAreas">
-            <item>
-             <property name="text">
-              <string>Whole Area</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Positive Values Area</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Negative Values Area</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>None</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="lXAxisAreas">
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
-            </property>
-            <property name="text">
-             <string>X-Axis Extension</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QPushButton" name="pb_axis_X">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QComboBox" name="cbAxisXColor">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#736F6E</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QPushButton" name="pb_axis_Y">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QComboBox" name="cbAxisYColor">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#404040</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="cbGridExtendAxisLines">
-            <property name="toolTip">
-             <string>If checked, axises will be inifinite lines</string>
-            </property>
-            <property name="text">
-             <string>Extend axis lines</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="lAxisSize">
-            <property name="text">
-             <string>Short Axis Size</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QComboBox" name="cbXAxisAreas">
-            <item>
-             <property name="text">
-              <string>Whole Area</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Positive Values Area</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Negative Values Area</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>None</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="0" column="1" alignment="Qt::AlignLeft">
-           <widget class="QSpinBox" name="sbAxisSize">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Size of Axis Lines drawn in absolute zero point</string>
-            </property>
-            <property name="suffix">
-             <string>px</string>
-            </property>
-            <property name="minimum">
-             <number>10</number>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <spacer name="verticalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>0</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <spacer name="verticalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -1364,7 +1620,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>0</height>
           </size>
          </property>
         </spacer>
@@ -2461,7 +2717,222 @@
        <string>&amp;Defaults</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="bgLanguage">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="title">
+          <string>Language</string>
+         </property>
+         <layout class="QGridLayout" name="language_layout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="lLanguage">
+            <property name="text">
+             <string>&amp;GUI Language:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbLanguage</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="cbLanguageCmd"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lLanguageCmd">
+            <property name="text">
+             <string>&amp;Command Language:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbLanguageCmd</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="cbLanguage"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Program Defaults</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_17">
+          <item row="1" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbUseQtFileOpenDialog">
+            <property name="text">
+             <string>Don't use native OS file open dialog</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
+            <property name="text">
+             <string>Show keyboard shortcuts in actions tooltips</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbAutoBackup">
+            <property name="toolTip">
+             <string>When set, LibreCAD will automatically generate a backup of your current drawing.</string>
+            </property>
+            <property name="text">
+             <string>Auto save backup each</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
+            </property>
+            <property name="text">
+             <string>Persist dialog size only</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QSpinBox" name="cbAutoSaveTime">
+            <property name="toolTip">
+             <string>Time between automatic saving of the document in minutes.</string>
+            </property>
+            <property name="suffix">
+             <string> minutes</string>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>60</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbPersistentDialogs">
+            <property name="toolTip">
+             <string>If checked, dialogs will be positioned and resized to position/size of last invocation.</string>
+            </property>
+            <property name="text">
+             <string>Persistent dialogs location and size</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item row="2" column="0">
+        <widget class="QGroupBox" name="buttonGroup5">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Defaults for new drawings</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_26">
+          <item row="0" column="1">
+           <widget class="QComboBox" name="cbUnit">
+            <property name="toolTip">
+             <string>Drawing unit.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="lUnit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>&amp;Unit:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbUnit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="rbGridOrtho">
+            <property name="text">
+             <string>Orthogonal Grid</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QRadioButton" name="rbGridIsoLeft">
+            <property name="text">
+             <string>Left  Isometric Grid</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="rbGridIsoTop">
+            <property name="text">
+             <string>Top Isometric Grid</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QRadioButton" name="rbGridIsoRight">
+            <property name="text">
+             <string>RIght Isometric Grid</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="1">
         <widget class="QGroupBox" name="groupBox_4">
          <property name="title">
           <string>Keyboard Settings</string>
@@ -2487,118 +2958,7 @@
          </layout>
         </widget>
        </item>
-       <item row="0" column="0" rowspan="2">
-        <widget class="QGroupBox" name="groupBox">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>70</height>
-          </size>
-         </property>
-         <property name="title">
-          <string>Program Defaults</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_17">
-          <item row="1" column="0">
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>Auto save time (minutes):</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QSpinBox" name="cbAutoSaveTime">
-            <property name="toolTip">
-             <string>Time between automatic saving of the document in minutes.</string>
-            </property>
-            <property name="minimum">
-             <number>1</number>
-            </property>
-            <property name="maximum">
-             <number>60</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbUseQtFileOpenDialog">
-            <property name="text">
-             <string>Don't use native OS file open dialog</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
-            <property name="text">
-             <string>Show keyboard shortcuts in actions tooltips</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbPersistentDialogs">
-            <property name="toolTip">
-             <string>If checked, dialogs will be positioned and resized to position/size of last invocation.</string>
-            </property>
-            <property name="text">
-             <string>Persistent dialogs location and size</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
-            </property>
-            <property name="text">
-             <string>Persist dialog size only</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbAutoBackup">
-            <property name="toolTip">
-             <string>When set, LibreCAD will automatically generate a backup of your current drawing.</string>
-            </property>
-            <property name="text">
-             <string>Auto backup</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QGroupBox" name="groupBox_5">
-         <property name="title">
-          <string>CAD Preferences</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <item>
-           <widget class="QCheckBox" name="cbToActiveLayer">
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="text">
-             <string>Modify layer of selected entities, at  layer activation</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="cbAutoZoomDrawing">
-            <property name="text">
-             <string>Automatically zoom drawing when opening</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="0" column="1" rowspan="2">
+       <item row="0" column="1">
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
           <string>Startup</string>
@@ -2669,47 +3029,26 @@
          </layout>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QGroupBox" name="buttonGroup5">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>70</height>
-          </size>
-         </property>
+       <item row="1" column="1">
+        <widget class="QGroupBox" name="groupBox_5">
          <property name="title">
-          <string>Defaults for new drawings</string>
+          <string>CAD Preferences</string>
          </property>
-         <layout class="QHBoxLayout">
+         <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <widget class="QLabel" name="lUnit">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           <widget class="QCheckBox" name="cbToActiveLayer">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
-             <string>&amp;Unit:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbUnit</cstring>
+             <string>Modify layer of selected entities, at  layer activation</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="cbUnit">
-            <property name="toolTip">
-             <string>Drawing unit.</string>
+           <widget class="QCheckBox" name="cbAutoZoomDrawing">
+            <property name="text">
+             <string>Automatically zoom drawing when opening</string>
             </property>
            </widget>
           </item>
@@ -2717,51 +3056,17 @@
         </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QGroupBox" name="bgLanguage">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <property name="title">
-          <string>Language</string>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
          </property>
-         <layout class="QGridLayout" name="language_layout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="lLanguage">
-            <property name="text">
-             <string>&amp;GUI Language:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbLanguage</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="cbLanguageCmd"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="lLanguageCmd">
-            <property name="text">
-             <string>&amp;Command Language:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbLanguageCmd</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="cbLanguage"/>
-          </item>
-         </layout>
-        </widget>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -2982,13 +3287,6 @@
      </widget>
     </widget>
    </item>
-   <item row="5" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -3003,7 +3301,6 @@
   <tabstop>buttonBox</tabstop>
   <tabstop>lePathLibrary</tabstop>
   <tabstop>btPathLibrary</tabstop>
-  <tabstop>cbUnit</tabstop>
   <tabstop>lePathFonts</tabstop>
   <tabstop>leTemplate</tabstop>
   <tabstop>btTemplate</tabstop>

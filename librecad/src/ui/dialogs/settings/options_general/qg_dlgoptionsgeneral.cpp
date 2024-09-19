@@ -92,8 +92,6 @@ void QG_DlgOptionsGeneral::languageChange() {
 }
 
 void QG_DlgOptionsGeneral::init() {
-
-    gbGridDefaults->setVisible(false);
     // Fill combobox with languages:
     QStringList languageList = RS_SYSTEM->getLanguageList();
     languageList.sort();
@@ -127,16 +125,21 @@ void QG_DlgOptionsGeneral::init() {
         bool indicator_lines_state = LC_GET_BOOL("indicator_lines_state", true);
         indicator_lines_checkbox->setChecked(indicator_lines_state);
 
-        QString indicator_lines_type = LC_GET_STR("indicator_lines_type", "Crosshair");
-        int index = indicator_lines_combobox->findText(indicator_lines_type);
-        indicator_lines_combobox->setCurrentIndex(index);
+        int indicator_lines_type = LC_GET_INT("indicator_lines_type", 0);
+        indicator_lines_combobox->setCurrentIndex(indicator_lines_type);
 
         bool indicator_shape_state = LC_GET_BOOL("indicator_shape_state", true);
         indicator_shape_checkbox->setChecked(indicator_shape_state);
 
-        QString indicator_shape_type = LC_GET_STR("indicator_shape_type", "Circle");
-        index = indicator_shape_combobox->findText(indicator_shape_type);
-        indicator_shape_combobox->setCurrentIndex(index);
+        int indicator_shape_type = LC_GET_INT("indicator_shape_type", 0);
+        indicator_shape_combobox->setCurrentIndex(indicator_shape_type);
+
+        wSnapLinesLineType->init(false, false, false);
+        RS2::LineType snapIndicatorLineType = static_cast<RS2::LineType> (LC_GET_INT("indicator_lines_line_type", RS2::DashLine2));
+        wSnapLinesLineType->setLineType(snapIndicatorLineType);
+
+        int snapIndicatorLineWidth = static_cast<RS2::LineType> (LC_GET_INT("indicator_lines_line_width", 1));
+        sbSnapLinesLineWidth->setValue(snapIndicatorLineWidth);
 
         bool cursor_hiding = LC_GET_BOOL("cursor_hiding");
         cursor_hiding_checkbox->setChecked(cursor_hiding);
@@ -218,21 +221,43 @@ void QG_DlgOptionsGeneral::init() {
         checked = LC_GET_BOOL("metaGridShow", true);
         cbShowMetaGrid->setChecked(checked);
 
-        wMetaGridLineType->init(false, false, false);
-        wGridLineType->init(false, false, false);
+        wMetaGridLinesLineType->init(false, false, false);
+        wMetaGridPointsLineType->init(false, false, false);
+        wGridPointsLineType->init(false, false, false);
+        wGridLinesLineType->init(false, false, false);
 
-        RS2::LineType metaGridLineType = static_cast<RS2::LineType> (LC_GET_INT("metaGridLineType", RS2::DotLineTiny));
-        wMetaGridLineType->setLineType(metaGridLineType);
+        RS2::LineType metaGridPointsLineType = static_cast<RS2::LineType> (LC_GET_INT("metaGridLineType", RS2::DotLineTiny));
+        wMetaGridPointsLineType->setLineType(metaGridPointsLineType);
 
-        RS2::LineType gridLineType = static_cast<RS2::LineType> (LC_GET_INT("GridLineType", RS2::DotLine));
-        wGridLineType->setLineType(gridLineType);
+        RS2::LineType metaGridLinesLineType = static_cast<RS2::LineType> (LC_GET_INT("metaGridLinesLineType", RS2::SolidLine));
+        wMetaGridLinesLineType->setLineType(metaGridLinesLineType);
 
-        int metagridWidthPx = LC_GET_INT("metaGridLineWidth", 1);
-        sbMetaGridWidth->setValue(metagridWidthPx);
+        RS2::LineType gridPointsLineType = static_cast<RS2::LineType> (LC_GET_INT("GridLineType", RS2::DotLine));
+        wGridPointsLineType->setLineType(gridPointsLineType);
 
-        int gridWidthPx = LC_GET_INT("GridLineWidth", 1);
-        sbGridLineWidth->setValue(gridWidthPx);
+        RS2::LineType gridLinesLineType = static_cast<RS2::LineType> (LC_GET_INT("GridLinesLineType", RS2::DotLine));
+        wGridLinesLineType->setLineType(gridLinesLineType);
 
+        int metagridPointsWidthPx = LC_GET_INT("metaGridPointsLineWidth", 1);
+        sbMetaGridPointsWidth->setValue(metagridPointsWidthPx);
+
+        int metagridLinesWidthPx = LC_GET_INT("metaGridLinesLineWidth", 1);
+        sbMetaGridLinesWidth->setValue(metagridLinesWidthPx);
+
+        int gridPointsWidthPx = LC_GET_INT("GridLinePointsWidth", 1);
+        sbGridPointsLineWidth->setValue(gridPointsWidthPx);
+
+        int gridLinesWidthPx = LC_GET_INT("GridLineLinesWidth", 1);
+        sbGridLinesLineWidth->setValue(gridLinesWidthPx);
+
+        checked = LC_GET_BOOL("GridRenderSimple", false);
+        cbSimpleGridRendring->setChecked(checked);
+
+        checked = LC_GET_BOOL("GridDisableWithinPan", false);
+        cbDisableGridOnPanning->setChecked(checked);
+
+        checked = LC_GET_BOOL("GridDrawIsoVerticalForTop", true);
+        cbDrawVerticalForIsoTop->setChecked(checked);
     }
     LC_GROUP_END();
 
@@ -242,8 +267,10 @@ void QG_DlgOptionsGeneral::init() {
     LC_GROUP("Colors");
     {
         initComboBox(cbBackgroundColor, LC_GET_STR("background", RS_Settings::background));
-        initComboBox(cbGridColor, LC_GET_STR("grid", RS_Settings::grid));
-        initComboBox(cbMetaGridColor, LC_GET_STR("meta_grid", RS_Settings::meta_grid));
+        initComboBox(cbGridPointsColor, LC_GET_STR("grid", RS_Settings::color_meta_grid_points));
+        initComboBox(cbGridLinesColor, LC_GET_STR("gridLines", RS_Settings::color_meta_grid_lines));
+        initComboBox(cbMetaGridPointsColor, LC_GET_STR("meta_grid", RS_Settings::color_meta_grid_points));
+        initComboBox(cbMetaGridLinesColor, LC_GET_STR("meta_grid_lines", RS_Settings::color_meta_grid_lines));
         initComboBox(cbSelectedColor, LC_GET_STR("select", RS_Settings::select));
         initComboBox(cbHighlightedColor, LC_GET_STR("highlight", RS_Settings::highlight));
         initComboBox(cbStartHandleColor, LC_GET_STR("start_handle", RS_Settings::start_handle));
@@ -251,16 +278,13 @@ void QG_DlgOptionsGeneral::init() {
         initComboBox(cbEndHandleColor, LC_GET_STR("end_handle", RS_Settings::end_handle));
         initComboBox(cbRelativeZeroColor, LC_GET_STR("relativeZeroColor", RS_Settings::relativeZeroColor));
         initComboBox(cbPreviewRefColor, LC_GET_STR("previewReferencesColor", RS_Settings::previewRefColor));
-        initComboBox(cbPreviewRefHighlightColor,
-                     LC_GET_STR("previewReferencesHighlightColor", RS_Settings::previewRefHighlightColor));
+        initComboBox(cbPreviewRefHighlightColor,LC_GET_STR("previewReferencesHighlightColor", RS_Settings::previewRefHighlightColor));
         initComboBox(cb_snap_color, LC_GET_STR("snap_indicator", RS_Settings::snap_indicator));
-
+        initComboBox(cb_snap_lines_color, LC_GET_STR("snap_indicator_lines", RS_Settings::snap_indicator_lines));
         initComboBox(cbAxisXColor, LC_GET_STR("grid_x_axisColor", RS_Settings::xAxisColor));
         initComboBox(cbAxisYColor, LC_GET_STR("grid_y_axisColor", RS_Settings::yAxisColor));
     }
     LC_GROUP_END();
-
-
 
     LC_GROUP("Paths");
     {
@@ -287,16 +311,45 @@ void QG_DlgOptionsGeneral::init() {
 
     LC_GROUP("Defaults");
     {
-//    cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit) )) );
         cbUnit->setCurrentIndex(cbUnit->findText(QObject::tr(LC_GET_STR("Unit", def_unit).toUtf8().data())));
         // Auto save timer
         cbAutoSaveTime->setValue(LC_GET_INT("AutoSaveTime", 5));
-        cbAutoBackup->setChecked(LC_GET_BOOL("AutoBackupDocument", true));
+        bool autoBackup = LC_GET_BOOL("AutoBackupDocument", true);
+        cbAutoBackup->setChecked(autoBackup);
+        cbAutoSaveTime->setEnabled(autoBackup);
         cbUseQtFileOpenDialog->setChecked(LC_GET_BOOL("UseQtFileOpenDialog", true));
         cbWheelScrollInvertH->setChecked(LC_GET_BOOL("WheelScrollInvertH"));
         cbWheelScrollInvertV->setChecked(LC_GET_BOOL("WheelScrollInvertV"));
         cbInvertZoomDirection->setChecked(LC_GET_BOOL("InvertZoomDirection"));
         cbAngleSnapStep->setCurrentIndex(LC_GET_INT("AngleSnapStep", 3));
+
+        bool defaultIsometricGrid = LC_GET_BOOL("IsometricGrid", false);
+        int defaultIsoView = LC_GET_INT("IsoGridView", RS2::IsoGridViewType::IsoTop);
+
+        if (defaultIsometricGrid){
+            switch (defaultIsoView){
+                case RS2::IsoGridViewType::IsoLeft:{
+                    rbGridIsoLeft->setChecked(true);
+                    break;
+                }
+                case RS2::IsoGridViewType::IsoTop:{
+                    rbGridIsoTop->setChecked(true);
+                    break;
+                }
+                case RS2::IsoGridViewType::IsoRight:{
+                    rbGridIsoRight->setChecked(true);
+                    break;
+                }
+                default:{
+                    rbGridIsoTop->setChecked(true);
+                    break;
+                }
+            }
+            rbGridOrtho->setChecked(false);
+        }
+        else{
+            rbGridOrtho->setChecked(true);
+        }
     }
     LC_GROUP_END();
 
@@ -374,9 +427,11 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("Language", cbLanguage->itemData(cbLanguage->currentIndex()).toString());
             LC_SET("LanguageCmd", cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()).toString());
             LC_SET("indicator_lines_state", indicator_lines_checkbox->isChecked());
-            LC_SET("indicator_lines_type", indicator_lines_combobox->currentText());
+            LC_SET("indicator_lines_type", indicator_lines_combobox->currentIndex());
             LC_SET("indicator_shape_state", indicator_shape_checkbox->isChecked());
-            LC_SET("indicator_shape_type", indicator_shape_combobox->currentText());
+            LC_SET("indicator_shape_type", indicator_shape_combobox->currentIndex());
+            LC_SET("indicator_lines_line_type", wSnapLinesLineType->getLineType());
+            LC_SET("indicator_lines_line_width", sbSnapLinesLineWidth->value());
             LC_SET("cursor_hiding", cursor_hiding_checkbox->isChecked());
             LC_SET("showSnapOptionsInSnapToolbar", cbShowSnapOptionsInSnapBar->isChecked());
             LC_SET("UnitlessGrid", cb_unitless_grid->isChecked());
@@ -395,22 +450,29 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("ZeroShortAxisMarkSize", sbAxisSize->value());
             LC_SET("AllowMenusTearOff", cbAllowMenusDetaching->isChecked());
             LC_SET("MinRenderableTextHeightPx", sbTextMinHeight->value());
-
             LC_SET("metaGridShow", cbShowMetaGrid->isChecked());
-            LC_SET("metaGridLineType", wMetaGridLineType->getLineType());
-            LC_SET("metaGridLineWidth", sbMetaGridWidth->value());
+            LC_SET("metaGridPointsLineType", wMetaGridPointsLineType->getLineType());
+            LC_SET("metaGridLinesLineType", wMetaGridLinesLineType->getLineType());
+            LC_SET("metaGridPointsLineWidth", sbMetaGridPointsWidth->value());
+            LC_SET("metaGridLinesLineWidth", sbMetaGridLinesWidth->value());
 
-            LC_SET("GridLineType", wGridLineType->getLineType());
-            LC_SET("GridLineWidth", sbGridLineWidth->value());
-
+            LC_SET("GridPointsLineType", wGridPointsLineType->getLineType());
+            LC_SET("GridLinesLineType", wGridLinesLineType->getLineType());
+            LC_SET("GridPointsLineWidth", sbGridPointsLineWidth->value());
+            LC_SET("GridLinesLineWidth", sbGridLinesLineWidth->value());
+            LC_SET("GridRenderSimple", cbSimpleGridRendring->isChecked());
+            LC_SET("GridDisableWithinPan", cbDisableGridOnPanning->isChecked());
+            LC_SET("GridDrawIsoVerticalForTop", cbDrawVerticalForIsoTop->isChecked());
         }
         LC_GROUP_END();
 
         LC_GROUP("Colors");
         {
             LC_SET("background", cbBackgroundColor->currentText());
-            LC_SET("grid", cbGridColor->currentText());
-            LC_SET("meta_grid", cbMetaGridColor->currentText());
+            LC_SET("grid", cbGridPointsColor->currentText());
+            LC_SET("gridLines", cbGridLinesColor->currentText());
+            LC_SET("meta_grid", cbMetaGridPointsColor->currentText());
+            LC_SET("meta_grid_lines", cbMetaGridLinesColor->currentText());
             LC_SET("select", cbSelectedColor->currentText());
             LC_SET("highlight", cbHighlightedColor->currentText());
             LC_SET("start_handle", cbStartHandleColor->currentText());
@@ -420,6 +482,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("previewReferencesColor", cbPreviewRefColor->currentText());
             LC_SET("previewReferencesHighlightColor", cbPreviewRefHighlightColor->currentText());
             LC_SET("snap_indicator", cb_snap_color->currentText());
+            LC_SET("snap_indicator_lines", cb_snap_lines_color->currentText());
             LC_SET("grid_x_axisColor", cbAxisXColor->currentText());
             LC_SET("grid_y_axisColor", cbAxisYColor->currentText());
         }
@@ -449,6 +512,26 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("InvertZoomDirection", cbInvertZoomDirection->isChecked());
             LC_SET("AngleSnapStep", cbAngleSnapStep->currentIndex());
 
+            bool defaultIsometricGrid = !rbGridOrtho->isChecked();
+            LC_SET("IsometricGrid", defaultIsometricGrid);
+            if (defaultIsometricGrid){
+                int defaultIsoView;
+
+                if (rbGridIsoLeft->isChecked()) {
+                    defaultIsoView = RS2::IsoGridViewType::IsoLeft;
+                }
+                else if (rbGridIsoTop->isChecked()){
+                    defaultIsoView  = RS2::IsoGridViewType::IsoTop;
+                }
+                else if (rbGridIsoRight->isChecked()){
+                    defaultIsoView = RS2::IsoGridViewType::IsoRight;
+                }
+                else{
+                    defaultIsoView = RS2::IsoGridViewType::IsoTop;
+                }
+
+                LC_SET("IsoGridView", defaultIsoView);
+            }
         }
         LC_GROUP_END();
 
@@ -520,12 +603,20 @@ void QG_DlgOptionsGeneral::on_pb_background_clicked() {
     set_color(cbBackgroundColor, QColor(RS_Settings::background));
 }
 
-void QG_DlgOptionsGeneral::on_pb_grid_clicked() {
-    set_color(cbGridColor, QColor(RS_Settings::grid));
+void QG_DlgOptionsGeneral::on_pb_gridPoints_clicked() {
+    set_color(cbGridPointsColor, QColor(RS_Settings::color_meta_grid_points));
 }
 
-void QG_DlgOptionsGeneral::on_pb_meta_clicked() {
-    set_color(cbMetaGridColor, QColor(RS_Settings::meta_grid));
+void QG_DlgOptionsGeneral::on_pb_gridLines_clicked() {
+    set_color(cbGridLinesColor, QColor(RS_Settings::color_meta_grid_lines));
+}
+
+void QG_DlgOptionsGeneral::on_pb_metaPoints_clicked() {
+    set_color(cbMetaGridPointsColor, QColor(RS_Settings::color_meta_grid_points));
+}
+
+void QG_DlgOptionsGeneral::on_pb_metaLines_clicked() {
+    set_color(cbMetaGridLinesColor, QColor(RS_Settings::color_meta_grid_lines));
 }
 
 void QG_DlgOptionsGeneral::on_pb_selected_clicked() {
@@ -551,6 +642,12 @@ void QG_DlgOptionsGeneral::on_pb_end_clicked() {
 void QG_DlgOptionsGeneral::on_pb_snap_color_clicked() {
     set_color(cb_snap_color, QColor(RS_Settings::snap_indicator));
 }
+
+void QG_DlgOptionsGeneral::on_pb_snap_lines_color_clicked() {
+    set_color(cb_snap_lines_color, QColor(RS_Settings::snap_indicator_lines));
+}
+
+
 
 void QG_DlgOptionsGeneral::on_pb_relativeZeroColor_clicked() {
     set_color(cbRelativeZeroColor, QColor(RS_Settings::relativeZeroColor));
@@ -671,18 +768,19 @@ void QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled() {
 }
 
 void QG_DlgOptionsGeneral::on_cbShowMetaGridToggled() {
-    bool metagrid = cbShowMetaGrid->isChecked();
+    /*bool metagrid = cbShowMetaGrid->isChecked();
     lMetaGridColor->setEnabled(metagrid);
     cbMetaGridColor->setEnabled(metagrid);
     pb_meta->setEnabled(metagrid);
     wMetaGridLineType->setEnabled(metagrid);
     lMetaGridLineType->setEnabled(metagrid);
     lMetaGridLineWidth->setEnabled(metagrid);
-    sbMetaGridWidth->setEnabled(metagrid);
+    sbMetaGridWidth->setEnabled(metagrid);*/
 }
 
 void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state) {
-    bool allowBackup = cbAutoBackup->checkState() == Qt::Checked;
+    bool allowBackup = cbAutoBackup->isChecked();
+    cbAutoSaveTime->setEnabled(allowBackup);
     auto &appWindow = QC_ApplicationWindow::getAppWindow();
     appWindow->startAutoSave(allowBackup);
 }

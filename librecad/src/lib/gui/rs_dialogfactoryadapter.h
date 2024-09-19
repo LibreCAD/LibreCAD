@@ -72,14 +72,14 @@ public:
 	QString requestFileSaveAsDialog(const QString&, const QString&, const QString&, QString*) override {return {};}
 	void updateCoordinateWidget(const RS_Vector& , const RS_Vector& , bool =false) override {}
  void updateMouseWidget(const QString&, const QString&,[[maybe_unused]] const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()) override{}
- void updateMouseWidgetIcon(const QIcon &icon) override  {}
+ void updateMouseWidgetIcon([[maybe_unused]]const QIcon &icon) override  {}
 	void updateSelectionWidget(int, double) override {}
 //    void updateArcTangentialOptions(double, bool) override{}
 	void commandMessage(const QString&) override {}
  void command([[maybe_unused]]const QString& message) override{};
 	void setMouseWidget(QG_MouseWidget*) override {}
 	void setCoordinateWidget(QG_CoordinateWidget* ) override {}
- void setRelativeZeroCoordinatesWidget(LC_RelZeroCoordinatesWidget *widget) override {}
+ void setRelativeZeroCoordinatesWidget([[maybe_unused]]LC_RelZeroCoordinatesWidget *widget) override {}
  void setSelectionWidget(QG_SelectionWidget* ) override {}
 	void setCommandWidget(QG_CommandWidget* ) override {}
 	void displayBlockName(const QString&, const bool&) override {}

@@ -68,6 +68,7 @@ public:
  void updateGridPoints();
 
 	virtual	void getPixmapForView(std::unique_ptr<QPixmap>& pm);
+ void loadSettings() override;
 		
     // Methods from RS_LayerListListener Interface:
 	void layerEdited(RS_Layer*) override{
@@ -131,6 +132,8 @@ protected:
     QList<QAction*> recent_actions;
     void autoPanStep();
 
+
+
 private slots:
     void slotHScrolled(int value);
     void slotVScrolled(int value);
@@ -170,6 +173,7 @@ private:
     bool antialiasing{false};
     bool scrollbars{false};
     bool cursor_hiding{false};
+    bool selectCursor_hiding{false};
 
 
     // For auto panning by the cursor close to the view border

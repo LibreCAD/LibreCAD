@@ -30,6 +30,8 @@
 
 #include "rs.h"
 #include "rs_vector.h"
+#include "rs_graphic.h"
+#include "lc_gridsystem.h"
 
 class RS_GraphicView;
 class QString;
@@ -41,6 +43,7 @@ namespace lc {
 
 using LC_Rect = lc::geo::Area;
 
+
 /**
  * This class represents a grid. Grids can be drawn on graphic
  * views and snappers can snap to the grid points.
@@ -50,24 +53,17 @@ using LC_Rect = lc::geo::Area;
 class RS_Grid{
 
 public:
-    struct OrthoGridMetrics{
-        int numPointsInMetagridX = 0;
-        int numPointsInMetagridY = 0;
-        int numPointsYBottom = 0;
-        int numPointsYTop = 0;
-        int numPointsXLeft = 0;
-        int numPointsXRight = 0;
-        int totalByMetaGrid = 0;
-        int numMetaX = 0;
-        int numMetaY = 0;
-        RS_Vector baseMetagridPoint;
-    };
-
-
 
 	RS_Grid(RS_GraphicView* graphicView);
 
-	void updatePointArray(bool metagridVisible);
+	void calculateGrid();
+
+ void invalidate(){
+     if (gridSystem != nullptr) {
+         gridSystem->invalidate();
+     }
+ }
+
 
 	/**
 		 * @return Array of all visible grid points.
@@ -85,8 +81,8 @@ public:
 		 * @return Number of visible grid points.
 		 */
 	int count() const;
-	void setCrosshairType(RS2::CrosshairType chType);
-	RS2::CrosshairType getCrosshairType() const;
+	void setIsoViewType(RS2::IsoGridViewType chType);
+	RS2::IsoGridViewType getIsoViewType() const;
 
 	/**
 		 * @return Grid info for status widget.
@@ -107,19 +103,14 @@ public:
 	void setIsometric(bool b);
 	RS_Vector getMetaGridWidth() const;
 	RS_Vector const& getCellVector() const;
-
- const OrthoGridMetrics &getOrthoGridMetrics() const;
+ void loadSettings();
+ void drawGrid(RS_Painter* painter);
 protected:
 
 private:
 	//! copy ctor disabled
     RS_Grid(RS_Grid const&) = delete;
     RS_Grid& operator = (RS_Grid const&) = delete;
-//! \{ \brief create grid points
-    void createOrthogonalGrid(LC_Rect const &rect, const RS_Vector &viewZero, const RS_Vector &viewSize,  RS_Vector const &gridWidth, bool metaGridVisible);
-    void createIsometricGrid(LC_Rect const& rect, RS_Vector const& gridWidth);
-//! \}
-
 //! \{ \brief determine grid width
     RS_Vector getMetricGridWidth(RS_Vector const& userGrid, bool scaleGrid, int minGridSpacing);
     RS_Vector getImperialGridWidth(RS_Vector const& userGrid, bool scaleGrid, int minGridSpacing);
@@ -133,27 +124,19 @@ private:
     //! Current meta grid spacing
     double metaSpacing = 0.;
 
-    //! Pointer to array of grid points
-    std::vector<RS_Vector> pt;
-    RS_Vector baseGrid; // the left-bottom grid point
-    RS_Vector cellV;    // (dx,dy)
     RS_Vector metaGridWidth;
-    //! Meta grid positions in X
-    std::vector<double> metaX;
-    //! Meta grid positions in Y
-    std::vector<double> metaY;
+
     bool isometric = false;
-    RS2::CrosshairType crosshairType = RS2::LeftCrosshair;
+    RS2::IsoGridViewType isoViewType = RS2::IsoLeft;
 
-    OrthoGridMetrics orthoGridMetrics;
+    bool scaleGrid = true;
+    RS_Vector userGrid;
+    int minGridSpacing;
 
-    void fillRectByGridPoints(int numPointsByX, int numPointsByY, int &currentPointIndex, const RS_Vector &baseGridPoint, const RS_Vector& delta);
-    void fillGenericGridPointsLattice(int numPointsByX, int numPointsByY, int &currentPointIndex, const RS_Vector &baseGridPoint,
-                                                const RS_Vector& delta, const RS_Vector& secondDelta);
+    LC_GridSystem* gridSystem = nullptr;
 
+    RS_Vector prepareGridWidth();
 
-    void tmpFillLattice(int numpointsByX, int numPointsByY, int &currentPointIndex,  const RS_Vector &baseGridPoint,
-                                double anglex, double angley, RS_Vector gridWidth);
 };
 
 #endif

@@ -103,6 +103,7 @@ public:
         return deleteMode;
     }
 
+    virtual void loadSettings();
 /** This virtual method must be overwritten to return
   the width of the widget the graphic is shown in */
     virtual int getWidth() const = 0;
@@ -256,10 +257,7 @@ public:
     virtual void drawAbsoluteZero(RS_Painter *painter);
     virtual void drawRelativeZero(RS_Painter *painter);
     virtual void drawPaper(RS_Painter *painter);
-    virtual void drawGrid(RS_Painter *painter);
-    virtual void drawMetaGrid(RS_Painter *painter);
     virtual void drawOverlay(RS_Painter *painter);
-    virtual void loadSettings();
     /**
      * @brief drawDraftSign     Display "Draft" at corners if the draft mode is turned on
      * @param painter           Painter assumed to be non-nullptr
@@ -273,9 +271,10 @@ public:
     RS2::SnapRestriction getSnapRestriction() const;
     bool isGridOn() const;
     bool isGridIsometric() const;
-    void setCrosshairType(RS2::CrosshairType chType);
-    RS2::CrosshairType getCrosshairType() const;
+    void setIsoViewType(RS2::IsoGridViewType chType);
+    RS2::IsoGridViewType getIsoViewType() const;
     RS_Vector toGui(RS_Vector v) const;
+    RS_Vector toGui(double x, double y) const;
     RS_Vector toGuiD(RS_Vector v) const;
     double toGuiX(double x) const;
     double toGuiY(double y) const;
@@ -288,6 +287,7 @@ public:
     double toGraphY(int y) const;
     double toGraphDX(int d) const;
     double toGraphDY(int d) const;
+    RS_Vector toGraphD(int d, int y) const;
 /**
   * (Un-)Locks the position of the relative zero.
   *
@@ -383,12 +383,13 @@ protected:
     bool extendAxisLines = false;
     int extendAxisModeX = 0;
     int extendAxisModeY = 0;
-    bool showMetaGrid = true;
-    int metaGridWidthPx = 1;
-    int gridWidthPx = 1;
-    RS2::LineType metagridLineType = RS2::DotLineTiny;
-    RS2::LineType gridLineType = RS2::DotLine;
-    int gridType = 0;
+//    bool showMetaGrid = true;
+//    bool simpleGridRendering = false;
+//    int metaGridWidthPx = 1;
+//    int gridWidthPx = 1;
+//    RS2::LineType metagridLineType = RS2::DotLineTiny;
+//    RS2::LineType gridLineType = RS2::DotLine;
+//    int gridType = 0;
     int entityHandleHalfSize = 2;
     int relativeZeroRadius = 5;
     int zeroShortAxisMarkSize = 20;
@@ -400,6 +401,7 @@ protected:
     bool deleteMode = false;
     LC_Rect view_rect;
     void drawEntityReferencePoints(RS_Painter *painter, const RS_Entity *e) const;
+    void invalidate();
 private:
     bool zoomFrozen = false;
     bool draftMode = false;
