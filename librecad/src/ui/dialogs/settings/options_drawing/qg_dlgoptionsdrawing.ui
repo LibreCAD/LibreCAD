@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>5</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab1">
       <attribute name="title">
@@ -597,7 +597,7 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>Left crosshair with isometric grid</string>
+             <string>Use isometric grid (Left projection view)</string>
             </property>
             <property name="text">
              <string>Isometric Left</string>
@@ -638,7 +638,7 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>Top crosshair with isometric grid</string>
+             <string>Use isometric grid (Top projection view)</string>
             </property>
             <property name="text">
              <string>Isometric Top</string>
@@ -667,7 +667,7 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>Right crosshair with isometric grid</string>
+             <string>Use isometric grid (Right projection view)</string>
             </property>
             <property name="text">
              <string>Isometric Right</string>
