@@ -37,12 +37,19 @@
  */
 class RS_ActionInfoTotalLength : public RS_ActionInterface {
 Q_OBJECT
+
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
+
 public:
     RS_ActionInfoTotalLength(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
 
     void init(int status) override;
     void trigger() override;
+
+    void drawSnapper() override;
+
 protected:
     /**
      * Action States.

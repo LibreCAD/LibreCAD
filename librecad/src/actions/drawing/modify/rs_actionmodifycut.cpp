@@ -65,6 +65,7 @@ void RS_ActionModifyCut::trigger(){
         cutEntity = nullptr;
         *cutCoord = RS_Vector(false);
         setStatus(ChooseCutEntity);
+        graphicView->redraw();
         updateSelectionWidget();
     }
 }
@@ -76,9 +77,9 @@ void RS_ActionModifyCut::finish(bool updateTB){
 
 void RS_ActionModifyCut::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyCut::mouseMoveEvent begin");
-    RS_Vector snap = snapPoint(e);
     deleteHighlights();
     deletePreview();
+    RS_Vector snap = snapPoint(e);
     switch (getStatus()) {
         case ChooseCutEntity: {
             deleteSnapper();
@@ -125,7 +126,6 @@ void RS_ActionModifyCut::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
             } else {
                 *cutCoord = nearest;
                 trigger();
-                deleteSnapper();
             }
             break;
         }

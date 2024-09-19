@@ -146,6 +146,7 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent *e){
     switch (status) {
         case SetCircle1:
         case SetCircle2: {
+            deleteSnapper();
             auto *circle = catchCircle(e);
             if (circle != nullptr){
                 highlightHover(circle);
@@ -158,6 +159,7 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent *e){
             break;
         }
         case SetCenter: {
+            deleteSnapper();
             pPoints->coord = toGraph(e);
             break;
         }
@@ -219,6 +221,7 @@ void RS_ActionDrawCircleTan2_1P::onMouseLeftButtonRelease(int status, QMouseEven
             pPoints->circles.push_back(en);
             graphicView->redraw(RS2::RedrawDrawing);
             setStatus(getStatus() + 1);
+            invalidateSnapSpot();
             break;
         }
         case SetPoint: {
@@ -229,6 +232,7 @@ void RS_ActionDrawCircleTan2_1P::onMouseLeftButtonRelease(int status, QMouseEven
         case SetCenter: {
             pPoints->coord = toGraph(e);
             if (preparePreview()) trigger();
+            invalidateSnapSpot();
             break;
         }
         default:

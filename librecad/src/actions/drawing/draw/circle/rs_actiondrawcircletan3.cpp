@@ -57,14 +57,16 @@ struct RS_ActionDrawCircleTan3::Points {
 RS_ActionDrawCircleTan3::RS_ActionDrawCircleTan3(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView)
-	:LC_ActionDrawCircleBase("Draw circle inscribed",
-                               container, graphicView)
-    , pPoints(std::make_unique<Points>())
-{
+	:LC_ActionDrawCircleBase("Draw circle tan 3 circles",container, graphicView)
+    , pPoints(std::make_unique<Points>()){
 	actionType=RS2::ActionDrawCircleTan3;
 }
 
 RS_ActionDrawCircleTan3::~RS_ActionDrawCircleTan3() = default;
+
+void RS_ActionDrawCircleTan3::drawSnapper() {
+    // disable snapper
+}
 
 void RS_ActionDrawCircleTan3::init(int status){
     LC_ActionDrawCircleBase::init(status);

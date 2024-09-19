@@ -51,6 +51,9 @@ public:
     double getLength() const;
     void setNumber(int n);
     int getNumber() const;
+
+    void setStatus(int status) override;
+
 protected:
     enum Status {
         SetLine1,     /**< Choose the 1st line. */

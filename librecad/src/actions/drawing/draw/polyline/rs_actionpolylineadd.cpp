@@ -80,6 +80,7 @@ void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent *e){
     int status = getStatus();
     switch (status) {
         case ChooseSegment: {
+            deleteSnapper();
             auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e, RS2::EntityPolyline));
             if (polyline != nullptr){
                 highlightHover(polyline);

@@ -44,6 +44,9 @@ public:
     void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
+
+    void drawSnapper() override;
+
 protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;

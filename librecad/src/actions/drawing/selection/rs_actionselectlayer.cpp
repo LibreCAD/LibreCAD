@@ -41,6 +41,7 @@ RS_ActionSelectLayer::RS_ActionSelectLayer(
 
 void RS_ActionSelectLayer::mouseMoveEvent(QMouseEvent *event){
     snapPoint(event);
+    deleteSnapper();
     deleteHighlights();
     auto ent = catchEntity(event);
     if (ent != nullptr){
@@ -62,6 +63,7 @@ void RS_ActionSelectLayer::trigger(){
 void RS_ActionSelectLayer::onMouseLeftButtonRelease([[maybe_unused]] int status, QMouseEvent *e) {
     en = catchEntity(e);
     trigger();
+    invalidateSnapSpot();
 }
 
 void RS_ActionSelectLayer::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {

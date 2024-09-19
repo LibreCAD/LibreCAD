@@ -51,6 +51,11 @@ void RS_ActionPolylineDelBetween::init(int status){
     }
 }
 
+void RS_ActionPolylineDelBetween::drawSnapper() {
+    // disable snapper for action
+}
+
+
 void RS_ActionPolylineDelBetween::trigger(){
 
     RS_DEBUG->print("RS_ActionPolylineDelBetween::trigger()");
@@ -76,12 +81,12 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionPolylineDelBetween::mouseMoveEvent begin");
 
     snapPoint(e);
-    int status = getStatus();
-//    deletePreview();
     deleteHighlights();
     deletePreview();
+    int status = getStatus();
     switch (status) {
         case SetPolyline: {
+
             auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
             if (polyline != nullptr){
                 highlightHover(polyline);
@@ -92,7 +97,7 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
             RS_Vector vertex;
             RS_Entity *segment;
             getSelectedPolylineVertex(e, vertex, segment);
-
+            deleteSnapper();
             if (vertex.valid){
                 highlightHover(segment);
                 previewRefSelectablePoint(vertex);
@@ -103,7 +108,7 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
             RS_Vector vertex;
             RS_Entity *segment;
             getSelectedPolylineVertex(e, vertex, segment);
-
+            deleteSnapper();
             previewRefSelectablePoint(vertexToDelete);
 
             if (vertex.valid){

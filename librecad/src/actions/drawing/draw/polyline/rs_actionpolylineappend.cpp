@@ -40,7 +40,6 @@ RS_ActionPolylineAppend::RS_ActionPolylineAppend(
     :RS_ActionDrawPolyline(container, graphicView){
     actionType = RS2::ActionPolylineAppend;
 }
-// FIXME - SAND - DELETEING ORIGINAL POLYLINE - #1877
 void RS_ActionPolylineAppend::trigger(){
 
     RS_DEBUG->print("RS_ActionPolylineAppend::trigger()");
@@ -84,6 +83,7 @@ void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
     switch (status) {
         case SetStartpoint: {
             snapPoint(e);
+            deleteSnapper();
             auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
             if (polyline != nullptr){
                 highlightHover(polyline);
@@ -229,5 +229,14 @@ void RS_ActionPolylineAppend::undo(){
         getPoint() = getHistory().last();
     } else {
         commandMessage(tr("Cannot undo: Not enough entities defined yet."));
+    }
+}
+
+RS2::CursorType RS_ActionPolylineAppend::doGetMouseCursor(int status) {
+    if (status == SetStartpoint){
+        return RS2::SelectCursor;
+    }
+    else {
+        return RS_ActionDrawPolyline::doGetMouseCursor(status);
     }
 }

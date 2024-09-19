@@ -75,6 +75,7 @@ void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
     deleteHighlights();
     switch (getStatus()) {
         case ChooseEntity: {
+            deleteSnapper();
             RS_Entity *pl = catchEntity(e, RS2::EntityPolyline);
             if (pl != nullptr){
                 highlightHover(pl);
@@ -143,6 +144,7 @@ void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e)
                 setStatus(SetSegment1);
                 graphicView->redraw();
             }
+            invalidateSnapSpot();
             break;
         }
         case SetSegment1:{

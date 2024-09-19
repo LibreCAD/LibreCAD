@@ -113,6 +113,7 @@ void RS_PreviewActionInterface::trigger() {
     RS_ActionInterface::trigger();
     deletePreview();
     deleteHighlights();
+    deleteSnapper();
 }
 
 /**

@@ -257,7 +257,7 @@ void RS_ActionPolylineEquidistant::makeContour(RS_Polyline*  originalPolyline, b
 }
 
 void RS_ActionPolylineEquidistant::trigger(){
-
+    RS_PreviewActionInterface::trigger();
     RS_DEBUG->print("RS_ActionPolylineEquidistant::trigger()");
 
     if (originalEntity){
@@ -292,6 +292,7 @@ void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent *event){
     snapPoint(event);
     deleteHighlights();
     deletePreview();
+    deleteSnapper();
     if (getStatus() == ChooseEntity){
         auto en = catchEntity(event, RS2::EntityPolyline);
         if (en != nullptr){
@@ -338,6 +339,7 @@ void RS_ActionPolylineEquidistant::onMouseLeftButtonRelease(int status, QMouseEv
         default:
             break;
     }
+    invalidateSnapSpot();
 }
 
 void RS_ActionPolylineEquidistant::onMouseRightButtonRelease(int status, [[maybe_unused]]  QMouseEvent *e) {

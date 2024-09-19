@@ -94,6 +94,7 @@ void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent *e){
         case SetCircle: {
             RS_Vector mouse{toGraph(e)};
             highlightSelected(normal);
+            deleteSnapper();
             deletePreview();
             RS_Entity *en = catchEntity(e, circleList, RS2::ResolveAll);
             if (en != nullptr){
@@ -139,6 +140,7 @@ void RS_ActionDrawLineOrthTan::onMouseLeftButtonRelease(int status, QMouseEvent 
                 }
                 normal = dynamic_cast<RS_Line *>(en);
                 setStatus(SetCircle);
+                invalidateSnapSpot();
             }
             break;
         }

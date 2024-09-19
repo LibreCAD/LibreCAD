@@ -65,6 +65,10 @@ void RS_ActionInfoAngle::init(int status){
     RS_PreviewActionInterface::init(status);
 }
 
+void RS_ActionInfoAngle::drawSnapper() {
+    // disable snapper
+}
+
 void RS_ActionInfoAngle::trigger(){
     RS_DEBUG->print("RS_ActionInfoAngle::trigger()");
 

@@ -112,6 +112,10 @@ bool RS_ActionModifyRound::removeOldFillet(RS_Entity *e, const bool &isPolyline)
     return true;
 }
 
+void RS_ActionModifyRound::drawSnapper() {
+    // disable snapper for action   
+}
+
 void RS_ActionModifyRound::trigger(){
 
     RS_DEBUG->print("RS_ActionModifyRound::trigger()");

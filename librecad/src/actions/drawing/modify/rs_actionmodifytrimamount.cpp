@@ -110,6 +110,7 @@ void RS_ActionModifyTrimAmount::mouseMoveEvent(QMouseEvent *e){
     auto en = catchEntity(e, enTypeList, RS2::ResolveNone);
     deletePreview();
     deleteHighlights();
+    deleteSnapper();
     if (en != nullptr){
         if (en->isAtomic()){
             highlightHover(en);
@@ -201,6 +202,7 @@ void RS_ActionModifyTrimAmount::onMouseLeftButtonRelease(int status, QMouseEvent
         default:
             break;
     }
+    invalidateSnapSpot();
 }
 
 void RS_ActionModifyTrimAmount::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {

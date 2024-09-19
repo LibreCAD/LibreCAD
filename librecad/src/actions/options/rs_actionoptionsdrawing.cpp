@@ -28,6 +28,7 @@
 #include "rs_actionoptionsdrawing.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_debug.h"
 
 RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -43,12 +44,24 @@ void RS_ActionOptionsDrawing::init(int status) {
 
 void RS_ActionOptionsDrawing::trigger() {
     if (graphic != nullptr) {
+        if (graphicView == nullptr){
+            LC_ERR << "Graphic view is NULL - START";
+        }
+        else{
+            LC_ERR << "Graphic view NOT not -  START";
+        }
         int dialogResult = RS_DIALOGFACTORY->requestOptionsDrawingDialog(*graphic);
         if (dialogResult == QDialog::Accepted){
             updateCoordinateWidgetFormat();
-            graphicView->loadSettings();
-            graphicView->redraw(RS2::RedrawAll);
-            graphicView->repaint();
+            if (graphicView != nullptr) {
+                LC_ERR << "Graphic view NOT null  - END !!!";
+                graphicView->loadSettings();
+                graphicView->redraw(RS2::RedrawAll);
+                graphicView->repaint();
+            }
+            else{
+                LC_ERR << "Graphic view is NULL - END !!!";
+            }
         }
     }
     finish(false);

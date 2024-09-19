@@ -105,6 +105,10 @@ void RS_ActionModifyBevel::trigger(){
     }
 }
 
+void RS_ActionModifyBevel::drawSnapper() {
+    // disable snapper
+}
+
 void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent begin");
     snapPoint(e);

@@ -104,6 +104,7 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
     deletePreview();
     switch (getStatus()) {
         case SetEntity: {
+            deleteSnapper();
             auto en = doCatchEntity(e);
             if (en != nullptr){
                 highlightHover(en);
@@ -191,6 +192,7 @@ void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
                     }
                 }
             }
+            invalidateSnapSpot();
             break;
         }
         case SetPoint: {
@@ -286,7 +288,14 @@ void RS_ActionInfoDist2::updateMouseButtonHints(){
     }
 }
 RS2::CursorType RS_ActionInfoDist2::doGetMouseCursor([[maybe_unused]] int status){
-    return RS2::CadCursor;
+    switch (status) {
+        case SetEntity: {
+            return RS2::SelectCursor;
+        }
+        default:{
+            return RS2::CadCursor;
+        }
+    }
 }
 
 LC_ActionOptionsWidget* RS_ActionInfoDist2::createOptionsWidget(){

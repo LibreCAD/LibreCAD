@@ -45,6 +45,7 @@ namespace {
 const auto enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle,RS2::EntityEllipse};
 }
 
+// fixme - sand - add support of options for line snap point
 RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
         RS_EntityContainer& container,
         RS_GraphicView& graphicView,
@@ -83,6 +84,8 @@ void RS_ActionDrawLineRelAngle::trigger() {
                                                 entity,
                                                 angleRad,
                                                 length);
+    moveRelativeZero(*pos);
+
     if (line == nullptr)
         LC_LOG(RS_Debug::D_ERROR)<<"RS_ActionDrawLineRelAngle::"<<__func__<<"(): cannot create line";
 

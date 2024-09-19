@@ -159,7 +159,7 @@ void RS_ActionModifyRotate2::doTrigger() {
 }
 
 void RS_ActionModifyRotate2::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select for two axis rotation"), MOD_CTRL(tr("Rotate 2 Axis immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Select for two axis rotation  (Enter to complete)"), MOD_CTRL(tr("Rotate 2 Axis immediately after selection")));
 }
 
 void RS_ActionModifyRotate2::updateMouseButtonHintsForSelected(int status) {

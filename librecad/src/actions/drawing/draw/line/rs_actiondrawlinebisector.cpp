@@ -82,28 +82,18 @@ int RS_ActionDrawLineBisector::getNumber() const{
 void RS_ActionDrawLineBisector::init(int status){
     RS_PreviewActionInterface::init(status);
     if (status >= 0){
-        RS_Snapper::suspend();
+        invalidateSnapSpot();
     }
+}
 
-    if (status < SetLine2){
-        if (line2 && line2->isHighlighted()){
-            line2->setHighlighted(false);
-        }
-        if (status < 0 && line1 && line1->isHighlighted()){
-            line1->setHighlighted(false);
-        }
-        graphicView->redraw(RS2::RedrawDrawing);
-    }
+void RS_ActionDrawLineBisector::setStatus(int status) {
+    RS_ActionInterface::setStatus(status);
+    invalidateSnapSpot();
 }
 
 void RS_ActionDrawLineBisector::trigger(){
     RS_PreviewActionInterface::trigger();
 
-    for (auto p: {line1, line2}) {
-        if (p && p->isHighlighted()){
-            p->setHighlighted(false);
-        }
-    }
     graphicView->redraw(RS2::RedrawDrawing);
 
     RS_Creation creation(container, graphicView);
@@ -121,7 +111,7 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
 
     snapPoint(e); // update coordinates widget
     RS_Vector mouse = toGraph(e);
-
+    deleteSnapper();
     deleteHighlights();
     switch (getStatus()) {
         case SetLine1: {
@@ -181,7 +171,7 @@ void RS_ActionDrawLineBisector::onMouseLeftButtonRelease(int status, QMouseEvent
     switch (status) {
         case SetLine1: {
             pPoints->coord1 = mouse;
-            RS_Entity *en = catchEntity(e,enTypeList,RS2::ResolveAll);
+            RS_Entity *en = catchEntity(mouse,enTypeList,RS2::ResolveAll);
             if (isLine(en)){
                 line1 = dynamic_cast<RS_Line *>(en);
                 line2 = nullptr;

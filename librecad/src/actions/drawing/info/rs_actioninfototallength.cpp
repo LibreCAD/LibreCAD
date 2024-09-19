@@ -43,6 +43,10 @@ void RS_ActionInfoTotalLength::init(int status) {
     trigger();
 }
 
+void RS_ActionInfoTotalLength::drawSnapper() {
+    // disable snapper;
+}
+
 void RS_ActionInfoTotalLength::trigger() {
 
     RS_DEBUG->print("RS_ActionInfoTotalLength::trigger()");
@@ -58,4 +62,8 @@ void RS_ActionInfoTotalLength::trigger() {
     }
 
     finish(false);
+}
+
+RS2::CursorType RS_ActionInfoTotalLength::doGetMouseCursor(int status) {
+    return RS2::SelectCursor;
 }

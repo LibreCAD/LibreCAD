@@ -145,6 +145,9 @@ void RS_ActionDrawLineAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e
                 persistRelativeZero = true;
             }
         }
+        else{
+            persistRelativeZero = false;
+        }
         fireCoordinateEvent(position);
     }
 }

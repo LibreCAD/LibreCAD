@@ -47,6 +47,9 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
+
+    RS2::CursorType doGetMouseCursor(int status) override;
+
 private:
 	/**
 	 * Polyline entity we're working on.
