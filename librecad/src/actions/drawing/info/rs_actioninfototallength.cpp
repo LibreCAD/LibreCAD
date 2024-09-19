@@ -26,7 +26,6 @@
 
 #include "rs_actioninfototallength.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphic.h"
 #include "rs_units.h"
 
