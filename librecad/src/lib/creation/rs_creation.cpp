@@ -564,22 +564,20 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
             }
             const RS_Vector &center = cir->getCenter();
             switch(sol.size()) {
-                case 0:
-                    t0 = RS_Vector(false);
-                case 2:
-                    if(RS_Vector::dotP(sol[1], coord - center) > 0.) {
-                        t0 = center + sol[1];
-                        t1 = center + sol[0];
-                        break;
-                    }
-                    else{
-                        t0 = center + sol[0];
-                        t1 = center + sol[1];
-                    }
-                    // fall-through
-                default:
-                    vp=sol[0]; // hm?
+            case 0:
+                t0 = RS_Vector(false);
+                [[fallthrough]];
+            case 2:
+                if (RS_Vector::dotP(sol[1], coord - center) > 0.){
+                    t0 = center + sol[1];
+                    t1 = center + sol[0];
                     break;
+                }
+                [[fallthrough]];
+            default:
+                t0 = center + sol[0];
+                t1 = center + sol[1];
+                break;
             }
             break;
         }
@@ -618,13 +616,14 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
                 switch (sol.size()) {
                     case 0:
                         t0 = RS_Vector(false);
+                        [[fallthrough]];
                     case 2:
                         if (RS_Vector::dotP(sol[1], coord - center) > 0.){
                             t0 = center + sol[1];
                             t1 = center + sol[0];
                             break;
                         }
-                        // fall-through
+                        [[fallthrough]];
                     default:
                         t0 = center + sol[0];
                         t1 = center + sol[1];
