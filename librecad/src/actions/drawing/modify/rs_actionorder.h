@@ -26,38 +26,38 @@
 #ifndef RS_ACTIONORDER_H
 #define RS_ACTIONORDER_H
 
-#include "rs_previewactioninterface.h"
-// fixme - sand - inherit from selection aware action
+#include "lc_actionpreselectionawarebase.h"
+
 /**
  * This action class can handle user events to move entities.
  *
  * @author Rallaz
  */
-class RS_ActionOrder : public RS_PreviewActionInterface {
+class RS_ActionOrder : public LC_ActionPreSelectionAwareBase {
     Q_OBJECT
 public:
     RS_ActionOrder(RS_EntityContainer& container,
                    RS_GraphicView& graphicView, RS2::ActionType type);
 
-    void init(int status) override;
     void trigger() override;
-    void mouseMoveEvent(QMouseEvent* e) override;
+    void drawSnapper() override;
+
 protected:
-    /**
-     * Action States.
-     */
-    enum Status {
-//        ChooseEntities,	/**< Choosing entities to reorder. */
-        ChooseEntity	/**< Choosing entity for raise or lower. */
-    };
-
     RS_Entity* targetEntity = nullptr;
-    RS2::ActionType orderType = RS2::ActionNone;
 
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-    void updateMouseButtonHints() override;
+    void mouseMoveEventSelected(QMouseEvent *e) override;
+
+    void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
+
+    void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
+
+    void updateMouseButtonHintsForSelected(int status) override;
+
+    RS2::CursorType doGetMouseCursorSelected(int status) override;
+
+    void updateMouseButtonHintsForSelection() override;
+
+    void selectionCompleted(bool singleEntity, bool fromInit) override;
 };
 
 #endif
