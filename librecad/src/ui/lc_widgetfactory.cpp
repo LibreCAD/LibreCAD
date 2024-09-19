@@ -666,16 +666,14 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
 
     auto help = menu(tr("&Help"), "help", menu_bar);
 
-    subMenuWithActions(help, tr("On&line"),"Online", nullptr, {
+    subMenuWithActions(help, tr("On&line Docs"),"OnlineInfo", nullptr, {
         urlActionTR(tr("&Wiki"), "https://dokuwiki.librecad.org/"),
         urlActionTR(tr("User's &Manual"), "https://librecad.readthedocs.io/"),
         urlActionTR(tr("&Commands"), "https://librecad.readthedocs.io/en/latest/ref/tools.html"),
         urlActionTR(tr("&Style Sheets"), "https://librecad.readthedocs.io/en/latest/ref/customize.html#style-sheets"),
-        urlActionTR(tr("Wid&gets"), "https://librecad.readthedocs.io/en/latest/ref/menu.html#widgets"),
-        urlActionTR(tr("&Forum"), "https://forum.librecad.org/"),
-        urlActionTR(tr("Zulip &Chat"), "https://librecad.zulipchat.com/"),
-        urlActionTR(tr("&Release Information"), "https://github.com/LibreCAD/LibreCAD/releases")
+        urlActionTR(tr("Wid&gets"), "https://librecad.readthedocs.io/en/latest/ref/menu.html#widgets")
     });
+
 
     auto help_about = new QAction(QIcon(":/main/librecad.png"), tr("About"), main_window);
     connect(help_about, SIGNAL(triggered()), main_window, SLOT(showAboutWindow()));
@@ -684,6 +682,15 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     connect(license, SIGNAL(triggered()), main_window, SLOT(invokeLicenseWindow()));
 
     help->addSeparator();
+    help->addAction(urlActionTR(tr("&Forum"), "https://forum.librecad.org/"));
+    help->addAction(urlActionTR(tr("Zulip &Chat"), "https://librecad.zulipchat.com/"));
+    help->addAction(urlActionTR(tr("&Available Releases"), "https://github.com/LibreCAD/LibreCAD/releases"));
+    help->addSeparator();
+    help->addAction(urlActionTR(tr("&Submit Error"), "https://github.com/LibreCAD/LibreCAD/issues/new"));
+    help->addAction(urlActionTR(tr("&Request Feature"), "https://github.com/LibreCAD/LibreCAD/releases"));
+
+    help->addSeparator();
+
     help->addAction(help_about);
     help->addAction(license);
     help->addAction(urlActionTR(tr("&Donate"), "https://librecad.org/donate.html"));
