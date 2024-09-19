@@ -1089,11 +1089,10 @@ void QG_DialogFactory::updateMouseWidget(const QString& left,
     if (mouseWidget) {
         mouseWidget->setHelp(left, right, modifiers);
     }
-    // Issue #1874: Review the following logic. If confirmed as a mistake, delete this commented out
-    // section
-    // if (commandWidget) {
-    //     commandWidget->setCommand(left);
-    // }
+
+    if (commandWidget) {
+       commandWidget->setCommand(left);
+    }
 }
 
 void QG_DialogFactory::updateMouseWidgetIcon(const QIcon &icon) {
