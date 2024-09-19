@@ -505,7 +505,7 @@ void LC_OrthogonalGrid::createGridLinesWithGaps(const RS_Vector &min, const RS_V
     int pointsInMetaGridY = noMetaGrid ? numPointsInMetagridY : (numPointsInMetagridY - 1);
 
     // the most accurate yet complex drawing mode - here we ensure that
-// grid lines are not drawn in metaGrid positions - PLUS - there is no intersections between grid lines and metaGrid lines
+    // grid lines are not drawn in metaGrid positions - PLUS - there is no intersections between grid lines and metaGrid lines
     linesLattice->updateForLines(0, 0, gridCellSize, lineOffset, numPointsYTotal * numPointsXTotal * 4);
 
     double metaX = firstMX;

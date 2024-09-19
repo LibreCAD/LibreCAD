@@ -295,7 +295,11 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "ZoomPrevious",
         "ZoomWindow",
         "ZoomPan",
-        "OptionsDrawing"
+        "OptionsDrawing",
+        "ViewGridOrtho",
+        "ViewGridIsoLeft",
+        "ViewGridIsoTop",
+        "ViewGridIsoRight"
     });
 
     actionsToDisableInPrintPreview.append(line_actions);
@@ -311,6 +315,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
     actionsToDisableInPrintPreview.append(info_actions);
     actionsToDisableInPrintPreview.append(block_actions);
     actionsToDisableInPrintPreview.append(pen_actions);
+
 }
 
 void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size){
@@ -623,6 +628,11 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         "ViewStatusBar",
         "ViewGrid",
         "ViewDraft",
+        "",
+        "ViewGridOrtho",
+        "ViewGridIsoLeft",
+        "ViewGridIsoTop",
+        "ViewGridIsoRight",
         "",
         "ZoomRedraw",
         "ZoomIn",

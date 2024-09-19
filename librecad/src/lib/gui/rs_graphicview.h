@@ -352,6 +352,7 @@ public:
     void setTypeToSelect(RS2::EntityType mType);
 
     int getMinRenderableTextHeightInPx() const;
+    void loadGridSettings();
 protected:
 
     RS_EntityContainer *container = nullptr; // Holds a pointer to all the enties
@@ -436,6 +437,8 @@ private:
 signals:
     void relative_zero_changed(const RS_Vector &);
     void previous_zoom_state(bool);
+
+
 };
 
 #endif

@@ -103,7 +103,7 @@ void LC_GridSystem::drawGrid(RS_Painter *painter, RS_GraphicView *view) {
     }
 }
 
-void LC_GridSystem::drawGridPoints(RS_Painter *painter, RS_GraphicView *view) {
+void LC_GridSystem::drawGridPoints(RS_Painter *painter, [[maybe_unused]]RS_GraphicView *view) {
     int pointsCount = getGridPointsCount();
     std::vector<double> pointsX = pointsLattice->getPointsX();
     std::vector<double> pointsY = pointsLattice->getPointsY();
@@ -118,7 +118,7 @@ void LC_GridSystem::drawGridLines(RS_Painter *painter, RS_GraphicView *view) {
     doDrawLines(painter, view, linesLattice);
 }
 
-void LC_GridSystem::doDrawLines(RS_Painter *painter, RS_GraphicView *view, LC_Lattice* linesLattice) {
+void LC_GridSystem::doDrawLines(RS_Painter *painter, [[maybe_unused]]RS_GraphicView *view, LC_Lattice* linesLattice) {
     int pointsCount = linesLattice->getPointsSize();
 //    LC_ERR << "Lines Points Count: " << pointsCount;
     int i = 0;

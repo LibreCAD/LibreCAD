@@ -357,7 +357,11 @@ void LC_ActionFactory::createViewActions(QMap<QString, QAction*>& map, QActionGr
         {"Fullscreen",    SLOT(toggleFullscreen(bool)),  tr("&Fullscreen")},
         {"ViewGrid",      SLOT(slotViewGrid(bool)),      tr("&Grid"),  ":/icons/grid.svg"},
         {"ViewDraft",     SLOT(slotViewDraft(bool)),     tr("&Draft"), ":/icons/draft.svg"},
-        {"ViewStatusBar", SLOT(slotViewStatusBar(bool)), tr("&Statusbar")}
+        {"ViewStatusBar", SLOT(slotViewStatusBar(bool)), tr("&Statusbar")},
+        {"ViewGridOrtho", SLOT(slotViewGridOrtho(bool)), tr("&Orthogonal Grid"), ":/icons/grid_ortho.svg"},
+        {"ViewGridIsoLeft", SLOT(slotViewGridIsoLeft(bool)), tr("&Isometric Left Grid"), ":/icons/grid_iso_left.svg"},
+        {"ViewGridIsoTop", SLOT(slotViewGridIsoTop(bool)), tr("&Isometric Top Grid"), ":/icons/grid_iso_top.svg"},
+        {"ViewGridIsoRight", SLOT(slotViewGridIsoRight(bool)), tr("&Isometric Right Grid"), ":/icons/grid_iso_right.svg"},
     }, true);
 }
 

@@ -22,11 +22,7 @@
 
 #include "lc_isometricgrid.h"
 #include "rs_graphicview.h"
-#include "rs_pen.h"
 #include "rs_math.h"
-#include "lc_defaults.h"
-#include "rs_debug.h"
-
 
 LC_IsometricGrid::LC_IsometricGrid(LC_GridSystem::LC_GridOptions *options, int iso_projection):LC_GridSystem(options) {
     if (iso_projection >= ISO_LEFT && iso_projection < ISO_LAST) {
@@ -91,7 +87,6 @@ void LC_IsometricGrid::doCreateGrid(RS_GraphicView* view, const RS_Vector &viewZ
         metaGridMax.y -= metaVerticalY;
     }
 
-
     metaGridViewOffset = RS_Vector(-metaHorizontalX, +metaVerticalY);
 
     double deltaY = viewSize.y - viewZero.y;
@@ -136,7 +131,7 @@ void LC_IsometricGrid::doCreateGrid(RS_GraphicView* view, const RS_Vector &viewZ
     if (gridOptions->drawLines) {
         double lineOffsetPx = gridOptions->metaGridLineWidthPx*2;
         RS_Vector lineInTileOffsetVector = view->toGraphD(lineOffsetPx,lineOffsetPx);
-        createGridLines(viewZero, viewSize, gridWidth, viewMaxPoint, drawGridWithoutGaps,  lineInTileOffsetVector);
+        createGridLines(viewZero, viewSize, gridWidth, drawGridWithoutGaps,  lineInTileOffsetVector);
         linesLattice->toGui(view);
     } else {
         // create points array
@@ -154,7 +149,6 @@ void LC_IsometricGrid::doCreateGrid(RS_GraphicView* view, const RS_Vector &viewZ
         metaGridLinesLattice->toGui(view);
     }
 }
-
 
 void LC_IsometricGrid::createGridLinesNoGaps(const RS_Vector &min, const RS_Vector &max) {
 
@@ -179,11 +173,8 @@ void LC_IsometricGrid::createGridLinesNoGaps(const RS_Vector &min, const RS_Vect
     linesLattice->update(30,60, gridCellSize, numPointsProjection);
 
     RS_Vector deltaX = linesLattice->getDeltaX()*2;
-    int numLinesInTile = tileNumPointsByX;
 
     double distanceToMetaGridTolerance = deltaX.x * 0.9;
-
-
 
     if (drawTopLines){
         double halfMetaX = metaHorizontalX/2;
@@ -422,7 +413,7 @@ void LC_IsometricGrid::createMetaGridLines(const RS_Vector& min, const RS_Vector
     }
 }
 
-void LC_IsometricGrid::createGridLines(const RS_Vector &min, const RS_Vector &max, const RS_Vector &gridWidth, const RS_Vector &maxCorner, bool drawGridWithoutGaps, const RS_Vector& lineInTileOffset) {
+void LC_IsometricGrid::createGridLines(const RS_Vector &min, const RS_Vector &max, const RS_Vector &gridWidth,  bool drawGridWithoutGaps, const RS_Vector& lineInTileOffset) {
     int linesCount = numPointsInMetagridX + numPointsInMetagridY;
     if (drawGridWithoutGaps){
         createGridLinesNoGaps(min, max);
@@ -541,7 +532,6 @@ void LC_IsometricGrid::fillTilesRowsByPointsExceptDiagonal() {
     double tilesDeltaX = tilesDelta.x;
     double tilesDeltaY = tilesDelta.y;
 
-    int c = 0;
     while (currentY < maxY) {
         double currentX = startPoint.x - rowShift;
         basePoint.x = currentX;
@@ -552,8 +542,7 @@ void LC_IsometricGrid::fillTilesRowsByPointsExceptDiagonal() {
         }
         currentY += tilesDeltaY;
         basePoint.y = currentY;
-        rowShift = -rowShift;
-        c++;
+        rowShift = -rowShift;        
     }
 }
 
@@ -568,7 +557,6 @@ void LC_IsometricGrid::fillTilesRowsByPoints() {
     double tilesDeltaX = tilesDelta.x;
     double tilesDeltaY = tilesDelta.y;
 
-    int c = 0;
     while (currentY < maxY) {
         double currentX = startPoint.x - rowShift;
         basePoint.x = currentX;
@@ -579,8 +567,7 @@ void LC_IsometricGrid::fillTilesRowsByPoints() {
         }
         currentY += tilesDeltaY;
         basePoint.y = currentY;
-        rowShift = -rowShift;
-        c++;
+        rowShift = -rowShift;    
     }
 }
 
@@ -606,7 +593,6 @@ void LC_IsometricGrid::fillTilesRowsByLinesNoDiagonals() {
         numPointsX --;
     }
 
-    int c = 0;
     while (currentY < maxY) {
         double currentX = startPoint.x - rowShift;
         basePoint.x = currentX;
@@ -617,8 +603,7 @@ void LC_IsometricGrid::fillTilesRowsByLinesNoDiagonals() {
         }
         currentY += tilesDeltaY;
         basePoint.y = currentY;
-        rowShift = -rowShift;
-        c++;
+        rowShift = -rowShift;        
     }
 }
 
@@ -634,7 +619,6 @@ void LC_IsometricGrid::fillTilesRowsBylines() {
     double tilesDeltaX = tilesDelta.x;
     double tilesDeltaY = tilesDelta.y;
 
-    int c = 0;
     while (currentY < maxY) {
         double currentX = startPoint.x - rowShift;
         basePoint.x = currentX;
@@ -645,8 +629,7 @@ void LC_IsometricGrid::fillTilesRowsBylines() {
         }
         currentY += tilesDeltaY;
         basePoint.y = currentY;
-        rowShift = -rowShift;
-        c++;
+        rowShift = -rowShift;    
     }
 }
 
@@ -663,11 +646,8 @@ void LC_IsometricGrid::fillPointsNoGaps(const RS_Vector &min, const RS_Vector &m
     double startX =  min.x - remainder(offset.x, pointsDeltaX*2)+pointsDeltaX/2;
     double startY =  max.y - remainder(offset.y, pointsDeltaY*2)+pointsDeltaY;
 
-    double maxX = max.x;
-    double maxY = max.y;
+    double maxX = max.x;    
 
-
-    int c = 0;
     double shiftByX = pointsDeltaX*2;
     double rowShift = deltaY.x/2;
     double currentY = startY;
@@ -678,7 +658,6 @@ void LC_IsometricGrid::fillPointsNoGaps(const RS_Vector &min, const RS_Vector &m
             currentX += shiftByX;
         }
         currentY += pointsDeltaY;
-        rowShift = -rowShift;
-        c++;
+        rowShift = -rowShift;    
     }
 }

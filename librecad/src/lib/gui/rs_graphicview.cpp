@@ -2102,3 +2102,10 @@ void RS_GraphicView::setTypeToSelect(RS2::EntityType mType) {
 int RS_GraphicView::getMinRenderableTextHeightInPx() const {
     return minRenderableTextHeightInPx;
 }
+
+void RS_GraphicView::loadGridSettings() {
+    if (grid != nullptr){
+        grid->loadSettings();
+    }
+    update();
+}

@@ -183,6 +183,11 @@ public slots:
     /** toggle the statusbar */
     void slotViewStatusBar(bool toggle);
 
+    void slotViewGridOrtho(bool toggle);
+    void slotViewGridIsoLeft(bool toggle);
+    void slotViewGridIsoRight(bool toggle);
+    void slotViewGridIsoTop(bool toggle);
+
     void slotOptionsGeneral();
     void slotOptionsShortcuts();
 
@@ -413,6 +418,10 @@ private:
     void enableWidgets(bool enable);
 
     friend class LC_WidgetFactory;
+
+    void updateGridViewActions(bool isometric, RS2::IsoGridViewType type);
+
+    void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType);
 };
 
 #ifdef _WINDOWS

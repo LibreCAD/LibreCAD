@@ -106,6 +106,7 @@ INCLUDEPATH += \
     lib/filters \
     lib/generators \
     lib/gui \
+    lib/gui/grid \
     lib/information \
     lib/math \
     lib/modification \
@@ -223,6 +224,7 @@ HEADERS += \
     lib/actions/rs_snapper.h \
     lib/creation/rs_creation.h \
     lib/debug/rs_debug.h \
+    lib/engine/lc_crosshair.h \
     lib/engine/lc_looputils.h \
     lib/engine/lc_parabola.h \
     lib/engine/lc_refarc.h \
@@ -293,9 +295,10 @@ HEADERS += \
     lib/filters/rs_filterdxf1.h \
     lib/filters/rs_filterjww.h \
     lib/filters/rs_filterlff.h \
-    lib/filters/rs_filterinterface.h \
+    lib/filters/rs_filterinterface.h \    
+    lib/gui/grid/lc_gridsystem.h \
+    lib/gui/grid/lc_isometricgrid.h \
     lib/gui/grid/lc_lattice.h \
-    lib/gui/grid/lc_metagrid.h \
     lib/gui/grid/lc_orthogonalgrid.h \
     lib/gui/rs_commandevent.h \
     lib/gui/rs_coordinateevent.h \
@@ -346,6 +349,7 @@ SOURCES += \
     lib/actions/rs_snapper.cpp \
     lib/creation/rs_creation.cpp \
     lib/debug/rs_debug.cpp \
+    lib/engine/lc_crosshair.cpp \
     lib/engine/lc_looputils.cpp \
     lib/engine/lc_parabola.cpp \
     lib/engine/lc_refarc.cpp \
@@ -405,9 +409,10 @@ SOURCES += \
     lib/filters/rs_filterdxfrw.cpp \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \
-    lib/filters/rs_filterlff.cpp \
-    lib/gui/grid/lc_lattice.cpp \
-    lib/gui/grid/lc_metagrid.cpp \
+    lib/filters/rs_filterlff.cpp \    
+    lib/gui/grid/lc_gridsystem.cpp \
+    lib/gui/grid/lc_isometricgrid.cpp \
+    lib/gui/grid/lc_lattice.cpp \    
     lib/gui/grid/lc_orthogonalgrid.cpp \
     lib/gui/rs_dialogfactory.cpp \
     lib/gui/rs_eventhandler.cpp \

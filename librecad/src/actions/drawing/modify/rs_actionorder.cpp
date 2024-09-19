@@ -44,7 +44,7 @@ void RS_ActionOrder::drawSnapper() {
     // delete snapper
 }
 
-void RS_ActionOrder::selectionCompleted(bool singleEntity, bool fromInit) {
+void RS_ActionOrder::selectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
     setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
     updateMouseButtonHints();
     updateSelectionWidget();
@@ -112,7 +112,7 @@ void RS_ActionOrder::mouseMoveEventSelected(QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionOrder::mouseMoveEvent end");
 }
 
-void RS_ActionOrder::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
+void RS_ActionOrder::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, QMouseEvent *e) {
     targetEntity = catchEntity(e);
     if (targetEntity == nullptr) {
         commandMessage(tr("No Entity found."));
@@ -121,7 +121,7 @@ void RS_ActionOrder::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent
     }
 }
 
-void RS_ActionOrder::mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) {
+void RS_ActionOrder::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]QMouseEvent *e) {
      deletePreview();
      if (selectionComplete) {
          selectionComplete = false;
@@ -135,10 +135,10 @@ void RS_ActionOrder::updateMouseButtonHintsForSelection() {
     updateMouseWidgetTRCancel(tr("Choose entities (Enter to Complete)"),  MOD_CTRL(tr("Order immediately after selection")));
 }
 
-void RS_ActionOrder::updateMouseButtonHintsForSelected(int status) {
+void RS_ActionOrder::updateMouseButtonHintsForSelected([[maybe_unused]]int status) {
     updateMouseWidgetTRCancel(tr("Choose entity for order"));
 }
 
-RS2::CursorType RS_ActionOrder::doGetMouseCursorSelected(int status) {
+RS2::CursorType RS_ActionOrder::doGetMouseCursorSelected([[maybe_unused]]int status) {
     return RS2::SelectCursor;
 }

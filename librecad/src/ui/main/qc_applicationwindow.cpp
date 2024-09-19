@@ -1007,6 +1007,14 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
                 currentAction->showOptions();
             }
         }
+        
+        if (!printPreview){
+            bool isometricGrid = activatedGraphic->isIsometricGrid();
+            RS2::IsoGridViewType isoViewType = activatedGraphic->getIsoView();
+            updateGridViewActions(isometricGrid, isoViewType);
+        }
+        
+        
         updateActionsAndWidgetsForPrintPreview(printPreview);
 
         if (snapToolBar) {
@@ -2285,7 +2293,6 @@ void QC_ApplicationWindow::updateGrids() {
     }
 }
 
-
 /**
  * Shows / hides the status bar.
  *
@@ -2295,6 +2302,69 @@ void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
     RS_DEBUG->print("QC_ApplicationWindow::slotViewStatusBar()");
 
     statusBar()->setVisible(toggle);
+}
+
+void QC_ApplicationWindow::slotViewGridOrtho(bool toggle) {
+    setGridView(toggle, false, RS2::IsoGridViewType::IsoLeft);
+}
+
+void QC_ApplicationWindow::slotViewGridIsoLeft(bool toggle) {
+    setGridView(toggle, true, RS2::IsoGridViewType::IsoLeft);
+}
+
+void QC_ApplicationWindow::slotViewGridIsoRight(bool toggle) {
+    setGridView(toggle, true, RS2::IsoGridViewType::IsoRight);
+}
+
+void QC_ApplicationWindow::slotViewGridIsoTop(bool toggle) {
+    setGridView(toggle, true, RS2::IsoGridViewType::IsoTop);
+}
+
+void QC_ApplicationWindow::setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType) {
+    if (toggle) {
+        RS_GraphicView *view = getGraphicView();
+        if (view != nullptr) {
+            if (!view->isPrintPreview()) {
+                RS_Graphic *graphic = view->getGraphic();
+                graphic->setIsometricGrid(isometric);
+                if (isometric) {
+                    graphic->setIsoView(isoGridType);
+                }
+                view->loadGridSettings();
+                updateGridViewActions(isometric, isoGridType);
+                view->redraw();
+                view->update();
+            }
+        }
+    }
+}
+
+void QC_ApplicationWindow::updateGridViewActions(bool isometric, RS2::IsoGridViewType type) {
+    bool viewOrtho = false, viewIsoLeft = false, viewIsoRight = false, viewIsoTop = false;
+
+    if (isometric){
+        switch (type){
+            case RS2::IsoLeft:{
+                viewIsoLeft = true;
+                break;
+            }
+            case RS2::IsoTop:{
+                viewIsoTop = true;
+                break;
+            }
+            case RS2::IsoRight:{
+                viewIsoRight = true;
+            }
+        }
+    }
+    else{
+        viewOrtho = true;
+    }
+
+    getAction("ViewGridOrtho")->setChecked(viewOrtho);
+    getAction("ViewGridIsoLeft")->setChecked(viewIsoLeft);
+    getAction("ViewGridIsoTop")->setChecked(viewIsoTop);
+    getAction("ViewGridIsoRight")->setChecked(viewIsoRight);
 }
 
 void QC_ApplicationWindow::slotOptionsShortcuts() {

@@ -64,6 +64,6 @@ void RS_ActionInfoTotalLength::trigger() {
     finish(false);
 }
 
-RS2::CursorType RS_ActionInfoTotalLength::doGetMouseCursor(int status) {
+RS2::CursorType RS_ActionInfoTotalLength::doGetMouseCursor([[maybe_unused]]int status) {
     return RS2::SelectCursor;
 }

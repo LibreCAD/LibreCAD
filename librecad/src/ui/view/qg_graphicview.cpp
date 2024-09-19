@@ -1263,7 +1263,7 @@ void QG_GraphicView::loadSettings() {
             cursor_hiding = LC_GET_BOOL("cursor_hiding", false);
             bool showSnapIndicatorLines = LC_GET_BOOL("indicator_lines_state", true);
             bool showSnapIndicatorShape = LC_GET_BOOL("indicator_shape_state", true);
-            selectCursor_hiding = cursor_hiding && (showSnapIndicatorLines /*|| indicator_shape_state*/);
+            selectCursor_hiding = cursor_hiding && (showSnapIndicatorLines || showSnapIndicatorShape);
         }
     }
 }
