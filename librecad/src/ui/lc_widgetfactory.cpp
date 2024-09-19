@@ -684,7 +684,6 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     help->addSeparator();
     help->addAction(urlActionTR(tr("&Forum"), "https://forum.librecad.org/"));
     help->addAction(urlActionTR(tr("Zulip &Chat"), "https://librecad.zulipchat.com/"));
-    help->addAction(urlActionTR(tr("&Available Releases"), "https://github.com/LibreCAD/LibreCAD/releases"));
     help->addSeparator();
     help->addAction(urlActionTR(tr("&Submit Error"), "https://github.com/LibreCAD/LibreCAD/issues/new"));
     help->addAction(urlActionTR(tr("&Request Feature"), "https://github.com/LibreCAD/LibreCAD/releases"));
@@ -692,6 +691,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     help->addSeparator();
 
     help->addAction(help_about);
+    help->addAction(urlActionTR(tr("&Available Releases"), "https://github.com/LibreCAD/LibreCAD/releases"));
     help->addAction(license);
     help->addAction(urlActionTR(tr("&Donate"), "https://librecad.org/donate.html"));
 
