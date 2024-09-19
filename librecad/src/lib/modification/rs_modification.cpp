@@ -2620,9 +2620,9 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
     using std::isnormal;
 #endif
 
-	if (!cutEntity) {
+    if (cutEntity == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-						"RS_Modification::cut: Entity is nullptr");
+                        "RS_Modification::cut: Entity is nullptr");
         return false;
     }
     if(cutEntity->isLocked() || ! cutEntity->isVisible()) return false;
@@ -2635,7 +2635,7 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
 
     // cut point is at endpoint of entity:
     if (cutCoord.distanceTo(cutEntity->getStartpoint())<RS_TOLERANCE ||
-            cutCoord.distanceTo(cutEntity->getEndpoint())<RS_TOLERANCE) {
+        cutCoord.distanceTo(cutEntity->getEndpoint())<RS_TOLERANCE) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::cut: Cutting point on endpoint");
         return false;
@@ -2646,84 +2646,85 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
         graphicView->deleteEntity(cutEntity);
     }
 
-	RS_AtomicEntity* cut1 = nullptr;
-	RS_AtomicEntity* cut2 = nullptr;
+    RS_AtomicEntity* cut1 = nullptr;
+    RS_AtomicEntity* cut2 = nullptr;
     double a;
 
+    const RS_Pen &originalPen = cutEntity->getPen(false);
+    RS_Layer *originalLayer = cutEntity->getLayer(false);
     switch (cutEntity->rtti()) {
-    case RS2::EntityCircle:
-        // convert to a whole 2 pi range arc
-        //RS_Circle* c = (RS_Circle*)cutEntity;
-        a=dynamic_cast<RS_Circle*>(cutEntity)->getCenter().angleTo(cutCoord);
-        cut1 = new RS_Arc(cutEntity->getParent(),
-                          RS_ArcData(dynamic_cast<RS_Circle*>(cutEntity) ->getCenter(),
-                                     dynamic_cast<RS_Circle*>(cutEntity) ->getRadius(),
-                                     a,a+2.*M_PI, false));
-        cut1->setPen(cutEntity->getPen(false));
-        cut1->setLayer(cutEntity->getLayer(false));
-		//cut2 = nullptr; // cut2 is nullptr by default
-        break;
-
-        // handle ellipse arc the using the default method
-    case RS2::EntitySplinePoints: // interpolation spline can be closed
-		// so we cannot use the default implementation
-        cut2 = ((LC_SplinePoints*)cutEntity)->cut(cutCoord);
-		cut1 = (RS_AtomicEntity*)cutEntity->clone();
-
-        cut1->setPen(cutEntity->getPen(false));
-        cut1->setLayer(cutEntity->getLayer(false));
-		if(cut2)
-		{
-		    cut2->setPen(cutEntity->getPen(false));
-		    cut2->setLayer(cutEntity->getLayer(false));
-		}
-		break;
-    case RS2::EntityEllipse:
-    // ToDo, to really handle Ellipse Arcs properly, we need to create a new class RS_EllipseArc, keep RS_Ellipse for whole range Ellipses
-    {
-        const auto* const ellipse=static_cast<const RS_Ellipse*>(cutEntity);
-        if(RS_Math::isSameDirection( ellipse ->getAngle1(), ellipse ->getAngle2(), RS_TOLERANCE_ANGLE)
-                && ! /*std::*/isnormal(ellipse->getAngle1())
-                && ! /*std::*/isnormal(ellipse->getAngle2())
-                ) {
-            // whole ellipse, convert to a whole range elliptic arc
-            a=ellipse->getEllipseAngle(cutCoord);
-			cut1 = new RS_Ellipse{cutEntity->getParent(),
-					RS_EllipseData{ellipse ->getCenter(),
-					ellipse ->getMajorP(),
-					ellipse ->getRatio(),
-					a,a+2.*M_PI,
-					ellipse ->isReversed()
-		}
-		};
-            cut1->setPen(cutEntity->getPen(false));
-            cut1->setLayer(cutEntity->getLayer(false));
-			//cut2 = nullptr; // cut2 is nullptr by default
+        case RS2::EntityCircle: {
+            // convert to a whole 2 pi range arc
+            auto *originalCircle = dynamic_cast<RS_Circle *>(cutEntity);
+            a = originalCircle->getCenter().angleTo(cutCoord);
+            cut1 = new RS_Arc(cutEntity->getParent(),
+                              RS_ArcData(originalCircle->getCenter(),
+                                         originalCircle->getRadius(),
+                                         a, a + 2. * M_PI, false));
+            cut1->setPen(originalPen);
+            cut1->setLayer(originalLayer);
+            // cut2 is nullptr by default
             break;
-        }else{
-            //elliptic arc
-            //missing "break;" line is on purpose
-            //elliptic arc should be handled by default:
-            //do not insert between here and default:
         }
-    }
-    // fall-through
-    default:
-        cut1 = (RS_AtomicEntity*)cutEntity->clone();
-        cut2 = (RS_AtomicEntity*)cutEntity->clone();
+        case RS2::EntitySplinePoints: {
+            // interpolation spline can be closed
+            // so we cannot use the default implementation
+            cut2 = ((LC_SplinePoints *) cutEntity)->cut(cutCoord);
+            cut1 = (RS_AtomicEntity *) cutEntity->clone();
 
-        cut1->trimEndpoint(cutCoord);
-        cut2->trimStartpoint(cutCoord);
+            cut1->setPen(originalPen);
+            cut1->setLayer(originalLayer);
+            if (cut2) {
+                cut2->setPen(originalPen);
+                cut2->setLayer(originalLayer);
+            }
+            break;
+        }
+        case RS2::EntityEllipse:{
+            // handle ellipse arc the using the default method
+            // ToDo, to really handle Ellipse Arcs properly, we need to create a new class RS_EllipseArc, keep RS_Ellipse for whole range Ellipses
+            const auto* const ellipse=static_cast<const RS_Ellipse*>(cutEntity);
+            if(RS_Math::isSameDirection( ellipse ->getAngle1(), ellipse ->getAngle2(), RS_TOLERANCE_ANGLE)
+               && ! /*std::*/isnormal(ellipse->getAngle1())
+               && ! /*std::*/isnormal(ellipse->getAngle2())
+                ) {
+                // whole ellipse, convert to a whole range elliptic arc
+                a=ellipse->getEllipseAngle(cutCoord);
+                cut1 = new RS_Ellipse{cutEntity->getParent(),
+                                      RS_EllipseData{ellipse ->getCenter(),
+                                                     ellipse ->getMajorP(),
+                                                     ellipse ->getRatio(),
+                                                     a,a+2.*M_PI,
+                                                     ellipse ->isReversed()
+                                      }
+                };
+                cut1->setPen(originalPen);
+                cut1->setLayer(originalLayer);
+                break;
+            }else{
+                //elliptic arc
+                //missing "break;" line is on purpose
+                //elliptic arc should be handled by default:
+                //do not insert between here and default:
+            }
+        }
+            // fall-through
+        default:
+            cut1 = (RS_AtomicEntity*)cutEntity->clone();
+            cut2 = (RS_AtomicEntity*)cutEntity->clone();
+
+            cut1->trimEndpoint(cutCoord);
+            cut2->trimStartpoint(cutCoord);
     }
     // add new cut entity:
     container->addEntity(cut1);
-    if (cut2) {
+    if (cut2 != nullptr) {
         container->addEntity(cut2);
     }
 
-    if (graphicView) {
+    if (graphicView != nullptr) {
         graphicView->drawEntity(cut1);
-        if (cut2) {
+        if (cut2 != nullptr) {
             graphicView->drawEntity(cut2);
         }
     }
@@ -2732,7 +2733,7 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
         LC_UndoSection undo( document);
 
         undo.addUndoable(cut1);
-        if (cut2) {
+        if (cut2 != nullptr) {
             undo.addUndoable(cut2);
         }
         cutEntity->setUndoState(true);
