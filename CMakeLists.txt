@@ -99,6 +99,7 @@ include_directories(librecad/src/lib/fileio)
 include_directories(librecad/src/lib/filters)
 include_directories(librecad/src/lib/generators)
 include_directories(librecad/src/lib/gui)
+include_directories(librecad/src/lib/gui/grid)
 include_directories(librecad/src/lib/information)
 include_directories(librecad/src/lib/math)
 include_directories(librecad/src/lib/modification)
@@ -1224,6 +1225,10 @@ set(SOURCES
 		librecad/src/lib/gui/grid/lc_lattice.cpp
 		librecad/src/lib/gui/grid/lc_orthogonalgrid.h
 		librecad/src/lib/gui/grid/lc_orthogonalgrid.cpp
+		librecad/src/lib/gui/grid/lc_gridsystem.h
+		librecad/src/lib/gui/grid/lc_gridsystem.cpp
+		librecad/src/lib/gui/grid/lc_isometricgrid.cpp
+		librecad/src/lib/engine/lc_crosshair.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
