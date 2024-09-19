@@ -409,7 +409,7 @@ void LC_ActionDrawDimBaseline::updateMouseButtonHints() {
             updateMouseWidgetTRBack(tr("Specify second extension line origin"), isBaseline() && !freeBaselineDistance ? MOD_CTRL("Mirror offset direction"): MOD_NONE);
             break;
         case SetDefPoint:
-            updateMouseWidgetTRBack(tr("Specify dimension line location"), MOD_SHIFT(tr("Snap to Adjacent Dim")));
+            updateMouseWidgetTRBack(tr("Specify dimension line location"), MOD_SHIFT_LC(tr("Snap to Adjacent Dim")));
             break;
         case SetText:
             updateMouseWidget(tr("Enter dimension text:"));

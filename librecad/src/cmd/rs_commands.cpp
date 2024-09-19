@@ -176,6 +176,7 @@ RS_Commands::RS_Commands() {
  */
 void RS_Commands::updateAlias()
 {
+    LC_LOG << __func__ << "(): begin";
     QString aliasName = RS_SYSTEM->getAppDataDir();
     if (aliasName.isEmpty())
         return;
@@ -220,7 +221,7 @@ void RS_Commands::updateAlias()
                 if (actionAlias != action &&  actionAlias != RS2::ActionNone) {
                     LC_ERR<<__func__<<"(): cannot overwrite existing alias: "<<alias<<"="<<m_actionToCommand.at(action)<<": with "<<alias<<"=" << cmd;
                 } else {
-                    aliasList[alias] = m_actionToCommand[commandToAction(cmd)];
+                    aliasList[alias] = m_actionToCommand[action];
                 }
             } else {
                 LC_ERR<<__func__<<"(): invalid alias, command not found: "<<line;
@@ -238,14 +239,15 @@ void RS_Commands::updateAlias()
     for(auto const& [alias, cmd]: aliasList){
         if(shortCommands.count(alias) == 1 || mainCommands.count(alias) == 1)
             continue;
-        if(mainCommands.count(cmd)){
+        if(mainCommands.count(cmd) == 1){
             RS_DEBUG->print("adding command alias: %s\t%s\n", alias.toStdString().c_str(), cmd.toStdString().c_str());
             shortCommands[alias]=mainCommands[cmd];
-        }else if(cmdTranslation.count(cmd)){
+        }else if(cmdTranslation.count(cmd) == 1){
             RS_DEBUG->print("adding command alias: %s\t%s\n", alias.toStdString().c_str(), cmdTranslation[cmd].toStdString().c_str());
             shortCommands[alias]=mainCommands[cmdTranslation[cmd]];
         }
     }
+    LC_LOG << __func__ << "(): done";
 }
 
 RS2::ActionType RS_Commands::commandToAction(const QString& command) const

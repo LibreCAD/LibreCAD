@@ -157,7 +157,7 @@ void LC_ActionPenApply::updateMouseButtonHints(){
             updateMouseWidgetTRCancel(tr("Specify entity to pick the pen"));
             break;
         case ApplyToEntity:
-            updateMouseWidgetTRCancel(tr("Specify entity to apply pen"), copyMode? MOD_SHIFT(tr("Apply Resolved Pen")) : MOD_NONE);
+            updateMouseWidgetTRCancel(tr("Specify entity to apply pen"), copyMode? MOD_SHIFT_LC(tr("Apply Resolved Pen")) : MOD_NONE);
             break;
         default:
             RS_ActionInterface::updateMouseButtonHints();

@@ -74,6 +74,8 @@ unix {
 }
 win32 {
     TARGET = LibreCAD
+
+    CONFIG += console
     DEFINES += QC_APPDIR="\"LibreCAD\""
 
     # add MSYSGIT_DIR = PathToGitBinFolder (without quotes) in custom.pro file, for commit hash in about dialog
@@ -328,6 +330,7 @@ HEADERS += \
     lib/generators/lc_xmlwriterinterface.h \
     lib/generators/lc_xmlwriterqxmlstreamwriter.h \
     lib/engine/lc_rect.h \
+    lib/engine/lc_rtree.h \
     lib/engine/lc_undosection.h \
     lib/printing/lc_printing.h \
     main/lc_application.h \
@@ -441,6 +444,7 @@ SOURCES += \
     lib/engine/rs_undocycle.cpp \
     lib/engine/rs_flags.cpp \
     lib/engine/lc_rect.cpp \
+    lib/engine/lc_rtree.cpp \
     lib/engine/lc_undosection.cpp \
     lib/engine/rs.cpp \
     lib/printing/lc_printing.cpp \

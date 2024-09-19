@@ -23,9 +23,13 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include <QComboBox>
+#include <QRegularExpression>
+
 #include "qg_dimensionlabeleditor.h"
 #include "rs.h"
 #include "rs_dimension.h"
+#include "rs_debug.h"
 
 namespace {
 const QChar g_diametericPrefix{0x2205};
@@ -39,6 +43,11 @@ QG_DimensionLabelEditor::QG_DimensionLabelEditor(QWidget* parent, Qt::WindowFlag
 {
     setupUi(this);
 
+    connect(bDiameter, &QAbstractButton::toggled, this, &QG_DimensionLabelEditor::updatePrefix);
+
+    // Initialize the symbol selection
+    cbSymbol->setCurrentIndex(-1);
+    connect(cbSymbol, &QComboBox::currentTextChanged, this, &QG_DimensionLabelEditor::insertSign);
 }
 
 /*
@@ -96,38 +105,61 @@ void QG_DimensionLabelEditor::setLabel(const QString& l) {
 }
 
 QString QG_DimensionLabelEditor::getLabel() {
+    // TODO: an extra '&' shouldn't be added
+    // TODO: fix the the root cause
     QString l = leLabel->text();
+    if (l.startsWith('&'))
+        l = l.mid(1);
+    QString prefix = m_hasDiameter ? bDiameter->text() : QString{};
+    if (prefix.startsWith('&'))
+        prefix = prefix.mid(1);
 
+    QRegularExpression re{QString{R"(^\s*%1)"}.arg(prefix)};
     // diameter:
     if (!bDiameter->text().isEmpty()) {
+        auto match = re.match(l);
         if (bDiameter->isChecked()) {
             if (l.isEmpty()) {
-                l = QString("%1<>").arg(bDiameter->text());
+                l = QString("%1<>").arg(prefix);
             }
             else {
-                if (!l.startsWith(bDiameter->text()))
-                    l = bDiameter->text() + l;
+                if (!match.hasMatch())
+                    l = prefix + l;
             }
         } else {
-            if (l.startsWith(tr("R", "Radial dimension prefix"))) {
-                l = l.mid(tr("R", "Radial dimension prefix").length());
-            } else if (!l.isEmpty() && l.at(0) == QChar(0x2207)) {
+            if (match.hasMatch()) {
+                l = l.mid(match.capturedEnd(0));
+            } else if (!l.isEmpty() && l.at(0) == g_diametericPrefix) {
                 l = l.mid(1);
             }
         }
     }
 
-    if (leTol1->text().isEmpty() && leTol2->text().isEmpty()) {
-        return l;
+    if (!leTol1->text().isEmpty() || !leTol2->text().isEmpty()) {
+        l += "\\S" + leTol1->text() + "^ " + leTol2->text() + ";";
     }
-    else {
-        return l + "\\S" + leTol1->text() +
-            "^ " + leTol2->text() + ";";
-    }
+    return l;
 }
 
 void QG_DimensionLabelEditor::insertSign(const QString& s) {
-    leLabel->insert(s.left(1));
+    const QString prefix = s.left(1);
+    const QString &current = leLabel->text();
+    if (current.isEmpty())
+        leLabel->setText(prefix + R"(<>)");
+    else if (!current.startsWith(prefix))
+        leLabel->setText(prefix + current);
+}
+
+void QG_DimensionLabelEditor::updatePrefix(bool isChecked)
+{
+    QString prefix = bDiameter->text();
+    if (prefix.startsWith('&'))
+        prefix = prefix.mid(1);
+    QRegularExpression re{QString{R"(^\s*%1)"}.arg(prefix)};
+    QString label = leLabel->text();
+    auto match = re.match(label);
+    if (!isChecked && match.hasMatch())
+        leLabel->setText(label.mid(match.capturedEnd(0)));
 }
 
 void QG_DimensionLabelEditor::setRadialType(const RS_Dimension& dim)
@@ -138,18 +170,21 @@ void QG_DimensionLabelEditor::setRadialType(const RS_Dimension& dim)
         bDiameter->setText(tr("R", "Radial dimesnion prefix"));
         bDiameter->setCheckable(true);
         bDiameter->setVisible(true);
+	m_hasDiameter = true;
         break;
     case RS2::EntityDimDiametric:
         bDiameter->setIcon({});
         bDiameter->setText({{QChar(g_diametericPrefix)}});
         bDiameter->setCheckable(true);
         bDiameter->setVisible(true);
+	m_hasDiameter = true;
         break;
     default:
         bDiameter->setIcon({});
         bDiameter->setText({});
         bDiameter->setChecked(false);
         bDiameter->setVisible(false);
+	m_hasDiameter = false;
         break;
     }
 }

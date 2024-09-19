@@ -172,12 +172,9 @@ void QG_CommandWidget::setFocus()
 }
 
 void QG_CommandWidget::setCommand(const QString& cmd) {
-    if (cmd!="") {
+    if (!cmd.isEmpty()) {
         lCommand->setText(cmd);
-    } else {
-        lCommand->setText(tr("Command:"));
     }
-    leCommand->setText("");
 }
 
 void QG_CommandWidget::setInput(const QString& cmd) {

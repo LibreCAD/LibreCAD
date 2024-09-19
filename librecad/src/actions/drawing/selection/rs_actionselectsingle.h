@@ -56,8 +56,8 @@ protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
 private:
-    enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
     RS_ActionInterface *actionSelect = nullptr;
+    enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
     bool isEntityAllowedToSelect(RS_Entity* ent) const override;
     void selectionFinishedByKey(QKeyEvent *e, bool escape) override;
 };

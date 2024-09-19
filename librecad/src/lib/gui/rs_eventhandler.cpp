@@ -446,8 +446,9 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     if (action==nullptr) {
         return;
     }
+    std::shared_ptr<RS_ActionInterface> actionHolder{action};
 
-    RS_DEBUG->print("RS_EventHandler::setCurrentAction %s", action->getName().toLatin1().data());
+    RS_DEBUG->print("RS_EventHandler::setCurrentAction %s", actionHolder->getName().toLatin1().data());
     // Predecessor of the new action or NULL:
     auto& predecessor = hasAction() ? currentActions.last() : defaultAction;
     // Suspend current action:
@@ -471,20 +472,20 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     //    }
 
     // Set current action:
-    currentActions.push_back(std::shared_ptr<RS_ActionInterface>(action));
+    currentActions.push_back(actionHolder);
     //    RS_DEBUG->print("RS_EventHandler::setCurrentAction: current action is: %s -> %s",
     //                    predecessor->getName().toLatin1().data(),
     //                    currentActions.last()->getName().toLatin1().data());
 
     // Initialisation of our new action:
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: init current action");
-    action->init(0);
+    actionHolder->init(0);
     // ## new:
-    if (!action->isFinished()) {
+    if (!actionHolder->isFinished()) {
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: show options");
-        action->showOptions();
+        actionHolder->showOptions();
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: set predecessor");
-        action->setPredecessor(predecessor.get());
+        actionHolder->setPredecessor(predecessor.get());
     }
 
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: cleaning up..");

@@ -96,6 +96,7 @@ RS2::FormatType QG_FileDialog::getType(const QString& filter) const
     } else if (filter == fDxf1) {
         return  RS2::FormatDXF1;
     }
+    return RS2::FormatDXFRW;
 }
 
 QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f, FileType type)

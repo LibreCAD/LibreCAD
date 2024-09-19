@@ -24,13 +24,15 @@
 **
 **********************************************************************/
 #include<iostream>
+
+#include "rs_debug.h"
+#include "rs_dimension.h"
+#include "rs_filterdxfrw.h" //for int <-> rs_color conversion
 #include "rs_information.h"
 #include "rs_line.h"
-#include "rs_dimension.h"
+#include "rs_math.h"
 #include "rs_solid.h"
 #include "rs_units.h"
-#include "rs_math.h"
-#include "rs_filterdxfrw.h" //for int <-> rs_color conversion
 
 RS_DimensionData::RS_DimensionData():
     definitionPoint(false),
