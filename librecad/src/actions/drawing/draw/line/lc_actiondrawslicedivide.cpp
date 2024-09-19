@@ -80,6 +80,7 @@ EntityTypeList LC_ActionDrawSliceDivide::getCatchEntityTypeList() const{
  */
 void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     ticksData.clear();
+    deleteSnapper();
     EntityTypeList catchEntityTypes = getCatchEntityTypeList();
     RS_Entity *en = catchModifiableEntity(e, catchEntityTypes);
     int optionsMode = SELECTION_NONE;

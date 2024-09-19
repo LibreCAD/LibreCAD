@@ -50,6 +50,9 @@ public:
 
     void setLayerMode(int mode){layerMode = mode;};
     int getLayerMode() const{return layerMode;}
+
+    void drawSnapper() override;
+
 protected:
     enum{
         SetArc

@@ -192,3 +192,7 @@ void LC_ActionInfoProperties::clearQuickInfoWidget(){
 void LC_ActionInfoProperties::updateMouseButtonHints(){
     updateMouseWidgetTRCancel(tr("Select entity"));
 }
+
+RS2::CursorType LC_ActionInfoProperties::doGetMouseCursor(int status) {
+    return RS2::SelectCursor;
+}

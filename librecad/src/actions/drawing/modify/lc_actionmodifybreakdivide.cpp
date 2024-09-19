@@ -59,6 +59,7 @@ bool LC_ActionModifyBreakDivide::doCheckMayDrawPreview([[maybe_unused]]QMouseEve
  */
 void LC_ActionModifyBreakDivide::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     if (status == SetLine){
+        deleteSnapper();
         RS_Entity *en = catchModifiableEntity(e, enTypeList);
         if (en != nullptr){
             int rtti = en->rtti();
@@ -104,6 +105,7 @@ void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(QMouseEvent *e, int 
                     break;
             }
         }
+        invalidateSnapSpot();
     }
 }
 

@@ -237,6 +237,7 @@ bool LC_ActionDrawCross::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *even
  * @param status
  */
 void LC_ActionDrawCross::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list,[[maybe_unused]] int status){
+    deleteSnapper();
     RS_Entity *en = catchEntity(e, circleType, RS2::ResolveAll);
     // check whether entity is ok for drawing cross
     if (en != nullptr){
@@ -274,6 +275,7 @@ void LC_ActionDrawCross::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused
 void LC_ActionDrawCross::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
     if (status == SetEntity){
         trigger(); // just draw cross on click
+        invalidateSnapSpot();
     }
 }
 

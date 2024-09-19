@@ -81,6 +81,7 @@ void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, QMouse
                 selectionCompleted(true, false);
             }
         }
+        invalidateSnapSpot();
     }
 }
 
@@ -100,6 +101,12 @@ void LC_ActionPreSelectionAwareBase::mouseMoveEvent(QMouseEvent *event) {
     }
     else{
         selectionMouseMove(event);
+    }
+}
+
+void LC_ActionPreSelectionAwareBase::drawSnapper() {
+    if (selectionComplete) {
+        RS_Snapper::drawSnapper();
     }
 }
 

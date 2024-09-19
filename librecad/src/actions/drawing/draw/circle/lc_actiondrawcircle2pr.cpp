@@ -150,10 +150,10 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
             }
 
             drawPreview();
-
             break;
         }
         case SelectCenter: {
+            deleteSnapper();
             RS_Vector altCenter;
             if (preparePreview(mouse, altCenter)){
                 // todo - review, what for we're checking for circle there?
@@ -190,6 +190,9 @@ void LC_ActionDrawCircle2PR::onMouseLeftButtonRelease(int status, [[maybe_unused
     RS_Vector coord = snapPoint(e);
     if (status == SetPoint2){
         coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
+    }
+    else if (status == SelectCenter){
+        invalidateSnapSpot();
     }
     fireCoordinateEvent(coord);
 }
