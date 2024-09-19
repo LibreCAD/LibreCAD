@@ -34,6 +34,7 @@
 #include <QTextStream>
 
 #include "rs_commands.h"
+#include "rs_dialogfactory.h"
 #include "rs_math.h"
 #include "rs_settings.h"
 
@@ -43,6 +44,27 @@ namespace {
 constexpr unsigned g_maxLinesToRead = 10240;
 // the maximum line length allowed
 constexpr unsigned g_maxLineLength = 4096;
+
+// returns true, if value exists, evaluated and printed to output
+bool calculatorEvaluation(const QString& input)
+{
+    int pos = input.indexOf(' ');
+    if (pos == -1)
+        pos = input.indexOf(':');
+    if (pos == -1)
+        return false;
+
+    QString expression = input.mid(pos);
+    if (expression.isEmpty())
+        return false;
+    bool okay=false;
+    double value = RS_Math::eval(expression, &okay);
+    if (okay) {
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("Calculator: ") + expression
+                                         + QString{" = %1"}.arg(value, 0, 'g', 10));
+    }
+    return okay;
+}
 }
 
 /**
@@ -301,13 +323,17 @@ bool QG_CommandEdit::isForeignCommand(QString input)
     else if ((input = filterCliCal(input)).isEmpty()) {
         r_value = false;
     }
-    else if (input == QObject::tr("cal"))
+    else if (input.startsWith(QObject::tr("cal")))
     {
-        calculator_mode = !calculator_mode;
-        if(calculator_mode)
-            emit message(QObject::tr("Calculator mode: On"));
-        else
-            emit message(QObject::tr("Calculator mode: Off"));
+        // Allow inline calculation. Tweak the calculator mode only if there's
+        // no expression after "cal " or "cal:"
+        if (!calculatorEvaluation(input)) {
+            calculator_mode = !calculator_mode;
+            if(calculator_mode)
+                emit message(QObject::tr("Calculator mode: On"));
+            else
+                emit message(QObject::tr("Calculator mode: Off"));
+        }
         r_value = false;
     }
     else if (calculator_mode)
