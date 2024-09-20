@@ -21,7 +21,7 @@
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation>Выровняйте настройки...</translation>
+        <translation type="unfinished">Скорректируйте настройки...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
