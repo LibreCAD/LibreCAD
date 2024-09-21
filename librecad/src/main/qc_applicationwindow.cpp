@@ -122,6 +122,14 @@
  *	*/
 #define WTB_MAX_SIZE        79
 
+namespace {
+void printMargins(const QMarginsF &margins, QString name)
+{
+    LC_ERR << name << " margins(mm): " << margins.left() << ": " << margins.top() << " : "
+           << margins.right() << " : " << margins.bottom();
+};
+}
+
 /**
  * Constructor. Initializes the app.
  */
@@ -2412,7 +2420,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     QPrinter::PageSize paperSizeName = LC_Printing::rsToQtPaperFormat(pf);
     RS_Vector paperSize = graphic->getPaperSize();
     if(paperSizeName==QPrinter::Custom){
-        RS_Vector&& s=RS_Units::convert(paperSize, graphic->getUnit(),RS2::Millimeter);
+        RS_Vector s=RS_Units::convert(paperSize, graphic->getUnit(),RS2::Millimeter);
         if(landscape) s=s.flipXY();
         printer.setPageSize(QPageSize{QSizeF(s.x,s.y), QPageSize::Millimeter});
         // RS_DEBUG->print(RS_Debug::D_ERROR, "set Custom paper size to (%g, %g)\n", s.x,s.y);
@@ -2426,6 +2434,19 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
                                             graphic->getMarginRight(),
                                             graphic->getMarginTop(),
                                             graphic->getMarginBottom()};
+
+    printMargins(paperMargins, "Drawing");
+    if (printPDF) {
+        // Issue #1897, exporting PDF margins to to follow the drawing settings
+        QPageLayout layout = printer.pageLayout();
+        layout.setMode(QPageLayout::FullPageMode);
+        layout.setUnits(QPageLayout::Millimeter);
+        layout.setMinimumMargins({});
+        RS_Vector s=RS_Units::convert(paperSize, graphic->getUnit(),RS2::Millimeter);
+        if(landscape) s=s.flipXY();
+        layout.setPageSize(QPageSize{QSizeF(s.x,s.y), QPageSize::Millimeter}, paperMargins);
+        printer.setPageLayout(layout);
+    }
     printer.setPageMargins(paperMargins, QPageLayout::Millimeter);
 
     QString strDefaultFile("");
@@ -2577,7 +2598,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         painter.setDrawingMode(w->getGraphicView()->getDrawingMode());
 
         QMarginsF margins = printer.pageLayout().margins(QPageLayout::Millimeter);
-        LC_ERR << "Printer margins: " << margins.left()<<": "<<margins.top()<<" : "<<margins.right()<<" : "<<margins.bottom();
+        printMargins(margins, "Printer");
         double printerFx = (double)printer.width() / printer.widthMM();
         double printerFy = (double)printer.height() / printer.heightMM();
 
