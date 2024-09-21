@@ -217,14 +217,6 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     widget_factory.createCategoriesToolbar();
     widget_factory.createStandardToolbars(actionHandler);
 
-    foreach(auto action, widget_factory.snap_toolbar->actions())
-    {
-        if(!action->objectName().isEmpty())
-        {
-            a_map[action->objectName()] = action;
-        }
-    }
-
     settings.beginGroup("CustomToolbars");
     foreach (auto key, settings.childKeys())
     {
@@ -901,6 +893,16 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
     }
 
     if (w == activedMdiSubWindow) {
+        // this may occur after file open, so additional update is needed :(
+        RS_GraphicView* activatedGraphicView = getGraphicView();
+        RS_Graphic* activatedGraphic = activatedGraphicView->getGraphic();
+        bool printPreview = activatedGraphicView->isPrintPreview();
+        if (!printPreview){
+            bool isometricGrid = activatedGraphic->isIsometricGrid();
+            RS2::IsoGridViewType isoViewType = activatedGraphic->getIsoView();
+            updateGridViewActions(isometricGrid, isoViewType);
+        }
+        activatedGraphicView->loadSettings();
         return;
     }
 
@@ -2840,12 +2842,12 @@ void QC_ApplicationWindow::invokeToolbarCreator() {
         return;
     }
 
-    auto dlg = new QDialog(this);
+    auto dlg = new LC_Dialog(this, "ToolbarCreator");
     dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->setWindowTitle(tr("Toolbar Creator"));
     dlg->setObjectName("Toolbar Creator");
 
-    auto toolbar_creator = new WidgetCreator(dlg, a_map, ag_manager->allGroups());
+    auto toolbar_creator = new WidgetCreator(dlg, ag_manager);
     toolbar_creator->addCustomWidgets("CustomToolbars");
 
     connect(toolbar_creator, SIGNAL(widgetToCreate(QString)),
@@ -2900,11 +2902,11 @@ void QC_ApplicationWindow::invokeMenuCreator() {
         return;
     }
 
-    auto dlg = new QDialog(this);
+    auto dlg = new LC_Dialog(this, "MenuCreator");
     dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->setWindowTitle(tr("Menu Creator"));
     auto layout = new QVBoxLayout;
-    auto widget_creator = new WidgetCreator(dlg, a_map, ag_manager->allGroups(), true);
+    auto widget_creator = new WidgetCreator(dlg, ag_manager, true);
     widget_creator->addCustomWidgets("CustomMenus");
 
     connect(widget_creator, SIGNAL(widgetToDestroy(QString)),

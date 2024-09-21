@@ -34,128 +34,106 @@
 #include "widgetcreator.h"
 #include "ui_widgetcreator.h"
 
-WidgetCreator::WidgetCreator(QWidget* parent,
-                             QMap<QString, QAction*>& actions,
-                             QMap<QString, LC_ActionGroup*> action_groups,
-                             bool assigner)
-    : QFrame(parent)
-    , ui(new Ui::WidgetCreator)
-    , a_map(actions)
-    , ag_map(action_groups)
-{
+WidgetCreator::WidgetCreator(
+    QWidget *parent,
+    LC_ActionGroupManager* agm,
+    bool assigner)
+    :QFrame(parent), ui(new Ui::WidgetCreator), actionGroupManager(agm){
+
     ui->setupUi(this);
 
-    if (!assigner)
-    {
+    if (!assigner) {
         ui->assign_button->hide();
         ui->update_button->hide();
-    }
-    else
-    {
-        connect(ui->assign_button, SIGNAL(released()), this, SLOT(requestAssignment()));
-        connect(ui->update_button, SIGNAL(released()), this, SLOT(requestUpdate()));
+    } else {
+        connect(ui->assign_button, &QPushButton::released, this, &WidgetCreator::requestAssignment);
+        connect(ui->update_button, &QPushButton::released, this, &WidgetCreator::requestUpdate);
     }
 
     ui->categories_combobox->addItem(QObject::tr("All"));
-    foreach (auto ag, ag_map)
-    {
-        ui->categories_combobox->addItem(ag->objectName());
+    foreach (auto ag, actionGroupManager->allGroupsList()) {
+       ui->categories_combobox->addItem(ag->objectName());
     }
     ui->categories_combobox->setCurrentIndex(-1);
     ui->chosen_actions->setDragDropMode(QAbstractItemView::InternalMove);
 
     ui->offered_actions->setSortingEnabled(true);
 
-    ui->offered_actions->fromActionMap(a_map);
+    ui->offered_actions->fromActionMap(actionGroupManager->getActionsMap());
 
-    connect(ui->add_button, SIGNAL(released()), this, SLOT(addChosenAction()));
-    connect(ui->remove_button, SIGNAL(released()), this, SLOT(removeChosenAction()));
+    connect(ui->add_button, &QPushButton::released, this, &WidgetCreator::addChosenAction);
+    connect(ui->remove_button,  &QPushButton::released, this, &WidgetCreator::removeChosenAction);
 
-    connect(ui->offered_actions, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
-            this, SLOT(addChosenAction(QListWidgetItem*)));
-    connect(ui->chosen_actions, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
-            this, SLOT(removeChosenAction(QListWidgetItem*)));
+    connect(ui->offered_actions, &ActionList::itemDoubleClicked,this, &WidgetCreator::addChosenActionForItem);
+    connect(ui->chosen_actions, &ActionList::itemDoubleClicked,this, &WidgetCreator::removeChosenActionForItem);
 
-    connect(ui->combo, SIGNAL(activated(QString)), this, SLOT(setLists(QString)));
+    connect(ui->combo, &QComboBox::activated, this, &WidgetCreator::setLists);
 
-    connect(ui->create_button, SIGNAL(released()), this, SLOT(createWidget()));
-    connect(ui->destroy_button, SIGNAL(released()), this, SLOT(destroyWidget()));
+    connect(ui->create_button, &QPushButton::released, this, &WidgetCreator::createWidget);
+    connect(ui->destroy_button, &QPushButton::released, this, &WidgetCreator::destroyWidget);
 
-    connect(ui->categories_combobox, SIGNAL(activated(QString)), this, SLOT(setCategory(QString)));
+    connect(ui->categories_combobox, &QComboBox::activated, this, &WidgetCreator::setCategory);
 }
 
-WidgetCreator::~WidgetCreator()
-{
+WidgetCreator::~WidgetCreator() {
     delete ui;
 }
 
-void WidgetCreator::addChosenAction()
-{
-    QListWidgetItem* item = ui->offered_actions->currentItem();
-    if (item)
-    {
+void WidgetCreator::addChosenAction() {
+    QListWidgetItem *item = ui->offered_actions->currentItem();
+    if (item) {
         ui->chosen_actions->addItem(item->clone());
         delete item;
     }
 }
 
-void WidgetCreator::addChosenAction(QListWidgetItem* item)
-{
+void WidgetCreator::addChosenActionForItem(QListWidgetItem *item) {
     ui->chosen_actions->addItem(item->clone());
     delete item;
 }
 
-void WidgetCreator::removeChosenAction()
-{
-    QListWidgetItem* item = ui->chosen_actions->currentItem();
-    if (item)
-    {
+void WidgetCreator::removeChosenAction() {
+    QListWidgetItem *item = ui->chosen_actions->currentItem();
+    if (item) {
         ui->offered_actions->addItem(item->clone());
         delete item;
     }
 }
 
-void WidgetCreator::removeChosenAction(QListWidgetItem* item)
-{
+void WidgetCreator::removeChosenActionForItem(QListWidgetItem *item) {
     ui->offered_actions->addItem(item->clone());
     delete item;
 }
 
-QStringList WidgetCreator::getChosenActions()
-{
+QStringList WidgetCreator::getChosenActions() {
     QStringList s_list;
 
-    for (int i = 0; i < ui->chosen_actions->count(); ++i)
-    {
+    for (int i = 0; i < ui->chosen_actions->count(); ++i) {
         s_list << ui->chosen_actions->item(i)->whatsThis();
     }
     return s_list;
 }
 
-QString WidgetCreator::getWidgetName()
-{
+QString WidgetCreator::getWidgetName() {
     return ui->combo->lineEdit()->text();
 }
 
-
-void WidgetCreator::addCustomWidgets(const QString& group)
-{
+void WidgetCreator::addCustomWidgets(const QString &group) {
     w_group = group;
 
     QSettings settings;
 
     settings.beginGroup(group);
-    foreach (auto key, settings.childKeys())
-    {
-        ui->combo->addItem(key);
-    }
+        foreach (auto key, settings.childKeys()) {
+            ui->combo->addItem(key);
+        }
     settings.endGroup();
 
     ui->combo->lineEdit()->clear();
 }
 
-void WidgetCreator::setLists(QString key)
-{
+void WidgetCreator::setLists(int index) {
+    QString key = ui->combo->itemText(index);
     w_key = key;
     QSettings settings;
     auto widget = QString("%1/%2").arg(w_group).arg(key);
@@ -166,35 +144,33 @@ void WidgetCreator::setLists(QString key)
     ui->chosen_actions->clear();
     ui->offered_actions->clear();
 
-    ui->offered_actions->fromActionMap(a_map);
-    int index = ui->categories_combobox->findText(QObject::tr("All"));
-    ui->categories_combobox->setCurrentIndex(index);
+    ui->offered_actions->fromActionMap(actionGroupManager->getActionsMap());
+    int allIndex = ui->categories_combobox->findText(QObject::tr("All"));
+    ui->categories_combobox->setCurrentIndex(allIndex);
 
-    for(int i = 0; i < ui->offered_actions->count(); ++i)
-    {
+    for (int i = 0; i < ui->offered_actions->count(); ++i) {
         auto item = ui->offered_actions->item(i);
         if (s_list.contains(item->whatsThis()))
             delete item;
     }
 
-    foreach (auto str, s_list)
-    {
-        ui->chosen_actions->addActionItem(a_map[str]);
-    }
+        foreach (auto str, s_list) {
+            QAction *action = actionGroupManager->getActionByName(str);
+            if (action != nullptr) {
+                ui->chosen_actions->addActionItem(action);
+            }
+        }
 }
 
-void WidgetCreator::createWidget()
-{
+void WidgetCreator::createWidget() {
     w_key = ui->combo->lineEdit()->text();
-    if(!w_key.isEmpty() && ui->combo->findText(w_key) == -1)
-    {
+    if (!w_key.isEmpty() && ui->combo->findText(w_key) == -1) {
         w_key.replace("/", "-");
         ui->combo->addItem(w_key);
     }
 
     QStringList a_list = getChosenActions();
-    if (!a_list.isEmpty() && !w_key.isEmpty())
-    {
+    if (!a_list.isEmpty() && !w_key.isEmpty()) {
         QSettings settings;
         auto widget = QString("%1/%2").arg(w_group).arg(w_key);
         settings.setValue(widget, a_list);
@@ -202,14 +178,12 @@ void WidgetCreator::createWidget()
     }
 }
 
-void WidgetCreator::destroyWidget()
-{
+void WidgetCreator::destroyWidget() {
     auto key = ui->combo->lineEdit()->text();
     if (key.isEmpty()) return;
 
     int index = ui->combo->findText(key);
-    if (index > -1)
-    {
+    if (index > -1) {
         ui->combo->removeItem(index);
         QSettings settings;
         settings.remove(QString("%1/%2").arg(w_group).arg(key));
@@ -219,44 +193,42 @@ void WidgetCreator::destroyWidget()
     }
 }
 
-void WidgetCreator::setCategory(QString category)
-{
-    if (category == QObject::tr("All"))
-    {
+void WidgetCreator::setCategory(int index) {
+    QString category = ui->categories_combobox->itemText(index);
+    if (category == QObject::tr("All")) {
+        auto a_map = actionGroupManager->getActionsMap();
         ui->offered_actions->clear();
         ui->offered_actions->fromActionMap(a_map);
         return;
     }
 
-    if (!ag_map.contains(category)) return;
+    if (!actionGroupManager->hasActionGroup(category)) {
+        return;
+    }
 
     ui->offered_actions->clear();
     auto chosen_actions = getChosenActions();
-    auto action_group = ag_map[category];
-    foreach (auto action, action_group->actions())
-    {
-        if (!chosen_actions.contains(action->objectName()))
-            ui->offered_actions->addActionItem(action);
-    }
+    auto action_group = actionGroupManager->getActionGroup(category);
+    if (action_group != nullptr)
+        for (auto action: action_group->actions()) {
+            if (!chosen_actions.contains(action->objectName()))
+                ui->offered_actions->addActionItem(action);
+        }
 }
 
-void WidgetCreator::addButton(QPushButton* button)
-{
+void WidgetCreator::addButton(QPushButton *button) {
     ui->button_frame->layout()->addWidget(button);
 }
 
-void WidgetCreator::requestAssignment()
-{
+void WidgetCreator::requestAssignment() {
     auto widget_name = getWidgetName();
     if (hasBeenCreated(widget_name))
         emit widgetToAssign(widget_name);
 }
 
-void WidgetCreator::requestUpdate()
-{
+void WidgetCreator::requestUpdate() {
     auto widget_name = getWidgetName();
-    if (hasBeenCreated(widget_name))
-    {
+    if (hasBeenCreated(widget_name)) {
         QSettings settings;
         auto widget = QString("%1/%2").arg(w_group).arg(w_key);
         QStringList a_list = getChosenActions();
@@ -265,8 +237,7 @@ void WidgetCreator::requestUpdate()
     }
 }
 
-bool WidgetCreator::hasBeenCreated(const QString& widget_name)
-{
+bool WidgetCreator::hasBeenCreated(const QString &widget_name) {
     int index = ui->combo->findText(widget_name);
     return (index > -1) ? true : false;
 }

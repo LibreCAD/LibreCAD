@@ -14,10 +14,6 @@ class QC_ApplicationWindow;
 class LC_ActionGroupManager : public QObject
 {
     Q_OBJECT
-
-
-
-
 public:
     explicit LC_ActionGroupManager(QC_ApplicationWindow *parent);
 
@@ -55,6 +51,8 @@ public:
     const QString getShortcutsMappingsFolder();
     QMap<QString, QAction *> &getActionsMap();
     QAction *getActionByName(const QString &name);
+    bool hasActionGroup(QString categoryName);
+    LC_ActionGroup* getActionGroup(QString groupName);
 public slots:
     void toggleExclusiveSnapMode(bool state);
     void toggleTools(bool state);

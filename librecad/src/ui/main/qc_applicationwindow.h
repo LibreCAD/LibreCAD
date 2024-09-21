@@ -326,7 +326,7 @@ private:
         LC_SimpleTests* m_pSimpleTest {nullptr};
     #endif
 
-    QMap<QString, QAction*> a_map; // todo - move actionmap to ActionManager
+//    QMap<QString, QAction*> a_map; // todo - move actionmap to ActionManager
     LC_ActionGroupManager* ag_manager {nullptr};
 
     /** Pointer to the application window (this). */

@@ -499,12 +499,19 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
         "InvokeMenuCreator", "InvokeToolbarCreator"
     });
 
+    auto *preferences = createGenericToolbar(tr("Preferences"), "Preferences", tbPolicy, {
+        "OptionsGeneral", "OptionsDrawing"
+    });
+
     addToTop(file);
     addToTop(edit);
     addToTop(view);
+    addToTop(preferences);
     main_window->addToolBarBreak();
     addToTop(pen_toolbar);
     addToTop(options_toolbar);
+
+
 
     addToLeft(order);
 
@@ -780,6 +787,14 @@ void LC_WidgetFactory::addAction(QMenu* menu, const char* actionName){
     }
 }
 
+void LC_WidgetFactory::addAction(QToolBar* toolbar, const char* actionName){
+    QAction *action = ag_manager->getActionByName(actionName);
+    if (action != nullptr) {
+        toolbar->addAction(action);
+    }
+}
+
+
 QAction* LC_WidgetFactory::urlActionTR(const QString& title, const char* url ){
     auto* result    = new QAction(  title, main_window);
     connect(result, &QAction::triggered, main_window, [=](){
@@ -980,6 +995,15 @@ void LC_WidgetFactory::initStatusBar() {
         tb->setObjectName("TBGridStatus");
         tb->addWidget(main_window->grid_status);
         tb->setProperty("_group", 3);
+/*
+        tb->addSeparator();
+
+        addAction(tb,"ViewGrid");
+        addAction(tb,"ViewGridOrtho");
+        addAction(tb,"ViewGridIsoLeft");
+        addAction(tb,"ViewGridIsoTop");
+        addAction(tb,"ViewGridIsoRight");
+*/
         addToBottom(tb);
     }
 }

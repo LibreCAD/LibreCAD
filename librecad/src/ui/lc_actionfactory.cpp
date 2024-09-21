@@ -451,8 +451,8 @@ void LC_ActionFactory::createWidgetActions(QMap<QString, QAction *> &map, QActio
 void LC_ActionFactory::createWidgetActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
     createMainWindowActions(map, group, {
         {"RedockWidgets",        SLOT(slotRedockWidgets()),    tr("Re-dock Widgets")},
-        {"InvokeMenuCreator",    SLOT(invokeMenuCreator()),    tr("Menu Creator")},
-        {"InvokeToolbarCreator", SLOT(invokeToolbarCreator()), tr("Toolbar Creator")}
+        {"InvokeMenuCreator",    SLOT(invokeMenuCreator()),    tr("Menu Creator"), ":/icons/create_menu.svg"},
+        {"InvokeToolbarCreator", SLOT(invokeToolbarCreator()), tr("Toolbar Creator"), ":/icons/create_toolbar.svg"}
     });
 }
 

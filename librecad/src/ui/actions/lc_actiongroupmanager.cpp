@@ -188,3 +188,23 @@ QMap<QString, QAction *> &LC_ActionGroupManager::getActionsMap() {
 QAction *LC_ActionGroupManager::getActionByName(const QString& name) {
     return a_map[name];
 }
+
+bool LC_ActionGroupManager::hasActionGroup(QString categoryName) {
+    QList<LC_ActionGroup *> ag_list = findChildren<LC_ActionGroup *>();
+    for (auto ag: ag_list) {
+        if (ag->objectName() == categoryName){
+            return true;
+        }
+    }
+    return false;
+}
+
+LC_ActionGroup* LC_ActionGroupManager::getActionGroup(QString groupName) {
+    QList<LC_ActionGroup *> ag_list = findChildren<LC_ActionGroup *>();
+    for (auto ag: ag_list) {
+        if (ag->objectName() == groupName){
+            return ag;
+        }
+    }
+    return nullptr;
+}

@@ -106,6 +106,7 @@ private:
     QMenu *subMenu(QMenu *parent, const QString& title, const QString& name, const char *icon, const std::vector<QString> &actionNames);
     QAction* urlActionTR(const QString& title, const char *url);
     void addAction(QMenu *menu, const char *actionName);
+    void addAction(QToolBar* toolbar, const char* actionName);
 
     void sortToolbarsByByGroupAndTitle(QList<QToolBar *> &list);
 
