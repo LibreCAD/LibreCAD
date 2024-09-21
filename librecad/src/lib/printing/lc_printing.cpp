@@ -125,9 +125,19 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
     // printer setup:
     bool bStartPrinting = false;
     if (printerType == PrinterType::PDF) {
+        printer.setFullPage(true);
         printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setColorMode(QPrinter::Color);
         printer.setResolution(1200);
+        // Issue #1897, exporting PDF margins to to follow the drawing settings
+        QPageLayout layout = printer.pageLayout();
+        layout.setMode(QPageLayout::FullPageMode);
+        layout.setUnits(QPageLayout::Millimeter);
+        layout.setMinimumMargins({});
+        RS_Vector s=RS_Units::convert(paperSize, graphic->getUnit(),RS2::Millimeter);
+        if(landscape) s=s.flipXY();
+        layout.setPageSize(QPageSize{QSizeF(s.x,s.y), QPageSize::Millimeter}, paperMargins);
+        printer.setPageLayout(layout);
         QFileInfo infDefaultFile(strDefaultFile);
         QFileDialog fileDlg(&mdiWindow, QObject::tr("Export as PDF"));
         QString defFilter("PDF files (*.pdf)");
