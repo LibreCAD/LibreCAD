@@ -2401,6 +2401,8 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     if (!w->getGraphicView()->isPrintPreview())
     {
         slotFilePrintPreview(true);
+        RS_DIALOGFACTORY->commandMessage(
+            tr("Please adjust scaling and positioning in print preview first."));
         return;
     }
 
