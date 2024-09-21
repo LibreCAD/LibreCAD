@@ -2421,11 +2421,12 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     }
     // qDebug()<<"paper size=("<<printer.paperSize(QPrinter::Millimeter).width()<<", "<<printer.paperSize(QPrinter::Millimeter).height()<<")";
     printer.setPageOrientation(landscape ? QPageLayout::Landscape : QPageLayout::Portrait);
+    // margins in mm
     QMarginsF paperMargins{graphic->getMarginLeft(),
                                             graphic->getMarginRight(),
                                             graphic->getMarginTop(),
                                             graphic->getMarginBottom()};
-    printer.setPageMargins(paperMargins);
+    printer.setPageMargins(paperMargins, QPageLayout::Millimeter);
 
     QString strDefaultFile("");
     RS_SETTINGS->beginGroup("/Print");
@@ -2439,6 +2440,8 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     if(printPDF) {
         printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setColorMode(QPrinter::Color);
+        printer.setResolution(1200);
+        printer.setFullPage(true);
         QFileInfo   infDefaultFile(strDefaultFile);
         QFileDialog fileDlg(this, tr("Export as PDF"));
         QString     defFilter("PDF files (*.pdf)");
@@ -2497,7 +2500,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         };
 
         RS_Vector paperSizeMm = RS_Units::convert(paperSize, graphic->getUnit(), RS2::Millimeter);
-        QMarginsF printerMargins = printer.pageLayout().margins();
+        QMarginsF printerMargins = printer.pageLayout().margins(QPageLayout::Millimeter);
         QRectF paperRect = printer.paperRect(QPrinter::Millimeter);
         RS_Vector printerSizeMm{paperRect.width(), paperRect.height()};
         if (bStartPrinting
@@ -2573,8 +2576,8 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         RS_PainterQt painter(&printer);
         painter.setDrawingMode(w->getGraphicView()->getDrawingMode());
 
-        QMarginsF margins = printer.pageLayout().margins();
-
+        QMarginsF margins = printer.pageLayout().margins(QPageLayout::Millimeter);
+        LC_ERR << "Printer margins: " << margins.left()<<": "<<margins.top()<<" : "<<margins.right()<<" : "<<margins.bottom();
         double printerFx = (double)printer.width() / printer.widthMM();
         double printerFy = (double)printer.height() / printer.heightMM();
 
