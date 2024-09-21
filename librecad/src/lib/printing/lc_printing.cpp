@@ -91,6 +91,9 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
     }
 
     QPrinter printer(QPrinter::HighResolution);
+    // fullPage must be set to true to get full width and height
+    // (without counting margins).
+    printer.setFullPage(true);
 
     bool landscape = false;
     RS2::PaperFormat pf = graphic->getPaperFormat(&landscape);
@@ -110,7 +113,7 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
                            graphic->getMarginRight(),
                            graphic->getMarginTop(),
                            graphic->getMarginBottom()};
-    printer.setPageMargins(paperMargins);
+    printer.setPageMargins(paperMargins, QPageLayout::Millimeter);
 
     QString strDefaultFile("");
     LC_GROUP("Print");
@@ -124,6 +127,7 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
     if (printerType == PrinterType::PDF) {
         printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setColorMode(QPrinter::Color);
+        printer.setResolution(1200);
         QFileInfo infDefaultFile(strDefaultFile);
         QFileDialog fileDlg(&mdiWindow, QObject::tr("Export as PDF"));
         QString defFilter("PDF files (*.pdf)");
@@ -161,9 +165,6 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
         printDialog.setOption(QAbstractPrintDialog::PrintShowPageSize);
         bStartPrinting = (QDialog::Accepted == printDialog.exec());
 
-        // fullPage must be set to true to get full width and height
-        // (without counting margins).
-        printer.setFullPage(true);
         auto equalPaperSize = [&printer](const RS_Vector &v0, const RS_Vector &v1) {
             // from DPI to pixel/mm
             auto resolution = RS_Units::convert(1., RS2::Millimeter, RS2::Inch) * printer.resolution();
@@ -232,28 +233,9 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
     }
 
     if (bStartPrinting) {
-        // Try to set the printer to the highest resolution
-        //todo: handler printer resolution better
-        if (printer.outputFormat() == QPrinter::NativeFormat) {
-            //bug#3448560
-            //fixme: supportedResolutions() only reports resolution of 72dpi
-            //this seems to be a Qt bug up to Qt-4.7.4
-            //we might be ok to keep the default resolution
-
-            //            QList<int> res=printer.supportedResolutions ();
-            //            if (res.size()>0)
-            //                printer.setResolution(res.last());
-            //        for(int i=0;i<res.size();i++){
-            //        std::cout<<"res.at(i)="<<res.at(i)<<std::endl;
-            //        }
-        } else {//pdf or postscript format
-            //fixme: user should be able to set resolution output to file
-            printer.setResolution(1200);
-        }
 
         RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "QC_ApplicationWindow::slotFilePrint: resolution is %d", printer.resolution());
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        printer.setFullPage(true);
 
         RS_PainterQt painter(&printer);
         // RAII style to restore cursor. Not really a shared pointer for ownership
@@ -262,7 +244,8 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
         }};
         painter.setDrawingMode(mdiWindow.getGraphicView()->getDrawingMode());
 
-        QMarginsF margins = printer.pageLayout().margins();
+        QMarginsF margins = printer.pageLayout().margins(QPageLayout::Millimeter);
+        LC_ERR << "Printer margins (mm): " << margins.left()<<": "<<margins.top()<<" : "<<margins.right()<<" : "<<margins.bottom();
 
         double printerFx = (double) printer.width() / printer.widthMM();
         double printerFy = (double) printer.height() / printer.heightMM();
