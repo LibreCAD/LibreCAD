@@ -35,7 +35,7 @@ LC_IsometricGrid::LC_IsometricGrid(LC_GridSystem::LC_GridOptions *options, int i
     drawLeftLine = projection == ISO_TOP || projection == ISO_LEFT;
     drawTopLines = projection == ISO_RIGHT || projection == ISO_LEFT || gridOptions->drawIsometricVerticalsAlways;
 
-    linesLattice = new LC_Lattice();
+    gridLattice = new LC_Lattice();
 }
 
 RS_Vector LC_IsometricGrid::snapGrid(const RS_Vector &coord) const {
@@ -53,21 +53,44 @@ RS_Vector LC_IsometricGrid::snapGrid(const RS_Vector &coord) const {
     return result;
 }
 
-void LC_IsometricGrid::doCreateGrid(RS_GraphicView* view, const RS_Vector &viewZero, const RS_Vector &viewSize, const RS_Vector &metaGridWidth, const RS_Vector &gridWidth) {
-    bool metaGridVisible = gridOptions->drawMetaGrid;
-    bool simpleGridRendering = gridOptions->simpleGridRendering;
+void LC_IsometricGrid::prepareGridOther(const RS_Vector &viewZero, const RS_Vector &viewSize) {
+    double angle30Deg = M_PI / 6;
+    double deltaY = viewSize.y - viewZero.y;
+    double offsetY = viewSize.y - metaGridMin.y;
+    double offsetX = viewZero.x - metaGridMin.x;
 
-    metaGridCellSize = metaGridWidth;
-    gridCellSize = gridWidth;
+//    if (deltaX / space.x > 1e3 || deltaY / space.y > 1e3) {
+//        return;
+//    }
 
+    double tan30Deg = tan(angle30Deg);
+    double dxLeft = fabs(offsetY / tan30Deg);
+    double dxRight = fabs(deltaY / tan30Deg) - dxLeft;
+
+    gridDeltaLeft = dxLeft;
+    gridDeltaRight = dxRight;
+
+    RS_Vector viewMaxPoint = RS_Vector(viewSize.x, viewZero.y);
+    const RS_Vector metaGridViewOffset = RS_Vector(offsetX, offsetY);
+
+    gridBasePoint = metaGridMin;
+
+    numPointsInMetagridX = RS_Math::round(metaGridCellSize.x / gridCellSize.x) - 1;
+    numPointsInMetagridY = RS_Math::round(metaGridCellSize.y / gridCellSize.y) - 1;
+
+
+    calculateTilesGridMetrics(viewMaxPoint, metaGridViewOffset);
+    gridLattice->update(30, 60, gridCellSize, 0);
+    prepareSnapSolution();
+}
+
+void LC_IsometricGrid::determineMetaGridBoundaries(const RS_Vector &viewZero, const RS_Vector &viewSize) {
     isometricCell = RS_Vector(metaGridCellSize.x * 2, 0);
     double angle30Deg = M_PI / 6;
     isometricCell.rotate(angle30Deg);
-
     double metaHorizontalX = isometricCell.x;
     double metaVerticalY = isometricCell.y;
 
-    cellVector.set(sqrt(3.) * gridWidth.y, fabs(gridWidth.y)); // fixme - sqrt(3) - is it approximation there?
 
     metaGridMin.x = truncToStep(viewZero.x, metaHorizontalX);
     metaGridMax.x = truncToStep(viewSize.x, metaHorizontalX);
@@ -88,66 +111,25 @@ void LC_IsometricGrid::doCreateGrid(RS_GraphicView* view, const RS_Vector &viewZ
     }
 
     metaGridViewOffset = RS_Vector(-metaHorizontalX, +metaVerticalY);
+}
 
-    double deltaY = viewSize.y - viewZero.y;
+void LC_IsometricGrid::createCellVector(const RS_Vector &gridWidth) {
+    cellVector.set(sqrt(3.) * gridWidth.y, fabs(gridWidth.y)); // fixme - sqrt(3) - is it approximation there?
+}
 
-    double offsetY = viewSize.y - metaGridMin.y;
-    double offsetX = viewZero.x - metaGridMin.x;
+void LC_IsometricGrid::determineGridPointsAmount([[maybe_unused]]const RS_Vector &vector) {
+}
 
-//    if (deltaX / space.x > 1e3 || deltaY / space.y > 1e3) {
-//        return;
-//    }
-
-    double tan30Deg = tan(angle30Deg);
-    double dxLeft = fabs(offsetY / tan30Deg);
-
-
-    double dxRight = fabs(deltaY / tan30Deg) - dxLeft;
-
-    gridDeltaLeft = dxLeft;
-    gridDeltaRight = dxRight;
-
-
-    bool drawGridWithoutGaps = simpleGridRendering || !metaGridVisible;
+int LC_IsometricGrid::determineTotalPointsAmount([[maybe_unused]]bool drawGridWithoutGaps) {
+    double metaHorizontalX = isometricCell.x;
+    double metaVerticalY = isometricCell.y;
 
     int numTilesByX = (int) ((metaGridMax.x - metaGridMin.x) / metaHorizontalX) + 2;
     int numTilesByY = (int) ((metaGridMax.y - metaGridMin.y) / metaVerticalY) + 2;
 
-    numPointsInMetagridX = RS_Math::round(metaGridWidth.x / gridWidth.x) - 1;
-    numPointsInMetagridY = RS_Math::round(metaGridWidth.y / gridWidth.y) - 1;
 
     int numPointsTotal = numTilesByX * numTilesByY * numPointsInMetagridX * numPointsInMetagridY * 4;
-
-    RS_Vector viewMaxPoint = RS_Vector(viewSize.x, viewZero.y);
-    const RS_Vector metaGridViewOffset = RS_Vector(offsetX, offsetY);
-
-    gridBasePoint = metaGridMin;
-
-    calculateTilesGridMetrics(viewMaxPoint, metaGridViewOffset);
-    pointsLattice->update(30, 60, gridWidth, 0);
-
-    prepareSnapSolution();
-
-    if (gridOptions->drawLines) {
-        double lineOffsetPx = gridOptions->metaGridLineWidthPx*2;
-        RS_Vector lineInTileOffsetVector = view->toGraphD(lineOffsetPx,lineOffsetPx);
-        createGridLines(viewZero, viewSize, gridWidth, drawGridWithoutGaps,  lineInTileOffsetVector);
-        linesLattice->toGui(view);
-    } else {
-        // create points array
-        if (isNumberOfPointsValid(numPointsTotal)) {
-            createGridPoints(viewZero, viewSize, gridWidth, drawGridWithoutGaps, numPointsTotal);
-            pointsLattice->toGui(view);
-        }
-        else{
-            pointsLattice->init(0);
-        }
-    }
-
-    if (gridOptions->drawMetaGrid){
-        createMetaGridLines(viewZero, viewSize);
-        metaGridLinesLattice->toGui(view);
-    }
+    return numPointsTotal;
 }
 
 void LC_IsometricGrid::createGridLinesNoGaps(const RS_Vector &min, const RS_Vector &max) {
@@ -170,9 +152,9 @@ void LC_IsometricGrid::createGridLinesNoGaps(const RS_Vector &min, const RS_Vect
     int numLinesX = width/metaGridHalfWidthX * 2;
     int numPointsProjection = numLinesX * numLinesX * 2;
 
-    linesLattice->update(30,60, gridCellSize, numPointsProjection);
+    gridLattice->update(30, 60, gridCellSize, numPointsProjection);
 
-    RS_Vector deltaX = linesLattice->getDeltaX()*2;
+    RS_Vector deltaX = gridLattice->getDeltaX() * 2;
 
     double distanceToMetaGridTolerance = deltaX.x * 0.9;
 
@@ -188,13 +170,13 @@ void LC_IsometricGrid::createGridLinesNoGaps(const RS_Vector &min, const RS_Vect
             }
             double distanceToMetaLine = std::abs(currentX - nextMetaX);
             if (distanceToMetaLine > verticalTolerance) {
-                linesLattice->addLine(currentX, minY, currentX, height);
+                gridLattice->addLine(currentX, minY, currentX, height);
                 currentX += gridByX;
             }
             else{
                 nextMetaX += halfMetaX;
                 if (!gridOptions->drawMetaGrid){
-                    linesLattice->addLine(currentX, minY, currentX, height);
+                    gridLattice->addLine(currentX, minY, currentX, height);
                 }
                 currentX += gridByX;
             }
@@ -209,19 +191,19 @@ void LC_IsometricGrid::createGridLinesNoGaps(const RS_Vector &min, const RS_Vect
             }
             double distanceToMetaLine = std::abs(currentX - nextMetaX);
             if (distanceToMetaLine > verticalTolerance) {
-                linesLattice->addLine(currentX, minY, currentX, height);
+                gridLattice->addLine(currentX, minY, currentX, height);
                 currentX -= gridByX;
             } else {
                 nextMetaX -= halfMetaX;
                 if (!gridOptions->drawMetaGrid){
-                    linesLattice->addLine(currentX, minY, currentX, height);
+                    gridLattice->addLine(currentX, minY, currentX, height);
                 }
                 currentX -= gridByX;
             }
         }
 
         if (!gridOptions->drawMetaGrid){
-            linesLattice->addLine(metaGridMin.x, minY, metaGridMin.x, height);
+            gridLattice->addLine(metaGridMin.x, minY, metaGridMin.x, height);
         }
     }
 
@@ -236,12 +218,12 @@ void LC_IsometricGrid::createGridLinesNoGaps(const RS_Vector &min, const RS_Vect
             }
             double distanceToMetaLine = std::abs(currentX - nextMetaX);
             if (distanceToMetaLine > distanceToMetaGridTolerance) {
-                linesLattice->addLine(currentX + uiGridDeltaLeft, height, currentX - uiGridDeltaRight, minY);
+                gridLattice->addLine(currentX + uiGridDeltaLeft, height, currentX - uiGridDeltaRight, minY);
                 currentX += deltaX.x;
             } else {
                 nextMetaX += metaHorizontalX;
                 if (!gridOptions->drawMetaGrid){
-                    linesLattice->addLine(currentX + uiGridDeltaLeft, height, currentX - uiGridDeltaRight, minY);
+                    gridLattice->addLine(currentX + uiGridDeltaLeft, height, currentX - uiGridDeltaRight, minY);
                 }
                 currentX += deltaX.x;
             }
@@ -258,19 +240,19 @@ void LC_IsometricGrid::createGridLinesNoGaps(const RS_Vector &min, const RS_Vect
             }
             double distanceToMetaLine = std::abs(currentX - nextMetaX);
             if (distanceToMetaLine > distanceToMetaGridTolerance) {
-                linesLattice->addLine(currentX + uiGridDeltaLeft, height, currentX - uiGridDeltaRight, minY);
+                gridLattice->addLine(currentX + uiGridDeltaLeft, height, currentX - uiGridDeltaRight, minY);
                 currentX -= deltaX.x;
             } else {
                 nextMetaX -= metaHorizontalX;
                 if (!gridOptions->drawMetaGrid){
-                    linesLattice->addLine(currentX + uiGridDeltaLeft, height, currentX - uiGridDeltaRight, minY);
+                    gridLattice->addLine(currentX + uiGridDeltaLeft, height, currentX - uiGridDeltaRight, minY);
                 }
                 currentX -= deltaX.x;
             }
         }
 
         if (!gridOptions->drawMetaGrid){
-            linesLattice->addLine(metaGridMin.x + uiGridDeltaLeft, height, metaGridMin.x - uiGridDeltaRight, minY);
+            gridLattice->addLine(metaGridMin.x + uiGridDeltaLeft, height, metaGridMin.x - uiGridDeltaRight, minY);
         }
     }
 
@@ -285,12 +267,12 @@ void LC_IsometricGrid::createGridLinesNoGaps(const RS_Vector &min, const RS_Vect
             }
             double distanceToMetaLine = std::abs(currentX - nextMetaX);
             if (distanceToMetaLine > distanceToMetaGridTolerance) {
-                linesLattice->addLine(currentX - uiGridDeltaLeft, height, currentX + uiGridDeltaRight, minY);
+                gridLattice->addLine(currentX - uiGridDeltaLeft, height, currentX + uiGridDeltaRight, minY);
                 currentX += deltaX.x;
             } else {
                 nextMetaX += metaHorizontalX;
                 if (!gridOptions->drawMetaGrid){
-                    linesLattice->addLine(currentX - uiGridDeltaLeft, height, currentX + uiGridDeltaRight, minY);
+                    gridLattice->addLine(currentX - uiGridDeltaLeft, height, currentX + uiGridDeltaRight, minY);
                 }
                 currentX += deltaX.x;
             }
@@ -307,19 +289,19 @@ void LC_IsometricGrid::createGridLinesNoGaps(const RS_Vector &min, const RS_Vect
             }
             double distanceToMetaLine = std::abs(currentX - nextMetaX);
             if (distanceToMetaLine > distanceToMetaGridTolerance) {
-                linesLattice->addLine(currentX - uiGridDeltaLeft, height, currentX + uiGridDeltaRight, minY);
+                gridLattice->addLine(currentX - uiGridDeltaLeft, height, currentX + uiGridDeltaRight, minY);
                 currentX -= deltaX.x;
             } else {
                 nextMetaX -= metaHorizontalX;
                 if (!gridOptions->drawMetaGrid){
-                    linesLattice->addLine(currentX - uiGridDeltaLeft, height, currentX + uiGridDeltaRight, minY);
+                    gridLattice->addLine(currentX - uiGridDeltaLeft, height, currentX + uiGridDeltaRight, minY);
                 }
                 currentX -= deltaX.x;
             }
         }
 
         if (!gridOptions->drawMetaGrid){
-            linesLattice->addLine(metaGridMin.x - uiGridDeltaLeft, height, metaGridMin.x + uiGridDeltaRight, minY);
+            gridLattice->addLine(metaGridMin.x - uiGridDeltaLeft, height, metaGridMin.x + uiGridDeltaRight, minY);
         }
     }
 }
@@ -347,22 +329,23 @@ void LC_IsometricGrid::createMetaGridLines(const RS_Vector& min, const RS_Vector
     int numLinesX = (width - min.x)/metaGridHalfWidthX * 2;
     int numPointsProjection = numLinesX * numLinesX * 2;
 
-    metaGridLinesLattice->update(30,60, metaGridCellSize, numPointsProjection);
+    metaGridLattice->update(30, 60, metaGridCellSize, numPointsProjection);
 
-    for (x = metaGridMin.x, c = 0; x < width; x += metaHorizontalX, c++) {
+
+    for (x = metaGridMin.x; x < width; x += metaHorizontalX) {
         if (drawRightLine) {
-            metaGridLinesLattice->addLine(x - uiGridDeltaLeft, height, x + uiGridDeltaRight, minY);
+            metaGridLattice->addLine(x - uiGridDeltaLeft, height, x + uiGridDeltaRight, minY);
         }
 
         if (drawLeftLine) {
-            metaGridLinesLattice->addLine(x + uiGridDeltaLeft, height, x - uiGridDeltaRight, minY);
+            metaGridLattice->addLine(x + uiGridDeltaLeft, height, x - uiGridDeltaRight, minY);
         }
 
         // vertical grid lines:qc
         if (drawTopLines) {
             double halfX = x - metaGridHalfWidthX;
-            metaGridLinesLattice->addLine(x, minY, x, height);
-            metaGridLinesLattice->addLine(halfX, minY, halfX, height);
+            metaGridLattice->addLine(x, minY, x, height);
+            metaGridLattice->addLine(halfX, minY, halfX, height);
         }
     }
 
@@ -371,20 +354,31 @@ void LC_IsometricGrid::createMetaGridLines(const RS_Vector& min, const RS_Vector
         // draw rightmost possible vertical line
         x -= metaGridHalfWidthX;
         if (x < width) {
-            metaGridLinesLattice->addLine(x, minY, x, height);
+            metaGridLattice->addLine(x, minY, x, height);
         }
     }
 
     if (drawRightLine) {
-// paint left top corner
+        // paint left top corner
         double currentX = metaGridMin.x - metaHorizontalX;
         while (true) {
             double rightPoint = currentX + uiGridDeltaRight;
             if (rightPoint < minX) {
                 break;
             }
-            metaGridLinesLattice->addLine(currentX - uiGridDeltaLeft, height, rightPoint, minY);
+            metaGridLattice->addLine(currentX - uiGridDeltaLeft, height, rightPoint, minY);
             currentX -= metaHorizontalX;
+        }
+
+        // paint left bottom corner
+        currentX = lastX;
+        while (true) {
+            double leftPoint = currentX - uiGridDeltaLeft;
+            if (leftPoint > width) {
+                break;
+            }
+            metaGridLattice->addLine(leftPoint, height, currentX + uiGridDeltaRight, minY);
+            currentX += metaHorizontalX;
         }
     }
 
@@ -396,7 +390,7 @@ void LC_IsometricGrid::createMetaGridLines(const RS_Vector& min, const RS_Vector
             if (leftPoint > width) {
                 break;
             }
-            metaGridLinesLattice->addLine(currentX + uiGridDeltaLeft, height, currentX - uiGridDeltaRight, minY);
+            metaGridLattice->addLine(currentX + uiGridDeltaLeft, height, currentX - uiGridDeltaRight, minY);
             currentX += metaHorizontalX;
         }
 
@@ -407,7 +401,7 @@ void LC_IsometricGrid::createMetaGridLines(const RS_Vector& min, const RS_Vector
             if (rightPoint < 0) {
                 break;
             }
-            metaGridLinesLattice->addLine(rightPoint, height, currentX - uiGridDeltaRight, minY);
+            metaGridLattice->addLine(rightPoint, height, currentX - uiGridDeltaRight, minY);
             currentX -= metaHorizontalX;
         }
     }
@@ -422,7 +416,7 @@ void LC_IsometricGrid::createGridLines(const RS_Vector &min, const RS_Vector &ma
         if (drawTopLines){
             linesCount = linesCount * 4;
         }
-        linesLattice->updateForLines(30, 60, gridWidth, lineInTileOffset, linesCount * 2);
+        gridLattice->updateForLines(30, 60, gridWidth, lineInTileOffset, linesCount * 2);
         if (drawTopLines){
             fillTilesRowsByLinesNoDiagonals();
         }
@@ -433,8 +427,13 @@ void LC_IsometricGrid::createGridLines(const RS_Vector &min, const RS_Vector &ma
 }
 #define DEBUG_ISO_META_
 
+#ifdef DEBUG_ISO_META
+#include "rs_pen.h"
+#include "lc_defaults.h"
+#endif
+
 void LC_IsometricGrid::drawMetaGridLines(RS_Painter *painter, RS_GraphicView *view) {
-    doDrawLines(painter, view, metaGridLinesLattice);
+    doDrawLines(painter, view, metaGridLattice);
 
 #ifdef DEBUG_ISO_META
 
@@ -462,7 +461,7 @@ void LC_IsometricGrid::drawMetaGridLines(RS_Painter *painter, RS_GraphicView *vi
 }
 
 void LC_IsometricGrid::createGridPoints(const RS_Vector &min, const RS_Vector &max,const RS_Vector &gridWidth,  bool drawGridWithoutGaps, int totalPoints) {
-    pointsLattice->update(30, 60, gridWidth, totalPoints);
+    gridLattice->update(30, 60, gridWidth, totalPoints);
     if (drawGridWithoutGaps){
         fillPointsNoGaps(min, max);
     }
@@ -476,8 +475,8 @@ void LC_IsometricGrid::createGridPoints(const RS_Vector &min, const RS_Vector &m
 }
 
 void LC_IsometricGrid::prepareSnapSolution() {
-    gridDeltaX = pointsLattice->getDeltaX();
-    gridDeltaY = pointsLattice->getDeltaY();
+    gridDeltaX = gridLattice->getDeltaX();
+    gridDeltaY = gridLattice->getDeltaY();
     snapVectorSolution = RS_VectorSolutions({RS_Vector(0,0), gridDeltaY, gridDeltaX, -gridDeltaX, -gridDeltaY});
 }
 
@@ -536,7 +535,7 @@ void LC_IsometricGrid::fillTilesRowsByPointsExceptDiagonal() {
         double currentX = startPoint.x - rowShift;
         basePoint.x = currentX;
         while (currentX < maxX) {
-            pointsLattice->fillWithoutDiagonal(tileNumPointsByX, tileNumPointsByY, basePoint, false, false, true, numPointsInMetagridX);
+            gridLattice->fillWithoutDiagonal(tileNumPointsByX, tileNumPointsByY, basePoint, false, false, true, numPointsInMetagridX);
             currentX += tilesDeltaX;
             basePoint.x = currentX;
         }
@@ -561,7 +560,7 @@ void LC_IsometricGrid::fillTilesRowsByPoints() {
         double currentX = startPoint.x - rowShift;
         basePoint.x = currentX;
         while (currentX < maxX) {
-            pointsLattice->fill(tileNumPointsByX, tileNumPointsByY, basePoint, false, false);
+            gridLattice->fill(tileNumPointsByX, tileNumPointsByY, basePoint, false, false);
             currentX += tilesDeltaX;
             basePoint.x = currentX;
         }
@@ -597,7 +596,7 @@ void LC_IsometricGrid::fillTilesRowsByLinesNoDiagonals() {
         double currentX = startPoint.x - rowShift;
         basePoint.x = currentX;
         while (currentX < maxX) {
-            linesLattice->fillAllByLinesExceptDiagonal(numPointsX, numPointsY, basePoint, false, false,!drawLeftLine,!drawRightLine);
+            gridLattice->fillAllByLinesExceptDiagonal(numPointsX, numPointsY, basePoint, false, false, !drawLeftLine, !drawRightLine);
             currentX += tilesDeltaX;
             basePoint.x = currentX;
         }
@@ -623,7 +622,7 @@ void LC_IsometricGrid::fillTilesRowsBylines() {
         double currentX = startPoint.x - rowShift;
         basePoint.x = currentX;
         while (currentX < maxX) {
-            linesLattice->fillByLines(tileNumPointsByX, tileNumPointsByY, basePoint, false, false, !drawLeftLine,!drawRightLine);
+            gridLattice->fillByLines(tileNumPointsByX, tileNumPointsByY, basePoint, false, false, !drawLeftLine, !drawRightLine);
             currentX += tilesDeltaX;
             basePoint.x = currentX;
         }
@@ -634,8 +633,8 @@ void LC_IsometricGrid::fillTilesRowsBylines() {
 }
 
 void LC_IsometricGrid::fillPointsNoGaps(const RS_Vector &min, const RS_Vector &max) {
-    RS_Vector deltaX = pointsLattice->getDeltaX();
-    RS_Vector deltaY = pointsLattice->getDeltaY();
+    RS_Vector deltaX = gridLattice->getDeltaX();
+    RS_Vector deltaY = gridLattice->getDeltaY();
     double pointsDeltaX = deltaX.x;
     double pointsDeltaY = deltaY.y;
 
@@ -654,7 +653,7 @@ void LC_IsometricGrid::fillPointsNoGaps(const RS_Vector &min, const RS_Vector &m
     while (currentY < min.y) {
         double currentX = startX - rowShift;
         while (currentX < maxX) {
-            pointsLattice->addPoint(currentX, currentY);
+            gridLattice->addPoint(currentX, currentY);
             currentX += shiftByX;
         }
         currentY += pointsDeltaY;

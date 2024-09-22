@@ -38,6 +38,7 @@
 #include "lc_isometricgrid.h"
 
 
+static constexpr const int MINIMAL_GRID_UI_STEP = 2;
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
@@ -66,7 +67,7 @@ RS_Vector RS_Grid::snapGrid(const RS_Vector& coord) const {
 }
 
 void RS_Grid::loadSettings(){
-    // auto scale grid?
+
     LC_GROUP("Appearance");
     scaleGrid = LC_GET_BOOL("ScaleGrid", true);
     // get grid setting
@@ -75,14 +76,15 @@ void RS_Grid::loadSettings(){
         isometric = graphic->isIsometricGrid();
         isoViewType = graphic->getIsoView();
         userGrid = graphic->getVariableVector("$GRIDUNIT", RS_Vector(-1.0, -1.0));
-    }else { // fixme - review, isoView
+    }else {
         isometric = LC_GET_ONE_BOOL("Defaults", "IsometricGrid");
         isoViewType=static_cast<RS2::IsoGridViewType>(LC_GET_ONE_INT("Defaults", "IsoGridView", 0));
         userGrid.x = LC_GET_STR("GridSpacingX", QString("-1")).toDouble();
         userGrid.y = LC_GET_STR("GridSpacingY", QString("-1")).toDouble();
     }
 
-    bool showMetaGrid = LC_GET_BOOL("metaGridShow", true);
+    bool drawMetaGrid = LC_GET_BOOL("metaGridDraw", true);
+    bool drawGrid = LC_GET_BOOL("GridDraw", true);
     bool simpleGridRendering = LC_GET_BOOL("GridRenderSimple", false);
     minGridSpacing = LC_GET_INT("MinGridSpacing", 10);
     int gridType = LC_GET_INT("GridType", 0);
@@ -90,48 +92,44 @@ void RS_Grid::loadSettings(){
     
     RS2::LineType metagridLineType;
     int metaGridWidthPx;
-    RS2::LineType gridLineType;
-    int gridWidthPx;
 
     if (linesGrid){
         metagridLineType =  static_cast<RS2::LineType> (LC_GET_INT("metaGridLinesLineType", RS2::SolidLine));
         metaGridWidthPx = LC_GET_INT("metaGridLinesLineWidth", 1);
-        gridWidthPx = LC_GET_INT("GridLineLinesWidth", 1);
-        gridLineType =  static_cast<RS2::LineType> (LC_GET_INT("GridLineType", RS2::SolidLine));
     }
     else{
         metagridLineType =  static_cast<RS2::LineType> (LC_GET_INT("metaGridLineType", RS2::DotLineTiny));
         metaGridWidthPx = LC_GET_INT("metaGridPointsLineWidth", 1);
-        gridWidthPx = LC_GET_INT("GridLinePointsWidth", 1);
-        gridLineType =  static_cast<RS2::LineType> (LC_GET_INT("GridLineType", RS2::SolidLine));
     }
 
-    bool disableGridOnPanning = LC_GET_BOOL("GridDisableWithinPan", false);
+    int gridWidthPx = LC_GET_INT("GridLineLinesWidth", 1);
+    RS2::LineType gridLineType =  static_cast<RS2::LineType> (LC_GET_INT("GridLineType", RS2::SolidLine));
 
+    bool disableGridOnPanning = LC_GET_BOOL("GridDisableWithinPan", false);
     bool drawIsoVerticalForTop = LC_GET_BOOL("GridDrawIsoVerticalForTop", true);
     LC_GROUP_END();
 
     LC_GROUP("Colors");
     RS_Color metaGridColor;
-    RS_Color gridColor;
+    RS_Color gridColorLines = QColor(LC_GET_STR("gridLines", RS_Settings::color_meta_grid_lines));
+    RS_Color gridColorPoint =  QColor(LC_GET_STR("grid", RS_Settings::color_meta_grid_points));
      if (linesGrid) {
          metaGridColor= QColor(LC_GET_STR("meta_grid_lines", RS_Settings::color_meta_grid_lines));
-         gridColor = QColor(LC_GET_STR("gridLines", RS_Settings::color_meta_grid_lines));
      }
      else{
          metaGridColor= QColor(LC_GET_STR("meta_grid", RS_Settings::color_meta_grid_points));
-         gridColor = QColor(LC_GET_STR("grid", RS_Settings::color_meta_grid_points));
      }
     LC_GROUP_END();
 
     auto* gridOptions = new LC_GridSystem::LC_GridOptions();
-    gridOptions->drawMetaGrid = showMetaGrid;
+    gridOptions->drawMetaGrid = drawMetaGrid;
     gridOptions->simpleGridRendering = simpleGridRendering;
     gridOptions->gridWidthPx = gridWidthPx;
     gridOptions->gridLineType = gridLineType;
-    gridOptions->gridVisible = true;
+    gridOptions->drawGrid = drawGrid;
     gridOptions->drawLines = linesGrid;
-    gridOptions->gridColor = gridColor;
+    gridOptions->gridColorPoint = gridColorPoint;
+    gridOptions->gridColorLine = gridColorLines;
     gridOptions->metaGridLineWidthPx  = metaGridWidthPx;
     gridOptions->metaGridLineType = metagridLineType;
     gridOptions->metaGridColor = metaGridColor;
@@ -158,17 +156,76 @@ void RS_Grid::calculateGrid() {
 
     RS_Vector gridWidth = prepareGridWidth();
 
-    if (gridWidth.x>minimumGridWidth && gridWidth.y>minimumGridWidth &&
-        graphicView->toGuiDX(gridWidth.x)>2 &&
-        graphicView->toGuiDY(gridWidth.y)>2) {
+    RS_Vector gridWidthToUse = gridWidth;
+    RS_Vector metaGridWidthToUse = metaGridWidth;
+    gridWidthToUse.valid = true;
+    metaGridWidthToUse.valid = true;
+    // checking for minimal grid with constraint. It may occur either to zoom of drawing, or due to options that specifies minimal width of grid in pixel.
+    // if grid is scaled, that option will lead to re-calculating of grid, but if the grid is not scaled (and so has fixed size) - it may lead to
+    // too dense grid for current zoom level
 
-        RS_Vector viewZero = graphicView->toGraph(0, 0);
-        RS_Vector viewSize = graphicView->toGraph(graphicView->getWidth(), graphicView->getHeight());
+    bool hasInfiniteAxis = false;
+    bool undefinedXSize = userGrid.x != 0;
+    bool undefinedYSize = userGrid.y != 0;
 
-        // populate grid points and metaGrid line positions: pts, metaX, metaY
+    hasInfiniteAxis = undefinedYSize != undefinedXSize;
 
-        gridSystem->createGrid(graphicView, viewZero, viewSize, metaGridWidth, gridWidth);
+    QString gridInfoStr;
+    QString metaGridInfoStr;
+    bool squareGrid = gridWidth.x == gridWidth.y;
+    if (!(gridWidth.x>minimumGridWidth && gridWidth.y>minimumGridWidth)){
+        gridWidthToUse.valid = false;
+        metaGridWidthToUse.valid = false;
     }
+    else {
+        RS_Vector gridWidthGUI = graphicView->toGuiD(gridWidth);
+        if (gridWidthGUI.x < minGridSpacing  || gridWidthGUI.y < minGridSpacing){
+            gridWidthToUse.valid = false;
+        }
+        else{
+            if (hasInfiniteAxis){
+                gridInfoStr =  QString("%1").arg(undefinedXSize ? gridWidth.y : gridWidth.x);
+            }
+            else {
+                gridInfoStr = squareGrid ? QString("%1").arg(gridWidth.x) : QString("%1 x %2").arg(gridWidth.x).arg(gridWidth.y);
+            }
+        }
+
+        RS_Vector metaGridWidthGUI = graphicView->toGuiD(metaGridWidth);
+        if (metaGridWidthGUI.x < minGridSpacing  || metaGridWidthGUI.y < minGridSpacing){
+            metaGridWidthToUse.valid = false;
+        }
+        else{
+            if (hasInfiniteAxis){
+                metaGridInfoStr =  QString("%1").arg(undefinedXSize ? metaGridWidth.y : metaGridWidth.x);
+            }
+            else {
+                metaGridInfoStr = squareGrid ? QString("%1").arg(metaGridWidth.x) : QString("%1 x %2").arg(metaGridWidth.x).arg(metaGridWidth.y);
+            }
+        }
+    }
+
+    RS_Vector viewZero = graphicView->toGraph(0, 0);
+    RS_Vector viewSize = graphicView->toGraph(graphicView->getWidth(), graphicView->getHeight());
+
+    // populate grid points and metaGrid line positions: pts, metaX, metaY
+    gridInfoString = "";
+    if (gridWidthToUse.valid){
+        if (metaGridWidthToUse.valid){
+            gridInfoString = QString("%1 / %2").arg(gridInfoStr).arg(metaGridInfoStr);
+        }
+        else{
+            gridInfoString = QString("%1").arg(gridInfoStr);
+        }
+    }
+    else{
+        if (metaGridWidthToUse.valid){
+            gridInfoString = QString("%1").arg(metaGridInfoStr);
+        }
+    }
+
+    gridSystem->setGridInfiniteState(hasInfiniteAxis, undefinedXSize);
+    gridSystem->createGrid(graphicView, viewZero, viewSize, metaGridWidthToUse, gridWidthToUse);
 }
 
 RS_Vector RS_Grid::prepareGridWidth() {// find out unit:
@@ -194,10 +251,6 @@ RS_Vector RS_Grid::prepareGridWidth() {// find out unit:
         // imperial grid:
         gridWidth = getImperialGridWidth(userGrid, scaleGrid, minGridSpacing);
     }
-    // for grid info:
-    spacing = gridWidth.x;
-    metaSpacing = metaGridWidth.x;
-
     return gridWidth;
 }
 
@@ -205,32 +258,52 @@ RS_Vector RS_Grid::prepareGridWidth() {// find out unit:
 RS_Vector RS_Grid::getMetricGridWidth(RS_Vector const &userGrid, bool scaleGrid, int minGridSpacing) {
     RS_Vector gridWidth;
 
+    bool hasExplicitUserGrid = false;
+
     if (userGrid.x > 0.0) {
         gridWidth.x = userGrid.x;
+        hasExplicitUserGrid = true;
     } else {
         gridWidth.x = minimumGridWidth;
     }
 
     if (userGrid.y > 0.0) {
         gridWidth.y = userGrid.y;
+        hasExplicitUserGrid = true;
     } else {
         gridWidth.y = minimumGridWidth;
     }
     // auto scale grid
-    //scale grid by drawing setting as well, bug#3416862
-    // std::cout<<"RS_Grid::updatePointArray(): userGrid="<<userGrid<<std::endl;
-    if (scaleGrid || userGrid.x <= minimumGridWidth || userGrid.y <= minimumGridWidth) {
-        if (scaleGrid || userGrid.x <= minimumGridWidth) {
-            while (graphicView->toGuiDX(gridWidth.x) < minGridSpacing) {
-                gridWidth.x *= 10;
+
+    if (scaleGrid){
+        RS_Vector guiGridWith = graphicView->toGuiD(gridWidth);
+        bool gridSmallerThanMin = guiGridWith.x < minGridSpacing || guiGridWith.y < minGridSpacing;
+        if (gridSmallerThanMin) {
+            do{
+                gridWidth *= 10;
+                guiGridWith = graphicView->toGuiD(gridWidth);
             }
+            while (guiGridWith.x < minGridSpacing  || guiGridWith.y < minGridSpacing);
         }
-        if (scaleGrid || userGrid.y <= minimumGridWidth) {
-            while (graphicView->toGuiDY(gridWidth.y) < minGridSpacing) {
-                gridWidth.y *= 10;
+        else if (hasExplicitUserGrid){
+            // it might be that explicitly specified user grid is larger than grid calculate for current zoom. Thus we should decrease it proportionally
+
+            RS_Vector decreasingWidth = gridWidth;
+            RS_Vector previousWidth = decreasingWidth;
+            while (true) {
+                decreasingWidth /= 10;
+                guiGridWith = graphicView->toGuiD(decreasingWidth);
+                if (guiGridWith.x < minGridSpacing || guiGridWith.y < minGridSpacing){
+                    gridWidth = previousWidth;
+                    break;
+                }
+                else{
+                    previousWidth = decreasingWidth;
+                }
             }
         }
     }
+
     // std::cout<<"RS_Grid::updatePointArray(): gridWidth="<<gridWidth<<std::endl;
     metaGridWidth.x = gridWidth.x * 10;
     metaGridWidth.y = gridWidth.y * 10;
@@ -242,27 +315,27 @@ RS_Vector RS_Grid::getMetricGridWidth(RS_Vector const &userGrid, bool scaleGrid,
 RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGrid, int minGridSpacing) {
     RS_Vector gridWidth;
     // RS_DEBUG->print("RS_Grid::update: 005");
-
+    bool hasExplicitUserGrid = false;
     if (userGrid.x > 0.0) {
         gridWidth.x = userGrid.x;
+        hasExplicitUserGrid = true;
     } else {
         gridWidth.x = 1.0 / 1024.0;
     }
 
     if (userGrid.y > 0.0) {
         gridWidth.y = userGrid.y;
+        hasExplicitUserGrid = true;
     } else {
         gridWidth.y = 1.0 / 1024.0;
     }
     // RS_DEBUG->print("RS_Grid::update: 006");
 
     RS2::Unit unit = RS2::None;
-//	RS2::LinearFormat format = RS2::Decimal;
     RS_Graphic *graphic = graphicView->getGraphic();
 
     if (graphic) {
         unit = graphic->getUnit();
-    //		format = graphic->getLinearFormat();
     }
 
     if (unit == RS2::Inch) {
@@ -270,7 +343,28 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
 
     // auto scale grid
         //scale grid by drawing setting as well, bug#3416862
-        if (scaleGrid || userGrid.x <= minimumGridWidth || userGrid.y <= minimumGridWidth) {
+        
+            RS_Vector guiGridWith = graphicView->toGuiD(gridWidth);
+            bool gridSmallerThanMin = guiGridWith.x < minGridSpacing || guiGridWith.y < minGridSpacing;
+            if (scaleGrid || gridSmallerThanMin) {
+                do{
+                    if (RS_Math::round(gridWidth.x) >= 36) {
+                        gridWidth *= 2;
+                    } else if (RS_Math::round(gridWidth.x) >= 12) {
+                        gridWidth *= 3;
+                    } else if (RS_Math::round(gridWidth.x) >= 4) {
+                        gridWidth *= 3;
+                    } else if (RS_Math::round(gridWidth.x) >= 1) {
+                        gridWidth *= 2;
+                    } else {
+                        gridWidth *= 2;
+                    }
+                    guiGridWith = graphicView->toGuiD(gridWidth);
+                }
+                while (guiGridWith.x < minGridSpacing  || guiGridWith.y < minGridSpacing);
+            }
+        
+       /* if (scaleGrid || userGrid.x <= minimumGridWidth || userGrid.y <= minimumGridWidth) {
             if (scaleGrid || userGrid.x <= minimumGridWidth) {
                 while (graphicView->toGuiDX(gridWidth.x) < minGridSpacing) {
                     if (RS_Math::round(gridWidth.x) >= 36) {
@@ -301,19 +395,20 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
                     }
                 }
             }
-        }
+        }*/
 
 // RS_DEBUG->print("RS_Grid::update: 008");
 
 // metagrid X shows inches..
         metaGridWidth.x = 1.0;
 
-        if (graphicView->toGuiDX(metaGridWidth.x) < minGridSpacing * 2) {
+        int minGridSpacingX2 = minGridSpacing * 2;
+        if (graphicView->toGuiDX(metaGridWidth.x) < minGridSpacingX2) {
 // .. or feet
             metaGridWidth.x = 12.0;
 
 // .. or yards
-            if (graphicView->toGuiDX(metaGridWidth.x) < minGridSpacing * 2) {
+            if (graphicView->toGuiDX(metaGridWidth.x) < minGridSpacingX2) {
                 metaGridWidth.x = 36.0;
 
                 // .. or miles (not really..)
@@ -322,7 +417,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
                 //}
 
                 // .. or nothing
-                if (graphicView->toGuiDX(metaGridWidth.x) < minGridSpacing * 2) {
+                if (graphicView->toGuiDX(metaGridWidth.x) < minGridSpacingX2) {
                     metaGridWidth.x = -1.0;
                 }
 
@@ -334,12 +429,12 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
 // metagrid Y shows inches..
         metaGridWidth.y = 1.0;
 
-        if (graphicView->toGuiDY(metaGridWidth.y) < minGridSpacing * 2) {
+        if (graphicView->toGuiDY(metaGridWidth.y) < minGridSpacingX2) {
 // .. or feet
             metaGridWidth.y = 12.0;
 
 // .. or yards
-            if (graphicView->toGuiDY(metaGridWidth.y) < minGridSpacing * 2) {
+            if (graphicView->toGuiDY(metaGridWidth.y) < minGridSpacingX2) {
                 metaGridWidth.y = 36.0;
 
                 // .. or miles (not really..)
@@ -348,7 +443,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
                 //}
 
                 // .. or nothing
-                if (graphicView->toGuiDY(metaGridWidth.y) < minGridSpacing * 2) {
+                if (graphicView->toGuiDY(metaGridWidth.y) < minGridSpacingX2) {
                     metaGridWidth.y = -1.0;
                 }
             }
@@ -376,7 +471,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
 
 
 QString RS_Grid::getInfo() const {
-    return QString("%1 / %2").arg(spacing).arg(metaSpacing);
+    return gridInfoString;
 }
 
 bool RS_Grid::isIsometric() const {

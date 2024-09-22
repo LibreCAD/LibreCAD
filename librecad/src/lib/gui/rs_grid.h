@@ -119,10 +119,7 @@ private:
     //! Graphic view this grid is connected to.
     RS_GraphicView *graphicView = nullptr;
 
-    //! Current grid spacing
-    double spacing = 0.;
-    //! Current meta grid spacing
-    double metaSpacing = 0.;
+    QString gridInfoString = "";
 
     RS_Vector metaGridWidth;
 

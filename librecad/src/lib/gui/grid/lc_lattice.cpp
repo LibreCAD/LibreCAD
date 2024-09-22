@@ -80,7 +80,6 @@ void LC_Lattice::init(int projectedPointsCount) {
     pointsX.resize(projectedPointsCount);
     pointsY.clear();
     pointsY.resize(projectedPointsCount);
-    currentIndex = 0;
 }
 
 void LC_Lattice::fillVerticalEdge(int numPointsByX, const RS_Vector &baseGridPoint, bool reverseX, bool reverseY, bool skipFirstPoint) {
@@ -176,9 +175,8 @@ void LC_Lattice::fillAll(int numPointsByX, int numPointsByY, const RS_Vector &ba
     for (int y = 0; y < numPointsByY; ++y) {
         RS_Vector currentPoint(rowStartPoint);
         for (int x = 0; x < numPointsByX; ++x) {
-            pointsX[currentIndex] = currentPoint.x;
-            pointsY[currentIndex] = currentPoint.y;
-            currentIndex++;
+            pointsX.push_back(currentPoint.x);
+            pointsY.push_back(currentPoint.y);
             currentPoint += xDelta;
         }
         rowStartPoint+=yDelta;
@@ -392,10 +390,9 @@ void LC_Lattice::fillExceptBLTRDiagonal(int numPointsByX, int numPointsByY, cons
         RS_Vector currentPoint(rowStartPoint);
         for (int x = 0; x < numPointsByX; ++x) {
             if (x != y) {
-                pointsX[currentIndex] = currentPoint.x;
-                pointsY[currentIndex] = currentPoint.y;
-                currentIndex++;
-            }
+                pointsX.push_back(currentPoint.x);
+                pointsY.push_back(currentPoint.y);
+             }
             currentPoint += xDelta;
         }
         rowStartPoint+=yDelta;
@@ -417,9 +414,8 @@ void LC_Lattice::fillExceptTLBRDiagonal(int numPointsByX, int numPointsByY, cons
         int columnToExclude = totalSize - y;
         for (int x = 0; x < numPointsByX; ++x) {
             if (x != columnToExclude) {
-                pointsX[currentIndex] = currentPoint.x;
-                pointsY[currentIndex] = currentPoint.y;
-                currentIndex++;
+                pointsX.push_back(currentPoint.x);
+                pointsY.push_back(currentPoint.y);
             }
             currentPoint += xDelta;
         }
@@ -461,9 +457,6 @@ const  RS_Vector &LC_Lattice::getDeltaY() {
     return deltaY;
 }
 
-double LC_Lattice::getPointX(int i) {
-    return pointsX[i];
-}
 
 const std::vector<double> &LC_Lattice::getPointsX() const {
     return pointsX;

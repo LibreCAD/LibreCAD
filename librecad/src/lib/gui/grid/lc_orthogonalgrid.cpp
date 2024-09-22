@@ -34,67 +34,24 @@ LC_OrthogonalGrid::LC_OrthogonalGrid(LC_GridSystem::LC_GridOptions *options):LC_
 
 LC_OrthogonalGrid::~LC_OrthogonalGrid() = default;
 
-void LC_OrthogonalGrid::doCreateGrid(RS_GraphicView* view, const RS_Vector &viewZero, const RS_Vector &viewSize,
-                                     RS_Vector const &metaGridWidth, RS_Vector const &gridWidth) {
-    /*  if (metaWidthX > minimumGridWidth && metaWidthY > minimumGridWidth &&
-          graphicView->toGuiDX(metaWidthX) > 2 &&
-          graphicView->toGuiDY(metaWidthY) > 2) {
-  */
-
-    bool metaGridVisible = gridOptions->drawMetaGrid;
-    bool simpleGridRendering = gridOptions->simpleGridRendering;
-
-    metaGridCellSize = metaGridWidth;
-    gridCellSize = gridWidth;
-    cellVector = {fabs(gridWidth.x), fabs(gridWidth.y)};
+void LC_OrthogonalGrid::prepareGridOther(const RS_Vector &viewZero, const RS_Vector &viewSize) {
 
     // find meta grid boundaries
 
-    determineMetaGridBoundaries(viewZero, viewSize);
-    projectMetaGridLinesAmount(metaGridWidth);
+    projectMetaGridLinesAmount(metaGridCellSize);
     ensureAllMetaGridLinesInView(viewZero, viewSize);
     fillMetaGridCoordinates();
 
     determineGridBoundaries(viewZero, viewSize);
-
-    determineGridPointsAmount(viewZero);
-
-    bool drawGridWithoutGaps = simpleGridRendering || !metaGridVisible;
-
-    int numPointsTotal = determineTotalPointsAmount(drawGridWithoutGaps);
-
-    // create grid data
-
-    if (gridOptions->drawLines){
-        // grid lines data
-        int metaGridLineWidthPx = gridOptions->metaGridLineWidthPx*2;
-        RS_Vector lineOffset = view->toGraphD(metaGridLineWidthPx,metaGridLineWidthPx);
-
-        createGridLines(viewZero, viewSize, drawGridWithoutGaps, lineOffset);
-        linesLattice->toGui(view);
-    }
-    else {
-        if (isNumberOfPointsValid(numPointsTotal)) {
-            // grid points data
-            createGridPoints(gridWidth, drawGridWithoutGaps, numPointsTotal);
-            pointsLattice->toGui(view);
-        }
-        else{
-            pointsLattice->init(0);
-        }
-    }
-
-    if (gridOptions->drawMetaGrid){
-        createMetaGridLines(viewZero, viewSize);
-        metaGridLinesLattice->toGui(view);
-    }
 }
 
-void LC_OrthogonalGrid::createGridPoints(const RS_Vector &gridWidth, bool drawGridWithoutGaps, int numPointsTotal) {
-    pointsLattice->update(0.0, 0.0, gridWidth, numPointsTotal);
+void LC_OrthogonalGrid::createCellVector(const RS_Vector &gridWidth) { cellVector = {fabs(gridWidth.x), fabs(gridWidth.y)}; }
+
+void LC_OrthogonalGrid::createGridPoints([[maybe_unused]]const RS_Vector &min, const RS_Vector &max, const RS_Vector &gridWidth, bool drawGridWithoutGaps, int numPointsTotal) {
+    gridLattice->update(0.0, 0.0, gridWidth, numPointsTotal);
 
     if (drawGridWithoutGaps) {
-        pointsLattice->fill(numPointsXTotal, numPointsYTotal, gridBasePoint, false, false);
+        gridLattice->fill(numPointsXTotal, numPointsYTotal, gridBasePoint, false, false);
     } else {
         fillPointsLatticeWithGapsForMetaGrid();
     }
@@ -131,9 +88,24 @@ RS_Vector LC_OrthogonalGrid::snapGrid(const RS_Vector& coord) const {
     if(gridX < RS_TOLERANCE || gridY < RS_TOLERANCE) {
         return coord;
     }
-    RS_Vector vp(coord-gridBasePoint);
 
-    return coord - RS_Vector(remainder(vp.x,gridX),remainder(vp.y,gridY));
+    RS_Vector correctionVector;
+    if (hasAxisIndefinite){
+        if (indefiniteX){
+            RS_Vector vp(coord-RS_Vector(0, gridBasePoint.y));
+            correctionVector = RS_Vector(0, remainder(vp.y, gridY));
+        }
+        else{
+            RS_Vector vp(coord-RS_Vector(gridBasePoint.x,0));
+            correctionVector = RS_Vector(remainder(vp.x, gridX), 0);
+        }
+    }
+    else{
+        RS_Vector vp(coord-gridBasePoint);
+        correctionVector = RS_Vector(remainder(vp.x, gridX), remainder(vp.y, gridY));
+    }
+    return coord - correctionVector;
+
 }
 
 void LC_OrthogonalGrid::fillPointsLatticeWithGapsForMetaGrid() {
@@ -161,11 +133,13 @@ void LC_OrthogonalGrid::fillPointsLatticeWithGapsForMetaGrid() {
     }
 
     // first fill by points fully visible metaGrid cells
-    for (int mx = 0; mx < numMetaX - 1; ++mx) {
-        tileBasePoint.x = metaX[mx];
-        for (int my = 0; my < numMetaY - 1; ++my) {
-            tileBasePoint.y = metaY[my];
-            pointsLattice->fill(numPointsInMetagridX, numPointsInMetagridY, tileBasePoint, false, false);
+    if (numMetaX > 0 && numMetaY > 0) {
+        for (int mx = 0; mx < numMetaX - 1; ++mx) {
+            tileBasePoint.x = metaX[mx];
+            for (int my = 0; my < numMetaY - 1; ++my) {
+                tileBasePoint.y = metaY[my];
+                gridLattice->fill(numPointsInMetagridX, numPointsInMetagridY, tileBasePoint, false, false);
+            }
         }
     }
 
@@ -173,68 +147,69 @@ void LC_OrthogonalGrid::fillPointsLatticeWithGapsForMetaGrid() {
     tileBasePoint.y = metaGridMax.y;
     for (int mx = 0; mx < numMetaX - 1; ++mx) {
         tileBasePoint.x = metaX[mx];
-        pointsLattice->fill(numPointsInMetagridX, numPointsYTop, tileBasePoint, false, false);
+        gridLattice->fill(numPointsInMetagridX, numPointsYTop, tileBasePoint, false, false);
     }
-    if (numMetaX > 1 && numMetaY == 0) {
-        // very rare case - view height is so small, that no horizontal metagrids in view - but there are vertical ones.
+    /*if (numMetaX > 1 && numMetaY == 0) {
+        // very rare case - view height is so small, that no horizontal metaGrid lines in view - but there are vertical ones. Or, some irregular user grid
+        // is used (with spacing by X smaller than spacing by Y) on large zoom level
         // to central tiles should be filled too
         tileBasePoint.y = gridBasePointIfMetagridNotVisible.y;
         for (int mx = 0; mx < numMetaX - 1; ++mx) {
             tileBasePoint.x = metaX[mx];
-            pointsLattice->fill(numPointsInMetagridX, numPointsYTop, tileBasePoint, false, false);
+            gridLattice->fill(numPointsInMetagridX, numPointsYTop, tileBasePoint, false, false);
         }
-    }
+    }*/
 
     // fill right column
     tileBasePoint.x = metaGridMax.x;
+//    if (numMetaX == 0) { // no vid
+//        tileBasePoint.x = gridBasePointIfMetagridNotVisible.x;
+//    }
     for (int my = 0; my < numMetaY - 1; ++my) {
         tileBasePoint.y = metaY[my];
-        pointsLattice->fill(numPointsXRight, numPointsInMetagridY, tileBasePoint, false, false);
+        gridLattice->fill(numPointsXRight, numPointsInMetagridY, tileBasePoint, false, false);
     }
 
     // fill right top corner
     tileBasePoint.y = metaGridMax.y;
-    if (numMetaX == 0) { // no vid
-        tileBasePoint.x = gridBasePointIfMetagridNotVisible.x;
-    }
-    if (numMetaY == 0) {
-        tileBasePoint.y = gridBasePointIfMetagridNotVisible.y;
-    }
-    pointsLattice->fill(numPointsXRight, numPointsYTop, tileBasePoint, false, false);
+//    if (numMetaY == 0) {
+//        tileBasePoint.y = gridBasePointIfMetagridNotVisible.y;
+//    }
+    gridLattice->fill(numPointsXRight, numPointsYTop, tileBasePoint, false, false);
 
     // fill right bottom corner
     tileBasePoint.y = metaGridMin.y;
-    if (numMetaX == 0) { // no vid
-        tileBasePoint.x = gridBasePointIfMetagridNotVisible.x;
-    }
-    pointsLattice->fill(numPointsXRight, numPointsYBottom, tileBasePoint, false, true);
+//    if (numMetaX == 0) { // no vid
+//        tileBasePoint.x = gridBasePointIfMetagridNotVisible.x;
+//    }
+    gridLattice->fill(numPointsXRight, numPointsYBottom, tileBasePoint, false, true);
 
 
     // fill bottom row
     tileBasePoint.y = metaGridMin.y;
     for (int mx = 0; mx < numMetaX - 1; ++mx) {
         tileBasePoint.x = metaX[mx];
-        pointsLattice->fill(numPointsInMetagridX, numPointsYBottom, tileBasePoint, false, true);
+        gridLattice->fill(numPointsInMetagridX, numPointsYBottom, tileBasePoint, false, true);
     }
 
     // fill left column
     tileBasePoint.x = metaGridMin.x;
     for (int my = 0; my < numMetaY - 1; ++my) {
         tileBasePoint.y = metaY[my];
-        pointsLattice->fill(numPointsXLeft, numPointsInMetagridY, tileBasePoint, true, false);
+        gridLattice->fill(numPointsXLeft, numPointsInMetagridY, tileBasePoint, true, false);
     }
 
     // fill left bottom corner
     tileBasePoint.y = metaGridMin.y;
-    pointsLattice->fill(numPointsXLeft, numPointsYBottom, tileBasePoint, true, true);
+    gridLattice->fill(numPointsXLeft, numPointsYBottom, tileBasePoint, true, true);
 
     // fill left top corner
 
     tileBasePoint.y = metaGridMax.y;
-    if (numMetaY == 0) {
+    /*if (numMetaY == 0) {
         tileBasePoint.y = gridBasePointIfMetagridNotVisible.y;
-    }
-    pointsLattice->fill(numPointsXLeft, numPointsYTop, tileBasePoint, true, false);
+    }*/
+    gridLattice->fill(numPointsXLeft, numPointsYTop, tileBasePoint, true, false);
 }
 
 int LC_OrthogonalGrid::determineTotalPointsAmount(bool drawGridWithoutGaps) {
@@ -259,7 +234,7 @@ void LC_OrthogonalGrid::determineGridPointsAmount(const RS_Vector &viewZero) {
         numPointsXRight = RS_Math::round((gridMax.x - metaGridMax.x) / gridX) - 1;
     }
     else{ // no metaGrid lines visible on screen at all
-        numPointsXRight = RS_Math::round((gridMax.x - gridMin.x) / gridX) - 1;
+        numPointsXRight = RS_Math::round((gridMax.x+metaGridCellSize.x  - gridMin.x) / gridX) - 1;
     }
 
     gridBasePointIfMetagridNotVisible.x = viewZero.x - remainder(metaGridViewOffset.x, gridX);
@@ -271,7 +246,7 @@ void LC_OrthogonalGrid::determineGridPointsAmount(const RS_Vector &viewZero) {
         numPointsYTop = RS_Math::round((gridMax.y - metaGridMax.y) / gridY) - 1;
     }
     else{
-        numPointsYTop = RS_Math::round((gridMax.y - gridMin.y) / gridY) - 1;
+        numPointsYTop = RS_Math::round((gridMax.y + metaGridCellSize.y  - gridMin.y) / gridY) - 1;
     }
     gridBasePointIfMetagridNotVisible.y = gridMin.y - remainder(metaGridViewOffset.y, gridY);
 }
@@ -320,6 +295,7 @@ void LC_OrthogonalGrid::ensureAllMetaGridLinesInView(const RS_Vector &viewZero, 
     double lastGridX = metaGridMin.x + metaWidthX * (numMetaX - 1);
     if (lastGridX > viewSize.x) {
         numMetaX--;
+        metaGridMax.x -= metaWidthX;
     }
 
     // ensure that horizontal metaGrid lines are within view and so visible
@@ -344,18 +320,18 @@ void LC_OrthogonalGrid::fillMetaGridCoordinates() {
 
 void LC_OrthogonalGrid::createMetaGridLines(const RS_Vector& min, const RS_Vector &max){
 
-    metaGridLinesLattice->update(0, 0, metaGridCellSize, numMetaX*numMetaY*4);
+    metaGridLattice->update(0, 0, metaGridCellSize, numMetaX * numMetaY * 4);
     // draw vertical lines
     if (numMetaX > 0) {
-        doCreateVerticalLines(metaGridLinesLattice, min.y, max.y, metaGridMin.x, metaGridCellSize.x, numMetaX);
-        metaGridLinesLattice->addLine(metaGridMin.x, min.y, metaGridMin.x, max.y);
+        doCreateVerticalLines(metaGridLattice, min.y, max.y, metaGridMin.x, metaGridCellSize.x, numMetaX);
+        metaGridLattice->addLine(metaGridMin.x, min.y, metaGridMin.x, max.y);
     }
 
     // draw horizontal line for orthogonal grid
 
     if (numMetaY > 0) {
-        doCreateHorizontalLines(metaGridLinesLattice, min.x, max.x, metaGridMin.y, metaGridCellSize.y, numMetaY);
-        metaGridLinesLattice->addLine(min.x, metaGridMin.y, max.x, metaGridMin.y);
+        doCreateHorizontalLines(metaGridLattice, min.x, max.x, metaGridMin.y, metaGridCellSize.y, numMetaY);
+        metaGridLattice->addLine(min.x, metaGridMin.y, max.x, metaGridMin.y);
     }
 }
 
@@ -364,7 +340,7 @@ void LC_OrthogonalGrid::createMetaGridLines(const RS_Vector& min, const RS_Vecto
 void LC_OrthogonalGrid::drawMetaGridLines(RS_Painter *painter, RS_GraphicView *view) {
 
     // draw meta grid:
-    doDrawLines(painter, view, metaGridLinesLattice);
+    doDrawLines(painter, view, metaGridLattice);
 
 #ifdef DEBUG_META_GRID
     RS2::LineType penLineType = gridOptions->metaGridLineType;
@@ -434,7 +410,7 @@ void LC_OrthogonalGrid::createGridLinesWithoutGaps(const RS_Vector &min, const R
     // simpler mode for grid drawing - here we ensure that grid line is not drawn over metaGrid lines if they are present
     // however, grid line may intersect grid line
 
-    linesLattice->updateForLines(0, 0, gridCellSize, RS_Vector(0,0), numPointsYTotal*numPointsXTotal*4);
+    gridLattice->updateForLines(0, 0, gridCellSize, RS_Vector(0, 0), numPointsYTotal * numPointsXTotal * 4);
 
     // draw vertical lines
     double minY = min.y;
@@ -452,7 +428,7 @@ void LC_OrthogonalGrid::createGridLinesWithoutGaps(const RS_Vector &min, const R
     createVerticalLines(minY, maxY, metaX, gridX, numPointsXRight);
 
     if (noMetaGrid){
-        linesLattice->addLine(firstMX, minY, firstMX, maxY);
+        gridLattice->addLine(firstMX, minY, firstMX, maxY);
     }
     // draw horizontal lines
 
@@ -470,11 +446,11 @@ void LC_OrthogonalGrid::createGridLinesWithoutGaps(const RS_Vector &min, const R
     createHorizontalLines(minX, maxX, metaY, gridY, numPointsYTop);
 
     if (noMetaGrid){
-        linesLattice->addLine(minX, firstMY, maxX, firstMY);
+        gridLattice->addLine(minX, firstMY, maxX, firstMY);
     }    
 }
 
-void LC_OrthogonalGrid::createGridLines(const RS_Vector& min, const RS_Vector &max, bool drawGridWithoutGaps, const RS_Vector& lineOffset) {
+void LC_OrthogonalGrid::createGridLines(const RS_Vector& min, const RS_Vector &max, [[maybe_unused]]const RS_Vector& gridWidth, bool drawGridWithoutGaps, const RS_Vector& lineOffset) {
     if (drawGridWithoutGaps) {
         createGridLinesWithoutGaps(min, max);
     } else {
@@ -506,7 +482,7 @@ void LC_OrthogonalGrid::createGridLinesWithGaps(const RS_Vector &min, const RS_V
 
     // the most accurate yet complex drawing mode - here we ensure that
     // grid lines are not drawn in metaGrid positions - PLUS - there is no intersections between grid lines and metaGrid lines
-    linesLattice->updateForLines(0, 0, gridCellSize, lineOffset, numPointsYTotal * numPointsXTotal * 4);
+    gridLattice->updateForLines(0, 0, gridCellSize, lineOffset, numPointsYTotal * numPointsXTotal * 4);
 
     double metaX = firstMX;
     double metaY = firstMY;
@@ -637,7 +613,7 @@ void LC_OrthogonalGrid::doCreateVerticalLines(LC_Lattice* lattice, const double 
 }
 
 void LC_OrthogonalGrid::createVerticalLines(const double &start, const double &end, const double &baseX, const double &delta, const int &pointsToDraw) const {
-    doCreateVerticalLines(linesLattice, start, end, baseX, delta, pointsToDraw);
+    doCreateVerticalLines(gridLattice, start, end, baseX, delta, pointsToDraw);
 }
 
 void LC_OrthogonalGrid::doCreateHorizontalLines(LC_Lattice* lattice, const double &start, const double &end, const double &baseY, const double &delta, const int &pointsToDraw) const {
@@ -649,5 +625,5 @@ void LC_OrthogonalGrid::doCreateHorizontalLines(LC_Lattice* lattice, const doubl
 }
 
 void LC_OrthogonalGrid::createHorizontalLines(const double &start, const double &end, const double &baseY, const double &delta, const int &pointsToDraw) const {
-    doCreateHorizontalLines(linesLattice, start, end, baseY, delta, pointsToDraw);
+    doCreateHorizontalLines(gridLattice, start, end, baseY, delta, pointsToDraw);
 }

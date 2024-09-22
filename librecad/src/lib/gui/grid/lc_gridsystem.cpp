@@ -37,20 +37,14 @@ namespace {
 
 LC_GridSystem::LC_GridSystem(LC_GridSystem::LC_GridOptions *options) {
    gridOptions = options;
-   pointsLattice = new LC_Lattice();
-   if (options->drawLines){
-       linesLattice = new LC_Lattice();
-   }
-   if (options->drawMetaGrid){
-       metaGridLinesLattice = new LC_Lattice();
-   }
+   gridLattice = new LC_Lattice();
+   metaGridLattice = new LC_Lattice();
 }
 
 LC_GridSystem::~LC_GridSystem() {
     delete gridOptions;
-    delete pointsLattice;
-    delete linesLattice;
-    delete metaGridLinesLattice;
+    delete gridLattice;
+    delete metaGridLattice;
 }
 
 void LC_GridSystem::createGrid(
@@ -64,6 +58,54 @@ void LC_GridSystem::createGrid(
         }
         doCreateGrid(view, viewZero, viewSize, metaGridWidth, gridWidth);
         valid = true;
+    }
+}
+
+void LC_GridSystem::doCreateGrid(
+    RS_GraphicView *view, const RS_Vector &viewZero, const RS_Vector &viewSize, const RS_Vector &metaGridWidth, const RS_Vector &gridWidth) {
+
+    bool gridVisible = gridOptions->drawGrid && gridWidth.valid;
+    bool metaGridVisible = gridOptions->drawMetaGrid && metaGridWidth.valid;
+    bool simpleGridRendering = gridOptions->simpleGridRendering;
+
+    metaGridCellSize = metaGridWidth;
+    gridCellSize = gridWidth;
+
+    createCellVector(gridWidth);
+    determineMetaGridBoundaries(viewZero, viewSize);
+    prepareGridOther(viewZero, viewSize);
+
+    if (gridVisible) { // we'll not draw invalid grid (due to min grid width), but may draw metagrid width
+        determineGridPointsAmount(viewZero);
+        bool drawGridWithoutGaps = simpleGridRendering || !metaGridVisible;
+        int numPointsTotal = determineTotalPointsAmount(drawGridWithoutGaps);
+
+        if (gridOptions->drawLines || hasAxisIndefinite) {
+            // grid lines data
+            int lineOffsetPx = gridOptions->metaGridLineWidthPx * 2;
+            RS_Vector lineOffset = view->toGraphD(lineOffsetPx, lineOffsetPx);
+            createGridLines(viewZero, viewSize, gridWidth, drawGridWithoutGaps, lineOffset);
+            gridLattice->toGui(view);
+        } else {
+            // create points array
+            if (isNumberOfPointsValid(numPointsTotal)) {
+                createGridPoints(viewZero, viewSize, gridWidth, drawGridWithoutGaps, numPointsTotal);
+                gridLattice->toGui(view);
+            } else {
+                gridLattice->init(0);
+            }
+        }
+    }
+    else{
+        gridLattice->init(0);
+    }
+
+    if (metaGridVisible){
+        createMetaGridLines(viewZero, viewSize);
+        metaGridLattice->toGui(view);
+    }
+    else{
+        metaGridLattice->init(0);
     }
 }
 
@@ -93,46 +135,46 @@ void LC_GridSystem::drawMetaGrid(RS_Painter *painter, RS_GraphicView *view) {
 }
 
 void LC_GridSystem::drawGrid(RS_Painter *painter, RS_GraphicView *view) {
-    if (gridOptions->drawLines){
-        painter->setPen({gridOptions->gridColor, RS2::Width00, gridOptions->gridLineType}, gridOptions->gridWidthPx);
+    if (gridOptions->drawLines || hasAxisIndefinite){
+        painter->setPen({gridOptions->gridColorLine, RS2::Width00, gridOptions->gridLineType}, gridOptions->gridWidthPx);
         drawGridLines(painter, view);
     }
     else{
-        painter->setPen({gridOptions->gridColor, RS2::Width00, RS2::SolidLine});
+        painter->setPen({gridOptions->gridColorPoint, RS2::Width00, RS2::SolidLine});
         drawGridPoints(painter, view);
     }
 }
 
 void LC_GridSystem::drawGridPoints(RS_Painter *painter, [[maybe_unused]]RS_GraphicView *view) {
     int pointsCount = getGridPointsCount();
-    std::vector<double> pointsX = pointsLattice->getPointsX();
-    std::vector<double> pointsY = pointsLattice->getPointsY();
     for (int i = 0; i < pointsCount; i++){
-        double pX = pointsX[i];
-        double pY = pointsY[i];
+        double pX = gridLattice->getPointX(i);
+        double pY = gridLattice->getPointY(i);
         painter->drawGridPoint(pX, pY);
     }
 }
 
 void LC_GridSystem::drawGridLines(RS_Painter *painter, RS_GraphicView *view) {
-    doDrawLines(painter, view, linesLattice);
+    doDrawLines(painter, view, gridLattice);
 }
 
 void LC_GridSystem::doDrawLines(RS_Painter *painter, [[maybe_unused]]RS_GraphicView *view, LC_Lattice* linesLattice) {
     int pointsCount = linesLattice->getPointsSize();
 //    LC_ERR << "Lines Points Count: " << pointsCount;
     int i = 0;
-    while (i < pointsCount){
-        RS_Vector startPoint = linesLattice->getPoint(i);
+    while (i < pointsCount) {
+        double startPointX = linesLattice->getPointX(i);
+        double startPointY = linesLattice->getPointY(i);
         i++;
-        RS_Vector endPoint = linesLattice->getPoint(i);
+        double endPointX = linesLattice->getPointX(i);
+        double endPointY = linesLattice->getPointY(i);
         i++;
-        painter->drawLine(startPoint, endPoint);
+        painter->drawLine(startPointX, startPointY, endPointX, endPointY);
     }
 }
 
 int LC_GridSystem::getGridPointsCount() {
-    return pointsLattice->getPointsSize();
+    return gridLattice->getPointsSize();
 }
 
 double LC_GridSystem::truncToStep(double value, double step){
@@ -141,5 +183,17 @@ double LC_GridSystem::truncToStep(double value, double step){
 }
 
 bool LC_GridSystem::isNumberOfPointsValid(int numberOfPoints){
-    return numberOfPoints >= 0 || numberOfPoints < maxGridPoints;
+    return numberOfPoints >= 0 && numberOfPoints < maxGridPoints;
+}
+
+void LC_GridSystem::clearGrid() {
+    gridLattice->init(0);
+    if (metaGridLattice != nullptr){
+        metaGridLattice->init(0);
+    }
+}
+
+void LC_GridSystem::setGridInfiniteState(bool hasIndefiniteAxis, bool undefinedX) {
+    hasAxisIndefinite = hasIndefiniteAxis;
+    indefiniteX = undefinedX;
 }

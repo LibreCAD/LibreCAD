@@ -98,7 +98,7 @@ RS_GraphicView::RS_GraphicView(QWidget *parent, Qt::WindowFlags f)
     drawingMode(RS2::ModeFull),
     savedViews(16),
     previousViewTime{std::make_unique<QDateTime>(QDateTime::currentDateTime())} {
-    loadSettings();
+//    loadSettings();
 }
 
 void RS_GraphicView::loadSettings() {

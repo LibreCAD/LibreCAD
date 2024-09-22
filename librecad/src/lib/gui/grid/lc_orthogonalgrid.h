@@ -61,21 +61,19 @@ protected:
      */
     RS_Vector gridBasePointIfMetagridNotVisible;
 
-    void doCreateGrid(RS_GraphicView* view, const RS_Vector &viewZero, const RS_Vector &viewSize,
-                      RS_Vector const &metaGridWidth, RS_Vector const &gridWidth) override;
-
+    void prepareGridOther(const RS_Vector &viewZero, const RS_Vector &viewSize) override;
 
     void fillMetaGridCoordinates();
 
     void ensureAllMetaGridLinesInView(const RS_Vector &viewZero, const RS_Vector &viewSize);
 
-    void determineMetaGridBoundaries(const RS_Vector &viewZero, const RS_Vector &viewSize);
+    void determineMetaGridBoundaries(const RS_Vector &viewZero, const RS_Vector &viewSize) override;
 
     void projectMetaGridLinesAmount(const RS_Vector &metaGridWidth);
 
-    void determineGridPointsAmount(const RS_Vector &viewZero);
+    void determineGridPointsAmount(const RS_Vector &viewZero) override;
 
-    int  determineTotalPointsAmount(bool drawGridWithoutGaps);
+    int  determineTotalPointsAmount(bool drawGridWithoutGaps) override;
 
     void fillPointsLatticeWithGapsForMetaGrid();
 
@@ -83,15 +81,15 @@ protected:
 
     void drawMetaGridLines(RS_Painter *painter, RS_GraphicView *view) override;
 
-    void createGridPoints(const RS_Vector &gridWidth, bool drawGridWithoutGaps, int numPointsTotal);
+    void createGridPoints(const RS_Vector &min, const RS_Vector &max,const RS_Vector &gridWidth, bool drawGridWithoutGaps, int numPointsTotal) override;
 
-    void createGridLines(const RS_Vector& min, const RS_Vector &max, bool gaps, const RS_Vector& lineOffset);
+    void createGridLines(const RS_Vector& min, const RS_Vector &max, const RS_Vector & gridWidth, bool gaps, const RS_Vector& lineOffset) override;
 
     void createVerticalLines(const double &start, const double &end, const double &baseX, const double &delta, const int &pointsToDraw) const;
 
     void createHorizontalLines(const double &start, const double &end, const double &baseY, const double &delta, const int &pointsToDraw) const;
 
-    void createMetaGridLines(const RS_Vector &min, const RS_Vector &max);
+    void createMetaGridLines(const RS_Vector &min, const RS_Vector &max) override;
 
     void doCreateVerticalLines(LC_Lattice *lattice, const double &start, const double &end, const double &baseX,
                                const double &delta, const int &pointsToDraw) const;
@@ -102,6 +100,8 @@ protected:
     void createGridLinesWithoutGaps(const RS_Vector &min, const RS_Vector &max);
 
     void createGridLinesWithGaps(const RS_Vector &min, const RS_Vector &max, const RS_Vector &lineOffset);
+
+    void createCellVector(const RS_Vector &gridWidth) override;
 };
 
 #endif // LC_ORTHOGONALGRID_H

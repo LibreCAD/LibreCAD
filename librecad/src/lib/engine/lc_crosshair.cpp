@@ -78,7 +78,7 @@ double LC_Crosshair::drawIndicator(RS_Painter* painter, RS_GraphicView* view, co
     return offset;
 }
 
-void LC_Crosshair::draw(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) {
+void LC_Crosshair::draw(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset) {
 //    LC_ERR << "Draw Crosshair!";
     RS_Vector guiCoord = view->toGui(getPos());
 

@@ -55,7 +55,6 @@ public:
     void fillVerticalEdge(int numPointsByX, const RS_Vector& baseGridPoint, bool reverseX, bool reverseY, bool skipFirstPoint = false);
     void fillHorizontalEdge(int numPointsByX, const RS_Vector& baseGridPoint, bool reverseX, bool reverseY, bool skipFirstPoint = false);
 
-    int getPointsCount(){return currentIndex;}
     int getPointsSize(){return pointsX.size();}
     const std::vector<RS_Vector>getPoints();
 
@@ -66,10 +65,10 @@ public:
     void fillByLines(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint, bool reverseX, bool reverseY, bool fillLeftEdge, bool fillRightEdge);
     void fillAllByLinesExceptDiagonal(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint, bool reverseX, bool reverseY, bool fillLeftEdge, bool fillRightEdge);
 
-    double getPointX(int i);
+    double getPointX(int i){return pointsX[i];};
+    double getPointY(int i){return pointsY[i];};
 
     const std::vector<double> &getPointsX() const;
-
     const std::vector<double> &getPointsY() const;
 
     void toGui(RS_GraphicView *view);
@@ -84,8 +83,6 @@ protected:
     RS_Vector majorVector;
     std::vector<double> pointsX;
     std::vector<double> pointsY;
-    int currentIndex = 0;
-
     RS_Vector lineOffsetX;
     RS_Vector lineOffsetY;
 
