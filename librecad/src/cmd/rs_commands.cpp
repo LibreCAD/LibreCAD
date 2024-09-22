@@ -44,15 +44,24 @@ struct LC_CommandItem {
     RS2::ActionType actionType;
 };
 
+// Prefixes for function-, Meta- and Alt- keys.
+const char* g_FnPrefix = "Fn";
+const char* g_AltPrefix = "Alt-";
+const char* g_MetaPrefix = "Meta-";
+
 // helper function to check and report command collision
 template<typename T1, typename T2>
-bool isCollisionFree(std::map<T1, T2> const& lookUp, T1 const& key, T2 const& value)
+bool isCollisionFree(std::map<T1, T2> const& lookUp, T1 const& key, T2 const& value, QString cmd = {})
 {
-    if(!lookUp.count(key)) return true;
+    if(!lookUp.count(key) || lookUp.at(key) == value)
+        return true;
 
     //report command string collision
-    QString msg=__FILE__+QObject::tr(": duplicated command: %1 is already taken by %2")
-            .arg(key).arg(value);
+    QString msg = __FILE__ + QObject::tr(": duplicated command: %1 is already taken by %2");
+    if constexpr (std::is_same_v<T2, RS2::ActionType>)
+        msg = msg.arg(key).arg(cmd);
+    else
+        msg = msg.arg(key).arg(value);
 
     RS_DEBUG->print(RS_Debug::D_ERROR, "%s\n", msg.toStdString().c_str());
     return false;
@@ -87,10 +96,6 @@ void writeAliasFile(QFile& file,
 }
 }
 
-const char* RS_Commands::FnPrefix = "Fn";
-const char* RS_Commands::AltPrefix = "Alt-";
-const char* RS_Commands::MetaPrefix = "Meta-";
-
 
 RS_Commands* RS_Commands::instance() {
     static RS_Commands* uniqueInstance = new RS_Commands();
@@ -102,13 +107,13 @@ RS_Commands* RS_Commands::instance() {
  * Constructor. Initiates main command dictionary.
  * mainCommand keeps a map from translated commands to actionType
  * shortCommand keeps a list of translated short commands
- * cmdTranslation contains both ways of mapping between translated and English
+ * m_cmdTranslation contains both ways of mapping between translated and English
  * Command order:
  *      mainCommand (long form): Category (long) + Parameter(s)
  *      shortCommand: 2 letter keycode followed by legacy commands
  * Commands form:
  *    list all <main (full) command and translation string> pairs (category+parameters, i.e "line2p")
- *    Category: (long form for mainCommands, also appear is alias file as "command-untranslated")
+ *    Category: (long form for m_mainCommands, also appear is alias file as "command-untranslated")
  *        line - lin / li / l
  *        ...
  *        (others as req'd)
@@ -1021,30 +1026,36 @@ RS_Commands::RS_Commands() {
         auto const act=c0.actionType;
         //add full commands
         for(auto const& p0: c0.fullCmdList){
-            if(isCollisionFree(cmdTranslation, p0.first, p0.second))
-                cmdTranslation[p0.first]=p0.second;
-            if(isCollisionFree(mainCommands, p0.second, act)) {
-                mainCommands[p0.second]=act;
+            if (isCollisionFree(m_cmdTranslation, p0.first, p0.second))
+                m_cmdTranslation[p0.first] = p0.second;
+            if (isCollisionFree(m_mainCommands, p0.second, act, m_revLookUp.count(act) ? m_revLookUp[act] : QString{})) {
+                m_mainCommands[p0.second] = act;
+                m_revLookUp.emplace(act, p0.second);
             }
         }
         for(auto const& p0: c0.fullCmdList){
-            if(isCollisionFree(mainCommands, p0.first, act)) {
+            if(isCollisionFree(m_mainCommands, p0.first, act, m_revLookUp.count(act) ? m_revLookUp[act] : QString{})) {
                 // enable english commands, if no conflict is found
-                mainCommands[p0.first]=act;
+                m_mainCommands[p0.first]=act;
+                m_revLookUp.emplace(act, p0.first);
             }
         }
         //add short commands
         for(auto const& p1: c0.shortCmdList){
-            if(isCollisionFree(cmdTranslation, p1.first, p1.second))
-                cmdTranslation[p1.first]=p1.second;
-            if(isCollisionFree(shortCommands, p1.second, act)) {
-                shortCommands[p1.second]=act;
+            if(isCollisionFree(m_cmdTranslation, p1.first, p1.second))
+                m_cmdTranslation[p1.first]=p1.second;
+            if(isCollisionFree(m_shortCommands, p1.second, act, m_revLookUp.count(act) ? m_revLookUp[act] : QString{})) {
+                m_shortCommands[p1.second]=act;
+                if (m_revLookUp.count(act) == 0)
+                    m_revLookUp.emplace(act, p1.second);
             }
         }
         for(auto const& p1: c0.shortCmdList){
-            if(isCollisionFree(shortCommands, p1.first, act)) {
+            if(isCollisionFree(m_shortCommands, p1.first, act, m_revLookUp.count(act) ? m_revLookUp[act] : QString{})) {
                 // enable english short commands, if no conflict is found
-                shortCommands[p1.first]=act;
+                m_shortCommands[p1.first]=act;
+                if (m_revLookUp.count(act) == 0)
+                    m_revLookUp.emplace(act, p1.second);
             }
         }
     }
@@ -1230,7 +1241,7 @@ RS_Commands::RS_Commands() {
         // fixme - add reversive translation for added commands
     };
     for(auto const& p: transList){
-        cmdTranslation[p.first] = p.second;
+        m_cmdTranslation[p.first] = p.second;
     }
 }
 
@@ -1276,21 +1287,21 @@ void RS_Commands::updateAlias(){
         }
     } else {
         //alias file does no exist, create one with translated shortCommands
-        writeAliasFile(f, shortCommands, mainCommands);
+        writeAliasFile(f, m_shortCommands, m_mainCommands);
     }
     //update alias file with non present commands
     //RLZ: to be written
 
     //add alias to shortCommands
     for(auto const& p: aliasList){
-        if(shortCommands.count(p.first)) continue;
-        if(mainCommands.count(p.first)) continue;
-        if(mainCommands.count(p.second)){
+        if(m_shortCommands.count(p.first)) continue;
+        if(m_mainCommands.count(p.first)) continue;
+        if(m_mainCommands.count(p.second)){
             RS_DEBUG->print("adding command alias: %s\t%s\n", p.first.toStdString().c_str(), p.second.toStdString().c_str());
-            shortCommands[p.first]=mainCommands[p.second];
-        }else if(cmdTranslation.count(p.second)){
-            RS_DEBUG->print("adding command alias: %s\t%s\n", p.first.toStdString().c_str(), cmdTranslation[p.second].toStdString().c_str());
-            shortCommands[p.first]=mainCommands[cmdTranslation[p.second]];
+            m_shortCommands[p.first]=m_mainCommands[p.second];
+        }else if(m_cmdTranslation.count(p.second)){
+            RS_DEBUG->print("adding command alias: %s\t%s\n", p.first.toStdString().c_str(), m_cmdTranslation[p.second].toStdString().c_str());
+            m_shortCommands[p.first]=m_mainCommands[m_cmdTranslation[p.second]];
         }
     }
     f.close();
@@ -1302,7 +1313,7 @@ void RS_Commands::updateAlias(){
  */
 QStringList RS_Commands::complete(const QString& cmd) const {
     QStringList ret;
-    for(auto const& p: mainCommands){
+    for(auto const& p: m_mainCommands){
         if(p.first.startsWith(cmd, Qt::CaseInsensitive)){
             ret << p.first;
         }
@@ -1329,7 +1340,7 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) const
     RS2::ActionType ret = RS2::ActionNone;
 
     // find command:
-    for(const auto& table: {mainCommands, shortCommands})
+    for(const auto& table: {m_mainCommands, m_shortCommands})
     {
         if (table.count(cmd)) {
             ret = table.at(cmd);
@@ -1341,7 +1352,7 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) const
 
     if (!verbose) return ret;
     // find full command to confirm to user:
-    for(auto const& p: mainCommands){
+    for(auto const& p: m_mainCommands){
         if(p.second==ret){
             RS_DEBUG->print("RS_Commands::cmdToAction: commandMessage");
             RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1 (%2)").arg(full).arg(p.first));
@@ -1365,9 +1376,9 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) const {
 
     QString c;
 
-    if(!(code.startsWith(FnPrefix) ||
-         code.startsWith(AltPrefix) ||
-         code.startsWith(MetaPrefix))) {
+    if(!(code.startsWith(g_FnPrefix) ||
+         code.startsWith(g_AltPrefix) ||
+         code.startsWith(g_MetaPrefix))) {
     	if(code.size() < 1 || code.contains(QRegExp("^[a-z].*",Qt::CaseInsensitive)) == false )
             return RS2::ActionNone;
         c = code.toLower();
@@ -1379,13 +1390,13 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) const {
     //    std::cout<<"regex: "<<qPrintable(c)<<" matches: "<< c.contains(QRegularExpression("^[a-z].*",Qt::CaseInsensitive))<<std::endl;
     //    std::cout<<"RS2::ActionType RS_Commands::keycodeToAction("<<qPrintable(c)<<")"<<std::endl;
 
-    auto it = shortCommands.find(c);
+    auto it = m_shortCommands.find(c);
 
-    if( it == shortCommands.end() ) {
+    if( it == m_shortCommands.end() ) {
 
         //not found, searching for main commands
-        it = mainCommands.find(c);
-        if( it == mainCommands.end() ){
+        it = m_mainCommands.find(c);
+        if( it == m_mainCommands.end() ){
             //			RS_DIALOGFACTORY->commandMessage(QObject::tr("Command not found: %1").arg(c));
             return RS2::ActionNone;
         }
@@ -1401,9 +1412,9 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) const {
  * @return translated command for the given English command.
  */
 QString RS_Commands::command(const QString& cmd) {
-    auto it= instance()->cmdTranslation.find(cmd);
-    if(it != instance()->cmdTranslation.end()){
-        return instance()->cmdTranslation[cmd];
+    auto it= instance()->m_cmdTranslation.find(cmd);
+    if(it != instance()->m_cmdTranslation.end()){
+        return instance()->m_cmdTranslation[cmd];
     }
     RS_DIALOGFACTORY->commandMessage(QObject::tr("Command not found: %1").arg(cmd));
     RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -1426,16 +1437,16 @@ bool RS_Commands::checkCommand(const QString& cmd, const QString& str,
 
     QString const& strl = str.toLower();
     QString const& cmdLower = cmd.toLower();
-    auto it = instance()->cmdTranslation.find(cmdLower);
-    if(it != instance()->cmdTranslation.end()){
+    auto it = instance()->m_cmdTranslation.find(cmdLower);
+    if(it != instance()->m_cmdTranslation.end()){
         RS2::ActionType type0=instance()->cmdToAction(it->second, false);
         if( type0  != RS2::ActionNone ) {
             return  type0 ==instance()->cmdToAction(strl);
         }
     }
 
-    it =  instance()->cmdTranslation.find(strl);
-    if(it !=  instance()->cmdTranslation.end()) return it->second == cmdLower;
+    it =  instance()->m_cmdTranslation.find(strl);
+    if(it !=  instance()->m_cmdTranslation.end()) return it->second == cmdLower;
     return false;
 }
 

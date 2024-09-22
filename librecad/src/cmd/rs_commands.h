@@ -65,11 +65,6 @@ public:
     static QString msgAvailableCommands();
     void updateAlias();
 
-    // Prefixes for function-, Meta- and Alt- keys.
-    static const char *FnPrefix;
-    static const char *AltPrefix;
-    static const char *MetaPrefix;
-
 private:
     RS_Commands() ;
     ~RS_Commands()=delete;
@@ -78,10 +73,12 @@ private:
     RS_Commands(RS_Commands &&) = delete;
     RS_Commands &operator=(RS_Commands &&) = delete;
 
-    std::map<QString, RS2::ActionType> mainCommands;
-    std::map<QString, RS2::ActionType> shortCommands;
+    std::map<QString, RS2::ActionType> m_mainCommands;
+    std::map<QString, RS2::ActionType> m_shortCommands;
+    // from action to command
+    std::map<RS2::ActionType, QString> m_revLookUp;
     // key=english command , value = translated
-    std::map<QString, QString> cmdTranslation;
+    std::map<QString, QString> m_cmdTranslation;
 };
 
 #endif
