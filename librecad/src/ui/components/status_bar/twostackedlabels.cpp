@@ -25,6 +25,7 @@
 #include "twostackedlabels.h"
 
 #include <QLabel>
+#include <QMouseEvent>
 #include <QVBoxLayout>
 
 TwoStackedLabels::TwoStackedLabels(QWidget* parent)
@@ -40,12 +41,17 @@ TwoStackedLabels::TwoStackedLabels(QWidget* parent)
     setLayout(layout);
 }
 
-void TwoStackedLabels::setTopLabel(const QString& status)
-{
+void TwoStackedLabels::setTopLabel(const QString& status){
     top_label->setText(status);
 }
 
-void TwoStackedLabels::setBottomLabel(const QString& status)
-{
+void TwoStackedLabels::setBottomLabel(const QString& status){
     bottom_label->setText(status);
+}
+
+void TwoStackedLabels::mouseReleaseEvent(QMouseEvent *e) {
+    if(e->button()==Qt::LeftButton){
+        emit clicked();
+    }
+    QWidget::mouseReleaseEvent(e);
 }
