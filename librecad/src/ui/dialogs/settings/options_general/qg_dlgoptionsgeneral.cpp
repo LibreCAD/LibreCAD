@@ -76,10 +76,7 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
 
     connect(cbGridExtendAxisLines, &QCheckBox::toggled, this, &QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled);
 
-    connect(cbShowMetaGrid, &QCheckBox::toggled, this, &QG_DlgOptionsGeneral::on_cbShowMetaGridToggled);
-
     connect(tbShortcuts, &QToolButton::clicked, this, &QG_DlgOptionsGeneral::setShortcutsMappingsFoler);
-
 
 }
 
@@ -218,12 +215,15 @@ void QG_DlgOptionsGeneral::init() {
         int minTextHeight = LC_GET_INT("MinRenderableTextHeightPx", 4);
         sbTextMinHeight->setValue(minTextHeight);
 
-        checked = LC_GET_BOOL("metaGridShow", true);
-        cbShowMetaGrid->setChecked(checked);
+        checked = LC_GET_BOOL("GridDraw", true);
+        cbDrawGrid->setChecked(checked);
+
+        checked = LC_GET_BOOL("metaGridDraw", true);
+        cbDrawMetaGrid->setChecked(checked);
 
         wMetaGridLinesLineType->init(false, false, false);
         wMetaGridPointsLineType->init(false, false, false);
-        wGridPointsLineType->init(false, false, false);
+
         wGridLinesLineType->init(false, false, false);
 
         RS2::LineType metaGridPointsLineType = static_cast<RS2::LineType> (LC_GET_INT("metaGridLineType", RS2::DotLineTiny));
@@ -231,9 +231,6 @@ void QG_DlgOptionsGeneral::init() {
 
         RS2::LineType metaGridLinesLineType = static_cast<RS2::LineType> (LC_GET_INT("metaGridLinesLineType", RS2::SolidLine));
         wMetaGridLinesLineType->setLineType(metaGridLinesLineType);
-
-        RS2::LineType gridPointsLineType = static_cast<RS2::LineType> (LC_GET_INT("GridLineType", RS2::DotLine));
-        wGridPointsLineType->setLineType(gridPointsLineType);
 
         RS2::LineType gridLinesLineType = static_cast<RS2::LineType> (LC_GET_INT("GridLinesLineType", RS2::DotLine));
         wGridLinesLineType->setLineType(gridLinesLineType);
@@ -243,9 +240,6 @@ void QG_DlgOptionsGeneral::init() {
 
         int metagridLinesWidthPx = LC_GET_INT("metaGridLinesLineWidth", 1);
         sbMetaGridLinesWidth->setValue(metagridLinesWidthPx);
-
-        int gridPointsWidthPx = LC_GET_INT("GridLinePointsWidth", 1);
-        sbGridPointsLineWidth->setValue(gridPointsWidthPx);
 
         int gridLinesWidthPx = LC_GET_INT("GridLineLinesWidth", 1);
         sbGridLinesLineWidth->setValue(gridLinesWidthPx);
@@ -450,15 +444,13 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("ZeroShortAxisMarkSize", sbAxisSize->value());
             LC_SET("AllowMenusTearOff", cbAllowMenusDetaching->isChecked());
             LC_SET("MinRenderableTextHeightPx", sbTextMinHeight->value());
-            LC_SET("metaGridShow", cbShowMetaGrid->isChecked());
+            LC_SET("metaGridDraw", cbDrawMetaGrid->isChecked());
+            LC_SET("GridDraw", cbDrawGrid->isChecked());
             LC_SET("metaGridPointsLineType", wMetaGridPointsLineType->getLineType());
             LC_SET("metaGridLinesLineType", wMetaGridLinesLineType->getLineType());
             LC_SET("metaGridPointsLineWidth", sbMetaGridPointsWidth->value());
             LC_SET("metaGridLinesLineWidth", sbMetaGridLinesWidth->value());
-
-            LC_SET("GridPointsLineType", wGridPointsLineType->getLineType());
             LC_SET("GridLinesLineType", wGridLinesLineType->getLineType());
-            LC_SET("GridPointsLineWidth", sbGridPointsLineWidth->value());
             LC_SET("GridLinesLineWidth", sbGridLinesLineWidth->value());
             LC_SET("GridRenderSimple", cbSimpleGridRendring->isChecked());
             LC_SET("GridDisableWithinPan", cbDisableGridOnPanning->isChecked());
@@ -765,17 +757,6 @@ void QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled() {
     sbAxisSize->setEnabled(!extend);
     cbXAxisAreas->setEnabled(extend);
     cbYAxisAreas->setEnabled(extend);
-}
-
-void QG_DlgOptionsGeneral::on_cbShowMetaGridToggled() {
-    /*bool metagrid = cbShowMetaGrid->isChecked();
-    lMetaGridColor->setEnabled(metagrid);
-    cbMetaGridColor->setEnabled(metagrid);
-    pb_meta->setEnabled(metagrid);
-    wMetaGridLineType->setEnabled(metagrid);
-    lMetaGridLineType->setEnabled(metagrid);
-    lMetaGridLineWidth->setEnabled(metagrid);
-    sbMetaGridWidth->setEnabled(metagrid);*/
 }
 
 void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state) {

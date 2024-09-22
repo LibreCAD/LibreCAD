@@ -52,7 +52,6 @@ protected slots:
     void on_cbVisualizeHoveringClicked();
     void on_cbPersistentDialogsClicked();
     void on_cbGridExtendAxisLinesToggled();
-    void on_cbShowMetaGridToggled();
 
 private slots:
     void on_tabWidget_currentChanged(int index);
