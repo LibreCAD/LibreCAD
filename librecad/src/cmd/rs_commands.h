@@ -76,7 +76,7 @@ private:
     std::map<QString, RS2::ActionType> m_mainCommands;
     std::map<QString, RS2::ActionType> m_shortCommands;
     // from action to command
-    std::map<RS2::ActionType, QString> m_revLookUp;
+    std::map<RS2::ActionType, QString> m_actionToCommand;
     // key=english command , value = translated
     std::map<QString, QString> m_cmdTranslation;
 };

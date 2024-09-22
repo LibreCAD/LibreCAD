@@ -1028,34 +1028,34 @@ RS_Commands::RS_Commands() {
         for(auto const& p0: c0.fullCmdList){
             if (isCollisionFree(m_cmdTranslation, p0.first, p0.second))
                 m_cmdTranslation[p0.first] = p0.second;
-            if (isCollisionFree(m_mainCommands, p0.second, act, m_revLookUp.count(act) ? m_revLookUp[act] : QString{})) {
+            if (isCollisionFree(m_mainCommands, p0.second, act, m_actionToCommand.count(act) ? m_actionToCommand[act] : QString{})) {
                 m_mainCommands[p0.second] = act;
-                m_revLookUp.emplace(act, p0.second);
+                m_actionToCommand.emplace(act, p0.second);
             }
         }
         for(auto const& p0: c0.fullCmdList){
-            if(isCollisionFree(m_mainCommands, p0.first, act, m_revLookUp.count(act) ? m_revLookUp[act] : QString{})) {
+            if(isCollisionFree(m_mainCommands, p0.first, act, m_actionToCommand.count(act) ? m_actionToCommand[act] : QString{})) {
                 // enable english commands, if no conflict is found
                 m_mainCommands[p0.first]=act;
-                m_revLookUp.emplace(act, p0.first);
+                m_actionToCommand.emplace(act, p0.first);
             }
         }
         //add short commands
         for(auto const& p1: c0.shortCmdList){
             if(isCollisionFree(m_cmdTranslation, p1.first, p1.second))
                 m_cmdTranslation[p1.first]=p1.second;
-            if(isCollisionFree(m_shortCommands, p1.second, act, m_revLookUp.count(act) ? m_revLookUp[act] : QString{})) {
+            if(isCollisionFree(m_shortCommands, p1.second, act, m_actionToCommand.count(act) ? m_actionToCommand[act] : QString{})) {
                 m_shortCommands[p1.second]=act;
-                if (m_revLookUp.count(act) == 0)
-                    m_revLookUp.emplace(act, p1.second);
+                if (m_actionToCommand.count(act) == 0)
+                    m_actionToCommand.emplace(act, p1.second);
             }
         }
         for(auto const& p1: c0.shortCmdList){
-            if(isCollisionFree(m_shortCommands, p1.first, act, m_revLookUp.count(act) ? m_revLookUp[act] : QString{})) {
+            if(isCollisionFree(m_shortCommands, p1.first, act, m_actionToCommand.count(act) ? m_actionToCommand[act] : QString{})) {
                 // enable english short commands, if no conflict is found
                 m_shortCommands[p1.first]=act;
-                if (m_revLookUp.count(act) == 0)
-                    m_revLookUp.emplace(act, p1.second);
+                if (m_actionToCommand.count(act) == 0)
+                    m_actionToCommand.emplace(act, p1.second);
             }
         }
     }
