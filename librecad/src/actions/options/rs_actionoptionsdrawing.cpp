@@ -31,10 +31,11 @@
 #include "rs_debug.h"
 
 RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
+        RS_GraphicView& graphicView, int tabIndex)
         :RS_ActionInterface("Drawing Options",
                     container, graphicView) {
 	actionType=RS2::ActionOptionsDrawing;
+ tabToShow = tabIndex;
 }
 
 void RS_ActionOptionsDrawing::init(int status) {
@@ -50,7 +51,7 @@ void RS_ActionOptionsDrawing::trigger() {
 //        else{
 //            LC_ERR << "Graphic view NOT not -  START";
 //        }
-        int dialogResult = RS_DIALOGFACTORY->requestOptionsDrawingDialog(*graphic);
+        int dialogResult = RS_DIALOGFACTORY->requestOptionsDrawingDialog(*graphic,tabToShow);
         if (dialogResult == QDialog::Accepted){
             updateCoordinateWidgetFormat();
             if (graphicView != nullptr) {

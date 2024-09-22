@@ -995,6 +995,11 @@ void LC_WidgetFactory::initStatusBar() {
         tb->setObjectName("TBGridStatus");
         tb->addWidget(main_window->grid_status);
         tb->setProperty("_group", 3);
+
+        main_window->grid_status->setToolTip("Current size of Grid/MetaGrid. Click to change grid size.");
+
+        connect(main_window->grid_status, &TwoStackedLabels::clicked, main_window, &QC_ApplicationWindow::slotShowDrawingOptions);
+
 /*
         tb->addSeparator();
 

@@ -1021,6 +1021,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionOptionsDrawing:
             a = new RS_ActionOptionsDrawing(*document, *view);
             break;
+        case RS2::ActionOptionsDrawingGrid:
+            a = new RS_ActionOptionsDrawing(*document, *view, 2);
+            break;
         default:
             RS_DEBUG->print(RS_Debug::D_WARNING,
                             "QG_ActionHandler::setCurrentAction():"

@@ -861,6 +861,10 @@ void QC_ApplicationWindow::slotError(const QString& msg) {
         commandWidget->appendHistory(msg);
 }
 
+void QC_ApplicationWindow::slotShowDrawingOptions() {
+    actionHandler->setCurrentAction(RS2::ActionOptionsDrawingGrid);
+}
+
 /**
  * Hands focus back to the application window. In the rare event
  * of a escape press from the layer widget (e.g after switching desktops

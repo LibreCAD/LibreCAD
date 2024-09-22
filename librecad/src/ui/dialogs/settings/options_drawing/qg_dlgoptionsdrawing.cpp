@@ -87,9 +87,18 @@ QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent)
     connect(cbAngleFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updatePreview);
 
 
+    connect(rbIsoLeft, &QCheckBox::toggled, this, &QG_DlgOptionsDrawing::disableXSpacing);
+    connect(rbIsoRight, &QCheckBox::toggled, this, &QG_DlgOptionsDrawing::disableXSpacing);
+    connect(rbIsoTop, &QCheckBox::toggled, this, &QG_DlgOptionsDrawing::disableXSpacing);
+    connect(rbOrthogonalGrid,  &QCheckBox::toggled, this, &QG_DlgOptionsDrawing::enableXSpacing);
+
+
+
     tabWidget->setCurrentIndex(0);
     init();
 }
+
+
 
 /*
  *  Destroys the object and frees any allocated resources
@@ -256,6 +265,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
 
     *spacing = graphic->getVariableVector("$GRIDUNIT",
                                           {0.0, 0.0});
+
     cbXSpacing->setEditText(QString("%1").arg(spacing->x));
     cbYSpacing->setEditText(QString("%1").arg(spacing->y));
 
@@ -264,6 +274,33 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
     }
     if (cbYSpacing->currentText() == "0") {
         cbYSpacing->setEditText(tr("auto"));
+    }
+    LC_GROUP("Appearance");
+    {
+        bool state = LC_GET_BOOL("ScaleGrid");
+        if (state) {
+            lGridStateScaling->setText(tr("ON"));
+        } else {
+            lGridStateScaling->setText(tr("OFF"));
+        }
+        state = LC_GET_BOOL("UnitlessGrid");
+        if (state) {
+            lGridStateUnitless->setText(tr("ON"));
+        } else {
+            lGridStateUnitless->setText(tr("OFF"));
+        }
+        state = LC_GET_BOOL("GridDraw");
+        if (state) {
+            lGridStateDrawGrid->setText(tr("ON"));
+        } else {
+            lGridStateDrawGrid->setText(tr("OFF"));
+        }
+        state = LC_GET_BOOL("metaGridDraw");
+        if (state) {
+            lGridStateDrawMetaGrid->setText(tr("ON"));
+        } else {
+            lGridStateDrawMetaGrid->setText(tr("OFF"));
+        }
     }
     cbXSpacing->setEnabled(cbGridOn->isChecked() && rbOrthogonalGrid->isChecked());
     cbYSpacing->setEnabled(cbGridOn->isChecked());
@@ -1059,33 +1096,7 @@ void QG_DlgOptionsDrawing::showEvent(QShowEvent* event) {
     updatePaperPreview();
     LC_Dialog::showEvent(event);
 }
-// fixme - sand - review and probably remove after investigating GridSpacingX setting
-void QG_DlgOptionsDrawing::on_rbIsometricGrid_clicked(){
-    /*if(rbIsometricGrid->isChecked()){
-        rbOrthogonalGrid->setChecked(false);
-        graphic->setIsometricGrid(true);
-        cbXSpacing->setDisabled(true);
-        rbCrosshairLeft->setDisabled(false);
-        rbCrosshairTop->setDisabled(false);
-        rbCrosshairRight->setDisabled(false);
-    }else{
-        rbIsometricGrid->setChecked(true);
-    }*/
-}
 
-// fixme - sand - review and probably remove after investigating GridSpacingX setting
-void QG_DlgOptionsDrawing::on_rbOrthogonalGrid_clicked(){
-  /*  if( rbOrthogonalGrid->isChecked()) {
-        rbIsometricGrid->setChecked(false);
-        graphic->setIsometricGrid(false);
-        cbXSpacing->setDisabled(false);
-        rbCrosshairLeft->setDisabled(true);
-        rbCrosshairTop->setDisabled(true);
-        rbCrosshairRight->setDisabled(true);
-    }else{
-        rbOrthogonalGrid->setChecked(true);
-    }*/
-}
 // fixme - sand - review and probably remove after investigating GridSpacingX setting
 void QG_DlgOptionsDrawing::on_cbGridOn_toggled(bool checked){
     rbIsoTop->setEnabled(checked);
@@ -1100,10 +1111,21 @@ void QG_DlgOptionsDrawing::onLandscapeToggled(bool /*checked*/) {
     updatePaperSize();
 }
 
+void QG_DlgOptionsDrawing::disableXSpacing(bool checked) {
+    if (checked){
+        cbXSpacing->setEnabled(false);
+    }
+}
+
+void QG_DlgOptionsDrawing::enableXSpacing(bool checked) {
+    if (checked){
+        cbXSpacing ->setEnabled(true);
+    }
+}
+
 void QG_DlgOptionsDrawing::onDimFxLonToggled(bool checked) {
     cbDimFxL->setEnabled(checked);
 }
-
 
 void QG_DlgOptionsDrawing::onRelSizeToggled([[maybe_unused]] bool checked) {
 //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgOptionsDrawing::on_rbRelSize_toggled, checked = %d",checked);
@@ -1117,4 +1139,10 @@ void QG_DlgOptionsDrawing::updateLPtSzUnits() {
         lPtSzUnits->setText(QApplication::translate("QG_DlgOptionsDrawing", "Screen %", nullptr));
     else
         lPtSzUnits->setText(QApplication::translate("QG_DlgOptionsDrawing", "Dwg Units", nullptr));
+}
+
+void QG_DlgOptionsDrawing::showInitialTab(int tabIndex) {
+    if (tabIndex > 0){
+        tabWidget->setCurrentIndex(tabIndex);
+    }
 }

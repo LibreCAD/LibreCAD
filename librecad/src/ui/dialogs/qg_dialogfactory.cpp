@@ -1051,9 +1051,10 @@ void QG_DialogFactory::requestKeyboardShortcutsDialog(LC_ActionGroupManager *pMa
 /**
  * Shows dialog for drawing options.
  */
-int QG_DialogFactory::requestOptionsDrawingDialog(RS_Graphic& graphic) {
+int QG_DialogFactory::requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIndex) {
     QG_DlgOptionsDrawing dlg(parent);
     dlg.setGraphic(&graphic);
+    dlg.showInitialTab(tabIndex);
     int result = dlg.exec();
     return result;
 }

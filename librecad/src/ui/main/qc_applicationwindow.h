@@ -123,7 +123,7 @@ public slots:
     void slotFocusCommandLine();
     void slotFocusOptionsWidget();
     void slotError(const QString& msg);
-
+    void slotShowDrawingOptions();
 
     void slotWindowActivated(QMdiSubWindow* w, bool forced=false) override;
     void slotWindowsMenuAboutToShow();

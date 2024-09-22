@@ -369,7 +369,7 @@ public:
          *
          * @param graphic Graphic document.
      */
-    virtual int requestOptionsDrawingDialog(RS_Graphic& graphic) = 0;
+    virtual int requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIndex = -1) = 0;
 
     /**
      * This virtual method must be overwritten and must present
