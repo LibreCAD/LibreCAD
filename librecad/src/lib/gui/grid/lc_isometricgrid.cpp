@@ -38,6 +38,19 @@ LC_IsometricGrid::LC_IsometricGrid(LC_GridSystem::LC_GridOptions *options, int i
     gridLattice = new LC_Lattice();
 }
 
+void LC_IsometricGrid::setCellSize(const RS_Vector &gridWidth, const RS_Vector &metaGridWidth) {
+    // for isometric grid, we ignore irregular grid (so far, may be latter better support of them will be added).
+    // and thus we use only Y coordinate
+    double gridY = gridWidth.y;
+    if (gridY != gridWidth.x){
+        gridCellSize = RS_Vector(gridY, gridY);
+        metaGridCellSize = RS_Vector(metaGridWidth.y, metaGridWidth.y);
+    }
+    else {
+        LC_GridSystem::setCellSize(gridWidth, metaGridWidth);
+    }
+}
+
 RS_Vector LC_IsometricGrid::snapGrid(const RS_Vector &coord) const {
     RS_Vector normalizedPosition(coord - gridBasePoint);
 
@@ -518,7 +531,7 @@ void LC_IsometricGrid::calculateTilesGridMetrics(const RS_Vector &maxCorner, con
     tilesDelta = RS_Vector(isometricCell.x, metaVerticalY);
 }
 
-// fixme - rework for using screen coords
+
 void LC_IsometricGrid::fillTilesRowsByPointsExceptDiagonal() {
     RS_Vector startPoint = tilesStartPoint;
     double currentY = startPoint.y;

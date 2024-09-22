@@ -68,10 +68,9 @@ void LC_GridSystem::doCreateGrid(
     bool metaGridVisible = gridOptions->drawMetaGrid && metaGridWidth.valid;
     bool simpleGridRendering = gridOptions->simpleGridRendering;
 
-    metaGridCellSize = metaGridWidth;
-    gridCellSize = gridWidth;
+    setCellSize(gridWidth, metaGridWidth);
 
-    createCellVector(gridWidth);
+    createCellVector(gridCellSize);
     determineMetaGridBoundaries(viewZero, viewSize);
     prepareGridOther(viewZero, viewSize);
 
@@ -84,12 +83,12 @@ void LC_GridSystem::doCreateGrid(
             // grid lines data
             int lineOffsetPx = gridOptions->metaGridLineWidthPx * 2;
             RS_Vector lineOffset = view->toGraphD(lineOffsetPx, lineOffsetPx);
-            createGridLines(viewZero, viewSize, gridWidth, drawGridWithoutGaps, lineOffset);
+            createGridLines(viewZero, viewSize, gridCellSize, drawGridWithoutGaps, lineOffset);
             gridLattice->toGui(view);
         } else {
             // create points array
             if (isNumberOfPointsValid(numPointsTotal)) {
-                createGridPoints(viewZero, viewSize, gridWidth, drawGridWithoutGaps, numPointsTotal);
+                createGridPoints(viewZero, viewSize, gridCellSize, drawGridWithoutGaps, numPointsTotal);
                 gridLattice->toGui(view);
             } else {
                 gridLattice->init(0);
@@ -107,6 +106,11 @@ void LC_GridSystem::doCreateGrid(
     else{
         metaGridLattice->init(0);
     }
+}
+
+void LC_GridSystem::setCellSize(const RS_Vector &gridWidth, const RS_Vector &metaGridWidth) {
+    metaGridCellSize = metaGridWidth;
+    gridCellSize = gridWidth;
 }
 
 void LC_GridSystem::setOptions(LC_GridSystem::LC_GridOptions *options) {

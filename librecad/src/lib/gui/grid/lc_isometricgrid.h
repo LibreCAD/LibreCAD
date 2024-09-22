@@ -85,6 +85,8 @@ protected:
     void createCellVector(const RS_Vector &gridWidth);
     void determineMetaGridBoundaries(const RS_Vector &viewZero, const RS_Vector &viewSize) override;
     void prepareGridOther(const RS_Vector &viewZero, const RS_Vector &viewSize);
+
+    void setCellSize(const RS_Vector &gridWidth, const RS_Vector &metaGridWidth) override;
 };
 
 #endif // LC_ISOMETRICGRID_H

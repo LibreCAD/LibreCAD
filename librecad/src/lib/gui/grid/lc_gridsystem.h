@@ -133,6 +133,8 @@ protected:
     double truncToStep(double value, double step);
     void doDrawLines(RS_Painter *painter, RS_GraphicView *view, LC_Lattice *lattice);
     bool isNumberOfPointsValid(int numberOfPoints);
+
+    virtual void setCellSize(const RS_Vector &gridWidth, const RS_Vector &metaGridWidth);
 };
 
 #endif // LC_GRIDSYSTEM_H
