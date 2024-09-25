@@ -101,6 +101,8 @@
 #include "qg_mousewidget.h"
 #include "qg_recentfiles.h"
 #include "lc_mdiapplicationwindow.h"
+#include "lc_releasechecker.h"
+#include "lc_dlgnewversionavailable.h"
 
 #ifndef QC_APP_ICON
 # define QC_APP_ICON ":/main/librecad.png"
@@ -203,9 +205,6 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     if (custom_size)
         setIconSize(QSize(icon_size, icon_size));
-
-
-
 
     if (enable_left_sidebar){
         int leftSidebarColumnsCount = settings.value("Widgets/LeftToolbarColumnsCount", 5).toInt();
@@ -340,6 +339,27 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     loadPlugins();
 
     statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
+    LC_GET_BOOL("Startup");
+    {
+        const char *ownBuildVersion = XSTR(LC_VERSION);
+        bool checkForNewVersion = LC_GET_BOOL("CheckForNewVersions", true);
+        bool ignorePreReleases = LC_GET_BOOL("IgnorePreReleaseVersions", true);
+        QString skippedRelease = LC_GET_STR("SkippedRelease", ownBuildVersion);
+        QString skippedPreRelease = LC_GET_STR("SkippedPreRelease", ownBuildVersion);
+        releaseChecker = new LC_ReleaseChecker(ignorePreReleases, ownBuildVersion, XSTR(LC_PRERELEASE), skippedPreRelease,
+                                               skippedRelease);
+        connect(releaseChecker, &LC_ReleaseChecker::updatesAvailable, this, &QC_ApplicationWindow::onNewVersionAvailable);
+    }
+    LC_GROUP_END();
+}
+
+void QC_ApplicationWindow::checkForNewVersion() { releaseChecker->checkForNewVersion(); }
+
+void QC_ApplicationWindow::onNewVersionAvailable() {
+    LC_DlgNewVersionAvailable dlg(this, releaseChecker);
+    if (dlg.exec()) {
+
+    }
 }
 
 void QC_ApplicationWindow::startAutoSave(bool startAutoBackup) {

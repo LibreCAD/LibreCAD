@@ -244,6 +244,8 @@ struct QG_GraphicView::AutoPanData{
 
 void updateGridPoint();
 
+void paintUnbuffered();
+
 /**
  * Constructor.
  */
@@ -1192,6 +1194,73 @@ void QG_GraphicView::updateGridPoints(){
  * have from the last call..
  */
 void QG_GraphicView::paintEvent(QPaintEvent *){
+    if (classicRenderer) {
+        paintClassicalBuffered();
+    }
+    else{
+        paintSequental();
+    }
+
+    redrawMethod=RS2::RedrawNone;
+//    LC_ERR << "Redraw END";
+}
+
+
+void QG_GraphicView::paintSequental() {
+    int width = getWidth();
+    int height = getHeight();
+    view_rect = LC_Rect(toGraph(0, 0),
+                        toGraph(width, height));
+
+    QSize const s0(width, height);
+    if (pixmapLayer1.size() != s0){
+        pixmapLayer1 = QPixmap(width, height);
+        redrawMethod=(RS2::RedrawMethod ) (redrawMethod | RS2::RedrawGrid);
+    }
+
+    if (redrawMethod & RS2::RedrawGrid) {
+        pixmapLayer1.fill(getBackground());
+        RS_PainterQt painter1(&pixmapLayer1);
+        if (antialiasing) {
+            painter1.setRenderHint(QPainter::Antialiasing);
+        }
+        drawLayer1(&painter1);
+        painter1.end();
+        redrawMethod=(RS2::RedrawMethod ) (redrawMethod | RS2::RedrawDrawing);
+    }
+
+    if (redrawMethod & RS2::RedrawDrawing) {
+        // DRaw layer 2
+        pixmapLayer2 = pixmapLayer1;
+        RS_PainterQt painter2(&pixmapLayer2);
+        if (antialiasing) {
+            painter2.setRenderHint(QPainter::Antialiasing);
+        }
+        painter2.setDrawingMode(drawingMode);
+        painter2.setDrawSelectedOnly(false);
+        drawLayer2( &painter2);
+        painter2.setDrawSelectedOnly(true);
+        drawLayer2( &painter2);
+        painter2.end();
+        redrawMethod=(RS2::RedrawMethod ) (redrawMethod | RS2::RedrawOverlay);
+    }
+
+    if (redrawMethod & RS2::RedrawOverlay) {
+        pixmapLayer3 = pixmapLayer2;
+        RS_PainterQt painter3(&pixmapLayer3);
+        if (antialiasing) {
+            painter3.setRenderHint(QPainter::Antialiasing);
+        }
+        this->drawLayer3(&painter3);
+        painter3.end();
+    }
+
+    RS_PainterQt wPainter(this);
+    wPainter.drawPixmap(0, 0, pixmapLayer3);
+    wPainter.end();
+}
+
+void QG_GraphicView::paintClassicalBuffered() {
     // Re-Create or get the layering pixmaps
     getPixmapForView(PixmapLayer1);
     getPixmapForView(PixmapLayer2);
@@ -1203,57 +1272,54 @@ void QG_GraphicView::paintEvent(QPaintEvent *){
 //        LC_ERR << "Redraw Grid";
         PixmapLayer1->fill(getBackground());
         RS_PainterQt painter1(PixmapLayer1.get());
-        drawLayer1((RS_Painter*)&painter1);
+        drawLayer1((RS_Painter *) &painter1);
         painter1.end();
     }
 
     if (redrawMethod & RS2::RedrawDrawing) {
 //        LC_ERR << "Redraw Drawing";
         view_rect = LC_Rect(toGraph(0, 0),
-                            toGraph(getWidth(), getHeight()));
+                                  toGraph(getWidth(), getHeight()));
         // DRaw layer 2
         PixmapLayer2->fill(Qt::transparent);
         RS_PainterQt painter2(PixmapLayer2.get());
-        if (antialiasing)
-        {
+        if (antialiasing) {
             painter2.setRenderHint(QPainter::Antialiasing);
         }
         painter2.setDrawingMode(drawingMode);
         painter2.setDrawSelectedOnly(false);
-        drawLayer2((RS_Painter*)&painter2);
+        drawLayer2((RS_Painter *) &painter2);
         painter2.setDrawSelectedOnly(true);
-        drawLayer2((RS_Painter*)&painter2);
+        drawLayer2((RS_Painter *) &painter2);
         painter2.end();
     }
 
-    if (redrawMethod & RS2::RedrawOverlay)
-    {
+    if (redrawMethod & RS2::RedrawOverlay) {
 //        LC_ERR << "Redraw Overlay";
         PixmapLayer3->fill(Qt::transparent);
         RS_PainterQt painter3(PixmapLayer3.get());
-        if (antialiasing)
-        {
+        if (antialiasing) {
             painter3.setRenderHint(QPainter::Antialiasing);
         }
-        drawLayer3((RS_Painter*)&painter3);
+        drawLayer3((RS_Painter *) &painter3);
         painter3.end();
     }
 
     // Finally paint the layers back on the screen, bitblk to the rescue!
     RS_PainterQt wPainter(this);
-    wPainter.drawPixmap(0,0,*PixmapLayer1);
-    wPainter.drawPixmap(0,0,*PixmapLayer2);
-    wPainter.drawPixmap(0,0,*PixmapLayer3);
+    wPainter.drawPixmap(0, 0, *PixmapLayer1);
+    wPainter.drawPixmap(0, 0, *PixmapLayer2);
+    wPainter.drawPixmap(0, 0, *PixmapLayer3);
     wPainter.end();
-
-    redrawMethod=RS2::RedrawNone;
-//    LC_ERR << "Redraw END";
 }
 
 #define HIDE_SELECT_CURSOR false
 
 void QG_GraphicView::loadSettings() {
     RS_GraphicView::loadSettings();
+    antialiasing  = LC_GET_ONE_BOOL("Appearance","Antialiasing");
+    classicRenderer =  LC_GET_BOOL("ClassicRenderer", true);
+
     if (HIDE_SELECT_CURSOR) {
         // potentially, select cursor may be also hidden and so snapper will be used instead of cursor.
         // however, this will require review and modifications of significant amount of actions, so

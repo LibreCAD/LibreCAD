@@ -41,6 +41,7 @@
 #include "lc_penpalettewidget.h"
 #include "lc_quickinfowidget.h"
 #include "lc_mdiapplicationwindow.h"
+#include "lc_releasechecker.h"
 
 class LC_ActionGroupManager;
 class LC_CustomToolbar;
@@ -167,7 +168,7 @@ public slots:
     /** closing the current file */
     void slotFileClosing(QC_MDIWindow*);
 	/** close all files; return false == operation cancelled */
-	bool slotFileCloseAll();
+	   bool slotFileCloseAll();
     /** prints the current file */
     void slotFilePrint(bool printPDF=false);
     void slotFilePrintPDF();
@@ -233,14 +234,15 @@ public slots:
     void updateMenu(const QString& menu_name);
 
     void invokeLicenseWindow();
-
-
+    void onNewVersionAvailable();
+    void checkForNewVersion();
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);
     void printPreviewChanged(bool on);
     void windowsChanged(bool windowsLeft);
     void signalEnableRelativeZeroSnaps(const bool);
+
 
 public:
     /**
@@ -415,6 +417,8 @@ private:
 
     QList<QAction*> actionsToDisableInPrintPreview;
 
+    LC_ReleaseChecker* releaseChecker;
+
     void enableWidgets(bool enable);
 
     friend class LC_WidgetFactory;
@@ -422,6 +426,7 @@ private:
     void updateGridViewActions(bool isometric, RS2::IsoGridViewType type);
 
     void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType);
+
 };
 
 #ifdef _WINDOWS

@@ -340,45 +340,51 @@ int main(int argc, char** argv)
         reopenLastFiles = LC_GET_BOOL("OpenLastOpenedFiles");
         lastFiles = LC_GET_STR("LastOpenFilesList", "");
         activeFile = LC_GET_STR("LastOpenFilesActive", "");
-    }
 
-    if (reopenLastFiles && fileList.isEmpty() && !lastFiles.isEmpty()){
-        foreach(const QString& filename, lastFiles.split(";")) {
-            if (!filename.isEmpty() && QFileInfo::exists(filename))
-                fileList << filename;
+
+        if (reopenLastFiles && fileList.isEmpty() && !lastFiles.isEmpty()) {
+                foreach(const QString &filename, lastFiles.split(";")) {
+                    if (!filename.isEmpty() && QFileInfo::exists(filename))
+                        fileList << filename;
+                }
+        }
+
+        bool files_loaded = false;
+        for (QStringList::Iterator it = fileList.begin(); it != fileList.end(); ++it) {
+            if (show_splash) {
+                splash->showMessage(QObject::tr("Loading File %1..")
+                                        .arg(QDir::toNativeSeparators(*it)),
+                                    Qt::AlignRight | Qt::AlignBottom, Qt::black);
+                qApp->processEvents();
+            }
+            appWin.slotFileOpen(*it);
+            files_loaded = true;
+        }
+
+        if (reopenLastFiles) {
+            appWin.activateWindowWithFile(activeFile);
+        }
+        RS_DEBUG->print("main: loading files: OK");
+
+        if (!files_loaded) {
+            appWin.slotFileNewNew();
+        }
+
+        if (show_splash)
+            splash->finish(&appWin);
+        else
+            delete splash;
+
+        bool checkForNewVersion = LC_GET_BOOL("CheckForNewVersions", true);
+        if (checkForNewVersion) {
+            appWin.checkForNewVersion();
         }
     }
-
-    bool files_loaded = false;
-    for (QStringList::Iterator it = fileList.begin(); it != fileList.end(); ++it ) {
-        if (show_splash){
-            splash->showMessage(QObject::tr("Loading File %1..")
-                    .arg(QDir::toNativeSeparators(*it)),
-            Qt::AlignRight|Qt::AlignBottom, Qt::black);
-            qApp->processEvents();
-        }
-        appWin.slotFileOpen(*it);
-        files_loaded = true;
-    }
-
-    if (reopenLastFiles){
-        appWin.activateWindowWithFile(activeFile);
-    }
-    RS_DEBUG->print("main: loading files: OK");
-
-    if (!files_loaded) {
-        appWin.slotFileNewNew();
-    }
-
-    if (show_splash)
-        splash->finish(&appWin);
-    else
-        delete splash;
-
     if (first_load)
         settings.setValue("Startup/FirstLoad", 0);
 
     RS_DEBUG->print("main: entering Qt event loop");
+
 
     int return_code = app.exec();
 

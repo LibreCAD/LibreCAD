@@ -17,6 +17,7 @@ set(Qt6Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Core")
 set(Qt6Svg_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Svg")
 set(Qt6CoreTools_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6CoreTools")
 set(Qt6Gui_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtGui")
+set(QtNetwork_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtNetwork")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOUIC_OPTIONS --connections string)
@@ -28,8 +29,11 @@ set(CMAKE_AUTORCC ON)
 add_compile_definitions(DWGSUPPORT)
 add_compile_definitions(MUPARSER_STATIC)
 
+add_compile_definitions(LC_VERSION=2.2.0.2)
+add_compile_definitions(LC_PRERELEASE=true)
 
-find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Core5Compat REQUIRED)
+
+find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Core5Compat Network REQUIRED)
 #find_package(Qt5 COMPONENTS Widgets REQUIRED)
 #qt_standard_project_setup()
 
@@ -1231,6 +1235,10 @@ set(SOURCES
 		librecad/src/lib/gui/grid/lc_gridsystem.cpp
 		librecad/src/lib/gui/grid/lc_isometricgrid.cpp
 		librecad/src/lib/engine/lc_crosshair.cpp
+		librecad/src/ui/main/lc_releasechecker.h
+		librecad/src/ui/main/lc_releasechecker.cpp
+		librecad/src/ui/dialogs/main/lc_dlgnewversionavailable.h
+		librecad/src/ui/dialogs/main/lc_dlgnewversionavailable.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
@@ -1365,7 +1373,7 @@ qt_add_executable(librecad
 	${SOURCES})
 
 #add_executable(LibreCAD ${SOURCES})
-target_link_libraries(librecad PRIVATE Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg)
+target_link_libraries(librecad PRIVATE Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt::Network)
 
 #set_target_properties(librecad PROPERTIES
 #	WIN32_EXECUTABLE ON

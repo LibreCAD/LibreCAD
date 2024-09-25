@@ -37,6 +37,7 @@
 #include "rs_units.h"
 #include "lc_defaults.h"
 #include "rs_math.h"
+#include "main.h"
 
 /*
  *  Constructs a QG_DlgOptionsGeneral as a child of 'parent', with the
@@ -77,6 +78,9 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
     connect(cbGridExtendAxisLines, &QCheckBox::toggled, this, &QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled);
 
     connect(tbShortcuts, &QToolButton::clicked, this, &QG_DlgOptionsGeneral::setShortcutsMappingsFoler);
+
+    connect(cbCheckNewVersion, &QCheckBox::toggled,
+            this, &QG_DlgOptionsGeneral::onCheckNewVersionChanged);
 
 }
 
@@ -172,6 +176,9 @@ void QG_DlgOptionsGeneral::init() {
 
         bool checked = LC_GET_BOOL("Antialiasing");
         cb_antialiasing->setChecked(checked);
+
+        checked = LC_GET_BOOL("ClassicRenderer", true);
+        cbClassicRendering->setChecked(checked);
 
         checked = LC_GET_BOOL("UnitlessGrid");
         cb_unitless_grid->setChecked(checked);
@@ -372,6 +379,9 @@ void QG_DlgOptionsGeneral::init() {
         cbOpenLastFiles->setChecked(LC_GET_BOOL("OpenLastOpenedFiles", true));
         originalUseClassicToolbar = LC_GET_BOOL("UseClassicStatusBar", false);
         cbClassicStatusBar->setChecked(originalUseClassicToolbar);
+
+        cbCheckNewVersion->setChecked(LC_GET_BOOL("CheckForNewVersions", true));
+        cbCheckNewVersionIgnorePreRelease->setChecked(LC_GET_BOOL("IgnorePreReleaseVersions", true));
     }
     LC_GROUP_END();
 
@@ -380,6 +390,8 @@ void QG_DlgOptionsGeneral::init() {
         cbEvaluateOnSpace->setChecked(LC_GET_BOOL("EvaluateCommandOnSpace"));
         cbToggleFreeSnapOnSpace->setChecked(LC_GET_BOOL("ToggleFreeSnapOnSpace"));
     }
+
+    cbCheckNewVersionIgnorePreRelease->setEnabled(!XSTR(LC_PRERELEASE));
 
     initReferencePoints();
 
@@ -430,6 +442,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("showSnapOptionsInSnapToolbar", cbShowSnapOptionsInSnapBar->isChecked());
             LC_SET("UnitlessGrid", cb_unitless_grid->isChecked());
             LC_SET("Antialiasing", cb_antialiasing->isChecked());
+            LC_SET("ClassicRenderer", cbClassicRendering->isChecked());
             LC_SET("Autopanning", cb_autopanning->isChecked());
             LC_SET("ScrollBars", scrollbars_check_box->isChecked());
             LC_SET("ShowKeyboardShortcutsInTooltips", cbShowKeyboardShortcutsInToolTips->isChecked());
@@ -549,6 +562,8 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("EnableCADToolbars", cad_toolbars_checkbox->isChecked());
             LC_SET("OpenLastOpenedFiles", cbOpenLastFiles->isChecked());
             LC_SET("UseClassicStatusBar", cbClassicStatusBar->isChecked());
+            LC_SET("CheckForNewVersions", cbCheckNewVersion->isChecked());
+            LC_SET("IgnorePreReleaseVersions", cbCheckNewVersionIgnorePreRelease->isChecked());
         }
         LC_GROUP_END();
 
@@ -757,6 +772,15 @@ void QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled() {
     sbAxisSize->setEnabled(!extend);
     cbXAxisAreas->setEnabled(extend);
     cbYAxisAreas->setEnabled(extend);
+}
+
+void QG_DlgOptionsGeneral::onCheckNewVersionChanged() {
+   if (cbCheckNewVersion->isChecked()){
+       cbCheckNewVersionIgnorePreRelease->setEnabled(!XSTR(LC_PRERELEASE));
+   }
+   else{
+       cbCheckNewVersionIgnorePreRelease->setEnabled(false);
+   }
 }
 
 void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state) {

@@ -297,7 +297,9 @@ HEADERS += \
     lib/filters/rs_filterdxf1.h \
     lib/filters/rs_filterjww.h \
     lib/filters/rs_filterlff.h \
-    lib/filters/rs_filterinterface.h \    
+    lib/filters/rs_filterinterface.h \     \
+    ui/dialogs/main/lc_dlgnewversionavailable.h \
+    ui/main/lc_releasechecker.h
     lib/gui/grid/lc_gridsystem.h \
     lib/gui/grid/lc_isometricgrid.h \
     lib/gui/grid/lc_lattice.h \
@@ -412,7 +414,9 @@ SOURCES += \
     lib/filters/rs_filterdxfrw.cpp \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \
-    lib/filters/rs_filterlff.cpp \    
+    lib/filters/rs_filterlff.cpp \     \
+    ui/dialogs/main/lc_dlgnewversionavailable.cpp \
+    ui/main/lc_releasechecker.cpp
     lib/gui/grid/lc_gridsystem.cpp \
     lib/gui/grid/lc_isometricgrid.cpp \
     lib/gui/grid/lc_lattice.cpp \    
@@ -1282,6 +1286,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/entity/qg_dlgspline.ui \
        ui/dialogs/entity/qg_dlgtext.ui \
        ui/dialogs/file/export/qg_dlgoptionsmakercam.ui \
+       ui/dialogs/main/lc_dlgnewversionavailable.ui \
        ui/dialogs/main/qg_dlginitial.ui \
        ui/dialogs/main/qg_exitdialog.ui \
        ui/dialogs/settings/options_device/lc_deviceoptions.ui \

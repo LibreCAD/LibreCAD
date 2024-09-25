@@ -974,11 +974,7 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 //        DEBUG_HEADER
 //        RS_DEBUG->print(RS_Debug::D_ERROR, "dpiX=%d\n",dpiX);
         const RS_Pen penSaved = painter->getPen();
-        if (isHiDpi) {
-            RS_Pen pen = penSaved;
-            pen.setWidth(RS2::Width01);
-            painter->setPen(pen);
-        }
+
 
         if (grid && isGridOn()) {
             grid->calculateGrid();
@@ -986,6 +982,12 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
             // fixme - review
             QString info = grid->getInfo();
             updateGridStatusWidget(info);
+        }
+
+        if (isHiDpi) {
+            RS_Pen pen = penSaved;
+            pen.setWidth(RS2::Width01);
+            painter->setPen(pen);
         }
 
         if (isDraftMode())
