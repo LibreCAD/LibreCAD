@@ -534,6 +534,9 @@ void RS_PainterQt::drawArc( const RS_Vector& cp,
     double startAngle = RS_Math::rad2deg(reversed ? a2 : a1);
     double endAngle = RS_Math::rad2deg(reversed ? a1 : a2);
     double angularLength = RS_Math::rad2deg(RS_Math::getAngleDifference(a1, a2, reversed));
+    // Issue #1896: zero angular length arc is not supported, assuming 360 degree arcs
+    if (angularLength < RS_Math::rad2deg(RS_TOLERANCE_ANGLE))
+        angularLength = 360.;
 
     // brute fix for #1896
     if (std::abs(angularLength) < RS_TOLERANCE_ANGLE) {
