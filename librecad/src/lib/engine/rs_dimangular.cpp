@@ -323,66 +323,116 @@ void RS_DimAngular::updateDim([[maybe_unused]] bool autoText /*= false*/)
 
     RS_Vector p1 {dimCenter + dimDir1e * dimRadius};
     RS_Vector p2 {dimCenter + dimDir2e * dimRadius};
-    RS_Pen pen( getExtensionLineColor(), getExtensionLineWidth(), RS2::LineByBlock);
+
+    RS_Pen pen(getExtensionLineColor(), getExtensionLineWidth(), RS2::LineByBlock);
 
     extensionLine( line1, p1, dimDir1s, dimDir1e, av, pen);
     extensionLine( line2, p2, dimDir2s, dimDir2e, av, pen);
 
+    pen.setWidth(getDimensionLineWidth());
+    pen.setColor(getDimensionLineColor());
+
     // Create dimension line (arc)
-    RS_Arc* arc {new RS_Arc( this, RS_ArcData( dimCenter, dimRadius, dimAngleL1, dimAngleL2, false))};
-    pen.setWidth( getDimensionLineWidth());
-    pen.setColor( getDimensionLineColor());
-    arc->setPen( pen);
-    arc->setLayer( nullptr);
-    addEntity( arc);
+    RS_Arc* refArc { new RS_Arc(this, RS_ArcData(dimCenter, dimRadius, dimAngleL1, dimAngleL2, false)) };
 
     // do we have to put the arrows outside of the arc?
-    bool outsideArrows {arc->getLength() < 3.0 * av.arrow()};
+    bool outsideArrows {refArc->getLength() < 3.0 * av.arrow()};
 
-    arrow( p1, dimAngleL1, +1.0, outsideArrows, av, pen);
-    arrow( p2, dimAngleL2, -1.0, outsideArrows, av, pen);
-
-    // text label
-    RS_MTextData textData;
-    RS_Vector textPos {arc->getMiddlePoint()};
+    arrow(p1, dimAngleL1, +1.0, outsideArrows, av, pen);
+    arrow(p2, dimAngleL2, -1.0, outsideArrows, av, pen);
 
     RS_Vector distV;
+
     double textAngle {0.0};
-    double angle1 {textPos.angleTo( dimCenter) - M_PI_2};
 
-    // rotate text so it's readable from the bottom or right (ISO)
-    // quadrant 1 & 4
-    if (angle1 > M_PI_2 * 3.0 + 0.001
-        || angle1 < M_PI_2 + 0.001) {
-        distV.setPolar( av.gap(), angle1 + M_PI_2);
-        textAngle = angle1;
+    RS_Vector textPos { refArc->getMiddlePoint() };
+
+    const double angle1 { textPos.angleTo(dimCenter) - M_PI_2 };
+
+    if (!this->getInsideHorizontalText())
+    {
+        // rotate text so it's readable from the bottom or right (ISO)
+        // quadrant 1 & 4
+        if (angle1 > M_PI_2 * 3.0 + 0.001
+            || angle1 < M_PI_2 + 0.001) {
+            distV.setPolar( av.gap(), angle1 + M_PI_2);
+            textAngle = angle1;
+        }
+        // quadrant 2 & 3
+        else {
+            distV.setPolar( av.gap(), angle1 - M_PI_2);
+            textAngle = angle1 + M_PI;
+        }
+
+        refArc->setPen(pen);
+        refArc->setLayer(nullptr);
+        addEntity(refArc);
+
+        // move text away from dimension line:
+        textPos += distV;
     }
-    // quadrant 2 & 3
-    else {
-        distV.setPolar( av.gap(), angle1 - M_PI_2);
-        textAngle = angle1 + M_PI;
-    }
 
-    // move text away from dimension line:
-    textPos += distV;
-
-    textData = RS_MTextData( textPos,
-                             av.txt(), 30.0,
-                             RS_MTextData::VABottom,
-                             RS_MTextData::HACenter,
-                             RS_MTextData::LeftToRight,
-                             RS_MTextData::Exact,
-                             1.0,
-                             getLabel(),
-                             getTextStyle(),
-                             textAngle);
+    RS_MTextData textData { RS_MTextData( textPos,
+                                          av.txt(), 30.0,
+                                          RS_MTextData::VABottom,
+                                          RS_MTextData::HACenter,
+                                          RS_MTextData::LeftToRight,
+                                          RS_MTextData::Exact,
+                                          1.0,
+                                          getLabel(),
+                                          getTextStyle(),
+                                          textAngle) };
 
     RS_MText* text {new RS_MText( this, textData)};
-
-    // move text to the side:
     text->setPen( RS_Pen( getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
     text->setLayer( nullptr);
     addEntity( text);
+
+
+    /*
+        Gap between text and arc, when text is horizontal.
+
+        - by Melwyn Francis Carlo.
+    */
+    if (this->getInsideHorizontalText())
+    {
+        double halfWidth_plusGap  = (text->getUsedTextWidth() / 2) + av.gap();
+        double halfHeight_plusGap = (av.txt()                 / 2) + av.gap();
+
+        RS_Vector cornerTopRight   { textPos + RS_Vector(+halfWidth_plusGap, +halfHeight_plusGap + av.txt()) };
+        RS_Vector cornerBottomLeft { textPos + RS_Vector(-halfWidth_plusGap, -halfHeight_plusGap) };
+
+        double deltaOffset { 0.01 };
+
+        RS_Arc* arc1 { new RS_Arc(this, RS_ArcData(dimCenter, dimRadius, dimAngleL1, dimAngleL1, false)) };
+        RS_Arc* arc2 { new RS_Arc(this, RS_ArcData(dimCenter, dimRadius, dimAngleL2, dimAngleL2, false)) };
+
+        while ( ! ((arc1->getEndpoint().x >= cornerBottomLeft.x)  &&  (arc1->getEndpoint().y >= cornerBottomLeft.y) 
+                && (arc1->getEndpoint().x <= cornerTopRight.x)    &&  (arc1->getEndpoint().y <= cornerTopRight.y)) 
+
+        &&     arc1->getAngle2() < RS_MAXDOUBLE 
+        &&     arc1->getAngle2() > RS_MINDOUBLE)
+        {
+            arc1->setAngle2(arc1->getAngle2() + deltaOffset);
+        }
+
+        while ( ! ((arc2->getStartpoint().x >= cornerBottomLeft.x)  &&  (arc2->getStartpoint().y >= cornerBottomLeft.y) 
+                && (arc2->getStartpoint().x <= cornerTopRight.x)    &&  (arc2->getStartpoint().y <= cornerTopRight.y)) 
+
+        &&     arc2->getAngle1() < RS_MAXDOUBLE 
+        &&     arc2->getAngle1() > RS_MINDOUBLE)
+        {
+            arc2->setAngle1(arc2->getAngle1() - deltaOffset);
+        }
+
+        arc1->setPen(pen);
+        arc1->setLayer(nullptr);
+        addEntity(arc1);
+
+        arc2->setPen(pen);
+        arc2->setLayer(nullptr);
+        addEntity(arc2);
+    }
 
     calculateBorders();
 }
