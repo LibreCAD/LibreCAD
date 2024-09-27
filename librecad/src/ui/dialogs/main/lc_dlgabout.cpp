@@ -26,6 +26,10 @@
 #include "ui_lc_dlgabout.h"
 #include "main.h"
 
+#if defined(Q_OS_LINUX)
+#include <QThread>
+#endif
+
 LC_DlgAbout::LC_DlgAbout(QWidget *parent)
     : LC_Dialog(parent, "About")
     , ui(new Ui::LC_DlgAbout){
