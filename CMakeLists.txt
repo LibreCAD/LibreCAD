@@ -29,7 +29,7 @@ set(CMAKE_AUTORCC ON)
 add_compile_definitions(DWGSUPPORT)
 add_compile_definitions(MUPARSER_STATIC)
 
-add_compile_definitions(LC_VERSION=2.0.2)
+add_compile_definitions(LC_VERSION=2.2.2.2-alpha)
 add_compile_definitions(LC_PRERELEASE=true)
 
 
