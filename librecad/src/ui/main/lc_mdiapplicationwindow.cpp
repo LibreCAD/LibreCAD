@@ -483,12 +483,6 @@ void LC_MDIApplicationWindow::enableWidget(QWidget *w, bool enable) {
     }
 }
 
-void LC_MDIApplicationWindow::slotRedockWidgets() {
-    const QList<QDockWidget *> dockwidgets = findChildren<QDockWidget *>();
-    for (auto *dockwidget: dockwidgets)
-        dockwidget->setFloating(false);
-}
-
 /**
  * Force-Activate this sub window.
  */

@@ -1082,11 +1082,11 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
         bool tabbed = mdiAreaCAD->viewMode() == QMdiArea::TabbedView;
         windowsMenu->clear(); // this is a temporary menu; constructed on-demand
 
-        menuItem = windowsMenu->addAction(tr("Ta&b mode"), this, SLOT(slotToggleTab()));
+        menuItem = windowsMenu->addAction(tr("Ta&b mode"), this, &LC_MDIApplicationWindow::slotToggleTab);
         menuItem->setCheckable(true);
         menuItem->setChecked(tabbed);
 
-        menuItem = windowsMenu->addAction(tr("&Window mode"), this, SLOT(slotToggleTab()));
+        menuItem = windowsMenu->addAction(tr("&Window mode"), this, &LC_MDIApplicationWindow::slotToggleTab);
         menuItem->setCheckable(true);
         menuItem->setChecked(!tabbed);
 
@@ -1095,32 +1095,32 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
             menu = new QMenu(tr("&Layout"), windowsMenu);
             windowsMenu->addMenu(menu);
 
-            menuItem = menu->addAction(tr("Rounded"), this, SLOT(slotTabShapeRounded()));
+            menuItem = menu->addAction(tr("Rounded"), this, &LC_MDIApplicationWindow::slotTabShapeRounded);
             menuItem->setCheckable(true);
 
             int tabShape = LC_GET_INT("TabShape");
             menuItem->setChecked(tabShape == RS2::Rounded);
 
-            menuItem = menu->addAction(tr("Triangular"), this, SLOT(slotTabShapeTriangular()));
+            menuItem = menu->addAction(tr("Triangular"), this, &LC_MDIApplicationWindow::slotTabShapeTriangular);
             menuItem->setCheckable(true);
             menuItem->setChecked(tabShape == RS2::Triangular);
 
             menu->addSeparator();
             int tabPosition = LC_GET_INT("TabPosition");
 
-            menuItem = menu->addAction(tr("North"), this, SLOT(slotTabPositionNorth()));
+            menuItem = menu->addAction(tr("North"), this, &LC_MDIApplicationWindow::slotTabPositionNorth);
             menuItem->setCheckable(true);
             menuItem->setChecked(tabPosition == RS2::North);
 
-            menuItem = menu->addAction(tr("South"), this, SLOT(slotTabPositionSouth()));
+            menuItem = menu->addAction(tr("South"), this, &LC_MDIApplicationWindow::slotTabPositionSouth);
             menuItem->setCheckable(true);
             menuItem->setChecked(tabPosition == RS2::South);
 
-            menuItem = menu->addAction(tr("East"), this, SLOT(slotTabPositionEast()));
+            menuItem = menu->addAction(tr("East"), this, &LC_MDIApplicationWindow::slotTabPositionEast);
             menuItem->setCheckable(true);
             menuItem->setChecked(tabPosition == RS2::East);
 
-            menuItem = menu->addAction(tr("West"), this, SLOT(slotTabPositionWest()));
+            menuItem = menu->addAction(tr("West"), this, &LC_MDIApplicationWindow::slotTabPositionWest);
             menuItem->setCheckable(true);
             menuItem->setChecked(tabPosition == RS2::West);
 
@@ -1128,14 +1128,14 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
             menu = new QMenu(tr("&Arrange"), windowsMenu);
             windowsMenu->addMenu(menu);
 
-            menuItem = menu->addAction(tr("&Maximized"), this, SLOT(slotSetMaximized()));
+            menuItem = menu->addAction(tr("&Maximized"), this, &LC_MDIApplicationWindow::slotSetMaximized);
             menuItem->setCheckable(true);
             menuItem->setChecked(LC_GET_INT("SubWindowMode") == RS2::Maximized);
 
-            menu->addAction(tr("&Cascade"), this, SLOT(slotCascade()));
-            menu->addAction(tr("&Tile"), this, SLOT(slotTile()));
-            menu->addAction(tr("Tile &Vertically"), this, SLOT(slotTileVertical()));
-            menu->addAction(tr("Tile &Horizontally"), this, SLOT(slotTileHorizontal()));
+            menu->addAction(tr("&Cascade"), this, &LC_MDIApplicationWindow::slotCascade);
+            menu->addAction(tr("&Tile"), this, &LC_MDIApplicationWindow::slotTile);
+            menu->addAction(tr("Tile &Vertically"), this, &LC_MDIApplicationWindow::slotTileVertical);
+            menu->addAction(tr("Tile &Horizontally"), this, &LC_MDIApplicationWindow::slotTileHorizontal);
         }
     }
 
@@ -3138,4 +3138,10 @@ void QC_ApplicationWindow::enableWidgets(bool enable) {
     }
 
     // fixme - disable widgets from status bar
+}
+
+void QC_ApplicationWindow::slotRedockWidgets() {
+    const QList<QDockWidget *> dockwidgets = findChildren<QDockWidget *>();
+    for (auto *dockwidget: dockwidgets)
+        dockwidget->setFloating(false);
 }

@@ -499,10 +499,10 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
 
     map["OptionsGeneral"]->setMenuRole(QAction::NoRole);
 
-    connect(main_window, SIGNAL(printPreviewChanged(bool)), map["FilePrint"], SLOT(setChecked(bool)));
-    connect(main_window, SIGNAL(printPreviewChanged(bool)), map["FilePrintPreview"], SLOT(setChecked(bool)));
-    connect(main_window, SIGNAL(gridChanged(bool)), map["ViewGrid"], SLOT(setChecked(bool)));
-    connect(main_window, SIGNAL(draftChanged(bool)), map["ViewDraft"], SLOT(setChecked(bool)));
+    connect(main_window, &QC_ApplicationWindow::printPreviewChanged, map["FilePrint"], &QAction::setChecked);
+    connect(main_window, &QC_ApplicationWindow::printPreviewChanged, map["FilePrintPreview"], &QAction::setChecked);
+    connect(main_window, &QC_ApplicationWindow::gridChanged, map["ViewGrid"], &QAction::setChecked);
+    connect(main_window, &QC_ApplicationWindow::draftChanged, map["ViewDraft"], &QAction::setChecked);
 
     connect(main_window, &QC_ApplicationWindow::windowsChanged, map["OptionsDrawing"], &QAction::setEnabled);
 }

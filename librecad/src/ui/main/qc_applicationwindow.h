@@ -91,7 +91,6 @@ struct DockAreas
 class QC_ApplicationWindow: public LC_MDIApplicationWindow
 {
     Q_OBJECT
-
 public:
 
     enum
@@ -237,14 +236,13 @@ public slots:
     void onNewVersionAvailable();
     void checkForNewVersion();
     void forceCheckForNewVersion();
+    void slotRedockWidgets();
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);
     void printPreviewChanged(bool on);
     void windowsChanged(bool windowsLeft);
     void signalEnableRelativeZeroSnaps(const bool);
-
-
 public:
     /**
      * @return Pointer to application window.

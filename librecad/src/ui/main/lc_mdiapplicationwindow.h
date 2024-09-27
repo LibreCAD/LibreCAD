@@ -84,7 +84,7 @@ public slots:
     void slotTabPositionEast();
     void slotTabPositionWest();
     void slotToggleTab();
-    void slotRedockWidgets();
+
     void slotTile();
     void slotZoomAuto();
     virtual void slotWindowActivated(QMdiSubWindow* w, bool forced=false) = 0;
