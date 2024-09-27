@@ -11,6 +11,8 @@ DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
 LC_VERSION="2.2.2-alpha"
+LC_PRERELEASE = "true";
+
 VERSION=$${LC_VERSION}
 
 # Store intermedia stuff somewhere else
@@ -26,7 +28,7 @@ CONFIG += qt \
     verbose \
     depend_includepath
 
-QT += widgets printsupport
+QT += widgets printsupport network
 CONFIG += c++17
 
 # using qt5 connections for UI forms
@@ -90,6 +92,7 @@ win32 {
 }
 
 DEFINES += LC_VERSION=\"$$LC_VERSION\"
+DEFINES += LC_PRERELEASE=\"$$LC_PRERELEASE\"
 
 # Additional libraries to load
 LIBS += -L../../generated/lib  \
@@ -297,9 +300,10 @@ HEADERS += \
     lib/filters/rs_filterdxf1.h \
     lib/filters/rs_filterjww.h \
     lib/filters/rs_filterlff.h \
-    lib/filters/rs_filterinterface.h \     \
+    lib/filters/rs_filterinterface.h \
+    ui/dialogs/main/lc_dlgabout.h \
     ui/dialogs/main/lc_dlgnewversionavailable.h \
-    ui/main/lc_releasechecker.h
+    ui/main/lc_releasechecker.h \
     lib/gui/grid/lc_gridsystem.h \
     lib/gui/grid/lc_isometricgrid.h \
     lib/gui/grid/lc_lattice.h \
@@ -414,9 +418,10 @@ SOURCES += \
     lib/filters/rs_filterdxfrw.cpp \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \
-    lib/filters/rs_filterlff.cpp \     \
+    lib/filters/rs_filterlff.cpp \
+    ui/dialogs/main/lc_dlgabout.cpp \
     ui/dialogs/main/lc_dlgnewversionavailable.cpp \
-    ui/main/lc_releasechecker.cpp
+    ui/main/lc_releasechecker.cpp \
     lib/gui/grid/lc_gridsystem.cpp \
     lib/gui/grid/lc_isometricgrid.cpp \
     lib/gui/grid/lc_lattice.cpp \    
@@ -1286,6 +1291,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/entity/qg_dlgspline.ui \
        ui/dialogs/entity/qg_dlgtext.ui \
        ui/dialogs/file/export/qg_dlgoptionsmakercam.ui \
+       ui/dialogs/main/lc_dlgabout.ui \
        ui/dialogs/main/lc_dlgnewversionavailable.ui \
        ui/dialogs/main/qg_dlginitial.ui \
        ui/dialogs/main/qg_exitdialog.ui \

@@ -29,7 +29,7 @@ set(CMAKE_AUTORCC ON)
 add_compile_definitions(DWGSUPPORT)
 add_compile_definitions(MUPARSER_STATIC)
 
-add_compile_definitions(LC_VERSION=2.2.0.2)
+add_compile_definitions(LC_VERSION=2.0.2)
 add_compile_definitions(LC_PRERELEASE=true)
 
 
@@ -1239,6 +1239,7 @@ set(SOURCES
 		librecad/src/ui/main/lc_releasechecker.cpp
 		librecad/src/ui/dialogs/main/lc_dlgnewversionavailable.h
 		librecad/src/ui/dialogs/main/lc_dlgnewversionavailable.cpp
+		librecad/src/ui/dialogs/main/lc_dlgabout.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

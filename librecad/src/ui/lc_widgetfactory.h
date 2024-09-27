@@ -35,8 +35,6 @@ class LC_WidgetFactory : public QObject
 {
     Q_OBJECT
 
-
-
 public:
     LC_WidgetFactory(QC_ApplicationWindow* main_win,
                      LC_ActionGroupManager* agm);

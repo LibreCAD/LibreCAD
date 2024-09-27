@@ -1148,7 +1148,7 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
         graphic->startUndoCycle();
     }
 
-    for (auto en: *container) {
+    for (auto en: *container) { // fixme - sand - iterating all elements in container
         if (!en) continue;
         if (!en->isSelected()) continue;
 
@@ -1194,11 +1194,16 @@ void QG_GraphicView::updateGridPoints(){
  * have from the last call..
  */
 void QG_GraphicView::paintEvent(QPaintEvent *){
-    if (classicRenderer) {
-        paintClassicalBuffered();
+    if (antialiasing){
+        if (classicRenderer) {
+            paintClassicalBuffered();
+        }
+        else{
+            paintSequental();
+        }
     }
     else{
-        paintSequental();
+        paintClassicalBuffered();
     }
 
     redrawMethod=RS2::RedrawNone;
@@ -1221,9 +1226,7 @@ void QG_GraphicView::paintSequental() {
     if (redrawMethod & RS2::RedrawGrid) {
         pixmapLayer1.fill(getBackground());
         RS_PainterQt painter1(&pixmapLayer1);
-        if (antialiasing) {
-            painter1.setRenderHint(QPainter::Antialiasing);
-        }
+        painter1.setRenderHint(QPainter::Antialiasing);
         drawLayer1(&painter1);
         painter1.end();
         redrawMethod=(RS2::RedrawMethod ) (redrawMethod | RS2::RedrawDrawing);
@@ -1233,9 +1236,7 @@ void QG_GraphicView::paintSequental() {
         // DRaw layer 2
         pixmapLayer2 = pixmapLayer1;
         RS_PainterQt painter2(&pixmapLayer2);
-        if (antialiasing) {
-            painter2.setRenderHint(QPainter::Antialiasing);
-        }
+        painter2.setRenderHint(QPainter::Antialiasing);
         painter2.setDrawingMode(drawingMode);
         painter2.setDrawSelectedOnly(false);
         drawLayer2( &painter2);
@@ -1248,9 +1249,7 @@ void QG_GraphicView::paintSequental() {
     if (redrawMethod & RS2::RedrawOverlay) {
         pixmapLayer3 = pixmapLayer2;
         RS_PainterQt painter3(&pixmapLayer3);
-        if (antialiasing) {
-            painter3.setRenderHint(QPainter::Antialiasing);
-        }
+        painter3.setRenderHint(QPainter::Antialiasing);
         this->drawLayer3(&painter3);
         painter3.end();
     }

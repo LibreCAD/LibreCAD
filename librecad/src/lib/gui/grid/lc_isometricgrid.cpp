@@ -321,7 +321,7 @@ void LC_IsometricGrid::createGridLinesNoGaps(const RS_Vector &min, const RS_Vect
 
 
 void LC_IsometricGrid::createMetaGridLines(const RS_Vector& min, const RS_Vector &max) {
-    int c;
+
     double x;
 
     double minX = min.x;

@@ -47,7 +47,7 @@ void LC_OrthogonalGrid::prepareGridOther(const RS_Vector &viewZero, const RS_Vec
 
 void LC_OrthogonalGrid::createCellVector(const RS_Vector &gridWidth) { cellVector = {fabs(gridWidth.x), fabs(gridWidth.y)}; }
 
-void LC_OrthogonalGrid::createGridPoints([[maybe_unused]]const RS_Vector &min, const RS_Vector &max, const RS_Vector &gridWidth, bool drawGridWithoutGaps, int numPointsTotal) {
+void LC_OrthogonalGrid::createGridPoints([[maybe_unused]]const RS_Vector &min, [[maybe_unused]]const RS_Vector &max, const RS_Vector &gridWidth, bool drawGridWithoutGaps, int numPointsTotal) {
     gridLattice->update(0.0, 0.0, gridWidth, numPointsTotal);
 
     if (drawGridWithoutGaps) {

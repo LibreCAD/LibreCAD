@@ -236,6 +236,7 @@ public slots:
     void invokeLicenseWindow();
     void onNewVersionAvailable();
     void checkForNewVersion();
+    void forceCheckForNewVersion();
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);

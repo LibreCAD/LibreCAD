@@ -103,6 +103,7 @@
 #include "lc_mdiapplicationwindow.h"
 #include "lc_releasechecker.h"
 #include "lc_dlgnewversionavailable.h"
+#include "lc_dlgabout.h"
 
 #ifndef QC_APP_ICON
 # define QC_APP_ICON ":/main/librecad.png"
@@ -339,21 +340,18 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     loadPlugins();
 
     statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
-    LC_GET_BOOL("Startup");
-    {
-        const char *ownBuildVersion = XSTR(LC_VERSION);
-        bool checkForNewVersion = LC_GET_BOOL("CheckForNewVersions", true);
-        bool ignorePreReleases = LC_GET_BOOL("IgnorePreReleaseVersions", true);
-        QString skippedRelease = LC_GET_STR("SkippedRelease", ownBuildVersion);
-        QString skippedPreRelease = LC_GET_STR("SkippedPreRelease", ownBuildVersion);
-        releaseChecker = new LC_ReleaseChecker(ignorePreReleases, ownBuildVersion, XSTR(LC_PRERELEASE), skippedPreRelease,
-                                               skippedRelease);
-        connect(releaseChecker, &LC_ReleaseChecker::updatesAvailable, this, &QC_ApplicationWindow::onNewVersionAvailable);
-    }
-    LC_GROUP_END();
+    const char *ownBuildVersion = XSTR(LC_VERSION);
+    releaseChecker = new LC_ReleaseChecker( ownBuildVersion,XSTR(LC_PRERELEASE));
+    connect(releaseChecker, &LC_ReleaseChecker::updatesAvailable, this, &QC_ApplicationWindow::onNewVersionAvailable);
 }
 
-void QC_ApplicationWindow::checkForNewVersion() { releaseChecker->checkForNewVersion(); }
+void QC_ApplicationWindow::checkForNewVersion() {
+    releaseChecker->checkForNewVersion();
+}
+
+void QC_ApplicationWindow::forceCheckForNewVersion() {
+    releaseChecker->checkForNewVersion(true);
+}
 
 void QC_ApplicationWindow::onNewVersionAvailable() {
     LC_DlgNewVersionAvailable dlg(this, releaseChecker);
@@ -2465,67 +2463,8 @@ void QC_ApplicationWindow::slotImportBlock() {
 
 
 void QC_ApplicationWindow::showAboutWindow() {
-    // author: ravas
-
-    QDialog dlg;
-    dlg.setWindowTitle(tr("About"));
-
-    auto layout = new QVBoxLayout;
-    dlg.setLayout(layout);
-
-    auto frame = new QGroupBox(qApp->applicationName());
-    layout->addWidget(frame);
-
-    auto f_layout = new QVBoxLayout;
-    frame->setLayout(f_layout);
-
-    // Compiler macro list in Qt source tree
-    // Src/qtbase/src/corelib/global/qcompilerdetection.h
-
-    QString info
-        (
-            tr("Version: %1").arg(XSTR(LC_VERSION)) + "\n" +
-            #if defined(Q_CC_CLANG)
-            tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "\n" +
-            #elif defined(Q_CC_GNU)
-            tr("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "\n" +
-            #elif defined(Q_CC_MSVC)
-            tr("Compiler: Microsoft Visual C++") + "\n" +
-            #endif
-            tr("Compiled on: %1").arg(__DATE__) + "\n" +
-            tr("Qt Version: %1").arg(qVersion()) + "\n" +
-            tr("Boost Version: %1.%2.%3").arg(BOOST_VERSION / 100000).arg(BOOST_VERSION / 100 % 1000).arg(BOOST_VERSION % 100)
-        );
-
-    auto app_info = new QLabel(info);
-    app_info->setTextInteractionFlags(Qt::TextSelectableByMouse);
-    f_layout->addWidget(app_info);
-
-    auto copy_button = new QPushButton(tr("Copy"));
-    // copy_button->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    f_layout->addWidget(copy_button);
-
-    connect(copy_button, SIGNAL(released()), &dlg, SLOT(accept()));
-
-    QLabel *links_label = new QLabel(QString("<a href=\"https://github.com/LibreCAD/LibreCAD/graphs/contributors\">%1</a>"
-                                             "<br/>"
-                                             "<a href=\"https://github.com/LibreCAD/LibreCAD/blob/master/LICENSE\">%2</a>"
-                                             "<br/>"
-                                             "<a href=\"https://github.com/LibreCAD/LibreCAD/\">%3</a>")
-                                         .arg(tr("Contributors"))
-                                         .arg(tr("License"))
-                                         .arg(tr("The Code")));
-    links_label->setOpenExternalLinks(true);
-    links_label->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
-    f_layout->addWidget(links_label);
-
-    if (dlg.exec()) {
-        QClipboard *clipboard = QApplication::clipboard();
-#if QT_VERSION >= 0x050400
-        info += "\n" + tr("System") + ": " + QSysInfo::prettyProductName();
-#endif
-        clipboard->setText(info);
-    }
+    LC_DlgAbout dlg(this);
+    dlg.exec();
 }
 
 /**

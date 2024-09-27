@@ -246,7 +246,11 @@ int main(int argc, char** argv)
     bool show_splash = settings.value("Startup/ShowSplash", 1).toBool();
 
     if (show_splash){
-        QPixmap pixmap(":/main/splash_librecad.png");
+        QString splashPixmapName = ":/main/splash_librecad.png";
+        if (XSTR(LC_PRERELEASE)){
+            splashPixmapName = ":/main/splash_librecad_beta.png";
+        }
+        QPixmap pixmap(splashPixmapName);
         splash->setPixmap(pixmap);
         splash->setAttribute(Qt::WA_DeleteOnClose);
         splash->show();
@@ -340,7 +344,6 @@ int main(int argc, char** argv)
         reopenLastFiles = LC_GET_BOOL("OpenLastOpenedFiles");
         lastFiles = LC_GET_STR("LastOpenFilesList", "");
         activeFile = LC_GET_STR("LastOpenFilesActive", "");
-
 
         if (reopenLastFiles && fileList.isEmpty() && !lastFiles.isEmpty()) {
                 foreach(const QString &filename, lastFiles.split(";")) {

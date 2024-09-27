@@ -975,7 +975,9 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 //        RS_DEBUG->print(RS_Debug::D_ERROR, "dpiX=%d\n",dpiX);
         const RS_Pen penSaved = painter->getPen();
 
-
+        // fixme - sand - review as overall rendering pipeline. It might be that
+        // it will be better to use more fine-grained painting and draw grid in own
+        // pixmap, and have draft sign somewhere else?
         if (grid && isGridOn()) {
             grid->calculateGrid();
             grid->drawGrid(painter);

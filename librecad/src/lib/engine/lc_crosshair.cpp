@@ -124,6 +124,7 @@ void LC_Crosshair::draw(RS_Painter *painter, RS_GraphicView *view, [[maybe_unuse
                 break;
             }
             // implicit fall-through to draw cartesian orthogonal crosshair
+            [[fallthrough]];
         }
         case Crosshair:{
             RS_Vector p1(0, guiCoord.y);

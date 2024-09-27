@@ -43,10 +43,6 @@ public:
     bool isBefore(const LC_TagInfo& other) const;
     bool isSameVersion(const LC_TagInfo& other) const;
 
-    int getMajor() const;
-    int getMinor() const;
-    int getRevision() const;
-    int getBugfix() const;
     QString getLabel() const;
     QString getTagName() const;
 protected:
@@ -81,31 +77,12 @@ class LC_ReleaseInfo{
         valid = true;
     }
 
-    bool isAfter(LC_ReleaseInfo other){
-        return publishedDate > other.publishedDate;
-    }
-
-
-    const LC_TagInfo &getTagInfo() const {
-        return tagInfo;
-    }
-
-    void setTagInfo(const LC_TagInfo &tagInfo) {
-        LC_ReleaseInfo::tagInfo = tagInfo;
-    }
-
-    const QDateTime &getPublishedDate() const {
-        return publishedDate;
-    }
-
-    const QString &getHtmlUrl() const {
-        return htmlURL;
-    }
-
-    bool isValid() const {
-        return valid;
-    }
-
+    bool isAfter(LC_ReleaseInfo other){return publishedDate > other.publishedDate;}
+    const LC_TagInfo &getTagInfo() const {return tagInfo;}
+    void setTagInfo(const LC_TagInfo &tag) {tagInfo = tag;}
+    const QDateTime &getPublishedDate() const {return publishedDate;}
+    const QString &getHtmlUrl() const {return htmlURL;}
+    bool isValid() const {return valid;}
 protected:
     LC_TagInfo tagInfo;
     bool draft = true;
@@ -121,9 +98,8 @@ protected:
 class LC_ReleaseChecker: public QObject{
     Q_OBJECT
 public:
-
-    LC_ReleaseChecker(bool ignorePreReleases, QString ownTagName,bool ownPreRelease, QString skippedPreReleaseTagStr, QString skippedReleaseTagStr);
-    void checkForNewVersion();
+    LC_ReleaseChecker(QString ownTagName, bool ownPreRelease);
+    void checkForNewVersion(bool forceCheck = false);
     const LC_ReleaseInfo &getLatestRelease() const;
     const LC_ReleaseInfo &getLatestPreRelease() const;
 
@@ -134,16 +110,12 @@ protected:
     LC_ReleaseInfo getOwnReleaseInfo(QString tagName, bool preRelease) const;
     LC_TagInfo parseTagInfo(const QString &tagName) const;
 
-    bool ignorePreReleases;
     LC_ReleaseInfo ownReleaseInfo;
-    LC_TagInfo skippedRelease;
-    LC_TagInfo skippedPreRelease;
-
     LC_ReleaseInfo latestRelease;
     LC_ReleaseInfo latestPreRelease;
 protected slots:
     void infoReceived(QNetworkReply* pReply);
-    void processReleasesJSON(const QByteArray &responseContent) ;
+    void processReleasesJSON(const QByteArray &responseContent, bool b);
 
     void sortReleasesInfo(QVector<LC_ReleaseInfo> &list) const ;
 };
