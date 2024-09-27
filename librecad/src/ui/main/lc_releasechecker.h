@@ -106,6 +106,7 @@ public:
 signals:
     void updatesAvailable() const;
 protected:
+    bool emitSignalIfNoNewVersion;
     QNetworkAccessManager m_WebCtrl;
     LC_ReleaseInfo getOwnReleaseInfo(QString tagName, bool preRelease) const;
     LC_TagInfo parseTagInfo(const QString &tagName) const;
@@ -115,9 +116,11 @@ protected:
     LC_ReleaseInfo latestPreRelease;
 protected slots:
     void infoReceived(QNetworkReply* pReply);
-    void processReleasesJSON(const QByteArray &responseContent, bool b);
+    void processReleasesJSON(const QByteArray &responseContent);
 
     void sortReleasesInfo(QVector<LC_ReleaseInfo> &list) const ;
+
+
 };
 
 #endif // LC_RELEASECHECKER_H

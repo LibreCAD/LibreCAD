@@ -84,6 +84,7 @@ LC_ReleaseInfo LC_ReleaseChecker::getOwnReleaseInfo(QString tagName, bool preRel
 #define TEST_JSON_PARSING_
 void LC_ReleaseChecker::checkForNewVersion(bool forceCheck) {
   #ifndef TEST_JSON_PARSING
+    emitSignalIfNoNewVersion = forceCheck;
     connect(&m_WebCtrl, &QNetworkAccessManager::finished, this, &LC_ReleaseChecker::infoReceived);
     QUrl gitHubReleasesUrl("https://api.github.com/repos/LibreCAD/LibreCAD/releases");
     QNetworkRequest request(gitHubReleasesUrl);
@@ -95,7 +96,7 @@ void LC_ReleaseChecker::checkForNewVersion(bool forceCheck) {
     file.close();
     QString resultStr = QString(responseContent);
 //    LC_ERR << resultStr;
-    processReleasesJSON(responseContent, forceCheck);
+    processReleasesJSON(responseContent);
 #endif
 }
 
@@ -103,7 +104,7 @@ void LC_ReleaseChecker::infoReceived(QNetworkReply *reply) {
     if(reply->error() == QNetworkReply::NoError) {
         QByteArray responseContent = reply->readAll();
         QString resultStr = QString(responseContent);
-        processReleasesJSON(responseContent, false);
+        processReleasesJSON(responseContent);
     }
     else{
         RS_DIALOGFACTORY->requestWarningDialog(tr("Sorry, some network error occurred during checking for new version."));
@@ -164,7 +165,7 @@ LC_TagInfo LC_ReleaseChecker::parseTagInfo(const QString &tagName) const {
     return result;
 }
 
-void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent, bool forceCheck) {
+void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent) {
     QJsonParseError error;
     QJsonDocument jsonDocument = QJsonDocument::fromJson(responseContent, &error);
     if (jsonDocument.isEmpty()){
@@ -263,8 +264,9 @@ void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent, b
                     availablePreReleases = 0;
                 }
             }
-            if (availableReleases > 0 || availablePreReleases > 0 || forceCheck){
+            if (availableReleases > 0 || availablePreReleases > 0 || emitSignalIfNoNewVersion){
                 emit updatesAvailable();
+                emitSignalIfNoNewVersion = false;
             }
         }
     }
