@@ -67,18 +67,20 @@ public:
 	bool requestHatchDialog(RS_Hatch*) override {return false;}
 	int requestOptionsGeneralDialog() override {return -1;}
     void requestKeyboardShortcutsDialog([[maybe_unused]]LC_ActionGroupManager *pManager) override{}
-	int requestOptionsDrawingDialog(RS_Graphic&) override {return -1;}
+	int requestOptionsDrawingDialog(RS_Graphic&, int) override {return -1;}
 	bool requestOptionsMakerCamDialog() override {return false;}
 	QString requestFileSaveAsDialog(const QString&, const QString&, const QString&, QString*) override {return {};}
 	void updateCoordinateWidget(const RS_Vector& , const RS_Vector& , bool =false) override {}
-    void updateMouseWidget(const QString&, const QString&,[[maybe_unused]] const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()) override{}
+ void updateMouseWidget(const QString&, const QString&,[[maybe_unused]] const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()) override{}
+ void updateMouseWidgetIcon([[maybe_unused]]const QIcon &icon) override  {}
 	void updateSelectionWidget(int, double) override {}
 //    void updateArcTangentialOptions(double, bool) override{}
 	void commandMessage(const QString&) override {}
  void command([[maybe_unused]]const QString& message) override{};
 	void setMouseWidget(QG_MouseWidget*) override {}
 	void setCoordinateWidget(QG_CoordinateWidget* ) override {}
-	void setSelectionWidget(QG_SelectionWidget* ) override {}
+ void setRelativeZeroCoordinatesWidget([[maybe_unused]]LC_RelZeroCoordinatesWidget *widget) override {}
+ void setSelectionWidget(QG_SelectionWidget* ) override {}
 	void setCommandWidget(QG_CommandWidget* ) override {}
 	void displayBlockName(const QString&, const bool&) override {}
  void hideSnapOptions() override {};

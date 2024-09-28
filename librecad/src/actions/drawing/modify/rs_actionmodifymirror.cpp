@@ -69,6 +69,7 @@ void RS_ActionModifyMirror::mouseMoveEventSelected(QMouseEvent *e) {
     switch (getStatus()) {
         case SetAxisPoint1: {
             if (mirrorToExistingLine){
+                deleteSnapper();
                 RS_Entity* en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
                 if (en != nullptr){
                     auto line = dynamic_cast<RS_Line *>(en);
@@ -121,6 +122,7 @@ void RS_ActionModifyMirror::mouseLeftButtonReleaseEventSelected(int status, QMou
             setStatus(ShowDialog);
             showOptionsAndTrigger();
         }
+        invalidateSnapSpot();
     }
     else {
         RS_Vector snapped = snapPoint(e);
@@ -196,7 +198,7 @@ void RS_ActionModifyMirror::doTrigger() {
 }
 
 void RS_ActionModifyMirror::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select to mirror"));
+    updateMouseWidgetTRCancel(tr("Select to mirror (Enter to complete)"));
 }
 
 void RS_ActionModifyMirror::updateMouseButtonHintsForSelected(int status) {

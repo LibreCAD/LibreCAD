@@ -45,5 +45,5 @@ void RS_ActionModifyExplodeText::trigger() {
 }
 
 void RS_ActionModifyExplodeText::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select to explode text"), MOD_CTRL(tr("Explode immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Select to explode text (Enter to complete)"), MOD_CTRL(tr("Explode immediately after selection")));
 }

@@ -63,7 +63,7 @@ public:
         drawingMode = RS2::ModeFull;
         drawSelectedEntities=false;
     }
-	virtual ~RS_Painter() = default;
+    virtual ~RS_Painter() = default;
 
     /**
      * Sets the drawing mode.
@@ -93,8 +93,10 @@ public:
     virtual void lineTo(int x, int y) = 0;
 
     virtual void drawGridPoint(const RS_Vector& p) = 0;
+    virtual void drawGridPoint(const double& x, const double& y) = 0;
     virtual void drawPoint(const RS_Vector& p, int pdmode, int pdsize) = 0;
     virtual void drawLine(const RS_Vector& p1, const RS_Vector& p2) = 0;
+    virtual void drawLine(const double &x1, const double &y1, const double &x2, const double &y2) = 0;
     virtual void drawRect(const RS_Vector& p1, const RS_Vector& p2);
     virtual void drawArc(const RS_Vector& cp, double radius,
                          double a1, double a2,
@@ -139,6 +141,7 @@ public:
 
     virtual RS_Pen getPen() const = 0;
     virtual void setPen(const RS_Pen& pen) = 0;
+    virtual void setPen(const RS_Pen& pen, int linewidthPx) = 0;
     virtual void setPen(const RS_Color& color) = 0;
     virtual void setPen(int r, int g, int b) = 0;
     virtual void disablePen() = 0;
@@ -150,15 +153,11 @@ public:
     virtual int getWidth() const= 0;
     virtual int getHeight() const= 0;
     virtual double getDpmm() const= 0;
-
-    virtual void setOffset(const RS_Vector& o) {
-        offset = o;
-    }
-
+    virtual void setOffset(const RS_Vector& o) {offset = o;}
     virtual void setClipRect(int x, int y, int w, int h) = 0;
     virtual void resetClipping() = 0;
-	int toScreenX(double x) const;
-	int toScreenY(double y) const;
+    int toScreenX(double x) const;
+    int toScreenY(double y) const;
 
 protected:
     /**
@@ -172,8 +171,6 @@ protected:
 
     // When set to true, only selected entities should be drawn
     bool drawSelectedEntities = false;
-
-
 };
 
 #endif

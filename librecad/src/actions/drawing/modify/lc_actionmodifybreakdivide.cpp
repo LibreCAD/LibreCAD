@@ -59,6 +59,7 @@ bool LC_ActionModifyBreakDivide::doCheckMayDrawPreview([[maybe_unused]]QMouseEve
  */
 void LC_ActionModifyBreakDivide::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     if (status == SetLine){
+        deleteSnapper();
         RS_Entity *en = catchModifiableEntity(e, enTypeList);
         if (en != nullptr){
             int rtti = en->rtti();
@@ -104,11 +105,46 @@ void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(QMouseEvent *e, int 
                     break;
             }
         }
+        invalidateSnapSpot();
     }
 }
 
 bool LC_ActionModifyBreakDivide::doCheckMayTrigger(){
-    return triggerData != nullptr;
+    bool result = false;
+    if (triggerData != nullptr){
+        RS_Entity* en = triggerData->entity;
+        RS_Vector snap = triggerData->snapPoint;
+        if (en != nullptr){
+            int rtti = en->rtti();
+            // do processing of individual entity types
+            switch (rtti) {
+                case RS2::EntityLine: {
+                    auto *line = dynamic_cast<RS_Line *>(en);
+                    createEntitiesForLine(line, snap, triggerData->entitiesToCreate, false);
+                    break;
+                }
+                case RS2::EntityCircle: {
+                    auto *circle = dynamic_cast<RS_Circle *>(en);
+                    createEntitiesForCircle(circle, snap, triggerData->entitiesToCreate, false);
+                    break;
+                }
+                case RS2::EntityArc: {
+                    auto *arc = dynamic_cast<RS_Arc *>(en);
+                    createEntitiesForArc(arc, snap, triggerData->entitiesToCreate, false);
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+        if (triggerData->entitiesToCreate.isEmpty()){
+            commandMessage(tr("Invalid entity selected - no segments between intersections to break/divide."));
+        }
+        else {
+            result = true;
+        }
+    }
+    return result;
 }
 
 bool LC_ActionModifyBreakDivide::isSetActivePenAndLayerOnTrigger(){
@@ -116,31 +152,7 @@ bool LC_ActionModifyBreakDivide::isSetActivePenAndLayerOnTrigger(){
 }
 
 void LC_ActionModifyBreakDivide::doPrepareTriggerEntities(QList<RS_Entity *> &list){
-    RS_Entity* en = triggerData->entity;
-    RS_Vector snap = triggerData->snapPoint;
-    if (en != nullptr){
-        int rtti = en->rtti();
-        // do processing of individual entity types
-        switch (rtti) {
-            case RS2::EntityLine: {
-                auto *line = dynamic_cast<RS_Line *>(en);
-                createEntitiesForLine(line, snap, list, false);
-                break;
-            }
-            case RS2::EntityCircle: {
-                auto *circle = dynamic_cast<RS_Circle *>(en);
-                createEntitiesForCircle(circle, snap, list, false);
-                break;
-            }
-            case RS2::EntityArc: {
-                auto *arc = dynamic_cast<RS_Arc *>(en);
-                createEntitiesForArc(arc, snap, list, false);
-                break;
-            }
-            default:
-                break;
-        }
-    }
+    list.append(triggerData->entitiesToCreate);
 }
 
 void LC_ActionModifyBreakDivide::performTriggerDeletions(){
@@ -149,6 +161,7 @@ void LC_ActionModifyBreakDivide::performTriggerDeletions(){
 }
 
 void LC_ActionModifyBreakDivide::doAfterTrigger(){
+    triggerData->entitiesToCreate.clear();
     delete triggerData;
     triggerData = nullptr;
 }

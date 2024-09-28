@@ -5,6 +5,7 @@
 #include <QList>
 #include <QMap>
 #include "lc_actiongroup.h"
+#include "lc_actiongroupmanager.h"
 
 class QListWidgetItem;
 class QActionGroup;
@@ -33,8 +34,7 @@ public:
      * @param assigner - when true: buttons are added for assignment and updating
      */
     explicit WidgetCreator(QWidget* parent,
-                           QMap<QString, QAction*>& actions,
-                           QMap<QString, LC_ActionGroup*> action_groups,
+                           LC_ActionGroupManager* actionGroupManager,
                            bool assigner = false);
     ~WidgetCreator();
 
@@ -51,26 +51,25 @@ public:
 
 private:
     Ui::WidgetCreator* ui;
-    QMap<QString, QAction*>& a_map;
-    QMap<QString, LC_ActionGroup*> ag_map;
     QString w_group;
     QString w_key;
+    LC_ActionGroupManager* actionGroupManager;
 
 private slots:
     void addChosenAction();
-    void addChosenAction(QListWidgetItem* item);
+    void addChosenActionForItem(QListWidgetItem* item);
 
     void removeChosenAction();
-    void removeChosenAction(QListWidgetItem* item);
+    void removeChosenActionForItem(QListWidgetItem* item);
 
-    void setLists(QString);
+    void setLists(int index);
 
     void destroyWidget();
     void createWidget();
     void requestAssignment();
     void requestUpdate();
 
-    void setCategory(QString);
+    void setCategory(int index);
 
 signals:
     void widgetToCreate(QString);

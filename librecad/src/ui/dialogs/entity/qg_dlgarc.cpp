@@ -62,17 +62,12 @@ void QG_DlgArc::setArc(RS_Arc& a) {
 
     wPen->setPen(arc, lay, "Pen");
 
-    QString s;
-    s.setNum(arc->getCenter().x, 'g', 10);
-    leCenterX->setText(s);
-    s.setNum(arc->getCenter().y, 'g', 10);
-    leCenterY->setText(s);
-    s.setNum(arc->getRadius(), 'g', 10);
-    leRadius->setText(s);
-    s.setNum(RS_Math::rad2deg(arc->getAngle1()), 'g', 10);
-    leAngle1->setText(s);
-    s.setNum(RS_Math::rad2deg(arc->getAngle2()), 'g', 10);
-    leAngle2->setText(s);
+    leCenterX->setText(asString(arc->getCenter().x));
+    leCenterY->setText(asString(arc->getCenter().y));
+    leRadius->setText(asString(arc->getRadius()));
+    leAngle1->setText(asStringAngleDeg(arc->getAngle1()));
+    leAngle2->setText(asStringAngleDeg(arc->getAngle2()));
+
     cbReversed->setChecked(arc->isReversed());
     lId->setText(QString("ID: %1").arg(arc->getId()));
 }

@@ -117,6 +117,7 @@ void LC_ActionDrawLineFromPointToLine::doOnLeftMouseButtonRelease([[maybe_unused
             if (en != nullptr){
                 targetLine = dynamic_cast<RS_Line *>(en);
                 trigger();
+                invalidateSnapSpot();
             }
             break;
         }
@@ -144,6 +145,7 @@ bool LC_ActionDrawLineFromPointToLine::doCheckMayDrawPreview([[maybe_unused]] QM
  */
 void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     if (status == SelectLine){
+        deleteSnapper();
         RS_Entity* en = catchModifiableEntity(e, RS2::EntityLine);
         RS_Line* line;
         if (en != nullptr){

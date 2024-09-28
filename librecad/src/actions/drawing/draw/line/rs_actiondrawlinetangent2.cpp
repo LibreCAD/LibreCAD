@@ -168,6 +168,7 @@ void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, QMouseEvent
                 } else {
                     init(status + 1);
                     preparePreview(e);
+                    invalidateSnapSpot();
                 }
             }
             break;

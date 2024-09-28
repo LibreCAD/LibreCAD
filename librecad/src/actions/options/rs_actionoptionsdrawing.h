@@ -37,14 +37,15 @@
  * @author Andrew Mustun
  */
 class RS_ActionOptionsDrawing : public RS_ActionInterface {
-	Q_OBJECT
+Q_OBJECT
 public:
     RS_ActionOptionsDrawing(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
+                            RS_GraphicView& graphicView, int tabIndex = -1);
 
-	void init(int status) override;
-
-	void trigger() override;
+    void init(int status) override;
+    void trigger() override;
+protected:
+    int tabToShow = -1;
 };
 
 #endif

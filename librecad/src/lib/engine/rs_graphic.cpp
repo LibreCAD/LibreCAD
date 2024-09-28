@@ -57,14 +57,11 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
         pagesNumH(1),
         pagesNumV(1) {
 
-
-    setUnit(RS_Units::stringToUnit(LC_GET_ONE_STR("Defaults", "Unit", "None")));
-
+    LC_GROUP_GUARD("Defaults");
     {
-        LC_GROUP_GUARD("Appearance");
-        //$ISOMETRICGRID == $SNAPSTYLE
+        setUnit(RS_Units::stringToUnit(LC_GET_ONE_STR("Defaults", "Unit", "None")));
         addVariable("$SNAPSTYLE", static_cast<int>(LC_GET_INT("IsometricGrid", 0)), 70);
-        crosshairType = static_cast<RS2::CrosshairType>(LC_GET_INT("CrosshairType", 0));
+        addVariable("$SNAPISOPAIR", static_cast<int>(LC_GET_INT("IsoGridView", 1)), 70); // fixme - iso view
     }
     RS2::Unit unit = getUnit();
 
@@ -598,12 +595,13 @@ void RS_Graphic::setIsometricGrid(bool on) {
     addVariable("$SNAPSTYLE", (int)on, 70);
 }
 
-void RS_Graphic::setCrosshairType(RS2::CrosshairType chType){
-    crosshairType=chType;
+RS2::IsoGridViewType RS_Graphic::getIsoView() const{
+    RS2::IsoGridViewType result = (RS2::IsoGridViewType) getVariableInt("$SNAPISOPAIR", RS2::IsoGridViewType::IsoTop);
+    return result;
 }
 
-RS2::CrosshairType RS_Graphic::getCrosshairType() const {
-    return crosshairType;
+void RS_Graphic::setIsoView(RS2::IsoGridViewType viewType){
+    addVariable("$SNAPISOPAIR", viewType, 70);
 }
 
 /**

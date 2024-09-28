@@ -53,6 +53,10 @@ void RS_ActionPolylineDel::init(int status) {
     }
 }
 
+void RS_ActionPolylineDel::drawSnapper() {
+    // completely disable snapper for action
+}
+
 void RS_ActionPolylineDel::trigger(){
     RS_DEBUG->print("RS_ActionPolylineDel::trigger()");
     RS_Modification m(*container, graphicView);
@@ -147,6 +151,7 @@ void RS_ActionPolylineDel::onMouseLeftButtonRelease(int status, QMouseEvent *e){
         default:
             break;
     }
+    invalidateSnapSpot();
 }
 
 void RS_ActionPolylineDel::updateMouseButtonHints(){

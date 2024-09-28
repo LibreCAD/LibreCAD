@@ -80,6 +80,7 @@ class LC_ActionModifyBreakDivide:public LC_AbstractActionWithPreview
     struct TriggerData{
         RS_Entity* entity;
         RS_Vector snapPoint;
+        QList<RS_Entity *> entitiesToCreate;
     };
 
 public:

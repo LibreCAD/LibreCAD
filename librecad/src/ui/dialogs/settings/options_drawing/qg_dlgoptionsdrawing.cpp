@@ -39,7 +39,6 @@
 #include "rs_debug.h"
 #include "rs_font.h"
 #include "rs_math.h"
-#include "rs_settings.h"
 #include "rs_units.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
@@ -55,9 +54,6 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-namespace {
-    int current_tab = 0;
-}
 
 QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent)
     : LC_Dialog(parent, "OptionsDrawing")
@@ -65,27 +61,62 @@ QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent)
     ,paperScene{new QGraphicsScene(parent)}
     ,spacing{std::make_unique<RS_Vector>()}{
     setupUi(this);
-    tabWidget->setCurrentIndex(current_tab);
+
+    connect(rbLandscape, &QRadioButton::toggled, this, &QG_DlgOptionsDrawing::onLandscapeToggled);
+    connect(cbDimFxLon, &QCheckBox::toggled, this, &QG_DlgOptionsDrawing::onDimFxLonToggled);
+    connect(rbRelSize, &QRadioButton::toggled, this, &QG_DlgOptionsDrawing::onRelSizeToggled);
+
+    connect(lePaperWidth, &QLineEdit::textChanged, this, &QG_DlgOptionsDrawing::updatePaperPreview);
+    connect(lePaperHeight, &QLineEdit::textChanged, this, &QG_DlgOptionsDrawing::updatePaperPreview);
+    connect(leMarginTop, &QLineEdit::textChanged, this, &QG_DlgOptionsDrawing::updatePaperPreview);
+    connect(leMarginBottom, &QLineEdit::textChanged, this, &QG_DlgOptionsDrawing::updatePaperPreview);
+    connect(leMarginRight, &QLineEdit::textChanged, this, &QG_DlgOptionsDrawing::updatePaperPreview);
+    connect(leMarginLeft, &QLineEdit::textChanged, this, &QG_DlgOptionsDrawing::updatePaperPreview);
+
+    connect(cbUnit, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updatePreview);
+    connect(cbPaperFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updatePaperSize);
+    connect(cbLengthPrecision, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updatePreview);
+    connect(cbLengthFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateLengthPrecision);
+    connect(cbLengthFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updatePreview);
+
+
+    connect(cbDimLUnit, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateDimLengthPrecision);
+    connect(cbDimAUnit, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateDimAnglePrecision);
+    connect(cbAnglePrecision, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updatePreview);
+    connect(cbAngleFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateAnglePrecision);
+    connect(cbAngleFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updatePreview);
+
+
+    connect(rbIsoLeft, &QCheckBox::toggled, this, &QG_DlgOptionsDrawing::disableXSpacing);
+    connect(rbIsoRight, &QCheckBox::toggled, this, &QG_DlgOptionsDrawing::disableXSpacing);
+    connect(rbIsoTop, &QCheckBox::toggled, this, &QG_DlgOptionsDrawing::disableXSpacing);
+    connect(rbOrthogonalGrid,  &QCheckBox::toggled, this, &QG_DlgOptionsDrawing::enableXSpacing);
+
+
+
+    tabWidget->setCurrentIndex(0);
     init();
 }
+
+
 
 /*
  *  Destroys the object and frees any allocated resources
  */
 QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing(){
     // no need to delete child widgets, Qt does it all for us
-
-    // fixme - why these settings are there? They are not related to drawing, they are applications specific...
+/*
+    // fixme - review and check what is affected by GridSpacingX, Y settings!!! it might be that they were used by previous grid drawing algorithm to set minimal grid spacing values!!!
     LC_GROUP_GUARD("Appearance");
     {
         LC_SET("IsometricGrid", rbIsometricGrid->isChecked() ? QString("1") : QString("0"));
-        RS2::CrosshairType chType(RS2::TopCrosshair);
+        RS2::GridViewType chType(RS2::IsoTop);
         if (rbCrosshairLeft->isChecked()) {
-            chType = RS2::LeftCrosshair;
+            chType = RS2::IsoLeft;
         } else if (rbCrosshairTop->isChecked()) {
-            chType = RS2::TopCrosshair;
+            chType = RS2::IsoTop;
         } else if (rbCrosshairRight->isChecked()) {
-            chType = RS2::RightCrosshair;
+            chType = RS2::IsoRight;
         }
         LC_SET("CrosshairType", QString::number(static_cast<int>(chType)));
         if (spacing->valid) {
@@ -93,6 +124,7 @@ QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing(){
             LC_SET("GridSpacingY", spacing->y);
         }
     }
+    */
 }
 
 /*
@@ -208,58 +240,32 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
 
     // Grid:
     cbGridOn->setChecked(graphic->isGridOn());
-    //    LC_GROUP("Appearance");
-    //    cbIsometricGrid->setChecked(static_cast<bool>(RS_SETTINGS->readNumEntry("/IsometricGrid", 0)));
-    //    LC_GROUP_END();
-
-    //    graphic->setIsometricGrid(cbIsometricGrid->isChecked());
-    rbIsometricGrid->setChecked(graphic->isIsometricGrid());
-    rbOrthogonalGrid->setChecked(!rbIsometricGrid->isChecked());
-
-    // fixme - well.... it seems that the logic of dialog is broken there...
-    // the option is applied to for specific drawing (like variables) - but for the entire application
-    // therefore, UI should be moved to Application settings...
-
-    LC_GROUP("Appearance");
-
-    const bool extendAxisLines_isChecked = LC_GET_BOOL("ExtendAxisLines", false);
-    cbExtendAxisLines->setChecked(extendAxisLines_isChecked);
-
-    const int gridType_comboboxIndex = LC_GET_INT("GridType", 0);
-    cbGridType->setCurrentIndex(gridType_comboboxIndex);
-
-    LC_GROUP_END();
-
-    rbIsometricGrid->setDisabled  ( ! cbGridOn->isChecked() || (gridType_comboboxIndex != 0));
-    rbOrthogonalGrid->setDisabled ( ! cbGridOn->isChecked() || (gridType_comboboxIndex != 0));
-
-    RS2::CrosshairType chType = graphic->getCrosshairType();
-    switch (chType) {
-        case RS2::LeftCrosshair:
-            rbCrosshairLeft->setChecked(true);
-            break;
-        case RS2::TopCrosshair:
-            rbCrosshairTop->setChecked(true);
-            break;
-            //    case RS2::RightCrosshair:
-            //        rbCrosshairRight->setChecked(true);
-            //        break;
-        default:
-            rbCrosshairRight->setChecked(true);
-            break;
+    bool isometricGrid = graphic->isIsometricGrid();
+    if (isometricGrid){
+        rbOrthogonalGrid ->setChecked(false);
+        RS2::IsoGridViewType chType = graphic->getIsoView();
+        switch (chType) {
+            case RS2::IsoLeft:
+                rbIsoLeft->setChecked(true);
+                break;
+            case RS2::IsoTop:
+                rbIsoTop->setChecked(true);
+                break;
+            case RS2::IsoRight:
+                rbIsoRight->setChecked(true);
+                break;
+            default:
+                break;
+        }
     }
-    if (rbOrthogonalGrid->isChecked() || !cbGridOn->isChecked()) {
-        rbCrosshairLeft->setDisabled(true);
-        rbCrosshairTop->setDisabled(true);
-        rbCrosshairRight->setDisabled(true);
-    } else {
-        rbCrosshairLeft->setDisabled(false);
-        rbCrosshairTop->setDisabled(false);
-        rbCrosshairRight->setDisabled(false);
+    else{
+        rbOrthogonalGrid->setChecked(true);
     }
+
 
     *spacing = graphic->getVariableVector("$GRIDUNIT",
                                           {0.0, 0.0});
+
     cbXSpacing->setEditText(QString("%1").arg(spacing->x));
     cbYSpacing->setEditText(QString("%1").arg(spacing->y));
 
@@ -268,6 +274,33 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
     }
     if (cbYSpacing->currentText() == "0") {
         cbYSpacing->setEditText(tr("auto"));
+    }
+    LC_GROUP("Appearance");
+    {
+        bool state = LC_GET_BOOL("ScaleGrid");
+        if (state) {
+            lGridStateScaling->setText(tr("ON"));
+        } else {
+            lGridStateScaling->setText(tr("OFF"));
+        }
+        state = LC_GET_BOOL("UnitlessGrid");
+        if (state) {
+            lGridStateUnitless->setText(tr("ON"));
+        } else {
+            lGridStateUnitless->setText(tr("OFF"));
+        }
+        state = LC_GET_BOOL("GridDraw");
+        if (state) {
+            lGridStateDrawGrid->setText(tr("ON"));
+        } else {
+            lGridStateDrawGrid->setText(tr("OFF"));
+        }
+        state = LC_GET_BOOL("metaGridDraw");
+        if (state) {
+            lGridStateDrawMetaGrid->setText(tr("ON"));
+        } else {
+            lGridStateDrawMetaGrid->setText(tr("OFF"));
+        }
     }
     cbXSpacing->setEnabled(cbGridOn->isChecked() && rbOrthogonalGrid->isChecked());
     cbYSpacing->setEnabled(cbGridOn->isChecked());
@@ -336,7 +369,8 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
         cbDimFxLon->setChecked(false);
     }
     int dimlwd = graphic->getVariableInt("$DIMLWD", -2); //default ByBlock
-    cbDimLwD->setWidth(RS2::intToLineWidth(dimlwd));
+    RS2::LineWidth lineWidth = RS2::intToLineWidth(dimlwd);
+    cbDimLwD->setWidth(lineWidth);
     int dimlwe = graphic->getVariableInt("$DIMLWE", -2); //default ByBlock
     cbDimLwE->setWidth(RS2::intToLineWidth(dimlwe));
 
@@ -394,14 +428,29 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
     cbEncoding->setEditText(encoding);
     */
 
-    updatePaperSize();
-    updateUnitLabels();
+
 
     // Paper margins
+    bool block = true;
+    leMarginLeft->blockSignals(block);
+    leMarginRight->blockSignals(block);
+    leMarginTop->blockSignals(block);
+    leMarginBottom->blockSignals(block);
+
     leMarginLeft->setText(QString::number(graphic->getMarginLeftInUnits()));
     leMarginTop->setText(QString::number(graphic->getMarginTopInUnits()));
     leMarginRight->setText(QString::number(graphic->getMarginRightInUnits()));
     leMarginBottom->setText(QString::number(graphic->getMarginBottomInUnits()));
+
+    block = false;
+    leMarginLeft->blockSignals(block);
+    leMarginRight->blockSignals(block);
+    leMarginTop->blockSignals(block);
+    leMarginBottom->blockSignals(block);
+
+    updatePaperSize();
+    updateUnitLabels();
+
     updatePaperPreview();
 
     // Number of pages
@@ -500,7 +549,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
  * Called when OK is clicked.
  */
 void QG_DlgOptionsDrawing::validate() {
-    RS2::LinearFormat f = (RS2::LinearFormat) cbLengthFormat->currentIndex();
+    auto f = (RS2::LinearFormat) cbLengthFormat->currentIndex();
     if (f == RS2::Engineering || f == RS2::Architectural) {
         if (static_cast<RS2::Unit>(cbUnit->currentIndex()) != RS2::Inch) {
             QMessageBox::warning(this, tr("Options"),
@@ -570,13 +619,6 @@ void QG_DlgOptionsDrawing::validate() {
             spacing->y = cbYSpacing->currentText().toDouble();
         }
         graphic->addVariable("$GRIDUNIT", *spacing, 10);
-// fixme - move these options to Application Preferences dialog
-        LC_GROUP("Appearance");
-        {
-            LC_SET("ExtendAxisLines", cbExtendAxisLines->isChecked());
-            LC_SET("GridType", cbGridType->currentIndex());
-        }
-        LC_GROUP_END();
 
         // dim:
         bool ok1 = true;
@@ -631,8 +673,15 @@ void QG_DlgOptionsDrawing::validate() {
         if (dimScale <= DBL_EPSILON)
             dimScale = 1.0;
         graphic->addVariable("$DIMSCALE", dimScale, 40);
-        graphic->addVariable("$DIMLWD", cbDimLwD->getWidth(), 70);
-        graphic->addVariable("$DIMLWE", cbDimLwE->getWidth(), 70);
+
+        RS2::LineWidth dimLwDLineWidth = cbDimLwD->getWidth();
+        int lineWidthDValue = RS2::lineWidthToInt(dimLwDLineWidth);
+        graphic->addVariable("$DIMLWD", lineWidthDValue, 70);
+
+        RS2::LineWidth dimLwELineWidth = cbDimLwE->getWidth();
+        int lineWidthEValue = RS2::lineWidthToInt(dimLwELineWidth);
+        graphic->addVariable("$DIMLWE", lineWidthEValue, 70);
+
         graphic->addVariable("$DIMFXL", cbDimFxL->value(), 40);
         graphic->addVariable("$DIMFXLON", cbDimFxLon->isChecked() ? 1 : 0, 70);
         graphic->addVariable("$DIMLUNIT", cbDimLUnit->currentIndex() + 1, 70);
@@ -726,6 +775,25 @@ void QG_DlgOptionsDrawing::validate() {
             pdsize = -pdsize;
 
         graphic->addVariable("$PDSIZE", pdsize, DXF_FORMAT_GC_PDSize);
+
+        bool isometricGrid = !rbOrthogonalGrid->isChecked();
+
+        graphic->setIsometricGrid(isometricGrid);
+
+        RS2::IsoGridViewType isoView = RS2::IsoGridViewType::IsoTop;
+        if (isometricGrid){
+            if (rbIsoLeft->isChecked()){
+                isoView = RS2::IsoGridViewType::IsoLeft;
+            }
+            else if (rbIsoTop->isChecked()){
+                isoView = RS2::IsoGridViewType::IsoTop;
+            }
+            else if (rbIsoRight->isChecked()){
+                isoView = RS2::IsoGridViewType::IsoRight;
+            }
+            graphic->setIsoView(isoView);
+        }
+
 
 // indicate graphic is modified and requires save
         graphic->setModified(true);
@@ -1029,74 +1097,37 @@ void QG_DlgOptionsDrawing::showEvent(QShowEvent* event) {
     LC_Dialog::showEvent(event);
 }
 
-void QG_DlgOptionsDrawing::on_rbIsometricGrid_clicked(){
-    if(rbIsometricGrid->isChecked()){
-        rbOrthogonalGrid->setChecked(false);
-        graphic->setIsometricGrid(true);
-        cbXSpacing->setDisabled(true);
-        rbCrosshairLeft->setDisabled(false);
-        rbCrosshairTop->setDisabled(false);
-        rbCrosshairRight->setDisabled(false);
-    }else{
-        rbIsometricGrid->setChecked(true);
-    }
-}
-
-void QG_DlgOptionsDrawing::on_rbCrosshairLeft_toggled(bool checked){
-    if(checked) graphic->setCrosshairType(RS2::LeftCrosshair);
-}
-
-void QG_DlgOptionsDrawing::on_rbCrosshairTop_toggled(bool checked){
-    if(checked) graphic->setCrosshairType(RS2::TopCrosshair);
-}
-
-void QG_DlgOptionsDrawing::on_rbCrosshairRight_toggled(bool checked){
-    if(checked) graphic->setCrosshairType(RS2::RightCrosshair);
-}
-
-void QG_DlgOptionsDrawing::on_rbOrthogonalGrid_clicked(){
-    if( rbOrthogonalGrid->isChecked()) {
-        rbIsometricGrid->setChecked(false);
-        graphic->setIsometricGrid(false);
-        cbXSpacing->setDisabled(false);
-        rbCrosshairLeft->setDisabled(true);
-        rbCrosshairTop->setDisabled(true);
-        rbCrosshairRight->setDisabled(true);
-    }else{
-        rbOrthogonalGrid->setChecked(true);
-    }
-}
-
+// fixme - sand - review and probably remove after investigating GridSpacingX setting
 void QG_DlgOptionsDrawing::on_cbGridOn_toggled(bool checked){
-    rbIsometricGrid->setEnabled(checked);
+    rbIsoTop->setEnabled(checked);
     rbOrthogonalGrid->setEnabled(checked);
-    rbCrosshairLeft->setEnabled(checked && rbIsometricGrid->isChecked());
-    rbCrosshairTop->setEnabled(checked && rbIsometricGrid->isChecked());
-    rbCrosshairRight->setEnabled(checked && rbIsometricGrid->isChecked());
+    rbIsoLeft->setEnabled(checked);
+    rbIsoRight->setEnabled(checked);
     cbXSpacing->setEnabled(checked && rbOrthogonalGrid->isChecked());
     cbYSpacing->setEnabled(checked);
-    cbGridType->setEnabled(checked);
-    cbExtendAxisLines->setEnabled(checked);
 }
 
-void QG_DlgOptionsDrawing::on_cbGridType_currentIndexChanged(int index) {
-    rbIsometricGrid->setEnabled(!index);
-    rbOrthogonalGrid->setEnabled(!index);
-}
-
-void QG_DlgOptionsDrawing::on_rbLandscape_toggled(bool /*checked*/) {
+void QG_DlgOptionsDrawing::onLandscapeToggled(bool /*checked*/) {
     updatePaperSize();
 }
 
-void QG_DlgOptionsDrawing::on_cbDimFxLon_toggled(bool checked) {
+void QG_DlgOptionsDrawing::disableXSpacing(bool checked) {
+    if (checked){
+        cbXSpacing->setEnabled(false);
+    }
+}
+
+void QG_DlgOptionsDrawing::enableXSpacing(bool checked) {
+    if (checked){
+        cbXSpacing ->setEnabled(true);
+    }
+}
+
+void QG_DlgOptionsDrawing::onDimFxLonToggled(bool checked) {
     cbDimFxL->setEnabled(checked);
 }
 
-void QG_DlgOptionsDrawing::on_tabWidget_currentChanged(int index) {
-    current_tab = index;
-}
-
-void QG_DlgOptionsDrawing::on_rbRelSize_toggled([[maybe_unused]] bool checked) {
+void QG_DlgOptionsDrawing::onRelSizeToggled([[maybe_unused]] bool checked) {
 //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgOptionsDrawing::on_rbRelSize_toggled, checked = %d",checked);
     updateLPtSzUnits();
 }
@@ -1109,4 +1140,9 @@ void QG_DlgOptionsDrawing::updateLPtSzUnits() {
     else
         lPtSzUnits->setText(QApplication::translate("QG_DlgOptionsDrawing", "Dwg Units", nullptr));
 }
-//EOF
+
+void QG_DlgOptionsDrawing::showInitialTab(int tabIndex) {
+    if (tabIndex > 0){
+        tabWidget->setCurrentIndex(tabIndex);
+    }
+}

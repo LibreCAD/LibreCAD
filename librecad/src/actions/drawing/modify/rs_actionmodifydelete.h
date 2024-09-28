@@ -49,6 +49,5 @@ protected:
     };
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     void updateMouseButtonHintsForSelection() override;
-    void selectionCompleted(bool singleEntity, bool fromInit) override;
 };
 #endif

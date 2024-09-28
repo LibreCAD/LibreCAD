@@ -18,6 +18,8 @@ public:
 
 public slots:
     void chooseStyleSheet();
+
+    void accept() override;
 };
 
 #endif // LC_WIDGETOPTIONSDIALOG_H

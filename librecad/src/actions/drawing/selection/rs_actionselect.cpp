@@ -72,9 +72,6 @@ int RS_ActionSelect::countSelected(){
 
 void RS_ActionSelect::updateMouseButtonHints() {
     switch(nextAction) {
-        case RS2::ActionOrderNoSelect:
-            updateMouseWidgetTRCancel(tr("Select entities to order"));
-            break;
         case RS2::ActionModifyDeleteQuick:
             updateMouseWidgetTRCancel(tr("Select to delete immediately"));
             break;

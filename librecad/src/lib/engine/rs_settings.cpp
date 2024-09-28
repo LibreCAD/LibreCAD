@@ -217,6 +217,16 @@ int RS_Settings::readIntSingle(const QString& group, const QString &key, int def
     return result;
 }
 
+const QByteArray& RS_Settings::readByteArray(const QString &key) {
+    return readByteArraySingle(m_group, key);
+}
+
+const QByteArray& RS_Settings::readByteArraySingle(const QString& group, const QString &key) {
+    QString fullName = getFullName(group, key);
+    const QByteArray &array = settings->value(fullName, "").toByteArray();
+    return array;
+}
+
 QVariant RS_Settings::readEntryCache(const QString &key) {
     if (cache.count(key) == 0) {
         return QVariant();
@@ -234,4 +244,20 @@ void RS_Settings::clear_geometry() {
     settings->remove("/Geometry");
     cache.clear();
     save_is_allowed = false;
+}
+
+void RS_Settings::writePen(QString name, RS_Pen const &pen){
+    LC_SET("pen" + name + "Color", pen.getColor().name());
+    LC_SET("pen" + name + "LineType", pen.getLineType());
+    LC_SET("pen" + name + "Width", pen.getWidth());
+}
+
+RS_Pen RS_Settings::readPen(QString name, RS_Pen &defaultPen){
+    RS_Color color = QColor(LC_GET_STR("pen" + name + "Color", defaultPen.getColor().name()));
+    // FIXME - well, that's a bit ugly - if there is a mess in setting value, cast from int to short will be illegal. Need additional validation there?
+    RS2::LineType lineType = static_cast<RS2::LineType> (LC_GET_INT("pen" + name + "LineType", defaultPen.getLineType()));
+    RS2::LineWidth lineWidth = static_cast<RS2::LineWidth> (LC_GET_INT("pen" + name + "Width", defaultPen.getWidth()));
+
+    RS_Pen result = RS_Pen(color, lineWidth, lineType);
+    return result;
 }

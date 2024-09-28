@@ -39,31 +39,41 @@ QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, Qt::WindowFlag
     : QWidget(parent, fl){
     setObjectName(name);
     setupUi(this);
+    bool useClassicalStatusBar = LC_GET_ONE_BOOL("Startup", "UseClassicStatusBar", false);
 
-    QSettings settings;
-    settings.beginGroup("Widgets");
-    int allow_statusbar_height = settings.value("AllowStatusbarHeight", 0).toInt();
-    int height {64};
-    if (allow_statusbar_height) {
-        height = settings.value( "StatusbarHeight", 64).toInt();
+    LC_GROUP_GUARD("Widgets");
+    {
+        bool custom_size = LC_GET_BOOL("AllowToolbarIconSize", false);
+        iconSize = custom_size ? LC_GET_INT("ToolbarIconSize", 24) : 24;
+        int height{64};
+
+        if (useClassicalStatusBar) {
+            QSettings settings;
+
+            int allow_statusbar_height = LC_GET_BOOL("AllowStatusbarHeight", false);
+            if (allow_statusbar_height) {
+                height = LC_GET_INT("StatusbarHeight", 64);
+            }
+
+            setMinimumHeight(height);
+            setMaximumHeight(height);
+
+            int halfHeight = height / 2 - 2;
+
+            lblCtrl->setMinimumSize(halfHeight, halfHeight);
+            lblCtrl->setMaximumSize(halfHeight, halfHeight);
+            lblShift->setMinimumSize(halfHeight, halfHeight);
+            lblShift->setMaximumSize(halfHeight, halfHeight);
+        } else {
+            lLeftButton->setWordWrap(false);
+            lRightButton->setWordWrap(false);
+            lLeftButton->setTextFormat(Qt::TextFormat::PlainText);
+        }
     }
 
-    setMinimumHeight( height);
-    setMaximumHeight( height);
     lLeftButton->setText("");
     lRightButton->setText("");
-    lMousePixmap->setPixmap( QPixmap(":/icons/mouse.svg").scaled( height, height));
-
-    int halfHeight = height/2 - 2;
-    lblCtrl->setMinimumSize(halfHeight, halfHeight);
-    lblCtrl->setMaximumSize(halfHeight, halfHeight);
-    lblShift->setMinimumSize(halfHeight, halfHeight);
-    lblShift->setMaximumSize(halfHeight, halfHeight);
-
-    lblShift->setPixmap(QPixmap(":/icons/state-shift_yes.svg").scaled(halfHeight, halfHeight));
-    lblCtrl->setPixmap(QPixmap(":/icons/state_ctrl_yes.svg").scaled(halfHeight, halfHeight));
-//    gridLayout->setAlignment(lblCtrl,Qt::AlignCenter);
-//    gridLayout->setAlignment(lblShift,Qt::AlignCenter);
+    lMousePixmap->setPixmap(QPixmap(":/icons/mouse.svg")/*.scaled(height, height)*/);
 }
 
 /*
@@ -89,17 +99,35 @@ void QG_MouseWidget::setHelp(const QString& left, const QString& right, const LC
     const QString &ctrlMessage = modifiersInfo.getCtrlMessage();
     setupModifier(lblCtrl, ctrlMessage);
 
-    lLeftButton->setText(left);
-    lRightButton->setText(right);
+    QString leftText = left;
+    QString rightText = right;
+
+    lLeftButton->setText(leftText);
+    lLeftButton->setToolTip(leftText);
+    lRightButton->setText(rightText);
+    lRightButton->setToolTip(rightText);
 }
 
 void QG_MouseWidget::setupModifier(QLabel *btn, const QString& helpMsg) const{
     if (helpMsg != nullptr){
-        btn->setVisible(true);
+        btn->setEnabled(true);
         btn->setToolTip(helpMsg);
     }
     else {
-        btn->setVisible(false);
+        btn->setEnabled(false);
         btn->setToolTip("");
     }
+}
+
+void QG_MouseWidget::setActionIcon(QIcon icon) {
+    lCurrentAction->setPixmap(icon.pixmap(iconSize));
+}
+
+void QG_MouseWidget::setCurrentQAction(QAction *a) {
+    QIcon icon;
+    if (a != nullptr){
+        icon = a->icon();
+        lCurrentAction->setToolTip(a->toolTip());
+    }
+    setActionIcon((icon));
 }

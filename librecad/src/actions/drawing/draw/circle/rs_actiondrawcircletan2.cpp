@@ -111,6 +111,10 @@ void RS_ActionDrawCircleTan2::trigger(){
     RS_DEBUG->print("RS_ActionDrawCircleTan2::trigger(): entity added: %lu", circle->getId());
 }
 
+void RS_ActionDrawCircleTan2::drawSnapper() {
+    // disable snapper for action
+}
+
 void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent begin");
     deleteHighlights();

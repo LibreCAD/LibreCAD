@@ -35,6 +35,9 @@ public:
     ~LC_ActionPreSelectionAwareBase() override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void init(int status) override;
+
+    void drawSnapper() override;
+
 protected:
     bool selectionComplete = false;
     bool countDeep = false;

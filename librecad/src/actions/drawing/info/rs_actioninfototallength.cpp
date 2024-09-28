@@ -26,7 +26,6 @@
 
 #include "rs_actioninfototallength.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphic.h"
 #include "rs_units.h"
 
@@ -41,6 +40,10 @@ RS_ActionInfoTotalLength::RS_ActionInfoTotalLength(RS_EntityContainer& container
 void RS_ActionInfoTotalLength::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
+}
+
+void RS_ActionInfoTotalLength::drawSnapper() {
+    // disable snapper;
 }
 
 void RS_ActionInfoTotalLength::trigger() {
@@ -58,4 +61,8 @@ void RS_ActionInfoTotalLength::trigger() {
     }
 
     finish(false);
+}
+
+RS2::CursorType RS_ActionInfoTotalLength::doGetMouseCursor([[maybe_unused]]int status) {
+    return RS2::SelectCursor;
 }

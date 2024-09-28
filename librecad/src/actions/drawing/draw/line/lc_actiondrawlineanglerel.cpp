@@ -186,6 +186,7 @@ void LC_ActionDrawLineAngleRel::doOnLeftMouseButtonRelease(QMouseEvent *e, int s
                         trigger();
                     }
                 }
+                invalidateSnapSpot();
                 break;
             }
             case SetTickLength:{ // tick length selection state
@@ -221,6 +222,7 @@ bool LC_ActionDrawLineAngleRel::doCheckMayDrawPreview[[maybe_unused]]([[maybe_un
 void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     switch (status) {
         case SetLine:{ // line select state
+            deleteSnapper();
             RS_Entity* en = catchModifiableEntity(e, enTypeList);
             if (en != nullptr){
                 auto* line = dynamic_cast<RS_Line *>(en);

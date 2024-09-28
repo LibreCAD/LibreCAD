@@ -377,7 +377,9 @@ void RS_PainterQt::drawGridPoint(const RS_Vector& p) {
     QPainter::drawPoint(toScreenX(p.x), toScreenY(p.y));
 }
 
-
+void RS_PainterQt::drawGridPoint(const double &x, const double &y) {
+    QPainter::drawPoint(toScreenX(x), toScreenY(y));
+}
 
 /**
  * Draws a point at (x1, y1).
@@ -469,17 +471,17 @@ void RS_PainterQt::drawPoint(const RS_Vector& p, int pdmode, int pdsize) {
 /**
  * Draws a line from (x1, y1) to (x2, y2).
  */
-void RS_PainterQt::drawLine(const RS_Vector& p1, const RS_Vector& p2)
-{
+void RS_PainterQt::drawLine(const RS_Vector& p1, const RS_Vector& p2){
     PainterGuard painterGuard{*this};
     QPainter::drawLine(toScreenX(p1.x), toScreenY(p1.y),
                        toScreenX(p2.x), toScreenY(p2.y));
 }
 
-
-
-
-
+void RS_PainterQt::drawLine(const double &x1, const double &y1, const double &x2, const double &y2){
+    PainterGuard painterGuard{*this};
+    QPainter::drawLine(toScreenX(x1), toScreenY(y1),
+                       toScreenX(x2), toScreenY(y2));
+}
 
 /**
  * Draws a rectangle with corners p1, p2.
@@ -530,10 +532,19 @@ void RS_PainterQt::drawArc( const RS_Vector& cp,
 
     // angles in degrees
     double startAngle = RS_Math::rad2deg(reversed ? a2 : a1);
+//    double endAngle = RS_Math::rad2deg(reversed ? a1 : a2);
     double angularLength = RS_Math::rad2deg(RS_Math::getAngleDifference(a1, a2, reversed));
     // Issue #1896: zero angular length arc is not supported, assuming 360 degree arcs
-    if (angularLength < RS_Math::rad2deg(RS_TOLERANCE_ANGLE))
-        angularLength = 360.;
+//    if (angularLength < RS_Math::rad2deg(RS_TOLERANCE_ANGLE))
+//        angularLength = 360.;
+//
+    // brute fix for #1896
+    if (std::abs(angularLength) < RS_TOLERANCE_ANGLE) {
+        // check whether angles are via period
+        if (RS_Math::getPeriodsCount(a1, a2, reversed) != 0) {
+            angularLength = 360; // in degrees
+        }
+    }
 
     QPainterPath path;
     path.arcMoveTo(circleRect, startAngle);
@@ -839,26 +850,26 @@ RS_Pen RS_PainterQt::getPen() const{
     //return p;
 }
 
-void RS_PainterQt::setPen(const RS_Pen& pen) {
+void RS_PainterQt::setPen(const RS_Pen &pen, int penWidth) {
     lpen = pen;
     switch (drawingMode) {
-    case RS2::ModeBW:
-        lpen.setColor( RS_Color( Qt::black));
-        break;
+        case RS2::ModeBW:
+            lpen.setColor( RS_Color( Qt::black));
+            break;
 
-    case RS2::ModeWB:
-        lpen.setColor( RS_Color( Qt::white));
-        break;
+        case RS2::ModeWB:
+            lpen.setColor( RS_Color( Qt::white));
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 
     QColor pColor { lpen.getColor() };
 
     pColor.setAlphaF(pen.getAlpha());
-    QPen p(pColor, RS_Math::round(lpen.getScreenWidth()),
-           rsToQtLineType(lpen.getLineType()));
+
+    QPen p(pColor, penWidth, rsToQtLineType(lpen.getLineType()));
     if (p.style() == Qt::CustomDashLine)
     {
         auto dashPattern = rsToQDashPattern(lpen.getLineType(),
@@ -872,6 +883,11 @@ void RS_PainterQt::setPen(const RS_Pen& pen) {
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
     QPainter::setPen(p);
+}
+
+void RS_PainterQt::setPen(const RS_Pen& pen) {
+    int penWidth = RS_Math::round(pen.getScreenWidth());
+    setPen(pen, penWidth);
 }
 
 void RS_PainterQt::setPen(const RS_Color& color) {
@@ -1089,4 +1105,3 @@ void RS_PainterQt::drawText(const QRect& rect, const QString& text, QRect* bound
 {
     QPainter::drawText(rect, Qt::AlignTop | Qt::AlignLeft | Qt::TextDontClip, text, boundingBox);
 }
-

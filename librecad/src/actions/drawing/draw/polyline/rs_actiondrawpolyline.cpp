@@ -48,39 +48,7 @@
 #include "emu_c99.h"
 #endif
 
-struct RS_ActionDrawPolyline::Points {
 
-	/**
-	 * Line data defined so far.
-	 */
-    RS_PolylineData data;
-    RS_ArcData arc_data;
-    /**
-	 * Polyline entity we're working on.
-	 */
-    RS_Polyline* polyline;
-
-    /**
-	 * last point.
-	 */
-    RS_Vector point;
-    RS_Vector calculatedEndpoint;
-    /**
-	 * Start point of the series of lines. Used for close function.
-	 */
-    RS_Vector start;
-
-    /**
-	 * Point history (for undo)
-	 */
-    QList<RS_Vector> history;
-
-    /**
-	 * Bulge history (for undo)
-	 */
-    QList<double> bHistory;
-    QString equation;
-};
 
 RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)

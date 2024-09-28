@@ -45,6 +45,9 @@ public:
     void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *event) override;
+
+    void drawSnapper() override;
+
 protected:
     /**
   * Action States.

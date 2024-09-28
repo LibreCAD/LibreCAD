@@ -81,6 +81,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
             break;
         }
         case SetCircle: {
+            deleteSnapper();
             deletePreview();
             deleteHighlights();
             RS_Entity *en = catchEntity(e, circleType, RS2::ResolveAll);
@@ -145,6 +146,7 @@ void RS_ActionDrawLineTangent1::onCoordinateEvent(int status,  [[maybe_unused]]b
             *point = pos;
             moveRelativeZero(*point);
             setStatus(SetCircle);
+            invalidateSnapSpot();
             break;
         }
         default:

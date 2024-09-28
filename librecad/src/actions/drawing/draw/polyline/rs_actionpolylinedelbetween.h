@@ -47,6 +47,9 @@ public:
     void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
+
+    void drawSnapper() override;
+
 protected:
     RS_Vector vertexToDelete2 = RS_Vector(false);
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;

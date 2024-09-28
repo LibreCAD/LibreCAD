@@ -199,9 +199,7 @@ public:
         drawSnapper();
     }
     void hideSnapOptions();
-//    virtual void hideOptions();
-//    virtual void showOptions();
-    void drawSnapper();
+    virtual void drawSnapper();
 
 protected:
     void deleteSnapper();
@@ -232,7 +230,7 @@ protected:
     void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false);
     void updateCoordinateWidgetByRelZero(const RS_Vector& abs, bool updateFormat=false);
     void updateCoordinateWidgetFormat();
-
+    void invalidateSnapSpot();
 private:
     struct ImpData;
     std::unique_ptr<ImpData> pImpData;

@@ -53,6 +53,10 @@ RS_Line *LC_ActionModifyLineJoin::catchLine(QMouseEvent *e){
     return snappedLine;
 }
 
+void LC_ActionModifyLineJoin::drawSnapper() {
+    // disable snapper
+}
+
 void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, int status){
 
     RS_Line *snappedLine = catchLine(e);

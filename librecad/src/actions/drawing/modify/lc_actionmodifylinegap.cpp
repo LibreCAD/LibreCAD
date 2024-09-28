@@ -43,6 +43,7 @@ void LC_ActionModifyLineGap::doPreparePreviewEntities(QMouseEvent *e, RS_Vector 
     switch (status){
         case (SetEntity):{ // selecting the line
             // finding line entity
+            deleteSnapper();
             RS_Entity* en = catchModifiableEntity(e, enTypeList);
             if (en != nullptr){
                 auto *line = dynamic_cast<RS_Line *>(en);
@@ -136,6 +137,7 @@ void LC_ActionModifyLineGap::doOnLeftMouseButtonRelease(QMouseEvent *e, int stat
                     }
                 }
             }
+            invalidateSnapSpot();
             break;
         }
         case SetGapEndPoint: {
@@ -434,4 +436,17 @@ void LC_ActionModifyLineGap::doFinish([[maybe_unused]]bool updateTB){
 
 LC_ActionOptionsWidget* LC_ActionModifyLineGap::createOptionsWidget(){
     return new LC_ModifyGapOptions();
+}
+
+RS2::CursorType LC_ActionModifyLineGap::doGetMouseCursor(int status) {
+    switch (status){
+        case SetEntity:{
+            return RS2::SelectCursor;
+        }
+        case SetGapEndPoint:{
+            return RS2::CadCursor;
+        }
+        default:
+            return RS2::NoCursorChange;
+    }
 }

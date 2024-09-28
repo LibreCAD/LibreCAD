@@ -32,6 +32,7 @@
 #include <memory>
 
 #include <QMap>
+#include <QSettings>
 
 #include "rs.h"
 #include "rs_pen.h"
@@ -39,6 +40,8 @@
 #include "mainwindowx.h"
 #include "lc_penpalettewidget.h"
 #include "lc_quickinfowidget.h"
+#include "lc_mdiapplicationwindow.h"
+#include "lc_releasechecker.h"
 
 class LC_ActionGroupManager;
 class LC_CustomToolbar;
@@ -85,10 +88,9 @@ struct DockAreas
  *
  * @author Andrew Mustun
  */
-class QC_ApplicationWindow: public MainWindowX
+class QC_ApplicationWindow: public LC_MDIApplicationWindow
 {
     Q_OBJECT
-
 public:
 
     enum
@@ -121,26 +123,11 @@ public slots:
     void slotFocusCommandLine();
     void slotFocusOptionsWidget();
     void slotError(const QString& msg);
+    void slotShowDrawingOptions();
 
-    void slotWindowActivated(int);
-    void slotWindowActivated(QMdiSubWindow* w, bool forced=false);
+    void slotWindowActivated(QMdiSubWindow* w, bool forced=false) override;
     void slotWindowsMenuAboutToShow();
     void slotWindowsMenuActivated(bool);
-    void slotCascade();
-    void slotTile();
-    void slotTileHorizontal();
-    void slotTileVertical();
-    void slotSetMaximized();
-
-    void slotTabShapeRounded();
-    void slotTabShapeTriangular();
-    void slotTabPositionNorth();
-    void slotTabPositionSouth();
-    void slotTabPositionEast();
-    void slotTabPositionWest();
-
-    void slotToggleTab();
-    void slotZoomAuto();
 
     void slotPenChanged(RS_Pen p);
     //void slotSnapsChanged(RS_SnapMode s);
@@ -180,7 +167,7 @@ public slots:
     /** closing the current file */
     void slotFileClosing(QC_MDIWindow*);
 	/** close all files; return false == operation cancelled */
-	bool slotFileCloseAll();
+	   bool slotFileCloseAll();
     /** prints the current file */
     void slotFilePrint(bool printPDF=false);
     void slotFilePrintPDF();
@@ -195,6 +182,11 @@ public slots:
     void slotViewDraft(bool toggle);
     /** toggle the statusbar */
     void slotViewStatusBar(bool toggle);
+
+    void slotViewGridOrtho(bool toggle);
+    void slotViewGridIsoLeft(bool toggle);
+    void slotViewGridIsoRight(bool toggle);
+    void slotViewGridIsoTop(bool toggle);
 
     void slotOptionsGeneral();
     void slotOptionsShortcuts();
@@ -212,8 +204,6 @@ public slots:
     void execPlug();
 
     //void invokeLinkList();
-
-    void slotRedockWidgets();
 
     void toggleFullscreen(bool checked);
 
@@ -243,51 +233,22 @@ public slots:
     void updateMenu(const QString& menu_name);
 
     void invokeLicenseWindow();
-
-
+    void onNewVersionAvailable();
+    void checkForNewVersion();
+    void forceCheckForNewVersion();
+    void slotRedockWidgets();
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);
     void printPreviewChanged(bool on);
     void windowsChanged(bool windowsLeft);
     void signalEnableRelativeZeroSnaps(const bool);
-
 public:
     /**
      * @return Pointer to application window.
      */
     static std::unique_ptr<QC_ApplicationWindow>&  getAppWindow();
 
-    /**
-     * @return Pointer to MdiArea.
-     */
-    QMdiArea const* getMdiArea() const;
-    QMdiArea* getMdiArea();
-
-    /**
-	 * @return Pointer to the currently active MDI Window or nullptr if no
-     * MDI Window is active.
-     */
-    const QC_MDIWindow* getMDIWindow() const;
-    QC_MDIWindow* getMDIWindow();
-
-    /**
-     * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
-     *
-     * @return Pointer to the graphic view of the currently active document
-	 * window or nullptr if no window is available.
-     */
-    const RS_GraphicView* getGraphicView() const;
-    RS_GraphicView* getGraphicView();
-
-    /**
-     * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
-     *
-     * @return Pointer to the graphic document of the currently active document
-	 * window or nullptr if no window is available.
-     */
-    const RS_Document* getDocument() const;
-    RS_Document* getDocument();
 
     /**
      * Creates a new document. Implementation from RS_MainWindowInterface.
@@ -296,32 +257,24 @@ public:
 
     QG_PenToolBar* getPenToolBar() {return penToolBar;};
 
-    void redrawAll();
+
     void updateGrids();
 
-    QG_BlockWidget* getBlockWidget(void)
-    {
+    QG_BlockWidget* getBlockWidget(void){
         return blockWidget;
     }
 
-    QG_SnapToolBar* getSnapToolBar(void)
-    {
+    QG_SnapToolBar* getSnapToolBar(void){
         return snapToolBar;
     }
 
-    QG_SnapToolBar const* getSnapToolBar(void) const
-    {
+    QG_SnapToolBar const* getSnapToolBar(void) const{
         return snapToolBar;
     }
 
     LC_PenPaletteWidget* getPenPaletteWidget(void) const{ return penPaletteWidget;};
 
     LC_QuickInfoWidget* getEntityInfoWidget(void) const {return quickInfoWidget;};
-
-    /**
-     * Find opened window for specified document.
-     */
-    QC_MDIWindow* getWindowWithDoc(const RS_Document* doc);
 
     RS_Vector getMouseAbsolutePosition();
     RS_Vector getMouseRelativePosition();
@@ -332,15 +285,14 @@ public:
     // Auto-save
     void startAutoSave(bool enabled);
 
-    // activates window with given filename of drawing, if any
-    void activateWindowWithFile(QString &fileName);
+
     int showCloseDialog(QC_MDIWindow* w, bool showSaveAll = false);
     bool doSave(QC_MDIWindow* w, bool forceSaveAs = false);
-    void doArrangeWindows(RS2::SubWindowMode mode, bool actuallyDont = false);
+
     void doClose(QC_MDIWindow* w, bool activateNext = true);
 
     void updateActionsAndWidgetsForPrintPreview(bool printPreviewOn);
-    void enableWidget(QWidget* w, bool enable);
+
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
@@ -356,10 +308,10 @@ private:
 
     QString format_filename_caption(const QString &qstring_in);
     /** Helper function for Menu file -> New & New.... */
-	bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = nullptr);
+	   bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = nullptr);
 	// more helpers
-    void setTabLayout(RS2::TabShape s, RS2::TabPosition p);
-	void doActivate(QMdiSubWindow* w);
+
+	   void doActivate(QMdiSubWindow* w) override;
     void enableFileActions(QC_MDIWindow* w);
 
     /**
@@ -370,13 +322,12 @@ private:
 
     //Plugin support
     void loadPlugins();
-    QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
 
-    #ifdef LC_DEBUGGING
+#ifdef LC_DEBUGGING
         LC_SimpleTests* m_pSimpleTest {nullptr};
     #endif
 
-    QMap<QString, QAction*> a_map; // todo - move actionmap to ActionManager
+//    QMap<QString, QAction*> a_map; // todo - move actionmap to ActionManager
     LC_ActionGroupManager* ag_manager {nullptr};
 
     /** Pointer to the application window (this). */
@@ -384,11 +335,6 @@ private:
     std::unique_ptr<QTimer> m_autosaveTimer;
 
     QG_ActionHandler* actionHandler {nullptr};
-
-    /** MdiArea for MDI */
-    QMdiArea* mdiAreaCAD {nullptr};
-    QMdiSubWindow* activedMdiSubWindow {nullptr};
-    QMdiSubWindow* current_subwindow {nullptr};
 
 
     /** Dialog factory */
@@ -423,6 +369,7 @@ private:
     // --- Statusbar ---
     /** Coordinate widget */
     QG_CoordinateWidget* coordinateWidget {nullptr};
+    LC_RelZeroCoordinatesWidget* relativeZeroCoordinatesWidget {nullptr};
     /** Mouse widget */
     QG_MouseWidget* mouseWidget {nullptr};
     /** Selection Status */
@@ -460,7 +407,6 @@ private:
     QList<QC_PluginInterface*> loadedPlugins;
     QList<QAction*> toolbar_view_actions;
     QList<QAction*> dockwidget_view_actions;
-    QList<QC_MDIWindow*> window_list;
     QList<QAction*> recentFilesAction;
 
     QStringList openedFiles;
@@ -470,7 +416,16 @@ private:
 
     QList<QAction*> actionsToDisableInPrintPreview;
 
+    LC_ReleaseChecker* releaseChecker;
+
     void enableWidgets(bool enable);
+
+    friend class LC_WidgetFactory;
+
+    void updateGridViewActions(bool isometric, RS2::IsoGridViewType type);
+
+    void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType);
+
 };
 
 #ifdef _WINDOWS

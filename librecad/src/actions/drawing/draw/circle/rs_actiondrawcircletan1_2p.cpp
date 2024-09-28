@@ -121,6 +121,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
     deleteHighlights();
     switch (getStatus()) {
         case SetCircle1:{
+            deleteSnapper();
             RS_Entity *en = catchCircle(e);
             if (en != nullptr){
                 highlightHover(en);
@@ -138,7 +139,8 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
                     const RS_Vector &baseEntityCenter = baseEntity->getCenter();
                     RS_Vector const &dvp = mouse - baseEntityCenter;
                     double rvp = dvp.magnitude();
-                    if (rvp < RS_TOLERANCE2) break;
+                    if (rvp < RS_TOLERANCE2)
+                        break;
                     pPoints->cData.radius = (baseEntityRadius + rvp) * 0.5;
                     pPoints->cData.center = baseEntityCenter + dvp * (pPoints->cData.radius / rvp);
                     pPoints->cData.radius = fabs(baseEntityRadius - pPoints->cData.radius);
@@ -194,6 +196,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
             break;
         }
         case SetCenter: {
+            deleteSnapper();
             highlightSelected(baseEntity);
             pPoints->coord = toGraph(e);
             if (preparePreview()){
@@ -247,10 +250,11 @@ RS_Vector RS_ActionDrawCircleTan1_2P::getTangentPoint(RS_Vector& creatingCircleC
 
 bool RS_ActionDrawCircleTan1_2P::getCenters(){
     pPoints->centers.clear();
-    if (getStatus() < SetPoint2) return false;
+    if (getStatus() < SetPoint2) {
+        return false;
+    }
 
     LC_Quadratic lc0(baseEntity, pPoints->points[0]);
-//    LC_Quadratic lc1(circle, points[1]);
     LC_Quadratic lc1(pPoints->points[1], pPoints->points[0]);
     auto list = LC_Quadratic::getIntersection(lc0, lc1);
 //    DEBUG_HEADER
@@ -264,12 +268,16 @@ bool RS_ActionDrawCircleTan1_2P::getCenters(){
             double ds = vp.distanceTo(baseEntity->getCenter());
             //condition for tangential to the given circle
             double baseEntityRadius = baseEntity->getRadius();
-            if (fabs(ds - (ds0 + baseEntityRadius)) > RS_TOLERANCE && fabs(ds - fabs(ds0 - baseEntityRadius)) > RS_TOLERANCE) continue;
+            if (fabs(ds - (ds0 + baseEntityRadius)) > RS_TOLERANCE && fabs(ds - fabs(ds0 - baseEntityRadius)) > RS_TOLERANCE) {
+                continue;
+            }
         } else {
             double ds = 0.;
             baseEntity->getNearestPointOnEntity(vp, false, &ds);
             //condition for tangential to the given straight line
-            if (fabs(ds - ds0) > RS_TOLERANCE) continue;
+            if (fabs(ds - ds0) > RS_TOLERANCE) {
+                continue;
+            }
         }
 
         //avoid counting the same center
@@ -280,7 +288,9 @@ bool RS_ActionDrawCircleTan1_2P::getCenters(){
                 break;
             }
         }
-        if (existing) continue;
+        if (existing) {
+            continue;
+        }
         pPoints->centers.push_back(vp);
     }
 //    DEBUG_HEADER
@@ -302,8 +312,12 @@ bool RS_ActionDrawCircleTan1_2P::preparePreview(){
 RS_Entity *RS_ActionDrawCircleTan1_2P::catchCircle(QMouseEvent *e){
     RS_Entity *ret = nullptr;
     RS_Entity *en = catchModifiableEntity(e, enTypeList);
-    if (!en) return ret;
-    if (!en->isVisible()) return ret;
+    if (en == nullptr) {
+        return ret;
+    }
+    if (!en->isVisible()) {
+        return ret;
+    }
     return en;
 }
 
@@ -311,10 +325,13 @@ void RS_ActionDrawCircleTan1_2P::onMouseLeftButtonRelease(int status, QMouseEven
     switch (status) {
         case SetCircle1: {
             RS_Entity *en = catchCircle(e);
-            if (!en) return;
+            if (en == nullptr){
+                return;
+            }
             baseEntity = dynamic_cast<RS_AtomicEntity *>(en);
             graphicView->redraw(RS2::RedrawDrawing);
             setStatus(status + 1);
+            invalidateSnapSpot();
             break;
         }
         case SetPoint1:
@@ -324,7 +341,10 @@ void RS_ActionDrawCircleTan1_2P::onMouseLeftButtonRelease(int status, QMouseEven
         }
         case SetCenter:
             pPoints->coord = toGraph(e);
-            if (preparePreview()) trigger();
+            if (preparePreview()) {
+                trigger();
+            }
+            invalidateSnapSpot();
             break;
 
         default:

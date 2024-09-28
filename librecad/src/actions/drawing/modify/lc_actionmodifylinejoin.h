@@ -66,7 +66,9 @@ public:
     void setLine2EdgeMode(int index);
 
     void setAttributesSource(int value);
-    int getAttributesSource() const{return attributesSource;};
+    int getAttributesSource() const{return attributesSource;}
+
+    void drawSnapper() override;;
 protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doBack(QMouseEvent *pEvent, int status) override;

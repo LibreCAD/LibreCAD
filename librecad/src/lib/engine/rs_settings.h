@@ -34,6 +34,7 @@
 #include <QString>
 #include <QObject>
 #include <QVariant>
+#include "rs_pen.h"
 
 class QSettings;
 
@@ -50,6 +51,7 @@ class QSettings;
 #define LC_GET_ONE_INT RS_Settings::instance()->readIntSingle
 #define LC_GET_BOOL RS_Settings::instance()->readBool
 #define LC_GET_ONE_BOOL RS_Settings::instance()->readBoolSingle
+#define LC_GET_BARRAY RS_Settings::instance()->readByteArray
 #define LC_GROUP RS_Settings::instance()->beginGroup
 #define LC_GROUP_GUARD auto _guard_settings = RS_Settings::instance()->beginGroupGuard
 #define LC_GROUP_END RS_Settings::instance()->endGroup
@@ -68,17 +70,22 @@ public:
     // ---------------------------------------------------------------------------
     // Default Settings
     // ---------------------------------------------------------------------------
-    static constexpr char const* snap_indicator    = "#FFC200";
-    static constexpr char const* background        = "Black";
-    static constexpr char const* grid              = "Gray";
-    static constexpr char const* meta_grid         = "#404040";
-    static constexpr char const* select            = "#A54747";
+    static constexpr char const* snap_indicator          = "#FFC200";
+    static constexpr char const* snap_indicator_lines    = "#FFC200";
+    static constexpr char const* background              = "Black";
+    static constexpr char const* color_grid_points       = "Gray";
+    static constexpr char const* color_grid_lines        = "#aeaeff";
+    static constexpr char const* color_meta_grid_points  = "#404040";
+    static constexpr char const* color_meta_grid_lines   = "#55557f";
+    static constexpr char const* select                  = "#A54747";
     static constexpr char const* highlight         = "#739373";
     static constexpr char const* start_handle      = "Cyan";
     static constexpr char const* handle            = "Blue";
     static constexpr char const* end_handle        = "Blue";
     static constexpr char const* relativeZeroColor = "Red";
-    static constexpr char const* previewRefColor = "Yellow";
+    static constexpr char const* xAxisColor        = "Red";
+    static constexpr char const* yAxisColor        = "Green";
+    static constexpr char const* previewRefColor   = "Yellow";
     static constexpr char const* previewRefHighlightColor = "Green";
 
     // Used to have RAII style GroupGuard: endGroup is called automatically whenever a unique_ptr<GroupGuard>
@@ -131,6 +138,8 @@ public:
     QString readStr(const QString& key,const QString& def = QString());
     bool readBool(const QString &key, bool defaultValue = false);
     bool readBoolSingle(const QString& group, const QString &key, bool defaultValue = false);
+    const QByteArray &readByteArraySingle(const QString &group, const QString &key);
+    const QByteArray &readByteArray(const QString &key);
 
     void clear_all();
     void clear_geometry();
@@ -138,6 +147,8 @@ public:
 
     void emitOptionsChanged();
 
+    static void writePen(QString name, RS_Pen const &pen);
+    static RS_Pen readPen(QString name, RS_Pen &defaultPen);
 
 signals:
     void optionChanged(const QString& groupName, const QString &propertyName, QVariant oldValue, QVariant newValue);
@@ -156,6 +167,8 @@ protected:
     bool writeEntrySingle(const QString &group, const QString &key, const QVariant &value);
 
     QString getFullName(const QString &group, const QString &key) const;
+
+
 };
 
 #endif

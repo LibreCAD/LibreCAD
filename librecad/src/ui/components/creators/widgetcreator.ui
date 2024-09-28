@@ -14,10 +14,10 @@
    <string>Frame</string>
   </property>
   <property name="frameShape">
-   <enum>QFrame::StyledPanel</enum>
+   <enum>QFrame::NoFrame</enum>
   </property>
   <property name="frameShadow">
-   <enum>QFrame::Raised</enum>
+   <enum>QFrame::Plain</enum>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -28,7 +28,7 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QGridLayout" name="gridLayout">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -41,7 +41,7 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <item>
+      <item row="0" column="0">
        <widget class="QFrame" name="frame_2">
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
@@ -84,12 +84,22 @@
              <number>6</number>
             </property>
             <item>
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Action Group:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QComboBox" name="categories_combobox">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>3</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Select action group with actions</string>
               </property>
               <property name="editable">
                <bool>true</bool>
@@ -100,12 +110,19 @@
           </widget>
          </item>
          <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Available Actions:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="ActionList" name="offered_actions"/>
          </item>
         </layout>
        </widget>
       </item>
-      <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+      <item row="0" column="1">
        <widget class="QFrame" name="frame_5">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
@@ -143,6 +160,9 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="toolTip">
+            <string>Add selected item to list of used actions</string>
+           </property>
            <property name="text">
             <string>&gt;</string>
            </property>
@@ -162,6 +182,9 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="toolTip">
+            <string>Remove selected item from list of used actions</string>
+           </property>
            <property name="text">
             <string>&lt;</string>
            </property>
@@ -176,7 +199,7 @@
         </layout>
        </widget>
       </item>
-      <item>
+      <item row="0" column="2">
        <widget class="QFrame" name="widget_list">
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
@@ -227,18 +250,28 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Name</string>
+               <string>Widget Name: </string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QComboBox" name="combo">
+              <property name="toolTip">
+               <string>Select name of widget to edit or create</string>
+              </property>
               <property name="editable">
                <bool>true</bool>
               </property>
              </widget>
             </item>
            </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>Used Actions:</string>
+           </property>
           </widget>
          </item>
          <item>

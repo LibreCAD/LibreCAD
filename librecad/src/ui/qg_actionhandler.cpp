@@ -352,35 +352,19 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new LC_ActionEditPasteTransform(*document, *view);
             break;
         case RS2::ActionOrderBottom:
-            orderType = RS2::ActionOrderBottom;
-            if(!document->countSelected()){
-                a = new RS_ActionSelect(this, *document, *view, RS2::ActionOrderNoSelect);
-            }
-            else {
-                a = new RS_ActionOrder(*document, *view, orderType);
-            }
+            a = new RS_ActionOrder(*document, *view, RS2::ActionOrderBottom);
             break;
         case RS2::ActionOrderLower:
             orderType = RS2::ActionOrderLower;
-            a = new RS_ActionSelect(this, *document, *view, RS2::ActionOrderNoSelect);
+            a = new RS_ActionOrder(*document, *view, RS2::ActionOrderLower);
             break;
         case RS2::ActionOrderRaise:
-            orderType = RS2::ActionOrderRaise;
-            a = new RS_ActionSelect(this, *document, *view, RS2::ActionOrderNoSelect);
+            a = new RS_ActionOrder(*document, *view, RS2::ActionOrderRaise);
             break;
         case RS2::ActionOrderTop:
             orderType = RS2::ActionOrderTop;
-            if(!document->countSelected()){
-                a = new RS_ActionSelect(this, *document, *view, RS2::ActionOrderNoSelect);
-            }
-            else {
-                a = new RS_ActionOrder(*document, *view, orderType);
-            }
+            a = new RS_ActionOrder(*document, *view, RS2::ActionOrderTop);
             break;
-        case RS2::ActionOrderNoSelect:
-            a = new RS_ActionOrder(*document, *view, orderType);
-            break;
-
             // Selecting actions:
             //
         case RS2::ActionSelectSingle:
@@ -1036,6 +1020,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 
         case RS2::ActionOptionsDrawing:
             a = new RS_ActionOptionsDrawing(*document, *view);
+            break;
+        case RS2::ActionOptionsDrawingGrid:
+            a = new RS_ActionOptionsDrawing(*document, *view, 2);
             break;
         default:
             RS_DEBUG->print(RS_Debug::D_WARNING,

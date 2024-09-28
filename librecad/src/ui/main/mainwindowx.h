@@ -17,6 +17,7 @@ public:
 
     void sortWidgetsByTitle(QList<QDockWidget*>& list);
     void sortWidgetsByTitle(QList<QToolBar*>& list);
+    void sortWidgetsByGroupAndTitle(QList<QToolBar*>& list);
 
 public slots:
     void toggleRightDockArea(bool state);

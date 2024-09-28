@@ -166,6 +166,8 @@ QString doubleToString(double value, double prec);
 QString doubleToString(double value, int prec);
 
 void test();
+
+    int getPeriodsCount(double a1, double a2, bool reversed);
 }; // namespace
 
 #endif

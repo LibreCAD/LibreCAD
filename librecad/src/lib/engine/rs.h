@@ -430,6 +430,7 @@ namespace RS2 {
 
         ActionOptionsGeneral,
         ActionOptionsDrawing,
+        ActionOptionsDrawingGrid,
 
         ActionToolRegenerateDimensions,
 
@@ -662,13 +663,17 @@ namespace RS2 {
     };
 
     /**
-     * Crosshair type
+     * Grid View type
      */
-    enum CrosshairType {
-        LeftCrosshair,         /**< Left type isometric Crosshair */
-        TopCrosshair,         /**< Top type isometric Crosshair */
-        RightCrosshair,         /**< Right type isometric Crosshair */
-        OrthogonalCrosshair         /**< Orthogonal Crosshair */
+    enum IsoGridViewType {
+        IsoLeft,         /**< Left type isometric view */
+        IsoTop,         /**< Top type isometric view */
+        IsoRight         /**< Right type isometric view */
+    };
+
+    enum CrossHairType{
+        GridCrosshair,
+        SpiderWebCrosshair,
     };
 
     /**
@@ -845,6 +850,7 @@ namespace RS2 {
      * Wrapper for Qt
      */
     LineWidth intToLineWidth(int w);
+    int lineWidthToInt(LineWidth lw);
 
     /**
      * Enum of cursor types.

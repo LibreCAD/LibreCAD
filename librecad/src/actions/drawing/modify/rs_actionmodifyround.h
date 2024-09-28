@@ -51,6 +51,9 @@ public:
     double getRadius() const;
     void setTrim(bool t);
     bool isTrimOn() const;
+
+    void drawSnapper() override;
+
 protected:
     /**
  * Action States.

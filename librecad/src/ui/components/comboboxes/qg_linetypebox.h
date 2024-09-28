@@ -49,7 +49,7 @@ public:
     void setLineType(RS2::LineType w);
     void setLayerLineType(RS2::LineType w);
 
-    void init(bool showByLayer, bool showUnchanged);
+    void init(bool showByLayer, bool showUnchanged, bool showNoPen = false);
 	
 	bool isUnchanged() {
 		return unchanged;
@@ -69,4 +69,3 @@ private:
 };
 
 #endif
-

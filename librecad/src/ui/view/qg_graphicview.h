@@ -65,8 +65,10 @@ public:
 	void setBackground(const RS_Color& bg) override;
 	void setMouseCursor(RS2::CursorType c) override;
 	void updateGridStatusWidget(QString text) override;
+ void updateGridPoints();
 
 	virtual	void getPixmapForView(std::unique_ptr<QPixmap>& pm);
+ void loadSettings() override;
 		
     // Methods from RS_LayerListListener Interface:
 	void layerEdited(RS_Layer*) override{
@@ -130,6 +132,8 @@ protected:
     QList<QAction*> recent_actions;
     void autoPanStep();
 
+
+
 private slots:
     void slotHScrolled(int value);
     void slotVScrolled(int value);
@@ -152,23 +156,34 @@ protected:
     //! Hand mouse cursor
     std::unique_ptr<QCursor> curHand;
 		
-	// Used for buffering different paint layers
-	std::unique_ptr<QPixmap> PixmapLayer1;  // Used for grids and absolute 0
+	   // Used for buffering different paint layers
+	   std::unique_ptr<QPixmap> PixmapLayer1;  // Used for grids and absolute 0
     std::unique_ptr<QPixmap> PixmapLayer2;  // Used for the actual CAD drawing
     std::unique_ptr<QPixmap> PixmapLayer3;  // Used for crosshair and actionitems
+
+
+    QPixmap pixmapLayer1;
+    QPixmap pixmapLayer2;
+    QPixmap pixmapLayer3;
+
 	
-	RS2::RedrawMethod redrawMethod;
+	   RS2::RedrawMethod redrawMethod;
 		
     //! Keep tracks of if we are currently doing a high-resolution scrolling
     bool isSmoothScrolling;
 
+    bool classicRenderer = true;
+
     QMap<QString, QMenu*> menus;
 
+    void paintClassicalBuffered();
+    void paintSequental();
 private:
     void addEditEntityEntry(QMouseEvent* event, QMenu& menu);
     bool antialiasing{false};
     bool scrollbars{false};
     bool cursor_hiding{false};
+    bool selectCursor_hiding{false};
 
 
     // For auto panning by the cursor close to the view border
@@ -181,6 +196,8 @@ private:
 signals:
     void xbutton1_released();
     void gridStatusChanged(QString);
+
+
 };
 
 #endif

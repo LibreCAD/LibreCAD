@@ -49,6 +49,8 @@ public:
 //    void commandEvent(RS_CommandEvent* e) override;
     void finish(bool updateTB) override;
 
+    void drawSnapper() override;
+
 protected:
     /**
  * Action States.

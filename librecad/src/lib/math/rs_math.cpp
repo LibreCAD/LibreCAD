@@ -170,6 +170,23 @@ bool RS_Math::isAngleBetween(double a,
 double RS_Math::correctAngle(double a) {
     return std::fmod(M_PI + std::remainder(a - M_PI, g_twoPi), g_twoPi);
 }
+/**
+ * returns amount of periods between given angles
+ * @param a1
+ * @param a2
+ * @return 0 if angles are the same or not periodic, number of periods if angles are periodic
+ */
+int RS_Math::getPeriodsCount(double a1, double a2, bool reversed){
+    if (reversed)
+        std::swap(a1,a2);
+   double dif = std::abs(a2-a1) + g_twoPi;
+   double remainder = std::remainder(dif, g_twoPi);
+   int result = 0;
+   if (remainder < RS_TOLERANCE_ANGLE){
+       result =  dif / g_twoPi - 1;
+   }
+   return result;
+}
 
 /**
  * Corrects the given angle to the range of -PI to +PI.
@@ -192,7 +209,7 @@ double RS_Math::correctAngle0ToPi(double a) {
  */
 double RS_Math::getAngleDifference(double a1, double a2, bool reversed) {
     if (reversed)
-        std::swap(a1, a2);
+        std::swap(a1,a2);
     return correctAngle(a2 - a1);
 }
 

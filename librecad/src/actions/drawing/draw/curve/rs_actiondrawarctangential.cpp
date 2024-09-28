@@ -123,6 +123,7 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
     deleteHighlights();
     switch (status){
         case SetBaseEntity: {
+            deleteSnapper();
             RS_Entity *entity = catchEntity(e, RS2::ResolveAll);
             if (entity != nullptr){
                 if (entity->isAtomic()){
@@ -215,6 +216,7 @@ void RS_ActionDrawArcTangential::onMouseLeftButtonRelease(int status, QMouseEven
                     updateMouseButtonHints();
                 }
             }
+            invalidateSnapSpot();
             break;
         }
         case SetEndAngle: {// set angle (point that defines the angle)

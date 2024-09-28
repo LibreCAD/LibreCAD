@@ -51,8 +51,10 @@ public:
     void moveTo(int x, int y) override;
     void lineTo(int x, int y) override;
     void drawGridPoint(const RS_Vector& p) override;
+    void drawGridPoint(const double& x, const double& y) override;
     void drawPoint(const RS_Vector& p, int pdmode, int pdsize) override;
     void drawLine(const RS_Vector& p1, const RS_Vector& p2) override;
+    void drawLine(const double &x1, const double &y1, const double &x2, const double &y2) override;
     //virtual void drawRect(const RS_Vector& p1, const RS_Vector& p2);
     void fillRect ( const QRectF & rectangle, const RS_Color & color ) override;
     void fillRect ( const QRectF & rectangle, const QBrush & brush ) override;
@@ -100,6 +102,7 @@ public:
 
     RS_Pen getPen() const override;
     void setPen(const RS_Pen& pen) override;
+    void setPen(const RS_Pen& pen, int linewidthPx) override;
     void setPen(const RS_Color& color) override;
     void setPen(int r, int g, int b) override;
     void disablePen() override;
@@ -123,4 +126,3 @@ protected:
 };
 
 #endif
-

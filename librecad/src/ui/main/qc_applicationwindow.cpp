@@ -41,7 +41,6 @@
 #include <QPagedPaintDevice>
 #include <QPluginLoader>
 #include <QRegularExpression>
-#include <QSplitter>
 #include <QStatusBar>
 #include <QStyleFactory>
 #include <QSysInfo>
@@ -101,6 +100,10 @@
 #include "qg_snaptoolbar.h"
 #include "qg_mousewidget.h"
 #include "qg_recentfiles.h"
+#include "lc_mdiapplicationwindow.h"
+#include "lc_releasechecker.h"
+#include "lc_dlgnewversionavailable.h"
+#include "lc_dlgabout.h"
 
 #ifndef QC_APP_ICON
 # define QC_APP_ICON ":/main/librecad.png"
@@ -125,7 +128,6 @@
  */
 QC_ApplicationWindow::QC_ApplicationWindow():
      actionHandler(new QG_ActionHandler(this))
-    , current_subwindow(nullptr)
     , pen_wiz(new LC_PenWizard(QObject::tr("Pen Wizard"), this))
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
@@ -148,6 +150,8 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     QSettings settings;
 
+
+
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
     setWindowIcon(QIcon(QC_APP_ICON));
 
@@ -156,38 +160,14 @@ QC_ApplicationWindow::QC_ApplicationWindow():
             pen_wiz, &LC_PenWizard::setEnabled);
     addDockWidget(Qt::RightDockWidgetArea, pen_wiz);
 
-    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
-    QStatusBar* status_bar = statusBar();
-    coordinateWidget = new QG_CoordinateWidget(status_bar, "coordinates");
-    status_bar->addWidget(coordinateWidget);
-    mouseWidget = new QG_MouseWidget(status_bar, "mouse info");
-    status_bar->addWidget(mouseWidget);
-    selectionWidget = new QG_SelectionWidget(status_bar, "selections");
-    status_bar->addWidget(selectionWidget);
-    m_pActiveLayerName = new QG_ActiveLayerName(this);
-    status_bar->addWidget(m_pActiveLayerName);
-    grid_status = new TwoStackedLabels(status_bar);
-    grid_status->setTopLabel(tr("Grid Status"));
-    status_bar->addWidget(grid_status);
+    LC_ActionFactory a_factory(this, actionHandler);
+    bool using_theme = settings.value("Widgets/AllowTheme", 0).toBool();
+    a_factory.fillActionContainer(ag_manager, using_theme);
 
-    settings.beginGroup("Widgets");
-    int allow_statusbar_fontsize = settings.value("AllowStatusbarFontSize", 0).toInt();
-    int allow_statusbar_height = settings.value("AllowStatusbarHeight", 0).toInt();
+    LC_WidgetFactory widget_factory(this, ag_manager);
 
-    if (allow_statusbar_fontsize)
-    {
-        int fontsize = settings.value("StatusbarFontSize", 12).toInt();
-        QFont font;
-        font.setPointSize(fontsize);
-        status_bar->setFont(font);
-    }
-    int height {64};
-    if (allow_statusbar_height) {
-        height = settings.value( "StatusbarHeight", 64).toInt();
-    }
-    status_bar->setMinimumHeight( height);
-    status_bar->setMaximumHeight( height);
-    settings.endGroup();
+    widget_factory.initStatusBar();
+
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
 
@@ -227,11 +207,6 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     if (custom_size)
         setIconSize(QSize(icon_size, icon_size));
 
-    LC_ActionFactory a_factory(this, actionHandler);
-    bool using_theme = settings.value("Widgets/AllowTheme", 0).toBool();
-    a_factory.fillActionContainer(a_map, ag_manager, using_theme);
-
-    LC_WidgetFactory widget_factory(this, a_map, ag_manager);
     if (enable_left_sidebar){
         int leftSidebarColumnsCount = settings.value("Widgets/LeftToolbarColumnsCount", 5).toInt();
         widget_factory.createLeftSidebar(leftSidebarColumnsCount, icon_size);
@@ -242,24 +217,13 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     widget_factory.createCategoriesToolbar();
     widget_factory.createStandardToolbars(actionHandler);
 
-
-
-    foreach(auto action, widget_factory.snap_toolbar->actions())
-    {
-        if(!action->objectName().isEmpty())
-        {
-            a_map[action->objectName()] = action;
-        }
-    }
-
     settings.beginGroup("CustomToolbars");
     foreach (auto key, settings.childKeys())
     {
         auto toolbar = new QToolBar(key, this);
         toolbar->setObjectName(key);
-        foreach (auto action, settings.value(key).toStringList())
-        {
-            toolbar->addAction(a_map[action]);
+        foreach (auto actionName, settings.value(key).toStringList()){
+            toolbar->addAction(getAction(actionName));
         }
         addToolBar(toolbar);
     }
@@ -276,9 +240,8 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
         auto toolbar = new QToolBar("DefaultCustom", this);
         toolbar->setObjectName("DefaultCustom");
-        foreach (auto& action, list)
-        {
-            toolbar->addAction(a_map[action]);
+        foreach (auto& actionName, list){
+            toolbar->addAction(getAction(actionName));
         }
         settings.setValue("CustomToolbars/DefaultCustom", list);
         addToolBar(Qt::LeftToolBarArea, toolbar);
@@ -286,15 +249,15 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     widget_factory.createMenus(menuBar());
 
-    undoButton = a_map["EditUndo"];
-    redoButton = a_map["EditRedo"];
-    previousZoom = a_map["ZoomPrevious"];
+    undoButton = getAction("EditUndo");
+    redoButton = getAction("EditRedo");
+    previousZoom = getAction("ZoomPrevious");
 
-    dock_areas.left = a_map["LeftDockAreaToggle"];
-    dock_areas.right = a_map["RightDockAreaToggle"];
-    dock_areas.top = a_map["TopDockAreaToggle"];
-    dock_areas.bottom = a_map["BottomDockAreaToggle"];
-    dock_areas.floating = a_map["FloatingDockwidgetsToggle"];
+    dock_areas.left = getAction("LeftDockAreaToggle");
+    dock_areas.right = getAction("RightDockAreaToggle");
+    dock_areas.top = getAction("TopDockAreaToggle");
+    dock_areas.bottom = getAction("BottomDockAreaToggle");
+    dock_areas.floating = getAction("FloatingDockwidgetsToggle");
 
     snapToolBar = widget_factory.snap_toolbar;
     penToolBar = widget_factory.pen_toolbar;
@@ -318,8 +281,7 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     actionsToDisableInPrintPreview = widget_factory.actionsToDisableInPrintPreview;
 
-    connect(a_map["FileClose"], SIGNAL(triggered(bool)),
-            mdiAreaCAD, SLOT(closeActiveSubWindow()));
+    connect(getAction("FileClose"), &QAction::triggered, mdiAreaCAD, &QMdiArea::closeActiveSubWindow);
 
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
             this, SLOT(slotPenChanged(const RS_Pen&)));
@@ -378,16 +340,32 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     loadPlugins();
 
     statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
+    const char *ownBuildVersion = XSTR(LC_VERSION);
+    releaseChecker = new LC_ReleaseChecker( ownBuildVersion,XSTR(LC_PRERELEASE));
+    connect(releaseChecker, &LC_ReleaseChecker::updatesAvailable, this, &QC_ApplicationWindow::onNewVersionAvailable);
 }
 
-void QC_ApplicationWindow::startAutoSave(bool startAutoBackup)
-{
-    if (startAutoBackup)
-    {
+void QC_ApplicationWindow::checkForNewVersion() {
+    releaseChecker->checkForNewVersion();
+}
+
+void QC_ApplicationWindow::forceCheckForNewVersion() {
+    releaseChecker->checkForNewVersion(true);
+}
+
+void QC_ApplicationWindow::onNewVersionAvailable() {
+    LC_DlgNewVersionAvailable dlg(this, releaseChecker);
+    if (dlg.exec()) {
+
+    }
+}
+
+void QC_ApplicationWindow::startAutoSave(bool startAutoBackup) {
+    if (startAutoBackup) {
         if (m_autosaveTimer == nullptr) {
             m_autosaveTimer = std::make_unique<QTimer>(this);
             m_autosaveTimer->setObjectName("autosave");
-            connect(m_autosaveTimer.get(), SIGNAL(timeout()), this, SLOT(slotFileAutoSave()));
+            connect(m_autosaveTimer.get(), &QTimer::timeout, this, &QC_ApplicationWindow::slotFileAutoSave);
         }
         if (!m_autosaveTimer->isActive()) {
             // autosaving has been turned on. Make a backup immediately
@@ -408,92 +386,14 @@ void QC_ApplicationWindow::startAutoSave(bool startAutoBackup)
  * @brief QC_ApplicationWindow::getAppWindow() accessor for the application window singleton instance
  * @return QC_ApplicationWindow* the application window instance
  */
-std::unique_ptr<QC_ApplicationWindow>& QC_ApplicationWindow::getAppWindow()
-{
+std::unique_ptr<QC_ApplicationWindow>& QC_ApplicationWindow::getAppWindow(){
     static auto instance = std::unique_ptr<QC_ApplicationWindow>(new QC_ApplicationWindow);
     // singleton could be reset: cannot be called after reseting
     Q_ASSERT(instance != nullptr);
     return instance;
 }
 
-/**
-  * Find a menu entry in the current menu list. This function will try to recursively find the menu
-  * searchMenu for example foo/bar
-  * thisMenuList list of Widgets
-  * currentEntry only used internally during recursion
-  * returns 0 when no menu was found
-  */
-QMenu *QC_ApplicationWindow::findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry) {
-    if (searchMenu==currentEntry)
-        return ( QMenu *)thisMenuList.at(0)->parent();
 
-    QList<QObject*>::const_iterator i=thisMenuList.begin();
-    while (i != thisMenuList.end()) {
-        if ((*i)->inherits ("QMenu")) {
-            QMenu *ii=(QMenu*)*i;
-            if (QMenu *foundMenu=findMenu(searchMenu, ii->children(), currentEntry+"/"+ii->objectName().replace("&", ""))) {
-                return foundMenu;
-            }
-        }
-        ++i;
-    }
-    return 0;
-}
-
-/**
- * Arrange the sub-windows as specified, and set the setting.
- * Note: Tab mode always uses (and sets) the RS2::Maximized mode.
- * @param m the layout mode; if set to RS2::CurrentMode, read the current setting
- * @param actuallyDont just set the setting, don't actually do the arrangement
- */
-void QC_ApplicationWindow::doArrangeWindows(RS2::SubWindowMode m, bool actuallyDont) {
-
-    int mode = m != RS2::CurrentMode ? m : LC_GET_ONE_INT("WindowOptions", "SubWindowMode", RS2::Maximized);
-
-    if (!actuallyDont) {
-        switch (mode) {
-            case RS2::Maximized:
-                if (mdiAreaCAD->currentSubWindow())
-                    mdiAreaCAD->currentSubWindow()->showMaximized();
-                break;
-            case RS2::Cascade:
-                slotCascade();
-                break;
-            case RS2::Tile:
-                slotTile();
-                break;
-            case RS2::TileHorizontal:
-                slotTileHorizontal();
-                break;
-            case RS2::TileVertical:
-                slotTileVertical();
-                break;
-        }
-    }
-    LC_SET_ONE("WindowOptions", "SubWindowMode", mode);
-}
-
-/**
- * Set the QTabWidget shape and position for the MDI area; also the settings.
- * Note: setting a Tab layout always sets the window arrangement to RS2::Maximized
- * Used by the Drawing > Layout menu.
- * @param s the tab shape; if RS2::AnyShape read the current setting
- * @param p the tab bar position; if RS2::AnyPosition read the current setting
- */
-void QC_ApplicationWindow::setTabLayout(RS2::TabShape s, RS2::TabPosition p) {
-    LC_GROUP("WindowOptions");
-    int shape = (s == RS2::AnyShape) ? LC_GET_INT("TabShape", RS2::Triangular) : s;
-    int position = (p == RS2::AnyPosition) ? LC_GET_INT("TabPosition", RS2::West) : p;
-    LC_GROUP_END();
-    mdiAreaCAD->setTabShape(static_cast<QTabWidget::TabShape>(shape));
-    mdiAreaCAD->setTabPosition(static_cast<QTabWidget::TabPosition>(position));
-    doArrangeWindows(RS2::Maximized);
-    LC_GROUP_GUARD("WindowOptions");
-    {
-        LC_SET("TabShape", shape);
-        LC_SET("TabPosition", position);
-    }
-}
 
 /**
  * Force-Save(as) the content of the sub window.  Retry on failure.
@@ -580,6 +480,7 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
 
         blockWidget->setBlockList(nullptr);
         coordinateWidget->setGraphic(nullptr);
+        relativeZeroCoordinatesWidget->setGraphicView(nullptr);
     }
 
     if (penPaletteWidget != nullptr) {
@@ -607,21 +508,7 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
  * Force-Activate this sub window.
  */
 void QC_ApplicationWindow::doActivate(QMdiSubWindow *w) {
-    bool maximized = LC_GET_ONE_BOOL("WindowOptions","Maximized");
-    if (w) {
-        slotWindowActivated(w, true);
-        w->activateWindow();
-        w->raise();
-        w->setFocus();
-        if (maximized || QMdiArea::TabbedView == mdiAreaCAD->viewMode()) {
-            w->showMaximized();
-        } else {
-            w->show();
-        }
-    }
-    if (mdiAreaCAD->viewMode() == QMdiArea::SubWindowView) {
-        doArrangeWindows(RS2::CurrentMode);
-    }
+    LC_MDIApplicationWindow::doActivate(w);
     enableFileActions(qobject_cast<QC_MDIWindow *>(w));
 }
 
@@ -655,23 +542,23 @@ int QC_ApplicationWindow::showCloseDialog(QC_MDIWindow *w, bool showSaveAll) {
  */
 void QC_ApplicationWindow::enableFileActions(QC_MDIWindow *w) {
     if (!w || w->getDocument()->getFilename().isEmpty()) {
-        a_map["FileSave"]->setText(tr("&Save"));
-        a_map["FileSaveAs"]->setText(tr("Save &as..."));
+        getAction("FileSave")->setText(tr("&Save"));
+        getAction("FileSaveAs")->setText(tr("Save &as..."));
     } else {
         QString name = format_filename_caption(w->getDocument()->getFilename());
-        a_map["FileSave"]->setText(tr("&Save %1").arg(name));
-        a_map["FileSaveAs"]->setText(tr("Save %1 &as...").arg(name));
+        getAction("FileSave")->setText(tr("&Save %1").arg(name));
+        getAction("FileSaveAs")->setText(tr("Save %1 &as...").arg(name));
     }
-    a_map["FileSave"]->setEnabled(w);
-    a_map["FileSaveAs"]->setEnabled(w);
-    a_map["FileSaveAll"]->setEnabled(w && window_list.count() > 1);
-    a_map["FileExportMakerCam"]->setEnabled(w);
-    a_map["FilePrintPDF"]->setEnabled(w);
-    a_map["FileExport"]->setEnabled(w);
-    a_map["FilePrint"]->setEnabled(w);
-    a_map["FilePrintPreview"]->setEnabled(w);
-    a_map["FileClose"]->setEnabled(w);
-    a_map["FileCloseAll"]->setEnabled(w && window_list.count() > 1);
+    getAction("FileSave")->setEnabled(w);
+    getAction("FileSaveAs")->setEnabled(w);
+    getAction("FileSaveAll")->setEnabled(w && window_list.count() > 1);
+    getAction("FileExportMakerCam")->setEnabled(w);
+    getAction("FilePrintPDF")->setEnabled(w);
+    getAction("FileExport")->setEnabled(w);
+    getAction("FilePrint")->setEnabled(w);
+    getAction("FilePrintPreview")->setEnabled(w);
+    getAction("FileClose")->setEnabled(w);
+    getAction("FileCloseAll")->setEnabled(w && window_list.count() > 1);
 }
 
 /**
@@ -826,29 +713,6 @@ void QC_ApplicationWindow::dragEnterEvent(QDragEnterEvent *event) {
     }
 }
 
-/**
- * @return Pointer to the currently active MDI Window or nullptr if no
- * MDI Window is active.
- */
-QC_MDIWindow const* QC_ApplicationWindow::getMDIWindow() const{
-    if (mdiAreaCAD) {
-        QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
-        if(w) {
-            return qobject_cast<QC_MDIWindow*>(w);
-        }
-    }
-    return nullptr;
-}
-
-QC_MDIWindow* QC_ApplicationWindow::getMDIWindow(){
-    if (mdiAreaCAD) {
-        QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
-        if(w) {
-            return qobject_cast<QC_MDIWindow*>(w);
-        }
-    }
-    return nullptr;
-}
 
 void QC_ApplicationWindow::setPreviousZoomEnable(bool enable){
     previousZoomEnable=enable;
@@ -890,32 +754,36 @@ void QC_ApplicationWindow::slotUpdateActiveLayer() {
  */
 void QC_ApplicationWindow::initSettings() {
     RS_DEBUG->print("QC_ApplicationWindow::initSettings()");
-
     QSettings settings;
     // fixme - inconsistent work with settings...
     settings.beginGroup("Geometry");
-    restoreState(settings.value("StateOfWidgets", "").toByteArray());
-    dock_areas.left->setChecked(settings.value("LeftDockArea", 0).toBool());
-    dock_areas.right->setChecked(settings.value("RightDockArea", 1).toBool());
-    dock_areas.top->setChecked(settings.value("TopDockArea", 0).toBool());
-    dock_areas.bottom->setChecked(settings.value("BottomDockArea", 0).toBool());
-    dock_areas.floating->setChecked(settings.value("FloatingDockwidgets", 0).toBool());
-    settings.endGroup();
+    LC_GROUP("Geometry");
+    {
+//        restoreState(LC_GET_BARRAY("StateOfWidgets"));
+        restoreState(settings.value("StateOfWidgets", "").toByteArray());
 
-    settings.beginGroup("Widgets");
-
-    int allow_style = settings.value("AllowStyle", 0).toInt();
-    if (allow_style) {
-        QString style = settings.value("Style", "").toString();
-        QApplication::setStyle(QStyleFactory::create(style));
+        dock_areas.left->setChecked(LC_GET_BOOL("LeftDockArea", false));
+        dock_areas.right->setChecked(LC_GET_BOOL("RightDockArea", true));
+        dock_areas.top->setChecked(LC_GET_BOOL("TopDockArea", false));
+        dock_areas.bottom->setChecked(LC_GET_BOOL("BottomDockArea", false));
+        dock_areas.floating->setChecked(LC_GET_BOOL("FloatingDockwidgets", false));
     }
 
-    QString sheet_path = settings.value("StyleSheet", "").toString();
-    if (loadStyleSheet(sheet_path))
-        style_sheet_path = sheet_path;
-    settings.endGroup();
+    LC_GROUP("Widgets");
+    {
+        bool allow_style = LC_GET_BOOL("AllowStyle", false);
+        if (allow_style) {
+            QString style = LC_GET_STR("Style", "");
+            QApplication::setStyle(QStyleFactory::create(style));
+        }
 
-    a_map["ViewDraft"]->setChecked(settings.value("Appearance/DraftMode", 0).toBool());
+        QString sheet_path = LC_GET_STR("StyleSheet", "");
+        if (loadStyleSheet(sheet_path)) {
+            style_sheet_path = sheet_path;
+        }
+    }
+
+    getAction("ViewDraft")->setChecked(LC_GET_ONE_BOOL("Appearance","DraftMode", false));
 }
 
 
@@ -934,7 +802,7 @@ void QC_ApplicationWindow::storeSettings() {
             LC_SET("WindowY", y());
             QString geometry{saveGeometry().toBase64(QByteArray::Base64Encoding)};
             LC_SET("WindowGeometry", geometry);
-            RS_SETTINGS->writeEntry("/StateOfWidgets", QVariant(saveState()));
+            RS_SETTINGS->writeEntry("/StateOfWidgets", QVariant(saveState())); // fixme
             LC_SET("LeftDockArea", dock_areas.left->isChecked());
             LC_SET("RightDockArea", dock_areas.right->isChecked());
             LC_SET("TopDockArea", dock_areas.top->isChecked());
@@ -1011,6 +879,10 @@ void QC_ApplicationWindow::slotError(const QString& msg) {
         commandWidget->appendHistory(msg);
 }
 
+void QC_ApplicationWindow::slotShowDrawingOptions() {
+    actionHandler->setCurrentAction(RS2::ActionOptionsDrawingGrid);
+}
+
 /**
  * Hands focus back to the application window. In the rare event
  * of a escape press from the layer widget (e.g after switching desktops
@@ -1020,10 +892,7 @@ void QC_ApplicationWindow::slotFocus() {
     setFocus();
 }
 
-void QC_ApplicationWindow::slotWindowActivated(int index){
-    if(index < 0 || index >= mdiAreaCAD->subWindowList().size()) return;
-    slotWindowActivated(mdiAreaCAD->subWindowList().at(index));
-}
+
 
 /**
  * Called when a document window was activated.
@@ -1038,6 +907,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
         enableWidget(commandWidget, false);
         RS_DIALOGFACTORY->hideSnapOptions();
         coordinateWidget->clearContent();
+        relativeZeroCoordinatesWidget->clearContent();
         // todo - check which other widgets in status bar or so should be cleared if no files..
         emit windowsChanged(false);
         activedMdiSubWindow = w;
@@ -1045,6 +915,16 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
     }
 
     if (w == activedMdiSubWindow) {
+        // this may occur after file open, so additional update is needed :(
+        RS_GraphicView* activatedGraphicView = getGraphicView();
+        RS_Graphic* activatedGraphic = activatedGraphicView->getGraphic();
+        bool printPreview = activatedGraphicView->isPrintPreview();
+        if (!printPreview){
+            bool isometricGrid = activatedGraphic->isIsometricGrid();
+            RS2::IsoGridViewType isoViewType = activatedGraphic->getIsoView();
+            updateGridViewActions(isometricGrid, isoViewType);
+        }
+        activatedGraphicView->loadSettings();
         return;
     }
 
@@ -1115,6 +995,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
         }
 
         coordinateWidget->setGraphic(activatedGraphic);
+        relativeZeroCoordinatesWidget->setGraphicView(activatedGraphicView);
         blockWidget->setBlockList(activatedDocument->getBlockList());
 
         // Update all inserts in this graphic (blocks might have changed):
@@ -1150,6 +1031,14 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
                 currentAction->showOptions();
             }
         }
+        
+        if (!printPreview){
+            bool isometricGrid = activatedGraphic->isIsometricGrid();
+            RS2::IsoGridViewType isoViewType = activatedGraphic->getIsoView();
+            updateGridViewActions(isometricGrid, isoViewType);
+        }
+        
+        
         updateActionsAndWidgetsForPrintPreview(printPreview);
 
         if (snapToolBar) {
@@ -1193,11 +1082,11 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
         bool tabbed = mdiAreaCAD->viewMode() == QMdiArea::TabbedView;
         windowsMenu->clear(); // this is a temporary menu; constructed on-demand
 
-        menuItem = windowsMenu->addAction(tr("Ta&b mode"), this, SLOT(slotToggleTab()));
+        menuItem = windowsMenu->addAction(tr("Ta&b mode"), this, &LC_MDIApplicationWindow::slotToggleTab);
         menuItem->setCheckable(true);
         menuItem->setChecked(tabbed);
 
-        menuItem = windowsMenu->addAction(tr("&Window mode"), this, SLOT(slotToggleTab()));
+        menuItem = windowsMenu->addAction(tr("&Window mode"), this, &LC_MDIApplicationWindow::slotToggleTab);
         menuItem->setCheckable(true);
         menuItem->setChecked(!tabbed);
 
@@ -1206,32 +1095,32 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
             menu = new QMenu(tr("&Layout"), windowsMenu);
             windowsMenu->addMenu(menu);
 
-            menuItem = menu->addAction(tr("Rounded"), this, SLOT(slotTabShapeRounded()));
+            menuItem = menu->addAction(tr("Rounded"), this, &LC_MDIApplicationWindow::slotTabShapeRounded);
             menuItem->setCheckable(true);
 
             int tabShape = LC_GET_INT("TabShape");
             menuItem->setChecked(tabShape == RS2::Rounded);
 
-            menuItem = menu->addAction(tr("Triangular"), this, SLOT(slotTabShapeTriangular()));
+            menuItem = menu->addAction(tr("Triangular"), this, &LC_MDIApplicationWindow::slotTabShapeTriangular);
             menuItem->setCheckable(true);
             menuItem->setChecked(tabShape == RS2::Triangular);
 
             menu->addSeparator();
             int tabPosition = LC_GET_INT("TabPosition");
 
-            menuItem = menu->addAction(tr("North"), this, SLOT(slotTabPositionNorth()));
+            menuItem = menu->addAction(tr("North"), this, &LC_MDIApplicationWindow::slotTabPositionNorth);
             menuItem->setCheckable(true);
             menuItem->setChecked(tabPosition == RS2::North);
 
-            menuItem = menu->addAction(tr("South"), this, SLOT(slotTabPositionSouth()));
+            menuItem = menu->addAction(tr("South"), this, &LC_MDIApplicationWindow::slotTabPositionSouth);
             menuItem->setCheckable(true);
             menuItem->setChecked(tabPosition == RS2::South);
 
-            menuItem = menu->addAction(tr("East"), this, SLOT(slotTabPositionEast()));
+            menuItem = menu->addAction(tr("East"), this, &LC_MDIApplicationWindow::slotTabPositionEast);
             menuItem->setCheckable(true);
             menuItem->setChecked(tabPosition == RS2::East);
 
-            menuItem = menu->addAction(tr("West"), this, SLOT(slotTabPositionWest()));
+            menuItem = menu->addAction(tr("West"), this, &LC_MDIApplicationWindow::slotTabPositionWest);
             menuItem->setCheckable(true);
             menuItem->setChecked(tabPosition == RS2::West);
 
@@ -1239,14 +1128,14 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
             menu = new QMenu(tr("&Arrange"), windowsMenu);
             windowsMenu->addMenu(menu);
 
-            menuItem = menu->addAction(tr("&Maximized"), this, SLOT(slotSetMaximized()));
+            menuItem = menu->addAction(tr("&Maximized"), this, &LC_MDIApplicationWindow::slotSetMaximized);
             menuItem->setCheckable(true);
             menuItem->setChecked(LC_GET_INT("SubWindowMode") == RS2::Maximized);
 
-            menu->addAction(tr("&Cascade"), this, SLOT(slotCascade()));
-            menu->addAction(tr("&Tile"), this, SLOT(slotTile()));
-            menu->addAction(tr("Tile &Vertically"), this, SLOT(slotTileVertical()));
-            menu->addAction(tr("Tile &Horizontally"), this, SLOT(slotTileHorizontal()));
+            menu->addAction(tr("&Cascade"), this, &LC_MDIApplicationWindow::slotCascade);
+            menu->addAction(tr("&Tile"), this, &LC_MDIApplicationWindow::slotTile);
+            menu->addAction(tr("Tile &Vertically"), this, &LC_MDIApplicationWindow::slotTileVertical);
+            menu->addAction(tr("Tile &Horizontally"), this, &LC_MDIApplicationWindow::slotTileHorizontal);
         }
     }
 
@@ -1289,222 +1178,6 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
     }
 }
 
-/**
- * Cascade MDI windows
- */
-void QC_ApplicationWindow::slotTile() {
-    doArrangeWindows(RS2::Tile, true);
-    mdiAreaCAD->tileSubWindows();
-    slotZoomAuto();
-}
-
-//auto zoom the graphicView of sub-windows
-void QC_ApplicationWindow::slotZoomAuto() {
-    QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
-    for (int i = 0; i < windows.size(); i++) {
-        QMdiSubWindow *window = windows.at(i);
-        qobject_cast<QC_MDIWindow *>(window)->slotZoomAuto();
-    }
-}
-
-/**
- * Cascade MDI windows
- */
-void QC_ApplicationWindow::slotCascade() {
-//    mdiAreaCAD->cascadeSubWindows();
-//return;
-    doArrangeWindows(RS2::Cascade, true);
-    QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
-    switch (windows.size()) {
-        case 1:
-            //mdiAreaCAD->tileSubWindows();
-            slotTile();
-        case 0:
-            return;
-        default: {
-            QMdiSubWindow *active = mdiAreaCAD->activeSubWindow();
-            for (int i = 0; i < windows.size(); ++i) {
-                windows.at(i)->showNormal();
-            }
-            mdiAreaCAD->cascadeSubWindows();
-            //find displacement by linear-regression
-            double mi = 0., mi2 = 0., mw = 0., miw = 0., mh = 0., mih = 0.;
-            for (int i = 0; i < windows.size(); ++i) {
-                mi += i;
-                mi2 += i * i;
-                double w = windows.at(i)->pos().x();
-                mw += w;
-                miw += i * w;
-                double h = windows.at(i)->pos().y();
-                mh += h;
-                mih += i * h;
-            }
-            mi2 *= windows.size();
-            miw *= windows.size();
-            mih *= windows.size();
-            double d = 1. / (mi2 - mi * mi);
-            double disX = (miw - mi * mw) * d;
-            double disY = (mih - mi * mh) * d;
-            //End of Linear Regression
-            //
-            QMdiSubWindow *window = windows.first();
-            QRect geo = window->geometry();
-            QRect frame = window->frameGeometry();
-//        std::cout<<"Frame=:"<<( frame.height() - geo.height())<<std::endl;
-            int width = mdiAreaCAD->width() - (frame.width() - geo.width()) - disX * (windows.size() - 1);
-            int height = mdiAreaCAD->height() - (frame.width() - geo.width()) - disY * (windows.size() - 1);
-            if (width <= 0 || height <= 0) {
-                return;
-            }
-            for (int i = 0; i < windows.size(); ++i) {
-                window = windows.at(i);
-//            std::cout<<"window:("<<i<<"): pos()="<<(window->pos().x())<<" "<<(window->pos().y())<<std::endl;
-                geo = window->geometry();
-//            if(i==active) {
-//                    window->setWindowState(Qt::WindowActive);
-//            }else{
-//                    window->setWindowState(Qt::WindowNoState);
-//            }
-                window->setGeometry(geo.x(), geo.y(), width, height);
-                qobject_cast<QC_MDIWindow *>(window)->slotZoomAuto();
-            }
-            mdiAreaCAD->setActiveSubWindow(active);
-//        windows.at(active)->activateWindow();
-//        windows.at(active)->raise();
-//        windows.at(active)->setFocus();
-        }
-    }
-}
-
-
-/**
- * Tiles MDI windows horizontally.
- */
-void QC_ApplicationWindow::slotTileHorizontal() {
-
-    RS_DEBUG->print("QC_ApplicationWindow::slotTileHorizontal");
-    doArrangeWindows(RS2::TileHorizontal, true);
-
-    // primitive horizontal tiling
-    QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
-    if (windows.count() <= 1) {
-        slotTile();
-        return;
-    }
-    for (int i = 0; i < windows.count(); ++i) {
-        QMdiSubWindow *window = windows.at(i);
-        window->lower();
-        window->showNormal();
-    }
-    int heightForEach = mdiAreaCAD->height() / windows.count();
-    int y = 0;
-    for (int i = 0; i < windows.count(); ++i) {
-        QMdiSubWindow *window = windows.at(i);
-        int preferredHeight = window->minimumHeight()
-                              + window->parentWidget()->baseSize().height();
-        int actHeight = qMax(heightForEach, preferredHeight);
-
-        window->setGeometry(0, y, mdiAreaCAD->width(), actHeight);
-        qobject_cast<QC_MDIWindow *>(window)->slotZoomAuto();
-        y += actHeight;
-    }
-    mdiAreaCAD->activeSubWindow()->raise();
-}
-
-
-/**
- * Tiles MDI windows vertically.
- */
-void QC_ApplicationWindow::slotTileVertical() {
-
-    RS_DEBUG->print("QC_ApplicationWindow::slotTileVertical()");
-    doArrangeWindows(RS2::TileVertical, true);
-
-    // primitive horizontal tiling
-    QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
-    if (windows.count() <= 1) {
-        slotTile();
-        return;
-    }
-    for (int i = 0; i < windows.count(); ++i) {
-        QMdiSubWindow *window = windows.at(i);
-        window->lower();
-        window->showNormal();
-    }
-    int widthForEach = mdiAreaCAD->width() / windows.count();
-    int x = 0;
-    for (int i = 0; i < windows.count(); ++i) {
-        QMdiSubWindow *window = windows.at(i);
-        int preferredWidth = window->minimumWidth()
-                             + window->parentWidget()->baseSize().width();
-        int actWidth = qMax(widthForEach, preferredWidth);
-
-        window->setGeometry(x, 0, actWidth, mdiAreaCAD->height());
-        qobject_cast<QC_MDIWindow *>(window)->slotZoomAuto();
-        x += actWidth;
-    }
-    mdiAreaCAD->activeSubWindow()->raise();
-}
-
-void QC_ApplicationWindow::slotSetMaximized() {
-    doArrangeWindows(RS2::Maximized);
-}
-
-void QC_ApplicationWindow::slotTabShapeRounded() {
-    setTabLayout(RS2::Rounded, RS2::AnyPosition);
-}
-
-void QC_ApplicationWindow::slotTabShapeTriangular() {
-    setTabLayout(RS2::Triangular, RS2::AnyPosition);
-}
-
-void QC_ApplicationWindow::slotTabPositionNorth() {
-    setTabLayout(RS2::AnyShape, RS2::North);
-}
-
-void QC_ApplicationWindow::slotTabPositionSouth() {
-    setTabLayout(RS2::AnyShape, RS2::South);
-}
-
-void QC_ApplicationWindow::slotTabPositionEast() {
-    setTabLayout(RS2::AnyShape, RS2::East);
-}
-
-void QC_ApplicationWindow::slotTabPositionWest() {
-    setTabLayout(RS2::AnyShape, RS2::West);
-}
-
-/**
- * toggles between subwindow and tab mode for the MdiArea
- */
-void QC_ApplicationWindow::slotToggleTab() {
-    if (mdiAreaCAD->viewMode() == QMdiArea::SubWindowView) {
-        LC_SET_ONE("Startup", "TabMode", 1);
-        mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
-        QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar *>();
-        QTabBar *tabBar = tabBarList.at(0);
-        if (tabBar) {
-            tabBar->setExpanding(false);
-        }
-        QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
-        QMdiSubWindow *active = mdiAreaCAD->activeSubWindow();
-        for (int i = 0; i < windows.size(); i++) {
-            QMdiSubWindow *m = windows.at(i);
-            m->hide();
-            if (m != active) {
-                m->lower();
-            } else {
-                m->raise();
-            }
-            slotSetMaximized();
-            qobject_cast<QC_MDIWindow *>(m)->slotZoomAuto();
-        }
-    } else {
-        LC_SET_ONE("Startup", "TabMode", 0);
-        mdiAreaCAD->setViewMode(QMdiArea::SubWindowView);
-        doArrangeWindows(RS2::CurrentMode);
-    }
-}
 
 /**
  * Called when something changed in the pen tool bar
@@ -1579,7 +1252,7 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
             auto menu = new QMenu(activator, view);
             menu->setObjectName(menu_name);
                 foreach (auto key, a_list) {
-                    menu->addAction(a_map[key]);
+                    menu->addAction(getAction(key));
                 }
             view->setMenu(activator, menu);
         }
@@ -1600,7 +1273,7 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
     // fixme - settings
     if (settings.value("Appearance/DraftMode", 0).toBool()) {
         QString draft_string = " [" + tr("Draft Mode") + "]";
-        w->getGraphicView()->setDraftMode(true);
+        view->setDraftMode(true);
         QString title = w->windowTitle();
         w->setWindowTitle(title + draft_string);
     }
@@ -1647,12 +1320,16 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
         graphic->addBlockListListener(blockWidget);
     }
 // Link the dialog factory to the coordinate widget:
-    if (coordinateWidget) {
+    if (coordinateWidget != nullptr) {
         coordinateWidget->setGraphic(graphic);
+    }
+    if (relativeZeroCoordinatesWidget != nullptr){
+        relativeZeroCoordinatesWidget->setGraphicView(view);
     }
 // Link the dialog factory to the mouse widget:
     QG_DIALOGFACTORY->setMouseWidget(mouseWidget);
     QG_DIALOGFACTORY->setCoordinateWidget(coordinateWidget);
+    QG_DIALOGFACTORY->setRelativeZeroCoordinatesWidget(relativeZeroCoordinatesWidget);
     QG_DIALOGFACTORY->setSelectionWidget(selectionWidget);
 // Link the dialog factory to the option widget:
 //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
@@ -1688,7 +1365,8 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
     qApp->processEvents(QEventLoop::AllEvents, 1000);
 
     // link the layer widget to the new document:
-    RS_LayerList *layerList = w->getDocument()->getLayerList();
+    RS_Document *document = w->getDocument();
+    RS_LayerList *layerList = document->getLayerList();
     layerWidget->setLayerList(layerList, false);
     if (layerTreeWidget != nullptr)
         layerTreeWidget->setLayerList(layerList);
@@ -1699,9 +1377,11 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
 
 
     // link the block widget to the new document:
-    blockWidget->setBlockList(w->getDocument()->getBlockList());
+    blockWidget->setBlockList(document->getBlockList());
+    auto graphic = w->getGraphic();
     // link coordinate widget to graphic
-    coordinateWidget->setGraphic(w->getGraphic());
+    coordinateWidget->setGraphic(graphic);
+    relativeZeroCoordinatesWidget->setGraphicView(w->getGraphicView());
 
     qApp->processEvents(QEventLoop::AllEvents, 1000);
 
@@ -1734,8 +1414,8 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
         commandWidget->appendHistory(message);
         statusBar()->showMessage(message, 2000);
     }
-    if (w->getGraphic()) {
-        emit(gridChanged(w->getGraphic()->isGridOn()));
+    if (graphic) {
+        emit(gridChanged(graphic->isGridOn()));
     }
 
     QApplication::restoreOverrideCursor();
@@ -1878,8 +1558,7 @@ format_filename_caption(const QString &qstring_in) {
  *	Returns:			void
  *	Notes:			Menu file -> open.
  *	*/
-void QC_ApplicationWindow::
-slotFileOpen(const QString &fileName, RS2::FormatType type) {
+void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType type) {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen(..)");
 
     QSettings settings;
@@ -1898,12 +1577,13 @@ slotFileOpen(const QString &fileName, RS2::FormatType type) {
         QRect geo;
         //bool maximized=false;
 
-        QC_MDIWindow *w = slotFileNew(nullptr);
+        auto w = slotFileNew(nullptr);
         // RVT_PORT qApp->processEvents(1000);
         qApp->processEvents(QEventLoop::AllEvents, 1000);
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: linking layer list");
-        RS_LayerList *layerList = w->getDocument()->getLayerList();
+        auto document = w->getDocument();
+        auto layerList = document->getLayerList();
         // link the layer widget to the new document:
 
         layerWidget->setLayerList(layerList, false);
@@ -1913,9 +1593,12 @@ slotFileOpen(const QString &fileName, RS2::FormatType type) {
             penPaletteWidget->setLayerList(layerList);
         }
         // link the block widget to the new document:
-        blockWidget->setBlockList(w->getDocument()->getBlockList());
+        blockWidget->setBlockList(document->getBlockList());
         // link coordinate widget to graphic
-        coordinateWidget->setGraphic(w->getGraphic());
+        auto graphic = w->getGraphic();
+        auto graphicView = w->getGraphicView();
+        coordinateWidget->setGraphic(graphic);
+        relativeZeroCoordinatesWidget->setGraphicView(graphicView);
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: open file");
 
@@ -1932,8 +1615,7 @@ slotFileOpen(const QString &fileName, RS2::FormatType type) {
             success = w->slotFileOpen(fileName, type);
         } else {
             QString msg = tr("Cannot open the file\n%1\nPlease "
-                             "check its existence and permissions.")
-                .arg(fileName);
+                             "check its existence and permissions.").arg(fileName);
             commandWidget->appendHistory(msg);
             QMessageBox::information(this, QMessageBox::tr("Warning"), msg, QMessageBox::Ok);
         }
@@ -1960,7 +1642,7 @@ slotFileOpen(const QString &fileName, RS2::FormatType type) {
         if (layerTreeWidget != nullptr)
             layerTreeWidget->slotFilteringMaskChanged();
 
-        auto graphic = w->getGraphic();
+        
         if (graphic) {
             if (int objects_removed = graphic->clean()) {
                 auto msg = QObject::tr("Invalid objects removed:");
@@ -1987,15 +1669,16 @@ slotFileOpen(const QString &fileName, RS2::FormatType type) {
             doArrangeWindows(RS2::CurrentMode);
 
 
-        if (LC_GET_ONE_BOOL("CADPreferences","AutoZoomDrawing")) {
-            w->getGraphicView()->zoomAuto(false);
+        
+        if (LC_GET_ONE_BOOL("CADPreferences", "AutoZoomDrawing")) {
+            graphicView->zoomAuto(false);
         }
 
 // fixme - settings inconsistent call
         if (settings.value("Appearance/DraftMode", 0).toBool()) {
             QString draft_string = " [" + tr("Draft Mode") + "]";
-            w->getGraphicView()->setDraftMode(true);
-            w->getGraphicView()->redraw();
+            graphicView->setDraftMode(true);
+            graphicView->redraw();
             QString title = w->windowTitle();
             w->setWindowTitle(title + draft_string);
         }
@@ -2500,8 +2183,10 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
 
                 // Link the graphic view to the mouse widget:
                 QG_DIALOGFACTORY->setMouseWidget(mouseWidget);
+                // fixme - sand - check whether coordinates, selection and relzero are really necessary for print preview!!!
                 // Link the graphic view to the coordinate widget:
                 QG_DIALOGFACTORY->setCoordinateWidget(coordinateWidget);
+                QG_DIALOGFACTORY->setRelativeZeroCoordinatesWidget(relativeZeroCoordinatesWidget);
                 QG_DIALOGFACTORY->setSelectionWidget(selectionWidget);
                 // Link the graphic view to the option widget:
                 //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
@@ -2593,6 +2278,13 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
 
     for (QC_MDIWindow *win: window_list) {
         win->getGraphicView()->setDraftMode(toggle);
+
+        QC_MDIWindow *ppv = win->getPrintPreview();
+        if (ppv != nullptr){
+            QG_GraphicView *printPreviewGraphicView = ppv->getGraphicView();
+            printPreviewGraphicView->setDraftMode(toggle);
+            printPreviewGraphicView->redraw();
+        }
         QString title = win->windowTitle();
 
         if (toggle && !title.contains(draft_string)) {
@@ -2605,20 +2297,6 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
     redrawAll();
 }
 
-/**
- * Redraws all mdi windows.
- */
-void QC_ApplicationWindow::redrawAll() {
-    if (mdiAreaCAD) {
-        for (const QC_MDIWindow *win: window_list) {
-            if (win != nullptr) {
-                QG_GraphicView *gv = win->getGraphicView();
-                if (gv != nullptr) { gv->redraw(); }
-            }
-        }
-    }
-}
-
 
 /**
  * Updates all grids of all graphic views.
@@ -2627,7 +2305,7 @@ void QC_ApplicationWindow::updateGrids() {
     if (mdiAreaCAD) {
         QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
         for (int i = 0; i < windows.size(); ++i) {
-            QC_MDIWindow *m = qobject_cast<QC_MDIWindow *>(windows.at(i));
+            auto *m = qobject_cast<QC_MDIWindow *>(windows.at(i));
             if (m) {
                 QG_GraphicView *gv = m->getGraphicView();
                 if (gv) {
@@ -2639,7 +2317,6 @@ void QC_ApplicationWindow::updateGrids() {
     }
 }
 
-
 /**
  * Shows / hides the status bar.
  *
@@ -2649,6 +2326,69 @@ void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
     RS_DEBUG->print("QC_ApplicationWindow::slotViewStatusBar()");
 
     statusBar()->setVisible(toggle);
+}
+
+void QC_ApplicationWindow::slotViewGridOrtho(bool toggle) {
+    setGridView(toggle, false, RS2::IsoGridViewType::IsoLeft);
+}
+
+void QC_ApplicationWindow::slotViewGridIsoLeft(bool toggle) {
+    setGridView(toggle, true, RS2::IsoGridViewType::IsoLeft);
+}
+
+void QC_ApplicationWindow::slotViewGridIsoRight(bool toggle) {
+    setGridView(toggle, true, RS2::IsoGridViewType::IsoRight);
+}
+
+void QC_ApplicationWindow::slotViewGridIsoTop(bool toggle) {
+    setGridView(toggle, true, RS2::IsoGridViewType::IsoTop);
+}
+
+void QC_ApplicationWindow::setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType) {
+    if (toggle) {
+        RS_GraphicView *view = getGraphicView();
+        if (view != nullptr) {
+            if (!view->isPrintPreview()) {
+                RS_Graphic *graphic = view->getGraphic();
+                graphic->setIsometricGrid(isometric);
+                if (isometric) {
+                    graphic->setIsoView(isoGridType);
+                }
+                view->loadGridSettings();
+                updateGridViewActions(isometric, isoGridType);
+                view->redraw();
+                view->update();
+            }
+        }
+    }
+}
+
+void QC_ApplicationWindow::updateGridViewActions(bool isometric, RS2::IsoGridViewType type) {
+    bool viewOrtho = false, viewIsoLeft = false, viewIsoRight = false, viewIsoTop = false;
+
+    if (isometric){
+        switch (type){
+            case RS2::IsoLeft:{
+                viewIsoLeft = true;
+                break;
+            }
+            case RS2::IsoTop:{
+                viewIsoTop = true;
+                break;
+            }
+            case RS2::IsoRight:{
+                viewIsoRight = true;
+            }
+        }
+    }
+    else{
+        viewOrtho = true;
+    }
+
+    getAction("ViewGridOrtho")->setChecked(viewOrtho);
+    getAction("ViewGridIsoLeft")->setChecked(viewIsoLeft);
+    getAction("ViewGridIsoTop")->setChecked(viewIsoTop);
+    getAction("ViewGridIsoRight")->setChecked(viewIsoRight);
 }
 
 void QC_ApplicationWindow::slotOptionsShortcuts() {
@@ -2662,7 +2402,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
     int dialogResult = RS_DIALOGFACTORY->requestOptionsGeneralDialog();
 
     if (dialogResult == QDialog::Accepted){
-
+        // fixme - check this signal, probably it's better to rely on settings change
         bool hideRelativeZero = LC_GET_ONE_BOOL("Appearance", "hideRelativeZero");
         emit signalEnableRelativeZeroSnaps(!hideRelativeZero);
 
@@ -2673,6 +2413,9 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
                 QG_GraphicView *gv = m->getGraphicView();
                 if (gv != nullptr) {
                     gv->loadSettings();
+                    if (m == activedMdiSubWindow) {
+                        gv->redraw();
+                    }
                 }
             }
         }
@@ -2720,67 +2463,8 @@ void QC_ApplicationWindow::slotImportBlock() {
 
 
 void QC_ApplicationWindow::showAboutWindow() {
-    // author: ravas
-
-    QDialog dlg;
-    dlg.setWindowTitle(tr("About"));
-
-    auto layout = new QVBoxLayout;
-    dlg.setLayout(layout);
-
-    auto frame = new QGroupBox(qApp->applicationName());
-    layout->addWidget(frame);
-
-    auto f_layout = new QVBoxLayout;
-    frame->setLayout(f_layout);
-
-    // Compiler macro list in Qt source tree
-    // Src/qtbase/src/corelib/global/qcompilerdetection.h
-
-    QString info
-        (
-            tr("Version: %1").arg(XSTR(LC_VERSION)) + "\n" +
-            #if defined(Q_CC_CLANG)
-            tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "\n" +
-            #elif defined(Q_CC_GNU)
-            tr("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "\n" +
-            #elif defined(Q_CC_MSVC)
-            tr("Compiler: Microsoft Visual C++") + "\n" +
-            #endif
-            tr("Compiled on: %1").arg(__DATE__) + "\n" +
-            tr("Qt Version: %1").arg(qVersion()) + "\n" +
-            tr("Boost Version: %1.%2.%3").arg(BOOST_VERSION / 100000).arg(BOOST_VERSION / 100 % 1000).arg(BOOST_VERSION % 100)
-        );
-
-    auto app_info = new QLabel(info);
-    app_info->setTextInteractionFlags(Qt::TextSelectableByMouse);
-    f_layout->addWidget(app_info);
-
-    auto copy_button = new QPushButton(tr("Copy"));
-    // copy_button->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    f_layout->addWidget(copy_button);
-
-    connect(copy_button, SIGNAL(released()), &dlg, SLOT(accept()));
-
-    QLabel *links_label = new QLabel(QString("<a href=\"https://github.com/LibreCAD/LibreCAD/graphs/contributors\">%1</a>"
-                                             "<br/>"
-                                             "<a href=\"https://github.com/LibreCAD/LibreCAD/blob/master/LICENSE\">%2</a>"
-                                             "<br/>"
-                                             "<a href=\"https://github.com/LibreCAD/LibreCAD/\">%3</a>")
-                                         .arg(tr("Contributors"))
-                                         .arg(tr("License"))
-                                         .arg(tr("The Code")));
-    links_label->setOpenExternalLinks(true);
-    links_label->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
-    f_layout->addWidget(links_label);
-
-    if (dlg.exec()) {
-        QClipboard *clipboard = QApplication::clipboard();
-#if QT_VERSION >= 0x050400
-        info += "\n" + tr("System") + ": " + QSysInfo::prettyProductName();
-#endif
-        clipboard->setText(info);
-    }
+    LC_DlgAbout dlg(this);
+    dlg.exec();
 }
 
 /**
@@ -2877,45 +2561,7 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent *e) {
 }
 
 
-QMdiArea const *QC_ApplicationWindow::getMdiArea() const {
-    return mdiAreaCAD;
-}
 
-QMdiArea *QC_ApplicationWindow::getMdiArea() {
-    return mdiAreaCAD;
-}
-
-RS_GraphicView const *QC_ApplicationWindow::getGraphicView() const {
-    QC_MDIWindow const *m = getMDIWindow();
-    if (m) {
-        return m->getGraphicView();
-    }
-    return nullptr;
-}
-
-RS_GraphicView *QC_ApplicationWindow::getGraphicView() {
-    QC_MDIWindow *m = getMDIWindow();
-    if (m) {
-        return m->getGraphicView();
-    }
-    return nullptr;
-}
-
-RS_Document const *QC_ApplicationWindow::getDocument() const {
-    QC_MDIWindow const *m = getMDIWindow();
-    if (m) {
-        return m->getDocument();
-    }
-    return nullptr;
-}
-
-RS_Document *QC_ApplicationWindow::getDocument() {
-    QC_MDIWindow *m = getMDIWindow();
-    if (m) {
-        return m->getDocument();
-    }
-    return nullptr;
-}
 
 void QC_ApplicationWindow::createNewDocument(
     const QString &fileName, RS_Document *doc) {
@@ -2935,7 +2581,7 @@ void QC_ApplicationWindow::updateWindowTitle(QWidget *w) {
             w->setWindowTitle(w->windowTitle() + draft_string);
     }
 }
-// fixme - sand -  potentially, relay is obsolete and should be removed
+
 void QC_ApplicationWindow::relayAction(QAction *q_action) {
     // author: ravas
 
@@ -2947,6 +2593,7 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
     }
 
     view->setCurrentQAction(q_action);
+    mouseWidget->setCurrentQAction(q_action);
 
     const QString commands(q_action->data().toString());
     if (!commands.isEmpty()) {
@@ -2975,7 +2622,7 @@ QMenu *QC_ApplicationWindow::createPopupMenu() {
     temp_dw_menu->addActions(dw_menu->actions());
     context_menu->addMenu(temp_dw_menu);
 
-    context_menu->addAction(a_map["ViewStatusBar"]);
+    context_menu->addAction(getAction("ViewStatusBar"));
 
     return context_menu;
 }
@@ -3007,94 +2654,59 @@ void QC_ApplicationWindow::slotFileOpenRecent(QAction *action) {
 void QC_ApplicationWindow::widgetOptionsDialog() {
     // author: ravas
 
+    // fixme - OMG!!!! whf?
+
     LC_WidgetOptionsDialog dlg;
 
-    QSettings settings;
-    settings.beginGroup("Widgets");
 
-    int allow_style = settings.value("AllowStyle", 0).toInt();
-    dlg.style_checkbox->setChecked(allow_style);
-    dlg.style_combobox->addItems(QStyleFactory::keys());
-    if (allow_style) {
-        QString a_style = settings.value("Style", "").toString();
-        if (!a_style.isEmpty()) {
-            int index = dlg.style_combobox->findText(a_style);
-            dlg.style_combobox->setCurrentIndex(index);
-        }
+    if (dlg.exec() == QDialog::Accepted) {
+        /*  int allow_style = dlg.style_checkbox->isChecked();
+          settings.setValue("AllowStyle", allow_style);
+          if (allow_style) {
+              QString style = dlg.style_combobox->currentText();
+              settings.setValue("Style", style);
+              QApplication::setStyle(QStyleFactory::create(style));
+          }
+
+          QString sheet_path = dlg.stylesheet_field->text();
+          settings.setValue("StyleSheet", sheet_path);
+          if (loadStyleSheet(sheet_path))
+              style_sheet_path = sheet_path;
+
+          int allow_theme = dlg.theme_checkbox->isChecked();
+          settings.setValue("AllowTheme", allow_theme);
+
+          int allow_toolbar_icon_size = dlg.toolbar_icon_size_checkbox->isChecked();
+          settings.setValue("AllowToolbarIconSize", allow_toolbar_icon_size);
+          if (allow_toolbar_icon_size) {
+              int toolbar_icon_size = dlg.toolbar_icon_size_spinbox->value();
+              settings.setValue("ToolbarIconSize", toolbar_icon_size);
+              setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
+          }
+
+          int allow_statusbar_fontsize = dlg.statusbar_fontsize_checkbox->isChecked();
+          settings.setValue("AllowStatusbarFontSize", allow_statusbar_fontsize);
+          if (allow_statusbar_fontsize) {
+              int statusbar_fontsize = dlg.statusbar_fontsize_spinbox->value();
+              settings.setValue("StatusbarFontSize", statusbar_fontsize);
+              QFont font;
+              font.setPointSize(statusbar_fontsize);
+              statusBar()->setFont(font);
+          }
+
+          int allow_statusbar_height = dlg.statusbar_height_checkbox->isChecked();
+          settings.setValue("AllowStatusbarHeight", allow_statusbar_height);
+          if (allow_statusbar_height) {
+              int statusbar_height = dlg.statusbar_height_spinbox->value();
+              settings.setValue("StatusbarHeight", statusbar_height);
+              statusBar()->setMinimumHeight(statusbar_height);
+          }
+
+          int columnCount = dlg.left_toobar_columns_spinbox->value();
+          settings.setValue("LeftToolbarColumnsCount", columnCount);
+          settings.endGroup();
+      }*/
     }
-
-    QString sheet_path = settings.value("StyleSheet", "").toString();
-    if (!sheet_path.isEmpty() && QFile::exists(sheet_path))
-        dlg.stylesheet_field->setText(sheet_path);
-
-    int allow_theme = settings.value("AllowTheme", 0).toInt();
-    dlg.theme_checkbox->setChecked(allow_theme);
-
-    int allow_toolbar_icon_size = settings.value("AllowToolbarIconSize", 0).toInt();
-    dlg.toolbar_icon_size_checkbox->setChecked(allow_toolbar_icon_size);
-    int toolbar_icon_size = settings.value("ToolbarIconSize", 24).toInt();
-    dlg.toolbar_icon_size_spinbox->setValue(toolbar_icon_size);
-
-    int allow_statusbar_height = settings.value("AllowStatusbarHeight", 0).toInt();
-    dlg.statusbar_height_checkbox->setChecked(allow_statusbar_height);
-    int statusbar_height = settings.value("StatusbarHeight", 32).toInt();
-    dlg.statusbar_height_spinbox->setValue(statusbar_height);
-
-    int allow_statusbar_fontsize = settings.value("AllowStatusbarFontSize", 0).toInt();
-    dlg.statusbar_fontsize_checkbox->setChecked(allow_statusbar_fontsize);
-    int statusbar_fontsize = settings.value("StatusbarFontSize", 12).toInt();
-    dlg.statusbar_fontsize_spinbox->setValue(statusbar_fontsize);
-
-    int leftToolbarColumnsCount = settings.value("LeftToolbarColumnsCount", 5).toInt();
-    dlg.left_toobar_columns_spinbox->setValue(leftToolbarColumnsCount);
-
-    if (dlg.exec()) {
-        int allow_style = dlg.style_checkbox->isChecked();
-        settings.setValue("AllowStyle", allow_style);
-        if (allow_style) {
-            QString style = dlg.style_combobox->currentText();
-            settings.setValue("Style", style);
-            QApplication::setStyle(QStyleFactory::create(style));
-        }
-
-        QString sheet_path = dlg.stylesheet_field->text();
-        settings.setValue("StyleSheet", sheet_path);
-        if (loadStyleSheet(sheet_path))
-            style_sheet_path = sheet_path;
-
-        int allow_theme = dlg.theme_checkbox->isChecked();
-        settings.setValue("AllowTheme", allow_theme);
-
-        int allow_toolbar_icon_size = dlg.toolbar_icon_size_checkbox->isChecked();
-        settings.setValue("AllowToolbarIconSize", allow_toolbar_icon_size);
-        if (allow_toolbar_icon_size) {
-            int toolbar_icon_size = dlg.toolbar_icon_size_spinbox->value();
-            settings.setValue("ToolbarIconSize", toolbar_icon_size);
-            setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
-        }
-
-        int allow_statusbar_fontsize = dlg.statusbar_fontsize_checkbox->isChecked();
-        settings.setValue("AllowStatusbarFontSize", allow_statusbar_fontsize);
-        if (allow_statusbar_fontsize) {
-            int statusbar_fontsize = dlg.statusbar_fontsize_spinbox->value();
-            settings.setValue("StatusbarFontSize", statusbar_fontsize);
-            QFont font;
-            font.setPointSize(statusbar_fontsize);
-            statusBar()->setFont(font);
-        }
-
-        int allow_statusbar_height = dlg.statusbar_height_checkbox->isChecked();
-        settings.setValue("AllowStatusbarHeight", allow_statusbar_height);
-        if (allow_statusbar_height) {
-            int statusbar_height = dlg.statusbar_height_spinbox->value();
-            settings.setValue("StatusbarHeight", statusbar_height);
-            statusBar()->setMinimumHeight(statusbar_height);
-        }
-
-        int columnCount = dlg.left_toobar_columns_spinbox->value();
-        settings.setValue("LeftToolbarColumnsCount", columnCount);
-    }
-    settings.endGroup();
 }
 
 /**
@@ -3193,12 +2805,12 @@ void QC_ApplicationWindow::invokeToolbarCreator() {
         return;
     }
 
-    auto dlg = new QDialog(this);
+    auto dlg = new LC_Dialog(this, "ToolbarCreator");
     dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->setWindowTitle(tr("Toolbar Creator"));
     dlg->setObjectName("Toolbar Creator");
 
-    auto toolbar_creator = new WidgetCreator(dlg, a_map, ag_manager->allGroups());
+    auto toolbar_creator = new WidgetCreator(dlg, ag_manager);
     toolbar_creator->addCustomWidgets("CustomToolbars");
 
     connect(toolbar_creator, SIGNAL(widgetToCreate(QString)),
@@ -3230,9 +2842,9 @@ void QC_ApplicationWindow::createToolbar(const QString &toolbar_name) {
         addToolBar(Qt::BottomToolBarArea, toolbar);
     }
 
-        foreach (auto key, a_list) {
-            toolbar->addAction(a_map[key]);
-        }
+    foreach (auto key, a_list) {
+        toolbar->addAction(getAction(key));
+    }
 }
 
 void QC_ApplicationWindow::destroyToolbar(const QString &toolbar_name) {
@@ -3253,11 +2865,11 @@ void QC_ApplicationWindow::invokeMenuCreator() {
         return;
     }
 
-    auto dlg = new QDialog(this);
+    auto dlg = new LC_Dialog(this, "MenuCreator");
     dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->setWindowTitle(tr("Menu Creator"));
     auto layout = new QVBoxLayout;
-    auto widget_creator = new WidgetCreator(dlg, a_map, ag_manager->allGroups(), true);
+    auto widget_creator = new WidgetCreator(dlg, ag_manager, true);
     widget_creator->addCustomWidgets("CustomMenus");
 
     connect(widget_creator, SIGNAL(widgetToDestroy(QString)),
@@ -3369,7 +2981,7 @@ void QC_ApplicationWindow::assignMenu(const QString &activator, const QString &m
             auto menu = new QMenu(activator, view);
             menu->setObjectName(menu_name);
                 foreach (auto key, a_list) {
-                    menu->addAction(a_map[key]);
+                    menu->addAction(getAction(key));
                 }
             view->setMenu(activator, menu);
         }
@@ -3393,7 +3005,7 @@ void QC_ApplicationWindow::updateMenu(const QString &menu_name) {
                         auto menu = new QMenu(activator, view);
                         menu->setObjectName(menu_name);
                             foreach (auto key, a_list) {
-                                menu->addAction(a_map[key]);
+                                menu->addAction(getAction(key));
                             }
                         view->setMenu(activator, menu);
                     }
@@ -3460,36 +3072,6 @@ void QC_ApplicationWindow::invokeLicenseWindow() {
     dlg.exec();
 }
 
-QC_MDIWindow *QC_ApplicationWindow::getWindowWithDoc(const RS_Document *doc) {
-    QC_MDIWindow *wwd = nullptr;
-
-    if (doc) {
-            foreach (QC_MDIWindow *w, window_list) {
-                if (w && w->getDocument() == doc) {
-                    wwd = w;
-                    break;
-                }
-            }
-    }
-    return wwd;
-}
-
-void QC_ApplicationWindow::activateWindowWithFile(QString &fileName) {
-    if (!fileName.isEmpty()) {
-            foreach (QC_MDIWindow *w, window_list) {
-                if (w != nullptr) {}
-                RS_Document *doc = w->getDocument();
-                if (doc != nullptr) {
-                    const QString &docFileName = doc->getFilename();
-                    if (fileName == docFileName) {
-                        doActivate(w);
-                        break;
-                    }
-                }
-            }
-    }
-}
-
 void QC_ApplicationWindow::showBlockActivated(const RS_Block *block) {
     if (blockWidget != nullptr && block != nullptr) {
         blockWidget->activateBlock(const_cast<RS_Block *>(block));
@@ -3497,17 +3079,16 @@ void QC_ApplicationWindow::showBlockActivated(const RS_Block *block) {
 }
 
 QAction *QC_ApplicationWindow::getAction(const QString &actionName) const {
-    if (a_map.count(actionName) == 0)
-        return nullptr;
-    return a_map[actionName];
+    return ag_manager->getActionByName(actionName);
 }
 
+// fixme - remove this methods
 RS_Vector QC_ApplicationWindow::getMouseAbsolutePosition() {
     if (coordinateWidget != nullptr)
         return coordinateWidget->getAbsoluteCoordinates();
     return RS_Vector(false);
 }
-
+// fixme - remove this methods
 RS_Vector QC_ApplicationWindow::getMouseRelativePosition() {
     if (coordinateWidget != nullptr)
         return coordinateWidget->getRelativeCoordinates();
@@ -3523,6 +3104,16 @@ void QC_ApplicationWindow::updateActionsAndWidgetsForPrintPreview(bool printPrev
             a->setEnabled(enable);
         }
     }
+
+    coordinateWidget->setEnabled(!printPreviewOn);
+    selectionWidget->setEnabled(!printPreviewOn);
+    m_pActiveLayerName->setEnabled(!printPreviewOn);
+    grid_status->setEnabled(!printPreviewOn);
+    relativeZeroCoordinatesWidget->setEnabled(!printPreviewOn);
+    if (printPreviewOn){
+        mouseWidget->setActionIcon(QIcon());
+    }
+
 //    LC_ERR << "Preview Changed " << (printPreviewOn ? " +ON" : " -OFF");
     emit printPreviewChanged(printPreviewOn);
 }
@@ -3545,18 +3136,12 @@ void QC_ApplicationWindow::enableWidgets(bool enable) {
         // fixme - command widget should be aware of print preview mode and do not support other commands...
         enableWidget(commandWidget, enable);
     }
-}
 
-void QC_ApplicationWindow::enableWidget(QWidget *w, bool enable) {
-    if (w != nullptr) {
-        if (w->isEnabled() != enable) {
-            w->setEnabled(enable);
-        }
-    }
+    // fixme - disable widgets from status bar
 }
 
 void QC_ApplicationWindow::slotRedockWidgets() {
-    QList<QDockWidget *> dockwidgets = findChildren<QDockWidget *>();
+    const QList<QDockWidget *> dockwidgets = findChildren<QDockWidget *>();
     for (auto *dockwidget: dockwidgets)
         dockwidget->setFloating(false);
 }

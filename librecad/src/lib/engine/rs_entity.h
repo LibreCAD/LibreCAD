@@ -64,6 +64,7 @@ public:
     void init();
     virtual void initId();
     virtual RS_Entity *clone() const = 0;
+    virtual RS_Entity *cloneProxy() const { return clone();};
 
     virtual void reparent(RS_EntityContainer *parent){
         this->parent = parent;
@@ -551,6 +552,9 @@ public:
     virtual void draw(
         RS_Painter *painter, RS_GraphicView *view,
         double &patternOffset) = 0;
+    virtual void drawDraft(
+        RS_Painter *painter, RS_GraphicView *view,
+        double &patternOffset) {draw(painter, view, patternOffset);};
     double getStyleFactor(RS_GraphicView *view);
     QString getUserDefVar(const QString &key) const;
     std::vector<QString> getAllKeys() const;

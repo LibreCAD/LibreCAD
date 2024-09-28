@@ -242,6 +242,8 @@ public:
 
     void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
 
+    void drawDraft(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
+
 protected:
     RS_TextData data;
 
@@ -257,6 +259,11 @@ protected:
      * @see update
      */
     double usedTextHeight = 0.;
+
+    RS_Vector baselineStartPoint;
+    RS_Vector baselineEndPoint;
+
+    void updateBaselinePoints();
 };
 
 #endif

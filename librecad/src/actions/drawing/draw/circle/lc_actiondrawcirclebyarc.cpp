@@ -171,7 +171,12 @@ bool LC_ActionDrawCircleByArc::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent
     return status == SetArc;
 }
 
+void LC_ActionDrawCircleByArc::drawSnapper() {
+   // disable snapper
+}
+
 void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
+
     RS_Entity *en = catchEntity(e, circleType, RS2::ResolveAll);
     if (en != nullptr){
         highlightHover(en);

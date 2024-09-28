@@ -146,8 +146,8 @@ public:
     void setGridOn(bool on);
     bool isIsometricGrid() const;
     void setIsometricGrid(bool on);
-    void setCrosshairType(RS2::CrosshairType chType);
-    RS2::CrosshairType getCrosshairType() const;
+    RS2::IsoGridViewType getIsoView() const;
+    void setIsoView(RS2::IsoGridViewType viewType);
     void centerToPage();
     bool fitToPage();
     bool isBiggerThanPaper();
@@ -205,6 +205,7 @@ public:
     int getPagesNumVert() const {return pagesNumV;}
     friend std::ostream& operator << (std::ostream& os, RS_Graphic& g);
     int clean();
+
 private:
 
     bool BackupDrawingFile(const QString &filename);
@@ -214,7 +215,6 @@ private:
     RS_LayerList layerList;
     RS_BlockList blockList;
     RS_VariableDict variableDict;
-    RS2::CrosshairType crosshairType; //crosshair type used by isometric grid
     //if set to true, will refuse to modify paper scale
     bool paperScaleFixed = false;
 
@@ -227,5 +227,7 @@ private:
     // Number of pages drawing occupies
     int pagesNumH = 1;
     int pagesNumV = 1;
+
+
 };
 #endif

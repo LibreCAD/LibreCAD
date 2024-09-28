@@ -65,53 +65,86 @@ void RS_ActionInfoAngle::init(int status){
     RS_PreviewActionInterface::init(status);
 }
 
+void RS_ActionInfoAngle::drawSnapper() {
+    // disable snapper
+}
+
 void RS_ActionInfoAngle::trigger(){
     RS_DEBUG->print("RS_ActionInfoAngle::trigger()");
 
-    if (entity1 != nullptr && entity2 != nullptr){
-        RS_VectorSolutions const &sol = RS_Information::getIntersection(entity1, entity2, false);
-
-        if (sol.hasValid()){
-            pPoints->intersection = sol.get(0);
-
-            if (pPoints->intersection.valid && pPoints->point1.valid && pPoints->point2.valid){
-                double angle1 = pPoints->intersection.angleTo(pPoints->point1);
-                double angle2 = pPoints->intersection.angleTo(pPoints->point2);
-                double angle = remainder(angle2 - angle1, 2. * M_PI);
+    int status = getStatus();
+    switch (status){
+        case SetEntity1: {
+            if (entity1 != nullptr){
+                auto line = dynamic_cast<RS_Line*>(entity1);
+                double angle1 = line->getAngle1();
+                double angle2 = line->getAngle2();
                 RS2::AngleFormat angleFormat = graphic->getAngleFormat();
                 int anglePrec = graphic->getAnglePrecision();
-                QString str = RS_Units::formatAngle(angle, angleFormat, anglePrec);
-                RS2::LinearFormat linearFormat = graphic->getLinearFormat();
-                RS2::Unit linearUnit = graphic->getUnit();
-                int linearPrecision = graphic->getLinearPrecision();
-                QString intersectX = RS_Units::formatLinear(pPoints->intersection.x, linearUnit,linearFormat, linearPrecision);
-                QString intersectY = RS_Units::formatLinear(pPoints->intersection.y, linearUnit,linearFormat, linearPrecision);
-                if (angle < 0.){
-                    str += " or ";
-                    str += RS_Units::formatAngle(angle + 2. * M_PI, angleFormat, anglePrec);
+                QString strAngle1 = RS_Units::formatAngle(angle1, angleFormat, anglePrec);
+                if (angle1 < 0.) {
+                    strAngle1 += " or ";
+                    strAngle1 += RS_Units::formatAngle(angle1 + 2. * M_PI, angleFormat, anglePrec);
                 }
-
-                RS_Vector relPoint = graphicView->getRelativeZero();
-                RS_Vector intersectRel;
-                if (relPoint.valid){
-                    intersectRel = pPoints->intersection - relPoint;
+                QString strAngle2 = RS_Units::formatAngle(angle2, angleFormat, anglePrec);
+                if (angle2 < 0.) {
+                    strAngle2 += " or ";
+                    strAngle2 += RS_Units::formatAngle(angle2 + 2. * M_PI, angleFormat, anglePrec);
                 }
-                else{
-                    intersectRel = pPoints->intersection;
-                }
-
-                QString intersectRelX = RS_Units::formatLinear(intersectRel.x, linearUnit,linearFormat, linearPrecision);
-                QString intersectRelY = RS_Units::formatLinear(intersectRel.y, linearUnit,linearFormat, linearPrecision);
-
-                const QString &msgTemplate = tr("Angle: %1\nIntersection: (%2 , %3)\nIntersection :@(%4, %5)");
-                const QString &msg = msgTemplate.arg(str, intersectX, intersectY, intersectRelX, intersectRelY);
                 commandMessage("---");
+                const QString &msgTemplate = tr("Angle 1: %1\nAngle 2: %2");
+                const QString &msg = msgTemplate.arg(strAngle1, strAngle2);
                 commandMessage(msg);
-
+                entity1 = nullptr;
+                setStatus(SetEntity1);
             }
-        } else {
-            commandMessage(tr("Lines are parallel"));
+            break;
         }
+        case SetEntity2:{
+            if (entity1 != nullptr && entity2 != nullptr){
+                RS_VectorSolutions const &sol = RS_Information::getIntersection(entity1, entity2, false);
+                if (sol.hasValid()) {
+                    pPoints->intersection = sol.get(0);
+                    double angle1 = pPoints->intersection.angleTo(pPoints->point1);
+                    double angle2 = pPoints->intersection.angleTo(pPoints->point2);
+                    double angle = remainder(angle2 - angle1, 2. * M_PI);
+                    RS2::AngleFormat angleFormat = graphic->getAngleFormat();
+                    int anglePrec = graphic->getAnglePrecision();
+                    QString str = RS_Units::formatAngle(angle, angleFormat, anglePrec);
+                    RS2::LinearFormat linearFormat = graphic->getLinearFormat();
+                    RS2::Unit linearUnit = graphic->getUnit();
+                    int linearPrecision = graphic->getLinearPrecision();
+                    QString intersectX = RS_Units::formatLinear(pPoints->intersection.x, linearUnit, linearFormat, linearPrecision);
+                    QString intersectY = RS_Units::formatLinear(pPoints->intersection.y, linearUnit, linearFormat, linearPrecision);
+                    if (angle < 0.) {
+                        str += " or ";
+                        str += RS_Units::formatAngle(angle + 2. * M_PI, angleFormat, anglePrec);
+                    }
+
+                    RS_Vector relPoint = graphicView->getRelativeZero();
+                    RS_Vector intersectRel;
+                    if (relPoint.valid) {
+                        intersectRel = pPoints->intersection - relPoint;
+                    } else {
+                        intersectRel = pPoints->intersection;
+                    }
+
+                    QString intersectRelX = RS_Units::formatLinear(intersectRel.x, linearUnit, linearFormat, linearPrecision);
+                    QString intersectRelY = RS_Units::formatLinear(intersectRel.y, linearUnit, linearFormat, linearPrecision);
+
+                    const QString &msgTemplate = tr("Angle: %1\nIntersection: (%2 , %3)\nIntersection :@(%4, %5)");
+                    const QString &msg = msgTemplate.arg(str, intersectX, intersectY, intersectRelX, intersectRelY);
+                    commandMessage("---");
+                    commandMessage(msg);
+
+                } else {
+                    commandMessage(tr("Lines are parallel"));
+                }
+            }
+            break;
+        }
+        default:
+            break;
     }
 }
 
@@ -172,7 +205,12 @@ void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
             entity1 = catchEntity(e, RS2::ResolveAll);
             if (isLine(entity1)){
                 pPoints->point1 = entity1->getNearestPointOnEntity(mouse);
-                setStatus(SetEntity2);
+                if (isControl(e)){
+                    trigger();
+                }
+                else {
+                    setStatus(SetEntity2);
+                }
             }
             break;
 
@@ -198,7 +236,7 @@ void RS_ActionInfoAngle::onMouseRightButtonRelease(int status, [[maybe_unused]]Q
 void RS_ActionInfoAngle::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity1:
-            updateMouseWidgetTRCancel(tr("Specify first line"));
+            updateMouseWidgetTRCancel(tr("Specify first line"), MOD_CTRL(tr("Single Line Mode")));
             break;
         case SetEntity2:
             updateMouseWidgetTRBack(tr("Specify second line"));

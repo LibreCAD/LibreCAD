@@ -26,7 +26,6 @@
 #ifndef QG_SNAPTOOLBAR_H
 #define QG_SNAPTOOLBAR_H
 
-class QG_CadToolBar;
 class QG_ActionHandler;
 class LC_ActionGroupManager;
 

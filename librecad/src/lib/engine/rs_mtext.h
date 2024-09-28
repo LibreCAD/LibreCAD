@@ -216,16 +216,49 @@ public:
   void draw(RS_Painter *painter, RS_GraphicView *view,
             double &patternOffset) override;
 
-private:
-  double updateAddLine(RS_EntityContainer *textLine, int lineCounter);
+    void drawDraft(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
 
-  void addLetter(RS_EntityContainer &oneLine, QChar letter, RS_Font &font,
-                 const RS_Vector &letterSpace, RS_Vector &letterPosition);
-
-  void alignVertically();
 
 protected:
-  static RS_MText *createUpperLower(QString text, const RS_MTextData &data,
+    // fixme - this is prof of the concept for better drawing mtext on small zooms - instead of drawing just rectangles, draw the set of baselines for text.
+    // fixme - however, the same approach should be also used for text, so review later
+    class LC_TextLine:public RS_EntityContainer{
+    public:
+        LC_TextLine(RS_EntityContainer* parent=nullptr, bool owner=true):RS_EntityContainer(parent, owner){};
+        ~LC_TextLine() override = default;
+
+        LC_TextLine* clone() const override;
+        const RS_Vector &getTextSize();
+        void setTextSize(const RS_Vector &textSize);
+        const RS_Vector &getLeftBottomCorner() const;
+        void setLeftBottomCorner(const RS_Vector leftBottomCorner);
+
+        const RS_Vector &getBaselineStart() const;
+
+        void setBaselineStart(const RS_Vector &baselineStart);
+
+        const RS_Vector &getBaselineEnd() const;
+
+        void setBaselineEnd(const RS_Vector &baselineEnd);
+
+        void moveBaseline(const RS_Vector &offset);
+
+    protected:
+        RS_Vector textSize;
+        RS_Vector leftBottomCorner;
+        RS_Vector baselineStart;
+        RS_Vector baselineEnd;
+    };
+
+    double updateAddLine(LC_TextLine *textLine, int lineCounter);
+
+    void addLetter(LC_TextLine &oneLine, QChar letter, RS_Font &font,
+                   const RS_Vector &letterSpace, RS_Vector &letterPosition);
+
+    void alignVertically();
+
+
+   static RS_MText *createUpperLower(QString text, const RS_MTextData &data,
                                     const RS_Vector &position);
   RS_MTextData data;
 
@@ -241,6 +274,10 @@ protected:
    * @see update
    */
   double usedTextHeight = 0.;
+
+    void rotateLinesRefs() const;
+
+    RS_Entity *cloneProxy() const override;
 };
 
 #endif

@@ -29,6 +29,7 @@
 
 #include <memory>
 #include "rs_previewactioninterface.h"
+#include "rs_polyline.h"
 
 namespace mu {
     class Parser;
@@ -36,8 +37,8 @@ namespace mu {
 
 class RS_EntityContainer;
 class RS_GraphicView;
-class RS_Polyline;
-struct RS_PolylineData;
+
+
 
 /**
  * This action class can handle user events to draw 
@@ -102,6 +103,43 @@ protected:
     SegmentMode m_mode{};
     int m_reversed = 1;
     bool m_calculatedSegment = false;
+
+    struct Points {
+
+/**
+ * Line data defined so far.
+ */
+        RS_PolylineData data;
+        RS_ArcData arc_data;
+        /**
+      * Polyline entity we're working on.
+      */
+        RS_Polyline* polyline;
+
+        /**
+      * last point.
+      */
+        RS_Vector point;
+        RS_Vector calculatedEndpoint;
+        /**
+      * Start point of the series of lines. Used for close function.
+      */
+        RS_Vector start;
+
+        /**
+      * Point history (for undo)
+      */
+        QList<RS_Vector> history;
+
+        /**
+      * Bulge history (for undo)
+      */
+        QList<double> bHistory;
+        QString equation;
+    };
+
+    std::unique_ptr<Points> pPoints;
+
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
@@ -110,9 +148,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
 private:
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-
     void drawEquation(int numberOfPolylines);
     void setParserExpression(const QString& expression);
     bool getPlottingX(QString command, double& x);

@@ -61,6 +61,10 @@ void RS_ActionDrawCircleInscribe::clearLines(bool checkStatus){
     }
 }
 
+void RS_ActionDrawCircleInscribe::drawSnapper() {
+    // disable snapper
+}
+
 void RS_ActionDrawCircleInscribe::init(int status){
     LC_ActionDrawCircleBase::init(status);
     if (status >= 0){

@@ -44,8 +44,9 @@ LC_ActionFactory::LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandle
 }
 // todo - add explanations for commands for actions (probably mix with commandItems) as it was mentioned in issue #570
 
-void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm, bool useTheme){
+void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useTheme){
     using_theme = useTheme;
+    QMap<QString, QAction *> &a_map = agm->getActionsMap();
     createSelectActions(a_map, agm->select);
     createDrawLineActions(a_map, agm->line);
     createDrawCircleActions(a_map, agm->circle);
@@ -66,8 +67,10 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     createRestrictActions(a_map, agm->restriction);
     createOtherActions(a_map, agm->other);
 
-    for (QAction* value: a_map){
-       value->setCheckable(true);
+    for (QAction* value: std::as_const(a_map)){
+        if (value != nullptr) {
+            value->setCheckable(true);
+        }
     }
 
     // not checkable actions
@@ -354,7 +357,11 @@ void LC_ActionFactory::createViewActions(QMap<QString, QAction*>& map, QActionGr
         {"Fullscreen",    SLOT(toggleFullscreen(bool)),  tr("&Fullscreen")},
         {"ViewGrid",      SLOT(slotViewGrid(bool)),      tr("&Grid"),  ":/icons/grid.svg"},
         {"ViewDraft",     SLOT(slotViewDraft(bool)),     tr("&Draft"), ":/icons/draft.svg"},
-        {"ViewStatusBar", SLOT(slotViewStatusBar(bool)), tr("&Statusbar")}
+        {"ViewStatusBar", SLOT(slotViewStatusBar(bool)), tr("&Statusbar")},
+        {"ViewGridOrtho", SLOT(slotViewGridOrtho(bool)), tr("&Orthogonal Grid"), ":/icons/grid_ortho.svg"},
+        {"ViewGridIsoLeft", SLOT(slotViewGridIsoLeft(bool)), tr("&Isometric Left Grid"), ":/icons/grid_iso_left.svg"},
+        {"ViewGridIsoTop", SLOT(slotViewGridIsoTop(bool)), tr("&Isometric Top Grid"), ":/icons/grid_iso_top.svg"},
+        {"ViewGridIsoRight", SLOT(slotViewGridIsoRight(bool)), tr("&Isometric Right Grid"), ":/icons/grid_iso_right.svg"},
     }, true);
 }
 
@@ -444,8 +451,8 @@ void LC_ActionFactory::createWidgetActions(QMap<QString, QAction *> &map, QActio
 void LC_ActionFactory::createWidgetActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
     createMainWindowActions(map, group, {
         {"RedockWidgets",        SLOT(slotRedockWidgets()),    tr("Re-dock Widgets")},
-        {"InvokeMenuCreator",    SLOT(invokeMenuCreator()),    tr("Menu Creator")},
-        {"InvokeToolbarCreator", SLOT(invokeToolbarCreator()), tr("Toolbar Creator")}
+        {"InvokeMenuCreator",    SLOT(invokeMenuCreator()),    tr("Menu Creator"), ":/icons/create_menu.svg"},
+        {"InvokeToolbarCreator", SLOT(invokeToolbarCreator()), tr("Toolbar Creator"), ":/icons/create_toolbar.svg"}
     });
 }
 
@@ -492,10 +499,10 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
 
     map["OptionsGeneral"]->setMenuRole(QAction::NoRole);
 
-    connect(main_window, SIGNAL(printPreviewChanged(bool)), map["FilePrint"], SLOT(setChecked(bool)));
-    connect(main_window, SIGNAL(printPreviewChanged(bool)), map["FilePrintPreview"], SLOT(setChecked(bool)));
-    connect(main_window, SIGNAL(gridChanged(bool)), map["ViewGrid"], SLOT(setChecked(bool)));
-    connect(main_window, SIGNAL(draftChanged(bool)), map["ViewDraft"], SLOT(setChecked(bool)));
+    connect(main_window, &QC_ApplicationWindow::printPreviewChanged, map["FilePrint"], &QAction::setChecked);
+    connect(main_window, &QC_ApplicationWindow::printPreviewChanged, map["FilePrintPreview"], &QAction::setChecked);
+    connect(main_window, &QC_ApplicationWindow::gridChanged, map["ViewGrid"], &QAction::setChecked);
+    connect(main_window, &QC_ApplicationWindow::draftChanged, map["ViewDraft"], &QAction::setChecked);
 
     connect(main_window, &QC_ApplicationWindow::windowsChanged, map["OptionsDrawing"], &QAction::setEnabled);
 }

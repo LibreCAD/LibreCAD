@@ -95,9 +95,10 @@ void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
 
         // the parent needs a pointer to the block window and vice versa
         parent->addChildWindow(w);
-        w->getGraphicView()->zoomAuto(false);
+        QG_GraphicView *graphicView = w->getGraphicView();
+        graphicView->zoomAuto(false);
         //update grid settings, bug#3443293
-        w->getGraphicView()->getGrid()->updatePointArray();
+        graphicView->updateGridPoints();
     }
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "QC_DialogFactory::requestEditBlockWindow(): OK");

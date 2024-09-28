@@ -263,5 +263,9 @@
         <file>ellipse_arc_1_point.svg</file>
         <file>dim_baseline.svg</file>
         <file>dim_continue.svg</file>
+        <file>grid_ortho.svg</file>
+        <file>grid_iso_top.svg</file>
+        <file>grid_iso_left.svg</file>
+        <file>grid_iso_right.svg</file>
     </qresource>
 </RCC>

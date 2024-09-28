@@ -142,7 +142,6 @@ void LC_ActionDrawLineSnake::doPreparePreviewEntities([[maybe_unused]]QMouseEven
         createRefPoint(pPoints->data.startpoint, list);
         createRefSelectablePoint(possibleEndPoint, list);
     }
-
 }
 
 RS_Vector LC_ActionDrawLineSnake::doGetRelativeZeroAfterTrigger(){
@@ -639,8 +638,7 @@ double LC_ActionDrawLineSnake::defineActualSegmentAngle(double realAngle){
         if (currentIndex > 0){
             History h(pPoints->history.at(currentIndex));
 
-            if (h.histAct == HA_SetEndpoint) // this is start of previous line segment
-            {
+            if (h.histAct == HA_SetEndpoint){ // this is start of previous line segment
               RS_Vector previousSegmentStart = h.prevPt;
               RS_Vector previousSegmentEnd = h.currPt;
 

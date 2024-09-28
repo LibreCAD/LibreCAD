@@ -46,8 +46,7 @@ RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
     RS_GraphicView& graphicView)
         :LC_ActionDrawCircleBase("Draw ellipse inscribed",
                            container, graphicView)
-    , pPoints(std::make_unique<Points>())
-{
+    , pPoints(std::make_unique<Points>()){
 	actionType=RS2::ActionDrawEllipseInscribe;
 }
 
@@ -103,6 +102,10 @@ void RS_ActionDrawEllipseInscribe::trigger(){
 
     RS_DEBUG->print("RS_ActionDrawEllipse4Line::trigger():"
                     " entity added: %lu", ellipse->getId());
+}
+
+void RS_ActionDrawEllipseInscribe::drawSnapper() {
+    // disable snapper
 }
 
 void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent *e){

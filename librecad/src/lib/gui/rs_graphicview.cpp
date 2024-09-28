@@ -98,23 +98,27 @@ RS_GraphicView::RS_GraphicView(QWidget *parent, Qt::WindowFlags f)
     drawingMode(RS2::ModeFull),
     savedViews(16),
     previousViewTime{std::make_unique<QDateTime>(QDateTime::currentDateTime())} {
-
-    loadSettings();
+//    loadSettings();
 }
 
 void RS_GraphicView::loadSettings() {
+
     LC_GROUP("Appearance");
     {
         this->m_colorData->hideRelativeZero = LC_GET_BOOL("hideRelativeZero");
         extendAxisLines = LC_GET_BOOL("ExtendAxisLines", false);
-        gridType = LC_GET_INT("GridType", 0);
+        entityHandleHalfSize = LC_GET_INT("EntityHandleSize", 4) / 2;
+        relativeZeroRadius = LC_GET_INT("RelZeroMarkerRadius", 5);
+        zeroShortAxisMarkSize = LC_GET_INT("ZeroShortAxisMarkSize", 20);
+        minRenderableTextHeightInPx = LC_GET_INT("MinRenderableTextHeightPx", 4);
+
+        extendAxisModeX = LC_GET_INT("ExtendModeXAxis",0);
+        extendAxisModeY = LC_GET_INT("ExtendModeYAxis",0);
     }
     LC_GROUP_END();
     LC_GROUP_GUARD("Colors");
     {
         setBackground(QColor(LC_GET_STR("background", RS_Settings::background)));
-        setGridColor(QColor(LC_GET_STR("grid", RS_Settings::grid)));
-        setMetaGridColor(QColor(LC_GET_STR("meta_grid", RS_Settings::meta_grid)));
         setSelectedColor(QColor(LC_GET_STR("select", RS_Settings::select)));
         setHighlightedColor(QColor(LC_GET_STR("highlight", RS_Settings::highlight)));
         setStartHandleColor(QColor(LC_GET_STR("start_handle", RS_Settings::start_handle)));
@@ -123,8 +127,12 @@ void RS_GraphicView::loadSettings() {
         setRelativeZeroColor(QColor(LC_GET_STR("relativeZeroColor", RS_Settings::relativeZeroColor)));
         setPreviewReferenceEntitiesColor(QColor(LC_GET_STR("previewReferencesColor", RS_Settings::previewRefColor)));
         setPreviewReferenceHighlightedEntitiesColor(QColor(LC_GET_STR("previewReferencesHighlightColor", RS_Settings::previewRefHighlightColor)));
-        setXAxisExtensionColor(QColor(LC_GET_STR("xAxisExtColor", "red")));
-        setYAxisExtensionColor(QColor(LC_GET_STR("yAxisExtColor", "green")));
+        setXAxisExtensionColor(QColor(LC_GET_STR("grid_x_axisColor", "red")));
+        setYAxisExtensionColor(QColor(LC_GET_STR("grid_y_axisColor", "green")));
+    }
+
+    if (grid != nullptr){
+        grid->loadSettings();
     }
 }
 
@@ -154,6 +162,7 @@ void RS_GraphicView::setContainer(RS_EntityContainer *container) {
 void RS_GraphicView::setFactorX(double f) {
     if (!zoomFrozen) {
         factor.x = std::abs(f);
+        invalidate();
     }
 }
 
@@ -163,6 +172,7 @@ void RS_GraphicView::setFactorX(double f) {
 void RS_GraphicView::setFactorY(double f) {
     if (!zoomFrozen) {
         factor.y = std::abs(f);
+        invalidate();
     }
 }
 
@@ -196,12 +206,12 @@ bool RS_GraphicView::isGridIsometric() const {
 }
 
 
-void RS_GraphicView::setCrosshairType(RS2::CrosshairType chType) {
-    grid->setCrosshairType(chType);
+void RS_GraphicView::setIsoViewType(RS2::IsoGridViewType chType) {
+    grid->setIsoViewType(chType);
 }
 
-RS2::CrosshairType RS_GraphicView::getCrosshairType() const {
-    return grid->getCrosshairType();
+RS2::IsoGridViewType RS_GraphicView::getIsoViewType() const {
+    return grid->getIsoViewType();
 }
 
 /**
@@ -212,6 +222,7 @@ void RS_GraphicView::centerOffsetX() {
         offsetX = (int) (((getWidth() - borderLeft - borderRight)
                           - (container->getSize().x * factor.x)) / 2.0
                          - (container->getMin().x * factor.x)) + borderLeft;
+        invalidate();
     }
 }
 
@@ -223,6 +234,7 @@ void RS_GraphicView::centerOffsetY() {
         offsetY = (int) ((getHeight() - borderTop - borderBottom
                           - (container->getSize().y * factor.y)) / 2.0
                          - (container->getMin().y * factor.y)) + borderBottom;
+        invalidate();
     }
 }
 
@@ -233,6 +245,7 @@ void RS_GraphicView::centerX(double v) {
     if (!zoomFrozen) {
         offsetX = (int) ((v * factor.x)
                          - (double) (getWidth() - borderLeft - borderRight) / 2.0);
+        invalidate();
     }
 }
 
@@ -243,6 +256,7 @@ void RS_GraphicView::centerY(double v) {
     if (!zoomFrozen) {
         offsetY = (int) ((v * factor.y)
                          - (double) (getHeight() - borderTop - borderBottom) / 2.0);
+        invalidate();
     }
 }
 
@@ -395,7 +409,7 @@ void RS_GraphicView::zoomInX(double f) {
     offsetX = (int) ((offsetX - getWidth() / 2) * f) + getWidth() / 2;
     adjustOffsetControls();
     adjustZoomControls();
-// updateGrid();
+    invalidate();
     redraw();
 }
 
@@ -407,7 +421,7 @@ void RS_GraphicView::zoomInY(double f) {
     offsetY = (int) ((offsetY - getHeight() / 2) * f) + getHeight() / 2;
     adjustOffsetControls();
     adjustZoomControls();
-//    updateGrid();
+    invalidate();
     redraw();
 }
 
@@ -436,7 +450,7 @@ void RS_GraphicView::zoomOutX(double f) {
     offsetX = (int) (offsetX / f);
     adjustOffsetControls();
     adjustZoomControls();
-//    updateGrid();
+    invalidate();
     redraw();
 }
 
@@ -453,7 +467,7 @@ void RS_GraphicView::zoomOutY(double f) {
     offsetY = (int) (offsetY / f);
     adjustOffsetControls();
     adjustZoomControls();
-//    updateGrid();
+    invalidate();
     redraw();
 }
 
@@ -469,7 +483,6 @@ void RS_GraphicView::zoomOutY(double f) {
 void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
 
     RS_DEBUG->print("RS_GraphicView::zoomAuto");
-
 
     if (container) {
         container->calculateBorders();
@@ -607,8 +620,7 @@ void RS_GraphicView::restoreView() {
 
     adjustOffsetControls();
     adjustZoomControls();
-//    updateGrid();
-
+    invalidate();
     redraw();
 }
 
@@ -636,7 +648,7 @@ void RS_GraphicView::zoomAutoY(bool axis) {
         for (auto e: *container) {
 
             if (e->rtti() == RS2::EntityLine) {
-                RS_Line *l = (RS_Line *) e;
+                auto *l = (RS_Line *) e;
                 double x1, x2;
                 x1 = toGuiX(l->getStartpoint().x);
                 x2 = toGuiX(l->getEndpoint().x);
@@ -672,13 +684,12 @@ void RS_GraphicView::zoomAutoY(bool axis) {
 
         if (noChange == false) {
             setFactorY(fy);
-//centerOffsetY();
             offsetY = (int) ((getHeight() - borderTop - borderBottom
                               - (visibleHeight * factor.y)) / 2.0
                              - (minY * factor.y)) + borderBottom;
             adjustOffsetControls();
             adjustZoomControls();
-//    updateGrid();
+            invalidate();
 
         }
         RS_DEBUG->print("Auto zoom y ok");
@@ -757,7 +768,7 @@ void RS_GraphicView::zoomWindow(
 
     adjustOffsetControls();
     adjustZoomControls();
-//    updateGrid();
+    invalidate();
 
     redraw();
 }
@@ -926,6 +937,7 @@ void RS_GraphicView::zoomPageEx() {
     offsetY =
         (int) ((getHeight() - borderTop - borderBottom - (printAreaSizeInViewCoordinates.y) * fy) / 2.0 + paperInsertionBase.y * fy / paperScale) + borderBottom;
 
+    invalidate();
     redraw();
 }
 
@@ -955,26 +967,29 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 // drawing paper border:
     if (isPrintPreview()) {
         drawPaper(painter);
-    } else {// drawing meta grid:
-
-//increase grid point size on for DPI>96
+    } else {
+        //increase grid point size on for DPI>96
         auto dpiX = int(qApp->screens().front()->logicalDotsPerInch());
         const bool isHiDpi = dpiX > 96;
 //        DEBUG_HEADER
 //        RS_DEBUG->print(RS_Debug::D_ERROR, "dpiX=%d\n",dpiX);
         const RS_Pen penSaved = painter->getPen();
+
+        // fixme - sand - review as overall rendering pipeline. It might be that
+        // it will be better to use more fine-grained painting and draw grid in own
+        // pixmap, and have draft sign somewhere else?
+        if (grid && isGridOn()) {
+            grid->calculateGrid();
+            grid->drawGrid(painter);
+            // fixme - review
+            QString info = grid->getInfo();
+            updateGridStatusWidget(info);
+        }
+
         if (isHiDpi) {
             RS_Pen pen = penSaved;
             pen.setWidth(RS2::Width01);
             painter->setPen(pen);
-        }
-
-        if (grid && isGridOn()) {
-//only drawGrid updates the grid layout (updatePointArray())
-            drawMetaGrid(painter);
-//draw grid after metaGrid to avoid overwriting grid points by metaGrid lines
-//bug# 3430258
-            drawGrid(painter);
         }
 
         if (isDraftMode())
@@ -1221,8 +1236,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
     }
     if (isPrintPreview() || isPrinting()) {
 // do not draw construction layer on print preview or print
-        if (!e->isPrint()
-            || e->isConstruction())
+        if (!e->isPrint() || e->isConstruction())
             return;
     }
 
@@ -1243,7 +1257,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
         switch (e->rtti()) {
             case RS2::EntityMText:
             case RS2::EntityText:
-                painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
+                e->drawDraft(painter, this, patternOffset);
                 break;
             case RS2::EntityImage:
                 // all images as rectangles:
@@ -1274,9 +1288,9 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
 
 void RS_GraphicView::drawEntityReferencePoints(RS_Painter *painter, const RS_Entity *e) const {
     RS_VectorSolutions const &s = e->getRefPoints();
-
+//    int sz = -1;
+    int sz = entityHandleHalfSize;
     for (size_t i = 0; i < s.getNumber(); ++i) {
-        int sz = -1;
         RS_Color col = this->m_colorData->handleColor;
         if (i == 0) {
             col = this->m_colorData->startHandleColor;
@@ -1297,7 +1311,7 @@ void RS_GraphicView::drawEntityReferencePoints(RS_Painter *painter, const RS_Ent
  * The painter must be initialized and all the attributes (pen) must be set.
  */
 void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity *e, double &patternOffset) {
-    if (!e) {
+    if (!e) { // fixme - sand -  remove check after insuring that there is same check up in calls chain
         return;
     }
 
@@ -1340,7 +1354,7 @@ void RS_GraphicView::deleteEntity(RS_Entity *e) {
     setDeleteMode(true);
     drawEntity(e);
     setDeleteMode(false);
-    redraw(RS2::RedrawDrawing);
+    redraw(RS2::RedrawDrawing); // fixme - sand - review redraw
 }
 
 /**
@@ -1361,7 +1375,7 @@ const RS_LineTypePattern *RS_GraphicView::getPattern(RS2::LineType t) {
  * @see drawIt()
  */
 void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
-    int const zr = 20;
+    int const zr = zeroShortAxisMarkSize;
 
     RS_Pen pen_xAxis (m_colorData->xAxisExtensionColor, RS2::Width00, RS2::SolidLine);
     pen_xAxis.setScreenWidth(0);
@@ -1371,34 +1385,106 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
 
     auto originPoint = toGui(RS_Vector(0,0));
 
-    if (((originPoint.x + zr) < 0) || ((originPoint.x - zr) > getWidth()))  return;
-    if (((originPoint.y + zr) < 0) || ((originPoint.y - zr) > getHeight())) return;
-
-
-    double xAxisPoints [2];
-    double yAxisPoints [2];
-
+ 
+    int width = getWidth();
+    int height = getHeight();
     if (extendAxisLines){
-        xAxisPoints [0] = 0.0;
-        xAxisPoints [1] = getWidth();
 
-        yAxisPoints [0] = 0.0;
-        yAxisPoints [1] = getHeight();
+        int xAxisStartPoint;
+        int xAxisEndPoint;
+                
+        switch (extendAxisModeX){
+            case Both:
+                xAxisStartPoint = 0;
+                xAxisEndPoint = width;
+                break;
+            case Positive:
+                xAxisStartPoint = originPoint.x;
+                if (originPoint.x < width){
+                    xAxisEndPoint = width;
+                }
+                else{
+                    xAxisEndPoint = 0;
+                }
+                break;
+            case Negative:
+                xAxisStartPoint  = originPoint.x;
+                if (originPoint.x < width){
+                    xAxisEndPoint = 0;
+                }
+                else{
+                    xAxisEndPoint = width;
+                }
+                break;
+            case None:{ // draw short
+                xAxisStartPoint  = originPoint.x - zr;
+                xAxisEndPoint = originPoint.x + zr;
+                break;
+            }
+            default:
+                break;
+        }
+
+        painter->setPen(pen_xAxis);
+        painter->drawLine(RS_Vector(xAxisStartPoint, originPoint.y), RS_Vector(xAxisEndPoint, originPoint.y));
+
+        int yAxisStartPoint;
+        int yAxisEndPoint;
+        switch (extendAxisModeY){
+            case Both:
+                yAxisStartPoint  = 0;
+                yAxisEndPoint  = height;
+                break;
+            case Positive:
+                yAxisStartPoint = originPoint.y;
+                if (originPoint.y < height){
+                    yAxisEndPoint = 0;
+                }
+                else{
+
+                    yAxisEndPoint = height;
+                }
+                break;
+            case Negative:
+                yAxisStartPoint  = originPoint.y;
+                if (originPoint.y < height){
+                    yAxisEndPoint = height;
+                }
+                else{
+                    yAxisEndPoint = 0;
+                }
+                break;
+            case None:
+                yAxisStartPoint  = originPoint.y - zr;
+                yAxisEndPoint = originPoint.y + zr;
+                break;
+            default:
+                break;
+        }
+
+        painter->setPen(pen_yAxis);
+        painter->drawLine(RS_Vector(originPoint.x, yAxisStartPoint), RS_Vector(originPoint.x, yAxisEndPoint));
     }
     else
     {
+        double xAxisPoints [2];
+        double yAxisPoints [2];
+
+        if (((originPoint.x + zr) < 0) || ((originPoint.x - zr) > width)) return;
+        if (((originPoint.y + zr) < 0) || ((originPoint.y - zr) > height)) return;
         xAxisPoints [0] = originPoint.x - zr;
         xAxisPoints [1] = originPoint.x + zr;
 
         yAxisPoints [0] = originPoint.y - zr;
         yAxisPoints [1] = originPoint.y + zr;
+
+        painter->setPen(pen_xAxis);
+        painter->drawLine(RS_Vector(xAxisPoints[0], originPoint.y), RS_Vector(xAxisPoints[1], originPoint.y));
+
+        painter->setPen(pen_yAxis);
+        painter->drawLine(RS_Vector(originPoint.x, yAxisPoints[0]), RS_Vector(originPoint.x, yAxisPoints[1]));
     }
 
-    painter->setPen(pen_xAxis);
-    painter->drawLine(RS_Vector(xAxisPoints[0], originPoint.y), RS_Vector(xAxisPoints[1], originPoint.y));
-
-    painter->setPen(pen_yAxis);
-    painter->drawLine(RS_Vector(originPoint.x, yAxisPoints[0]), RS_Vector(originPoint.x, yAxisPoints[1]));
 }
 
 /**
@@ -1424,7 +1510,7 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
     p.setScreenWidth(0);
     painter->setPen(p);
 
-    int const zr = 5;
+    int const zr = relativeZeroRadius*2;
     auto vp = toGui(relativeZero);
     if (vp.x + zr < 0 || vp.x - zr > getWidth()) return;
     if (vp.y + zr < 0 || vp.y - zr > getHeight()) return;
@@ -1436,7 +1522,7 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
                       RS_Vector(vp.x, vp.y + zr)
     );
 
-    painter->drawCircle(vp, 5);
+    painter->drawCircle(vp, relativeZeroRadius);
 }
 
 #define DEBUG_PRINT_PREVIEW_POINTS_NO
@@ -1546,126 +1632,6 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
 }
 
 
-/**
- * Draws the grid.
- *
- * @see drawIt()
- */
-void RS_GraphicView::drawGrid(RS_Painter *painter){
-
-// draw grid:
-
-    painter->setPen({m_colorData->gridColor, RS2::Width00, RS2::SolidLine});
-
-    bool gridTypeSolid = gridType == 1;
-
-    if (gridTypeSolid) {
-        const RS_Vector cellSize = grid->getCellVector();
-
-        auto const &mx = grid->getMetaX();
-        for (auto const &x: mx) {
-            for (int i = 1; i < 10; i++) {
-                const double subX{x - (i * cellSize.x)};
-                painter->drawLine(RS_Vector(toGuiX(subX), 0), RS_Vector(toGuiX(subX), getHeight()));
-            }
-        }
-
-        auto const &my = grid->getMetaY();
-        for (auto const &y: my) {
-            for (int j = 1; j < 10; j++) {
-                const double subY{y - (j * cellSize.y)};
-                painter->drawLine(RS_Vector(0, toGuiY(subY)), RS_Vector(getWidth(), toGuiY(subY)));
-            }
-        }
-    } else {
-        //grid->updatePointArray();
-        auto const &pts = grid->getPoints();
-        for (auto const &v: pts) {
-            painter->drawGridPoint(toGui(v));
-        }
-    }
-
-// draw grid info:
-//painter->setPen(Qt::white);
-    QString info = grid->getInfo();
-//info = QString("%1 / %2")
-//       .arg(grid->getSpacing())
-//       .arg(grid->getMetaSpacing());
-    // fixme - UPDATING UI WIDGET ON EACH DRAW!!!!! FiX THIS
-    updateGridStatusWidget(info);
-}
-
-/**
- * Draws the meta grid.
- *
- * @see drawIt()
- */
-void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
-
-//draw grid after metaGrid to avoid overwriting grid points by metaGrid lines
-//bug# 3430258
-    grid->updatePointArray();
-
-    RS_Pen pen;
-    RS2::LineType penLineType;
-
-    bool gridTypeSolid = gridType == 1;
-    penLineType = gridTypeSolid ? RS2::SolidLine : RS2::DotLineTiny;
-
-    painter->setPen({m_colorData->metaGridColor, RS2::Width01, penLineType});
-
-    RS_Vector dv = grid->getMetaGridWidth().scale(factor);
-    double dx = std::abs(dv.x);
-    double dy = std::abs(dv.y); //potential bug, need to recover metaGrid.width
-// draw meta grid:
-    auto mx = grid->getMetaX();
-    for (auto const &x: mx) {
-        painter->drawLine(RS_Vector(toGuiX(x), 0),
-                          RS_Vector(toGuiX(x), getHeight()));
-        if (grid->isIsometric()) {
-            painter->drawLine(RS_Vector(toGuiX(x) + 0.5 * dx, 0),
-                              RS_Vector(toGuiX(x) + 0.5 * dx, getHeight()));
-        }
-    }
-    auto my = grid->getMetaY();
-    if (grid->isIsometric()) {//isometric metaGrid
-        dx = std::abs(dx);
-        dy = std::abs(dy);
-        if (!my.size() || dx < 1 || dy < 1) return;
-        RS_Vector baseMeta(toGui(RS_Vector(mx[0], my[0])));
-// x-x0=k*dx, x-remainder(x-x0,dx)
-        RS_Vector vp0(-std::remainder(-baseMeta.x, dx) - dx, getHeight() - remainder(getHeight() - baseMeta.y, dy) + dy);
-        RS_Vector vp1(vp0);
-        RS_Vector vp2(getWidth() - std::remainder(getWidth() - baseMeta.x, dx) + dx, vp0.y);
-        RS_Vector vp3(vp2);
-        int cmx = std::round((vp2.x - vp0.x) / dx);
-        int cmy = std::round((vp0.y + std::remainder(-baseMeta.y, dy) + dy) / dy);
-        for (int i = cmx + cmy + 2; i >= 0; i--) {
-            if (i <= cmx) {
-                vp0.x += dx;
-                vp2.y -= dy;
-            } else {
-                vp0.y -= dy;
-                vp2.x -= dx;
-            }
-            if (i <= cmy) {
-                vp1.y -= dy;
-                vp3.x -= dx;
-            } else {
-                vp1.x += dx;
-                vp3.y -= dy;
-            }
-            painter->drawLine(vp0, vp1);
-            painter->drawLine(vp2, vp3);
-        }
-
-    } else {//orthogonal
-        for (auto const &y: my) {
-            painter->drawLine(RS_Vector(0, toGuiY(y)),
-                              RS_Vector(getWidth(), toGuiY(y)));
-        }
-    }
-	}
 
 
 void RS_GraphicView::drawDraftSign(RS_Painter *painter) {
@@ -1690,7 +1656,7 @@ void RS_GraphicView::drawOverlay(RS_Painter *painter) {
                 foreach (auto e, ec->getEntityList()) {
                     setPenForOverlayEntity(painter, e, patternOffset);
                     bool selected = e->isSelected();
-                    // within overlays, we use temporary entities (clones), os it's safe to modify selection state
+                    // within overlays, we use temporary entities (or clones), os it's safe to modify selection state
                     e->setSelected(false);
                     e->draw(painter, this, patternOffset);
                     if (selected) {
@@ -1737,6 +1703,14 @@ RS_Vector RS_GraphicView::toGui(RS_Vector v) const {
     return RS_Vector(toGuiX(v.x), toGuiY(v.y));
 }
 
+RS_Vector RS_GraphicView::toGui(double x, double y) const{
+    return RS_Vector(toGuiX(x), toGuiY(y));
+}
+
+RS_Vector RS_GraphicView::toGuiD(RS_Vector v) const {
+    return RS_Vector(toGuiDX(v.x), toGuiDY(v.y));
+}
+
 /**
  * Translates a real coordinate in X to a screen coordinate X.
  * @param visible Pointer to a boolean which will contain true
@@ -1766,6 +1740,8 @@ double RS_GraphicView::toGuiDX(double d) const {
 double RS_GraphicView::toGuiDY(double d) const {
     return d * factor.y;
 }
+
+
 
 /**
  * Translates a vector in screen coordinates to a vector in real coordinates.
@@ -1817,6 +1793,10 @@ double RS_GraphicView::toGraphDY(int d) const {
     return d / factor.y;
 }
 
+RS_Vector RS_GraphicView::toGraphD(int x, int y) const{
+    return RS_Vector(x /factor.x, y / factor.y);
+}
+
 /**
  * Sets the relative zero coordinate (if not locked)
  * without deleting / drawing the point.
@@ -1860,6 +1840,8 @@ void isRelativeZeroHidden();
 void setPreviewReferenceEntitiesColor(const RS_Color &c);
 
 void setPreviewReferenceHighlightedEntitiesColor(const RS_Color &c);
+
+void invalidateGrid();
 
 /**
  * Gets the specified overlay container.
@@ -2014,10 +1996,16 @@ bool RS_GraphicView::isZoomFrozen() const {
 
 void RS_GraphicView::setOffsetX(int ox) {
     offsetX = ox;
+    invalidate();
+}
+
+void RS_GraphicView::invalidate(){
+    grid->invalidate();
 }
 
 void RS_GraphicView::setOffsetY(int oy) {
     offsetY = oy;
+    invalidate();
 }
 
 int RS_GraphicView::getOffsetX() const {
@@ -2113,4 +2101,15 @@ RS2::EntityType RS_GraphicView::getTypeToSelect() const {
 
 void RS_GraphicView::setTypeToSelect(RS2::EntityType mType) {
     typeToSelect = mType;
+}
+
+int RS_GraphicView::getMinRenderableTextHeightInPx() const {
+    return minRenderableTextHeightInPx;
+}
+
+void RS_GraphicView::loadGridSettings() {
+    if (grid != nullptr){
+        grid->loadSettings();
+    }
+    update();
 }

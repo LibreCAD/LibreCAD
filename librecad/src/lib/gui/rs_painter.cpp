@@ -149,10 +149,11 @@ void RS_Painter::drawRect(const RS_Vector& p1, const RS_Vector& p2) {
 }
 
 void RS_Painter::drawHandle(const RS_Vector& p, const RS_Color& c, int size) {
-    if (size<0) {
+    if (size<0) { // fixme - remove redundant check in painting
         size = 2;
     }
-    fillRect((int)(p.x-size), (int)(p.y-size), 2*size, 2*size, c);
+    int doubleSize = 2 * size;
+    fillRect((int)(p.x - size), (int)(p.y - size), doubleSize, doubleSize, c);
 }
 
 int RS_Painter::toScreenX(double x) const {
@@ -162,4 +163,3 @@ int RS_Painter::toScreenX(double x) const {
 int RS_Painter::toScreenY(double y) const{
 	return RS_Math::round(offset.y + y);
 }
-

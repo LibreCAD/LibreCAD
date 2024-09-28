@@ -40,52 +40,50 @@ RS_ActionPolylineAppend::RS_ActionPolylineAppend(
     :RS_ActionDrawPolyline(container, graphicView){
     actionType = RS2::ActionPolylineAppend;
 }
-
 void RS_ActionPolylineAppend::trigger(){
 
     RS_DEBUG->print("RS_ActionPolylineAppend::trigger()");
 
-    RS_ActionDrawPolyline::trigger();
+    RS_PreviewActionInterface::trigger();
 
-    if (!getPolyline()){
+    auto newPolyline = pPoints->polyline;
+    if (newPolyline == nullptr){
         return;
     }
 
-// add the entity
-//RS_Polyline* polyline = new RS_Polyline(container, data);
-    getPolyline()->setLayerToActive();
-    getPolyline()->setPenToActive();
+    newPolyline->setLayerToActive();
+    newPolyline->setPenToActive();
+
+    graphicView->deleteEntity(originalPolyline);
+    originalPolyline->changeUndoState();
 
 // upd. undo list:
     if (document){
         document->startUndoCycle();
-        // RVT_PORT need to decide on how to handle undo cycles
-        originalPolyline->setUndoState(true);
-        document->addUndoable(originalPolyline);
-        document->addUndoable(getPolyline());
+        document->addUndoable(newPolyline);
+        document->removeUndoable(originalPolyline);
         document->endUndoCycle();
     }
 
 // upd view
     deleteSnapper();
     moveRelativeZero(RS_Vector(0.0, 0.0));
-    graphicView->deleteEntity(originalPolyline);
-    graphicView->drawEntity(getPolyline());
-    moveRelativeZero(getPolyline()->getEndpoint());
+    graphicView->drawEntity(newPolyline);
+    moveRelativeZero(newPolyline->getEndpoint());
     drawSnapper();
     RS_DEBUG->print("RS_ActionDrawPolyline::trigger(): polyline added: %lu",
-                    getPolyline()->getId());
-
-    getPolyline() = nullptr;
+                    newPolyline->getId());
+    originalPolyline = nullptr;
+    pPoints->polyline = nullptr;
 }
 
 void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
     int status = getStatus();
-//    deletePreview();
     deleteHighlights();
     switch (status) {
         case SetStartpoint: {
             snapPoint(e);
+            deleteSnapper();
             auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
             if (polyline != nullptr){
                 highlightHover(polyline);
@@ -93,7 +91,7 @@ void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
             break;
         }
         case SetNextPoint: {
-            highlightSelected(originalPolyline);
+            highlightSelected(pPoints->polyline);
             RS_ActionDrawPolyline::mouseMoveEvent(e);
             break;
         }
@@ -105,46 +103,49 @@ void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
 }
 
 void RS_ActionPolylineAppend::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    if (status == SetStartpoint){
+    if (status == SetStartpoint) {
         originalPolyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
-        if (!originalPolyline){
+        if (!originalPolyline) {
             commandMessage(tr("No Entity found."));
             return;
-        } else if (!isPolyline(originalPolyline)){
+        } else if (!isPolyline(originalPolyline)) {
             commandMessage(tr("Entity must be a polyline."));
             return;
-        } else if (originalPolyline->isClosed()){
+        } else if (originalPolyline->isClosed()) {
             commandMessage(tr("Can not append nodes in a closed polyline."));
             return;
         } else {
             snapPoint(e);
             auto *op = static_cast<RS_Polyline *>(originalPolyline);
-            RS_Entity *entFirst = op->firstEntity();
-            RS_Entity *entLast = op->lastEntity();
+            auto entFirst = op->firstEntity();
+            auto entLast = op->lastEntity();
             double dist = graphicView->toGraphDX(catchEntityGuiRange) * 0.9;
-            RS_Entity *nearestSegment = originalPolyline->getNearestEntity(toGraph(e), &dist, RS2::ResolveNone);
-            getPolyline() = dynamic_cast<RS_Polyline *>(originalPolyline->clone());
-            container->addEntity(getPolyline());
+            auto nearestSegment = originalPolyline->getNearestEntity(toGraph(e), &dist, RS2::ResolveNone);
+            auto *clone = dynamic_cast<RS_Polyline *>(originalPolyline->clone());
+            pPoints->polyline = clone;
+            pPoints->data = clone->getData();
+            container->addEntity(clone);
             prepend = false;
-            if (nearestSegment == entFirst){
+            if (nearestSegment == entFirst) {
                 prepend = true;
-                getPoint() = originalPolyline->getStartpoint();
-            } else if (nearestSegment == entLast){
-                getPoint() = originalPolyline->getEndpoint();
+                pPoints->point = originalPolyline->getStartpoint();
+            } else if (nearestSegment == entLast) {
+                pPoints->point = originalPolyline->getEndpoint();
             } else {
                 commandMessage(tr("Click somewhere near the beginning or end of existing polyline."));
             }
         }
+        fireCoordinateEventForSnap(e);
     }
-    fireCoordinateEventForSnap(e);
+    else{
+        RS_ActionDrawPolyline::onMouseLeftButtonRelease(status, e);
+    }
 }
 
 void RS_ActionPolylineAppend::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     if (status == SetNextPoint){
         trigger();
     }
-// deletePreview();
-//clearPreview();
     deleteSnapper();
     initPrevious(status);
 }
@@ -152,11 +153,11 @@ void RS_ActionPolylineAppend::onMouseRightButtonRelease(int status, [[maybe_unus
 void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetStartpoint: {
-            getHistory().clear();
-            getHistory().append(getPoint());
-            getBHistory().clear();
-            getBHistory().append(0.0);
-            getStart() = getPoint();
+            pPoints->history.clear();
+            pPoints->history.append(pPoints->point);
+            pPoints->bHistory.clear();
+            pPoints->bHistory.append(0.0);
+            pPoints->start = pPoints->point;
             setStatus(SetNextPoint);
             moveRelativeZero(getPoint());
             updateMouseButtonHints();
@@ -164,30 +165,25 @@ void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] boo
         }
         case SetNextPoint: {
             moveRelativeZero(mouse);
-            getPoint() = mouse;
-            getHistory().append(mouse);
-            getBHistory().append(0.0);
-            if (!getPolyline()){
-                getPolyline() = new RS_Polyline(container, getData());
-                getPolyline()->addVertex(getStart(), 0.0, prepend);
+            pPoints->point = mouse;
+            pPoints->history.append(mouse);
+            pPoints->bHistory.append(0.0);
+            RS_Polyline *polyline = pPoints->polyline;
+            if (polyline == nullptr){
+                polyline = new RS_Polyline(container, getData());
+                polyline->addVertex(getStart(), 0.0, prepend);
             }
-            if (getPolyline()){
-                getPolyline()->addVertex(mouse, 0.0, prepend);
-//			polyline->setEndpoint(mouse);
-                if (getPolyline()->count() == 1){
-                    getPolyline()->setLayerToActive();
-                    getPolyline()->setPenToActive();
+            else{
+                polyline->addVertex(mouse, 0.0, prepend);
+                if (polyline->count() == 1){
+                    polyline->setLayerToActive();
+                    polyline->setPenToActive();
                 }
-                // RVT_PORT (can be deleted) deletePreview();
-//clearPreview();
                 deleteSnapper();
-                graphicView->drawEntity(getPolyline());
+                graphicView->drawEntity(polyline);
                 drawSnapper();
             }
-//trigger();
-//data.startpoint = data.endpoint;
             updateMouseButtonHints();
-//graphicView->moveRelativeZero(mouse);
             break;
         }
         default:
@@ -233,5 +229,14 @@ void RS_ActionPolylineAppend::undo(){
         getPoint() = getHistory().last();
     } else {
         commandMessage(tr("Cannot undo: Not enough entities defined yet."));
+    }
+}
+
+RS2::CursorType RS_ActionPolylineAppend::doGetMouseCursor(int status) {
+    if (status == SetStartpoint){
+        return RS2::SelectCursor;
+    }
+    else {
+        return RS_ActionDrawPolyline::doGetMouseCursor(status);
     }
 }

@@ -64,6 +64,11 @@ public:
         coordinateWidget = cw;
     }
 
+    void setRelativeZeroCoordinatesWidget(LC_RelZeroCoordinatesWidget *widget) override {
+        relZeroCoordinatesWidget = widget;
+    }
+
+
 /**
  * Links this dialog factory to a mouse widget.
  */
@@ -149,7 +154,7 @@ public:
     bool requestHatchDialog(RS_Hatch* hatch) override;
     int requestOptionsGeneralDialog() override;
     void requestKeyboardShortcutsDialog(LC_ActionGroupManager *pManager) override;
-    int requestOptionsDrawingDialog(RS_Graphic& graphic) override;
+    int requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIndex) override;
     bool requestOptionsMakerCamDialog() override;
 
     QString requestFileSaveAsDialog(const QString& caption = QString(),
@@ -165,6 +170,7 @@ public:
  */
     void updateMouseWidget(const QString& left=QString(),
                            const QString& right=QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()) override;
+    void updateMouseWidgetIcon(const QIcon &icon);
     void updateSelectionWidget(int num, double length) override;//updated for total number of selected, and total length of selected
     void commandMessage(const QString& message) override;
     void command(const QString& message) override;
@@ -189,6 +195,7 @@ protected:
     QG_SelectionWidget* selectionWidget = nullptr;
 //! Pointer to the command line widget
     QG_CommandWidget* commandWidget = nullptr;
+    LC_RelZeroCoordinatesWidget *relZeroCoordinatesWidget;
     QG_SnapToolBar* snapToolbar = nullptr;
     LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
 };

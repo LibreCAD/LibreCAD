@@ -37,7 +37,6 @@ class LC_WidgetFactory : public QObject
 
 public:
     LC_WidgetFactory(QC_ApplicationWindow* main_win,
-                     QMap<QString, QAction*>& action_map,
                      LC_ActionGroupManager* agm);
 
     void createStandardToolbars(QG_ActionHandler* action_handler);
@@ -45,6 +44,7 @@ public:
     void createMenus(QMenuBar* menu_bar);
     void createLeftSidebar(int columns, int icon_size);
     void createRightSidebar(QG_ActionHandler* action_handler);
+    void initStatusBar();
 
     QToolBar* createCategoriesToolbar();
 
@@ -68,7 +68,6 @@ public:
 
 private:
     QC_ApplicationWindow* main_window = nullptr;
-    QMap<QString, QAction*>& a_map;
     LC_ActionGroupManager* ag_manager = nullptr;
 
     QList<QAction*> file_actions;
@@ -87,6 +86,8 @@ private:
     QList<QAction*> block_actions;
     QList<QAction*> pen_actions;
 
+    bool allowTearOffMenus = true;
+
     LC_DockWidget *leftDocWidget(const QString& title, const char* name, const QList<QAction *> &actions, int columns, int iconSize);
     QToolBar *createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames);
     void addToTop(QToolBar *toolbar);
@@ -103,6 +104,10 @@ private:
     QMenu *subMenu(QMenu *parent, const QString& title, const QString& name, const char *icon, const std::vector<QString> &actionNames);
     QAction* urlActionTR(const QString& title, const char *url);
     void addAction(QMenu *menu, const char *actionName);
+    void addAction(QToolBar* toolbar, const char* actionName);
+
+    void sortToolbarsByByGroupAndTitle(QList<QToolBar *> &list);
+
 };
 
 #endif // LC_WIDGETFACTORY_H

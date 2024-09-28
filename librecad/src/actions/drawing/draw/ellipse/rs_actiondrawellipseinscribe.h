@@ -42,6 +42,9 @@ public:
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
     void finish(bool updateTB) override;
+
+    void drawSnapper() override;
+
 protected:
     /**
      * Action States.

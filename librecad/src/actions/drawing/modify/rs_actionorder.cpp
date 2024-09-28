@@ -34,38 +34,42 @@
 
 RS_ActionOrder::RS_ActionOrder(RS_EntityContainer& container,
         RS_GraphicView& graphicView, RS2::ActionType type)
-        :RS_PreviewActionInterface("Sort Entities",
+        :LC_ActionPreSelectionAwareBase("Sort Entities",
 						   container, graphicView)
-		,targetEntity(nullptr)
-		,orderType(type){
-	actionType=RS2::ActionOrderBottom;
+		,targetEntity(nullptr){
+	   actionType=type;
 }
 
-void RS_ActionOrder::init(int status) {
-    RS_PreviewActionInterface::init(status);
-    targetEntity = nullptr;
-    if (orderType == RS2::ActionOrderBottom ||
-        orderType == RS2::ActionOrderTop) {
+void RS_ActionOrder::drawSnapper() {
+    // delete snapper
+}
+
+void RS_ActionOrder::selectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
+    setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
+    updateMouseButtonHints();
+    updateSelectionWidget();
+    if (actionType == RS2::ActionOrderBottom || actionType ==  RS2::ActionOrderTop){
         trigger();
-    } else
+    }
+    else {
         snapMode.restriction = RS2::RestrictNothing;
+    }
 }
 
 void RS_ActionOrder::trigger() {
     RS_DEBUG->print("RS_ActionOrder::trigger()");
 
     QList<RS_Entity *> entList;
-    for(auto e: *container){ // fixme - iterating all entities for selection
-        if (e->isSelected())
-            entList.append(e);
+    for(auto e: selectedEntities){
+         entList.append(e);
     }
 
-    if (targetEntity) {
+    if (targetEntity != nullptr) {
         int index = -1;
         targetEntity->setHighlighted(false);
         graphicView->drawEntity(targetEntity);
 
-        switch (orderType) {
+        switch (actionType) {
             case RS2::ActionOrderLower:
                 index = document->findEntity(targetEntity);
                 document->moveEntity(index, entList);
@@ -79,7 +83,7 @@ void RS_ActionOrder::trigger() {
         }
         targetEntity = nullptr;
     } else {
-        switch (orderType) {
+        switch (actionType) {
             case RS2::ActionOrderBottom:
                 document->moveEntity(-1, entList);
                 break;
@@ -90,63 +94,51 @@ void RS_ActionOrder::trigger() {
                 break;
         }
     }
+    deselectAll();
     setStatus(getStatus()-1);
 }
 
-void RS_ActionOrder::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionOrder::mouseMoveEventSelected(QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionOrder::mouseMoveEvent begin");
 
-    switch (getStatus()) {
-        case ChooseEntity:
-            snapFree(e);
-            break;
-        default:
-            break;
+    snapPoint(e);
+    deleteHighlights();
+    targetEntity = catchEntity(e);
+    if (targetEntity != nullptr){
+        highlightHover(targetEntity);
     }
+    drawHighlights();
 
     RS_DEBUG->print("RS_ActionOrder::mouseMoveEvent end");
 }
 
-void RS_ActionOrder::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    switch (status) {
-        case ChooseEntity: {
-            targetEntity = catchEntity(e);
-            if (!targetEntity) {
-                commandMessage(tr("No Entity found."));
-            } else {
-                targetEntity->setHighlighted(true);
-                graphicView->drawEntity(targetEntity);
-                graphicView->redraw();
-                trigger();
-            }
-            break;
-        }
-        default:
-            break;
-    }
-    deleteSnapper();
-}
-
-void RS_ActionOrder::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
-    deleteSnapper();
-    if (targetEntity) {
-        targetEntity->setHighlighted(false);
-        graphicView->drawEntity(targetEntity);
-        graphicView->redraw();
-    }
-    initPrevious(status);
-}
-
-void RS_ActionOrder::updateMouseButtonHints() {
-    switch (getStatus()) {
-        case ChooseEntity:
-            updateMouseWidgetTRCancel(tr("Choose entity for order"));
-            break;
-        default:
-            updateMouseWidget();
+void RS_ActionOrder::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, QMouseEvent *e) {
+    targetEntity = catchEntity(e);
+    if (targetEntity == nullptr) {
+        commandMessage(tr("No Entity found."));
+    } else {
+        trigger();
     }
 }
 
-RS2::CursorType RS_ActionOrder::doGetMouseCursor([[maybe_unused]] int status){
-    return RS2::CadCursor;
+void RS_ActionOrder::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]QMouseEvent *e) {
+     deletePreview();
+     if (selectionComplete) {
+         selectionComplete = false;
+     }
+     else{
+         initPrevious(status);
+     }
+}
+
+void RS_ActionOrder::updateMouseButtonHintsForSelection() {
+    updateMouseWidgetTRCancel(tr("Choose entities (Enter to Complete)"),  MOD_CTRL(tr("Order immediately after selection")));
+}
+
+void RS_ActionOrder::updateMouseButtonHintsForSelected([[maybe_unused]]int status) {
+    updateMouseWidgetTRCancel(tr("Choose entity for order"));
+}
+
+RS2::CursorType RS_ActionOrder::doGetMouseCursorSelected([[maybe_unused]]int status) {
+    return RS2::SelectCursor;
 }

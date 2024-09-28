@@ -10,7 +10,9 @@ DISABLE_POSTSCRIPT = false
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-LC_VERSION="2.2.2-alpha"
+LC_VERSION="2.2.2.2-alpha"
+LC_PRERELEASE = "true";
+
 VERSION=$${LC_VERSION}
 
 # Store intermedia stuff somewhere else
@@ -26,7 +28,7 @@ CONFIG += qt \
     verbose \
     depend_includepath
 
-QT += widgets printsupport
+QT += widgets printsupport network
 CONFIG += c++17
 
 # using qt5 connections for UI forms
@@ -90,6 +92,7 @@ win32 {
 }
 
 DEFINES += LC_VERSION=\"$$LC_VERSION\"
+DEFINES += LC_PRERELEASE=\"$$LC_PRERELEASE\"
 
 # Additional libraries to load
 LIBS += -L../../generated/lib  \
@@ -108,6 +111,7 @@ INCLUDEPATH += \
     lib/filters \
     lib/generators \
     lib/gui \
+    lib/gui/grid \
     lib/information \
     lib/math \
     lib/modification \
@@ -225,6 +229,7 @@ HEADERS += \
     lib/actions/rs_snapper.h \
     lib/creation/rs_creation.h \
     lib/debug/rs_debug.h \
+    lib/engine/lc_crosshair.h \
     lib/engine/lc_looputils.h \
     lib/engine/lc_parabola.h \
     lib/engine/lc_refarc.h \
@@ -296,6 +301,13 @@ HEADERS += \
     lib/filters/rs_filterjww.h \
     lib/filters/rs_filterlff.h \
     lib/filters/rs_filterinterface.h \
+    ui/dialogs/main/lc_dlgabout.h \
+    ui/dialogs/main/lc_dlgnewversionavailable.h \
+    ui/main/lc_releasechecker.h \
+    lib/gui/grid/lc_gridsystem.h \
+    lib/gui/grid/lc_isometricgrid.h \
+    lib/gui/grid/lc_lattice.h \
+    lib/gui/grid/lc_orthogonalgrid.h \
     lib/gui/rs_commandevent.h \
     lib/gui/rs_coordinateevent.h \
     lib/gui/rs_dialogfactory.h \
@@ -312,6 +324,7 @@ HEADERS += \
     lib/information/rs_locale.h \
     lib/information/rs_information.h \
     lib/information/rs_infoarea.h \
+    lib/math/lc_convert.h \
     lib/math/lc_linemath.h \
     lib/modification/rs_modification.h \
     lib/modification/rs_selection.h \
@@ -329,7 +342,9 @@ HEADERS += \
     main/lc_application.h \
     ui/action_options/curve/lc_ellipsearcoptions.h \
     ui/action_options/ellipse/lc_ellipse1pointoptions.h \
-    ui/dialogs/lc_dialog.h
+    ui/components/status_bar/lc_relzerocoordinateswidget.h \
+    ui/dialogs/lc_dialog.h \
+    ui/main/lc_mdiapplicationwindow.h
     
 SOURCES += \
     actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp \
@@ -343,6 +358,7 @@ SOURCES += \
     lib/actions/rs_snapper.cpp \
     lib/creation/rs_creation.cpp \
     lib/debug/rs_debug.cpp \
+    lib/engine/lc_crosshair.cpp \
     lib/engine/lc_looputils.cpp \
     lib/engine/lc_parabola.cpp \
     lib/engine/lc_refarc.cpp \
@@ -403,6 +419,13 @@ SOURCES += \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \
     lib/filters/rs_filterlff.cpp \
+    ui/dialogs/main/lc_dlgabout.cpp \
+    ui/dialogs/main/lc_dlgnewversionavailable.cpp \
+    ui/main/lc_releasechecker.cpp \
+    lib/gui/grid/lc_gridsystem.cpp \
+    lib/gui/grid/lc_isometricgrid.cpp \
+    lib/gui/grid/lc_lattice.cpp \    
+    lib/gui/grid/lc_orthogonalgrid.cpp \
     lib/gui/rs_dialogfactory.cpp \
     lib/gui/rs_eventhandler.cpp \
     lib/gui/rs_graphicview.cpp \
@@ -414,6 +437,7 @@ SOURCES += \
     lib/information/rs_locale.cpp \
     lib/information/rs_information.cpp \
     lib/information/rs_infoarea.cpp \
+    lib/math/lc_convert.cpp \
     lib/math/lc_linemath.cpp \
     lib/math/rs_math.cpp \
     lib/math/lc_quadratic.cpp \
@@ -436,7 +460,9 @@ SOURCES += \
     main/lc_application.cpp \
     ui/action_options/curve/lc_ellipsearcoptions.cpp \
     ui/action_options/ellipse/lc_ellipse1pointoptions.cpp \
-    ui/dialogs/lc_dialog.cpp
+    ui/components/status_bar/lc_relzerocoordinateswidget.cpp \
+    ui/dialogs/lc_dialog.cpp \
+    ui/main/lc_mdiapplicationwindow.cpp
 
 # ################################################################################
 # Command
@@ -1230,6 +1256,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/components/containers/lc_snapoptionswidgetsholder.ui \
        ui/components/creators/widgetcreator.ui \
        ui/components/pen/qg_widgetpen.ui \
+       ui/components/status_bar/lc_relzerocoordinateswidget.ui \
        ui/components/status_bar/qg_activelayername.ui \
        ui/components/status_bar/qg_coordinatewidget.ui \
        ui/components/status_bar/qg_mousewidget.ui \
@@ -1264,6 +1291,8 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/entity/qg_dlgspline.ui \
        ui/dialogs/entity/qg_dlgtext.ui \
        ui/dialogs/file/export/qg_dlgoptionsmakercam.ui \
+       ui/dialogs/main/lc_dlgabout.ui \
+       ui/dialogs/main/lc_dlgnewversionavailable.ui \
        ui/dialogs/main/qg_dlginitial.ui \
        ui/dialogs/main/qg_exitdialog.ui \
        ui/dialogs/settings/options_device/lc_deviceoptions.ui \

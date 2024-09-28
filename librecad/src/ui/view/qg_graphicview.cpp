@@ -61,6 +61,7 @@
 #include "rs_modification.h"
 #include "rs_painterqt.h"
 #include "rs_settings.h"
+#include "rs_grid.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -73,7 +74,7 @@ constexpr int g_hotspotXY=-1;
 
 namespace {
 // maximum length for displayed block name in context menu
-constexpr int g_MaxBlockNameLength = 40;
+    constexpr int g_MaxBlockNameLength = 40;
 
 /*
          * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
@@ -87,9 +88,9 @@ constexpr int g_MaxBlockNameLength = 40;
          * 1.100 - a very slow & deliberate zooming, but feels very "cautious", "controlled", "safe", and "precise".
          * 1.000 - goes nowhere. :)
          */
-constexpr double zoomFactor = 1.137;
+    constexpr double zoomFactor = 1.137;
 // zooming factor is wheel angle delta divided by this factor
-constexpr double zoomWheelDivisor = 200.;
+    constexpr double zoomWheelDivisor = 200.;
 
 
 /**
@@ -99,131 +100,125 @@ constexpr double zoomWheelDivisor = 200.;
  * @return RS_Entity* - the closest entity within the range of g_cursorSize
  *                      returns nullptr, if no entity is found in range
  */
-RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event)
-{
-    if (event == nullptr)
-        return nullptr;
-    RS_EntityContainer* container = view.getContainer();
-    if (container==nullptr)
-        return nullptr;
-    const QPointF mapped = event->pos();
-    double distance = RS_MAXDOUBLE;
-    RS_Entity* entity = container->getNearestEntity(view.toGraph(mapped), &distance);
+    RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event){
+        if (event == nullptr)
+            return nullptr;
+        RS_EntityContainer* container = view.getContainer();
+        if (container==nullptr)
+            return nullptr;
+        const QPointF mapped = event->pos();
+        double distance = RS_MAXDOUBLE;
+        RS_Entity* entity = container->getNearestEntity(view.toGraph(mapped), &distance);
 
-    return (view.toGuiDX(distance) <= g_cursorSize) ? entity : nullptr;
-}
+        return (view.toGuiDX(distance) <= g_cursorSize) ? entity : nullptr;
+    }
 
 // Find an ancestor of the RS_Insert type.
 // Return nullptr, if none is found
-RS_Insert* getAncestorInsert(RS_Entity* entity)
-{
-    while(entity != nullptr) {
-        if (entity->rtti() == RS2::EntityInsert) {
-            RS_Insert* parent = getAncestorInsert(entity->getParent());
-            return parent != nullptr ? parent : static_cast<RS_Insert*>(entity);
+    RS_Insert* getAncestorInsert(RS_Entity* entity){
+        while(entity != nullptr) {
+            if (entity->rtti() == RS2::EntityInsert) {
+                RS_Insert* parent = getAncestorInsert(entity->getParent());
+                return parent != nullptr ? parent : static_cast<RS_Insert*>(entity);
+            }
+            entity = entity->getParent();
         }
-        entity = entity->getParent();
+        return nullptr;
     }
-    return nullptr;
-}
 
 // whether the current insert is part of Text
-RS_Entity* getParentText(RS_Insert* insert)
-{
-    if (insert == nullptr || insert->getBlock() != nullptr || insert->getParent() == nullptr)
-        return nullptr;
-    switch(insert->getParent()->rtti()) {
-    case RS2::EntityText:
-    case RS2::EntityMText:
-        return insert->getParent();
-    default:
-        return nullptr;
+    RS_Entity* getParentText(RS_Insert* insert)    {
+        if (insert == nullptr || insert->getBlock() != nullptr || insert->getParent() == nullptr)
+            return nullptr;
+        switch(insert->getParent()->rtti()) {
+            case RS2::EntityText:
+            case RS2::EntityMText:
+                return insert->getParent();
+            default:
+                return nullptr;
+        }
     }
-}
 
 // Start the edit action:
 // Edit Block for an insert
 // Edit entity, otherwise
-void editAction(QG_GraphicView& view, RS_Entity& entity)
-{
-    RS_EntityContainer* container = view.getContainer();
-    if (container==nullptr)
-        return;
-
-    switch(entity.rtti()) {
-    case RS2::EntityInsert:
-    {
-        auto& appWindow = QC_ApplicationWindow::getAppWindow();
-        RS_BlockList* blockList = appWindow->getBlockWidget()->getBlockList();
-        RS_Block* active = (blockList != nullptr) ? blockList->getActive() : nullptr;
-        auto* insert = static_cast<RS_Insert*>(&entity);
-        RS_Block* current = insert->getBlockForInsert();
-        if (current == active)
-            active=nullptr;
-        else if (blockList != nullptr)
-            blockList->activate(current);
-        std::shared_ptr<RS_Block*> scoped{&active, [blockList](RS_Block** pointer) {
-                if (pointer != nullptr && *pointer != nullptr && blockList != nullptr)
-                    blockList->activate(*pointer);
-            }};
-        auto* action = new RS_ActionBlocksEdit(*container, view);
-        if (action == nullptr)
+    void editAction(QG_GraphicView& view, RS_Entity& entity){
+        RS_EntityContainer* container = view.getContainer();
+        if (container==nullptr)
             return;
-        view.setCurrentAction(action);
+
+        switch(entity.rtti()) {
+            case RS2::EntityInsert:
+            {
+                auto& appWindow = QC_ApplicationWindow::getAppWindow();
+                RS_BlockList* blockList = appWindow->getBlockWidget()->getBlockList();
+                RS_Block* active = (blockList != nullptr) ? blockList->getActive() : nullptr;
+                auto* insert = static_cast<RS_Insert*>(&entity);
+                RS_Block* current = insert->getBlockForInsert();
+                if (current == active)
+                    active=nullptr;
+                else if (blockList != nullptr)
+                    blockList->activate(current);
+                std::shared_ptr<RS_Block*> scoped{&active, [blockList](RS_Block** pointer) {
+                    if (pointer != nullptr && *pointer != nullptr && blockList != nullptr)
+                        blockList->activate(*pointer);
+                }};
+                auto* action = new RS_ActionBlocksEdit(*container, view);
+                if (action == nullptr)
+                    return;
+                view.setCurrentAction(action);
+                break;
+            }
+            default:
+            {
+                auto* action = new RS_ActionModifyEntity(*container, view);
+                if (action == nullptr)
+                    return;
+                action->setEntity(&entity);
+                view.setCurrentAction(action);
+                action->trigger();
+                action->finish(false);
+            }
+        }
     }
-        break;
-    default:
+
+    void launchEditProperty(QG_GraphicView& view, RS_Entity* entity)
     {
-        auto* action = new RS_ActionModifyEntity(*container, view);
-        if (action == nullptr)
+        RS_EntityContainer* container = view.getContainer();
+        if (entity == nullptr || container == nullptr)
             return;
-        action->setEntity(&entity);
-        view.setCurrentAction(action);
-        action->trigger();
-        action->finish(false);
-    }
-    }
-}
 
-void launchEditProperty(QG_GraphicView& view, RS_Entity* entity)
-{
-    RS_EntityContainer* container = view.getContainer();
-    if (entity == nullptr || container == nullptr)
-        return;
+        editAction(view, *entity);
 
-    editAction(view, *entity);
-
-    //container->removeEntity(entity);
-    auto* doc = dynamic_cast<RS_Document*>(container);
-    if (doc != nullptr)
-        doc->startUndoCycle();
-    // delete any temporary highlighting duplicates of the original
-    auto* defaultAction = dynamic_cast<RS_ActionDefault*>(view.getEventHandler()->getDefaultAction());
-    if (defaultAction != nullptr)
-    {
-        defaultAction->clearHighLighting();
+        //container->removeEntity(entity);
+        auto* doc = dynamic_cast<RS_Document*>(container);
+        if (doc != nullptr)
+            doc->startUndoCycle();
+        // delete any temporary highlighting duplicates of the original
+        auto* defaultAction = dynamic_cast<RS_ActionDefault*>(view.getEventHandler()->getDefaultAction());
+        if (defaultAction != nullptr)
+        {
+            defaultAction->clearHighLighting();
+        }
+        doc->endUndoCycle();
     }
-    doc->endUndoCycle();
-}
 
 // Show the entity property dialog on the closest entity in range
-void showEntityPropertiesDialog(QG_GraphicView& view, RS_Entity* entity)
-{
-    if (entity == nullptr) return;
+    void showEntityPropertiesDialog(QG_GraphicView& view, RS_Entity* entity){
+        if (entity == nullptr) return;
 
-    // snap to the top selected parent
-    while (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->isSelected())
-        entity = entity->getParent();
+        // snap to the top selected parent
+        while (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->isSelected()) {
+            entity = entity->getParent();
+        }
 
-    launchEditProperty(view, entity);
-}
+        launchEditProperty(view, entity);
+    }
 }
 
 // Support auto-panning when the cursor is close to the view border
-struct QG_GraphicView::AutoPanData
-{
-    void start(double interval, QG_GraphicView &view)
-    {
+struct QG_GraphicView::AutoPanData{
+    void start(double interval, QG_GraphicView &view){
         m_delayCounter = 0;
         panTimer = std::make_unique<QTimer>(&view);
         panTimer->start(interval);
@@ -247,6 +242,10 @@ struct QG_GraphicView::AutoPanData
 };
 
 
+void updateGridPoint();
+
+void paintUnbuffered();
+
 /**
  * Constructor.
  */
@@ -264,8 +263,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* 
 {
     RS_DEBUG->print("QG_GraphicView::QG_GraphicView()..");
 
-    if (doc != nullptr)
-    {
+    if (doc != nullptr){
         setContainer(doc);
         doc->setGraphicView(this);
         setDefaultAction(new RS_ActionDefault(*doc, *this));
@@ -284,8 +282,6 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* 
     view_rect = LC_Rect(toGraph(0, 0), toGraph(getWidth(), getHeight()));
 }
 
-
-
 /**
  * Destructor
  */
@@ -293,26 +289,20 @@ QG_GraphicView::~QG_GraphicView() {
 	cleanUp();
 }
 
-
-
 /**
  * @return width of widget.
  */
-int QG_GraphicView::getWidth() const
-{
+int QG_GraphicView::getWidth() const{
     if (scrollbars)
         return width() - vScrollBar->sizeHint().width();
     else
         return width();
 }
 
-
-
 /**
  * @return height of widget.
  */
-int QG_GraphicView::getHeight() const
-{
+int QG_GraphicView::getHeight() const{
     if (scrollbars)
         return height() - hScrollBar->sizeHint().height();
     else
@@ -330,7 +320,6 @@ void QG_GraphicView::setBackground(const RS_Color& bg) {
     palette.setColor(backgroundRole(), bg);
     setPalette(palette);
 }
-
 
 /**
  * Sets the mouse cursor to the given type.
@@ -394,15 +383,13 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType cursorType) {
         setCursor(Qt::ClosedHandCursor);
         break;
     case RS2::CadCursor:
-        cursor_hiding
-            ? setCursor(Qt::BlankCursor)
-            : setCursor(*curCad);
+        cursor_hiding ? setCursor(Qt::BlankCursor) : setCursor(*curCad);
         break;
     case RS2::DelCursor:
         setCursor(*curDel);
         break;
     case RS2::SelectCursor:
-        setCursor(*curSelect);
+        selectCursor_hiding ? setCursor(Qt::BlankCursor) : setCursor(*curSelect);
         break;
     case RS2::MagnifierCursor:
         setCursor(*curMagnifier);
@@ -410,10 +397,8 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType cursorType) {
     case RS2::MovingHandCursor:
         setCursor(*curHand);
         break;
-
     }
 }
-
 
 /**
  * Sets the text for the grid status widget in the left bottom corner.
@@ -421,7 +406,6 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType cursorType) {
 void QG_GraphicView::updateGridStatusWidget(QString text){
     emit gridStatusChanged(std::move(text));
 }
-
 
 /**
  * Redraws the widget.
@@ -431,7 +415,6 @@ void QG_GraphicView::redraw(RS2::RedrawMethod method) {
         update(); // Paint when reeady to pain
 //	repaint(); //Paint immediate
 }
-
 
 void QG_GraphicView::resizeEvent(QResizeEvent* /*e*/) {
     RS_DEBUG->print("QG_GraphicView::resizeEvent begin");
@@ -477,50 +460,41 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e)
     e->accept();
 }
 
-
 void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
 {
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent");
 
     event->accept();
 
-    switch (event->button())
-    {
-    case Qt::RightButton:
-        if (event->modifiers()==Qt::ControlModifier)
-        {
-            if (menus.contains("Ctrl+Right-Click"))
-            {
+    switch (event->button()) {
+    case Qt::RightButton: {
+        if (event->modifiers() == Qt::ControlModifier) {
+            if (menus.contains("Ctrl+Right-Click")) {
                 menus["Ctrl+Right-Click"]->popup(mapToGlobal(event->pos()));
                 break;
             }
         }
-        if (event->modifiers()==Qt::ShiftModifier)
-        {
-            if (menus.contains("Shift+Right-Click"))
-            {
+        if (event->modifiers() == Qt::ShiftModifier) {
+            if (menus.contains("Shift+Right-Click")) {
                 menus["Shift+Right-Click"]->popup(mapToGlobal(event->pos()));
                 break;
             }
         }
 
-        if (!eventHandler->hasAction())
-        {
-            if (menus.contains("Right-Click"))
-            {
+        if (!eventHandler->hasAction()) {
+            if (menus.contains("Right-Click")) {
                 menus["Right-Click"]->popup(mapToGlobal(event->pos()));
-            }
-            else
-            {
-                QMenu* context_menu = new QMenu(this);
+            } else {
+                auto *context_menu = new QMenu(this);
                 context_menu->setAttribute(Qt::WA_DeleteOnClose);
-                if (!recent_actions.empty())
+                if (!recent_actions.empty()) {
                     context_menu->addActions(recent_actions);
+                }
 
                 // "Edit Entity" entry
                 addEditEntityEntry(event, *context_menu);
                 // Add drawing preferences
-                QAction* OptionsDrawing = QC_ApplicationWindow::getAppWindow()->getAction("OptionsDrawing");
+                QAction *OptionsDrawing = QC_ApplicationWindow::getAppWindow()->getAction("OptionsDrawing");
                 if (OptionsDrawing != nullptr)
                     context_menu->addAction(OptionsDrawing);
                 if (!context_menu->isEmpty())
@@ -529,10 +503,9 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
                     delete context_menu;
 
             }
-        }
-        else back();
+        } else back();
         break;
-
+    }
     case Qt::XButton1:
         enter();
         emit xbutton1_released();
@@ -545,8 +518,7 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
 }
 
-void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu)
-{
+void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu){
     RS_Entity* entity = snapEntity(*this, event);
     if (entity == nullptr)
     return;
@@ -582,8 +554,7 @@ void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu)
     });
 }
 
-void QG_GraphicView::mouseMoveEvent(QMouseEvent* event)
-{
+void QG_GraphicView::mouseMoveEvent(QMouseEvent* event){
     if (isAutoPan(event)) {
         startAutoPanTimer(event);
         event->accept();
@@ -595,10 +566,9 @@ void QG_GraphicView::mouseMoveEvent(QMouseEvent* event)
     eventHandler->mouseMoveEvent(event);
 }
 
-bool QG_GraphicView::event(QEvent *event)
-{
+bool QG_GraphicView::event(QEvent *event){
     if (event->type() == QEvent::NativeGesture) {
-        QNativeGestureEvent *nge = static_cast<QNativeGestureEvent *>(event);
+        auto *nge = static_cast<QNativeGestureEvent *>(event);
 
         if (nge->gestureType() == Qt::ZoomNativeGesture) {
             double v = nge->value();
@@ -640,7 +610,6 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
         case QPointingDevice::PointerType::Eraser:
             if (e->type()==QEvent::TabletRelease) {
                 if (container) {
-
                     RS_ActionSelectSingle* a =
                         new RS_ActionSelectSingle(*container, *this);
                     setCurrentAction(a);
@@ -676,10 +645,7 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
             break;
         default:
             break;
-
-
         }
-
 #else
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
         switch (e->deviceType()) {
@@ -753,7 +719,6 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
 void QG_GraphicView::leaveEvent(QEvent* e) {
     // stop auto-panning
     m_panData->panTimer.reset();
-
     eventHandler->mouseLeaveEvent();
     QWidget::leaveEvent(e);
 }
@@ -763,11 +728,9 @@ void QG_GraphicView::enterEvent(QEnterEvent* e) {
     QWidget::enterEvent(e);
 }
 
-
 void QG_GraphicView::focusOutEvent(QFocusEvent* e) {
     QWidget::focusOutEvent(e);
 }
-
 
 void QG_GraphicView::focusInEvent(QFocusEvent* e) {
     eventHandler->mouseEnterEvent();
@@ -794,15 +757,13 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     RS_Vector mouse = toGraph(e->position());
 #endif
 
-    if (device == "Trackpad")
-    {
+    if (device == "Trackpad") {
         QPoint numPixels = e->pixelDelta();
 
         // high-resolution scrolling triggers Pan instead of Zoom logic
         isSmoothScrolling |= !numPixels.isNull();
 
-        if (isSmoothScrolling)
-        {
+        if (isSmoothScrolling){
             if (e->phase() == Qt::ScrollEnd) isSmoothScrolling = false;
         }
         else // Trackpads that without high-resolution scrolling
@@ -811,10 +772,8 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
             numPixels = e->angleDelta() / 4;
         }
 
-        if (!numPixels.isNull())
-        {
-            if (e->modifiers()==Qt::ControlModifier)
-            {
+        if (!numPixels.isNull()){
+            if (e->modifiers()==Qt::ControlModifier){
                 // fixme - move from events to settings
                 bool invZoom = LC_GET_ONE_BOOL("Defaults", "InvertZoomDirection");
 
@@ -832,8 +791,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                 setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
                                                      RS2::Both, &mouse, factor));
             }
-            else
-            {
+            else{
                 // fixme - move from events to settings
                 LC_GROUP_GUARD("Defaults");
                 bool inv_h = LC_GET_BOOL("WheelScrollInvertH");
@@ -973,17 +931,16 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     e->accept();
 }
 
-// fixme - move by keyboard support!!!
-    void QG_GraphicView::keyPressEvent(QKeyEvent * e)
-    {
-        if (container == nullptr) {
-            return;
-        }
+// fixme - sand -  move by keyboard support!!!
+void QG_GraphicView::keyPressEvent(QKeyEvent * e){
+    if (container == nullptr) {
+        return;
+    }
 
-        bool scroll = false;
-        RS2::Direction direction = RS2::Up;
+    bool scroll = false;
+    RS2::Direction direction = RS2::Up;
 
-        switch (e->key()) {
+    switch (e->key()) {
         case Qt::Key_Left:
             scroll = true;
             direction = RS2::Right;
@@ -1003,30 +960,28 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         default:
             scroll = false;
             break;
-        }
-
-        if (scroll) {
-            setCurrentAction(new RS_ActionZoomScroll(direction, *container, *this));
-        }
-        eventHandler->keyPressEvent(e);
     }
 
-    void QG_GraphicView::keyReleaseEvent(QKeyEvent * e)
-    {
-        eventHandler->keyReleaseEvent(e);
+    if (scroll) {
+        setCurrentAction(new RS_ActionZoomScroll(direction, *container, *this));
     }
+    eventHandler->keyPressEvent(e);
+}
 
-    /**
- * Called whenever the graphic view has changed.
- * Adjusts the scrollbar ranges / steps.
- */
-    void QG_GraphicView::adjustOffsetControls()
-    {
-        if (scrollbars) {
-            static bool running = false;
+void QG_GraphicView::keyReleaseEvent(QKeyEvent * e){
+    eventHandler->keyReleaseEvent(e);
+}
 
-            if (running) {
-                return;
+/**
+* Called whenever the graphic view has changed.
+* Adjusts the scrollbar ranges / steps.
+*/
+void QG_GraphicView::adjustOffsetControls(){
+    if (scrollbars) {
+        static bool running = false;
+
+        if (running) {
+            return;
         }
 
         running = true;
@@ -1043,15 +998,15 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
         // no drawing yet - still allow to scroll
         if (max.x < min.x+1.0e-6 ||
-                max.y < min.y+1.0e-6 ||
-                    max.x > RS_MAXDOUBLE ||
-                    max.x < RS_MINDOUBLE ||
-                    min.x > RS_MAXDOUBLE ||
-                    min.x < RS_MINDOUBLE ||
-                    max.y > RS_MAXDOUBLE ||
-                    max.y < RS_MINDOUBLE ||
-                    min.y > RS_MAXDOUBLE ||
-                    min.y < RS_MINDOUBLE ) {
+            max.y < min.y+1.0e-6 ||
+            max.x > RS_MAXDOUBLE ||
+            max.x < RS_MINDOUBLE ||
+            min.x > RS_MAXDOUBLE ||
+            min.x < RS_MINDOUBLE ||
+            max.y > RS_MAXDOUBLE ||
+            max.y < RS_MINDOUBLE ||
+            min.y > RS_MAXDOUBLE ||
+            min.y < RS_MINDOUBLE ) {
             min = RS_Vector(-10,-10);
             max = RS_Vector(100,100);
         }
@@ -1165,8 +1120,7 @@ void QG_GraphicView::setOffset(int ox, int oy) {
     adjustOffsetControls();
 }
 
-RS_Vector QG_GraphicView::getMousePosition() const
-{
+RS_Vector QG_GraphicView::getMousePosition() const {
     //find mouse position
     QPoint vp=mapFromGlobal(QCursor::pos());
     //if cursor is not on widget, return the widget center position
@@ -1175,12 +1129,11 @@ RS_Vector QG_GraphicView::getMousePosition() const
     return toGraph(vp.x(), vp.y());
 }
 
-void QG_GraphicView::getPixmapForView(std::unique_ptr<QPixmap>& pm)
-{
-	QSize const s0(getWidth(), getHeight());
-	if(pm && pm->size()==s0)
-		return;
-	pm.reset(new QPixmap(getWidth(), getHeight()));
+void QG_GraphicView::getPixmapForView(std::unique_ptr<QPixmap>& pm){
+    QSize const s0(getWidth(), getHeight());
+    if(pm && pm->size()==s0)
+        return;
+    pm.reset(new QPixmap(getWidth(), getHeight()));
 }
 
 void QG_GraphicView::layerActivated(RS_Layer *layer) {
@@ -1195,7 +1148,7 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
         graphic->startUndoCycle();
     }
 
-    for (auto en: *container) {
+    for (auto en: *container) { // fixme - sand - iterating all elements in container
         if (!en) continue;
         if (!en->isSelected()) continue;
 
@@ -1231,6 +1184,9 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
     redraw(RS2::RedrawDrawing);
 }
 
+void QG_GraphicView::updateGridPoints(){
+    getGrid()->calculateGrid();
+}
 
 /**
  * Handles paint events by redrawing the graphic in this view.
@@ -1238,66 +1194,150 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
  * have from the last call..
  */
 void QG_GraphicView::paintEvent(QPaintEvent *){
+    if (antialiasing){
+        if (classicRenderer) {
+            paintClassicalBuffered();
+        }
+        else{
+            paintSequental();
+        }
+    }
+    else{
+        paintClassicalBuffered();
+    }
+
+    redrawMethod=RS2::RedrawNone;
+//    LC_ERR << "Redraw END";
+}
+
+
+void QG_GraphicView::paintSequental() {
+    int width = getWidth();
+    int height = getHeight();
+    view_rect = LC_Rect(toGraph(0, 0),
+                        toGraph(width, height));
+
+    QSize const s0(width, height);
+    if (pixmapLayer1.size() != s0){
+        pixmapLayer1 = QPixmap(width, height);
+        redrawMethod=(RS2::RedrawMethod ) (redrawMethod | RS2::RedrawGrid);
+    }
+
+    if (redrawMethod & RS2::RedrawGrid) {
+        pixmapLayer1.fill(getBackground());
+        RS_PainterQt painter1(&pixmapLayer1);
+        painter1.setRenderHint(QPainter::Antialiasing);
+        drawLayer1(&painter1);
+        painter1.end();
+        redrawMethod=(RS2::RedrawMethod ) (redrawMethod | RS2::RedrawDrawing);
+    }
+
+    if (redrawMethod & RS2::RedrawDrawing) {
+        // DRaw layer 2
+        pixmapLayer2 = pixmapLayer1;
+        RS_PainterQt painter2(&pixmapLayer2);
+        painter2.setRenderHint(QPainter::Antialiasing);
+        painter2.setDrawingMode(drawingMode);
+        painter2.setDrawSelectedOnly(false);
+        drawLayer2( &painter2);
+        painter2.setDrawSelectedOnly(true);
+        drawLayer2( &painter2);
+        painter2.end();
+        redrawMethod=(RS2::RedrawMethod ) (redrawMethod | RS2::RedrawOverlay);
+    }
+
+    if (redrawMethod & RS2::RedrawOverlay) {
+        pixmapLayer3 = pixmapLayer2;
+        RS_PainterQt painter3(&pixmapLayer3);
+        painter3.setRenderHint(QPainter::Antialiasing);
+        this->drawLayer3(&painter3);
+        painter3.end();
+    }
+
+    RS_PainterQt wPainter(this);
+    wPainter.drawPixmap(0, 0, pixmapLayer3);
+    wPainter.end();
+}
+
+void QG_GraphicView::paintClassicalBuffered() {
     // Re-Create or get the layering pixmaps
     getPixmapForView(PixmapLayer1);
     getPixmapForView(PixmapLayer2);
     getPixmapForView(PixmapLayer3);
+//    LC_ERR << "Redraw START";
 
     // Draw Layer 1
     if (redrawMethod & RS2::RedrawGrid) {
+//        LC_ERR << "Redraw Grid";
         PixmapLayer1->fill(getBackground());
         RS_PainterQt painter1(PixmapLayer1.get());
-        drawLayer1((RS_Painter*)&painter1);
+        drawLayer1((RS_Painter *) &painter1);
         painter1.end();
     }
 
     if (redrawMethod & RS2::RedrawDrawing) {
+//        LC_ERR << "Redraw Drawing";
         view_rect = LC_Rect(toGraph(0, 0),
-                            toGraph(getWidth(), getHeight()));
+                                  toGraph(getWidth(), getHeight()));
         // DRaw layer 2
         PixmapLayer2->fill(Qt::transparent);
         RS_PainterQt painter2(PixmapLayer2.get());
-        if (antialiasing)
-        {
+        if (antialiasing) {
             painter2.setRenderHint(QPainter::Antialiasing);
         }
         painter2.setDrawingMode(drawingMode);
         painter2.setDrawSelectedOnly(false);
-        drawLayer2((RS_Painter*)&painter2);
+        drawLayer2((RS_Painter *) &painter2);
         painter2.setDrawSelectedOnly(true);
-        drawLayer2((RS_Painter*)&painter2);
+        drawLayer2((RS_Painter *) &painter2);
         painter2.end();
     }
 
-    if (redrawMethod & RS2::RedrawOverlay)
-    {
+    if (redrawMethod & RS2::RedrawOverlay) {
+//        LC_ERR << "Redraw Overlay";
         PixmapLayer3->fill(Qt::transparent);
         RS_PainterQt painter3(PixmapLayer3.get());
-        if (antialiasing)
-        {
+        if (antialiasing) {
             painter3.setRenderHint(QPainter::Antialiasing);
         }
-        drawLayer3((RS_Painter*)&painter3);
+        drawLayer3((RS_Painter *) &painter3);
         painter3.end();
     }
 
     // Finally paint the layers back on the screen, bitblk to the rescue!
     RS_PainterQt wPainter(this);
-    wPainter.drawPixmap(0,0,*PixmapLayer1);
-    wPainter.drawPixmap(0,0,*PixmapLayer2);
-    wPainter.drawPixmap(0,0,*PixmapLayer3);
+    wPainter.drawPixmap(0, 0, *PixmapLayer1);
+    wPainter.drawPixmap(0, 0, *PixmapLayer2);
+    wPainter.drawPixmap(0, 0, *PixmapLayer3);
     wPainter.end();
-
-    redrawMethod=RS2::RedrawNone;
 }
 
-void QG_GraphicView::setAntialiasing(bool state)
-{
+#define HIDE_SELECT_CURSOR false
+
+void QG_GraphicView::loadSettings() {
+    RS_GraphicView::loadSettings();
+    antialiasing  = LC_GET_ONE_BOOL("Appearance","Antialiasing");
+    classicRenderer =  LC_GET_BOOL("ClassicRenderer", true);
+
+    if (HIDE_SELECT_CURSOR) {
+        // potentially, select cursor may be also hidden and so snapper will be used instead of cursor.
+        // however, this will require review and modifications of significant amount of actions, so
+        // probably I'll return to this later. In such case, the code within this "if" will be handy for such support
+        LC_GROUP("Appearance");
+        {
+            cursor_hiding = LC_GET_BOOL("cursor_hiding", false);
+            bool showSnapIndicatorLines = LC_GET_BOOL("indicator_lines_state", true);
+            bool showSnapIndicatorShape = LC_GET_BOOL("indicator_shape_state", true);
+            selectCursor_hiding = cursor_hiding && (showSnapIndicatorLines || showSnapIndicatorShape);
+        }
+    }
+}
+
+void QG_GraphicView::setAntialiasing(bool state){
 	antialiasing = state;
 }
 
-void QG_GraphicView::addScrollbars()
-{
+void QG_GraphicView::addScrollbars(){
     scrollbars = true;
 
     hScrollBar = new QG_ScrollBar(Qt::Horizontal, this);
@@ -1331,44 +1371,36 @@ void QG_GraphicView::addScrollbars()
             this, SLOT(slotVScrolled(int)));
 }
 
-bool QG_GraphicView::hasScrollbars()
-{
+bool QG_GraphicView::hasScrollbars(){
     return scrollbars;
 }
 
-void QG_GraphicView::setCursorHiding(bool state)
-{
+void QG_GraphicView::setCursorHiding(bool state){
     cursor_hiding = state;
 }
 
-void QG_GraphicView::setCurrentQAction(QAction* q_action)
-{
+void QG_GraphicView::setCurrentQAction(QAction* q_action){
     eventHandler->setQAction(q_action);
 
-    if (recent_actions.contains(q_action))
-    {
+    if (recent_actions.contains(q_action)){
         recent_actions.removeOne(q_action);
     }
     recent_actions.prepend(q_action);
 }
 
-void QG_GraphicView::destroyMenu(const QString& activator)
-{
-    if (menus.contains(activator))
-    {
+void QG_GraphicView::destroyMenu(const QString& activator){
+    if (menus.contains(activator)) {
         auto menu = menus.take(activator);
         delete menu;
     }
 }
 
-void QG_GraphicView::setMenu(const QString& activator, QMenu* menu)
-{
+void QG_GraphicView::setMenu(const QString& activator, QMenu* menu){
     destroyMenu(activator);
     menus[activator] = menu;
 }
 
-void QG_GraphicView::startAutoPanTimer(QMouseEvent *event)
-{
+void QG_GraphicView::startAutoPanTimer(QMouseEvent *event){
     if (event == nullptr)
         return;
     const RS_Vector cadArea_minCoord(0., 0.);
@@ -1440,9 +1472,7 @@ void QG_GraphicView::startAutoPanTimer(QMouseEvent *event)
     }
 }
 
-
-bool QG_GraphicView::isAutoPan(QMouseEvent *event) const
-{
+bool QG_GraphicView::isAutoPan(QMouseEvent *event) const{
     if (event == nullptr) {
         return false;
     }
@@ -1477,13 +1507,11 @@ bool QG_GraphicView::isAutoPan(QMouseEvent *event) const
     return cadArea_actual.inArea(mouseCoord) && !cadArea_unprobed.inArea(mouseCoord);
 }
 
-
 /*
     Auto-pans the CAD area.
     - by Melwyn Francis Carlo <carlo.melwyn@outlook.com>
 */
-void QG_GraphicView::autoPanStep()
-{
+void QG_GraphicView::autoPanStep(){
     // skip first steps to avoid unintensional panning
     m_panData->m_delayCounter = std::min(++ m_panData->m_delayCounter, m_panData->delayCounterMax);
     if (m_panData->m_delayCounter < m_panData->delayCounterMax)

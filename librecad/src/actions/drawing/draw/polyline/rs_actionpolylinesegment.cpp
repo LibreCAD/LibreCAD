@@ -58,6 +58,10 @@ RS_ActionPolylineSegment::RS_ActionPolylineSegment(RS_EntityContainer& container
     initWithTarget = true;
 }
 
+void RS_ActionPolylineSegment::drawSnapper() {
+    // disable snapper for this action
+}
+
 void RS_ActionPolylineSegment::init(int status){
     RS_PreviewActionInterface::init(status);
     if (initWithTarget){

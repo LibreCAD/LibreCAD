@@ -37,6 +37,14 @@ protected:
     void loadDialogPosition();
     QString getPositionSettingsGroupName() const;
     void showEvent(QShowEvent *event) override;
+
+    QString asString(double value);
+    bool toDouble(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
+    bool toDoubleAngle(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
+
+    QString asStringAngleDeg(double value);
+
+    QString asStringAngle(double value);
 };
 
 #endif // LC_DIALOG_H

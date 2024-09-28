@@ -99,6 +99,18 @@ void RS_Vector::set(double vx, double vy, double vz) {
     valid = true;
 }
 
+void RS_Vector::plus(const RS_Vector &other) {
+   x+= other.x;
+   y+= other.y;
+   z+= other.z;
+}
+
+void RS_Vector::minus(const RS_Vector &other) {
+    x-= other.x;
+    y-= other.y;
+    z-= other.z;
+}
+
 /**
  * Sets a new position for the vector in polar coordinates.
  */

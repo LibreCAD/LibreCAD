@@ -521,6 +521,10 @@ void RS_ActionInterface::updateMouseWidget(const QString& left,const QString& ri
     RS_DIALOGFACTORY->updateMouseWidget(left, right, modifiers);
 }
 
+void RS_ActionInterface::updateMouseWidgetIcon(const QIcon &icon){
+    RS_DIALOGFACTORY->updateMouseWidgetIcon(icon);
+}
+
 
 /**
  * Shortcut for displaying command message string
@@ -544,6 +548,15 @@ void RS_ActionInterface::updateSnapAngleStep() {
             break;
         case 3:
             snapToAngleStep = 15.0;
+            break;
+        case 4:
+            snapToAngleStep = 30.0;
+            break;
+        case 5:
+            snapToAngleStep = 45.0;
+            break;
+        case 6:
+            snapToAngleStep = 90.0;
             break;
         default:
             snapToAngleStep = 15.0;
