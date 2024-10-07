@@ -917,7 +917,11 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
     if (w == activedMdiSubWindow) {
         // this may occur after file open, so additional update is needed :(
         RS_GraphicView* activatedGraphicView = getGraphicView();
+        if (activatedGraphicView == nullptr || activatedGraphicView->getGraphic() == nullptr)
+            return;
+
         RS_Graphic* activatedGraphic = activatedGraphicView->getGraphic();
+
         bool printPreview = activatedGraphicView->isPrintPreview();
         if (!printPreview){
             bool isometricGrid = activatedGraphic->isIsometricGrid();
