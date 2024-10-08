@@ -82,12 +82,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>齿轮插件</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>齿轮插件</translation>
     </message>
 </context>
 <context>
@@ -1055,12 +1055,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="65"/>
         <source>File...</source>
-        <translation type="unfinished"></translation>
+        <translation>文件...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>缩放:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
@@ -1120,7 +1120,7 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>绘图插件</translation>
     </message>
 </context>
 <context>
