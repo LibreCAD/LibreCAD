@@ -425,6 +425,24 @@ QStringList handleArgs(int argc, char** argv, const QList<int>& argClean)
     return ret;
 }
 
+QString LCReleaseLabel()
+{
+    QString version{XSTR(LC_VERSION)};
+    QString label;
+    const std::map<QString, QString> labelMap = {
+        {"rc", QObject::tr("Release Candidate")},
+        {"beta", QObject::tr("BETA")},
+        {"alpha", QObject::tr("ALPHA")}
+    };
+    for (const auto& [key, value]: labelMap) {
+        if (version.contains(key, Qt::CaseInsensitive)) {
+            label=value;
+            break;
+        }
+    }
+    return label;
+}
+
 namespace {
 void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings)
 {
@@ -455,19 +473,7 @@ void updateSplash(const std::unique_ptr<QSplashScreen>& splash)
     if (splash == nullptr)
         return;
 
-    QString version{XSTR(LC_VERSION)};
-    QString label;
-    const std::map<QString, QString> labelMap = {
-        {"rc", QObject::tr("Release Candidate")},
-        {"beta", QObject::tr("BETA")},
-        {"alpha", QObject::tr("ALPHA")}
-    };
-    for (const auto& [key, value]: labelMap) {
-        if (version.contains(key, Qt::CaseInsensitive)) {
-            label=value;
-            break;
-        }
-    }
+    QString label = LCReleaseLabel();
     if (label.isEmpty())
         return;
 

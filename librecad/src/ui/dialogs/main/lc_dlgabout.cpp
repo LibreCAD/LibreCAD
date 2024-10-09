@@ -22,19 +22,46 @@
 
 #include <boost/version.hpp>
 #include <QClipboard>
+#include <QLabel>
+#include <QPainter>
+#include <QPixmap>
+
 #include "lc_dlgabout.h"
-#include "ui_lc_dlgabout.h"
 #include "main.h"
+#include "ui_lc_dlgabout.h"
 
 #if defined(Q_OS_LINUX)
 #include <QThread>
 #endif
 
+namespace {
+
+void aboutImageLabels(QLabel* label)
+{
+    if (label == nullptr)
+        return;
+    QString versionLabel = LCReleaseLabel();
+    auto pixmap = label->pixmap();
+
+    QPainter painter(&pixmap);
+    const double factorX = pixmap.width()/542.;
+    const double factorY = pixmap.height()/337.;
+    painter.setPen(QColor(255, 0, 0, 128));
+    QRectF labelRect{QPointF{280.*factorX, 130.*factorY}, QPointF{480.*factorX, 170.*factorY}};
+    QFont font;
+    font.setPixelSize(int(labelRect.height()) - 2);
+    painter.setFont(font);
+    painter.drawText(labelRect,Qt::AlignRight, versionLabel);
+    painter.end();
+    label->setPixmap(pixmap);
+}
+}
+
 LC_DlgAbout::LC_DlgAbout(QWidget *parent)
     : LC_Dialog(parent, "About")
     , ui(new Ui::LC_DlgAbout){
     ui->setupUi(this);
-    QC_ApplicationWindow* appWindow = (QC_ApplicationWindow*) parent;
+    QC_ApplicationWindow* appWindow = static_cast<QC_ApplicationWindow*>(parent);
 
     // Compiler macro list in Qt source tree
     // Src/qtbase/src/corelib/global/qcompilerdetection.h
@@ -64,9 +91,7 @@ LC_DlgAbout::LC_DlgAbout(QWidget *parent)
                             .arg(tr("License"))
                             .arg(tr("The Code")));
 
-    if (XSTR(LC_PRERELEASE)){
-        ui->lblLogo->setPixmap(QPixmap(QString::fromUtf8(":/main/splash_librecad_beta.png")));
-    }
+    aboutImageLabels(ui->lblLogo);
 
     connect(ui->pbCopy, &QPushButton::clicked, this, &LC_DlgAbout::copyInfo);
     connect(ui->pbCheckNewVersion, &QPushButton::clicked, appWindow, &QC_ApplicationWindow::forceCheckForNewVersion);
