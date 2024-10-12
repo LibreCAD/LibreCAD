@@ -25,8 +25,8 @@
 **********************************************************************/
 #include "qg_dlginitial.h"
 
-#include "rs_system.h"
 #include "rs_settings.h"
+#include "rs_system.h"
 #include "rs_units.h"
 
 /*
@@ -58,24 +58,21 @@ void QG_DlgInitial::init() {
     // Fill combobox with languages:
     QStringList languageList = RS_SYSTEM->getLanguageList();
     QString defaultLanguage=RS_SYSTEM->symbolToLanguage(QString("en"));
-    for (QStringList::Iterator it = languageList.begin();
-        it!=languageList.end();
-        it++) {
-
-        QString l = RS_SYSTEM->symbolToLanguage(*it);
-        cbLanguage->addItem(l,*it);
-        cbLanguageCmd->addItem(l,*it);
+    for (QString language: languageList) {
+        QString l = RS_SYSTEM->symbolToLanguage(language);
+        cbLanguage->addItem(l, language);
+        cbLanguageCmd->addItem(l, language);
     }
 
 
-        // units:
-        for (int i=RS2::None; i<RS2::LastUnit; i++) {
+    // units:
+    for (int i=RS2::None; i<RS2::LastUnit; i++) {
         cbUnit->addItem(RS_Units::unitToString((RS2::Unit)i));
     }
 
-        cbUnit->setCurrentIndex( cbUnit->findText("Millimeter") );
-        cbLanguage->setCurrentIndex( cbLanguage->findText(defaultLanguage) );
-        cbLanguageCmd->setCurrentIndex( cbLanguageCmd->findText(defaultLanguage) );
+    cbUnit->setCurrentIndex( cbUnit->findText("Millimeter") );
+    cbLanguage->setCurrentIndex( cbLanguage->findText(defaultLanguage) );
+    cbLanguageCmd->setCurrentIndex( cbLanguageCmd->findText(defaultLanguage) );
 }
 
 void QG_DlgInitial::setText(const QString& t) {

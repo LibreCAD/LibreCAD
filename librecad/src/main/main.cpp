@@ -366,8 +366,10 @@ int main(int argc, char** argv)
             appWin.slotFileNewNew();
         }
 
-        if (show_splash)
+        if (show_splash) {
             splash->finish(&appWin);
+            splash.release();
+        }
 
         bool checkForNewVersion = LC_GET_BOOL("CheckForNewVersions", true);
         if (checkForNewVersion) {
@@ -379,6 +381,7 @@ int main(int argc, char** argv)
 
     RS_DEBUG->print("main: entering Qt event loop");
 
+    QCoreApplication::processEvents();
 
     int return_code = app.exec();
 
