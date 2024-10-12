@@ -40,14 +40,16 @@ void aboutImageLabels(QLabel* label)
 {
     if (label == nullptr)
         return;
+
     QString versionLabel = LCReleaseLabel();
+    label->setPixmap(QPixmap{":main/librecad01_" + versionLabel.toLower() + ".png"});
     auto pixmap = label->pixmap();
 
     QPainter painter(&pixmap);
-    const double factorX = pixmap.width()/542.;
-    const double factorY = pixmap.height()/337.;
+    const double factorX = pixmap.width()/551.;
+    const double factorY = pixmap.height()/171.;
     painter.setPen(QColor(255, 0, 0, 128));
-    QRectF labelRect{QPointF{280.*factorX, 130.*factorY}, QPointF{480.*factorX, 170.*factorY}};
+    QRectF labelRect{QPointF{280.*factorX, 125.*factorY}, QPointF{480.*factorX, 165.*factorY}};
     QFont font;
     font.setPixelSize(int(labelRect.height()) - 2);
     painter.setFont(font);
@@ -59,7 +61,7 @@ void aboutImageLabels(QLabel* label)
 
 LC_DlgAbout::LC_DlgAbout(QWidget *parent)
     : LC_Dialog(parent, "About")
-    , ui(new Ui::LC_DlgAbout){
+    , ui(std::make_unique<Ui::LC_DlgAbout>()){
     ui->setupUi(this);
     QC_ApplicationWindow* appWindow = static_cast<QC_ApplicationWindow*>(parent);
 
@@ -97,9 +99,7 @@ LC_DlgAbout::LC_DlgAbout(QWidget *parent)
     connect(ui->pbCheckNewVersion, &QPushButton::clicked, appWindow, &QC_ApplicationWindow::forceCheckForNewVersion);
 }
 
-LC_DlgAbout::~LC_DlgAbout(){
-    delete ui;
-}
+LC_DlgAbout::~LC_DlgAbout() = default;
 
 void LC_DlgAbout::copyInfo(){
     QString text = info;
