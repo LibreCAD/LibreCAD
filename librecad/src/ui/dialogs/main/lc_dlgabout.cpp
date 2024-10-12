@@ -63,32 +63,32 @@ LC_DlgAbout::LC_DlgAbout(QWidget *parent)
     : LC_Dialog(parent, "About")
     , ui(std::make_unique<Ui::LC_DlgAbout>()){
     ui->setupUi(this);
-    QC_ApplicationWindow* appWindow = static_cast<QC_ApplicationWindow*>(parent);
+    auto* appWindow = static_cast<QC_ApplicationWindow*>(parent);
 
     // Compiler macro list in Qt source tree
     // Src/qtbase/src/corelib/global/qcompilerdetection.h
 
     info = QString(
-            tr("Version: <b>%1</b>").arg(XSTR(LC_VERSION)) + "<br>" +
+            tr("Version: <b>%1</b>").arg(XSTR(LC_VERSION)) + "<br/>" +
             #if defined(Q_CC_CLANG)
-            tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "\n" +
+            tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "<br/>" +
             #elif defined(Q_CC_GNU)
-            tr("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "<br>" +
+            tr("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "<br/>" +
             #elif defined(Q_CC_MSVC)
-            tr("Compiler: Microsoft Visual C++") + "<br>" +
+            tr("Compiler: Microsoft Visual C++") + "<br/>" +
             #endif
-            tr("Compiled on: %1").arg(__DATE__) + "<br>" +
-            tr("Qt Version: %1").arg(qVersion()) + "<br>" +
+            tr("Compiled on: %1").arg(__DATE__) + "<br/>" +
+            tr("Qt Version: %1").arg(qVersion()) + "<br/>" +
             tr("Boost Version: %1.%2.%3").arg(BOOST_VERSION / 100000).arg(BOOST_VERSION / 100 % 1000).arg(BOOST_VERSION % 100)
         );
     ui->lVersionInfo->setText(info);
 
 
-    ui->lLinks->setText(QString("<a href=\"https://github.com/LibreCAD/LibreCAD/graphs/contributors\">%1</a>"
+    ui->lLinks->setText(QString(R"(<a href="https://github.com/LibreCAD/LibreCAD/graphs/contributors">%1</a>)"
                                 "<br/>"
-                                "<a href=\"https://github.com/LibreCAD/LibreCAD/blob/master/LICENSE\">%2</a>"
+                                R"(<a href="https://github.com/LibreCAD/LibreCAD/blob/master/LICENSE">%2</a>)"
                                 "<br/>"
-                                "<a href=\"https://github.com/LibreCAD/LibreCAD/\">%3</a>")
+                                R"(<a href="https://github.com/LibreCAD/LibreCAD/">%3</a>)")
                             .arg(tr("Contributors"))
                             .arg(tr("License"))
                             .arg(tr("The Code")));
