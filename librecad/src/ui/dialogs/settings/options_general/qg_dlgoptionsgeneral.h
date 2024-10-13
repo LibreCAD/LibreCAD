@@ -80,6 +80,10 @@ protected slots:
     void setHatchPatternsFolder();
     void setShortcutsMappingsFoler();
     bool checkRestartNeeded();
+    void on_pbOverlayBoxLine_clicked();
+    void on_pbOverlayBoxFill_clicked();
+    void on_pbOverlayBoxLineInverted_clicked();
+    void on_pbOverlayBoxFillInverted_clicked();
 
     void set_color(QComboBox* combo, QColor custom);
 private:
@@ -96,6 +100,8 @@ private:
     void updateLPtSzUnits();
     void saveReferencePoints();
     QString selectFolder(const char* title);
+
+
 };
 
 #endif // QG_DLGOPTIONSGENERAL_H

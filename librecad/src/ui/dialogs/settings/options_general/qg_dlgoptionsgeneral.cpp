@@ -82,6 +82,8 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
     connect(cbCheckNewVersion, &QCheckBox::toggled,
             this, &QG_DlgOptionsGeneral::onCheckNewVersionChanged);
 
+
+
 }
 
 /*
@@ -219,8 +221,6 @@ void QG_DlgOptionsGeneral::init() {
         originalAllowsMenusTearOff = LC_GET_BOOL("AllowMenusTearOff", true);
         cbAllowMenusDetaching->setChecked(originalAllowsMenusTearOff);
 
-        int minTextHeight = LC_GET_INT("MinRenderableTextHeightPx", 4);
-        sbTextMinHeight->setValue(minTextHeight);
 
         checked = LC_GET_BOOL("GridDraw", true);
         cbDrawGrid->setChecked(checked);
@@ -233,7 +233,7 @@ void QG_DlgOptionsGeneral::init() {
 
         wGridLinesLineType->init(false, false, false);
 
-        RS2::LineType metaGridPointsLineType = static_cast<RS2::LineType> (LC_GET_INT("metaGridLineType", RS2::DotLineTiny));
+        RS2::LineType metaGridPointsLineType = static_cast<RS2::LineType> (LC_GET_INT("metaGridPointsLineType", RS2::DotLineTiny));
         wMetaGridPointsLineType->setLineType(metaGridPointsLineType);
 
         RS2::LineType metaGridLinesLineType = static_cast<RS2::LineType> (LC_GET_INT("metaGridLinesLineType", RS2::SolidLine));
@@ -259,8 +259,41 @@ void QG_DlgOptionsGeneral::init() {
 
         checked = LC_GET_BOOL("GridDrawIsoVerticalForTop", true);
         cbDrawVerticalForIsoTop->setChecked(checked);
+
+        int zoomFactor1000 = LC_GET_INT("ScrollZoomFactor", 1137);
+        double zoomFactor = zoomFactor1000 / 1000.0;
+        sbDefaultZoomFactor->setValue(zoomFactor);
+
+        checked = LC_GET_BOOL("IgnoreDraftForHighlight", false);
+        cbHighlightWIthLinewidthInDraft->setChecked(checked);
     }
     LC_GROUP_END();
+
+    LC_GROUP("Render");
+    {
+        int minTextHeight = LC_GET_INT("MinRenderableTextHeightPx", 4);
+        sbTextMinHeight->setValue(minTextHeight);
+
+        int minArcRadius100 = LC_GET_INT("MinArcRadius", 80);
+        double minArcRadius = minArcRadius100 / 100.0;
+        sbRenderMinArcRadius->setValue(minArcRadius);
+
+        int minCircleRadius100 = LC_GET_INT("MinCircleRadius", 200);
+        double minCircleRaidus = minCircleRadius100 / 100.0;
+        sbRenderMinCircleRadius->setValue(minCircleRaidus);
+
+        int minLineLen100 = LC_GET_INT("MinLineLen", 200);
+        double minLineLen = minLineLen100 / 100.0;
+        sbRenderMinLineLen->setValue(minLineLen);
+
+        int minEllipseMajor100 = LC_GET_INT("MinEllipseMajor", 200);
+        double minEllipseMajor = minEllipseMajor100 / 100.0;
+        sbRenderMinEllipseMajor->setValue(minEllipseMajor);
+
+        int minEllipseMinor100 = LC_GET_INT("MinEllipseMinor", 200);
+        double minEllipseMinor = minEllipseMinor100 / 100.0;
+        sbRenderMinEllipseMinor->setValue(minEllipseMinor);
+    }
 
     LC_GROUP("NewDrawingDefaults");
     LC_GROUP_END();
@@ -284,6 +317,14 @@ void QG_DlgOptionsGeneral::init() {
         initComboBox(cb_snap_lines_color, LC_GET_STR("snap_indicator_lines", RS_Settings::snap_indicator_lines));
         initComboBox(cbAxisXColor, LC_GET_STR("grid_x_axisColor", RS_Settings::xAxisColor));
         initComboBox(cbAxisYColor, LC_GET_STR("grid_y_axisColor", RS_Settings::yAxisColor));
+
+        initComboBox(cbOverlayBoxLine, LC_GET_STR("overlay_box_line", RS_Settings::overlayBoxLine));
+        initComboBox(cbOverlayBoxFill, LC_GET_STR("overlay_box_fill", RS_Settings::overlayBoxFill));
+        initComboBox(cbOverlayBoxLineInverted, LC_GET_STR("overlay_box_line_inv", RS_Settings::overlayBoxLineInverted));
+        initComboBox(cbOverlayBoxFillInverted, LC_GET_STR("overlay_box_fill_inv", RS_Settings::overlayBoxFillInverted));
+
+        int overlayTransparency = LC_GET_INT("overlay_box_transparency",90);
+        sbOverlayBoxTransparency->setValue(overlayTransparency);
     }
     LC_GROUP_END();
 
@@ -456,7 +497,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("RelZeroMarkerRadius", sbRelZeroRadius->value());
             LC_SET("ZeroShortAxisMarkSize", sbAxisSize->value());
             LC_SET("AllowMenusTearOff", cbAllowMenusDetaching->isChecked());
-            LC_SET("MinRenderableTextHeightPx", sbTextMinHeight->value());
+
             LC_SET("metaGridDraw", cbDrawMetaGrid->isChecked());
             LC_SET("GridDraw", cbDrawGrid->isChecked());
             LC_SET("metaGridPointsLineType", wMetaGridPointsLineType->getLineType());
@@ -468,8 +509,22 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("GridRenderSimple", cbSimpleGridRendring->isChecked());
             LC_SET("GridDisableWithinPan", cbDisableGridOnPanning->isChecked());
             LC_SET("GridDrawIsoVerticalForTop", cbDrawVerticalForIsoTop->isChecked());
+            double zoomFactor = sbDefaultZoomFactor->value();
+            int zoomFactor1000 = (int)(zoomFactor * 1000.0);
+            LC_SET("ScrollZoomFactor", zoomFactor1000);
+            LC_SET("IgnoreDraftForHighlight", cbHighlightWIthLinewidthInDraft->isChecked());
         }
         LC_GROUP_END();
+
+        LC_GROUP("Render");
+        {
+            LC_SET("MinRenderableTextHeightPx", sbTextMinHeight->value());
+            LC_SET("MinArcRadius", (int)(sbRenderMinArcRadius->value()*100));
+            LC_SET("MinCircleRadius", (int)(sbRenderMinCircleRadius->value()*100));
+            LC_SET("MinLineLen", (int)(sbRenderMinLineLen->value()*100));
+            LC_SET("MinEllipseMajor", (int)(sbRenderMinEllipseMajor->value()*100));
+            LC_SET("MinEllipseMinor", (int)(sbRenderMinEllipseMinor->value()*100));
+        }
 
         LC_GROUP("Colors");
         {
@@ -490,6 +545,12 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("snap_indicator_lines", cb_snap_lines_color->currentText());
             LC_SET("grid_x_axisColor", cbAxisXColor->currentText());
             LC_SET("grid_y_axisColor", cbAxisYColor->currentText());
+
+            LC_SET("overlay_box_line", cbOverlayBoxLine->currentText());
+            LC_SET("overlay_box_fill", cbOverlayBoxFill->currentText());
+            LC_SET("overlay_box_line_inv", cbOverlayBoxLineInverted->currentText());
+            LC_SET("overlay_box_fill_inv", cbOverlayBoxFillInverted->currentText());
+            LC_SET("overlay_box_transparency",sbOverlayBoxTransparency->value());
         }
         LC_GROUP_END();
 
@@ -674,6 +735,22 @@ void QG_DlgOptionsGeneral::on_pb_axis_X_clicked() {
 
 void QG_DlgOptionsGeneral::on_pb_axis_Y_clicked() {
     set_color(cbAxisYColor, QColor(RS_Settings::yAxisColor));
+}
+
+void QG_DlgOptionsGeneral::on_pbOverlayBoxLine_clicked() {
+    set_color(cbOverlayBoxLine, QColor(RS_Settings::overlayBoxLine));
+}
+
+void QG_DlgOptionsGeneral::on_pbOverlayBoxFill_clicked() {
+    set_color(cbOverlayBoxFill, QColor(RS_Settings::overlayBoxFill));
+}
+
+void QG_DlgOptionsGeneral::on_pbOverlayBoxLineInverted_clicked() {
+    set_color(cbOverlayBoxLineInverted, QColor(RS_Settings::overlayBoxLineInverted));
+}
+
+void QG_DlgOptionsGeneral::on_pbOverlayBoxFillInverted_clicked() {
+    set_color(cbOverlayBoxFillInverted, QColor(RS_Settings::overlayBoxFillInverted));
 }
 
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked() {
