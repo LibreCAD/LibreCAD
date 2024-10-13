@@ -134,13 +134,19 @@ void LC_GridSystem::draw(RS_Painter *painter, RS_GraphicView *view) {
 }
 
 void LC_GridSystem::drawMetaGrid(RS_Painter *painter, RS_GraphicView *view) {
-    painter->setPen({gridOptions->metaGridColor, RS2::Width00, gridOptions->metaGridLineType}, gridOptions->metaGridLineWidthPx);
+    RS_Pen pen = RS_Pen(gridOptions->metaGridColor, RS2::Width00, gridOptions->metaGridLineType);
+    pen.setScreenWidth(gridOptions->metaGridLineWidthPx);
+    painter->setPen(pen);
+    painter->noCapStyle();
     drawMetaGridLines(painter, view);
 }
 
 void LC_GridSystem::drawGrid(RS_Painter *painter, RS_GraphicView *view) {
     if (gridOptions->drawLines || hasAxisIndefinite){
-        painter->setPen({gridOptions->gridColorLine, RS2::Width00, gridOptions->gridLineType}, gridOptions->gridWidthPx);
+        RS_Pen pen = RS_Pen(gridOptions->gridColorLine, RS2::Width00, gridOptions->gridLineType);
+        pen.setScreenWidth(gridOptions->gridWidthPx);
+        painter->setPen(pen);
+        painter->noCapStyle();
         drawGridLines(painter, view);
     }
     else{
@@ -173,7 +179,7 @@ void LC_GridSystem::doDrawLines(RS_Painter *painter, [[maybe_unused]]RS_GraphicV
         double endPointX = linesLattice->getPointX(i);
         double endPointY = linesLattice->getPointY(i);
         i++;
-        painter->drawLine(startPointX, startPointY, endPointX, endPointY);
+        painter->drawLineSimple(startPointX, startPointY, endPointX, endPointY);
     }
 }
 

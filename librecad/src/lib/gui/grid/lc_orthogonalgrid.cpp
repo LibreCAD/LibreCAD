@@ -535,7 +535,7 @@ void LC_OrthogonalGrid::createGridLinesWithGaps(const RS_Vector &min, const RS_V
     // top row
     metaX = firstMX;
     vStart = lastMY + startShiftY;
-    vEnd = min.y + endShiftY;
+    vEnd = minY + endShiftY;
     for (int i = 0; i < numMetaX - 1; i++) {
         hStart = metaX + startShiftX;
         hEnd = metaX + metaWidthX + endShiftX;
@@ -580,8 +580,8 @@ void LC_OrthogonalGrid::createGridLinesWithGaps(const RS_Vector &min, const RS_V
     createHorizontalLines(hStart, hEnd, firstMY, -gridY, numPointsYBottom);
 
     // left top vertical
-    vStart = minY + startShiftY;
-    vEnd = lastMY + endShiftY;
+    vStart = lastMY + startShiftY;
+    vEnd = minY + endShiftY;;
     createVerticalLines(vStart, vEnd, firstMX, -gridX, numPointsXLeft);
 
     // left bottom vertical
@@ -598,8 +598,8 @@ void LC_OrthogonalGrid::createGridLinesWithGaps(const RS_Vector &min, const RS_V
     createHorizontalLines(hStart, hEnd, firstMY, -gridY, numPointsYBottom);
 
     // right top vertical
-    vStart = minY + startShiftY;
-    vEnd = lastMY + endShiftY;
+    vStart = lastMY + startShiftY;
+    vEnd = minY + endShiftY;;
     createVerticalLines(vStart, vEnd, lastMX, gridX, numPointsXRight);
     createHorizontalLines(hStart, hEnd, lastMY, gridY, numPointsYTop);
 }
