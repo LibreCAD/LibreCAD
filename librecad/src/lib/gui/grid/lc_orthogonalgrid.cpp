@@ -496,8 +496,9 @@ void LC_OrthogonalGrid::createGridLinesWithGaps(const RS_Vector &min, const RS_V
 
     double startShiftY = sizeDeltaY;
     double endShiftY = - sizeDeltaY * 2;
+    double endShiftYHalf = - sizeDeltaY;
     double startShiftX = sizeDeltaX;
-    double endShiftX = - sizeDeltaX * 2;
+    double endShiftX = - sizeDeltaX/* * 2*/;
 
     double gridX = gridCellSize.x;
     double gridY = gridCellSize.y;
@@ -520,8 +521,8 @@ void LC_OrthogonalGrid::createGridLinesWithGaps(const RS_Vector &min, const RS_V
 
     // bottom row
     metaX = firstMX;
-    vStart = height + startShiftY;
-    vEnd = firstMY + endShiftY;
+    vStart = height/* + startShiftY*/;
+    vEnd = firstMY + endShiftYHalf;
     for (int i = 0; i < numMetaX - 1; i++) {
         hStart = metaX + startShiftX;
         hEnd = metaX + metaWidthX + endShiftX;
@@ -535,7 +536,7 @@ void LC_OrthogonalGrid::createGridLinesWithGaps(const RS_Vector &min, const RS_V
     // top row
     metaX = firstMX;
     vStart = lastMY + startShiftY;
-    vEnd = minY + endShiftY;
+    vEnd = minY/* + endShiftYHalf*/;
     for (int i = 0; i < numMetaX - 1; i++) {
         hStart = metaX + startShiftX;
         hEnd = metaX + metaWidthX + endShiftX;
@@ -547,11 +548,11 @@ void LC_OrthogonalGrid::createGridLinesWithGaps(const RS_Vector &min, const RS_V
     }
     // left column
     metaY = firstMY;
-    hStart = minX + startShiftX;
+    hStart = minX/* + startShiftX*/;
     hEnd = firstMX + endShiftX;
     for (int i = 0; i < numMetaY - 1; i++) {
         vStart = metaY + startShiftY;
-        vEnd = metaY + metaWidthY + endShiftY;
+        vEnd = metaY + metaWidthY + endShiftYHalf;
 
         createVerticalLines(vStart, vEnd, firstMX, -gridX, numPointsXLeft);
         createHorizontalLines(hStart, hEnd, metaY, gridY, pointsInMetaGridY + 1);
@@ -561,10 +562,10 @@ void LC_OrthogonalGrid::createGridLinesWithGaps(const RS_Vector &min, const RS_V
     // right column
     metaY = firstMY;
     hStart = lastMX + startShiftX;
-    hEnd = width + endShiftX;
+    hEnd = width/* + endShiftX*/;
     for (int i = 0; i < numMetaY - 1; i++) {
         vStart = metaY + startShiftY;
-        vEnd = metaY + metaWidthY + endShiftY;
+        vEnd = metaY + metaWidthY + endShiftYHalf;
 
         createVerticalLines(vStart, vEnd, lastMX, gridX, numPointsXRight);
         createHorizontalLines(hStart, hEnd, metaY, gridY, pointsInMetaGridY + 1);
@@ -572,7 +573,7 @@ void LC_OrthogonalGrid::createGridLinesWithGaps(const RS_Vector &min, const RS_V
     }
 
     // left top corners horizontal
-    hStart = minX + startShiftX;
+    hStart = minX/* + startShiftX*/;
     hEnd = firstMX + endShiftX;
     createHorizontalLines(hStart, hEnd, lastMY, gridY, numPointsYTop);
 
@@ -581,25 +582,25 @@ void LC_OrthogonalGrid::createGridLinesWithGaps(const RS_Vector &min, const RS_V
 
     // left top vertical
     vStart = lastMY + startShiftY;
-    vEnd = minY + endShiftY;;
+    vEnd = minY/* + endShiftYHalf*/;
     createVerticalLines(vStart, vEnd, firstMX, -gridX, numPointsXLeft);
 
     // left bottom vertical
-    vStart = height + startShiftY;
-    vEnd = firstMY + endShiftY;
+    vStart = height/* + startShiftY*/;
+    vEnd = firstMY + endShiftYHalf;
     createVerticalLines(vStart, vEnd, firstMX, -gridX, numPointsXLeft);
 
     //  right bottom vertical
-    vStart = height + startShiftY;
-    vEnd = firstMY + endShiftY;
+    vStart = height/* + startShiftY*/;
+    vEnd = firstMY + endShiftYHalf;
     hStart = lastMX + startShiftX;
-    hEnd = width + endShiftX;
+    hEnd = width/* + endShiftX*/;
     createVerticalLines(vStart, vEnd, lastMX, gridX, numPointsXRight);
     createHorizontalLines(hStart, hEnd, firstMY, -gridY, numPointsYBottom);
 
     // right top vertical
     vStart = lastMY + startShiftY;
-    vEnd = minY + endShiftY;;
+    vEnd = minY/* + endShiftYHalf*/;
     createVerticalLines(vStart, vEnd, lastMX, gridX, numPointsXRight);
     createHorizontalLines(hStart, hEnd, lastMY, gridY, numPointsYTop);
 }
