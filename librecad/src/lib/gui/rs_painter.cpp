@@ -839,10 +839,10 @@ void RS_Painter::fillRect ( const QRectF & rectangle, const RS_Color & color ) {
     QPainter::fillRect(x1,y1,x2-x1,y2-y1, color);
 }
 void RS_Painter::fillRect ( const QRectF & rectangle, const QBrush & brush ) {
-    double x1=rectangle.left();
+  /*  double x1=rectangle.left();
     double x2=rectangle.right();
     double y1=rectangle.top();
-    double y2=rectangle.bottom();
+    double y2=rectangle.bottom();*/
     // fixme - review (width height semantics)
 //        QPainter::fillRect(toScreenX(x1),toScreenY(y1),toScreenX(x2),toScreenY(y2), brush);
     QPainter::fillRect(rectangle, brush);

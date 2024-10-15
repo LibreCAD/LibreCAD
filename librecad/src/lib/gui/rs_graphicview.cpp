@@ -53,7 +53,7 @@
 #include "emu_c99.h"
 #endif
 
-#ifdef DEBUG_RENDERING
+#ifdef DEBUG_RENDERING_
 #define DEBUG_RENDERING_DETAILS
 #endif
 

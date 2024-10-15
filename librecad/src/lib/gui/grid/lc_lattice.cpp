@@ -75,7 +75,7 @@ void LC_Lattice::calcDeltas(double angleX, double angleY, const RS_Vector &gridW
     majorVector = deltaX + deltaY;
 }
 
-void LC_Lattice::init(int projectedPointsCount) {
+void LC_Lattice::init([[maybe_unused]]int projectedPointsCount) {
     pointsX.clear();
 //    pointsX.resize(projectedPointsCount);
     pointsX.resize(0);

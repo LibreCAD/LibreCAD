@@ -302,8 +302,8 @@ HEADERS += \
     lib/filters/rs_filterjww.h \
     lib/filters/rs_filterlff.h \
     lib/filters/rs_filterinterface.h \
-    lib/gui/no_used/rs_painterold.h \
-    lib/gui/no_used/rs_painterqtold.h \
+    #lib/gui/no_used/rs_painterold.h \
+    #lib/gui/no_used/rs_painterqtold.h \
     ui/dialogs/main/lc_dlgabout.h \
     ui/dialogs/main/lc_dlgnewversionavailable.h \
     ui/main/lc_releasechecker.h \
@@ -321,8 +321,7 @@ HEADERS += \
     lib/gui/rs_grid.h \
     lib/gui/rs_linetypepattern.h \
     lib/gui/rs_mainwindowinterface.h \
-    lib/gui/rs_painter.h \
-    lib/gui/rs_painterqt.h \
+    lib/gui/rs_painter.h \    
     lib/gui/rs_staticgraphicview.h \
     lib/information/rs_locale.h \
     lib/information/rs_information.h \
@@ -423,8 +422,8 @@ SOURCES += \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \
     lib/filters/rs_filterlff.cpp \
-    lib/gui/no_used/rs_painterold.cpp \
-    lib/gui/no_used/rs_painterqtold.cpp \
+    #lib/gui/no_used/rs_painterold.cpp \
+   # lib/gui/no_used/rs_painterqtold.cpp \
     ui/dialogs/main/lc_dlgabout.cpp \
     ui/dialogs/main/lc_dlgnewversionavailable.cpp \
     ui/main/lc_releasechecker.cpp \
@@ -437,8 +436,7 @@ SOURCES += \
     lib/gui/rs_graphicview.cpp \
     lib/gui/rs_grid.cpp \
     lib/gui/rs_linetypepattern.cpp \
-    lib/gui/rs_painter.cpp \
-    lib/gui/rs_painterqt.cpp \
+    lib/gui/rs_painter.cpp \    
     lib/gui/rs_staticgraphicview.cpp \
     lib/information/rs_locale.cpp \
     lib/information/rs_information.cpp \

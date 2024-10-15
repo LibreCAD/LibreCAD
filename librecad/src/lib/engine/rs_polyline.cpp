@@ -682,7 +682,7 @@ void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patte
     painter->drawPolyline(*this, *view);
 }
 
-void RS_Polyline::drawAsChild(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) {
+void RS_Polyline::drawAsChild(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset) {
     painter->drawPolyline(*this, *view);
 }
 
