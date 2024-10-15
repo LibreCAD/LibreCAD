@@ -95,6 +95,10 @@ RS_Entity* RS_Solid::clone() const
 /**
  * @return Corner number 'num'.
  */
+RS_Vector RS_Solid::unsafeGetCorner(int num) const{
+    return data.corner[num];
+}
+
 RS_Vector RS_Solid::getCorner(int num) const
 {
     if (num >= RS_SolidData::FirstCorner && num < RS_SolidData::MaxCorners) {
@@ -434,20 +438,22 @@ void RS_Solid::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 
 void RS_Solid::draw(RS_Painter* painter,
                     RS_GraphicView* view,
-                    [[maybe_unused]] double& patternOffset)
-{
-    if (nullptr == painter
+                    [[maybe_unused]] double& patternOffset){
+    /*if (nullptr == painter
         || nullptr == view) {
         return;
-    }
+    }*/
 
-    painter->fillTriangle( view->toGui(getCorner(0)),
-                           view->toGui(getCorner(1)),
-                           view->toGui(getCorner(2)));
+    const RS_Vector &c0 = view->toGui(data.corner[0]);
+    const RS_Vector &c1 = view->toGui(data.corner[1]);
+    const RS_Vector &c2 = view->toGui(data.corner[2]);
+
+//    LC_ERR << "Graph" << data.corner[0].x << "  " << data.corner[0].y << "  " << data.corner[1].x << "  " << data.corner[1].y << "  " << data.corner[2].x << "  " << data.corner[2].y;
+
+    painter->fillTriangle(c0,c1,c2);
     if (!isTriangle()) {
-        painter->fillTriangle( view->toGui(getCorner(1)),
-                               view->toGui(getCorner(2)),
-                               view->toGui(getCorner(3)));
+        painter->fillTriangle(c1,c2,
+                              view->toGui(data.corner[3]));
     }
 }
 
@@ -466,4 +472,3 @@ std::ostream& operator << (std::ostream& os, const RS_Solid& p)
     os << " Solid: " << p.getData() << "\n";
     return os;
 }
-

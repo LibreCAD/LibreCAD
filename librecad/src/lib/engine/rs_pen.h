@@ -55,7 +55,7 @@ public:
         setColor(c);
         setWidth(w);
         setLineType(t);
-		setScreenWidth(0);
+		      setScreenWidth(0);
         setAlpha(1.0);
     }
     /**
@@ -71,7 +71,7 @@ public:
         setColor(RS_Color(0,0,0));
         setWidth(RS2::Width00);
         setLineType(RS2::SolidLine);
-		setScreenWidth(0);
+		      setScreenWidth(0);
         setAlpha(1.0);
     }
     //RS_Pen(const RS_Pen& pen) : RS_Flags(pen.getFlags()) {
@@ -101,17 +101,59 @@ public:
     RS_Color getColor() const {
         return color;
     }
+
     void setColor(const RS_Color& c) {
         color = c;
     }
+
+    inline void setColorFromPen(const RS_Pen& pen){
+        color = pen.color;
+    }
+
+    inline void setWidthFromPen(const RS_Pen& pen){
+        width = pen.width;
+    }
+
+    inline void setLineTypeFromPen(const RS_Pen& pen){
+        lineType = pen.lineType;
+    }
+
+    inline bool isColorByLayer(){
+        return color.getFlag(RS2::FlagByLayer);
+    }
+
+    inline bool isColorByBlock(){
+        return color.getFlag(RS2::FlagByBlock);
+    }
+
+    inline bool isWidthByLayer(){
+        return width == RS2::WidthByLayer;
+    }
+
+    inline bool isWidthByBlock(){
+        return width == RS2::WidthByBlock;
+    }
+
+    inline bool isLineTypeByLayer(){
+        return lineType == RS2::LineByLayer;
+    }
+
+    inline bool isLineTypeByBlock(){
+        return lineType == RS2::LineByBlock;
+    }
+
+    bool hasByLayerAttributes(){
+        return color.getFlag(RS2::FlagByLayer) ||  width == RS2::WidthByLayer || lineType == RS2::LineByLayer;
+    }
+
     bool isValid() {
         return !getFlag(RS2::FlagInvalid);
     }
 
-    double getAlpha() const {
+    float getAlpha() const {
         return alpha;
     }
-    void setAlpha(double a) {
+    void setAlpha(float a) {
         alpha = a;
     }
 
@@ -128,18 +170,30 @@ public:
         return (lineType==p.lineType && width==p.width && color==p.color);
     }
 
+    bool isSameAs(const RS_Pen &p, const double &patternOffset) const{
+        return (lineType==p.lineType && width==p.width && color==p.color && alpha == p.alpha && m_dashOffset == patternOffset && !getFlag(RS2::FlagInvalid));
+    }
+
+    void updateBy(const RS_Pen & p){
+        color = p.color;
+        lineType = p.lineType;
+        width = p.width;
+        alpha = p.alpha;
+        m_dashOffset = p.m_dashOffset;
+        setFlags(p.getFlags());
+        delFlag(RS2::FlagInvalid);
+    }
+
     bool operator != (const RS_Pen& p) const {
         return !(*this==p);
     }
 
     // accessor/mutator for dash pattern offset
-    void setDashOffset(double offset)
-    {
+    void setDashOffset(double offset){
         m_dashOffset = offset;
     }
 
-    double dashOffset() const
-    {
+    double dashOffset() const{
         return m_dashOffset;
     }
 
@@ -151,7 +205,7 @@ protected:
     RS2::LineWidth width = RS2::Width00;
     double screenWidth = 0.;
     RS_Color color{};
-    double alpha = 1.;
+    float alpha = 1.;
     double m_dashOffset = 0.;
 };
 

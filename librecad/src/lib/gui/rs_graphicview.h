@@ -37,6 +37,13 @@
 
 #include "lc_rect.h"
 #include "rs.h"
+#include "rs_pen.h"
+
+#define DEBUG_RENDERING
+
+#ifdef DEBUG_RENDERING
+#include <QElapsedTimer>
+#endif
 
 class QDateTime;
 class QMouseEvent;
@@ -160,6 +167,16 @@ public:
   * Sets the color for the last handle (end vertex)
   */
     void setEndHandleColor(const RS_Color &c);
+
+    const RS_Color &getOverlayBoxLineColor() const;
+    void setOverlayBoxLineColor(const RS_Color &overlayBoxLine);
+    const RS_Color &getOverlayBoxLineInvertedColor() const;
+    void setOverlayBoxLineInvertedColor(const RS_Color &overlayBoxLineInverted);
+    const RS_Color &getOverlayBoxFillInvertedColor() const;
+    const RS_Color &getOverlayBoxFillColor() const;
+    void setOverlayBoxFillColor(const RS_Color &overlayBoxFill);
+    void setOverlayBoxFillInvertedColor(const RS_Color &overlayBoxFillInverted);
+
 /* Sets the color for the relative-zero marker. */
     void setRelativeZeroColor(const RS_Color &c);
     void setPreviewReferenceEntitiesColor(const RS_Color& c);
@@ -233,36 +250,39 @@ public:
     virtual void zoomWindow(
         RS_Vector v1, RS_Vector v2,
         bool keepAspectRatio = true);
-//virtual void zoomPan(RS_Vector v1);
+
     virtual void zoomPan(int dx, int dy);
     virtual void zoomScroll(RS2::Direction direction);
     virtual void zoomPage();
     void zoomPageEx();
     virtual void drawWindow_DEPRECATED(RS_Vector v1, RS_Vector v2);
-    virtual void drawLayer1(RS_Painter *painter);
-    virtual void drawLayer2(RS_Painter *painter);
-    virtual void drawLayer3(RS_Painter *painter);
-    virtual void deleteEntity(RS_Entity *e);
-    virtual void drawEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset);
-    virtual void drawEntity(RS_Painter *painter, RS_Entity *e);
-    virtual void drawEntity(RS_Entity *e, double &patternOffset);
-    virtual void drawEntity(RS_Entity *e);
-    virtual void drawEntityPlain(RS_Painter *painter, RS_Entity *e);
-    virtual void drawEntityPlain(RS_Painter *painter, RS_Entity *e, double &patternOffset);
-    virtual void setPenForEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset, bool inOverlay);
-    virtual void setPenForOverlayEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset);
-    virtual void drawEntityHighlighted(RS_Entity *e, bool highlighted = true);
+    void drawLayer1(RS_Painter *painter);
+    void drawLayer2(RS_Painter *painter);
+    void drawLayer3(RS_Painter *painter);
+    void deleteEntity(RS_Entity *e);
+    void drawEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset);
+    void drawAsChild(RS_Painter *painter, RS_Entity *e, double &patternOffset);
+    void drawEntity(RS_Painter *painter, RS_Entity *e);
+    void drawEntity(RS_Entity *e, double &patternOffset);
+    void drawEntity(RS_Entity *e);
+    void drawEntityPlain(RS_Painter *painter, RS_Entity *e);
+    void drawEntityPlain(RS_Painter *painter, RS_Entity *e, double &patternOffset);
+    void setPenForEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset, bool inOverlay);
+    void setPenForPrintingEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset);
+    void setPenForDraftEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset, bool inOverlay);
+    void setPenForOverlayEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset);
+    void drawEntityHighlighted(RS_Entity *e, bool highlighted = true);
     virtual RS_Vector getMousePosition() const = 0;
     virtual const RS_LineTypePattern *getPattern(RS2::LineType t);
-    virtual void drawAbsoluteZero(RS_Painter *painter);
-    virtual void drawRelativeZero(RS_Painter *painter);
-    virtual void drawPaper(RS_Painter *painter);
-    virtual void drawOverlay(RS_Painter *painter);
+    void drawAbsoluteZero(RS_Painter *painter);
+    void drawRelativeZero(RS_Painter *painter);
+    void drawPaper(RS_Painter *painter);
+    void drawOverlay(RS_Painter *painter);
     /**
      * @brief drawDraftSign     Display "Draft" at corners if the draft mode is turned on
      * @param painter           Painter assumed to be non-nullptr
      */
-    virtual void drawDraftSign(RS_Painter *painter);
+    void drawDraftSign(RS_Painter *painter);
     RS_Grid *getGrid() const;
     virtual void updateGridStatusWidget(QString) = 0;
     void setDefaultSnapMode(RS_SnapMode sm);
@@ -288,34 +308,34 @@ public:
     double toGraphDX(int d) const;
     double toGraphDY(int d) const;
     RS_Vector toGraphD(int d, int y) const;
-/**
+    /**
   * (Un-)Locks the position of the relative zero.
   *
   * @param lock true: lock, false: unlock
   */
     void lockRelativeZero(bool lock);
-/**
+    /**
   * @return true if the position of the relative zero point is
   * locked.
   */
     bool isRelativeZeroLocked() const;
-/**
+    /**
   * @return Relative zero coordinate.
   */
     RS_Vector const &getRelativeZero() const;
     void setRelativeZero(const RS_Vector &pos);
     void moveRelativeZero(const RS_Vector &pos);
     RS_EventHandler *getEventHandler() const;
-/**
+    /**
   * Enables or disables print preview.
   */
     void setPrintPreview(bool pv);
-/**
+    /**
   * @retval true This is a print preview graphic view.
   * @retval false Otherwise.
   */
     bool isPrintPreview() const;
-/**
+    /**
   * Enables or disables printing.
   */
     void setPrinting(bool p);
@@ -351,8 +371,20 @@ public:
     RS2::EntityType getTypeToSelect() const;
     void setTypeToSelect(RS2::EntityType mType);
 
-    int getMinRenderableTextHeightInPx() const;
     void loadGridSettings();
+    double getDefaultWidthFactor() const {return defaultWidthFactor;};
+
+    int getPointMode() const;
+    int getPointSize() const;
+    double getMinCircleDrawingRadius() const;
+    double getMinArcDrawingRadius() const;
+    double getMinEllipseMajorRadius() const;
+    double getMinEllipseMinorRadius() const;
+    double getMinLineDrawingLen() const;
+    int getMinRenderableTextHeightInPx() const;
+    void setHasNoGrid(bool hasNoGrid);
+    bool isDraftLinesMode() const;
+    void setDraftLinesMode(bool draftLinesMode);
 protected:
 
     RS_EntityContainer *container = nullptr; // Holds a pointer to all the enties
@@ -374,6 +406,11 @@ protected:
     RS2::SnapRestriction defaultSnapRes;
     RS2::DrawingMode drawingMode;
 
+    RS_Pen lastPaintEntityPen = RS_Pen();
+    bool lastPaintedHighlighted = false;
+    bool lastPaintedSelected = false;
+    bool lastPaintOverlay = false;
+
         enum ExtendAxisArea{
         Both,
         Positive,
@@ -384,17 +421,11 @@ protected:
     bool extendAxisLines = false;
     int extendAxisModeX = 0;
     int extendAxisModeY = 0;
-//    bool showMetaGrid = true;
-//    bool simpleGridRendering = false;
-//    int metaGridWidthPx = 1;
-//    int gridWidthPx = 1;
-//    RS2::LineType metagridLineType = RS2::DotLineTiny;
-//    RS2::LineType gridLineType = RS2::DotLine;
-//    int gridType = 0;
     int entityHandleHalfSize = 2;
     int relativeZeroRadius = 5;
     int zeroShortAxisMarkSize = 20;
     int minRenderableTextHeightInPx = 4;
+    bool ignoreDraftForHighlight = false;
 /**
   * Delete mode. If true, all drawing actions will delete in background color
   * instead.
@@ -403,9 +434,53 @@ protected:
     LC_Rect view_rect;
     void drawEntityReferencePoints(RS_Painter *painter, const RS_Entity *e) const;
     void invalidate();
+
+    // painting cached values
+
+    double unitFactor;
+    double unitFactor100;
+    double defaultWidthFactor;
+    double paperScale;
+    // points rendering settings
+    int pdmode;
+    double pdsize;
+    int screenPDSize;
+#ifdef DEBUG_RENDERING
+    QElapsedTimer drawTimer;
+    QElapsedTimer isVisibleTimer;
+    QElapsedTimer setPenTimer;
+    QElapsedTimer painterSetPenTimer;
+    QElapsedTimer getPenTimer;
+    QElapsedTimer isConstructionTimer;
+    QElapsedTimer drawLayer1Timer;
+    QElapsedTimer drawLayer2Timer;
+    QElapsedTimer drawLayer3Timer;
+    // painting debug
+    int drawEntityCount;
+    long long entityDrawTime;
+    long long isVisibleTime;
+    long long isConstructionTime;
+    long long setPenTime;
+    long long painterSetPenTime;
+    long long getPenTime;
+    long layer1Time;
+    long layer2Time;
+    long layer3Time;
+#endif
+
+    int determinePointScreenSize(RS_Painter *painter, double pdsize) const;
+
+    double minCircleDrawingRadius = 2.0;
+    double minArcDrawingRadius = 0.5;
+    double minEllipseMajorRadius = 2.;
+    double minEllipseMinorRadius = 1.;
+    double minLineDrawingLen = 2;
+    Qt::PenJoinStyle penJoinStyle = Qt::RoundJoin;
+    Qt::PenCapStyle penCapStyle = Qt::RoundCap;
 private:
     bool zoomFrozen = false;
     bool draftMode = false;
+    bool draftLinesMode = false;
     RS_Vector factor{1., 1.};
     int offsetX = 0;
     int offsetY = 0;
@@ -418,21 +493,24 @@ private:
     int borderTop = 0;
     int borderRight = 0;
     int borderBottom = 0;
-//	RS_Vector relativeZero{false};
     RS_Vector relativeZero = RS_Vector(0, 0, 0);
     bool relativeZeroLocked = false;
-//! Print preview flag
+    //! Print preview flag
     bool printPreview = false;
-//! Active when printing only:
+    //! Active when printing only:
     bool printing = false;
-// Map that will be used for overlaying additional items on top of the main CAD drawing
+    // Map that will be used for overlaying additional items on top of the main CAD drawing
     QMap<int, RS_EntityContainer *> overlayEntities;
-/** if true, graphicView is under cleanup */
+    /** if true, graphicView is under cleanup */
     bool m_bIsCleanUp = false;
     bool panning = false;
+    // this flag is applicable for print-preview mode
     bool scaleLineWidth = false;
     bool inOverlayDrawing = false;
     RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+
+    // fixme - this is disgusting, yet had to disable grid in hatch. Rework!!!
+    bool hasNoGrid = false;
 
 signals:
     void relative_zero_changed(const RS_Vector &);

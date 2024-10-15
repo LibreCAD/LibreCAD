@@ -23,24 +23,24 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<cmath>
 
-#include<QPainterPath>
-#include<QPolygon>
+#include <cmath>
+#include <iostream>
+#include <memory>
 
 #include "dxf_format.h"
-#include "rs_color.h"
-#include "rs_spline.h"
-#include "rs_polyline.h"
-#include "rs_debug.h"
-#include "rs_math.h"
-#include "rs_painter.h"
-#include "rs_graphicview.h"
-#include "rs_linetypepattern.h"
+#include "lc_splinepoints.h"
 #include "rs_arc.h"
+#include "rs_debug.h"
+#include "rs_graphicview.h"
+#include "rs_line.h"
+#include "rs_linetypepattern.h"
+#include "rs_math.h"
+#include "rs_painterqt.h"
+#include "rs_polyline.h"
+#include "rs_spline.h"
 #include "rs_ellipse.h"
 #include "rs_circle.h"
-
 
 namespace {
 // Convert from LibreCAD line style pattern to QPen Dash Pattern.
@@ -84,28 +84,42 @@ namespace {
  * Constructor.
  */
 // RVT_PORT changed from RS_PainterQt::RS_PainterQt( const QPaintDevice* pd)
-RS_Painter::RS_Painter( QPaintDevice* pd)
+RS_PainterQt::RS_PainterQt( QPaintDevice* pd)
     : QPainter{pd}, lastUsedPen() {
-    drawingMode = RS2::ModeFull;
-    drawSelectedEntities=false;
     cachedDpmm = getDpmm();
+}
+
+void RS_PainterQt::moveTo(int x, int y) {
+    //RVT_PORT changed from QPainter::moveTo(x,y);
+    rememberX=x;
+    rememberY=y;
+}
+
+void RS_PainterQt::lineTo(int x, int y) {
+    // RVT_PORT changed from QPainter::lineTo(x, y);
+    QPainterPath path;
+    path.moveTo(rememberX,rememberY);
+    path.lineTo(x,y);
+    QPainter::drawPath(path);
+    rememberX=x;
+    rememberY=y;
 }
 
 /**
  * Draws a grid point at (x1, y1).
  */
-void RS_Painter::drawGridPoint(const RS_Vector& p) {
+void RS_PainterQt::drawGridPoint(const RS_Vector& p) {
     QPainter::drawPoint(QPointF(p.x, p.y));
 }
 
-void RS_Painter::drawGridPoint(const double &x, const double &y) {
+void RS_PainterQt::drawGridPoint(const double &x, const double &y) {
     QPainter::drawPoint(QPointF(x, y));
 }
 
 /**
  * Draws a point at (x1, y1).
  */
-void RS_Painter::drawPoint(const RS_Vector& p, int pdmode, int pdsize) {
+void RS_PainterQt::drawPoint(const RS_Vector& p, int pdmode, int pdsize) {
     int screenX = p.x;
     int screenY = p.y;
     int halfPDSize = pdsize/2;
@@ -191,15 +205,15 @@ void RS_Painter::drawPoint(const RS_Vector& p, int pdmode, int pdsize) {
 /**
  * Draws a line from (x1, y1) to (x2, y2).
  */
-void RS_Painter::drawLine(const RS_Vector& p1, const RS_Vector& p2){
+void RS_PainterQt::drawLine(const RS_Vector& p1, const RS_Vector& p2){
     QPainter::drawLine(QPointF(p1.x, p1.y),QPointF(p2.x, p2.y));
 }
 
-void RS_Painter::drawLineSimple(const double &x1, const double &y1, const double &x2, const double &y2){
+void RS_PainterQt::drawLineSimple(const double &x1, const double &y1, const double &x2, const double &y2){
     QPainter::drawLine(QPointF(x1, y1),QPointF(x2, y2));
 }
 
-void RS_Painter::drawLine(const double &x1, const double &y1, const double &x2, const double &y2){
+void RS_PainterQt::drawLine(const double &x1, const double &y1, const double &x2, const double &y2){
     if(QPointF(x2-x1, y2-y1).manhattanLength() > minLineDrawingLen) {
         QPainter::drawLine(QPointF(x1, y1),QPointF(x2, y2));
     }
@@ -218,7 +232,7 @@ void RS_Painter::drawLine(const double &x1, const double &y1, const double &x2, 
  * @param a2 Angle 2 in rad
  * @param reversed true: clockwise, false: counterclockwise
  */
-void RS_Painter::drawArcEntity( const RS_Vector& cp,
+void RS_PainterQt::drawArcEntity( const RS_Vector& cp,
                                   double radius,
                                   double startAngleDegrees,
                                   double angularLength){
@@ -237,11 +251,101 @@ void RS_Painter::drawArcEntity( const RS_Vector& cp,
 }
 
 /**
+ * Draws an arc on apple.
+ *
+ * @param cx center in x
+ * @param cy center in y
+ * @param radius Radius
+ * @param a1 Angle 1 in rad
+ * @param a2 Angle 2 in rad
+ * @param reversed true: clockwise, false: counterclockwise
+ */
+void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
+                              double a1, double a2,
+                              bool reversed) {
+    RS_DEBUG->print("RS_PainterQt::drawArcMac");
+    if(radius<=0.5) {
+        drawGridPoint(cp);
+    } else {
+        //QPointArray pa;
+        //createArc(pa, cp, radius, a1, a2, reversed);
+
+        double cix;            // Next point on circle
+        double ciy;            //
+        double aStep;         // Angle Step (rad)
+        double a;             // Current Angle (rad)
+        double ox;
+        double oy;
+
+        if(2.0/radius<=1.0) {
+            aStep=std::asin(2.0/radius);
+        } else {
+            aStep=1.0;
+        }
+
+        if (aStep<0.05) {
+            aStep = 0.05;
+        }
+
+        //QPointArray pa;
+        //int i=0;
+        //pa.resize(i+1);
+        //pa.setPoint(i++, toScreenX(cp.x+cos(a1)*radius),
+        //            toScreenY(cp.y-sin(a1)*radius));
+        //moveTo(toScreenX(cp.x+cos(a1)*radius),
+        //       toScreenY(cp.y-sin(a1)*radius));
+        ox = cp.x+std::cos(a1)*radius;
+        oy = cp.y-std::sin(a1)*radius;
+        if(!reversed) {
+            // Arc Counterclockwise:
+            if(a1>a2-1.0e-10) {
+                a2+=2*M_PI;
+            }
+            for(a=a1+aStep; a<=a2; a+=aStep) {
+                cix = cp.x+std::cos(a)*radius;
+                ciy = cp.y-std::sin(a)*radius;
+                //lineTo(cix, ciy);
+                drawLine(RS_Vector(ox, oy), RS_Vector(cix, ciy));
+                ox = cix;
+                oy = ciy;
+                //pa.resize(i+1);
+                //pa.setPoint(i++, cix, ciy);
+            }
+        } else {
+            // Arc Clockwise:
+            if(a1<a2+1.0e-10) {
+                a2-=2*M_PI;
+            }
+            for(a=a1-aStep; a>=a2; a-=aStep) {
+                cix = cp.x+std::cos(a)*radius;
+                ciy = cp.y-std::sin(a)*radius;
+                drawLine(RS_Vector(ox, oy), RS_Vector(cix, ciy));
+                ox = cix;
+                oy = ciy;
+                //lineTo(cix, ciy);
+                //pa.resize(i+1);
+                //pa.setPoint(i++, cix, ciy);
+            }
+        }
+        drawLine(RS_Vector(ox, oy),
+                 RS_Vector(cp.x+std::cos(a2)*radius,
+                           cp.y-std::sin(a2)*radius));
+        //lineTo(toScreenX(cp.x+cos(a2)*radius),
+        //       toScreenY(cp.y-sin(a2)*radius));
+        //pa.resize(i+1);
+        //pa.setPoint(i++,
+        //            toScreenX(cp.x+cos(a2)*radius),
+        //            toScreenY(cp.y-sin(a2)*radius));
+        //drawPolyline(pa);
+    }
+}
+
+/**
  * Draws a circle.
  * @param cp Center point
  * @param radius Radius
  */
-void RS_Painter::drawCircle(const RS_Vector& cp, double radius){
+void RS_PainterQt::drawCircle(const RS_Vector& cp, double radius){
     if (radius < minCircleDrawingRadius){
         QPainter::drawPoint(QPointF(cp.x, cp.y));
     }
@@ -250,7 +354,7 @@ void RS_Painter::drawCircle(const RS_Vector& cp, double radius){
     }
 }
 
-void RS_Painter::drawEllipse(double centerX, double centerY, double radius1, double radius2, double angle) {
+void RS_PainterQt::drawEllipse(double centerX, double centerY, double radius1, double radius2, double angle) {
     if (radius1 < minEllipseMajorRadius){
         QPainter::drawPoint(QPointF(centerX, centerY));
     }
@@ -277,7 +381,7 @@ void RS_Painter::drawEllipse(double centerX, double centerY, double radius1, dou
 }
 
 
-void RS_Painter::createSolidFillPath(QPainterPath &path, const RS_GraphicView *view,   QList<RS_Entity *> entities)  {
+void RS_PainterQt::createSolidFillPath(QPainterPath &path, const RS_GraphicView *view,   QList<RS_Entity *> entities)  {
         foreach (auto l, entities) {
             if (l->rtti()==RS2::EntityContainer) {
                 auto* loop = (RS_EntityContainer*)l;
@@ -388,7 +492,7 @@ void RS_Painter::createSolidFillPath(QPainterPath &path, const RS_GraphicView *v
             }
         }
 }
-void RS_Painter::debugOutPath(const QPainterPath &tmpPath) const {
+void RS_PainterQt::debugOutPath(const QPainterPath &tmpPath) const {
     int c = tmpPath.elementCount();
     for (int i = 0; i < c; i++){
         const QPainterPath::Element &element = tmpPath.elementAt(i);
@@ -398,7 +502,7 @@ void RS_Painter::debugOutPath(const QPainterPath &tmpPath) const {
 
 
 
-void RS_Painter::drawEllipseArc(double centerX, double centerY, double radius1, double radius2, double angle,
+void RS_PainterQt::drawEllipseArc(double centerX, double centerY, double radius1, double radius2, double angle,
                                   double angle1, double angle2, double angularLength, bool reversed) {
     if (radius1 < minEllipseMajorRadius){
         QPainter::drawPoint(QPointF(centerX, centerY));
@@ -439,7 +543,7 @@ void RS_Painter::drawEllipseArc(double centerX, double centerY, double radius1, 
     }
 }
 
-void RS_Painter::drawSplinePoints(const 	std::vector<RS_Vector> &controlPoints, bool closed){
+void RS_PainterQt::drawSplinePoints(const 	std::vector<RS_Vector> &controlPoints, bool closed){
     size_t n = controlPoints.size();
     if(n < 2)
         return;
@@ -464,7 +568,7 @@ void RS_Painter::drawSplinePoints(const 	std::vector<RS_Vector> &controlPoints, 
 
             for (size_t i = 1; i < n - 1; i++) {
                 const RS_Vector &cpi = controlPoints[i];
-                vEnd = (cpi + controlPoints[i + 1]) / 2.0;
+                vEnd = (cpi + controlPoints[i + 1]) / 2.0;                
                 qPath.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
             }
             qPath.quadTo(QPointF(cpNMinus1.x, cpNMinus1.y), QPointF(vStart.x, vStart.y));
@@ -485,11 +589,11 @@ void RS_Painter::drawSplinePoints(const 	std::vector<RS_Vector> &controlPoints, 
                 qPath.quadTo(QPointF(cp1.x, cp1.y), QPointF(vEnd.x, vEnd.y));
 
                 for (size_t i = 2; i < n - 2; i++) {
-                    const RS_Vector &cpi = controlPoints[i];
+                    const RS_Vector &cpi = controlPoints[i];                    
                     vEnd = (cpi + controlPoints[i + 1]) / 2.0;
                     qPath.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
                 }
-
+                                
                 qPath.quadTo(QPointF(controlPoints[n - 2].x, controlPoints[n - 2].y), QPointF( controlPoints[n - 1].x,  controlPoints[n - 1].y));
             }
         }
@@ -497,7 +601,7 @@ void RS_Painter::drawSplinePoints(const 	std::vector<RS_Vector> &controlPoints, 
     QPainter::drawPath(qPath);
 }
 
-void RS_Painter::drawPolyline(const RS_Polyline& polyline, const RS_GraphicView& view){
+void RS_PainterQt::drawPolyline(const RS_Polyline& polyline, const RS_GraphicView& view){
     if (polyline.isEmpty()) {
         return;
     }
@@ -541,7 +645,7 @@ void RS_Painter::drawPolyline(const RS_Polyline& polyline, const RS_GraphicView&
     QPainter::drawPath(path);
 }
 
-void RS_Painter::drawSpline(const RS_Spline& spline, const RS_GraphicView& view){
+void RS_PainterQt::drawSpline(const RS_Spline& spline, const RS_GraphicView& view){
     QPainterPath path;
     unsigned int count = spline.count();
     if (count > 0) {
@@ -556,15 +660,15 @@ void RS_Painter::drawSpline(const RS_Spline& spline, const RS_GraphicView& view)
     QPainter::drawPath(path);
 }
 
-void RS_Painter::drawImg(QImage& img, const RS_Vector& pos,
+void RS_PainterQt::drawImg(QImage& img, const RS_Vector& pos,
                            const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor) {
     save();
     // Render smooth only at close zooms
     if (factor.x < 1 || factor.y < 1) {
-        RS_Painter::setRenderHint(SmoothPixmapTransform , true);
+        RS_PainterQt::setRenderHint(SmoothPixmapTransform , true);
     }
     else {
-        RS_Painter::setRenderHint(SmoothPixmapTransform);
+        RS_PainterQt::setRenderHint(SmoothPixmapTransform);
     }
 
     RS_Vector un = uVector/uVector.magnitude();
@@ -587,13 +691,13 @@ void RS_Painter::drawImg(QImage& img, const RS_Vector& pos,
     restore();
 }
 
-void RS_Painter::drawTextH(int x1, int y1,
+void RS_PainterQt::drawTextH(int x1, int y1,
                              int x2, int y2,
                              const QString& text) {
     QPainter::drawText(x1, y1, x2, y2,Qt::AlignRight|Qt::AlignVCenter,text);
 }
 
-void RS_Painter::drawTextV(int x1, int y1,
+void RS_PainterQt::drawTextV(int x1, int y1,
                              int x2, int y2,
                              const QString& text) {
     save();
@@ -605,12 +709,12 @@ void RS_Painter::drawTextV(int x1, int y1,
     restore();
 }
 
-void RS_Painter::fillRect(int x1, int y1, int w, int h,
+void RS_PainterQt::fillRect(int x1, int y1, int w, int h,
                             const RS_Color& col) {
     QPainter::fillRect(x1, y1, w, h, col);
 }
 
-void RS_Painter::fillTriangle(const RS_Vector& p1,
+void RS_PainterQt::fillTriangle(const RS_Vector& p1,
                                 const RS_Vector& p2,
                                 const RS_Vector& p3) {
 
@@ -627,32 +731,32 @@ void RS_Painter::fillTriangle(const RS_Vector& p1,
 }
 
 
-void RS_Painter::erase() {
+void RS_PainterQt::erase() {
     QPainter::eraseRect(0,0,getWidth(),getHeight());
 }
 
-int RS_Painter::getWidth() const{
+int RS_PainterQt::getWidth() const{
     return device()->width();
 }
 
 /** get Density per millimeter on screen/print device
   *@return density per millimeter in pixel/mm
   */
-double RS_Painter::getDpmm() const{
+double RS_PainterQt::getDpmm() const{
     int mm(device()->widthMM());
     if(mm==0) mm=400;
     return double(device()->width())/mm;
 }
 
-int RS_Painter::getHeight() const{
+int RS_PainterQt::getHeight() const{
     return device()->height();
 }
 
-const QBrush& RS_Painter::brush() const{
+const QBrush& RS_PainterQt::brush() const{
     return QPainter::brush();
 }
 
-RS_Pen RS_Painter::getPen() const{
+RS_Pen RS_PainterQt::getPen() const{
     return lpen;
 }
 
@@ -663,13 +767,13 @@ namespace {
     const QColor qcolorWhite = colorWhite.toQColor();
 }
 
-void RS_Painter::noCapStyle(){
+void RS_PainterQt::noCapStyle(){
     QPen pen = QPainter::pen();
     pen.setCapStyle(Qt::PenCapStyle::FlatCap);
     QPainter::setPen(pen);
 }
 
-void RS_Painter::setPen(const RS_Pen& pen) {
+void RS_PainterQt::setPen(const RS_Pen& pen) {     
     lpen = pen;
     QColor pColor;
     switch (drawingMode) {
@@ -735,7 +839,7 @@ void RS_Painter::setPen(const RS_Pen& pen) {
 
 }
 
-void RS_Painter::setPen(const RS_Color& color) {
+void RS_PainterQt::setPen(const RS_Color& color) {
     switch (drawingMode) {
         case RS2::ModeBW: {
             const RS_Color &color = RS_Color(Qt::black);
@@ -756,7 +860,7 @@ void RS_Painter::setPen(const RS_Color& color) {
     }
 }
 
-void RS_Painter::setPen(int r, int g, int b) {
+void RS_PainterQt::setPen(int r, int g, int b) {
     switch (drawingMode) {
         case RS2::ModeBW: {
             RS_Color color = RS_Color(Qt::black);
@@ -779,120 +883,120 @@ void RS_Painter::setPen(int r, int g, int b) {
     }
 }
 
-void RS_Painter::disablePen() {
+void RS_PainterQt::disablePen() {
     lpen = RS_Pen(RS2::FlagInvalid);
     QPainter::setPen(Qt::NoPen);
 }
 
-void RS_Painter::setBrush(const RS_Color& color) {
+void RS_PainterQt::setBrush(const RS_Color& color) {
     switch (drawingMode) {
-        case RS2::ModeBW:
-            QPainter::setBrush( QColor( Qt::black));
-            break;
+    case RS2::ModeBW:
+        QPainter::setBrush( QColor( Qt::black));
+        break;
 
-        case RS2::ModeWB:
-            QPainter::setBrush( QColor( Qt::white));
-            break;
+    case RS2::ModeWB:
+        QPainter::setBrush( QColor( Qt::white));
+        break;
 
-        default:
-            QPainter::setBrush( color);
-            break;
+    default:
+        QPainter::setBrush( color);
+        break;
     }
 }
 
-void RS_Painter::setBrush(const QBrush& color) {
+void RS_PainterQt::setBrush(const QBrush& color) {
     QPainter::setBrush(color);
 }
 
-void RS_Painter::drawPolygon(const QPolygon& a, Qt::FillRule rule) {
+void RS_PainterQt::drawPolygon(const QPolygon& a, Qt::FillRule rule) {
     QPainter::drawPolygon(a,rule);
 }
 
-void RS_Painter::drawPolygonF(const QPolygonF& a, Qt::FillRule rule) {
+void RS_PainterQt::drawPolygonF(const QPolygonF& a, Qt::FillRule rule) {
     QPainter::drawPolygon(a,rule);
 }
 
-void RS_Painter::fillPath ( const QPainterPath & path, const QBrush& brush){
+void RS_PainterQt::fillPath ( const QPainterPath & path, const QBrush& brush){
     QPainter::fillPath(path, brush);
 }
-void RS_Painter::drawPath ( const QPainterPath & path ) {
+void RS_PainterQt::drawPath ( const QPainterPath & path ) {
     QPainter::drawPath(path);
 }
 
-void RS_Painter::setClipRect(int x, int y, int w, int h) {
+void RS_PainterQt::setClipRect(int x, int y, int w, int h) {
     QPainter::setClipRect(x, y, w, h);
     setClipping(true);
 }
 
-void RS_Painter::resetClipping() {
+void RS_PainterQt::resetClipping() {
     setClipping(false);
 }
 
-void RS_Painter::fillRect ( const QRectF & rectangle, const RS_Color & color ) {
+void RS_PainterQt::fillRect ( const QRectF & rectangle, const RS_Color & color ) {
 
-    double x1=rectangle.left();
-    double x2=rectangle.right();
-    double y1=rectangle.top();
-    double y2=rectangle.bottom();
+        double x1=rectangle.left();
+        double x2=rectangle.right();
+        double y1=rectangle.top();
+        double y2=rectangle.bottom();
     // fixme - review (width height semantics)
 //        QPainter::fillRect(toScreenX(x1),toScreenY(y1),toScreenX(x2)-toScreenX(x1),toScreenY(y2)-toScreenX(y1), color);
-    QPainter::fillRect(x1,y1,x2-x1,y2-y1, color);
+        QPainter::fillRect(x1,y1,x2-x1,y2-y1, color);
 }
-void RS_Painter::fillRect ( const QRectF & rectangle, const QBrush & brush ) {
-    double x1=rectangle.left();
-    double x2=rectangle.right();
-    double y1=rectangle.top();
-    double y2=rectangle.bottom();
+void RS_PainterQt::fillRect ( const QRectF & rectangle, const QBrush & brush ) {
+        double x1=rectangle.left();
+        double x2=rectangle.right();
+        double y1=rectangle.top();
+        double y2=rectangle.bottom();
     // fixme - review (width height semantics)
 //        QPainter::fillRect(toScreenX(x1),toScreenY(y1),toScreenX(x2),toScreenY(y2), brush);
-    QPainter::fillRect(rectangle, brush);
+        QPainter::fillRect(rectangle, brush);
 }
 
-RS_Pen& RS_Painter::getRsPen(){
+RS_Pen& RS_PainterQt::getRsPen(){
     return lpen;
 }
 
-void RS_Painter::drawText(const QRect& rect, const QString& text, QRect* boundingBox){
+void RS_PainterQt::drawText(const QRect& rect, const QString& text, QRect* boundingBox){
     QPainter::drawText(rect, Qt::AlignTop | Qt::AlignLeft | Qt::TextDontClip, text, boundingBox);
 }
 
-void RS_Painter::setPenJoinStyle(Qt::PenJoinStyle style){
+
+void RS_PainterQt::setPenJoinStyle(Qt::PenJoinStyle style){
     penJoinStyle = style;
 }
 
-void RS_Painter::setPenCapStyle(Qt::PenCapStyle style){
+void RS_PainterQt::setPenCapStyle(Qt::PenCapStyle style){
     penCapStyle = style;
 }
 
-void RS_Painter::setMinCircleDrawingRadius(double val) {
+void RS_PainterQt::setMinCircleDrawingRadius(double val) {
     minCircleDrawingRadius = val;
 }
 
-void RS_Painter::setMinArcDrawingRadius(double val) {
+void RS_PainterQt::setMinArcDrawingRadius(double val) {
     minArcDrawingRadius = val;
 }
 
+void RS_PainterQt::setCachedDpmm(double val) {
+    cachedDpmm = val;
+}
 
-void RS_Painter::setMinEllipseMajorRadius(double val) {
+void RS_PainterQt::setMinEllipseMajorRadius(double val) {
     minEllipseMajorRadius = val;
 }
 
-void RS_Painter::setMinEllipseMinorRadius(double val) {
+double RS_PainterQt::getMinEllipseMinorRadius() const {
+    return minEllipseMinorRadius;
+}
+
+void RS_PainterQt::setMinEllipseMinorRadius(double val) {
     minEllipseMinorRadius = val;
 }
 
-void RS_Painter::setMinLineDrawingLen(double val) {
+double RS_PainterQt::getMinLineDrawingLen() const {
+    return minLineDrawingLen;
+}
+
+void RS_PainterQt::setMinLineDrawingLen(double val) {
     minLineDrawingLen = val;
-}
-
-void RS_Painter::drawRect(const RS_Vector& p1, const RS_Vector& p2) {
-    drawPolygon(QRect(int(p1.x+0.5), int(p1.y+0.5), int(p2.x - p1.x+0.5), int(p2.y - p1.y+0.5)));
-}
-
-void RS_Painter::drawHandle(const RS_Vector& p, const RS_Color& c, int size) {
-    if (size<0) { // fixme - remove redundant check in painting
-        size = 2;
-    }
-    int doubleSize = 2 * size;
-    fillRect((int)(p.x - size), (int)(p.y - size), doubleSize, doubleSize, c);
 }

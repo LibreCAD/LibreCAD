@@ -255,6 +255,12 @@ public:
 
     const QList<RS_Entity*>& getEntityList();
 
+    inline RS_Entity* unsafeEntityAt(int index) const {return entities.at(index);}
+
+    void drawAsChild(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
+
+    RS_Entity *cloneProxy() const override;;
+
 protected:
     /**
      * @brief getLoops for hatch, split closed loops into single simple loops. All returned containers are owned by
@@ -284,6 +290,8 @@ private:
     bool ignoredSnap() const;
     mutable int entIdx = 0;
     bool autoDelete = false;
+
+
 };
 
 #endif

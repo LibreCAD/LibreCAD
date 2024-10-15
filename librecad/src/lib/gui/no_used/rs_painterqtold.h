@@ -25,13 +25,13 @@
 **********************************************************************/
 
 
-#ifndef RS_PAINTERQT_H
-#define RS_PAINTERQT_H
+#ifndef RS_PAINTERQT_OLD_H
+#define RS_PAINTERQT_OLD_H
 
 #include <QPainter>
 #include <QPainterPath>
 
-#include "rs_painter.h"
+#include "rs_painterold.h"
 #include "rs_pen.h"
 
 class RS_GraphicView;
@@ -42,11 +42,11 @@ class RS_Spline;
  * lines or arcs in a widget. All coordinates are screen coordinates
  * and have nothing to do with the graphic view.
  */
-class RS_PainterQt: public QPainter, public RS_Painter {
+class RS_PainterQtOld: public QPainter, public RS_PainterOld {
 
 public:
-    RS_PainterQt( QPaintDevice* pd);
-    virtual ~RS_PainterQt()=default;
+    RS_PainterQtOld( QPaintDevice* pd);
+    virtual ~RS_PainterQtOld()=default;
 
     void moveTo(int x, int y) override;
     void lineTo(int x, int y) override;
@@ -60,34 +60,34 @@ public:
     void fillRect ( const QRectF & rectangle, const QBrush & brush ) override;
 
     void drawArc(const RS_Vector& cp, double radius,
-                         double a1, double a2,
-                         bool reversed) override;
+                 double a1, double a2,
+                 bool reversed) override;
     virtual void drawArcMac(const RS_Vector& cp, double radius,
-                         double a1, double a2,
-                         bool reversed);
+                            double a1, double a2,
+                            bool reversed);
     void drawCircle(const RS_Vector&, double radius) override;
     void drawEllipse(const RS_Vector& cp,
-                             double radius1, double radius2,
-                             double angle,
-                             double a1, double a2,
-                             bool reversed) override;
+                     double radius1, double radius2,
+                     double angle,
+                     double a1, double a2,
+                     bool reversed) override;
     void drawPolyline(const RS_Polyline& polyline, const RS_GraphicView& view) override;
     void drawSplinePoints(const LC_SplinePointsData& splineData) override;
     void drawSpline(const RS_Spline& spline, const RS_GraphicView& view) override;
     void drawImg(QImage& img, const RS_Vector& pos,
-                               const RS_Vector& u, const RS_Vector& v, const RS_Vector& factor) override;
+                 const RS_Vector& u, const RS_Vector& v, const RS_Vector& factor) override;
     void drawTextH(int x1, int y1, int x2, int y2,
-                           const QString& text) override;
+                   const QString& text) override;
     void drawTextV(int x1, int y1, int x2, int y2,
-                           const QString& text) override;
+                   const QString& text) override;
     void drawText(const QRect& rect, const QString& text, QRect* boundingBox) override;
 
     void fillRect(int x1, int y1, int w, int h,
-                          const RS_Color& col) override;
+                  const RS_Color& col) override;
 
     void fillTriangle(const RS_Vector& p1,
-                              const RS_Vector& p2,
-                              const RS_Vector& p3) override;
+                      const RS_Vector& p2,
+                      const RS_Vector& p3) override;
 
     void drawPolygon(const QPolygon& a,Qt::FillRule rule=Qt::WindingFill) override;
     void drawPath ( const QPainterPath & path ) override;

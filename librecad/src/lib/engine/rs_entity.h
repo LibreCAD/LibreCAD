@@ -146,6 +146,7 @@ public:
     void setLayer(RS_Layer *l);
     void setLayerToActive();
     RS_Layer *getLayer(bool resolve = true) const;
+    RS_Layer *getLayerResolved() const;
 
     /**
      * Sets the explicit pen for this entity or a pen with special
@@ -157,6 +158,7 @@ public:
 
     void setPenToActive();
     RS_Pen getPen(bool resolve = true) const;
+    RS_Pen getPenResolved() const;
     /**
      * Must be overwritten to return true if an entity type
      * is a container for other entities (e.g. polyline, group, ...).
@@ -552,6 +554,12 @@ public:
     virtual void draw(
         RS_Painter *painter, RS_GraphicView *view,
         double &patternOffset) = 0;
+
+    virtual void drawAsChild(
+        RS_Painter *painter, RS_GraphicView *view,
+        double &patternOffset){
+        draw(painter, view, patternOffset);
+    }
     virtual void drawDraft(
         RS_Painter *painter, RS_GraphicView *view,
         double &patternOffset) {draw(painter, view, patternOffset);};

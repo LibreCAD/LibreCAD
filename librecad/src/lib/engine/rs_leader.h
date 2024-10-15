@@ -98,6 +98,8 @@ public:
 
 	friend std::ostream& operator << (std::ostream& os, const RS_Leader& l);
 
+    RS_VectorSolutions getRefPoints() const override;
+
 protected:
     RS_LeaderData data;
     bool empty = false;

@@ -287,7 +287,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                 }
                 case RS2::EntityArc: {
                     auto *refMovingArc = dynamic_cast<RS_Arc *>(refMovingEntity);
-                    auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->clone());
+                    auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->cloneProxy());
 
                     if (ctrlPressed){ // for arc, we just correct angle of enpoint without changing the center and radius - if we move endpoint ref
                         mouse = getSnapAngleAwarePoint(e, refMovingArc->getCenter(), mouse, true);

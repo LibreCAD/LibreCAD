@@ -542,6 +542,12 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
 
 // Set the appropriate text for the display size value label
     updateLPtSzUnits();
+
+    int lineCaps = graphic->getGraphicVariableInt("$ENDCAPS", 1);
+    cbLineCap->setCurrentIndex(lineCaps);
+
+    int joinStyle = graphic->getGraphicVariableInt("$JOINSTYLE", 1);
+    cbLineJoin ->setCurrentIndex(joinStyle);
 }
 
 
@@ -794,6 +800,8 @@ void QG_DlgOptionsDrawing::validate() {
             graphic->setIsoView(isoView);
         }
 
+        graphic->addVariable("$JOINSTYLE", cbLineJoin ->currentIndex(), DXF_FORMAT_GC_JoinStyle);
+        graphic->addVariable("$ENDCAPS", cbLineCap->currentIndex(), DXF_FORMAT_GC_Endcaps);
 
 // indicate graphic is modified and requires save
         graphic->setModified(true);

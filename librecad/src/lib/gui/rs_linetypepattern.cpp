@@ -71,17 +71,14 @@ const RS_LineTypePattern patternSelected{{1.0, -3.0}};
 }
 
 RS_LineTypePattern::RS_LineTypePattern(std::initializer_list<double> const& pattern):
-	pattern(pattern)
-    , num { pattern.size()}
-{
+    pattern(pattern), num { pattern.size()}{
     for(double l: pattern){
         totalLength += std::abs(l);
     }
 }
 
 
-const RS_LineTypePattern* RS_LineTypePattern::getPattern(RS2::LineType lineType)
-{
+const RS_LineTypePattern* RS_LineTypePattern::getPattern(RS2::LineType lineType){
     static std::map<RS2::LineType, const RS_LineTypePattern*> lineTypeToPattern = {
             {RS2::NoPen, &patternSolidLine},
             {RS2::SolidLine, &patternSolidLine},
@@ -113,8 +110,7 @@ const RS_LineTypePattern* RS_LineTypePattern::getPattern(RS2::LineType lineType)
             {RS2::LineByBlock, &patternBlockLine},
             {RS2::LineSelected, &patternSelected}
             };
-    if (lineTypeToPattern.count(lineType) == 0)
+    if (lineTypeToPattern.count(lineType) == 0) // fixme - redundant check since its developer bug?
         return nullptr;
     return lineTypeToPattern[lineType];
 }
-

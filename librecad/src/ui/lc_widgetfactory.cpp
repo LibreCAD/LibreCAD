@@ -287,6 +287,8 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "EditPaste",
         "EditPasteTransform",
         "ViewGrid",
+        "ViewDraft",
+        "ViewLinesDraft",
         "ModifyDeleteQuick",
         "EditKillAllActions",
         "ZoomIn",
@@ -467,7 +469,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     order->hide();
 
     auto *view = createGenericToolbar(tr("View"), "View", tbPolicy, {
-        "ViewGrid", "ViewDraft", "", "ZoomRedraw", "ZoomIn",
+        "ViewGrid", "ViewDraft", "ViewLinesDraft", "", "ZoomRedraw", "ZoomIn",
         "ZoomOut", "ZoomAuto", "ZoomPrevious", "ZoomWindow", "ZoomPan"
     });
 
@@ -635,6 +637,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         "ViewStatusBar",
         "ViewGrid",
         "ViewDraft",
+        "ViewLinesDraft",
         "",
         "ViewGridOrtho",
         "ViewGridIsoLeft",

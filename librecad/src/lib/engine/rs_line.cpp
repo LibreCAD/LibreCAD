@@ -37,11 +37,10 @@
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_linetypepattern.h"
-#include <rs_units.h>
 #include <rs_graphic.h>
 #include "rs_painter.h"
-#include "rs_painterqt.h"
 #include "lc_quadratic.h"
+#include "lc_linemath.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -59,22 +58,21 @@ std::ostream& operator << (std::ostream& os, const RS_LineData& ld) {
  */
 RS_Line::RS_Line(RS_EntityContainer* parent,
                  const RS_LineData& d)
-    :RS_AtomicEntity(parent), data(d) {
+    :LC_CachedLengthEntity(parent), data(d) {
     calculateBorders();
 }
 
 ////construct a line from two endpoints
 RS_Line::RS_Line(RS_EntityContainer* parent, const RS_Vector& pStart, const RS_Vector& pEnd)
-	:RS_AtomicEntity(parent), data({pStart,pEnd}) {
+	:LC_CachedLengthEntity(parent), data({pStart,pEnd}) {
     calculateBorders();
 }
 
 ////construct a line from two endpoints, to be used for construction
 RS_Line::RS_Line(const RS_Vector& pStart, const RS_Vector& pEnd)
-	:RS_AtomicEntity(nullptr), data({pStart,pEnd}) {
+	:LC_CachedLengthEntity(nullptr), data({pStart,pEnd}) {
     calculateBorders();
 }
-
 
 RS_Entity* RS_Line::clone() const {
 	RS_Line* l = new RS_Line(*this);
@@ -82,19 +80,16 @@ RS_Entity* RS_Line::clone() const {
 	return l;
 }
 
-
-
 void RS_Line::calculateBorders() {
     minV = RS_Vector::minimum(data.startpoint, data.endpoint);
     maxV = RS_Vector::maximum(data.startpoint, data.endpoint);
+    updateLength();
 }
-
 
 RS_VectorSolutions RS_Line::getRefPoints() const
 {
 	return RS_VectorSolutions({data.startpoint, data.endpoint});
 }
-
 
 RS_Vector RS_Line::getNearestEndpoint(const RS_Vector& coord,
                                       double* dist)const {
@@ -133,8 +128,7 @@ double RS_Line::getProjectionValueAlongLine(const RS_Vector& coord) const
 RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
                                            bool onEntity,
                                            double* dist,
-                                           RS_Entity** entity) const
-{
+                                           RS_Entity** entity) const{
     if (entity) {
         *entity = const_cast<RS_Line*>(this);
     }
@@ -211,37 +205,35 @@ RS_Vector RS_Line::getPointOnEntityAlongLine(const RS_Vector& coord,const double
 }
 */
 
-
-RS_Vector RS_Line::getMiddlePoint()const
-{
-        return (getStartpoint() + getEndpoint())*0.5;
+RS_Vector RS_Line::getMiddlePoint()const{
+    return (getStartpoint() + getEndpoint())*0.5;
 }
-    /** @return the nearest of equidistant middle points of the line. */
-    RS_Vector RS_Line::getNearestMiddle(const RS_Vector& coord,
-                                        double* dist,
-                                        int middlePoints
-                                        )const {
+
+/** @return the nearest of equidistant middle points of the line. */
+RS_Vector RS_Line::getNearestMiddle(const RS_Vector& coord,
+                                    double* dist,
+                                    int middlePoints
+)const {
 //        RS_DEBUG->print("RS_Line::getNearestMiddle(): begin\n");
-        RS_Vector dvp(getEndpoint() - getStartpoint());
-        double l=dvp.magnitude();
-        if( l<= RS_TOLERANCE) {
-            //line too short
-            return const_cast<RS_Line*>(this)->getNearestCenter(coord, dist);
-        }
-        RS_Vector vp0(getNearestPointOnEntity(coord,true,dist));
-        int counts=middlePoints+1;
-        int i( static_cast<int>(vp0.distanceTo(getStartpoint())/l*counts+0.5));
-        if(!i) i++; // remove end points
-        if(i==counts) i--;
-        vp0=getStartpoint() + dvp*(double(i)/double(counts));
-
-		if (dist) {
-            *dist=vp0.distanceTo(coord);
-        }
-//        RS_DEBUG->print("RS_Line::getNearestMiddle(): end\n");
-        return vp0;
+    RS_Vector dvp(getEndpoint() - getStartpoint());
+    double l=dvp.magnitude();
+    if( l<= RS_TOLERANCE) {
+        //line too short
+        return const_cast<RS_Line*>(this)->getNearestCenter(coord, dist);
     }
+    RS_Vector vp0(getNearestPointOnEntity(coord,true,dist));
+    int counts=middlePoints+1;
+    int i( static_cast<int>(vp0.distanceTo(getStartpoint())/l*counts+0.5));
+    if(!i) i++; // remove end points
+    if(i==counts) i--;
+    vp0=getStartpoint() + dvp*(double(i)/double(counts));
 
+    if (dist) {
+        *dist=vp0.distanceTo(coord);
+    }
+//        RS_DEBUG->print("RS_Line::getNearestMiddle(): end\n");
+    return vp0;
+}
 
 //RS_Vector RS_Line::getNearestCenter(const RS_Vector& coord,
 //                                    double* dist) {
@@ -275,14 +267,10 @@ RS_Vector RS_Line::getNearestDist(double distance,
     return ret;
 }
 
-
-
 RS_Vector RS_Line::getNearestDist(double distance,
-								  bool startp) const{
-
+                                  bool startp) const{
     double a1 = getAngle1();
-
-	RS_Vector dv = RS_Vector::polar(distance, a1);
+    RS_Vector dv = RS_Vector::polar(distance, a1);
     RS_Vector ret;
 
     if (startp) {
@@ -291,12 +279,8 @@ RS_Vector RS_Line::getNearestDist(double distance,
     else {
         ret = data.endpoint - dv;
     }
-
     return ret;
-
 }
-
-
 /*RS_Vector RS_Line::getNearestRef(const RS_Vector& coord,
                                  double* dist) {
     double d1, d2, d;
@@ -320,7 +304,6 @@ RS_Vector RS_Line::getNearestDist(double distance,
 }*/
 
 
-
 /** return the equation of the entity
 for quadratic,
 
@@ -341,11 +324,9 @@ LC_Quadratic RS_Line::getQuadratic() const
     return LC_Quadratic(ce);
 }
 
-double RS_Line::areaLineIntegral() const
-{
+double RS_Line::areaLineIntegral() const{
     return 0.5*(data.endpoint.y - data.startpoint.y)*(data.startpoint.x + data.endpoint.x);
 }
-
 
 RS_Vector  RS_Line::getTangentDirection(const RS_Vector& /*point*/)const{
         return getEndpoint() - getStartpoint();
@@ -356,14 +337,10 @@ void RS_Line::moveStartpoint(const RS_Vector& pos) {
     calculateBorders();
 }
 
-
-
 void RS_Line::moveEndpoint(const RS_Vector& pos) {
     data.endpoint = pos;
     calculateBorders();
 }
-
-
 
 RS_Vector RS_Line::prepareTrim(const RS_Vector& trimCoord,
                                const RS_VectorSolutions& trimSol) {
@@ -405,12 +382,9 @@ RS2::Ending RS_Line::getTrimPoint(const RS_Vector& trimCoord,
     }
 }
 
-
 void RS_Line::reverse() {
     std::swap(data.startpoint, data.endpoint);
 }
-
-
 
 bool RS_Line::hasEndpointsWithinWindow(const RS_Vector& firstCorner, const RS_Vector& secondCorner) {
     RS_Vector vLow( std::min(firstCorner.x, secondCorner.x), std::min(firstCorner.y, secondCorner.y));
@@ -452,7 +426,7 @@ bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
 
 bool RS_Line::isTangent(const RS_CircleData&  circleData) const{
     double d;
-	getNearestPointOnEntity(circleData.center,false,&d);
+    getNearestPointOnEntity(circleData.center,false,&d);
     if(std::abs(d-circleData.radius)<20.*RS_TOLERANCE) return true;
     return false;
 }
@@ -460,18 +434,18 @@ bool RS_Line::isTangent(const RS_CircleData&  circleData) const{
 RS_Vector RS_Line::getNormalVector() const
 {
     RS_Vector vp=data.endpoint  - data.startpoint; //direction vector
-	double r=vp.magnitude();
-	if (r< RS_TOLERANCE) return RS_Vector{false};
-	return RS_Vector{-vp.y,vp.x}/r;
+    double r=vp.magnitude();
+    if (r< RS_TOLERANCE) return RS_Vector{false};
+    return RS_Vector{-vp.y,vp.x}/r;
 }
 
 std::vector<RS_Entity* > RS_Line::offsetTwoSides(const double& distance) const
 {
-	std::vector<RS_Entity*> ret(0);
-	RS_Vector const& vp=getNormalVector()*distance;
-	ret.push_back(new RS_Line{data.startpoint+vp,data.endpoint+vp});
-	ret.push_back(new RS_Line{data.startpoint-vp,data.endpoint-vp});
-	return ret;
+    std::vector<RS_Entity*> ret(0);
+    RS_Vector const& vp=getNormalVector()*distance;
+    ret.push_back(new RS_Line{data.startpoint+vp,data.endpoint+vp});
+    ret.push_back(new RS_Line{data.startpoint-vp,data.endpoint-vp});
+    return ret;
 }
 
 /**
@@ -549,7 +523,6 @@ void RS_Line::scale(const RS_Vector& factor) {
     calculateBorders();
 }
 
-
 void RS_Line::scale(const RS_Vector& center, const RS_Vector& factor) {
 //    RS_DEBUG->print("RS_Line::scale1: sp: %f/%f, ep: %f/%f",
 //                    data.startpoint.x, data.startpoint.y,
@@ -561,8 +534,6 @@ void RS_Line::scale(const RS_Vector& center, const RS_Vector& factor) {
 //                    data.endpoint.x, data.endpoint.y);
     calculateBorders();
 }
-
-
 
 void RS_Line::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     data.startpoint.mirror(axisPoint1, axisPoint2);
@@ -600,8 +571,6 @@ void RS_Line::stretch(const RS_Vector& firstCorner,
     }
 }
 
-
-
 void RS_Line::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     if(  std::abs(data.startpoint.x -ref.x)<1.0e-4 &&
          std::abs(data.startpoint.y -ref.y)<1.0e-4 ) {
@@ -614,30 +583,23 @@ void RS_Line::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 }
 
 void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
-    if (painter == nullptr && view == nullptr)
-        return;
     if (isConstruction()) {
-
         // draw construction lines as infinite lines
         drawInfinite(*painter, *view);
     } else {
-
         // Adjust dash offset
         updateDashOffset(*painter, *view, patternOffset);
-        painter->drawLine(view->toGui(getStartpoint()), view->toGui(getEndpoint()));
+        painter->drawLine(view->toGuiX(data.startpoint.x),view->toGuiY(data.startpoint.y), view->toGuiX(data.endpoint.x), view->toGuiY(data.endpoint.y));
     }
 }
 
-void RS_Line::drawInfinite(RS_Painter& painter, RS_GraphicView& view)
-{
-    LC_Rect viewportRect = view.getViewRect();
-    RS_VectorSolutions endPoints{{ getStartpoint(), getEndpoint()}};
-
-    RS_EntityContainer borders(nullptr, true);
+void RS_Line::drawInfinite(RS_Painter& painter, RS_GraphicView& view){
+   const LC_Rect viewportRect = view.getViewRect();
+/*    RS_EntityContainer borders(nullptr, true);
     borders.addRectangle(viewportRect.minP(), viewportRect.maxP());
 
-    RS_Vector pStart{view.toGui(endPoints.at(0))};
-    RS_Vector pEnd{view.toGui(endPoints.at(1))};
+    RS_Vector pStart{view.toGui(data.startpoint)};
+    RS_Vector pEnd{view.toGui( data.endpoint)};
     //    std::cout<<"draw line: "<<pStart<<" to "<<pEnd<<std::endl;
     RS_Vector direction = pEnd-pStart;
     if (direction.squared() < RS_TOLERANCE2)
@@ -665,14 +627,58 @@ void RS_Line::drawInfinite(RS_Painter& painter, RS_GraphicView& view)
             if (viewportRect.inArea(vpIts.at(j), RS_TOLERANCE * 10.))
                 std::swap(vpIts[j], vpIts[i++]);
 
-    }
         break;
+    }
     default:
         //should not happen
         return;
+    }*/
+
+    RS_Vector start(false);
+
+    double offsetX = view.toGuiDX(0.25);
+    double offsetY = view.toGuiDY(0.25);
+
+    RS_Vector pLeft = LC_LineMath::getIntersectionInfiniteLineLineFast(data.startpoint, data.endpoint,
+                                                                       viewportRect.minP(), RS_Vector(viewportRect.minP().x, viewportRect.maxP().y),
+                                                                       offsetX, offsetY);
+    if (pLeft.valid){
+        start = pLeft;
+    }
+    RS_Vector pBottom = LC_LineMath::getIntersectionInfiniteLineLineFast(data.startpoint, data.endpoint,
+                                                                         viewportRect.minP(), RS_Vector(viewportRect.maxP().x, viewportRect.minP().y),
+                                                                         offsetX, offsetY);
+    if (pBottom.valid){
+        if (start.valid){
+            painter.drawLine(view.toGui(start), view.toGui(pBottom));
+            return;
+        }
+        else{
+            start = pBottom;
+        }
     }
 
-    painter.drawLine(view.toGui(vpIts.get(0)), view.toGui(vpIts.get(1)));
+    RS_Vector pRight = LC_LineMath::getIntersectionInfiniteLineLineFast(data.startpoint, data.endpoint,
+                                                                        RS_Vector(viewportRect.maxP().x, viewportRect.minP().y),viewportRect.maxP(),
+                                                                        offsetX, offsetY);
+    if (pRight.valid){
+        if (start.valid){
+            painter.drawLine(view.toGui(start), view.toGui(pRight));
+            return;
+        }
+        else {
+            start = pRight;
+        }
+    }
+    if (start.valid) {
+        RS_Vector pTop = LC_LineMath::getIntersectionInfiniteLineLineFast(data.startpoint, data.endpoint,
+                                                                          RS_Vector(viewportRect.minP().x, viewportRect.maxP().y), viewportRect.maxP(),
+                                                                          offsetX, offsetY);
+        if (pTop.valid){
+            painter.drawLine(view.toGui(start), view.toGui(pTop));
+        }
+    }
+
 }
 
 /**

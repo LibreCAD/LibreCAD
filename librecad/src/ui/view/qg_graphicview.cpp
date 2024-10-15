@@ -58,14 +58,15 @@
 #include "rs_graphic.h"
 #include "rs_insert.h"
 #include "rs_math.h"
-#include "rs_modification.h"
-#include "rs_painterqt.h"
+#include "rs_painter.h"
 #include "rs_settings.h"
 #include "rs_grid.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
+
+
 
 // Issue #1765: set default cursor size: 32x32
 constexpr int g_cursorSize=32;
@@ -88,9 +89,9 @@ namespace {
          * 1.100 - a very slow & deliberate zooming, but feels very "cautious", "controlled", "safe", and "precise".
          * 1.000 - goes nowhere. :)
          */
-    constexpr double zoomFactor = 1.137;
+    constexpr double zoomFactor = 1.137;// fixme - to settings
 // zooming factor is wheel angle delta divided by this factor
-    constexpr double zoomWheelDivisor = 200.;
+    constexpr double zoomWheelDivisor = 200.; // fixme - to settings
 
 
 /**
@@ -242,9 +243,7 @@ struct QG_GraphicView::AutoPanData{
 };
 
 
-void updateGridPoint();
 
-void paintUnbuffered();
 
 /**
  * Constructor.
@@ -427,14 +426,17 @@ void QG_GraphicView::resizeEvent(QResizeEvent* /*e*/) {
     RS_DEBUG->print("QG_GraphicView::resizeEvent end");
 }
 
-void QG_GraphicView::mousePressEvent(QMouseEvent* event)
-{
+void QG_GraphicView::mousePressEvent(QMouseEvent* event){
     // pan zoom with middle mouse button
-    if (event->button()==Qt::MiddleButton)
-    {
-        setCurrentAction(new RS_ActionZoomPan(*container, *this));
+    if (event->button()==Qt::MiddleButton){
+        // fixme - sand - rework this and ensure there is not delay for pan start!!!
+        auto *action = new RS_ActionZoomPan(*container, *this);
+        setCurrentAction(action);
+        action->mousePressEvent(event); // try to avoid delay as possible
     }
-    eventHandler->mousePressEvent(event);
+    else {
+        eventHandler->mousePressEvent(event);
+    }
 }
 
 void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e)
@@ -902,18 +904,20 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         // todo - are we REALLY need it there? alternatively, zoom may be part of this class)
 
         auto zoomAction = new RS_ActionZoomIn(*container, *this, zoomDirection, RS2::Both, &zoomCenter,
-                                              zoomFactor);
+                                              scrollZoomFactor);
         if (isPrintPreview()) { // small optimization for print-preview, so options will not be recreated
             zoomAction->trigger();
             delete zoomAction;
         }
         else{
-            setCurrentAction(zoomAction);
+//            setCurrentAction(zoomAction);
+            zoomAction->trigger();
+            delete zoomAction;
         }
     }
     redraw();
 
-    QMouseEvent event
+/*    QMouseEvent event
     {
         QEvent::MouseMove,
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
@@ -928,7 +932,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     };
     eventHandler->mouseMoveEvent(&event);
 
-    e->accept();
+    e->accept();*/
 }
 
 // fixme - sand -  move by keyboard support!!!
@@ -1194,6 +1198,35 @@ void QG_GraphicView::updateGridPoints(){
  * have from the last call..
  */
 void QG_GraphicView::paintEvent(QPaintEvent *){
+
+#ifdef DEBUG_RENDERING
+    QElapsedTimer timer;
+    timer.start();
+    drawEntityCount = 0;
+    entityDrawTime = 0;
+    isVisibleTime = 0;
+    isConstructionTime  = 0;
+    setPenTime = 0;
+    painterSetPenTime = 0;
+    getPenTime = 0;
+    layer1Time = 0;
+    layer2Time = 0;
+    layer3Time = 0;
+#endif
+
+    int width = getWidth();
+    int height = getHeight();
+    view_rect = LC_Rect(toGraph(0, 0),
+                        toGraph(width, height));
+
+    RS_Graphic *graphic = getGraphic();
+    if (graphic != nullptr) { // fixme - well, that's quite ugly, yet graphic view is used also withing Hatch Dialog
+        paperScale = graphic->getPaperScale();
+    }
+    else{
+        paperScale = 1.0;
+    }
+
     if (antialiasing){
         if (classicRenderer) {
             paintClassicalBuffered();
@@ -1207,15 +1240,17 @@ void QG_GraphicView::paintEvent(QPaintEvent *){
     }
 
     redrawMethod=RS2::RedrawNone;
-//    LC_ERR << "Redraw END";
+#ifdef DEBUG_RENDERING
+    LC_ERR<<"Paint:"  << timer.elapsed() <<" Layer 1: "  << layer1Time <<" Layer 2:"  << layer2Time  <<" Layer 3:"  << layer3Time
+    << " Entity Draw: " << entityDrawTime*1e-6 <<  " isVisible: " << isVisibleTime*1e-6 <<  " isConstruction: " << isConstructionTime*1e-6
+    << " setPen: " << setPenTime*1e-6 <<  " getPen: " << getPenTime*1e-6 << " painter setPen: " << painterSetPenTime*1e-6 << " Entities: " << drawEntityCount;
+#endif
 }
 
 
 void QG_GraphicView::paintSequental() {
     int width = getWidth();
     int height = getHeight();
-    view_rect = LC_Rect(toGraph(0, 0),
-                        toGraph(width, height));
 
     QSize const s0(width, height);
     if (pixmapLayer1.size() != s0){
@@ -1225,7 +1260,7 @@ void QG_GraphicView::paintSequental() {
 
     if (redrawMethod & RS2::RedrawGrid) {
         pixmapLayer1.fill(getBackground());
-        RS_PainterQt painter1(&pixmapLayer1);
+        RS_Painter painter1(&pixmapLayer1);
         painter1.setRenderHint(QPainter::Antialiasing);
         drawLayer1(&painter1);
         painter1.end();
@@ -1235,28 +1270,46 @@ void QG_GraphicView::paintSequental() {
     if (redrawMethod & RS2::RedrawDrawing) {
         // DRaw layer 2
         pixmapLayer2 = pixmapLayer1;
-        RS_PainterQt painter2(&pixmapLayer2);
+        RS_Painter painter2(&pixmapLayer2);
         painter2.setRenderHint(QPainter::Antialiasing);
+        setupPainter(painter2);
         painter2.setDrawingMode(drawingMode);
         painter2.setDrawSelectedOnly(false);
         drawLayer2( &painter2);
+
         painter2.setDrawSelectedOnly(true);
         drawLayer2( &painter2);
+        //	If not in print preview, draw the absolute zero reference.
+        //	----------------------------------------------------------
+        if (!isPrintPreview()) {
+            drawAbsoluteZero(&painter2);
+        }
         painter2.end();
         redrawMethod=(RS2::RedrawMethod ) (redrawMethod | RS2::RedrawOverlay);
     }
 
     if (redrawMethod & RS2::RedrawOverlay) {
         pixmapLayer3 = pixmapLayer2;
-        RS_PainterQt painter3(&pixmapLayer3);
+        RS_Painter painter3(&pixmapLayer3);
+        setupPainter(painter3);
         painter3.setRenderHint(QPainter::Antialiasing);
         this->drawLayer3(&painter3);
         painter3.end();
     }
 
-    RS_PainterQt wPainter(this);
+    RS_Painter wPainter(this);
     wPainter.drawPixmap(0, 0, pixmapLayer3);
     wPainter.end();
+}
+
+void QG_GraphicView::setupPainter(RS_Painter &painter2) const {
+    painter2.setMinCircleDrawingRadius(minCircleDrawingRadius);
+    painter2.setMinArcDrawingRadius(minArcDrawingRadius);
+    painter2.setMinLineDrawingLen(minLineDrawingLen);
+    painter2.setMinEllipseMajorRadius(minEllipseMajorRadius);
+    painter2.setMinEllipseMinorRadius(minEllipseMinorRadius);
+    painter2.setPenCapStyle(penCapStyle);
+    painter2.setPenJoinStyle(penJoinStyle);
 }
 
 void QG_GraphicView::paintClassicalBuffered() {
@@ -1270,42 +1323,50 @@ void QG_GraphicView::paintClassicalBuffered() {
     if (redrawMethod & RS2::RedrawGrid) {
 //        LC_ERR << "Redraw Grid";
         PixmapLayer1->fill(getBackground());
-        RS_PainterQt painter1(PixmapLayer1.get());
-        drawLayer1((RS_Painter *) &painter1);
+        RS_Painter painter1(PixmapLayer1.get());
+        drawLayer1( &painter1);
         painter1.end();
     }
 
     if (redrawMethod & RS2::RedrawDrawing) {
 //        LC_ERR << "Redraw Drawing";
-        view_rect = LC_Rect(toGraph(0, 0),
-                                  toGraph(getWidth(), getHeight()));
         // DRaw layer 2
         PixmapLayer2->fill(Qt::transparent);
-        RS_PainterQt painter2(PixmapLayer2.get());
+        RS_Painter painter2(PixmapLayer2.get());
+        setupPainter(painter2);
         if (antialiasing) {
             painter2.setRenderHint(QPainter::Antialiasing);
         }
         painter2.setDrawingMode(drawingMode);
+
         painter2.setDrawSelectedOnly(false);
-        drawLayer2((RS_Painter *) &painter2);
-        painter2.setDrawSelectedOnly(true);
-        drawLayer2((RS_Painter *) &painter2);
+        drawLayer2(&painter2);
+
+        painter2.setDrawSelectedOnly(true); // fixme - render perf - draw selected separately... actually, it's duplicate of rendering!!!!!
+        drawLayer2(&painter2);
+
+        //	If not in print preview, draw the absolute zero reference.
+        //	----------------------------------------------------------
+        if (!isPrintPreview()) {
+            drawAbsoluteZero(&painter2);
+        }
         painter2.end();
     }
 
     if (redrawMethod & RS2::RedrawOverlay) {
 //        LC_ERR << "Redraw Overlay";
         PixmapLayer3->fill(Qt::transparent);
-        RS_PainterQt painter3(PixmapLayer3.get());
+        RS_Painter painter3(PixmapLayer3.get());
         if (antialiasing) {
             painter3.setRenderHint(QPainter::Antialiasing);
         }
-        drawLayer3((RS_Painter *) &painter3);
+        setupPainter(painter3);
+        drawLayer3( &painter3);
         painter3.end();
     }
 
     // Finally paint the layers back on the screen, bitblk to the rescue!
-    RS_PainterQt wPainter(this);
+    RS_Painter wPainter(this);
     wPainter.drawPixmap(0, 0, *PixmapLayer1);
     wPainter.drawPixmap(0, 0, *PixmapLayer2);
     wPainter.drawPixmap(0, 0, *PixmapLayer3);
@@ -1316,8 +1377,64 @@ void QG_GraphicView::paintClassicalBuffered() {
 
 void QG_GraphicView::loadSettings() {
     RS_GraphicView::loadSettings();
-    antialiasing  = LC_GET_ONE_BOOL("Appearance","Antialiasing");
-    classicRenderer =  LC_GET_BOOL("ClassicRenderer", true);
+
+    LC_GROUP("Appearance");
+    {
+        antialiasing  = LC_GET_BOOL("Antialiasing");
+        classicRenderer =  LC_GET_BOOL("ClassicRenderer", true);
+        int zoomFactor1000 = LC_GET_INT("ScrollZoomFactor", 1137);
+        scrollZoomFactor = zoomFactor1000 / 1000.0;
+    }
+    LC_GROUP_END();
+
+    RS_Graphic* graphic = getGraphic();
+    if (graphic != nullptr) {
+        unitFactor = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
+        unitFactor100 =  unitFactor / 100.0;
+        defaultWidthFactor = graphic->getVariableDouble("$DIMSCALE", 1.0);
+
+        pdmode = graphic->getGraphicVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
+        pdsize = graphic->getGraphicVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
+
+//        Lineweight endcaps setting for new objects:
+//        0 = none; 1 = round; 2 = angle; 3 = square
+        int endCaps = graphic->getGraphicVariableInt("$ENDCAPS", 1);
+        switch (endCaps){
+            case 0:
+                penCapStyle = Qt::FlatCap;
+                break;
+            case 1:
+                penCapStyle = Qt::RoundCap;
+                break;
+            case 2:
+                penCapStyle = Qt::MPenCapStyle;
+                break;
+            case 3:
+                penCapStyle = Qt::SquareCap;
+                break;
+            default:
+                penCapStyle = Qt::FlatCap; // fixme - or round?
+        }
+        //0=none; 1= round; 2 = angle; 3 = flat
+        int joinStyle = graphic->getGraphicVariableInt("$JOINSTYLE", 1);
+
+        switch (joinStyle){
+            case 0:
+                penJoinStyle = Qt::BevelJoin;
+                break;
+            case 1:
+                penJoinStyle = Qt::RoundJoin;
+                break;
+            case 2:
+                penJoinStyle = Qt::MiterJoin;
+                break;
+            case 3:
+                penJoinStyle = Qt::BevelJoin;
+                break;
+            default:
+                penJoinStyle = Qt::RoundJoin;
+        }
+    }
 
     if (HIDE_SELECT_CURSOR) {
         // potentially, select cursor may be also hidden and so snapper will be used instead of cursor.

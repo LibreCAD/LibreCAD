@@ -721,8 +721,6 @@ set(SOURCES
         librecad/src/lib/gui/rs_mainwindowinterface.h
         librecad/src/lib/gui/rs_painter.cpp
         librecad/src/lib/gui/rs_painter.h
-        librecad/src/lib/gui/rs_painterqt.cpp
-        librecad/src/lib/gui/rs_painterqt.h
         librecad/src/lib/gui/rs_staticgraphicview.cpp
         librecad/src/lib/gui/rs_staticgraphicview.h
         librecad/src/lib/information/rs_infoarea.cpp
@@ -1240,6 +1238,8 @@ set(SOURCES
 		librecad/src/ui/dialogs/main/lc_dlgnewversionavailable.h
 		librecad/src/ui/dialogs/main/lc_dlgnewversionavailable.cpp
 		librecad/src/ui/dialogs/main/lc_dlgabout.cpp
+		librecad/src/lib/engine/lc_cachedlengthentity.h
+		librecad/src/lib/engine/lc_cachedlengthentity.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

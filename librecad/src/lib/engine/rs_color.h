@@ -60,7 +60,7 @@ public:
 
     /** @return A copy of this color without flags. */
     RS_Color stripFlags() const {
-        return RS_Color(red(), green(), blue());
+        return RS_Color(red(), green(), blue(), alpha());
     }
 
     /** @return true if the color is defined by layer. */
@@ -75,7 +75,7 @@ public:
 
     QColor toQColor(void) const {
             QColor c0;
-            c0.setRgb(red(),green(),blue());
+            c0.setRgb(red(),green(),blue(), alpha());
             return c0;
     }
 
@@ -94,10 +94,17 @@ public:
     };
 
     RS_Color& operator = (const RS_Color& c) {
-        setRgb(c.red(), c.green(), c.blue());
+        setRgb(c.red(), c.green(), c.blue(), c.alpha());
         setFlags(c.getFlags());
 
         return *this;
+    }
+
+    bool isEqualIgnoringFlags(const RS_Color& c){
+        return red()==c.red() &&
+               green()==c.green() &&
+               blue()==c.blue() &&
+               alpha()==c.alpha();
     }
 
     void applyFlags(RS_Color& source ){
@@ -108,6 +115,7 @@ public:
         return (red()==c.red() &&
                 green()==c.green() &&
                 blue()==c.blue() &&
+                alpha()==c.alpha() &&
                 getFlags()==c.getFlags());
     }
 
@@ -115,4 +123,3 @@ public:
 };
 
 #endif
-

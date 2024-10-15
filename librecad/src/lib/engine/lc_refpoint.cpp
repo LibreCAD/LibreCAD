@@ -42,15 +42,10 @@ RS2::EntityType LC_RefPoint::rtti() const{
 }
 
 void LC_RefPoint::draw(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset){
-    if (painter == nullptr || view == nullptr){
-        return;
-    }
-
     int screenPDSize = determinePointSreenSize(painter, view, pdsize);
 
 //		RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Point::draw X = %f, Y = %f, PDMODE = %d, PDSIZE = %f, ScreenPDSize = %i",guiPos.x,guiPos.y,pdmode,pdsize,screenPDSize);
-        RS_Vector guiPos = view->toGui(getPos());
-
-     painter->drawPoint(guiPos, pdmode, screenPDSize);
+    RS_Vector guiPos = view->toGui(getPos());
+    painter->drawPoint(guiPos, pdmode, screenPDSize);
 
 }

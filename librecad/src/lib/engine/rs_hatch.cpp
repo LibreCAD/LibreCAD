@@ -48,67 +48,58 @@
 #include "rs_patternlist.h"
 
 
-namespace
-{
-
+namespace{
 // angular distance corrected for direction and range [0, 2 pi]
-double angularDist(double a, double startAngle, bool reversed) {
-    return reversed?
+    double angularDist(double a, double startAngle, bool reversed) {
+        return reversed?
                RS_Math::correctAngle(startAngle - a):
                RS_Math::correctAngle(a - startAngle);
-}
+    }
 
 //loop debugging info
-void pr(RS_EntityContainer* loop)
-{
-    if (loop == nullptr)
-    {
-        LC_ERR<<"-nullptr-;";
-        return;
-    }
-    LC_ERR<<"( id="<<loop->getId()<<"| ";
-    for (auto* e: *loop) {
-        if (e&& e->rtti() == RS2::EntityContainer)
-        {
-            pr(static_cast<RS_EntityContainer*>(e));
-        } else if (e) {
-            LC_ERR<<", "<<e->getId();
+    void pr(RS_EntityContainer* loop){
+        if (loop == nullptr) {
+            LC_ERR<<"-nullptr-;";
+            return;
         }
+        LC_ERR<<"( id="<<loop->getId()<<"| ";
+        for (auto* e: *loop) {
+            if (e&& e->rtti() == RS2::EntityContainer)
+            {
+                pr(static_cast<RS_EntityContainer*>(e));
+            } else if (e) {
+                LC_ERR<<", "<<e->getId();
+            }
+        }
+        LC_ERR<<" |"<<loop->getId()<<" )";
     }
-    LC_ERR<<" |"<<loop->getId()<<" )";
-}
 
 // Clean up zero length entities from a container
-void avoidZeroLength(RS_EntityContainer& container) {
-    std::set<RS_Entity*> toCleanUp;
-    for (RS_Entity* e: container) {
-        if (e != nullptr && e->isContainer())
-            avoidZeroLength(*static_cast<RS_EntityContainer*>(e));
-        else if (e != nullptr && RS_Math::equal(e->getLength(), 0.)) {
-            toCleanUp.insert(e);
+    void avoidZeroLength(RS_EntityContainer& container) {
+        std::set<RS_Entity*> toCleanUp;
+        for (RS_Entity* e: container) {
+            if (e != nullptr && e->isContainer())
+                avoidZeroLength(*static_cast<RS_EntityContainer*>(e));
+            else if (e != nullptr && RS_Math::equal(e->getLength(), 0.)) {
+                toCleanUp.insert(e);
+            }
         }
+        for (RS_Entity* e: toCleanUp)
+            container.removeEntity(e);
     }
-    for (RS_Entity* e: toCleanUp)
-        container.removeEntity(e);
 }
-}
-
 
 RS_HatchData::RS_HatchData(bool _solid,
 						   double _scale,
 						   double _angle,
 						   const QString& _pattern):
-	solid(_solid)
-  ,scale(_scale)
-  ,angle(_angle)
-  ,pattern(_pattern)
-{
+	solid(_solid),scale(_scale),angle(_angle),pattern(_pattern){
 	//std::cout << "RS_HatchData: " << pattern.latin1() << "\n";
 }
 
 std::ostream& operator << (std::ostream& os, const RS_HatchData& td) {
-	os << "(" << td.pattern.toLatin1().data() << ")";
-	return os;
+    os << "(" << td.pattern.toLatin1().data() << ")";
+    return os;
 }
 
 /**
@@ -116,16 +107,13 @@ std::ostream& operator << (std::ostream& os, const RS_HatchData& td) {
  */
 RS_Hatch::RS_Hatch(RS_EntityContainer* parent,
                    const RS_HatchData& d)
-        : RS_EntityContainer(parent), data(d)
-{
+    : RS_EntityContainer(parent), data(d){
 
-	hatch = nullptr;
+    hatch = nullptr;
     updateRunning = false;
     needOptimization = true;
     updateError = HATCH_UNDEFINED;
 }
-
-
 
 /**
  * Validates the hatch.
@@ -134,16 +122,16 @@ bool RS_Hatch::validate() {
     bool ret = true;
 
     // loops:
-    foreach(auto* l, entities){
+        foreach(auto* l, entities){
 
-        auto* loop = dynamic_cast<RS_EntityContainer*>(l);
-        if (loop != nullptr) {
-            // skip zero length edges
-            avoidZeroLength(*loop);
+            auto* loop = dynamic_cast<RS_EntityContainer*>(l);
+            if (loop != nullptr) {
+                // skip zero length edges
+                avoidZeroLength(*loop);
 
-            ret = loop->optimizeContours() && ret;
+                ret = loop->optimizeContours() && ret;
+            }
         }
-    }
 
     if(ret)
         getTotalArea();
@@ -151,11 +139,9 @@ bool RS_Hatch::validate() {
     return ret;
 }
 
-
-
 RS_Entity* RS_Hatch::clone() const{
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::clone()");
-    RS_Hatch* t = new RS_Hatch(*this);
+    auto* t = new RS_Hatch(*this);
     t->setOwner(isOwner());
     t->initId();
     t->detach();
@@ -178,7 +164,7 @@ int RS_Hatch::countLoops() const{
 }
 
 bool RS_Hatch::isContainer() const {
-	return !isSolid();
+    return !isSolid();
 }
 
 /**
@@ -196,8 +182,6 @@ void RS_Hatch::calculateBorders() {
 
     activateContour(false);
 }
-
-
 
 /**
  * Updates the Hatch. Called when the
@@ -236,7 +220,7 @@ void RS_Hatch::update() {
     // delete old hatch:
     if (hatch) {
         removeEntity(hatch);
-		hatch = nullptr;
+        hatch = nullptr;
     }
 
     if (isUndone()) {
@@ -295,15 +279,15 @@ void RS_Hatch::update() {
 
     // check pattern sizes for sanity
     if (cSize.x<1.0e-6 || cSize.y<1.0e-6 ||
-            pSize.x<1.0e-6 || pSize.y<1.0e-6 ||
-            cSize.x>RS_MAXDOUBLE-1 || cSize.y>RS_MAXDOUBLE-1 ||
-            pSize.x>RS_MAXDOUBLE-1 || pSize.y>RS_MAXDOUBLE-1) {
+        pSize.x<1.0e-6 || pSize.y<1.0e-6 ||
+        cSize.x>RS_MAXDOUBLE-1 || cSize.y>RS_MAXDOUBLE-1 ||
+        pSize.x>RS_MAXDOUBLE-1 || pSize.y>RS_MAXDOUBLE-1) {
         updateRunning = false;
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: contour size or pattern size too small");
         updateError = HATCH_TOO_SMALL;
         return;
     }
-    // avoid huge memory consumption:
+        // avoid huge memory consumption:
     else if ( cSize.x* cSize.y/(pSize.x*pSize.y)>1e4) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: contour size too large or pattern size too small");
         updateError = HATCH_AREA_TOO_BIG;
@@ -326,8 +310,8 @@ void RS_Hatch::update() {
     // adding array of patterns to tmp:
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: creating pattern carpet");
     for (int px=px1; px<px2; px++) {
-		for (int py=py1; py<py2; py++) {
-			for(auto e: *pat){
+        for (int py=py1; py<py2; py++) {
+            for(auto e: *pat){
                 RS_Entity* te=e->clone();
                 te->move(dvx*px + dvy*py);
                 tmp.addEntity(te);
@@ -354,37 +338,38 @@ void RS_Hatch::update() {
     hatch->setFlag(RS2::FlagTemp);
 
     //calculateBorders();
-	for(auto e: tmp2){
+    for(auto e: tmp2){
 
         RS_Vector middlePoint;
         RS_Vector middlePoint2;
         if (e->rtti()==RS2::EntityLine) {
-			RS_Line* line = static_cast<RS_Line*>(e);
+            auto* line = static_cast<RS_Line*>(e);
             middlePoint = line->getMiddlePoint();
             middlePoint2 = line->getNearestDist(line->getLength()/2.1,
                                                 line->getStartpoint());
         } else if (e->rtti()==RS2::EntityArc) {
-			RS_Arc* arc = static_cast<RS_Arc*>(e);
+            auto* arc = static_cast<RS_Arc*>(e);
             middlePoint = arc->getMiddlePoint();
             middlePoint2 = arc->getNearestDist(arc->getLength()/2.1,
                                                arc->getStartpoint());
         } else {
-			middlePoint = RS_Vector{false};
-			middlePoint2 = RS_Vector{false};
+            middlePoint = RS_Vector{false};
+            middlePoint2 = RS_Vector{false};
         }
 
         if (middlePoint.valid) {
             bool onContour=false;
 
             if (RS_Information::isPointInsideContour(
-                        middlePoint,
-                        this, &onContour) ||
-                    RS_Information::isPointInsideContour(middlePoint2, this)) {
+                middlePoint,
+                this, &onContour) ||
+                RS_Information::isPointInsideContour(middlePoint2, this)) {
 
                 RS_Entity* te = e->clone();
                 te->setPen(hatch_pen);
                 te->setLayer(hatch_layer);
                 te->reparent(hatch);
+                te->setFlag(RS2::FlagHatchChild);
                 hatch->addEntity(te);
             }
         }
@@ -403,7 +388,6 @@ void RS_Hatch::update() {
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: OK");
 }
-
 
 RS_EntityContainer RS_Hatch::trimPattern(const RS_EntityContainer& patternEntities) const
 {
@@ -564,159 +548,97 @@ RS_EntityContainer RS_Hatch::trimPattern(const RS_EntityContainer& patternEntiti
  * Activates of deactivates the hatch boundary.
  */
 void RS_Hatch::activateContour(bool on) {
-        RS_DEBUG->print("RS_Hatch::activateContour: %d", (int)on);
+    RS_DEBUG->print("RS_Hatch::activateContour: %d", (int)on);
         foreach(auto* e, entities){
-        if (!e->isUndone()) {
-            if (!e->getFlag(RS2::FlagTemp)) {
-                                RS_DEBUG->print("RS_Hatch::activateContour: set visible");
-                e->setVisible(on);
-            }
-                        else {
-                                RS_DEBUG->print("RS_Hatch::activateContour: entity temp");
-                        }
-        }
-                else {
-                        RS_DEBUG->print("RS_Hatch::activateContour: entity undone");
+            if (!e->isUndone()) {
+                if (!e->getFlag(RS2::FlagTemp)) {
+                    RS_DEBUG->print("RS_Hatch::activateContour: set visible");
+                    e->setVisible(on);
                 }
-    }
-        RS_DEBUG->print("RS_Hatch::activateContour: OK");
+                else {
+                    RS_DEBUG->print("RS_Hatch::activateContour: entity temp");
+                }
+            }
+            else {
+                RS_DEBUG->print("RS_Hatch::activateContour: entity undone");
+            }
+        }
+    RS_DEBUG->print("RS_Hatch::activateContour: OK");
 }
 
 /**
  * Overrides drawing of subentities. This is only ever called for solid fills.
  */
 void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-
-    if (!data.solid) {
+    if (data.solid) {
+        drawSolidFill(painter, view);
+    }
+    else{
         foreach (auto se, entities){
-
             view->drawEntity(painter,se);
         }
-        return;
     }
+}
 
-    //area of solid fill. Use polygon approximation, except trivial cases
+void RS_Hatch::drawSolidFill(RS_Painter *painter, const RS_GraphicView *view) {//area of solid fill. Use polygon approximation, except trivial cases
+
+    if (needOptimization == true) {
+        foreach (auto l, entities){
+                if (l->rtti()==RS2::EntityContainer) {
+                    auto* loop = (RS_EntityContainer*)l;
+                    loop->optimizeContours();
+                }
+            }
+        needOptimization = false;
+    }
     QPainterPath path;
     QList<QPolygon> paClosed;
     QPolygon pa;
 
-    if (needOptimization==true) {
-        foreach (auto l, entities){
 
-            if (l->rtti()==RS2::EntityContainer) {
-                RS_EntityContainer* loop = (RS_EntityContainer*)l;
-
-                loop->optimizeContours();
-            }
-        }
-        needOptimization = false;
-    }
-
-    foreach (auto l, entities){
-        l->setLayer(getLayer());
-
-        if (l->rtti()==RS2::EntityContainer) {
-            RS_EntityContainer* loop = (RS_EntityContainer*)l;
-
-            // edges:
-            for(auto e: *loop){
-
-                e->setLayer(getLayer());
-                switch (e->rtti()) {
-                case RS2::EntityLine: {
-                    QPoint pt1(RS_Math::round(view->toGuiX(e->getStartpoint().x)),
-                               RS_Math::round(view->toGuiY(e->getStartpoint().y)));
-                    QPoint pt2(RS_Math::round(view->toGuiX(e->getEndpoint().x)),
-                               RS_Math::round(view->toGuiY(e->getEndpoint().y)));
-
-                    if(!pa.size() || (pa.last() - pt1).manhattanLength() >= 1) {
-                        pa << pt1;
-                    }
-                    pa << pt2;
-                }
-                    break;
-
-                case RS2::EntityArc: {
-                    QPolygon pa2;
-                    RS_Arc* arc=static_cast<RS_Arc*>(e);
-
-                    painter->createArc(pa2, view->toGui(arc->getCenter()),
-                                       view->toGuiDX(arc->getRadius())
-                                       ,arc->getAngle1(),arc->getAngle2(),arc->isReversed());
-                    if(pa.size() &&pa2.size()&&(pa.last()-pa2.first()).manhattanLength()<1)
-                        pa2.remove(0,1);
-                    pa<<pa2;
-
-                }
-                    break;
-
-                case RS2::EntityCircle: {
-                    RS_Circle* circle = static_cast<RS_Circle*>(e);
-                    RS_Vector c=view->toGui(circle->getCenter());
-                    double r=view->toGuiDX(circle->getRadius());
-                    path.addEllipse(QPoint(c.x,c.y),r,r);
-                }
-                    break;
-                case RS2::EntityEllipse:
-                if(static_cast<RS_Ellipse*>(e)->isArc()) {
-                    QPolygon pa2;
-                    auto ellipse=static_cast<RS_Ellipse*>(e);
-
-                    painter->createEllipse(pa2,
-                                           view->toGui(ellipse->getCenter()),
-                                           view->toGuiDX(ellipse->getMajorRadius()),
-                                           view->toGuiDX(ellipse->getMinorRadius()),
-                                           ellipse->getAngle()
-                                           ,ellipse->getAngle1(),ellipse->getAngle2(),ellipse->isReversed()
-                                           );
-
-                    if(pa.size() && pa2.size()&&(pa.last()-pa2.first()).manhattanLength()<1)
-                        pa2.remove(0,1);
-                    pa<<pa2;
-                }else{
-                    QPolygon pa2;
-                    auto ellipse=static_cast<RS_Ellipse*>(e);
-                    painter->createEllipse(pa2,
-                                           view->toGui(ellipse->getCenter()),
-                                           view->toGuiDX(ellipse->getMajorRadius()),
-                                           view->toGuiDX(ellipse->getMinorRadius()),
-                                           ellipse->getAngle(),
-                                           ellipse->getAngle1(), ellipse->getAngle2(),
-                                           ellipse->isReversed()
-                                           );
-                    path.addPolygon(pa2);
-                }
-                    break;
-                default:
-                    break;
-                }
-
-                if( pa.size()>2 && pa.first() == pa.last()) {
-                    paClosed<<pa;
-                    pa.clear();
-                }
-
-            }
-
-        }
-    }
-    if(pa.size()>2){
-        pa<<pa.first();
-        paClosed<<pa;
-    }
-
-    for(auto& p:paClosed){
-        path.addPolygon(p);
-    }
-
-    //bug#474, restore brush after solid fill
     const QBrush brush(painter->brush());
     const RS_Pen pen=painter->getPen();
     painter->setBrush(pen.getColor());
-    painter->disablePen();
+//    painter->disablePen();
+
+    createSolidFillPath(painter, view, path);
+    /*  if(pa.size()>2){
+            pa<<pa.first();
+            paClosed<<pa;
+        }
+
+        for(auto& p:paClosed){
+            path.addPolygon(p);
+        }*/
+
+    //bug#474, restore brush after solid fill
+/*    const QBrush brush(painter->brush());
+    const RS_Pen pen=painter->getPen();
+    painter->setBrush(pen.getColor());
+    painter->disablePen();*/
     painter->drawPath(path);
+    QBrush fillBrush = brush;
+    fillBrush.setColor(pen.getColor());
+    fillBrush.setStyle(Qt::SolidPattern);
+//    path.closeSubpath();
+//    painter->fillPath(path, fillBrush);
+
+//    debugOutPath(path);
+//    painter->drawPath(path);
     painter->setBrush(brush);
     painter->setPen(pen);
+}
+
+void RS_Hatch::createSolidFillPath(RS_Painter *painter, const RS_GraphicView *view, QPainterPath &path) {
+    painter->createSolidFillPath(path, view, entities);
+}
+
+void RS_Hatch::debugOutPath(const QPainterPath &tmpPath) const {
+    int c = tmpPath.elementCount();
+    for (int i = 0; i < c; i++){
+        const QPainterPath::Element &element = tmpPath.elementAt(i);
+        LC_ERR << "i " << i << "("<< element.x << "," << element.y <<  ") Line To " << element.isLineTo() << " Move To: " << element.isMoveTo() << " Is Curve:" << element.isCurveTo();
+    }
 }
 
 //must be called after update()
@@ -731,17 +653,17 @@ double RS_Hatch::getTotalArea() {
 
     return m_area;
 }
-
+#define DEBUG_TOTAL_AREA_
 double RS_Hatch::getTotalAreaImpl() {
     auto loops = getLoops();
+#ifdef DEBUG_TOTAL_AREA
     LC_LOG<<__func__<<"(): loops.size()="<<loops.size();
-    for (auto& l: loops)
-    {
+    for (auto& l: loops) {
         LC_LOG<<l->getId()<<": "<<l->rtti();
         pr(l.get());
     }
     LC_LOG<<"loops: done";
-
+#endif
     LC_LoopUtils::LoopSorter loopSorter(std::move(loops));
     auto sorted = loopSorter.getResults();
 
@@ -750,7 +672,9 @@ double RS_Hatch::getTotalAreaImpl() {
     // loops:
     for(auto* loop: sorted){
         m_area += loop->areaLineIntegral();
+#ifdef DEBUG_TOTAL_AREA
         LC_LOG<<__func__<<"(): "<<loop->getId()<<": m_area="<<m_area;
+#endif
     }
     return m_area;
 }
@@ -782,21 +706,16 @@ double RS_Hatch::getDistanceToPoint(
     }
 }
 
-
-
 void RS_Hatch::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
     update();
 }
-
-
 
 void RS_Hatch::rotate(const RS_Vector& center, const double& angle) {
     RS_EntityContainer::rotate(center, angle);
     data.angle = RS_Math::correctAngle(data.angle+angle);
     update();
 }
-
 
 void RS_Hatch::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     RS_EntityContainer::rotate(center, angleVector);
@@ -810,8 +729,6 @@ void RS_Hatch::scale(const RS_Vector& center, const RS_Vector& factor) {
     update();
 }
 
-
-
 void RS_Hatch::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_EntityContainer::mirror(axisPoint1, axisPoint2);
     double ang = axisPoint1.angleTo(axisPoint2);
@@ -819,11 +736,9 @@ void RS_Hatch::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
     update();
 }
 
-
 void RS_Hatch::stretch(const RS_Vector& firstCorner,
                        const RS_Vector& secondCorner,
                        const RS_Vector& offset) {
-
     RS_EntityContainer::stretch(firstCorner, secondCorner, offset);
     update();
 }

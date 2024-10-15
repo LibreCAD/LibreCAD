@@ -59,6 +59,7 @@ void QG_DlgHatch::init() {
     gvPreview->setContainer(preview.get());
     gvPreview->setBorders(15,15,15,15);
     gvPreview->addScrollbars();
+    gvPreview->setHasNoGrid(true); // fixme - rework
     cbPattern->init();
 }
 

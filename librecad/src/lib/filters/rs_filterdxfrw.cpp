@@ -1378,6 +1378,12 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
 	if( graphic->getVariableDouble("$PDSIZE", -999.9) < -100.0)
 		graphic->addVariable("$PDSIZE", LC_DEFAULTS_PDSize, DXF_FORMAT_GC_VarName);
 
+  if( graphic->getVariableDouble("$JOINSTYLE", -999.9) < -100.0)
+       graphic->addVariable("$JOINSTYLE", 1, DXF_FORMAT_GC_JoinStyle);
+
+  if( graphic->getVariableDouble("$ENDCAPS", -999.9) < -100.0)
+      graphic->addVariable("$ENDCAPS", 1, DXF_FORMAT_GC_Endcaps);
+
     QString acadver = versionStr = graphic->getVariableString("$ACADVER", "");
     acadver.replace(QRegularExpression("[a-zA-Z]"), "");
     bool ok;

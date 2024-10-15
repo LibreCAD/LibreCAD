@@ -180,6 +180,7 @@ public slots:
     void slotViewGrid(bool toggle);
     /** toggle the draft mode */
     void slotViewDraft(bool toggle);
+    void slotViewDraftLines(bool toggle);
     /** toggle the statusbar */
     void slotViewStatusBar(bool toggle);
 
@@ -240,6 +241,7 @@ public slots:
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);
+    void draftLinesChanged(bool on);
     void printPreviewChanged(bool on);
     void windowsChanged(bool windowsLeft);
     void signalEnableRelativeZeroSnaps(const bool);

@@ -116,16 +116,42 @@ RS_Entity *RS_EntityContainer::clone() const {
     RS_DEBUG->print("RS_EntityContainer::clone: ori autoDel: %d",
                     autoDelete);
 
-    RS_EntityContainer *ec = new RS_EntityContainer(getParent(), isOwner());
+    auto *ec = new RS_EntityContainer(getParent(), isOwner());
     if (isOwner()) {
-        for (const auto *entity: entities)
-            if (entity != nullptr)
+        for (const auto *entity: std::as_const(entities)) {
+            if (entity != nullptr) {
                 ec->entities.push_back(entity->clone());
+            }
+        }
     } else {
         ec->entities = entities;
     }
 
     RS_DEBUG->print("RS_EntityContainer::clone: clone autoDel: %d",
+                    ec->isOwner());
+
+    ec->detach();
+    ec->initId();
+
+    return ec;
+}
+
+RS_Entity *RS_EntityContainer::cloneProxy() const {
+    RS_DEBUG->print("RS_EntityContainer::cloneproxy: ori autoDel: %d",
+                    autoDelete);
+
+    auto *ec = new RS_EntityContainer(getParent(), isOwner());
+    if (isOwner()) {
+        for (const auto *entity: std::as_const(entities)) {
+            if (entity != nullptr) {
+                ec->entities.push_back(entity->cloneProxy());
+            }
+        }
+    } else {
+        ec->entities = entities;
+    }
+
+    RS_DEBUG->print("RS_EntityContainer::cloneproxy: clone autoDel: %d",
                     ec->isOwner());
 
     ec->detach();
@@ -146,7 +172,7 @@ void RS_EntityContainer::detach() {
     setOwner(false);
 
     // make deep copies of all entities:
-    for (auto e: entities) { // fixme - sand -  check, iteration over all entities
+    for (auto e: entities) {
         if (!e->getFlag(RS2::FlagTemp)) {
             tmp.append(e->clone());
         }
@@ -168,7 +194,7 @@ void RS_EntityContainer::reparent(RS_EntityContainer *parent) {
 
     // All sub-entities:
 
-    for (auto e: entities) {
+    for (auto e: std::as_const(entities)) {
         e->reparent(parent);
     }
 }
@@ -179,7 +205,7 @@ void RS_EntityContainer::setVisible(bool v) {
 
     // All sub-entities:
 
-    for (auto e: entities) {
+    for (auto e: std::as_const(entities)) {
         //        RS_DEBUG->print("RS_EntityContainer::setVisible: subentity: %d", v);
         e->setVisible(v);
     }
@@ -191,7 +217,7 @@ void RS_EntityContainer::setVisible(bool v) {
 double RS_EntityContainer::getLength() const {
     double ret = 0.0;
 
-    for (auto e: entities) {
+    for (auto e: std::as_const(entities)) {
         if (e->isVisible()) {
             double l = e->getLength();
             if (l < 0.0) {
@@ -1163,6 +1189,7 @@ RS_Entity *RS_EntityContainer::entityAt(int index) {
         return nullptr;
 }
 
+
 void RS_EntityContainer::setEntityAt(int index, RS_Entity *en) {
     if (autoDelete && entities.at(index)) {
         delete entities.at(index);
@@ -1859,11 +1886,15 @@ void RS_EntityContainer::revertDirection() {
  * @param view
  */
 void RS_EntityContainer::draw(RS_Painter *painter, RS_GraphicView *view, double & /*patternOffset*/) {
-    if (painter == nullptr || view == nullptr){
-        return;
+    foreach (auto *e, entities){
+        view->drawEntity(painter, e);
     }
+}
 
-    foreach (auto *e, entities)view->drawEntity(painter, e);
+void RS_EntityContainer::drawAsChild(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) {
+    foreach (auto *e, entities){
+            view->drawAsChild(painter, e, patternOffset);
+    }
 }
 
 /**

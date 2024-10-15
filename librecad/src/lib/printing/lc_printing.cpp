@@ -33,14 +33,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "qc_mdiwindow.h"
 #include "qg_graphicview.h"
-
 #include "rs_debug.h"
 #include "rs_graphic.h"
-#include "rs_painterqt.h"
 #include "rs_settings.h"
 #include "rs_staticgraphicview.h"
 #include "rs_units.h"
 #include "rs_vector.h"
+#include "rs_painter.h"
 
 namespace {
 
@@ -247,9 +246,9 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
         RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "QC_ApplicationWindow::slotFilePrint: resolution is %d", printer.resolution());
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
-        RS_PainterQt painter(&printer);
+        RS_Painter painter(&printer);
         // RAII style to restore cursor. Not really a shared pointer for ownership
-        std::shared_ptr<RS_PainterQt> painterPtr{&painter, []([[maybe_unused]] RS_PainterQt *painter) {
+        std::shared_ptr<RS_Painter> painterPtr{&painter, []([[maybe_unused]] RS_Painter *painter) {
             QApplication::restoreOverrideCursor();
         }};
         painter.setDrawingMode(mdiWindow.getGraphicView()->getDrawingMode());

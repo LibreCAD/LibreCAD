@@ -62,7 +62,7 @@
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_document.h"
-#include "rs_painterqt.h"
+#include "rs_painter.h"
 #include "rs_pen.h"
 #include "rs_settings.h"
 #include "rs_staticgraphicview.h"
@@ -782,8 +782,15 @@ void QC_ApplicationWindow::initSettings() {
             style_sheet_path = sheet_path;
         }
     }
-
-    getAction("ViewDraft")->setChecked(LC_GET_ONE_BOOL("Appearance","DraftMode", false));
+    LC_GROUP("Appearance");
+    {
+        QAction *viewLinesDraftAction = getAction("ViewLinesDraft");
+        viewLinesDraftAction->setChecked(LC_GET_BOOL("DraftLinesMode", false));
+        bool draftMode = LC_GET_BOOL("DraftMode", false);
+        getAction("ViewDraft")->setChecked(draftMode);
+        viewLinesDraftAction->setDisabled(draftMode);
+    }
+    LC_GROUP_END();
 }
 
 
@@ -1947,7 +1954,7 @@ bool QC_ApplicationWindow::slotFileExport(
     }
 
     // set painter with buffer
-    RS_PainterQt painter(buffer.get());
+    RS_Painter painter(buffer.get());
 
     painter.setBackground(black ? Qt::black : Qt::white);
     if (bw) {
@@ -2293,6 +2300,25 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
             title.remove(draft_string);
             win->setWindowTitle(title);
         }
+        emit draftChanged(toggle);
+    }
+    redrawAll();
+}
+
+void QC_ApplicationWindow::slotViewDraftLines(bool toggle) {
+    RS_DEBUG->print("QC_ApplicationWindow::slotViewLinesDraft()");
+
+    LC_SET_ONE("Appearance","DraftLinesMode", toggle);
+
+    for (QC_MDIWindow *win: window_list) {
+        QG_GraphicView *graphicView = win->getGraphicView();
+        graphicView->setDraftLinesMode(toggle);
+//        QC_MDIWindow *ppv = win->getPrintPreview();
+//        if (ppv != nullptr){
+//            QG_GraphicView *printPreviewGraphicView = ppv->getGraphicView();
+//            printPreviewGraphicView->setDraftMode(toggle);
+//            printPreviewGraphicView->redraw();
+//        }
     }
     redrawAll();
 }

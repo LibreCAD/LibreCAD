@@ -52,13 +52,11 @@ void RS_Point::calculateBorders () {
     minV = maxV = data.pos;
 }
 
-RS_VectorSolutions RS_Point::getRefPoints() const
-{
+RS_VectorSolutions RS_Point::getRefPoints() const{
 	return RS_VectorSolutions{data.pos};
 }
 
-RS_Vector RS_Point::getStartpoint() const
-{
+RS_Vector RS_Point::getStartpoint() const{
     return data.pos;
 }
 
@@ -111,7 +109,6 @@ RS_Vector RS_Point::getNearestPointOnEntity(const RS_Vector& coord,
 }
 
 RS_Vector RS_Point::getNearestCenter(const RS_Vector& coord, double* dist) const{
-
     if (dist) {
         *dist = data.pos.distanceTo(coord);
     }
@@ -145,7 +142,7 @@ RS_Vector RS_Point::getNearestDist(double /*distance*/,
 double RS_Point::getDistanceToPoint(const RS_Vector& coord,
                                     RS_Entity** entity,
                                     RS2::ResolveLevel /*level*/,
-                                                                        double /*solidDist*/)const {
+                                    double /*solidDist*/)const {
     if (entity) {
         *entity = const_cast<RS_Point*>(this);
     }
@@ -189,24 +186,11 @@ RS_Entity& RS_Point::shear(double k){
 }
 
 void RS_Point::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternOffset*/) {
-    if (painter == nullptr || view == nullptr){
+/*    if (painter == nullptr || view == nullptr){
         return;
-    }
-
-    RS_Graphic *graphic = getGraphic();
-
-    if (graphic){
-        // fixme - isn't it too ugly to retreive settings within each DRAW!! method??
-        // fixme - that's is definitely candidate for performance improvement, by mode caching or so ...
-        int pdmode = getGraphicVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
-        double pdsize = getGraphicVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
-        int screenPDSize = determinePointSreenSize(painter, view, pdsize);
-
-//		RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Point::draw X = %f, Y = %f, PDMODE = %d, PDSIZE = %f, ScreenPDSize = %i",guiPos.x,guiPos.y,pdmode,pdsize,screenPDSize);
-        RS_Vector guiPos = view->toGui(getPos());
-
-        painter->drawPoint(guiPos, pdmode, screenPDSize);
-    }
+    }*/
+    RS_Vector guiPos = view->toGui(getPos());
+    painter->drawPoint(guiPos, view->getPointMode(), view->getPointSize());
 }
 
 int RS_Point::determinePointSreenSize(const RS_Painter *painter, const RS_GraphicView *view, double pdsize) const{
@@ -223,6 +207,7 @@ int RS_Point::determinePointSreenSize(const RS_Painter *painter, const RS_Graphi
     }
     return screenPDSize;
 }
+
 
 /**
  * Dumps the point's data to stdout.
