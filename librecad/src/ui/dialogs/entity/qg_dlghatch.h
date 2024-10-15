@@ -42,13 +42,13 @@ public:
     void saveSettings();
 
 public slots:
-    virtual void polish();
+    void polish();
     void showEvent( QShowEvent * e ) override;
-    virtual void setHatch( RS_Hatch & h, bool isNew );
-    virtual void updateHatch();
-    virtual void setPattern( const QString & p );
+    void setHatch( RS_Hatch & h, bool isNew );
+    void updateHatch();
+    void setPattern( const QString & p );
     void resizeEvent( QResizeEvent * ) override;
-	virtual void updatePreview();
+	   void updatePreview();
 
 protected slots:
     virtual void languageChange();
@@ -61,7 +61,7 @@ private:
     RS_Hatch* hatch = nullptr;
     bool isNew = false;
 
-
+    void addRectangle(RS_Pen pen, const RS_Vector &v0, const RS_Vector &v1, RS_EntityContainer *container);
 };
 
 #endif // QG_DLGHATCH_H
