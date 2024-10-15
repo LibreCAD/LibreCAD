@@ -102,7 +102,7 @@ void RS_Grid::loadSettings(){
         metaGridWidthPx = LC_GET_INT("metaGridPointsLineWidth", 1);
     }
 
-    int gridWidthPx = LC_GET_INT("GridLineLinesWidth", 1);
+    int gridWidthPx = LC_GET_INT("GridLinesLineWidth", 1);
     RS2::LineType gridLineType =  static_cast<RS2::LineType> (LC_GET_INT("GridLinesLineType", RS2::SolidLine));
 
     bool disableGridOnPanning = LC_GET_BOOL("GridDisableWithinPan", false);

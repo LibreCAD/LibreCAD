@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>686</width>
+    <width>723</width>
     <height>596</height>
    </rect>
   </property>
@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -54,6 +54,9 @@
          <layout class="QGridLayout" name="gridLayout_9">
           <item row="0" column="0">
            <widget class="QCheckBox" name="indicator_lines_checkbox">
+            <property name="toolTip">
+             <string>If checked, snap indicator will be shown</string>
+            </property>
             <property name="text">
              <string>Snap indicator lines</string>
             </property>
@@ -64,6 +67,9 @@
           </item>
           <item row="0" column="1" colspan="2">
            <widget class="QComboBox" name="indicator_lines_combobox">
+            <property name="toolTip">
+             <string>Type of snap lines indicator</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -93,6 +99,9 @@
           </item>
           <item row="1" column="1">
            <widget class="QComboBox" name="cb_snap_lines_color">
+            <property name="toolTip">
+             <string>Color for snap lines indicator</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -136,7 +145,11 @@
            </widget>
           </item>
           <item row="2" column="1" colspan="2">
-           <widget class="QG_LineTypeBox" name="wSnapLinesLineType" native="true"/>
+           <widget class="QG_LineTypeBox" name="wSnapLinesLineType" native="true">
+            <property name="toolTip">
+             <string>Type of line to draw snap indicator</string>
+            </property>
+           </widget>
           </item>
           <item row="3" column="0">
            <widget class="QLabel" name="label_3">
@@ -147,6 +160,9 @@
           </item>
           <item row="3" column="1" colspan="2">
            <widget class="QSpinBox" name="sbSnapLinesLineWidth">
+            <property name="toolTip">
+             <string>Width of line for snap indicator</string>
+            </property>
             <property name="suffix">
              <string>px</string>
             </property>
@@ -160,6 +176,9 @@
           </item>
           <item row="4" column="0">
            <widget class="QCheckBox" name="indicator_shape_checkbox">
+            <property name="toolTip">
+             <string>If checked, a shap for snap will be drawn</string>
+            </property>
             <property name="text">
              <string>Snap indicator shape</string>
             </property>
@@ -167,6 +186,9 @@
           </item>
           <item row="4" column="1">
            <widget class="QComboBox" name="indicator_shape_combobox">
+            <property name="toolTip">
+             <string>Type of snap indicator shape</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -201,6 +223,9 @@
           </item>
           <item row="5" column="1">
            <widget class="QComboBox" name="cb_snap_color">
+            <property name="toolTip">
+             <string>Color for snap indicator shape</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -294,6 +319,9 @@
           </item>
           <item row="7" column="0" colspan="2">
            <widget class="QCheckBox" name="cursor_hiding_checkbox">
+            <property name="toolTip">
+             <string>If checked, cursor will be hidden during snapping</string>
+            </property>
             <property name="text">
              <string>Hide cursor when snapping</string>
             </property>
@@ -301,6 +329,9 @@
           </item>
           <item row="8" column="0" colspan="3">
            <widget class="QCheckBox" name="cbShowSnapOptionsInSnapBar">
+            <property name="toolTip">
+             <string>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</string>
+            </property>
             <property name="text">
              <string>Show snap options in Snap Selection Toolbar</string>
             </property>
@@ -363,6 +394,9 @@
           </item>
           <item row="5" column="3">
            <widget class="QComboBox" name="cbEndHandleColor">
+            <property name="toolTip">
+             <string>Color of end handle for entity</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -405,6 +439,9 @@
           </item>
           <item row="2" column="3">
            <widget class="QComboBox" name="cbStartHandleColor">
+            <property name="toolTip">
+             <string>Color for start handle of entity</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -420,6 +457,9 @@
           </item>
           <item row="3" column="3">
            <widget class="QComboBox" name="cbHandleColor">
+            <property name="toolTip">
+             <string>Color of non-endpoint handle of entity</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -515,6 +555,9 @@
           </item>
           <item row="4" column="1">
            <widget class="QComboBox" name="cbOverlayBoxLineInverted">
+            <property name="toolTip">
+             <string>Color of line for overlay selection box if box is inverted (from right to left)</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -537,6 +580,9 @@
           </item>
           <item row="5" column="1">
            <widget class="QComboBox" name="cbOverlayBoxFillInverted">
+            <property name="toolTip">
+             <string>Color for filling inverted overlay selection box</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -576,6 +622,9 @@
           </item>
           <item row="3" column="1">
            <widget class="QComboBox" name="cbOverlayBoxFill">
+            <property name="toolTip">
+             <string>Fill color for overlay selection box</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -615,6 +664,9 @@
           </item>
           <item row="1" column="1">
            <widget class="QComboBox" name="cbOverlayBoxLine">
+            <property name="toolTip">
+             <string>Color for line for overlay box</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -657,6 +709,9 @@
           </item>
           <item row="6" column="1">
            <widget class="QSpinBox" name="sbOverlayBoxTransparency">
+            <property name="toolTip">
+             <string>Transparency for overlay selection box. Smaller value - more transparent.</string>
+            </property>
             <property name="minimum">
              <number>10</number>
             </property>
@@ -779,6 +834,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="toolTip">
+             <string>Color for drawing background</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -837,6 +895,9 @@
           </item>
           <item row="13" column="1">
            <widget class="QComboBox" name="cbSelectedColor">
+            <property name="toolTip">
+             <string>Color for selected entities</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -905,7 +966,7 @@
        <item row="2" column="0" colspan="2">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="points">
           <attribute name="title">
@@ -950,6 +1011,9 @@
               </item>
               <item row="9" column="1">
                <widget class="QComboBox" name="cbGridPointsColor">
+                <property name="toolTip">
+                 <string>Color for grid points</string>
+                </property>
                 <property name="accessibleDescription">
                  <string notr="true"/>
                 </property>
@@ -986,10 +1050,17 @@
              </property>
              <layout class="QGridLayout" name="gridLayout_20">
               <item row="2" column="1">
-               <widget class="QG_LineTypeBox" name="wMetaGridPointsLineType" native="true"/>
+               <widget class="QG_LineTypeBox" name="wMetaGridPointsLineType" native="true">
+                <property name="toolTip">
+                 <string>Type of Meta Grid line if grid is drawn as points</string>
+                </property>
+               </widget>
               </item>
               <item row="3" column="1">
                <widget class="QSpinBox" name="sbMetaGridPointsWidth">
+                <property name="toolTip">
+                 <string>Width of Meta Grid line if grid is drawn by points</string>
+                </property>
                 <property name="suffix">
                  <string>px</string>
                 </property>
@@ -1017,6 +1088,9 @@
               </item>
               <item row="1" column="1">
                <widget class="QComboBox" name="cbMetaGridPointsColor">
+                <property name="toolTip">
+                 <string>Color for Meta Grid lines if grid drawn by points</string>
+                </property>
                 <property name="accessibleDescription">
                  <string notr="true"/>
                 </property>
@@ -1078,6 +1152,9 @@
              <layout class="QGridLayout" name="gridLayout_23">
               <item row="12" column="1">
                <widget class="QSpinBox" name="sbGridLinesLineWidth">
+                <property name="toolTip">
+                 <string>Width of grid lines</string>
+                </property>
                 <property name="suffix">
                  <string>px</string>
                 </property>
@@ -1090,10 +1167,17 @@
                </widget>
               </item>
               <item row="11" column="1">
-               <widget class="QG_LineTypeBox" name="wGridLinesLineType" native="true"/>
+               <widget class="QG_LineTypeBox" name="wGridLinesLineType" native="true">
+                <property name="toolTip">
+                 <string>Line type for grid lines</string>
+                </property>
+               </widget>
               </item>
               <item row="9" column="1">
                <widget class="QComboBox" name="cbGridLinesColor">
+                <property name="toolTip">
+                 <string>Color for grid lines</string>
+                </property>
                 <property name="accessibleDescription">
                  <string notr="true"/>
                 </property>
@@ -1161,10 +1245,17 @@
              </property>
              <layout class="QGridLayout" name="gridLayout_24">
               <item row="2" column="1">
-               <widget class="QG_LineTypeBox" name="wMetaGridLinesLineType" native="true"/>
+               <widget class="QG_LineTypeBox" name="wMetaGridLinesLineType" native="true">
+                <property name="toolTip">
+                 <string>Type of Meta Grid lines if grid is drawn by lines</string>
+                </property>
+               </widget>
               </item>
               <item row="3" column="1">
                <widget class="QSpinBox" name="sbMetaGridLinesWidth">
+                <property name="toolTip">
+                 <string>Width of Meta Grid lines if grid is drawn by lines</string>
+                </property>
                 <property name="suffix">
                  <string>px</string>
                 </property>
@@ -1192,6 +1283,9 @@
               </item>
               <item row="1" column="1">
                <widget class="QComboBox" name="cbMetaGridLinesColor">
+                <property name="toolTip">
+                 <string>Color of Meta Grid if grid drawn by lines</string>
+                </property>
                 <property name="accessibleDescription">
                  <string notr="true"/>
                 </property>
@@ -1324,6 +1418,9 @@
           </item>
           <item row="4" column="1">
            <widget class="QComboBox" name="cbAxisXColor">
+            <property name="toolTip">
+             <string>Color for X axis</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -1349,6 +1446,9 @@
           </item>
           <item row="5" column="1">
            <widget class="QComboBox" name="cbAxisYColor">
+            <property name="toolTip">
+             <string>Color for Y axis</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -1390,6 +1490,9 @@
           </item>
           <item row="3" column="1">
            <widget class="QComboBox" name="cbYAxisAreas">
+            <property name="toolTip">
+             <string>Defines how to draw extended Y axis</string>
+            </property>
             <item>
              <property name="text">
               <string>Whole Area</string>
@@ -1446,6 +1549,9 @@
           </item>
           <item row="2" column="1">
            <widget class="QComboBox" name="cbXAxisAreas">
+            <property name="toolTip">
+             <string>Defines how to draw extended X axis</string>
+            </property>
             <item>
              <property name="text">
               <string>Whole Area</string>
@@ -1506,6 +1612,9 @@
           </item>
           <item row="3" column="1">
            <widget class="QComboBox" name="cbRelativeZeroColor">
+            <property name="toolTip">
+             <string>Color of relative zero marker</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -1526,6 +1635,9 @@
           </item>
           <item row="1" column="0">
            <widget class="QCheckBox" name="cbHideRelativeZero">
+            <property name="toolTip">
+             <string>If checked, relative zero marker will not be drawn</string>
+            </property>
             <property name="text">
              <string>Hide the relative-&amp;zero marker</string>
             </property>
@@ -1543,6 +1655,9 @@
           </item>
           <item row="2" column="1">
            <widget class="QSpinBox" name="sbRelZeroRadius">
+            <property name="toolTip">
+             <string>Radius of relative zero marker</string>
+            </property>
             <property name="suffix">
              <string>px</string>
             </property>
@@ -1565,6 +1680,9 @@
          <layout class="QGridLayout" name="gridLayout_21">
           <item row="5" column="0">
            <widget class="QCheckBox" name="cbDrawGrid">
+            <property name="toolTip">
+             <string>If checked, grid wil be drawn</string>
+            </property>
             <property name="text">
              <string>Draw Grid</string>
             </property>
@@ -1585,6 +1703,9 @@
           </item>
           <item row="0" column="0" colspan="2">
            <widget class="QCheckBox" name="cb_unitless_grid">
+            <property name="toolTip">
+             <string>If checked, grid will not be adjusted to current units of drawing</string>
+            </property>
             <property name="text">
              <string>Unitless grid</string>
             </property>
@@ -1617,6 +1738,9 @@
               <width>16777215</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="toolTip">
+             <string>Minimal spacing between grid until grid rescale</string>
             </property>
             <property name="editable">
              <bool>true</bool>
@@ -1691,6 +1815,9 @@
           </item>
           <item row="1" column="0" colspan="2">
            <widget class="QCheckBox" name="cbScaleGrid">
+            <property name="toolTip">
+             <string>If checked, the grid will be scalled automatically</string>
+            </property>
             <property name="text">
              <string>A&amp;utomatically scale grid</string>
             </property>
@@ -2589,6 +2716,9 @@
          <layout class="QGridLayout" name="gridLayout_5">
           <item row="1" column="0" colspan="4">
            <widget class="QCheckBox" name="cbDisplayRefPoints">
+            <property name="toolTip">
+             <string>If checked, more informative and explaining preview will be drawn for operations</string>
+            </property>
             <property name="text">
              <string>Show additional reference entities in operations preview mode</string>
             </property>
@@ -2626,6 +2756,9 @@
           </item>
           <item row="0" column="2">
            <widget class="QComboBox" name="cbMaxPreview">
+            <property name="toolTip">
+             <string>If more entities in preview than specified, rect will be drawn instead of entities.</string>
+            </property>
             <property name="editable">
              <bool>true</bool>
             </property>
@@ -2663,6 +2796,9 @@
           </item>
           <item row="3" column="2">
            <widget class="QComboBox" name="cbPreviewRefHighlightColor">
+            <property name="toolTip">
+             <string>Color for selected preview reference entiites</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -2710,6 +2846,9 @@
           </item>
           <item row="2" column="2">
            <widget class="QComboBox" name="cbPreviewRefColor">
+            <property name="toolTip">
+             <string>Color for preview reference entities</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -2789,6 +2928,9 @@
           </item>
           <item row="0" column="1">
            <widget class="QComboBox" name="cbHighlightedColor">
+            <property name="toolTip">
+             <string>Color for highlighted entities</string>
+            </property>
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
@@ -2863,6 +3005,9 @@
               <width>150</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="toolTip">
+             <string>Size of reference points</string>
             </property>
            </widget>
           </item>
@@ -2958,7 +3103,7 @@
              <string/>
             </property>
             <property name="minimum">
-             <number>4</number>
+             <number>3</number>
             </property>
             <property name="maximum">
              <number>15</number>
@@ -3138,6 +3283,9 @@
           </item>
           <item row="2" column="0" colspan="3">
            <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
+            <property name="toolTip">
+             <string>If checked, keyboard shortcut will be shown in tooltip for action</string>
+            </property>
             <property name="text">
              <string>Show keyboard shortcuts in actions tooltips</string>
             </property>
@@ -3155,6 +3303,9 @@
           </item>
           <item row="4" column="0" colspan="3">
            <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
+            <property name="toolTip">
+             <string>If checked, location of dialog will not be saved, but size will</string>
+            </property>
             <property name="styleSheet">
              <string notr="true">margin-left:15px</string>
             </property>
@@ -3249,10 +3400,43 @@
           <string>Defaults for new drawings</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_26">
-          <item row="0" column="1">
-           <widget class="QComboBox" name="cbUnit">
-            <property name="toolTip">
-             <string>Drawing unit.</string>
+          <item row="2" column="1">
+           <widget class="QRadioButton" name="rbGridIsoLeft">
+            <property name="text">
+             <string>Left  Isometric Grid</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QRadioButton" name="rbGridIsoRight">
+            <property name="text">
+             <string>RIght Isometric Grid</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="rbGridOrtho">
+            <property name="text">
+             <string>Orthogonal Grid</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="rbGridIsoTop">
+            <property name="text">
+             <string>Top Isometric Grid</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -3275,43 +3459,20 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QRadioButton" name="rbGridOrtho">
-            <property name="text">
-             <string>Orthogonal Grid</string>
-            </property>
-            <property name="autoExclusive">
-             <bool>true</bool>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="cbUnit">
+            <property name="toolTip">
+             <string>Drawing unit.</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QRadioButton" name="rbGridIsoLeft">
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbNewDrawingGridOff">
+            <property name="toolTip">
+             <string>If checked, new drawing will be created with grid disabled</string>
+            </property>
             <property name="text">
-             <string>Left  Isometric Grid</string>
-            </property>
-            <property name="autoExclusive">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QRadioButton" name="rbGridIsoTop">
-            <property name="text">
-             <string>Top Isometric Grid</string>
-            </property>
-            <property name="autoExclusive">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QRadioButton" name="rbGridIsoRight">
-            <property name="text">
-             <string>RIght Isometric Grid</string>
-            </property>
-            <property name="autoExclusive">
-             <bool>true</bool>
+             <string>Grid is Off </string>
             </property>
            </widget>
           </item>
@@ -3708,9 +3869,9 @@
   <tabstop>lePathHatch</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../../../res/icons/icons.qrc"/>
-  <include location="../../../../../res/icons/icons.qrc"/>
   <include location="../../../../../res/ui/ui.qrc"/>
+  <include location="../../../../../res/icons/icons.qrc"/>
+  <include location="../../../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>

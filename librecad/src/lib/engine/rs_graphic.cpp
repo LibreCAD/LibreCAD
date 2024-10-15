@@ -61,29 +61,30 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
     {
         setUnit(RS_Units::stringToUnit(LC_GET_ONE_STR("Defaults", "Unit", "None")));
         addVariable("$SNAPSTYLE", static_cast<int>(LC_GET_INT("IsometricGrid", 0)), 70);
-        addVariable("$SNAPISOPAIR", static_cast<int>(LC_GET_INT("IsoGridView", 1)), 70); // fixme - iso view
+        addVariable("$SNAPISOPAIR", static_cast<int>(LC_GET_INT("IsoGridView", 1)), 70);
+        setGridOn(!LC_GET_BOOL("GridOffForNewDrawing", false));
     }
     RS2::Unit unit = getUnit();
 
     if (unit == RS2::Inch) {
-        addVariable("$DIMASZ", 0.1, 40);
-        addVariable("$DIMEXE", 0.05, 40);
-        addVariable("$DIMEXO", 0.025, 40);
-        addVariable("$DIMGAP", 0.025, 40);
-        addVariable("$DIMTXT", 0.1, 40);
+        addVariable("$DIMASZ", 0.1, DXF_FORMAT_GC_DimASz);
+        addVariable("$DIMEXE", 0.05, DXF_FORMAT_GC_DimEXE);
+        addVariable("$DIMEXO", 0.025, DXF_FORMAT_GC_DimExO);
+        addVariable("$DIMGAP", 0.025, DXF_FORMAT_GC_DimGap);
+        addVariable("$DIMTXT", 0.1, DXF_FORMAT_GC_DimTxt);
     } else {
         addVariable("$DIMASZ",
-                    RS_Units::convert(2.5, RS2::Millimeter, unit), 40);
+                    RS_Units::convert(2.5, RS2::Millimeter, unit), DXF_FORMAT_GC_DimASz);
         addVariable("$DIMEXE",
-                    RS_Units::convert(1.25, RS2::Millimeter, unit), 40);
+                    RS_Units::convert(1.25, RS2::Millimeter, unit), DXF_FORMAT_GC_DimEXE);
         addVariable("$DIMEXO",
-                    RS_Units::convert(0.625, RS2::Millimeter, unit), 40);
+                    RS_Units::convert(0.625, RS2::Millimeter, unit), DXF_FORMAT_GC_DimExO);
         addVariable("$DIMGAP",
-                    RS_Units::convert(0.625, RS2::Millimeter, unit), 40);
+                    RS_Units::convert(0.625, RS2::Millimeter, unit), DXF_FORMAT_GC_DimGap);
         addVariable("$DIMTXT",
-                    RS_Units::convert(2.5, RS2::Millimeter, unit), 40);
+                    RS_Units::convert(2.5, RS2::Millimeter, unit), DXF_FORMAT_GC_DimTxt);
     }
-    addVariable("$DIMTIH", 0, 70);
+    addVariable("$DIMTIH", 0, DXF_FORMAT_GC_DimTIH);
     //initialize printer vars bug #3602444
     setPaperScale(getPaperScale());
     setPaperInsertionBase(getPaperInsertionBase());
@@ -92,6 +93,8 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
     addVariable("$PDMODE", LC_DEFAULTS_PDMode, DXF_FORMAT_GC_PDMode);
     addVariable("$PDSIZE", LC_DEFAULTS_PDSize, DXF_FORMAT_GC_PDSize);
 
+    addVariable("$JOINSTYLE", 1, DXF_FORMAT_GC_JoinStyle);
+    addVariable("$ENDCAPS", 1, DXF_FORMAT_GC_Endcaps);
     setModified(false);
 }
 

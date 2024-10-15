@@ -248,7 +248,7 @@ void QG_DlgOptionsGeneral::init() {
         int metagridLinesWidthPx = LC_GET_INT("metaGridLinesLineWidth", 1);
         sbMetaGridLinesWidth->setValue(metagridLinesWidthPx);
 
-        int gridLinesWidthPx = LC_GET_INT("GridLineLinesWidth", 1);
+        int gridLinesWidthPx = LC_GET_INT("GridLinesLineWidth", 1);
         sbGridLinesLineWidth->setValue(gridLinesWidthPx);
 
         checked = LC_GET_BOOL("GridRenderSimple", false);
@@ -364,6 +364,8 @@ void QG_DlgOptionsGeneral::init() {
         cbWheelScrollInvertV->setChecked(LC_GET_BOOL("WheelScrollInvertV"));
         cbInvertZoomDirection->setChecked(LC_GET_BOOL("InvertZoomDirection"));
         cbAngleSnapStep->setCurrentIndex(LC_GET_INT("AngleSnapStep", 3));
+
+        cbNewDrawingGridOff->setChecked(LC_GET_BOOL("GridOffForNewDrawing", false));
 
         bool defaultIsometricGrid = LC_GET_BOOL("IsometricGrid", false);
         int defaultIsoView = LC_GET_INT("IsoGridView", RS2::IsoGridViewType::IsoTop);
@@ -577,6 +579,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("WheelScrollInvertV", cbWheelScrollInvertV->isChecked());
             LC_SET("InvertZoomDirection", cbInvertZoomDirection->isChecked());
             LC_SET("AngleSnapStep", cbAngleSnapStep->currentIndex());
+            LC_SET("GridOffForNewDrawing", cbNewDrawingGridOff->isChecked());
 
             bool defaultIsometricGrid = !rbGridOrtho->isChecked();
             LC_SET("IsometricGrid", defaultIsometricGrid);
