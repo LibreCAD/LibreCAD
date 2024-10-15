@@ -39,7 +39,7 @@
 #include "rs.h"
 #include "rs_pen.h"
 
-#define DEBUG_RENDERING
+#define DEBUG_RENDERING_
 
 #ifdef DEBUG_RENDERING
 #include <QElapsedTimer>
@@ -508,15 +508,10 @@ private:
     bool scaleLineWidth = false;
     bool inOverlayDrawing = false;
     RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
-
-    // fixme - this is disgusting, yet had to disable grid in hatch. Rework!!!
     bool hasNoGrid = false;
-
 signals:
     void relative_zero_changed(const RS_Vector &);
     void previous_zoom_state(bool);
-
-
 };
 
 #endif

@@ -53,7 +53,7 @@
 #include "emu_c99.h"
 #endif
 
-#ifdef DEBUG_RENDERING_
+#ifdef DEBUG_RENDERING
 #define DEBUG_RENDERING_DETAILS
 #endif
 
@@ -523,7 +523,6 @@ void RS_GraphicView::zoomOutY(double f) {
  * @param keepAspectRatio true: keep aspect ratio 1:1
  *                        false: factors in x and y are stretched to the max
  */
-#include <iostream>
 
 void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
 
@@ -1723,6 +1722,8 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
                 break;
             }
             default:
+                xAxisStartPoint = 0;
+                xAxisEndPoint = 0;
                 break;
         }
 
@@ -1760,6 +1761,8 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
                 yAxisEndPoint = originPoint.y + zr;
                 break;
             default:
+                yAxisStartPoint = 0;
+                yAxisEndPoint = 0;
                 break;
         }
 
