@@ -146,6 +146,18 @@ void RS_Grid::loadSettings(){
     }
 }
 
+void RS_Grid::calculateSnapSettings(){
+    if (gridSystem->isValid() || gridSystem->isGridDisabledByPanning(graphicView)){
+        return;
+    }
+    RS_Vector viewZero;
+    RS_Vector viewSize;
+    RS_Vector metaGridWidthToUse;
+    RS_Vector gridWidthToUse;
+    prepareGridCalculations(viewZero, viewSize,metaGridWidthToUse, gridWidthToUse);
+    gridSystem->calculateSnapInfo(viewZero, viewSize,metaGridWidthToUse, gridWidthToUse);
+}
+
 /**
  * Updates the grid point array.
  */
@@ -153,11 +165,24 @@ void RS_Grid::calculateGrid() {
     if (!graphicView->isGridOn()){
         return;
     }
+    if (gridSystem->isValid() || gridSystem->isGridDisabledByPanning(graphicView)){
+        return;
+    }
 
+    RS_Vector viewZero;
+    RS_Vector viewSize;
+    RS_Vector metaGridWidthToUse;
+    RS_Vector gridWidthToUse;
+    prepareGridCalculations(viewZero, viewSize,metaGridWidthToUse, gridWidthToUse);
+
+    gridSystem->createGrid(graphicView, viewZero, viewSize, metaGridWidthToUse, gridWidthToUse);
+}
+
+void RS_Grid::prepareGridCalculations(RS_Vector& viewZero,RS_Vector& viewSize,RS_Vector& metaGridWidthToUse,RS_Vector& gridWidthToUse){
     RS_Vector gridWidth = prepareGridWidth();
 
-    RS_Vector gridWidthToUse = gridWidth;
-    RS_Vector metaGridWidthToUse = metaGridWidth;
+    gridWidthToUse = gridWidth;
+    metaGridWidthToUse = metaGridWidth;
     gridWidthToUse.valid = true;
     metaGridWidthToUse.valid = true;
     // checking for minimal grid with constraint. It may occur either to zoom of drawing, or due to options that specifies minimal width of grid in pixel.
@@ -205,8 +230,8 @@ void RS_Grid::calculateGrid() {
         }
     }
 
-    RS_Vector viewZero = graphicView->toGraph(0, 0);
-    RS_Vector viewSize = graphicView->toGraph(graphicView->getWidth(), graphicView->getHeight());
+    viewZero = graphicView->toGraph(0, 0);
+    viewSize = graphicView->toGraph(graphicView->getWidth(), graphicView->getHeight());
 
     // populate grid points and metaGrid line positions: pts, metaX, metaY
     gridInfoString = "";
@@ -225,7 +250,6 @@ void RS_Grid::calculateGrid() {
     }
 
     gridSystem->setGridInfiniteState(hasInfiniteAxis, undefinedXSize);
-    gridSystem->createGrid(graphicView, viewZero, viewSize, metaGridWidthToUse, gridWidthToUse);
 }
 
 RS_Vector RS_Grid::prepareGridWidth() {// find out unit:

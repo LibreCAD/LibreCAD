@@ -1025,10 +1025,15 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
         // fixme - sand - review as overall rendering pipeline. It might be that
         // it will be better to use more fine-grained painting and draw grid in own
         // pixmap, and have draft sign somewhere else?
-        if (grid && isGridOn() && !hasNoGrid) {
-            grid->calculateGrid();
-            grid->drawGrid(painter);
-            // fixme - review
+        if (grid && !hasNoGrid) {
+            if (isGridOn()) {
+                grid->calculateGrid();
+                grid->drawGrid(painter);
+
+            }
+            else{
+                grid->calculateSnapSettings();
+            }
             QString info = grid->getInfo();
             updateGridStatusWidget(info);
         }

@@ -53,12 +53,20 @@ void LC_GridSystem::createGrid(
     const RS_Vector &metaGridWidth, const RS_Vector &gridWidth) {
 
     if (!valid){
-        if (gridOptions->disableGridOnPanning && view->isPanning()){
-            return;
-        }
         doCreateGrid(view, viewZero, viewSize, metaGridWidth, gridWidth);
         valid = true;
     }
+}
+
+bool LC_GridSystem::isGridDisabledByPanning(RS_GraphicView* view){
+    return gridOptions->disableGridOnPanning && view->isPanning();
+}
+
+void LC_GridSystem::doCalculateSnapInfo(RS_Vector &viewZero, RS_Vector &viewSize, RS_Vector &metaGridWidth, RS_Vector &gridWidth) {
+    setCellSize(gridWidth, metaGridWidth);
+    createCellVector(gridCellSize);
+    determineMetaGridBoundaries(viewZero, viewSize);
+    prepareGridOther(viewZero, viewSize);
 }
 
 void LC_GridSystem::doCreateGrid(
@@ -122,15 +130,21 @@ void LC_GridSystem::invalidate() {
     valid = false;
 }
 
+bool LC_GridSystem::isValid() const {
+    return valid;
+}
+
 void LC_GridSystem::draw(RS_Painter *painter, RS_GraphicView *view) {
-    if (gridOptions->disableGridOnPanning && view->isPanning()){
+    if (isGridDisabledByPanning(view)){
         return;
     }
-    // fixme - special handling of order if simplify grid painter to make grid over meta grid?
-    if (gridOptions->drawMetaGrid){
-        drawMetaGrid(painter, view);
+    else {
+        // fixme - special handling of order if simplify grid painter to make grid over meta grid?
+        if (gridOptions->drawMetaGrid) {
+            drawMetaGrid(painter, view);
+        }
+        drawGrid(painter, view);
     }
-    drawGrid(painter, view);
 }
 
 void LC_GridSystem::drawMetaGrid(RS_Painter *painter, RS_GraphicView *view) {
@@ -206,4 +220,11 @@ void LC_GridSystem::clearGrid() {
 void LC_GridSystem::setGridInfiniteState(bool hasIndefiniteAxis, bool undefinedX) {
     hasAxisIndefinite = hasIndefiniteAxis;
     indefiniteX = undefinedX;
+}
+
+void LC_GridSystem::calculateSnapInfo(RS_Vector& viewZero,RS_Vector& viewSize,RS_Vector& metaGridWidthToUse,RS_Vector& gridWidthToUse) {
+    if (!valid){
+        doCalculateSnapInfo( viewZero, viewSize, metaGridWidthToUse, gridWidthToUse);
+        valid = true;
+    }
 }
