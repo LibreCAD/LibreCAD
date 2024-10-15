@@ -23,6 +23,7 @@
 #ifndef LC_DLGABOUT_H
 #define LC_DLGABOUT_H
 
+#include<memory>
 #include "lc_dialog.h"
 #include "qc_applicationwindow.h"
 
@@ -40,7 +41,7 @@ public:
 protected slots:
     void copyInfo();
 private:
-    Ui::LC_DlgAbout *ui;
+    std::unique_ptr<Ui::LC_DlgAbout> ui;
     QString info;
 };
 

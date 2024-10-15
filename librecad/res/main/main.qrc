@@ -14,5 +14,9 @@
         <file>splash_librecad_beta.png</file>
         <file>splash_librecad_beta.png</file>
         <file>splash_librecad_alpha.png</file>
+        <file>librecad01_release.png</file>
+        <file>librecad01_rc.png</file>
+        <file>librecad01_beta.png</file>
+        <file>librecad01_alpha.png</file>
     </qresource>
 </RCC>
