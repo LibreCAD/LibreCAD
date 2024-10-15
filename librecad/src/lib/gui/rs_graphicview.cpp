@@ -1168,7 +1168,7 @@ void RS_GraphicView::setPenForPrintingEntity(RS_Painter *painter, RS_Entity *e, 
     setPenTimer.start();
 #endif
 // Getting pen from entity (or layer)
-    
+
     RS_Pen pen = e->getPenResolved();
     RS_Pen originalPen = pen;
     bool highlighted = e->getFlag(RS2::FlagHighlighted);
@@ -1180,7 +1180,7 @@ void RS_GraphicView::setPenForPrintingEntity(RS_Painter *painter, RS_Entity *e, 
     }
     else{
         lastPaintedHighlighted = highlighted;
-        lastPaintedSelected = selected;        
+        lastPaintedSelected = selected;
     }
     // Avoid negative widths
     double width = pen.getWidth();
@@ -1478,7 +1478,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
     }
 #ifdef DEBUG_RENDERING
     isVisibleTimer.start();
-#endif    
+#endif
     // entity is not visible:
     bool visible = e->isVisible();
 #ifdef DEBUG_RENDERING
@@ -1681,14 +1681,14 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
 
     auto originPoint = toGui(RS_Vector(0,0));
 
- 
+
     int width = getWidth();
     int height = getHeight();
     if (extendAxisLines){
 
         int xAxisStartPoint;
         int xAxisEndPoint;
-                
+
         switch (extendAxisModeX){
             case Both:
                 xAxisStartPoint = 0;
@@ -2036,8 +2036,6 @@ double RS_GraphicView::toGuiDX(double d) const {
 double RS_GraphicView::toGuiDY(double d) const {
     return d * factor.y;
 }
-
-
 
 /**
  * Translates a vector in screen coordinates to a vector in real coordinates.

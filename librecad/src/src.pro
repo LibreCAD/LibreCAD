@@ -10,7 +10,7 @@ DISABLE_POSTSCRIPT = false
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-LC_VERSION="2.2.2.2-alpha"
+LC_VERSION="2.2.2.3-alpha"
 LC_PRERELEASE = "true";
 
 VERSION=$${LC_VERSION}
@@ -430,7 +430,7 @@ SOURCES += \
     ui/main/lc_releasechecker.cpp \
     lib/gui/grid/lc_gridsystem.cpp \
     lib/gui/grid/lc_isometricgrid.cpp \
-    lib/gui/grid/lc_lattice.cpp \    
+    lib/gui/grid/lc_lattice.cpp \
     lib/gui/grid/lc_orthogonalgrid.cpp \
     lib/gui/rs_dialogfactory.cpp \
     lib/gui/rs_eventhandler.cpp \

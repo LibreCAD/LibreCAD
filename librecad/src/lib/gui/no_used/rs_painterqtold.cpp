@@ -853,16 +853,16 @@ RS_Pen RS_PainterQtOld::getPen() const{
 void RS_PainterQtOld::setPen(const RS_Pen &pen, int penWidth) {
     lpen = pen;
     switch (drawingMode) {
-    case RS2::ModeBW:
-        lpen.setColor( RS_Color( Qt::black));
-        break;
+        case RS2::ModeBW:
+            lpen.setColor( RS_Color( Qt::black));
+            break;
 
-    case RS2::ModeWB:
-        lpen.setColor( RS_Color( Qt::white));
-        break;
+        case RS2::ModeWB:
+            lpen.setColor( RS_Color( Qt::white));
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 
     QColor pColor { lpen.getColor() };

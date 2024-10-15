@@ -144,7 +144,7 @@ Section "Install Section" SecInstall
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayIcon" "$INSTDIR\LibreCAD.exe"
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayVersion" "${SCMREVISION}"
   WriteRegStr HKLM "${UNINSTKEY}" "Publisher" "LibreCAD Team"
-  WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.2.2_rc1"
+  WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.2.2_alpha1"
   WriteRegStr HKLM "${UNINSTKEY}" "HelpLink" "https://librecad.org/"
   WriteRegStr HKLM "${UNINSTKEY}" "InstallLocation" "$INSTDIR"
   WriteRegStr HKLM "${UNINSTKEY}" "URLInfoAbout" "http://librecad.org/"

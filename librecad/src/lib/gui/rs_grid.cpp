@@ -89,7 +89,7 @@ void RS_Grid::loadSettings(){
     minGridSpacing = LC_GET_INT("MinGridSpacing", 10);
     int gridType = LC_GET_INT("GridType", 0);
     bool linesGrid = gridType == 1;
-    
+
     RS2::LineType metagridLineType;
     int metaGridWidthPx;
 
@@ -343,7 +343,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
 
     // auto scale grid
         //scale grid by drawing setting as well, bug#3416862
-        
+
             RS_Vector guiGridWith = graphicView->toGuiD(gridWidth);
             bool gridSmallerThanMin = guiGridWith.x < minGridSpacing || guiGridWith.y < minGridSpacing;
             if (scaleGrid || gridSmallerThanMin) {
@@ -363,7 +363,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
                 }
                 while (guiGridWith.x < minGridSpacing  || guiGridWith.y < minGridSpacing);
             }
-        
+
        /* if (scaleGrid || userGrid.x <= minimumGridWidth || userGrid.y <= minimumGridWidth) {
             if (scaleGrid || userGrid.x <= minimumGridWidth) {
                 while (graphicView->toGuiDX(gridWidth.x) < minGridSpacing) {

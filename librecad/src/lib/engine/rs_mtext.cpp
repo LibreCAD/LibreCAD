@@ -815,6 +815,6 @@ void RS_MText::drawDraft(RS_Painter *painter, RS_GraphicView *view, [[maybe_unus
             const RS_Vector &start = view->toGui(line->getBaselineStart());
             const RS_Vector &end = view->toGui(line->getBaselineEnd());
             painter->drawLine(start, end);
-        }
     }
+  }
 }

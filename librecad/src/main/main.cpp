@@ -27,32 +27,34 @@
 **
 **********************************************************************/
 #include <clocale>
-#include "main.h"
 
 #include <QApplication>
 #include <QByteArray>
 #include <QDebug>
-#include <QSplashScreen>
-#include <QSettings>
-#include <QMessageBox>
 #include <QFileInfo>
+#include <QMessageBox>
+#include <QPainter>
+#include <QPixmap>
+#include <QSettings>
+#include <QSplashScreen>
 
+#include "console_dxf2pdf.h"
+#include "console_dxf2png.h"
+#include "lc_application.h"
+#include "main.h"
+#include "qc_applicationwindow.h"
+#include "qg_dlginitial.h"
+#include "rs_debug.h"
 #include "rs_fontlist.h"
 #include "rs_patternlist.h"
 #include "rs_settings.h"
 #include "rs_system.h"
-#include "qg_dlginitial.h"
-
-#include "lc_application.h"
-#include "qc_applicationwindow.h"
-#include "rs_debug.h"
-
-#include "console_dxf2pdf.h"
-#include "console_dxf2png.h"
 
 namespace
 {
 void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings);
+// update splash for alpha/beta names)
+void updateSplash(const std::unique_ptr<QSplashScreen>& splash);
 }
 /**
  * Main. Creates Application window.
@@ -241,21 +243,12 @@ int main(int argc, char** argv)
         RS_DEBUG->print("main: show initial config dialog: OK");
     }
 
-    auto splash = new QSplashScreen;
+    auto splash = std::make_unique<QSplashScreen>();
 
     bool show_splash = settings.value("Startup/ShowSplash", 1).toBool();
 
     if (show_splash){
-        QString splashPixmapName = ":/main/splash_librecad.png";
-        if (XSTR(LC_PRERELEASE)){
-            splashPixmapName = ":/main/splash_librecad_beta.png";
-        }
-        QPixmap pixmap(splashPixmapName);
-        splash->setPixmap(pixmap);
-        splash->setAttribute(Qt::WA_DeleteOnClose);
-        splash->show();
-        splash->showMessage(QObject::tr("Loading.."),
-                            Qt::AlignRight|Qt::AlignBottom, Qt::black);
+        updateSplash(splash);
         app.processEvents();
         RS_DEBUG->print("main: splashscreen: OK");
     }
@@ -375,8 +368,7 @@ int main(int argc, char** argv)
 
         if (show_splash)
             splash->finish(&appWin);
-        else
-            delete splash;
+        splash->finish(&appWin);
 
         bool checkForNewVersion = LC_GET_BOOL("CheckForNewVersions", true);
         if (checkForNewVersion) {
@@ -453,5 +445,57 @@ void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings)
     }
 
     settings.endGroup();
+}
+
+
+// Update Splash image to show "ALPHA", "BETA", and "Release Candidate"
+QPixmap getSplashImage(const std::unique_ptr<QSplashScreen>& splash, const QString& label);
+// Update Splash Screen
+void updateSplash(const std::unique_ptr<QSplashScreen>& splash)
+{
+    if (splash == nullptr)
+        return;
+
+    QString version{XSTR(LC_VERSION)};
+    QString label;
+    const std::map<QString, QString> labelMap = {
+        {"rc", QObject::tr("Release Candidate")},
+        {"beta", QObject::tr("BETA")},
+        {"alpha", QObject::tr("ALPHA")}
+    };
+    for (const auto& [key, value]: labelMap) {
+        if (version.contains(key, Qt::CaseInsensitive)) {
+            label=value;
+            break;
+        }
+    }
+    if (label.isEmpty())
+        return;
+
+    QPixmap splashImage = getSplashImage(splash, label);
+    splash->setPixmap(splashImage);
+    splash->setAttribute(Qt::WA_DeleteOnClose);
+    splash->show();
+    splash->showMessage(QObject::tr("Loading.."),
+                        Qt::AlignRight|Qt::AlignBottom, Qt::black);
+}
+
+// Update Splash image to show "ALPHA", "BETA", and "Release Candidate"
+QPixmap getSplashImage(const std::unique_ptr<QSplashScreen>& splash, const QString& label)
+{
+    if (splash == nullptr)
+        return {};
+
+    QPixmap pixmapSplash(":/main/splash_librecad.png");
+    QPainter painter(&pixmapSplash);
+    const double factorX = pixmapSplash.width()/542.;
+    const double factorY = pixmapSplash.height()/337.;
+    painter.setPen(QColor(255, 0, 0, 128));
+    QRectF labelRect{QPointF{280.*factorX, 130.*factorY}, QPointF{480.*factorX, 170.*factorY}};
+    QFont font;
+    font.setPixelSize(int(labelRect.height()) - 2);
+    painter.setFont(font);
+    painter.drawText(labelRect,Qt::AlignRight, label);
+    return pixmapSplash;
 }
 }

@@ -39,7 +39,6 @@ class QLabel;
 class QMenu;
 class QEnterEvent;
 class QG_ScrollBar;
-class RS_PainterQt;
 
 /**
  * This is the Qt implementation of a widget which can view a 
@@ -132,8 +131,6 @@ protected:
 
     QList<QAction*> recent_actions;
     void autoPanStep();
-
-
 
 private slots:
     void slotHScrolled(int value);

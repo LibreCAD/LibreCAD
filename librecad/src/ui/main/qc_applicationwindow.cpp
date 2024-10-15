@@ -924,7 +924,11 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
     if (w == activedMdiSubWindow) {
         // this may occur after file open, so additional update is needed :(
         RS_GraphicView* activatedGraphicView = getGraphicView();
+        if (activatedGraphicView == nullptr || activatedGraphicView->getGraphic() == nullptr)
+            return;
+
         RS_Graphic* activatedGraphic = activatedGraphicView->getGraphic();
+
         bool printPreview = activatedGraphicView->isPrintPreview();
         if (!printPreview){
             bool isometricGrid = activatedGraphic->isIsometricGrid();
@@ -1038,14 +1042,14 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
                 currentAction->showOptions();
             }
         }
-        
+
         if (!printPreview){
             bool isometricGrid = activatedGraphic->isIsometricGrid();
             RS2::IsoGridViewType isoViewType = activatedGraphic->getIsoView();
             updateGridViewActions(isometricGrid, isoViewType);
         }
-        
-        
+
+
         updateActionsAndWidgetsForPrintPreview(printPreview);
 
         if (snapToolBar) {
@@ -1649,7 +1653,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
         if (layerTreeWidget != nullptr)
             layerTreeWidget->slotFilteringMaskChanged();
 
-        
+
         if (graphic) {
             if (int objects_removed = graphic->clean()) {
                 auto msg = QObject::tr("Invalid objects removed:");
@@ -1676,7 +1680,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
             doArrangeWindows(RS2::CurrentMode);
 
 
-        
+
         if (LC_GET_ONE_BOOL("CADPreferences", "AutoZoomDrawing")) {
             graphicView->zoomAuto(false);
         }
@@ -2680,58 +2684,9 @@ void QC_ApplicationWindow::slotFileOpenRecent(QAction *action) {
 void QC_ApplicationWindow::widgetOptionsDialog() {
     // author: ravas
 
-    // fixme - OMG!!!! whf?
-
     LC_WidgetOptionsDialog dlg;
 
-
     if (dlg.exec() == QDialog::Accepted) {
-        /*  int allow_style = dlg.style_checkbox->isChecked();
-          settings.setValue("AllowStyle", allow_style);
-          if (allow_style) {
-              QString style = dlg.style_combobox->currentText();
-              settings.setValue("Style", style);
-              QApplication::setStyle(QStyleFactory::create(style));
-          }
-
-          QString sheet_path = dlg.stylesheet_field->text();
-          settings.setValue("StyleSheet", sheet_path);
-          if (loadStyleSheet(sheet_path))
-              style_sheet_path = sheet_path;
-
-          int allow_theme = dlg.theme_checkbox->isChecked();
-          settings.setValue("AllowTheme", allow_theme);
-
-          int allow_toolbar_icon_size = dlg.toolbar_icon_size_checkbox->isChecked();
-          settings.setValue("AllowToolbarIconSize", allow_toolbar_icon_size);
-          if (allow_toolbar_icon_size) {
-              int toolbar_icon_size = dlg.toolbar_icon_size_spinbox->value();
-              settings.setValue("ToolbarIconSize", toolbar_icon_size);
-              setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
-          }
-
-          int allow_statusbar_fontsize = dlg.statusbar_fontsize_checkbox->isChecked();
-          settings.setValue("AllowStatusbarFontSize", allow_statusbar_fontsize);
-          if (allow_statusbar_fontsize) {
-              int statusbar_fontsize = dlg.statusbar_fontsize_spinbox->value();
-              settings.setValue("StatusbarFontSize", statusbar_fontsize);
-              QFont font;
-              font.setPointSize(statusbar_fontsize);
-              statusBar()->setFont(font);
-          }
-
-          int allow_statusbar_height = dlg.statusbar_height_checkbox->isChecked();
-          settings.setValue("AllowStatusbarHeight", allow_statusbar_height);
-          if (allow_statusbar_height) {
-              int statusbar_height = dlg.statusbar_height_spinbox->value();
-              settings.setValue("StatusbarHeight", statusbar_height);
-              statusBar()->setMinimumHeight(statusbar_height);
-          }
-
-          int columnCount = dlg.left_toobar_columns_spinbox->value();
-          settings.setValue("LeftToolbarColumnsCount", columnCount);
-          settings.endGroup();
-      }*/
     }
 }
 
