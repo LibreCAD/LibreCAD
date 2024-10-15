@@ -75,17 +75,34 @@ jobs:
           name: assets
           path: LibreCAD*.AppImage
           retention-days: 2
-#
-#      - name: Create snapcraft
-#        run: |
-#          ./scripts/createSnap.sh
-#
-#      - name: Uploading snap
-#        uses: actions/upload-artifact@v3.1.0
-#        with:
-#          path: ${{ github.workspace }}/librecad**snap
-#          name: LibreCAD.snap
-#
+
+  BuildSnap:
+      runs-on: ubuntu-22.04
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+          ref: 2.2.1
+
+      - name: install snap
+        uses: samuelmeuli/action-snapcraft@v2
+        with:
+          name: snap
+          path: ${{ steps.snapcraft.outputs.snap }}
+          
+      - name: Create snapcraft
+        run: |
+          pwd
+          ls
+          ls scripts
+          bash ./scripts/createSnap.sh
+
+      - name: Uploading snap
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          path: ${{ github.workspace }}/librecad**snap
+          name: LibreCAD.snap
 
   BuildMacOS:
     runs-on: macos-13
@@ -323,7 +340,7 @@ jobs:
 
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD'
-    needs: [BuildLinux, BuildMacOS, BuildWindows, BuildWindows64]
+    needs: [BuildLinux, BuildMacOS, BuildWindows, BuildWindows64, BuildSnap]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

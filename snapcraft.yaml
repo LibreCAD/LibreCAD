@@ -1,5 +1,5 @@
 name: librecad
-version: '2.2.1-beta'
+version: '2.2.1-rc'
 grade: stable
 base: core22
 confinement: strict
@@ -20,6 +20,9 @@ apps:
 parts:
         librecad:
                 plugin: qmake
+                qmake-parameters:
+                  - "QMAKE_CFLAGS+=-march=x86_64"
+                  - "QMAKE_CXXFLAGS+=-march=x86-64"
                 source: .
                 build-packages:
                         - qtbase5-dev
