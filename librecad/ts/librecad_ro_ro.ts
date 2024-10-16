@@ -836,15 +836,15 @@ distanța dintre puncte=%2 este mai mare decât diametrul=%3</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
-        <translation type="unfinished"></translation>
+        <translation>Deblochează tot</translation>
     </message>
     <message>
         <source>&amp;Lock all</source>
-        <translation type="unfinished"></translation>
+        <translation>B&amp;lochează tot</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Exportă strat(e) selectat(e)</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
