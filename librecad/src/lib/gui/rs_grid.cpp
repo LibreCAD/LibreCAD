@@ -89,7 +89,7 @@ void RS_Grid::loadSettings(){
     minGridSpacing = LC_GET_INT("MinGridSpacing", 10);
     int gridType = LC_GET_INT("GridType", 0);
     bool linesGrid = gridType == 1;
-    
+
     RS2::LineType metagridLineType;
     int metaGridWidthPx;
 
@@ -98,12 +98,12 @@ void RS_Grid::loadSettings(){
         metaGridWidthPx = LC_GET_INT("metaGridLinesLineWidth", 1);
     }
     else{
-        metagridLineType =  static_cast<RS2::LineType> (LC_GET_INT("metaGridLineType", RS2::DotLineTiny));
+        metagridLineType =  static_cast<RS2::LineType> (LC_GET_INT("metaGridPointsLineType", RS2::DotLineTiny));
         metaGridWidthPx = LC_GET_INT("metaGridPointsLineWidth", 1);
     }
 
-    int gridWidthPx = LC_GET_INT("GridLineLinesWidth", 1);
-    RS2::LineType gridLineType =  static_cast<RS2::LineType> (LC_GET_INT("GridLineType", RS2::SolidLine));
+    int gridWidthPx = LC_GET_INT("GridLinesLineWidth", 1);
+    RS2::LineType gridLineType =  static_cast<RS2::LineType> (LC_GET_INT("GridLinesLineType", RS2::SolidLine));
 
     bool disableGridOnPanning = LC_GET_BOOL("GridDisableWithinPan", false);
     bool drawIsoVerticalForTop = LC_GET_BOOL("GridDrawIsoVerticalForTop", true);
@@ -146,6 +146,18 @@ void RS_Grid::loadSettings(){
     }
 }
 
+void RS_Grid::calculateSnapSettings(){
+    if (gridSystem->isValid() || gridSystem->isGridDisabledByPanning(graphicView)){
+        return;
+    }
+    RS_Vector viewZero;
+    RS_Vector viewSize;
+    RS_Vector metaGridWidthToUse;
+    RS_Vector gridWidthToUse;
+    prepareGridCalculations(viewZero, viewSize,metaGridWidthToUse, gridWidthToUse);
+    gridSystem->calculateSnapInfo(viewZero, viewSize,metaGridWidthToUse, gridWidthToUse);
+}
+
 /**
  * Updates the grid point array.
  */
@@ -153,11 +165,24 @@ void RS_Grid::calculateGrid() {
     if (!graphicView->isGridOn()){
         return;
     }
+    if (gridSystem->isValid() || gridSystem->isGridDisabledByPanning(graphicView)){
+        return;
+    }
 
+    RS_Vector viewZero;
+    RS_Vector viewSize;
+    RS_Vector metaGridWidthToUse;
+    RS_Vector gridWidthToUse;
+    prepareGridCalculations(viewZero, viewSize,metaGridWidthToUse, gridWidthToUse);
+
+    gridSystem->createGrid(graphicView, viewZero, viewSize, metaGridWidthToUse, gridWidthToUse);
+}
+
+void RS_Grid::prepareGridCalculations(RS_Vector& viewZero,RS_Vector& viewSize,RS_Vector& metaGridWidthToUse,RS_Vector& gridWidthToUse){
     RS_Vector gridWidth = prepareGridWidth();
 
-    RS_Vector gridWidthToUse = gridWidth;
-    RS_Vector metaGridWidthToUse = metaGridWidth;
+    gridWidthToUse = gridWidth;
+    metaGridWidthToUse = metaGridWidth;
     gridWidthToUse.valid = true;
     metaGridWidthToUse.valid = true;
     // checking for minimal grid with constraint. It may occur either to zoom of drawing, or due to options that specifies minimal width of grid in pixel.
@@ -205,8 +230,8 @@ void RS_Grid::calculateGrid() {
         }
     }
 
-    RS_Vector viewZero = graphicView->toGraph(0, 0);
-    RS_Vector viewSize = graphicView->toGraph(graphicView->getWidth(), graphicView->getHeight());
+    viewZero = graphicView->toGraph(0, 0);
+    viewSize = graphicView->toGraph(graphicView->getWidth(), graphicView->getHeight());
 
     // populate grid points and metaGrid line positions: pts, metaX, metaY
     gridInfoString = "";
@@ -225,7 +250,6 @@ void RS_Grid::calculateGrid() {
     }
 
     gridSystem->setGridInfiniteState(hasInfiniteAxis, undefinedXSize);
-    gridSystem->createGrid(graphicView, viewZero, viewSize, metaGridWidthToUse, gridWidthToUse);
 }
 
 RS_Vector RS_Grid::prepareGridWidth() {// find out unit:
@@ -343,7 +367,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
 
     // auto scale grid
         //scale grid by drawing setting as well, bug#3416862
-        
+
             RS_Vector guiGridWith = graphicView->toGuiD(gridWidth);
             bool gridSmallerThanMin = guiGridWith.x < minGridSpacing || guiGridWith.y < minGridSpacing;
             if (scaleGrid || gridSmallerThanMin) {
@@ -363,7 +387,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
                 }
                 while (guiGridWith.x < minGridSpacing  || guiGridWith.y < minGridSpacing);
             }
-        
+
        /* if (scaleGrid || userGrid.x <= minimumGridWidth || userGrid.y <= minimumGridWidth) {
             if (scaleGrid || userGrid.x <= minimumGridWidth) {
                 while (graphicView->toGuiDX(gridWidth.x) < minGridSpacing) {

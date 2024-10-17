@@ -59,7 +59,7 @@ struct RS_HatchData {
 
 std::ostream& operator << (std::ostream& os, const RS_HatchData& td);
 
-
+class QPainterPath;
 
 /**
  * Class for a hatch entity.
@@ -169,6 +169,12 @@ private:
     bool updateRunning = false;
     bool needOptimization = false;
     bool m_updated=false;
+
+    void drawSolidFill(RS_Painter *painter, const RS_GraphicView *view);
+
+    void debugOutPath(const QPainterPath &tmpPath) const;
+
+    void createSolidFillPath( RS_Painter *painter, const RS_GraphicView *view, QPainterPath &path);
 };
 
 #endif

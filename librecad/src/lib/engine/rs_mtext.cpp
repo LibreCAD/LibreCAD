@@ -35,6 +35,7 @@
 #include "rs_graphicview.h"
 #include "rs_insert.h"
 #include "rs_math.h"
+#include "rs_line.h"
 #include "rs_painter.h"
 
 
@@ -49,10 +50,10 @@ RS_MText::LC_TextLine *RS_MText::LC_TextLine::clone() const {
     }
     ec->detach();
     ec->initId();
-    ec->setTextSize(this->textSize);
-    ec->setLeftBottomCorner(this->leftBottomCorner);
-    ec->setBaselineStart(this->baselineStart);
-    ec->setBaselineEnd(this->baselineEnd);
+    ec->setTextSize(textSize);
+    ec->setLeftBottomCorner(leftBottomCorner);
+    ec->setBaselineStart(baselineStart);
+    ec->setBaselineEnd(baselineEnd);
     return ec;
 }
 
@@ -125,7 +126,7 @@ RS_MText::RS_MText(RS_EntityContainer *parent, const RS_MTextData &d)
 }
 
 RS_Entity *RS_MText::clone() const {
-    RS_MText *t = new RS_MText(*this);
+    auto *t = new RS_MText(*this);
     t->setOwner(isOwner());
     t->initId();
     t->detach();
@@ -133,40 +134,28 @@ RS_Entity *RS_MText::clone() const {
 }
 // fixme - test concept for using UI proxies for heavy entities on modification operation (rotate, scale etc).
 // potentially, it might be either expanded further or removed.
-class RS_MTextProxy:public RS_MText{
+class RS_MTextProxy:public RS_EntityContainer{
 public:
-    RS_MTextProxy(const RS_MText &parent):RS_MText(parent) {}
+    RS_MTextProxy(const RS_MText &parent):RS_EntityContainer(parent) {
 
-    void move(const RS_Vector &offset) override {
-        RS_MText::move(offset);
     }
 
-    void rotate(const RS_Vector &center, const double &angle) override {
-        RS_MText::rotate(center, angle);
-    }
 
-    void scale(const RS_Vector &center, const RS_Vector &factor) override {
-        RS_MText::scale(center, factor);
-    }
-
-    void mirror(const RS_Vector &axisPoint1, const RS_Vector &axisPoint2) override {
-        RS_MText::mirror(axisPoint1, axisPoint2);
-    }
-
-    void stretch(const RS_Vector &firstCorner, const RS_Vector &secondCorner, const RS_Vector &offset) override {
-        RS_MText::stretch(firstCorner, secondCorner, offset);
-    }
 };
 
 RS_Entity *RS_MText::cloneProxy() const {
-  /*  RS_MText *t = new RS_MTextProxy(*this);
-    t->setOwner(isOwner());
-    t->initId();
-//    t->detach();
-    t->entities.clear();
-//    for ()
-    return t;*/
-  return clone();
+    RS_EntityContainer* proxy = new RS_EntityContainer();
+    proxy->setOwner(true);
+    for (RS_Entity *entity: std::as_const(entities)) {
+        auto line = dynamic_cast<LC_TextLine*>(entity);
+        if (line != nullptr && line->count() > 0) {
+            const RS_Vector &start = line->getBaselineStart();
+            const RS_Vector &end = line->getBaselineEnd();
+            auto line = new RS_Line(proxy, start, end);
+            proxy->addEntity(line);
+        }
+    }
+  return proxy;
 }
 
 /**
@@ -791,8 +780,8 @@ std::ostream &operator<<(std::ostream &os, const RS_MText &p) {
 
 void RS_MText::draw(RS_Painter *painter, RS_GraphicView *view,
                     double & patternOffset) {
-    if (!(painter && view))
-        return;
+    /*if (!(painter && view))
+        return;*/
 #ifdef DEBUG_LINE_POINTS
     painter->drawRect(view->toGui(getMin()), view->toGui(getMax()));
 #endif
@@ -804,14 +793,15 @@ void RS_MText::draw(RS_Painter *painter, RS_GraphicView *view,
     }
 
     for (RS_Entity *entity: std::as_const(entities)) {
+        entity->drawAsChild(painter, view, patternOffset);
+
+#ifdef DEBUG_LINE_POINTS
         auto line = dynamic_cast<LC_TextLine*>(entity);
         if (line != nullptr) {
-            entity->draw(painter, view, patternOffset);
-#ifdef DEBUG_LINE_POINTS
             painter->drawRect(view->toGui(line->getBaselineStart())-2, view->toGui(line->getBaselineStart())+2);
             painter->drawRect(view->toGui(line->getLeftBottomCorner())-4, view->toGui(line->getLeftBottomCorner())+4);
-#endif
         }
+#endif
     }
 }
 
@@ -821,10 +811,10 @@ void RS_MText::drawDraft(RS_Painter *painter, RS_GraphicView *view, [[maybe_unus
 #endif
     for (RS_Entity *entity: std::as_const(entities)) {
         auto line = dynamic_cast<LC_TextLine*>(entity);
-        if (line != nullptr) {
+        if (line != nullptr && line->count() > 0) {
             const RS_Vector &start = view->toGui(line->getBaselineStart());
             const RS_Vector &end = view->toGui(line->getBaselineEnd());
             painter->drawLine(start, end);
-        }
     }
+  }
 }

@@ -215,6 +215,8 @@ public:
 
 	void calculateBorders() override;
 
+    void drawDraft(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
+
 
 protected:
 	// whether the point is within image

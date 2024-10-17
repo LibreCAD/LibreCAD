@@ -87,6 +87,10 @@ public:
     static constexpr char const* yAxisColor        = "Green";
     static constexpr char const* previewRefColor   = "Yellow";
     static constexpr char const* previewRefHighlightColor = "Green";
+    static constexpr char const* overlayBoxLineInverted = "#32ff32";
+    static constexpr char const* overlayBoxFillInverted = "#09ff09";
+    static constexpr char const* overlayBoxLine = "#3232ff";
+    static constexpr char const* overlayBoxFill = "#0909ff";
 
     // Used to have RAII style GroupGuard: endGroup is called automatically whenever a unique_ptr<GroupGuard>
     // goes out of scope

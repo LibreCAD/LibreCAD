@@ -28,9 +28,12 @@
 #ifndef RS_PAINTER_H
 #define RS_PAINTER_H
 
+#include <QPen>
+#include <QPainter>
 #include "rs.h"
 #include "qnamespace.h"
 #include "rs_vector.h"
+#include "rs_entity.h"
 
 class RS_Color;
 class RS_GraphicView;
@@ -57,13 +60,10 @@ struct LC_SplinePointsData;
  * communicate with the LibreCAD from a GUI level. This
  * does not contain any Qt or platform specific code.
  */
-class RS_Painter {
+class RS_Painter: public QPainter {
 public:
-    RS_Painter(): offset{0.0,0.0} {
-        drawingMode = RS2::ModeFull;
-        drawSelectedEntities=false;
-    }
-    virtual ~RS_Painter() = default;
+    RS_Painter( QPaintDevice* pd);
+    ~RS_Painter() = default;
 
     /**
      * Sets the drawing mode.
@@ -89,88 +89,97 @@ public:
         return drawingMode;
     }
 
-    virtual void moveTo(int x, int y) = 0;
-    virtual void lineTo(int x, int y) = 0;
+    void drawGridPoint(const RS_Vector& p);
+    void drawGridPoint(const double& x, const double& y);
+    void drawPoint(const RS_Vector& p, int pdmode, int pdsize);
+    void drawLine(const RS_Vector& p1, const RS_Vector& p2);
+    void drawLine(const double &x1, const double &y1, const double &x2, const double &y2);
+    void drawLineSimple(const double &x1, const double &y1, const double &x2, const double &y2);
+    void drawRect(const RS_Vector& p1, const RS_Vector& p2);
+    void drawArcEntity(const RS_Vector &cp, double radius, double startAngleDegrees, double angularLength);
 
-    virtual void drawGridPoint(const RS_Vector& p) = 0;
-    virtual void drawGridPoint(const double& x, const double& y) = 0;
-    virtual void drawPoint(const RS_Vector& p, int pdmode, int pdsize) = 0;
-    virtual void drawLine(const RS_Vector& p1, const RS_Vector& p2) = 0;
-    virtual void drawLine(const double &x1, const double &y1, const double &x2, const double &y2) = 0;
-    virtual void drawRect(const RS_Vector& p1, const RS_Vector& p2);
-    virtual void drawArc(const RS_Vector& cp, double radius,
-                         double a1, double a2,
-                         bool reversed) = 0;
-    void createArc(QPolygon& pa,
-                   const RS_Vector& cp, double radius,
-                   double a1, double a2,
-                   bool reversed);
-    void createEllipse(QPolygon& pa,
-                       const RS_Vector& cp,
+    void drawCircle(const RS_Vector& cp, double radius);
+    void drawEllipse(double centerX, double centerY,
+                             double radius1, double radius2,
+                             double angle);
+    void drawEllipseArc(double centerX, double centerY,
                              double radius1, double radius2,
                              double angle,
-                             double angle1, double angle2,
+                             double angle1, double angle2, double angleLength,
                              bool reversed);
-    virtual void drawCircle(const RS_Vector& cp, double radius) = 0;
-    virtual void drawEllipse(const RS_Vector& cp,
-                             double radius1, double radius2,
-                             double angle,
-                             double angle1, double angle2,
-                             bool reversed) = 0;
-    virtual void drawPolyline(const RS_Polyline& polyline, const RS_GraphicView& view) = 0;
-    virtual void drawSplinePoints(const LC_SplinePointsData& splineData) = 0;
-    virtual void drawSpline(const RS_Spline& spline, const RS_GraphicView& view) = 0;
-    virtual void drawImg(QImage& img, const RS_Vector& pos,
-                               const RS_Vector& u, const RS_Vector& v, const RS_Vector& factor) = 0;
-    virtual void drawTextH(int x1, int y1, int x2, int y2,
-                           const QString& text) = 0;
-    virtual void drawTextV(int x1, int y1, int x2, int y2,
-                           const QString& text) = 0;
-    virtual void drawText(const QRect& rect, const QString& text, QRect* boundingBox) = 0;
+    void drawPolyline(const RS_Polyline& polyline, const RS_GraphicView& view);
+    void drawSplinePoints(const 	std::vector<RS_Vector> &controlPoints, bool closed);
+    void drawSpline(const RS_Spline& spline, const RS_GraphicView& view);
+    void drawImg(QImage& img, const RS_Vector& pos,
+                               const RS_Vector& u, const RS_Vector& v, const RS_Vector& factor);
+    void drawTextH(int x1, int y1, int x2, int y2,
+                           const QString& text);
+    void drawTextV(int x1, int y1, int x2, int y2,
+                           const QString& text);
+    void drawText(const QRect& rect, const QString& text, QRect* boundingBox);
 
-    virtual void fillRect(int x1, int y1, int w, int h, const RS_Color& col) = 0;
-    virtual void fillRect ( const QRectF & rectangle, const RS_Color & color ) = 0;
-    virtual void fillRect ( const QRectF & rectangle, const QBrush & brush ) = 0;
+    void fillRect(int x1, int y1, int w, int h, const RS_Color& col);
+    void fillRect ( const QRectF & rectangle, const RS_Color & color );
+    void fillRect ( const QRectF & rectangle, const QBrush & brush );
 
-    virtual void fillTriangle(const RS_Vector& p1,
+    void fillTriangle(const RS_Vector& p1,
                               const RS_Vector& p2,
-                              const RS_Vector& p3) = 0;
+                              const RS_Vector& p3);
 
-    virtual void drawPath ( const QPainterPath & path ) = 0;
-    virtual void drawHandle(const RS_Vector& p, const RS_Color& c, int size=-1);
+    void drawPath ( const QPainterPath & path);
+    void fillPath ( const QPainterPath & path, const QBrush& brush);
+    void drawHandle(const RS_Vector& p, const RS_Color& c, int size=-1);
 
-    virtual RS_Pen getPen() const = 0;
-    virtual void setPen(const RS_Pen& pen) = 0;
-    virtual void setPen(const RS_Pen& pen, int linewidthPx) = 0;
-    virtual void setPen(const RS_Color& color) = 0;
-    virtual void setPen(int r, int g, int b) = 0;
-    virtual void disablePen() = 0;
-    virtual const QBrush& brush() const = 0;
-    virtual void setBrush(const RS_Color& color) = 0;
-    virtual void setBrush(const QBrush& color) = 0;
-    virtual void drawPolygon(const QPolygon& a, Qt::FillRule rule=Qt::WindingFill) = 0;
-    virtual void erase() = 0;
-    virtual int getWidth() const= 0;
-    virtual int getHeight() const= 0;
-    virtual double getDpmm() const= 0;
-    virtual void setOffset(const RS_Vector& o) {offset = o;}
-    virtual void setClipRect(int x, int y, int w, int h) = 0;
-    virtual void resetClipping() = 0;
-    int toScreenX(double x) const;
-    int toScreenY(double y) const;
-
+    RS_Pen getPen() const;
+    void setPen(const RS_Pen& pen);
+    void setPen(const RS_Color& color);
+    void setPen(int r, int g, int b);
+    void disablePen();
+    const QBrush& brush() const;
+    void setBrush(const RS_Color& color);
+    void setBrush(const QBrush& color);
+    void drawPolygon(const QPolygon& a, Qt::FillRule rule=Qt::WindingFill);
+    void erase();
+    int getWidth() const;
+    int getHeight() const;
+    double getDpmm() const;
+    void setClipRect(int x, int y, int w, int h);
+    void resetClipping();
+    void createSolidFillPath(QPainterPath &path, const RS_GraphicView *view, QList<RS_Entity *> entities);
+    void noCapStyle();
+    RS_Pen& getRsPen();
+    void setPenJoinStyle(Qt::PenJoinStyle penJoinStyle);
+    void setPenCapStyle(Qt::PenCapStyle penCapStyle);
+    void setMinCircleDrawingRadius(double minCircleDrawingRadius);
+    void setMinArcDrawingRadius(double minArcDrawingRadius);
+    void setMinEllipseMajorRadius(double minEllipseMajorRadius);
+    void setMinEllipseMinorRadius(double minEllipseMinorRadius);
+    void setMinLineDrawingLen(double minLineDrawingLen);
 protected:
     /**
      * Current drawing mode.
      */
     RS2::DrawingMode drawingMode = RS2::ModeFull;
-    /**
-     * A fixed offset added to all entities drawn (useful for previews).
-     */
-    RS_Vector offset;
-
     // When set to true, only selected entities should be drawn
     bool drawSelectedEntities = false;
+
+    RS_Pen lpen;
+    long rememberX = 0; // Used for the moment because QPainter doesn't support moveTo anymore, thus we need to remember ourselves the moveTo positions
+    long rememberY = 0;
+
+    Qt::PenJoinStyle penJoinStyle = Qt::RoundJoin;
+    Qt::PenCapStyle penCapStyle = Qt::RoundCap;
+    QPen lastUsedPen;
+    double cachedDpmm;
+    double minCircleDrawingRadius = 2.0;
+    double minArcDrawingRadius = 0.8;
+    double minEllipseMajorRadius = 2.;
+    double minEllipseMinorRadius = 1.;
+    double minLineDrawingLen = 2;
+
+    void drawPolygonF(const QPolygonF &a, Qt::FillRule rule);
+    void debugOutPath(const QPainterPath &tmpPath) const;
+    double getDpmmCached() const {return cachedDpmm;};
 };
 
 #endif

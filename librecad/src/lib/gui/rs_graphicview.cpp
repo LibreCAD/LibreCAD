@@ -46,9 +46,15 @@
 #include "rs_snapper.h"
 #include "rs_settings.h"
 #include "rs_units.h"
+#include "lc_linemath.h"
+#include "dxf_format.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
+#endif
+
+#ifdef DEBUG_RENDERING
+#define DEBUG_RENDERING_DETAILS
 #endif
 
 struct RS_GraphicView::ColorData {
@@ -83,6 +89,13 @@ struct RS_GraphicView::ColorData {
     RS_Color xAxisExtensionColor;
     RS_Color yAxisExtensionColor;
 
+    /** overlaybox */
+
+    RS_Color overlayBoxLine;
+    RS_Color overlayBoxFill;
+    RS_Color overlayBoxLineInverted;
+    RS_Color overlayBoxFillInverted;
+
     /* Relative-zero hidden state */
     bool hideRelativeZero = false;
 };
@@ -110,10 +123,28 @@ void RS_GraphicView::loadSettings() {
         entityHandleHalfSize = LC_GET_INT("EntityHandleSize", 4) / 2;
         relativeZeroRadius = LC_GET_INT("RelZeroMarkerRadius", 5);
         zeroShortAxisMarkSize = LC_GET_INT("ZeroShortAxisMarkSize", 20);
-        minRenderableTextHeightInPx = LC_GET_INT("MinRenderableTextHeightPx", 4);
-
         extendAxisModeX = LC_GET_INT("ExtendModeXAxis",0);
         extendAxisModeY = LC_GET_INT("ExtendModeYAxis",0);
+        ignoreDraftForHighlight = LC_GET_BOOL("IgnoreDraftForHighlight", false);
+        draftLinesMode = LC_GET_BOOL("DraftLinesMode", false);
+    }
+    LC_GROUP_END();
+    LC_GROUP("Render");{
+        minRenderableTextHeightInPx = LC_GET_INT("MinRenderableTextHeightPx", 4);
+        int minArcRadius100 = LC_GET_INT("MinArcRadius", 80);
+        minArcDrawingRadius = minArcRadius100 / 100.0;
+
+        int minCircleRadius100 = LC_GET_INT("MinCircleRadius", 200);
+        minCircleDrawingRadius = minCircleRadius100 / 100.0;
+
+        int minLineLen100 = LC_GET_INT("MinLineLen", 200);
+        minLineDrawingLen = minLineLen100 / 100.0;
+
+        int minEllipseMajor100 = LC_GET_INT("MinEllipseMajor", 200);
+        minEllipseMajorRadius = minEllipseMajor100 / 100.0;
+
+        int minEllipseMinor100 = LC_GET_INT("MinEllipseMinor", 200);
+        minEllipseMinorRadius = minEllipseMinor100 / 100.0;
     }
     LC_GROUP_END();
     LC_GROUP_GUARD("Colors");
@@ -129,6 +160,19 @@ void RS_GraphicView::loadSettings() {
         setPreviewReferenceHighlightedEntitiesColor(QColor(LC_GET_STR("previewReferencesHighlightColor", RS_Settings::previewRefHighlightColor)));
         setXAxisExtensionColor(QColor(LC_GET_STR("grid_x_axisColor", "red")));
         setYAxisExtensionColor(QColor(LC_GET_STR("grid_y_axisColor", "green")));
+
+
+        int overlayTransparency = LC_GET_INT("overlay_box_transparency",90);
+
+        setOverlayBoxLineColor(QColor(LC_GET_STR("overlay_box_line", RS_Settings::overlayBoxLine)));
+        QColor tmp = QColor(LC_GET_STR("overlay_box_fill", RS_Settings::overlayBoxFill));
+        RS_Color fillColor(tmp.red(), tmp.green(), tmp.blue(), overlayTransparency);
+        setOverlayBoxFillColor(fillColor);
+
+        setOverlayBoxLineInvertedColor(QColor(LC_GET_STR("overlay_box_line_inv", RS_Settings::overlayBoxLineInverted)));
+        tmp = QColor(LC_GET_STR("overlay_box_fill_inv", RS_Settings::overlayBoxFillInverted));
+        RS_Color fillColorInverted(tmp.red(), tmp.green(), tmp.blue(), overlayTransparency);
+        setOverlayBoxFillInvertedColor(fillColorInverted);
     }
 
     if (grid != nullptr){
@@ -339,6 +383,8 @@ void RS_GraphicView::enter() {
 
 void keyPressEvent(QKeyEvent *event);
 
+
+
 void RS_GraphicView::keyPressEvent(QKeyEvent *event) {
     if (eventHandler && eventHandler->hasAction()) {
         eventHandler->keyPressEvent(event);
@@ -376,7 +422,6 @@ void RS_GraphicView::disableCoordinateInput() {
  * zooms in by factor f
  */
 void RS_GraphicView::zoomIn(double f, const RS_Vector &center) {
-
     if (f < 1.0e-6) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_GraphicView::zoomIn: invalid factor");
@@ -398,7 +443,7 @@ void RS_GraphicView::zoomIn(double f, const RS_Vector &center) {
 //adjustOffsetControls();
 //adjustZoomControls();
 // updateGrid();
-    redraw();
+    redraw(); // fixme - is it needed there? already called in zoom window
 }
 
 /**
@@ -478,7 +523,6 @@ void RS_GraphicView::zoomOutY(double f) {
  * @param keepAspectRatio true: keep aspect ratio 1:1
  *                        false: factors in x and y are stretched to the max
  */
-#include <iostream>
 
 void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
 
@@ -963,8 +1007,10 @@ void RS_GraphicView::drawWindow_DEPRECATED(RS_Vector v1, RS_Vector v2) {
  *
  */
 void RS_GraphicView::drawLayer1(RS_Painter *painter) {
-
-// drawing paper border:
+#ifdef DEBUG_RENDERING_DETAILS
+    drawLayer1Timer.start();
+#endif
+    // drawing paper border:
     if (isPrintPreview()) {
         drawPaper(painter);
     } else {
@@ -978,10 +1024,15 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
         // fixme - sand - review as overall rendering pipeline. It might be that
         // it will be better to use more fine-grained painting and draw grid in own
         // pixmap, and have draft sign somewhere else?
-        if (grid && isGridOn()) {
-            grid->calculateGrid();
-            grid->drawGrid(painter);
-            // fixme - review
+        if (grid && !hasNoGrid) {
+            if (isGridOn()) {
+                grid->calculateGrid();
+                grid->drawGrid(painter);
+
+            }
+            else{
+                grid->calculateSnapSettings();
+            }
             QString info = grid->getInfo();
             updateGridStatusWidget(info);
         }
@@ -998,8 +1049,10 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
         if (isHiDpi)
             painter->setPen(penSaved);
     }
+#ifdef DEBUG_RENDERING_DETAILS
+    layer1Time += drawLayer1Timer.elapsed();
+#endif
 }
-
 
 /*	*
  *	Function name:
@@ -1015,21 +1068,35 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
  *	*/
 
 void RS_GraphicView::drawLayer2(RS_Painter *painter) {
-    drawEntity(painter, container); //	Draw all entities.
-
-//	If not in print preview, draw the absolute zero reference.
-//	----------------------------------------------------------
-    if (!isPrintPreview()) {
-        drawAbsoluteZero(painter);
-    }
+#ifdef DEBUG_RENDERING_DETAILS
+    drawLayer2Timer.start();
+#endif
+    screenPDSize = determinePointScreenSize(painter, pdsize);
+    double patternOffset = 0.;
+    lastPaintEntityPen = RS_Pen();
+    lastPaintEntityPen.setFlags(RS2::FlagInvalid);
+    lastPaintedHighlighted = false;
+    lastPaintedSelected = false;
+    lastPaintOverlay = false;
+    container->draw(painter, this, patternOffset);
+#ifdef DEBUG_RENDERING_DETAILS
+    layer2Time += drawLayer2Timer.elapsed();
+#endif
 }
 
 void RS_GraphicView::drawLayer3(RS_Painter *painter) {
-// drawing zero points:
+#ifdef DEBUG_RENDERING_DETAILS
+    drawLayer3Timer.start();
+#endif
+   // drawing zero points:
     if (!isPrintPreview()) {
         drawRelativeZero(painter);
+        lastPaintEntityPen = RS_Pen();
         drawOverlay(painter);
     }
+#ifdef DEBUG_RENDERING_DETAILS
+    layer3Time += drawLayer3Timer.elapsed();
+#endif
 }
 
 void RS_GraphicView::setPenForOverlayEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset) {
@@ -1058,14 +1125,28 @@ void RS_GraphicView::setPenForOverlayEntity(RS_Painter *painter, RS_Entity *e, d
             break;
         }
         default: {
-            setPenForEntity(painter, e, patternOffset, true);
+            if (draftMode){
+                if (ignoreDraftForHighlight) {
+                    setPenForEntity(painter, e, patternOffset, true);
+                }
+                else{
+                    setPenForDraftEntity(painter, e, patternOffset, true);
+                }
+            }
+            else{
+                if (draftLinesMode){
+                    setPenForDraftEntity(painter, e, patternOffset, true);
+                }
+                else {
+                    setPenForEntity(painter, e, patternOffset, true);
+                }
+            }
         }
     }
-//        }
-//    }
-//    else{
-//        setPenForEntity(painter, e, patternOffset);
-//    }
+}
+
+namespace{
+    const RS_Color bgColorInPrintPreview(255,255, 255);
 }
 
 /*	*
@@ -1086,107 +1167,273 @@ void RS_GraphicView::setPenForOverlayEntity(RS_Painter *painter, RS_Entity *e, d
  *
  *	Returns:			void
  */
-
-void RS_GraphicView::setPenForEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset, bool inOverlay) {
-    if (draftMode) {
-        painter->setPen(RS_Pen(m_colorData->foreground,
-                               RS2::Width00, RS2::SolidLine));
-    }
-
+void RS_GraphicView::setPenForPrintingEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset) {
+#ifdef DEBUG_RENDERING
+    setPenTimer.start();
+#endif
 // Getting pen from entity (or layer)
-    RS_Pen pen = e->getPen(true);
 
+    RS_Pen pen = e->getPenResolved();
+    RS_Pen originalPen = pen;
+    bool highlighted = e->getFlag(RS2::FlagHighlighted);
+    bool selected = e->getFlag(RS2::FlagSelected);
+    if (lastPaintedHighlighted == highlighted && lastPaintedSelected == selected) {
+        if (lastPaintEntityPen.isSameAs(pen, patternOffset)) {
+            return;
+        }
+    }
+    else{
+        lastPaintedHighlighted = highlighted;
+        lastPaintedSelected = selected;
+    }
     // Avoid negative widths
-    int w = std::max(static_cast<int>(pen.getWidth()), 0);
+    double width = pen.getWidth();
+//    int w = std::max(static_cast<int>(pen.getWidth()), 0);
 
 // - Scale pen width.
 // - By default pen width is not scaled on print and print preview.
 //   This is the standard (AutoCAD like) behaviour.
 // bug# 3437941
 // ------------------------------------------------------------
-    bool inPrintingMode = isPrinting();
-    bool inPrintPreview = isPrintPreview();
 
-    RS_Color &backgroundColor = m_colorData->background;
-    if (!draftMode) {
-        double uf = 1.0; // Unit factor.
-        double wf = 1.0; // Width factor.
+    if (pen.getAlpha() == 1.0) {
+        if (width >0) {
+            double wf = 1.0; // Width factor.
 
-        RS_Graphic *graphic = container->getGraphic();
-
-        if (graphic) {
-            uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
-
-            if ((inPrintingMode || inPrintPreview) &&
-                graphic->getPaperScale() > RS_TOLERANCE) {
+            if (paperScale > RS_TOLERANCE) {
                 if (scaleLineWidth) {
-                    wf = graphic->getVariableDouble("$DIMSCALE", 1.0);
+                    wf = defaultWidthFactor;
                 } else {
-                    wf = 1.0 / graphic->getPaperScale();
+                    wf = 1.0 / paperScale;
                 }
             }
-        }
+            double screenWidth = toGuiDX(width * unitFactor100 * wf);
 
-        if (pen.getAlpha() == 1.0) {
-            pen.setScreenWidth(toGuiDX(w / 100.0 * uf * wf));
-        }
-    } else {
-//		pen.setWidth(RS2::Width00);
-        pen.setScreenWidth(0);
-    }
-
-// prevent drawing with 1-width which is slow:
-    if (RS_Math::round(pen.getScreenWidth()) == 1) {
-        pen.setScreenWidth(0.0);
-    }
-
-    // prevent background color on background drawing
-    // and enhance visibility of black lines on dark backgrounds
-    RS_Color penColor{pen.getColor().stripFlags()};
-
-    if (inPrintPreview /*|| inPrintingMode*/){ //  todo - should we change color for printer mode too?
-        backgroundColor = RS_Color(255, 255, 255); // same color as used for drawing print area in drawPaper
-    }
-    if (penColor == backgroundColor.stripFlags() || (penColor.toIntColor() == RS_Color::Black
-            && penColor.colorDistance(backgroundColor) < RS_Color::MinColorDistance)) {
-        pen.setColor(m_colorData->foreground);
-    }
-
-    pen.setDashOffset(patternOffset);
-
-    if (!inPrintingMode && !inPrintPreview) {
-        if (inOverlay || inOverlayDrawing) {
-            if (e->isHighlighted()) {    // Glowing effects on mouse hovering: use the "selected" color
-                // for glowing effects on mouse hovering, draw solid lines
-                pen.setColor(m_colorData->selectedColor); // fixme - use separate color for highlighting, or use color for highlights?
-                pen.setLineType(RS2::SolidLine);
+            /*// prevent drawing with 1-width which is slow:
+            if (RS_Math::round(pen.getScreenWidth()) == 1) {
+                pen.setScreenWidth(0.0);
+            }*/
+            if (screenWidth < 1){ // fixme - not sure about this check. However, without it, lines will stay transparent and then disappear on zooming out. Probably some other threshold value (instead 1) should be used?
+                screenWidth = 0.0;
             }
-        } else {
-            // this entity is selected:
-            if (e->isSelected()) {
-                pen.setLineType(RS2::DashLineTiny);
-                pen.setWidth(RS2::Width00);
-                pen.setColor(m_colorData->selectedColor);
-            }
-            // this entity is highlighted:
-            if (e->isHighlighted()) {
-                pen.setColor(m_colorData->highlightedColor);
-            }
+            pen.setScreenWidth(screenWidth);
         }
+        else{
+            pen.setScreenWidth(0.0);
+        }
+    }
+    else{
+        // fixme - if we'll support transparency, add necessary processing there
+        if (RS_Math::round(pen.getScreenWidth()) == 1) {
+            pen.setScreenWidth(0.0);
+        }
+    }
 
-        if (e->isTransparent()) {
-            pen.setColor(backgroundColor);
-        }
+    RS_Color backgroundColor;
+    if (printPreview /*|| inPrintingMode*/){ //  todo - should we change color for printer mode too?
+        backgroundColor = bgColorInPrintPreview; // same color as used for drawing print area in drawPaper
+    }
+    else{
+        backgroundColor =  m_colorData->background;
+    }
+
+    if (pen.getColor().isEqualIgnoringFlags(m_colorData->background) || (pen.getColor().toIntColor() == RS_Color::Black
+                                                                         && pen.getColor().colorDistance(m_colorData->background) < RS_Color::MinColorDistance)) {
+        pen.setColor(this->m_colorData->foreground);
+    }
+
+    if (pen.getLineType() != RS2::SolidLine){
+        pen.setDashOffset(patternOffset * defaultWidthFactor);
     }
 
 // deleting not drawing:
-    if (getDeleteMode()) {
+    if (deleteMode || e->getFlag(RS2::FlagTransparent) ) {
         pen.setColor(backgroundColor);
     }
 // LC_ERR << "PEN " << pen.getColor().name() << "Width: " << pen.getWidth() <<  " | " << pen.getScreenWidth() << " LT " << pen.getLineType();
+    lastPaintEntityPen.updateBy(originalPen);
     painter->setPen(pen);
+#ifdef DEBUG_RENDERING
+    setPenTime += setPenTimer.nsecsElapsed();
+#endif
 }
 
+void RS_GraphicView::setPenForDraftEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset, bool inOverlay) {
+#ifdef DEBUG_RENDERING
+    setPenTimer.start();
+#endif
+    RS_Pen pen = e->getPenResolved();
+    RS_Pen originalPen = pen;
+    bool highlighted = e->getFlag(RS2::FlagHighlighted);
+    bool selected = e->getFlag(RS2::FlagSelected);
+    bool overlayPaint = inOverlay || inOverlayDrawing;
+// try to avoid pen setup if the pen and entity flags are the same as for previous entity. This is important for performance reasons, so we'll reuse
+    // painter pen set previously. This check assumed that that all previous entity drawing were performed via this function and no
+    // arbitrary QPainter::setPen was called between drawing entities.
+    if (lastPaintedHighlighted == highlighted && lastPaintedSelected == selected && lastPaintOverlay == overlayPaint) {
+        if (lastPaintEntityPen.isSameAs(pen, patternOffset)) {
+            return;
+        }
+    }
+    else{
+        lastPaintedHighlighted = highlighted;
+        lastPaintedSelected = selected;
+        lastPaintOverlay = overlayPaint;
+    }
+    pen.setScreenWidth(0.0);
+
+    if (overlayPaint) {
+        if (highlighted) {    // Glowing effects on mouse hovering: use the "selected" color
+            // for glowing effects on mouse hovering, draw solid lines
+            pen.setColor(m_colorData->selectedColor);
+            pen.setLineType(RS2::SolidLine);
+        }
+        else{
+            if (pen.getColor().isEqualIgnoringFlags(m_colorData->background) || (pen.getColor().toIntColor() == RS_Color::Black
+                                                                                 && pen.getColor().colorDistance(m_colorData->background) < RS_Color::MinColorDistance)) {
+                pen.setColor(this->m_colorData->foreground);
+            }
+        }
+    } else {
+        // this entity is selected:
+        if (selected) {
+            pen.setLineType(RS2::DashLineTiny);
+            pen.setWidth(RS2::Width00);
+            pen.setColor(m_colorData->selectedColor);
+        }
+        else if (highlighted) {
+            pen.setColor(m_colorData->highlightedColor);
+        }
+        else if (deleteMode || e->getFlag(RS2::FlagTransparent)) {
+            pen.setColor(m_colorData->background);
+        }
+        else if (pen.getColor().isEqualIgnoringFlags(m_colorData->background) || (pen.getColor().toIntColor() == RS_Color::Black
+                                                                                  && pen.getColor().colorDistance(m_colorData->background) < RS_Color::MinColorDistance)) {
+            pen.setColor(this->m_colorData->foreground);
+        }
+    }
+
+    if (pen.getLineType() != RS2::SolidLine){
+        pen.setDashOffset(patternOffset * defaultWidthFactor);
+    }
+
+// LC_ERR << "PEN " << pen.getColor().name() << "Width: " << pen.getWidth() <<  " | " << pen.getScreenWidth() << " LT " << pen.getLineType();
+    lastPaintEntityPen.updateBy(originalPen);
+    painter->setPen(pen);
+#ifdef DEBUG_RENDERING
+    setPenTime += setPenTimer.nsecsElapsed();
+#endif
+}
+
+
+void RS_GraphicView::setPenForEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset, bool inOverlay) {
+#ifdef DEBUG_RENDERING
+    getPenTimer.start();
+#endif
+    // Getting pen from entity (or layer)
+    RS_Pen pen = e->getPenResolved();
+#ifdef DEBUG_RENDERING
+    getPenTime += getPenTimer.nsecsElapsed();
+#endif
+    RS_Pen originalPen = pen;
+    bool highlighted = e->getFlag(RS2::FlagHighlighted);
+    bool selected = e->getFlag(RS2::FlagSelected);
+    bool overlayPaint = inOverlay || inOverlayDrawing;
+    // try to avoid pen setup if the pen and entity flags are the same as for previous entity. This is important for performance reasons, so we'll reuse
+    // painter pen set previously. This check assumed that that all previous entity drawing were performed via this function and no
+    // arbitrary QPainter::setPen was called between drawing entities.
+    if (lastPaintedHighlighted == highlighted && lastPaintedSelected == selected && lastPaintOverlay == overlayPaint) {
+        if (lastPaintEntityPen.isSameAs(pen, patternOffset)) {
+            return;
+        }
+    }
+    else{
+        lastPaintedHighlighted = highlighted;
+        lastPaintedSelected = selected;
+        lastPaintOverlay = overlayPaint;
+    }
+
+
+#ifdef DEBUG_RENDERING
+    setPenTimer.start();
+#endif
+    // Avoid negative widths
+//    int w = std::max(static_cast<int>(pen.getWidth()), 0);
+    double width = pen.getWidth();
+    if (pen.getAlpha() == 1.0) {
+        if (width>0) {
+            double screenWidth = toGuiDX(width * unitFactor100);
+            // prevent drawing with 1-width which is slow:
+           /* if (RS_Math::round(screenWidth) == 1) {
+                screenWidth = 0.0;
+            }
+            else*/ if (screenWidth < 1){ // fixme - not sure about this check. However, without it, lines will stay transparent and then disappear on zooming out. Probably some other threshold value (instead 1) should be used?
+                screenWidth = 0.0;
+            }
+            pen.setScreenWidth(screenWidth);
+        }
+        else{
+            pen.setScreenWidth(0.0);
+        }
+    }
+    else{
+            // fixme - if we'll support transparency, add necessary processing there
+        if (RS_Math::round(pen.getScreenWidth()) == 1) {
+            pen.setScreenWidth(0.0);
+        }
+    }
+
+
+    if (overlayPaint) {
+        if (highlighted) {    // Glowing effects on mouse hovering: use the "selected" color
+            // for glowing effects on mouse hovering, draw solid lines
+            pen.setColor(m_colorData->selectedColor);
+            pen.setLineType(RS2::SolidLine);
+        }
+        else{
+            if (pen.getColor().isEqualIgnoringFlags(m_colorData->background) || (pen.getColor().toIntColor() == RS_Color::Black
+                                                                                 && pen.getColor().colorDistance(m_colorData->background) < RS_Color::MinColorDistance)) {
+                pen.setColor(this->m_colorData->foreground);
+            }
+        }
+    } else {
+        // this entity is selected:
+        if (selected) {
+            pen.setLineType(RS2::DashLineTiny);
+            pen.setWidth(RS2::Width00); // fixme - move to settings?
+            pen.setColor(m_colorData->selectedColor);
+        }
+        // this entity is highlighted:
+        else if (highlighted) {
+            pen.setColor(m_colorData->highlightedColor);
+        }
+        else  if (deleteMode || e->getFlag(RS2::FlagTransparent)) {
+            pen.setColor(m_colorData->background);
+        }
+        else if (pen.getColor().isEqualIgnoringFlags(m_colorData->background) || (pen.getColor().toIntColor() == RS_Color::Black
+                                                                                   && pen.getColor().colorDistance(m_colorData->background) < RS_Color::MinColorDistance)) {
+                    pen.setColor(this->m_colorData->foreground);
+        }
+    }
+
+    if (pen.getLineType() != RS2::SolidLine){
+        pen.setDashOffset(patternOffset * defaultWidthFactor);
+    }
+
+    // deleting not drawing:
+
+// LC_ERR << "PEN " << pen.getColor().name() << "Width: " << pen.getWidth() <<  " | " << pen.getScreenWidth() << " LT " << pen.getLineType();
+#ifdef DEBUG_RENDERING
+    setPenTime += setPenTimer.nsecsElapsed();
+    painterSetPenTimer.start();
+#endif
+    lastPaintEntityPen.updateBy(originalPen);
+    painter->setPen(pen);
+#ifdef DEBUG_RENDERING
+    painterSetPenTime +=painterSetPenTimer.nsecsElapsed();
+
+#endif
+}
 
 /**
  * Draws an entity. Might be recursively called e.g. for polylines.
@@ -1223,84 +1470,136 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e) {
 }
 
 void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset) {
-
-// update is disabled:
+    // update is disabled:
     // given entity is nullptr:
     if (!e) {
         return;
     }
 
-// entity is not visible:
-    if (!e->isVisible()) {
+    // check for selected entity drawing
+    if (/*!e->isContainer() && */(e->getFlag(RS2::FlagSelected) != painter->shouldDrawSelected())) {
         return;
     }
-    if (isPrintPreview() || isPrinting()) {
-// do not draw construction layer on print preview or print
-        if (!e->isPrint() || e->isConstruction())
+#ifdef DEBUG_RENDERING
+    isVisibleTimer.start();
+#endif
+    // entity is not visible:
+    bool visible = e->isVisible();
+#ifdef DEBUG_RENDERING
+    isVisibleTime += isVisibleTimer.nsecsElapsed();
+#endif
+    if (!visible) {// fixme - renderperf - optimize is visible
+        return;
+    }
+
+#ifdef DEBUG_RENDERING
+    isConstructionTimer.start();
+#endif
+    bool constructionEntity = e->isConstruction();
+#ifdef DEBUG_RENDERING
+    isConstructionTime += isConstructionTimer.nsecsElapsed();
+#endif
+    if (isPrinting()){
+        // do not draw construction layer on print preview or print
+        if (!e->isPrint() || constructionEntity)
             return;
-    }
 
-    // test if the entity is in the viewport
-    if (!isPrinting() &&
-        e->rtti() != RS2::EntityGraphic &&
-        e->rtti() != RS2::EntityLine &&
-        (toGuiX(e->getMax().x) < 0 || toGuiX(e->getMin().x) > getWidth() ||
-         toGuiY(e->getMin().y) < 0 || toGuiY(e->getMax().y) > getHeight())) {
-        return;
-    }
-
-// set pen (color):
-    setPenForEntity(painter, e, patternOffset, false);
-
-//RS_DEBUG->print("draw plain");
-    if (isDraftMode()) {
-        switch (e->rtti()) {
-            case RS2::EntityMText:
-            case RS2::EntityText:
-                e->drawDraft(painter, this, patternOffset);
-                break;
-            case RS2::EntityImage:
-                // all images as rectangles:
-                painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
-                break;
-            case RS2::EntityHatch:
-                //skip hatches
-                break;
-            default:
-                drawEntityPlain(painter, e, patternOffset);
-        }
-    } else {
+        setPenForPrintingEntity(painter, e, patternOffset);
         drawEntityPlain(painter, e, patternOffset);
     }
+    else {
+        if (isPrintPreview()) {
+            if (!e->isPrint() || constructionEntity)
+                return;
+        }
 
-// draw reference points:
-    if (e->isSelected() && !(isPrinting() || isPrintPreview())) {
-        if (!e->isParentSelected()) {
-            drawEntityReferencePoints(painter, e);
+        // test if the entity is in the viewport
+        switch (e->rtti()){
+           /* case RS2::EntityGraphic:
+                break;*/
+            case RS2::EntityLine:{
+                if (constructionEntity){
+                    if (!LC_LineMath::hasIntersectionLineRect(e->getMin(), e->getMax(), view_rect.minP(), view_rect.maxP())){
+                        return;
+                    }
+                }
+                else{ // normal line
+                    if (e->getMax().x < view_rect.minP().x || e->getMin().x > view_rect.maxP().x ||
+                        e->getMin().y > view_rect.maxP().y || e->getMax().y < view_rect.minP().y){
+                        return;
+                    }
+                }
+                break;
+            }
+            default:
+                if (e->getMax().x < view_rect.minP().x || e->getMin().x > view_rect.maxP().x ||
+                    e->getMin().y > view_rect.maxP().y || e->getMax().y < view_rect.minP().y){
+                    return;
+                }
+        }
+
+        if (printPreview){
+            // set pen (color):
+            setPenForPrintingEntity(painter, e, patternOffset);
+            drawEntityPlain(painter, e, patternOffset);
+        }
+        else {
+            if (isDraftMode()) {
+                switch (e->rtti()) {
+                    case RS2::EntityMText:
+                    case RS2::EntityText:
+                    case RS2::EntityImage:
+                        // set pen (color):
+                        setPenForDraftEntity(painter, e, patternOffset, false);
+                        e->drawDraft(painter, this, patternOffset);
+                        break;
+                    case RS2::EntityHatch:
+                        //skip hatches
+                        break;
+                    default:
+                        setPenForDraftEntity(painter, e, patternOffset, false);
+                        drawEntityPlain(painter, e, patternOffset);
+                }
+            } else {
+                // set pen (color):
+                if (draftLinesMode) {
+                    setPenForDraftEntity(painter, e, patternOffset, false);
+                }
+                else{
+                    setPenForEntity(painter, e, patternOffset, false);
+                }
+                drawEntityPlain(painter, e, patternOffset);
+            }
+
+            // draw reference points:
+            if (e->getFlag(RS2::FlagSelected) && !isPrintPreview()) {
+                if (!e->isParentSelected()) {
+                    drawEntityReferencePoints(painter, e);
+                }
+            }
         }
     }
-
-//RS_DEBUG->print("draw plain OK");
-
-
 //RS_DEBUG->print("RS_GraphicView::drawEntity() end");
+}
+
+void RS_GraphicView::drawAsChild(RS_Painter *painter, RS_Entity *e, double &patternOffset) {
+    e->drawAsChild(painter, this, patternOffset);
 }
 
 void RS_GraphicView::drawEntityReferencePoints(RS_Painter *painter, const RS_Entity *e) const {
     RS_VectorSolutions const &s = e->getRefPoints();
-//    int sz = -1;
     int sz = entityHandleHalfSize;
     for (size_t i = 0; i < s.getNumber(); ++i) {
-        RS_Color col = this->m_colorData->handleColor;
+        RS_Color col = m_colorData->handleColor;
         if (i == 0) {
-            col = this->m_colorData->startHandleColor;
+            col = m_colorData->startHandleColor;
         } else if (i == s.getNumber() - 1) {
-            col = this->m_colorData->endHandleColor;
+            col = m_colorData->endHandleColor;
         }
-        if (this->getDeleteMode()) {
-            painter->drawHandle(this->toGui(s.get(i)), this->m_colorData->background, sz);
+        if (getDeleteMode()) {
+            painter->drawHandle(toGui(s.get(i)), m_colorData->background, sz);
         } else {
-            painter->drawHandle(this->toGui(s.get(i)), col, sz);
+            painter->drawHandle(toGui(s.get(i)), col, sz);
         }
     }
 }
@@ -1311,15 +1610,16 @@ void RS_GraphicView::drawEntityReferencePoints(RS_Painter *painter, const RS_Ent
  * The painter must be initialized and all the attributes (pen) must be set.
  */
 void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity *e, double &patternOffset) {
-    if (!e) { // fixme - sand -  remove check after insuring that there is same check up in calls chain
-        return;
-    }
-
-    if (!e->isContainer() && (e->isSelected() != painter->shouldDrawSelected())) {
-        return;
-    }
-
+#ifdef DEBUG_RENDERING
+    drawEntityCount++;
+    drawTimer.start();
+#endif
     e->draw(painter, this, patternOffset);
+#ifdef DEBUG_RENDERING
+    qint64 elapsed = drawTimer.nsecsElapsed();
+    entityDrawTime+= elapsed;
+#endif
+
 }
 
 void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity *e) {
@@ -1385,14 +1685,14 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
 
     auto originPoint = toGui(RS_Vector(0,0));
 
- 
+
     int width = getWidth();
     int height = getHeight();
     if (extendAxisLines){
 
         int xAxisStartPoint;
         int xAxisEndPoint;
-                
+
         switch (extendAxisModeX){
             case Both:
                 xAxisStartPoint = 0;
@@ -1422,6 +1722,8 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
                 break;
             }
             default:
+                xAxisStartPoint = 0;
+                xAxisEndPoint = 0;
                 break;
         }
 
@@ -1459,6 +1761,8 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
                 yAxisEndPoint = originPoint.y + zr;
                 break;
             default:
+                yAxisStartPoint = 0;
+                yAxisEndPoint = 0;
                 break;
         }
 
@@ -1741,8 +2045,6 @@ double RS_GraphicView::toGuiDY(double d) const {
     return d * factor.y;
 }
 
-
-
 /**
  * Translates a vector in screen coordinates to a vector in real coordinates.
  */
@@ -1835,13 +2137,6 @@ public:
     RS_Graphic *graphic;
 };
 
-void isRelativeZeroHidden();
-
-void setPreviewReferenceEntitiesColor(const RS_Color &c);
-
-void setPreviewReferenceHighlightedEntitiesColor(const RS_Color &c);
-
-void invalidateGrid();
 
 /**
  * Gets the specified overlay container.
@@ -1940,6 +2235,38 @@ void RS_GraphicView::setHandleColor(const RS_Color &c) {
      */
 void RS_GraphicView::setEndHandleColor(const RS_Color &c) {
     m_colorData->endHandleColor = c;
+}
+
+const RS_Color &RS_GraphicView::getOverlayBoxLineColor() const {
+    return m_colorData->overlayBoxLine;
+}
+
+void RS_GraphicView::setOverlayBoxLineColor(const RS_Color &overlayBoxLine) {
+    m_colorData->overlayBoxLine = overlayBoxLine;
+}
+
+const RS_Color &RS_GraphicView::getOverlayBoxFillColor() const {
+    return m_colorData->overlayBoxFill;
+}
+
+void RS_GraphicView::setOverlayBoxFillColor(const RS_Color &overlayBoxFill) {
+    m_colorData->overlayBoxFill = overlayBoxFill;
+}
+
+const RS_Color &RS_GraphicView::getOverlayBoxLineInvertedColor() const {
+    return m_colorData->overlayBoxLineInverted;
+}
+
+void RS_GraphicView::setOverlayBoxLineInvertedColor(const RS_Color &overlayBoxLineInverted) {
+    m_colorData->overlayBoxLineInverted = overlayBoxLineInverted;
+}
+
+const RS_Color &RS_GraphicView::getOverlayBoxFillInvertedColor() const {
+    return m_colorData->overlayBoxFillInverted;
+}
+
+void RS_GraphicView::setOverlayBoxFillInvertedColor(const RS_Color &overlayBoxFillInverted) {
+   m_colorData->overlayBoxFillInverted = overlayBoxFillInverted;
 }
 
 void RS_GraphicView::setBorders(int left, int top, int right, int bottom) {
@@ -2112,4 +2439,59 @@ void RS_GraphicView::loadGridSettings() {
         grid->loadSettings();
     }
     update();
+}
+
+int RS_GraphicView::getPointMode() const {
+    return pdmode;
+}
+
+int RS_GraphicView::getPointSize() const {
+    return screenPDSize;
+}
+
+int RS_GraphicView::determinePointScreenSize(RS_Painter *painter, double pdsize) const{
+    int screenPointSize;
+    int deviceHeight = painter->getHeight();
+    if (pdsize == 0){
+        screenPointSize = deviceHeight / 20;
+    }
+    else if (DXF_FORMAT_PDSize_isPercent(pdsize)){
+        screenPointSize = (deviceHeight * DXF_FORMAT_PDSize_Percent(pdsize)) / 100;
+    }
+    else {
+        screenPointSize = toGuiDY(pdsize);
+    }
+    return screenPointSize;
+}
+
+double RS_GraphicView::getMinCircleDrawingRadius() const {
+    return minCircleDrawingRadius;
+}
+
+double RS_GraphicView::getMinArcDrawingRadius() const {
+    return minArcDrawingRadius;
+}
+
+double RS_GraphicView::getMinEllipseMajorRadius() const {
+    return minEllipseMajorRadius;
+}
+
+double RS_GraphicView::getMinEllipseMinorRadius() const {
+    return minEllipseMinorRadius;
+}
+
+double RS_GraphicView::getMinLineDrawingLen() const {
+    return minLineDrawingLen;
+}
+
+void RS_GraphicView::setHasNoGrid(bool noGrid) {
+    hasNoGrid = noGrid;
+}
+
+bool RS_GraphicView::isDraftLinesMode() const {
+    return draftLinesMode;
+}
+
+void RS_GraphicView::setDraftLinesMode(bool mode) {
+    draftLinesMode = mode;
 }

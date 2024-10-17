@@ -267,5 +267,6 @@
         <file>grid_iso_top.svg</file>
         <file>grid_iso_left.svg</file>
         <file>grid_iso_right.svg</file>
+        <file>draftLineWidth.svg</file>
     </qresource>
 </RCC>

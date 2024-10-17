@@ -32,7 +32,7 @@
 #include "rs_staticgraphicview.h"
 #include "rs_settings.h"
 #include "rs_pen.h"
-#include "rs_painterqt.h"
+#include "rs_painter.h"
 #include "rs_document.h"
 #include "rs_dialogfactory.h"
 #include "rs_debug.h"

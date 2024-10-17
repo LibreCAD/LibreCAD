@@ -26,6 +26,7 @@
 
 #include "rs_actionzoomin.h"
 #include "rs_graphicview.h"
+#include "rs_debug.h"
 
 /**
  * Default constructor.
@@ -57,33 +58,33 @@ void RS_ActionZoomIn::init(int status) {
 
 void RS_ActionZoomIn::trigger() {
     switch (axis) {
-    case RS2::OnlyX:
-        if (direction==RS2::In) {
-            graphicView->zoomInX();
-        } else {
-            graphicView->zoomOutX();
-        }
-        break;
+        case RS2::OnlyX:
+            if (direction==RS2::In) {
+                graphicView->zoomInX();
+            } else {
+                graphicView->zoomOutX();
+            }
+            break;
 
-    case RS2::OnlyY:
-        if (direction==RS2::In) {
-            graphicView->zoomInY();
-        } else {
-            graphicView->zoomOutY();
-        }
-        break;
+        case RS2::OnlyY:
+            if (direction==RS2::In) {
+                graphicView->zoomInY();
+            } else {
+                graphicView->zoomOutY();
+            }
+            break;
 
-    case RS2::Both:
-        if (!center->valid) {
-            *center = graphicView->toGraph(graphicView->getWidth() / 2,
-                                           graphicView->getHeight() / 2);
-        }
-        if (direction==RS2::In) {
-			graphicView->zoomIn(zoom_factor, *center);
-        } else {
-			graphicView->zoomOut(zoom_factor, *center);
-        }
-        break;
+        case RS2::Both:
+            if (!center->valid) {
+                *center = graphicView->toGraph(graphicView->getWidth() / 2,
+                                               graphicView->getHeight() / 2);
+            }
+            if (direction==RS2::In) {
+                graphicView->zoomIn(zoom_factor, *center);
+            } else {
+                graphicView->zoomOut(zoom_factor, *center);
+            }
+            break;
     }
     finish(false);
 }

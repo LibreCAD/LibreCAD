@@ -31,7 +31,7 @@
 #include "rs_line.h"
 #include "rs_solid.h"
 
-
+// fixme - sand - RS_LEADER should be reworked, add support of moving ref points, properties, probably various rendering types
 /**
  * Constructor.
  */
@@ -93,6 +93,21 @@ void RS_Leader::update() {
         }
     }
     calculateBorders();
+}
+
+RS_VectorSolutions RS_Leader::getRefPoints() const {
+    RS_VectorSolutions result = RS_VectorSolutions();
+    result.clear();
+    int count = entities.size();
+    if (count > 1) {
+        auto startEntity = entities[0];
+        result.push_back(startEntity->getStartpoint());
+        for (int i = 0; i < count-1; i++) {
+            auto e = entities[i];
+            result.push_back(e->getEndpoint());
+        }
+    }
+    return result;
 }
 
 /**
@@ -197,4 +212,3 @@ std::ostream& operator << (std::ostream& os,
         os << "(Leader)";
         return os;
 }
-

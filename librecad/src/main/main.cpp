@@ -52,13 +52,14 @@
 
 namespace
 {
-void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings);
+    void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings);
 // update splash for alpha/beta names)
-void updateSplash(const std::unique_ptr<QSplashScreen>& splash);
+    void updateSplash(const std::unique_ptr<QSplashScreen>& splash);
 }
 /**
  * Main. Creates Application window.
  */
+ // fixme - sand - refactor and split to several specialized functions
 int main(int argc, char** argv)
 {
     QT_REQUIRE_VERSION(argc, argv, "5.2.1");
@@ -141,9 +142,8 @@ int main(int argc, char** argv)
             RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Debugging", RS_Debug::D_DEBUGGING);
             exit(0);
         }
-        if ( allowOptions&& (argstr.startsWith(lpDebugSwitch0, Qt::CaseInsensitive) ||
-                             argstr.startsWith(lpDebugSwitch1, Qt::CaseInsensitive) ))
-        {
+        if (allowOptions&& (argstr.startsWith(lpDebugSwitch0, Qt::CaseInsensitive) ||
+                             argstr.startsWith(lpDebugSwitch1, Qt::CaseInsensitive) )){
             argClean<<i;
 
             // to control the level of debugging output use --debug with level 0-6, e.g. --debug3
@@ -152,71 +152,72 @@ int main(int argc, char** argv)
             argstr.remove(QRegularExpression("^"+lpDebugSwitch0));
             argstr.remove(QRegularExpression("^"+lpDebugSwitch1));
             char level;
-            if(argstr.size()==0)
-            {
-                if(i+1<argc)
-                {
-                    if(QRegularExpression(R"(\d*)").match(argv[i+1]).hasMatch())
-                    {
+            if(argstr.size()==0){
+                if(i+1<argc){
+                    if(QRegularExpression(R"(\d*)").match(argv[i+1]).hasMatch()){
                         ++i;
                         qDebug()<<"reading "<<argv[i]<<" as debugging level";
                         level=argv[i][0];
                         argClean<<i;
                     }
-                    else
-                        level='3';
+                    else {
+                        level = '3';
+                    }
                 }
-                else
-                    level='3'; //default to D_WARNING
+                else {
+                    level = '3'; //default to D_WARNING
+                }
             }
-            else
-                level=argstr.toStdString()[0];
-
-            switch(level)
-            {
-            case '?' :
-                RS_DEBUG->print( RS_Debug::D_NOTHING, "possible debug levels:");
-                RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Nothing", RS_Debug::D_NOTHING);
-                RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Critical", RS_Debug::D_CRITICAL);
-                RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Error", RS_Debug::D_ERROR);
-                RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Warning", RS_Debug::D_WARNING);
-                RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Notice", RS_Debug::D_NOTICE);
-                RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Informational", RS_Debug::D_INFORMATIONAL);
-                RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Debugging", RS_Debug::D_DEBUGGING);
-                return 0;
-
-            case '0' + RS_Debug::D_NOTHING :
-                RS_DEBUG->setLevel( RS_Debug::D_NOTHING);
-                break;
-
-            case '0' + RS_Debug::D_CRITICAL :
-                RS_DEBUG->setLevel( RS_Debug::D_CRITICAL);
-                break;
-
-            case '0' + RS_Debug::D_ERROR :
-                RS_DEBUG->setLevel( RS_Debug::D_ERROR);
-                break;
-
-            case '0' + RS_Debug::D_WARNING :
-                RS_DEBUG->setLevel( RS_Debug::D_WARNING);
-                break;
-
-            case '0' + RS_Debug::D_NOTICE :
-                RS_DEBUG->setLevel( RS_Debug::D_NOTICE);
-                break;
-
-            case '0' + RS_Debug::D_INFORMATIONAL :
-                RS_DEBUG->setLevel( RS_Debug::D_INFORMATIONAL);
-                break;
-
-            case '0' + RS_Debug::D_DEBUGGING :
-                RS_DEBUG->setLevel( RS_Debug::D_DEBUGGING);
-                break;
-
-            default :
-                RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
-                break;
+            else {
+                level = argstr.toStdString()[0];
             }
+
+            switch(level){
+                case '?' : {
+                    RS_DEBUG->print(RS_Debug::D_NOTHING, "possible debug levels:");
+                    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Nothing", RS_Debug::D_NOTHING);
+                    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Critical", RS_Debug::D_CRITICAL);
+                    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Error", RS_Debug::D_ERROR);
+                    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Warning", RS_Debug::D_WARNING);
+                    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Notice", RS_Debug::D_NOTICE);
+                    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Informational", RS_Debug::D_INFORMATIONAL);
+                    RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Debugging", RS_Debug::D_DEBUGGING);
+                    return false;
+                }
+                case '0' + RS_Debug::D_NOTHING : {
+                    RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
+                    break;
+                }
+                case '0' + RS_Debug::D_CRITICAL : {
+                    RS_DEBUG->setLevel(RS_Debug::D_CRITICAL);
+                    break;
+                }
+                case '0' + RS_Debug::D_ERROR : {
+                    RS_DEBUG->setLevel(RS_Debug::D_ERROR);
+                    break;
+                }
+                case '0' + RS_Debug::D_WARNING : {
+                    RS_DEBUG->setLevel(RS_Debug::D_WARNING);
+                    break;
+                }
+                case '0' + RS_Debug::D_NOTICE : {
+                    RS_DEBUG->setLevel(RS_Debug::D_NOTICE);
+                    break;
+                }
+                case '0' + RS_Debug::D_INFORMATIONAL : {
+                    RS_DEBUG->setLevel(RS_Debug::D_INFORMATIONAL);
+                    break;
+                }
+                case '0' + RS_Debug::D_DEBUGGING : {
+                    RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
+                    break;
+                }
+                default : {
+                    RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
+                    break;
+                }
+            }
+
         }
     }
     RS_DEBUG->print("param 0: %s", argv[0]);
@@ -293,22 +294,24 @@ int main(int argc, char** argv)
     }
     settings.endGroup();
 
-    if (!first_load)
+    if (!first_load) {
         restoreWindowGeometry(appWin, settings);
+    }
 
     bool maximize = settings.value("Startup/Maximize", 0).toBool();
 
-    if (maximize || first_load)
+    if (maximize || first_load) {
         appWin.showMaximized();
-    else
+    }
+    else {
         appWin.show();
+    }
 
     RS_DEBUG->print("main: set focus");
     appWin.setFocus();
     RS_DEBUG->print("main: creating main window: OK");
 
-    if (show_splash)
-    {
+    if (show_splash){
         RS_DEBUG->print("main: updating splash");
         splash->raise();
         splash->showMessage(QObject::tr("Loading..."),
@@ -393,21 +396,18 @@ int main(int argc, char** argv)
     return return_code;
 }
 
-
 /**
  * Handles command line arguments that might not require a GUI.
  *
  * @return list of files to load on startup.
  */
-QStringList handleArgs(int argc, char** argv, const QList<int>& argClean)
-{
+QStringList handleArgs(int argc, char** argv, const QList<int>& argClean){
     RS_DEBUG->print("main: handling args..");
     QStringList ret;
 
     bool doexit = false;
 
-    for (int i=1; i<argc; i++)
-    {
+    for (int i=1; i<argc; i++)    {
         if(argClean.indexOf(i)>=0) continue;
         if (!QString(argv[i]).startsWith("-"))
         {
@@ -415,13 +415,11 @@ QStringList handleArgs(int argc, char** argv, const QList<int>& argClean)
             QFileInfo(QFile::decodeName(argv[i])).absoluteFilePath());
             ret.append(fname);
         }
-        else if (QString(argv[i])=="--exit")
-        {
+        else if (QString(argv[i])=="--exit")        {
             doexit = true;
         }
     }
-    if (doexit)
-    {
+    if (doexit)    {
         exit(0);
     }
     RS_DEBUG->print("main: handling args: OK");
@@ -447,63 +445,63 @@ QString LCReleaseLabel()
 }
 
 namespace {
-void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings)
-{
-    settings.beginGroup("Geometry");
-    auto geometryB64 = settings.value("/WindowGeometry").toString().toUtf8();
-    auto geometry = QByteArray::fromBase64(geometryB64, QByteArray::Base64Encoding);
-    if (!geometry.isEmpty()) {
-        appWin.restoreGeometry(geometry);
-    } else {
-        // fallback
-        int windowWidth = settings.value("WindowWidth", 1024).toInt();
-        int windowHeight = settings.value("WindowHeight", 1024).toInt();
-        int windowX = settings.value("WindowX", 32).toInt();
-        int windowY = settings.value("WindowY", 32).toInt();
-        appWin.resize(windowWidth, windowHeight);
-        appWin.move(windowX, windowY);
-    }
+    void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings)
+    {
+        settings.beginGroup("Geometry");
+        auto geometryB64 = settings.value("/WindowGeometry").toString().toUtf8();
+        auto geometry = QByteArray::fromBase64(geometryB64, QByteArray::Base64Encoding);
+        if (!geometry.isEmpty()) {
+            appWin.restoreGeometry(geometry);
+        } else {
+            // fallback
+            int windowWidth = settings.value("WindowWidth", 1024).toInt();
+            int windowHeight = settings.value("WindowHeight", 1024).toInt();
+            int windowX = settings.value("WindowX", 32).toInt();
+            int windowY = settings.value("WindowY", 32).toInt();
+            appWin.resize(windowWidth, windowHeight);
+            appWin.move(windowX, windowY);
+        }
 
-    settings.endGroup();
-}
+        settings.endGroup();
+    }
 
 
 // Update Splash image to show "ALPHA", "BETA", and "Release Candidate"
 QPixmap getSplashImage(const std::unique_ptr<QSplashScreen>& splash, const QString& label);
 // Update Splash Screen
-void updateSplash(const std::unique_ptr<QSplashScreen>& splash)
-{
-    if (splash == nullptr)
-        return;
+    void updateSplash(const std::unique_ptr<QSplashScreen>& splash)
+    {
+        if (splash == nullptr)
+            return;
 
     QString label = LCReleaseLabel();
-    if (label.isEmpty())
-        return;
+        if (label.isEmpty())
+            return;
 
-    QPixmap splashImage = getSplashImage(splash, label);
-    splash->setPixmap(splashImage);
-    splash->setAttribute(Qt::WA_DeleteOnClose);
-    splash->show();
-    splash->showMessage(QObject::tr("Loading.."),
-                        Qt::AlignRight|Qt::AlignBottom, Qt::black);
-}
+        QPixmap splashImage = getSplashImage(splash, label);
+        splash->setPixmap(splashImage);
+        splash->setAttribute(Qt::WA_DeleteOnClose);
+        splash->show();
+        splash->showMessage(QObject::tr("Loading.."),
+                            Qt::AlignRight|Qt::AlignBottom, Qt::black);
+    }
 
 // Update Splash image to show "ALPHA", "BETA", and "Release Candidate"
-QPixmap getSplashImage(const std::unique_ptr<QSplashScreen>& splash, const QString& label)
-{
-    if (splash == nullptr)
-        return {};
+    QPixmap getSplashImage(const std::unique_ptr<QSplashScreen>& splash, const QString& label)
+    {
+        if (splash == nullptr)
+            return {};
 
-    QPixmap pixmapSplash(":/main/splash_librecad.png");
-    QPainter painter(&pixmapSplash);
-    const double factorX = pixmapSplash.width()/542.;
-    const double factorY = pixmapSplash.height()/337.;
-    painter.setPen(QColor(255, 0, 0, 128));
-    QRectF labelRect{QPointF{280.*factorX, 130.*factorY}, QPointF{480.*factorX, 170.*factorY}};
-    QFont font;
-    font.setPixelSize(int(labelRect.height()) - 2);
-    painter.setFont(font);
-    painter.drawText(labelRect,Qt::AlignRight, label);
-    return pixmapSplash;
-}
+        QPixmap pixmapSplash(":/main/splash_librecad.png");
+        QPainter painter(&pixmapSplash);
+        const double factorX = pixmapSplash.width()/542.;
+        const double factorY = pixmapSplash.height()/337.;
+        painter.setPen(QColor(255, 0, 0, 128));
+        QRectF labelRect{QPointF{280.*factorX, 130.*factorY}, QPointF{480.*factorX, 170.*factorY}};
+        QFont font;
+        font.setPixelSize(int(labelRect.height()) - 2);
+        painter.setFont(font);
+        painter.drawText(labelRect,Qt::AlignRight, label);
+        return pixmapSplash;
+    }
 }

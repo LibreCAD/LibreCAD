@@ -102,6 +102,8 @@ protected:
     void createGridLinesWithGaps(const RS_Vector &min, const RS_Vector &max, const RS_Vector &lineOffset);
 
     void createCellVector(const RS_Vector &gridWidth) override;
+
+
 };
 
 #endif // LC_ORTHOGONALGRID_H

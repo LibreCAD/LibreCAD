@@ -51,31 +51,31 @@ class QG_GraphicView:   public RS_GraphicView,
                         public RS_LayerListListener,
                         public RS_BlockListListener
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     QG_GraphicView(QWidget *parent = nullptr, Qt::WindowFlags f = {}, RS_Document *doc = nullptr);
-	~QG_GraphicView() override;
+    ~QG_GraphicView() override;
 
-	int getWidth() const override;
-	int getHeight() const override;
-	void redraw(RS2::RedrawMethod method=RS2::RedrawAll) override;
-	void adjustOffsetControls() override;
-	void adjustZoomControls() override;
-	void setBackground(const RS_Color& bg) override;
-	void setMouseCursor(RS2::CursorType c) override;
-	void updateGridStatusWidget(QString text) override;
- void updateGridPoints();
+    int getWidth() const override;
+    int getHeight() const override;
+    void redraw(RS2::RedrawMethod method=RS2::RedrawAll) override;
+    void adjustOffsetControls() override;
+    void adjustZoomControls() override;
+    void setBackground(const RS_Color& bg) override;
+    void setMouseCursor(RS2::CursorType c) override;
+    void updateGridStatusWidget(QString text) override;
+    void updateGridPoints();
 
-	virtual	void getPixmapForView(std::unique_ptr<QPixmap>& pm);
- void loadSettings() override;
-		
+    virtual	void getPixmapForView(std::unique_ptr<QPixmap>& pm);
+    void loadSettings() override;
+
     // Methods from RS_LayerListListener Interface:
-	void layerEdited(RS_Layer*) override{
-        redraw(RS2::RedrawDrawing); 
+    void layerEdited(RS_Layer*) override{
+        redraw(RS2::RedrawDrawing);
     }
-	void layerRemoved(RS_Layer*) override{
-        redraw(RS2::RedrawDrawing); 
+    void layerRemoved(RS_Layer*) override{
+        redraw(RS2::RedrawDrawing);
     }
 
     void layerToggled(RS_Layer*) override{
@@ -84,19 +84,19 @@ public:
         redraw(RS2::RedrawDrawing);
     }
 
-	void layerActivated(RS_Layer *) override;
+    void layerActivated(RS_Layer *) override;
     /**
      * @brief setOffset
      * @param ox, offset X
      * @param oy, offset Y
      */
-	void setOffset(int ox, int oy) override;
+    void setOffset(int ox, int oy) override;
     /**
      * @brief getMousePosition() mouse position in widget coordinates
      * @return the cursor position in widget coordinates
      * returns the widget center, if cursor is not on the widget
      */
-	RS_Vector getMousePosition() const override;
+    RS_Vector getMousePosition() const override;
 
     void setAntialiasing(bool state);
     void setCursorHiding(bool state);
@@ -111,28 +111,26 @@ public:
     void setMenu(const QString& activator, QMenu* menu);
 
 protected:
-	void mousePressEvent(QMouseEvent* e) override;
-	void mouseDoubleClickEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void tabletEvent(QTabletEvent* e) override;
-	void leaveEvent(QEvent*) override;
+    void mousePressEvent(QMouseEvent* e) override;
+    void mouseDoubleClickEvent(QMouseEvent* e) override;
+    void mouseReleaseEvent(QMouseEvent* e) override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void tabletEvent(QTabletEvent* e) override;
+    void leaveEvent(QEvent*) override;
     void enterEvent(QEnterEvent*) override;
-	void focusInEvent(QFocusEvent*) override;
-	void focusOutEvent(QFocusEvent*) override;
-	void wheelEvent(QWheelEvent* e) override;
-	void keyPressEvent(QKeyEvent* e) override;
-	void keyReleaseEvent(QKeyEvent* e) override;
+    void focusInEvent(QFocusEvent*) override;
+    void focusOutEvent(QFocusEvent*) override;
+    void wheelEvent(QWheelEvent* e) override;
+    void keyPressEvent(QKeyEvent* e) override;
+    void keyReleaseEvent(QKeyEvent* e) override;
 
-	bool event(QEvent * e) override;
+    bool event(QEvent * e) override;
 
-	void paintEvent(QPaintEvent *)override;
-	void resizeEvent(QResizeEvent* e) override;
+    void paintEvent(QPaintEvent *)override;
+    void resizeEvent(QResizeEvent* e) override;
 
     QList<QAction*> recent_actions;
     void autoPanStep();
-
-
 
 private slots:
     void slotHScrolled(int value);
@@ -155,20 +153,20 @@ protected:
     std::unique_ptr<QCursor> curMagnifier;
     //! Hand mouse cursor
     std::unique_ptr<QCursor> curHand;
-		
-	   // Used for buffering different paint layers
-	   std::unique_ptr<QPixmap> PixmapLayer1;  // Used for grids and absolute 0
+
+    // Used for buffering different paint layers
+    std::unique_ptr<QPixmap> PixmapLayer1;  // Used for grids and absolute 0
     std::unique_ptr<QPixmap> PixmapLayer2;  // Used for the actual CAD drawing
     std::unique_ptr<QPixmap> PixmapLayer3;  // Used for crosshair and actionitems
 
-
+    double scrollZoomFactor = 1.137;
     QPixmap pixmapLayer1;
     QPixmap pixmapLayer2;
     QPixmap pixmapLayer3;
 
-	
-	   RS2::RedrawMethod redrawMethod;
-		
+
+    RS2::RedrawMethod redrawMethod;
+
     //! Keep tracks of if we are currently doing a high-resolution scrolling
     bool isSmoothScrolling;
 
@@ -184,13 +182,14 @@ private:
     bool scrollbars{false};
     bool cursor_hiding{false};
     bool selectCursor_hiding{false};
-
+    void setupPainter(RS_Painter &painter2) const;
 
     // For auto panning by the cursor close to the view border
     void startAutoPanTimer(QMouseEvent *e);
     bool isAutoPan(QMouseEvent* e) const;
     struct AutoPanData;
     std::unique_ptr<AutoPanData> m_panData;
+
 
 
 signals:

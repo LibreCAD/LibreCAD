@@ -26,7 +26,7 @@
 
 #include "rs.h"
 #include "rs_graphic.h"
-#include "rs_painterqt.h"
+#include "rs_painter.h"
 #include "lc_printing.h"
 #include "rs_staticgraphicview.h"
 #include "rs_units.h"
@@ -37,7 +37,7 @@
 static bool openDocAndSetGraphic(RS_Document**, RS_Graphic**, const QString&);
 static void touchGraphic(RS_Graphic*, PdfPrintParams&);
 static void setupPrinterAndPaper(RS_Graphic*, QPrinter&, PdfPrintParams&);
-static void drawPage(RS_Graphic*, QPrinter&, RS_PainterQt&);
+static void drawPage(RS_Graphic*, QPrinter&, RS_Painter&);
 
 void PdfPrintLoop::run()
 {
@@ -78,7 +78,7 @@ void PdfPrintLoop::printOneDxfToOnePdf(const QString& dxfFile) {
 
     setupPrinterAndPaper(graphic, printer, params);
 
-    RS_PainterQt painter(&printer);
+    RS_Painter painter(&printer);
 
     if (params.monochrome)
         painter.setDrawingMode(RS2::ModeBW);
@@ -142,7 +142,7 @@ void PdfPrintLoop::printManyDxfToOnePdf() {
         setupPrinterAndPaper(pages.at(0).graphic, printer, params);
     }
 
-    RS_PainterQt painter(&printer);
+    RS_Painter painter(&printer);
 
     if (params.monochrome)
         painter.setDrawingMode(RS2::ModeBW);
@@ -253,7 +253,7 @@ static void setupPrinterAndPaper(RS_Graphic* graphic, QPrinter& printer,
 
 
 static void drawPage(RS_Graphic* graphic, QPrinter& printer,
-    RS_PainterQt& painter)
+    RS_Painter& painter)
 {
     double printerFx = (double)printer.width() / printer.widthMM();
     double printerFy = (double)printer.height() / printer.heightMM();

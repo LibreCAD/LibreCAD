@@ -791,9 +791,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             dlg.updatePoint();
             ret = true;
         }
-    }
         break;
-
+    }
     case RS2::EntityLine: {
         QG_DlgLine dlg(parent);
         dlg.setLine(*((RS_Line*)entity));
@@ -801,9 +800,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             dlg.updateLine();
             ret = true;
         }
-    }
         break;
-
+    }
     case RS2::EntityArc: {
         QG_DlgArc dlg(parent);
         dlg.setArc(*((RS_Arc*)entity));
@@ -811,9 +809,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             dlg.updateArc();
             ret = true;
         }
-    }
         break;
-
+    }
     case RS2::EntityCircle: {
         QG_DlgCircle dlg(parent);
         dlg.setCircle(*((RS_Circle*)entity));
@@ -821,9 +818,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             dlg.updateCircle();
             ret = true;
         }
-    }
         break;
-
+    }
     case RS2::EntityEllipse: {
         QG_DlgEllipse dlg(parent);
         dlg.setEllipse(*((RS_Ellipse*)entity));
@@ -831,9 +827,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             dlg.updateEllipse();
             ret = true;
         }
-    }
         break;
-
+    }
     case RS2::EntityParabola: {
         LC_DlgParabola dlg;
         dlg.setParabola(*static_cast<LC_Parabola*>(entity));
@@ -841,9 +836,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             dlg.updateParabola();
             ret = true;
         }
-    }
         break;
-
+    }
     case RS2::EntitySpline: {
         QG_DlgSpline dlg;
         dlg.setSpline(*((RS_Spline*)entity));
@@ -851,9 +845,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             dlg.updateSpline();
             ret = true;
         }
-    }
         break;
-
+    }
     case RS2::EntitySplinePoints: {
         LC_DlgSplinePoints dlg;
         dlg.setSpline(*static_cast<LC_SplinePoints*>(entity));
@@ -861,9 +854,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             dlg.updateSpline();
             ret = true;
         }
-    }
         break;
-
+    }
     case RS2::EntityInsert: {
         QG_DlgInsert dlg;
         dlg.setInsert(*((RS_Insert*)entity));
@@ -872,9 +864,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             ret = true;
             entity->update();
         }
-    }
         break;
-
+    }
     case RS2::EntityDimAligned:
     case RS2::EntityDimAngular:
     case RS2::EntityDimDiametric:
@@ -887,9 +878,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             ret = true;
             ((RS_Dimension*)entity)->updateDim(true);
         }
-    }
         break;
-
+    }
     case RS2::EntityDimLinear: {
         QG_DlgDimLinear dlg(parent);
         dlg.setDim(*((RS_DimLinear*)entity));
@@ -898,9 +888,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             ret = true;
             ((RS_DimLinear*)entity)->updateDim(true);
         }
-    }
         break;
-
+    }
     case RS2::EntityMText: {
         QG_DlgMText dlg(parent);
         dlg.setText(*((RS_MText*)entity), false);
@@ -909,9 +898,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             ret = true;
             ((RS_MText*)entity)->update();
         }
-    }
         break;
-
+    }
     case RS2::EntityText: {
         QG_DlgText dlg(parent);
         dlg.setText(*((RS_Text*)entity), false);
@@ -920,9 +908,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             ret = true;
             ((RS_Text*)entity)->update();
         }
-    }
         break;
-
+    }
     case RS2::EntityHatch: {
         QG_DlgHatch dlg(parent);
         dlg.setHatch(*((RS_Hatch*)entity), false);
@@ -931,9 +918,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             ret = true;
             ((RS_Hatch*)entity)->update();
         }
-    }
         break;
-
+    }
     case RS2::EntityPolyline: {
         QG_DlgPolyline dlg(parent);
         dlg.setPolyline(*((RS_Polyline*)entity));
@@ -941,9 +927,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             dlg.updatePolyline();
             ret = true;
         }
-    }
         break;
-
+    }
     case RS2::EntityImage: {
         QG_DlgImage dlg(parent);
         dlg.setImage(*((RS_Image*)entity));
@@ -951,9 +936,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             dlg.updateImage();
             ret = true;
         }
-    }
         break;
-
+    }
     default:
         break;
     }

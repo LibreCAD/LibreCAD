@@ -29,6 +29,7 @@
 
 
 #include "rs_atomicentity.h"
+#include "lc_cachedlengthentity.h"
 
 
 class LC_Quadratic;
@@ -64,7 +65,7 @@ std::ostream& operator << (std::ostream& os, const RS_LineData& ld);
  *
  * @author Andrew Mustun
  */
-class RS_Line : public RS_AtomicEntity {
+class RS_Line : public LC_CachedLengthEntity {
 public:
     RS_Line() = default;
     RS_Line(RS_EntityContainer* parent,
@@ -146,8 +147,8 @@ public:
     /**
      * @return The length of the line.
      */
-    double getLength() const override{
-        return data.startpoint.distanceTo(data.endpoint);
+    void updateLength() override{
+        cachedLength = data.startpoint.distanceTo(data.endpoint);
     }
 
     /**
@@ -248,4 +249,3 @@ protected:
         RS_Vector highlightedVertex;
 
 };
-

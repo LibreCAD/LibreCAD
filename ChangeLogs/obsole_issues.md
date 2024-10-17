@@ -68,6 +68,19 @@ This issues in GitHub seems to be obsolete and not actual, please review:
 
 ***Implemented in this PR***
 
+This MR includes the following major changes: 
+
+1) Proper rendering of X,Y-axis in drawing, options for them;
+2) Rework of grid rendering, support of lines grid in isometric view, grid-related options  
+3) Restructured Application Preferences Dialog
+4) Dockable status bar components (enabled by options) + widget with relative point position (so now they may be mixed up with toolbars);
+5) Indication of currently active action in MouseWidget
+6) Check for New Version functionality (on startup and explicit), rework of About dialog. NOTE: during preparing public build, in addition to LC_VERSION it's necessary to set LC_PRERELEASE define (true for pre-release version, false - for release ones). Also, it's better use unique release versions even for "latest" updates (like 2.2.2.1-latest, 2.2.2.2-latest etc. instead of one generic 2.2.2-latest), otherwise it might be hard to distinguish fresher updates. 
+7) Changes for draft mode for text/mtext rendering - now instead of rectangle around the text, baselines for text lines are drawn.  
+8) Bugfixes
+
+The following list of issues were addressed by this MR:
+
 #1550
 
 #1688

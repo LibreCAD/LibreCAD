@@ -62,6 +62,10 @@ public:
     void clearGrid();
 
     void setGridInfiniteState(bool hasIndefiniteAxis, bool undefinedX);
+    bool isGridDisabledByPanning(RS_GraphicView *view);
+    bool isValid() const;
+
+    void calculateSnapInfo(RS_Vector& viewZero,RS_Vector& viewSize,RS_Vector& metaGridWidthToUse,RS_Vector& gridWidthToUse);
 
 protected:
     bool valid = false;
@@ -135,6 +139,8 @@ protected:
     bool isNumberOfPointsValid(int numberOfPoints);
 
     virtual void setCellSize(const RS_Vector &gridWidth, const RS_Vector &metaGridWidth);
+
+    void doCalculateSnapInfo(RS_Vector& viewZero,RS_Vector& viewSize,RS_Vector& metaGridWidthToUse,RS_Vector& gridWidthToUse);
 };
 
 #endif // LC_GRIDSYSTEM_H

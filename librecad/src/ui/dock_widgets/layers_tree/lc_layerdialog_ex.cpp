@@ -38,11 +38,9 @@ LC_LayerDialogEx::LC_LayerDialogEx(QWidget* parent, QString name, LC_LayerTreeMo
     editedTreeItem = treeItem;
 }
 
-void LC_LayerDialogEx::languageChange()
-{
+void LC_LayerDialogEx::languageChange(){
     retranslateUi(this);
 }
-
 
 void LC_LayerDialogEx::setMode(int viewMode){
     int mode = viewMode;
@@ -59,18 +57,21 @@ void LC_LayerDialogEx::setMode(int viewMode){
             break;
         }
         case LC_LayerDialogEx::MODE_ADD_SECONDARY_LAYER:{
-          setWindowTitle(tr("Add Secondary Layer"));
+            setWindowTitle(tr("Add Secondary Layer"));
+            leName->setFocus();
             allowChangingLayerType(false);
           break;
         }
         case LC_LayerDialogEx::MODE_ADD_CHILD_LAYER:{
             setWindowTitle(tr("Add Layer"));
             leParentPath->setEnabled(false);
+            leName->setFocus();
             allowChangingLayerType(true);
             break;
         }
         case LC_LayerDialogEx::MODE_ADD_LAYER:{
             setWindowTitle(tr("Add Layer"));
+            leName->setFocus();
             allowChangingLayerType(true);
             break;
         }
@@ -81,6 +82,7 @@ void LC_LayerDialogEx::setMode(int viewMode){
                 leName->setDisabled(true);
             }
             else {
+                leName->setFocus();
                 allowChangingLayerType(true);
             }
             break;
@@ -291,6 +293,3 @@ bool LC_LayerDialogEx::checkForDuplicatedNames(const QStringList &newLayerNamesL
 QString LC_LayerDialogEx::getLayerName(){
     return leName->text();
 }
-
-
-

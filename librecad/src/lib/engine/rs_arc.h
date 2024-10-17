@@ -30,6 +30,8 @@
 #include <iosfwd>
 
 #include "rs_atomicentity.h"
+#include "lc_cachedlengthentity.h"
+
 class LC_Quadratic;
 
 
@@ -53,6 +55,11 @@ struct RS_ArcData {
     double angle1 = 0.;
     double angle2 = 0.;
     bool reversed = false;
+
+    // cached value for draw()
+    double startAngleDegrees = 0.;
+    double otherAngleDegrees = 0.;
+    double angularLength = 0.;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_ArcData& ad);
@@ -63,7 +70,7 @@ std::ostream& operator << (std::ostream& os, const RS_ArcData& ad);
  *
  * @author Andrew Mustun
  */
-class RS_Arc : public RS_AtomicEntity {
+class RS_Arc : public LC_CachedLengthEntity {
 public:
     RS_Arc()=default;
     RS_Arc(RS_EntityContainer* parent,
@@ -181,7 +188,7 @@ public:
 
     RS_Vector getMiddlePoint() const override;
     double getAngleLength() const;
-    double getLength() const override;
+
     double getBulge() const;
 
     bool createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
@@ -236,10 +243,8 @@ public:
                  const RS_Vector& secondCorner,
                  const RS_Vector& offset) override;
 
-    /** find the visible part of the arc, and call drawVisible() to draw */
+
     void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
-    /** directly draw the arc, assuming the whole arc is within visible window */
-    void drawVisible(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 
     friend std::ostream& operator << (std::ostream& os, const RS_Arc& a);
 
@@ -264,6 +269,9 @@ m0 x + m1 y + m2 =0
 
 protected:
     RS_ArcData data{};
+
+    void updateLength() override;
+    void updatePaintingInfo();
 };
 
 #endif

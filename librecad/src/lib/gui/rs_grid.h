@@ -57,6 +57,7 @@ public:
 	RS_Grid(RS_GraphicView* graphicView);
 
 	void calculateGrid();
+ void calculateSnapSettings();
 
  void invalidate(){
      if (gridSystem != nullptr) {
@@ -114,6 +115,7 @@ private:
 //! \{ \brief determine grid width
     RS_Vector getMetricGridWidth(RS_Vector const& userGrid, bool scaleGrid, int minGridSpacing);
     RS_Vector getImperialGridWidth(RS_Vector const& userGrid, bool scaleGrid, int minGridSpacing);
+    void prepareGridCalculations(RS_Vector& viewZero,RS_Vector& viewSize,RS_Vector& metaGridWidthToUse,RS_Vector& gridWidthToUse);
 //! \}
 
     //! Graphic view this grid is connected to.

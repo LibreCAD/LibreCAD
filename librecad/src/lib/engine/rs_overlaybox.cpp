@@ -42,34 +42,32 @@ RS_OverlayBox::RS_OverlayBox(RS_EntityContainer* parent,
 }
 
 RS_Entity* RS_OverlayBox::clone() const{
-    RS_OverlayBox* l = new RS_OverlayBox(*this);
+    auto* l = new RS_OverlayBox(*this);
     l->initId();
     return l;
 }
 
 void RS_OverlayBox::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-    if (painter==NULL || view==NULL) {
-        return;
-    }
 
     RS_Vector v1=view->toGui(getCorner1());
     RS_Vector v2=view->toGui(getCorner2());
 
     QRectF selectRect(
-                v1.x,
-                v1.y,
-                v2.x - v1.x,
-                v2.y - v1.y);
+        v1.x,
+        v1.y,
+        v2.x - v1.x,
+        v2.y - v1.y);
 
     if (v1.x > v2.x) {
-        RS_Pen p(RS_Color(50,255,50),RS2::Width00,RS2::DashLine);
+        RS_Pen p(view->getOverlayBoxLineInvertedColor(), RS2::Width00, RS2::DashLine);
         painter->setPen(p);
-//        painter->setPen(QColor(50, 255, 50));
-        painter->fillRect(selectRect, RS_Color(9, 255, 9, 90));
+        const RS_Color &fillColor = view->getOverlayBoxFillInvertedColor();
+        painter->fillRect(selectRect, fillColor);
     }
     else {
-        painter->setPen(QColor(50, 50, 255));
-        painter->fillRect(selectRect, RS_Color(9, 9, 255, 90));
+        painter->setPen(view->getOverlayBoxLineColor());
+        const RS_Color &fillColor = view->getOverlayBoxFillColor();
+        painter->fillRect(selectRect, fillColor);
     }
 
     painter->drawRect(v1, v2);
@@ -84,10 +82,8 @@ std::ostream& operator << (std::ostream& os, const RS_OverlayBox& l) {
 }
 
 std::ostream& operator << (std::ostream& os, const RS_OverlayBoxData& ld) {
-        os << "(" << ld.corner1 <<
-              "/" << ld.corner2 <<
-              ")";
-        return os;
+    os << "(" << ld.corner1 <<
+       "/" << ld.corner2 <<
+       ")";
+    return os;
 }
-
-

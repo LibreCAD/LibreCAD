@@ -101,6 +101,7 @@ public:
     }
 
     RS_Vector getCorner(int num) const;
+    RS_Vector unsafeGetCorner(int num) const;
 
     void shapeArrow(const RS_Vector& point,
                     double angle,

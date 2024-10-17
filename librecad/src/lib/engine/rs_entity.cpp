@@ -52,7 +52,7 @@
 #include "lc_quadratic.h"
 
 namespace {
-
+// fixme - renderperf - that should be cached as it is set once
 // Whether the entity is a member of cross hatch filling curves
 bool isHatchMember(const RS_Entity* entity) {
     if (entity == nullptr || entity->getParent() == nullptr)
@@ -70,11 +70,9 @@ bool isHatchMember(const RS_Entity* entity) {
  *               a polyline entity as parent.
  */
 RS_Entity::RS_Entity(RS_EntityContainer *parent)
-    : parent{parent}
-{
+    : parent{parent}{
     init();
 }
-
 
 /**
  * Copy constructor.
@@ -127,14 +125,14 @@ void RS_Entity::resetBorders() {
 
 
 void RS_Entity::moveBorders(const RS_Vector& offset){
-	minV.move(offset);
-	maxV.move(offset);
-}
-void RS_Entity::scaleBorders(const RS_Vector& center, const RS_Vector& factor){
-	minV.scale(center,factor);
-	maxV.scale(center,factor);
+    minV.move(offset);
+    maxV.move(offset);
 }
 
+void RS_Entity::scaleBorders(const RS_Vector& center, const RS_Vector& factor){
+    minV.scale(center,factor);
+    maxV.scale(center,factor);
+}
 
 /**
  * Selects or deselects this entity.
@@ -175,7 +173,7 @@ bool RS_Entity::toggleSelected() {
  */
 bool RS_Entity::isSelected() const {
 	//bug 557, Selected entities in invisible layers are deleted
-	return getFlag(RS2::FlagSelected) && isVisible();
+	return getFlag(RS2::FlagSelected) && isVisible(); // fixme - renderperf - isVisible is costly
 }
 
 
@@ -299,7 +297,7 @@ bool RS_Entity::isArc() const
  }
 
 /** whether the entity's bounding box intersects with visible portion of graphic view */
-bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const
+bool RS_Entity::    isVisibleInWindow(RS_GraphicView* view) const
 {
     RS_Vector vpMin(view->toGraph(0,view->getHeight()));
     RS_Vector vpMax(view->toGraph(view->getWidth(),0));
@@ -357,7 +355,7 @@ double RS_Entity::getDistanceToPoint(const RS_Vector& coord,
  * The Layer might also be nullptr. In that case the layer visibility
 * is ignored.
  */
-bool RS_Entity::isVisible() const{
+bool RS_Entity::isVisible() const {
 
     if (!getFlag(RS2::FlagVisible)) {
         return false;
@@ -367,15 +365,6 @@ bool RS_Entity::isVisible() const{
         return false;
     }
 
-        /*RS_EntityContainer* parent = getParent();
-        if (parent && parent->isUndone()) {
-                return false;
-        }*/
-
-	if (!getLayer()) {
-        return true;
-    }
-
     // inserts are usually visible - the entities in them have their own
     //   layers which might be frozen
     // upd: i'm not sure if that is the best behaviour
@@ -383,50 +372,26 @@ bool RS_Entity::isVisible() const{
     //	return true;
     //}
     // blocks are visible in editing window, issue#253
-    if( isDocument() && (rtti()==RS2::EntityBlock || rtti()==RS2::EntityInsert)) {
+    if (isDocument() && (rtti() == RS2::EntityBlock || rtti() == RS2::EntityInsert)) {
         return true;
     }
-
-    if (layer /*&& layer->getName()!="ByBlock"*/) {
-
-        if (!layer->isFrozen()) {
+    if (layer != nullptr) {
+        return !layer->isFrozen();
+    } else {
+        /*RS_EntityContainer* parent = getParent();
+if (parent && parent->isUndone()) {
+        return false;
+}*/
+        RS_Layer* resolvedLayer = getLayerResolved();
+        if (resolvedLayer == nullptr) {
             return true;
-        } else {
-            return false;
+        }
+        else {
+            return !resolvedLayer ->isFrozen();
         }
     }
-
-	if (!layer /*&& getLayer()->getName()!="ByBlock"*/) {
-		if (!getLayer()) {
-            return true;
-        } else {
-            if (!getLayer()->isFrozen()) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-
-	if (!getBlockOrInsert()) {
-        return true;
-    }
-
-    if (getBlockOrInsert()->rtti()==RS2::EntityBlock) {
-		return !(getLayer(false) && getLayer(false)->isFrozen());
-    }
-
-
-	if (!getBlockOrInsert()->getLayer()) {
-        return true;
-    }
-
-	if (!getBlockOrInsert()->getLayer()->isFrozen()) {
-        return true;
-    }
-
-    return false;
 }
+
 
 void RS_Entity::setVisible(bool v) {
 	if (v) {
@@ -481,7 +446,6 @@ RS_Vector RS_Entity::getTangentDirection(const RS_Vector& /*point*/)const{
 bool RS_Entity::isHighlighted() const{
     return getFlag(RS2::FlagHighlighted);
 }
-
 
 RS_Vector RS_Entity::getSize() const {
 	return maxV-minV;
@@ -730,6 +694,21 @@ RS2::Unit RS_Entity::getGraphicUnit() const
 
 
 
+RS_Layer* RS_Entity::getLayerResolved() const {
+    // we have no layer but a parent that might have one.
+    // return parent's layer instead:
+    if (layer == nullptr /*|| layer->getName()=="ByBlock"*/) {
+        if (parent != nullptr) {
+            return parent->getLayerResolved();
+        } else {
+            return nullptr;
+        }
+    }
+    else{
+        return layer;
+    }
+}
+
 /**
  * Returns a pointer to the layer this entity is on or nullptr.
  *
@@ -746,20 +725,18 @@ RS_Layer* RS_Entity::getLayer(bool resolve) const {
     if (resolve) {
         // we have no layer but a parent that might have one.
         // return parent's layer instead:
-		if (!layer /*|| layer->getName()=="ByBlock"*/) {
-            if (parent) {
+        if (layer == nullptr /*|| layer->getName()=="ByBlock"*/) {
+            if (parent != nullptr) {
                 return parent->getLayer(true);
             } else {
-				return nullptr;
+                return nullptr;
             }
         }
     }
 
-	// return our layer. might still be nullptr:
+// return our layer. might still be nullptr:
     return layer;
 }
-
-
 
 /**
  * Sets the layer of this entity to the layer with the given name
@@ -769,11 +746,9 @@ void RS_Entity::setLayer(const QString& name) {
     if (graphic) {
         layer = graphic->findLayer(name);
     } else {
-		layer = nullptr;
+        layer = nullptr;
     }
 }
-
-
 
 /**
  * Sets the layer of this entity to the layer given.
@@ -781,8 +756,6 @@ void RS_Entity::setLayer(const QString& name) {
 void RS_Entity::setLayer(RS_Layer* l) {
     layer = l;
 }
-
-
 
 /**
  * Sets the layer of this entity to the current layer of
@@ -795,11 +768,73 @@ void RS_Entity::setLayerToActive() {
     if (graphic) {
         layer = graphic->getActiveLayer();
     } else {
-		layer = nullptr;
+        layer = nullptr;
     }
 }
 
+RS_Pen RS_Entity::getPenResolved() const {
+    RS_Pen p = pen;
+    // use parental attributes (e.g. vertex of a polyline, block
+    // entities when they are drawn in block documents):
+    if (parent != nullptr && parent->rtti() != RS2::EntityGraphic) {
+        //if pen is invalid gets all from parent
+        if (!p.isValid()) {
+            p = parent->getPen(false);
+        }
+        //pen is valid, verify byBlock parts
+        RS_EntityContainer *ep = parent;
+        //If parent is byblock check parent.parent (nested blocks)
+        while (p.isColorByBlock()) {
+            if (ep) {
+                p.setColorFromPen(parent->getPen(false)); // fixme - check whether resolved pen is actually needed there...
+                ep = ep->parent;
+            } else
+                break;
+        }
+        ep = parent;
+        while (p.isWidthByBlock()) {
+            if (ep) {
+                p.setWidthFromPen(parent->getPen(false)); // fixme - check whether resolved pen is actually needed there...
+                ep = ep->parent;
+            } else
+                break;
+        }
+        ep = parent;
+        while (p.isLineTypeByBlock()) {
+            if (ep) {
+                p.setLineTypeFromPen(parent->getPen(false)); // fixme - check whether resolved pen is actually needed there...
+                ep = ep->parent;
+            } else
+                break;
+        }
+    }
 
+    // use layer's color:
+    bool colorByLayer = p.isColorByLayer();
+    bool widthByLayer = p.isWidthByLayer();
+    bool lineByLayer = p.isLineTypeByLayer();
+    if (colorByLayer || widthByLayer || lineByLayer) {
+        RS_Layer *l = getLayerResolved();
+        // check byLayer attributes:
+        if (l != nullptr) {
+            const RS_Pen &layerPen = l->getPen();
+            if (colorByLayer) {
+                p.setColorFromPen(layerPen);
+            }
+
+            // use layer's width:
+            if (widthByLayer) {
+                p.setWidthFromPen(layerPen);
+            }
+
+            // use layer's linetype:
+            if (lineByLayer) {
+                p.setLineTypeFromPen(layerPen);
+            }
+        }
+    }
+    return p;
+}
 
 /**
  * Gets the pen needed to draw this entity.
@@ -813,72 +848,12 @@ void RS_Entity::setLayerToActive() {
  * @return Pen for this entity.
  */
 RS_Pen RS_Entity::getPen(bool resolve) const {
-
-    if (!resolve) {
-        return pen;
+    if (resolve) {
+        return getPenResolved();
     } else {
-
-        RS_Pen p = pen;
-        RS_Layer* l = getLayer(true);
-
-        // use parental attributes (e.g. vertex of a polyline, block
-        // entities when they are drawn in block documents):
-        if (parent) {
-            //if pen is invalid gets all from parent
-            if (!p.isValid() ) {
-                p = parent->getPen();
-            }
-            //pen is valid, verify byBlock parts
-            RS_EntityContainer* ep = parent;
-            //If parent is byblock check parent.parent (nested blocks)
-            while (p.getColor().isByBlock()){
-                if (ep) {
-                    p.setColor(parent->getPen().getColor());
-                    ep = ep->parent;
-                } else
-                    break;
-            }
-            ep = parent;
-            while (p.getWidth()==RS2::WidthByBlock){
-                if (ep) {
-                    p.setWidth(parent->getPen().getWidth());
-                    ep = ep->parent;
-                } else
-                    break;
-            }
-            ep = parent;
-            while (p.getLineType()==RS2::LineByBlock){
-                if (ep) {
-                    p.setLineType(parent->getPen().getLineType());
-                    ep = ep->parent;
-                } else
-                    break;
-            }
-        }
-        // check byLayer attributes:
-        if (l) {
-            // use layer's color:
-            if (p.getColor().isByLayer()) {
-                p.setColor(l->getPen().getColor());
-            }
-
-            // use layer's width:
-            if (p.getWidth()==RS2::WidthByLayer) {
-                p.setWidth(l->getPen().getWidth());
-            }
-
-            // use layer's linetype:
-            if (p.getLineType()==RS2::LineByLayer) {
-                p.setLineType(l->getPen().getLineType());
-            }
-            //}
-        }
-
-        return p;
+        return pen;
     }
 }
-
-
 
 /**
  * Sets the pen of this entity to the current pen of
@@ -898,8 +873,6 @@ void RS_Entity::setPenToActive() {
     //}
 }
 
-
-
 /**
  * Implementations must stretch the given range of the entity
  * by the given offset. This default implementation moves the
@@ -916,55 +889,53 @@ void RS_Entity::stretch(const RS_Vector& firstCorner,
         move(offset);
     }
 }
-
-
-
+// fixme - sand - it seems  this method is   not used
 /**
  * @return Factor for scaling the line styles considering the current
  * paper scaling and the fact that styles are stored in Millimeter.
  */
 double RS_Entity::getStyleFactor(RS_GraphicView* view) {
     double styleFactor = 1.0;
-	if (!view) return styleFactor;
+    if (!view) return styleFactor;
 
 
-	if (view->isPrinting()==false && view->isDraftMode()) {
-		styleFactor = 1.0/view->getFactor().x;
-	} else {
-		//styleFactor = getStyleFactor();
-		// the factor caused by the unit:
-		RS2::Unit unit = RS2::None;
-		RS_Graphic* g = getGraphic();
-		if (g) {
-			unit = g->getUnit();
-			//double scale = g->getPaperScale();
-			styleFactor = RS_Units::convert(1.0, RS2::Millimeter, unit);
-			// / scale;
-		}
+    if (view->isPrinting()==false && view->isDraftMode()) {
+        styleFactor = 1.0/view->getFactor().x;
+    } else {
+//styleFactor = getStyleFactor();
+// the factor caused by the unit:
+        RS2::Unit unit = RS2::None;
+        RS_Graphic* g = getGraphic();
+        if (g) {
+            unit = g->getUnit();
+//double scale = g->getPaperScale();
+            styleFactor = RS_Units::convert(1.0, RS2::Millimeter, unit);
+// / scale;
+        }
 
-		// the factor caused by the line width:
-		if (((int)getPen(true).getWidth())>0) {
-			styleFactor *= ((double)getPen(true).getWidth()/100.0);
-		} else if (((int)getPen(true).getWidth())==0) {
-			styleFactor *= 0.01;
-		}
-	}
+// the factor caused by the line width:
+        if (((int)getPen(true).getWidth())>0) {
+            styleFactor *= ((double)getPen(true).getWidth()/100.0);
+        } else if (((int)getPen(true).getWidth())==0) {
+            styleFactor *= 0.01;
+        }
+    }
 
-	if (view->isPrinting() || view->isPrintPreview() || view->isDraftMode()==false) {
-		RS_Graphic* graphic = getGraphic();
-		if (graphic && graphic->getPaperScale()>1.0e-6) {
-			styleFactor /= graphic->getPaperScale();
-		}
-	}
+    if (view->isPrinting() || view->isPrintPreview() || view->isDraftMode()==false) {
+        RS_Graphic* graphic = getGraphic();
+        if (graphic && graphic->getPaperScale()>1.0e-6) {
+            styleFactor /= graphic->getPaperScale();
+        }
+    }
 
-	//RS_DEBUG->print("stylefactor: %f", styleFactor);
-	//RS_DEBUG->print("viewfactor: %f", view->getFactor().x);
+//RS_DEBUG->print("stylefactor: %f", styleFactor);
+//RS_DEBUG->print("viewfactor: %f", view->getFactor().x);
 
-	if (styleFactor*view->getFactor().x<0.2) {
-		styleFactor = -1.0;
-	}
+    if (styleFactor*view->getFactor().x<0.2) {
+        styleFactor = -1.0;
+    }
 
-	return styleFactor;
+    return styleFactor;
 }
 
 
@@ -1016,16 +987,17 @@ std::vector<QString> RS_Entity::getAllKeys() const{
 
 //! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print
 bool RS_Entity::isConstruction(bool typeCheck) const{
-	if(typeCheck
-		&&  getParent()
-		&&  rtti() != RS2::EntityLine){
-            // do not expand entities on construction layers, except lines
-            return false;
+    if(typeCheck &&  getParent() &&  rtti() != RS2::EntityLine){
+        // do not expand entities on construction layers, except lines
+        return false;
     }
 
     // Issue #1773, hatch filling curves are not shown as infinite on construction layers
-    if (isHatchMember(this))
+    if (getFlag(RS2::FlagHatchChild)){
         return false;
+    }
+    /*if (isHatchMember(this))
+        return false;*/
 
     return (layer != nullptr) && layer->isConstruction();
 }

@@ -74,6 +74,10 @@ void RS_Preview::addEntity(RS_Entity* entity) {
         }
         case RS2::EntitySpline:
             break;
+        case RS2::EntityMText:
+            break;
+        case RS2::EntityText:
+            break;
         default: {
             if (entity->isContainer()) {
                 if (entity->countDeep() > maxEntities-countDeep()) {
@@ -133,7 +137,7 @@ void RS_Preview::addCloneOf(RS_Entity* entity) {
         return;
     }
 
-    RS_Entity* clone = entity->clone();
+    RS_Entity* clone = entity->cloneProxy();
     clone->reparent(this);
     addEntity(clone);
 }
@@ -145,7 +149,7 @@ void RS_Preview::addAllFrom(RS_EntityContainer& container) {
     unsigned int c=0;
     for(auto e: container){
         if (c < maxEntities) {
-            RS_Entity* clone = e->clone();
+            RS_Entity* clone = e->cloneProxy();
             clone->setSelected(false);
             clone->reparent(this);
 
@@ -155,15 +159,15 @@ void RS_Preview::addAllFrom(RS_EntityContainer& container) {
         }
     }
 }
-
+// fixme - sand - use cloneProxy()
 /**
  * Adds all selected entities from 'container' to the preview (unselected).
  */
 void RS_Preview::addSelectionFrom(RS_EntityContainer& container) {
     unsigned int c=0;
-    for(auto e: container){
+    for(auto e: container){ // fixme - sand - wow - iterating over all entities!!! Rework selection
         if (e->isSelected() && c<maxEntities) {
-            RS_Entity* clone = e->clone();
+            RS_Entity* clone = e->cloneProxy();
             clone->setSelected(false);
             clone->reparent(this);
 
@@ -187,7 +191,7 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container,
             ((e->isInWindow(v1, v2)) || e->hasEndpointsWithinWindow(v1, v2)) &&
             c < maxEntities) {
 
-            RS_Entity *clone = e->clone();
+            RS_Entity *clone = e->cloneProxy();
             //clone->setSelected(false);
             clone->reparent(this);
 
@@ -200,18 +204,13 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container,
 
 void RS_Preview::draw(RS_Painter* painter, RS_GraphicView* view,
                               double& patternOffset) {
-
-    if (!(painter && view)) {
-        return;
-    }
-
-    for (auto e: entities){
-        e->draw(painter, view, patternOffset);
+    for (auto e: std::as_const(entities)){
+        e->drawDraft(painter, view, patternOffset);
     }
 }
 
 void RS_Preview::addReferenceEntitiesToContainer(RS_EntityContainer *container){
-    for (auto en: referenceEntities){
+    for (auto en: std::as_const(referenceEntities)){
         container->addEntity(en);
     }
 }

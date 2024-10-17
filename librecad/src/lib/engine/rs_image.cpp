@@ -303,7 +303,7 @@ double RS_Image::getDistanceToPoint(const RS_Vector& coord,
     if(containsPoint(coord)){
 //if coord is on image
 
-        bool draftMode = LC_GET_ONE_BOOL("Appearance", "DraftMode");
+        bool draftMode = LC_GET_ONE_BOOL("Appearance", "DraftMode"); // fixme - review why it's picked from settings and not from graphic view
 
         if(!draftMode) return double(0.);
     }
@@ -366,7 +366,7 @@ void RS_Image::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
 
 
 void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-	if (!(painter && view) || !img.get() || img->isNull())
+	if (/*!(painter && view) || */!img.get() || img->isNull())
 		return;
 
     // erase image:
@@ -384,14 +384,21 @@ void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
     if (isSelected() && !(view->isPrinting() || view->isPrintPreview())) {
         RS_VectorSolutions sol = getCorners();
-		for (size_t i = 0; i < sol.size(); ++i){
-			size_t const j = (i+1)%sol.size();
-			painter->drawLine(view->toGui(sol.get(i)), view->toGui(sol.get(j)));
-		}
+        for (size_t i = 0; i < sol.size(); ++i){
+            size_t const j = (i+1)%sol.size();
+            painter->drawLine(view->toGui(sol.get(i)), view->toGui(sol.get(j)));
+        }
     }
 }
 
+void RS_Image::drawDraft(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset) {
+    const RS_Vector &uiMin = view->toGui(getMin());
+    const RS_Vector &uiMax = view->toGui(getMax());
+    painter->drawRect(uiMin, uiMax);
 
+    painter->drawLine(uiMin.x, uiMin.y, uiMax.x, uiMax.y);
+    painter->drawLine(uiMin.x, uiMax.y, uiMax.x, uiMin.y);
+}
 
 /**
  * Dumps the point's data to stdout.

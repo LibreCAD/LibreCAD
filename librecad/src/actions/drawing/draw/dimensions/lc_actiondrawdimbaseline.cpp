@@ -403,10 +403,10 @@ void LC_ActionDrawDimBaseline::updateMouseButtonHints() {
     int status = getStatus();
     switch (status) {
         case SetExtPoint1:
-            updateMouseWidgetTRCancel(tr("Select base linear/aligned dimension"), MOD_CTRL("Select distant extension point"));
+            updateMouseWidgetTRCancel(tr("Select base linear/aligned dimension"), MOD_CTRL(tr("Select distant extension point")));
             break;
         case SetExtPoint2:
-            updateMouseWidgetTRBack(tr("Specify second extension line origin"), isBaseline() && !freeBaselineDistance ? MOD_CTRL("Mirror offset direction"): MOD_NONE);
+            updateMouseWidgetTRBack(tr("Specify second extension line origin"), isBaseline() && !freeBaselineDistance ? MOD_CTRL(tr("Mirror offset direction")): MOD_NONE);
             break;
         case SetDefPoint:
             updateMouseWidgetTRBack(tr("Specify dimension line location"), MOD_SHIFT_LC(tr("Snap to Adjacent Dim")));

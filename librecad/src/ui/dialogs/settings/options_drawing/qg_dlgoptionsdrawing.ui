@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="tab1">
       <attribute name="title">
@@ -1639,61 +1639,137 @@
      </widget>
      <widget class="QWidget" name="tab5">
       <attribute name="title">
-       <string>&amp;Splines</string>
+       <string>&amp;Splines and Lines</string>
       </attribute>
-      <layout class="QVBoxLayout">
-       <item>
-        <layout class="QHBoxLayout">
-         <item>
-          <widget class="QLabel" name="lSplineSegs">
-           <property name="text">
-            <string>Number of line segments per spline patch:</string>
-           </property>
-           <property name="wordWrap">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="cbSplineSegs">
-           <property name="editable">
-            <bool>true</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string notr="true">2</string>
+      <layout class="QGridLayout" name="gridLayout_15">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>Splines</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_16">
+          <item row="0" column="1">
+           <widget class="QComboBox" name="cbSplineSegs">
+            <property name="editable">
+             <bool>true</bool>
             </property>
-           </item>
-           <item>
+            <item>
+             <property name="text">
+              <string notr="true">2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">4</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">8</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">16</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">32</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">64</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="lSplineSegs">
             <property name="text">
-             <string notr="true">4</string>
+             <string>Number of line segments per spline patch:</string>
             </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">8</string>
+            <property name="wordWrap">
+             <bool>false</bool>
             </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">16</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">32</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">64</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-        </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
-       <item>
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="groupBox_4">
+         <property name="title">
+          <string>Lines</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_17">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_17">
+            <property name="text">
+             <string>Line Cap:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="cbLineCap">
+            <item>
+             <property name="text">
+              <string>None</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Round</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Angle</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Square</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>Line Join:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="cbLineJoin">
+            <item>
+             <property name="text">
+              <string>None</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Round</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Angle</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Flat</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
         <spacer name="spacer19_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -1705,6 +1781,19 @@
           <size>
            <width>20</width>
            <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="1">
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
           </size>
          </property>
         </spacer>
@@ -2854,7 +2943,6 @@
   <tabstop>cbDimAUnit</tabstop>
   <tabstop>cbDimADec</tabstop>
   <tabstop>cbDimAZin</tabstop>
-  <tabstop>cbSplineSegs</tabstop>
   <tabstop>bDot</tabstop>
   <tabstop>bBlank</tabstop>
   <tabstop>bPlus</tabstop>

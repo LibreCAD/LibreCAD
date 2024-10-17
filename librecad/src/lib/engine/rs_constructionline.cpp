@@ -192,13 +192,11 @@ RS_Vector RS_ConstructionLine::getMiddlePoint() const{
 }
 RS_Vector RS_ConstructionLine::getNearestMiddle(const RS_Vector& /*coord*/,
         double* dist, const int /*middlePoints*/)const {
-	if (dist) {
+	   if (dist) {
         *dist = RS_MAXDOUBLE;
     }
     return RS_Vector(false);
 }
-
-
 
 RS_Vector RS_ConstructionLine::getNearestDist(double /*distance*/,
         const RS_Vector& /*coord*/,
@@ -232,15 +230,11 @@ double RS_ConstructionLine::getDistanceToPoint(const RS_Vector& coord,
     return ( fabs(vpc.y) );
 }
 
-
-
 void RS_ConstructionLine::move(const RS_Vector& offset) {
     data.point1.move(offset);
     data.point2.move(offset);
     //calculateBorders();
 }
-
-
 
 void RS_ConstructionLine::rotate(const RS_Vector& center, const double& angle) {
     RS_Vector angleVector(angle);
@@ -261,15 +255,12 @@ void RS_ConstructionLine::scale(const RS_Vector& center, const RS_Vector& factor
     //calculateBorders();
 }
 
-
-
 void RS_ConstructionLine::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-        data.point1.mirror(axisPoint1, axisPoint2);
-        data.point2.mirror(axisPoint1, axisPoint2);
+    data.point1.mirror(axisPoint1, axisPoint2);
+    data.point2.mirror(axisPoint1, axisPoint2);
 }
 
-RS_Entity& RS_ConstructionLine::shear(double k)
-{
+RS_Entity& RS_ConstructionLine::shear(double k){
     data.point1.shear(k);
     data.point2.shear(k);
     return *this;
@@ -282,5 +273,3 @@ std::ostream& operator << (std::ostream& os, const RS_ConstructionLine& l) {
     os << " ConstructionLine: " << l.getData() << "\n";
     return os;
 }
-
-

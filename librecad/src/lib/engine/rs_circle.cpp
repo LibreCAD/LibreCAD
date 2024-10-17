@@ -71,39 +71,38 @@ std::ostream& operator << (std::ostream& os, const RS_CircleData& ad)
  */
 RS_Circle::RS_Circle(RS_EntityContainer* parent,
                      const RS_CircleData& d)
-    :RS_AtomicEntity(parent), data(d) {
+    :LC_CachedLengthEntity(parent), data(d) {
     calculateBorders();
 }
 
 RS_Entity* RS_Circle::clone() const {
-	RS_Circle* c = new RS_Circle(*this);
-	c->initId();
-	return c;
+    RS_Circle* c = new RS_Circle(*this);
+    c->initId();
+    return c;
 }
-
 
 void RS_Circle::calculateBorders() {
     RS_Vector r{data.radius, data.radius};
     minV = data.center - r;
     maxV = data.center + r;
+    updateLength();
 }
-
 
 /** @return The center point (x) of this arc */
 RS_Vector RS_Circle::getCenter() const {
-	return data.center;
+    return data.center;
 }
 /** Sets new center. */
 void RS_Circle::setCenter(const RS_Vector& c) {
-	data.center = c;
+    data.center = c;
 }
 /** @return The radius of this arc */
 double RS_Circle::getRadius() const {
-	return data.radius;
+    return data.radius;
 }
 /** Sets new radius. */
 void RS_Circle::setRadius(double r) {
-	data.radius = r;
+    data.radius = r;
 }
 
 /**
@@ -116,8 +115,8 @@ double RS_Circle::getAngleLength() const {
 /**
  * @return Length of the circle which is the circumference.
  */
-double RS_Circle::getLength() const {
-    return 2 * M_PI * data.radius;
+void RS_Circle::updateLength() {
+    cachedLength = 2.0 * M_PI * data.radius;
 }
 
 bool RS_Circle::isTangent(const RS_CircleData&  circleData) const{
@@ -792,28 +791,25 @@ bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
 }
 
 void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-    if (!isVisibleInWindow(view))
-        return;
-
     painter->drawCircle(view->toGui(getCenter()), view->toGuiDX(getRadius()));
 }
 
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-	if(ref.distanceTo(data.center)<1.0e-4){
-		data.center += offset;
+    if(ref.distanceTo(data.center)<1.0e-4){
+        data.center += offset;
         return;
     }
-	RS_Vector v1(data.radius, 0.0);
+    RS_Vector v1(data.radius, 0.0);
     RS_VectorSolutions sol;
-	sol.push_back(data.center + v1);
-	sol.push_back(data.center - v1);
-	v1.set(0., data.radius);
-	sol.push_back(data.center + v1);
-	sol.push_back(data.center - v1);
+    sol.push_back(data.center + v1);
+    sol.push_back(data.center - v1);
+    v1.set(0., data.radius);
+    sol.push_back(data.center + v1);
+    sol.push_back(data.center - v1);
     double dist;
     v1=sol.getClosest(ref,&dist);
     if(dist>1.0e-4) return;
-	data.radius = data.center.distanceTo(v1 + offset);
+    data.radius = data.center.distanceTo(v1 + offset);
 }
 
 

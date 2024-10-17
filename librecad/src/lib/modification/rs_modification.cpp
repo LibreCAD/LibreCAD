@@ -695,6 +695,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     // hash for renaming duplicated blocks
     QHash<QString, QString> blocksDict;
 
+    // fixme - perf - is it really necessary to do something based on blocks for ordinary copy-paste?
     // create block to paste entities as a whole
     QString name_old = (data.blockName != nullptr) ? data.blockName : "paste-block";
     QString name_new = (graphic->findBlock(name_old) != nullptr) ? graphic->getBlockList()->newName(name_old) : name_old;
@@ -760,7 +761,6 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     } else {
         undo.addUndoable(i);
     }
-
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: OK");
 }
@@ -912,7 +912,7 @@ bool RS_Modification::pasteEntity(RS_Entity* entity, RS_EntityContainer* contain
 
     // set the same layer in clone as in source
     QString ln = entity->getLayer()->getName();
-    RS_Layer* layer = graphic->getLayerList()->find(ln);
+    RS_Layer* layer = graphic->getLayerList()->find(ln); // fixme - perf- layer search is not needed if copy paste within the same document
     if (!layer) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to select layer to paste in");
         return false;
@@ -1896,7 +1896,7 @@ bool RS_Modification::move(RS_MoveData& data, const std::vector<RS_Entity*> &ent
     for(auto e: entitiesList){
         // Create new entities
         for (int num= 1; num <= numberOfCopies; num++) {
-            RS_Entity* ec = e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy() : e->clone();
 
             ec->move(data.offset*num);
             if (!forPreviewOnly){
@@ -2001,8 +2001,7 @@ bool RS_Modification::rotate(RS_RotateData& data, const std::vector<RS_Entity*> 
     int numberOfCopies = data.obtainNumberOfCopies();
     for (auto e: entitiesList) {
         for (int num = 1; num <= numberOfCopies; num++) {
-
-            RS_Entity *ec = e->cloneProxy();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy() : e->clone();
             ec->setSelected(false);
 
             double rotationAngle = data.angle * num;
@@ -2095,7 +2094,7 @@ bool RS_Modification::scale(RS_ScaleData& data, const std::vector<RS_Entity*> &e
     for(RS_Entity* e: selectedList) {
         if (e != nullptr) {
             for (int num= 1; num <= numberOfCopies; num++) {
-                auto ec = e->clone();
+                RS_Entity* ec = forPreviewOnly ? e->cloneProxy() : e->clone();
                 ec->setSelected(false);
 
                 ec->scale(data.referencePoint, RS_Math::pow(data.factor, num));
@@ -2150,7 +2149,7 @@ bool RS_Modification::mirror(RS_MirrorData& data, const std::vector<RS_Entity*> 
 
     for(auto e: entitiesList){
         for (int num=1; num<=numberOfCopies; ++num) {
-            RS_Entity* ec = e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy() : e->clone();
             ec->setSelected(false);
 
             ec->mirror(data.axisPoint1, data.axisPoint2);
@@ -2198,7 +2197,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data, const std::vector<RS_Entity*
 
     for(auto e: entitiesList){
         for (int num= 1; num <= numberOfCopies; num++) {
-            RS_Entity* ec = e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy() : e->clone();
             ec->setSelected(false);
 
             double angle1ForCopy = /*data.sameAngle1ForCopies ?  data.angle1 :*/ data.angle1 * num;
@@ -2267,7 +2266,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData &data, const std::vector<RS_E
     // Create new entities
     for(auto e: entitiesList){
         for (int num=1; num <= numberOfCopies; ++num) {
-            RS_Entity* ec = e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy() : e->clone();
             ec->setSelected(false);
 
             const RS_Vector &offset = data.offset * num;
@@ -2771,7 +2770,7 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
             if (  (e->isInWindow(firstCorner, secondCorner) ||
                    e->hasEndpointsWithinWindow(firstCorner, secondCorner))) {
 
-                RS_Entity* ec = e->clone();
+                RS_Entity* ec = e->clone();  // fixme - sand - should we use proxy there?
                 ec->stretch(firstCorner, secondCorner, offset);
                 addList.push_back(ec);
                 e->setSelected(true);

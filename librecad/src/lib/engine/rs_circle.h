@@ -31,6 +31,7 @@
 
 #include <vector>
 #include "rs_atomicentity.h"
+#include "lc_cachedlengthentity.h"
 
 class LC_Quadratic;
 
@@ -53,7 +54,7 @@ std::ostream& operator << (std::ostream& os, const RS_CircleData& ad);
  *
  * @author Andrew Mustun
  */
-class RS_Circle : public RS_AtomicEntity {
+class RS_Circle : public LC_CachedLengthEntity {
 public:
 	RS_Circle()=default;
     RS_Circle (RS_EntityContainer* parent,
@@ -63,16 +64,16 @@ public:
 	RS_Entity* clone() const override;
 
     /**	@return RS2::EntityCircle */
-	RS2::EntityType rtti() const override{
+    RS2::EntityType rtti() const override{
         return RS2::EntityCircle;
     }
     /** @return true */
-	bool isEdge() const  override{
+    bool isEdge() const  override{
         return true;
     }
 
     /** @return Copy of data that defines the circle. **/
-	const RS_CircleData& getData() const {
+    const RS_CircleData& getData() const {
         return data;
     }
 
@@ -89,71 +90,70 @@ public:
          * @return Direction 1. The angle at which the arc starts at
          * the startpoint.
          */
-	double getDirection1() const override;
+    double getDirection1() const override;
     /**
          * @return Direction 2. The angle at which the arc starts at
          * the endpoint.
          */
-	double getDirection2() const override;
+    double getDirection2() const override;
 
     /** @return The center point (x) of this arc */
-	RS_Vector getCenter() const override;
+    RS_Vector getCenter() const override;
     /** Sets new center. */
-	void setCenter(const RS_Vector& c);
+    void setCenter(const RS_Vector& c);
     /** @return The radius of this arc */
-	double getRadius() const override;
+    double getRadius() const override;
     /** Sets new radius. */
-	void setRadius(double r);
+    void setRadius(double r);
     double getAngleLength() const;
-	double getLength() const override;
-	bool isTangent(const RS_CircleData&  circleData) const override;
+    bool isTangent(const RS_CircleData&  circleData) const override;
 
     bool createFromCR(const RS_Vector& c, double r);
     bool createFrom2P(const RS_Vector& p1, const RS_Vector& p2);
     bool createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
                       const RS_Vector& p3);
     bool createFrom3P(const RS_VectorSolutions& sol);
-	bool createInscribe(const RS_Vector& coord, const std::vector<RS_Line*>& lines);
-	std::vector<RS_Entity* > offsetTwoSides(const double& distance) const override;
-	RS_VectorSolutions createTan1_2P(const RS_AtomicEntity* circle, const std::vector<RS_Vector>& points);
-	static RS_VectorSolutions createTan2(const std::vector<RS_AtomicEntity*>& circles, const double& r);
+    bool createInscribe(const RS_Vector& coord, const std::vector<RS_Line*>& lines);
+    std::vector<RS_Entity* > offsetTwoSides(const double& distance) const override;
+    RS_VectorSolutions createTan1_2P(const RS_AtomicEntity* circle, const std::vector<RS_Vector>& points);
+    static RS_VectorSolutions createTan2(const std::vector<RS_AtomicEntity*>& circles, const double& r);
     /** solve one of the eight Appollonius Equations
 | Cx - Ci|^2=(Rx+Ri)^2
 with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are the Center and radius of the i-th existing circle
 **/
-	static std::vector<RS_Circle> solveAppolloniusSingle(const std::vector<RS_Circle>& circles);
+    static std::vector<RS_Circle> solveAppolloniusSingle(const std::vector<RS_Circle>& circles);
 
-	std::vector<RS_Circle> createTan3(const std::vector<RS_AtomicEntity*>& circles);
-	bool testTan3(const std::vector<RS_AtomicEntity*>& circles);
-	RS_Vector getMiddlePoint(void)const override;
-	RS_Vector getNearestEndpoint(const RS_Vector& coord,
-										 double* dist = nullptr) const override;
-	RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-											  bool onEntity = true, double* dist = NULL, RS_Entity** entity=NULL)const override;
-	RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = NULL)const override;
-	RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = nullptr,
-									   int middlePoints = 1 ) const override;
-	RS_Vector getNearestDist(double distance,
-                                     const RS_Vector& coord,
-									 double* dist = NULL)const override;
-	RS_Vector getNearestDist(double distance,
-									 bool startp)const override;
-	RS_Vector getNearestOrthTan(const RS_Vector& coord,
-                                        const RS_Line& normal,
-										bool onEntity = false) const override;
+    std::vector<RS_Circle> createTan3(const std::vector<RS_AtomicEntity*>& circles);
+    bool testTan3(const std::vector<RS_AtomicEntity*>& circles);
+    RS_Vector getMiddlePoint(void)const override;
+    RS_Vector getNearestEndpoint(const RS_Vector& coord,
+                                 double* dist = nullptr) const override;
+    RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
+                                      bool onEntity = true, double* dist = NULL, RS_Entity** entity=NULL)const override;
+    RS_Vector getNearestCenter(const RS_Vector& coord,
+                               double* dist = NULL)const override;
+    RS_Vector getNearestMiddle(const RS_Vector& coord,
+                               double* dist = nullptr,
+                               int middlePoints = 1 ) const override;
+    RS_Vector getNearestDist(double distance,
+                             const RS_Vector& coord,
+                             double* dist = NULL)const override;
+    RS_Vector getNearestDist(double distance,
+                             bool startp)const override;
+    RS_Vector getNearestOrthTan(const RS_Vector& coord,
+                                const RS_Line& normal,
+                                bool onEntity = false) const override;
 
     RS_Vector dualLineTangentPoint(const RS_Vector& line) const override;
 
-	bool offset(const RS_Vector& coord, const double& distance) override;
-	RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;//find the tangential points seeing from given point
-	RS_Vector getTangentDirection(const RS_Vector& point)const override;
-	void move(const RS_Vector& offset) override;
-	void rotate(const RS_Vector& center, const double& angle) override;
-	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
-	void scale(const RS_Vector& center, const RS_Vector& factor) override;
-	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    bool offset(const RS_Vector& coord, const double& distance) override;
+    RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;//find the tangential points seeing from given point
+    RS_Vector getTangentDirection(const RS_Vector& point)const override;
+    void move(const RS_Vector& offset) override;
+    void rotate(const RS_Vector& center, const double& angle) override;
+    void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+    void scale(const RS_Vector& center, const RS_Vector& factor) override;
+    void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
     /**
      * @description:    Implementation of the Shear/Skew the entity
@@ -165,10 +165,10 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
      * @param[in] double - k the skew/shear parameter
      */
     RS_Entity& shear(double k) override;
-	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
+    void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     /** whether the entity's bounding box intersects with visible portion of graphic view */
-	bool isVisibleInWindow(RS_GraphicView* view) const override;
-	void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+    bool isVisibleInWindow(RS_GraphicView* view) const override;
+    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
     /** return the equation of the entity
 for quadratic,
 
@@ -178,22 +178,23 @@ m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
 for linear:
 m0 x + m1 y + m2 =0
 **/
-	LC_Quadratic getQuadratic() const override;
-    
+    LC_Quadratic getQuadratic() const override;
+
 /**
 * @brief Returns area of full circle
 * Note: Circular arcs are handled separately by RS_Arc (areaLIneIntegral) 
 * However, full ellipses and ellipse arcs are handled by RS_Ellipse
 * @return \pi r^2
 */
-	double areaLineIntegral() const override;
+    double areaLineIntegral() const override;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Circle& a);
 
-	void calculateBorders() override;
+    void calculateBorders() override;
 
 protected:
     RS_CircleData data;
+    void updateLength() override;
 };
 
 #endif

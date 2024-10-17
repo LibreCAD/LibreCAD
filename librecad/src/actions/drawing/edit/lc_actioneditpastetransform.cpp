@@ -30,6 +30,7 @@
 #include "rs_graphicview.h"
 #include "rs_clipboard.h"
 #include "rs_units.h"
+#include "rs_debug.h"
 
 LC_ActionEditPasteTransform::LC_ActionEditPasteTransform(RS_EntityContainer &container, RS_GraphicView &graphicView)
     :RS_PreviewActionInterface("PasteTransform",container, graphicView),
@@ -75,6 +76,8 @@ void LC_ActionEditPasteTransform::trigger() {
             const RS_PasteData &pasteData = RS_PasteData(currentPoint, data->factor , data->angle,
                                                          false, "");
             m.paste(pasteData);
+            // fixme - some progress is needed there, ++++ speed improvement for paste operation!!
+            LC_ERR << "Paste: " << x+y;
         }
     }
 

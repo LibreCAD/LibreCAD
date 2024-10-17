@@ -25,9 +25,6 @@
         <item row="2" column="1">
          <widget class="QLineEdit" name="leScale"/>
         </item>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="leAngle"/>
-        </item>
         <item row="3" column="0">
          <widget class="QLabel" name="lAngle">
           <property name="text">
@@ -48,8 +45,8 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0" colspan="2">
-         <widget class="QG_PatternBox" name="cbPattern" native="true"/>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="leAngle"/>
         </item>
         <item row="0" column="0" colspan="2">
          <widget class="QCheckBox" name="cbSolid">
@@ -57,6 +54,22 @@
            <string>Solid Fill</string>
           </property>
          </widget>
+        </item>
+        <item row="1" column="0" colspan="2">
+         <widget class="QG_PatternBox" name="cbPattern" native="true"/>
+        </item>
+        <item row="4" column="1">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>

@@ -82,7 +82,8 @@ namespace RS2 {
         FlagSelected2   = 1<<13,
         /** Entity is highlighted temporarily (as a user action feedback) */
         FlagHighlighted = 1<<14,
-        FlagTransparent = 1<<15
+        FlagTransparent = 1<<15,
+        FlagHatchChild = 1<<16
     };
 
     /**
@@ -743,6 +744,7 @@ namespace RS2 {
         LineTypeUnchanged=26,      /**< Line type defined by block not entity */
         LineSelected=27      /**< Line type for selected */
     };
+
 
     /**
      * Enum of line widths:

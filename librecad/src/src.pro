@@ -10,7 +10,7 @@ DISABLE_POSTSCRIPT = false
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-LC_VERSION="2.2.2-alpha"
+LC_VERSION="2.2.2.3-alpha"
 LC_PRERELEASE = "true";
 
 VERSION=$${LC_VERSION}
@@ -229,6 +229,7 @@ HEADERS += \
     lib/actions/rs_snapper.h \
     lib/creation/rs_creation.h \
     lib/debug/rs_debug.h \
+    lib/engine/lc_cachedlengthentity.h \
     lib/engine/lc_crosshair.h \
     lib/engine/lc_looputils.h \
     lib/engine/lc_parabola.h \
@@ -301,6 +302,8 @@ HEADERS += \
     lib/filters/rs_filterjww.h \
     lib/filters/rs_filterlff.h \
     lib/filters/rs_filterinterface.h \
+    #lib/gui/no_used/rs_painterold.h \
+    #lib/gui/no_used/rs_painterqtold.h \
     ui/dialogs/main/lc_dlgabout.h \
     ui/dialogs/main/lc_dlgnewversionavailable.h \
     ui/main/lc_releasechecker.h \
@@ -318,8 +321,7 @@ HEADERS += \
     lib/gui/rs_grid.h \
     lib/gui/rs_linetypepattern.h \
     lib/gui/rs_mainwindowinterface.h \
-    lib/gui/rs_painter.h \
-    lib/gui/rs_painterqt.h \
+    lib/gui/rs_painter.h \    
     lib/gui/rs_staticgraphicview.h \
     lib/information/rs_locale.h \
     lib/information/rs_information.h \
@@ -358,6 +360,7 @@ SOURCES += \
     lib/actions/rs_snapper.cpp \
     lib/creation/rs_creation.cpp \
     lib/debug/rs_debug.cpp \
+    lib/engine/lc_cachedlengthentity.cpp \
     lib/engine/lc_crosshair.cpp \
     lib/engine/lc_looputils.cpp \
     lib/engine/lc_parabola.cpp \
@@ -419,20 +422,21 @@ SOURCES += \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \
     lib/filters/rs_filterlff.cpp \
+    #lib/gui/no_used/rs_painterold.cpp \
+   # lib/gui/no_used/rs_painterqtold.cpp \
     ui/dialogs/main/lc_dlgabout.cpp \
     ui/dialogs/main/lc_dlgnewversionavailable.cpp \
     ui/main/lc_releasechecker.cpp \
     lib/gui/grid/lc_gridsystem.cpp \
     lib/gui/grid/lc_isometricgrid.cpp \
-    lib/gui/grid/lc_lattice.cpp \    
+    lib/gui/grid/lc_lattice.cpp \
     lib/gui/grid/lc_orthogonalgrid.cpp \
     lib/gui/rs_dialogfactory.cpp \
     lib/gui/rs_eventhandler.cpp \
     lib/gui/rs_graphicview.cpp \
     lib/gui/rs_grid.cpp \
     lib/gui/rs_linetypepattern.cpp \
-    lib/gui/rs_painter.cpp \
-    lib/gui/rs_painterqt.cpp \
+    lib/gui/rs_painter.cpp \    
     lib/gui/rs_staticgraphicview.cpp \
     lib/information/rs_locale.cpp \
     lib/information/rs_information.cpp \

@@ -31,7 +31,8 @@
 #include "rs_settings.h"
 
 LC_TagInfo::LC_TagInfo(int major, int minor, int revision, int bugfix, const QString &label, const QString &tagName):major(major), minor(minor), revision(
-    revision), bugfix(bugfix), label(label), tagName(tagName) {}
+    revision), bugfix(bugfix), label(label), tagName(tagName) {
+}
 
 
 QString LC_TagInfo::getLabel() const {
@@ -71,6 +72,7 @@ bool LC_TagInfo::isBefore(const LC_TagInfo& other) const{
 
 LC_ReleaseChecker::LC_ReleaseChecker(QString ownTagName, bool ownPreRelease):
     ownReleaseInfo(getOwnReleaseInfo(ownTagName, ownPreRelease)){
+    connect(&m_WebCtrl, &QNetworkAccessManager::finished, this, &LC_ReleaseChecker::infoReceived);
 }
 
 LC_ReleaseInfo LC_ReleaseChecker::getOwnReleaseInfo(QString tagName, bool preRelease) const{
@@ -85,7 +87,6 @@ LC_ReleaseInfo LC_ReleaseChecker::getOwnReleaseInfo(QString tagName, bool preRel
 void LC_ReleaseChecker::checkForNewVersion(bool forceCheck) {
   #ifndef TEST_JSON_PARSING
     emitSignalIfNoNewVersion = forceCheck;
-    connect(&m_WebCtrl, &QNetworkAccessManager::finished, this, &LC_ReleaseChecker::infoReceived);
     QUrl gitHubReleasesUrl("https://api.github.com/repos/LibreCAD/LibreCAD/releases");
     QNetworkRequest request(gitHubReleasesUrl);
     m_WebCtrl.get(request);
@@ -199,7 +200,7 @@ void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent) {
 
                 LC_TagInfo tagInfo = parseTagInfo(tagName);
 
-                LC_ERR << tagName << " as  | " << tagInfo.major << "." << tagInfo.minor << "." << tagInfo.revision << "." << tagInfo.bugfix<< "-" << tagInfo.label;
+//                LC_ERR << tagName << " as  | " << tagInfo.major << "." << tagInfo.minor << "." << tagInfo.revision << "." << tagInfo.bugfix<< "-" << tagInfo.label;
 
                 LC_ReleaseInfo releaseInfo = LC_ReleaseInfo(publishedAt, draft, prerelease, htmlUrl, body);
                 releaseInfo.setTagInfo(tagInfo);
@@ -208,18 +209,18 @@ void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent) {
                     // also, if needed, skip pre-release builds
                     if (prerelease){
                         if (ignorePreReleases) {
-                            LC_ERR << "Skipped as ignored pre-release";
+//                            LC_ERR << "Skipped as ignored pre-release";
                             continue;
                         }
                         else if (tagInfo.isBefore(ignoredPreRelease)){
-                            LC_ERR << "Skipped as before current";
+//                            LC_ERR << "Skipped as before current";
                             continue;
                         }
                         preReleases << releaseInfo;
                     }
                     else{
                         if (tagInfo.isBefore(ignoredRelease)){
-                            LC_ERR << "Skipped as before ignored";
+//                            LC_ERR << "Skipped as before ignored";
                             continue;
                         }
                         else{
@@ -254,7 +255,7 @@ void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent) {
 //            LC_ERR << "=======";
             if (availablePreReleases > 0){
                 sortReleasesInfo(preReleases);
-                LC_ERR << availablePreReleases;
+//                LC_ERR << availablePreReleases;
                 LC_ReleaseInfo &info = preReleases.last();
                 if (!info.getTagInfo().isSameVersion(ignoredPreRelease) && !info.getTagInfo().isSameVersion(ownTagInfo)) {
                     latestPreRelease = info;

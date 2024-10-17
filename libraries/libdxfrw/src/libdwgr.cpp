@@ -219,6 +219,9 @@ std::unique_ptr<dwgReader> dwgR::createReaderForVersion(DRW::Version version, st
 bool dwgR::openFile(std::ifstream *filestr){
     bool isOk = false;
     DRW_DBG("dwgR::read 1\n");
+   /* enum { BufferSize = 16184 };
+    char _buffer[BufferSize];
+    filestr->rdbuf()->pubsetbuf(_buffer, BufferSize);*/
     filestr->open (fileName.c_str(), std::ios_base::in | std::ios::binary);
     if (!filestr->is_open() || !filestr->good() ){
         error = DRW::BAD_OPEN;

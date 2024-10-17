@@ -26,7 +26,6 @@
 
 #ifndef QG_RECENTFILES_H
 #define QG_RECENTFILES_H
-
 #include <QObject>
 #include <QtContainerFwd>
 
@@ -39,10 +38,10 @@ class QWidget;
  */
 class QG_RecentFiles: public QObject
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
-	QG_RecentFiles(QObject* parent, int number);
+    QG_RecentFiles(QObject* parent, int number);
     ~QG_RecentFiles() override;
 
     void add(const QString& filename);
@@ -51,24 +50,24 @@ public:
      * @return complete path and name of the file stored in the
      * list at index i
      */
-	QString get(int i) const;
+    QString get(int i) const;
 
     /** @return number of files currently stored in the list */
-	int count() const;
+    int count() const;
 
     /** @return number of files that can be stored in the list at maximum */
-	int getNumber() const;
+    int getNumber() const;
 
-	int indexOf(const QString& filename) const;
+    int indexOf(const QString& filename) const;
     bool contains(const QString& filename) const
     {
         return indexOf(filename) >= 0;
     }
     void addFiles(QMenu* file_menu);
-	void updateRecentFilesMenu();
+    void updateRecentFilesMenu();
     bool hasMenuEntries() const
     {
-        return recentFilesAction.size() > 0;
+        return !m_recentFilesActions.empty();
     }
 
 private:
@@ -78,9 +77,9 @@ private:
      */
     void saveToSettings() const;
 
-	int const number;
-	QStringList files;
-	QList<QAction*> recentFilesAction;
+    int const m_maxEntries;
+    QStringList m_files;
+    QList<QAction*> m_recentFilesActions;
 };
 
 #endif

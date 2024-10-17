@@ -28,6 +28,7 @@
 
 #include "rs_actionzoompan.h"
 #include "rs_graphicview.h"
+#include "rs_debug.h"
 
 RS_ActionZoomPan::RS_ActionZoomPan(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
@@ -39,7 +40,7 @@ void RS_ActionZoomPan::init(int status) {
     snapMode.restriction = RS2::RestrictNothing;
     x1 = y1 = x2 = y2 = -1;
     setStatus(SetPanStart);
-    updateMouseButtonHints();
+//    updateMouseButtonHints();
 }
 
 void RS_ActionZoomPan::trigger() {

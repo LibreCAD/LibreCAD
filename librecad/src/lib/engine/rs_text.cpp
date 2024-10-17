@@ -34,6 +34,7 @@
 #include "rs_math.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
+#include "rs_line.h"
 #include "rs_painter.h"
 
 RS_TextData::RS_TextData(const RS_Vector& _insertionPoint,
@@ -515,20 +516,22 @@ std::ostream& operator << (std::ostream& os, const RS_Text& p) {
     return os;
 }
 
+RS_Entity *RS_Text::cloneProxy() const {
+    return new RS_Line(nullptr, baselineStartPoint, baselineEndPoint);
+}
+
 void RS_Text::drawDraft(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset) {
 //    painter->drawRect(view->toGui(getMin()), view->toGui(getMax()));
     painter->drawLine(view->toGui(baselineStartPoint), view->toGui(baselineEndPoint));
 }
 
 void RS_Text::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset){
-    if (!(painter && view)) {
-        return;
-    }
-
+//    if (!(painter && view)) {
+//        return;
+//    }
     if (!view->isPrintPreview() && !view->isPrinting()){
         if (view->isPanning() || view->toGuiDY(getHeight()) < view->getMinRenderableTextHeightInPx()){
             drawDraft(painter, view, patternOffset);
-//            painter->drawRect(view->toGui(getMin()), view->toGui(getMax()));
             return;
         }
     }

@@ -244,6 +244,8 @@ public:
 
     void drawDraft(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
 
+    RS_Entity *cloneProxy() const override;
+
 protected:
     RS_TextData data;
 

@@ -139,6 +139,8 @@ public:
         double &patternOffset) override;
     friend std::ostream &operator<<(std::ostream &os, const RS_Polyline &l);
 
+    void drawAsChild(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
+
 protected:
     std::unique_ptr<RS_Entity> createVertex(
         const RS_Vector &v,

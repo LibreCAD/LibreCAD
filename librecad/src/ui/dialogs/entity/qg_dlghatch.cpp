@@ -27,9 +27,12 @@
 
 #include "rs_settings.h"
 #include "rs_hatch.h"
+#include "rs_line.h"
+#include "rs_polyline.h"
 #include "rs_patternlist.h"
 #include "rs_pattern.h"
 #include "rs_math.h"
+
 
 /*
  *  Constructs a QG_DlgHatch as a child of 'parent', with the
@@ -59,6 +62,8 @@ void QG_DlgHatch::init() {
     gvPreview->setContainer(preview.get());
     gvPreview->setBorders(15,15,15,15);
     gvPreview->addScrollbars();
+    gvPreview->loadSettings();
+//    gvPreview->setHasNoGrid(false);
     cbPattern->init();
 }
 
@@ -75,20 +80,19 @@ void QG_DlgHatch::showEvent ( QShowEvent * e) {
 void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
     hatch = &h;
     this->isNew = isNew;
-    // fixme - change to bool option
-    QString enablePrev = LC_GET_ONE_STR("Draw","HatchPreview", "0");
+    bool enablePrev = LC_GET_ONE_BOOL("Draw","HatchPreview", false);
 
-    cbEnablePreview->setChecked(enablePrev=="1");
+    cbEnablePreview->setChecked(enablePrev);
 
     // read defaults from config file:
     if (isNew) {
         LC_GROUP_GUARD("Draw");
         {
-            QString solid = LC_GET_STR("HatchSolid", "0");
+            bool solid = LC_GET_BOOL("HatchSolid", false);
             QString pat = LC_GET_STR("HatchPattern", "ANSI31");
             QString scale = LC_GET_STR("HatchScale", "1.0");
             QString angle = LC_GET_STR("HatchAngle", "0.0");
-            cbSolid->setChecked(solid=="1");
+            cbSolid->setChecked(solid);
             setPattern(pat);
             leScale->setText(scale);
             leAngle->setText(angle);
@@ -114,8 +118,10 @@ void QG_DlgHatch::updateHatch() {
         hatch->setPattern(cbPattern->currentText());
         hatch->setScale(RS_Math::eval(leScale->text()));
         hatch->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
-        if (!isNew)
+        if (!isNew) {
             showArea();
+        }
+        saveSettings();
     }
 }
 
@@ -171,8 +177,10 @@ void QG_DlgHatch::updatePreview() {
     prevHatch->setPen(hatch->getPen());
 
     auto* loop = new RS_EntityContainer(prevHatch);
-    loop->setPen(RS_Pen(RS2::FlagInvalid));
-    loop->addRectangle({0., 0.}, {prevSize,prevSize});
+//    loop->setPen(RS_Pen(RS2::FlagInvalid));
+    const RS_Pen &pen = RS_Pen(RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer);
+    loop->setPen(pen);
+    addRectangle(pen, {0., 0.}, {prevSize,prevSize}, loop);
     prevHatch->addEntity(loop);
     preview->addEntity(prevHatch);
     if (!isSolid) {
@@ -180,6 +188,28 @@ void QG_DlgHatch::updatePreview() {
     }
 
     gvPreview->zoomAuto();
+}
+
+void QG_DlgHatch::addRectangle(RS_Pen pen, RS_Vector const &v0, RS_Vector const &v1, RS_EntityContainer* container){
+   /* RS_Polyline* polyline = new RS_Polyline(container);
+    polyline->setPen(pen);
+
+    polyline->addVertex(v0);
+    polyline->addVertex({v1.x, v0.y});
+    polyline->addVertex(v1);
+    polyline->addVertex({v0.x, v1.y});
+    polyline->addVertex(v0);
+//    polyline->setClosed(true);
+    container->addEntity(polyline);*/
+
+
+    container->addEntity(new RS_Line{container, v0, {v1.x, v0.y}});
+    container->addEntity(new RS_Line{container, {v1.x, v0.y}, v1});
+    container->addEntity(new RS_Line{container, v1, {v0.x, v1.y}});
+    container->addEntity(new RS_Line{container, {v0.x, v1.y}, v0});
+    for (auto e: container->getEntityList()){
+        e->setPen(pen);
+    }
 }
 
 void QG_DlgHatch::saveSettings(){
