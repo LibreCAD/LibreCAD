@@ -15,12 +15,6 @@ jobs:
           fetch-depth: 0
           ref: 2.2.1
 
-      - name: install snap
-        uses: samuelmeuli/action-snapcraft@v2
-        with:
-          name: snap
-          path: ${{ steps.snapcraft.outputs.snap }}
-
       - name: Install Qt5
         uses: jurplel/install-qt-action@v3
         with:
@@ -70,10 +64,10 @@ jobs:
           ./CI/build-appimg.sh
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: assets
-          path: LibreCAD*.AppImage
+          path: ${{ github.workspace }}/LibreCAD**.AppImage
+          overwrite: true
           retention-days: 2
 
   BuildSnap:
@@ -87,9 +81,6 @@ jobs:
 
       - name: install snap
         uses: samuelmeuli/action-snapcraft@v2
-        with:
-          name: snap
-          path: ${{ steps.snapcraft.outputs.snap }}
           
       - name: Create snapcraft
         run: |
@@ -99,10 +90,11 @@ jobs:
           bash ./scripts/createSnap.sh
 
       - name: Uploading snap
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@v4
         with:
           path: ${{ github.workspace }}/librecad**snap
-          name: LibreCAD.snap
+          overwrite: true
+          retention-days: 2
 
   BuildMacOS:
     runs-on: macos-13
@@ -112,12 +104,6 @@ jobs:
         with:
           fetch-depth: 0
           ref: 2.2.1
-          
-      - name: qt50
-        run: |
-          pip install -U pip
-          pip install aqtinstall
-          aqt list-qt mac desktop --arch 5.15.2
           
       - name: Install Qt5
         uses: jurplel/install-qt-action@v3
@@ -135,7 +121,7 @@ jobs:
       - name: Install dependencies
         run: |
           rm -f /usr/local/bin/2to3
-          brew install boost freetype
+          brew install boost
           
       # XProtect can cause random failures if it decides that the DMG we create
       # during the packaging phase is malware.
@@ -152,10 +138,10 @@ jobs:
           mv LibreCAD.dmg LibreCAD-`git describe --always`.dmg
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: assets
-          path: LibreCAD*.dmg
+          path: ${{ github.workspace }}/LibreCAD*.dmg
+          overwrite: true
           retention-days: 2
 
   BuildWindows:
@@ -242,10 +228,10 @@ jobs:
         shell: bash
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: assets
-          path: LibreCAD*.exe
+          path: ${{ github.workspace }}/LibreCAD**exe
+          overwrite: true
           retention-days: 2
 
   BuildWindows64:
@@ -332,10 +318,10 @@ jobs:
         shell: bash
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: assets
-          path: LibreCAD*.exe
+          path: ${{ github.workspace }}/LibreCAD**exe
+          overwrite: true
           retention-days: 2
 
   UpdateAssets:
