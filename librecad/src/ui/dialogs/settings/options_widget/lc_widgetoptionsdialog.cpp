@@ -24,8 +24,10 @@
 
 #include "lc_widgetoptionsdialog.h"
 #include "rs_settings.h"
+#include "qc_applicationwindow.h"
 #include <QFileDialog>
 #include <QStyleFactory>
+#include <QStatusBar>
 
 LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
     : LC_Dialog(parent, "WidgetOptions"){
@@ -88,52 +90,51 @@ LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
 void LC_WidgetOptionsDialog::accept() {
     LC_GROUP_GUARD("Widgets");
     {
-        // FIXME _ RESTORE!!@!
-//        bool allow_style = style_checkbox->isChecked();
-//        LC_SET("AllowStyle", allow_style);
-//        if (allow_style) {
-//            QString style = style_combobox->currentText();
-//            LC_SET("Style", style);
-//            QApplication::setStyle(QStyleFactory::create(style));
-//        }
-//
-//        QString sheet_path = stylesheet_field->text();
-//        LC_SET("StyleSheet", sheet_path);
-//        if (loadStyleSheet(sheet_path)) {
-//           style_sheet_path = sheet_path;
-//         }
-//
-//        bool allow_theme = theme_checkbox->isChecked();
-//        LC_SET("AllowTheme", allow_theme);
-//
-//        int allow_toolbar_icon_size = toolbar_icon_size_checkbox->isChecked();
-//        LC_SET("AllowToolbarIconSize", allow_toolbar_icon_size);
-//        if (allow_toolbar_icon_size) {
-//            int toolbar_icon_size = toolbar_icon_size_spinbox->value();
-//            LC_SET("ToolbarIconSize", toolbar_icon_size);
-//            setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
-//        }
-//
-//        int allow_statusbar_fontsize = statusbar_fontsize_checkbox->isChecked();
-//        LC_SET("AllowStatusbarFontSize", allow_statusbar_fontsize);
-//        if (allow_statusbar_fontsize) {
-//            int statusbar_fontsize = statusbar_fontsize_spinbox->value();
-//            LC_SET("StatusbarFontSize", statusbar_fontsize);
-//            QFont font;
-//            font.setPointSize(statusbar_fontsize);
-//            statusBar()->setFont(font);
-//        }
-//
-//        int allow_statusbar_height = statusbar_height_checkbox->isChecked();
-//        LC_SET("AllowStatusbarHeight", allow_statusbar_height);
-//        if (allow_statusbar_height) {
-//            int statusbar_height = statusbar_height_spinbox->value();
-//            LC_SET("StatusbarHeight", statusbar_height);
-//            statusBar()->setMinimumHeight(statusbar_height);
-//        }
-//
-//        int columnCount = left_toobar_columns_spinbox->value();
-//        LC_SET("LeftToolbarColumnsCount", columnCount);
+        bool allow_style = style_checkbox->isChecked();
+        LC_SET("AllowStyle", allow_style);
+        if (allow_style) {
+            QString style = style_combobox->currentText();
+            LC_SET("Style", style);
+            QApplication::setStyle(QStyleFactory::create(style));
+        }
+
+        QString sheet_path = stylesheet_field->text();
+        LC_SET("StyleSheet", sheet_path);
+        if (QC_ApplicationWindow::loadStyleSheet(sheet_path)) {
+           // nothing to do
+        }
+
+        bool allow_theme = theme_checkbox->isChecked();
+        LC_SET("AllowTheme", allow_theme);
+        auto& appWindow = QC_ApplicationWindow::getAppWindow();
+        int allow_toolbar_icon_size = toolbar_icon_size_checkbox->isChecked();
+        LC_SET("AllowToolbarIconSize", allow_toolbar_icon_size);
+        if (allow_toolbar_icon_size) {
+            int toolbar_icon_size = toolbar_icon_size_spinbox->value();
+            LC_SET("ToolbarIconSize", toolbar_icon_size);
+            appWindow->setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
+        }
+
+        int allow_statusbar_fontsize = statusbar_fontsize_checkbox->isChecked();
+        LC_SET("AllowStatusbarFontSize", allow_statusbar_fontsize);
+        if (allow_statusbar_fontsize) {
+            int statusbar_fontsize = statusbar_fontsize_spinbox->value();
+            LC_SET("StatusbarFontSize", statusbar_fontsize);
+            QFont font;
+            font.setPointSize(statusbar_fontsize);
+            appWindow->statusBar()->setFont(font);
+        }
+
+        int allow_statusbar_height = statusbar_height_checkbox->isChecked();
+        LC_SET("AllowStatusbarHeight", allow_statusbar_height);
+        if (allow_statusbar_height) {
+            int statusbar_height = statusbar_height_spinbox->value();
+            LC_SET("StatusbarHeight", statusbar_height);
+            appWindow->statusBar()->setMinimumHeight(statusbar_height);
+        }
+
+        int columnCount = left_toobar_columns_spinbox->value();
+        LC_SET("LeftToolbarColumnsCount", columnCount);
     }
     LC_Dialog::accept();
 }

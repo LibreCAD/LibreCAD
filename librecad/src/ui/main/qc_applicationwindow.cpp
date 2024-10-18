@@ -178,20 +178,20 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     mdiAreaCAD = central->getMdiArea();
     mdiAreaCAD->setDocumentMode(true);
 
-	LC_GROUP("WindowOptions");
-	setTabLayout(static_cast<RS2::TabShape>(LC_GET_INT("TabShape", RS2::Triangular)),
-		static_cast<RS2::TabPosition>(LC_GET_INT("TabPosition", RS2::West)));
-	LC_GROUP_END();
+    LC_GROUP("WindowOptions");
+    setTabLayout(static_cast<RS2::TabShape>(LC_GET_INT("TabShape", RS2::Triangular)),
+                 static_cast<RS2::TabPosition>(LC_GET_INT("TabPosition", RS2::West)));
+    LC_GROUP_END();
 
     settings.beginGroup("Startup");
-	if (settings.value("TabMode", 0).toBool()) {
-		mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
-		QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar*>();
-		QTabBar *tabBar = tabBarList.at(0);
-		if (tabBar)
-			tabBar->setExpanding(false);
-	}
-        
+    if (settings.value("TabMode", 0).toBool()) {
+        mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
+        QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar*>();
+        QTabBar *tabBar = tabBarList.at(0);
+        if (tabBar)
+            tabBar->setExpanding(false);
+    }
+
     bool enable_left_sidebar = settings.value("EnableLeftSidebar", 1).toBool();
     bool enable_cad_toolbars = settings.value("EnableCADToolbars", 1).toBool();
     settings.endGroup();
@@ -204,15 +204,17 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     int icon_size = custom_size ? settings.value("ToolbarIconSize", 24).toInt() : 24;
     settings.endGroup();
 
-    if (custom_size)
+    if (custom_size) {
         setIconSize(QSize(icon_size, icon_size));
+    }
 
     if (enable_left_sidebar){
         int leftSidebarColumnsCount = settings.value("Widgets/LeftToolbarColumnsCount", 5).toInt();
         widget_factory.createLeftSidebar(leftSidebarColumnsCount, icon_size);
     }
-    if (enable_cad_toolbars)
+    if (enable_cad_toolbars) {
         widget_factory.createCADToolbars();
+    }
     widget_factory.createRightSidebar(actionHandler);
     widget_factory.createCategoriesToolbar();
     widget_factory.createStandardToolbars(actionHandler);
