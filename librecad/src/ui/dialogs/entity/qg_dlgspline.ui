@@ -56,7 +56,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QG_LayerBox" name="cbLayer" native="true"/>
+          <widget class="QG_LayerBox" name="cbLayer" native="true">
+           <property name="toolTip">
+            <string>Layer of spline</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -128,6 +132,9 @@
         </item>
         <item row="1" column="0" colspan="2">
          <widget class="QCheckBox" name="cbClosed">
+          <property name="toolTip">
+           <string>Defines whether spline defines closed contour</string>
+          </property>
           <property name="text">
            <string>Closed</string>
           </property>
@@ -140,6 +147,9 @@
             <width>64</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Degree used to approximate spline</string>
           </property>
           <item>
            <property name="text">

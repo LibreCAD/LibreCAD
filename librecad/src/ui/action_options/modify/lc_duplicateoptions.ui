@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>546</width>
+    <width>545</width>
     <height>24</height>
    </rect>
   </property>
@@ -95,17 +95,17 @@
      </property>
      <item>
       <property name="text">
-       <string>Active</string>
+       <string comment="pen">Active</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Original</string>
+       <string comment="pen">Original</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Original Resolved</string>
+       <string comment="pen">Original Resolved</string>
       </property>
      </item>
     </widget>
@@ -117,12 +117,12 @@
      </property>
      <item>
       <property name="text">
-       <string>Active</string>
+       <string comment="layer">Active</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Original</string>
+       <string comment="layer">Original</string>
       </property>
      </item>
     </widget>

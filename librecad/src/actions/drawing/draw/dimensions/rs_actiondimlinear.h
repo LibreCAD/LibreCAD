@@ -27,8 +27,6 @@
 #ifndef RS_ACTIONDIMLINEAR_H
 #define RS_ACTIONDIMLINEAR_H
 
-#include "rs_actiondimension.h"
-#include "rs_constructionline.h"
 #include "lc_actiondimlinearbase.h"
 
 struct RS_DimLinearData;

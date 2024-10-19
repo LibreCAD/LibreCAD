@@ -57,7 +57,7 @@
    <item>
     <widget class="QLabel" name="lDist">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -113,6 +113,12 @@
    </item>
    <item>
     <widget class="QCheckBox" name="cbSymmetric">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="toolTip">
       <string>If checked, trim/extension is performed for both sides of line.</string>
      </property>

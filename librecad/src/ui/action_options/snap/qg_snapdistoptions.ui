@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>138</width>
+    <width>150</width>
     <height>24</height>
    </rect>
   </property>
@@ -55,7 +55,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="leDist"/>
+    <widget class="QLineEdit" name="leDist">
+     <property name="toolTip">
+      <string>Distance of snap point from initially resolved snap point</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

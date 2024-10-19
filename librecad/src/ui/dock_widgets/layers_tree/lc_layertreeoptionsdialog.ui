@@ -29,7 +29,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tabNaming">
       <property name="toolTip">
@@ -272,6 +272,9 @@
        </item>
        <item row="2" column="1">
         <widget class="QSpinBox" name="sbIndentSize">
+         <property name="toolTip">
+          <string>Size of the indent in characters to indent name of child layer from parent ones</string>
+         </property>
          <property name="suffix">
           <string/>
          </property>
@@ -411,7 +414,7 @@
           </sizepolicy>
          </property>
          <property name="toolTip">
-          <string>Color selection</string>
+          <string>Click to select color</string>
          </property>
          <property name="text">
           <string/>
@@ -487,7 +490,7 @@
           </sizepolicy>
          </property>
          <property name="toolTip">
-          <string>Color selection</string>
+          <string>Click to select color</string>
          </property>
          <property name="text">
           <string/>
@@ -514,7 +517,7 @@
           </sizepolicy>
          </property>
          <property name="toolTip">
-          <string>Color selection</string>
+          <string>Click to select color</string>
          </property>
          <property name="text">
           <string/>
@@ -545,7 +548,7 @@
        <item row="3" column="2">
         <widget class="QPushButton" name="pbActiveLayerBgColor">
          <property name="toolTip">
-          <string>Color selection</string>
+          <string>Click to select color</string>
          </property>
          <property name="text">
           <string/>
@@ -559,7 +562,7 @@
        <item row="2" column="2">
         <widget class="QPushButton" name="pbSelectedItemsBgColor">
          <property name="toolTip">
-          <string>Color selection</string>
+          <string>Click to select color</string>
          </property>
          <property name="text">
           <string/>

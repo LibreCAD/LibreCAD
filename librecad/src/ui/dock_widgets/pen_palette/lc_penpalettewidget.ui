@@ -293,13 +293,20 @@
          <height>0</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string/>
+       </property>
        <property name="text">
         <string>Type:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QG_LineTypeBox" name="cbType" native="true"/>
+      <widget class="QG_LineTypeBox" name="cbType" native="true">
+       <property name="toolTip">
+        <string>Line type</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="label">
@@ -321,7 +328,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QG_WidthBox" name="cbWidth"/>
+      <widget class="QG_WidthBox" name="cbWidth">
+       <property name="toolTip">
+        <string>Width of line</string>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer_2">
@@ -510,6 +521,11 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>QG_LineTypeBox</class>
+   <extends>QWidget</extends>
+   <header>qg_linetypebox.h</header>
+  </customwidget>
+  <customwidget>
    <class>QG_ColorBox</class>
    <extends>QComboBox</extends>
    <header>../ui/components/comboboxes/qg_colorbox.h</header>
@@ -519,18 +535,13 @@
    <extends>QComboBox</extends>
    <header>../ui/components/comboboxes/qg_widthbox.h</header>
   </customwidget>
-  <customwidget>
-   <class>QG_LineTypeBox</class>
-   <extends>QWidget</extends>
-   <header>qg_linetypebox.h</header>
-  </customwidget>
  </customwidgets>
  <resources>
   <include location="../../../../res/extui/extui.qrc"/>
-  <include location="../../../../res/icons/icons.qrc"/>
-  <include location="../../../../res/icons/icons.qrc"/>
   <include location="../../../../res/ui/ui.qrc"/>
   <include location="../../../../res/actions/actions.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>
 </ui>

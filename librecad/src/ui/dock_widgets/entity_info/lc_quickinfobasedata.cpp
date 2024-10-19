@@ -72,10 +72,10 @@ QString LC_QuickInfoBaseData::formatLinear(double length){
  * @param value value for the link
  * @return original string to append
  */
-QString LC_QuickInfoBaseData::createLink(QString & data, const QString &path, int index, const char* title, QString & value){
+QString LC_QuickInfoBaseData::createLink(QString & data, const QString &path, int index, QString title, QString & value){
     QString idx;
     idx.setNum(index);
-    data.append("<a href='").append("/").append(path).append("?").append(idx).append("' title='").append(tr(title)).append("'").append(">");
+    data.append("<a href='").append("/").append(path).append("?").append(idx).append("' title='").append(title).append("'").append(">");
     data.append(value);
     data.append("</a>");
     return data;
@@ -105,6 +105,3 @@ void LC_QuickInfoBaseData::setDocumentAndView(RS_Document *doc, QG_GraphicView *
     document = doc;
     graphicView = view;
 }
-
-
-

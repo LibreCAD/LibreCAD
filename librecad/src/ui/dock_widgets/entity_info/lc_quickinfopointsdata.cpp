@@ -199,9 +199,9 @@ QString LC_QuickInfoPointsData::generateView(bool showDistanceAndAngle, bool for
             case COORD_RELATIVE_TO_PREVIOUS: {
                 QString label = tr("First point").append(": ");
                 QString value = formatVector(firstPoint->data);
-                createLink(data, "zero", 0, "Set Relative Zero", label);
+                createLink(data, "zero", 0, tr("Set Relative Zero"), label);
                 data.append(" <b>");
-                createLink(data, "coord", 0, "To Cmd", value);
+                createLink(data, "coord", 0, tr("To Cmd"), value);
                 data.append(" </b>");
                 data.append("<hr>");
                 break;
@@ -216,9 +216,9 @@ QString LC_QuickInfoPointsData::generateView(bool showDistanceAndAngle, bool for
         RS_Vector prevPoint = firstPoint->data;
         for (int i = 0; i < pointsCount; i++){
             PointInfo* pointInfo = collectedPoints.at(i);
-            createLink(data, "zero", i, "Set Relative Zero", pointInfo->label);
+            createLink(data, "zero", i, tr("Set Relative Zero"), pointInfo->label);
             data.append(" | &nbsp;");
-            createLink(data, "coord", i, "To Cmd", pointInfo->value);
+            createLink(data, "coord", i, tr("To Cmd"), pointInfo->value);
             if (showDistanceAndAngle){ // show them based on options
                 data.append(" | &nbsp;");
                 data.append(pointInfo->distance).append(", &lt; ").append(pointInfo->angle);

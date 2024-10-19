@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LIBRECAD_LC_ACTIONDIMLINEARBASE_H
 #define LIBRECAD_LC_ACTIONDIMLINEARBASE_H
 
-#include "rs_constructionline.h"
 #include "rs_actiondimension.h"
 
 class LC_ActionDimLinearBase:public RS_ActionDimension {

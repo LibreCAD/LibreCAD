@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>316</width>
-    <height>346</height>
+    <height>368</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -164,6 +164,9 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string>If enabled, specific style of UI may be applied</string>
            </property>
            <property name="text">
             <string>Style</string>

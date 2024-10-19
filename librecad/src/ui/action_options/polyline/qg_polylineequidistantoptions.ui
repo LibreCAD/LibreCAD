@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>180</width>
+    <width>221</width>
     <height>22</height>
    </rect>
   </property>
@@ -18,36 +18,33 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>120</width>
+    <width>0</width>
     <height>22</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>180</width>
+    <width>32767</width>
     <height>32767</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Line Relative Angle Options</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
-   <property name="spacing">
-    <number>6</number>
-   </property>
+  <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="rightMargin">
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
-   <item>
+   <item row="0" column="0">
     <widget class="QLabel" name="lLength">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -66,17 +63,17 @@
      </property>
     </widget>
    </item>
-   <item>
+   <item row="0" column="1">
     <widget class="QLineEdit" name="leDist">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="maximumSize">
       <size>
-       <width>40</width>
+       <width>80</width>
        <height>16777215</height>
       </size>
      </property>
@@ -85,7 +82,7 @@
      </property>
     </widget>
    </item>
-   <item>
+   <item row="0" column="2">
     <widget class="QLabel" name="lNumber">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -104,14 +101,14 @@
      </property>
     </widget>
    </item>
-   <item>
+   <item row="0" column="3">
     <widget class="QSpinBox" name="sbNumber">
      <property name="toolTip">
       <string>Number of copies</string>
      </property>
     </widget>
    </item>
-   <item>
+   <item row="0" column="4">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

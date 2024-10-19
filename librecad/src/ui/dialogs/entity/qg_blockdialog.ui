@@ -65,6 +65,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="leName">
+       <property name="toolTip">
+        <string>Name of the block</string>
+       </property>
        <property name="text">
         <string/>
        </property>

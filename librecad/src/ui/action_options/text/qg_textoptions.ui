@@ -77,6 +77,9 @@
        <height>22</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Text to insert</string>
+     </property>
      <property name="verticalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
@@ -96,7 +99,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="leAngle"/>
+    <widget class="QLineEdit" name="leAngle">
+     <property name="toolTip">
+      <string>Rotation angle</string>
+     </property>
+    </widget>
    </item>
    <item>
     <spacer name="horizontalSpacer">

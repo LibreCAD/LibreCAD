@@ -109,7 +109,7 @@ public:
      void keyPressEvent(QKeyEvent* e) override;
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
-    bool loadStyleSheet(QString path);
+    static bool loadStyleSheet(QString path);
 
     bool eventFilter(QObject *obj, QEvent *event) override;
     QAction* getAction(const QString& name) const;

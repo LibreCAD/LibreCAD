@@ -221,14 +221,14 @@ QVariant LC_PenPaletteModel::data(const QModelIndex &index, int role) const{
         case Qt::ToolTipRole: {
             // optional tooltip displaying
             if (options->showToolTip){
-                QString toolTip = QString("Name: <b>").append(item->getName()).append("</b><br>")
-                    .append("Line Type: <b>").append(item->getLineTypeName()).append("</b><br>")
-                    .append("Line Width: <b>").append(item->getLineWidthName()).append("</b><br>");
+                QString toolTip = QString(tr("Name:")).append("<b>").append(item->getName()).append("</b><br>")
+                    .append(tr("Line Type:")).append("<b>").append(item->getLineTypeName()).append("</b><br>")
+                    .append(tr("Line Width:")).append("<b>").append(item->getLineWidthName()).append("</b><br>");
                 RS_Color color = item->getColor();
                 if (color.isValid()){
-                    toolTip = toolTip.append("Color: <b><font color='").append(color.name()).append("'>").append(item->getColorName()).append("</font></b>");
+                    toolTip = toolTip.append(tr("Color:")).append("<b><font color='").append(color.name()).append("'>").append(item->getColorName()).append("</font></b>");
                 } else {
-                    toolTip = toolTip.append("Color: <b>").append(item->getColorName()).append("</b>");
+                    toolTip = toolTip.append(tr("Color:")).append("<b>").append(item->getColorName()).append("</b>");
                 }
                 return toolTip;
             }

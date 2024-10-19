@@ -30,10 +30,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_document.h"
 #include "qg_graphicview.h"
 
-class LC_QuickInfoBaseData
-{
+class LC_QuickInfoBaseData{
     Q_DECLARE_TR_FUNCTIONS(LC_QuickInfoBaseData)
-
 public:
     LC_QuickInfoBaseData();
     QString getFormattedVectorForIndex(int index) const;
@@ -64,7 +62,7 @@ protected:
     QString formatVector(const RS_Vector &vector) const;
     QString formatAngle(double angle);
     QString formatLinear(double length);
-    QString createLink(QString &data, const QString &path, int index, const char *title, QString &value);
+    QString createLink(QString &data, const QString &path, int index, QString title, QString &value);
 };
 
 #endif // LC_QUICKINFOBASEDATA_H

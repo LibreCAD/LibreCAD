@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>394</width>
-    <height>310</height>
+    <width>403</width>
+    <height>318</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,6 +32,9 @@
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="0">
        <widget class="QCheckBox" name="cbDisplayDistance">
+        <property name="toolTip">
+         <string>If selected, the distance and angle between adjacent points will be shown together with coordinates.</string>
+        </property>
         <property name="text">
          <string>Display distance and angle to point in addition to coordinates</string>
         </property>
@@ -39,6 +42,9 @@
       </item>
       <item row="1" column="0">
        <widget class="QCheckBox" name="cbDrawPointsPath">
+        <property name="toolTip">
+         <string>If selected, all points collected will be connected by path that shows how they will be selected during point preview</string>
+        </property>
         <property name="text">
          <string>Draw points path on preview</string>
         </property>
@@ -71,6 +77,9 @@
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="1" column="0">
        <widget class="QCheckBox" name="cbDetailedPolyline">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <property name="text">
          <string>Include polyline child entities information to vertexes</string>
         </property>
@@ -78,6 +87,9 @@
       </item>
       <item row="0" column="0">
        <widget class="QCheckBox" name="cbEntityBoundaries">
+        <property name="toolTip">
+         <string>If selected, coordinates of boundary box area for the entity will be also shown</string>
+        </property>
         <property name="text">
          <string>Display entity boundaries (Min, Max) coordinates</string>
         </property>
@@ -100,6 +112,9 @@
      <layout class="QGridLayout" name="gridLayout_4">
       <item row="1" column="0">
        <widget class="QCheckBox" name="cbInDefaultAction">
+        <property name="toolTip">
+         <string>Entity under cursor will be examined only if CTRL is pressed and no active action</string>
+        </property>
         <property name="text">
          <string>Select entity under cursor if not active action and CTRL is pressed</string>
         </property>
@@ -107,6 +122,9 @@
       </item>
       <item row="0" column="0">
        <widget class="QCheckBox" name="cbDefaultActionAuto">
+        <property name="toolTip">
+         <string>If selected, entities under mouse cursor will be examined for theif settings, if there is no active action</string>
+        </property>
         <property name="text">
          <string>Always select entity under cursor if no active action</string>
         </property>

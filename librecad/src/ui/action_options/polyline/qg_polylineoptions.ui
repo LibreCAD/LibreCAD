@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>664</width>
+    <width>747</width>
     <height>22</height>
    </rect>
   </property>
@@ -49,6 +49,9 @@
    </property>
    <item>
     <widget class="QToolButton" name="bClose">
+     <property name="toolTip">
+      <string>Connects ends of the polyline so closed contour is created</string>
+     </property>
      <property name="text">
       <string>Close</string>
      </property>
@@ -56,8 +59,18 @@
    </item>
    <item>
     <widget class="QToolButton" name="bUndo">
+     <property name="toolTip">
+      <string>Undo for previous vertex</string>
+     </property>
      <property name="text">
       <string>Undo</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Segment Type:</string>
      </property>
     </widget>
    </item>
@@ -74,6 +87,9 @@
        <width>0</width>
        <height>0</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Defines which segment of polyline should be created</string>
      </property>
      <item>
       <property name="text">

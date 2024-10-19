@@ -209,13 +209,13 @@ RS_Entity* RS_Information::getNearestEntity(const RS_Vector& coord,
  * RS_VectorSolutions is set if one intersection is a tangent point.
  */
 RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
-		RS_Entity const* e2, bool onEntities) {
+                                                   RS_Entity const* e2, bool onEntities) {
 
     RS_VectorSolutions ret;
     const double tol = 1.0e-4;
 
-	if (!(e1 && e2) ) {
-		RS_DEBUG->print("RS_Information::getIntersection() for nullptr entities");
+    if (!(e1 && e2) ) {
+        RS_DEBUG->print("RS_Information::getIntersection() for nullptr entities");
         return ret;
     }
     if (e1->getId() == e2->getId()) {
@@ -231,19 +231,19 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
         return ret;
     }
 
-	if (onEntities && !(e1->isConstruction() || e2->isConstruction())) {
-	// a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
-		LC_Rect const rect1{e1->getMin(), e1->getMax()};
-		LC_Rect const rect2{e2->getMin(), e2->getMax()};
+    if (onEntities && !(e1->isConstruction() || e2->isConstruction())) {
+// a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
+        LC_Rect const rect1{e1->getMin(), e1->getMax()};
+        LC_Rect const rect2{e2->getMin(), e2->getMax()};
 
-		if (onEntities && !rect1.intersects(rect2, RS_TOLERANCE)) {
-			return ret;
-		}
-	}
+        if (onEntities && !rect1.intersects(rect2, RS_TOLERANCE)) {
+            return ret;
+        }
+    }
 
     //avoid intersections between line segments the same spline
     /* ToDo: 24 Aug 2011, Dongxu Li, if rtti() is not defined for the parent, the following check for splines may still cause segfault */
-	if ( e1->getParent() && e1->getParent() == e2->getParent()) {
+    if ( e1->getParent() && e1->getParent() == e2->getParent()) {
         if ( e1->getParent()->rtti()==RS2::EntitySpline ) {
             //do not calculate intersections from neighboring lines of a spline
             if ( abs(e1->getParent()->findEntity(e1) - e1->getParent()->findEntity(e2)) <= 1 ) {
@@ -252,39 +252,39 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
         }
     }
 
-	if(e1->rtti() == RS2::EntitySplinePoints || e2->rtti() == RS2::EntitySplinePoints)
-	{
-		ret = LC_SplinePoints::getIntersection(e1, e2);
-	}
-	else
-	{
-		// issue #484 , quadratic intersection solver is not robust enough for quadratic-quadratic
-		// TODO, implement a robust algorithm for quadratic based solvers, and detecting entity type
-		// circles/arcs can be removed
-		auto isArc = [](RS_Entity const* e) {
-			auto type = e->rtti();
-			return type == RS2::EntityCircle || type == RS2::EntityArc;
-		};
+    if(e1->rtti() == RS2::EntitySplinePoints || e2->rtti() == RS2::EntitySplinePoints)
+    {
+        ret = LC_SplinePoints::getIntersection(e1, e2);
+    }
+    else
+    {
+// issue #484 , quadratic intersection solver is not robust enough for quadratic-quadratic
+// TODO, implement a robust algorithm for quadratic based solvers, and detecting entity type
+// circles/arcs can be removed
+        auto isArc = [](RS_Entity const* e) {
+            auto type = e->rtti();
+            return type == RS2::EntityCircle || type == RS2::EntityArc;
+        };
 
-		if(isArc(e1) && isArc(e2)){
-			//use specialized arc-arc intersection solver
-			ret=getIntersectionArcArc(e1, e2);
-		}else{
-			const auto qf1=e1->getQuadratic();
-			const auto qf2=e2->getQuadratic();
-			ret=LC_Quadratic::getIntersection(qf1,qf2);
-		}
-	}
+        if(isArc(e1) && isArc(e2)){
+//use specialized arc-arc intersection solver
+            ret=getIntersectionArcArc(e1, e2);
+        }else{
+            const auto qf1=e1->getQuadratic();
+            const auto qf2=e2->getQuadratic();
+            ret=LC_Quadratic::getIntersection(qf1,qf2);
+        }
+    }
     RS_VectorSolutions ret2;
-	for(const RS_Vector& vp: ret){
-		if (!vp.valid) continue;
-		if (onEntities) {
+    for(const RS_Vector& vp: ret){
+        if (!vp.valid) continue;
+        if (onEntities) {
             //ignore intersections not on entity
             if (!(
-                        (e1->isConstruction(true) || e1->isPointOnEntity(vp, tol)) &&
-                        (e2->isConstruction(true) || e2->isPointOnEntity(vp, tol))
-                        )
-                    ) {
+                (e1->isConstruction(true) || e1->isPointOnEntity(vp, tol)) &&
+                (e2->isConstruction(true) || e2->isPointOnEntity(vp, tol))
+            )
+                ) {
 //				std::cout<<"Ignored intersection "<<vp<<std::endl;
 //				std::cout<<"because: e1->isPointOnEntity(ret.get(i), tol)="<<e1->isPointOnEntity(vp, tol)
 //					<<"\t(e2->isPointOnEntity(ret.get(i), tol)="<<e2->isPointOnEntity(vp, tol)<<std::endl;
@@ -292,8 +292,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
             }
         }
         // need to test whether the intersection is tangential
-		RS_Vector direction1=e1->getTangentDirection(vp);
-		RS_Vector direction2=e2->getTangentDirection(vp);
+        RS_Vector direction1=e1->getTangentDirection(vp);
+        RS_Vector direction2=e2->getTangentDirection(vp);
         if( direction1.valid && direction2.valid && fabs(fabs(direction1.dotP(direction2)) - sqrt(direction1.squared()*direction2.squared())) < sqrt(tol)*tol )
             ret2.setTangent(true);
         //TODO, make the following tangential test, nearest test work for all entity types

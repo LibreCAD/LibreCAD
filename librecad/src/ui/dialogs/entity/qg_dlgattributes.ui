@@ -49,7 +49,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QG_LayerBox" name="cbLayer" native="true"/>
+          <widget class="QG_LayerBox" name="cbLayer" native="true">
+           <property name="toolTip">
+            <string>Layer to apply</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -60,6 +64,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Pen attributes</string>
          </property>
         </widget>
        </item>

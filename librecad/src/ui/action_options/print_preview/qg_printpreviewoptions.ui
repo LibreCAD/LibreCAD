@@ -40,6 +40,9 @@
    </property>
    <item>
     <widget class="QToolButton" name="tbLandscape">
+     <property name="toolTip">
+      <string>Landscape Orientation of paper</string>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -55,7 +58,7 @@
    <item>
     <widget class="QToolButton" name="tbPortait">
      <property name="toolTip">
-      <string>Portrait Orientation</string>
+      <string>Portrait Orientation of paper</string>
      </property>
      <property name="text">
       <string/>
@@ -138,8 +141,8 @@
      </property>
      <property name="maximumSize">
       <size>
-       <width>54</width>
-       <height>32</height>
+       <width>16777215</width>
+       <height>16777215</height>
       </size>
      </property>
      <property name="toolTip">
@@ -303,6 +306,9 @@
    </item>
    <item>
     <widget class="QCheckBox" name="cbTiledPrint">
+     <property name="toolTip">
+      <string>If enabled, paper space will include specified amount of pages organized in columns and rows</string>
+     </property>
      <property name="text">
       <string>Tiled Print</string>
      </property>
@@ -326,6 +332,9 @@
       </item>
       <item row="0" column="3">
        <widget class="QSpinBox" name="sbPagessHorizontal">
+        <property name="toolTip">
+         <string>Amount of pages columns</string>
+        </property>
         <property name="minimum">
          <number>1</number>
         </property>
@@ -340,6 +349,9 @@
       </item>
       <item row="0" column="5">
        <widget class="QSpinBox" name="sbPagesVertical">
+        <property name="toolTip">
+         <string>Amount of pages rows</string>
+        </property>
         <property name="minimum">
          <number>1</number>
         </property>

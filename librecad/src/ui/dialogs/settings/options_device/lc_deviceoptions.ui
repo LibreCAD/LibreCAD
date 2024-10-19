@@ -22,6 +22,9 @@
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
        <widget class="QComboBox" name="device_combobox">
+        <property name="toolTip">
+         <string>Selection of pointing device</string>
+        </property>
         <item>
          <property name="text">
           <string notr="true">Mouse</string>

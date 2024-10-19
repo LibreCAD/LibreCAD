@@ -56,7 +56,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QG_LayerBox" name="cbLayer" native="true"/>
+          <widget class="QG_LayerBox" name="cbLayer" native="true">
+           <property name="toolTip">
+            <string>Layer of ellipse</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -96,6 +100,9 @@
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Y Coordinate of arc's center</string>
+          </property>
          </widget>
         </item>
         <item row="0" column="0">
@@ -115,6 +122,9 @@
             <width>64</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>X Coordinate of ellipse's center</string>
           </property>
          </widget>
         </item>
@@ -168,6 +178,9 @@
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>End angle of elliptic arc</string>
+          </property>
          </widget>
         </item>
         <item row="5" column="1">
@@ -177,6 +190,9 @@
             <width>64</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Start angle of elliptic arc</string>
           </property>
          </widget>
         </item>
@@ -208,6 +224,9 @@
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Rotation angle for the major axis of ellipse</string>
+          </property>
          </widget>
         </item>
         <item row="3" column="1">
@@ -217,6 +236,9 @@
             <width>64</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Radius of minor axis of the ellipse</string>
           </property>
          </widget>
         </item>
@@ -248,10 +270,16 @@
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Radius of major axis of ellipse</string>
+          </property>
          </widget>
         </item>
         <item row="7" column="0" colspan="2">
          <widget class="QCheckBox" name="cbReversed">
+          <property name="toolTip">
+           <string>Defines whether arc is reversed</string>
+          </property>
           <property name="text">
            <string>Reversed</string>
           </property>

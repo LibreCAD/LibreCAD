@@ -112,13 +112,25 @@
        </spacer>
       </item>
       <item row="0" column="1">
-       <widget class="QG_ColorBox" name="cbColor"/>
+       <widget class="QG_ColorBox" name="cbColor">
+        <property name="toolTip">
+         <string>Color of line</string>
+        </property>
+       </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QG_WidthBox" name="cbWidth"/>
+       <widget class="QG_WidthBox" name="cbWidth">
+        <property name="toolTip">
+         <string>Width of line</string>
+        </property>
+       </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QG_LineTypeBox" name="cbLineType" native="true"/>
+       <widget class="QG_LineTypeBox" name="cbLineType" native="true">
+        <property name="toolTip">
+         <string>Type of line</string>
+        </property>
+       </widget>
       </item>
       <item row="3" column="1">
        <spacer name="spacer9">
@@ -183,6 +195,11 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
+   <class>QG_LineTypeBox</class>
+   <extends>QWidget</extends>
+   <header>qg_linetypebox.h</header>
+  </customwidget>
+  <customwidget>
    <class>QG_ColorBox</class>
    <extends>QComboBox</extends>
    <header>../ui/components/comboboxes/qg_colorbox.h</header>
@@ -191,11 +208,6 @@
    <class>QG_WidthBox</class>
    <extends>QComboBox</extends>
    <header>../ui/components/comboboxes/qg_widthbox.h</header>
-  </customwidget>
-  <customwidget>
-   <class>QG_LineTypeBox</class>
-   <extends>QWidget</extends>
-   <header>qg_linetypebox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

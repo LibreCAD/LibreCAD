@@ -68,7 +68,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QG_LayerBox" name="cbLayer" native="true"/>
+          <widget class="QG_LayerBox" name="cbLayer" native="true">
+           <property name="toolTip">
+            <string>Layer of arc</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -79,6 +83,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Pen attributes</string>
          </property>
         </widget>
        </item>
@@ -150,6 +157,9 @@
             <height>22</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Radius of arc</string>
+          </property>
          </widget>
         </item>
         <item row="1" column="0">
@@ -187,6 +197,9 @@
             <width>64</width>
             <height>22</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Y Coordinate of arc's center</string>
           </property>
          </widget>
         </item>
@@ -226,6 +239,9 @@
             <height>22</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>X Coordinate of arc's center</string>
+          </property>
          </widget>
         </item>
         <item row="3" column="0">
@@ -264,6 +280,9 @@
             <height>22</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Starting angle of arc</string>
+          </property>
          </widget>
         </item>
         <item row="4" column="1">
@@ -279,6 +298,9 @@
             <width>64</width>
             <height>22</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>End angle of arc</string>
           </property>
          </widget>
         </item>
@@ -338,6 +360,9 @@
         </item>
         <item row="5" column="0" colspan="2">
          <widget class="QCheckBox" name="cbReversed">
+          <property name="toolTip">
+           <string>Defines whether arc is reversed (clockwise)</string>
+          </property>
           <property name="text">
            <string>Reversed</string>
           </property>

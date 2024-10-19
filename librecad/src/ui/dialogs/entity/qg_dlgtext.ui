@@ -141,6 +141,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="teText">
+       <property name="toolTip">
+        <string>Text to insert</string>
+       </property>
        <property name="linkUnderline" stdset="0">
         <bool>false</bool>
        </property>
@@ -189,6 +192,9 @@
            </property>
            <property name="focusPolicy">
             <enum>Qt::StrongFocus</enum>
+           </property>
+           <property name="toolTip">
+            <string>Layer of text</string>
            </property>
           </widget>
          </item>
@@ -244,7 +250,11 @@
          <number>2</number>
         </property>
         <item row="4" column="2">
-         <widget class="QLineEdit" name="leOblique"/>
+         <widget class="QLineEdit" name="leOblique">
+          <property name="toolTip">
+           <string>Obligue of text</string>
+          </property>
+         </widget>
         </item>
         <item row="3" column="2">
          <widget class="QLineEdit" name="leAngle">
@@ -253,6 +263,9 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Rotation angle</string>
           </property>
          </widget>
         </item>
@@ -283,7 +296,11 @@
          </widget>
         </item>
         <item row="5" column="2">
-         <widget class="QLineEdit" name="leWidthRel"/>
+         <widget class="QLineEdit" name="leWidthRel">
+          <property name="toolTip">
+           <string>Width factor</string>
+          </property>
+         </widget>
         </item>
         <item row="6" column="2">
          <spacer name="spacer2_2">
@@ -315,6 +332,9 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Height of text</string>
           </property>
          </widget>
         </item>
@@ -489,6 +509,9 @@
           </item>
           <item row="1" column="3">
            <widget class="QRadioButton" name="rbAligned">
+            <property name="toolTip">
+             <string>Aligned</string>
+            </property>
             <property name="text">
              <string>A&amp;ligned</string>
             </property>
@@ -534,6 +557,9 @@
           </item>
           <item row="0" column="3">
            <widget class="QRadioButton" name="rbFit">
+            <property name="toolTip">
+             <string>Fit</string>
+            </property>
             <property name="text">
              <string>Fit</string>
             </property>
@@ -614,6 +640,9 @@
           </item>
           <item row="2" column="3">
            <widget class="QRadioButton" name="rbMiddle">
+            <property name="toolTip">
+             <string>Middle</string>
+            </property>
             <property name="text">
              <string>&amp;Middle</string>
             </property>
@@ -910,10 +939,13 @@
         <item>
          <widget class="QComboBox" name="cbSymbol">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Symbol to insert</string>
           </property>
           <item>
            <property name="text">
@@ -999,7 +1031,7 @@
         <item row="0" column="1">
          <widget class="QComboBox" name="cbUniPage">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -1009,6 +1041,9 @@
             <width>200</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Codepage selection for selecting character</string>
           </property>
           <item>
            <property name="text">
@@ -1582,6 +1617,9 @@
             <height>25</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Selected character preview. Click to insert to text.</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -1600,7 +1638,7 @@
         <item row="1" column="1">
          <widget class="QComboBox" name="cbUniChar">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -1610,6 +1648,9 @@
             <width>92</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Selection of character to insert</string>
           </property>
          </widget>
         </item>
@@ -1638,14 +1679,14 @@
    <header>qg_widgetpen.h</header>
   </customwidget>
   <customwidget>
-   <class>QG_FontBox</class>
-   <extends>QWidget</extends>
-   <header>qg_fontbox.h</header>
-  </customwidget>
-  <customwidget>
    <class>QG_LayerBox</class>
    <extends>QWidget</extends>
    <header>qg_layerbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QG_FontBox</class>
+   <extends>QWidget</extends>
+   <header>qg_fontbox.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

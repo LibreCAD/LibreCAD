@@ -476,7 +476,7 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
             msg += command("angle");
             msg += "/";
             msg += command("anglerel");
-            updateMouseWidgetTRBack(tr("Specify angle or [%2]").arg(msg));
+            updateMouseWidgetTRBack(tr("Specify angle or [%1]").arg(msg));
             break;
         }
         case SetPoint: {
