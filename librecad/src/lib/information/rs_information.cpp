@@ -44,6 +44,7 @@
 #include "rs_vector.h"
 
 namespace {
+constexpr double g_tangentTolerance = 1e-5;
 // whether the entity is circular (circle or arc)
 bool isArc(RS_Entity const* e) {
     if (e==nullptr)
@@ -55,6 +56,139 @@ bool isArc(RS_Entity const* e) {
     default:
         return false;
     }
+}
+bool isLine(RS_Entity const* e) {
+    return e != nullptr && e->rtti() == RS2::EntityLine;
+}
+
+bool isEllipse(RS_Entity const* e) {
+    return e != nullptr && e->rtti() == RS2::EntityEllipse;
+}
+
+class TangentFinderAlgo;
+class TangentFinder {
+    const RS_Entity* m_e1=nullptr;
+    const RS_Entity* m_e2=nullptr;
+public:
+    TangentFinder(const RS_Entity* e1, const RS_Entity* e2):
+        m_e1{e1}
+      , m_e2{e2}
+    {}
+
+    RS_VectorSolutions GetTangent() const;
+};
+class TangentFinderAlgo {
+public:
+
+    virtual ~TangentFinderAlgo() = default;
+
+    virtual std::pair<RS_VectorSolutions, bool> operator () (const RS_Entity* e1, const RS_Entity* e2) const = 0;
+};
+
+class TangentFinderAlgoLine : public TangentFinderAlgo
+{
+public:
+    std::pair<RS_VectorSolutions, bool> operator () (const RS_Entity* e1, const RS_Entity* e2) const override
+    {
+        if (isLine(e2))
+            std::swap(e1, e2);
+        if (!isLine(e1))
+            return {};
+        // Line-Line doesn't have any tangent point
+        if (isLine(e2))
+            return {};
+
+        // line normal direction
+        const double tol = g_tangentTolerance * std::min(e1->getLength(), e2->getLength());
+        // offset vector of the line
+        RS_Vector offset = RS_Vector{e1->getDirection1() + M_PI/2.} * tol;
+
+        std::unique_ptr<RS_Entity> line{e1->clone()};
+        line->move(offset);
+
+        RS_VectorSolutions ret = LC_Quadratic::getIntersection(line->getQuadratic(), e2->getQuadratic());
+
+        if (ret.empty()) {
+            line->move(offset * (-2.));
+            ret = LC_Quadratic::getIntersection(line->getQuadratic(), e2->getQuadratic());
+        }
+
+        return {ret, true};
+    }
+};
+
+class TangentFinderAlgoArc : public TangentFinderAlgo
+{
+public:
+    std::pair<RS_VectorSolutions, bool> operator () (const RS_Entity* e1, const RS_Entity* e2) const override
+    {
+        if (isArc(e2))
+            std::swap(e1, e2);
+        if (!isArc(e1))
+            return {};
+        RS_Circle c1{nullptr, {e1->getCenter(), e1->getRadius()*(1. + g_tangentTolerance)}};
+        RS_VectorSolutions ret = LC_Quadratic::getIntersection(c1.getQuadratic(), e2->getQuadratic());
+        if (ret.empty()) {
+            c1.setRadius(e1->getRadius()*(1. - g_tangentTolerance));
+            ret = LC_Quadratic::getIntersection(c1.getQuadratic(), e2->getQuadratic());
+        }
+
+        return {ret, true};
+    }
+};
+
+class TangentFinderAlgoEllipse : public TangentFinderAlgo
+{
+public:
+    std::pair<RS_VectorSolutions, bool> operator () (const RS_Entity* e1, const RS_Entity* e2) const override
+    {
+        if (isEllipse(e2))
+            std::swap(e1, e2);
+        if (!isEllipse(e1))
+            return {};
+        auto ellipse = static_cast<const RS_Ellipse*>(e1);
+        RS_Circle c1{nullptr, {ellipse->getCenter(), ellipse->getMinorRadius() * (1.0 + g_tangentTolerance)}};
+        std::unique_ptr<RS_Entity> other{e2->clone()};
+        other->rotate(ellipse->getCenter(), -ellipse->getAngle());
+        other->scale(ellipse->getCenter(), {ellipse->getRatio(), 1.});
+        RS_VectorSolutions ret = LC_Quadratic::getIntersection(c1.getQuadratic(), other->getQuadratic());
+        if (ret.empty()) {
+            c1.setRadius(ellipse->getMinorRadius() * (1.0 - g_tangentTolerance));
+            ret = LC_Quadratic::getIntersection(c1.getQuadratic(), other->getQuadratic());
+        }
+        ret.scale(ellipse->getCenter(), {1./ellipse->getRatio(), 1.});
+        ret.rotate(ellipse->getCenter(), ellipse->getAngle());
+        return {ret, true};
+    }
+};
+
+RS_VectorSolutions TangentFinder::GetTangent() const
+{
+    // TODO: handle splinepoints, parabola, and hyperbola
+    std::unique_ptr<TangentFinderAlgo> algos[] = {
+        std::make_unique<TangentFinderAlgoLine>(),
+        std::make_unique<TangentFinderAlgoArc>(),
+        std::make_unique<TangentFinderAlgoEllipse>()
+    };
+
+    for(const std::unique_ptr<TangentFinderAlgo>& algo: algos) {
+        const auto& [points, processed] = (*algo)(m_e1, m_e2);
+        if (processed) {
+            RS_VectorSolutions ret = points;
+            //
+            if (points.size() == 2) {
+                RS_Vector center = (points.at(0) + points.at(1)) * 0.5;
+                RS_Vector projection = m_e1->getNearestPointOnEntity(center, false);
+                projection = m_e2->getNearestPointOnEntity(projection, false);
+                ret = {projection};
+            }
+            if (!ret.empty())
+                ret.setTangent(true);
+
+            return ret;
+        }
+    }
+    return {};
 }
 
 // Attempt to find tangent points by approximate
@@ -370,7 +504,7 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
                 // Accept small distance gap as tangent points. While this will allow some false tangent
                 // points from close but non-contacting curves, it's more important to reliably find all
                 // tangent points with rounding errors.
-                ret = recoverTangentPoint(e1, e2);
+                ret = TangentFinder{e1, e2}.GetTangent();
             }
         }
     }
