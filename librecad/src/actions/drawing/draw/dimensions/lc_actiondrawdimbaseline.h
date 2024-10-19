@@ -27,6 +27,7 @@
 #include "rs_dimension.h"
 
 class LC_ActionDrawDimBaseline:public LC_ActionDimLinearBase{
+    Q_OBJECT
 public:
     LC_ActionDrawDimBaseline(RS_EntityContainer &container,RS_GraphicView &graphicView,RS2::ActionType type);
 

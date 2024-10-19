@@ -855,6 +855,9 @@ LC_ActionModifyBreakDivide::CircleSegmentData* LC_ActionModifyBreakDivide::findC
         // circle) - considering that we rotate circle in such way that snap point is on 0 angle.
         for (int i = 0; i < intersectionsCount; i++) {
             RS_Vector v = intersections.at(i);
+
+//            previewRefPoint(v);
+
             double angleToIntersection = center.angleTo(v);
 
             // use corrected angle and thus actually we've rotated intersection point over center of circle

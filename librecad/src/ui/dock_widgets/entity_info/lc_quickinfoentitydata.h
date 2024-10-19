@@ -127,7 +127,7 @@ protected:
      */
     LC_PenInfoRegistry* penRegistry = LC_PenInfoRegistry::instance();
 
-    void addProperty(const char* name, const QString &valueStr, PropertyType type);
+    void addProperty(QString name, const QString &valueStr, PropertyType type);
     void collectLineProperties(RS_Line* line);
     void collectCircleProperties(RS_Circle *circle);
     void collectGenericProperties(RS_Entity *line);
@@ -160,14 +160,14 @@ protected:
     static QString getDirectionStr(RS_MTextData::MTextDrawingDirection direction);
     static QString getLineSpacingStyleStr(RS_MTextData::MTextLineSpacingStyle style);
 
-    void addAngleProperty(const char *name, double value);
-    void addLinearProperty(const char *name, double value, PropertyType type=LINEAR);
-    void addAreaProperty(const char *name, double value);
-    void addDoubleProperty(const char* name, const QString &valueStr, double value, PropertyType type);
-    void addVectorProperty(const char *name,const RS_Vector &value, PropertyType type=VECTOR);
-    void addVectorProperty(const char* name, const QString &valueStr, const RS_Vector& coord, PropertyType type=VECTOR);
-    void addVectorProperty(const char *name, int count, const RS_Vector &value, PropertyType type=VECTOR);
-    void addVectorProperty(const char *name, int count, const QString &valueStr, const RS_Vector &coord, PropertyType type=VECTOR);
+    void addAngleProperty(const QString name, double value);
+    void addLinearProperty(const QString name, double value, PropertyType type=LINEAR);
+    void addAreaProperty(const QString name, double value);
+    void addDoubleProperty(const QString name, const QString &valueStr, double value, PropertyType type);
+    void addVectorProperty(const QString name,const RS_Vector &value, PropertyType type=VECTOR);
+    void addVectorProperty(const QString name, const QString &valueStr, const RS_Vector& coord, PropertyType type=VECTOR);
+    void addVectorProperty(const QString name, int count, const RS_Vector &value, PropertyType type=VECTOR);
+    void addVectorProperty(QString name, int count, const QString &valueStr, const RS_Vector &coord, PropertyType type=VECTOR);
 };
 
 #endif // LC_QUICKINFOENTITYDATA_H

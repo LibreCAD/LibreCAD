@@ -40,17 +40,17 @@
      </property>
      <item>
       <property name="text">
-       <string>Start</string>
+       <string comment="gap">Start</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Middle</string>
+       <string comment="gap">Middle</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>End</string>
+       <string comment="gap">End</string>
       </property>
      </item>
     </widget>
@@ -76,22 +76,22 @@
      </property>
      <item>
       <property name="text">
-       <string>Free</string>
+       <string comment="snap">Free</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Start</string>
+       <string comment="snap">Start</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Middle</string>
+       <string comment="snap">Middle</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>End</string>
+       <string comment="snap">End</string>
       </property>
      </item>
     </widget>

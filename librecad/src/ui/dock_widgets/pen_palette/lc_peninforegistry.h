@@ -26,7 +26,7 @@
 
 #include <QIcon>
 #include <QMap>
-
+#include <QCoreApplication>
 #include "rs.h"
 #include "rs_color.h"
 
@@ -37,8 +37,8 @@
  * Todo - in general, this registry may be also used for initialization of corresponding comboboxes
  * that will let us keep all intitialization in one place
  */
-class LC_PenInfoRegistry
-{
+class LC_PenInfoRegistry{
+    Q_DECLARE_TR_FUNCTIONS(LC_PenInfoRegistry)
 public:
     enum ColorNameDisplayMode{
         HEX,
@@ -80,8 +80,8 @@ private:
 
     void registerLineTypes();
     void registerLineWidths();
-    void doRegisterLineType(const char* iconName, const char* labelKey, RS2::LineType lineType);
-    void doRegisterLineWidth(const char* iconName, const char* labelKey, RS2::LineWidth lineWidth);
+    void doRegisterLineType(const char* iconName, QString labelKey, RS2::LineType lineType);
+    void doRegisterLineWidth(const char* iconName, QString labelKey, RS2::LineWidth lineWidth);
     void registerColorNames();
     void registerLCColor(QColor color, QString name);
 };

@@ -183,7 +183,7 @@
      </property>
      <item>
       <property name="text">
-       <string>Free</string>
+       <string comment="linesnap">Free</string>
       </property>
      </item>
      <item>

@@ -3,8 +3,8 @@
 
 #include "rs_previewactioninterface.h"
 
-class LC_ActionDrawLinePolygonBase:public RS_PreviewActionInterface
-{
+class LC_ActionDrawLinePolygonBase:public RS_PreviewActionInterface{
+    Q_OBJECT
 public:
     LC_ActionDrawLinePolygonBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView, RS2::ActionType actionType);
     ~LC_ActionDrawLinePolygonBase() override;

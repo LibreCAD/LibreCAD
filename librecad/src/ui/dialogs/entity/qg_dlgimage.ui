@@ -49,7 +49,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QG_LayerBox" name="cbLayer" native="true"/>
+          <widget class="QG_LayerBox" name="cbLayer" native="true">
+           <property name="toolTip">
+            <string>Layer of image</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -102,6 +106,9 @@
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Width of image</string>
+          </property>
          </widget>
         </item>
         <item row="1" column="0">
@@ -119,10 +126,17 @@
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>X coordinate of insertion point</string>
+          </property>
          </widget>
         </item>
         <item row="8" column="1">
-         <widget class="QLineEdit" name="leDPI"/>
+         <widget class="QLineEdit" name="leDPI">
+          <property name="toolTip">
+           <string>Resolution (dots per inch)</string>
+          </property>
+         </widget>
         </item>
         <item row="6" column="1">
          <widget class="QLineEdit" name="lePath">
@@ -131,6 +145,9 @@
             <width>70</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Path to image file</string>
           </property>
           <property name="readOnly">
            <bool>false</bool>
@@ -144,6 +161,9 @@
             <width>70</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Scaling factor</string>
           </property>
          </widget>
         </item>
@@ -162,6 +182,9 @@
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Rotation angle</string>
+          </property>
          </widget>
         </item>
         <item row="1" column="1">
@@ -171,6 +194,9 @@
             <width>70</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Y coordinate of insertion point</string>
           </property>
          </widget>
         </item>
@@ -235,6 +261,9 @@
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Size of image in pixels</string>
+          </property>
           <property name="readOnly">
            <bool>true</bool>
           </property>
@@ -261,6 +290,9 @@
             <width>70</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Height of image</string>
           </property>
          </widget>
         </item>
