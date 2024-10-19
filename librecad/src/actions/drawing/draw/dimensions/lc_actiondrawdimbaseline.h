@@ -23,8 +23,8 @@
 #ifndef LC_ACTIONDRAWDIMBASELINE_H
 #define LC_ACTIONDRAWDIMBASELINE_H
 
-#include "rs_actiondimlinear.h"
-#include "rs_dimension.h"
+#include "lc_actiondimlinearbase.h"
+#include "rs_dimlinear.h"
 
 class LC_ActionDrawDimBaseline:public LC_ActionDimLinearBase{
     Q_OBJECT
@@ -39,9 +39,7 @@ public:
     void trigger() override;
     void reset() override;
     double getCurrentBaselineDistance() const;
-
     QStringList getAvailableCommands() override;
-
 protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
@@ -63,9 +61,7 @@ protected:
     void setExtensionPoint2(RS_Vector p) override;
     RS_Vector getExtensionPoint2() override;
     void preparePreview() override;
-
     double getDimAngle() override;
-
     bool doProcessCommand(int status, const QString &command) override;
 };
 
