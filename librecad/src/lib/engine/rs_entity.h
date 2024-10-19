@@ -136,7 +136,8 @@ public:
     //get center for entities: arc, circle and ellipse
 	virtual RS_Vector getCenter() const;
 	virtual double getRadius() const;
-	RS_Graphic* getGraphic() const;
+    virtual void setRadius(double r);
+    RS_Graphic* getGraphic() const;
 	RS_Block* getBlock() const;
 	RS_Insert* getInsert() const;
 	RS_Entity* getBlockOrInsert() const;

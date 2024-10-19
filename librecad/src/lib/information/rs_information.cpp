@@ -83,6 +83,52 @@ public:
     virtual ~TangentFinderAlgo() = default;
 
     virtual std::pair<RS_VectorSolutions, bool> operator () (const RS_Entity* e1, const RS_Entity* e2) const = 0;
+protected:
+
+    const RS_Entity* m_e1=nullptr;
+    const RS_Entity* m_e2=nullptr;
+
+    RS_VectorSolutions FindTangent(const RS_Entity* e1, const RS_Entity* e2) const {
+        const double tol = g_tangentTolerance * std::min(e1->getLength(), e2->getLength());
+
+        RS_VectorSolutions ret = FindOffsetIntersections(e1, e2, tol);
+
+        if (ret.empty()) {
+            ret = FindOffsetIntersections(e1, e2, -tol);
+        }
+        return ret;
+    }
+
+private:
+    RS_VectorSolutions FindOffsetIntersections(const RS_Entity* e1, const RS_Entity* e2, double aOffsetValue) const {
+        double offsetValue = aOffsetValue;
+        std::unique_ptr<RS_Entity> offset = CreateOffset(e1, offsetValue);
+        RS_VectorSolutions ret = LC_Quadratic::getIntersection(offset->getQuadratic(), e2->getQuadratic());
+        if (ret.size() <= 1)
+            return ret;
+        double low = 0., high = offsetValue;
+        while( ret.at(0).distanceTo(ret.at(1)) > 1e-7 && high - low > RS_TOLERANCE) {
+            offsetValue = (low + high) * 0.5;
+            offset = CreateOffset(e1, offsetValue);
+            ret = LC_Quadratic::getIntersection(offset->getQuadratic(), e2->getQuadratic());
+            switch(ret.size()) {
+            case 0:
+                low = offsetValue;
+                break;
+            case 1:
+                return ret;
+            default:
+                high = offsetValue;
+            }
+        }
+        RS_Vector tangent = (ret.at(0) + ret.at(1)) * 0.5;
+        tangent = e2->getNearestPointOnEntity(tangent, false);
+        return {tangent};
+    }
+    virtual std::unique_ptr<RS_Entity> CreateOffset([[maybe_unused]] const RS_Entity* e1, [[maybe_unused]] double offsetValue) const
+    {
+        return {};
+    }
 };
 
 class TangentFinderAlgoLine : public TangentFinderAlgo
@@ -98,22 +144,16 @@ public:
         if (isLine(e2))
             return {};
 
-        // line normal direction
-        const double tol = g_tangentTolerance * std::min(e1->getLength(), e2->getLength());
-        // offset vector of the line
-        RS_Vector offset = RS_Vector{e1->getDirection1() + M_PI/2.} * tol;
-
-        std::unique_ptr<RS_Entity> line{e1->clone()};
-        line->move(offset);
-
-        RS_VectorSolutions ret = LC_Quadratic::getIntersection(line->getQuadratic(), e2->getQuadratic());
-
-        if (ret.empty()) {
-            line->move(offset * (-2.));
-            ret = LC_Quadratic::getIntersection(line->getQuadratic(), e2->getQuadratic());
-        }
+        RS_VectorSolutions ret = FindTangent(e1, e2);
 
         return {ret, true};
+    }
+
+    std::unique_ptr<RS_Entity> CreateOffset(const RS_Entity* e1, double offsetValue) const override {
+        std::unique_ptr<RS_Entity> line{e1->clone()};
+        auto normal = RS_Vector{e1->getDirection1() + M_PI/2.};
+        line->move(normal * offsetValue);
+        return line;
     }
 };
 
@@ -126,14 +166,16 @@ public:
             std::swap(e1, e2);
         if (!isArc(e1))
             return {};
-        RS_Circle c1{nullptr, {e1->getCenter(), e1->getRadius()*(1. + g_tangentTolerance)}};
-        RS_VectorSolutions ret = LC_Quadratic::getIntersection(c1.getQuadratic(), e2->getQuadratic());
-        if (ret.empty()) {
-            c1.setRadius(e1->getRadius()*(1. - g_tangentTolerance));
-            ret = LC_Quadratic::getIntersection(c1.getQuadratic(), e2->getQuadratic());
-        }
+
+        RS_VectorSolutions ret = FindTangent(e1, e2);
 
         return {ret, true};
+    }
+
+    std::unique_ptr<RS_Entity> CreateOffset(const RS_Entity* e1, double offsetValue) const override {
+        std::unique_ptr<RS_Entity> circle{ e1->clone()};
+        circle->setRadius(e1->getRadius()*(1. + offsetValue));
+        return circle;
     }
 };
 
@@ -151,11 +193,10 @@ public:
         std::unique_ptr<RS_Entity> other{e2->clone()};
         other->rotate(ellipse->getCenter(), -ellipse->getAngle());
         other->scale(ellipse->getCenter(), {ellipse->getRatio(), 1.});
-        RS_VectorSolutions ret = LC_Quadratic::getIntersection(c1.getQuadratic(), other->getQuadratic());
-        if (ret.empty()) {
-            c1.setRadius(ellipse->getMinorRadius() * (1.0 - g_tangentTolerance));
-            ret = LC_Quadratic::getIntersection(c1.getQuadratic(), other->getQuadratic());
-        }
+
+        RS_VectorSolutions ret;
+        bool processed=false;
+       std::tie(ret, processed) = TangentFinderAlgoArc{}(&c1, other.get());
         ret.scale(ellipse->getCenter(), {1./ellipse->getRatio(), 1.});
         ret.rotate(ellipse->getCenter(), ellipse->getAngle());
         return {ret, true};
@@ -187,65 +228,6 @@ RS_VectorSolutions TangentFinder::GetTangent() const
 
             return ret;
         }
-    }
-    return {};
-}
-
-// Attempt to find tangent points by approximate
-RS_VectorSolutions recoverTangentPointImpl(const RS_Entity& e1, const RS_Entity& e2);
-RS_VectorSolutions recoverTangentPoint(const RS_Entity* e1, const RS_Entity* e2) {
-    if (e1==nullptr || e2==nullptr)
-        return {};
-    if (!e1->getQuadratic().isValid() || !e2->getQuadratic().isValid())
-        return {};
-    if (e2->rtti() == RS2::EntityEllipse)
-        std::swap(e1, e2);
-    if (e1->rtti() == RS2::EntityEllipse && e2->rtti() == RS2::EntityLine) {
-        // use the line-arc solver
-        // rotate around the center of the ellipse
-        RS_Vector p0 = e2->getStartpoint();
-        RS_Vector p1 = e2->getEndpoint();
-        auto ellipse = static_cast<const RS_Ellipse*>(e1);
-        p0.rotate(ellipse->getCenter(), - ellipse->getAngle()).scale(ellipse->getCenter(), {ellipse->getRatio(), 1.});
-        p1.rotate(ellipse->getCenter(), - ellipse->getAngle()).scale(ellipse->getCenter(), {ellipse->getRatio(), 1.});
-        RS_Circle circle{nullptr, {ellipse->getCenter(), ellipse->getMinorRadius()}};
-        RS_Line line{nullptr, {p0, p1}};
-        RS_VectorSolutions ret = RS_Information::getIntersectionLineArc(&line, &circle);
-        ret.scale(ellipse->getCenter(), {1./ellipse->getRatio(), 1.});
-        ret.rotate(ellipse->getCenter(), ellipse->getAngle());
-        return ret;
-    }
-
-    // tolerance by the curve size
-    for(int i=0; i<10; ++i) {
-        RS_VectorSolutions ret = recoverTangentPointImpl(*e1, *e2);
-        if (!ret.empty())
-            return ret;
-    }
-    return {};
-}
-
-RS_VectorSolutions recoverTangentPointImpl(const RS_Entity& e1, const RS_Entity& e2) {
-
-    // tolerance by the curve size
-    const double tol = 1e-7 * std::max(e1.getLength(), e2.getLength());
-    std::random_device rd{};
-    std::uniform_real_distribution<double> rdist{0., 1.};
-    // a random start point
-    RS_Vector p1 = e1.getMin() + (e1.getMax() - e1.getMin()) * rdist(rd);
-    double dist1 = RS_MAXDOUBLE;
-    double dist2 = RS_MAXDOUBLE;
-    // Recursively find the closest point on entities
-    for(int i=0; i< 100; ++i) {
-        RS_Vector p2 = e2.getNearestPointOnEntity(p1, false, &dist2);
-        p1 = e1.getNearestPointOnEntity(p2, false, &dist1);
-        // convergence
-        if (std::max(dist1, dist2) < tol)
-            return {p1};
-
-        // parallel curves
-        if (std::abs(dist1 - dist2) < 1e-7 * std::max(dist1, dist2))
-            return {};
     }
     return {};
 }
@@ -478,10 +460,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
         // issue #484 , quadratic intersection solver is not robust enough for quadratic-quadratic
         // TODO, implement a robust algorithm for quadratic based solvers, and detecting entity type
         // circles/arcs can be removed
-        bool useSpecializedSolvers=false;
         if (e1->rtti() == RS2::EntityLine && e2->rtti() == RS2::EntityLine) {
             ret = getIntersectionLineLine(e1, e2);
-            useSpecializedSolvers=true;
         }
 
         if (isArc(e1)) {
@@ -489,14 +469,12 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
             if (isArc(e1)) {
                 //use specialized arc-arc intersection solver
                 ret=getIntersectionArcArc(e1, e2);
-                useSpecializedSolvers=true;
             } else if (e1->rtti() == RS2::EntityLine) {
                 ret=getIntersectionLineArc(static_cast<const RS_Line*>(e1), static_cast<const RS_Arc*>(e2));
-                useSpecializedSolvers=true;
             }
         }
 
-        if (!useSpecializedSolvers) {
+        if (ret.empty()) {
             ret=LC_Quadratic::getIntersection(e1->getQuadratic(), e2->getQuadratic());
             if (ret.empty()) {
                 // TODO: the following tangent point recovery only works if there's no other intersection

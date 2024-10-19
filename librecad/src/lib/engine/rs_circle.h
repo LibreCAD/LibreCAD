@@ -103,7 +103,7 @@ public:
     /** @return The radius of this arc */
 	double getRadius() const override;
     /** Sets new radius. */
-	void setRadius(double r);
+    void setRadius(double r) override;
     double getAngleLength() const;
 	double getLength() const override;
 	bool isTangent(const RS_CircleData&  circleData) const override;
