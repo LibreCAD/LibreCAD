@@ -44,7 +44,12 @@
 #include "rs_vector.h"
 
 namespace {
-constexpr double g_tangentTolerance = 1e-5;
+
+// The tolerance level in finding tangent points: when the gap between the curves is smaller than this factor times
+// the length of the shorter curve, a tangent point is identified. This may generate false tangent points
+//
+constexpr double g_tangentTolerance = 1e-6;
+
 // whether the entity is circular (circle or arc)
 bool isArc(RS_Entity const* e) {
     if (e==nullptr)
@@ -57,15 +62,20 @@ bool isArc(RS_Entity const* e) {
         return false;
     }
 }
+
+// whether the entity is a line
 bool isLine(RS_Entity const* e) {
     return e != nullptr && e->rtti() == RS2::EntityLine;
 }
 
+// whether the entity is an ellipse
 bool isEllipse(RS_Entity const* e) {
     return e != nullptr && e->rtti() == RS2::EntityEllipse;
 }
 
-class TangentFinderAlgo;
+// The helper class for tangent point finding: assuming two curves(e1, e2) are valid,
+// and RS_Information::getIntersection(e1, e2) returns no intersection
+//
 class TangentFinder {
     const RS_Entity* m_e1=nullptr;
     const RS_Entity* m_e2=nullptr;
@@ -75,31 +85,46 @@ public:
       , m_e2{e2}
     {}
 
+    // The main API to find tangent
     RS_VectorSolutions GetTangent() const;
 };
+
+/**
+ * @brief The TangentFinderAlgo class, find a tangent point within tolerance, if finding intersection failed
+ */
 class TangentFinderAlgo {
 public:
 
     virtual ~TangentFinderAlgo() = default;
 
+    /**
+     * @brief The main API to find a tangent point from two curves; assuming no intersection is found.
+     * @todo Handle the case when both intersection and tangent point exist
+     * @return std::pair<RS_VectorSolutions, bool> - the tangent point found, could be empty
+     *                                               the boolean indicates whether the current algorithm has processed the curves,
+     *                                               if the boolean is true, no further processing is needed;
+     *                                               if the boolean is false, the current algorithm doesn't handle the curves, due to type
+     *                                               mismatch, so another algorithm should be applied
+     */
     virtual std::pair<RS_VectorSolutions, bool> operator () (const RS_Entity* e1, const RS_Entity* e2) const = 0;
 protected:
-
-    const RS_Entity* m_e1=nullptr;
-    const RS_Entity* m_e2=nullptr;
 
     RS_VectorSolutions FindTangent(const RS_Entity* e1, const RS_Entity* e2) const {
         const double tol = g_tangentTolerance * std::min(e1->getLength(), e2->getLength());
 
+        // Find tangent point from one side
         RS_VectorSolutions ret = FindOffsetIntersections(e1, e2, tol);
 
+        // try the other side
         if (ret.empty()) {
             ret = FindOffsetIntersections(e1, e2, -tol);
         }
+
         return ret;
     }
 
 private:
+    // find tangent point by bisection
     RS_VectorSolutions FindOffsetIntersections(const RS_Entity* e1, const RS_Entity* e2, double aOffsetValue) const {
         double offsetValue = aOffsetValue;
         std::unique_ptr<RS_Entity> offset = CreateOffset(e1, offsetValue);
@@ -133,6 +158,7 @@ private:
 
 class TangentFinderAlgoLine : public TangentFinderAlgo
 {
+    // find a Tangent point within tolerance, if at least one entity is a line
 public:
     std::pair<RS_VectorSolutions, bool> operator () (const RS_Entity* e1, const RS_Entity* e2) const override
     {
@@ -159,6 +185,7 @@ public:
 
 class TangentFinderAlgoArc : public TangentFinderAlgo
 {
+    // find a Tangent point within tolerance, if at least one entity is circular, i.e. arc/circle
 public:
     std::pair<RS_VectorSolutions, bool> operator () (const RS_Entity* e1, const RS_Entity* e2) const override
     {
@@ -181,6 +208,7 @@ public:
 
 class TangentFinderAlgoEllipse : public TangentFinderAlgo
 {
+    // find a Tangent point within tolerance, if at least one entity is an ellipse
 public:
     std::pair<RS_VectorSolutions, bool> operator () (const RS_Entity* e1, const RS_Entity* e2) const override
     {
@@ -462,16 +490,6 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
         // circles/arcs can be removed
         if (e1->rtti() == RS2::EntityLine && e2->rtti() == RS2::EntityLine) {
             ret = getIntersectionLineLine(e1, e2);
-        }
-
-        if (isArc(e1)) {
-            std::swap(e1, e2);
-            if (isArc(e1)) {
-                //use specialized arc-arc intersection solver
-                ret=getIntersectionArcArc(e1, e2);
-            } else if (e1->rtti() == RS2::EntityLine) {
-                ret=getIntersectionLineArc(static_cast<const RS_Line*>(e1), static_cast<const RS_Arc*>(e2));
-            }
         }
 
         if (ret.empty()) {
