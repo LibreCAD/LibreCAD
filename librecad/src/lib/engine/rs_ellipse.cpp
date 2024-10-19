@@ -232,6 +232,15 @@ RS_Entity* RS_Ellipse::clone() const {
  */
 void RS_Ellipse::calculateBorders() {
 
+#ifndef EMU_C99
+    using std::isnormal;
+#endif
+    if (fabs(data.angle1) < RS_TOLERANCE_ANGLE && (fabs(data.angle1) < RS_TOLERANCE_ANGLE)){
+        data.angle1 = 0;
+        data.angle2 = 0;
+    }
+    data.isArc = isnormal(data.angle1) || /*std::*/isnormal(data.angle2);
+
     RS_Vector startpoint = getStartpoint();
     RS_Vector endpoint = getEndpoint();
 
@@ -273,14 +282,6 @@ void RS_Ellipse::calculateBorders() {
     minV.set(minX, minY);
     maxV.set(maxX, maxY);
 
-#ifndef EMU_C99
-    using std::isnormal;
-#endif
-    if (fabs(data.angle1) < RS_TOLERANCE_ANGLE && (fabs(data.angle1) < RS_TOLERANCE_ANGLE)){
-        data.angle1 = 0;
-        data.angle2 = 0;
-    }
-    data.isArc = isnormal(data.angle1) || /*std::*/isnormal(data.angle2);
     data.angleDegrees = RS_Math::rad2deg(getAngle());
     data.startAngleDegrees = RS_Math::rad2deg(data.reversed ? data.angle2 : data.angle1);
     data.otherAngleDegrees = RS_Math::rad2deg(data.reversed ? data.angle1 : data.angle2);
