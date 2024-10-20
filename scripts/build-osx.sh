@@ -138,7 +138,15 @@ else
 fi
 
 #bz2 compression
-hdiutil convert -shadow -format UDBZ -ov -o "$OUTPUT_DMG" "$OUTPUT_DMG"
+for i in {1..20}
+do
+	sleep 1
+	if [[ ! -f  "${OUTPUT_DMG}" ]]; then
+		hdiutil convert -shadow -format UDBZ -ov -o "$OUTPUT_DMG" "$OUTPUT_DMG"
+	else
+		break
+	fi
+done
 
 if [[ -f  "${OUTPUT_DMG}" ]]
 then
