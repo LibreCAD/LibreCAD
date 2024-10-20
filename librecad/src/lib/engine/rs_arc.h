@@ -113,8 +113,9 @@ public:
     double getRadius() const override {
         return data.radius;
     }
+
     /** Sets new radius. */
-    void setRadius(double r) {
+    void setRadius(double r) override {
         data.radius = r;
     }
 
