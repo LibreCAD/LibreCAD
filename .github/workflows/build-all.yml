@@ -336,7 +336,7 @@ jobs:
           ref: 2.2.1
 
       - name: Fetch artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
 
       - name: Upload latest pre-release
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -348,6 +348,7 @@ jobs:
           title: "Release Candidate"
           files: |
             assets/LibreCAD*.*
+            assets/librecad*.*
             LICENSE
 
 
