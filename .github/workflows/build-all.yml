@@ -277,8 +277,9 @@ jobs:
           tag_name: "2.2.2_alpha-latest"
           prerelease: true
           draft: false
-          files: |
+          path: |
             linuxAssets/LibreCAD*.AppImage
             macOSAssets/LibreCAD*.dmg
             win64Assets/LibreCAD*.exe
+            snapAssets/*snap
             LICENSE
