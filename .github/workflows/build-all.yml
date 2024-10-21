@@ -53,8 +53,8 @@ jobs:
         if: github.repository_owner == 'LibreCAD'
         uses: ad-m/github-push-action@master
         with:
-          repository: ${{ github.repository_owner }}/static-analyzer-reports
-          github_token: ${{ secrets.LC_PUSH_ANALYZER_REPORT }}
+          repository: ${{github.repository_owner}}/static-analyzer-reports
+          github_token: ${{secrets.LC_PUSH_ANALYZER_REPORT}}
           branch: gh-pages
           force: true
           directory: out
@@ -62,11 +62,18 @@ jobs:
       - name: Create AppImage
         run: |
           ./CI/build-appimg.sh
+          pwd
+          echo  ${{github.workspace}}
+          ls  ${{github.workspace}}/
+          ls  ${{github.workspace}}/**.AppImage
+          ls 
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          path: ${{ github.workspace }}/LibreCAD**.AppImage
+          name: linuxAssets
+          path: ${{github.workspace}}/
+          pattern: LibreCAD*.AppImage
           overwrite: true
           retention-days: 2
 
@@ -92,7 +99,9 @@ jobs:
       - name: Uploading snap
         uses: actions/upload-artifact@v4
         with:
-          path: ${{ github.workspace }}/librecad**snap
+          name: snapAssets
+          path: ${{github.workspace}}/
+          pattern: librecad*snap
           overwrite: true
           retention-days: 2
 
@@ -140,7 +149,9 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          path: ${{ github.workspace }}/LibreCAD*.dmg
+          name: macOSAssets
+          path: ${{github.workspace}}/
+          pattern: LibreCAD**.dmg
           overwrite: true
           retention-days: 2
 
@@ -190,7 +201,7 @@ jobs:
           aqt install-tool windows desktop tools_mingw qt.tools.win32_mingw810
 
       - name: Debugging
-        if: ${{ always() }}
+        if: ${{always()}}
         shell: cmd
         run: |
           set
@@ -213,12 +224,12 @@ jobs:
 
       - name: Build
         run: |
-          set PATH=${{ github.workspace }}\Tools\mingw810_32\bin;%PATH%
+          set PATH=${{github.workspace}}\Tools\mingw810_32\bin;%PATH%
           copy CI\custom-win.pri custom.pri
           copy CI\custom-win.nsh scripts\postprocess-windows\custom.nsh
           echo SET:
           set
-          pushd "${{ github.workspace }}\scripts"
+          pushd "${{github.workspace}}\scripts"
           build-windows.bat
         shell: cmd
 
@@ -230,7 +241,9 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          path: ${{ github.workspace }}/LibreCAD**exe
+          name: win32Assets
+          path: ${{github.workspace}}/
+          pattern: LibreCAD*.exe
           overwrite: true
           retention-days: 2
 
@@ -281,7 +294,7 @@ jobs:
           rm boost.7z
 
       - name: Debugging
-        if: ${{ always() }}
+        if: ${{always()}}
         shell: cmd
         run: |
           set
@@ -308,7 +321,7 @@ jobs:
           copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
           echo SET:
           set
-          pushd "${{ github.workspace }}\scripts"
+          pushd "${{github.workspace}}\scripts"
           build-windows.bat
         shell: cmd
 
@@ -320,7 +333,9 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          path: ${{ github.workspace }}/LibreCAD**exe
+          name: win64Assets
+          path: ${{github.workspace}}/
+          pattern: LibreCAD*.exe
           overwrite: true
           retention-days: 2
 
@@ -341,7 +356,7 @@ jobs:
       - name: Upload latest pre-release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          repo_token: "${{secrets.GITHUB_TOKEN}}"
           automatic_release_tag: "2.2.1_rc-latest"
           prerelease: true
           draft: false
