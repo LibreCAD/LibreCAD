@@ -72,7 +72,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: linuxAssets
-          path: ${{github.workspace}}/
+          path: ${{github.workspace}}/LibreCAD*.AppImage
           pattern: LibreCAD*.AppImage
           overwrite: true
           retention-days: 2
@@ -100,7 +100,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: snapAssets
-          path: ${{github.workspace}}/
+          path: ${{github.workspace}}/librecad*.snap
           pattern: librecad*snap
           overwrite: true
           retention-days: 2
@@ -150,7 +150,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: macOSAssets
-          path: ${{github.workspace}}/
+          path: ${{github.workspace}}/LibreCAD*.dmg
           pattern: LibreCAD**.dmg
           overwrite: true
           retention-days: 2
@@ -242,7 +242,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: win32Assets
-          path: ${{github.workspace}}/
+          path: ${{github.workspace}}/LibreCAD*.exe
           pattern: LibreCAD*.exe
           overwrite: true
           retention-days: 2
@@ -334,7 +334,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: win64Assets
-          path: ${{github.workspace}}/
+          path: ${{github.workspace}}/LibreCAD*.exe
           pattern: LibreCAD*.exe
           overwrite: true
           retention-days: 2
