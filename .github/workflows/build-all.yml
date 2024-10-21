@@ -362,10 +362,10 @@ jobs:
           draft: false
           title: "Release Candidate"
           files: |
-            linuxAssets/LibreCAD*.*
+            linuxAssets/LibreCAD*.AppImage
             macOSAssets/LibreCAD*.dmg
             win*Assets/LibreCAD*.exe
-            snapAssets/librecad*.*
+            snapAssets/librecad*.snap
             LICENSE
 
 
