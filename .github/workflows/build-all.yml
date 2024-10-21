@@ -365,7 +365,7 @@ jobs:
             linuxAssets/LibreCAD*.*
             macOSAssets/LibreCAD*.dmg
             win*Assets/LibreCAD*.exe
-            assets/librecad*.*
+            snapAssets/librecad*.*
             LICENSE
 
 
