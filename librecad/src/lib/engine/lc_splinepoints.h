@@ -212,6 +212,7 @@ public:
     void revertDirection() override;
 
     void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+
     std::vector<RS_Vector> const& getPoints() const;
     std::vector<RS_Vector> const& getControlPoints() const;
     std::vector<RS_Vector> getStrokePoints() const;
