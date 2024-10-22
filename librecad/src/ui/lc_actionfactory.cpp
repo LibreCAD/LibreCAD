@@ -354,15 +354,16 @@ void LC_ActionFactory::createViewActions(QMap<QString, QAction*>& map, QActionGr
         {"ZoomWindow",RS2::ActionZoomWindow, tr("&Window Zoom"), ":/icons/zoom_window.svg","zoom-select"}});
 
     createMainWindowActions(map, group, {
-        {"Fullscreen",       SLOT(toggleFullscreen(bool)),     tr("&Fullscreen")},
-        {"ViewGrid",         SLOT(slotViewGrid(bool)),         tr("&Grid"),                 ":/icons/grid.svg"},
-        {"ViewDraft",        SLOT(slotViewDraft(bool)),        tr("&Draft"),                ":/icons/draft.svg"},
-        {"ViewLinesDraft",   SLOT(slotViewDraftLines(bool)),   tr("&Draft Lines"),          ":/icons/draftLineWidth.svg"},
-        {"ViewStatusBar",    SLOT(slotViewStatusBar(bool)),    tr("&Statusbar")},
-        {"ViewGridOrtho",    SLOT(slotViewGridOrtho(bool)),    tr("&Orthogonal Grid"),      ":/icons/grid_ortho.svg"},
-        {"ViewGridIsoLeft",  SLOT(slotViewGridIsoLeft(bool)),  tr("&Isometric Left Grid"),  ":/icons/grid_iso_left.svg"},
-        {"ViewGridIsoTop",   SLOT(slotViewGridIsoTop(bool)),   tr("&Isometric Top Grid"),   ":/icons/grid_iso_top.svg"},
-        {"ViewGridIsoRight", SLOT(slotViewGridIsoRight(bool)), tr("&Isometric Right Grid"), ":/icons/grid_iso_right.svg"},
+        {"Fullscreen",       SLOT(toggleFullscreen(bool)),          tr("&Fullscreen")},
+        {"ViewGrid",         SLOT(slotViewGrid(bool)),              tr("&Grid"),                 ":/icons/grid.svg"},
+        {"ViewDraft",        SLOT(slotViewDraft(bool)),             tr("&Draft"),                ":/icons/draft.svg"},
+        {"ViewLinesDraft",   SLOT(slotViewDraftLines(bool)),        tr("&Draft Lines"),          ":/icons/draftLineWidth.svg"},
+        {"ViewAntialiasing", SLOT(slotViewAntialiasing(bool)),      tr("&Antialiasing"),         ":/icons/anti_aliasing.svg"},
+        {"ViewStatusBar",    SLOT(slotViewStatusBar(bool)),         tr("&Statusbar")},
+        {"ViewGridOrtho",    SLOT(slotViewGridOrtho(bool)),         tr("&Orthogonal Grid"),      ":/icons/grid_ortho.svg"},
+        {"ViewGridIsoLeft",  SLOT(slotViewGridIsoLeft(bool)),       tr("&Isometric Left Grid"),  ":/icons/grid_iso_left.svg"},
+        {"ViewGridIsoTop",   SLOT(slotViewGridIsoTop(bool)),        tr("&Isometric Top Grid"),   ":/icons/grid_iso_top.svg"},
+        {"ViewGridIsoRight", SLOT(slotViewGridIsoRight(bool)),      tr("&Isometric Right Grid"), ":/icons/grid_iso_right.svg"},
     }, true);
 }
 
@@ -405,11 +406,11 @@ void LC_ActionFactory::createOptionsActionsUncheckable(QMap<QString, QAction *> 
     });
 
     createMainWindowActions(map, group, {
-        {"OptionsGeneral",   SLOT(slotOptionsGeneral()), tr("&Application Preferences"), ":/icons/settings.svg"},
-        {"WidgetOptions",    SLOT(widgetOptionsDialog()),    tr("Widget Options")},
-        {"ShortcutsOptions",    SLOT(slotOptionsShortcuts()),    tr("Keyboard Shortcuts"), ":/icons/shortcuts_settings.svg"},
-        {"DeviceOptions",    SLOT(showDeviceOptions()),      tr("Device Options")},
-        {"ReloadStyleSheet", SLOT(reloadStyleSheet()),   tr("Reload Style Sheet")}
+        {"OptionsGeneral",   SLOT(slotOptionsGeneral()),   tr("&Application Preferences"), ":/icons/settings.svg"},
+        {"WidgetOptions",    SLOT(widgetOptionsDialog()),  tr("Widget Options")},
+        {"ShortcutsOptions", SLOT(slotOptionsShortcuts()), tr("Keyboard Shortcuts"),       ":/icons/shortcuts_settings.svg"},
+        {"DeviceOptions",    SLOT(showDeviceOptions()),    tr("Device Options")},
+        {"ReloadStyleSheet", SLOT(reloadStyleSheet()),     tr("Reload Style Sheet")}
     });
 }
 
@@ -505,6 +506,7 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     connect(main_window, &QC_ApplicationWindow::gridChanged, map["ViewGrid"], &QAction::setChecked);
     connect(main_window, &QC_ApplicationWindow::draftChanged, map["ViewDraft"], &QAction::setChecked);
     connect(main_window, &QC_ApplicationWindow::draftChanged, map["ViewLinesDraft"], &QAction::setDisabled);
+    connect(main_window, &QC_ApplicationWindow::antialiasingChanged, map["ViewAntialiasing"], &QAction::setChecked);
 
     connect(main_window, &QC_ApplicationWindow::windowsChanged, map["OptionsDrawing"], &QAction::setEnabled);
 }

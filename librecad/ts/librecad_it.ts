@@ -936,7 +936,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionFactory</name>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="355"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="354"/>
         <source>&amp;Window Zoom</source>
         <translation>Zoom &amp;Finestra</translation>
     </message>
@@ -1375,7 +1375,7 @@ or [%2]</source>
         <translation>Inverti &amp;direzione</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="520"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="521"/>
         <source>Ctrl+R</source>
         <translation></translation>
     </message>
@@ -1440,12 +1440,12 @@ or [%2]</source>
         <translation>&amp;Esplodi il testo in singole lettere</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="340"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="339"/>
         <source>Point inside contour</source>
         <translation>Punto all&apos;interno di un contorno</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="341"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="340"/>
         <source>&amp;Distance Point to Point</source>
         <translation>&amp;Distanza da Punto a Punto</translation>
     </message>
@@ -1454,7 +1454,7 @@ or [%2]</source>
         <translation type="vanished">&amp;Distanza da Oggetto a Punto</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="344"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="343"/>
         <source>An&amp;gle between two lines</source>
         <translation>A&amp;ngolo fra due linee</translation>
     </message>
@@ -1463,7 +1463,7 @@ or [%2]</source>
         <translation type="vanished">&amp;Lunghezza totale degli oggetti selezionati</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="346"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="345"/>
         <source>Polygonal &amp;Area</source>
         <translation>&amp;Area Poligonale</translation>
     </message>
@@ -1497,7 +1497,7 @@ or [%2]</source>
         <translation>&amp;Incolla</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="331"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="330"/>
         <source>move to bottom</source>
         <translation>muovi in fondo</translation>
     </message>
@@ -1582,138 +1582,143 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="285"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="284"/>
         <source>Copy Pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="291"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="290"/>
         <source>Snap on grid</source>
         <translation type="unfinished">Aggancia alla griglia</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="292"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="291"/>
         <source>Snap Middle Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="293"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="292"/>
         <source>Snap on Endpoints</source>
         <translation type="unfinished">Aggancia sui punti finali</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="294"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="293"/>
         <source>Snap on Entity</source>
         <translation type="unfinished">Aggancia su oggetto</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="295"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="294"/>
         <source>Snap Center</source>
         <translation type="unfinished">Aggancia il centro</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="296"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="295"/>
         <source>Snap Middle</source>
         <translation type="unfinished">Aggancia al punto medio</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="297"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="296"/>
         <source>Snap Distance</source>
         <translation type="unfinished">Distanza di aggancio (snap)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="298"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="297"/>
         <source>Snap Intersection</source>
         <translation type="unfinished">Aggancia all&apos;intersezione</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="304"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="303"/>
         <source>Restrict Horizontal</source>
         <translation type="unfinished">Limitazione Orizzontale</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="305"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="304"/>
         <source>Restrict Vertical</source>
         <translation type="unfinished">Limitazione Verticale</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="305"/>
         <source>Restrict Orthogonal</source>
         <translation type="unfinished">Limitazione Ortogonale</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="307"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
         <source>Restrict Nothing</source>
         <translation type="unfinished">Nessuna Limitazione</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="313"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="312"/>
         <source>Set relative zero position</source>
         <translation type="unfinished">Posiziona Zero Relativo</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="314"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="313"/>
         <source>Lock relative zero position</source>
         <translation type="unfinished">Blocca posizione Zero Relativo</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="323"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="322"/>
         <source>Exclusive Snap Mode</source>
         <translation type="unfinished">Aggancio esclusivo</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="324"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="323"/>
         <source>Free Snap</source>
         <translation type="unfinished">Aggancio libero</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="332"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="331"/>
         <source>lower after entity</source>
         <translation>porta sotto oggetto</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="333"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="332"/>
         <source>raise over entity</source>
         <translation>porta sopra oggetto</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="334"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="333"/>
         <source>move to top</source>
         <translation>porta in cima</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="342"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="341"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="343"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="342"/>
         <source>Distance &amp;Point to Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="345"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="344"/>
         <source>Total &amp;length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="347"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="346"/>
         <source>Entity Pro&amp;perties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="348"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="347"/>
         <source>Collect &amp;Coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="349"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="348"/>
         <source>Ang&amp;le between 3 points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="361"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="360"/>
         <source>&amp;Draft Lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="361"/>
+        <source>&amp;Antialiasing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1841,7 +1846,7 @@ or [%2]</source>
         <translation>Deseleziona &amp;Tutto</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="528"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="529"/>
         <source>Ctrl+K</source>
         <translation></translation>
     </message>
@@ -1941,23 +1946,23 @@ or [%2]</source>
         <translation>&amp;Blocco</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="358"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Fullscreen</source>
         <translation>&amp;Schermo pieno</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="359"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="358"/>
         <source>&amp;Grid</source>
         <translation>&amp;Griglia</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="545"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="546"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="360"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="359"/>
         <source>&amp;Draft</source>
         <translation>&amp;Bozza</translation>
     </message>
@@ -1967,7 +1972,7 @@ or [%2]</source>
         <translation>Barra di &amp;stato</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="548"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="549"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
         <translation></translation>
@@ -2068,7 +2073,7 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="547"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="548"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
         <translation></translation>
@@ -7595,226 +7600,226 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_WidgetFactory</name>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="414"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="415"/>
         <source>Library Browser</source>
         <translation>Ricerca libreria</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="426"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="427"/>
         <source>Command line</source>
         <translation>Riga di comando</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="451"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
         <source>Dock</source>
         <translation>Zona aggancio</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="451"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
         <source>Float</source>
         <translation>Galleggiante</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="555"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="554"/>
         <source>Lines</source>
         <translation>Linee</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="556"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="555"/>
         <source>Circles</source>
         <translation>Circonferenze</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="557"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="556"/>
         <source>Freehand</source>
         <translation>Mano libera</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="558"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="557"/>
         <source>Ellipses</source>
         <translation>Ellissi</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="558"/>
         <source>PolyLines</source>
         <translation>Polilinee</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="329"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="533"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="560"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="330"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="532"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Select</source>
         <translation type="unfinished">Seleziona</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="324"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="528"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="325"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="527"/>
         <source>Line</source>
         <translation type="unfinished">Linea</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="325"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="326"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="528"/>
         <source>Circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="326"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="530"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="327"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
         <source>Curve</source>
         <translation type="unfinished">Curva</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="327"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="531"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="328"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="530"/>
         <source>Ellipse</source>
         <translation type="unfinished">Ellisse</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="328"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="532"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="329"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="531"/>
         <source>Polyline</source>
         <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="330"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="534"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="331"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="533"/>
         <source>Dimension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="331"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="535"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="332"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="534"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="561"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="333"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="537"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="334"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="536"/>
         <source>Info</source>
         <translation type="unfinished">Informazioni</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="334"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="466"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="335"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="564"/>
         <source>Order</source>
         <translation type="unfinished">Ordine</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="356"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="357"/>
         <source>Pen Palette</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="366"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="367"/>
         <source>Layer List</source>
         <translation type="unfinished">Elenco livelli</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="378"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="379"/>
         <source>Layer Tree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="391"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="392"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="404"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="405"/>
         <source>Block List</source>
         <translation type="unfinished">Elenco blocchi</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="457"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="458"/>
         <source>File</source>
         <translation type="unfinished">File</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="462"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="463"/>
         <source>Edit</source>
         <translation type="unfinished">Modifica</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="471"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="472"/>
         <source>View</source>
         <translation type="unfinished">Visualizza</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="477"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="478"/>
         <source>Snap Selection</source>
         <translation type="unfinished">Selezione snap</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="487"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="488"/>
         <source>Pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="493"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="494"/>
         <source>Tool Options</source>
         <translation type="unfinished">Opzioni Strumenti</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="495"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="496"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="713"/>
         <source>Dock Areas</source>
         <translation type="unfinished">Aree di aggangio</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="500"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="501"/>
         <source>Creators</source>
         <translation type="unfinished">Autori</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="504"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="505"/>
         <source>Preferences</source>
         <translation type="unfinished">Preferenze</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="552"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="551"/>
         <source>Categories</source>
         <translation type="unfinished">Categorie</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="561"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="560"/>
         <source>Dimensions</source>
         <translation>Quotature</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="574"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="573"/>
         <source>&amp;File</source>
         <translation type="unfinished">&amp;File</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="585"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="584"/>
         <source>Import</source>
         <translation type="unfinished">Importa</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="590"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
         <source>Export</source>
         <translation type="unfinished">Esporta</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="607"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="606"/>
         <source>&amp;Options</source>
         <translation type="unfinished">&amp;Opzioni</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="617"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="616"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;Modifica</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="633"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="632"/>
         <source>Pl&amp;ugins</source>
         <translation type="unfinished">Pl&amp;ugin</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="635"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="634"/>
         <source>&amp;View</source>
         <translation type="unfinished">&amp;Visualizza</translation>
     </message>
@@ -8000,14 +8005,14 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="332"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="536"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="563"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="333"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="535"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
         <source>Modify</source>
         <translation type="unfinished">Modifica</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="564"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="563"/>
         <source>Measure</source>
         <translation>Misura</translation>
     </message>
@@ -8140,22 +8145,22 @@ p, li { white-space: pre-wrap; }
         <translation>Opzioni linea con angolo relativo</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="59"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="56"/>
         <source>Spacing:</source>
         <translation>Interasse:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="84"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="81"/>
         <source>Distance from original polyline</source>
         <translation>Distanza dalla polilinea d&apos;origine</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="97"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="94"/>
         <source>Copies:</source>
         <translation>Copie:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="110"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="107"/>
         <source>Number of copies</source>
         <translation type="unfinished">Numero di copie</translation>
     </message>
@@ -8242,52 +8247,52 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">&amp;Aiuto</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1148"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1152"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Cascata</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1149"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1153"/>
         <source>&amp;Tile</source>
         <translation>&amp;Affianca</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1151"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1155"/>
         <source>Tile &amp;Horizontally</source>
         <translation>Affianca &amp;orizzontalmente</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1236"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
         <source>Creating new file...</source>
         <translation>Creazione nuovo file...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1282"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1286"/>
         <source>unnamed document %1</source>
         <translation>Documento senza nome %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2677"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2691"/>
         <source>Opening recent file...</source>
         <translation>Apertura file recente...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1708"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1712"/>
         <source>Loaded document: </source>
         <translation>Documento caricato: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1714"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1718"/>
         <source>Opening aborted</source>
         <translation>Apertura interrotta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2097"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2101"/>
         <source>Printing...</source>
         <translation>Stampa...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2249"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2253"/>
         <source>Exiting application...</source>
         <translation>Chiusura applicazione...</translation>
     </message>
@@ -8320,12 +8325,12 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Elenco blocchi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2173"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2177"/>
         <source>Print preview for %1</source>
         <translation>Anteprima di stampa per %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1357"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1361"/>
         <source>New Drawing created.</source>
         <translation>Nuovo disegno creato.</translation>
     </message>
@@ -8340,47 +8345,47 @@ p, li { white-space: pre-wrap; }
         <translation>Disegno salvato: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1806"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1810"/>
         <source>Exporting drawing...</source>
         <translation>Esportazione disegno...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1902"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1906"/>
         <source>Exported: %1</source>
         <translation>Esportato: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1942"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1946"/>
         <source>Exporting...</source>
         <translation>Esportazione...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1994"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1998"/>
         <source>Export complete</source>
         <translation>Esportazione completata</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1994"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1998"/>
         <source>Export failed!</source>
         <translation>Esportazione non riuscita!</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2101"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2105"/>
         <source>Printing complete</source>
         <translation>Stampa completata</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2707"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2721"/>
         <source>Command line</source>
         <translation>Riga di comando</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1280"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1284"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Blocco &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1488"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1492"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -8393,17 +8398,17 @@ Verificare i permessi.</translation>
         <translation type="vanished">&amp;Polilinea</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1776"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1780"/>
         <source>Auto-saving drawing...</source>
         <translation>Salvataggio automatico disegno...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1784"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1788"/>
         <source>Auto-saved drawing</source>
         <translation>Disegno salvato automaticamente</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1789"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1793"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -8430,7 +8435,7 @@ Salvataggio automatico disabilitato.</translation>
         <translation type="vanished">Versione: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1584"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1588"/>
         <source>Warning: File already opened : </source>
         <translation>Attenzione: file già aperto: </translation>
     </message>
@@ -8445,27 +8450,27 @@ Salvataggio automatico disabilitato.</translation>
         <translation> , verificare il nome ed i permessi del file.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1150"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1154"/>
         <source>Tile &amp;Vertically</source>
         <translation>Affianca &amp;Verticalmente</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1098"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1102"/>
         <source>Ta&amp;b mode</source>
         <translation>Modalità &amp;Schede</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1426"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1430"/>
         <source>New document from template: </source>
         <translation>Nuovo documendo da modello: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1472"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1476"/>
         <source>Select Template aborted</source>
         <translation>Selezione modello annullata</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1794"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1798"/>
         <source>Auto-saving failed</source>
         <translation>Salvataggio automatico fallito</translation>
     </message>
@@ -8474,7 +8479,7 @@ Salvataggio automatico disabilitato.</translation>
         <translation type="vanished">Selezione snap</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1843"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1847"/>
         <source>Export as</source>
         <translation>Esporta come</translation>
     </message>
@@ -8492,10 +8497,10 @@ Salvataggio automatico disabilitato.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="432"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1288"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1692"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2290"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2611"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1292"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1696"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2294"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2625"/>
         <source>Draft Mode</source>
         <translation>Modalità bozza</translation>
     </message>
@@ -8508,7 +8513,7 @@ Salvataggio automatico disabilitato.</translation>
         <translation type="vanished">Esporta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1630"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1634"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -8517,7 +8522,7 @@ Please check its existence and permissions.</source>
 Verificare l&apos;esistenza e i permessi.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1713"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1717"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>File &apos;%1&apos; non esiste. Apertura annullata</translation>
     </message>
@@ -8582,22 +8587,22 @@ Verificare l&apos;esistenza e i permessi.</translation>
         <translation type="vanished">Stato Griglia</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2648"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2662"/>
         <source>Toolbars</source>
         <translation>Barre degli Strumenti</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2653"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2667"/>
         <source>Dockwidgets</source>
         <translation>Pannelli</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2759"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2773"/>
         <source>Device Options</source>
         <translation>Opzioni puntatore</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2762"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2776"/>
         <source>Device</source>
         <translation>Puntatore</translation>
     </message>
@@ -8647,17 +8652,17 @@ Verificare l&apos;esistenza e i permessi.</translation>
         <translation type="vanished">Sistema</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2793"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2807"/>
         <source>Toolbar Creator</source>
         <translation>Creatore Barre Strumenti</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2853"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2867"/>
         <source>Menu Creator</source>
         <translation>Crea Menu</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2877"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2891"/>
         <source>Menu Assigner</source>
         <translation>Assegna Menu</translation>
     </message>
@@ -8712,62 +8717,62 @@ Verificare l&apos;esistenza e i permessi.</translation>
         <translation>Salva %1 come...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1102"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1106"/>
         <source>&amp;Window mode</source>
         <translation>Modo finestra</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1108"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1112"/>
         <source>&amp;Layout</source>
         <translation>Disposizione</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1111"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1115"/>
         <source>Rounded</source>
         <translation>Arrotondato</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1117"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1121"/>
         <source>Triangular</source>
         <translation>Triangolare</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1124"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1128"/>
         <source>North</source>
         <translation>Nord</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1128"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
         <source>South</source>
         <translation>Sud</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1136"/>
         <source>East</source>
         <translation>Est</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1136"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
         <source>West</source>
         <translation>Ovest</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1141"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1145"/>
         <source>&amp;Arrange</source>
         <translation>Organizza</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1144"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1148"/>
         <source>&amp;Maximized</source>
         <translation>Massimizzato</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1753"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1757"/>
         <source>Save All cancelled</source>
         <translation>Salva tutto annullato</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2058"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2062"/>
         <source>Close All cancelled</source>
         <translation>Chiudi tutto annullato</translation>
     </message>
@@ -8776,17 +8781,17 @@ Verificare l&apos;esistenza e i permessi.</translation>
         <translation type="vanished">Il codice</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2707"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2721"/>
         <source>Cmd</source>
         <translation>Comando</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2708"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2722"/>
         <source>Float</source>
         <translation>Galleggiante</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2708"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2722"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation>Aggancio</translation>
@@ -15686,9 +15691,9 @@ p, li { white-space: pre-wrap; }
     <name>QMessageBox</name>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1491"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1633"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1788"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1495"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1637"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1792"/>
         <source>Warning</source>
         <translation>Attenzione</translation>
     </message>
@@ -17664,7 +17669,7 @@ Vuoi sovrascrivere?</translation>
         <translation>Tutto</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1661"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1665"/>
         <source>Invalid objects removed:</source>
         <translation>Oggetti non validi rimossi:</translation>
     </message>
@@ -17727,7 +17732,7 @@ Vuoi sovrascrivere?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="696"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3043"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3057"/>
         <source>License</source>
         <translation>Licenza</translation>
     </message>
@@ -21647,12 +21652,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyAttributes</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="62"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="64"/>
         <source>Select to modify attributes (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="62"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="64"/>
         <source>Modify attributes immediately after selecting</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21852,7 +21857,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyEntity</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="120"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="122"/>
         <source>Click on entity to modify</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22895,7 +22900,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_GraphicView</name>
     <message>
-        <location filename="../src/lib/gui/rs_graphicview.cpp" line="1942"/>
+        <location filename="../src/lib/gui/rs_graphicview.cpp" line="1953"/>
         <source>Draft</source>
         <translation type="unfinished"></translation>
     </message>

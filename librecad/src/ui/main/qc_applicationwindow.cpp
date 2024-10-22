@@ -788,9 +788,15 @@ void QC_ApplicationWindow::initSettings() {
     {
         QAction *viewLinesDraftAction = getAction("ViewLinesDraft");
         viewLinesDraftAction->setChecked(LC_GET_BOOL("DraftLinesMode", false));
+
         bool draftMode = LC_GET_BOOL("DraftMode", false);
+
         getAction("ViewDraft")->setChecked(draftMode);
         viewLinesDraftAction->setDisabled(draftMode);
+
+        QAction* viewAntialiasing = getAction("ViewAntialiasing");
+        bool antialiasing = LC_GET_BOOL("Antialiasing", false);
+        viewAntialiasing->setChecked(antialiasing);
     }
     LC_GROUP_END();
 }
@@ -2306,8 +2312,8 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
             title.remove(draft_string);
             win->setWindowTitle(title);
         }
-        emit draftChanged(toggle);
     }
+    emit draftChanged(toggle);
     redrawAll();
 }
 
@@ -2319,13 +2325,21 @@ void QC_ApplicationWindow::slotViewDraftLines(bool toggle) {
     for (QC_MDIWindow *win: window_list) {
         QG_GraphicView *graphicView = win->getGraphicView();
         graphicView->setDraftLinesMode(toggle);
-//        QC_MDIWindow *ppv = win->getPrintPreview();
-//        if (ppv != nullptr){
-//            QG_GraphicView *printPreviewGraphicView = ppv->getGraphicView();
-//            printPreviewGraphicView->setDraftMode(toggle);
-//            printPreviewGraphicView->redraw();
-//        }
     }
+    emit draftLinesChanged(toggle);
+    redrawAll();
+}
+
+void QC_ApplicationWindow::slotViewAntialiasing(bool toggle) {
+    RS_DEBUG->print("QC_ApplicationWindow::slotViewAntialiasing()");
+
+    LC_SET_ONE("Appearance","Antialiasing", toggle);
+
+    for (QC_MDIWindow *win: window_list) {
+        QG_GraphicView *graphicView = win->getGraphicView();
+        graphicView->setAntialiasing(toggle);
+    }
+    emit antialiasingChanged(toggle);
     redrawAll();
 }
 
@@ -2356,9 +2370,12 @@ void QC_ApplicationWindow::updateGrids() {
  */
 void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
     RS_DEBUG->print("QC_ApplicationWindow::slotViewStatusBar()");
-
     statusBar()->setVisible(toggle);
 }
+
+
+
+
 
 void QC_ApplicationWindow::slotViewGridOrtho(bool toggle) {
     setGridView(toggle, false, RS2::IsoGridViewType::IsoLeft);
@@ -2431,12 +2448,15 @@ void QC_ApplicationWindow::slotOptionsShortcuts() {
  * Shows the dialog for general application preferences.
  */
 void QC_ApplicationWindow::slotOptionsGeneral() {
-    int dialogResult = RS_DIALOGFACTORY->requestOptionsGeneralDialog();
 
+    int dialogResult = RS_DIALOGFACTORY->requestOptionsGeneralDialog();
     if (dialogResult == QDialog::Accepted){
         // fixme - check this signal, probably it's better to rely on settings change
         bool hideRelativeZero = LC_GET_ONE_BOOL("Appearance", "hideRelativeZero");
         emit signalEnableRelativeZeroSnaps(!hideRelativeZero);
+
+        bool antialiasing = LC_GET_ONE_BOOL("Appearance", "Antialiasing", false);
+        emit antialiasingChanged(antialiasing);
 
         QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
         for (int i = 0; i < windows.size(); ++i) {

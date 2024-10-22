@@ -183,6 +183,7 @@ public slots:
     void slotViewDraftLines(bool toggle);
     /** toggle the statusbar */
     void slotViewStatusBar(bool toggle);
+    void slotViewAntialiasing(bool toggle);
 
     void slotViewGridOrtho(bool toggle);
     void slotViewGridIsoLeft(bool toggle);
@@ -242,6 +243,7 @@ signals:
     void gridChanged(bool on);
     void draftChanged(bool on);
     void draftLinesChanged(bool on);
+    void antialiasingChanged(bool on);
     void printPreviewChanged(bool on);
     void windowsChanged(bool windowsLeft);
     void signalEnableRelativeZeroSnaps(const bool);

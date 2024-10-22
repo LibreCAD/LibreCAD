@@ -1451,7 +1451,7 @@ void QG_GraphicView::loadSettings() {
 }
 
 void QG_GraphicView::setAntialiasing(bool state){
-	antialiasing = state;
+    antialiasing = state;
 }
 
 void QG_GraphicView::addScrollbars(){

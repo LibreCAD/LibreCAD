@@ -268,5 +268,6 @@
         <file>grid_iso_left.svg</file>
         <file>grid_iso_right.svg</file>
         <file>draftLineWidth.svg</file>
+        <file>anti_aliasing.svg</file>
     </qresource>
 </RCC>

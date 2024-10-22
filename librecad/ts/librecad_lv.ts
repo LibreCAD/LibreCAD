@@ -936,7 +936,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionFactory</name>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="355"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="354"/>
         <source>&amp;Window Zoom</source>
         <translation>&amp;Loga mērogs</translation>
     </message>
@@ -1371,7 +1371,7 @@ or [%2]</source>
         <translation>Apgriezt &amp;virzienu</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="520"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="521"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
@@ -1436,12 +1436,12 @@ or [%2]</source>
         <translation>&amp;Eksplodēt tekstu burtos</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="340"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="339"/>
         <source>Point inside contour</source>
         <translation>Punkts kontūrā</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="341"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="340"/>
         <source>&amp;Distance Point to Point</source>
         <translation>&amp;Attālums no punkta uz punktu</translation>
     </message>
@@ -1450,7 +1450,7 @@ or [%2]</source>
         <translation type="vanished">&amp;Attālums no objekta līdz punktam</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="344"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="343"/>
         <source>An&amp;gle between two lines</source>
         <translation>&amp;Leņķis starp divām līnijām</translation>
     </message>
@@ -1459,7 +1459,7 @@ or [%2]</source>
         <translation type="vanished">Izvēlē&amp;to objektu kopīgais garums</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="346"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="345"/>
         <source>Polygonal &amp;Area</source>
         <translation>Daudzstūra l&amp;aukums</translation>
     </message>
@@ -1493,7 +1493,7 @@ or [%2]</source>
         <translation>&amp;Ielīmēt</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="331"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="330"/>
         <source>move to bottom</source>
         <translation>pārvietot uz apakšu</translation>
     </message>
@@ -1578,138 +1578,143 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="285"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="284"/>
         <source>Copy Pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="291"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="290"/>
         <source>Snap on grid</source>
         <translation type="unfinished">Pievilkt pie režģa</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="292"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="291"/>
         <source>Snap Middle Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="293"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="292"/>
         <source>Snap on Endpoints</source>
         <translation type="unfinished">Pievilkt pie galapunktiem</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="294"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="293"/>
         <source>Snap on Entity</source>
         <translation type="unfinished">Pievilkt pie objekta</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="295"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="294"/>
         <source>Snap Center</source>
         <translation type="unfinished">Pievilkt pie centra</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="296"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="295"/>
         <source>Snap Middle</source>
         <translation type="unfinished">Pievilkt pie vidus</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="297"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="296"/>
         <source>Snap Distance</source>
         <translation type="unfinished">Pievilkšanas attālums</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="298"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="297"/>
         <source>Snap Intersection</source>
         <translation type="unfinished">Pievilkt krustpunktos</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="304"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="303"/>
         <source>Restrict Horizontal</source>
         <translation type="unfinished">Ierobežot horizontāli</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="305"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="304"/>
         <source>Restrict Vertical</source>
         <translation type="unfinished">Ierobežot vertikāli</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="305"/>
         <source>Restrict Orthogonal</source>
         <translation type="unfinished">Ierobežot perpendikulāri</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="307"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
         <source>Restrict Nothing</source>
         <translation type="unfinished">Neierobežot</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="313"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="312"/>
         <source>Set relative zero position</source>
         <translation type="unfinished">Iestatīt relatīvās nulles pozīciju</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="314"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="313"/>
         <source>Lock relative zero position</source>
         <translation type="unfinished">Fiksēt relatīvās nulles pozīciju</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="323"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="322"/>
         <source>Exclusive Snap Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="324"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="323"/>
         <source>Free Snap</source>
         <translation type="unfinished">Brīva pievilkšana</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="332"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="331"/>
         <source>lower after entity</source>
         <translation>pazemināt pēc objekta</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="333"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="332"/>
         <source>raise over entity</source>
         <translation>pacelt virs objekta</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="334"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="333"/>
         <source>move to top</source>
         <translation>pārvietot uz virspusi</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="342"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="341"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="343"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="342"/>
         <source>Distance &amp;Point to Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="345"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="344"/>
         <source>Total &amp;length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="347"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="346"/>
         <source>Entity Pro&amp;perties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="348"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="347"/>
         <source>Collect &amp;Coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="349"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="348"/>
         <source>Ang&amp;le between 3 points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="361"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="360"/>
         <source>&amp;Draft Lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="361"/>
+        <source>&amp;Antialiasing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1837,7 +1842,7 @@ or [%2]</source>
         <translation>Neizvēlēties &amp;nevienu</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="528"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="529"/>
         <source>Ctrl+K</source>
         <translation>Ctrl+K</translation>
     </message>
@@ -1937,23 +1942,23 @@ or [%2]</source>
         <translation>&amp;Bloks</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="358"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Fullscreen</source>
         <translation>&amp;Pilnekrāns</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="359"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="358"/>
         <source>&amp;Grid</source>
         <translation>&amp;Režģis</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="545"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="546"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="360"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="359"/>
         <source>&amp;Draft</source>
         <translation>&amp;Melnraksts</translation>
     </message>
@@ -1963,7 +1968,7 @@ or [%2]</source>
         <translation>&amp;Statusjosla</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="548"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="549"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
         <translation>Ctrl+I</translation>
@@ -2064,7 +2069,7 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="547"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="548"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
         <translation type="unfinished"></translation>
@@ -7587,226 +7592,226 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_WidgetFactory</name>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="414"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="415"/>
         <source>Library Browser</source>
         <translation type="unfinished">Bibliotēka pārlūks</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="426"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="427"/>
         <source>Command line</source>
         <translation type="unfinished">Komandrinda</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="451"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
         <source>Dock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="451"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="555"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="554"/>
         <source>Lines</source>
         <translation type="unfinished">Līnijas</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="556"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="555"/>
         <source>Circles</source>
         <translation type="unfinished">Riņķi</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="557"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="556"/>
         <source>Freehand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="558"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="557"/>
         <source>Ellipses</source>
         <translation type="unfinished">Elipses</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="558"/>
         <source>PolyLines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="329"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="533"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="560"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="330"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="532"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Select</source>
         <translation type="unfinished">Izvēlēties</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="324"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="528"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="325"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="527"/>
         <source>Line</source>
         <translation type="unfinished">Līnija</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="325"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="326"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="528"/>
         <source>Circle</source>
         <translation type="unfinished">Riņķis</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="326"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="530"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="327"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
         <source>Curve</source>
         <translation type="unfinished">Līkne</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="327"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="531"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="328"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="530"/>
         <source>Ellipse</source>
         <translation type="unfinished">Elipse</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="328"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="532"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="329"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="531"/>
         <source>Polyline</source>
         <translation type="unfinished">Lauzta līnija</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="330"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="534"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="331"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="533"/>
         <source>Dimension</source>
         <translation type="unfinished">Dimensija</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="331"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="535"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="332"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="534"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="561"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="333"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="537"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="334"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="536"/>
         <source>Info</source>
         <translation type="unfinished">Informācija</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="334"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="466"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="335"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="564"/>
         <source>Order</source>
         <translation type="unfinished">Secība</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="356"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="357"/>
         <source>Pen Palette</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="366"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="367"/>
         <source>Layer List</source>
         <translation type="unfinished">Slāņu saraksts</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="378"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="379"/>
         <source>Layer Tree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="391"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="392"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="404"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="405"/>
         <source>Block List</source>
         <translation type="unfinished">Bloku saraksts</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="457"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="458"/>
         <source>File</source>
         <translation type="unfinished">Datne</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="462"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="463"/>
         <source>Edit</source>
         <translation type="unfinished">Rediģēt</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="471"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="472"/>
         <source>View</source>
         <translation type="unfinished">Skats</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="477"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="478"/>
         <source>Snap Selection</source>
         <translation type="unfinished">Pievilkšanas izvēle</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="487"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="488"/>
         <source>Pen</source>
         <translation type="unfinished">Zīmulis</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="493"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="494"/>
         <source>Tool Options</source>
         <translation type="unfinished">Rīku opcijas</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="495"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="496"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="713"/>
         <source>Dock Areas</source>
         <translation type="unfinished">Doka laukumi</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="500"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="501"/>
         <source>Creators</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="504"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="505"/>
         <source>Preferences</source>
         <translation type="unfinished">Iestatījumi</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="552"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="551"/>
         <source>Categories</source>
         <translation type="unfinished">Kategorijas</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="561"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="560"/>
         <source>Dimensions</source>
         <translation type="unfinished">Dimensijas</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="574"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="573"/>
         <source>&amp;File</source>
         <translation type="unfinished">&amp;Datne</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="585"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="584"/>
         <source>Import</source>
         <translation type="unfinished">Importēt</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="590"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
         <source>Export</source>
         <translation type="unfinished">Eksportēt</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="607"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="606"/>
         <source>&amp;Options</source>
         <translation type="unfinished">&amp;Opcijas</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="617"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="616"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">R&amp;ediģēt</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="633"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="632"/>
         <source>Pl&amp;ugins</source>
         <translation type="unfinished">Spra&amp;udņi</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="635"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="634"/>
         <source>&amp;View</source>
         <translation type="unfinished">&amp;Skats</translation>
     </message>
@@ -7992,14 +7997,14 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="332"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="536"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="563"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="333"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="535"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
         <source>Modify</source>
         <translation type="unfinished">Modificēt</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="564"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="563"/>
         <source>Measure</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8128,22 +8133,22 @@ p, li { white-space: pre-wrap; }
         <translation>Līnijas relatīvā leņķa opcijas</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="59"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="56"/>
         <source>Spacing:</source>
         <translation>Atstatums:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="84"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="81"/>
         <source>Distance from original polyline</source>
         <translation>Attālums no sākotnējās lauztās līnijas</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="97"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="94"/>
         <source>Copies:</source>
         <translation>Kopijas:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="110"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="107"/>
         <source>Number of copies</source>
         <translation type="unfinished">Kopiju skaits</translation>
     </message>
@@ -8230,52 +8235,52 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">&amp;Palīdzība</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1148"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1152"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Kaskāde</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1149"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1153"/>
         <source>&amp;Tile</source>
         <translation>&amp;Flīzēt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1151"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1155"/>
         <source>Tile &amp;Horizontally</source>
         <translation>Flīzēt &amp;horizontāli</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1236"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
         <source>Creating new file...</source>
         <translation>Izveido jaunu datni...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1282"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1286"/>
         <source>unnamed document %1</source>
         <translation>nenosaukts dokuments %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2677"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2691"/>
         <source>Opening recent file...</source>
         <translation>Atver nesenu datni...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1708"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1712"/>
         <source>Loaded document: </source>
         <translation>Ielādēts dokuments:</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1714"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1718"/>
         <source>Opening aborted</source>
         <translation>Atver apturētu</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2097"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2101"/>
         <source>Printing...</source>
         <translation>Drukā...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2249"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2253"/>
         <source>Exiting application...</source>
         <translation>Iziet no lietotnes...</translation>
     </message>
@@ -8288,12 +8293,12 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Bloku saraksts</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2173"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2177"/>
         <source>Print preview for %1</source>
         <translation>Drukāt %1 priekšskatījumu</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1357"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1361"/>
         <source>New Drawing created.</source>
         <translation>Izveidots jauns zīmējums.</translation>
     </message>
@@ -8308,47 +8313,47 @@ p, li { white-space: pre-wrap; }
         <translation>Saglabātais zīmējums: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1806"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1810"/>
         <source>Exporting drawing...</source>
         <translation>Eksportē zīmējumu...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1902"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1906"/>
         <source>Exported: %1</source>
         <translation>Eksportēts: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1942"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1946"/>
         <source>Exporting...</source>
         <translation>Eksportē...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1994"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1998"/>
         <source>Export complete</source>
         <translation>Eksportēšana pabeigta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1994"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1998"/>
         <source>Export failed!</source>
         <translation>Eksportēšana neizdevās!</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2101"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2105"/>
         <source>Printing complete</source>
         <translation>Drukāšana pabeigta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2707"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2721"/>
         <source>Command line</source>
         <translation>Komandrinda</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1280"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1284"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Bloks “%1”</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1488"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1492"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -8361,17 +8366,17 @@ Pārbaudiet tiesības.</translation>
         <translation type="vanished">&amp;Lauzta līnija</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1776"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1780"/>
         <source>Auto-saving drawing...</source>
         <translation>Automātiski saglabā zīmējumu...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1784"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1788"/>
         <source>Auto-saved drawing</source>
         <translation>Automātiski saglabāts zīmējums</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1789"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1793"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -8398,7 +8403,7 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
         <translation type="vanished">Versija: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1584"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1588"/>
         <source>Warning: File already opened : </source>
         <translation>Brīdinājums — datne jau ir atvērta : </translation>
     </message>
@@ -8413,27 +8418,27 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
         <translation> , lūdzu, pārbaudiet datnes nosaukumu un atļaujas.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1150"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1154"/>
         <source>Tile &amp;Vertically</source>
         <translation>Flīzēt &amp;vertikāli</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1098"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1102"/>
         <source>Ta&amp;b mode</source>
         <translation>&amp;Ciļņu režīms</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1426"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1430"/>
         <source>New document from template: </source>
         <translation>Jauns dokuments no veidnes: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1472"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1476"/>
         <source>Select Template aborted</source>
         <translation>Veidnes izvēle apturēta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1794"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1798"/>
         <source>Auto-saving failed</source>
         <translation>Automātiskā saglabāšana neizdevās</translation>
     </message>
@@ -8458,7 +8463,7 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
         <translation type="vanished">Rīku opcijas</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1843"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1847"/>
         <source>Export as</source>
         <translation>Eksportēt kā</translation>
     </message>
@@ -8476,10 +8481,10 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="432"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1288"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1692"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2290"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2611"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1292"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1696"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2294"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2625"/>
         <source>Draft Mode</source>
         <translation>Melnraksta režīms</translation>
     </message>
@@ -8492,7 +8497,7 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
         <translation type="vanished">Eksportēt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1630"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1634"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -8501,7 +8506,7 @@ Please check its existence and permissions.</source>
 Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1713"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1717"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>Datne “%1” neeksistē. Atvēršana ir pārtraukta</translation>
     </message>
@@ -8570,22 +8575,22 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
         <translation type="vanished">Režģa satuss</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2648"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2662"/>
         <source>Toolbars</source>
         <translation>Rīkjoslas</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2653"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2667"/>
         <source>Dockwidgets</source>
         <translation>Doka sīkrīki</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2759"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2773"/>
         <source>Device Options</source>
         <translation>Ierīces opcijas</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2762"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2776"/>
         <source>Device</source>
         <translation>Ierīce</translation>
     </message>
@@ -8615,17 +8620,17 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
         <translation type="obsolete">Kopēt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2793"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2807"/>
         <source>Toolbar Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2853"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2867"/>
         <source>Menu Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2877"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2891"/>
         <source>Menu Assigner</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8671,77 +8676,77 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1102"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1106"/>
         <source>&amp;Window mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1108"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1112"/>
         <source>&amp;Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1111"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1115"/>
         <source>Rounded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1117"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1121"/>
         <source>Triangular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1124"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1128"/>
         <source>North</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1128"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
         <source>South</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1136"/>
         <source>East</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1136"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
         <source>West</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1141"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1145"/>
         <source>&amp;Arrange</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1144"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1148"/>
         <source>&amp;Maximized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1753"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1757"/>
         <source>Save All cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2058"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2062"/>
         <source>Close All cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2707"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2721"/>
         <source>Cmd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2708"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2722"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2708"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2722"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation type="unfinished"></translation>
@@ -15584,9 +15589,9 @@ p, li { white-space: pre-wrap; }
     <name>QMessageBox</name>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1491"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1633"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1788"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1495"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1637"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1792"/>
         <source>Warning</source>
         <translation>Brīdinājums</translation>
     </message>
@@ -17554,7 +17559,7 @@ Vai vēlaties to aizvietot?</translation>
         <translation type="unfinished">Viss</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1661"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1665"/>
         <source>Invalid objects removed:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17617,7 +17622,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="696"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3043"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3057"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21518,12 +21523,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyAttributes</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="62"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="64"/>
         <source>Select to modify attributes (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="62"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="64"/>
         <source>Modify attributes immediately after selecting</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21723,7 +21728,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyEntity</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="120"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="122"/>
         <source>Click on entity to modify</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22774,7 +22779,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_GraphicView</name>
     <message>
-        <location filename="../src/lib/gui/rs_graphicview.cpp" line="1942"/>
+        <location filename="../src/lib/gui/rs_graphicview.cpp" line="1953"/>
         <source>Draft</source>
         <translation type="unfinished"></translation>
     </message>
