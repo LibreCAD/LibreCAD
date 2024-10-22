@@ -99,10 +99,10 @@ jobs:
 #          ./scripts/createSnap.sh
 #
 #      - name: Uploading snap
-#        uses: actions/upload-artifact@v3.1.0
+#        uses: actions/upload-artifact@main
 #        with:
-#          path: ${{ github.workspace }}/librecad**snap
-#          name: LibreCAD.snap
+#          name: snapAssets
+#          path: librecad*.snap
 #
   BuildMacOS:
     runs-on: macos-14
@@ -281,5 +281,5 @@ jobs:
             linuxAssets/LibreCAD*.AppImage
             macOSAssets/LibreCAD*.dmg
             win64Assets/LibreCAD*.exe
-            snapAssets/*snap
+            snapAssets/librecad*.snap
             LICENSE
