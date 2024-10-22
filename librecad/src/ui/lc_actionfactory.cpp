@@ -497,7 +497,8 @@ void LC_ActionFactory::createEditActionsUncheckable(QMap<QString, QAction *> &ma
 void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     map["ZoomPrevious"]->setEnabled(false);
     map["RightDockAreaToggle"]->setChecked(true);
-    map["ViewStatusBar"]->setChecked(true);
+    bool statusBarVisible = LC_GET_ONE_BOOL("Appearance", "StatusBarVisible", false);
+    map["ViewStatusBar"]->setChecked(statusBarVisible);
 
     map["OptionsGeneral"]->setMenuRole(QAction::NoRole);
 

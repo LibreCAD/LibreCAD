@@ -168,6 +168,9 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     widget_factory.initStatusBar();
 
+    bool statusBarVisible = LC_GET_ONE_BOOL("Appearance", "StatusBarVisible", true);
+    statusBar()->setVisible(statusBarVisible);
+
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
 
@@ -2371,10 +2374,8 @@ void QC_ApplicationWindow::updateGrids() {
 void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
     RS_DEBUG->print("QC_ApplicationWindow::slotViewStatusBar()");
     statusBar()->setVisible(toggle);
+    LC_SET_ONE("Appearance", "StatusBarVisible", toggle);
 }
-
-
-
 
 
 void QC_ApplicationWindow::slotViewGridOrtho(bool toggle) {
@@ -2674,7 +2675,8 @@ QMenu *QC_ApplicationWindow::createPopupMenu() {
     temp_dw_menu->addActions(dw_menu->actions());
     context_menu->addMenu(temp_dw_menu);
 
-    context_menu->addAction(getAction("ViewStatusBar"));
+    QAction *viewStatusBarAction = getAction("ViewStatusBar");
+    context_menu->addAction(viewStatusBarAction);
 
     return context_menu;
 }
