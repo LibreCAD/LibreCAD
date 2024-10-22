@@ -842,7 +842,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="222"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="224"/>
         <source>Specify first control point</source>
         <translation>Especifiqueu el primer punt de control</translation>
     </message>
@@ -851,28 +851,28 @@ or [%2]</source>
         <translation type="vanished">Cancel·la</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="239"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
         <source>Specify next control point or [%1]</source>
         <translation>Especifiqueu el següent punt de control o [%1]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="239"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
         <source>Back</source>
         <translation>Enrere</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="243"/>
         <source>Specify next control point</source>
         <translation>Especifiqueu el següent punt de control</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="273"/>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="294"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="275"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="296"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>No es pot desfer: Encara no hi ha definides prou entitats.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="310"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="312"/>
         <source>Cannot undo: Nothing could be redone.</source>
         <translation>No es pot desfer: No s&apos;ha pogut refer res.</translation>
     </message>
@@ -8245,52 +8245,52 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <translation type="vanished">&amp;Ajuda</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1152"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1154"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Cascada</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1153"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1155"/>
         <source>&amp;Tile</source>
         <translation>&amp;Mosaic</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1155"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1157"/>
         <source>Tile &amp;Horizontally</source>
         <translation>Mosaic &amp;horitzontal</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1242"/>
         <source>Creating new file...</source>
         <translation>S&apos;està creant un fitxer nou...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1286"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1288"/>
         <source>unnamed document %1</source>
         <translation>document sense nom %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2691"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2697"/>
         <source>Opening recent file...</source>
         <translation>S&apos;està obrint un fitxer recent...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1712"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1714"/>
         <source>Loaded document: </source>
         <translation>Document carregat: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1718"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1720"/>
         <source>Opening aborted</source>
         <translation>S&apos;ha interromput l&apos;obertura del fitxer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2101"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2103"/>
         <source>Printing...</source>
         <translation>S&apos;està imprimint...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2253"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2255"/>
         <source>Exiting application...</source>
         <translation>S&apos;està sortint de l&apos;aplicació...</translation>
     </message>
@@ -8303,12 +8303,12 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <translation type="vanished">Llista dels blocs</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2177"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2179"/>
         <source>Print preview for %1</source>
         <translation>Vista prèvia de la impressió per a %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1361"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1363"/>
         <source>New Drawing created.</source>
         <translation>S&apos;ha creat un dibuix nou.</translation>
     </message>
@@ -8323,47 +8323,47 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <translation>S&apos;ha desat el dibuix: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1810"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1812"/>
         <source>Exporting drawing...</source>
         <translation>S&apos;està exportant el dibuix...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1906"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1908"/>
         <source>Exported: %1</source>
         <translation>S&apos;ha exportat: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1946"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1948"/>
         <source>Exporting...</source>
         <translation>S&apos;està exportant...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1998"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2000"/>
         <source>Export complete</source>
         <translation>S&apos;ha completat l&apos;exportació</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1998"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2000"/>
         <source>Export failed!</source>
         <translation>Ha fallat l&apos;exportació!</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2105"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2107"/>
         <source>Printing complete</source>
         <translation>S&apos;ha completat la impressió</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2721"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2727"/>
         <source>Command line</source>
         <translation>Línia d&apos;ordres</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1284"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1286"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Bloc &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1492"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1494"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -8376,17 +8376,17 @@ Comproveu els permisos.</translation>
         <translation type="vanished">Línia &amp;poligonal</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1780"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1782"/>
         <source>Auto-saving drawing...</source>
         <translation>S&apos;està desant automàticament el dibuix...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1788"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1790"/>
         <source>Auto-saved drawing</source>
         <translation>El dibuix s&apos;ha desat automàticament</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1793"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1795"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -8414,7 +8414,7 @@ S&apos;ha desactivat el desament automàtic.</translation>
         <translation type="vanished">Versió: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1588"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1590"/>
         <source>Warning: File already opened : </source>
         <translation>Advertència: El fitxer ja està obert: </translation>
     </message>
@@ -8429,27 +8429,27 @@ S&apos;ha desactivat el desament automàtic.</translation>
         <translation> , comproveu el nom del fitxer i els permisos.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1154"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1156"/>
         <source>Tile &amp;Vertically</source>
         <translation>Mosaic &amp;vertical</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1102"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1104"/>
         <source>Ta&amp;b mode</source>
         <translation>Mode de pes&amp;tanya</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1430"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1432"/>
         <source>New document from template: </source>
         <translation>Document nou a partir d&apos;una plantilla: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1476"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1478"/>
         <source>Select Template aborted</source>
         <translation>S&apos;ha interromput la selecció de la plantilla</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1798"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1800"/>
         <source>Auto-saving failed</source>
         <translation>Ha fallat el desament automàtic</translation>
     </message>
@@ -8474,7 +8474,7 @@ S&apos;ha desactivat el desament automàtic.</translation>
         <translation type="vanished">Opcions d&apos;eina</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1847"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1849"/>
         <source>Export as</source>
         <translation>Exporta com</translation>
     </message>
@@ -8492,10 +8492,10 @@ S&apos;ha desactivat el desament automàtic.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="432"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1292"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1696"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2294"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2625"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1294"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1698"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2296"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2631"/>
         <source>Draft Mode</source>
         <translation>Mode esborrany</translation>
     </message>
@@ -8508,7 +8508,7 @@ S&apos;ha desactivat el desament automàtic.</translation>
         <translation type="vanished">Exporta</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1634"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1636"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -8517,7 +8517,7 @@ Please check its existence and permissions.</source>
 Comproveu la seva existència i els permisos.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1717"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1719"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>El fitxer &apos;%1&apos; no existeix. L&apos;obertura s&apos;ha avortat</translation>
     </message>
@@ -8586,22 +8586,22 @@ Comproveu la seva existència i els permisos.</translation>
         <translation type="vanished">Estat de la quadrícula</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2662"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2668"/>
         <source>Toolbars</source>
         <translation>Barres d&apos;eines</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2667"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2673"/>
         <source>Dockwidgets</source>
         <translation>Acoblador d&apos;estris</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2773"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2779"/>
         <source>Device Options</source>
         <translation>Opcions del dispositiu</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2776"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2782"/>
         <source>Device</source>
         <translation>Dispositiu</translation>
     </message>
@@ -8651,17 +8651,17 @@ Comproveu la seva existència i els permisos.</translation>
         <translation type="vanished">Sistema</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2807"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2813"/>
         <source>Toolbar Creator</source>
         <translation>Creador de barres d&apos;eines</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2867"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2873"/>
         <source>Menu Creator</source>
         <translation>Creador de menús</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2891"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2897"/>
         <source>Menu Assigner</source>
         <translation>Eina d&apos;assignació de menús</translation>
     </message>
@@ -8716,62 +8716,62 @@ Comproveu la seva existència i els permisos.</translation>
         <translation>Desar %1 com a…</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1106"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1108"/>
         <source>&amp;Window mode</source>
         <translation>Mode de finestra</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1112"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1114"/>
         <source>&amp;Layout</source>
         <translation>&amp;Disposició</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1115"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1117"/>
         <source>Rounded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1121"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1123"/>
         <source>Triangular</source>
         <translation>Triangular</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1128"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1130"/>
         <source>North</source>
         <translation>Nord</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1134"/>
         <source>South</source>
         <translation>Sud</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1136"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1138"/>
         <source>East</source>
         <translation>Est</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1142"/>
         <source>West</source>
         <translation>Oest</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1145"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1147"/>
         <source>&amp;Arrange</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1148"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1150"/>
         <source>&amp;Maximized</source>
         <translation>&amp;Maximitzar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1757"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1759"/>
         <source>Save All cancelled</source>
         <translation>Desar-ho tot cancel·lat</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2062"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2064"/>
         <source>Close All cancelled</source>
         <translation>Tancar-ho tot cancel·lat</translation>
     </message>
@@ -8780,17 +8780,17 @@ Comproveu la seva existència i els permisos.</translation>
         <translation type="vanished">El codi</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2721"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2727"/>
         <source>Cmd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2722"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2728"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2722"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2728"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation type="unfinished"></translation>
@@ -9150,7 +9150,7 @@ en una finestra separada</translation>
         <translation>Ordre:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="202"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="205"/>
         <source>Unknown command: %1</source>
         <translation>Ordre desconeguda: %1</translation>
     </message>
@@ -9160,7 +9160,7 @@ en una finestra separada</translation>
         <translation>Historial i sortida d&apos;ordres</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="248"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="251"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>enrere</translation>
@@ -9172,22 +9172,27 @@ en una finestra separada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="92"/>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="337"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="340"/>
         <source>Dock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="337"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="176"/>
+        <source>Enter Command:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="340"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="338"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="341"/>
         <source>Command line</source>
         <translation>Línia d&apos;ordres</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="338"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="341"/>
         <source>Cmd</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15659,9 +15664,9 @@ p, li { white-space: pre-wrap; }
     <name>QMessageBox</name>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1495"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1637"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1792"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1497"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1639"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1794"/>
         <source>Warning</source>
         <translation>Advertència</translation>
     </message>
@@ -17667,7 +17672,7 @@ Voleu substituir-ho?</translation>
         <translation>Tot</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1665"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1667"/>
         <source>Invalid objects removed:</source>
         <translation>Objectes no vàlids que s&apos;han suprimit:</translation>
     </message>
@@ -17730,7 +17735,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="696"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3057"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3063"/>
         <source>License</source>
         <translation type="unfinished">Llicència</translation>
     </message>

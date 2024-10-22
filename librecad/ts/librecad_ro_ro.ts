@@ -841,7 +841,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="222"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="224"/>
         <source>Specify first control point</source>
         <translation type="unfinished">Specificati primul punct de control</translation>
     </message>
@@ -850,28 +850,28 @@ or [%2]</source>
         <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="239"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
         <source>Specify next control point or [%1]</source>
         <translation type="unfinished">Specificati urmatorul punct de control sau [%1]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="239"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
         <source>Back</source>
         <translation type="unfinished">Inapoi</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="243"/>
         <source>Specify next control point</source>
         <translation type="unfinished">Specificati urmatorul punct de control</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="273"/>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="294"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="275"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="296"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation type="unfinished">Nu se poate anula: nu au fost definite suficiente entitati.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="310"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="312"/>
         <source>Cannot undo: Nothing could be redone.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8238,52 +8238,52 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">&amp;Ajutor</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1152"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1154"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Cascada</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1153"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1155"/>
         <source>&amp;Tile</source>
         <translation>&amp;Tigla</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1155"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1157"/>
         <source>Tile &amp;Horizontally</source>
         <translation>Tigla &amp; Orizontal</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1242"/>
         <source>Creating new file...</source>
         <translation>Creare fisier nou...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1286"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1288"/>
         <source>unnamed document %1</source>
         <translation>document fara nume %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2691"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2697"/>
         <source>Opening recent file...</source>
         <translation>Deschiderea unui fisier recent...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1712"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1714"/>
         <source>Loaded document: </source>
         <translation>Document incarcat:</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1718"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1720"/>
         <source>Opening aborted</source>
         <translation>Renuntare deschidere</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2101"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2103"/>
         <source>Printing...</source>
         <translation>Listare...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2253"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2255"/>
         <source>Exiting application...</source>
         <translation>Inchiderea aplicatiei...</translation>
     </message>
@@ -8316,12 +8316,12 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Lista blocurilor</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2177"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2179"/>
         <source>Print preview for %1</source>
         <translation>Previzualizare listare pentru %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1361"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1363"/>
         <source>New Drawing created.</source>
         <translation>A fost creat un nou desen.</translation>
     </message>
@@ -8336,47 +8336,47 @@ p, li { white-space: pre-wrap; }
         <translation>Desen salvat: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1810"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1812"/>
         <source>Exporting drawing...</source>
         <translation>Exportare desen...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1906"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1908"/>
         <source>Exported: %1</source>
         <translation>Exportat: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1946"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1948"/>
         <source>Exporting...</source>
         <translation>Exportare...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1998"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2000"/>
         <source>Export complete</source>
         <translation>Export complet</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1998"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2000"/>
         <source>Export failed!</source>
         <translation>Eroare export!</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2105"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2107"/>
         <source>Printing complete</source>
         <translation>Listare completa</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2721"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2727"/>
         <source>Command line</source>
         <translation>Linie de comanda</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1284"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1286"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Bloc &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1492"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1494"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -8389,17 +8389,17 @@ Va rog verificati permisiunile.</translation>
         <translation type="vanished">&amp;Polilinie</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1780"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1782"/>
         <source>Auto-saving drawing...</source>
         <translation>Salvare automata a desenului...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1788"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1790"/>
         <source>Auto-saved drawing</source>
         <translation>Desen salvat automat</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1793"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1795"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -8426,7 +8426,7 @@ Autosalvare dezactivata.</translation>
         <translation type="vanished">Versiune: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1588"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1590"/>
         <source>Warning: File already opened : </source>
         <translation>Atentie: fisier deja deschis:</translation>
     </message>
@@ -8441,53 +8441,53 @@ Autosalvare dezactivata.</translation>
         <translation>, verificati numele fisierului si permisiunile.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1154"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1156"/>
         <source>Tile &amp;Vertically</source>
         <translation>Tigla &amp;Vertical</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1102"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1104"/>
         <source>Ta&amp;b mode</source>
         <translation>Modul Ta&amp;b</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1430"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1432"/>
         <source>New document from template: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1476"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1478"/>
         <source>Select Template aborted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1798"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1800"/>
         <source>Auto-saving failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1847"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1849"/>
         <source>Export as</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="432"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1292"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1696"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2294"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2625"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1294"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1698"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2296"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2631"/>
         <source>Draft Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1634"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1636"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1717"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1719"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8524,22 +8524,22 @@ Please check its existence and permissions.</source>
         <translation type="obsolete">Info</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2662"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2668"/>
         <source>Toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2667"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2673"/>
         <source>Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2773"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2779"/>
         <source>Device Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2776"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2782"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8553,17 +8553,17 @@ Please check its existence and permissions.</source>
         <translation type="obsolete">Copiere</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2807"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2813"/>
         <source>Toolbar Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2867"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2873"/>
         <source>Menu Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2891"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2897"/>
         <source>Menu Assigner</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8609,77 +8609,77 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1106"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1108"/>
         <source>&amp;Window mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1112"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1114"/>
         <source>&amp;Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1115"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1117"/>
         <source>Rounded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1121"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1123"/>
         <source>Triangular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1128"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1130"/>
         <source>North</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1134"/>
         <source>South</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1136"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1138"/>
         <source>East</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1142"/>
         <source>West</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1145"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1147"/>
         <source>&amp;Arrange</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1148"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1150"/>
         <source>&amp;Maximized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1757"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1759"/>
         <source>Save All cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2062"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2064"/>
         <source>Close All cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2721"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2727"/>
         <source>Cmd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2722"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2728"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2722"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2728"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation type="unfinished"></translation>
@@ -9027,7 +9027,7 @@ intr-o fereastra noua</translation>
         <translation>Comanda:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="202"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="205"/>
         <source>Unknown command: %1</source>
         <translation>Comanda necunoscuta: %1</translation>
     </message>
@@ -9037,7 +9037,7 @@ intr-o fereastra noua</translation>
         <translation>Istoric comenzi si valori iesire</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="248"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="251"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation type="unfinished"></translation>
@@ -9049,22 +9049,27 @@ intr-o fereastra noua</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="92"/>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="337"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="340"/>
         <source>Dock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="337"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="176"/>
+        <source>Enter Command:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="340"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="338"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="341"/>
         <source>Command line</source>
         <translation type="unfinished">Linie de comanda</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="338"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="341"/>
         <source>Cmd</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15414,9 +15419,9 @@ p, li { white-space: pre-wrap; }
     <name>QMessageBox</name>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1495"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1637"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1792"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1497"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1639"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1794"/>
         <source>Warning</source>
         <translation>Atentie</translation>
     </message>
@@ -17376,7 +17381,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1665"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1667"/>
         <source>Invalid objects removed:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17439,7 +17444,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="696"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3057"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3063"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>

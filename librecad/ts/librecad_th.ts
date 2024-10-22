@@ -821,33 +821,33 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="222"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="224"/>
         <source>Specify first control point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="239"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
         <source>Specify next control point or [%1]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="239"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="243"/>
         <source>Specify next control point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="273"/>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="294"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="275"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="296"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="310"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="312"/>
         <source>Cannot undo: Nothing could be redone.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8173,47 +8173,47 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">&amp;วิธีใช้</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1152"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1154"/>
         <source>&amp;Cascade</source>
         <translation>ซ้อนห&amp;ลั่น</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1153"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1155"/>
         <source>&amp;Tile</source>
         <translation>ปูแ&amp;ผ่</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1155"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1157"/>
         <source>Tile &amp;Horizontally</source>
         <translation>ปูแผ่หน้าต่าง&amp;นอน</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1242"/>
         <source>Creating new file...</source>
         <translation>กำลังสร้างแฟ้มใหม่...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1286"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1288"/>
         <source>unnamed document %1</source>
         <translation>เอกสารไม่มีชื่อ %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1712"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1714"/>
         <source>Loaded document: </source>
         <translation>โหลดเอกสาร: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1718"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1720"/>
         <source>Opening aborted</source>
         <translation>ล้มเลิกการเปิด</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2101"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2103"/>
         <source>Printing...</source>
         <translation>กำลังพิมพ์...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2253"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2255"/>
         <source>Exiting application...</source>
         <translation>กำลังออกจากแอปพลิเคชัน...</translation>
     </message>
@@ -8226,12 +8226,12 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">รายชื่อบล็อค</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2177"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2179"/>
         <source>Print preview for %1</source>
         <translation>ตัวอย่างก่อนพิมพ์ของ %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1361"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1363"/>
         <source>New Drawing created.</source>
         <translation>สร้างงานเขียนแบบแผ่นใหม่แล้ว</translation>
     </message>
@@ -8246,47 +8246,47 @@ p, li { white-space: pre-wrap; }
         <translation>บันทึกงานเขียนแบบแล้ว: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1810"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1812"/>
         <source>Exporting drawing...</source>
         <translation>กำลังส่งออกงานเขียนแบบ...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1906"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1908"/>
         <source>Exported: %1</source>
         <translation>ส่งออกแล้ว: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1946"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1948"/>
         <source>Exporting...</source>
         <translation>กำลังส่งออก...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1998"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2000"/>
         <source>Export complete</source>
         <translation>ส่งออกเสร็จสมบูรณ์</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1998"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2000"/>
         <source>Export failed!</source>
         <translation>ส่งออกไม่สำเร็จ!</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2105"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2107"/>
         <source>Printing complete</source>
         <translation>พิมพ์เสร็จสมบูรณ์</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2721"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2727"/>
         <source>Command line</source>
         <translation>บรรทัดคำสั่ง</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1284"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1286"/>
         <source>Block &apos;%1&apos;</source>
         <translation>บล็อค &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1492"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1494"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -8299,17 +8299,17 @@ Please check the permissions.</source>
         <translation type="vanished">เส้นตรงหลายข&amp;ยัก</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1780"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1782"/>
         <source>Auto-saving drawing...</source>
         <translation>กำลังบันทึกงานเขียนแบบโดยอัตโนมัติ...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1788"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1790"/>
         <source>Auto-saved drawing</source>
         <translation>บันทึกงานเขียนแบบโดยอัตโนมัติแล้ว</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1793"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1795"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -8336,7 +8336,7 @@ Auto-save disabled.</source>
         <translation type="vanished">รุ่น: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1588"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1590"/>
         <source>Warning: File already opened : </source>
         <translation>คำเตือน: แฟ้มเปิดอยู่แล้ว : </translation>
     </message>
@@ -8351,27 +8351,27 @@ Auto-save disabled.</source>
         <translation> , กรุณาตรวจสอบชื่อแฟ้มและการอนุญาตสิทธิ์</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1154"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1156"/>
         <source>Tile &amp;Vertically</source>
         <translation>ปูแผ่หน้าต่าง&amp;ตั้ง</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1102"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1104"/>
         <source>Ta&amp;b mode</source>
         <translation>โหมดแ&amp;ท็บ</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1430"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1432"/>
         <source>New document from template: </source>
         <translation>เอกสารใหม่จากแม่แบบ: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1476"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1478"/>
         <source>Select Template aborted</source>
         <translation>ล้มเลิกการเลือกแม่แบบ</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1798"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1800"/>
         <source>Auto-saving failed</source>
         <translation>บันทึกโดยอัตโนมัติไม่สำเร็จ</translation>
     </message>
@@ -8396,7 +8396,7 @@ Auto-save disabled.</source>
         <translation type="vanished">ตัวเลือกของเครื่องมือ</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1847"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1849"/>
         <source>Export as</source>
         <translation>ส่งออกเป็น</translation>
     </message>
@@ -8414,10 +8414,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="432"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1292"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1696"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2294"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2625"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1294"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1698"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2296"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2631"/>
         <source>Draft Mode</source>
         <translation>โหมดร่าง</translation>
     </message>
@@ -8430,7 +8430,7 @@ Auto-save disabled.</source>
         <translation type="vanished">ส่งออก</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1634"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1636"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -8439,7 +8439,7 @@ Please check its existence and permissions.</source>
 กรุณาตรวจสอบว่าแฟ้มนี้มีอยู่ รวมถึงการอนุญาตสิทธิ์</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1717"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1719"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>ไม่มีแฟ้ม &apos;%1&apos; อยู่ จึงล้มเลิกการเปิด</translation>
     </message>
@@ -8492,27 +8492,27 @@ Please check its existence and permissions.</source>
         <translation type="vanished">ข้อมูล</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2691"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2697"/>
         <source>Opening recent file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2662"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2668"/>
         <source>Toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2667"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2673"/>
         <source>Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2773"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2779"/>
         <source>Device Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2776"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2782"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8546,17 +8546,17 @@ Please check its existence and permissions.</source>
         <translation type="vanished">ระบบ</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2807"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2813"/>
         <source>Toolbar Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2867"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2873"/>
         <source>Menu Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2891"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2897"/>
         <source>Menu Assigner</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8602,62 +8602,62 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1106"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1108"/>
         <source>&amp;Window mode</source>
         <translation>โหมดห&amp;น้าต่าง</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1112"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1114"/>
         <source>&amp;Layout</source>
         <translation>จัด&amp;วาง</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1115"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1117"/>
         <source>Rounded</source>
         <translation>ขอบมน</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1121"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1123"/>
         <source>Triangular</source>
         <translation>ขอบเหลี่ยม</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1128"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1130"/>
         <source>North</source>
         <translation>เหนือ</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1134"/>
         <source>South</source>
         <translation>ใต้</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1136"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1138"/>
         <source>East</source>
         <translation>ตะวันออก</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1142"/>
         <source>West</source>
         <translation>ตะวันตก</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1145"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1147"/>
         <source>&amp;Arrange</source>
         <translation>จัดเ&amp;รียง</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1148"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1150"/>
         <source>&amp;Maximized</source>
         <translation>&amp;ขยายแผ่</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1757"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1759"/>
         <source>Save All cancelled</source>
         <translation>ยกเลิกการบันทึกทั้งหมด</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2062"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2064"/>
         <source>Close All cancelled</source>
         <translation>ยกเลิกการปิดทั้งหมด</translation>
     </message>
@@ -8666,17 +8666,17 @@ Please check its existence and permissions.</source>
         <translation type="vanished">โค้ด</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2721"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2727"/>
         <source>Cmd</source>
         <translation>คำสั่ง</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2722"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2728"/>
         <source>Float</source>
         <translation>ลอยตัว</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2722"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2728"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation>เทียบท่า</translation>
@@ -9055,7 +9055,7 @@ in a separate window</source>
         <translation>คำสั่ง:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="202"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="205"/>
         <source>Unknown command: %1</source>
         <translation>คำสั่งไม่รู้จัก: %1</translation>
     </message>
@@ -9065,7 +9065,7 @@ in a separate window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="248"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="251"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation type="unfinished"></translation>
@@ -9077,22 +9077,27 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="92"/>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="337"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="340"/>
         <source>Dock</source>
         <translation type="unfinished">เทียบท่า</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="337"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="176"/>
+        <source>Enter Command:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="340"/>
         <source>Float</source>
         <translation type="unfinished">ลอยตัว</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="338"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="341"/>
         <source>Command line</source>
         <translation type="unfinished">บรรทัดคำสั่ง</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="338"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="341"/>
         <source>Cmd</source>
         <translation type="unfinished">คำสั่ง</translation>
     </message>
@@ -15354,9 +15359,9 @@ p, li { white-space: pre-wrap; }
     <name>QMessageBox</name>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1495"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1637"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1792"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1497"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1639"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1794"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17259,7 +17264,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1665"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1667"/>
         <source>Invalid objects removed:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17322,7 +17327,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="696"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3057"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3063"/>
         <source>License</source>
         <translation type="unfinished">สัญญาอนุญาต</translation>
     </message>

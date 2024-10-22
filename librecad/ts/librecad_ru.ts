@@ -848,7 +848,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="222"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="224"/>
         <source>Specify first control point</source>
         <translation>Указать первую контрольную точку</translation>
     </message>
@@ -857,28 +857,28 @@ or [%2]</source>
         <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="239"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
         <source>Specify next control point or [%1]</source>
         <translation>Укажите следующую контрольную точку или [%1]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="239"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="243"/>
         <source>Specify next control point</source>
         <translation>Укажите следующую контрольную точку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="273"/>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="294"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="275"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="296"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Отмена невозможна: определено недостаточно элементов.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="310"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="312"/>
         <source>Cannot undo: Nothing could be redone.</source>
         <translation>Отмена невозможна: восстанавливать нечего.</translation>
     </message>
@@ -8337,52 +8337,52 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">&amp;Помощь</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1152"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1154"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Стопкой</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1153"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1155"/>
         <source>&amp;Tile</source>
         <translation>&amp;Мозаика</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1155"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1157"/>
         <source>Tile &amp;Horizontally</source>
         <translation>Мозаика по &amp;горизонтали</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1242"/>
         <source>Creating new file...</source>
         <translation>Создание нового файла...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1286"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1288"/>
         <source>unnamed document %1</source>
         <translation>безымянный документ %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2691"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2697"/>
         <source>Opening recent file...</source>
         <translation>Открытие последнего файла...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1712"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1714"/>
         <source>Loaded document: </source>
         <translation>Документ загружен: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1718"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1720"/>
         <source>Opening aborted</source>
         <translation>Открытие прервано</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2101"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2103"/>
         <source>Printing...</source>
         <translation>Печать...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2253"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2255"/>
         <source>Exiting application...</source>
         <translation>Выход из программы...</translation>
     </message>
@@ -8415,12 +8415,12 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Блочный список</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2177"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2179"/>
         <source>Print preview for %1</source>
         <translation>Предварительный просмотр %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1361"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1363"/>
         <source>New Drawing created.</source>
         <translation>Был создан новый чертёж.</translation>
     </message>
@@ -8435,47 +8435,47 @@ p, li { white-space: pre-wrap; }
         <translation>Чертёж сохранен: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1810"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1812"/>
         <source>Exporting drawing...</source>
         <translation>Экспорт чертежа...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1906"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1908"/>
         <source>Exported: %1</source>
         <translation>Экспортирован: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1946"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1948"/>
         <source>Exporting...</source>
         <translation>Экспорт...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1998"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2000"/>
         <source>Export complete</source>
         <translation>Экспорт завершен</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1998"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2000"/>
         <source>Export failed!</source>
         <translation>Ошибка экспорта!</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2105"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2107"/>
         <source>Printing complete</source>
         <translation>Печать завершена</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2721"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2727"/>
         <source>Command line</source>
         <translation>Командная строка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1284"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1286"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Блок &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1492"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1494"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -8488,17 +8488,17 @@ Please check the permissions.</source>
         <translation type="vanished">&amp;Ломаная</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1780"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1782"/>
         <source>Auto-saving drawing...</source>
         <translation>Автосохранение чертежа...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1788"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1790"/>
         <source>Auto-saved drawing</source>
         <translation>Чертёж автоматически сохранен</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1793"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1795"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -8525,7 +8525,7 @@ Auto-save disabled.</source>
         <translation type="vanished">Версия: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1588"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1590"/>
         <source>Warning: File already opened : </source>
         <translation>Предупреждение: файл уже открыт: </translation>
     </message>
@@ -8540,27 +8540,27 @@ Auto-save disabled.</source>
         <translation> , проверьте правильность имени файла и права доступа.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1154"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1156"/>
         <source>Tile &amp;Vertically</source>
         <translation>Мозаика по &amp;вертикали</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1102"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1104"/>
         <source>Ta&amp;b mode</source>
         <translation>&amp;Режим вкладок</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1430"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1432"/>
         <source>New document from template: </source>
         <translation>Новый документ из шаблона: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1476"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1478"/>
         <source>Select Template aborted</source>
         <translation>Выбор шаблона прерван</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1798"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1800"/>
         <source>Auto-saving failed</source>
         <translation>Ошибка при автосохранении</translation>
     </message>
@@ -8569,7 +8569,7 @@ Auto-save disabled.</source>
         <translation type="vanished">Привязка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1847"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1849"/>
         <source>Export as</source>
         <translation>Экспортировать как</translation>
     </message>
@@ -8587,10 +8587,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="432"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1292"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1696"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2294"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2625"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1294"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1698"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2296"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2631"/>
         <source>Draft Mode</source>
         <translation>режим черновика</translation>
     </message>
@@ -8603,7 +8603,7 @@ Auto-save disabled.</source>
         <translation type="vanished">Экспорт</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1634"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1636"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -8612,7 +8612,7 @@ Please check its existence and permissions.</source>
 Проверьте его наличие и права доступа.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1717"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1719"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>Файл &apos;%1&apos; не существует. Операция прервана</translation>
     </message>
@@ -8677,22 +8677,22 @@ Please check its existence and permissions.</source>
         <translation type="vanished">Сетка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2662"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2668"/>
         <source>Toolbars</source>
         <translation>Панели</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2667"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2673"/>
         <source>Dockwidgets</source>
         <translation>Стыкуемые диалоги</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2773"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2779"/>
         <source>Device Options</source>
         <translation>Устройства</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2776"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2782"/>
         <source>Device</source>
         <translation>Устройство</translation>
     </message>
@@ -8742,17 +8742,17 @@ Please check its existence and permissions.</source>
         <translation type="vanished">Система</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2807"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2813"/>
         <source>Toolbar Creator</source>
         <translation>Создать панель</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2867"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2873"/>
         <source>Menu Creator</source>
         <translation>Создать меню</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2891"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2897"/>
         <source>Menu Assigner</source>
         <translation>Назначить меню</translation>
     </message>
@@ -8807,62 +8807,62 @@ Please check its existence and permissions.</source>
         <translation>Сохраните %1 &amp;как...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1106"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1108"/>
         <source>&amp;Window mode</source>
         <translation>&amp;Оконный режим</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1112"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1114"/>
         <source>&amp;Layout</source>
         <translation>&amp;Расположение</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1115"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1117"/>
         <source>Rounded</source>
         <translation>Скругленное</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1121"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1123"/>
         <source>Triangular</source>
         <translation>Треугольное</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1128"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1130"/>
         <source>North</source>
         <translation>Север</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1134"/>
         <source>South</source>
         <translation>Юг</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1136"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1138"/>
         <source>East</source>
         <translation>Восток</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1142"/>
         <source>West</source>
         <translation>Запад</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1145"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1147"/>
         <source>&amp;Arrange</source>
         <translation>&amp;Упорядоченный</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1148"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1150"/>
         <source>&amp;Maximized</source>
         <translation>&amp;Увеличенный</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1757"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1759"/>
         <source>Save All cancelled</source>
         <translation>Сохранить Все отменено</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2062"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2064"/>
         <source>Close All cancelled</source>
         <translation>Закрыть Все отменено</translation>
     </message>
@@ -8871,17 +8871,17 @@ Please check its existence and permissions.</source>
         <translation type="vanished">Код</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2721"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2727"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2722"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2728"/>
         <source>Float</source>
         <translation>Плавающее</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2722"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2728"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation>Панель</translation>
@@ -9277,7 +9277,7 @@ in a separate window</source>
         <translation>Команда:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="202"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="205"/>
         <source>Unknown command: %1</source>
         <translation>Неизвестная команда: %1</translation>
     </message>
@@ -9287,7 +9287,7 @@ in a separate window</source>
         <translation>История команд и вывода</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="248"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="251"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>отмена</translation>
@@ -9299,22 +9299,27 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="92"/>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="337"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="340"/>
         <source>Dock</source>
         <translation>Панель</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="337"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="176"/>
+        <source>Enter Command:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="340"/>
         <source>Float</source>
         <translation>Плавающее</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="338"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="341"/>
         <source>Command line</source>
         <translation>Командная строка</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="338"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="341"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
     </message>
@@ -15881,9 +15886,9 @@ p, li { white-space: pre-wrap; }
     <name>QMessageBox</name>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1495"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1637"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1792"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1497"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1639"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1794"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
@@ -17919,7 +17924,7 @@ Do you want to replace it?</source>
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1665"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1667"/>
         <source>Invalid objects removed:</source>
         <translation>Исключенные объекты:</translation>
     </message>
@@ -17982,7 +17987,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="696"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3057"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3063"/>
         <source>License</source>
         <translation>Лицензия</translation>
     </message>

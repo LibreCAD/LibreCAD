@@ -842,7 +842,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="222"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="224"/>
         <source>Specify first control point</source>
         <translation>Adja meg az első vezérlőpontot</translation>
     </message>
@@ -851,28 +851,28 @@ or [%2]</source>
         <translation type="vanished">Mégsem</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="239"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
         <source>Specify next control point or [%1]</source>
         <translation>Adja meg a következő vezérlőpontot vagy [% 1]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="239"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
         <source>Back</source>
         <translation>Vissza</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="241"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="243"/>
         <source>Specify next control point</source>
         <translation>Adja meg a következő vezérlőpontot</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="273"/>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="294"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="275"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="296"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Nem lehet visszavonni: Nincs elég elem.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="310"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp" line="312"/>
         <source>Cannot undo: Nothing could be redone.</source>
         <translation>Nem lehet visszavonni: Semmi sem hozható vissza.</translation>
     </message>
@@ -8275,47 +8275,47 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Blokk lista</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1152"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1154"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Lépcsőzetes</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1153"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1155"/>
         <source>&amp;Tile</source>
         <translation>&amp;Mozaik</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1155"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1157"/>
         <source>Tile &amp;Horizontally</source>
         <translation>Vízszintes &amp;felosztás</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1242"/>
         <source>Creating new file...</source>
         <translation>Új fájl létrehozása...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1286"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1288"/>
         <source>unnamed document %1</source>
         <translation>névtelen %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1361"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1363"/>
         <source>New Drawing created.</source>
         <translation>Elkészült az új rajz.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2691"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2697"/>
         <source>Opening recent file...</source>
         <translation>Utóbbiak megnyitása...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1712"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1714"/>
         <source>Loaded document: </source>
         <translation>Betöltve: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1718"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1720"/>
         <source>Opening aborted</source>
         <translation>Megnyitás megszakadt</translation>
     </message>
@@ -8330,62 +8330,62 @@ p, li { white-space: pre-wrap; }
         <translation>Mentett: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1810"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1812"/>
         <source>Exporting drawing...</source>
         <translation>Exportálás...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1906"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1908"/>
         <source>Exported: %1</source>
         <translation>Exportált: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1946"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1948"/>
         <source>Exporting...</source>
         <translation>Exportálás...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1998"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2000"/>
         <source>Export complete</source>
         <translation>Az exportálás befejelződött</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1998"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2000"/>
         <source>Export failed!</source>
         <translation>Exportálási hiba!</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2101"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2103"/>
         <source>Printing...</source>
         <translation>Nyomtatás...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2105"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2107"/>
         <source>Printing complete</source>
         <translation>A nyomtatás befejeződött</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2177"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2179"/>
         <source>Print preview for %1</source>
         <translation>%1 nyomtatási képe</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2253"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2255"/>
         <source>Exiting application...</source>
         <translation>Kilépés...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2721"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2727"/>
         <source>Command line</source>
         <translation>Parancssor</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1284"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1286"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Blokk &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1492"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1494"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -8398,17 +8398,17 @@ Please check the permissions.</source>
         <translation type="vanished">&amp;Töröttvonal</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1780"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1782"/>
         <source>Auto-saving drawing...</source>
         <translation>Rajz automatikus mentése...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1788"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1790"/>
         <source>Auto-saved drawing</source>
         <translation>Automatikusan mentett rajz</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1793"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1795"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -8435,7 +8435,7 @@ Az automatikus mentés kikapcsolva.</translation>
         <translation type="vanished">Verzió %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1588"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1590"/>
         <source>Warning: File already opened : </source>
         <translation>Figyelem: Ez a fájl már meg van nyitva: </translation>
     </message>
@@ -8450,27 +8450,27 @@ Az automatikus mentés kikapcsolva.</translation>
         <translation> , kérem ellenőrizze a fájlnevet, és a jogosultságokat.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1154"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1156"/>
         <source>Tile &amp;Vertically</source>
         <translation>Csempe &amp; Függőlegesen</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1102"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1104"/>
         <source>Ta&amp;b mode</source>
         <translation>Tab&amp;ulátor mód</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1430"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1432"/>
         <source>New document from template: </source>
         <translation>Új dokumentum sablonból: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1476"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1478"/>
         <source>Select Template aborted</source>
         <translation>A sablon kiválasztása megszakítva</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1798"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1800"/>
         <source>Auto-saving failed</source>
         <translation>Az automatikus mentés nem sikerült</translation>
     </message>
@@ -8479,7 +8479,7 @@ Az automatikus mentés kikapcsolva.</translation>
         <translation type="vanished">Fogás kiválasztása</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1847"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1849"/>
         <source>Export as</source>
         <translation>Exportálás másként</translation>
     </message>
@@ -8497,10 +8497,10 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="432"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1292"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1696"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2294"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2625"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1294"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1698"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2296"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2631"/>
         <source>Draft Mode</source>
         <translation>Vázlat mód</translation>
     </message>
@@ -8513,7 +8513,7 @@ Az automatikus mentés kikapcsolva.</translation>
         <translation type="vanished">Exportálás</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1634"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1636"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -8522,7 +8522,7 @@ Please check its existence and permissions.</source>
 Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1717"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1719"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>A &apos;%1&apos; fájl nem létezik. Megnyitás megszakítva</translation>
     </message>
@@ -8587,22 +8587,22 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
         <translation type="vanished">Rács állapota</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2662"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2668"/>
         <source>Toolbars</source>
         <translation>Eszköztárak</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2667"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2673"/>
         <source>Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2773"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2779"/>
         <source>Device Options</source>
         <translation>Eszközbeállítások</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2776"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2782"/>
         <source>Device</source>
         <translation>Eszköz</translation>
     </message>
@@ -8644,17 +8644,17 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
         <translation type="vanished">Rendszer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2807"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2813"/>
         <source>Toolbar Creator</source>
         <translation>Eszköztár készítő</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2867"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2873"/>
         <source>Menu Creator</source>
         <translation>Menükészítő</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2891"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2897"/>
         <source>Menu Assigner</source>
         <translation>Menü hozzárendelő</translation>
     </message>
@@ -8709,62 +8709,62 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
         <translation>1 mentése &amp;másként...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1106"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1108"/>
         <source>&amp;Window mode</source>
         <translation>&amp;Window mód</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1112"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1114"/>
         <source>&amp;Layout</source>
         <translation>&amp;Elrendezés</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1115"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1117"/>
         <source>Rounded</source>
         <translation>Lekerekített</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1121"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1123"/>
         <source>Triangular</source>
         <translation>Háromszög alakú</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1128"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1130"/>
         <source>North</source>
         <translation>Észak</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1134"/>
         <source>South</source>
         <translation>Dél</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1136"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1138"/>
         <source>East</source>
         <translation>Kelet</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1142"/>
         <source>West</source>
         <translation>nyugat</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1145"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1147"/>
         <source>&amp;Arrange</source>
         <translation>&amp;Rendez</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1148"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1150"/>
         <source>&amp;Maximized</source>
         <translation>&amp;Maximális</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1757"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1759"/>
         <source>Save All cancelled</source>
         <translation>Összes mentése törölve</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2062"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2064"/>
         <source>Close All cancelled</source>
         <translation>Összes bezárás törölve</translation>
     </message>
@@ -8773,17 +8773,17 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
         <translation type="vanished">A kód</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2721"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2727"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2722"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2728"/>
         <source>Float</source>
         <translation>Lebeg</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2722"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2728"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation>Dokk</translation>
@@ -9175,7 +9175,7 @@ in a separate window</source>
         <translation>Parancs:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="202"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="205"/>
         <source>Unknown command: %1</source>
         <translation>Ismeretlen parancs: %1</translation>
     </message>
@@ -9185,7 +9185,7 @@ in a separate window</source>
         <translation>Parancselőzmények és kimenet</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="248"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="251"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>kilépés</translation>
@@ -9197,22 +9197,27 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="92"/>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="337"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="340"/>
         <source>Dock</source>
         <translation>Dokk</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="337"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="176"/>
+        <source>Enter Command:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="340"/>
         <source>Float</source>
         <translation>Lebeg</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="338"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="341"/>
         <source>Command line</source>
         <translation>Parancssor</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="338"/>
+        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="341"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
     </message>
@@ -15711,9 +15716,9 @@ p, li { white-space: pre-wrap; }
     <name>QMessageBox</name>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1495"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1637"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1792"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1497"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1639"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1794"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -17707,7 +17712,7 @@ Lecseréli?</translation>
         <translation>Minden</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1665"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1667"/>
         <source>Invalid objects removed:</source>
         <translation>Érvénytelen objektumok eltávolítva:</translation>
     </message>
@@ -17770,7 +17775,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="696"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3057"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3063"/>
         <source>License</source>
         <translation>Licensz</translation>
     </message>
