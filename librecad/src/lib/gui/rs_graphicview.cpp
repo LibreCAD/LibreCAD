@@ -367,7 +367,9 @@ void RS_GraphicView::killSelectActions() {
  */
 void RS_GraphicView::killAllActions() {
     if (eventHandler) {
-        eventHandler->killAllActions();
+        if (forcedActionKillAllowed) {
+            eventHandler->killAllActions();
+        }
     }
 }
 
@@ -2503,4 +2505,8 @@ bool RS_GraphicView::isDraftLinesMode() const {
 
 void RS_GraphicView::setDraftLinesMode(bool mode) {
     draftLinesMode = mode;
+}
+
+void RS_GraphicView::setForcedActionKillAllowed(bool enabled) {
+    forcedActionKillAllowed = enabled;
 }

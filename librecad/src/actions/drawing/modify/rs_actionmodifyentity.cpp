@@ -61,6 +61,7 @@ void RS_ActionModifyEntity::trigger() {
 
         unsigned long originalEntityId = en->getId();
 
+        graphicView->setForcedActionKillAllowed(false);
         if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone.get())) {
             container->addEntity(clone.get());
 
@@ -87,6 +88,7 @@ void RS_ActionModifyEntity::trigger() {
             clone.release();
             updateSelectionWidget();
         }
+        graphicView->setForcedActionKillAllowed(true);
     } else {
         RS_DEBUG->print("RS_ActionModifyEntity::trigger: Entity is NULL\n");
     }

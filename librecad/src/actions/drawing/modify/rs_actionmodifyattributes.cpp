@@ -50,10 +50,12 @@ void RS_ActionModifyAttributes::trigger() {
     data.changeLayer = false;
 
     if (graphic) {
+        graphicView->setForcedActionKillAllowed(false);
         if (RS_DIALOGFACTORY->requestAttributesDialog(data,*graphic->getLayerList())) {
             RS_Modification m(*container, graphicView);
             m.changeAttributes(data, selectedEntities, container);
         }
+        graphicView->setForcedActionKillAllowed(true);
     }
 //    graphicView->killSelectActions();
 }

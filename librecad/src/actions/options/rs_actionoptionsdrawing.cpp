@@ -45,25 +45,19 @@ void RS_ActionOptionsDrawing::init(int status) {
 
 void RS_ActionOptionsDrawing::trigger() {
     if (graphic != nullptr) {
-//        if (graphicView == nullptr){
-//            LC_ERR << "Graphic view is NULL - START";
-//        }
-//        else{
-//            LC_ERR << "Graphic view NOT not -  START";
-//        }
+        graphicView->setForcedActionKillAllowed(false);
         int dialogResult = RS_DIALOGFACTORY->requestOptionsDrawingDialog(*graphic,tabToShow);
         if (dialogResult == QDialog::Accepted){
             updateCoordinateWidgetFormat();
             if (graphicView != nullptr) {
-//                LC_ERR << "Graphic view NOT null  - END !!!";
                 graphicView->loadSettings();
                 graphicView->redraw(RS2::RedrawAll);
                 graphicView->repaint();
             }
             else{
-//                LC_ERR << "Graphic view is NULL - END !!!";
             }
         }
+        graphicView->setForcedActionKillAllowed(true);
     }
     finish(false);
 }
