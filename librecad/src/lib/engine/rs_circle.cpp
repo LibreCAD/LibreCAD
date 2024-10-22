@@ -100,6 +100,7 @@ void RS_Circle::setCenter(const RS_Vector& c) {
 double RS_Circle::getRadius() const {
     return data.radius;
 }
+
 /** Sets new radius. */
 void RS_Circle::setRadius(double r) {
     data.radius = r;

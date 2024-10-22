@@ -467,6 +467,10 @@ double RS_Entity::getRadius() const {
 	return RS_MAXDOUBLE;
 }
 
+void RS_Entity::setRadius([[maybe_unused]] double r)
+{
+}
+
 /**
  * @return The parent graphic in which this entity is stored
  * or the parent's parent graphic or nullptr if none of the parents

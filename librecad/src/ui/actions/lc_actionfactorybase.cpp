@@ -20,11 +20,12 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-
 #include <QActionGroup>
+
 #include "lc_actionfactorybase.h"
-#include "qg_actionhandler.h"
 #include "lc_shortcutinfo.h"
+#include "qg_actionhandler.h"
+#include "rs_dialogfactory.h"
 
 LC_ActionFactoryBase::LC_ActionFactoryBase(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler):
     QObject(parent), main_window(parent),action_handler(a_handler){
@@ -70,16 +71,16 @@ QAction *LC_ActionFactoryBase::justCreateAction(QMap<QString, QAction *> &a_map,
             action->setIcon(icon);
     }
     action->setObjectName(name);
-    a_map[name] = action;
+    a_map.insert(name, action);
     return action;
 }
-
 
 void LC_ActionFactoryBase::createActions(QMap<QString, QAction *> &map, QActionGroup *group, const std::vector<ActionInfo> &actionList) const {
     for (const LC_ActionFactoryBase::ActionInfo &a: actionList){
         justCreateAction(map, a.key, a.text, a.iconName,a.themeIconName, group);
     }
 }
+
 void LC_ActionFactoryBase::createActionHandlerActions(QMap<QString, QAction *> &map, QActionGroup *group, const std::vector<ActionInfo> &actionList) const {
     for (const LC_ActionFactoryBase::ActionInfo &a: actionList){
         createAction_AH(a.key, a.actionType, a.text, a.iconName,a.themeIconName, group, map);
@@ -93,11 +94,13 @@ void LC_ActionFactoryBase::createMainWindowActions(QMap<QString, QAction *> &map
 }
 
 void LC_ActionFactoryBase::makeActionsShortcutsNonEditable(const QMap<QString, QAction *> &map,
-                                                          const std::vector<const char *> &actionNames) {
+                                                           const std::vector<const char *> &actionNames) {
     for (auto name: actionNames){
-        QAction* action = map[name];
-        if (action != nullptr){
-          action ->setProperty(LC_ShortcutInfo::PROPERTY_ACTION_SHORTCUT_CONFIGURABLE, false);
+        if (map.contains(name)) {
+            QAction* action = map[name];
+            if (action != nullptr){
+                action ->setProperty(LC_ShortcutInfo::PROPERTY_ACTION_SHORTCUT_CONFIGURABLE, false);
+            }
         }
     }
 }
