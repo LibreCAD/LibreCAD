@@ -311,6 +311,13 @@ RS_Vector LC_ParabolaData::FromX(double x) const
     return vp;
 }
 
+std::array<RS_Vector, 2> LC_ParabolaData::FromXWithTangent(double x) const
+{
+    const double h = vertex.distanceTo(focus) * 0.5;
+    return {RS_Vector{x, x*x/(4.*h)}.rotate(axis.angle() - M_PI/2) + vertex,
+            RS_Vector{2.*h, x}.rotate(axis.angle() - M_PI/2)};
+}
+
 /** \brief return the equation of the entity
 a quadratic contains coefficients for quadratic:
 m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
@@ -564,6 +571,17 @@ RS_Vector LC_Parabola::getNearestOrthTan([[maybe_unused]] const RS_Vector& coord
     const double x = -2.*data.axis.magnitude()*line.x/line.y;
     return RS_Vector{x, x*x/(4.*data.axis.magnitude())}.rotate(data.axis.angle() - M_PI/2) + data.vertex;
 }
+
+std::unique_ptr<LC_Parabola> LC_Parabola::approximateOffset(double dist) const
+{
+    auto controlPoints = data.controlPoints;
+    RS_Vector displacement = data.axis.normalized() * (- dist);
+    for(RS_Vector& controlPoint: controlPoints)
+        controlPoint.move(displacement);
+    LC_ParabolaData offsetData{controlPoints};
+    return std::make_unique<LC_Parabola>(nullptr, offsetData);
+}
+
 
 // void LC_Parabola::LC_Parabola::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
 // {
