@@ -28,6 +28,7 @@
 #include <random>
 #include <vector>
 
+#include "lc_parabola.h"
 #include "lc_quadratic.h"
 #include "lc_rect.h"
 #include "lc_splinepoints.h"
@@ -71,6 +72,11 @@ bool isLine(RS_Entity const* e) {
 // whether the entity is an ellipse
 bool isEllipse(RS_Entity const* e) {
     return e != nullptr && e->rtti() == RS2::EntityEllipse;
+}
+
+// whether the entity is an ellipse
+bool isParabola(RS_Entity const* e) {
+    return e != nullptr && e->rtti() == RS2::EntityParabola;
 }
 
 /**
@@ -234,13 +240,37 @@ public:
     }
 };
 
+// Algorithm for cases with one entity being a parabola
+class TangentFinderAlgoParabola : public TangentFinderAlgo
+{
+public:
+    std::pair<RS_VectorSolutions, bool> operator () (const RS_Entity* e1, const RS_Entity* e2) const override
+    {
+        if (isParabola(e2))
+            std::swap(e1, e2);
+        if (!isParabola(e1))
+            return {};
+
+        RS_VectorSolutions ret = FindTangent(e1, e2);
+
+        return {ret, true};
+    }
+
+    std::unique_ptr<RS_Entity> CreateOffset(const RS_Entity* e1, double offsetValue) const override {
+
+        auto parabola = static_cast<const LC_Parabola*>(e1);
+        return parabola->approximateOffset(offsetValue);
+    }
+};
+
 RS_VectorSolutions TangentFinder::GetTangent() const
 {
     // TODO: handle splinepoints, parabola, and hyperbola
     std::unique_ptr<TangentFinderAlgo> algos[] = {
         std::make_unique<TangentFinderAlgoLine>(),
         std::make_unique<TangentFinderAlgoArc>(),
-        std::make_unique<TangentFinderAlgoEllipse>()
+        std::make_unique<TangentFinderAlgoEllipse>(),
+        std::make_unique<TangentFinderAlgoParabola>()
     };
 
     for(const std::unique_ptr<TangentFinderAlgo>& algo: algos) {
