@@ -270,9 +270,17 @@ m0 x + m1 y + m2 =0
 
 protected:
     RS_ArcData data{};
+    // cached values for performance
+    RS_Vector middlePoint;
+    RS_Vector startPoint;
+    RS_Vector endPoint;
 
     void updateLength() override;
     void updatePaintingInfo();
+
+    void updateMiddlePoint();
+
+    void moveMiddlePoint(RS_Vector vector);
 };
 
 #endif
