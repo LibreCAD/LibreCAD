@@ -378,6 +378,25 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                     }
                     break;
                 }
+                case RS2::EntityPolyline:{
+                    if (shiftPressed || ctrlPressed){
+                        auto* polyline = static_cast<RS_Polyline *>(refMovingEntity);
+                        RS_Vector directionPoint = polyline->getRefPointAdjacentDirection(shiftPressed, pPoints->v1);
+                        if (directionPoint.valid) {
+                            pPoints->v2 = LC_LineMath::getNearestPointOnInfiniteLine(mouse, pPoints->v1, directionPoint);
+                        }
+                        else{
+                            pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                        }
+                    }
+                    else{
+                        pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                    }
+                    if (showRefEntitiesOnPreview) {
+                        previewRefLine(pPoints->v2, pPoints->v1);
+                    }
+                    break;
+                }
                 // FIXME - add additional processing for dimensions to ensure snapping of dimension lines (same as for creation of dims)
                 default: {
                     pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
@@ -588,6 +607,22 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
 
                         break;
                     }
+                    case RS2::EntityPolyline:{
+                        if (shiftPressed || ctrlPressed){
+                            auto* polyline = static_cast<RS_Polyline *>(refMovingEntity);
+                            RS_Vector directionPoint = polyline->getRefPointAdjacentDirection(shiftPressed, pPoints->v1);
+                            if (directionPoint.valid) {
+                                pPoints->v2 = LC_LineMath::getNearestPointOnInfiniteLine(mouse, pPoints->v1, directionPoint);
+                            }
+                            else{
+                                pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                            }
+                        }
+                        else{
+                            pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                        }
+                        break;
+                    }
                     default: {
                         pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, false);
                         break;
@@ -736,7 +771,10 @@ void RS_ActionDefault::updateMouseButtonHints(){
                     modifiers =  MOD_SHIFT_AND_CTRL_ANGLE(tr("Lengthen Line"));
                     break;
                 case RS2::EntityArc:
-                    modifiers =  MOD_SHIFT_AND_CTRL_ANGLE(tr("Lengthen Arc"));
+                    modifiers =  MOD_SHIFT_AND_CTRL(tr("Lengthen/Scale"),tr("Lengthen Chord"));
+                    break;
+                case RS2::EntityPolyline:
+                    modifiers =  MOD_SHIFT_AND_CTRL(tr("Move in Previous segment direction"),tr("Move in Next segment direction"));
                     break;
                 default:
                     modifiers = MOD_SHIFT_ANGLE_SNAP;

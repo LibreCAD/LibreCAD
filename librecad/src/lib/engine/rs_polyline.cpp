@@ -701,3 +701,34 @@ std::ostream& operator << (std::ostream& os, const RS_Polyline& l) {
 
     return os;
 }
+/**
+ * finds vertex that is adjacent to given (previous or next)
+ * @param previousSegment - direction of previous segment if true, false - next one
+ * @param refPoint
+ * @return
+ */
+RS_Vector RS_Polyline::getRefPointAdjacentDirection(bool previousSegment, RS_Vector& refPoint) {
+    RS_Vector previous = getStartpoint();
+    if (refPoint == previous){ // handle start point
+        return entityAt(0)->getEndpoint();
+    }
+    bool breakOnNextVertex = false;
+    for (RS_Entity *entity = firstEntity(RS2::ResolveAll); entity; entity = nextEntity(RS2::ResolveAll)) {
+        RS_Vector segmentEndPoint = entity->getEndpoint();
+        if (breakOnNextVertex){
+            return segmentEndPoint;
+        }
+        if (segmentEndPoint == refPoint){
+            if (previousSegment){
+                return previous;
+            }
+            else{
+                breakOnNextVertex = true;
+            }
+        }
+        else{
+            previous = segmentEndPoint;
+        }
+    }
+    return previous;
+}
