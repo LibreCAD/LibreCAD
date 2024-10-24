@@ -405,6 +405,9 @@ RS_VectorSolutions RS_Polyline::getRefPoints() const{
     RS_VectorSolutions ret{{data.startpoint}};
     for(auto e: *this){
         if (e->isAtomic()) {
+            if (e->isArc()){
+                ret.push_back(e->getMiddlePoint());
+            }
             ret.push_back(e->getEndpoint());
         }
     }
