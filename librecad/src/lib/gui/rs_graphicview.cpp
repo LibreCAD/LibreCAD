@@ -1497,7 +1497,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
 #ifdef DEBUG_RENDERING
     isVisibleTime += isVisibleTimer.nsecsElapsed();
 #endif
-    if (!visible) {// fixme - renderperf - optimize is visible
+    if (!visible) {
         return;
     }
 
