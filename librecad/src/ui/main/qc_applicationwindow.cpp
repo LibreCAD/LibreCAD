@@ -947,6 +947,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
             updateGridViewActions(isometricGrid, isoViewType);
         }
         activatedGraphicView->loadSettings();
+        activatedGraphicView->redraw();
         return;
     }
 
