@@ -131,7 +131,7 @@ void LC_ActionPolylineChangeSegmentType::mouseMoveEvent(QMouseEvent *e) {
 
 
 RS_Polyline* LC_ActionPolylineChangeSegmentType::createModifiedPolyline() {
-    auto* result = new RS_Polyline(nullptr);
+    auto* result = new RS_Polyline(container);
 
     for (RS_Entity *entity = polyline->firstEntity(RS2::ResolveAll); entity; entity = polyline->nextEntity(RS2::ResolveAll)) {
         if (polylineSegment == entity){

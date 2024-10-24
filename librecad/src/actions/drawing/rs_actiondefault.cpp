@@ -397,6 +397,22 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                     }
                     break;
                 }
+                case RS2::EntityCircle:{
+                    // fixme -sand - add morphing of circle to ellipse
+                    pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                    if (showRefEntitiesOnPreview) {
+                        previewRefLine(pPoints->v2, pPoints->v1);
+                    }
+                    break;
+                }
+                case RS2::EntityEllipse:{
+                    // fixme - sand - add rotation of major axis
+                    pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                    if (showRefEntitiesOnPreview) {
+                        previewRefLine(pPoints->v2, pPoints->v1);
+                    }
+                    break;
+                }
                 // FIXME - add additional processing for dimensions to ensure snapping of dimension lines (same as for creation of dims)
                 default: {
                     pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);

@@ -250,7 +250,13 @@ namespace RS2 {
         ActionGetSelect,
 
         ActionDrawArc,
+        ActionDrawArcChord,
+        ActionDrawArcAngleLen,
         ActionDrawArc3P,
+        ActionDrawArc2PAngle,
+        ActionDrawArc2PRadius,
+        ActionDrawArc2PLength,
+        ActionDrawArc2PHeight,
         ActionDrawArcParallel,
         ActionDrawArcTangential,
         ActionDrawCircle,

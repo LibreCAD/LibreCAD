@@ -613,7 +613,13 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionDrawCircleTan3(*document, *view);
             break;
         case RS2::ActionDrawArc:
-            a = new RS_ActionDrawArc(*document, *view);
+            a = new RS_ActionDrawArc(*document, *view, RS2::ActionDrawArc);
+            break;
+        case RS2::ActionDrawArcChord:
+            a = new RS_ActionDrawArc(*document, *view, RS2::ActionDrawArcChord);
+            break;
+        case RS2::ActionDrawArcAngleLen:
+            a = new RS_ActionDrawArc(*document, *view,RS2::ActionDrawArcAngleLen);
             break;
         case RS2::ActionDrawArc3P:
             a = new RS_ActionDrawArc3P(*document, *view);

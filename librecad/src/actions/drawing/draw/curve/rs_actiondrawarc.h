@@ -39,7 +39,8 @@ class RS_ActionDrawArc:public LC_ActionDrawCircleBase {
 public:
     RS_ActionDrawArc(
         RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+        RS_GraphicView &graphicView,
+        RS2::ActionType actionType);
     ~RS_ActionDrawArc() override;
     void reset() override;
     void init(int status) override;

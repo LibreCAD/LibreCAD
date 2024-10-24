@@ -172,14 +172,23 @@ void LC_ActionFactory::createDrawCircleActions(QMap<QString, QAction*>& map, QAc
 
 void LC_ActionFactory::createDrawCurveActions(QMap<QString, QAction*>& map, QActionGroup* group) {
     createActionHandlerActions(map, group,{
-        {"DrawArc",             RS2::ActionDrawArc,             tr("&Center, Point, Angles"),    ":/icons/arc_center_point_angle.svg"},
-        {"DrawArc3P",           RS2::ActionDrawArc3P,           tr("&3 Points"),                 ":/icons/arc_3_points.svg"},
-        {"DrawArcParallel",     RS2::ActionDrawArcParallel,     tr("&Concentric"),               ":/icons/arc_concentric.svg"},     // fixme - why this action is not in list?
-        {"DrawArcTangential",   RS2::ActionDrawArcTangential,   tr("Arc &Tangential"),           ":/icons/arc_continuation.svg"},
-        {"DrawParabola4Points", RS2::ActionDrawParabola4Points, tr("Para&bola 4 points"),        ":/icons/parabola_4_points.svg"},
-        {"DrawParabolaFD",      RS2::ActionDrawParabolaFD,      tr("Parabola &Focus Directrix"), ":/icons/parabola_focus_directrix.svg"},
-        {"DrawSpline",          RS2::ActionDrawSpline,          tr("&Spline"),                   ":/icons/spline.svg"},
-        {"DrawSplinePoints",    RS2::ActionDrawSplinePoints,    tr("&Spline through points"),    ":/icons/spline_points.svg"}
+        {"DrawArc",                RS2::ActionDrawArc,             tr("&Center, Point, Angles"),    ":/icons/arc_center_point_angle.svg"},
+        {"DrawArcChord",           RS2::ActionDrawArcChord,        tr("&Center, Point, Chord"),     ":/icons/arc_center_point_chord.svg"},
+        {"DrawArcAngleLen",        RS2::ActionDrawArcAngleLen,     tr("&Center, Point, Arc Angle"), ":/icons/arc_center_point_anglelen.svg"},
+        {"DrawArc3P",              RS2::ActionDrawArc3P,           tr("&3 Points"),                 ":/icons/arc_3_points.svg"},
+        {"DrawArc2PAngle",         RS2::ActionDrawArc2PAngle,      tr("&2 Points, Angle"),          ":/icons/arc_2p_angle.svg"},
+        {"DrawArc2PRadius",        RS2::ActionDrawArc2PRadius,     tr("&2 Points, Radius"),         ":/icons/arc_2p_radius.svg"},
+        {"DrawArc2PLength",        RS2::ActionDrawArc2PLength,     tr("&2 Points, Length"),         ":/icons/arc_2p_length.svg"},
+        {"DrawArc2PHeight",        RS2::ActionDrawArc2PHeight,     tr("&2 Points, Height"),         ":/icons/arc_2p_height.svg"},
+        {"DrawArcParallel",        RS2::ActionDrawArcParallel,     tr("&Concentric"),               ":/icons/arc_concentric.svg"},     // fixme - why this action is not in list?
+        {"DrawArcTangential",      RS2::ActionDrawArcTangential,   tr("Arc &Tangential"),           ":/icons/arc_continuation.svg"},
+        {"DrawParabola4Points",    RS2::ActionDrawParabola4Points, tr("Para&bola 4 points"),        ":/icons/parabola_4_points.svg"},
+        {"DrawParabolaFD",         RS2::ActionDrawParabolaFD,      tr("Parabola &Focus Directrix"), ":/icons/parabola_focus_directrix.svg"},
+        {"DrawSpline",             RS2::ActionDrawSpline,          tr("&Spline"),                   ":/icons/spline.svg"},
+        {"DrawSplinePoints",       RS2::ActionDrawSplinePoints,    tr("&Spline through points"),    ":/icons/spline_points.svg"},
+        {"DrawSplinePointsAdd",    RS2::ActionDrawSplinePoints,    tr("&Add spline point"),         ":/icons/spline_points_add.svg"},
+        {"DrawSplinePointsRemove", RS2::ActionDrawSplinePoints,    tr("&Remove spline points"),     ":/icons/spline_points_remove.svg"},
+        {"DrawSplinePointsAppend", RS2::ActionDrawSplinePoints,    tr("&Append spline points"),     ":/icons/spline_points_insert.svg"}
     });
 }
 

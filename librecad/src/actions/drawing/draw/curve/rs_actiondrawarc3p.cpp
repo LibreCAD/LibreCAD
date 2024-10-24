@@ -204,8 +204,8 @@ bool RS_ActionDrawArc3P::doProcessCommand([[maybe_unused]]int status, const QStr
     if (checkCommand("center", c, rtti())) {
         accept = true;
         finish(false);
-        // fixme - review why this action is called ther
-        graphicView->setCurrentAction(new RS_ActionDrawArc(*container, *graphicView));
+        // fixme - review why this action is called there
+        graphicView->setCurrentAction(new RS_ActionDrawArc(*container, *graphicView, RS2::ActionDrawArc));
     }
     return accept;
 }

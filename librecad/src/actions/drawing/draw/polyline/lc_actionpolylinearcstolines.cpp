@@ -94,7 +94,7 @@ void LC_ActionPolylineArcsToLines::onMouseRightButtonRelease(int status, QMouseE
 }
 
 RS_Polyline *LC_ActionPolylineArcsToLines::createPolyline(RS_Polyline *original) {
-    auto* clone = new RS_Polyline(nullptr);
+    auto* clone = new RS_Polyline(container);
 
     clone->addVertex(original->getStartpoint());
 

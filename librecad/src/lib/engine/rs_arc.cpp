@@ -828,7 +828,7 @@ void RS_Arc::scale(const RS_Vector& center, const RS_Vector& factor) {
         //factor.y*=-1;
     }
 
-    data.center.scale(center, factor);
+    data.center = data.center.scale(center, factor);
     data.radius *= factor.x;
     data.radius = fabs( data.radius );
     //todo, does this handle negative factors properly?
