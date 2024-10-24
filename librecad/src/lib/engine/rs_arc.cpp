@@ -1035,6 +1035,7 @@ void RS_Arc::moveMiddlePoint(RS_Vector vector) {
         data.radius = arcData.radius;
         data.angle1 = arcData.angle1;
         data.angle2 = arcData.angle2;
+        data.reversed  = arcData.reversed;
         calculateBorders();
     }
 }
