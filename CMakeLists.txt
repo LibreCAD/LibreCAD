@@ -1240,6 +1240,10 @@ set(SOURCES
 		librecad/src/ui/dialogs/main/lc_dlgabout.cpp
 		librecad/src/lib/engine/lc_cachedlengthentity.h
 		librecad/src/lib/engine/lc_cachedlengthentity.cpp
+		librecad/src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.h
+		librecad/src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp
+		librecad/src/actions/drawing/draw/polyline/lc_actionpolylinearcstolines.h
+		librecad/src/actions/drawing/draw/polyline/lc_actionpolylinearcstolines.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

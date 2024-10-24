@@ -328,6 +328,8 @@ namespace RS2 {
         ActionPolylineTrim,
         ActionPolylineEquidistant,
         ActionPolylineSegment,
+        ActionPolylineArcsToLines,
+        ActionPolylineChangeSegmentType,
 
         ActionDimAligned,
         ActionDimLinear,

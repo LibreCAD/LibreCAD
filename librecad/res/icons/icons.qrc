@@ -269,5 +269,7 @@
         <file>grid_iso_right.svg</file>
         <file>draftLineWidth.svg</file>
         <file>anti_aliasing.svg</file>
+        <file>polyline_arc_to_lines.svg</file>
+        <file>polyline_segment_type.svg</file>
     </qresource>
 </RCC>

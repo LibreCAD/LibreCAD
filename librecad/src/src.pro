@@ -221,6 +221,8 @@ HEADERS += \
     actions/drawing/draw/dimensions/lc_actioncircledimbase.h \
     actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.h \
     actions/drawing/draw/ellipse/lc_actiondrawellipse1point.h \
+    actions/drawing/draw/polyline/lc_actionpolylinearcstolines.h \
+    actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.h \
     lib/actions/lc_highlight.h \
     lib/actions/lc_modifiersinfo.h \
     lib/actions/rs_actioninterface.h \
@@ -352,6 +354,8 @@ SOURCES += \
     actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp \
     actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp \
     actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp \
+    actions/drawing/draw/polyline/lc_actionpolylinearcstolines.cpp \
+    actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp \
     lib/actions/lc_highlight.cpp \
     lib/actions/lc_modifiersinfo.cpp \
     lib/actions/rs_actioninterface.cpp \

@@ -205,7 +205,9 @@ void LC_ActionFactory::createDrawPolylineActions(QMap<QString, QAction *> &map, 
         {"PolylineDelBetween",  RS2::ActionPolylineDelBetween,  tr("Delete &between two nodes"),               ":/icons/delete_between_nodes.svg"},
         {"PolylineTrim",        RS2::ActionPolylineTrim,        tr("&Trim segments"),                          ":/icons/trim.svg"},
         {"PolylineEquidistant", RS2::ActionPolylineEquidistant, tr("Create &Equidistant Polylines"),           ":/icons/create_equidistant_polyline.svg"},
-        {"PolylineSegment",     RS2::ActionPolylineSegment,     tr("Polyline from Existing &Segments"),        ":/icons/create_polyline_from_existing_segments.svg"}
+        {"PolylineSegment",     RS2::ActionPolylineSegment,     tr("Polyline from Existing &Segments"),        ":/icons/create_polyline_from_existing_segments.svg"},
+        {"PolylineArcToLines",  RS2::ActionPolylineArcsToLines, tr("Polyline Arcs to Chords"),                 ":/icons/polyline_arc_to_lines.svg"},
+        {"PolylineSegmentType", RS2::ActionPolylineChangeSegmentType, tr("Polyline Change Segment Type"),      ":/icons/polyline_segment_type.svg"}
     });
 }
 

@@ -93,7 +93,6 @@ void LC_ActionDrawEllipse1Point::trigger() {
     drawSnapper();
 
     setStatus(SetPoint);
-
 }
 
 void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {

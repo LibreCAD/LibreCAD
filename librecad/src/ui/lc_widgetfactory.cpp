@@ -157,7 +157,9 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "PolylineDelBetween",
         "PolylineTrim",
         "PolylineEquidistant",
-        "PolylineSegment"
+        "PolylineSegment",
+        "PolylineArcToLines",
+        "PolylineSegmentType"
     });
 
     fillActionsList(select_actions, {

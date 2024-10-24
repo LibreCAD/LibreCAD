@@ -201,6 +201,8 @@
 #include "lc_actioninfo3pointsangle.h"
 #include "lc_actiondrawellipse1point.h"
 #include "lc_actiondrawdimbaseline.h"
+#include "lc_actionpolylinearcstolines.h"
+#include "lc_actionpolylinechangesegmenttype.h"
 
 /**
  * Constructor
@@ -561,6 +563,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionPolylineSegment:
             a = new RS_ActionPolylineSegment(*document, *view);
+            break;
+        case RS2::ActionPolylineArcsToLines:
+            a = new LC_ActionPolylineArcsToLines(*document, *view);
+            break;
+        case RS2::ActionPolylineChangeSegmentType:
+            a = new LC_ActionPolylineChangeSegmentType(*document, *view);
             break;
         case RS2::ActionDrawLinePolygonCenCor:
             a = new RS_ActionDrawLinePolygonCenCor(*document, *view);
