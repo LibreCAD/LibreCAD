@@ -2483,8 +2483,13 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="943"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="965"/>
         <source>Select line, arc or circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="965"/>
+        <source>Proceed even if no intersections</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

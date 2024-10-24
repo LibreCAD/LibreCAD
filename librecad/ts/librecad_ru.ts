@@ -2502,9 +2502,14 @@ or [%2]</source>
         <translation>Выбран неподходящий объект - нет сегментов между пересечениями с другими объектами</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="943"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="965"/>
         <source>Select line, arc or circle</source>
         <translation>Выделите линию, дугу или окружность</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="965"/>
+        <source>Proceed even if no intersections</source>
+        <translation>Также удалять объекты без пересечений</translation>
     </message>
 </context>
 <context>
