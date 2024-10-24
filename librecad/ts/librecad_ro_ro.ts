@@ -2562,7 +2562,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionPolylineArcsToLines</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinearcstolines.cpp" line="119"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinearcstolines.cpp" line="120"/>
         <source>Specify polyline with arc segments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2570,22 +2570,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionPolylineChangeSegmentType</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="61"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="62"/>
         <source>Invalid arc point to create arc, select another one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="233"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="243"/>
         <source>Select polyline to modify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="237"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="247"/>
         <source>Select segment of polyline to modify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="241"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="251"/>
         <source>Specify position on arc to create</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8913,7 +8913,7 @@ intr-o fereastra noua</translation>
     <name>QG_ColorBox</name>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="106"/>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="279"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="285"/>
         <source>By Layer</source>
         <translation>Dupa strat</translation>
     </message>
@@ -8929,41 +8929,52 @@ intr-o fereastra noua</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="120"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="122"/>
         <source>Yellow</source>
         <translation>Galben</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="122"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="124"/>
         <source>Green</source>
         <translation>Verde</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="124"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="126"/>
         <source>Cyan</source>
         <translation>Cian</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="126"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="128"/>
         <source>Blue</source>
         <translation>Albastru</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="128"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="130"/>
         <source>Magenta</source>
         <translation>Magenta</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="133"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="135"/>
+        <source>Orange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="136"/>
+        <source>Dark Orange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="139"/>
         <source>Black / White</source>
         <translation>Alb / Negru</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="137"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="143"/>
         <source>Gray</source>
         <translation>Gri</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="139"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="145"/>
         <source>Light Gray</source>
         <translation>Gri deschis</translation>
     </message>
@@ -8974,47 +8985,48 @@ intr-o fereastra noua</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="119"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="121"/>
         <source>Dark Red</source>
         <translation>Rosu inchis</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="121"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="123"/>
         <source>Dark Yellow</source>
         <translation>Galben inchis</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="123"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="125"/>
         <source>Dark Green</source>
         <translation>Verde inchis</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="125"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="127"/>
         <source>Dark Cyan</source>
         <translation>Cian inchis</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="127"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="129"/>
         <source>Dark Blue</source>
         <translation>Albastru inchis</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="129"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="131"/>
         <source>Dark Magenta</source>
         <translation>Magenta inchis</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="138"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="144"/>
         <source>Dark Gray</source>
         <translation>Gri inchis</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="111"/>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="317"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="323"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="166"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="172"/>
         <source>Custom Picked</source>
         <translation type="unfinished"></translation>
     </message>
