@@ -26,11 +26,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_Parabola_H
 
 #include <array>
+#include <memory>
 #include <vector>
+
 #include "lc_splinepoints.h"
 
-struct RS_LineData;
 class RS_Line;
+struct RS_LineData;
 
 /**
  * Holds the data that defines a parabola.
@@ -58,6 +60,12 @@ struct LC_ParabolaData
     LC_Quadratic getQuadratic() const;
     double FindX(const RS_Vector& point) const;
     RS_Vector FromX(double x) const;
+    /**
+     * @brief FromXWithTangent find point on curve and tangent at the given x
+     * @param x - the coordinate along the x-direction
+     * @return std::array<RS_Vector, 2> - point and tangent
+     */
+    std::array<RS_Vector, 2> FromXWithTangent(double x) const;
 
     // The three control points, and all other properties are calculated from control points
     std::array<RS_Vector, 3> controlPoints;
@@ -94,7 +102,7 @@ public:
 
     RS_Entity* clone() const override;
 
-    /**	@return RS2::EntitySpline */
+    /**	@return RS2::EntityParabola */
     RS2::EntityType rtti() const override;
 
     /** @return false */
@@ -226,6 +234,14 @@ public:
 
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void revertDirection() override;
+
+    /**
+     * @brief approximateOffset - approximate offset by a parabola
+     * @param dist - the approximate distance for offset, positive direction is when the new parabola appears to be
+     *               outside of the original
+     * @return an approximate offset
+     */
+    std::unique_ptr<LC_Parabola> approximateOffset(double dist) const;
 
     // void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
     // std::vector<RS_Vector> const& getPoints() const;
