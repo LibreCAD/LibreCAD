@@ -188,11 +188,7 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     settings.beginGroup("Startup");
     if (settings.value("TabMode", 0).toBool()) {
-        mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
-        QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar*>();
-        QTabBar *tabBar = tabBarList.at(0);
-        if (tabBar)
-            tabBar->setExpanding(false);
+        setupCADAreaTabbar();
     }
 
     bool enable_left_sidebar = settings.value("EnableLeftSidebar", 1).toBool();
@@ -2463,6 +2459,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
         emit antialiasingChanged(antialiasing);
 
         statusbarManager->loadSettings();
+        onCADTabBarIndexChanged(0); // force update if settings changed
 
         QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
         for (int i = 0; i < windows.size(); ++i) {

@@ -24,7 +24,10 @@ protected:
     void doArrangeWindows(RS2::SubWindowMode mode, bool actuallyDont = false);
     void setTabLayout(RS2::TabShape s, RS2::TabPosition p);
     virtual void doActivate(QMdiSubWindow* w);
+    void setupCADAreaTabbar();
 
+protected slots:
+    void onCADTabBarIndexChanged(int index);
 public:
     LC_MDIApplicationWindow();
 
@@ -91,6 +94,9 @@ public slots:
     void slotWindowActivated(int);
 
     friend class QC_MDIWindow;
+
+
+
 };
 
 #endif // LC_MDIAPPLICATIONWINDOW_H

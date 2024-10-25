@@ -435,12 +435,7 @@ void LC_MDIApplicationWindow::slotTabPositionWest() {
 void LC_MDIApplicationWindow::slotToggleTab() {
     if (mdiAreaCAD->viewMode() == QMdiArea::SubWindowView) {
         LC_SET_ONE("Startup", "TabMode", 1);
-        mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
-        QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar *>();
-        QTabBar *tabBar = tabBarList.at(0);
-        if (tabBar) {
-            tabBar->setExpanding(false);
-        }
+        setupCADAreaTabbar();
         QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
         QMdiSubWindow *active = mdiAreaCAD->activeSubWindow();
         for (int i = 0; i < windows.size(); i++) {
@@ -458,6 +453,54 @@ void LC_MDIApplicationWindow::slotToggleTab() {
         LC_SET_ONE("Startup", "TabMode", 0);
         mdiAreaCAD->setViewMode(QMdiArea::SubWindowView);
         doArrangeWindows(RS2::CurrentMode);
+    }
+}
+
+void LC_MDIApplicationWindow::setupCADAreaTabbar() {
+    mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
+    QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar *>();
+    QTabBar *tabBar = tabBarList.at(0);
+    if (tabBar != nullptr) {
+        tabBar->setExpanding(false);
+        connect(tabBar, &QTabBar::currentChanged, this, &LC_MDIApplicationWindow::onCADTabBarIndexChanged);
+    }
+}
+
+void LC_MDIApplicationWindow::onCADTabBarIndexChanged(int index) {
+    LC_GROUP("Appearance");
+    {
+        bool showCloseButtons = LC_GET_BOOL("ShowCloseButton", true);
+        bool showActive = LC_GET_BOOL("ShowCloseButtonActiveOnly", true);
+
+        QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar *>();
+        QTabBar *tabBar = tabBarList.at(0);
+        if (tabBar != nullptr) {
+            QTabBar::ButtonPosition closeSide =
+                (QTabBar::ButtonPosition) style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition, 0, this);
+
+            for (int i = 0; i < tabBar->count(); ++i) {
+                QWidget *w = tabBar->tabButton(i, closeSide);
+                if (w != nullptr) {
+                    if (showCloseButtons){
+                        if (showActive) {
+                            if (i != tabBar->currentIndex()) {
+//                                tabBar->tabButton(0, QTabBar::RightSide)->deleteLater();
+//                                tabBar->setTabButton(0, QTabBar::RightSide, 0);
+                                w->hide();
+                            } else {
+                                w->show();
+                            }
+                        }
+                        else{
+                            w->show();
+                        }
+                    }
+                    else {
+                        w->hide();
+                    }
+                }
+            }
+        }
     }
 }
 

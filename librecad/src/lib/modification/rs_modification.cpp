@@ -2365,11 +2365,11 @@ void RS_Modification::addNewEntities(const std::vector<RS_Entity*>& addList, boo
  *
  */
 LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
-                           RS_AtomicEntity* trimEntity,
-                           const RS_Vector& limitCoord,
-                           RS_Entity* limitEntity,
-                           bool both,
-                           bool forPreview) {
+                                    RS_AtomicEntity* trimEntity,
+                                    const RS_Vector& limitCoord,
+                                    RS_Entity* limitEntity,
+                                    bool both,
+                                    bool forPreview) {
 
     LC_TrimResult result;
     if (trimEntity == nullptr || limitEntity == nullptr) {
@@ -2398,12 +2398,12 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
         }
     }
 
-	if (!sol.hasValid()) {
+    if (!sol.hasValid()) {
         return both ? trim( limitCoord, (RS_AtomicEntity*)limitEntity, trimCoord, trimEntity, false, forPreview) : result;
     }
 
-	RS_AtomicEntity* trimmed1 = nullptr;
-	RS_AtomicEntity* trimmed2 = nullptr;
+    RS_AtomicEntity* trimmed1 = nullptr;
+    RS_AtomicEntity* trimmed2 = nullptr;
 
     if (trimEntity->rtti()==RS2::EntityCircle) {
         // convert a circle into a trimmable arc, need to start from intersections
@@ -2414,15 +2414,15 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
     }
 
     // trim trim entity
-	size_t ind = 0;
+    size_t ind = 0;
     RS_Vector is(false), is2(false);
 
     //RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
     if ( trimEntity->trimmable() ) {
         is = trimmed1->prepareTrim(trimCoord, sol);
     } else {
-		is = sol.getClosest(limitCoord, nullptr, &ind);
-		//sol.getClosest(limitCoord, nullptr, &ind);
+        is = sol.getClosest(limitCoord, nullptr, &ind);
+//sol.getClosest(limitCoord, nullptr, &ind);
         RS_DEBUG->print("RS_Modification::trim: limitCoord: %f/%f", limitCoord.x, limitCoord.y);
         RS_DEBUG->print("RS_Modification::trim: sol.get(0): %f/%f", sol.get(0).x, sol.get(0).y);
         RS_DEBUG->print("RS_Modification::trim: sol.get(1): %f/%f", sol.get(1).x, sol.get(1).y);
