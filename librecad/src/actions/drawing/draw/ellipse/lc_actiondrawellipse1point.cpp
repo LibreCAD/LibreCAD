@@ -74,7 +74,7 @@ void LC_ActionDrawEllipse1Point::trigger() {
                                     pPoints->angle1, pPoints->angle2, pPoints->reversed}
     };
     // todo - code belos is similar to DrawEllipseAxis action.. should we make it common for all ellipse actions?
-    if (ratio > 1.){
+    if   (ratio > 1.){
         ellipse->switchMajorMinor();
     }
     ellipse->setLayerToActive();

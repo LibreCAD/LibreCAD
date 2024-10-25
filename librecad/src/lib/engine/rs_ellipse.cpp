@@ -512,6 +512,7 @@ bool RS_Ellipse::switchMajorMinor(void)
         setAngle1(getEllipseAngle(vp_start));
         setAngle2(getEllipseAngle(vp_end));
     }
+    calculateBorders();
     return true;
 }
 
