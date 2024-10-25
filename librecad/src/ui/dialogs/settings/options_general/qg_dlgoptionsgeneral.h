@@ -52,6 +52,7 @@ protected slots:
     void on_cbVisualizeHoveringClicked();
     void on_cbPersistentDialogsClicked();
     void on_cbGridExtendAxisLinesToggled();
+    void on_cbClassicStatusBarToggled();
     void onCheckNewVersionChanged();
     void on_tabWidget_currentChanged(int index);
     void on_pb_background_clicked();
