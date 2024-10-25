@@ -385,6 +385,7 @@ public:
     void setHasNoGrid(bool hasNoGrid);
     bool isDraftLinesMode() const;
     void setDraftLinesMode(bool draftLinesMode);
+    void setForcedActionKillAllowed(bool forcedActionKillAllowed);
 protected:
 
     RS_EntityContainer *container = nullptr; // Holds a pointer to all the enties
@@ -509,6 +510,7 @@ private:
     bool inOverlayDrawing = false;
     RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
     bool hasNoGrid = false;
+    bool forcedActionKillAllowed = true;
 signals:
     void relative_zero_changed(const RS_Vector &);
     void previous_zoom_state(bool);

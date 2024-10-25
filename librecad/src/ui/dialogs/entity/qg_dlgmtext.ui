@@ -66,6 +66,9 @@
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
                </property>
+               <property name="toolTip">
+                <string>Layer of MText</string>
+               </property>
               </widget>
              </item>
              <item>
@@ -137,6 +140,9 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="toolTip">
+               <string>If checked, default line spacing will be used</string>
+              </property>
               <property name="text">
                <string>&amp;Default line spacing</string>
               </property>
@@ -181,6 +187,9 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Height of line</string>
               </property>
              </widget>
             </item>
@@ -247,6 +256,9 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="toolTip">
+               <string>Specific line spacing factor is used</string>
+              </property>
              </widget>
             </item>
             <item row="2" column="0">
@@ -272,6 +284,9 @@
               </property>
               <property name="focusPolicy">
                <enum>Qt::WheelFocus</enum>
+              </property>
+              <property name="toolTip">
+               <string>Font to use</string>
               </property>
              </widget>
             </item>
@@ -624,6 +639,9 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="toolTip">
+               <string>Rotation angle</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -652,6 +670,9 @@
                    <height>25</height>
                   </size>
                  </property>
+                 <property name="toolTip">
+                  <string>Left to right text direction</string>
+                 </property>
                  <property name="text">
                   <string>Left to right</string>
                  </property>
@@ -664,6 +685,9 @@
                    <width>50</width>
                    <height>25</height>
                   </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Right to left text direction</string>
                  </property>
                  <property name="text">
                   <string>Right to left</string>
@@ -801,6 +825,9 @@
          <property name="focusPolicy">
           <enum>Qt::StrongFocus</enum>
          </property>
+         <property name="toolTip">
+          <string>Text lines to insert</string>
+         </property>
          <property name="tabChangesFocus">
           <bool>true</bool>
          </property>
@@ -836,10 +863,13 @@
         <item>
          <widget class="QComboBox" name="cbSymbol">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Symbol insertion</string>
           </property>
           <item>
            <property name="text">
@@ -945,7 +975,7 @@
         <item row="0" column="1">
          <widget class="QComboBox" name="cbUniPage">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -955,6 +985,9 @@
             <width>200</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Codepage to use for characted selection</string>
           </property>
           <item>
            <property name="text">
@@ -1501,7 +1534,7 @@
         <item row="1" column="1">
          <widget class="QComboBox" name="cbUniChar">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -1511,6 +1544,9 @@
             <width>25</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Selection of character to insert</string>
           </property>
          </widget>
         </item>
@@ -1533,6 +1569,9 @@
             <width>25</width>
             <height>25</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Selected character preview. Click to insert to text.</string>
           </property>
           <property name="text">
            <string/>
@@ -1564,14 +1603,14 @@
    <header>qg_widgetpen.h</header>
   </customwidget>
   <customwidget>
-   <class>QG_FontBox</class>
-   <extends>QWidget</extends>
-   <header>qg_fontbox.h</header>
-  </customwidget>
-  <customwidget>
    <class>QG_LayerBox</class>
    <extends>QWidget</extends>
    <header>qg_layerbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QG_FontBox</class>
+   <extends>QWidget</extends>
+   <header>qg_fontbox.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

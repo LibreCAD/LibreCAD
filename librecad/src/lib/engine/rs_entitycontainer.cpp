@@ -1542,7 +1542,6 @@ double RS_EntityContainer::getDistanceToPoint(
     RS_Entity *subEntity = nullptr;
 
     for (auto e: entities) {
-
         if (e->isVisible() && (e->getLayer() == nullptr || !e->getLayer()->isLocked())) {
             RS_DEBUG->print("entity: getDistanceToPoint");
             RS_DEBUG->print("entity: %d", e->rtti());

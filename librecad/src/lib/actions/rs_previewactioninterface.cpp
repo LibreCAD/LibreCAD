@@ -272,18 +272,18 @@ LC_RefEllipse* RS_PreviewActionInterface::previewRefEllipse(const RS_EllipseData
 
 RS_Line* RS_PreviewActionInterface::previewLine(const RS_LineData& data){
     auto *line = new RS_Line(this->preview.get(),data);
-    this->preview->addEntity(line);
+    preview->addEntity(line);
     return line;
 }
 
 RS_Line* RS_PreviewActionInterface::previewLine(const RS_Vector &start, const RS_Vector &end){
     auto *line = new RS_Line(this->preview.get(), start, end);
-    this->preview->addEntity(line);
+    preview->addEntity(line);
     return line;
 }
 
 void RS_PreviewActionInterface::previewEntity(RS_Entity* en){
-    this->preview->addEntity(en);
+    preview->addEntity(en);
 }
 
 void RS_PreviewActionInterface::previewRefPoint(const RS_Vector &coord){

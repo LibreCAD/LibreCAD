@@ -240,10 +240,10 @@ bool RS_Arc::createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& end
     return true;
 }
 
-void RS_Arc::calculateBorders() {
-    RS_Vector const startpoint = data.center + RS_Vector::polar(data.radius, data.angle1);
-    RS_Vector const endpoint = data.center + RS_Vector::polar(data.radius, data.angle2);
-    LC_Rect const rect{startpoint, endpoint};
+void RS_Arc::calculateBorders() {    
+    startPoint = data.center + RS_Vector::polar(data.radius, data.angle1);
+    endPoint = data.center + RS_Vector::polar(data.radius, data.angle2);
+    LC_Rect const rect{startPoint, endPoint};
 
     double minX = rect.lowerLeftCorner().x;
     double minY = rect.lowerLeftCorner().y;
@@ -267,9 +267,12 @@ void RS_Arc::calculateBorders() {
 
     minV.set(minX, minY);
     maxV.set(maxX, maxY);
+    updateMiddlePoint();
+
     updatePaintingInfo();
     updateLength();
 }
+
 
 void RS_Arc::updatePaintingInfo() {
     // angles in degrees
@@ -291,17 +294,19 @@ void RS_Arc::updatePaintingInfo() {
 }
 
 RS_Vector RS_Arc::getStartpoint() const{
-    return data.center + RS_Vector::polar(data.radius, data.angle1);
+    return startPoint;    
 }
 
 /** @return End point of the entity. */
 RS_Vector RS_Arc::getEndpoint() const{
+    return endPoint;
     return data.center + RS_Vector::polar(data.radius, data.angle2);
 }
 
 RS_VectorSolutions RS_Arc::getRefPoints() const{
 	//order: start, end, center
-    return {{getStartpoint(), getEndpoint(), data.center}};
+    //order: start, center, middle, end
+    return {{getStartpoint(),  data.center, middlePoint, getEndpoint()}};
 }
 
 double RS_Arc::getDirection1() const {
@@ -356,18 +361,19 @@ RS_Vector RS_Arc::getNearestEndpoint(const RS_Vector& coord, double* dist) const
   */
 RS_VectorSolutions RS_Arc::getTangentPoint(const RS_Vector& point) const {
     RS_VectorSolutions ret;
-    double r2(getRadius()*getRadius());
+    double radius = getRadius();
+    double r2(radius * radius);
     if(r2<RS_TOLERANCE2) return ret; //circle too small
     RS_Vector vp(point-getCenter());
     double c2(vp.squared());
-    if(c2<r2-getRadius()*2.*RS_TOLERANCE) {
+    if(c2< r2 - radius * 2. * RS_TOLERANCE) {
         //inside point, no tangential point
         return ret;
     }
-    if(c2>r2+getRadius()*2.*RS_TOLERANCE) {
+    if(c2> r2 + radius * 2. * RS_TOLERANCE) {
         //external point
         RS_Vector vp1(-vp.y,vp.x);
-        vp1*=getRadius()*sqrt(c2-r2)/c2;
+        vp1*= radius * sqrt(c2 - r2) / c2;
         vp *= r2/c2;
         vp += getCenter();
         if(vp1.squared()>RS_TOLERANCE2) {
@@ -789,7 +795,7 @@ void RS_Arc::reverse() {
 
 void RS_Arc::move(const RS_Vector& offset) {
     data.center.move(offset);
-    moveBorders(offset);
+    calculateBorders();
 }
 
 void RS_Arc::rotate(const RS_Vector& center, const double& angle) {
@@ -822,7 +828,7 @@ void RS_Arc::scale(const RS_Vector& center, const RS_Vector& factor) {
         //factor.y*=-1;
     }
 
-    data.center.scale(center, factor);
+    data.center = data.center.scale(center, factor);
     data.radius *= factor.x;
     data.radius = fabs( data.radius );
     //todo, does this handle negative factors properly?
@@ -870,11 +876,18 @@ void RS_Arc::moveRef(const RS_Vector& ref, const RS_Vector& offset){
         return;
 
 //reference points must be by the order: start, end, center
+//order: start, center, middle, end
     switch (index) {
-        case 0:
+        case 0: // start
             moveStartpoint(vp + offset);
             return;
-        case 1:
+        case 1: // center
+            move(offset);
+            return;
+        case 2: // middlepoint
+            moveMiddlePoint(vp + offset);
+            return;
+        case 3: // endpoint
             moveEndpoint(vp + offset);
             return;
         default:
@@ -918,16 +931,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
  * @return Middle point of the entity.
  */
 RS_Vector RS_Arc::getMiddlePoint() const {
-    double a = getAngle1();
-    double b = getAngle2();
-
-    if (isReversed()) {
-        a = b + RS_Math::correctAngle(a - b) * 0.5;
-    } else {
-        a += RS_Math::correctAngle(b - a) * 0.5;
-    }
-    RS_Vector ret(a);
-    return getCenter() + ret * getRadius();
+    return middlePoint;
 }
 
 /**
@@ -1007,4 +1011,31 @@ double RS_Arc::areaLineIntegral() const {
 std::ostream& operator << (std::ostream& os, const RS_Arc& a) {
     os << " Arc: " << a.data << "\n";
     return os;
+}
+
+void RS_Arc::updateMiddlePoint() {
+    double a = getAngle1();
+    double b = getAngle2();
+
+    if (isReversed()) {
+        a = b + RS_Math::correctAngle(a - b) * 0.5;
+    } else {
+        a += RS_Math::correctAngle(b - a) * 0.5;
+    }
+    RS_Vector ret(a);
+    middlePoint =  getCenter() + ret * getRadius();
+}
+
+void RS_Arc::moveMiddlePoint(RS_Vector vector) {
+    auto arc = RS_Arc(nullptr, RS_ArcData());    
+    bool suc = arc.createFrom3P(startPoint, vector,endPoint);
+    if (suc) {
+        RS_ArcData &arcData = arc.data;
+        data.center = arcData.center;
+        data.radius = arcData.radius;
+        data.angle1 = arcData.angle1;
+        data.angle2 = arcData.angle2;
+        data.reversed  = arcData.reversed;
+        calculateBorders();
+    }
 }

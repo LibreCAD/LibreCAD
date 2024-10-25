@@ -39,6 +39,7 @@
 #include "rs_selection.h"
 #include "rs_units.h"
 #include "rs_actioninterface.h"
+#include "lc_linemath.h"
 
 struct RS_ActionDefault::Points {
     RS_Vector v1;
@@ -257,6 +258,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
 
             // additional processing for moving endpoint of lines and arcs
             bool ctrlPressed = isControl(e);
+            bool shiftPressed = isShift(e);
             bool addClone = true;
 
             RS_Entity *refMovingEntity = pPoints->refMovingEntity;
@@ -289,9 +291,13 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                     auto *refMovingArc = dynamic_cast<RS_Arc *>(refMovingEntity);
                     auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->cloneProxy());
 
+                    const RS_Vector &arcCenter = refMovingArc->getCenter();
+                    const RS_Vector &arcMiddle = refMovingArc->getMiddlePoint();
+                    const RS_Vector &arcEnd = refMovingArc->getEndpoint();
+                    const RS_Vector &arcStart = refMovingArc->getStartpoint();
                     if (ctrlPressed){ // for arc, we just correct angle of enpoint without changing the center and radius - if we move endpoint ref
-                        mouse = getSnapAngleAwarePoint(e, refMovingArc->getCenter(), mouse, true);
-                        if (refMovingArc->getStartpoint() == pPoints->v1){
+                        mouse = getSnapAngleAwarePoint(e, arcCenter, mouse, true);
+                        if (arcStart == pPoints->v1){
                             clone->trimStartpoint(mouse);
                             pPoints->v2 = clone->getStartpoint();
                             preview->addEntity(clone);
@@ -299,7 +305,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                                 previewRefPoint(clone->getCenter());
                             }
                             addClone = false;
-                        } else if (refMovingArc->getEndpoint() == pPoints->v1){
+                        } else if (arcEnd == pPoints->v1){
                             clone->trimEndpoint(mouse);
                             pPoints->v2 = clone->getEndpoint();
                             preview->addEntity(clone);
@@ -316,21 +322,94 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                         }
                         if (!addClone){
                             if (showRefEntitiesOnPreview) {
-                                previewRefLine(refMovingArc->getCenter(), pPoints->v2);
-                                previewRefPoint(refMovingArc->getCenter());
+                                previewRefLine(arcCenter, pPoints->v2);
+                                previewRefPoint(arcCenter);
                             }
                         }
                     }
                     else{
-                        mouse = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                        bool referenceMoved = false;                        
+                        if (arcMiddle == pPoints->v1){ // middle point processing
+                            mouse = LC_LineMath::getNearestPointOnInfiniteLine(mouse, arcCenter, arcMiddle);
+                            if (shiftPressed) { // do scaling
+                                double fromMouse = arcCenter.distanceTo(mouse);
+                                double radius = refMovingArc->getRadius();
+                                double scaleFactor = fromMouse / radius;
+                                double fromMiddle = arcMiddle.distanceTo(mouse);
+                                if (fromMiddle > radius){
+                                    if (arcCenter.angleTo(arcMiddle) !=
+                                        arcCenter.angleTo(mouse)) { // checking direction of mouse relating to center (own for counter-part of circle)
+                                        scaleFactor = -scaleFactor;
+                                    }
+                                }
+
+                                clone->scale(arcCenter, RS_Vector(scaleFactor, scaleFactor));
+                                preview->addEntity(clone);
+                                referenceMoved = true;
+                            }
+                            else { // change radius
+                                if (showRefEntitiesOnPreview) {
+                                    previewRefSelectablePoint(mouse);
+                                    previewRefLine(arcCenter, clone->getMiddlePoint());
+                                }
+                            }
+                        }
+                        else {
+                            if (shiftPressed) {
+                                if (arcEnd == pPoints->v1 ||
+                                    arcStart == pPoints->v1) { // change chord length
+                                    mouse = LC_LineMath::getNearestPointOnInfiniteLine(mouse, arcStart, arcEnd);
+                                }
+                            } else {
+                                mouse = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                            }
+                        }
                         pPoints->v2 = mouse;
-                        clone->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
+                        if (!referenceMoved) {
+                            clone->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
+                            preview->addEntity(clone);
+                        }
+
                         if (showRefEntitiesOnPreview) {
                             previewRefLine(pPoints->v2, pPoints->v1);
                             previewRefPoint(clone->getCenter());
                         }
-                        preview->addEntity(clone);
                         addClone = false;
+                    }
+                    break;
+                }
+                case RS2::EntityPolyline:{
+                    if (shiftPressed || ctrlPressed){
+                        auto* polyline = static_cast<RS_Polyline *>(refMovingEntity);
+                        RS_Vector directionPoint = polyline->getRefPointAdjacentDirection(shiftPressed, pPoints->v1);
+                        if (directionPoint.valid) {
+                            pPoints->v2 = LC_LineMath::getNearestPointOnInfiniteLine(mouse, pPoints->v1, directionPoint);
+                        }
+                        else{
+                            pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                        }
+                    }
+                    else{
+                        pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                    }
+                    if (showRefEntitiesOnPreview) {
+                        previewRefLine(pPoints->v2, pPoints->v1);
+                    }
+                    break;
+                }
+                case RS2::EntityCircle:{
+                    // fixme -sand - add morphing of circle to ellipse
+                    pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                    if (showRefEntitiesOnPreview) {
+                        previewRefLine(pPoints->v2, pPoints->v1);
+                    }
+                    break;
+                }
+                case RS2::EntityEllipse:{
+                    // fixme - sand - add rotation of major axis
+                    pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                    if (showRefEntitiesOnPreview) {
+                        previewRefLine(pPoints->v2, pPoints->v1);
                     }
                     break;
                 }
@@ -440,26 +519,14 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                 deleteSnapper();
                 break;
             }
-            case MovingRef: {
-                /*
-                pPoints->v2 = snapPoint(e);
-                if (e->modifiers() & Qt::ShiftModifier){
-                    pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1);
-                }
-                deletePreview();
-                RS_Modification m(*container, graphicView);
-                RS_MoveRefData data;
-                data.ref = pPoints->v1;
-                data.offset = pPoints->v2 - pPoints->v1;
-                m.moveRef(data);
-                */
-
+            case MovingRef: {             
                 RS_Vector mouse = snapPoint(e);
 
                 deletePreview();
 
                 // additional processing for moving endpoint of lines and arcs
                 bool ctrlPressed = isControl(e);
+                bool shiftPressed = isShift(e);
                 bool moveRefOnClone = true;
 
                 RS_Entity *refMovingEntity = pPoints->refMovingEntity;
@@ -491,15 +558,18 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                         auto *refMovingArc = dynamic_cast<RS_Arc *>(refMovingEntity);
                         auto *arcClone = dynamic_cast<RS_Arc *>(clone);
 
+                        const RS_Vector &arcCenter = refMovingArc->getCenter();
+                        const RS_Vector &arcStart = refMovingArc->getStartpoint();
+                        const RS_Vector &arcEnd = refMovingArc->getEndpoint();
                         if (ctrlPressed) {
                             // for arc, we just correct angle of enpoint without changing the center and radius - if we move endpoint ref
-                            mouse = getSnapAngleAwarePoint(e, refMovingArc->getCenter(), mouse, false);
-                            if (refMovingArc->getStartpoint() == pPoints->v1) {
+                            mouse = getSnapAngleAwarePoint(e, arcCenter, mouse, false);
+                            if (arcStart == pPoints->v1) {
                                 arcClone->trimStartpoint(mouse);
                                 pPoints->v2 = arcClone->getStartpoint();
 
                                 moveRefOnClone = false;
-                            } else if (refMovingArc->getEndpoint() == pPoints->v1) {
+                            } else if (arcEnd == pPoints->v1) {
                                 arcClone->trimEndpoint(mouse);
                                 pPoints->v2 = arcClone->getEndpoint();
                                 moveRefOnClone = false;
@@ -508,10 +578,64 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                                 pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
                             }
                         } else {
-                            mouse = getSnapAngleAwarePoint(e, pPoints->v1, mouse, false);
-                            pPoints->v2 = mouse;
-                            arcClone->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
+                            bool referenceMoved = false;
+                            const RS_Vector &arcMiddle = refMovingArc->getMiddlePoint();
+                            if (arcMiddle == pPoints->v1) {
+                                mouse = LC_LineMath::getNearestPointOnInfiniteLine(mouse, arcCenter, arcMiddle);
+                                if (shiftPressed) {
+                                    double fromMouse = arcCenter.distanceTo(mouse);
+                                    double radius = refMovingArc->getRadius();
+                                    double scaleFactor = fromMouse / radius;
+                                    double fromMiddle = arcMiddle.distanceTo(mouse);
+                                    if (fromMiddle > radius) {
+                                        // checking direction of mouse relating to center (own for counter-part of circle)
+                                        if (arcCenter.angleTo(arcMiddle) !=
+                                            arcCenter.angleTo(mouse)) {
+                                            scaleFactor = -scaleFactor;
+                                        }
+                                    }
+                                    arcClone->scale(arcCenter, RS_Vector(scaleFactor, scaleFactor));
+                                    referenceMoved = true;
+                                }
+                                else{
+                                    // change radius, default processing my move ref
+                                }
+                            }
+                            else { // one of endpoint
+                                if (shiftPressed){ // changing chord
+                                    if (arcEnd == pPoints->v1 ||
+                                        arcStart == pPoints->v1) { // change chord length
+                                        mouse = LC_LineMath::getNearestPointOnInfiniteLine(mouse, arcStart, arcEnd);
+                                    }
+                                }
+                                else{ // free change of endpoint position
+                                    mouse = getSnapAngleAwarePoint(e, pPoints->v1, mouse, false);
+                                }
+                            }
+                            if (!referenceMoved) {
+                                pPoints->v2 = mouse;
+                                arcClone->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
+                            }
                             moveRefOnClone = false;
+
+                        }
+
+
+                        break;
+                    }
+                    case RS2::EntityPolyline:{
+                        if (shiftPressed || ctrlPressed){
+                            auto* polyline = static_cast<RS_Polyline *>(refMovingEntity);
+                            RS_Vector directionPoint = polyline->getRefPointAdjacentDirection(shiftPressed, pPoints->v1);
+                            if (directionPoint.valid) {
+                                pPoints->v2 = LC_LineMath::getNearestPointOnInfiniteLine(mouse, pPoints->v1, directionPoint);
+                            }
+                            else{
+                                pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                            }
+                        }
+                        else{
+                            pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
                         }
                         break;
                     }
@@ -663,7 +787,10 @@ void RS_ActionDefault::updateMouseButtonHints(){
                     modifiers =  MOD_SHIFT_AND_CTRL_ANGLE(tr("Lengthen Line"));
                     break;
                 case RS2::EntityArc:
-                    modifiers =  MOD_SHIFT_AND_CTRL_ANGLE(tr("Lengthen Arc"));
+                    modifiers =  MOD_SHIFT_AND_CTRL(tr("Lengthen/Scale"),tr("Lengthen Chord"));
+                    break;
+                case RS2::EntityPolyline:
+                    modifiers =  MOD_SHIFT_AND_CTRL(tr("Move in Previous segment direction"),tr("Move in Next segment direction"));
                     break;
                 default:
                     modifiers = MOD_SHIFT_ANGLE_SNAP;

@@ -172,14 +172,23 @@ void LC_ActionFactory::createDrawCircleActions(QMap<QString, QAction*>& map, QAc
 
 void LC_ActionFactory::createDrawCurveActions(QMap<QString, QAction*>& map, QActionGroup* group) {
     createActionHandlerActions(map, group,{
-        {"DrawArc",             RS2::ActionDrawArc,             tr("&Center, Point, Angles"),    ":/icons/arc_center_point_angle.svg"},
-        {"DrawArc3P",           RS2::ActionDrawArc3P,           tr("&3 Points"),                 ":/icons/arc_3_points.svg"},
-        {"DrawArcParallel",     RS2::ActionDrawArcParallel,     tr("&Concentric"),               ":/icons/arc_concentric.svg"},     // fixme - why this action is not in list?
-        {"DrawArcTangential",   RS2::ActionDrawArcTangential,   tr("Arc &Tangential"),           ":/icons/arc_continuation.svg"},
-        {"DrawParabola4Points", RS2::ActionDrawParabola4Points, tr("Para&bola 4 points"),        ":/icons/parabola_4_points.svg"},
-        {"DrawParabolaFD",      RS2::ActionDrawParabolaFD,      tr("Parabola &Focus Directrix"), ":/icons/parabola_focus_directrix.svg"},
-        {"DrawSpline",          RS2::ActionDrawSpline,          tr("&Spline"),                   ":/icons/spline.svg"},
-        {"DrawSplinePoints",    RS2::ActionDrawSplinePoints,    tr("&Spline through points"),    ":/icons/spline_points.svg"}
+        {"DrawArc",                RS2::ActionDrawArc,             tr("&Center, Point, Angles"),    ":/icons/arc_center_point_angle.svg"},
+        {"DrawArcChord",           RS2::ActionDrawArcChord,        tr("&Center, Point, Chord"),     ":/icons/arc_center_point_chord.svg"},
+        {"DrawArcAngleLen",        RS2::ActionDrawArcAngleLen,     tr("&Center, Point, Arc Angle"), ":/icons/arc_center_point_anglelen.svg"},
+        {"DrawArc3P",              RS2::ActionDrawArc3P,           tr("&3 Points"),                 ":/icons/arc_3_points.svg"},
+        {"DrawArc2PAngle",         RS2::ActionDrawArc2PAngle,      tr("&2 Points, Angle"),          ":/icons/arc_2p_angle.svg"},
+        {"DrawArc2PRadius",        RS2::ActionDrawArc2PRadius,     tr("&2 Points, Radius"),         ":/icons/arc_2p_radius.svg"},
+        {"DrawArc2PLength",        RS2::ActionDrawArc2PLength,     tr("&2 Points, Length"),         ":/icons/arc_2p_length.svg"},
+        {"DrawArc2PHeight",        RS2::ActionDrawArc2PHeight,     tr("&2 Points, Height"),         ":/icons/arc_2p_height.svg"},
+        {"DrawArcParallel",        RS2::ActionDrawArcParallel,     tr("&Concentric"),               ":/icons/arc_concentric.svg"},     // fixme - why this action is not in list?
+        {"DrawArcTangential",      RS2::ActionDrawArcTangential,   tr("Arc &Tangential"),           ":/icons/arc_continuation.svg"},
+        {"DrawParabola4Points",    RS2::ActionDrawParabola4Points, tr("Para&bola 4 points"),        ":/icons/parabola_4_points.svg"},
+        {"DrawParabolaFD",         RS2::ActionDrawParabolaFD,      tr("Parabola &Focus Directrix"), ":/icons/parabola_focus_directrix.svg"},
+        {"DrawSpline",             RS2::ActionDrawSpline,          tr("&Spline"),                   ":/icons/spline.svg"},
+        {"DrawSplinePoints",       RS2::ActionDrawSplinePoints,    tr("&Spline through points"),    ":/icons/spline_points.svg"},
+        {"DrawSplinePointsAdd",    RS2::ActionDrawSplinePoints,    tr("&Add spline point"),         ":/icons/spline_points_add.svg"},
+        {"DrawSplinePointsRemove", RS2::ActionDrawSplinePoints,    tr("&Remove spline points"),     ":/icons/spline_points_remove.svg"},
+        {"DrawSplinePointsAppend", RS2::ActionDrawSplinePoints,    tr("&Append spline points"),     ":/icons/spline_points_insert.svg"}
     });
 }
 
@@ -205,7 +214,9 @@ void LC_ActionFactory::createDrawPolylineActions(QMap<QString, QAction *> &map, 
         {"PolylineDelBetween",  RS2::ActionPolylineDelBetween,  tr("Delete &between two nodes"),               ":/icons/delete_between_nodes.svg"},
         {"PolylineTrim",        RS2::ActionPolylineTrim,        tr("&Trim segments"),                          ":/icons/trim.svg"},
         {"PolylineEquidistant", RS2::ActionPolylineEquidistant, tr("Create &Equidistant Polylines"),           ":/icons/create_equidistant_polyline.svg"},
-        {"PolylineSegment",     RS2::ActionPolylineSegment,     tr("Polyline from Existing &Segments"), ":/icons/create_polyline_from_existing_segments.svg"}
+        {"PolylineSegment",     RS2::ActionPolylineSegment,     tr("Polyline from Existing &Segments"),        ":/icons/create_polyline_from_existing_segments.svg"},
+        {"PolylineArcToLines",  RS2::ActionPolylineArcsToLines, tr("Polyline Arcs to Chords"),                 ":/icons/polyline_arc_to_lines.svg"},
+        {"PolylineSegmentType", RS2::ActionPolylineChangeSegmentType, tr("Polyline Change Segment Type"),      ":/icons/polyline_segment_type.svg"}
     });
 }
 
@@ -230,8 +241,8 @@ void LC_ActionFactory::createDrawDimensionsActions(QMap<QString, QAction *> &map
         {"DimAngular",   RS2::ActionDimAngular,   tr("&Angular"),    ":/icons/dim_angular.svg"},
         {"DimArc",       RS2::ActionDimArc,       tr("&Arc"),        ":/icons/dim_arc.svg"},
         {"DimLeader",    RS2::ActionDimLeader,    tr("&Leader"),     ":/icons/dim_leader.svg"},
-        {"DimBaseline",  RS2::ActionDimBaseline,  tr("&Baseline"),  ":/icons/dim_baseline.svg"},
-        {"DimContinue",  RS2::ActionDimContinue,  tr("&Continue"),  ":/icons/dim_continue.svg"}
+        {"DimBaseline",  RS2::ActionDimBaseline,  tr("&Baseline"),   ":/icons/dim_baseline.svg"},
+        {"DimContinue",  RS2::ActionDimContinue,  tr("&Continue"),   ":/icons/dim_continue.svg"}
     });
 }
 
@@ -354,15 +365,16 @@ void LC_ActionFactory::createViewActions(QMap<QString, QAction*>& map, QActionGr
         {"ZoomWindow",RS2::ActionZoomWindow, tr("&Window Zoom"), ":/icons/zoom_window.svg","zoom-select"}});
 
     createMainWindowActions(map, group, {
-        {"Fullscreen",       SLOT(toggleFullscreen(bool)),     tr("&Fullscreen")},
-        {"ViewGrid",         SLOT(slotViewGrid(bool)),         tr("&Grid"),                 ":/icons/grid.svg"},
-        {"ViewDraft",        SLOT(slotViewDraft(bool)),        tr("&Draft"),                ":/icons/draft.svg"},
-        {"ViewLinesDraft",   SLOT(slotViewDraftLines(bool)),   tr("&Draft Lines"),          ":/icons/draftLineWidth.svg"},
-        {"ViewStatusBar",    SLOT(slotViewStatusBar(bool)),    tr("&Statusbar")},
-        {"ViewGridOrtho",    SLOT(slotViewGridOrtho(bool)),    tr("&Orthogonal Grid"),      ":/icons/grid_ortho.svg"},
-        {"ViewGridIsoLeft",  SLOT(slotViewGridIsoLeft(bool)),  tr("&Isometric Left Grid"),  ":/icons/grid_iso_left.svg"},
-        {"ViewGridIsoTop",   SLOT(slotViewGridIsoTop(bool)),   tr("&Isometric Top Grid"),   ":/icons/grid_iso_top.svg"},
-        {"ViewGridIsoRight", SLOT(slotViewGridIsoRight(bool)), tr("&Isometric Right Grid"), ":/icons/grid_iso_right.svg"},
+        {"Fullscreen",       SLOT(toggleFullscreen(bool)),          tr("&Fullscreen")},
+        {"ViewGrid",         SLOT(slotViewGrid(bool)),              tr("&Grid"),                 ":/icons/grid.svg"},
+        {"ViewDraft",        SLOT(slotViewDraft(bool)),             tr("&Draft"),                ":/icons/draft.svg"},
+        {"ViewLinesDraft",   SLOT(slotViewDraftLines(bool)),        tr("&Draft Lines"),          ":/icons/draftLineWidth.svg"},
+        {"ViewAntialiasing", SLOT(slotViewAntialiasing(bool)),      tr("&Antialiasing"),         ":/icons/anti_aliasing.svg"},
+        {"ViewStatusBar",    SLOT(slotViewStatusBar(bool)),         tr("&Statusbar")},
+        {"ViewGridOrtho",    SLOT(slotViewGridOrtho(bool)),         tr("&Orthogonal Grid"),      ":/icons/grid_ortho.svg"},
+        {"ViewGridIsoLeft",  SLOT(slotViewGridIsoLeft(bool)),       tr("&Isometric Left Grid"),  ":/icons/grid_iso_left.svg"},
+        {"ViewGridIsoTop",   SLOT(slotViewGridIsoTop(bool)),        tr("&Isometric Top Grid"),   ":/icons/grid_iso_top.svg"},
+        {"ViewGridIsoRight", SLOT(slotViewGridIsoRight(bool)),      tr("&Isometric Right Grid"), ":/icons/grid_iso_right.svg"},
     }, true);
 }
 
@@ -401,21 +413,21 @@ void LC_ActionFactory::createBlockActionsUncheckable(QMap<QString, QAction *> &m
 
 void LC_ActionFactory::createOptionsActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
     createActionHandlerActions(map, group, {
-        {"OptionsDrawing",RS2::ActionOptionsDrawing, "Current &Drawing Preferences", ":/icons/drawing_settings.svg"}
+        {"OptionsDrawing",RS2::ActionOptionsDrawing, tr("Current &Drawing Preferences"), ":/icons/drawing_settings.svg"}
     });
 
     createMainWindowActions(map, group, {
-        {"OptionsGeneral",   SLOT(slotOptionsGeneral()), tr("&Application Preferences"), ":/icons/settings.svg"},
-        {"WidgetOptions",    SLOT(widgetOptionsDialog()),    tr("Widget Options")},
-        {"ShortcutsOptions",    SLOT(slotOptionsShortcuts()),    tr("Keyboard Shortcuts"), ":/icons/shortcuts_settings.svg"},
-        {"DeviceOptions",    SLOT(showDeviceOptions()),      tr("Device Options")},
-        {"ReloadStyleSheet", SLOT(reloadStyleSheet()),   tr("Reload Style Sheet")}
+        {"OptionsGeneral",   SLOT(slotOptionsGeneral()),   tr("&Application Preferences"), ":/icons/settings.svg"},
+        {"WidgetOptions",    SLOT(widgetOptionsDialog()),  tr("Widget Options")},
+        {"ShortcutsOptions", SLOT(slotOptionsShortcuts()), tr("Keyboard Shortcuts"),       ":/icons/shortcuts_settings.svg"},
+        {"DeviceOptions",    SLOT(showDeviceOptions()),    tr("Device Options")},
+        {"ReloadStyleSheet", SLOT(reloadStyleSheet()),     tr("Reload Style Sheet")}
     });
 }
 
 void LC_ActionFactory::createFileActions(QMap<QString, QAction *> &map, QActionGroup *group) {
     createMainWindowActions(map, group, {
-        {"FilePrintPreview", SLOT(slotFilePrintPreview(bool)),  "Print Pre&view",     ":/icons/print_preview.svg",     "document-print-preview"},
+        {"FilePrintPreview", SLOT(slotFilePrintPreview(bool)),  tr("Print Pre&view"),     ":/icons/print_preview.svg",     "document-print-preview"},
     });
 }
 
@@ -496,7 +508,8 @@ void LC_ActionFactory::createEditActionsUncheckable(QMap<QString, QAction *> &ma
 void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     map["ZoomPrevious"]->setEnabled(false);
     map["RightDockAreaToggle"]->setChecked(true);
-    map["ViewStatusBar"]->setChecked(true);
+    bool statusBarVisible = LC_GET_ONE_BOOL("Appearance", "StatusBarVisible", false);
+    map["ViewStatusBar"]->setChecked(statusBarVisible);
 
     map["OptionsGeneral"]->setMenuRole(QAction::NoRole);
 
@@ -505,6 +518,7 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     connect(main_window, &QC_ApplicationWindow::gridChanged, map["ViewGrid"], &QAction::setChecked);
     connect(main_window, &QC_ApplicationWindow::draftChanged, map["ViewDraft"], &QAction::setChecked);
     connect(main_window, &QC_ApplicationWindow::draftChanged, map["ViewLinesDraft"], &QAction::setDisabled);
+    connect(main_window, &QC_ApplicationWindow::antialiasingChanged, map["ViewAntialiasing"], &QAction::setChecked);
 
     connect(main_window, &QC_ApplicationWindow::windowsChanged, map["OptionsDrawing"], &QAction::setEnabled);
 }

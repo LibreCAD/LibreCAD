@@ -49,7 +49,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QG_LayerBox" name="cbLayer" native="true"/>
+          <widget class="QG_LayerBox" name="cbLayer" native="true">
+           <property name="toolTip">
+            <string>Layer of insert</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -71,6 +75,104 @@
         <string>Geometry</string>
        </property>
        <layout class="QGridLayout">
+        <item row="1" column="0">
+         <widget class="QLabel" name="lInsertionPointY">
+          <property name="text">
+           <string>Insertion point (y):</string>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="lInsertionPointX">
+          <property name="text">
+           <string>Insertion point (x):</string>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLineEdit" name="leRows">
+          <property name="minimumSize">
+           <size>
+            <width>64</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Amount of rows for copies</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLineEdit" name="leAngle">
+          <property name="minimumSize">
+           <size>
+            <width>64</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Rotation angle</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QLineEdit" name="leColSpacing">
+          <property name="minimumSize">
+           <size>
+            <width>64</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Spacing between columns</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="leScaleX">
+          <property name="minimumSize">
+           <size>
+            <width>64</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Scaling factor by X axis</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="leInsertionPointX">
+          <property name="minimumSize">
+           <size>
+            <width>64</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>X coordinate of insertion point</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QLineEdit" name="leRowSpacing">
+          <property name="minimumSize">
+           <size>
+            <width>64</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Spacing between rows</string>
+          </property>
+         </widget>
+        </item>
         <item row="8" column="1">
          <spacer name="spacer61">
           <property name="orientation">
@@ -87,79 +189,16 @@
           </property>
          </spacer>
         </item>
-        <item row="8" column="0">
-         <spacer name="spacer58">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Expanding</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="leInsertionPointY">
+        <item row="6" column="1">
+         <widget class="QLineEdit" name="leCols">
           <property name="minimumSize">
            <size>
             <width>64</width>
             <height>0</height>
            </size>
           </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="leInsertionPointX">
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>0</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="lInsertionPointX">
-          <property name="text">
-           <string>Insertion point (x):</string>
-          </property>
-          <property name="wordWrap">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="lInsertionPointY">
-          <property name="text">
-           <string>Insertion point (y):</string>
-          </property>
-          <property name="wordWrap">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLineEdit" name="leScaleX">
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>0</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="lFactorX">
-          <property name="text">
-           <string>Scale X:</string>
-          </property>
-          <property name="wordWrap">
-           <bool>false</bool>
+          <property name="toolTip">
+           <string>Amount of columns for copies</string>
           </property>
          </widget>
         </item>
@@ -171,12 +210,25 @@
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Scaling factor by Y axis</string>
+          </property>
          </widget>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="lFactorY">
           <property name="text">
            <string>Scale Y:</string>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="lRows">
+          <property name="text">
+           <string>Rows:</string>
           </property>
           <property name="wordWrap">
            <bool>false</bool>
@@ -193,53 +245,16 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
-         <widget class="QLineEdit" name="leAngle">
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="leInsertionPointY">
           <property name="minimumSize">
            <size>
             <width>64</width>
             <height>0</height>
            </size>
           </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="lRows">
-          <property name="text">
-           <string>Rows:</string>
-          </property>
-          <property name="wordWrap">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QLineEdit" name="leRows">
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>0</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QLineEdit" name="leCols">
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>0</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="lCols">
-          <property name="text">
-           <string>Columns:</string>
-          </property>
-          <property name="wordWrap">
-           <bool>false</bool>
+          <property name="toolTip">
+           <string>Y coordinate of insertion point</string>
           </property>
          </widget>
         </item>
@@ -253,25 +268,41 @@
           </property>
          </widget>
         </item>
-        <item row="7" column="1">
-         <widget class="QLineEdit" name="leRowSpacing">
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>0</height>
-           </size>
+        <item row="6" column="0">
+         <widget class="QLabel" name="lCols">
+          <property name="text">
+           <string>Columns:</string>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
-        <item row="8" column="1">
-         <widget class="QLineEdit" name="leColSpacing">
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>0</height>
-           </size>
+        <item row="2" column="0">
+         <widget class="QLabel" name="lFactorX">
+          <property name="text">
+           <string>Scale X:</string>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
           </property>
          </widget>
+        </item>
+        <item row="10" column="0">
+         <spacer name="spacer58">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
         <item row="8" column="0">
          <widget class="QLabel" name="lColSpacing">

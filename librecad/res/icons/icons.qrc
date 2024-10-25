@@ -268,5 +268,17 @@
         <file>grid_iso_left.svg</file>
         <file>grid_iso_right.svg</file>
         <file>draftLineWidth.svg</file>
+        <file>anti_aliasing.svg</file>
+        <file>polyline_arc_to_lines.svg</file>
+        <file>polyline_segment_type.svg</file>
+        <file>arc_2p_radius.svg</file>
+        <file>arc_2p_angle.svg</file>
+        <file>arc_2p_length.svg</file>
+        <file>arc_2p_height.svg</file>
+        <file>arc_center_point_chord.svg</file>
+        <file>arc_center_point_anglelen.svg</file>
+        <file>spline_points_add.svg</file>
+        <file>spline_points_remove.svg</file>
+        <file>spline_points_insert.svg</file>
     </qresource>
 </RCC>

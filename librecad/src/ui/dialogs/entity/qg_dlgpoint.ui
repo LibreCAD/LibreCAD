@@ -49,7 +49,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QG_LayerBox" name="cbLayer" native="true"/>
+          <widget class="QG_LayerBox" name="cbLayer" native="true">
+           <property name="toolTip">
+            <string>Layer of point</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -89,6 +93,9 @@
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Position of point by Y coordinate</string>
+          </property>
          </widget>
         </item>
         <item row="1" column="0">
@@ -108,6 +115,9 @@
             <width>64</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Position of point by X coordinate</string>
           </property>
          </widget>
         </item>

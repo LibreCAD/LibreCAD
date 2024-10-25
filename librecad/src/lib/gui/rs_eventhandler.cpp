@@ -446,6 +446,12 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     if (action==nullptr) {
         return;
     }
+    // Do not initialize action if it's already the last one.
+    // This is attempt to fix crashes of dialogs (like properties) which are called from actions
+    // todo - check again, either remove or uncomment
+//    if (hasAction() && currentActions.last().get() == action){
+//        return;
+//    }
     std::shared_ptr<RS_ActionInterface> actionHolder{action};
 
     RS_DEBUG->print("RS_EventHandler::setCurrentAction %s", actionHolder->getName().toLatin1().data());

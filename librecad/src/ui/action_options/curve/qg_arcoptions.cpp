@@ -73,6 +73,10 @@ void QG_ArcOptions::doSetAction(RS_ActionInterface *a, bool update){
     setReversedToActionAndView(reversed);
 }
 
+bool QG_ArcOptions::checkActionRttiValid(RS2::ActionType actionType) {
+    return actionType == RS2::ActionDrawArc || actionType == RS2::ActionDrawArcAngleLen || actionType == RS2::ActionDrawArcChord;
+}
+
 void QG_ArcOptions::setReversedToActionAndView(bool reversed){
     ui->rbNeg->setChecked(reversed);
     action->setReversed(reversed);

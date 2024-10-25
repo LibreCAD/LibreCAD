@@ -25,8 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_actionselectbase.h"
 
-class LC_ActionPreSelectionAwareBase:public RS_ActionSelectBase
-{
+class LC_ActionPreSelectionAwareBase:public RS_ActionSelectBase{
+    Q_OBJECT
 public:
     LC_ActionPreSelectionAwareBase(
         const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView,

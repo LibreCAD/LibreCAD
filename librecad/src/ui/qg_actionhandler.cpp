@@ -201,6 +201,8 @@
 #include "lc_actioninfo3pointsangle.h"
 #include "lc_actiondrawellipse1point.h"
 #include "lc_actiondrawdimbaseline.h"
+#include "lc_actionpolylinearcstolines.h"
+#include "lc_actionpolylinechangesegmenttype.h"
 
 /**
  * Constructor
@@ -562,6 +564,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionPolylineSegment:
             a = new RS_ActionPolylineSegment(*document, *view);
             break;
+        case RS2::ActionPolylineArcsToLines:
+            a = new LC_ActionPolylineArcsToLines(*document, *view);
+            break;
+        case RS2::ActionPolylineChangeSegmentType:
+            a = new LC_ActionPolylineChangeSegmentType(*document, *view);
+            break;
         case RS2::ActionDrawLinePolygonCenCor:
             a = new RS_ActionDrawLinePolygonCenCor(*document, *view);
             break;
@@ -605,7 +613,13 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionDrawCircleTan3(*document, *view);
             break;
         case RS2::ActionDrawArc:
-            a = new RS_ActionDrawArc(*document, *view);
+            a = new RS_ActionDrawArc(*document, *view, RS2::ActionDrawArc);
+            break;
+        case RS2::ActionDrawArcChord:
+            a = new RS_ActionDrawArc(*document, *view, RS2::ActionDrawArcChord);
+            break;
+        case RS2::ActionDrawArcAngleLen:
+            a = new RS_ActionDrawArc(*document, *view,RS2::ActionDrawArcAngleLen);
             break;
         case RS2::ActionDrawArc3P:
             a = new RS_ActionDrawArc3P(*document, *view);

@@ -129,12 +129,23 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
 
     fillActionsList(curve_actions, {
         "DrawArc",
+        "DrawArcChord",
+        "DrawArcAngleLen",
         "DrawArc3P",
+        // fixme - sand - restore as actions are ready
+//        "DrawArc2PAngle",
+//        "DrawArc2PRadius",
+//        "DrawArc2PLength",
+//        "DrawArc2PHeight",
         "DrawArcTangential",
         "DrawParabola4Points",
         "DrawParabolaFD",
         "DrawSpline",
         "DrawSplinePoints",
+        // fixme - sand - restore as actions are ready
+//        "DrawSplinePointsAppend",
+//        "DrawSplinePointsAdd",
+//        "DrawSplinePointsRemove",
         "DrawEllipseArcAxis",
         "DrawEllipseArc1Point",
         "DrawLineFree"
@@ -157,7 +168,9 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "PolylineDelBetween",
         "PolylineTrim",
         "PolylineEquidistant",
-        "PolylineSegment"
+        "PolylineSegment",
+        "PolylineArcToLines",
+        "PolylineSegmentType"
     });
 
     fillActionsList(select_actions, {
@@ -289,6 +302,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "ViewGrid",
         "ViewDraft",
         "ViewLinesDraft",
+        "ViewAntialiasing",
         "ModifyDeleteQuick",
         "EditKillAllActions",
         "ZoomIn",
@@ -469,7 +483,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     order->hide();
 
     auto *view = createGenericToolbar(tr("View"), "View", tbPolicy, {
-        "ViewGrid", "ViewDraft", "ViewLinesDraft", "", "ZoomRedraw", "ZoomIn",
+        "ViewGrid", "ViewDraft", "ViewLinesDraft", "ViewAntialiasing", "", "ZoomRedraw", "ZoomIn",
         "ZoomOut", "ZoomAuto", "ZoomPrevious", "ZoomWindow", "ZoomPan"
     });
 
@@ -512,8 +526,6 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     main_window->addToolBarBreak();
     addToTop(pen_toolbar);
     addToTop(options_toolbar);
-
-
 
     addToLeft(order);
 
@@ -638,6 +650,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         "ViewGrid",
         "ViewDraft",
         "ViewLinesDraft",
+        "ViewAntialiasing",
         "",
         "ViewGridOrtho",
         "ViewGridIsoLeft",

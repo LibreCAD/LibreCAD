@@ -168,6 +168,9 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     widget_factory.initStatusBar();
 
+    bool statusBarVisible = LC_GET_ONE_BOOL("Appearance", "StatusBarVisible", true);
+    statusBar()->setVisible(statusBarVisible);
+
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
 
@@ -178,20 +181,20 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     mdiAreaCAD = central->getMdiArea();
     mdiAreaCAD->setDocumentMode(true);
 
-	LC_GROUP("WindowOptions");
-	setTabLayout(static_cast<RS2::TabShape>(LC_GET_INT("TabShape", RS2::Triangular)),
-		static_cast<RS2::TabPosition>(LC_GET_INT("TabPosition", RS2::West)));
-	LC_GROUP_END();
+    LC_GROUP("WindowOptions");
+    setTabLayout(static_cast<RS2::TabShape>(LC_GET_INT("TabShape", RS2::Triangular)),
+                 static_cast<RS2::TabPosition>(LC_GET_INT("TabPosition", RS2::West)));
+    LC_GROUP_END();
 
     settings.beginGroup("Startup");
-	if (settings.value("TabMode", 0).toBool()) {
-		mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
-		QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar*>();
-		QTabBar *tabBar = tabBarList.at(0);
-		if (tabBar)
-			tabBar->setExpanding(false);
-	}
-        
+    if (settings.value("TabMode", 0).toBool()) {
+        mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
+        QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar*>();
+        QTabBar *tabBar = tabBarList.at(0);
+        if (tabBar)
+            tabBar->setExpanding(false);
+    }
+
     bool enable_left_sidebar = settings.value("EnableLeftSidebar", 1).toBool();
     bool enable_cad_toolbars = settings.value("EnableCADToolbars", 1).toBool();
     settings.endGroup();
@@ -204,15 +207,17 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     int icon_size = custom_size ? settings.value("ToolbarIconSize", 24).toInt() : 24;
     settings.endGroup();
 
-    if (custom_size)
+    if (custom_size) {
         setIconSize(QSize(icon_size, icon_size));
+    }
 
     if (enable_left_sidebar){
         int leftSidebarColumnsCount = settings.value("Widgets/LeftToolbarColumnsCount", 5).toInt();
         widget_factory.createLeftSidebar(leftSidebarColumnsCount, icon_size);
     }
-    if (enable_cad_toolbars)
+    if (enable_cad_toolbars) {
         widget_factory.createCADToolbars();
+    }
     widget_factory.createRightSidebar(actionHandler);
     widget_factory.createCategoriesToolbar();
     widget_factory.createStandardToolbars(actionHandler);
@@ -786,9 +791,15 @@ void QC_ApplicationWindow::initSettings() {
     {
         QAction *viewLinesDraftAction = getAction("ViewLinesDraft");
         viewLinesDraftAction->setChecked(LC_GET_BOOL("DraftLinesMode", false));
+
         bool draftMode = LC_GET_BOOL("DraftMode", false);
+
         getAction("ViewDraft")->setChecked(draftMode);
         viewLinesDraftAction->setDisabled(draftMode);
+
+        QAction* viewAntialiasing = getAction("ViewAntialiasing");
+        bool antialiasing = LC_GET_BOOL("Antialiasing", false);
+        viewAntialiasing->setChecked(antialiasing);
     }
     LC_GROUP_END();
 }
@@ -936,6 +947,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
             updateGridViewActions(isometricGrid, isoViewType);
         }
         activatedGraphicView->loadSettings();
+        activatedGraphicView->redraw();
         return;
     }
 
@@ -2304,8 +2316,8 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
             title.remove(draft_string);
             win->setWindowTitle(title);
         }
-        emit draftChanged(toggle);
     }
+    emit draftChanged(toggle);
     redrawAll();
 }
 
@@ -2317,13 +2329,21 @@ void QC_ApplicationWindow::slotViewDraftLines(bool toggle) {
     for (QC_MDIWindow *win: window_list) {
         QG_GraphicView *graphicView = win->getGraphicView();
         graphicView->setDraftLinesMode(toggle);
-//        QC_MDIWindow *ppv = win->getPrintPreview();
-//        if (ppv != nullptr){
-//            QG_GraphicView *printPreviewGraphicView = ppv->getGraphicView();
-//            printPreviewGraphicView->setDraftMode(toggle);
-//            printPreviewGraphicView->redraw();
-//        }
     }
+    emit draftLinesChanged(toggle);
+    redrawAll();
+}
+
+void QC_ApplicationWindow::slotViewAntialiasing(bool toggle) {
+    RS_DEBUG->print("QC_ApplicationWindow::slotViewAntialiasing()");
+
+    LC_SET_ONE("Appearance","Antialiasing", toggle);
+
+    for (QC_MDIWindow *win: window_list) {
+        QG_GraphicView *graphicView = win->getGraphicView();
+        graphicView->setAntialiasing(toggle);
+    }
+    emit antialiasingChanged(toggle);
     redrawAll();
 }
 
@@ -2354,9 +2374,10 @@ void QC_ApplicationWindow::updateGrids() {
  */
 void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
     RS_DEBUG->print("QC_ApplicationWindow::slotViewStatusBar()");
-
     statusBar()->setVisible(toggle);
+    LC_SET_ONE("Appearance", "StatusBarVisible", toggle);
 }
+
 
 void QC_ApplicationWindow::slotViewGridOrtho(bool toggle) {
     setGridView(toggle, false, RS2::IsoGridViewType::IsoLeft);
@@ -2429,12 +2450,15 @@ void QC_ApplicationWindow::slotOptionsShortcuts() {
  * Shows the dialog for general application preferences.
  */
 void QC_ApplicationWindow::slotOptionsGeneral() {
-    int dialogResult = RS_DIALOGFACTORY->requestOptionsGeneralDialog();
 
+    int dialogResult = RS_DIALOGFACTORY->requestOptionsGeneralDialog();
     if (dialogResult == QDialog::Accepted){
         // fixme - check this signal, probably it's better to rely on settings change
         bool hideRelativeZero = LC_GET_ONE_BOOL("Appearance", "hideRelativeZero");
         emit signalEnableRelativeZeroSnaps(!hideRelativeZero);
+
+        bool antialiasing = LC_GET_ONE_BOOL("Appearance", "Antialiasing", false);
+        emit antialiasingChanged(antialiasing);
 
         QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
         for (int i = 0; i < windows.size(); ++i) {
@@ -2652,7 +2676,8 @@ QMenu *QC_ApplicationWindow::createPopupMenu() {
     temp_dw_menu->addActions(dw_menu->actions());
     context_menu->addMenu(temp_dw_menu);
 
-    context_menu->addAction(getAction("ViewStatusBar"));
+    QAction *viewStatusBarAction = getAction("ViewStatusBar");
+    context_menu->addAction(viewStatusBarAction);
 
     return context_menu;
 }

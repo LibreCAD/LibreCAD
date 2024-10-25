@@ -89,6 +89,9 @@
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Radius of cricle</string>
+          </property>
          </widget>
         </item>
         <item row="1" column="0">
@@ -109,6 +112,9 @@
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Y Coordinate of circle's center</string>
+          </property>
          </widget>
         </item>
         <item row="0" column="0">
@@ -128,6 +134,9 @@
             <width>64</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>X Coordinate of circle's center</string>
           </property>
          </widget>
         </item>

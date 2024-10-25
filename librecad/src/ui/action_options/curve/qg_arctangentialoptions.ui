@@ -43,6 +43,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="toolTip">
+      <string>If selected, tangental arc with specified radius will be created</string>
+     </property>
      <property name="text">
       <string extracomment="Draw Tangential Arc by the given radius">Radius</string>
      </property>
@@ -77,6 +80,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>If selected, arc with specified angle will be created</string>
      </property>
      <property name="text">
       <string extracomment="Draw Tangential Arc by the given radius">Angle</string>

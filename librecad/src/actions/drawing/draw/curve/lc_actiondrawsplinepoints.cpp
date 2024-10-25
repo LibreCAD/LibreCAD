@@ -114,6 +114,7 @@ void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent *e){
             }
 
             sp->addPoint(mouse);
+            sp->update();
             previewEntity(sp);
             drawPreview();
             break;
@@ -157,6 +158,7 @@ void LC_ActionDrawSplinePoints::onCoordinateEvent(int status, [[maybe_unused]] b
             moveRelativeZero(mouse);
             if (pPoints->spline.get() != nullptr){
                 pPoints->spline->addPoint(mouse);
+                pPoints->spline->update();
                 drawPreview();
                 drawSnapper();
             }

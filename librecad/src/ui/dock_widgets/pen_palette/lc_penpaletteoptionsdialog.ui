@@ -6,12 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>349</width>
-    <height>469</height>
+    <width>359</width>
+    <height>482</height>
    </rect>
   </property>
   <property name="sizePolicy">
    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
    </sizepolicy>
   </property>
   <property name="windowTitle">
@@ -90,6 +92,9 @@
      <layout class="QGridLayout" name="gridLayout_5">
       <item row="0" column="1">
        <widget class="QComboBox" name="cbColorActiveBg">
+        <property name="toolTip">
+         <string>Background color for pen element currently edited in pen's table</string>
+        </property>
         <property name="editable">
          <bool>true</bool>
         </property>
@@ -110,6 +115,9 @@
       </item>
       <item row="1" column="1">
        <widget class="QComboBox" name="cbColorGrid">
+        <property name="toolTip">
+         <string>Color of grid for pens list</string>
+        </property>
         <property name="editable">
          <bool>true</bool>
         </property>
@@ -117,11 +125,14 @@
       </item>
       <item row="1" column="2">
        <widget class="QToolButton" name="tbGridColorSelect">
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
         <property name="text">
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../res/ui/ui.qrc">
+         <iconset resource="../../../../res/ui/ui.qrc">
           <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
         </property>
        </widget>
@@ -135,17 +146,23 @@
       </item>
       <item row="0" column="2">
        <widget class="QToolButton" name="tbActiveColorSelect">
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
         <property name="text">
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../res/ui/ui.qrc">
+         <iconset resource="../../../../res/ui/ui.qrc">
           <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
         </property>
        </widget>
       </item>
       <item row="3" column="0" colspan="2">
        <widget class="QCheckBox" name="cbAllRowBold">
+        <property name="toolTip">
+         <string>If set, bold font is used for all elements of active pen item (otherwise, only for name)</string>
+        </property>
         <property name="text">
          <string>Entire table row is bold for active pen</string>
         </property>
@@ -167,6 +184,9 @@
       </item>
       <item row="2" column="1">
        <widget class="QComboBox" name="cbColorMatchedItem">
+        <property name="toolTip">
+         <string>Color of pen item that is matched by filter</string>
+        </property>
         <property name="editable">
          <bool>true</bool>
         </property>
@@ -174,11 +194,14 @@
       </item>
       <item row="2" column="2">
        <widget class="QToolButton" name="tbMatchedItemColorSelect">
+        <property name="toolTip">
+         <string>Click to select color</string>
+        </property>
         <property name="text">
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../res/ui/ui.qrc">
+         <iconset resource="../../../../res/ui/ui.qrc">
           <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
         </property>
        </widget>
@@ -188,6 +211,9 @@
    </item>
    <item row="0" column="0">
     <widget class="QCheckBox" name="cbFilterCaseInsensitive">
+     <property name="toolTip">
+      <string>If set, filter will igore the case of pen's name</string>
+     </property>
      <property name="text">
       <string>Case-insensitive pens filtering</string>
      </property>
@@ -223,15 +249,22 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lePensFile"/>
+      <widget class="QLineEdit" name="lePensFile">
+       <property name="toolTip">
+        <string>File where pens are stored</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QToolButton" name="tbBrowse">
+       <property name="toolTip">
+        <string>Click to select file</string>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../res/actions/actions.qrc">
+        <iconset resource="../../../../res/actions/actions.qrc">
          <normaloff>:/actions/fileopen.png</normaloff>:/actions/fileopen.png</iconset>
        </property>
       </widget>
@@ -246,6 +279,9 @@
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="1">
        <widget class="QRadioButton" name="rbHEX">
+        <property name="toolTip">
+         <string>Hexadecimal value of color</string>
+        </property>
         <property name="text">
          <string>HEX</string>
         </property>
@@ -253,6 +289,9 @@
       </item>
       <item row="0" column="0">
        <widget class="QRadioButton" name="rbRGB">
+        <property name="toolTip">
+         <string>Red, Green, Blue components of color</string>
+        </property>
         <property name="text">
          <string>RGB</string>
         </property>
@@ -260,6 +299,9 @@
       </item>
       <item row="0" column="2">
        <widget class="QRadioButton" name="rbNatural">
+        <property name="toolTip">
+         <string>Natural name of color or HEX value of it</string>
+        </property>
         <property name="text">
          <string>Natural name where possible</string>
         </property>
@@ -270,6 +312,9 @@
    </item>
    <item row="2" column="0">
     <widget class="QCheckBox" name="cbShowMessageForNoSelection">
+     <property name="toolTip">
+      <string>If selected, additional messages will be show as part of pen related operations</string>
+     </property>
      <property name="text">
       <string>Show info message if no entities may be selected by pen</string>
      </property>
@@ -286,6 +331,9 @@
      </item>
      <item>
       <widget class="QComboBox" name="cbDoubleClickMode">
+       <property name="toolTip">
+        <string>Defines how the program to react on double click on pen item in table</string>
+       </property>
        <property name="currentIndex">
         <number>-1</number>
        </property>
@@ -309,8 +357,8 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../res/actions/actions.qrc"/>
-  <include location="../../res/ui/ui.qrc"/>
+  <include location="../../../../res/ui/ui.qrc"/>
+  <include location="../../../../res/actions/actions.qrc"/>
  </resources>
  <connections>
   <connection>

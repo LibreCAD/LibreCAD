@@ -127,7 +127,6 @@ void RS_ActionInterface::init(int status){
     }else{
         //delete snapper when finished, bug#3416878
         deleteSnapper();
-
     }
 }
 /**

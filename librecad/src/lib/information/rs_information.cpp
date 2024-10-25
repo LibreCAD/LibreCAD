@@ -461,13 +461,13 @@ RS_Entity* RS_Information::getNearestEntity(const RS_Vector& coord,
  * RS_VectorSolutions is set if one intersection is a tangent point.
  */
 RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
-		RS_Entity const* e2, bool onEntities) {
+                                                   RS_Entity const* e2, bool onEntities) {
 
     RS_VectorSolutions ret;
     const double tol = 1.0e-4;
 
-	if (!(e1 && e2) ) {
-		RS_DEBUG->print("RS_Information::getIntersection() for nullptr entities");
+    if (!(e1 && e2) ) {
+        RS_DEBUG->print("RS_Information::getIntersection() for nullptr entities");
         return ret;
     }
     if (e1->getId() == e2->getId()) {
@@ -483,19 +483,19 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
         return ret;
     }
 
-	if (onEntities && !(e1->isConstruction() || e2->isConstruction())) {
-	// a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
-		LC_Rect const rect1{e1->getMin(), e1->getMax()};
-		LC_Rect const rect2{e2->getMin(), e2->getMax()};
+    if (onEntities && !(e1->isConstruction() || e2->isConstruction())) {
+// a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
+        LC_Rect const rect1{e1->getMin(), e1->getMax()};
+        LC_Rect const rect2{e2->getMin(), e2->getMax()};
 
-		if (onEntities && !rect1.intersects(rect2, RS_TOLERANCE)) {
-			return ret;
-		}
-	}
+        if (onEntities && !rect1.intersects(rect2, RS_TOLERANCE)) {
+            return ret;
+        }
+    }
 
     //avoid intersections between line segments the same spline
     /* ToDo: 24 Aug 2011, Dongxu Li, if rtti() is not defined for the parent, the following check for splines may still cause segfault */
-	if ( e1->getParent() && e1->getParent() == e2->getParent()) {
+    if ( e1->getParent() && e1->getParent() == e2->getParent()) {
         if ( e1->getParent()->rtti()==RS2::EntitySpline ) {
             //do not calculate intersections from neighboring lines of a spline
             if ( abs(e1->getParent()->findEntity(e1) - e1->getParent()->findEntity(e2)) <= 1 ) {
@@ -504,15 +504,15 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
         }
     }
 
-	if(e1->rtti() == RS2::EntitySplinePoints || e2->rtti() == RS2::EntitySplinePoints)
-	{
-		ret = LC_SplinePoints::getIntersection(e1, e2);
-	}
-	else
-	{
-		// issue #484 , quadratic intersection solver is not robust enough for quadratic-quadratic
-		// TODO, implement a robust algorithm for quadratic based solvers, and detecting entity type
-		// circles/arcs can be removed
+    if(e1->rtti() == RS2::EntitySplinePoints || e2->rtti() == RS2::EntitySplinePoints)
+    {
+        ret = LC_SplinePoints::getIntersection(e1, e2);
+    }
+    else
+    {
+// issue #484 , quadratic intersection solver is not robust enough for quadratic-quadratic
+// TODO, implement a robust algorithm for quadratic based solvers, and detecting entity type
+// circles/arcs can be removed
         // issue #523: TangentFinder cannot handle line-line
         bool isLineLine = e1->rtti() == RS2::EntityLine && e2->rtti() == RS2::EntityLine;
         if (isLineLine)
@@ -521,8 +521,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
         if (isArc(e1)) {
             std::swap(e1, e2);
             if (isArc(e1)) {
-                //use specialized arc-arc intersection solver
-                ret=getIntersectionArcArc(e1, e2);
+			//use specialized arc-arc intersection solver
+			ret=getIntersectionArcArc(e1, e2);
             } else if (e1->rtti() == RS2::EntityLine) {
                 ret=getIntersectionLineArc(static_cast<const RS_Line*>(e1), static_cast<const RS_Arc*>(e2));
             }
@@ -538,8 +538,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
                 // tangent points with rounding errors.
                 ret = TangentFinder{e1, e2}.GetTangent();
             }
-        }
-    }
+		}
+	}
     RS_VectorSolutions ret2;
 	for(const RS_Vector& vp: ret){
 		if (!vp.valid) continue;
@@ -697,6 +697,7 @@ RS_VectorSolutions RS_Information::getIntersectionLineArc(const RS_Entity* line,
     // Tangential
     RS_VectorSolutions ret{projection};
     ret.setTangent(true);
+//        std::cout<<"Tangential point: "<<ret<<std::endl;
     return ret;
 }
 

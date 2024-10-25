@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>665</width>
+    <width>674</width>
     <height>24</height>
    </rect>
   </property>
@@ -45,7 +45,7 @@
    <item row="0" column="5">
     <widget class="QComboBox" name="cbLine2EdgeMode">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -58,7 +58,7 @@
      </property>
      <property name="maximumSize">
       <size>
-       <width>120</width>
+       <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>
@@ -99,7 +99,7 @@
    <item row="0" column="3">
     <widget class="QComboBox" name="cbLine1EdgeMode">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -112,7 +112,7 @@
      </property>
      <property name="maximumSize">
       <size>
-       <width>120</width>
+       <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>
@@ -139,7 +139,7 @@
    <item row="0" column="8">
     <widget class="QComboBox" name="cbAttributesSource">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -152,7 +152,7 @@
      </property>
      <property name="maximumSize">
       <size>
-       <width>90</width>
+       <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>

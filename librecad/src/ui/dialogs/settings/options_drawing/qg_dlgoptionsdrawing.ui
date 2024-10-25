@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>4</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tab1">
       <attribute name="title">
@@ -50,7 +50,11 @@
                  <number>12</number>
                 </property>
                 <item>
-                 <widget class="QComboBox" name="cbPaperFormat"/>
+                 <widget class="QComboBox" name="cbPaperFormat">
+                  <property name="toolTip">
+                   <string>Paper format</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
                  <layout class="QGridLayout" name="gridLayout_3">
@@ -58,7 +62,11 @@
                    <number>0</number>
                   </property>
                   <item row="0" column="2">
-                   <widget class="QLineEdit" name="lePaperWidth"/>
+                   <widget class="QLineEdit" name="lePaperWidth">
+                    <property name="toolTip">
+                     <string>Width of paper</string>
+                    </property>
+                   </widget>
                   </item>
                   <item row="1" column="0">
                    <widget class="QLabel" name="lPageHeight">
@@ -74,7 +82,11 @@
                    </widget>
                   </item>
                   <item row="1" column="2">
-                   <widget class="QLineEdit" name="lePaperHeight"/>
+                   <widget class="QLineEdit" name="lePaperHeight">
+                    <property name="toolTip">
+                     <string>Height of paper</string>
+                    </property>
+                   </widget>
                   </item>
                   <item row="0" column="0">
                    <widget class="QLabel" name="lPageWidth">
@@ -104,6 +116,9 @@
              <layout class="QHBoxLayout" name="horizontalLayout_2">
               <item>
                <widget class="QRadioButton" name="rbLandscape">
+                <property name="toolTip">
+                 <string>Landscape paper orientation</string>
+                </property>
                 <property name="text">
                  <string>&amp;Landscape</string>
                 </property>
@@ -111,6 +126,9 @@
               </item>
               <item>
                <widget class="QRadioButton" name="rbPortrait">
+                <property name="toolTip">
+                 <string>Portrait paper orientation</string>
+                </property>
                 <property name="text">
                  <string>P&amp;ortrait</string>
                 </property>
@@ -252,6 +270,9 @@
               </item>
               <item>
                <widget class="QSpinBox" name="sbPagesNumH">
+                <property name="toolTip">
+                 <string>Number of pages by horizontal</string>
+                </property>
                 <property name="minimum">
                  <number>1</number>
                 </property>
@@ -269,6 +290,9 @@
               </item>
               <item>
                <widget class="QSpinBox" name="sbPagesNumV">
+                <property name="toolTip">
+                 <string>Number of pages by vertical</string>
+                </property>
                 <property name="minimum">
                  <number>1</number>
                 </property>
@@ -289,6 +313,9 @@
              <widget class="QGraphicsView" name="gvPaperPreview">
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="toolTip">
+               <string>Preview of page and margins</string>
               </property>
               <property name="verticalScrollBarPolicy">
                <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -346,7 +373,11 @@
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="cbUnit"/>
+           <widget class="QComboBox" name="cbUnit">
+            <property name="toolTip">
+             <string>Units of measurements to use in drawing </string>
+            </property>
+           </widget>
           </item>
           <item>
            <spacer name="spacer19">
@@ -597,7 +628,7 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>Right crosshair with isometric grid</string>
+             <string>Right isometric grid</string>
             </property>
             <property name="text">
              <string>Isometric Right</string>
@@ -619,7 +650,7 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>Left crosshair with isometric grid</string>
+             <string>Left isometric grid</string>
             </property>
             <property name="text">
              <string>Isometric Left</string>
@@ -647,6 +678,9 @@
           </item>
           <item row="1" column="0" colspan="2">
            <widget class="QCheckBox" name="cbGridOn">
+            <property name="toolTip">
+             <string>If checked, grid will be shown for this drawing</string>
+            </property>
             <property name="text">
              <string>Show Grid</string>
             </property>
@@ -667,7 +701,7 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>Top crosshair with isometric grid</string>
+             <string>Top isometric grid</string>
             </property>
             <property name="text">
              <string>Isometric Top</string>
@@ -1713,6 +1747,9 @@
           </item>
           <item row="0" column="1">
            <widget class="QComboBox" name="cbLineCap">
+            <property name="toolTip">
+             <string>End cap for lines</string>
+            </property>
             <item>
              <property name="text">
               <string>None</string>
@@ -1744,6 +1781,9 @@
           </item>
           <item row="1" column="1">
            <widget class="QComboBox" name="cbLineJoin">
+            <property name="toolTip">
+             <string>Mode of lines joining in polylines or paths</string>
+            </property>
             <item>
              <property name="text">
               <string>None</string>
@@ -2792,6 +2832,9 @@
                   <height>23</height>
                  </rect>
                 </property>
+                <property name="toolTip">
+                 <string>If selected, size will be calculated as percentage of current screen size</string>
+                </property>
                 <property name="text">
                  <string>Size relative to screen</string>
                 </property>
@@ -2804,6 +2847,9 @@
                   <width>190</width>
                   <height>23</height>
                  </rect>
+                </property>
+                <property name="toolTip">
+                 <string>Size will be defined in drawing units of current drawing</string>
                 </property>
                 <property name="text">
                  <string>Size in drawing units</string>
@@ -2863,6 +2909,9 @@
                  <width>150</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="toolTip">
+                <string>Enter value for points size</string>
                </property>
               </widget>
              </item>

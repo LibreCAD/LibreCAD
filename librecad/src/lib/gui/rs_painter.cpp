@@ -517,8 +517,6 @@ void RS_Painter::drawPolyline(const RS_Polyline& polyline, const RS_GraphicView&
                 if (radius > minArcDrawingRadius) {
                     double centerX = view.toGuiX(data.center.x);
                     double centerY = view.toGuiY(data.center.y);
-
-
                     double startAngleDegrees, angularLength;
 
                     if (arc.isReversed()) {

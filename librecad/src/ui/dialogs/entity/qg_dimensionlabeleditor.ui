@@ -48,10 +48,10 @@
              </sizepolicy>
             </property>
             <property name="frameShape">
-             <enum>QFrame::Shape::NoFrame</enum>
+             <enum>QFrame::NoFrame</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Shadow::Plain</enum>
+             <enum>QFrame::Plain</enum>
             </property>
             <property name="text">
              <string>Label:</string>
@@ -68,6 +68,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Symbol before dimensional text</string>
             </property>
             <property name="text">
              <string/>
@@ -109,6 +112,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="toolTip">
+             <string>Superscript</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -118,6 +124,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Subscript</string>
             </property>
            </widget>
           </item>
@@ -144,6 +153,9 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Symbol to insert</string>
           </property>
           <item>
            <property name="text">

@@ -177,6 +177,9 @@
      <property name="enabled">
       <bool>false</bool>
      </property>
+     <property name="toolTip">
+      <string>Path for parent layer</string>
+     </property>
      <property name="text">
       <string/>
      </property>

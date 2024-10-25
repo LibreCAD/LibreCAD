@@ -115,29 +115,35 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     QString red(tr("Red"));
     addColor(Qt::red,red);
     colorIndexStart=findText(red); // keep the starting point of static colors
-	addColors(*this, {
-		{Qt::darkRed,tr("Dark Red")},
-		{Qt::yellow,tr("Yellow")},
-		{Qt::darkYellow,tr("Dark Yellow")},
-		{Qt::green,tr("Green")},
-		{Qt::darkGreen,tr("Dark Green")},
-		{Qt::cyan,tr("Cyan")},
-		{Qt::darkCyan,tr("Dark Cyan")},
-		{Qt::blue,tr("Blue")},
-		{Qt::darkBlue,tr("Dark Blue")},
-		{Qt::magenta,tr("Magenta")},
-		{Qt::darkMagenta,tr("Dark Magenta")},
-	});
+    addColors(*this, {
+        {Qt::darkRed,tr("Dark Red")},
+        {Qt::yellow,tr("Yellow")},
+        {Qt::darkRed,tr("Dark Red")},
+        {Qt::yellow,tr("Yellow")},
+        {Qt::darkYellow,tr("Dark Yellow")},
+        {Qt::green,tr("Green")},
+        {Qt::darkGreen,tr("Dark Green")},
+        {Qt::cyan,tr("Cyan")},
+        {Qt::darkCyan,tr("Dark Cyan")},
+        {Qt::blue,tr("Blue")},
+        {Qt::darkBlue,tr("Dark Blue")},
+        {Qt::magenta,tr("Magenta")},
+        {Qt::darkMagenta,tr("Dark Magenta")},
+    });
+    // todo - location of it not intuitive and it should be in upper position within colors
+    // todo - yet that will rework of addColors, may be later
+    addColor(QColor("orange"), tr("Orange"));
+    addColor(QColor("darkorange"), tr("Dark Orange"));
 
     // a special "Black/White" color
     addItem(QIcon(":/ui/color07.png"), tr("Black / White"), QColor(Qt::black));
 
     // Gray colors
-	addColors(*this, {
-		{Qt::gray,tr("Gray")},
-		{Qt::darkGray,tr("Dark Gray")},
-		{Qt::lightGray,tr("Light Gray")},
-	});
+    addColors(*this, {
+        {Qt::gray,tr("Gray")},
+        {Qt::darkGray,tr("Dark Gray")},
+        {Qt::lightGray,tr("Light Gray")},
+    });
     //static colors ends here
     // add custom colors from settings
     readCustomColorSettings();

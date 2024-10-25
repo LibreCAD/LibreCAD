@@ -100,6 +100,14 @@ struct RS_GraphicView::ColorData {
     bool hideRelativeZero = false;
 };
 
+namespace{
+    // fixme - move to nicer settings
+    static const RS_Color printPreviewBorderAndShadowColor = RS_Color(64, 64, 64);
+    static const RS_Color printPreviewBackgroundColor = RS_Color(200, 200, 200);
+    static const RS_Color printPreviewPaperColor = RS_Color(180, 180, 180);
+    static const RS_Color printPreviewPrintAreaColor = RS_Color(255, 255, 255);
+}
+
 /**
  * Constructor.
  */
@@ -359,7 +367,9 @@ void RS_GraphicView::killSelectActions() {
  */
 void RS_GraphicView::killAllActions() {
     if (eventHandler) {
-        eventHandler->killAllActions();
+        if (forcedActionKillAllowed) {
+            eventHandler->killAllActions();
+        }
     }
 }
 
@@ -1145,9 +1155,6 @@ void RS_GraphicView::setPenForOverlayEntity(RS_Painter *painter, RS_Entity *e, d
     }
 }
 
-namespace{
-    const RS_Color bgColorInPrintPreview(255,255, 255);
-}
 
 /*	*
  *	Function name:
@@ -1231,14 +1238,16 @@ void RS_GraphicView::setPenForPrintingEntity(RS_Painter *painter, RS_Entity *e, 
 
     RS_Color backgroundColor;
     if (printPreview /*|| inPrintingMode*/){ //  todo - should we change color for printer mode too?
-        backgroundColor = bgColorInPrintPreview; // same color as used for drawing print area in drawPaper
+        backgroundColor = printPreviewPrintAreaColor; // same color as used for drawing print area in drawPaper
+        // fixme - sand - nicer handling colors is needed. That should work fine if entity is over paper entity.
+        // however, if entity is over background... it still may be the issue.
     }
     else{
         backgroundColor =  m_colorData->background;
     }
 
-    if (pen.getColor().isEqualIgnoringFlags(m_colorData->background) || (pen.getColor().toIntColor() == RS_Color::Black
-                                                                         && pen.getColor().colorDistance(m_colorData->background) < RS_Color::MinColorDistance)) {
+    if (pen.getColor().isEqualIgnoringFlags(backgroundColor) || (pen.getColor().toIntColor() == RS_Color::Black
+                                                                         && pen.getColor().colorDistance(backgroundColor) < RS_Color::MinColorDistance)) {
         pen.setColor(this->m_colorData->foreground);
     }
 
@@ -1488,7 +1497,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
 #ifdef DEBUG_RENDERING
     isVisibleTime += isVisibleTimer.nsecsElapsed();
 #endif
-    if (!visible) {// fixme - renderperf - optimize is visible
+    if (!visible) {
         return;
     }
 
@@ -1831,6 +1840,8 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
 
 #define DEBUG_PRINT_PREVIEW_POINTS_NO
 
+
+
 /**
  * Draws the paper border (for print previews).
  * This function can ONLY be called from within a paintEvent because it will
@@ -1879,24 +1890,24 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
 
 // gray background:
     painter->fillRect(0, 0, getWidth(), getHeight(),
-                      RS_Color(200, 200, 200));
+                      printPreviewBackgroundColor);
 
-// shadow:
+// shadow:    
     painter->fillRect(paperX1 + 6, paperY1 + 6, paperW, paperH,
-                      RS_Color(64, 64, 64));
+                      printPreviewBorderAndShadowColor);
 
 // border:
     painter->fillRect(paperX1, paperY1, paperW, paperH,
-                      RS_Color(64, 64, 64));
+                      printPreviewBorderAndShadowColor);
 
-// paper:
+// paper:    
     painter->fillRect(paperX1 + 1, paperY1 - 1, paperW - 2, paperH + 2,
-                      RS_Color(180, 180, 180));
+                      printPreviewPaperColor);
 
 // print area:
     painter->fillRect(paperX1 + 1 + marginLeft, paperY1 - 1 - marginBottom,
                       printAreaW - 2, printAreaH + 2,
-                      RS_Color(255, 255, 255));
+                      printPreviewPrintAreaColor);
 
 // don't paint boundaries if zoom is to small
     if (qMin(std::abs(printAreaW / numX), std::abs(printAreaH / numY)) > 2) {
@@ -1905,13 +1916,13 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
             double offset = ((double) printAreaW * pX) / numX;
             painter->fillRect(paperX1 + marginLeft + offset, paperY1,
                               1, paperH,
-                              RS_Color(64, 64, 64));
+                              printPreviewBorderAndShadowColor);
         }
         for (int pY = 1; pY < numY; pY++) {
             double offset = ((double) printAreaH * pY) / numY;
             painter->fillRect(paperX1, paperY1 - marginBottom + offset,
                               paperW, 1,
-                              RS_Color(64, 64, 64));
+                              printPreviewBorderAndShadowColor);
         }
     }
 
@@ -2494,4 +2505,8 @@ bool RS_GraphicView::isDraftLinesMode() const {
 
 void RS_GraphicView::setDraftLinesMode(bool mode) {
     draftLinesMode = mode;
+}
+
+void RS_GraphicView::setForcedActionKillAllowed(bool enabled) {
+    forcedActionKillAllowed = enabled;
 }

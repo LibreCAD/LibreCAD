@@ -106,6 +106,9 @@
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QRadioButton" name="rbSplinePoints">
+            <property name="toolTip">
+             <string>If selected, spline points are used</string>
+            </property>
             <property name="text">
              <string>Spline Points</string>
             </property>
@@ -116,6 +119,9 @@
           </item>
           <item>
            <widget class="QRadioButton" name="rbControlPoints">
+            <property name="toolTip">
+             <string>If selected, control points are used</string>
+            </property>
             <property name="text">
              <string>Control Points</string>
             </property>
