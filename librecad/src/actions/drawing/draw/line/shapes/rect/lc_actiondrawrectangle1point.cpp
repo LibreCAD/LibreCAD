@@ -361,7 +361,7 @@ void LC_ActionDrawRectangle1Point::doUpdateMouseButtonHints(int status){
             updateMouseWidgetTRBack(tr("Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]"));
             break;
         case SetAngleFree:
-            updateMouseWidgetTRBack(tr("Specify point that defines base angle for rectangle"), MOD_SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_ANGLE_SNAP, tr("Don't keep insertion point")));
+            updateMouseWidgetTRBack(tr("Specify point that defines base angle for rectangle"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Don't keep insertion point")));
             break;
         default:
             updateMouseWidget();

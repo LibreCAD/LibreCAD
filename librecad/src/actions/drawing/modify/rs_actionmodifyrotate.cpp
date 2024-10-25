@@ -523,10 +523,10 @@ void RS_ActionModifyRotate::updateMouseButtonHintsForSelection() {
 void RS_ActionModifyRotate::updateMouseButtonHintsForSelected(int status){
     switch (status) {
         case SetReferencePoint:
-            updateMouseWidgetTRBack(tr("Specify reference point"),MOD_SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO, tr("Snap to center of selection")));
+            updateMouseWidgetTRBack(tr("Specify reference point"),MOD_SHIFT_AND_CTRL(MSG_REL_ZERO, tr("Snap to center of selection")));
             break;
         case SetCenterPoint:
-            updateMouseWidgetTRBack(tr("Specify rotation center"), MOD_SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_ANGLE_SNAP, tr("Snap to center of selection")));
+            updateMouseWidgetTRBack(tr("Specify rotation center"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Snap to center of selection")));
             break;
         case SetTargetPoint:
             updateMouseWidgetTRBack(tr("Specify target point to rotate to"), MOD_SHIFT_ANGLE_SNAP);

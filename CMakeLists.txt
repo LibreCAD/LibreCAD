@@ -1244,6 +1244,8 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp
 		librecad/src/actions/drawing/draw/polyline/lc_actionpolylinearcstolines.h
 		librecad/src/actions/drawing/draw/polyline/lc_actionpolylinearcstolines.cpp
+		librecad/src/ui/components/status_bar/lc_qtstatusbarmanager.h
+		librecad/src/ui/components/status_bar/lc_qtstatusbarmanager.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

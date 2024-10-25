@@ -5813,6 +5813,19 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
 </context>
 <context>
+    <name>LC_QTStatusbarManager</name>
+    <message>
+        <location filename="../src/ui/components/status_bar/lc_qtstatusbarmanager.cpp" line="37"/>
+        <source> SHIFT Key: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/status_bar/lc_qtstatusbarmanager.cpp" line="41"/>
+        <source> CTRL Key: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_QuickInfoEntityData</name>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="189"/>
@@ -8045,32 +8058,32 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="946"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1012"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1014"/>
         <source>Grid Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="977"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="979"/>
         <source>Coordinates</source>
         <translation type="unfinished">Συντεταγμένες</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="984"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="986"/>
         <source>Relative Zero</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="991"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="993"/>
         <source>Mouse</source>
         <translation type="unfinished">Ποντίκι</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="998"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1000"/>
         <source>Selection Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1005"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1007"/>
         <source>Active Layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8338,27 +8351,27 @@ p, li { white-space: pre-wrap; }
         <translation>ανώνυμο έγγραφο %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2700"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2703"/>
         <source>Opening recent file...</source>
         <translation>Άνοιγμα πρόσφατου αρχείου...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1718"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1719"/>
         <source>Loaded document: </source>
         <translation>Το έγγραφο φορτώθηκε: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1724"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1725"/>
         <source>Opening aborted</source>
         <translation>Το άνοιγμα ματαιώθηκε</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2107"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2108"/>
         <source>Printing...</source>
         <translation>Εκτύπωση...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2259"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2261"/>
         <source>Exiting application...</source>
         <translation>Έξοδος από την εφαρμογή...</translation>
     </message>
@@ -8391,12 +8404,12 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Λίστα μπλοκ</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2183"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2184"/>
         <source>Print preview for %1</source>
         <translation>Προεπισκόπηση εκτύπωσης για το %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1367"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1368"/>
         <source>New Drawing created.</source>
         <translation>Το νέο σχέδιο δημιουργήθηκε.</translation>
     </message>
@@ -8411,37 +8424,37 @@ p, li { white-space: pre-wrap; }
         <translation>Το σχέδιο αποθηκεύτηκε: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1816"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1817"/>
         <source>Exporting drawing...</source>
         <translation>Εξαγωγή σχεδίου...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1912"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1913"/>
         <source>Exported: %1</source>
         <translation>Έγινε εξαγωγή: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1952"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1953"/>
         <source>Exporting...</source>
         <translation>Εξαγωγή...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2004"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2005"/>
         <source>Export complete</source>
         <translation>Η εξαγωγή ολοκληρώθηκε</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2004"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2005"/>
         <source>Export failed!</source>
         <translation>Η εξαγωγή απέτυχε!</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2111"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2112"/>
         <source>Printing complete</source>
         <translation>Η εκτύπωση ολοκληρώθηκε</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2730"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2733"/>
         <source>Command line</source>
         <translation>Γραμμή εντολών</translation>
     </message>
@@ -8451,7 +8464,7 @@ p, li { white-space: pre-wrap; }
         <translation>Μπλοκ &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1498"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1499"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -8464,17 +8477,17 @@ Please check the permissions.</source>
         <translation type="vanished">&amp;Πολυγραμμή</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1786"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1787"/>
         <source>Auto-saving drawing...</source>
         <translation>Αυτόματη αποθήκευση σχεδίου...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1794"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1795"/>
         <source>Auto-saved drawing</source>
         <translation>Το σχέδιο αποθηκεύτηκε αυτόματα</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1799"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1800"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -8501,7 +8514,7 @@ Auto-save disabled.</source>
         <translation type="vanished">Έκδοση: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1594"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1595"/>
         <source>Warning: File already opened : </source>
         <translation>Προειδοποίηση: Το αρχείο έχει ήδη ανοιχτεί : </translation>
     </message>
@@ -8526,17 +8539,17 @@ Auto-save disabled.</source>
         <translation>Οργάνωση &amp;καρτελών</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1436"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1437"/>
         <source>New document from template: </source>
         <translation>Νέο έγγραφο από πρότυπο: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1482"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1483"/>
         <source>Select Template aborted</source>
         <translation>Η επιλογή προτύπου ματαιώθηκε</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1804"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1805"/>
         <source>Auto-saving failed</source>
         <translation>Η αυτόματη αποθήκευση απέτυχε</translation>
     </message>
@@ -8545,7 +8558,7 @@ Auto-save disabled.</source>
         <translation type="vanished">Επιλογή έλξης</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1853"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1854"/>
         <source>Export as</source>
         <translation>Εξαγωγή ως</translation>
     </message>
@@ -8564,9 +8577,9 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="435"/>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1298"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1702"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2300"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2633"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1703"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2302"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2635"/>
         <source>Draft Mode</source>
         <translation>Κατάσταση λειτουργίας προσχεδίου</translation>
     </message>
@@ -8579,7 +8592,7 @@ Auto-save disabled.</source>
         <translation type="vanished">Εξαγωγή</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1640"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1641"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -8588,7 +8601,7 @@ Please check its existence and permissions.</source>
 Παρακαλούμε να ελέγξετε την ύπαρξη και τα δικαιώματά του.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1723"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1724"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>Το αρχείο &apos;%1&apos; δεν υπάρχει. Το άνοιγμα ματαιώθηκε</translation>
     </message>
@@ -8637,22 +8650,22 @@ Please check its existence and permissions.</source>
         <translation type="vanished">Πληροφορίες</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2670"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2673"/>
         <source>Toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2675"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2678"/>
         <source>Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2782"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2785"/>
         <source>Device Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2785"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2788"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8686,17 +8699,17 @@ Please check its existence and permissions.</source>
         <translation type="vanished">Σύστημα</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2816"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2819"/>
         <source>Toolbar Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2876"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2879"/>
         <source>Menu Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2900"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2903"/>
         <source>Menu Assigner</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8800,27 +8813,27 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1763"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1764"/>
         <source>Save All cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2068"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2069"/>
         <source>Close All cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2730"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2733"/>
         <source>Cmd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2731"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2734"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2731"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2734"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation type="unfinished"></translation>
@@ -11893,27 +11906,27 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Προτιμήσεις</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3856"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3866"/>
         <source>Translations:</source>
         <translation>Μεταφράσεις:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3756"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3766"/>
         <source>Hatch Patterns:</source>
         <translation>Μοτίβα διαγράμμισης:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3866"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3876"/>
         <source>Fonts:</source>
         <translation>Γραμματοσειρές:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3821"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3831"/>
         <source>Part Libraries:</source>
         <translation>Βιβλιοθήκες εξαρτημάτων:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3555"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3565"/>
         <source>Language</source>
         <translation>Γλώσσα</translation>
     </message>
@@ -11927,7 +11940,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Προτιμήσεις εφαρμογής</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3464"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3474"/>
         <source>Defaults for new drawings</source>
         <translation>Προεπιλογές για τα νέα σχέδια</translation>
     </message>
@@ -11936,17 +11949,17 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="vanished">&amp;Εμφάνιση</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3561"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3571"/>
         <source>&amp;GUI Language:</source>
         <translation>&amp;Γλώσσα διεπαφής:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3581"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3591"/>
         <source>&amp;Command Language:</source>
         <translation>Γλώσσα &amp;εντολών:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3736"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3746"/>
         <source>&amp;Paths</source>
         <translation>Δ&amp;ιαδρομές</translation>
     </message>
@@ -11956,7 +11969,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>&amp;Προεπιλογές</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3523"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3533"/>
         <source>&amp;Unit:</source>
         <translation>&amp;Μονάδα:</translation>
     </message>
@@ -12017,7 +12030,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Χρόνος μεταξύ της αυτόματης αποθήκευσης του εγγράφου σε λεπτά.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3361"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3364"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>Όταν έχει τεθεί, το LibreCAD θα δημιουργεί αυτόματα εφεδρικό αρχείο του τρέχοντος σχεδίου.</translation>
     </message>
@@ -12026,7 +12039,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="vanished">Αυτόματη λήψη εφεδρικών αρχείων</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3943"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3953"/>
         <source>Template:</source>
         <translation>Πρότυπο:</translation>
     </message>
@@ -12067,27 +12080,27 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3439"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3449"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3507"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3517"/>
         <source>Left  Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3487"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3497"/>
         <source>RIght Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3497"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3507"/>
         <source>Orthogonal Grid</source>
         <translation type="unfinished">Ορθογώνιος κάνναβος</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3470"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3480"/>
         <source>Top Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12158,77 +12171,87 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3536"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3410"/>
+        <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3413"/>
+        <source>Duplicate prompt messages of actions in statusbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3546"/>
         <source>If checked, new drawing will be created with grid disabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3539"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3549"/>
         <source>Grid is Off </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3604"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3614"/>
         <source>New Versions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3610"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3620"/>
         <source>Check GitHub for new releases of LibreCAD on program startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3613"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3623"/>
         <source>Check for new versions on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3620"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3630"/>
         <source>If checked, pre-release versions will be ignored</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3626"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3636"/>
         <source>Ignore pre-release versions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3675"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3685"/>
         <source>Open last opened files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3682"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3692"/>
         <source>If enabled, drop-down menus may become floating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3685"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3695"/>
         <source>Allow menus detaching</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3692"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3702"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3695"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3705"/>
         <source>Use &quot;classic&quot; statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3780"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3790"/>
         <source>Clear Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3795"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3805"/>
         <source>Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3811"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3821"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12243,32 +12266,32 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3655"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3665"/>
         <source>Start in tab mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3636"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3646"/>
         <source>Startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3645"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3655"/>
         <source>Display loading screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3665"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3675"/>
         <source>Start with main window maximized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3705"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3715"/>
         <source>Enable CAD dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3712"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3722"/>
         <source>Enable CAD toolbars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12294,7 +12317,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3876"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3886"/>
         <source>Variable File:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13171,27 +13194,27 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3351"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3374"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3354"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3377"/>
         <source>Show keyboard shortcuts in actions tooltips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3364"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3367"/>
         <source>Auto save backup each</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3371"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3351"/>
         <source>If checked, location of dialog will not be saved, but size will</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3377"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3357"/>
         <source>Persist dialog size only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13211,112 +13234,112 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3426"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3436"/>
         <source>Keyboard Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3432"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3442"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3480"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3490"/>
         <source>Drawing units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3574"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3584"/>
         <source>Languages for commands in Cmd Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3594"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3604"/>
         <source>Language to use for GUI and messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3642"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3652"/>
         <source>Defines whether splash screen will be shown on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3652"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3662"/>
         <source>Controls default mode for drawings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3662"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3672"/>
         <source>If checked, after start the main window will be maximized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3672"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3682"/>
         <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3742"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3831"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3845"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3897"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3953"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3752"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3841"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3855"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3907"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3963"/>
         <source>Click to select directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3766"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>Path to folder with fonts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3773"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3783"/>
         <source>Path to file with keyboard shortcuts mapping variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3792"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3802"/>
         <source>Restores program geometry/layout to original state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3808"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3818"/>
         <source>Restores the program settings to its original state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3883"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3911"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3893"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3921"/>
         <source>Click to select file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3922"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3932"/>
         <source>Path to folder with hatch patterns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3929"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3939"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3936"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3946"/>
         <source>Path to file with variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3964"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3974"/>
         <source>Path to folder with translation files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3971"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3981"/>
         <source>Shortcuts Mappings:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3442"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3452"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15640,9 +15663,9 @@ p, li { white-space: pre-wrap; }
     <name>QMessageBox</name>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1501"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1643"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1798"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1502"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1644"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1799"/>
         <source>Warning</source>
         <translation>Προειδοποίηση</translation>
     </message>
@@ -15973,47 +15996,47 @@ Do you want to replace it?</source>
         <translation>Άνοιγμα εικόνας</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1140"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1142"/>
         <source>Windows Bitmap</source>
         <translation>Windows Bitmap</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1142"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1144"/>
         <source>Joint Photographic Experts Group</source>
         <translation>Joint Photographic Experts Group</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1146"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1148"/>
         <source>Multiple-image Network Graphics</source>
         <translation>Multiple-image Network Graphics</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1148"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1150"/>
         <source>Portable Bit Map</source>
         <translation>Portable Bit Map</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1150"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1152"/>
         <source>Portable Grey Map</source>
         <translation>Portable Grey Map</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1152"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1154"/>
         <source>Portable Network Graphic</source>
         <translation>Portable Network Graphic</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1154"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1156"/>
         <source>Portable Pixel Map</source>
         <translation>Portable Pixel Map</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1156"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1158"/>
         <source>X Bitmap Format</source>
         <translation>X Bitmap Format</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1158"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1160"/>
         <source>X Pixel Map</source>
         <translation>X Pixel Map</translation>
     </message>
@@ -16023,7 +16046,7 @@ Do you want to replace it?</source>
         <translation>Όλα τα Αρχεία Εικόνων (%1)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1144"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1146"/>
         <source>Graphics Interchange Format</source>
         <translation>Graphics Interchange Format</translation>
     </message>
@@ -16230,62 +16253,62 @@ Do you want to replace it?</source>
         <translation>Jww %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1160"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1162"/>
         <source>Scalable Vector Graphics</source>
         <translation>Κλιμακούμενα Διανυσματικά Γραφικά</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1162"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1164"/>
         <source>SGI Black &amp; White</source>
         <translation>SGI Μαύρο &amp; Άσπρο</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1164"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1166"/>
         <source>Encapsulated PostScript</source>
         <translation>Encapsulated PostScript</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1166"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1168"/>
         <source>Encapsulated PostScript Format</source>
         <translation>Encapsulated PostScript Format</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1168"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1170"/>
         <source>Encapsulated PostScript Interchange</source>
         <translation>Encapsulated PostScript Interchange</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1170"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1172"/>
         <source>Windows Icon</source>
         <translation>Windows Icon</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1172"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1174"/>
         <source>JPEG 2000</source>
         <translation>JPEG 2000</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1174"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1176"/>
         <source>ZSoft Paintbrush</source>
         <translation>ZSoft Paintbrush</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1176"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1178"/>
         <source>PC Paint</source>
         <translation>PC Paint</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1178"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1180"/>
         <source>SGI-Bilddatei</source>
         <translation>SGI-Bilddatei</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1180"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1182"/>
         <source>Targa Image File</source>
         <translation>Targa Image File</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1182"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1184"/>
         <source>Tagged Image File Format</source>
         <translation>Tagged Image File Format</translation>
     </message>
@@ -17604,7 +17627,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1671"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1672"/>
         <source>Invalid objects removed:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17667,7 +17690,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="709"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3066"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3069"/>
         <source>License</source>
         <translation type="unfinished">Άδεια</translation>
     </message>

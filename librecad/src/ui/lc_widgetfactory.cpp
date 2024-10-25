@@ -945,6 +945,9 @@ void LC_WidgetFactory::initStatusBar() {
     main_window->grid_status = new TwoStackedLabels(status_bar);
     main_window->grid_status->setTopLabel(tr("Grid Status"));
 
+    main_window->statusbarManager = new LC_QTStatusbarManager(status_bar);
+    main_window->statusbarManager->loadSettings();
+
     bool useClassicalStatusBar = LC_GET_ONE_BOOL("Startup", "UseClassicStatusBar", false);
     if (useClassicalStatusBar) {
         status_bar->addWidget(main_window->coordinateWidget);
@@ -1014,6 +1017,8 @@ void LC_WidgetFactory::initStatusBar() {
         tb->setObjectName("TBGridStatus");
         tb->addWidget(main_window->grid_status);
         tb->setProperty("_group", 3);
+
+        main_window->statusbarManager->setup();
 
         main_window->grid_status->setToolTip("Current size of Grid/MetaGrid. Click to change grid size.");
 

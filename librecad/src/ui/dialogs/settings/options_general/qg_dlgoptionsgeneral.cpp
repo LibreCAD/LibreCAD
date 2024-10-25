@@ -79,10 +79,10 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
 
     connect(tbShortcuts, &QToolButton::clicked, this, &QG_DlgOptionsGeneral::setShortcutsMappingsFoler);
 
-    connect(cbCheckNewVersion, &QCheckBox::toggled,
+    connect(cbCheckNewVersion, &QCheckBox::stateChanged,
             this, &QG_DlgOptionsGeneral::onCheckNewVersionChanged);
 
-
+    connect(cbClassicStatusBar, &QCheckBox::stateChanged, this, &QG_DlgOptionsGeneral::on_cbClassicStatusBarToggled);
 
 }
 
@@ -266,6 +266,7 @@ void QG_DlgOptionsGeneral::init() {
 
         checked = LC_GET_BOOL("IgnoreDraftForHighlight", false);
         cbHighlightWIthLinewidthInDraft->setChecked(checked);
+
     }
     LC_GROUP_END();
 
@@ -425,6 +426,10 @@ void QG_DlgOptionsGeneral::init() {
 
         cbCheckNewVersion->setChecked(LC_GET_BOOL("CheckForNewVersions", true));
         cbCheckNewVersionIgnorePreRelease->setChecked(LC_GET_BOOL("IgnorePreReleaseVersions", true));
+
+        bool checked = LC_GET_BOOL("ShowCommandPromptInStatusBar", true);
+        cbDuplicateActionsPromptsInStatusBar->setChecked(checked);
+        cbDuplicateActionsPromptsInStatusBar->setEnabled(!originalUseClassicToolbar);
     }
     LC_GROUP_END();
 
@@ -626,6 +631,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("EnableCADToolbars", cad_toolbars_checkbox->isChecked());
             LC_SET("OpenLastOpenedFiles", cbOpenLastFiles->isChecked());
             LC_SET("UseClassicStatusBar", cbClassicStatusBar->isChecked());
+            LC_SET("ShowCommandPromptInStatusBar", cbDuplicateActionsPromptsInStatusBar->isChecked());
             LC_SET("CheckForNewVersions", cbCheckNewVersion->isChecked());
             LC_SET("IgnorePreReleaseVersions", cbCheckNewVersionIgnorePreRelease->isChecked());
         }
@@ -717,8 +723,6 @@ void QG_DlgOptionsGeneral::on_pb_snap_color_clicked() {
 void QG_DlgOptionsGeneral::on_pb_snap_lines_color_clicked() {
     set_color(cb_snap_lines_color, QColor(RS_Settings::snap_indicator_lines));
 }
-
-
 
 void QG_DlgOptionsGeneral::on_pb_relativeZeroColor_clicked() {
     set_color(cbRelativeZeroColor, QColor(RS_Settings::relativeZeroColor));
@@ -845,6 +849,10 @@ void QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked() {
 
 void QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked() {
     cbPersistentDialogSizeOnly->setEnabled(cbPersistentDialogs->isChecked());
+}
+
+void QG_DlgOptionsGeneral::on_cbClassicStatusBarToggled(){
+    cbDuplicateActionsPromptsInStatusBar->setEnabled(!cbClassicStatusBar->isChecked());
 }
 
 void QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled() {

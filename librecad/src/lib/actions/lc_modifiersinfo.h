@@ -26,25 +26,27 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QString>
 
+#define MSG_ANGLE_SNAP  QObject::tr("Angle Snap")
+#define MSG_FREE_SNAP  QObject::tr("Free Snap")
+#define MSG_MIRROR_ANGLE QObject::tr("Use Mirrored Angle")
+#define MSG_REL_ZERO QObject::tr("Snap to Relative Zero")
+#define MSG_NONE ""
+
 #define MOD_NONE LC_ModifiersInfo::NONE()
 #define MOD_SHIFT_LC(msg) LC_ModifiersInfo::SHIFT(msg)
 #define MOD_CTRL(msg) LC_ModifiersInfo::CTRL(msg)
 #define MOD_SHIFT_AND_CTRL(shiftMsg, ctrlMsg) LC_ModifiersInfo::SHIFT_AND_CTRL(shiftMsg,ctrlMsg)
-#define MOD_SHIFT_AND_CTRL_ANGLE(ctrlMsg) LC_ModifiersInfo::SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_ANGLE_SNAP,ctrlMsg)
+#define MOD_SHIFT_AND_CTRL_ANGLE(ctrlMsg) LC_ModifiersInfo::SHIFT_AND_CTRL(MSG_ANGLE_SNAP,ctrlMsg)
 #define MOD_SHIFT_ANGLE_SNAP LC_ModifiersInfo::SHIFT_ANGLE_SNAP()
 #define MOD_SHIFT_FREE_SNAP LC_ModifiersInfo::SHIFT_FREE_SNAP()
 #define MOD_SHIFT_MIRROR_ANGLE LC_ModifiersInfo::SHIFT_MIRROR_ANGLE()
 #define MOD_SHIFT_RELATIVE_ZERO LC_ModifiersInfo::SHIFT_RELATIVE_ZERO()
 
+
 class LC_ModifiersInfo{
 public:
     LC_ModifiersInfo();
-
-    static const QString MSG_ANGLE_SNAP;
-    static const QString MSG_FREE_SNAP;
-    static const QString MSG_MIRROR_ANGLE;
-    static const QString MSG_REL_ZERO;
-    static const QString MSG_NONE;
+    static const QString MSG_EMPTY;
 
     static LC_ModifiersInfo NONE(){return {};};
     static LC_ModifiersInfo SHIFT_ANGLE_SNAP();
@@ -57,7 +59,7 @@ public:
     static LC_ModifiersInfo SHIFT(const QString &msg);
     static LC_ModifiersInfo SHIFT_AND_CTRL(const QString &shiftMsg, const QString &ctrlMsg);
     const QString&  getShiftMessage() const;
-    const QString& getCtrlMessage() const;
+    const QString&  getCtrlMessage() const;
 protected:
     Qt::KeyboardModifiers modifiers = Qt::NoModifier;
     QString shiftMsg;

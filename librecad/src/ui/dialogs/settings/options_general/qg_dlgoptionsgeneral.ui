@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -3345,13 +3345,16 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
+          <item row="5" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
             <property name="toolTip">
-             <string>If checked, keyboard shortcut will be shown in tooltip for action</string>
+             <string>If checked, location of dialog will not be saved, but size will</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
             </property>
             <property name="text">
-             <string>Show keyboard shortcuts in actions tooltips</string>
+             <string>Persist dialog size only</string>
             </property>
            </widget>
           </item>
@@ -3365,16 +3368,13 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
+          <item row="2" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
             <property name="toolTip">
-             <string>If checked, location of dialog will not be saved, but size will</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
+             <string>If checked, keyboard shortcut will be shown in tooltip for action</string>
             </property>
             <property name="text">
-             <string>Persist dialog size only</string>
+             <string>Show keyboard shortcuts in actions tooltips</string>
             </property>
            </widget>
           </item>
@@ -3394,7 +3394,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0" colspan="3">
+          <item row="4" column="0" colspan="3">
            <widget class="QCheckBox" name="cbPersistentDialogs">
             <property name="toolTip">
              <string>If checked, dialogs will be positioned and resized to position/size of last invocation.</string>
@@ -3693,6 +3693,19 @@
             </property>
             <property name="text">
              <string>Use &quot;classic&quot; statusbar</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbDuplicateActionsPromptsInStatusBar">
+            <property name="toolTip">
+             <string>If checked, prompt messages of actions will be also shown in bottom statusbar</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
+            </property>
+            <property name="text">
+             <string>Duplicate prompt messages of actions in statusbar</string>
             </property>
            </widget>
           </item>

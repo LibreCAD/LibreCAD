@@ -72,7 +72,8 @@ public:
 	QString requestFileSaveAsDialog(const QString&, const QString&, const QString&, QString*) override {return {};}
 	void updateCoordinateWidget(const RS_Vector& , const RS_Vector& , bool =false) override {}
  void updateMouseWidget(const QString&, const QString&,[[maybe_unused]] const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()) override{}
- void updateMouseWidgetIcon([[maybe_unused]]const QIcon &icon) override  {}
+ void clearMouseWidgetIcon() override  {}
+ void setStatusBarManager(LC_QTStatusbarManager *statusBarManager) override {}
 	void updateSelectionWidget(int, double) override {}
 //    void updateArcTangentialOptions(double, bool) override{}
 	void commandMessage(const QString&) override {}

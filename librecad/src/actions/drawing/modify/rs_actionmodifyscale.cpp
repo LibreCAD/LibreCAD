@@ -354,7 +354,7 @@ void RS_ActionModifyScale::determineScaleFactor(RS_ScaleData& data,
 void RS_ActionModifyScale::updateMouseButtonHintsForSelected(int status) {
     switch (status) {
         case SetReferencePoint:
-            updateMouseWidgetTRCancel(tr( "Specify scale center"), MOD_SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO, tr("Snap to center of selection")));
+            updateMouseWidgetTRCancel(tr( "Specify scale center"), MOD_SHIFT_AND_CTRL(MSG_REL_ZERO, tr("Snap to center of selection")));
             break;
             // Find the scale factors to scale the pPoints->sourcePoint to pPoints->targetPoint
         case SetSourcePoint:

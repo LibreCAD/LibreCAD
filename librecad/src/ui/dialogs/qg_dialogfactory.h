@@ -28,6 +28,7 @@
 #include "lc_optionswidgetsholder.h"
 #include "qg_snaptoolbar.h"
 #include "lc_snapoptionswidgetsholder.h"
+#include "lc_qtstatusbarmanager.h"
 
 class QG_SnapMiddleOptions;
 class QG_SnapDistOptions;
@@ -97,6 +98,7 @@ public:
         return commandWidget;
     }
 
+    void setStatusBarManager(LC_QTStatusbarManager *statusBarManager) override;
 
 
 /**
@@ -170,7 +172,7 @@ public:
  */
     void updateMouseWidget(const QString& left=QString(),
                            const QString& right=QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()) override;
-    void updateMouseWidgetIcon(const QIcon &icon);
+    void clearMouseWidgetIcon();
     void updateSelectionWidget(int num, double length) override;//updated for total number of selected, and total length of selected
     void commandMessage(const QString& message) override;
     void command(const QString& message) override;
@@ -195,6 +197,7 @@ protected:
     QG_SelectionWidget* selectionWidget = nullptr;
 //! Pointer to the command line widget
     QG_CommandWidget* commandWidget = nullptr;
+    LC_QTStatusbarManager* statusBarManager = nullptr;
     LC_RelZeroCoordinatesWidget *relZeroCoordinatesWidget;
     QG_SnapToolBar* snapToolbar = nullptr;
     LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
