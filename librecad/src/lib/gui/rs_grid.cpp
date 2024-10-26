@@ -337,19 +337,16 @@ RS_Vector RS_Grid::getMetricGridWidth(RS_Vector const &userGrid, bool scaleGrid,
 }
 
 RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGrid, int minGridSpacing) {
-    RS_Vector gridWidth;
+    RS_Vector gridWidth{};
     // RS_DEBUG->print("RS_Grid::update: 005");
-    bool hasExplicitUserGrid = false;
     if (userGrid.x > 0.0) {
         gridWidth.x = userGrid.x;
-        hasExplicitUserGrid = true;
     } else {
         gridWidth.x = 1.0 / 1024.0;
     }
 
     if (userGrid.y > 0.0) {
         gridWidth.y = userGrid.y;
-        hasExplicitUserGrid = true;
     } else {
         gridWidth.y = 1.0 / 1024.0;
     }

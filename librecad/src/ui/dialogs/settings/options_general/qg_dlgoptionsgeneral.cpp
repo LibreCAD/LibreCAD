@@ -66,13 +66,13 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
     connect(hatchpatterns_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setHatchPatternsFolder);
 
-    connect(cbAutoBackup, &QCheckBox::stateChanged,
+    connect(cbAutoBackup, &QCheckBox::checkStateChanged,
             this, &QG_DlgOptionsGeneral::onAutoBackupChanged);
 
-    connect(cbVisualizeHovering, &QCheckBox::stateChanged,
+    connect(cbVisualizeHovering, &QCheckBox::checkStateChanged,
             this, &QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked);
 
-    connect(cbPersistentDialogs, &QCheckBox::stateChanged,
+    connect(cbPersistentDialogs, &QCheckBox::checkStateChanged,
             this, &QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked);
 
     connect(cbGridExtendAxisLines, &QCheckBox::toggled, this, &QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled);

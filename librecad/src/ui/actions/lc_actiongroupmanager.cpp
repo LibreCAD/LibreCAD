@@ -156,7 +156,7 @@ void LC_ActionGroupManager::assignShortcutsToActions(QMap<QString, QAction *> &m
     shortcutsManager.assignShortcutsToActions(map, shortcutsList);
 }
 
-int LC_ActionGroupManager::loadShortcuts(const QMap<QString, QAction *> &map) {
+int LC_ActionGroupManager::loadShortcuts([[maybe_unused]] const QMap<QString, QAction *> &map) {
 //    a_map = map;
     int loadResult = shortcutsManager.loadShortcuts(a_map);
     return loadResult;

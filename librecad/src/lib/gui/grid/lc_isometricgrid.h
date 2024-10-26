@@ -68,7 +68,7 @@ protected:
     bool drawTopLines;
 
     void drawMetaGridLines(RS_Painter *painter, RS_GraphicView *view) override;
-    void createGridLines(const RS_Vector &min, const RS_Vector &max, const RS_Vector &gridWidth, bool drawGridWithoutGaps, const RS_Vector& lineInTileOffset);
+    void createGridLines(const RS_Vector &min, const RS_Vector &max, const RS_Vector &gridWidth, bool drawGridWithoutGaps, const RS_Vector& lineInTileOffset) override;
     void createGridPoints(const RS_Vector &min, const RS_Vector &max,const RS_Vector &gridWidth, bool drawGridWithoutGaps, int total) override;
 
     void calculateTilesGridMetrics(const RS_Vector &maxCorner, const RS_Vector &offset);
@@ -82,9 +82,9 @@ protected:
     void fillPointsNoGaps(const RS_Vector &min, const RS_Vector &max);
     int  determineTotalPointsAmount(bool drawGridWithoutGaps) override;
     void determineGridPointsAmount(const RS_Vector &vector) override;
-    void createCellVector(const RS_Vector &gridWidth);
+    void createCellVector(const RS_Vector &gridWidth) override;
     void determineMetaGridBoundaries(const RS_Vector &viewZero, const RS_Vector &viewSize) override;
-    void prepareGridOther(const RS_Vector &viewZero, const RS_Vector &viewSize);
+    void prepareGridOther(const RS_Vector &viewZero, const RS_Vector &viewSize) override;
 
     void setCellSize(const RS_Vector &gridWidth, const RS_Vector &metaGridWidth) override;
 };

@@ -33,7 +33,7 @@
 
 namespace {
 // format a number with specified digits after point
-    QString formatNumber(double value, int precision = 8)
+    [[maybe_unused]] QString formatNumber(double value, int precision = 8)
     {
         precision = std::max(precision, 0);
         precision = std::min(precision, 16);
