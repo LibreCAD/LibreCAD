@@ -42,6 +42,7 @@
 #include "lc_quickinfowidget.h"
 #include "lc_mdiapplicationwindow.h"
 #include "lc_releasechecker.h"
+#include "lc_qtstatusbarmanager.h"
 
 class LC_ActionGroupManager;
 class LC_CustomToolbar;
@@ -380,6 +381,8 @@ private:
     QG_SelectionWidget* selectionWidget {nullptr};
     QG_ActiveLayerName* m_pActiveLayerName {nullptr};
     TwoStackedLabels* grid_status {nullptr};
+
+    LC_QTStatusbarManager* statusbarManager {nullptr};
 
     // --- Menus ---
     QMenu* windowsMenu {nullptr};

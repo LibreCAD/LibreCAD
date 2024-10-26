@@ -188,11 +188,7 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     settings.beginGroup("Startup");
     if (settings.value("TabMode", 0).toBool()) {
-        mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
-        QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar*>();
-        QTabBar *tabBar = tabBarList.at(0);
-        if (tabBar)
-            tabBar->setExpanding(false);
+        setupCADAreaTabbar();
     }
 
     bool enable_left_sidebar = settings.value("EnableLeftSidebar", 1).toBool();
@@ -1358,6 +1354,7 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
 //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
 // Link the dialog factory to the command widget:
     QG_DIALOGFACTORY->setCommandWidget(commandWidget);
+    QG_DIALOGFACTORY->setStatusBarManager(statusbarManager);
 
     mdiAreaCAD->addSubWindow(w);
 
@@ -2215,6 +2212,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                 //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
                 // Link the graphic view to the command widget:
                 QG_DIALOGFACTORY->setCommandWidget(commandWidget);
+                QG_DIALOGFACTORY->setStatusBarManager(statusbarManager);
 
                 RS_DEBUG->print("  showing MDI window");
 
@@ -2460,6 +2458,9 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
         bool antialiasing = LC_GET_ONE_BOOL("Appearance", "Antialiasing", false);
         emit antialiasingChanged(antialiasing);
 
+        statusbarManager->loadSettings();
+        onCADTabBarIndexChanged(0); // force update if settings changed
+
         QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
         for (int i = 0; i < windows.size(); ++i) {
             auto *m = qobject_cast<QC_MDIWindow *>(windows.at(i));
@@ -2648,6 +2649,7 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
 
     view->setCurrentQAction(q_action);
     mouseWidget->setCurrentQAction(q_action);
+    statusbarManager->setCurrentQAction(q_action);
 
     const QString commands(q_action->data().toString());
     if (!commands.isEmpty()) {

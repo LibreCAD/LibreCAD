@@ -144,11 +144,11 @@ void LC_ActionInfo3PointsAngle::updateMouseButtonHints() {
             break;
         }
         case SetPoint2:{
-            updateMouseWidgetTRCancel(tr("Select second (intersection) point of angle"), MOD_SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO, LC_ModifiersInfo::MSG_ANGLE_SNAP));
+            updateMouseWidgetTRCancel(tr("Select second (intersection) point of angle"), MOD_SHIFT_AND_CTRL(MSG_REL_ZERO, MSG_ANGLE_SNAP));
             break;
         }
         case SetPoint3:{
-            updateMouseWidgetTRCancel(tr("Select second edge point of angle"), MOD_SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO, LC_ModifiersInfo::MSG_ANGLE_SNAP));
+            updateMouseWidgetTRCancel(tr("Select second edge point of angle"), MOD_SHIFT_AND_CTRL(MSG_REL_ZERO, MSG_ANGLE_SNAP));
             break;
         }
         default:

@@ -274,7 +274,7 @@ void RS_ActionInfoDist2::updateMouseButtonHints(){
             break;
         case SetPoint: {
             if (selectionMode == FIRST_IS_ENTITY){
-                updateMouseWidgetTRCancel(tr("Specify point"), MOD_SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO, tr("Relative point is on entity")));
+                updateMouseWidgetTRCancel(tr("Specify point"), MOD_SHIFT_AND_CTRL(MSG_REL_ZERO, tr("Relative point is on entity")));
             }
             else{
                 updateMouseWidgetTRCancel(tr("Specify point"), MOD_SHIFT_RELATIVE_ZERO);

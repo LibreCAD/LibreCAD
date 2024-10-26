@@ -59,10 +59,18 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
             this, &QG_DlgOptionsGeneral::setVariableFile);
     connect(fonts_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setFontsFolder);
-
+    connect(translation_button, &QToolButton::clicked,
+            this,&QG_DlgOptionsGeneral::setTranslationsFolder);
+    connect(hatchpatterns_button, &QToolButton::clicked,
+            this,&QG_DlgOptionsGeneral::setHatchPatternsFolder);
+    connect(cbAutoBackup, &QCheckBox::stateChanged,
+            this,&QG_DlgOptionsGeneral::onAutoBackupChanged);
+    connect(cbVisualizeHovering, &QCheckBox::stateChanged,
+            this, &QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked);
+    connect(cbPersistentDialogs, &QCheckBox::stateChanged,
+            this, &QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked);
     connect(translation_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setTranslationsFolder);
-
     connect(hatchpatterns_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setHatchPatternsFolder);
 
@@ -81,16 +89,16 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
 
     connect(cbPersistentDialogs, stateChangedSignal,
             this, &QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked);
-
-    connect(cbGridExtendAxisLines, &QCheckBox::toggled, this, &QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled);
-
-    connect(tbShortcuts, &QToolButton::clicked, this, &QG_DlgOptionsGeneral::setShortcutsMappingsFoler);
-
-    connect(cbCheckNewVersion, &QCheckBox::toggled,
-            this, &QG_DlgOptionsGeneral::onCheckNewVersionChanged);
-
-
-
+    connect(cbGridExtendAxisLines, &QCheckBox::toggled,
+            this,&QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled);
+    connect(tbShortcuts, &QToolButton::clicked,
+            this, &QG_DlgOptionsGeneral::setShortcutsMappingsFoler);
+    connect(cbCheckNewVersion, &QCheckBox::stateChanged,
+            this,&QG_DlgOptionsGeneral::onCheckNewVersionChanged);
+    connect(cbClassicStatusBar, &QCheckBox::stateChanged,
+            this,&QG_DlgOptionsGeneral::on_cbClassicStatusBarToggled);
+    connect(cbTabCloseButton, &QCheckBox::stateChanged,
+            this,&QG_DlgOptionsGeneral::onTabCloseButtonChanged);
 }
 
 /*
@@ -273,6 +281,19 @@ void QG_DlgOptionsGeneral::init() {
 
         checked = LC_GET_BOOL("IgnoreDraftForHighlight", false);
         cbHighlightWIthLinewidthInDraft->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowCloseButton", true);
+        cbTabCloseButton->setChecked(checked);
+
+        cbTabCloseButtonMode->setEnabled(checked);
+        // it's hardly possible that there will be other options, so direct index' check of combobox items is ok
+        bool showActiveOnly = LC_GET_BOOL("ShowCloseButtonActiveOnly", true);
+        if (showActiveOnly) {
+            cbTabCloseButtonMode->setCurrentIndex(1);
+        }
+        else{
+            cbTabCloseButtonMode->setCurrentIndex(0);
+        }
     }
     LC_GROUP_END();
 
@@ -432,6 +453,10 @@ void QG_DlgOptionsGeneral::init() {
 
         cbCheckNewVersion->setChecked(LC_GET_BOOL("CheckForNewVersions", true));
         cbCheckNewVersionIgnorePreRelease->setChecked(LC_GET_BOOL("IgnorePreReleaseVersions", true));
+
+        bool checked = LC_GET_BOOL("ShowCommandPromptInStatusBar", true);
+        cbDuplicateActionsPromptsInStatusBar->setChecked(checked);
+        cbDuplicateActionsPromptsInStatusBar->setEnabled(!originalUseClassicToolbar);
     }
     LC_GROUP_END();
 
@@ -522,6 +547,9 @@ void QG_DlgOptionsGeneral::ok(){
             int zoomFactor1000 = (int)(zoomFactor * 1000.0);
             LC_SET("ScrollZoomFactor", zoomFactor1000);
             LC_SET("IgnoreDraftForHighlight", cbHighlightWIthLinewidthInDraft->isChecked());
+
+            LC_SET("ShowCloseButton", cbTabCloseButton->isChecked());
+            LC_SET("ShowCloseButtonActiveOnly", cbTabCloseButtonMode->currentIndex() == 1);
         }
         LC_GROUP_END();
 
@@ -633,6 +661,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("EnableCADToolbars", cad_toolbars_checkbox->isChecked());
             LC_SET("OpenLastOpenedFiles", cbOpenLastFiles->isChecked());
             LC_SET("UseClassicStatusBar", cbClassicStatusBar->isChecked());
+            LC_SET("ShowCommandPromptInStatusBar", cbDuplicateActionsPromptsInStatusBar->isChecked());
             LC_SET("CheckForNewVersions", cbCheckNewVersion->isChecked());
             LC_SET("IgnorePreReleaseVersions", cbCheckNewVersionIgnorePreRelease->isChecked());
         }
@@ -724,8 +753,6 @@ void QG_DlgOptionsGeneral::on_pb_snap_color_clicked() {
 void QG_DlgOptionsGeneral::on_pb_snap_lines_color_clicked() {
     set_color(cb_snap_lines_color, QColor(RS_Settings::snap_indicator_lines));
 }
-
-
 
 void QG_DlgOptionsGeneral::on_pb_relativeZeroColor_clicked() {
     set_color(cbRelativeZeroColor, QColor(RS_Settings::relativeZeroColor));
@@ -852,6 +879,14 @@ void QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked() {
 
 void QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked() {
     cbPersistentDialogSizeOnly->setEnabled(cbPersistentDialogs->isChecked());
+}
+
+void QG_DlgOptionsGeneral::on_cbClassicStatusBarToggled(){
+    cbDuplicateActionsPromptsInStatusBar->setEnabled(!cbClassicStatusBar->isChecked());
+}
+
+void QG_DlgOptionsGeneral::onTabCloseButtonChanged(){
+    cbTabCloseButtonMode->setEnabled(cbTabCloseButton->isChecked());
 }
 
 void QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled() {

@@ -306,6 +306,7 @@ HEADERS += \
     lib/filters/rs_filterinterface.h \
     #lib/gui/no_used/rs_painterold.h \
     #lib/gui/no_used/rs_painterqtold.h \
+    ui/components/status_bar/lc_qtstatusbarmanager.h \
     ui/dialogs/main/lc_dlgabout.h \
     ui/dialogs/main/lc_dlgnewversionavailable.h \
     ui/main/lc_releasechecker.h \
@@ -428,6 +429,7 @@ SOURCES += \
     lib/filters/rs_filterlff.cpp \
     #lib/gui/no_used/rs_painterold.cpp \
    # lib/gui/no_used/rs_painterqtold.cpp \
+    ui/components/status_bar/lc_qtstatusbarmanager.cpp \
     ui/dialogs/main/lc_dlgabout.cpp \
     ui/dialogs/main/lc_dlgnewversionavailable.cpp \
     ui/main/lc_releasechecker.cpp \

@@ -832,8 +832,7 @@ void RS_ActionDefault::clearHighLighting(){
 }
 
 void RS_ActionDefault::resume(){
-    const QIcon icon = QIcon();
-    updateMouseWidgetIcon(icon);
+    clearMouseWidgetIcon();
     clearHighLighting();
     checkSupportOfQuickEntityInfo();
     BASE_CLASS::resume();

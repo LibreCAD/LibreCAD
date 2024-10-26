@@ -537,6 +537,6 @@ void RS_Text::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     }
 
     foreach (auto e, entities){
-       view->drawEntity(painter, e);
+       view->drawAsChild(painter, e, patternOffset);
     }
 }

@@ -105,6 +105,21 @@ void LC_ShortcutsManager::assignShortcutsToActions(const QMap<QString, QAction *
     }
 }
 
+QString LC_ShortcutsManager::getPlainActionToolTip(QAction* action){
+    if (action != nullptr) {
+        if (!action->shortcut().isEmpty()) {
+            QString tooltip = action->property(PROPERTY_SHORTCUT_BACKUP).toString();
+            if (tooltip.isEmpty()) {
+                tooltip = action->toolTip();
+            }
+            return tooltip;
+        }
+        return action->toolTip();
+    }
+    return "";
+}
+
+
 void LC_ShortcutsManager::updateActionShortcutTooltips(const QMap<QString, QAction *> &map, bool enable) const {
     if (enable){
         for (auto [key, action]: map.asKeyValueRange()) {

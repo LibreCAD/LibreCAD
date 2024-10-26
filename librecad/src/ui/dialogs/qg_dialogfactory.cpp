@@ -1063,7 +1063,7 @@ QString QG_DialogFactory::requestFileSaveAsDialog(const QString& caption /* = QS
  */
 void QG_DialogFactory::updateCoordinateWidget(const RS_Vector& abs,
                                               const RS_Vector& rel, bool updateFormat) {
-    if (coordinateWidget) {
+    if (coordinateWidget != nullptr) {
         coordinateWidget->setCoordinates(abs, rel, updateFormat);
     }
 }
@@ -1071,18 +1071,26 @@ void QG_DialogFactory::updateCoordinateWidget(const RS_Vector& abs,
 void QG_DialogFactory::updateMouseWidget(const QString& left,
                                          const QString& right,
                                          const LC_ModifiersInfo& modifiers) {
-    if (mouseWidget) {
+    if (mouseWidget != nullptr) {
         mouseWidget->setHelp(left, right, modifiers);
     }
 
-    if (commandWidget) {
+    if (commandWidget != nullptr) {
        commandWidget->setCommand(left);
+    }
+
+    if (statusBarManager != nullptr){
+        statusBarManager->setActionHelp(left, right, modifiers);
     }
 }
 
-void QG_DialogFactory::updateMouseWidgetIcon(const QIcon &icon) {
+void QG_DialogFactory::clearMouseWidgetIcon() {
    if (mouseWidget != nullptr){
+       const QIcon icon = QIcon();
        mouseWidget->setActionIcon(icon);
+   }
+   if (statusBarManager != nullptr){
+       statusBarManager->clearAction();
    }
 }
 
@@ -1090,16 +1098,14 @@ void QG_DialogFactory::updateMouseWidgetIcon(const QIcon &icon) {
  * Called whenever the selection changed.
  */
 void QG_DialogFactory::updateSelectionWidget(int num, double length) {
-    if (selectionWidget) {
+    if (selectionWidget != nullptr) {
         selectionWidget->setNumber(num);
         selectionWidget->setTotalLength(length);
     }
 }
 
-void QG_DialogFactory::displayBlockName(const QString& blockName, const bool& display)
-{
-    if (selectionWidget)
-    {
+void QG_DialogFactory::displayBlockName(const QString& blockName, const bool& display){
+    if (selectionWidget != nullptr)    {
         selectionWidget->flashAuxData( QString("Block Name"),
                                        blockName,
                                        QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT,
@@ -1184,4 +1190,8 @@ QString QG_DialogFactory::extToFormat(const QString& ext) {
     else {
         return ext.toUpper();
     }
+}
+
+void QG_DialogFactory::setStatusBarManager(LC_QTStatusbarManager *statusBarManager) {
+    QG_DialogFactory::statusBarManager = statusBarManager;
 }

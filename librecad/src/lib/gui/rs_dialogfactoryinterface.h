@@ -32,6 +32,7 @@
 #include "lc_modifiersinfo.h"
 #include "lc_actiongroupmanager.h"
 #include "lc_relzerocoordinateswidget.h"
+#include "lc_qtstatusbarmanager.h"
 #include <QString>
 
 class QWidget;
@@ -441,7 +442,8 @@ public:
     virtual void setRelativeZeroCoordinatesWidget(LC_RelZeroCoordinatesWidget* )=0;
     virtual void setSelectionWidget(QG_SelectionWidget* ) = 0;
     virtual void setCommandWidget(QG_CommandWidget* ) = 0;
-    virtual void updateMouseWidgetIcon(const QIcon &icon) =0;
+    virtual void clearMouseWidgetIcon() =0;
+    virtual void setStatusBarManager(LC_QTStatusbarManager *statusBarManager)= 0;
 };
 
 

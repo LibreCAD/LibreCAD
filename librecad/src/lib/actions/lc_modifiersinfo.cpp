@@ -24,11 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 LC_ModifiersInfo::LC_ModifiersInfo() {}
 
-const QString LC_ModifiersInfo::MSG_ANGLE_SNAP =  QObject::tr("Angle Snap");
-const QString LC_ModifiersInfo::MSG_FREE_SNAP =  QObject::tr("Free Snap");
-const QString LC_ModifiersInfo::MSG_MIRROR_ANGLE = QObject::tr("Use Mirrored Angle");
-const QString LC_ModifiersInfo::MSG_REL_ZERO = QObject::tr("Snap to Relative Zero");
-const QString LC_ModifiersInfo::MSG_NONE = "";
+const QString LC_ModifiersInfo::MSG_EMPTY = "";
 
 LC_ModifiersInfo LC_ModifiersInfo::SHIFT_ANGLE_SNAP(){
     return SHIFT(MSG_ANGLE_SNAP);
@@ -74,7 +70,7 @@ const QString& LC_ModifiersInfo::getShiftMessage() const{
         return shiftMsg;
     }
     else {
-        return MSG_NONE;
+        return MSG_EMPTY;
     }
 }
 
@@ -83,6 +79,6 @@ const QString& LC_ModifiersInfo::getCtrlMessage() const{
         return ctrlMsg;
     }
     else {
-        return MSG_NONE;
+        return MSG_EMPTY;
     }
 }

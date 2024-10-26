@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -3338,47 +3338,7 @@
           <string>Program Defaults</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_17">
-          <item row="1" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbUseQtFileOpenDialog">
-            <property name="text">
-             <string>Don't use native OS file open dialog</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
-            <property name="toolTip">
-             <string>If checked, keyboard shortcut will be shown in tooltip for action</string>
-            </property>
-            <property name="text">
-             <string>Show keyboard shortcuts in actions tooltips</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbAutoBackup">
-            <property name="toolTip">
-             <string>When set, LibreCAD will automatically generate a backup of your current drawing.</string>
-            </property>
-            <property name="text">
-             <string>Auto save backup each</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
-            <property name="toolTip">
-             <string>If checked, location of dialog will not be saved, but size will</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
-            </property>
-            <property name="text">
-             <string>Persist dialog size only</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
+          <item row="0" column="1">
            <widget class="QSpinBox" name="cbAutoSaveTime">
             <property name="toolTip">
              <string>Time between automatic saving of the document in minutes.</string>
@@ -3394,13 +3354,77 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0" colspan="3">
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="cbTabCloseButton">
+            <property name="toolTip">
+             <string>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</string>
+            </property>
+            <property name="text">
+             <string>Show Close button on drawings tabs</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cbAutoBackup">
+            <property name="toolTip">
+             <string>When set, LibreCAD will automatically generate a backup of your current drawing.</string>
+            </property>
+            <property name="text">
+             <string>Auto save backup each</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QComboBox" name="cbTabCloseButtonMode">
+            <item>
+             <property name="text">
+              <string>Always</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Active Tab</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbUseQtFileOpenDialog">
+            <property name="text">
+             <string>Don't use native OS file open dialog</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
+            <property name="toolTip">
+             <string>If checked, keyboard shortcut will be shown in tooltip for action</string>
+            </property>
+            <property name="text">
+             <string>Show keyboard shortcuts in actions tooltips</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
            <widget class="QCheckBox" name="cbPersistentDialogs">
             <property name="toolTip">
              <string>If checked, dialogs will be positioned and resized to position/size of last invocation.</string>
             </property>
             <property name="text">
              <string>Persistent dialogs location and size</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
+            <property name="toolTip">
+             <string>If checked, location of dialog will not be saved, but size will</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
+            </property>
+            <property name="text">
+             <string>Persist dialog size only</string>
             </property>
            </widget>
           </item>
@@ -3635,68 +3659,15 @@
          <property name="title">
           <string>Startup</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QCheckBox" name="cbSplash">
-            <property name="toolTip">
-             <string>Defines whether splash screen will be shown on startup</string>
-            </property>
+         <layout class="QGridLayout" name="gridLayout_29">
+          <item row="8" column="0" colspan="2">
+           <widget class="QCheckBox" name="cad_toolbars_checkbox">
             <property name="text">
-             <string>Display loading screen</string>
+             <string>Enable CAD toolbars</string>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QCheckBox" name="tab_mode_check_box">
-            <property name="toolTip">
-             <string>Controls default mode for drawings</string>
-            </property>
-            <property name="text">
-             <string>Start in tab mode</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="maximize_checkbox">
-            <property name="toolTip">
-             <string>If checked, after start the main window will be maximized</string>
-            </property>
-            <property name="text">
-             <string>Start with main window maximized</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="cbOpenLastFiles">
-            <property name="toolTip">
-             <string>If set, previously opened files during previous closing of the application will be re-opened.</string>
-            </property>
-            <property name="text">
-             <string>Open last opened files</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="cbAllowMenusDetaching">
-            <property name="toolTip">
-             <string>If enabled, drop-down menus may become floating</string>
-            </property>
-            <property name="text">
-             <string>Allow menus detaching</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="cbClassicStatusBar">
-            <property name="toolTip">
-             <string>If unchecked, individual widgets of statusbar are toolbars</string>
-            </property>
-            <property name="text">
-             <string>Use &quot;classic&quot; statusbar</string>
-            </property>
-           </widget>
-          </item>
-          <item>
+          <item row="7" column="0" colspan="2">
            <widget class="QCheckBox" name="left_sidebar_checkbox">
             <property name="toolTip">
              <string/>
@@ -3706,10 +3677,76 @@
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QCheckBox" name="cad_toolbars_checkbox">
+          <item row="6" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbDuplicateActionsPromptsInStatusBar">
+            <property name="toolTip">
+             <string>If checked, prompt messages of actions will be also shown in bottom statusbar</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
+            </property>
             <property name="text">
-             <string>Enable CAD toolbars</string>
+             <string>Duplicate prompt messages of actions in statusbar</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbClassicStatusBar">
+            <property name="toolTip">
+             <string>If unchecked, individual widgets of statusbar are toolbars</string>
+            </property>
+            <property name="text">
+             <string>Use &quot;classic&quot; statusbar</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbAllowMenusDetaching">
+            <property name="toolTip">
+             <string>If enabled, drop-down menus may become floating</string>
+            </property>
+            <property name="text">
+             <string>Allow menus detaching</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbOpenLastFiles">
+            <property name="toolTip">
+             <string>If set, previously opened files during previous closing of the application will be re-opened.</string>
+            </property>
+            <property name="text">
+             <string>Open last opened files</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QCheckBox" name="maximize_checkbox">
+            <property name="toolTip">
+             <string>If checked, after start the main window will be maximized</string>
+            </property>
+            <property name="text">
+             <string>Start with main window maximized</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="tab_mode_check_box">
+            <property name="toolTip">
+             <string>Controls default mode for drawings</string>
+            </property>
+            <property name="text">
+             <string>Start in tab mode</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbSplash">
+            <property name="toolTip">
+             <string>Defines whether splash screen will be shown on startup</string>
+            </property>
+            <property name="text">
+             <string>Display loading screen</string>
             </property>
            </widget>
           </item>
