@@ -65,6 +65,21 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
     connect(cbAutoBackup, &QCheckBox::stateChanged,this, &QG_DlgOptionsGeneral::onAutoBackupChanged);
     connect(cbVisualizeHovering, &QCheckBox::stateChanged,this, &QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked);
     connect(cbPersistentDialogs, &QCheckBox::stateChanged,this, &QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked);
+    connect(translation_button, &QToolButton::clicked,
+            this, &QG_DlgOptionsGeneral::setTranslationsFolder);
+
+    connect(hatchpatterns_button, &QToolButton::clicked,
+            this, &QG_DlgOptionsGeneral::setHatchPatternsFolder);
+
+    connect(cbAutoBackup, &QCheckBox::checkStateChanged,
+            this, &QG_DlgOptionsGeneral::onAutoBackupChanged);
+
+    connect(cbVisualizeHovering, &QCheckBox::checkStateChanged,
+            this, &QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked);
+
+    connect(cbPersistentDialogs, &QCheckBox::checkStateChanged,
+            this, &QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked);
+
     connect(cbGridExtendAxisLines, &QCheckBox::toggled, this, &QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled);
     connect(tbShortcuts, &QToolButton::clicked, this, &QG_DlgOptionsGeneral::setShortcutsMappingsFoler);
     connect(cbCheckNewVersion, &QCheckBox::stateChanged,this, &QG_DlgOptionsGeneral::onCheckNewVersionChanged);

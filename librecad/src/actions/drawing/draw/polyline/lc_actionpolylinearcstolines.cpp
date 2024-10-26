@@ -75,7 +75,7 @@ void LC_ActionPolylineArcsToLines::mouseMoveEvent(QMouseEvent *e) {
     drawPreview();
 }
 
-void LC_ActionPolylineArcsToLines::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionPolylineArcsToLines::onMouseLeftButtonRelease([[maybe_unused]] int status, QMouseEvent *e) {
     auto entity = catchEntity(e, RS2::EntityPolyline);
     if (entity != nullptr){
         polyline = dynamic_cast<RS_Polyline *>(entity);
@@ -89,7 +89,7 @@ void LC_ActionPolylineArcsToLines::init(int status) {
     }
 }
 
-void LC_ActionPolylineArcsToLines::onMouseRightButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionPolylineArcsToLines::onMouseRightButtonRelease([[maybe_unused]] int status, [[maybe_unused]] QMouseEvent *e) {
     init(-1);
 }
 
@@ -120,6 +120,6 @@ void LC_ActionPolylineArcsToLines::updateMouseButtonHints() {
     updateMouseWidgetTRCancel(tr("Specify polyline with arc segments"));
 }
 
-RS2::CursorType LC_ActionPolylineArcsToLines::doGetMouseCursor(int status) {
+RS2::CursorType LC_ActionPolylineArcsToLines::doGetMouseCursor([[maybe_unused]] int status) {
     return RS2::CadCursor;
 }

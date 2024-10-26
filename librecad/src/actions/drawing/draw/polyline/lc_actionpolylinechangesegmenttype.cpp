@@ -187,7 +187,6 @@ void LC_ActionPolylineChangeSegmentType::onMouseLeftButtonRelease(int status, QM
         }
         case SetSegment:{
             auto entity = catchEntity(e, RS2::ResolveAllButTextImage);
-            bool segmentFound = false;
             if (entity != nullptr && entity->isAtomic()){
                 if (polyline == entity->getParent()){
                     int rtti = entity->rtti();
@@ -220,7 +219,7 @@ void LC_ActionPolylineChangeSegmentType::onMouseLeftButtonRelease(int status, QM
     }
 }
 
-void LC_ActionPolylineChangeSegmentType::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
+void LC_ActionPolylineChangeSegmentType::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     if (status == SetArcPoint){
         arcPoint = pos;
         trigger();
@@ -228,11 +227,11 @@ void LC_ActionPolylineChangeSegmentType::onCoordinateEvent(int status, bool isZe
 }
 
 
-void LC_ActionPolylineChangeSegmentType::onMouseRightButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionPolylineChangeSegmentType::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     initPrevious(status);
 }
 
-RS2::CursorType LC_ActionPolylineChangeSegmentType::doGetMouseCursor(int status) {
+RS2::CursorType LC_ActionPolylineChangeSegmentType::doGetMouseCursor([[maybe_unused]] int status) {
     return RS2::CadCursor;
 }
 
