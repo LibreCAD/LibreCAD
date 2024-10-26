@@ -116,6 +116,7 @@ QString LC_ShortcutsManager::getPlainActionToolTip(QAction* action){
         }
         return action->toolTip();
     }
+    return "";
 }
 
 

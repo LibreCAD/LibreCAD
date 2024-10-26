@@ -1,50 +1,19 @@
 #include "qg_recentfiles.h"
-#include "qg_mousewidget.h"
-#include "qg_snaptoolbar.h"
-#include "qg_selectionwidget.h"
-#include "qg_pentoolbar.h"
-#include "lc_layertreewidget.h"
-#include "qg_layerwidget.h"
 #include "qg_graphicview.h"
-#include "qg_filedialog.h"
-#include "qg_exitdialog.h"
-#include "qg_dlgimageoptions.h"
-#include "qg_coordinatewidget.h"
-#include "qg_commandwidget.h"
-#include "qg_blockwidget.h"
-#include "qg_activelayername.h"
-#include "qg_actionhandler.h"
-#include "qc_plugininterface.h"
 #include "qc_mdiwindow.h"
-#include "qc_dialogfactory.h"
 #include "lc_undosection.h"
-#include "lc_widgetoptionsdialog.h"
 #include "lc_widgetfactory.h"
 #include "lc_printing.h"
-#include "qg_librarywidget.h"
 #include "lc_penwizard.h"
 #include "lc_centralwidget.h"
-#include "lc_actiongroupmanager.h"
-#include "lc_actionfactory.h"
 #include "rs_units.h"
 #include "rs_selection.h"
-#include "rs_system.h"
-#include "rs_staticgraphicview.h"
 #include "rs_settings.h"
-#include "rs_pen.h"
 #include "rs_painter.h"
 #include "rs_document.h"
-#include "rs_dialogfactory.h"
 #include "rs_debug.h"
 #include "rs_commands.h"
-#include "rs_actionprintpreview.h"
-#include "rs_actionlibraryinsert.h"
-#include "widgetcreator.h"
-#include "twostackedlabels.h"
 #include "textfileviewer.h"
-#include "main.h"
-#include "doc_plugin_interface.h"
-#include "comboboxoption.h"
 #include <boost/version.hpp>
 #include <QtSvg>
 #include <QTimer>
@@ -466,7 +435,7 @@ void LC_MDIApplicationWindow::setupCADAreaTabbar() {
     }
 }
 
-void LC_MDIApplicationWindow::onCADTabBarIndexChanged(int index) {
+void LC_MDIApplicationWindow::onCADTabBarIndexChanged([[maybe_unused]]int index) {
     LC_GROUP("Appearance");
     {
         bool showCloseButtons = LC_GET_BOOL("ShowCloseButton", true);

@@ -28,7 +28,7 @@ LC_QTStatusbarManager::LC_QTStatusbarManager(QStatusBar *sBar):QObject(sBar) {
     statusBar = sBar;
 }
 
-void LC_QTStatusbarManager::setActionHelp(const QString &left, const QString &right, const LC_ModifiersInfo &modifiersInfo) const {
+void LC_QTStatusbarManager::setActionHelp(const QString &left, [[maybe_unused]]const QString &right, const LC_ModifiersInfo &modifiersInfo) const {
     if (actionPromptEnabled && statusBar->isVisible()){
         QString modifiersMsg = "";
         const QString &shiftMessage = modifiersInfo.getShiftMessage();
