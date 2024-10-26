@@ -83,11 +83,11 @@
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
         <translation>raio=%1 é muito pequeno para os pontos selecionados
-distância entre pontos=%2 maior que o diâmetro=%3</translation>
+distância entre pontos=%2 é maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
-        <translation>Selecione à partir dos dois possíveis centros dos círculos</translation>
+        <translation>Selecione a partir dos dois possíveis centros dos círculos</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -103,7 +103,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Desfazer</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -157,7 +157,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Não foi possível desfazer: Ainda não há entidades suficientes definidas.</translation>
+        <translation>Não foi possível desfazer: Ainda não há suficientes entidades definidas.</translation>
     </message>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
@@ -240,27 +240,27 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>Bisector</source>
-        <translation type="unfinished"></translation>
+        <translation>Bisetor</translation>
     </message>
     <message>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangente (P,C)</translation>
     </message>
     <message>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangente (C,C)</translation>
     </message>
     <message>
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangente &amp;Ortogonal</translation>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortogonal</translation>
     </message>
     <message>
         <source>Relative angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ângulo relativo</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
@@ -268,7 +268,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>Polígono (Cor,Cor)</translation>
+        <translation>Polígo&amp;no (Cor,Cor)</translation>
     </message>
     <message>
         <source>Center, &amp;Point</source>
@@ -284,7 +284,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>2 Points, Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>2 Pontos, Raio</translation>
     </message>
     <message>
         <source>3 Points</source>
@@ -292,28 +292,28 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>&amp;Concentric</source>
-        <translation>Concêntico</translation>
+        <translation>&amp;Concêntico</translation>
     </message>
     <message>
         <source>Circle &amp;Inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation>Círculo &amp;Inscrito</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tangencial a 2 Círculos, Raio</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangencial a 2 Círculos, 1 Ponto</translation>
     </message>
     <message>
         <source>Tangential &amp;3 Circles</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangencial a &amp;3 Círculos</translation>
     </message>
     <message>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangencial, 2 P&amp;ontos</translation>
     </message>
     <message>
         <source>&amp;Center, Point, Angles</source>
@@ -325,7 +325,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>Arc &amp;Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation>Arco &amp;Tangencial</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
@@ -333,7 +333,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation type="unfinished"></translation>
+        <translation>Elipse &amp;Arco (Eixo)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Foci Point</source>
