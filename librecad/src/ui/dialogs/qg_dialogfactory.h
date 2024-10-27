@@ -4,6 +4,8 @@
 
  Copyright (C) 2024 LibreCAD.org
  Copyright (C) 2024 sand1024
+ Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+ Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -172,7 +174,7 @@ public:
  */
     void updateMouseWidget(const QString& left=QString(),
                            const QString& right=QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()) override;
-    void clearMouseWidgetIcon();
+    void clearMouseWidgetIcon() override;
     void updateSelectionWidget(int num, double length) override;//updated for total number of selected, and total length of selected
     void commandMessage(const QString& message) override;
     void command(const QString& message) override;

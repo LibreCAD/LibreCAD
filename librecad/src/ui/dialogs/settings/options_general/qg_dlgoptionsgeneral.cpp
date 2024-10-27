@@ -23,21 +23,20 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "qg_dlgoptionsgeneral.h"
 
-#include <QMessageBox>
-#include "qc_applicationwindow.h"
 #include <QColorDialog>
+#include <QMessageBox>
 
-#include "qg_filedialog.h"
-
-#include "rs_debug.h"
-#include "rs_system.h"
-#include "rs_settings.h"
-#include "rs_units.h"
 #include "lc_defaults.h"
-#include "rs_math.h"
 #include "main.h"
+#include "qc_applicationwindow.h"
+#include "qg_dlgoptionsgeneral.h"
+#include "qg_filedialog.h"
+#include "rs_debug.h"
+#include "rs_math.h"
+#include "rs_settings.h"
+#include "rs_system.h"
+#include "rs_units.h"
 
 /*
  *  Constructs a QG_DlgOptionsGeneral as a child of 'parent', with the
@@ -63,16 +62,6 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
             this,&QG_DlgOptionsGeneral::setTranslationsFolder);
     connect(hatchpatterns_button, &QToolButton::clicked,
             this,&QG_DlgOptionsGeneral::setHatchPatternsFolder);
-    connect(cbAutoBackup, &QCheckBox::stateChanged,
-            this,&QG_DlgOptionsGeneral::onAutoBackupChanged);
-    connect(cbVisualizeHovering, &QCheckBox::stateChanged,
-            this, &QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked);
-    connect(cbPersistentDialogs, &QCheckBox::stateChanged,
-            this, &QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked);
-    connect(translation_button, &QToolButton::clicked,
-            this, &QG_DlgOptionsGeneral::setTranslationsFolder);
-    connect(hatchpatterns_button, &QToolButton::clicked,
-            this, &QG_DlgOptionsGeneral::setHatchPatternsFolder);
 
 // starting Qt-6.7.0, use QCheckBox::checkStateChanged
 #if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
@@ -80,24 +69,31 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
 #else
     auto stateChangedSignal = &QCheckBox::stateChanged;
 #endif
-
     connect(cbAutoBackup, stateChangedSignal,
-            this, &QG_DlgOptionsGeneral::onAutoBackupChanged);
-
+            this,&QG_DlgOptionsGeneral::onAutoBackupChanged);
     connect(cbVisualizeHovering, stateChangedSignal,
             this, &QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked);
-
+    connect(cbPersistentDialogs, stateChangedSignal,
+            this, &QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked);
+    connect(translation_button, &QToolButton::clicked,
+            this, &QG_DlgOptionsGeneral::setTranslationsFolder);
+    connect(hatchpatterns_button, &QToolButton::clicked,
+            this, &QG_DlgOptionsGeneral::setHatchPatternsFolder);
+    connect(cbAutoBackup, stateChangedSignal,
+            this, &QG_DlgOptionsGeneral::onAutoBackupChanged);
+    connect(cbVisualizeHovering, stateChangedSignal,
+            this, &QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked);
     connect(cbPersistentDialogs, stateChangedSignal,
             this, &QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked);
     connect(cbGridExtendAxisLines, &QCheckBox::toggled,
             this,&QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled);
     connect(tbShortcuts, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setShortcutsMappingsFoler);
-    connect(cbCheckNewVersion, &QCheckBox::stateChanged,
+    connect(cbCheckNewVersion, stateChangedSignal,
             this,&QG_DlgOptionsGeneral::onCheckNewVersionChanged);
-    connect(cbClassicStatusBar, &QCheckBox::stateChanged,
+    connect(cbClassicStatusBar, stateChangedSignal,
             this,&QG_DlgOptionsGeneral::on_cbClassicStatusBarToggled);
-    connect(cbTabCloseButton, &QCheckBox::stateChanged,
+    connect(cbTabCloseButton, stateChangedSignal,
             this,&QG_DlgOptionsGeneral::onTabCloseButtonChanged);
 }
 

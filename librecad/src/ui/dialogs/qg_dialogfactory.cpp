@@ -2,6 +2,8 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) librecad.org
+** Copyright (C) 2024 sand1024
 ** Copyright (C) 2018 webmite <ianm.main@gmail.com>
 ** Copyright (C) 2018 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
