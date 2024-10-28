@@ -46,15 +46,12 @@ parts:
                         - libbz2-dev
 
                 stage-packages:
-                        - libc-bin
-                        - libc6
                         - libcairo2
                         - libfreetype6
-                        - libgcc1
                         - libicu70
                         - libpango-1.0-0
                         - libqt5widgets5
-                        - librsvg2-bin
+                        - libqt5svg5
 
                 override-stage: |
                         echo "1"
