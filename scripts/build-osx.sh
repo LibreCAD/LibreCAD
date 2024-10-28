@@ -141,11 +141,10 @@ fi
 for i in {1..20}
 do
 	sleep 10
-	if [[ ! -f  "${OUTPUT_DMG}" ]]; then
-		hdiutil convert -shadow -format UDBZ -ov -o "$OUTPUT_DMG" "$OUTPUT_DMG"
-	else
-		break
-	fi
+        if [[ -f  "${OUTPUT_DMG}" ]]; then
+	mv -f  "${OUTPUT_DMG}" /tmp/"${OUTPUT_DMG}.$i"
+        fi
+	hdiutil convert -shadow -format UDBZ -ov -o "$OUTPUT_DMG" "$OUTPUT_DMG"
 done
 
 if [[ -f  "${OUTPUT_DMG}" ]]
