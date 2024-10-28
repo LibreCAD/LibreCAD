@@ -137,14 +137,12 @@ else
 	${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -dmg -always-overwrite
 fi
 
-#bz2 compression
+#zlib compression
 for i in {1..20}
 do
 	sleep 10
-        if [[ -f  "${OUTPUT_DMG}" ]]; then
-	mv -f  "${OUTPUT_DMG}" /tmp/"${OUTPUT_DMG}.$i"
-        fi
-	hdiutil convert -shadow -format UDBZ -ov -o "$OUTPUT_DMG" "$OUTPUT_DMG"
+        cp "${OUTPUT_DMG}" "${OUTPUT_DMG}.$i.dmg"
+	[[ hdiutil convert -shadow -format UDZO -ov -o "$OUTPUT_DMG.$i.dmg" "$OUTPUT_DMG.$i.dmg" ]] && mv "$OUTPUT_DMG.$i.dmg" "${OUTPUT_DMG}"
 done
 
 if [[ -f  "${OUTPUT_DMG}" ]]
