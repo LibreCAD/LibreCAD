@@ -6871,11 +6871,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>paperoffset</source>
-        <translation>paperoffset</translation>
+        <translation>смбум</translation>
     </message>
     <message>
         <source>graphoffset</source>
-        <translation>graphoffset</translation>
+        <translation>смграф</translation>
     </message>
     <message>
         <source>Command: %1 (%2)</source>
