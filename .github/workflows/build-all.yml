@@ -73,7 +73,6 @@ jobs:
         with:
           name: linuxAssets
           path: ${{github.workspace}}/LibreCAD*.AppImage
-          pattern: LibreCAD*.AppImage
           retention-days: 2
 
   BuildSnap:
@@ -101,7 +100,6 @@ jobs:
         with:
           name: snapAssets
           path: ${{github.workspace}}/LibreCAD*.snap
-          pattern: LibreCAD*.snap
           retention-days: 2
 
   BuildMacOS:
@@ -150,7 +148,6 @@ jobs:
         with:
           name: macOSAssets
           path: ${{github.workspace}}/LibreCAD*.dmg
-          pattern: LibreCAD**.dmg
           retention-days: 2
 
   BuildWindows:
@@ -241,7 +238,6 @@ jobs:
         with:
           name: win32Assets
           path: ${{github.workspace}}/LibreCAD*.exe
-          pattern: LibreCAD*.exe
           retention-days: 2
 
   BuildWindows64:
@@ -332,7 +328,6 @@ jobs:
         with:
           name: win64Assets
           path: ${{github.workspace}}/LibreCAD*.exe
-          pattern: LibreCAD*.exe
           retention-days: 2
 
   UpdateAssets:
