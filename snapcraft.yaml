@@ -51,6 +51,7 @@ parts:
                         - libicu70
                         - libpango-1.0-0
                         - libqt5widgets5
+                        - libqt5printsupport5
                         - libqt5svg5
 
                 override-stage: |
