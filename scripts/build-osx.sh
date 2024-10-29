@@ -142,12 +142,13 @@ for i in {1..20}
 do
 	sleep 10
         cp "${OUTPUT_DMG}" "${OUTPUT_DMG}.$i.dmg"
-	[[ hdiutil convert -shadow -format UDZO -ov -o "$OUTPUT_DMG.$i.dmg" "$OUTPUT_DMG.$i.dmg" ]] && mv "$OUTPUT_DMG.$i.dmg" "${OUTPUT_DMG}"
+	hdiutil convert -shadow -format UDZO -ov -o "$OUTPUT_DMG.$i.dmg" "$OUTPUT_DMG.$i.dmg" && mv "$OUTPUT_DMG.$i.dmg" "${OUTPUT_DMG}.bak" && break
 done
 
-if [[ -f  "${OUTPUT_DMG}" ]]
+if [[ -f  "${OUTPUT_DMG}.bak" ]]
 then
 	echo "DMG installer generated:"
+	cp "${OUTPUT_DMG}.bak" "${OUTPUT_DMG}" 
 	ls -lh "${OUTPUT_DMG}"
 fi
 
