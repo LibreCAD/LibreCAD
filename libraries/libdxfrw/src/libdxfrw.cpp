@@ -2029,7 +2029,7 @@ bool dxfRW::processTables() {
                     } else if (sectionstr == "VPORT") {
                         processVports();
                     } else if (sectionstr == "VIEW") {
-//                        processView();
+                       processView();
                     } else if (sectionstr == "UCS") {
 //                        processUCS();
                     } else if (sectionstr == "APPID") {
@@ -2046,6 +2046,35 @@ bool dxfRW::processTables() {
         }
     }
 
+    return setError(DRW::BAD_READ_TABLES);
+}
+
+bool dxfRW::processView() {
+    DRW_DBG("dxfRW::processView\n");
+    int code;
+    std::string sectionstr;
+    bool reading = false;
+    DRW_View view;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            if (reading) {
+                iface->addView(view);
+            }
+            sectionstr = reader->getString();
+            DRW_DBG(sectionstr); DRW_DBG("\n");
+            if (sectionstr == "VIEW") {
+                reading = true;
+                view.reset();
+            } else if (sectionstr == "ENDTAB") {
+                return true;  //found ENDTAB terminate
+            }
+        } else if (reading) {
+            if (!view.parseCode(code, reader)) {
+                return setError( DRW::BAD_CODE_PARSED);
+            }
+        }
+    }
     return setError(DRW::BAD_READ_TABLES);
 }
 

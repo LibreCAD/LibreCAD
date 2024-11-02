@@ -331,7 +331,7 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
         if (ret) {
             //QString message=tr("Loaded document: ")+fileName;
             //statusBar()->showMessage(message, 2000);
-
+            // fixme - sand - move support of fonts in some separate space?
             if (fileName.endsWith(".lff") || fileName.endsWith(".cxf")) {
                 drawChars();
 

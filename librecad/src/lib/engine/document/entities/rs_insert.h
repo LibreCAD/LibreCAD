@@ -28,7 +28,7 @@
 #ifndef RS_INSERT_H
 #define RS_INSERT_H
 
-#include "rs_entitycontainer.h"
+#include "librecad/src/lib/engine/document/container/rs_entitycontainer.h"
 
 class RS_BlockList;
 

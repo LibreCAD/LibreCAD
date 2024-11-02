@@ -25,39 +25,35 @@
 **********************************************************************/
 
 
-#ifndef RS_PATTERN_H
-#define RS_PATTERN_H
+#ifndef RS_PREVIEW_H
+#define RS_PREVIEW_H
 
-#include "rs_entitycontainer.h"
-
-class QString;
-class RS_PatternList;
+#include "librecad/src/lib/engine/document/container/rs_entitycontainer.h"
 
 /**
- * Patterns are used for hatches. They are stored in a RS_PatternList.
- * Use RS_PatternList to access a pattern.
+ * This class supports previewing. The RS_Snapper class uses
+ * an instance of RS_Preview to preview entities, ranges, 
+ * lines, arcs, ... on the fly.
  *
  * @author Andrew Mustun
  */
-class RS_Pattern : public RS_EntityContainer {
+class RS_Preview : public RS_EntityContainer {
 public:
-    RS_Pattern(const QString& fileName);
-    RS2::EntityType rtti() const override {
-		return RS2::EntityPattern;
-	}
-    RS_Entity* clone() const override;
-
-    virtual bool loadPattern();
-	
-    /** @return the fileName of this pattern. */
-	QString getFileName() const;
-
-protected:
-    //! Pattern file name
-    QString fileName;
-
-    //! Is this pattern currently loaded into memory?
-    bool loaded = false;
+    RS_Preview(RS_EntityContainer* parent=nullptr);
+    RS2::EntityType rtti() const override{
+        return RS2::EntityPreview;
+    }
+    void addEntity(RS_Entity* entity) override;
+    void addCloneOf(RS_Entity* entity);
+    virtual void addSelectionFrom(RS_EntityContainer& container);
+    virtual void addAllFrom(RS_EntityContainer& container);
+    virtual void addStretchablesFrom(RS_EntityContainer& container,
+                                     const RS_Vector& v1, const RS_Vector& v2);
+    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+    void addReferenceEntitiesToContainer(RS_EntityContainer* container);
+    void clear() override;
+private:
+    unsigned int maxEntities = 0;
+    QList<RS_Entity*> referenceEntities;
 };
-
 #endif

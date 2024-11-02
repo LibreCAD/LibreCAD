@@ -29,7 +29,7 @@
 #define RS_SPLINE_H
 
 #include <vector>
-#include "rs_entitycontainer.h"
+#include "librecad/src/lib/engine/document/container/rs_entitycontainer.h"
 
 /**
  * Holds the data that defines a line.

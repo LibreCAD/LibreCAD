@@ -29,7 +29,7 @@
 #define RS_HATCH_H
 
 #include "rs_entity.h"
-#include "rs_entitycontainer.h"
+#include "librecad/src/lib/engine/document/container/rs_entitycontainer.h"
 
 /**
  * Holds the data that defines a hatch entity.

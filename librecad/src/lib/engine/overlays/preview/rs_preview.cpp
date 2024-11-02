@@ -24,12 +24,12 @@
 **
 **********************************************************************/
 
-#include "rs_entitycontainer.h"
+#include "librecad/src/lib/engine/document/container/rs_entitycontainer.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-#include "rs_settings.h"
+#include "librecad/src/lib/engine/settings/rs_settings.h"
 
 /**
  * Constructor.

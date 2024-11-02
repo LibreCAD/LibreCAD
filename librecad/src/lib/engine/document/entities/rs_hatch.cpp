@@ -32,7 +32,7 @@
 #include <QBrush>
 #include <QString>
 
-#include "lc_looputils.h"
+#include "librecad/src/lib/engine/document/container/lc_looputils.h"
 
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -44,8 +44,8 @@
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
-#include "rs_pattern.h"
-#include "rs_patternlist.h"
+#include "librecad/src/lib/engine/document/patterns/rs_pattern.h"
+#include "librecad/src/lib/engine/document/patterns/rs_patternlist.h"
 
 
 namespace{

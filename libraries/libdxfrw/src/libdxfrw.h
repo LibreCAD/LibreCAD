@@ -92,6 +92,7 @@ private:
     bool processDimStyle();
     bool processTextStyle();
     bool processVports();
+    bool processView();
     bool processAppId();
 
     bool processPoint();
@@ -154,6 +155,7 @@ private:
     std::vector<DRW_ImageDef*> imageDef;  /*!< imageDef list */
 
     int currHandle;
+
 
 };
 

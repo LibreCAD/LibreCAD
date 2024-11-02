@@ -27,7 +27,7 @@
 #ifndef RS_MTEXT_H
 #define RS_MTEXT_H
 
-#include "rs_entitycontainer.h"
+#include "librecad/src/lib/engine/document/container/rs_entitycontainer.h"
 #include <iosfwd>
 
 class RS_Font;

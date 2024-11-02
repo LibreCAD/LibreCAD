@@ -88,7 +88,9 @@ public:
      void addLayer(const DRW_Layer& data) override;
      void addDimStyle(const DRW_Dimstyle& data) override;
      void addVport(const DRW_Vport& data) override;
-     void addTextStyle(const DRW_Textstyle& /*data*/) override{}
+     void addView(const DRW_View &data) override;
+public:
+    void addTextStyle(const DRW_Textstyle& /*data*/) override{}
      void addAppId(const DRW_AppId& /*data*/) override{}
      void addBlock(const DRW_Block& data) override;
      void setBlock(const int handle) override;

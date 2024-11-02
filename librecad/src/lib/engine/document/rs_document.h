@@ -29,7 +29,7 @@
 #ifndef RS_DOCUMENT_H
 #define RS_DOCUMENT_H
 
-#include "rs_entitycontainer.h"
+#include "librecad/src/lib/engine/document/container/rs_entitycontainer.h"
 #include "rs_undo.h"
 
 class RS_BlockList;

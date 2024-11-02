@@ -28,7 +28,7 @@
 #ifndef RS_DIMENSION_H
 #define RS_DIMENSION_H
 
-#include "rs_entitycontainer.h"
+#include "librecad/src/lib/engine/document/container/rs_entitycontainer.h"
 #include "rs_mtext.h"
 
 /**

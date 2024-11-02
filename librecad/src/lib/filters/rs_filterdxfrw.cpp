@@ -4100,4 +4100,9 @@ void RS_FilterDXFRW::printDwgError(int le){
         break;
     }
 }
+
+void RS_FilterDXFRW::addView(const DRW_View &data) {
+
+}
+
 #endif

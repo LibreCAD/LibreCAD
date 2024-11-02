@@ -34,7 +34,7 @@
 #include "rs_constructionline.h"
 #include "rs_math.h"
 #include "rs_debug.h"
-#include "rs_settings.h"
+#include "librecad/src/lib/engine/settings/rs_settings.h"
 
 RS_DimAlignedData::RS_DimAlignedData():
     extensionPoint1(false),
