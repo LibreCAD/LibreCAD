@@ -1381,7 +1381,7 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
                 std::swap(ia,ia2);
             }
             if(RS_Math::isAngleBetween(ia,getAngle1(),getAngle2(),isReversed())) {
-                if(RS_Math::isAngleBetween(am,getAngle1(),ia,isReversed())) {
+                if(std::abs(ia - getAngle1()) > RS_TOLERANCE_ANGLE && RS_Math::isAngleBetween(am,getAngle1(),ia,isReversed())) {
                     setAngle2(ia);
                 } else {
                     setAngle1(ia);

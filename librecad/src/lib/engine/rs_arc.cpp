@@ -674,97 +674,91 @@ RS2::Ending RS_Arc::getTrimPoint(const RS_Vector& trimCoord,
 RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
                               const RS_VectorSolutions& trimSol) {
     //special trimming for ellipse arc
-            RS_DEBUG->print("RS_Ellipse::prepareTrim()");
-        if( ! trimSol.hasValid() ) return (RS_Vector(false));
-        if( trimSol.getNumber() == 1 ) return (trimSol.get(0));
-        double am=getArcAngle(trimCoord);
-		std::vector<double> ias;
-        double ia(0.),ia2(0.);
-        RS_Vector is,is2;
-		for(size_t ii=0; ii<trimSol.getNumber(); ++ii) { //find closest according ellipse angle
-			ias.push_back(getArcAngle(trimSol.get(ii)));
-            if( !ii ||  fabs( remainder( ias[ii] - am, 2*M_PI)) < fabs( remainder( ia -am, 2*M_PI)) ) {
-                ia = ias[ii];
-                is = trimSol.get(ii);
-            }
-        }
-        std::sort(ias.begin(),ias.end());
-		for(size_t ii=0; ii<trimSol.getNumber(); ++ii) { //find segment to include trimCoord
-            if ( ! RS_Math::isSameDirection(ia,ias[ii],RS_TOLERANCE)) continue;
-            if( RS_Math::isAngleBetween(am,ias[(ii+trimSol.getNumber()-1)% trimSol.getNumber()],ia,false))  {
-                ia2=ias[(ii+trimSol.getNumber()-1)% trimSol.getNumber()];
-            } else {
-                ia2=ias[(ii+1)% trimSol.getNumber()];
-            }
-            break;
-        }
-		for(const RS_Vector& vp: trimSol) { //find segment to include trimCoord
-			if ( ! RS_Math::isSameDirection(ia2,getArcAngle(vp),RS_TOLERANCE)) continue;
-			is2=vp;
-            break;
-        }
-//        if(RS_Math::isSameDirection(getAngle1(),getAngle2(),RS_TOLERANCE_ANGLE)
-//                ||  RS_Math::isSameDirection(ia2,ia,RS_TOLERANCE) ) {
-//            //whole ellipse
-//            if( !RS_Math::isAngleBetween(am,ia,ia2,isReversed())) {
-//                std::swap(ia,ia2);
-//                std::swap(is,is2);
-//            }
-//            setAngle1(ia);
-//            setAngle2(ia2);
-//            double da1=fabs(remainder(getAngle1()-am,2*M_PI));
-//            double da2=fabs(remainder(getAngle2()-am,2*M_PI));
-//            if(da2<da1) {
-//                std::swap(is,is2);
-//            }
+    RS_DEBUG->print("RS_Arc::prepareTrim(): begin");
+    for(auto&& intersection: trimSol)
+        LC_LOG<<"RS_Arc::prepareTrim(): line "<<__LINE__<<"intersection: angle="<<getArcAngle(intersection);
 
-//        } else {
-            double dia=fabs(remainder(ia-am,2*M_PI));
-            double dia2=fabs(remainder(ia2-am,2*M_PI));
-            double ai_min=std::min(dia,dia2);
-            double da1=fabs(remainder(getAngle1()-am,2*M_PI));
-            double da2=fabs(remainder(getAngle2()-am,2*M_PI));
-            double da_min=std::min(da1,da2);
-            if( da_min < ai_min ) {
-                //trimming one end of arc
-                bool irev= RS_Math::isAngleBetween(am,ia2,ia, isReversed()) ;
-                if ( RS_Math::isAngleBetween(ia,getAngle1(),getAngle2(), isReversed()) &&
-                        RS_Math::isAngleBetween(ia2,getAngle1(),getAngle2(), isReversed()) ) { //
-                    if(irev) {
-                        setAngle2(ia);
-                        setAngle1(ia2);
-                    } else {
-                        setAngle1(ia);
-                        setAngle2(ia2);
-                    }
-                    da1=fabs(remainder(getAngle1()-am,2*M_PI));
-                    da2=fabs(remainder(getAngle2()-am,2*M_PI));
-                }
-                if( ((da1 < da2) && (RS_Math::isAngleBetween(ia2,ia,getAngle1(),isReversed()))) ||
-                        ((da1 > da2) && (RS_Math::isAngleBetween(ia2,getAngle2(),ia,isReversed())))
-                  ) {
-                    std::swap(is,is2);
-                    //std::cout<<"reset: angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" is="<<getArcAngle(is)<<" ia2="<<ia2<<std::endl;
-                }
+    if( !trimSol.hasValid() )
+        return (RS_Vector(false));
+    LC_LOG<<"RS_Arc::prepareTrim(): line "<<__LINE__<<"trimCoord: angle="<<getArcAngle(trimCoord);
+    if( trimSol.getNumber() == 1 )
+        return (trimSol.get(0));
+    // The angle at trimCoord
+    double am=getArcAngle(trimCoord);
+    std::vector<double> ias;
+    double ia(0.),ia2(0.);
+    RS_Vector is,is2;
+    //find the closest intersection to the trimCoord, according angular difference
+    for(size_t ii=0; ii<trimSol.getNumber(); ++ii) {
+        ias.push_back(getArcAngle(trimSol.get(ii)));
+        if( !ii ||  fabs( remainder( ias[ii] - am, 2*M_PI)) < fabs( remainder( ia -am, 2*M_PI)) ) {
+            ia = ias[ii];
+            is = trimSol.get(ii);
+        }
+    }
+    std::sort(ias.begin(),ias.end());
+    //find segment to include trimCoord
+    for(size_t ii=0; ii<trimSol.getNumber(); ++ii) {
+        if ( ! RS_Math::isSameDirection(ia,ias[ii],RS_TOLERANCE)) continue;
+        if( RS_Math::isAngleBetween(am,ias[(ii+trimSol.getNumber()-1)% trimSol.getNumber()],ia,false))  {
+            ia2=ias[(ii+trimSol.getNumber()-1)% trimSol.getNumber()];
+        } else {
+            ia2=ias[(ii+1)% trimSol.getNumber()];
+        }
+        break;
+    }
+    LC_LOG<<"RS_Arc::prepareTrim(): line "<<__LINE__<<": angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" is="<<getArcAngle(is)<<" ia2="<<ia2;
+    //find segment to include trimCoord
+    for(const RS_Vector& vp: trimSol) {
+        if ( ! RS_Math::isSameDirection(ia2,getArcAngle(vp),RS_TOLERANCE)) continue;
+        is2=vp;
+        break;
+    }
+    double dia=fabs(remainder(ia-am,2*M_PI));
+    double dia2=fabs(remainder(ia2-am,2*M_PI));
+    double ai_min=std::min(dia,dia2);
+    double da1=fabs(remainder(getAngle1()-am,2*M_PI));
+    double da2=fabs(remainder(getAngle2()-am,2*M_PI));
+    double da_min=std::min(da1,da2);
+    if( da_min < ai_min ) {
+        //trimming one end of arc
+        bool irev= RS_Math::isAngleBetween(am,ia2,ia, isReversed()) ;
+        if ( RS_Math::isAngleBetween(ia,getAngle1(),getAngle2(), isReversed()) &&
+             RS_Math::isAngleBetween(ia2,getAngle1(),getAngle2(), isReversed()) ) { //
+            if(irev) {
+                setAngle2(ia);
+                setAngle1(ia2);
             } else {
-                //choose intersection as new end
-                if( dia > dia2) {
-                    std::swap(is,is2);
-                    std::swap(ia,ia2);
-                }
-                if(RS_Math::isAngleBetween(ia,getAngle1(),getAngle2(),isReversed())) {
-                    if(RS_Math::isAngleBetween(am,getAngle1(),ia,isReversed())) {
-                        setAngle2(ia);
-                    } else {
-                        setAngle1(ia);
-                    }
-                }
+                setAngle1(ia);
+                setAngle2(ia2);
             }
-//        }
-        return is;
+            da1=fabs(remainder(getAngle1()-am,2*M_PI));
+            da2=fabs(remainder(getAngle2()-am,2*M_PI));
+        }
+        if( ((da1 < da2 - RS_TOLERANCE_ANGLE) && (RS_Math::isAngleBetween(ia2,ia,getAngle1(),isReversed()))) ||
+            ((da1 > da2 - RS_TOLERANCE_ANGLE) && (RS_Math::isAngleBetween(ia2,getAngle2(),ia,isReversed())))
+            ) {
+            std::swap(is,is2);
+            LC_LOG<<"reset: angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" is="<<getArcAngle(is)<<" ia2="<<ia2;
+        }
+    } else {
+        //choose intersection as new end
+        if( dia > dia2) {
+            std::swap(is,is2);
+            std::swap(ia,ia2);
+        }
+        if(RS_Math::isAngleBetween(ia,getAngle1(),getAngle2(),isReversed())) {
+            if(std::abs(ia - getAngle1()) > RS_TOLERANCE_ANGLE && RS_Math::isAngleBetween(am,getAngle1(),ia,isReversed())) {
+                setAngle2(ia);
+            } else {
+                setAngle1(ia);
+            }
+        }
+    }
+    LC_LOG<<"RS_Arc::prepareTrim(): line "<<__LINE__<<": angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" is="<<getArcAngle(is)<<" ia2="<<ia2;
+    RS_DEBUG->print("RS_Arc::prepareTrim(): end");
+    return is;
 }
-
-
 
 void RS_Arc::reverse() {
     std::swap(data.angle1,data.angle2);
@@ -798,8 +792,6 @@ void RS_Arc::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     calculateBorders();
     RS_DEBUG->print("RS_Arc::rotate: OK");
 }
-
-
 
 void RS_Arc::scale(const RS_Vector& center, const RS_Vector& factor) {
     // negative scaling: mirroring
