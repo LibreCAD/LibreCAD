@@ -132,20 +132,13 @@ namespace {
             default:
             case 2:
                 //trim according to intersections
-                std::vector<double> angles;
-                const auto &center0 = circle->getCenter();
-                for (const RS_Vector &vp: sol) {
-                    angles.push_back(center0.angleTo(vp));
-                }
-                //sort intersections by angle to circle center
-                std::sort(angles.begin(), angles.end());
+                const RS_Vector& center0 = circle->getCenter();
+                std::vector<double> angles { {center0.angleTo(sol[0]), center0.angleTo(sol[1])}};
                 const double a0 = center0.angleTo(trimCoord);
-                for (size_t i = 0; i < angles.size(); ++i) {
-                    aStart = angles.at(i);
-                    aEnd = angles.at((i + 1) % angles.size());
-                    if (RS_Math::isAngleBetween(a0, aStart, aEnd, false))
-                        break;
-                }
+                aStart = angles.front();
+                aEnd = angles.back();
+                if (!RS_Math::isAngleBetween(a0, aStart, aEnd, false))
+                    std::swap(aStart, aEnd);
                 break;
         }
         RS_ArcData arcData(circle->getCenter(),
