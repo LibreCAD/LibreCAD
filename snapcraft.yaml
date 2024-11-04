@@ -1,5 +1,5 @@
 name: librecad
-version: '2.2.1-rc'
+version: '2.2.1-rc4'
 grade: stable
 base: core22
 confinement: strict
