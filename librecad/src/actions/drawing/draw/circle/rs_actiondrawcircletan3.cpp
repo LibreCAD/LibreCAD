@@ -205,11 +205,14 @@ bool RS_ActionDrawCircleTan3::getData(RS_Entity *testThirdEntity){
             case 1:
 //1 line, two circles
             {
+            auto cc = LC_Quadratic(circlesList[i1], circlesList[i2]);
                 for (unsigned k = 0; k < 4; ++k) {
                     //loop through all mirroring cases
                     lc1 = LC_Quadratic(circlesList[i], circlesList[i1], k & 1u);
                     LC_Quadratic lc2 = LC_Quadratic(circlesList[i], circlesList[i2], k & 2u);
                     sol.push_back(LC_Quadratic::getIntersection(lc1, lc2));
+                    sol.push_back(LC_Quadratic::getIntersection(cc, lc1));
+                    sol.push_back(LC_Quadratic::getIntersection(cc, lc2));
                 }
 
             }
@@ -290,7 +293,7 @@ bool RS_ActionDrawCircleTan3::getData(RS_Entity *testThirdEntity){
                 double d = RS_MAXDOUBLE;
                 circlesList[i]->getNearestPointOnEntity(circlesList[(i + j) % 3]->getCenter(),
                                                         false, &d);
-                if (d < RS_TOLERANCE){
+                if (d < 200.*RS_TOLERANCE){
                     LC_Quadratic lc2(circlesList[i], circlesList[(i + j) % 3], true);
                     sol.push_back(LC_Quadratic::getIntersection(lc2, lc1));
                 }
@@ -308,10 +311,18 @@ bool RS_ActionDrawCircleTan3::getData(RS_Entity *testThirdEntity){
         for (auto const &v: sol1) {
             double d = RS_MAXDOUBLE;
             circlesList[i]->getNearestPointOnEntity(v, false, &d);
-            auto data = std::make_shared<RS_CircleData>(v, d);
-            if (circlesList[(i + 1) % 3]->isTangent(*data) == false) continue;
-            if (circlesList[(i + 2) % 3]->isTangent(*data) == false) continue;
-            pPoints->candidates.push_back(data);
+            std::vector<std::shared_ptr<RS_CircleData>> data;
+            data.push_back(std::make_shared<RS_CircleData>(v, d));
+            if (circlesList[i]->rtti() == RS2::EntityCircle) {
+                auto* circle = static_cast<RS_Circle*>(circlesList[i]);
+                if (circle->getCenter().distanceTo(v) > circle->getRadius() * (1. + RS_TOLERANCE))
+                    data.push_back(std::make_shared<RS_CircleData>(v, d + 2. * circle->getRadius()));
+            }
+            for (const auto& circleData: data) {
+                if (circlesList[(i + 1) % 3]->isTangent(*circleData)
+                        && circlesList[(i + 2) % 3]->isTangent(*circleData))
+                    pPoints->candidates.push_back(circleData);
+            }
         }
 
     } else {

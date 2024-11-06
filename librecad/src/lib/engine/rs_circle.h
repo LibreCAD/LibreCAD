@@ -124,7 +124,7 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
     static std::vector<RS_Circle> solveAppolloniusSingle(const std::vector<RS_Circle>& circles);
 
     std::vector<RS_Circle> createTan3(const std::vector<RS_AtomicEntity*>& circles);
-    bool testTan3(const std::vector<RS_AtomicEntity*>& circles);
+    bool testTan3(const std::vector<RS_AtomicEntity*>& circles) const;
     RS_Vector getMiddlePoint(void)const override;
     RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                  double* dist = nullptr) const override;
