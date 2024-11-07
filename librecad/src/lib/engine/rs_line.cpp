@@ -446,10 +446,9 @@ bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
 }
 
 bool RS_Line::isTangent(const RS_CircleData&  circleData) const{
-    double d;
+    double d = 0.;
 	getNearestPointOnEntity(circleData.center,false,&d);
-    if(std::abs(d-circleData.radius)<20.*RS_TOLERANCE) return true;
-    return false;
+    return std::abs(d-circleData.radius) < 200.*RS_TOLERANCE;
 }
 
 RS_Vector RS_Line::getNormalVector() const

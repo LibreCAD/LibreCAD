@@ -38,6 +38,12 @@
 #include "lc_quadratic.h"
 #include "rs_debug.h"
 
+namespace {
+// tangent condition tolerance
+// two circles are considered tangent, if the distance is within this factor of the radii
+constexpr double Tangent_Tolerance_Factor = 1e-6;
+}
+
 RS_CircleData::RS_CircleData(RS_Vector const& center, double radius):
 	center(center)
 	, radius(radius)
@@ -121,14 +127,20 @@ double RS_Circle::getLength() const {
 }
 
 bool RS_Circle::isTangent(const RS_CircleData&  circleData) const{
-	const double d=circleData.center.distanceTo(data.center);
-//    DEBUG_HEADER
-    const double r0=std::abs(circleData.radius);
-    const double r1=std::abs(data.radius);
-//    std::cout<<std::abs(d-std::abs(r0-r1))<<" : "<<std::abs(d-std::abs(r0+r1))<<std::endl;
-    if( std::abs(d-std::abs(r0-r1))<20.*RS_TOLERANCE ||
-            std::abs(d-std::abs(r0+r1))<20.*RS_TOLERANCE ) return true;
-    return false;
+    const double d=circleData.center.distanceTo(data.center);
+    double r0=std::abs(circleData.radius);
+    double r1=std::abs(data.radius);
+    if (r0 < r1)
+        std::swap(r0, r1);
+    const double tol = Tangent_Tolerance_Factor * r0;
+    if (r1 < tol || d < tol)
+        return false;
+
+    const double tangentTol = std::max(200.*RS_TOLERANCE, tol);
+    // Internal or external tangency
+    bool ret = std::abs(d-r0+r1)<tangentTol ||
+            std::abs(d-r0-r1)<tangentTol;
+    return ret;
 }
 
 
@@ -318,7 +330,8 @@ RS_VectorSolutions RS_Circle::createTan2(const std::vector<RS_AtomicEntity*>& ci
 std::vector<RS_Circle> RS_Circle::createTan3(const std::vector<RS_AtomicEntity*>& circles)
 {
 	std::vector<RS_Circle> ret;
-    if(circles.size()!=3) return ret;
+    if(circles.size()!=3)
+        return ret;
 	 std::vector<RS_Circle> cs;
 	 for(auto c: circles){
 		 cs.emplace_back(RS_Circle(nullptr, {c->getCenter(),c->getRadius()}));
@@ -351,22 +364,19 @@ std::vector<RS_Circle> RS_Circle::createTan3(const std::vector<RS_AtomicEntity*>
     }while(++flags<8u);
 //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<"before testing, ret.size()="<<ret.size()<<std::endl;
-	for(size_t i=0;i<ret.size();){
-        if(ret[i].testTan3(circles) == false) {
-            ret.erase(ret.begin()+i);
-        }else{
-            ++i;
-        }
-    }
+    auto it = std::remove_if(ret.begin(), ret.end(), [&circles](const RS_Circle& circle) {
+        return !circle.testTan3(circles);
+    });
+    ret.erase(it, ret.end());
 //        DEBUG_HEADER
 //    std::cout<<"after testing, ret.size()="<<ret.size()<<std::endl;
     return ret;
 }
 
-bool RS_Circle::testTan3(const std::vector<RS_AtomicEntity*>& circles)
+bool RS_Circle::testTan3(const std::vector<RS_AtomicEntity*>& circles) const
 {
-
-    if(circles.size()!=3) return false;
+    if(circles.size()!=3)
+        return false;
 
 //        std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //        std::cout<<"to verify Center = ( "<<data.center.x<<" , "<<data.center.y<<" ), r= "<<data.radius<<std::endl;
@@ -380,11 +390,8 @@ bool RS_Circle::testTan3(const std::vector<RS_AtomicEntity*>& circles)
 //        std::cout<<"r0="<<r0<<"\tr1="<<r1<<"\tdist="<<dist<<"\tdelta0="<<std::abs(dist - std::abs(r0 - r1)) <<"\tdelta1="<<std::abs(dist - std::abs(r0 + r1))
 //                <<"\t"<<sqrt(DBL_EPSILON)*qMax(r0,r1)<<std::endl;
 
-        double const rmax=std::max(r0,r1);
-        if( dist < rmax )
-                return std::abs(dist - std::abs(r0 - r1)) <= sqrt(DBL_EPSILON)*rmax;
-        else
-                return std::abs(dist - std::abs(r0 + r1)) <= sqrt(DBL_EPSILON)*rmax;
+        if (!c->isTangent(data))
+            return false;
     }
     return true;
 }
