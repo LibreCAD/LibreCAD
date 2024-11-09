@@ -651,12 +651,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation type="unfinished">图层</translation>
+        <translation>图层</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
         <source>Color</source>
-        <translation type="unfinished">颜色</translation>
+        <translation>颜色</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
@@ -666,7 +666,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation type="unfinished">线宽</translation>
+        <translation>线宽</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
@@ -681,18 +681,18 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
         <source>from point</source>
-        <translation type="unfinished">从点</translation>
+        <translation>从点</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation type="unfinished">至点</translation>
+        <translation>至点</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
         <location filename="../divide/divide.cpp" line="514"/>
         <source>length</source>
-        <translation type="unfinished">长度</translation>
+        <translation>长度</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="492"/>
@@ -1090,17 +1090,17 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
         <source>The file %1 not exist</source>
-        <translation type="unfinished">文件%1不存在</translation>
+        <translation>文件 %1 不存在</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="137"/>
         <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished">不能打开文件%1</translation>
+        <translation>无法打开文件 %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="144"/>
         <source>%1 objects imported</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 对象已导入</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="166"/>
