@@ -5,7 +5,7 @@
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation>Okvir</translation>
+        <translation>Оквир</translation>
     </message>
     <message>
         <source>Add to favorites</source>
