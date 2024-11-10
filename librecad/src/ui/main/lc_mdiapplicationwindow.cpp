@@ -449,6 +449,7 @@ void LC_MDIApplicationWindow::onCADTabBarIndexChanged([[maybe_unused]]int index)
 
             for (int i = 0; i < tabBar->count(); ++i) {
                 QWidget *w = tabBar->tabButton(i, closeSide);
+                tabBar->setTabEnabled(i, w != nullptr);
                 if (w != nullptr) {
                     if (showCloseButtons){
                         if (showActive) {
