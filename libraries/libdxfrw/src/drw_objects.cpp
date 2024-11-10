@@ -1302,11 +1302,11 @@ bool DRW_AppId::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 bool DRW_View::parseCode(int code, dxfReader *reader) {
     switch (code) {
         case 40: {
-            size.x = reader->getDouble();
+            size.y = reader->getDouble();
             break;
         }
         case 41: {
-            size.y = reader->getDouble();
+            size.x = reader->getDouble();
             break;
         }
         case 10: {

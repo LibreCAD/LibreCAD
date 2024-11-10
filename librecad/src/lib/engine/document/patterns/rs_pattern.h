@@ -28,7 +28,7 @@
 #ifndef RS_PATTERN_H
 #define RS_PATTERN_H
 
-#include "librecad/src/lib/engine/document/container/rs_entitycontainer.h"
+#include "rs_entitycontainer.h"
 
 class QString;
 class RS_PatternList;

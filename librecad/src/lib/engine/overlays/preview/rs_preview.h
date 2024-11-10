@@ -28,7 +28,7 @@
 #ifndef RS_PREVIEW_H
 #define RS_PREVIEW_H
 
-#include "librecad/src/lib/engine/document/container/rs_entitycontainer.h"
+#include "rs_entitycontainer.h"
 
 /**
  * This class supports previewing. The RS_Snapper class uses

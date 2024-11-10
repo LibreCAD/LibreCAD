@@ -53,6 +53,8 @@
 
 #include "rs_debug.h"
 #include "rs_settings.h"
+#include "lc_namedviewslistwidget.h"
+#include "lc_namedviewsbutton.h"
 
 namespace {
     // only enable the penpallet by settings
@@ -386,6 +388,14 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
 //    connect(main_window, SIGNAL(windowsChanged(bool)), layer_widget, SLOT(setEnabled(bool)));
     dock_layer->setWidget(layer_widget);
 
+    auto* dock_views = new QDockWidget(main_window);
+    dock_views->setWindowTitle(tr("Named Views"));
+    dock_views->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dock_views->setObjectName("view_dockwidget");
+    named_views_widget = new LC_NamedViewsListWidget("View", dock_views);
+    named_views_widget->setFocusPolicy(Qt::NoFocus);
+    dock_views->setWidget(named_views_widget);
+
     QDockWidget* dock_layer_tree = nullptr;
     if (usePenPallet()) {
         dock_layer_tree = new QDockWidget(main_window);
@@ -461,6 +471,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
         main_window->tabifyDockWidget(dock_layer, dock_pen_palette);
         main_window->tabifyDockWidget(dock_pen_palette, dock_layer_tree);
     }
+    main_window->addDockWidget(Qt::RightDockWidgetArea, dock_views);
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_command);
     command_widget->getDockingAction()->setText(dock_command->isFloating() ? tr("Dock") : tr("Float"));
 }
@@ -486,6 +497,8 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
         "ViewGrid", "ViewDraft", "ViewLinesDraft", "ViewAntialiasing", "", "ZoomRedraw", "ZoomIn",
         "ZoomOut", "ZoomAuto", "ZoomPrevious", "ZoomWindow", "ZoomPan"
     });
+
+    auto *viewsList = createNamedViewsToolbar(tr("Named Views"), "Views", tbPolicy);
 
     snap_toolbar = new QG_SnapToolBar(main_window, action_handler, ag_manager,ag_manager->getActionsMap());
     snap_toolbar->setWindowTitle(tr("Snap Selection"));
@@ -522,6 +535,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     addToTop(file);
     addToTop(edit);
     addToTop(view);
+    addToTop(viewsList);
     addToTop(preferences);
     main_window->addToolBarBreak();
     addToTop(pen_toolbar);
@@ -644,7 +658,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
 
     auto plugins = menu(tr("Pl&ugins"),"plugins", menu_bar);
 
-    auto view = menu(tr("&View"),"view", menu_bar, {
+    auto view_menu = menu(tr("&View"), "view", menu_bar, {
         "Fullscreen",
         "ViewStatusBar",
         "ViewGrid",
@@ -669,9 +683,11 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         "ZoomPrevious",
         "ZoomWindow",
         "ZoomPan",
+        "",
+        "ZoomViewSave",
     });
 
-    // fixme - MTesxt& text - remove from dimensions actions...
+
     auto tools = menu(tr("&Tools"), "tools", menu_bar);
     subMenuWithActions(tools, tr("&Line"), "line", ":/icons/line.svg", line_actions);
     subMenuWithActions(tools, tr("&Circle"), "circle", ":/icons/circle.svg", circle_actions);
@@ -739,8 +755,13 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     main_window->sortWidgetsByTitle(dockwidgetsList);
 
     for (QDockWidget* dw: dockwidgetsList){
-        if (main_window->dockWidgetArea(dw) == Qt::RightDockWidgetArea)
-            dockwidgets_menu->addAction(dw->toggleViewAction());
+        if (main_window->dockWidgetArea(dw) == Qt::RightDockWidgetArea) {
+            QAction *action = dw->toggleViewAction();
+            dockwidgets_menu->addAction(action);
+            if (dw->objectName() == "view_dockwidget"){
+                view_menu->addAction(action);
+            }
+        }
     }
 
     addAction(dockwidgets_menu, "RedockWidgets");
@@ -788,15 +809,13 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     menu_bar->addMenu(file_menu);
     menu_bar->addMenu(settings);
     menu_bar->addMenu(edit);
-    menu_bar->addMenu(view);
+    menu_bar->addMenu(view_menu);
     menu_bar->addMenu(plugins);
     menu_bar->addMenu(tools);
     menu_bar->addMenu(widgets);
     menu_bar->addMenu(windows_menu);
     menu_bar->addMenu(help);
 }
-
-
 
 
 void LC_WidgetFactory::addAction(QMenu* menu, const char* actionName){
@@ -876,6 +895,27 @@ QMenu *LC_WidgetFactory::doCreateSubMenu(QMenu *parent, const QString& title, co
     const QString &objectName = nameCleared.toLower() + "_menu";
     sub_menu->setObjectName(objectName);
     return sub_menu;
+}
+
+QToolBar* LC_WidgetFactory::createNamedViewsToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy)
+{
+    auto* result = new QToolBar(title, main_window);
+    result->setSizePolicy(toolBarPolicy);
+    QString nameCleared(name);
+    nameCleared.remove(' ');
+    const QString &objectName = nameCleared.toLower() + "_toolbar";
+    result->setObjectName(objectName);
+
+    QAction *saveViewAction = ag_manager->getActionByName("ZoomViewSave");
+    result->addAction(saveViewAction);
+
+    QAction *restoreCurrentViewAction = ag_manager->getActionByName("ZoomViewRestore");
+
+    auto namedViewsSelectionWidget = named_views_widget->createSelectionWidget(saveViewAction, restoreCurrentViewAction);
+    namedViewsSelectionWidget->setParent(result);
+    result->addWidget(namedViewsSelectionWidget);
+
+    return result;
 }
 
 QToolBar* LC_WidgetFactory::createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames){

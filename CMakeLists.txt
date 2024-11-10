@@ -116,6 +116,7 @@ include_directories(librecad/src/lib/engine/document/patterns)
 include_directories(librecad/src/lib/engine/document/entities)
 include_directories(librecad/src/lib/engine/document/container)
 include_directories(librecad/src/lib/engine/document/variables)
+include_directories(librecad/src/lib/engine/document/ucs)
 include_directories(librecad/src/lib/fileio)
 include_directories(librecad/src/lib/filters)
 include_directories(librecad/src/lib/generators)
@@ -188,6 +189,7 @@ include_directories(librecad/src/ui/dock_widgets/pen_palette)
 include_directories(librecad/src/ui/dock_widgets/block_widget)
 include_directories(librecad/src/ui/dock_widgets/library_widget)
 include_directories(librecad/src/ui/dock_widgets/layer_widget)
+include_directories(librecad/src/ui/dock_widgets/views_list)
 #Temporary disabled for build
 #include_directories(plugins/align)
 #include_directories(plugins/asciifile)
@@ -1263,6 +1265,21 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/polyline/lc_actionpolylinearcstolines.cpp
 		librecad/src/ui/components/status_bar/lc_qtstatusbarmanager.h
 		librecad/src/ui/components/status_bar/lc_qtstatusbarmanager.cpp
+		librecad/src/lib/engine/document/views/lc_view.h
+		librecad/src/lib/engine/document/views/lc_view.cpp
+		librecad/src/lib/engine/document/views/lc_viewslist.h
+		librecad/src/lib/engine/document/views/lc_viewslist.cpp
+		librecad/src/lib/engine/document/ucs/lc_ucs.h
+		librecad/src/lib/engine/document/ucs/lc_ucs.cpp
+		librecad/src/ui/dock_widgets/views_list/lc_namedviewslistwidget.h
+		librecad/src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp
+		librecad/src/ui/dock_widgets/views_list/lc_namedviewsmodel.h
+		librecad/src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp
+		librecad/src/ui/dock_widgets/views_list/lc_namedviewslistoptions.cpp
+		librecad/src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.h
+		librecad/src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.cpp
+		librecad/src/ui/dock_widgets/views_list/lc_namedviewsbutton.h
+		librecad/src/ui/dock_widgets/views_list/lc_namedviewsbutton.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

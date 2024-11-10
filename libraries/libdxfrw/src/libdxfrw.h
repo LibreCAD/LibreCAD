@@ -44,6 +44,7 @@ public:
     bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
     bool writeLineType(DRW_LType *ent);
     bool writeLayer(DRW_Layer *ent);
+    bool writeView(DRW_View *ent);
     bool writeDimstyle(DRW_Dimstyle *ent);
     bool writeTextstyle(DRW_Textstyle *ent);
     bool writeVport(DRW_Vport *ent);

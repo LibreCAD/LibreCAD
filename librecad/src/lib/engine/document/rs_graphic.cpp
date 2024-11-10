@@ -39,7 +39,7 @@
 #include "rs_fileio.h"
 #include "rs_layer.h"
 #include "rs_math.h"
-#include "librecad/src/lib/engine/settings/rs_settings.h"
+#include "rs_settings.h"
 #include "rs_units.h"
 
 /**

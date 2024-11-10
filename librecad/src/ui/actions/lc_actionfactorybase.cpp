@@ -53,7 +53,7 @@ QAction * LC_ActionFactoryBase::createAction_AH(const char* name, RS2::ActionTyp
     // LC_ERR <<  " ** original action handler" << this->action_handler;
     // well, a bit crazy hacky code to let the lambda properly capture action handler... without local var, class member is not captured
     QG_ActionHandler* capturedHandler = action_handler;
-    connect(action, &QAction::triggered, capturedHandler, [ capturedHandler, actionType](bool){
+    connect(action, &QAction::triggered, capturedHandler, [ capturedHandler, actionType](bool){ // fixme - sand - simplify by using data() on QAction and sender()
         // LC_ERR << " ++ captured action handler "<<   capturedHandler;
         capturedHandler->setCurrentAction(actionType);
     });

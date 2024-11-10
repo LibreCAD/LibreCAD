@@ -6,6 +6,7 @@
 
 #include "lc_penpalettewidget.h"
 #include "lc_quickinfowidget.h"
+#include "lc_namedviewslistwidget.h"
 
 class QMenu;
 class QAction;
@@ -58,6 +59,7 @@ public:
     LC_QuickInfoWidget* quick_info_widget = nullptr;
     LC_LayerTreeWidget* layer_tree_widget = nullptr;
     LC_PenPaletteWidget* pen_palette = nullptr;
+    LC_NamedViewsListWidget* named_views_widget = nullptr;
     QG_BlockWidget* block_widget = nullptr;
     QG_LibraryWidget* library_widget = nullptr;
     QG_CommandWidget* command_widget = nullptr;
@@ -108,6 +110,7 @@ private:
 
     void sortToolbarsByByGroupAndTitle(QList<QToolBar *> &list);
 
+    QToolBar *createNamedViewsToolbar(const QString &title, const QString &name, QSizePolicy toolBarPolicy);
 };
 
 #endif // LC_WIDGETFACTORY_H

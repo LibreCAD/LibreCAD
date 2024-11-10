@@ -198,6 +198,7 @@ public:
     virtual void writeEntities() = 0;
     virtual void writeLTypes() = 0;
     virtual void writeLayers() = 0;
+    virtual void writeViews() = 0;
     virtual void writeTextstyles() = 0;
     virtual void writeVports() = 0;
     virtual void writeDimstyles() = 0;

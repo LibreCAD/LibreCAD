@@ -29,7 +29,7 @@
 #include "rs_graphic.h"
 #include "rs_units.h"
 #include "rs_debug.h"
-#include "librecad/src/lib/engine/settings/rs_settings.h"
+#include "rs_settings.h"
 
 RS_DimDiametricData::RS_DimDiametricData():
 	definitionPoint(false),

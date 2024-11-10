@@ -50,7 +50,7 @@ public:
         LOCKED,
         PRINT,
         CONSTRUCTION,
-		COLOR_SAMPLE,
+        COLOR_SAMPLE,
         NAME,
         LAST
     };

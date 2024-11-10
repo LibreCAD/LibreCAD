@@ -29,7 +29,7 @@
 #define RS_LEADER_H
 
 #include "rs_entity.h"
-#include "librecad/src/lib/engine/document/container/rs_entitycontainer.h"
+#include "rs_entitycontainer.h"
 
 
 /**

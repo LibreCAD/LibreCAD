@@ -24,7 +24,7 @@
 #define LC_HIGHLIGHT_H
 
 #include <QMap>
-#include "librecad/src/lib/engine/document/container/rs_entitycontainer.h"
+#include "rs_entitycontainer.h"
 
 class LC_Highlight: public RS_EntityContainer{
 

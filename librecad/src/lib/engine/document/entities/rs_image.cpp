@@ -36,7 +36,7 @@
 #include "rs_math.h"
 #include "rs_painter.h"
 #include "qc_applicationwindow.h"
-#include "librecad/src/lib/engine/settings/rs_settings.h"
+#include "rs_settings.h"
 
 namespace
 {

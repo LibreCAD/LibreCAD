@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LC_DlgNamedViewsListOptions</class>
+ <widget class="QDialog" name="LC_DlgNamedViewsListOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>503</width>
+    <height>200</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Named Views Settings</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,1">
+   <item row="9" column="0">
+    <widget class="QLabel" name="lblDoubleClick">
+     <property name="text">
+      <string>On double-click on table item</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="QComboBox" name="cbDoubleClickPolicy">
+     <property name="toolTip">
+      <string>Defines which action should be performed on double click on view item of the table. </string>
+     </property>
+     <item>
+      <property name="text">
+       <string>Do Nothing</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Rename View</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Update View</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Restore View</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="9" column="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="8" column="0" colspan="3">
+    <widget class="QCheckBox" name="cbSingleClickRestore">
+     <property name="toolTip">
+      <string>If enabled, click on the view table item will restore view. Otherwise, view should be restored explicitly.</string>
+     </property>
+     <property name="text">
+      <string>Restore view on single click by table item</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="3">
+    <widget class="QCheckBox" name="cbShowTooltip">
+     <property name="toolTip">
+      <string>If show, tooltip with additional information about view will be shown for table item.</string>
+     </property>
+     <property name="text">
+      <string>Show toolip with view details for table items</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="3">
+    <widget class="QCheckBox" name="cbShowViewTypeIcon">
+     <property name="toolTip">
+      <string>If checked, the column with icon for type of view will be shown in the table. </string>
+     </property>
+     <property name="text">
+      <string>Show view type icon</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QCheckBox" name="cbSilentUpdate">
+     <property name="toolTip">
+      <string>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</string>
+     </property>
+     <property name="text">
+      <string>Silently update existing view by current values on duplicated name during view creation</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3">
+    <widget class="QCheckBox" name="cbRemovalConfirmation">
+     <property name="toolTip">
+      <string>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </string>
+     </property>
+     <property name="text">
+      <string>Ask for confirmation before views removal</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0" colspan="3">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+     <property name="centerButtons">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>LC_DlgNamedViewsListOptions</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>LC_DlgNamedViewsListOptions</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

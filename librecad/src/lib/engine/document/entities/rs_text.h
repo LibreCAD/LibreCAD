@@ -28,7 +28,7 @@
 #ifndef RS_TEXT_H
 #define RS_TEXT_H
 
-#include "librecad/src/lib/engine/document/container/rs_entitycontainer.h"
+#include "rs_entitycontainer.h"
 
 /**
  * Holds the data that defines a text entity.

@@ -418,7 +418,16 @@ public:
     double backClippingPlaneOffset; // Back clipping plane (offset from target point), code 44
     double twistAngle; // Twist angle, code 50
     int viewMode; //(?? type) View mode (see VIEWMODE system variable), code 71
-    long renderMode;  // Render mode: code 281
+    unsigned int renderMode;  // Render mode: code 281.
+    // 0 = 2D Optimized (classic 2D)
+//    1 = Wireframe
+//    2 = Hidden line
+//    3 = Flat shaded
+//    4 = Gouraud shaded
+//    5 = Flat shaded with wireframe
+//    6 = Gouraud shaded with wireframe
+//    All rendering modes other than 2D Optimized engage the new 3D graphics pipeline. These values directly correspond to the SHADEMODE command and the AcDbAbstractViewTableRecord::RenderMode enum
+
     bool hasUCS; // 72, 1 if there is a UCS associated to this view; 0 otherwise
     bool cameraPlottable; // 73, 1 if the camera is plottable
 

@@ -34,7 +34,7 @@
 #include "rs_mtext.h"
 #include "rs_solid.h"
 #include "rs_units.h"
-#include "librecad/src/lib/engine/settings/rs_settings.h"
+#include "rs_settings.h"
 
 RS_DimRadialData::RS_DimRadialData():
 	definitionPoint(false),

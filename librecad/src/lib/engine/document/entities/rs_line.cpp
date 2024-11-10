@@ -33,11 +33,11 @@
 
 #include "rs_circle.h"
 #include "rs_debug.h"
-#include "librecad/src/lib/engine/document/container/rs_entitycontainer.h"
+#include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_linetypepattern.h"
-#include "librecad/src/lib/engine/document/rs_graphic.h"
+#include "rs_graphic.h"
 #include "rs_painter.h"
 #include "lc_quadratic.h"
 #include "lc_linemath.h"

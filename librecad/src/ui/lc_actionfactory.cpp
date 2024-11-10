@@ -82,10 +82,9 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createSelectActionsUncheckable(a_map, agm->select);
     createFileActionsUncheckable(a_map, agm->file);
     createViewActionsUncheckable(a_map, agm->view);
+    createNamedViewActionsUncheckable(a_map, agm->namedViews);
     createWidgetActionsUncheckable(a_map, agm->widgets);
     createEditActionsUncheckable(a_map, agm->edit);
-
-
     setupCreatedActions(a_map);
     setDefaultShortcuts(a_map, agm);
 
@@ -479,6 +478,19 @@ void LC_ActionFactory::createViewActionsUncheckable(QMap<QString, QAction *> &ma
         {"ZoomAuto",     RS2::ActionZoomAuto,     tr("&Auto Zoom"),     ":/icons/zoom_auto.svg",     "zoom-fit-best"},
         {"ZoomPrevious", RS2::ActionZoomPrevious, tr("Previous &View"), ":/icons/zoom_previous.svg", "zoom-previous"},
         {"ZoomRedraw",   RS2::ActionZoomRedraw,   tr("&Redraw"),        ":/icons/redraw.svg",        "view-refresh"}
+    });
+}
+
+void LC_ActionFactory::createNamedViewActionsUncheckable(QMap<QString, QAction*> &map, QActionGroup *group){
+    createMainWindowActions(map, group,{
+        {"ZoomViewSave",    SLOT(saveNamedView()),    tr("&Save View"), ":/icons/nview_add.svg"},
+        // fixme - quite an ugly approach, think about direct invocation of action for views list?
+        {"ZoomViewRestore",    SLOT(restoreNamedViewCurrent()),    tr("Restore Current View"), ":/icons/nview_visible.svg"},
+        {"ZoomViewRestore1",    SLOT(restoreNamedView1()),    tr("Restore View 1"), ":/icons/nview_visible.svg"},
+        {"ZoomViewRestore2",    SLOT(restoreNamedView2()),    tr("Restore View 2"), ":/icons/nview_visible.svg"},
+        {"ZoomViewRestore3",    SLOT(restoreNamedView3()),    tr("Restore View 3"), ":/icons/nview_visible.svg"},
+        {"ZoomViewRestore4",    SLOT(restoreNamedView4()),    tr("Restore View 4"), ":/icons/nview_visible.svg"},
+        {"ZoomViewRestore5",    SLOT(restoreNamedView5()),    tr("Restore View 5"), ":/icons/nview_visible.svg"},
     });
 }
 

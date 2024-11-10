@@ -22,7 +22,7 @@
 
 #include <iostream>
 #include <QString>
-#include "librecad/src/lib/debug/rs_debug.h"
+#include "rs_debug.h"
 #include "rs_layer.h"
 
 RS_LayerData::RS_LayerData(const QString& name,
