@@ -5,8 +5,9 @@ They ara listed below:
 The following functionality was added: 
 
 1) Support of VIEW table on DXF level (read/write)
-2) Docking widget "Named Views" for views management
-3) "Named Views" toolbar for restoring views, actions for quick restoring of 5 top views via shortcuts
+2) Dockable widget "Named Views" for views management
+3) "Named Views" toolbar for saving/restoring views
+4) Actions for quick restoring of 5 top views via shortcuts (default shortcuts were not set for them, however)
 
 Of course, only 2D views are supported (no 3D). 
 
@@ -15,8 +16,7 @@ However, so far they can't be created within LibreCAD and there is no navigation
 
 Implementation of named views on DXF level is interoperable at least with QCAD (so QCAD and LibreCAD can properly open files with named views). 
 
-Interoperability with other CAD softare (AutoCAD, Draftsight etc.) for named views should be tested. 
-
+Interoperability with other CAD software (AutoCAD, Draftsight etc.) for named views should be tested. 
 
 ### Action Icon in Options Widget
  
@@ -30,3 +30,6 @@ Drawing Preferences dialog was extended and "Variables" tab was added. On that t
 ### Localization
 
 Localization files were regenerated to reflect latest changes in the codebase. 
+
+### Source Code layout
+The additional sub-directories were added for source code in /lib/engine in order to have more specific and focused source code files hierarchy.
