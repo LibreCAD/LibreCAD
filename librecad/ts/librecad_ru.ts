@@ -5375,6 +5375,15 @@ Warning: this action can NOT be undone!</source>
         <source>Form</source>
         <translation>Форма</translation>
     </message>
+    <message>
+        <source>Current Action: </source>
+        <translation type="vanished">Активная Команда:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/containers/lc_optionswidgetsholder.cpp" line="102"/>
+        <source>Current Action:</source>
+        <translation>Активная Команда:</translation>
+    </message>
 </context>
 <context>
     <name>LC_PasteTransformOptions</name>
@@ -8169,90 +8178,90 @@ p, li { white-space: pre-wrap; }
         <translation>Плавающее</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="583"/>
         <source>Lines</source>
         <translation>Линии</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="590"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="584"/>
         <source>Circles</source>
         <translation>Окружности</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="591"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="585"/>
         <source>Freehand</source>
         <translation>Произвольно</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="586"/>
         <source>Ellipses</source>
         <translation>Эллипсы</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="593"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="587"/>
         <source>PolyLines</source>
         <translation>Ломаная линия</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="345"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="567"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="594"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="561"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="588"/>
         <source>Select</source>
         <translation>Выбрать</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="340"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="556"/>
         <source>Line</source>
         <translation>Прямая</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="341"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="563"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="557"/>
         <source>Circle</source>
         <translation>Окружность</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="342"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="564"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="558"/>
         <source>Curve</source>
         <translation>Кривая</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="343"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Ellipse</source>
         <translation>Эллипс</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="344"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="566"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="560"/>
         <source>Polyline</source>
         <translation>Ломаная</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="346"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="568"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
         <source>Dimension</source>
         <translation>Размер</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="569"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="596"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="563"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="590"/>
         <source>Other</source>
         <translation>Прочее</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="349"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="571"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="350"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="491"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="599"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="593"/>
         <source>Order</source>
         <translation>Порядок</translation>
     </message>
@@ -8307,276 +8316,276 @@ p, li { white-space: pre-wrap; }
         <translation>Именованные Виды</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="512"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="506"/>
         <source>Snap Selection</source>
         <translation>Привязка</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="522"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="516"/>
         <source>Pen</source>
         <translation>Перо</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="528"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="522"/>
         <source>Tool Options</source>
         <translation>Опции Команды</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="530"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="758"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="524"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="752"/>
         <source>Dock Areas</source>
         <translation>Стыкуемые области</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="535"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
         <source>Creators</source>
         <translation>Создатели</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="539"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="533"/>
         <source>Preferences</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="586"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="580"/>
         <source>Categories</source>
         <translation>Категории</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="595"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
         <source>Dimensions</source>
         <translation>Размеры</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="608"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="602"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="619"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="613"/>
         <source>Import</source>
         <translation>Импорт</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="624"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="618"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="641"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="635"/>
         <source>&amp;Options</source>
         <translation>&amp;Параметры</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="651"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="645"/>
         <source>&amp;Edit</source>
         <translation>&amp;Правка</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="667"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="661"/>
         <source>Pl&amp;ugins</source>
         <translation>&amp;Дополнения</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="669"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="663"/>
         <source>&amp;View</source>
         <translation>&amp;Вид</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="699"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="693"/>
         <source>&amp;Views Restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Восстановить Вид</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="707"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="701"/>
         <source>&amp;Tools</source>
         <translation>&amp;Инструменты</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="708"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="702"/>
         <source>&amp;Line</source>
         <translation>&amp;Прямая</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="709"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="703"/>
         <source>&amp;Circle</source>
         <translation>&amp;Окружность</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="710"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="704"/>
         <source>&amp;Curve</source>
         <translation>&amp;Кривая</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="711"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="705"/>
         <source>&amp;Ellipse</source>
         <translation>&amp;Эллипс</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="712"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="706"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Ломаная</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="713"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="707"/>
         <source>&amp;Select</source>
         <translation>&amp;Выбор</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="714"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="708"/>
         <source>Dime&amp;nsion</source>
         <translation>&amp;Размер</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="715"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="709"/>
         <source>Ot&amp;her</source>
         <translation>Прочее</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="716"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="710"/>
         <source>&amp;Modify</source>
         <translation>Из&amp;менить</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="717"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="711"/>
         <source>&amp;Info</source>
         <translation>&amp;Информация</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="718"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="712"/>
         <source>&amp;Order</source>
         <translation>&amp;Порядок</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="720"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="714"/>
         <source>&amp;Drawings</source>
         <translation>&amp;Чертежи</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="727"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="721"/>
         <source>&amp;Help</source>
         <translation>&amp;Помощь</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="729"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="723"/>
         <source>On&amp;line Docs</source>
         <translation>Онлайн документация</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="730"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="724"/>
         <source>&amp;Wiki</source>
         <translation>&amp;Вики</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="731"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="725"/>
         <source>User&apos;s &amp;Manual</source>
         <translation>Руководство &amp;пользователя</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="732"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="726"/>
         <source>&amp;Commands</source>
         <translation>&amp;Команды</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="733"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="727"/>
         <source>&amp;Style Sheets</source>
         <translation>&amp;Таблица стилей</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="734"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="728"/>
         <source>Wid&amp;gets</source>
         <translation>&amp;Виджеты</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="738"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="732"/>
         <source>About</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="745"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="739"/>
         <source>&amp;Forum</source>
         <translation>&amp;Форум</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="746"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="740"/>
         <source>Zulip &amp;Chat</source>
         <translation>Zulip&amp;Чат</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="748"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="742"/>
         <source>&amp;Submit Error</source>
         <translation>Сообщить об ошибке</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="749"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="743"/>
         <source>&amp;Request Feature</source>
         <translation>Запросить функционал</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="750"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="744"/>
         <source>&amp;Releases Page</source>
         <translation>Страница релизов</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="754"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="748"/>
         <source>&amp;Donate</source>
         <translation>&amp;Пожертвовать</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="756"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="750"/>
         <source>Widgets</source>
         <translation>Виджеты</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="766"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="760"/>
         <source>Dock Wid&amp;gets</source>
         <translation>&amp;Стыкуемый интерфейс</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="794"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="788"/>
         <source>&amp;Toolbars</source>
         <translation>&amp;Панели</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1012"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1081"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1006"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1075"/>
         <source>Grid Status</source>
         <translation>Сетка</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1046"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1040"/>
         <source>Coordinates</source>
         <translation>Координаты</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1053"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1047"/>
         <source>Relative Zero</source>
         <translation>Относительный ноль</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1060"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1054"/>
         <source>Mouse</source>
         <translation>Мышь</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1067"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1061"/>
         <source>Selection Info</source>
         <translation>О Выделенном</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1074"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1068"/>
         <source>Active Layer</source>
         <translation>Активный Слой</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="348"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="570"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="597"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="564"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="591"/>
         <source>Modify</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="598"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
         <source>Measure</source>
         <translation>Измерение</translation>
     </message>
@@ -8812,52 +8821,52 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">&amp;Помощь</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1163"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1172"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Стопкой</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1164"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1173"/>
         <source>&amp;Tile</source>
         <translation>&amp;Мозаика</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1166"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1175"/>
         <source>Tile &amp;Horizontally</source>
         <translation>Мозаика по &amp;горизонтали</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1251"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1260"/>
         <source>Creating new file...</source>
         <translation>Создание нового файла...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1297"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1306"/>
         <source>unnamed document %1</source>
         <translation>безымянный документ %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2731"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2740"/>
         <source>Opening recent file...</source>
         <translation>Открытие последнего файла...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1742"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1751"/>
         <source>Loaded document: </source>
         <translation>Документ загружен: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1748"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1757"/>
         <source>Opening aborted</source>
         <translation>Открытие прервано</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2131"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2140"/>
         <source>Printing...</source>
         <translation>Печать...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2286"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2295"/>
         <source>Exiting application...</source>
         <translation>Выход из программы...</translation>
     </message>
@@ -8890,67 +8899,67 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Блочный список</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2207"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2216"/>
         <source>Print preview for %1</source>
         <translation>Предварительный просмотр %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1379"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1388"/>
         <source>New Drawing created.</source>
         <translation>Был создан новый чертёж.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="413"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="422"/>
         <source>Saving drawing...</source>
         <translation>Сохранение чертежа...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="422"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="431"/>
         <source>Saved drawing: %1</source>
         <translation>Чертёж сохранен: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1840"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1849"/>
         <source>Exporting drawing...</source>
         <translation>Экспорт чертежа...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1936"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1945"/>
         <source>Exported: %1</source>
         <translation>Экспортирован: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1976"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1985"/>
         <source>Exporting...</source>
         <translation>Экспорт...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2028"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2037"/>
         <source>Export complete</source>
         <translation>Экспорт завершен</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2028"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2037"/>
         <source>Export failed!</source>
         <translation>Ошибка экспорта!</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2135"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2144"/>
         <source>Printing complete</source>
         <translation>Печать завершена</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2761"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2770"/>
         <source>Command line</source>
         <translation>Командная строка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1295"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1304"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Блок &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1517"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1526"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -8963,17 +8972,17 @@ Please check the permissions.</source>
         <translation type="vanished">&amp;Ломаная</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1810"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1819"/>
         <source>Auto-saving drawing...</source>
         <translation>Автосохранение чертежа...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1818"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1827"/>
         <source>Auto-saved drawing</source>
         <translation>Чертёж автоматически сохранен</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1823"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1832"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -9000,42 +9009,42 @@ Auto-save disabled.</source>
         <translation type="vanished">Версия: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1613"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1622"/>
         <source>Warning: File already opened : </source>
         <translation>Предупреждение: файл уже открыт: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="438"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="447"/>
         <source>Cannot save the file </source>
         <translation>Невозможно сохранить файл </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="439"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="448"/>
         <source> , please check the filename and permissions.</source>
         <translation> , проверьте правильность имени файла и права доступа.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1165"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1174"/>
         <source>Tile &amp;Vertically</source>
         <translation>Мозаика по &amp;вертикали</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1113"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1122"/>
         <source>Ta&amp;b mode</source>
         <translation>&amp;Режим вкладок</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1455"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1464"/>
         <source>New document from template: </source>
         <translation>Новый документ из шаблона: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1501"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1510"/>
         <source>Select Template aborted</source>
         <translation>Выбор шаблона прерван</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1828"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1837"/>
         <source>Auto-saving failed</source>
         <translation>Ошибка при автосохранении</translation>
     </message>
@@ -9044,7 +9053,7 @@ Auto-save disabled.</source>
         <translation type="vanished">Привязка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1877"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1886"/>
         <source>Export as</source>
         <translation>Экспортировать как</translation>
     </message>
@@ -9061,11 +9070,11 @@ Auto-save disabled.</source>
         <translation type="vanished">Версия Qt: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="432"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1303"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1726"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2327"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2663"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="441"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1312"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1735"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2336"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2672"/>
         <source>Draft Mode</source>
         <translation>режим черновика</translation>
     </message>
@@ -9078,7 +9087,7 @@ Auto-save disabled.</source>
         <translation type="vanished">Экспорт</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1661"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1670"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -9087,7 +9096,7 @@ Please check its existence and permissions.</source>
 Проверьте его наличие и права доступа.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1747"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1756"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>Файл &apos;%1&apos; не существует. Операция прервана</translation>
     </message>
@@ -9152,22 +9161,22 @@ Please check its existence and permissions.</source>
         <translation type="vanished">Сетка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2701"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2710"/>
         <source>Toolbars</source>
         <translation>Панели</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2706"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2715"/>
         <source>Dockwidgets</source>
         <translation>Стыкуемые диалоги</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2813"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2822"/>
         <source>Device Options</source>
         <translation>Устройства</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2816"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2825"/>
         <source>Device</source>
         <translation>Устройство</translation>
     </message>
@@ -9188,7 +9197,7 @@ Please check its existence and permissions.</source>
         <translation type="vanished">&amp;Стыкуемый интерфейс</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="322"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="331"/>
         <source>Recent Files</source>
         <translation>Недавние файлы</translation>
     </message>
@@ -9217,17 +9226,17 @@ Please check its existence and permissions.</source>
         <translation type="vanished">Система</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2892"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2901"/>
         <source>Toolbar Creator</source>
         <translation>Создать панель</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2952"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2961"/>
         <source>Menu Creator</source>
         <translation>Создать меню</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2976"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2985"/>
         <source>Menu Assigner</source>
         <translation>Назначить меню</translation>
     </message>
@@ -9240,104 +9249,104 @@ Please check its existence and permissions.</source>
         <translation type="vanished">&amp;Чертежи</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="413"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="422"/>
         <source>Saving drawing: %1</source>
         <translation>Сохранение чертежа: % 1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="418"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="427"/>
         <source>Save cancelled</source>
         <translation>Сохранение отменено</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="532"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="541"/>
         <source>Closing Drawing</source>
         <translation>Закрытие чертежа</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="540"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="549"/>
         <source>Save changes to the following item?
 %1</source>
         <translation>Сохранить изменения в следующем элементе?
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="551"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="560"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="552"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="561"/>
         <source>Save &amp;as...</source>
         <translation>Сохранить &amp;как...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="555"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="564"/>
         <source>&amp;Save %1</source>
         <translation>&amp;Сохранить %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="556"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="565"/>
         <source>Save %1 &amp;as...</source>
         <translation>Сохраните %1 &amp;как...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1117"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1126"/>
         <source>&amp;Window mode</source>
         <translation>&amp;Оконный режим</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1123"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
         <source>&amp;Layout</source>
         <translation>&amp;Расположение</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1126"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1135"/>
         <source>Rounded</source>
         <translation>Скругленное</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1141"/>
         <source>Triangular</source>
         <translation>Треугольное</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1139"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1148"/>
         <source>North</source>
         <translation>Север</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1143"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1152"/>
         <source>South</source>
         <translation>Юг</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1147"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1156"/>
         <source>East</source>
         <translation>Восток</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1151"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1160"/>
         <source>West</source>
         <translation>Запад</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1156"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1165"/>
         <source>&amp;Arrange</source>
         <translation>&amp;Упорядоченный</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1159"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1168"/>
         <source>&amp;Maximized</source>
         <translation>&amp;Увеличенный</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1787"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1796"/>
         <source>Save All cancelled</source>
         <translation>Сохранить Все отменено</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2092"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2101"/>
         <source>Close All cancelled</source>
         <translation>Закрыть Все отменено</translation>
     </message>
@@ -9346,17 +9355,17 @@ Please check its existence and permissions.</source>
         <translation type="vanished">Код</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2761"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2770"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2762"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2771"/>
         <source>Float</source>
         <translation>Плавающее</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2762"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2771"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation>Панель</translation>
@@ -12380,7 +12389,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2940"/>
         <source>&lt;b&gt;Note:&lt;/b&gt; changes of settings made during this invocation of the dialog may be not reflected.</source>
-        <translation type="unfinished">&lt;b&gt;Внимание:&lt;/b&gt; Изменения переменных, сделанные во время этого вызова диалогового окна, могут не отражаться</translation>
+        <translation>&lt;b&gt;Внимание:&lt;/b&gt; Изменения переменных, сделанные во время этого вызова диалогового окна, могут не отражаться</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2963"/>
@@ -12499,7 +12508,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2799"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1201"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1015"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1020"/>
         <source>Dwg Units</source>
         <translation>Единицы измерения Dwg</translation>
     </message>
@@ -12540,7 +12549,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1199"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1013"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1018"/>
         <source>Screen %</source>
         <translation>Экран %</translation>
     </message>
@@ -12548,32 +12557,32 @@ Please choose the unit you want to use for new drawings and your preferred langu
 <context>
     <name>QG_DlgOptionsGeneral</name>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="676"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="681"/>
         <source>Preferences</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3893"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3903"/>
         <source>Translations:</source>
         <translation>Папка с переводами:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3793"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3803"/>
         <source>Hatch Patterns:</source>
         <translation>Стили штриховки:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3903"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3913"/>
         <source>Fonts:</source>
         <translation>Шрифты:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3858"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3868"/>
         <source>Part Libraries:</source>
         <translation>Корневая папка библиотеки блоков:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3579"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3589"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
@@ -12587,7 +12596,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3488"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3498"/>
         <source>Defaults for new drawings</source>
         <translation>Значения по умолчанию для новых чертежей</translation>
     </message>
@@ -12596,17 +12605,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">&amp;Внешний вид</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3585"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3595"/>
         <source>&amp;GUI Language:</source>
         <translation>&amp;Язык интерфейса:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3605"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3615"/>
         <source>&amp;Command Language:</source>
         <translation>&amp;Язык командной строки:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3773"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3783"/>
         <source>&amp;Paths</source>
         <translation>&amp;Пути</translation>
     </message>
@@ -12616,7 +12625,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&amp;Умолчания</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3547"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3557"/>
         <source>&amp;Unit:</source>
         <translation>&amp;Единица измерения:</translation>
     </message>
@@ -12648,7 +12657,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">&amp;Подсвеченный цвет:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="677"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="682"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>Пожалуйста перезапустите приложение для изменения настроек.</translation>
     </message>
@@ -12677,7 +12686,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Время между автоматическими сохранениями документа в минутах.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3370"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3360"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>Автоматически создавать резервную копию текущего чертежа.</translation>
     </message>
@@ -12686,7 +12695,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">Создавать резервную копию</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3980"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3990"/>
         <source>Template:</source>
         <translation>Папка шаблонов чертежей:</translation>
     </message>
@@ -12738,27 +12747,27 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">Изменять слой выбранных элементов при переключении слоя</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3463"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3473"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Временно влкючается режим свободной привязки если нажат ПРОБЕЛ и окно команд активно</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3531"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3541"/>
         <source>Left  Isometric Grid</source>
         <translation>Изометрическая сетка &quot;Слева&quot;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3511"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3521"/>
         <source>RIght Isometric Grid</source>
         <translation>Изометрическа сетка &quot;Справа&quot;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3521"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3531"/>
         <source>Orthogonal Grid</source>
         <translation>Прямоугольная сетка</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3494"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3504"/>
         <source>Top Isometric Grid</source>
         <translation>Изометрическая сетка &quot;Сверху&quot;</translation>
     </message>
@@ -12768,68 +12777,68 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Показывать поясняющие объекты при пред-просмотре команд</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3560"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3570"/>
         <source>If checked, new drawing will be created with grid disabled</source>
         <translation>Если выбрано, новые чертежи создаются с выключенной сеткой</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3563"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3573"/>
         <source>Grid is Off </source>
         <translation>Без сетки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3628"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3638"/>
         <source>New Versions</source>
         <translation>Проверка новых версий</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3634"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3644"/>
         <source>Check GitHub for new releases of LibreCAD on program startup</source>
         <translation>Проверяет не появилась ли новая версия программы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3637"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3647"/>
         <source>Check for new versions on startup</source>
         <translation>Проверять наличие новой версии на старте</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3644"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3654"/>
         <source>If checked, pre-release versions will be ignored</source>
         <translation>Если выбрано, промежуточные версии будут игнорироваться</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3650"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3660"/>
         <source>Ignore pre-release versions</source>
         <translation>Игнорировать не финальные версии (alfa,beta)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3719"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3729"/>
         <source>Open last opened files</source>
         <translation>Открывать последние редактировавшиеся чертеже</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3706"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3716"/>
         <source>If enabled, drop-down menus may become floating</source>
         <translation>Если выбрано, выпадающие меню могу быть плавающими</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3709"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3719"/>
         <source>Allow menus detaching</source>
         <translation>Разрешить плавающие меню</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3696"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3706"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
         <translation>Если выбрано, индивидуальные компоненты статусной строки фиксированы и не могут находиться в других местах.
 Иначе, индивидуальные компоненты ведут себя как панели инструментов.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3699"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3709"/>
         <source>Use &quot;classic&quot; statusbar</source>
         <translation>Использовать &quot;классическую&quot; строку состояния</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3817"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3827"/>
         <source>Clear Settings</source>
         <translation>Сброс настроек</translation>
     </message>
@@ -12838,7 +12847,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">Восстановить геометрию и расположение программы в состояние по умолчанию</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3832"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3842"/>
         <source>Layout</source>
         <translation>Расположение</translation>
     </message>
@@ -12847,7 +12856,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">Восстановить программу в состояние по умолчанию</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3848"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3858"/>
         <source>All</source>
         <translation>Всё</translation>
     </message>
@@ -12870,32 +12879,32 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Скрывать указатель при привязке</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3739"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3749"/>
         <source>Start in tab mode</source>
         <translation>Начинать в режиме вкладок</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3660"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3670"/>
         <source>Startup</source>
         <translation>Запуск</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3749"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3759"/>
         <source>Display loading screen</source>
         <translation>Отображать экран загрузки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3729"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3739"/>
         <source>Start with main window maximized</source>
         <translation>Максимально раскрыть окно</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3676"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3686"/>
         <source>Enable CAD dockwidgets</source>
         <translation>Включить стыкуемые диалоги САПР</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3666"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3676"/>
         <source>Enable CAD toolbars</source>
         <translation>Включить панели САПР</translation>
     </message>
@@ -12906,12 +12915,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>#1E90FF</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="791"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="796"/>
         <source>Clear settings</source>
         <translation>Сбросить настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="792"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="797"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation>Включить пользовательские меню и панели?</translation>
     </message>
@@ -12921,7 +12930,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Если этот параметр включен, активация слоя изменит все выбранные объекты на этом новом слое. Для изменения нескольких объектов на слое: сначала выберите необходимые объекты; активируйте слой в виджете слоев. Это приведет к тому, что все выбранные объекты будут изменены и будут принадлежать новому слою.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3913"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3923"/>
         <source>Variable File:</source>
         <translation>Файл переменных:</translation>
     </message>
@@ -12936,7 +12945,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&amp;Количество объектов предварительного просмотра:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3394"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3370"/>
         <source>Don&apos;t use native OS file open dialog</source>
         <translation>Не используйте открытый диалог с родным файлом OS</translation>
     </message>
@@ -13936,47 +13945,47 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Изменять слой выбранных элементов при переключении слоя</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3360"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3390"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
         <translation>Если выбрано, кнопка закрытия (крестик) будет показана на вкладках чертежей (если приложение в режиме вкладок)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3363"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3393"/>
         <source>Show Close button on drawings tabs</source>
         <translation>Показывать кнопку закрытия вкладки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3381"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3411"/>
         <source>Always</source>
         <translation>Всегда</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3386"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3416"/>
         <source>Active Tab</source>
         <translation>Активная Вкладка</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3401"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3400"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
         <translation>Если выбрано, сочетания клавиш будут показываться во всплывающих подсказках</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3404"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3403"/>
         <source>Show keyboard shortcuts in actions tooltips</source>
         <translation>Показывать сочетанию клавишь во всплывающих подсказках команд</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3373"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3363"/>
         <source>Auto save backup each</source>
         <translation>Сохранять копию через</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3421"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3377"/>
         <source>If checked, location of dialog will not be saved, but size will</source>
         <translation>Если выбрано, положение окон сохраняться не будет, а размер будет</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3427"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3383"/>
         <source>Persist dialog size only</source>
         <translation>Сохранять только размер диалогов</translation>
     </message>
@@ -13986,129 +13995,139 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation> мин</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3411"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3424"/>
         <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
         <translation>Если выбрано, диалоги будут показываться с размером и позицией, установленной при их предыдущем показе</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3414"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3427"/>
         <source>Persistent dialogs location and size</source>
         <translation>Сохранять позицю и размер диалоговых окон</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3683"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3693"/>
         <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
         <translation>Если выбрано, то сообщение подсказки активной комманды будет показано в нижней статусной строке</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3689"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3699"/>
         <source>Duplicate prompt messages of actions in statusbar</source>
         <translation>Показывать подсказки команд еще и в строке статуса</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3450"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3460"/>
         <source>Keyboard Settings</source>
         <translation>Настройки клавиатуры</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3456"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3466"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
         <translation>Вычисление команд при нажатии ПРОБЕЛ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3504"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3514"/>
         <source>Drawing units</source>
         <translation>Единицы измерения чертежа</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3598"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3608"/>
         <source>Languages for commands in Cmd Widget</source>
         <translation>Язык команд коммандной строки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3618"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3628"/>
         <source>Language to use for GUI and messages</source>
         <translation>Язык, который будет использован в пользовательском интерфейсе и сообщениях</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3746"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3756"/>
         <source>Defines whether splash screen will be shown on startup</source>
         <translation>Если выбрно, на старте программы будет показан экран загрузки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3736"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3746"/>
         <source>Controls default mode for drawings</source>
         <translation>Определяет режим окон чертежей (вкладки или окна)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3726"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3736"/>
         <source>If checked, after start the main window will be maximized</source>
         <translation>Если выбрано, после старта программы главное окно будет максимизированно</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3716"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3726"/>
         <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
         <translation>Если выбрано, то при открытии программы будут автоматически открываться
 чертежи которые были открыты при последнем выходе из программы.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3868"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3882"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3934"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3990"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3434"/>
+        <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
+        <translation>Если выбрано, иконка текущей команды будет показываться в панели опций команд перед полями опций</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3437"/>
+        <source>Show current command icon in options toolbar</source>
+        <translation>Показывать иконку текущей команды в панели опций</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3789"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3878"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3892"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3944"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4000"/>
         <source>Click to select directory</source>
         <translation>Нажмите чтобы выбрать папку</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3803"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3813"/>
         <source>Path to folder with fonts</source>
         <translation>Путь к папке с шрифтами</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3810"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3820"/>
         <source>Path to file with keyboard shortcuts mapping variables</source>
         <translation>Путь к файлу с настройками клавиатурных сочетаний для команд</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3829"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3839"/>
         <source>Restores program geometry/layout to original state</source>
         <translation>Восстанавливает положение и размер элементов пользовательского интерфейса к их первоначальным состояниям.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3845"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3855"/>
         <source>Restores the program settings to its original state</source>
         <translation>Восстановление настроек программы к их исходному состоянию</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3920"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3948"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3930"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3958"/>
         <source>Click to select file</source>
         <translation>Нажмите для выбора файла</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3959"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3969"/>
         <source>Path to folder with hatch patterns</source>
         <translation>Путь к папке с шаблонами штриховки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3966"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3976"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Путь к папке с библиотекой блоков. Файлы  dxf должны размещаться в под-папках этой папки.
 Названия по дочерних папок будут показаны в окне Библиотека Элементов</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3973"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3983"/>
         <source>Path to file with variables</source>
         <translation>Путь к файлу переменных</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4001"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4011"/>
         <source>Path to folder with translation files</source>
         <translation>Путь к папке с файлами переводов локализации</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4008"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4018"/>
         <source>Shortcuts Mappings:</source>
         <translation>Файл настроек клавиатурных команд:</translation>
     </message>
@@ -14117,7 +14136,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">Переключает режим свободной привязки, при нажатии клавиши ПРОБЕЛ и пустом окне команд</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3466"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3476"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
         <translation>Переключение режима свободной привязки при нажатии ПРОБЕЛ</translation>
     </message>
@@ -16037,6 +16056,15 @@ p, li { white-space: pre-wrap; }
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
+    <message>
+        <source>Current Action: </source>
+        <translation type="vanished">Активная Команда:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/status_bar/qg_mousewidget.cpp" line="138"/>
+        <source>Current Action:</source>
+        <translation>Активная Команда:</translation>
+    </message>
 </context>
 <context>
     <name>QG_PenToolBar</name>
@@ -16462,38 +16490,38 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="175"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1520"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1664"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1822"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="177"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1529"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1673"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1831"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="270"/>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="282"/>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="344"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="272"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="284"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="346"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1760"/>
         <source>Remove Layer</source>
         <translation>Удалить слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="283"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="285"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
         <translation>Слой &quot;%1&quot; никогда нельзя удалить.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="425"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="427"/>
         <source>Layer Dialog</source>
         <translation>Диалоговое окно слоя</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="539"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="541"/>
         <source>Remove Block</source>
         <translation>Удалить блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="540"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="542"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
         <translation>Блок &quot;%1&quot; и все его объекты будут удалены.</translation>
     </message>
@@ -16510,20 +16538,20 @@ p, li { white-space: pre-wrap; }
         <translation>Слой &quot;%1&quot; уже существует. Укажите другое имя.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="271"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="273"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
         <translation>Слой &quot;%1&quot; и всё его содержимое будет удалено.
 Это действие будет НЕВОЗМОЖНО отменить.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="345"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="347"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1760"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
         <translation>Слой &quot;0&quot; никогда не может быть удален.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="355"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="357"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1808"/>
         <source>Remove %n layer(s)</source>
         <translation>
@@ -16533,30 +16561,30 @@ This action can NOT be undone.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="359"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="361"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1809"/>
         <source>Listed layers and all entities on them will be removed.</source>
         <translation>Перечисленные слои и все объекты на них будут удалены.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="361"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="363"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1810"/>
         <source>Warning: this action can NOT be undone!</source>
         <translation>Предупреждение: это действие не может быть отменено!</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="366"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="368"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
         <translation>Предупреждение: слой &quot;0&quot; никогда не может быть удален.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="370"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="372"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1811"/>
         <source>Layers for removal:</source>
         <translation>Слои для удаления:</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="598"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="600"/>
         <source>Remove %n block(s)</source>
         <translation>
             <numerusform>Удалить блок %n</numerusform>
@@ -16565,12 +16593,12 @@ This action can NOT be undone.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="600"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="602"/>
         <source>Listed blocks and all their entities will be removed.</source>
         <translation>Перечисленные блоки и все их объекты будут удалены.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="603"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="605"/>
         <source>Blocks for removal:</source>
         <translation>Блоки для удаления:</translation>
     </message>
@@ -16812,62 +16840,62 @@ Do you want to replace it?</source>
         <translation>Открыть чертеж</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="665"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="667"/>
         <source>Open Image</source>
         <translation>Открыть изображение</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1148"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1164"/>
         <source>Windows Bitmap</source>
         <translation>Растровое изображение Windows</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1150"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1166"/>
         <source>Joint Photographic Experts Group</source>
         <translation>Объединенная группа экспертов по фотографии</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1154"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1170"/>
         <source>Multiple-image Network Graphics</source>
         <translation>Сетевая графика с несколькими изображениями</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1156"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1172"/>
         <source>Portable Bit Map</source>
         <translation>Портативная битовая карта</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1158"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1174"/>
         <source>Portable Grey Map</source>
         <translation>Портативная серая карта</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1160"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1176"/>
         <source>Portable Network Graphic</source>
         <translation>Портативный сетевой график</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1162"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1178"/>
         <source>Portable Pixel Map</source>
         <translation>Портативная пиксельная карта</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1164"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1180"/>
         <source>X Bitmap Format</source>
         <translation>X Растровый формат</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1166"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1182"/>
         <source>X Pixel Map</source>
         <translation>X пиксельная карта</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="658"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="660"/>
         <source>All Image Files (%1)</source>
         <translation>Все файлы изображений (%1)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1152"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1168"/>
         <source>Graphics Interchange Format</source>
         <translation>Формат обмена графикой</translation>
     </message>
@@ -16887,7 +16915,7 @@ Do you want to replace it?</source>
         <translation>Шрифт %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="660"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="662"/>
         <source>All Files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>
@@ -17074,62 +17102,62 @@ Do you want to replace it?</source>
         <translation>Jww %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1168"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1184"/>
         <source>Scalable Vector Graphics</source>
         <translation>Векторный формат SVG</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1170"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1186"/>
         <source>SGI Black &amp; White</source>
         <translation>Чёрно-белый SGI</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1172"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1188"/>
         <source>Encapsulated PostScript</source>
         <translation>Встраиваемый Postscript</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1174"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1190"/>
         <source>Encapsulated PostScript Format</source>
         <translation>Встраиваемый формат Postscript</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1176"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1192"/>
         <source>Encapsulated PostScript Interchange</source>
         <translation>Встраиваемый формат Postscript для обмена</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1178"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1194"/>
         <source>Windows Icon</source>
         <translation>Значок Windows</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1180"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1196"/>
         <source>JPEG 2000</source>
         <translation>JPEG 2000</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1182"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1198"/>
         <source>ZSoft Paintbrush</source>
         <translation>ZМягкая кисть</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1184"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1200"/>
         <source>PC Paint</source>
         <translation>PC Paint</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1186"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1202"/>
         <source>SGI-Bilddatei</source>
         <translation>Файл изображения-SGI</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1188"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1204"/>
         <source>Targa Image File</source>
         <translation>Файл изображения Targa</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1190"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1206"/>
         <source>Tagged Image File Format</source>
         <translation>Теговый формат растровых изображений</translation>
     </message>
@@ -18501,7 +18529,7 @@ Do you want to replace it?</source>
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1695"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1704"/>
         <source>Invalid objects removed:</source>
         <translation>Исключенные объекты:</translation>
     </message>
@@ -18563,8 +18591,8 @@ Do you want to replace it?</source>
         <translation>Режим расчета: выключен</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="741"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3142"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="735"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3151"/>
         <source>License</source>
         <translation>Лицензия</translation>
     </message>
@@ -20532,7 +20560,7 @@ Do you want to replace it?</source>
         <translation>Пользовательский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="196"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="198"/>
         <source>noname</source>
         <comment>default layer name</comment>
         <translation>безымянный</translation>
@@ -20706,12 +20734,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDefault</name>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="779"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="780"/>
         <source>Set new position</source>
         <translation>Укажите новую позицию</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="787"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="788"/>
         <source>Lengthen Line</source>
         <translation>Увеличить прямую</translation>
     </message>
@@ -20720,42 +20748,42 @@ This block cannot be inserted.</source>
         <translation type="vanished">Увеличить дугу</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="790"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="791"/>
         <source>Lengthen/Scale</source>
         <translation>Изменить угол или Масштабировать</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="790"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="791"/>
         <source>Lengthen Chord</source>
         <translation>Изменить хорду</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="793"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="794"/>
         <source>Move in Previous segment direction</source>
         <translation>Перемещать в направлении предыдущего сегмента</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="793"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="794"/>
         <source>Move in Next segment direction</source>
         <translation>Перемещать в направлении следующего сегмента</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="798"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="799"/>
         <source>Set new ref position</source>
         <translation>Укажите новую позицию контрольной точки</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="802"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="803"/>
         <source>Scroll horizontally</source>
         <translation>Вертикальная прокрутка</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="802"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="803"/>
         <source>Scroll Vertically</source>
         <translation>Горизонтальная прокрутка</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="806"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="807"/>
         <source>Choose second edge</source>
         <translation>Выберите вторую грань</translation>
     </message>

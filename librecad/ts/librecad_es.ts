@@ -5300,6 +5300,11 @@ Warning: this action can NOT be undone!</source>
         <source>Form</source>
         <translation type="unfinished">Forma</translation>
     </message>
+    <message>
+        <location filename="../src/ui/components/containers/lc_optionswidgetsholder.cpp" line="102"/>
+        <source>Current Action:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_PasteTransformOptions</name>
@@ -8061,90 +8066,90 @@ p, li { white-space: pre-wrap; }
         <translation>Flotar</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="583"/>
         <source>Lines</source>
         <translation>Líneas</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="590"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="584"/>
         <source>Circles</source>
         <translation>Círculos</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="591"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="585"/>
         <source>Freehand</source>
         <translation>A mano</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="586"/>
         <source>Ellipses</source>
         <translation>Elipses</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="593"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="587"/>
         <source>PolyLines</source>
         <translation>PolyLinias</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="345"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="567"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="594"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="561"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="588"/>
         <source>Select</source>
         <translation>Seleccionar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="340"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="556"/>
         <source>Line</source>
         <translation type="unfinished">Línea</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="341"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="563"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="557"/>
         <source>Circle</source>
         <translation type="unfinished">Círculo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="342"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="564"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="558"/>
         <source>Curve</source>
         <translation type="unfinished">Curva</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="343"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Ellipse</source>
         <translation type="unfinished">Elipse</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="344"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="566"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="560"/>
         <source>Polyline</source>
         <translation type="unfinished">Polilínea</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="346"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="568"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
         <source>Dimension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="569"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="596"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="563"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="590"/>
         <source>Other</source>
         <translation type="unfinished">Otros</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="349"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="571"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="350"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="491"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="599"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="593"/>
         <source>Order</source>
         <translation type="unfinished">Orden</translation>
     </message>
@@ -8195,276 +8200,276 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="512"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="506"/>
         <source>Snap Selection</source>
         <translation type="unfinished">Forzar selección</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="522"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="516"/>
         <source>Pen</source>
         <translation type="unfinished">Trazador</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="528"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="522"/>
         <source>Tool Options</source>
         <translation type="unfinished">Opciones de herramientas</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="530"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="758"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="524"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="752"/>
         <source>Dock Areas</source>
         <translation type="unfinished">Áreas de muelle</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="535"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
         <source>Creators</source>
         <translation type="unfinished">Autores</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="539"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="533"/>
         <source>Preferences</source>
         <translation type="unfinished">Preferencias</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="586"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="580"/>
         <source>Categories</source>
         <translation type="unfinished">Categorías</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="595"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
         <source>Dimensions</source>
         <translation>Cotas</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="608"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="602"/>
         <source>&amp;File</source>
         <translation type="unfinished">&amp;Archivo</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="619"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="613"/>
         <source>Import</source>
         <translation type="unfinished">Importar</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="624"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="618"/>
         <source>Export</source>
         <translation type="unfinished">Exportar</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="641"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="635"/>
         <source>&amp;Options</source>
         <translation type="unfinished">&amp;Opciones</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="651"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="645"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;Editar</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="667"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="661"/>
         <source>Pl&amp;ugins</source>
         <translation type="unfinished">Pl&amp;ugins</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="669"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="663"/>
         <source>&amp;View</source>
         <translation type="unfinished">&amp;Ver</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="699"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="693"/>
         <source>&amp;Views Restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="707"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="701"/>
         <source>&amp;Tools</source>
         <translation type="unfinished">&amp;Herramientas</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="708"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="702"/>
         <source>&amp;Line</source>
         <translation type="unfinished">&amp;Línea</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="709"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="703"/>
         <source>&amp;Circle</source>
         <translation type="unfinished">&amp;Círculo</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="710"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="704"/>
         <source>&amp;Curve</source>
         <translation type="unfinished">&amp;Curva</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="711"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="705"/>
         <source>&amp;Ellipse</source>
         <translation type="unfinished">&amp;Elipse</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="712"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="706"/>
         <source>&amp;Polyline</source>
         <translation type="unfinished">&amp;Polilínea</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="713"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="707"/>
         <source>&amp;Select</source>
         <translation type="unfinished">&amp;Seleccionar</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="714"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="708"/>
         <source>Dime&amp;nsion</source>
         <translation type="unfinished">Co&amp;ta</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="715"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="709"/>
         <source>Ot&amp;her</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="716"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="710"/>
         <source>&amp;Modify</source>
         <translation type="unfinished">&amp;Modificar</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="717"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="711"/>
         <source>&amp;Info</source>
         <translation type="unfinished">&amp;Información</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="718"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="712"/>
         <source>&amp;Order</source>
         <translation type="unfinished">&amp;Orden</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="720"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="714"/>
         <source>&amp;Drawings</source>
         <translation type="unfinished">&amp;Dibujos</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="727"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="721"/>
         <source>&amp;Help</source>
         <translation type="unfinished">A&amp;yuda</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="729"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="723"/>
         <source>On&amp;line Docs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="730"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="724"/>
         <source>&amp;Wiki</source>
         <translation type="unfinished">&amp;Wiki</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="731"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="725"/>
         <source>User&apos;s &amp;Manual</source>
         <translation type="unfinished">&amp;Manual del Usuario</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="732"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="726"/>
         <source>&amp;Commands</source>
         <translation type="unfinished">&amp;Comandos</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="733"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="727"/>
         <source>&amp;Style Sheets</source>
         <translation type="unfinished">&amp;Hojas de Estilo</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="734"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="728"/>
         <source>Wid&amp;gets</source>
         <translation type="unfinished">Wid&amp;gets</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="738"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="732"/>
         <source>About</source>
         <translation type="unfinished">Acerca de</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="745"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="739"/>
         <source>&amp;Forum</source>
         <translation type="unfinished">&amp;Foro</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="746"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="740"/>
         <source>Zulip &amp;Chat</source>
         <translation type="unfinished">Zulip &amp;Chat</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="748"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="742"/>
         <source>&amp;Submit Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="749"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="743"/>
         <source>&amp;Request Feature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="750"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="744"/>
         <source>&amp;Releases Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="754"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="748"/>
         <source>&amp;Donate</source>
         <translation type="unfinished">&amp;Donar</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="756"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="750"/>
         <source>Widgets</source>
         <translation type="unfinished">Aparato</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="766"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="760"/>
         <source>Dock Wid&amp;gets</source>
         <translation type="unfinished">Acoplamiento de wid&amp;gets</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="794"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="788"/>
         <source>&amp;Toolbars</source>
         <translation type="unfinished">&amp;Barras de herramientas</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1012"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1081"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1006"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1075"/>
         <source>Grid Status</source>
         <translation type="unfinished">Estado Maya</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1046"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1040"/>
         <source>Coordinates</source>
         <translation type="unfinished">Coordenadas</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1053"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1047"/>
         <source>Relative Zero</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1060"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1054"/>
         <source>Mouse</source>
         <translation type="unfinished">Ratón</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1067"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1061"/>
         <source>Selection Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1074"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1068"/>
         <source>Active Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="348"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="570"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="597"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="564"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="591"/>
         <source>Modify</source>
         <translation>Modificar</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="598"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
         <source>Measure</source>
         <translation>Medidas</translation>
     </message>
@@ -8699,52 +8704,52 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">A&amp;yuda</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1163"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1172"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Cascada</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1164"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1173"/>
         <source>&amp;Tile</source>
         <translation>&amp;Mosaico</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1166"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1175"/>
         <source>Tile &amp;Horizontally</source>
         <translation>Mosaico &amp;horizontal</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1251"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1260"/>
         <source>Creating new file...</source>
         <translation>Creando un archivo nuevo...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1297"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1306"/>
         <source>unnamed document %1</source>
         <translation>documento sin nombre %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2731"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2740"/>
         <source>Opening recent file...</source>
         <translation>Abriendo archivo reciente...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1742"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1751"/>
         <source>Loaded document: </source>
         <translation>Documento cargado: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1748"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1757"/>
         <source>Opening aborted</source>
         <translation>Carga cancelada</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2131"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2140"/>
         <source>Printing...</source>
         <translation>Imprimiendo...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2286"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2295"/>
         <source>Exiting application...</source>
         <translation>Saliendo de la aplicación...</translation>
     </message>
@@ -8777,67 +8782,67 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Lista de bloques</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2207"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2216"/>
         <source>Print preview for %1</source>
         <translation>Previsualización de impresión %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1379"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1388"/>
         <source>New Drawing created.</source>
         <translation>Nuevo dibujo creado.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="413"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="422"/>
         <source>Saving drawing...</source>
         <translation>Guardando el dibujo...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="422"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="431"/>
         <source>Saved drawing: %1</source>
         <translation>Dibujo guardado: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1840"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1849"/>
         <source>Exporting drawing...</source>
         <translation>Exportando el dibujo...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1936"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1945"/>
         <source>Exported: %1</source>
         <translation>Exportado: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1976"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1985"/>
         <source>Exporting...</source>
         <translation>Exportando...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2028"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2037"/>
         <source>Export complete</source>
         <translation>Exportación completada</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2028"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2037"/>
         <source>Export failed!</source>
         <translation>¡Falló la exportación!</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2135"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2144"/>
         <source>Printing complete</source>
         <translation>Impresión completa</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2761"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2770"/>
         <source>Command line</source>
         <translation>Línea de comandos</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1295"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1304"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Bloque &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1517"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1526"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -8850,17 +8855,17 @@ Compruebe los permisos.</translation>
         <translation type="vanished">&amp;Polilínea</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1810"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1819"/>
         <source>Auto-saving drawing...</source>
         <translation>Guardando el dibujo automáticamente...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1818"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1827"/>
         <source>Auto-saved drawing</source>
         <translation>Dibujo guardado automáticamente</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1823"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1832"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -8887,42 +8892,42 @@ Guardado automático desactivado.</translation>
         <translation type="vanished">Versión: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1613"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1622"/>
         <source>Warning: File already opened : </source>
         <translation>Advertencia: Archivo ya abierto: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="438"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="447"/>
         <source>Cannot save the file </source>
         <translation>No se puede guardar el archivo </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="439"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="448"/>
         <source> , please check the filename and permissions.</source>
         <translation> , por favor, compruebe el nombre y los permisos.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1165"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1174"/>
         <source>Tile &amp;Vertically</source>
         <translation>Mosaico &amp;Vertical</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1113"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1122"/>
         <source>Ta&amp;b mode</source>
         <translation>Modo de &amp;Pestaña</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1455"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1464"/>
         <source>New document from template: </source>
         <translation>Nuevo documento desde plantilla: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1501"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1510"/>
         <source>Select Template aborted</source>
         <translation>Selección de plantilla cancelada</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1828"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1837"/>
         <source>Auto-saving failed</source>
         <translation>Fallo de autoguardado</translation>
     </message>
@@ -8931,7 +8936,7 @@ Guardado automático desactivado.</translation>
         <translation type="vanished">Forzar selección</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1877"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1886"/>
         <source>Export as</source>
         <translation>Exportar como</translation>
     </message>
@@ -8948,11 +8953,11 @@ Guardado automático desactivado.</translation>
         <translation type="vanished">Versión Qt: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="432"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1303"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1726"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2327"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2663"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="441"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1312"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1735"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2336"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2672"/>
         <source>Draft Mode</source>
         <translation>Modo borrador</translation>
     </message>
@@ -8965,7 +8970,7 @@ Guardado automático desactivado.</translation>
         <translation type="vanished">Exportar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1661"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1670"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -8974,7 +8979,7 @@ Please check its existence and permissions.</source>
 Por favor revise su existencia y permisos.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1747"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1756"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>El archivo &apos;%1&apos; no existe. Apertura del archivo cancelada</translation>
     </message>
@@ -9039,22 +9044,22 @@ Por favor revise su existencia y permisos.</translation>
         <translation type="vanished">Estado Maya</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2701"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2710"/>
         <source>Toolbars</source>
         <translation>Barras de herramientas</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2706"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2715"/>
         <source>Dockwidgets</source>
         <translation>widgets de muelle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2813"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2822"/>
         <source>Device Options</source>
         <translation>Opciones del dispositivo</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2816"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2825"/>
         <source>Device</source>
         <translation>Dispositivo</translation>
     </message>
@@ -9075,7 +9080,7 @@ Por favor revise su existencia y permisos.</translation>
         <translation type="vanished">Acoplamiento de wid&amp;gets</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="322"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="331"/>
         <source>Recent Files</source>
         <translation>Archivos recientes</translation>
     </message>
@@ -9104,17 +9109,17 @@ Por favor revise su existencia y permisos.</translation>
         <translation type="vanished">Sistema</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2892"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2901"/>
         <source>Toolbar Creator</source>
         <translation>Creador de la barra de herramientas</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2952"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2961"/>
         <source>Menu Creator</source>
         <translation>Creador de los menús</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2976"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2985"/>
         <source>Menu Assigner</source>
         <translation>Asignador del menú</translation>
     </message>
@@ -9127,104 +9132,104 @@ Por favor revise su existencia y permisos.</translation>
         <translation type="vanished">&amp;Dibujos</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="413"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="422"/>
         <source>Saving drawing: %1</source>
         <translation>Guardando dibujo: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="418"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="427"/>
         <source>Save cancelled</source>
         <translation>Guardado cancelado</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="532"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="541"/>
         <source>Closing Drawing</source>
         <translation>Cerrando el dibujo</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="540"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="549"/>
         <source>Save changes to the following item?
 %1</source>
         <translation>¿Guardar cambios en el siguiente elemento?
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="551"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="560"/>
         <source>&amp;Save</source>
         <translation>&amp;Guardar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="552"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="561"/>
         <source>Save &amp;as...</source>
         <translation>Guardar &amp;como...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="555"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="564"/>
         <source>&amp;Save %1</source>
         <translation>&amp;Guardar %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="556"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="565"/>
         <source>Save %1 &amp;as...</source>
         <translation>Guardar %1 &amp;como...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1117"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1126"/>
         <source>&amp;Window mode</source>
         <translation>&amp;Modo ventana</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1123"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
         <source>&amp;Layout</source>
         <translation>&amp;Disposición</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1126"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1135"/>
         <source>Rounded</source>
         <translation>Redondeado</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1141"/>
         <source>Triangular</source>
         <translation>Triangulado</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1139"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1148"/>
         <source>North</source>
         <translation>Norte</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1143"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1152"/>
         <source>South</source>
         <translation>Sur</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1147"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1156"/>
         <source>East</source>
         <translation>Este</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1151"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1160"/>
         <source>West</source>
         <translation>Oeste</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1156"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1165"/>
         <source>&amp;Arrange</source>
         <translation>&amp;Ordenar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1159"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1168"/>
         <source>&amp;Maximized</source>
         <translation>&amp;Maximizado</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1787"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1796"/>
         <source>Save All cancelled</source>
         <translation>Guardar Todo lo cancelado</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2092"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2101"/>
         <source>Close All cancelled</source>
         <translation>Cerrar Todo cancelado</translation>
     </message>
@@ -9233,17 +9238,17 @@ Por favor revise su existencia y permisos.</translation>
         <translation type="vanished">El Código</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2761"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2770"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2762"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2771"/>
         <source>Float</source>
         <translation>Reservar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2762"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2771"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation>Muelle</translation>
@@ -12380,7 +12385,7 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2799"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1201"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1015"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1020"/>
         <source>Dwg Units</source>
         <translation>Unidades de dibujo</translation>
     </message>
@@ -12421,7 +12426,7 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1199"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1013"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1018"/>
         <source>Screen %</source>
         <translation>% Pantalla</translation>
     </message>
@@ -12429,32 +12434,32 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
 <context>
     <name>QG_DlgOptionsGeneral</name>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="676"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="681"/>
         <source>Preferences</source>
         <translation>Preferencias</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3893"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3903"/>
         <source>Translations:</source>
         <translation>Traducciones:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3793"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3803"/>
         <source>Hatch Patterns:</source>
         <translation>Patrones de Sombreado:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3903"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3913"/>
         <source>Fonts:</source>
         <translation>Fuentes:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3858"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3868"/>
         <source>Part Libraries:</source>
         <translation>Bibliotecas:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3579"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3589"/>
         <source>Language</source>
         <translation>Idioma</translation>
     </message>
@@ -12468,7 +12473,7 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation>Preferencias de LibreCAD</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3488"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3498"/>
         <source>Defaults for new drawings</source>
         <translation>Establecer valores por defecto</translation>
     </message>
@@ -12477,17 +12482,17 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation type="vanished">&amp;Apariencia</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3585"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3595"/>
         <source>&amp;GUI Language:</source>
         <translation>Idioma de &amp;Menu:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3605"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3615"/>
         <source>&amp;Command Language:</source>
         <translation>Idioma de &amp;Comandos:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3773"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3783"/>
         <source>&amp;Paths</source>
         <translation>&amp;Rutas</translation>
     </message>
@@ -12497,7 +12502,7 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation>&amp;Valores por defecto</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3547"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3557"/>
         <source>&amp;Unit:</source>
         <translation>&amp;Unidades:</translation>
     </message>
@@ -12525,7 +12530,7 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation>Escalar rejilla a&amp;utomáticamente</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="677"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="682"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>Por favor, reinicie LibreCAD para aplicar todos los cambios.</translation>
     </message>
@@ -12558,7 +12563,7 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation>Tiempo entre salvados automáticos del documento en minutos.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3370"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3360"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>Si está marcado, LibreCAD genera automáticamente una copia de seguridad del dibujo actual.</translation>
     </message>
@@ -12567,7 +12572,7 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation type="vanished">Copia de seguridad automática</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3980"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3990"/>
         <source>Template:</source>
         <translation>Plantilla:</translation>
     </message>
@@ -12619,27 +12624,27 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation type="vanished">Modificar capa de entidades seleccionadas,  en la activación de capa</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3463"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3473"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3531"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3541"/>
         <source>Left  Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3511"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3521"/>
         <source>RIght Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3521"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3531"/>
         <source>Orthogonal Grid</source>
         <translation type="unfinished">Rejilla ortogonal</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3494"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3504"/>
         <source>Top Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12710,77 +12715,87 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3683"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3434"/>
+        <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3437"/>
+        <source>Show current command icon in options toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3693"/>
         <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3689"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3699"/>
         <source>Duplicate prompt messages of actions in statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3560"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3570"/>
         <source>If checked, new drawing will be created with grid disabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3563"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3573"/>
         <source>Grid is Off </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3628"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3638"/>
         <source>New Versions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3634"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3644"/>
         <source>Check GitHub for new releases of LibreCAD on program startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3637"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3647"/>
         <source>Check for new versions on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3644"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3654"/>
         <source>If checked, pre-release versions will be ignored</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3650"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3660"/>
         <source>Ignore pre-release versions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3719"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3729"/>
         <source>Open last opened files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3706"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3716"/>
         <source>If enabled, drop-down menus may become floating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3709"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3719"/>
         <source>Allow menus detaching</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3696"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3706"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3699"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3709"/>
         <source>Use &quot;classic&quot; statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3817"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3827"/>
         <source>Clear Settings</source>
         <translation>Borrar configuración</translation>
     </message>
@@ -12789,7 +12804,7 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation type="vanished">Restaura la geometría/diseño del programa al estado original</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3832"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3842"/>
         <source>Layout</source>
         <translation>Disposición</translation>
     </message>
@@ -12798,7 +12813,7 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation type="vanished">Restaura el programa a su estado original</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3848"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3858"/>
         <source>All</source>
         <translation>Todo</translation>
     </message>
@@ -12821,32 +12836,32 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation>Ocultar el cursor al ajustar</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3739"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3749"/>
         <source>Start in tab mode</source>
         <translation>Ocultar el cursor en el ajuste</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3660"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3670"/>
         <source>Startup</source>
         <translation>Puesta en marcha</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3749"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3759"/>
         <source>Display loading screen</source>
         <translation>Mostrar pantalla de carga</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3729"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3739"/>
         <source>Start with main window maximized</source>
         <translation>Comenzar con la ventana principal maximizada</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3676"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3686"/>
         <source>Enable CAD dockwidgets</source>
         <translation>Habilitar los acopladores de widgets CAD</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3666"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3676"/>
         <source>Enable CAD toolbars</source>
         <translation>Habilitar barras de herramientas CAD</translation>
     </message>
@@ -12857,12 +12872,12 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation>#1E90FF</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="791"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="796"/>
         <source>Clear settings</source>
         <translation>Borrar ajustes</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="792"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="797"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation>Esto también incluirá menús personalizados y barras de herramientas. ¿Continuar?</translation>
     </message>
@@ -12872,7 +12887,7 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cuando está habilitado, la activación de una capa modificaría todas las entidades seleccionadas a esa nueva capa. Para cambiar la capa de varias entidades: primero seleccionar las entidades necesarias; activar una capa en el widget de capa. Esto hace que todas las entidades seleccionadas se modifiquen para pertenecer a la nueva capa.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3913"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3923"/>
         <source>Variable File:</source>
         <translation>Archivo Variable:</translation>
     </message>
@@ -12887,7 +12902,7 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation>N&amp;úmero de entidades de vista previa:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3394"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3370"/>
         <source>Don&apos;t use native OS file open dialog</source>
         <translation>No usar el cuadro de diálogo de apertura de archivos del sistema operativo nativo</translation>
     </message>
@@ -13769,47 +13784,47 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3360"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3390"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3363"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3393"/>
         <source>Show Close button on drawings tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3381"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3411"/>
         <source>Always</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3386"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3416"/>
         <source>Active Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3401"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3400"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3404"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3403"/>
         <source>Show keyboard shortcuts in actions tooltips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3373"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3363"/>
         <source>Auto save backup each</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3421"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3377"/>
         <source>If checked, location of dialog will not be saved, but size will</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3427"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3383"/>
         <source>Persist dialog size only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13819,117 +13834,117 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3411"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3424"/>
         <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3414"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3427"/>
         <source>Persistent dialogs location and size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3450"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3460"/>
         <source>Keyboard Settings</source>
         <translation>Configuración del Teclado</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3456"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3466"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
         <translation>Evaluar comandos cuando se presiona la BARRA ESPACIADORA</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3504"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3514"/>
         <source>Drawing units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3598"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3608"/>
         <source>Languages for commands in Cmd Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3618"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3628"/>
         <source>Language to use for GUI and messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3746"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3756"/>
         <source>Defines whether splash screen will be shown on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3736"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3746"/>
         <source>Controls default mode for drawings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3726"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3736"/>
         <source>If checked, after start the main window will be maximized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3716"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3726"/>
         <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3868"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3882"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3934"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3990"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3789"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3878"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3892"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3944"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4000"/>
         <source>Click to select directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3803"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3813"/>
         <source>Path to folder with fonts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3810"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3820"/>
         <source>Path to file with keyboard shortcuts mapping variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3829"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3839"/>
         <source>Restores program geometry/layout to original state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3845"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3855"/>
         <source>Restores the program settings to its original state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3920"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3948"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3930"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3958"/>
         <source>Click to select file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3959"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3969"/>
         <source>Path to folder with hatch patterns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3966"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3976"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3973"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3983"/>
         <source>Path to file with variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4001"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4011"/>
         <source>Path to folder with translation files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4008"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4018"/>
         <source>Shortcuts Mappings:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13938,7 +13953,7 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
         <translation type="vanished">Alternar el modo de ajuste libre cuando se presiona la BARRA ESPACIADORA y la ventana de comandos está vacía</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3466"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3476"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
         <translation>Alternar el modo de ajuste libre cuando se pulsa la BARRA ESPACIO</translation>
     </message>
@@ -15857,6 +15872,11 @@ p, li { white-space: pre-wrap; }
         <source>Cancel</source>
         <translation type="unfinished">Cancelar</translation>
     </message>
+    <message>
+        <location filename="../src/ui/components/status_bar/qg_mousewidget.cpp" line="138"/>
+        <source>Current Action:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_PenToolBar</name>
@@ -16282,38 +16302,38 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="175"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1520"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1664"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1822"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="177"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1529"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1673"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1831"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="270"/>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="282"/>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="344"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="272"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="284"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="346"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1760"/>
         <source>Remove Layer</source>
         <translation>Eliminar Capa</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="283"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="285"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
         <translation>La capa &quot;%1&quot; no podrá ser eliminada.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="425"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="427"/>
         <source>Layer Dialog</source>
         <translation>Diálogo de capa</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="539"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="541"/>
         <source>Remove Block</source>
         <translation>Eliminar Bloque</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="540"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="542"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
         <translation>El bloque &quot;%1&quot; y todas sus entidades serán eliminadas.</translation>
     </message>
@@ -16330,20 +16350,20 @@ p, li { white-space: pre-wrap; }
         <translation>Ya existe una capa &quot;%1&quot;. Por favor especificar otro nombre.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="271"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="273"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
         <translation>Se eliminarán la capa &quot;%1&quot; y todas sus entidades.
 Esta acción NO se puede deshacer.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="345"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="347"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1760"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
         <translation>La capa &quot;0&quot; nunca se puede eliminar.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="355"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="357"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1808"/>
         <source>Remove %n layer(s)</source>
         <translation>
@@ -16352,30 +16372,30 @@ Esta acción NO se puede deshacer.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="359"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="361"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1809"/>
         <source>Listed layers and all entities on them will be removed.</source>
         <translation>Se eliminarán las capas enumeradas y todas las entidades que contienen.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="361"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="363"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1810"/>
         <source>Warning: this action can NOT be undone!</source>
         <translation>Advertencia: ¡esta acción NO se puede deshacer!</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="366"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="368"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
         <translation>Advertencia: la capa &quot;0&quot; nunca se puede eliminar.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="370"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="372"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1811"/>
         <source>Layers for removal:</source>
         <translation>Capas para eliminar:</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="598"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="600"/>
         <source>Remove %n block(s)</source>
         <translation>
             <numerusform>Eliminar %n bloque</numerusform>
@@ -16383,12 +16403,12 @@ Esta acción NO se puede deshacer.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="600"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="602"/>
         <source>Listed blocks and all their entities will be removed.</source>
         <translation>Se eliminarán los bloques enumerados y todas sus entidades.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="603"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="605"/>
         <source>Blocks for removal:</source>
         <translation>Bloques para eliminar:</translation>
     </message>
@@ -16612,62 +16632,62 @@ Do you want to replace it?</source>
         <translation>Abrir Dibujo</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="665"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="667"/>
         <source>Open Image</source>
         <translation>Abrir Imagen</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1148"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1164"/>
         <source>Windows Bitmap</source>
         <translation>BMP</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1150"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1166"/>
         <source>Joint Photographic Experts Group</source>
         <translation>JPEG</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1154"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1170"/>
         <source>Multiple-image Network Graphics</source>
         <translation>MNG</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1156"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1172"/>
         <source>Portable Bit Map</source>
         <translation>PBM</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1158"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1174"/>
         <source>Portable Grey Map</source>
         <translation>PGM</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1160"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1176"/>
         <source>Portable Network Graphic</source>
         <translation>PNG</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1162"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1178"/>
         <source>Portable Pixel Map</source>
         <translation>PPM</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1164"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1180"/>
         <source>X Bitmap Format</source>
         <translation>XBM</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1166"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1182"/>
         <source>X Pixel Map</source>
         <translation>XPM</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="658"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="660"/>
         <source>All Image Files (%1)</source>
         <translation>Todos los archivos (%1)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1152"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1168"/>
         <source>Graphics Interchange Format</source>
         <translation>GIF</translation>
     </message>
@@ -16687,7 +16707,7 @@ Do you want to replace it?</source>
         <translation>Fuente %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="660"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="662"/>
         <source>All Files (*.*)</source>
         <translation>Todos los Archivos (*.*)</translation>
     </message>
@@ -16874,62 +16894,62 @@ Do you want to replace it?</source>
         <translation>Jww %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1168"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1184"/>
         <source>Scalable Vector Graphics</source>
         <translation>Graficos vectoriales escalables SVG</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1170"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1186"/>
         <source>SGI Black &amp; White</source>
         <translation>SGI Blanco y negro</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1172"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1188"/>
         <source>Encapsulated PostScript</source>
         <translation>PostScript encapsulado</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1174"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1190"/>
         <source>Encapsulated PostScript Format</source>
         <translation>Formato PostScript encapsulado</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1176"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1192"/>
         <source>Encapsulated PostScript Interchange</source>
         <translation>PostScript encapsulado de intercambio</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1178"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1194"/>
         <source>Windows Icon</source>
         <translation>Icono de Windows</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1180"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1196"/>
         <source>JPEG 2000</source>
         <translation>JPEG 2000</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1182"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1198"/>
         <source>ZSoft Paintbrush</source>
         <translation>Paintbrush de ZSoft</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1184"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1200"/>
         <source>PC Paint</source>
         <translation>Pintura para PC</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1186"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1202"/>
         <source>SGI-Bilddatei</source>
         <translation>Fichero de imagen SGI</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1188"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1204"/>
         <source>Targa Image File</source>
         <translation>Fichero de imagen Targa</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1190"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1206"/>
         <source>Tagged Image File Format</source>
         <translation>Formato de Fichero de Imagen Etiquetado</translation>
     </message>
@@ -18291,7 +18311,7 @@ Do you want to replace it?</source>
         <translation>Todo</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1695"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1704"/>
         <source>Invalid objects removed:</source>
         <translation>Objetos no válidos eliminados:</translation>
     </message>
@@ -18353,8 +18373,8 @@ Do you want to replace it?</source>
         <translation>Modo de calculadora: Apagado</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="741"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3142"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="735"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3151"/>
         <source>License</source>
         <translation>Licencia</translation>
     </message>
@@ -20322,7 +20342,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="196"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="198"/>
         <source>noname</source>
         <comment>default layer name</comment>
         <translation>sin nombre</translation>
@@ -20500,52 +20520,52 @@ Este bloque no se puede insertar.</translation>
 <context>
     <name>RS_ActionDefault</name>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="779"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="780"/>
         <source>Set new position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="787"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="788"/>
         <source>Lengthen Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="790"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="791"/>
         <source>Lengthen/Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="790"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="791"/>
         <source>Lengthen Chord</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="793"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="794"/>
         <source>Move in Previous segment direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="793"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="794"/>
         <source>Move in Next segment direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="798"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="799"/>
         <source>Set new ref position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="802"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="803"/>
         <source>Scroll horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="802"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="803"/>
         <source>Scroll Vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="806"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="807"/>
         <source>Choose second edge</source>
         <translation>Elija segundo borde</translation>
     </message>

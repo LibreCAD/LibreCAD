@@ -5309,6 +5309,11 @@ Warning: this action can NOT be undone!</source>
         <source>Form</source>
         <translation type="unfinished">選択する</translation>
     </message>
+    <message>
+        <location filename="../src/ui/components/containers/lc_optionswidgetsholder.cpp" line="102"/>
+        <source>Current Action:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_PasteTransformOptions</name>
@@ -8051,71 +8056,71 @@ p, li { white-space: pre-wrap; }
     <name>LC_WidgetFactory</name>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="340"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="556"/>
         <source>Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="341"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="563"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="557"/>
         <source>Circle</source>
         <translation type="unfinished">円</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="342"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="564"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="558"/>
         <source>Curve</source>
         <translation type="unfinished">曲線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="343"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Ellipse</source>
         <translation type="unfinished">楕円</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="344"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="566"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="560"/>
         <source>Polyline</source>
         <translation type="unfinished">ポリライン</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="345"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="567"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="594"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="561"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="588"/>
         <source>Select</source>
         <translation type="unfinished">選択</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="346"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="568"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
         <source>Dimension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="569"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="596"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="563"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="590"/>
         <source>Other</source>
         <translation type="unfinished">その他</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="348"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="570"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="597"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="564"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="591"/>
         <source>Modify</source>
         <translation type="unfinished">変更・修正</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="349"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="571"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
         <source>Info</source>
         <translation type="unfinished">図形情報</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="350"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="491"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="599"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="593"/>
         <source>Order</source>
         <translation type="unfinished">整列</translation>
     </message>
@@ -8186,294 +8191,294 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="512"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="506"/>
         <source>Snap Selection</source>
         <translation type="unfinished">スナップ選択</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="522"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="516"/>
         <source>Pen</source>
         <translation type="unfinished">ペン</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="528"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="522"/>
         <source>Tool Options</source>
         <translation type="unfinished">ツールオプション</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="530"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="758"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="524"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="752"/>
         <source>Dock Areas</source>
         <translation type="unfinished">ドックエリア</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="535"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
         <source>Creators</source>
         <translation type="unfinished">新規作成</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="539"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="533"/>
         <source>Preferences</source>
         <translation type="unfinished">参照</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="586"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="580"/>
         <source>Categories</source>
         <translation type="unfinished">CADツール選択</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="583"/>
         <source>Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="590"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="584"/>
         <source>Circles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="591"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="585"/>
         <source>Freehand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="586"/>
         <source>Ellipses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="593"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="587"/>
         <source>PolyLines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="595"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
         <source>Dimensions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="598"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
         <source>Measure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="608"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="602"/>
         <source>&amp;File</source>
         <translation type="unfinished">ファイル(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="619"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="613"/>
         <source>Import</source>
         <translation type="unfinished">インポート</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="624"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="618"/>
         <source>Export</source>
         <translation type="unfinished">エクスポート</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="641"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="635"/>
         <source>&amp;Options</source>
         <translation type="unfinished">オプション設定（&amp;O）</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="651"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="645"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">編集(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="667"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="661"/>
         <source>Pl&amp;ugins</source>
         <translation type="unfinished">プラグイン（&amp;u）</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="669"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="663"/>
         <source>&amp;View</source>
         <translation type="unfinished">表示(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="699"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="693"/>
         <source>&amp;Views Restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="707"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="701"/>
         <source>&amp;Tools</source>
         <translation type="unfinished">ツール(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="708"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="702"/>
         <source>&amp;Line</source>
         <translation type="unfinished">直線(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="709"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="703"/>
         <source>&amp;Circle</source>
         <translation type="unfinished">円(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="710"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="704"/>
         <source>&amp;Curve</source>
         <translation type="unfinished">曲線(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="711"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="705"/>
         <source>&amp;Ellipse</source>
         <translation type="unfinished">楕円(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="712"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="706"/>
         <source>&amp;Polyline</source>
         <translation type="unfinished">ポリライン(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="713"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="707"/>
         <source>&amp;Select</source>
         <translation type="unfinished">選択(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="714"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="708"/>
         <source>Dime&amp;nsion</source>
         <translation type="unfinished">寸法記入（&amp;n）</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="715"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="709"/>
         <source>Ot&amp;her</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="716"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="710"/>
         <source>&amp;Modify</source>
         <translation type="unfinished">変更・修正(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="717"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="711"/>
         <source>&amp;Info</source>
         <translation type="unfinished">図形情報(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="718"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="712"/>
         <source>&amp;Order</source>
         <translation type="unfinished">整列(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="720"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="714"/>
         <source>&amp;Drawings</source>
         <translation type="unfinished">製図(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="727"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="721"/>
         <source>&amp;Help</source>
         <translation type="unfinished">ヘルプ(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="729"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="723"/>
         <source>On&amp;line Docs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="730"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="724"/>
         <source>&amp;Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="731"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="725"/>
         <source>User&apos;s &amp;Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="732"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="726"/>
         <source>&amp;Commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="733"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="727"/>
         <source>&amp;Style Sheets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="734"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="728"/>
         <source>Wid&amp;gets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="738"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="732"/>
         <source>About</source>
         <translation type="unfinished">Librecadの情報</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="745"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="739"/>
         <source>&amp;Forum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="746"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="740"/>
         <source>Zulip &amp;Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="748"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="742"/>
         <source>&amp;Submit Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="749"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="743"/>
         <source>&amp;Request Feature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="750"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="744"/>
         <source>&amp;Releases Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="754"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="748"/>
         <source>&amp;Donate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="756"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="750"/>
         <source>Widgets</source>
         <translation type="unfinished">ウィジット</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="766"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="760"/>
         <source>Dock Wid&amp;gets</source>
         <translation type="unfinished">ドックウィジェット(&amp;g)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="794"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="788"/>
         <source>&amp;Toolbars</source>
         <translation type="unfinished">ツールバー(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1012"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1081"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1006"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1075"/>
         <source>Grid Status</source>
         <translation type="unfinished">グリッドステータス</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1046"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1040"/>
         <source>Coordinates</source>
         <translation type="unfinished">座標</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1053"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1047"/>
         <source>Relative Zero</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1060"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1054"/>
         <source>Mouse</source>
         <translation type="unfinished">マウス</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1067"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1061"/>
         <source>Selection Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1074"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1068"/>
         <source>Active Layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8725,85 +8730,85 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">ブロックの一覧</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2761"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2770"/>
         <source>Command line</source>
         <translation>コマンドライン</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1163"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1172"/>
         <source>&amp;Cascade</source>
         <translation>カスケード表示(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1164"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1173"/>
         <source>&amp;Tile</source>
         <translation>タイル表示・自動配置(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1166"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1175"/>
         <source>Tile &amp;Horizontally</source>
         <translation>タイル表示：水平(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1251"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1260"/>
         <source>Creating new file...</source>
         <translation>新しいファイルを作成...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1295"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1304"/>
         <source>Block &apos;%1&apos;</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
         <translation>ブロック &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1297"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1306"/>
         <source>unnamed document %1</source>
         <translation>無題 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1379"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1388"/>
         <source>New Drawing created.</source>
         <translation>新規図面を作成しました.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1517"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1526"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
         <translation>ファイル %1 は開けません、権限をチェックしてください.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1742"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1751"/>
         <source>Loaded document: </source>
         <translation>ドキュメントをロードしました: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1748"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1757"/>
         <source>Opening aborted</source>
         <translation>開くことを中止</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="413"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="422"/>
         <source>Saving drawing...</source>
         <translation>図面を保存...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="422"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="431"/>
         <source>Saved drawing: %1</source>
         <translation>図面 %1 を保存しました</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1810"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1819"/>
         <source>Auto-saving drawing...</source>
         <translation>図面を自動保存...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1818"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1827"/>
         <source>Auto-saved drawing</source>
         <translation>図面を自動保存しました</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1823"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1832"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -8811,47 +8816,47 @@ Auto-save disabled.</source>
         <translation>ファイル %1 が自動保存できません、権限をチェックしてください.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1840"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1849"/>
         <source>Exporting drawing...</source>
         <translation>図面をエクスポート...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1936"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1945"/>
         <source>Exported: %1</source>
         <translation>エクスポート: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1976"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1985"/>
         <source>Exporting...</source>
         <translation>エクスポート...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2028"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2037"/>
         <source>Export complete</source>
         <translation>エクスポートは完了しました</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2028"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2037"/>
         <source>Export failed!</source>
         <translation>エクスポートは失敗しました！</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2131"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2140"/>
         <source>Printing...</source>
         <translation>印刷...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2135"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2144"/>
         <source>Printing complete</source>
         <translation>印刷を完了しました</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2207"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2216"/>
         <source>Print preview for %1</source>
         <translation>%1 の印刷プレビュー</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2286"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2295"/>
         <source>Exiting application...</source>
         <translation>アプリケーションを実行...</translation>
     </message>
@@ -8868,42 +8873,42 @@ Auto-save disabled.</source>
         <translation type="vanished">バージョン: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1613"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1622"/>
         <source>Warning: File already opened : </source>
         <translation>警告: ファイルは開かれています: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="438"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="447"/>
         <source>Cannot save the file </source>
         <translation>ファイルの保存ができません</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="439"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="448"/>
         <source> , please check the filename and permissions.</source>
         <translation>  , ファイル名、権限をチェックしてください.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1165"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1174"/>
         <source>Tile &amp;Vertically</source>
         <translation>タイル表示：縦(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1113"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1122"/>
         <source>Ta&amp;b mode</source>
         <translation>タブモード(&amp;b)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1455"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1464"/>
         <source>New document from template: </source>
         <translation>テンプレートから新しいドキュメント: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1501"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1510"/>
         <source>Select Template aborted</source>
         <translation>テンプレートの選択を中止しました</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1828"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1837"/>
         <source>Auto-saving failed</source>
         <translation>自動保存に失敗しました</translation>
     </message>
@@ -8928,7 +8933,7 @@ Auto-save disabled.</source>
         <translation type="vanished">ツールオプション</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1877"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1886"/>
         <source>Export as</source>
         <translation>エクスポート</translation>
     </message>
@@ -8945,11 +8950,11 @@ Auto-save disabled.</source>
         <translation type="vanished">QTのバージョン: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="432"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1303"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1726"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2327"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2663"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="441"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1312"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1735"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2336"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2672"/>
         <source>Draft Mode</source>
         <translation>作図モード</translation>
     </message>
@@ -8962,7 +8967,7 @@ Auto-save disabled.</source>
         <translation type="vanished">エクスポート</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1661"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1670"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -8970,7 +8975,7 @@ Please check its existence and permissions.</source>
 ファイルが存在しているか、もしくは権限をチェックしてください.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1747"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1756"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>ファイル &apos;%1&apos; は存在しません。ファイルを開くことを中止</translation>
     </message>
@@ -9031,7 +9036,7 @@ Please check its existence and permissions.</source>
         <translation type="vanished">ペン</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2731"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2740"/>
         <source>Opening recent file...</source>
         <translation>最近開いたファイル...</translation>
     </message>
@@ -9044,22 +9049,22 @@ Please check its existence and permissions.</source>
         <translation type="vanished">グリッドステータス</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2701"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2710"/>
         <source>Toolbars</source>
         <translation>ツールバー</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2706"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2715"/>
         <source>Dockwidgets</source>
         <translation>ドック ウィジット</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2813"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2822"/>
         <source>Device Options</source>
         <translation>デバイスの選択</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2816"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2825"/>
         <source>Device</source>
         <translation>デバイス</translation>
     </message>
@@ -9080,7 +9085,7 @@ Please check its existence and permissions.</source>
         <translation type="vanished">ドックウィジェット(&amp;g)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="322"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="331"/>
         <source>Recent Files</source>
         <translation>最近使用したファイル</translation>
     </message>
@@ -9109,17 +9114,17 @@ Please check its existence and permissions.</source>
         <translation type="vanished">システム</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2892"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2901"/>
         <source>Toolbar Creator</source>
         <translation>ツールバー作成</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2952"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2961"/>
         <source>Menu Creator</source>
         <translation>メニュー作成</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2976"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2985"/>
         <source>Menu Assigner</source>
         <translation>メニュー配置</translation>
     </message>
@@ -9132,118 +9137,118 @@ Please check its existence and permissions.</source>
         <translation type="vanished">製図(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="413"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="422"/>
         <source>Saving drawing: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="418"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="427"/>
         <source>Save cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="532"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="541"/>
         <source>Closing Drawing</source>
         <translation type="unfinished">図面を閉じる</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="540"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="549"/>
         <source>Save changes to the following item?
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="551"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="560"/>
         <source>&amp;Save</source>
         <translation type="unfinished">保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="552"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="561"/>
         <source>Save &amp;as...</source>
         <translation type="unfinished">別名で保存(&amp;a)...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="555"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="564"/>
         <source>&amp;Save %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="556"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="565"/>
         <source>Save %1 &amp;as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1117"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1126"/>
         <source>&amp;Window mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1123"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
         <source>&amp;Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1126"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1135"/>
         <source>Rounded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1141"/>
         <source>Triangular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1139"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1148"/>
         <source>North</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1143"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1152"/>
         <source>South</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1147"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1156"/>
         <source>East</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1151"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1160"/>
         <source>West</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1156"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1165"/>
         <source>&amp;Arrange</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1159"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1168"/>
         <source>&amp;Maximized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1787"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1796"/>
         <source>Save All cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2092"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2101"/>
         <source>Close All cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2761"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2770"/>
         <source>Cmd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2762"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2771"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2762"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2771"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation type="unfinished"></translation>
@@ -12353,7 +12358,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2799"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1201"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1015"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1020"/>
         <source>Dwg Units</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12394,7 +12399,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1199"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1013"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1018"/>
         <source>Screen %</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12402,32 +12407,32 @@ Please choose the unit you want to use for new drawings and your preferred langu
 <context>
     <name>QG_DlgOptionsGeneral</name>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="676"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="681"/>
         <source>Preferences</source>
         <translation>参照</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3893"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3903"/>
         <source>Translations:</source>
         <translation>国際言語変換:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3793"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3803"/>
         <source>Hatch Patterns:</source>
         <translation>ハッチングの模様:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3903"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3913"/>
         <source>Fonts:</source>
         <translation>フォント:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3858"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3868"/>
         <source>Part Libraries:</source>
         <translation>部品ライブラリ:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3579"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3589"/>
         <source>Language</source>
         <translation>言語</translation>
     </message>
@@ -12441,7 +12446,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>アプリケーションの設定</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3488"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3498"/>
         <source>Defaults for new drawings</source>
         <translation>新規図面の既定値</translation>
     </message>
@@ -12450,17 +12455,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">外観(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3585"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3595"/>
         <source>&amp;GUI Language:</source>
         <translation>GUI言語(&amp;G):</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3605"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3615"/>
         <source>&amp;Command Language:</source>
         <translation>コマンド 言語(&amp;C):</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3773"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3783"/>
         <source>&amp;Paths</source>
         <translation>パス(&amp;P)</translation>
     </message>
@@ -12470,7 +12475,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>既定値(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3547"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3557"/>
         <source>&amp;Unit:</source>
         <translation>単位(&amp;U):</translation>
     </message>
@@ -12502,7 +12507,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">操作する要素(&amp;H):</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="677"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="682"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>変更は再起動後に有効になります。</translation>
     </message>
@@ -12531,7 +12536,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>自動保存する時間（単位は分）.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3370"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3360"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>設定時、LibreCADは現在の図面を自動的にバックアップする。</translation>
     </message>
@@ -12540,7 +12545,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">自動バックアップ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3980"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3990"/>
         <source>Template:</source>
         <translation>テンプレート:</translation>
     </message>
@@ -12592,7 +12597,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3817"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3827"/>
         <source>Clear Settings</source>
         <translation>設定を元に戻す</translation>
     </message>
@@ -12601,7 +12606,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">図面/外観の設定を初期設定に戻す</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3832"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3842"/>
         <source>Layout</source>
         <translation>外観</translation>
     </message>
@@ -12610,12 +12615,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">変更をすべて初期設定に戻す</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3848"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3858"/>
         <source>All</source>
         <translation>すべて</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3739"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3749"/>
         <source>Start in tab mode</source>
         <translation>タブモードで開始する</translation>
     </message>
@@ -13516,47 +13521,47 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3360"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3390"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3363"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3393"/>
         <source>Show Close button on drawings tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3381"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3411"/>
         <source>Always</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3386"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3416"/>
         <source>Active Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3401"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3400"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3404"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3403"/>
         <source>Show keyboard shortcuts in actions tooltips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3373"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3363"/>
         <source>Auto save backup each</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3421"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3377"/>
         <source>If checked, location of dialog will not be saved, but size will</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3427"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3383"/>
         <source>Persist dialog size only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13566,42 +13571,42 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3411"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3424"/>
         <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3414"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3427"/>
         <source>Persistent dialogs location and size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3463"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3473"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3504"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3514"/>
         <source>Drawing units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3531"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3541"/>
         <source>Left  Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3511"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3521"/>
         <source>RIght Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3521"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3531"/>
         <source>Orthogonal Grid</source>
         <translation type="unfinished">直交グリッド</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3494"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3504"/>
         <source>Top Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13611,187 +13616,197 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3683"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3693"/>
         <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3689"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3699"/>
         <source>Duplicate prompt messages of actions in statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3560"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3570"/>
         <source>If checked, new drawing will be created with grid disabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3563"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3573"/>
         <source>Grid is Off </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3598"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3608"/>
         <source>Languages for commands in Cmd Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3618"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3628"/>
         <source>Language to use for GUI and messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3628"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3638"/>
         <source>New Versions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3634"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3644"/>
         <source>Check GitHub for new releases of LibreCAD on program startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3637"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3647"/>
         <source>Check for new versions on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3644"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3654"/>
         <source>If checked, pre-release versions will be ignored</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3650"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3660"/>
         <source>Ignore pre-release versions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3660"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3670"/>
         <source>Startup</source>
         <translation>スタート時の設定</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3746"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3756"/>
         <source>Defines whether splash screen will be shown on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3749"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3759"/>
         <source>Display loading screen</source>
         <translation>画面にスクリーンをロードする</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3736"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3746"/>
         <source>Controls default mode for drawings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3726"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3736"/>
         <source>If checked, after start the main window will be maximized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3729"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3739"/>
         <source>Start with main window maximized</source>
         <translation>メイン画面を最大で開始する</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3716"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3726"/>
         <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3719"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3729"/>
         <source>Open last opened files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3706"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3716"/>
         <source>If enabled, drop-down menus may become floating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3709"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3719"/>
         <source>Allow menus detaching</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3696"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3706"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3699"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3709"/>
         <source>Use &quot;classic&quot; statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3676"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3686"/>
         <source>Enable CAD dockwidgets</source>
         <translation>ドックウィジットを表示する</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3666"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3434"/>
+        <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3437"/>
+        <source>Show current command icon in options toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3676"/>
         <source>Enable CAD toolbars</source>
         <translation>ツールバーを表示する</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3868"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3882"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3934"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3990"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3789"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3878"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3892"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3944"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4000"/>
         <source>Click to select directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3803"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3813"/>
         <source>Path to folder with fonts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3810"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3820"/>
         <source>Path to file with keyboard shortcuts mapping variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3829"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3839"/>
         <source>Restores program geometry/layout to original state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3845"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3855"/>
         <source>Restores the program settings to its original state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3920"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3948"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3930"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3958"/>
         <source>Click to select file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3959"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3969"/>
         <source>Path to folder with hatch patterns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3966"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3976"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3973"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3983"/>
         <source>Path to file with variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4001"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4011"/>
         <source>Path to folder with translation files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4008"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4018"/>
         <source>Shortcuts Mappings:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13802,12 +13817,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>明るい藍色</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="791"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="796"/>
         <source>Clear settings</source>
         <translation>設定を初期化</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="792"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="797"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation>カスタムメニュー、ツールバーに含まれます.よろしいですか?</translation>
     </message>
@@ -13817,7 +13832,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;有効にすると、作業しているレイヤーの属性は、新しいレイヤーで選択したすべての属性を修正することになります。複数のレイヤーの属性を変更するには：最初に必要とする属性を選択します。レイヤーのウィジェット内のレイヤーを選択します。選択したすべての属性は新しいレイヤーに属するように修正させます&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3913"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3923"/>
         <source>Variable File:</source>
         <translation>可変長ファイル：</translation>
     </message>
@@ -13832,7 +13847,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>表示要素数(&amp;u)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3394"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3370"/>
         <source>Don&apos;t use native OS file open dialog</source>
         <translation>ネイティブOSのファイルを開くダイアログは使用しない</translation>
     </message>
@@ -13877,17 +13892,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3450"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3460"/>
         <source>Keyboard Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3456"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3466"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3466"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3476"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15797,6 +15812,11 @@ p, li { white-space: pre-wrap; }
         <source>Cancel</source>
         <translation type="unfinished">中止</translation>
     </message>
+    <message>
+        <location filename="../src/ui/components/status_bar/qg_mousewidget.cpp" line="138"/>
+        <source>Current Action:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_PenToolBar</name>
@@ -16223,39 +16243,39 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="175"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1520"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1664"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1822"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="177"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1529"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1673"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1831"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="270"/>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="282"/>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="344"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="272"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="284"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="346"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1760"/>
         <source>Remove Layer</source>
         <translation>レイヤー削除</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="283"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="285"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
         <translation>レイヤー&quot;%1&quot;は削除できません。</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="425"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="427"/>
         <source>Layer Dialog</source>
         <translation>レイヤー・ダイアログ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="539"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="541"/>
         <source>Remove Block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
         <translation>ブロック削除</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="540"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="542"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
         <translation>ブロック &quot;%1&quot;と、その構成要素図形は削除されます。</translation>
@@ -16273,20 +16293,20 @@ p, li { white-space: pre-wrap; }
         <translation>&quot;%1&quot;という名前のレイヤーは既に存在します。別な名前を指定してください。</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="271"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="273"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
         <translation>レイヤー&quot;%1&quot;とそれに含まれる全図形が削除されます.
 この操作はやり直せません.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="345"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="347"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1760"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="355"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="357"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1808"/>
         <source>Remove %n layer(s)</source>
         <translation type="unfinished">
@@ -16294,42 +16314,42 @@ This action can NOT be undone.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="359"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="361"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1809"/>
         <source>Listed layers and all entities on them will be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="361"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="363"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1810"/>
         <source>Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="366"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="368"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="370"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="372"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1811"/>
         <source>Layers for removal:</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="598"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="600"/>
         <source>Remove %n block(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="600"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="602"/>
         <source>Listed blocks and all their entities will be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="603"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="605"/>
         <source>Blocks for removal:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16552,70 +16572,70 @@ Do you want to replace it?</source>
         <translation>図面を開く</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="665"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="667"/>
         <source>Open Image</source>
         <translation>画像ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1148"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1164"/>
         <source>Windows Bitmap</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>BPM - Windows Bitmap</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1150"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1166"/>
         <source>Joint Photographic Experts Group</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>JPEG - Joint Photographic Experts Group</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1154"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1170"/>
         <source>Multiple-image Network Graphics</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>MNG - Multiple-image Network Graphics</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1156"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1172"/>
         <source>Portable Bit Map</source>
         <translation>Portable Bit Map</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1158"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1174"/>
         <source>Portable Grey Map</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>PGM - Portable Greymap</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1160"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1176"/>
         <source>Portable Network Graphic</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>PNG - Portable Network Graphic</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1162"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1178"/>
         <source>Portable Pixel Map</source>
         <translation>PPM - Portable Pixelmap</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1164"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1180"/>
         <source>X Bitmap Format</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>XBM - X Bitmap</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1166"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1182"/>
         <source>X Pixel Map</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>XPM -X PixelMap</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="658"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="660"/>
         <source>All Image Files (%1)</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>＜すべての形式 (%1)＞</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1152"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1168"/>
         <source>Graphics Interchange Format</source>
         <translation>グラフィック変換形式</translation>
     </message>
@@ -16635,7 +16655,7 @@ Do you want to replace it?</source>
         <translation>フォント %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="660"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="662"/>
         <source>All Files (*.*)</source>
         <translation>全ファイル (*.*)</translation>
     </message>
@@ -16822,73 +16842,73 @@ Do you want to replace it?</source>
         <translation>JW-Cad ファイル %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1168"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1184"/>
         <source>Scalable Vector Graphics</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>SVG - Scalable Vector Graphics</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1170"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1186"/>
         <source>SGI Black &amp; White</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>BW - SGI Black &amp; White</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1172"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1188"/>
         <source>Encapsulated PostScript</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>EPS - Encapsulated PostScript</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1174"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1190"/>
         <source>Encapsulated PostScript Format</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>EPSF - Encapsulated PostScript Format</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1176"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1192"/>
         <source>Encapsulated PostScript Interchange</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>EPSI - Encapsulated PostScript Interchange</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1178"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1194"/>
         <source>Windows Icon</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>ICO - Windows Icon</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1180"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1196"/>
         <source>JPEG 2000</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>JP2 - JPEG 2000</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1182"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1198"/>
         <source>ZSoft Paintbrush</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>PCX -ZSoft Paintbrush </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1184"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1200"/>
         <source>PC Paint</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>PIC - PC Paint</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1186"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1202"/>
         <source>SGI-Bilddatei</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>RGB - SGI-Bilddatei</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1188"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1204"/>
         <source>Targa Image File</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>TIF - Targa Image File</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1190"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="1206"/>
         <source>Tagged Image File Format</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
         <translation>TIFF - Tagged Image File Format</translation>
@@ -18255,7 +18275,7 @@ Do you want to replace it?</source>
         <translation>すべて</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1695"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1704"/>
         <source>Invalid objects removed:</source>
         <translation>オブジェクトの削除を無効:</translation>
     </message>
@@ -18317,8 +18337,8 @@ Do you want to replace it?</source>
         <translation>計算モード: Off</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="741"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3142"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="735"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3151"/>
         <source>License</source>
         <translation>ライセンス</translation>
     </message>
@@ -20286,7 +20306,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="196"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="198"/>
         <source>noname</source>
         <comment>default layer name</comment>
         <translation type="unfinished"></translation>
@@ -20463,52 +20483,52 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDefault</name>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="779"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="780"/>
         <source>Set new position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="787"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="788"/>
         <source>Lengthen Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="790"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="791"/>
         <source>Lengthen/Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="790"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="791"/>
         <source>Lengthen Chord</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="793"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="794"/>
         <source>Move in Previous segment direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="793"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="794"/>
         <source>Move in Next segment direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="798"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="799"/>
         <source>Set new ref position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="802"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="803"/>
         <source>Scroll horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="802"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="803"/>
         <source>Scroll Vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="806"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="807"/>
         <source>Choose second edge</source>
         <translation>他端選択</translation>
     </message>

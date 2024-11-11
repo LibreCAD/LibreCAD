@@ -2686,8 +2686,8 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
     }
 
     view->setCurrentQAction(q_action);
-    mouseWidget->setCurrentQAction(q_action);
-    statusbarManager->setCurrentQAction(q_action);
+
+    RS_DIALOGFACTORY->setCurrentQAction(q_action);
 
     const QString commands(q_action->data().toString());
     if (!commands.isEmpty()) {

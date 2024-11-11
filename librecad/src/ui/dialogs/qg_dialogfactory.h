@@ -140,9 +140,6 @@ public:
     void requestSnapDistOptions(double* dist, bool on) override;
     void requestSnapMiddleOptions(int* middlePoints, bool on) override;
     void hideSnapOptions() override;
-
-public:
-
     bool requestAttributesDialog(RS_AttributesData& data,
                                  RS_LayerList& layerList) override;
     bool requestMoveDialog(RS_MoveData& data) override;
@@ -181,6 +178,7 @@ public:
 
     static QString extToFormat(const QString& ext);
     void displayBlockName(const QString& blockName, const bool& display) override;
+    void setCurrentQAction(QAction *action) override;
 
 protected:
 //! Pointer to the widget which can host dialogs
@@ -203,6 +201,8 @@ protected:
     LC_RelZeroCoordinatesWidget *relZeroCoordinatesWidget;
     QG_SnapToolBar* snapToolbar = nullptr;
     LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
+
+
 };
 
 #endif
