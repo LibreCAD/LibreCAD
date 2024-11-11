@@ -278,6 +278,15 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     penPaletteWidget = widget_factory.pen_palette;
     namedViewsWidget = widget_factory.named_views_widget;
 
+    connect(namedViewsWidget, &LC_NamedViewsListWidget::viewListChanged, [this](int itemsCount){
+        getAction("ZoomViewRestore1")->setEnabled(itemsCount > 0);
+        getAction("ZoomViewRestore2")->setEnabled(itemsCount > 1);
+        getAction("ZoomViewRestore3")->setEnabled(itemsCount > 2);
+        getAction("ZoomViewRestore4")->setEnabled(itemsCount > 3);
+        getAction("ZoomViewRestore5")->setEnabled(itemsCount > 4);
+    });
+
+
     file_menu = widget_factory.file_menu;
     windowsMenu = widget_factory.windows_menu;
 

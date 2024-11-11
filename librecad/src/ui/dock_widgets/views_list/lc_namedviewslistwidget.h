@@ -53,7 +53,8 @@ public:
     void fillViewsList(QList<LC_View *> &list);
     QIcon getViewTypeIcon(LC_View *view);
     QWidget* createSelectionWidget(QAction* saveViewAction, QAction* defaultAction);
-
+signals:
+    void viewListChanged(int itemsCount);
 public slots:
     void addNewView();
 protected slots:

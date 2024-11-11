@@ -500,6 +500,8 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
 
     auto *viewsList = createNamedViewsToolbar(tr("Named Views"), "Views", tbPolicy);
 
+
+
     snap_toolbar = new QG_SnapToolBar(main_window, action_handler, ag_manager,ag_manager->getActionsMap());
     snap_toolbar->setWindowTitle(tr("Snap Selection"));
     snap_toolbar->setSizePolicy(tbPolicy);
@@ -688,6 +690,14 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     });
 
 
+    auto views_restore_menu = subMenu(view_menu, tr("&Views Restore"), "view_restore", ":/icons/nview_visible.svg",
+                                      {"ZoomViewRestore1",
+                                       "ZoomViewRestore2",
+                                       "ZoomViewRestore3",
+                                       "ZoomViewRestore4",
+                                       "ZoomViewRestore5"});
+
+
     auto tools = menu(tr("&Tools"), "tools", menu_bar);
     subMenuWithActions(tools, tr("&Line"), "line", ":/icons/line.svg", line_actions);
     subMenuWithActions(tools, tr("&Circle"), "circle", ":/icons/circle.svg", circle_actions);
@@ -764,6 +774,8 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         }
     }
 
+
+
     addAction(dockwidgets_menu, "RedockWidgets");
 
     dockwidgets_menu->addSeparator();
@@ -817,6 +829,14 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     menu_bar->addMenu(help);
 }
 
+void LC_WidgetFactory::makeActionsInvisible(const std::vector<QString> &actionNames){
+    for (QString actionName: actionNames) {
+        QAction *action = ag_manager->getActionByName(actionName);
+        if (action != nullptr) {
+            action->setVisible(false);
+        }
+    }
+}
 
 void LC_WidgetFactory::addAction(QMenu* menu, const char* actionName){
     QAction *action = ag_manager->getActionByName(actionName);

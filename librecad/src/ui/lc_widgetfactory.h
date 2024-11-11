@@ -111,6 +111,8 @@ private:
     void sortToolbarsByByGroupAndTitle(QList<QToolBar *> &list);
 
     QToolBar *createNamedViewsToolbar(const QString &title, const QString &name, QSizePolicy toolBarPolicy);
+
+    void makeActionsInvisible(const std::vector<QString> &actionNames);
 };
 
 #endif // LC_WIDGETFACTORY_H

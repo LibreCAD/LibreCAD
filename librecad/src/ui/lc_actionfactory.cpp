@@ -481,16 +481,16 @@ void LC_ActionFactory::createViewActionsUncheckable(QMap<QString, QAction *> &ma
     });
 }
 
-void LC_ActionFactory::createNamedViewActionsUncheckable(QMap<QString, QAction*> &map, QActionGroup *group){
-    createMainWindowActions(map, group,{
-        {"ZoomViewSave",    SLOT(saveNamedView()),    tr("&Save View"), ":/icons/nview_add.svg"},
+void LC_ActionFactory::createNamedViewActionsUncheckable(QMap<QString, QAction*> &map, QActionGroup *group) {
+    createMainWindowActions(map, group, {
+        {"ZoomViewSave",     SLOT(saveNamedView()),           tr("&Save View"),           ":/icons/nview_add.svg"},
         // fixme - quite an ugly approach, think about direct invocation of action for views list?
-        {"ZoomViewRestore",    SLOT(restoreNamedViewCurrent()),    tr("Restore Current View"), ":/icons/nview_visible.svg"},
-        {"ZoomViewRestore1",    SLOT(restoreNamedView1()),    tr("Restore View 1"), ":/icons/nview_visible.svg"},
-        {"ZoomViewRestore2",    SLOT(restoreNamedView2()),    tr("Restore View 2"), ":/icons/nview_visible.svg"},
-        {"ZoomViewRestore3",    SLOT(restoreNamedView3()),    tr("Restore View 3"), ":/icons/nview_visible.svg"},
-        {"ZoomViewRestore4",    SLOT(restoreNamedView4()),    tr("Restore View 4"), ":/icons/nview_visible.svg"},
-        {"ZoomViewRestore5",    SLOT(restoreNamedView5()),    tr("Restore View 5"), ":/icons/nview_visible.svg"},
+        {"ZoomViewRestore",  SLOT(restoreNamedViewCurrent()), tr("Restore Current View"), ":/icons/nview_visible.svg"},
+        {"ZoomViewRestore1", SLOT(restoreNamedView1()),       tr("Restore View 1"),       ":/icons/nview_visible.svg"},
+        {"ZoomViewRestore2", SLOT(restoreNamedView2()),       tr("Restore View 2"),       ":/icons/nview_visible.svg"},
+        {"ZoomViewRestore3", SLOT(restoreNamedView3()),       tr("Restore View 3"),       ":/icons/nview_visible.svg"},
+        {"ZoomViewRestore4", SLOT(restoreNamedView4()),       tr("Restore View 4"),       ":/icons/nview_visible.svg"},
+        {"ZoomViewRestore5", SLOT(restoreNamedView5()),       tr("Restore View 5"),       ":/icons/nview_visible.svg"},
     });
 }
 

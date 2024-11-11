@@ -167,6 +167,7 @@ void LC_NamedViewsListWidget::updateData(bool restoreSelectionIfPossible) {
     if (options->showTypeIcon){
         ui->tvTable->setColumnWidth(viewsModel->translateColumn(LC_NamedViewsModel::ICON),ICON_WIDTH);
     }
+    emit viewListChanged(viewsModel->count());
 }
 
 void LC_NamedViewsListWidget::restoreSingleSelectedRow(bool restoreSelectionIfPossible, int selectedRow) {
