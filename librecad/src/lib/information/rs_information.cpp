@@ -138,24 +138,30 @@ private:
         RS_VectorSolutions ret = LC_Quadratic::getIntersection(offset->getQuadratic(), e2->getQuadratic());
         if (ret.size() <= 1)
             return ret;
+
+        // invariant: offset: low (zero intersection), high: 2 intersection
         double low = 0., high = offsetValue;
         while( ret.at(0).distanceTo(ret.at(1)) > 1e-7 && high - low > RS_TOLERANCE) {
             offsetValue = (low + high) * 0.5;
             offset = CreateOffset(e1, offsetValue);
-            ret = LC_Quadratic::getIntersection(offset->getQuadratic(), e2->getQuadratic());
-            switch(ret.size()) {
+            RS_VectorSolutions retMid = LC_Quadratic::getIntersection(offset->getQuadratic(), e2->getQuadratic());
+            switch(retMid.size()) {
             case 0:
                 low = offsetValue;
                 break;
             case 1:
-                return ret;
+                retMid.setTangent(true);
+                return retMid;
             default:
+                ret = std::move(retMid);
                 high = offsetValue;
             }
         }
         RS_Vector tangent = (ret.at(0) + ret.at(1)) * 0.5;
         tangent = e2->getNearestPointOnEntity(tangent, false);
-        return {tangent};
+        ret = RS_VectorSolutions{tangent};
+        ret.setTangent(true);
+        return ret;
     }
 
     // Create an offset curve, according to the distance factor
