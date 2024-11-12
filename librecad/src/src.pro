@@ -237,6 +237,7 @@ RESOURCES += ../../licenses/licenses.qrc
 # ################################################################################
 # Library
 HEADERS += \
+    actions/drawing/draw/curve/lc_actionremovesplinepoints.h \
     actions/drawing/draw/dimensions/lc_actioncircledimbase.h \
     actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.h \
     actions/drawing/draw/ellipse/lc_actiondrawellipse1point.h \
@@ -379,6 +380,7 @@ HEADERS += \
     ui/main/lc_mdiapplicationwindow.h
     
 SOURCES += \
+    actions/drawing/draw/curve/lc_actionremovesplinepoints.cpp \
     actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp \
     actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp \
     actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp \

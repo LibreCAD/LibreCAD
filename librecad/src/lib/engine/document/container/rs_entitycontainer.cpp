@@ -1505,7 +1505,7 @@ RS_EntityContainer::RefInfo RS_EntityContainer::getNearestSelectedRefInfo(
     RS_Vector point;                // endpoint found
     RS_Entity *closestPointEntity = nullptr;
 
-    for (auto en: entities) {
+    for (auto en: entities) { // fixme - sand - iteration of ver all entities
 
         if (en->isVisible() && en->isSelected() && !en->isParentSelected()) {
             point = en->getNearestSelectedRef(coord, &curDist);

@@ -135,19 +135,21 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawArcAngleLen",
         "DrawArc3P",
         // fixme - sand - restore as actions are ready
-//        "DrawArc2PAngle",
-//        "DrawArc2PRadius",
-//        "DrawArc2PLength",
-//        "DrawArc2PHeight",
+        "DrawArc2PAngle",
+        "DrawArc2PRadius",
+        "DrawArc2PLength",
+        "DrawArc2PHeight",
+
         "DrawArcTangential",
         "DrawParabola4Points",
         "DrawParabolaFD",
         "DrawSpline",
         "DrawSplinePoints",
         // fixme - sand - restore as actions are ready
-//        "DrawSplinePointsAppend",
-//        "DrawSplinePointsAdd",
-//        "DrawSplinePointsRemove",
+        "DrawSplinePointsAppend",
+        "DrawSplinePointsAdd",
+        "DrawSplinePointsRemove",
+
         "DrawEllipseArcAxis",
         "DrawEllipseArc1Point",
         "DrawLineFree"

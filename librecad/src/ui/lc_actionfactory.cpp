@@ -185,9 +185,9 @@ void LC_ActionFactory::createDrawCurveActions(QMap<QString, QAction*>& map, QAct
         {"DrawParabolaFD",         RS2::ActionDrawParabolaFD,      tr("Parabola &Focus Directrix"), ":/icons/parabola_focus_directrix.svg"},
         {"DrawSpline",             RS2::ActionDrawSpline,          tr("&Spline"),                   ":/icons/spline.svg"},
         {"DrawSplinePoints",       RS2::ActionDrawSplinePoints,    tr("&Spline through points"),    ":/icons/spline_points.svg"},
-        {"DrawSplinePointsAdd",    RS2::ActionDrawSplinePoints,    tr("&Add spline point"),         ":/icons/spline_points_add.svg"},
-        {"DrawSplinePointsRemove", RS2::ActionDrawSplinePoints,    tr("&Remove spline points"),     ":/icons/spline_points_remove.svg"},
-        {"DrawSplinePointsAppend", RS2::ActionDrawSplinePoints,    tr("&Append spline points"),     ":/icons/spline_points_insert.svg"}
+        {"DrawSplinePointsAdd",    RS2::ActionDrawSplinePointAdd,    tr("&Add spline point"),         ":/icons/spline_points_add.svg"},
+        {"DrawSplinePointsRemove", RS2::ActionDrawSplinePointRemove,    tr("&Remove spline points"),     ":/icons/spline_points_remove.svg"},
+        {"DrawSplinePointsAppend", RS2::ActionDrawSplinePointAdd,    tr("&Append spline points"),     ":/icons/spline_points_insert.svg"}
     });
 }
 

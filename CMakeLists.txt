@@ -1280,6 +1280,8 @@ set(SOURCES
 		librecad/src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.cpp
 		librecad/src/ui/dock_widgets/views_list/lc_namedviewsbutton.h
 		librecad/src/ui/dock_widgets/views_list/lc_namedviewsbutton.cpp
+		librecad/src/actions/drawing/draw/curve/lc_actionremovesplinepoints.h
+		librecad/src/actions/drawing/draw/curve/lc_actionremovesplinepoints.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
