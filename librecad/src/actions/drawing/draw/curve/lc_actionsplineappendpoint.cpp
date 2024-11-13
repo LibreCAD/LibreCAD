@@ -37,7 +37,7 @@ LC_ActionSplineAppendPoint::LC_ActionSplineAppendPoint(RS_EntityContainer &conta
 
 void LC_ActionSplineAppendPoint::trigger() {
     RS_PreviewActionInterface::trigger();
-    RS_Entity* createdEntity = createNewEntityWithAddedControlPoint(entityToModify, vertexToAppend, appendPointsToStart);
+    RS_Entity* createdEntity = createModifiedSplineEntity(entityToModify, vertexPoint, appendPointsToStart);
     if (createdEntity != nullptr){
         if (document) {
             document->startUndoCycle();
@@ -49,10 +49,10 @@ void LC_ActionSplineAppendPoint::trigger() {
             document->addUndoable(createdEntity);
             deleteEntityUndoable(entityToModify);
             document->endUndoCycle();
-            moveRelativeZero(vertexToAppend);
+            moveRelativeZero(vertexPoint);
         }
         entityToModify = createdEntity;
-        vertexToAppend = RS_Vector(false);
+        vertexPoint = RS_Vector(false);
         deleteHighlights();
     }
     updateSelectionWidget();
@@ -68,34 +68,33 @@ void LC_ActionSplineAppendPoint::mouseMoveEvent(QMouseEvent *e) {
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
     deleteHighlights();
+    deletePreview();
     switch (status) {
         case SetEntity: {
             auto entity = catchEntity(e, enTypeList);
             if (entity != nullptr){
-                if (mayAppendPointToEntity(entity)) {
+                if (mayModifySplineEntity(entity)) {
                     highlightHoverWithRefPoints(entity, true);
                 }
             }
             break;
         }
         case SetFirstControlPoint:{
-            deletePreview();
             double dist;
             mouse = getRelZeroAwarePoint(e, mouse);
             RS_Vector nearestPoint = entityToModify->getNearestEndpoint(mouse, &dist);
             if (nearestPoint.valid) {
                 bool appendToStart = nearestPoint == entityToModify->getStartpoint();
                 previewRefSelectablePoint(mouse);
-                RS_Entity *previewUpdatedEntity = createNewEntityWithAddedControlPoint(entityToModify, mouse, appendToStart);
+                RS_Entity *previewUpdatedEntity = createModifiedSplineEntity(entityToModify, mouse, appendToStart);
                 if (previewUpdatedEntity != nullptr) {
                     previewEntity(previewUpdatedEntity);
                 }
             }
-            drawPreview();
+
             break;
         }
         case SetControlPoint:{
-            deletePreview();
             previewRefSelectablePoint(mouse);
             bool appendMode = appendPointsToStart;
             if (isShift(e)){
@@ -103,24 +102,24 @@ void LC_ActionSplineAppendPoint::mouseMoveEvent(QMouseEvent *e) {
                 RS_Vector nearestPoint = entityToModify->getNearestEndpoint(mouse, &dist);
                 appendMode = nearestPoint == entityToModify->getStartpoint();
             }
-            RS_Entity *previewUpdatedEntity = createNewEntityWithAddedControlPoint(entityToModify, mouse, appendMode);
+            RS_Entity *previewUpdatedEntity = createModifiedSplineEntity(entityToModify, mouse, appendMode);
             if (previewUpdatedEntity != nullptr) {
                 previewEntity(previewUpdatedEntity);
             }
-            drawPreview();
             break;
         }
         default:
             break;
     }
     drawHighlights();
+    deletePreview();
 }
 
 void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status){
         case SetEntity:{
             auto entity = catchEntity(e, enTypeList);
-            if (entity != nullptr && mayAppendPointToEntity(entity)){
+            if (entity != nullptr && mayModifySplineEntity(entity)){
                 entityToModify = entity;
                 entityToModify->setSelected(true);
                 graphicView->redraw(RS2::RedrawDrawing);
@@ -135,7 +134,7 @@ void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(int status, QMouseEven
             RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
             appendPointsToStart = nearestPoint == entityToModify->getStartpoint();
             if (nearestPoint.valid){
-                vertexToAppend = mouse;
+                vertexPoint = mouse;
                 trigger();
                 setStatus(SetControlPoint);
             }
@@ -143,7 +142,7 @@ void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(int status, QMouseEven
         }
         case SetControlPoint:{
             RS_Vector mouse = snapPoint(e);
-            vertexToAppend = mouse;
+            vertexPoint = mouse;
             if (isShift(e)){
                 double dist;
                 RS_Vector nearestPoint = entityToModify->getNearestEndpoint(mouse, &dist);
@@ -168,7 +167,7 @@ void LC_ActionSplineAppendPoint::onMouseRightButtonRelease(int status, QMouseEve
 }
 
 // todo - sand - should we allow append to closed splines?
-bool LC_ActionSplineAppendPoint::mayAppendPointToEntity(RS_Entity *e) {
+bool LC_ActionSplineAppendPoint::mayModifySplineEntity(RS_Entity *e) {
     switch (e->rtti()) {
         case RS2::EntitySplinePoints: {
 //            auto *splinePoints = dynamic_cast<LC_SplinePoints *>(e);
@@ -195,7 +194,7 @@ void LC_ActionSplineAppendPoint::clean() {
     graphicView->redraw();
 }
 
-RS_Entity *LC_ActionSplineAppendPoint::createNewEntityWithAddedControlPoint(RS_Entity *e, RS_Vector controlPoint, bool fromStart) {
+RS_Entity *LC_ActionSplineAppendPoint::createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool fromStart) {
     RS_Entity* result = nullptr;
     switch (e->rtti()){
         case RS2::EntitySplinePoints:{
@@ -252,7 +251,7 @@ RS_Entity *LC_ActionSplineAppendPoint::createNewEntityWithAddedControlPoint(RS_E
 void LC_ActionSplineAppendPoint::updateMouseButtonHints() {
     switch (getStatus()){
         case SetEntity:{
-            updateMouseWidgetTRCancel(tr("Specify spline or spline points entity"));
+            updateMouseWidgetTRCancel(tr("Select spline or spline points entity"));
             break;
         }
         case SetFirstControlPoint: {

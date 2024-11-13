@@ -607,3 +607,18 @@ std::ostream& operator << (std::ostream& os, const RS_Spline& l) {
     os << " Spline: " << l.getData() << "\n";
     return os;
 }
+
+RS_Vector RS_Spline::getNearestPointOnEntity(const RS_Vector &coord, bool onEntity, double *dist, RS_Entity **entity) const {
+    return RS_EntityContainer::getNearestPointOnEntity(coord, onEntity, dist, entity);
+/*    RS_Vector point(false);
+
+    RS_Entity *en = getNearestEntity(coord, dist, RS2::ResolveNone);
+
+    if (en && en->isVisible()
+        && !en->getParent()->ignoredSnap()
+        ) {
+        point = en->getNearestPointOnEntity(coord, onEntity, dist, entity);
+    }
+
+    return point;*/
+}

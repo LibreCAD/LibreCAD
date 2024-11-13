@@ -110,6 +110,8 @@ public:
 	RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const override;
 	RS_Vector getNearestSelectedRef( const RS_Vector& coord, double* dist = nullptr) const override;
 
+    RS_Vector getNearestPointOnEntity(const RS_Vector &coord, bool onEntity, double *dist, RS_Entity **entity) const override;
+
     /** @return Start point of the entity */
 	RS_Vector getStartpoint() const override;
     /** @return End point of the entity */

@@ -47,7 +47,7 @@ protected:
 
     RS_Entity *entityToModify = nullptr;
     bool appendPointsToStart = false;
-    RS_Vector vertexToAppend = RS_Vector(false);
+    RS_Vector vertexPoint = RS_Vector(false);
 
 
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
@@ -58,11 +58,11 @@ protected:
 
     void updateMouseButtonHints() override;
 
-    bool mayAppendPointToEntity(RS_Entity *e);
+    bool mayModifySplineEntity(RS_Entity *e);
 
     void clean();
 
-    RS_Entity *createNewEntityWithAddedControlPoint(RS_Entity *e, RS_Vector controlPoint, bool fromStart);
+    RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool fromStart);
 };
 
 #endif // LC_ACTIONSPLINEAPPENDPOINT_H

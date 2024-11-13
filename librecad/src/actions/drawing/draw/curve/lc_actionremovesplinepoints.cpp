@@ -36,7 +36,7 @@ LC_ActionRemoveSplinePoints::LC_ActionRemoveSplinePoints(RS_EntityContainer &con
 
 void LC_ActionRemoveSplinePoints::trigger() {
     RS_PreviewActionInterface::trigger();
-    RS_Entity* createdEntity = createNewEntityWithoutControlPoint(entityToModify, vertexToDelete);
+    RS_Entity* createdEntity = createModifiedSplineEntity(entityToModify, vertexPoint);
     if (createdEntity != nullptr){
         if (document) {
             document->startUndoCycle();
@@ -50,10 +50,10 @@ void LC_ActionRemoveSplinePoints::trigger() {
             document->endUndoCycle();
         }
         entityToModify = createdEntity;
-        vertexToDelete = RS_Vector(false);
+        vertexPoint = RS_Vector(false);
         deleteHighlights();
 
-        if (!mayDeleteControlPoints(entityToModify)) {
+        if (!mayModifySplineEntity(entityToModify)) {
             entityToModify->setSelected(false);
             setStatus(SetEntity);
         }
@@ -66,41 +66,41 @@ void LC_ActionRemoveSplinePoints::mouseMoveEvent(QMouseEvent *e) {
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
     deleteHighlights();
+    deletePreview();
     switch (status) {
         case SetEntity: {
             auto entity = catchEntity(e, enTypeList);
             if (entity != nullptr){
-               if (mayDeleteControlPoints(entity)) {
+               if (mayModifySplineEntity(entity)) {
                    highlightHoverWithRefPoints(entity, true);
                }
             }
             break;
         }
         case SetControlPoint:{
-            deletePreview();
             double dist;
             RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
             if (nearestPoint.valid) {
                 previewRefSelectablePoint(nearestPoint);
-                RS_Entity *previewUpdatedEntity = createNewEntityWithoutControlPoint(entityToModify, nearestPoint);
+                RS_Entity *previewUpdatedEntity = createModifiedSplineEntity(entityToModify, nearestPoint);
                 if (previewUpdatedEntity != nullptr) {
                     previewEntity(previewUpdatedEntity);
                 }
             }
-            drawPreview();
             break;
         }
         default:
             break;
     }
     drawHighlights();
+    drawPreview();
 }
 
 void LC_ActionRemoveSplinePoints::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status){
         case SetEntity:{
             auto entity = catchEntity(e, enTypeList);
-            if (entity != nullptr && mayDeleteControlPoints(entity)){
+            if (entity != nullptr && mayModifySplineEntity(entity)){
                 entityToModify = entity;
                 entityToModify->setSelected(true);
                 graphicView->redraw(RS2::RedrawDrawing);
@@ -113,7 +113,7 @@ void LC_ActionRemoveSplinePoints::onMouseLeftButtonRelease(int status, QMouseEve
             double dist;
             RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
             if (nearestPoint.valid){
-                vertexToDelete = nearestPoint;
+                vertexPoint = nearestPoint;
                 trigger();
             }
             break;
@@ -147,20 +147,34 @@ void LC_ActionRemoveSplinePoints::clean() {
     graphicView->redraw();
 }
 
-RS_Entity *LC_ActionRemoveSplinePoints::createNewEntityWithoutControlPoint(RS_Entity *e, RS_Vector controlPoint) {
+RS_Entity *LC_ActionRemoveSplinePoints::createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint) {
     RS_Entity* result = nullptr;
     switch (e->rtti()){
         case RS2::EntitySplinePoints:{
             auto* splinePoints = dynamic_cast<LC_SplinePoints *>(e->clone());
             LC_SplinePointsData &data = splinePoints->getData();
-            unsigned int count = data.controlPoints.size();
-            for (int i = 0; i < count; i++ ){
-                RS_Vector cp = data.controlPoints.at(i);
-                if (cp == controlPoint){
-                    data.controlPoints.erase(data.controlPoints.begin() + i);
-                    splinePoints->update();
-                    result = splinePoints;
-                    break;
+            unsigned int controlPointsCount = data.controlPoints.size();
+            int splinePointsCount = data.splinePoints.size();
+            if (splinePointsCount > 0){
+                for (int i = 0; i < splinePointsCount; i++) {
+                    RS_Vector cp = data.splinePoints.at(i);
+                    if (cp == controlPoint) {
+                        data.splinePoints.erase(data.splinePoints.begin() + i);
+                        splinePoints->update();
+                        result = splinePoints;
+                        break;
+                    }
+                }
+            }
+            else {
+                for (int i = 0; i < controlPointsCount; i++) {
+                    RS_Vector cp = data.controlPoints.at(i);
+                    if (cp == controlPoint) {
+                        data.controlPoints.erase(data.controlPoints.begin() + i);
+                        splinePoints->update();
+                        result = splinePoints;
+                        break;
+                    }
                 }
             }
             break;
@@ -190,7 +204,7 @@ RS_Entity *LC_ActionRemoveSplinePoints::createNewEntityWithoutControlPoint(RS_En
     return result;
 }
 
-bool LC_ActionRemoveSplinePoints::mayDeleteControlPoints(RS_Entity *e) {
+bool LC_ActionRemoveSplinePoints::mayModifySplineEntity(RS_Entity *e) {
     switch (e->rtti()){
         case RS2::EntitySplinePoints:{
             auto* splinePoints = dynamic_cast<LC_SplinePoints *>(e);
@@ -230,7 +244,7 @@ bool LC_ActionRemoveSplinePoints::mayDeleteControlPoints(RS_Entity *e) {
 void LC_ActionRemoveSplinePoints::updateMouseButtonHints() {
     switch (getStatus()){
         case SetEntity:{
-            updateMouseWidgetTRCancel(tr("Specify spline or spline points entity"));
+            updateMouseWidgetTRCancel(tr("Select spline or spline points entity"));
             break;
         }
         case SetControlPoint: {

@@ -20,46 +20,50 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#ifndef LC_ACTIONREMOVESPLINEPOINTS_H
-#define LC_ACTIONREMOVESPLINEPOINTS_H
+#ifndef LC_ACTIONSPLINEADDPOINTACTION_H
+#define LC_ACTIONSPLINEADDPOINTACTION_H
 
 #include "rs_previewactioninterface.h"
 
-class LC_ActionRemoveSplinePoints:public RS_PreviewActionInterface
-{
-public:
-    LC_ActionRemoveSplinePoints(RS_EntityContainer &container, RS_GraphicView &graphicView);
-    ~LC_ActionRemoveSplinePoints() override = default;
+class LC_ActionSplineAddPoint:public RS_PreviewActionInterface{
+    Q_OBJECT
 
-    void finish(bool updateTB) override;
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
+
+    void updateMouseButtonHints() override;
+
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+
+public:
+    LC_ActionSplineAddPoint(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    ~LC_ActionSplineAddPoint() override = default;
 
     void mouseMoveEvent(QMouseEvent *event) override;
 
-    void trigger() override;
+    void finish(bool updateTB) override;
 
-    void drawSnapper() override;
+    void trigger() override;
 
 protected:
     enum State{
         SetEntity,
+        SetBeforeControlPoint,
         SetControlPoint
     };
 
     RS_Entity *entityToModify = nullptr;
     RS_Vector vertexPoint = RS_Vector(false);
-
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-
-    void updateMouseButtonHints() override;
+    RS_Vector selectedVertexPoint = RS_Vector(false);
+    bool endpointIsSelected = false;
+    bool insertAfterSelected = false;
 
     void clean();
 
-    RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint);
-
-    bool mayModifySplineEntity(RS_Entity *e);
-
-    RS2::CursorType doGetMouseCursor(int status) override;
+    bool mayModifySplineEntity(RS_Entity *pEntity);
+    RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool ajustPosition = false);
 };
 
-#endif // LC_ACTIONREMOVESPLINEPOINTS_H
+#endif // LC_ACTIONSPLINEADDPOINTACTION_H
