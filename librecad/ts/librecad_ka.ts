@@ -1217,6 +1217,16 @@ or [%2]</source>
         <translation>მხები &amp;რკალი</translation>
     </message>
     <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="188"/>
+        <source>&amp;Append spline point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="190"/>
+        <source>&amp;Insert spline points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="198"/>
         <source>&amp;Ellipse (Axis)</source>
         <translation type="unfinished"></translation>
@@ -1566,18 +1576,8 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="188"/>
-        <source>&amp;Add spline point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="189"/>
         <source>&amp;Remove spline points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="190"/>
-        <source>&amp;Append spline points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2673,6 +2673,19 @@ or [%2]</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionRemoveSplinePoints</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionremovesplinepoints.cpp" line="204"/>
+        <source>Select spline or spline points entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionremovesplinepoints.cpp" line="208"/>
+        <source>Select control point of entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionSnapMiddleManual</name>
     <message>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="238"/>
@@ -2687,6 +2700,47 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="244"/>
         <source>Specify end point</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionSplineAddPoint</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineaddpoint.cpp" line="201"/>
+        <source>Select spline or spline points entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineaddpoint.cpp" line="205"/>
+        <source>Select control point to insert before</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineaddpoint.cpp" line="209"/>
+        <source>Specify control point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineaddpoint.cpp" line="209"/>
+        <source>Insert AFTER selected point</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionSplineAppendPoint</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp" line="211"/>
+        <source>Select spline or spline points entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp" line="215"/>
+        <source>Specify first control point</source>
+        <translation type="unfinished">მიუთითეთ პირველი საკონტროლო წერტილი</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp" line="219"/>
+        <source>Specify control point</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8024,430 +8078,430 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_WidgetFactory</name>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="438"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="440"/>
         <source>Library Browser</source>
         <translation>ბიბლიოთეკის ბრაუზერი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="450"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
         <source>Command line</source>
         <translation>ბრძანებათა სტრიქონი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="476"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="478"/>
         <source>Dock</source>
         <translation>მიმაგრება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="476"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="478"/>
         <source>Float</source>
         <translation>მცურავი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="583"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="585"/>
         <source>Lines</source>
         <translation>ხაზები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="584"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="586"/>
         <source>Circles</source>
         <translation>წრეები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="585"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="587"/>
         <source>Freehand</source>
         <translation>ხელით დახატული</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="586"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="588"/>
         <source>Ellipses</source>
         <translation>ოვალები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="587"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
         <source>PolyLines</source>
         <translation>პოლიხაზები</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="345"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="561"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="588"/>
-        <source>Select</source>
-        <translation>აირჩიეთ</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="340"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="556"/>
-        <source>Line</source>
-        <translation type="unfinished">ხაზი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="341"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="557"/>
-        <source>Circle</source>
-        <translation type="unfinished">წრე</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="342"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="558"/>
-        <source>Curve</source>
-        <translation type="unfinished">მრუდი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="343"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
-        <source>Ellipse</source>
-        <translation type="unfinished">ოვალი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="344"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="560"/>
-        <source>Polyline</source>
-        <translation type="unfinished">პოლიხაზი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="346"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
-        <source>Dimension</source>
-        <translation type="unfinished">განზომილება</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="563"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="590"/>
-        <source>Other</source>
-        <translation type="unfinished">სხვა</translation>
+        <source>Select</source>
+        <translation>აირჩიეთ</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="349"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
-        <source>Info</source>
-        <translation type="unfinished">ინფორმაცია</translation>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="342"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="558"/>
+        <source>Line</source>
+        <translation type="unfinished">ხაზი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="350"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="491"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="593"/>
-        <source>Order</source>
-        <translation type="unfinished">დალაგება</translation>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="343"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
+        <source>Circle</source>
+        <translation type="unfinished">წრე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="372"/>
-        <source>Pen Palette</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="344"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="560"/>
+        <source>Curve</source>
+        <translation type="unfinished">მრუდი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="382"/>
-        <source>Layer List</source>
-        <translation type="unfinished">ფენების სია</translation>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="345"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="561"/>
+        <source>Ellipse</source>
+        <translation type="unfinished">ოვალი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="402"/>
-        <source>Layer Tree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="415"/>
-        <source>Entity Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="428"/>
-        <source>Block List</source>
-        <translation type="unfinished">ბლოკების სია</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="482"/>
-        <source>File</source>
-        <translation type="unfinished">ფაილი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="487"/>
-        <source>Edit</source>
-        <translation type="unfinished">ჩასწორება</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="496"/>
-        <source>View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="392"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="501"/>
-        <source>Named Views</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="506"/>
-        <source>Snap Selection</source>
-        <translation type="unfinished">მონიშნულის მიმაგრება</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="516"/>
-        <source>Pen</source>
-        <translation type="unfinished">ფანქარი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="522"/>
-        <source>Tool Options</source>
-        <translation type="unfinished">ხელსაწყოების გამართვა</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="524"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="752"/>
-        <source>Dock Areas</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
-        <source>Creators</source>
-        <translation type="unfinished">შემქმნელები</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="533"/>
-        <source>Preferences</source>
-        <translation type="unfinished">პარამეტრები</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="580"/>
-        <source>Categories</source>
-        <translation type="unfinished">კატეგორიები</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
-        <source>Dimensions</source>
-        <translation>ზომები</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="602"/>
-        <source>&amp;File</source>
-        <translation type="unfinished">&amp;ფაილი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="613"/>
-        <source>Import</source>
-        <translation type="unfinished">შემოტანა</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="618"/>
-        <source>Export</source>
-        <translation type="unfinished">გატანა</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="635"/>
-        <source>&amp;Options</source>
-        <translation type="unfinished">&amp;მორგება</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="645"/>
-        <source>&amp;Edit</source>
-        <translation type="unfinished">&amp;ჩასწორება</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="661"/>
-        <source>Pl&amp;ugins</source>
-        <translation type="unfinished">&amp;დამატებები</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="663"/>
-        <source>&amp;View</source>
-        <translation type="unfinished">&amp;ხედი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="693"/>
-        <source>&amp;Views Restore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="701"/>
-        <source>&amp;Tools</source>
-        <translation type="unfinished">&amp;ხელსაწყოები</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="702"/>
-        <source>&amp;Line</source>
-        <translation type="unfinished">&amp;ხაზი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="703"/>
-        <source>&amp;Circle</source>
-        <translation type="unfinished">&amp;წრე</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="704"/>
-        <source>&amp;Curve</source>
-        <translation type="unfinished">&amp;მრუდი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="705"/>
-        <source>&amp;Ellipse</source>
-        <translation type="unfinished">&amp;ოვალი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="706"/>
-        <source>&amp;Polyline</source>
-        <translation type="unfinished">&amp;პოლიხაზი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="707"/>
-        <source>&amp;Select</source>
-        <translation type="unfinished">&amp;მონიშვნა</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="708"/>
-        <source>Dime&amp;nsion</source>
-        <translation type="unfinished">&amp;განზომილება</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="709"/>
-        <source>Ot&amp;her</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="710"/>
-        <source>&amp;Modify</source>
-        <translation type="unfinished">&amp;შეცვლა</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="711"/>
-        <source>&amp;Info</source>
-        <translation type="unfinished">&amp;ინფო</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="712"/>
-        <source>&amp;Order</source>
-        <translation type="unfinished">&amp;მიმდევრობა</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="714"/>
-        <source>&amp;Drawings</source>
-        <translation type="unfinished">&amp;ნახაზები</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="721"/>
-        <source>&amp;Help</source>
-        <translation type="unfinished">&amp;დახმარება</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="723"/>
-        <source>On&amp;line Docs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="724"/>
-        <source>&amp;Wiki</source>
-        <translation type="unfinished">&amp;ვიკი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="725"/>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished">მომხმარებლის &amp;სახელმძღვანელო</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="726"/>
-        <source>&amp;Commands</source>
-        <translation type="unfinished">&amp;ბრძანებები</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="727"/>
-        <source>&amp;Style Sheets</source>
-        <translation type="unfinished">&amp;სტილის ცხრილები</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="728"/>
-        <source>Wid&amp;gets</source>
-        <translation type="unfinished">&amp;ვიჯეტები</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="732"/>
-        <source>About</source>
-        <translation type="unfinished">პროგრამის შესახებ</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="739"/>
-        <source>&amp;Forum</source>
-        <translation type="unfinished">&amp;ფორუმი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="740"/>
-        <source>Zulip &amp;Chat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="742"/>
-        <source>&amp;Submit Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="743"/>
-        <source>&amp;Request Feature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="744"/>
-        <source>&amp;Releases Page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="748"/>
-        <source>&amp;Donate</source>
-        <translation type="unfinished">&amp;შეწირვა</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="750"/>
-        <source>Widgets</source>
-        <translation type="unfinished">ვიჯეტები</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="760"/>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="788"/>
-        <source>&amp;Toolbars</source>
-        <translation type="unfinished">&amp;ხელსაწყოთა ზოლები</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1006"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1075"/>
-        <source>Grid Status</source>
-        <translation type="unfinished">ბადის სტატუსი</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1040"/>
-        <source>Coordinates</source>
-        <translation type="unfinished">კოორდინატები</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1047"/>
-        <source>Relative Zero</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1054"/>
-        <source>Mouse</source>
-        <translation type="unfinished">თაგუნა</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1061"/>
-        <source>Selection Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1068"/>
-        <source>Active Layer</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="346"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
+        <source>Polyline</source>
+        <translation type="unfinished">პოლიხაზი</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="348"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="564"/>
+        <source>Dimension</source>
+        <translation type="unfinished">განზომილება</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="349"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
+        <source>Other</source>
+        <translation type="unfinished">სხვა</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="351"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="567"/>
+        <source>Info</source>
+        <translation type="unfinished">ინფორმაცია</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="352"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="493"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="595"/>
+        <source>Order</source>
+        <translation type="unfinished">დალაგება</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="374"/>
+        <source>Pen Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="384"/>
+        <source>Layer List</source>
+        <translation type="unfinished">ფენების სია</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="404"/>
+        <source>Layer Tree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
+        <source>Entity Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="430"/>
+        <source>Block List</source>
+        <translation type="unfinished">ბლოკების სია</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="484"/>
+        <source>File</source>
+        <translation type="unfinished">ფაილი</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="489"/>
+        <source>Edit</source>
+        <translation type="unfinished">ჩასწორება</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="498"/>
+        <source>View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="394"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="503"/>
+        <source>Named Views</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="508"/>
+        <source>Snap Selection</source>
+        <translation type="unfinished">მონიშნულის მიმაგრება</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="518"/>
+        <source>Pen</source>
+        <translation type="unfinished">ფანქარი</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="524"/>
+        <source>Tool Options</source>
+        <translation type="unfinished">ხელსაწყოების გამართვა</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="526"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="754"/>
+        <source>Dock Areas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="531"/>
+        <source>Creators</source>
+        <translation type="unfinished">შემქმნელები</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="535"/>
+        <source>Preferences</source>
+        <translation type="unfinished">პარამეტრები</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="582"/>
+        <source>Categories</source>
+        <translation type="unfinished">კატეგორიები</translation>
+    </message>
+    <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="591"/>
+        <source>Dimensions</source>
+        <translation>ზომები</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="604"/>
+        <source>&amp;File</source>
+        <translation type="unfinished">&amp;ფაილი</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="615"/>
+        <source>Import</source>
+        <translation type="unfinished">შემოტანა</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="620"/>
+        <source>Export</source>
+        <translation type="unfinished">გატანა</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="637"/>
+        <source>&amp;Options</source>
+        <translation type="unfinished">&amp;მორგება</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="647"/>
+        <source>&amp;Edit</source>
+        <translation type="unfinished">&amp;ჩასწორება</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="663"/>
+        <source>Pl&amp;ugins</source>
+        <translation type="unfinished">&amp;დამატებები</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="665"/>
+        <source>&amp;View</source>
+        <translation type="unfinished">&amp;ხედი</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="695"/>
+        <source>&amp;Views Restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="703"/>
+        <source>&amp;Tools</source>
+        <translation type="unfinished">&amp;ხელსაწყოები</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="704"/>
+        <source>&amp;Line</source>
+        <translation type="unfinished">&amp;ხაზი</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="705"/>
+        <source>&amp;Circle</source>
+        <translation type="unfinished">&amp;წრე</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="706"/>
+        <source>&amp;Curve</source>
+        <translation type="unfinished">&amp;მრუდი</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="707"/>
+        <source>&amp;Ellipse</source>
+        <translation type="unfinished">&amp;ოვალი</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="708"/>
+        <source>&amp;Polyline</source>
+        <translation type="unfinished">&amp;პოლიხაზი</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="709"/>
+        <source>&amp;Select</source>
+        <translation type="unfinished">&amp;მონიშვნა</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="710"/>
+        <source>Dime&amp;nsion</source>
+        <translation type="unfinished">&amp;განზომილება</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="711"/>
+        <source>Ot&amp;her</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="712"/>
+        <source>&amp;Modify</source>
+        <translation type="unfinished">&amp;შეცვლა</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="713"/>
+        <source>&amp;Info</source>
+        <translation type="unfinished">&amp;ინფო</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="714"/>
+        <source>&amp;Order</source>
+        <translation type="unfinished">&amp;მიმდევრობა</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="716"/>
+        <source>&amp;Drawings</source>
+        <translation type="unfinished">&amp;ნახაზები</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="723"/>
+        <source>&amp;Help</source>
+        <translation type="unfinished">&amp;დახმარება</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="725"/>
+        <source>On&amp;line Docs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="726"/>
+        <source>&amp;Wiki</source>
+        <translation type="unfinished">&amp;ვიკი</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="727"/>
+        <source>User&apos;s &amp;Manual</source>
+        <translation type="unfinished">მომხმარებლის &amp;სახელმძღვანელო</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="728"/>
+        <source>&amp;Commands</source>
+        <translation type="unfinished">&amp;ბრძანებები</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="729"/>
+        <source>&amp;Style Sheets</source>
+        <translation type="unfinished">&amp;სტილის ცხრილები</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="730"/>
+        <source>Wid&amp;gets</source>
+        <translation type="unfinished">&amp;ვიჯეტები</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="734"/>
+        <source>About</source>
+        <translation type="unfinished">პროგრამის შესახებ</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="741"/>
+        <source>&amp;Forum</source>
+        <translation type="unfinished">&amp;ფორუმი</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="742"/>
+        <source>Zulip &amp;Chat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="744"/>
+        <source>&amp;Submit Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="745"/>
+        <source>&amp;Request Feature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="746"/>
+        <source>&amp;Releases Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="750"/>
+        <source>&amp;Donate</source>
+        <translation type="unfinished">&amp;შეწირვა</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="752"/>
+        <source>Widgets</source>
+        <translation type="unfinished">ვიჯეტები</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="762"/>
+        <source>Dock Wid&amp;gets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="790"/>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished">&amp;ხელსაწყოთა ზოლები</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1008"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1077"/>
+        <source>Grid Status</source>
+        <translation type="unfinished">ბადის სტატუსი</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1042"/>
+        <source>Coordinates</source>
+        <translation type="unfinished">კოორდინატები</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1049"/>
+        <source>Relative Zero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1056"/>
+        <source>Mouse</source>
+        <translation type="unfinished">თაგუნა</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1063"/>
+        <source>Selection Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1070"/>
+        <source>Active Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="350"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="566"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="593"/>
         <source>Modify</source>
         <translation>ჩასწორება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="594"/>
         <source>Measure</source>
         <translation>გაზომვა</translation>
     </message>
@@ -9219,17 +9273,17 @@ Please check its existence and permissions.</source>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1229"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1241"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1230"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1242"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1240"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1252"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>escape</translation>
@@ -16681,47 +16735,47 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4178"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4194"/>
         <source>unknown error opening dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4182"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4198"/>
         <source>can&apos;t open this dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4186"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4202"/>
         <source>unsupported dwg version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4194"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4210"/>
         <source>error reading file header in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4198"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4214"/>
         <source>error reading header vars in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4202"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4218"/>
         <source>error reading classes in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4206"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4222"/>
         <source>error reading offsets in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4210"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4226"/>
         <source>error reading tables in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4218"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4234"/>
         <source>error reading entities in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16736,12 +16790,12 @@ Do you want to replace it?</source>
         <translation>გაფრთხილება</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4214"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4230"/>
         <source>error reading blocks in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4222"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4238"/>
         <source>error reading objects in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17879,7 +17933,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4190"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4206"/>
         <source>error reading file metadata in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18073,7 +18127,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="735"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="737"/>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3151"/>
         <source>License</source>
         <translation>ლიცენზია</translation>

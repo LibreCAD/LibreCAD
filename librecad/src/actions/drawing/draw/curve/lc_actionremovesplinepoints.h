@@ -24,42 +24,24 @@
 #define LC_ACTIONREMOVESPLINEPOINTS_H
 
 #include "rs_previewactioninterface.h"
+#include "lc_actionsplinemodifybase.h"
 
-class LC_ActionRemoveSplinePoints:public RS_PreviewActionInterface
+class LC_ActionRemoveSplinePoints:public LC_ActionSplineModifyBase
 {
 public:
     LC_ActionRemoveSplinePoints(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionRemoveSplinePoints() override = default;
-
-    void finish(bool updateTB) override;
-
     void mouseMoveEvent(QMouseEvent *event) override;
-
-    void trigger() override;
-
-    void drawSnapper() override;
-
 protected:
-    enum State{
-        SetEntity,
-        SetControlPoint
-    };
-
-    RS_Entity *entityToModify = nullptr;
-    RS_Vector vertexPoint = RS_Vector(false);
-
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-
     void updateMouseButtonHints() override;
+    RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool direction) override;
+    bool mayModifySplineEntity(RS_Entity *e) override;
+    void doAfterTrigger() override;
 
-    void clean();
+public:
+    void setStatus(int status) override;
 
-    RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint);
-
-    bool mayModifySplineEntity(RS_Entity *e);
-
-    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif // LC_ACTIONREMOVESPLINEPOINTS_H

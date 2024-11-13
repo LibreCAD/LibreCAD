@@ -1544,18 +1544,8 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="188"/>
-        <source>&amp;Add spline point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="189"/>
         <source>&amp;Remove spline points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="190"/>
-        <source>&amp;Append spline points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2073,6 +2063,16 @@ or [%2]</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="263"/>
         <source>Mo&amp;ve and Rotate</source>
         <translation>Mo&amp;ver e xirar</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="188"/>
+        <source>&amp;Append spline point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="190"/>
+        <source>&amp;Insert spline points</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="267"/>
@@ -2691,6 +2691,19 @@ or [%2]</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionRemoveSplinePoints</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionremovesplinepoints.cpp" line="204"/>
+        <source>Select spline or spline points entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionremovesplinepoints.cpp" line="208"/>
+        <source>Select control point of entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionSnapMiddleManual</name>
     <message>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="238"/>
@@ -2706,6 +2719,47 @@ or [%2]</source>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="244"/>
         <source>Specify end point</source>
         <translation type="unfinished">Especifique o punto final</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionSplineAddPoint</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineaddpoint.cpp" line="201"/>
+        <source>Select spline or spline points entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineaddpoint.cpp" line="205"/>
+        <source>Select control point to insert before</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineaddpoint.cpp" line="209"/>
+        <source>Specify control point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineaddpoint.cpp" line="209"/>
+        <source>Insert AFTER selected point</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionSplineAppendPoint</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp" line="211"/>
+        <source>Select spline or spline points entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp" line="215"/>
+        <source>Specify first control point</source>
+        <translation type="unfinished">Especifique o primeiro punto de control</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp" line="219"/>
+        <source>Specify control point</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8042,430 +8096,430 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_WidgetFactory</name>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="438"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="440"/>
         <source>Library Browser</source>
         <translation type="unfinished">Biblioteca</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="450"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
         <source>Command line</source>
         <translation type="unfinished">Liña de comandos</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="476"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="478"/>
         <source>Dock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="476"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="478"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="583"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="585"/>
         <source>Lines</source>
         <translation type="unfinished">Liñas</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="584"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="586"/>
         <source>Circles</source>
         <translation type="unfinished">Círculos</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="585"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="587"/>
         <source>Freehand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="586"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="588"/>
         <source>Ellipses</source>
         <translation type="unfinished">Elipses</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="587"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
         <source>PolyLines</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="345"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="561"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="588"/>
-        <source>Select</source>
-        <translation type="unfinished">Seleccionar</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="340"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="556"/>
-        <source>Line</source>
-        <translation type="unfinished">Liña</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="341"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="557"/>
-        <source>Circle</source>
-        <translation type="unfinished">Círculo</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="342"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="558"/>
-        <source>Curve</source>
-        <translation type="unfinished">Curva</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="343"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
-        <source>Ellipse</source>
-        <translation type="unfinished">Elipse</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="344"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="560"/>
-        <source>Polyline</source>
-        <translation type="unfinished">Poliliña</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="346"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
-        <source>Dimension</source>
-        <translation type="unfinished">Acoutamento</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="563"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="590"/>
-        <source>Other</source>
-        <translation type="unfinished">Outros</translation>
+        <source>Select</source>
+        <translation type="unfinished">Seleccionar</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="349"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="342"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="558"/>
+        <source>Line</source>
+        <translation type="unfinished">Liña</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="350"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="491"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="593"/>
-        <source>Order</source>
-        <translation type="unfinished">Orde</translation>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="343"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
+        <source>Circle</source>
+        <translation type="unfinished">Círculo</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="372"/>
-        <source>Pen Palette</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="344"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="560"/>
+        <source>Curve</source>
+        <translation type="unfinished">Curva</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="382"/>
-        <source>Layer List</source>
-        <translation type="unfinished">Listaxe de capas</translation>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="345"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="561"/>
+        <source>Ellipse</source>
+        <translation type="unfinished">Elipse</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="402"/>
-        <source>Layer Tree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="415"/>
-        <source>Entity Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="428"/>
-        <source>Block List</source>
-        <translation type="unfinished">Listaxe de bloques</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="482"/>
-        <source>File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="487"/>
-        <source>Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="496"/>
-        <source>View</source>
-        <translation type="unfinished">Opcións de vista</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="392"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="501"/>
-        <source>Named Views</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="506"/>
-        <source>Snap Selection</source>
-        <translation type="unfinished">Opcións de forzado</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="516"/>
-        <source>Pen</source>
-        <translation type="unfinished">Trazo</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="522"/>
-        <source>Tool Options</source>
-        <translation type="unfinished">Opcións de ferramenta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="524"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="752"/>
-        <source>Dock Areas</source>
-        <translation type="unfinished">Áreas de carga</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
-        <source>Creators</source>
-        <translation type="unfinished">Creadores</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="533"/>
-        <source>Preferences</source>
-        <translation type="unfinished">Preferencias</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="580"/>
-        <source>Categories</source>
-        <translation type="unfinished">Categorias</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
-        <source>Dimensions</source>
-        <translation type="unfinished">Acoutamento</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="602"/>
-        <source>&amp;File</source>
-        <translation type="unfinished">&amp;Ficheiro</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="613"/>
-        <source>Import</source>
-        <translation type="unfinished">I&amp;mportar</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="618"/>
-        <source>Export</source>
-        <translation type="unfinished">&amp;Exportar</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="635"/>
-        <source>&amp;Options</source>
-        <translation type="unfinished">&amp;Opcións</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="645"/>
-        <source>&amp;Edit</source>
-        <translation type="unfinished">&amp;Editar</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="661"/>
-        <source>Pl&amp;ugins</source>
-        <translation type="unfinished">&amp;Plugins</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="663"/>
-        <source>&amp;View</source>
-        <translation type="unfinished">&amp;Ver</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="693"/>
-        <source>&amp;Views Restore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="701"/>
-        <source>&amp;Tools</source>
-        <translation type="unfinished">Fe&amp;rramentas</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="702"/>
-        <source>&amp;Line</source>
-        <translation type="unfinished">&amp;Liña</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="703"/>
-        <source>&amp;Circle</source>
-        <translation type="unfinished">&amp;Círculo</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="704"/>
-        <source>&amp;Curve</source>
-        <translation type="unfinished">Cu&amp;rva</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="705"/>
-        <source>&amp;Ellipse</source>
-        <translation type="unfinished">&amp;Elipse</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="706"/>
-        <source>&amp;Polyline</source>
-        <translation type="unfinished">&amp;Poliliña</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="707"/>
-        <source>&amp;Select</source>
-        <translation type="unfinished">&amp;Seleccionar</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="708"/>
-        <source>Dime&amp;nsion</source>
-        <translation type="unfinished">&amp;Acoutar</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="709"/>
-        <source>Ot&amp;her</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="710"/>
-        <source>&amp;Modify</source>
-        <translation type="unfinished">&amp;Modificar</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="711"/>
-        <source>&amp;Info</source>
-        <translation type="unfinished">C&amp;onsultar</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="712"/>
-        <source>&amp;Order</source>
-        <translation type="unfinished">&amp;Orde</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="714"/>
-        <source>&amp;Drawings</source>
-        <translation type="unfinished">&amp;Debuxos</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="721"/>
-        <source>&amp;Help</source>
-        <translation type="unfinished">A&amp;xuda</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="723"/>
-        <source>On&amp;line Docs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="724"/>
-        <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="725"/>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="726"/>
-        <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="727"/>
-        <source>&amp;Style Sheets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="728"/>
-        <source>Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="732"/>
-        <source>About</source>
-        <translation type="unfinished">Sobre</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="739"/>
-        <source>&amp;Forum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="740"/>
-        <source>Zulip &amp;Chat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="742"/>
-        <source>&amp;Submit Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="743"/>
-        <source>&amp;Request Feature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="744"/>
-        <source>&amp;Releases Page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="748"/>
-        <source>&amp;Donate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="750"/>
-        <source>Widgets</source>
-        <translation type="unfinished">&amp;Widgets</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="760"/>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="unfinished">Cargador de &amp;widgets</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="788"/>
-        <source>&amp;Toolbars</source>
-        <translation type="unfinished">Barras de &amp;ferramentas</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1006"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1075"/>
-        <source>Grid Status</source>
-        <translation type="unfinished">Estado da grella</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1040"/>
-        <source>Coordinates</source>
-        <translation type="unfinished">Coordenadas</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1047"/>
-        <source>Relative Zero</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1054"/>
-        <source>Mouse</source>
-        <translation type="unfinished">Rato</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1061"/>
-        <source>Selection Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1068"/>
-        <source>Active Layer</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="346"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
+        <source>Polyline</source>
+        <translation type="unfinished">Poliliña</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="348"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="564"/>
+        <source>Dimension</source>
+        <translation type="unfinished">Acoutamento</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="349"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
+        <source>Other</source>
+        <translation type="unfinished">Outros</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="351"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="567"/>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="352"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="493"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="595"/>
+        <source>Order</source>
+        <translation type="unfinished">Orde</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="374"/>
+        <source>Pen Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="384"/>
+        <source>Layer List</source>
+        <translation type="unfinished">Listaxe de capas</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="404"/>
+        <source>Layer Tree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
+        <source>Entity Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="430"/>
+        <source>Block List</source>
+        <translation type="unfinished">Listaxe de bloques</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="484"/>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="489"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="498"/>
+        <source>View</source>
+        <translation type="unfinished">Opcións de vista</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="394"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="503"/>
+        <source>Named Views</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="508"/>
+        <source>Snap Selection</source>
+        <translation type="unfinished">Opcións de forzado</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="518"/>
+        <source>Pen</source>
+        <translation type="unfinished">Trazo</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="524"/>
+        <source>Tool Options</source>
+        <translation type="unfinished">Opcións de ferramenta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="526"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="754"/>
+        <source>Dock Areas</source>
+        <translation type="unfinished">Áreas de carga</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="531"/>
+        <source>Creators</source>
+        <translation type="unfinished">Creadores</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="535"/>
+        <source>Preferences</source>
+        <translation type="unfinished">Preferencias</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="582"/>
+        <source>Categories</source>
+        <translation type="unfinished">Categorias</translation>
+    </message>
+    <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="591"/>
+        <source>Dimensions</source>
+        <translation type="unfinished">Acoutamento</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="604"/>
+        <source>&amp;File</source>
+        <translation type="unfinished">&amp;Ficheiro</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="615"/>
+        <source>Import</source>
+        <translation type="unfinished">I&amp;mportar</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="620"/>
+        <source>Export</source>
+        <translation type="unfinished">&amp;Exportar</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="637"/>
+        <source>&amp;Options</source>
+        <translation type="unfinished">&amp;Opcións</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="647"/>
+        <source>&amp;Edit</source>
+        <translation type="unfinished">&amp;Editar</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="663"/>
+        <source>Pl&amp;ugins</source>
+        <translation type="unfinished">&amp;Plugins</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="665"/>
+        <source>&amp;View</source>
+        <translation type="unfinished">&amp;Ver</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="695"/>
+        <source>&amp;Views Restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="703"/>
+        <source>&amp;Tools</source>
+        <translation type="unfinished">Fe&amp;rramentas</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="704"/>
+        <source>&amp;Line</source>
+        <translation type="unfinished">&amp;Liña</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="705"/>
+        <source>&amp;Circle</source>
+        <translation type="unfinished">&amp;Círculo</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="706"/>
+        <source>&amp;Curve</source>
+        <translation type="unfinished">Cu&amp;rva</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="707"/>
+        <source>&amp;Ellipse</source>
+        <translation type="unfinished">&amp;Elipse</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="708"/>
+        <source>&amp;Polyline</source>
+        <translation type="unfinished">&amp;Poliliña</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="709"/>
+        <source>&amp;Select</source>
+        <translation type="unfinished">&amp;Seleccionar</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="710"/>
+        <source>Dime&amp;nsion</source>
+        <translation type="unfinished">&amp;Acoutar</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="711"/>
+        <source>Ot&amp;her</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="712"/>
+        <source>&amp;Modify</source>
+        <translation type="unfinished">&amp;Modificar</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="713"/>
+        <source>&amp;Info</source>
+        <translation type="unfinished">C&amp;onsultar</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="714"/>
+        <source>&amp;Order</source>
+        <translation type="unfinished">&amp;Orde</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="716"/>
+        <source>&amp;Drawings</source>
+        <translation type="unfinished">&amp;Debuxos</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="723"/>
+        <source>&amp;Help</source>
+        <translation type="unfinished">A&amp;xuda</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="725"/>
+        <source>On&amp;line Docs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="726"/>
+        <source>&amp;Wiki</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="727"/>
+        <source>User&apos;s &amp;Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="728"/>
+        <source>&amp;Commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="729"/>
+        <source>&amp;Style Sheets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="730"/>
+        <source>Wid&amp;gets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="734"/>
+        <source>About</source>
+        <translation type="unfinished">Sobre</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="741"/>
+        <source>&amp;Forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="742"/>
+        <source>Zulip &amp;Chat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="744"/>
+        <source>&amp;Submit Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="745"/>
+        <source>&amp;Request Feature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="746"/>
+        <source>&amp;Releases Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="750"/>
+        <source>&amp;Donate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="752"/>
+        <source>Widgets</source>
+        <translation type="unfinished">&amp;Widgets</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="762"/>
+        <source>Dock Wid&amp;gets</source>
+        <translation type="unfinished">Cargador de &amp;widgets</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="790"/>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished">Barras de &amp;ferramentas</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1008"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1077"/>
+        <source>Grid Status</source>
+        <translation type="unfinished">Estado da grella</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1042"/>
+        <source>Coordinates</source>
+        <translation type="unfinished">Coordenadas</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1049"/>
+        <source>Relative Zero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1056"/>
+        <source>Mouse</source>
+        <translation type="unfinished">Rato</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1063"/>
+        <source>Selection Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1070"/>
+        <source>Active Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="350"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="566"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="593"/>
         <source>Modify</source>
         <translation type="unfinished">Modificar</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="594"/>
         <source>Measure</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9248,17 +9302,17 @@ Por favor comprobe se existe e mais se ten permiso.</translation>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1229"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1241"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1230"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1242"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1240"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1252"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>escape</translation>
@@ -16864,47 +16918,47 @@ Quere reemprazalo?</translation>
         <translation>Aberto o ficheiro dwg versión %1.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4178"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4194"/>
         <source>unknown error opening dwg file</source>
         <translation>Erro descoñecido abrindo o ficheiro dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4182"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4198"/>
         <source>can&apos;t open this dwg file</source>
         <translation>Non se pode abrir este ficheiro dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4186"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4202"/>
         <source>unsupported dwg version</source>
         <translation>Versión dwg non soportada</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4194"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4210"/>
         <source>error reading file header in dwg file</source>
         <translation>Erro lendo a cabeceira do ficheiro dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4198"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4214"/>
         <source>error reading header vars in dwg file</source>
         <translation>Varios erros lendo a cabeceira do ficheiro dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4202"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4218"/>
         <source>error reading classes in dwg file</source>
         <translation>Erro lendo as clases do ficheiro dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4206"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4222"/>
         <source>error reading offsets in dwg file</source>
         <translation>Erro lendo os desprazamentos do ficheiro dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4210"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4226"/>
         <source>error reading tables in dwg file</source>
         <translation>Erro lendo as táboas do ficheiro dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4218"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4234"/>
         <source>error reading entities in dwg file</source>
         <translation>Erro lendo as entidades do ficheiro dwg</translation>
     </message>
@@ -16929,12 +16983,12 @@ Quere reemprazalo?</translation>
         <translation>Aviso</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4214"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4230"/>
         <source>error reading blocks in dwg file</source>
         <translation>erro lendo os bloques no ficheiro dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4222"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4238"/>
         <source>error reading objects in dwg file</source>
         <translation>erro lendo os obxectos no ficheiro dwg</translation>
     </message>
@@ -18080,7 +18134,7 @@ Quere reemprazalo?</translation>
         <translation>Ningún</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4190"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4206"/>
         <source>error reading file metadata in dwg file</source>
         <translation>erro ó ler os metadatos de ficheiro no ficheiro dwg</translation>
     </message>
@@ -18278,7 +18332,7 @@ Quere reemprazalo?</translation>
         <translation>Modo da calculadora: Apagada</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="735"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="737"/>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3151"/>
         <source>License</source>
         <translation type="unfinished">Licenza</translation>

@@ -24,46 +24,24 @@
 #define LC_ACTIONSPLINEADDPOINTACTION_H
 
 #include "rs_previewactioninterface.h"
+#include "lc_actionsplinemodifybase.h"
 
-class LC_ActionSplineAddPoint:public RS_PreviewActionInterface{
+class LC_ActionSplineAddPoint:public LC_ActionSplineModifyBase{
     Q_OBJECT
-
-protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-
-    void updateMouseButtonHints() override;
-
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
 
 public:
     LC_ActionSplineAddPoint(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionSplineAddPoint() override = default;
-
     void mouseMoveEvent(QMouseEvent *event) override;
-
-    void finish(bool updateTB) override;
-
-    void trigger() override;
-
 protected:
-    enum State{
-        SetEntity,
-        SetBeforeControlPoint,
-        SetControlPoint
-    };
 
-    RS_Entity *entityToModify = nullptr;
-    RS_Vector vertexPoint = RS_Vector(false);
-    RS_Vector selectedVertexPoint = RS_Vector(false);
     bool endpointIsSelected = false;
-    bool insertAfterSelected = false;
 
-    void clean();
-
-    bool mayModifySplineEntity(RS_Entity *pEntity);
-    RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool ajustPosition = false);
+    RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool adjustPosition) override;
+    void updateMouseButtonHints() override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void doCompleteTrigger() override;
+    void doAfterTrigger() override;
 };
 
 #endif // LC_ACTIONSPLINEADDPOINTACTION_H

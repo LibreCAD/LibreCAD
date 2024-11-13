@@ -1286,6 +1286,8 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp
 		librecad/src/actions/drawing/draw/curve/lc_actionsplineaddpoint.h
 		librecad/src/actions/drawing/draw/curve/lc_actionsplineaddpoint.cpp
+		librecad/src/actions/drawing/draw/curve/lc_actionsplinemodifybase.h
+		librecad/src/actions/drawing/draw/curve/lc_actionsplinemodifybase.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

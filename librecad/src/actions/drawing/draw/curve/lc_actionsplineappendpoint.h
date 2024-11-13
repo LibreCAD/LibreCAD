@@ -24,45 +24,21 @@
 #define LC_ACTIONSPLINEAPPENDPOINT_H
 
 #include "rs_previewactioninterface.h"
+#include "lc_actionsplinemodifybase.h"
 
-class LC_ActionSplineAppendPoint:public RS_PreviewActionInterface{
+class LC_ActionSplineAppendPoint:public LC_ActionSplineModifyBase{
 Q_OBJECT
 public:
     LC_ActionSplineAppendPoint(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionSplineAppendPoint() override = default;
-
     void mouseMoveEvent(QMouseEvent *event) override;
 
-    void trigger() override;
-
-    void finish(bool updateTB) override;
-
 protected:
-
-    enum State{
-        SetEntity,
-        SetFirstControlPoint,
-        SetControlPoint
-    };
-
-    RS_Entity *entityToModify = nullptr;
-    bool appendPointsToStart = false;
-    RS_Vector vertexPoint = RS_Vector(false);
-
-
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-
-    RS2::CursorType doGetMouseCursor(int status) override;
-
     void updateMouseButtonHints() override;
-
-    bool mayModifySplineEntity(RS_Entity *e);
-
-    void clean();
-
-    RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool fromStart);
+    bool mayModifySplineEntity(RS_Entity *e) override;
+    RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool fromStart) override;
+    void doCompleteTrigger() override;
 };
 
 #endif // LC_ACTIONSPLINEAPPENDPOINT_H
