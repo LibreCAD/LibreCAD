@@ -13,9 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,1">
+  <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,0,1">
    <property name="spacing">
-    <number>4</number>
+    <number>2</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -31,6 +31,20 @@
    </property>
    <item>
     <widget class="LC_SnapOptionsWidgetsHolder" name="snapOptionsHolder" native="true"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="lCurrentAction">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="vCurrentActionLine">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QWidget" name="wOptionsWidgetsContainer" native="true">

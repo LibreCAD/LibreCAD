@@ -30,6 +30,7 @@
 
 #include "rs_settings.h"
 #include "lc_modifiersinfo.h"
+#include "lc_shortcuts_manager.h"
 
 /*
  *  Constructs a QG_MouseWidget as a child of 'parent', with the
@@ -119,6 +120,12 @@ void QG_MouseWidget::setupModifier(QLabel *btn, const QString& helpMsg) const{
     }
 }
 
+void QG_MouseWidget::clearActionIcon(){
+    const QIcon icon = QIcon();
+    setActionIcon(icon);
+    lCurrentAction->setToolTip("");
+}
+
 void QG_MouseWidget::setActionIcon(QIcon icon) {
     lCurrentAction->setPixmap(icon.pixmap(iconSize));
 }
@@ -127,7 +134,9 @@ void QG_MouseWidget::setCurrentQAction(QAction *a) {
     QIcon icon;
     if (a != nullptr){
         icon = a->icon();
-        lCurrentAction->setToolTip(a->toolTip());
+        QString toolTip = LC_ShortcutsManager::getPlainActionToolTip(a);
+        lCurrentAction->setToolTip(tr("Current Action:")+ " " + toolTip);
     }
-    setActionIcon((icon));
+
+    setActionIcon(icon);
 }

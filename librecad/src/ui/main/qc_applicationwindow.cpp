@@ -276,6 +276,16 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     commandWidget = widget_factory.command_widget;
 
     penPaletteWidget = widget_factory.pen_palette;
+    namedViewsWidget = widget_factory.named_views_widget;
+
+    connect(namedViewsWidget, &LC_NamedViewsListWidget::viewListChanged, [this](int itemsCount){
+        getAction("ZoomViewRestore1")->setEnabled(itemsCount > 0);
+        getAction("ZoomViewRestore2")->setEnabled(itemsCount > 1);
+        getAction("ZoomViewRestore3")->setEnabled(itemsCount > 2);
+        getAction("ZoomViewRestore4")->setEnabled(itemsCount > 3);
+        getAction("ZoomViewRestore5")->setEnabled(itemsCount > 4);
+    });
+
 
     file_menu = widget_factory.file_menu;
     windowsMenu = widget_factory.windows_menu;
@@ -472,6 +482,10 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
             layerTreeWidget->setLayerList(nullptr);
             layerTreeWidget->set_view(nullptr);
             layerTreeWidget->set_document(nullptr);
+        }
+
+        if (namedViewsWidget != nullptr){
+            namedViewsWidget->setGraphicView(nullptr, nullptr);
         }
 
         if (quickInfoWidget != nullptr) {
@@ -1013,6 +1027,10 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
             penPaletteWidget->setLayerList(layerList);
         }
 
+        if (namedViewsWidget != nullptr){
+            namedViewsWidget->setGraphicView(activatedGraphicView,w);
+        }
+
         coordinateWidget->setGraphic(activatedGraphic);
         relativeZeroCoordinatesWidget->setGraphicView(activatedGraphicView);
         blockWidget->setBlockList(activatedDocument->getBlockList());
@@ -1337,7 +1355,13 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
 
         // Link the block list to the block widget
         graphic->addBlockListListener(blockWidget);
+
+        if (namedViewsWidget != nullptr){
+            namedViewsWidget->setGraphicView(w->getGraphicView(), w);
+        }
     }
+
+
 // Link the dialog factory to the coordinate widget:
     if (coordinateWidget != nullptr) {
         coordinateWidget->setGraphic(graphic);
@@ -1395,6 +1419,9 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
         penPaletteWidget->setLayerList(layerList);
     }
 
+    if (namedViewsWidget != nullptr){
+        namedViewsWidget->setGraphicView(w->getGraphicView(),w);
+    }
 
     // link the block widget to the new document:
     blockWidget->setBlockList(document->getBlockList());
@@ -1421,8 +1448,12 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper: load Template: OK");
 
     layerWidget->slotUpdateLayerList();
-    if (layerTreeWidget != nullptr)
+    if (layerTreeWidget != nullptr) {
         layerTreeWidget->slotFilteringMaskChanged();
+    }
+    if (namedViewsWidget != nullptr){
+        namedViewsWidget->refresh();
+    }
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper: update coordinate widget");
     // update coordinate widget format:
@@ -1605,13 +1636,15 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
         auto document = w->getDocument();
         auto layerList = document->getLayerList();
         // link the layer widget to the new document:
-
+// fixme - sand - it seems that setup below is duplicated, as it is called from slotFileNew already
         layerWidget->setLayerList(layerList, false);
-        if (layerTreeWidget)
+        if (layerTreeWidget != nullptr) {
             layerTreeWidget->setLayerList(layerList);
+        }
         if (penPaletteWidget != nullptr) {
             penPaletteWidget->setLayerList(layerList);
         }
+
         // link the block widget to the new document:
         blockWidget->setBlockList(document->getBlockList());
         // link coordinate widget to graphic
@@ -1659,9 +1692,12 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
         recentFiles->add(fileName);
         openedFiles.push_back(fileName);
         layerWidget->slotUpdateLayerList();
-        if (layerTreeWidget != nullptr)
+        if (layerTreeWidget != nullptr) {
             layerTreeWidget->slotFilteringMaskChanged();
-
+        }
+        if (namedViewsWidget != nullptr){
+            namedViewsWidget->refresh();
+        }
 
         if (graphic) {
             if (int objects_removed = graphic->clean()) {
@@ -2199,6 +2235,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                     // Link the block list to the block widget
                     graphic->addBlockListListener(blockWidget);
 
+                    // fixme - sand - check whether we should setup ViewListener for NamedViewsList widget?
+
                 }
 
                 // Link the graphic view to the mouse widget:
@@ -2648,8 +2686,8 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
     }
 
     view->setCurrentQAction(q_action);
-    mouseWidget->setCurrentQAction(q_action);
-    statusbarManager->setCurrentQAction(q_action);
+
+    RS_DIALOGFACTORY->setCurrentQAction(q_action);
 
     const QString commands(q_action->data().toString());
     if (!commands.isEmpty()) {
@@ -2801,6 +2839,51 @@ void QC_ApplicationWindow::updateDevice(QString device) {
         foreach (auto win, window_list) {
             win->getGraphicView()->device = device;
         }
+}
+
+void QC_ApplicationWindow::saveNamedView() {
+    if (namedViewsWidget != nullptr){
+        namedViewsWidget->addNewView();
+    }
+}
+
+// methods needed for support of shortcuts for views restoring
+void QC_ApplicationWindow::restoreNamedView1() {
+    doRestoreNamedView(1);
+}
+
+void QC_ApplicationWindow::restoreNamedView2() {
+    doRestoreNamedView(2);
+}
+
+void QC_ApplicationWindow::restoreNamedView3() {
+    doRestoreNamedView(3);
+}
+
+void QC_ApplicationWindow::restoreNamedView4() {
+    doRestoreNamedView(4);
+}
+
+void QC_ApplicationWindow::restoreNamedViewCurrent() {
+    if (namedViewsWidget != nullptr){
+        namedViewsWidget->restoreSelectedView();
+    }
+}
+
+void QC_ApplicationWindow::restoreNamedView5() {
+    doRestoreNamedView(5);
+}
+
+void QC_ApplicationWindow::restoreNamedView(const QString& viewName){
+    if (namedViewsWidget != nullptr){
+        namedViewsWidget->restoreView(viewName);
+    }
+}
+
+void QC_ApplicationWindow::doRestoreNamedView(int i) const {
+    if (namedViewsWidget != nullptr){
+        namedViewsWidget->restoreView(i);
+    }
 }
 
 void QC_ApplicationWindow::invokeToolbarCreator() {
@@ -3132,6 +3215,8 @@ void QC_ApplicationWindow::enableWidgets(bool enable) {
     enableWidget(blockWidget, enable);
     enableWidget(penToolBar, enable);
     enableWidget(pen_wiz, enable);
+//    enableWidget(namedViewsWidget,enable);
+
     if (libraryWidget != nullptr) {
         enableWidget(libraryWidget->getInsertButton(), enable);
     }

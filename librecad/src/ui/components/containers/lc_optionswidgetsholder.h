@@ -38,8 +38,14 @@ public:
     void addOptionsWidget(QWidget* optionsWidget);
     void removeOptionsWidget(QWidget* optionsWidget);
     LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
+    void clearActionIcon();
+    void setCurrentQAction(QAction *a);
+protected:
+    int iconSize = 24;
+    bool hasActionIcon = false;
 private:
     Ui::LC_OptionsWidgetsHolder *ui;
+    void doSetIcon(const QIcon &icon, const QString& text);
 };
 
 #endif // LC_OPTIONSWIDGETSHOLDER_H

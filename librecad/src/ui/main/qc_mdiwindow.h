@@ -32,6 +32,7 @@
 #include "rs.h"
 #include "rs_layerlistlistener.h"
 #include "rs_blocklistlistener.h"
+#include "lc_viewslist.h"
 
 class QG_GraphicView;
 class RS_Document;
@@ -48,7 +49,8 @@ class QCloseEvent;
  */
 class QC_MDIWindow: public QMdiSubWindow,
                     public RS_LayerListListener,
-                    public RS_BlockListListener
+                    public RS_BlockListListener,
+                    public LC_ViewListListener
 {
     Q_OBJECT
 
@@ -95,6 +97,10 @@ public:
 
     // Methods from RS_BlockListListener Interface:
     void blockListModified(bool) override {
+        setWindowModified(document->isModified());
+    }
+
+    void viewsListModified([[maybe_unused]]bool changed) {
         setWindowModified(document->isModified());
     }
 

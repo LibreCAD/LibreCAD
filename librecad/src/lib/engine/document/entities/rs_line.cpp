@@ -37,7 +37,7 @@
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_linetypepattern.h"
-#include <rs_graphic.h>
+#include "rs_graphic.h"
 #include "rs_painter.h"
 #include "lc_quadratic.h"
 #include "lc_linemath.h"

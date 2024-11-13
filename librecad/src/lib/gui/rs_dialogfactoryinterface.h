@@ -444,6 +444,7 @@ public:
     virtual void setCommandWidget(QG_CommandWidget* ) = 0;
     virtual void clearMouseWidgetIcon() =0;
     virtual void setStatusBarManager(LC_QTStatusbarManager *statusBarManager)= 0;
+    virtual void setCurrentQAction(QAction *action) = 0;
 };
 
 

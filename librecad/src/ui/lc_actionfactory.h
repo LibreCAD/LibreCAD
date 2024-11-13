@@ -73,10 +73,9 @@ private:
     void setDefaultShortcuts(QMap<QString, QAction *> &map, LC_ActionGroupManager* agm);
     void setupCreatedActions(QMap<QString, QAction *> &map);
     void markNotEditableActionsShortcuts(QMap<QString, QAction *> &map);
-
     void createRestrictActions(QMap<QString, QAction *> &map, QActionGroup *group);
-
     void createOtherActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createNamedViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
 };
 
 #endif

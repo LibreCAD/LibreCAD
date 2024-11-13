@@ -78,4 +78,3 @@ void QG_DlgMirror::updateData() {
     data->useCurrentAttributes = cbCurrentAttributes->isChecked();
     data->useCurrentLayer = cbCurrentLayer->isChecked();
 }
-

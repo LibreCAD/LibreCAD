@@ -1297,3 +1297,142 @@ bool DRW_AppId::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     //    RS crc;   //RS */
     return buf->isGood();
 }
+
+
+bool DRW_View::parseCode(int code, dxfReader *reader) {
+    switch (code) {
+        case 40: {
+            size.y = reader->getDouble();
+            break;
+        }
+        case 41: {
+            size.x = reader->getDouble();
+            break;
+        }
+        case 10: {
+            center.x = reader->getDouble();
+            break;
+        }
+        case 20: {
+            center.y = reader->getDouble();
+            break;
+        }
+        case 11: {
+            viewDirectionFromTarget.x = reader->getDouble();
+            break;
+        }
+        case 21: {
+            viewDirectionFromTarget.y = reader->getDouble();
+            break;
+        }
+        case 31: {
+            viewDirectionFromTarget.z = reader->getDouble();
+            break;
+        }
+        case 12: {
+            targetPoint.x = reader->getDouble();
+            break;
+        }
+        case 22: {
+            targetPoint.y = reader->getDouble();
+            break;
+        }
+        case 32: {
+            targetPoint.z = reader->getDouble();
+            break;
+        }
+        case 42: {
+            lensLen = reader->getDouble();
+            break;
+        }
+        case 43: {
+            frontClippingPlaneOffset = reader->getDouble();
+            break;
+        }
+        case 44: {
+            backClippingPlaneOffset = reader->getDouble();
+            break;
+        }
+        case 50: {
+            twistAngle = reader->getDouble();
+            break;
+        }
+        case 71: {
+            viewMode = reader->getInt32(); // tmp - check size to read
+            break;
+        }
+        case 281: {
+            renderMode = reader->getInt32(); // tmp - check size to read
+            break;
+        }
+        case 72: {
+            hasUCS = reader->getBool();
+            break;
+        }
+        case 73: {
+            cameraPlottable = reader->getBool();
+            break;
+        }
+        case 110: {
+            ucsOrigin.x = reader->getDouble();
+            break;
+        }
+        case 120: {
+            ucsOrigin.y = reader->getDouble();
+            break;
+        }
+        case 130: {
+            ucsOrigin.z = reader->getDouble();
+            break;
+        }
+        case 111: {
+            ucsXAxis.x = reader->getDouble();
+            break;
+        }
+        case 121: {
+            ucsXAxis.y = reader->getDouble();
+            break;
+        }
+        case 131: {
+            ucsXAxis.z = reader->getDouble();
+            break;
+        }
+        case 112: {
+            ucsYAxis.x = reader->getDouble();
+            break;
+        }
+        case 122: {
+            ucsYAxis.y = reader->getDouble();
+            break;
+        }
+        case 132: {
+            ucsYAxis.z = reader->getDouble();
+            break;
+        }
+        case 79: {
+            ucsOrthoType = reader->getInt32();
+            break;
+        }
+        case 146: {
+            ucsElevation = reader->getDouble();
+            break;
+        }
+        case 345: {
+            namedUCS_ID = reader->getHandleString();// ID/handle of AcDbUCSTableRecord if UCS is a named UCS. If not present, then UCS is unnamed, code 345
+            break;
+        }
+        case 346:{
+            baseUCS_ID = reader->getHandleString();// ID/handle of AcDbUCSTableRecord of base UCS if UCS is orthographic, If not present and 79 code is non-zero, then base UCS is taken to be WORLD, code 346
+            break;
+        }
+        default:
+            return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
+bool DRW_View::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs) {
+    // fixme - sand - complete reading VIEW from DWG
+    DRW_DBG("\n********************** parsing VIEW Settings from DWG is not yet implemented **************************\n");
+    return buf->isGood();
+}

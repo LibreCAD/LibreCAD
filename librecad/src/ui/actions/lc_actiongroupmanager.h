@@ -36,6 +36,7 @@ public:
     LC_ActionGroup* snap;
     LC_ActionGroup* snap_extras;
     LC_ActionGroup* view;
+    LC_ActionGroup* namedViews;
     LC_ActionGroup* widgets;
     LC_ActionGroup* pen;
 

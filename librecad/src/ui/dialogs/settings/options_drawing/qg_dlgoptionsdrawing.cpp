@@ -44,8 +44,6 @@
 #include "rs_settings.h"
 #include "rs_filterdxfrw.h"
 
-#include "qg_dlgoptionsdrawing.h"
-
 
 /*
  *  Constructs a QG_DlgOptionsDrawing as a child of 'parent', with the
@@ -548,6 +546,60 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
 
     int joinStyle = graphic->getGraphicVariableInt("$JOINSTYLE", 1);
     cbLineJoin ->setCurrentIndex(joinStyle);
+
+    initVariables();
+}
+
+void QG_DlgOptionsDrawing::initVariables(){
+    QHash<QString, RS_Variable>vars = graphic->getVariableDict();
+    tabVariables->setRowCount(vars.count());
+    QHash<QString, RS_Variable>::iterator it = vars.begin();
+    int row = 0;
+    while (it != vars.end()) {
+        QString name = it.key();
+        if (name.startsWith("$")){
+            name = name.mid(1);
+        }
+        QTableWidgetItem *nameItem = new QTableWidgetItem(name);
+        tabVariables->setItem(row, 0, nameItem);
+
+        QTableWidgetItem* codeItem = new QTableWidgetItem(QString("%1").arg(it.value().getCode()));
+        tabVariables->setItem(row, 1, codeItem);
+
+        QString str = "";
+        switch (it.value().getType()) {
+            case RS2::VariableVoid:
+                tabVariables->setItem(row, 2, new QTableWidgetItem(tr("VOID")));
+                break;
+            case RS2::VariableInt:
+                tabVariables->setItem(row, 2, new QTableWidgetItem(tr("INT")));
+                str = QString("%1").arg(it.value().getInt());
+                break;
+            case RS2::VariableDouble:
+                tabVariables->setItem(row, 2, new QTableWidgetItem(tr("DOUBLE")));
+                str = QString("%1").arg(it.value().getDouble());
+                break;
+            case RS2::VariableString:
+                tabVariables->setItem(row, 2, new QTableWidgetItem(tr("STRING")));
+                str = QString("%1").arg(it.value().getString());
+                break;
+            case RS2::VariableVector:
+                tabVariables->setItem(row, 2, new QTableWidgetItem(tr("VECTOR")));
+                str = QString("%1/%2")
+                    .arg(it.value().getVector().x)
+                    .arg(it.value().getVector().y);
+                if (RS_FilterDXFRW::isVariableTwoDimensional(it.key())==false) {
+                    str+= QString("/%1").arg(it.value().getVector().z);
+                }
+                break;
+        }
+        QTableWidgetItem *valueItem = new QTableWidgetItem(str);
+        tabVariables->setItem(row, 3, valueItem);
+        row++;
+        ++it;
+    }
+    tabVariables->sortByColumn(0, Qt::SortOrder::AscendingOrder);
+    tabVariables->setSortingEnabled(true);
 }
 
 

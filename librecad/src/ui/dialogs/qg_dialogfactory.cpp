@@ -142,9 +142,11 @@ LC_SnapOptionsWidgetsHolder* QG_DialogFactory::getSnapOptionsHolder(){
     bool useSnapToolbar = LC_GET_ONE_BOOL("Appearance", "showSnapOptionsInSnapToolbar", false);
     if (useSnapToolbar){
         result = snapOptionsWidgetHolderSnapToolbar;
+        snapOptionsWidgetHolderOptionsToolbar->setVisible(false);
     }
     else{
         result = snapOptionsWidgetHolderOptionsToolbar;
+        snapOptionsWidgetHolderOptionsToolbar->setVisible(true);
     }
     if (lastUsedSnapOptionsWidgetHolder != nullptr && lastUsedSnapOptionsWidgetHolder != result){
         result->updateBy(lastUsedSnapOptionsWidgetHolder);
@@ -1086,13 +1088,27 @@ void QG_DialogFactory::updateMouseWidget(const QString& left,
     }
 }
 
+void QG_DialogFactory::setCurrentQAction(QAction* q_action) {
+    if (mouseWidget != nullptr){
+        mouseWidget->setCurrentQAction(q_action);
+    }
+    if (statusBarManager != nullptr){
+        statusBarManager->setCurrentQAction(q_action);
+    }
+    if (optionWidgetHolder != nullptr){
+        optionWidgetHolder->setCurrentQAction(q_action);
+    }
+}
+
 void QG_DialogFactory::clearMouseWidgetIcon() {
    if (mouseWidget != nullptr){
-       const QIcon icon = QIcon();
-       mouseWidget->setActionIcon(icon);
+       mouseWidget->clearActionIcon();
    }
    if (statusBarManager != nullptr){
        statusBarManager->clearAction();
+   }
+   if (optionWidgetHolder != nullptr){
+       optionWidgetHolder->clearActionIcon();
    }
 }
 

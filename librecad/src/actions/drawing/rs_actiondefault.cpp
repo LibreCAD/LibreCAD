@@ -91,6 +91,7 @@ RS_ActionDefault::~RS_ActionDefault() = default;
 
 
 void RS_ActionDefault::init(int status){
+    clearMouseWidgetIcon();
     RS_DEBUG->print("RS_ActionDefault::init");
     if (status >= 0){
         checkSupportOfQuickEntityInfo();
