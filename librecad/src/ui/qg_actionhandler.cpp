@@ -204,6 +204,7 @@
 #include "lc_actionpolylinearcstolines.h"
 #include "lc_actionpolylinechangesegmenttype.h"
 #include "lc_actionremovesplinepoints.h"
+#include "lc_actionsplineappendpoint.h"
 
 /**
  * Constructor
@@ -665,6 +666,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionDrawSplinePointRemove:
             a = new LC_ActionRemoveSplinePoints(*document, *view);
+            break;
+        case RS2::ActionDrawSplinePointAppend:
+            a = new LC_ActionSplineAppendPoint(*document, *view);
             break;
         case RS2::ActionDrawMText:
             a = new RS_ActionDrawMText(*document, *view);

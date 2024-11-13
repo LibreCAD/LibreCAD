@@ -1,0 +1,273 @@
+/*******************************************************************************
+ *
+ This file is part of the LibreCAD project, a 2D CAD program
+
+ Copyright (C) 2024 LibreCAD.org
+ Copyright (C) 2024 sand1024
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ ******************************************************************************/
+
+#include "lc_actionsplineappendpoint.h"
+#include "lc_splinepoints.h"
+#include "rs_spline.h"
+#include "rs_document.h"
+#include "rs_graphicview.h"
+
+namespace {
+    // fixme - sand - think about support parabola as other splines
+    const EntityTypeList enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints/*, RS2::EntityParabola*/};
+}
+
+LC_ActionSplineAppendPoint::LC_ActionSplineAppendPoint(RS_EntityContainer &container, RS_GraphicView &graphicView):RS_PreviewActionInterface("SplineAppendPoint", container, graphicView) {
+    actionType = RS2::ActionDrawSplinePointAppend;
+}
+
+void LC_ActionSplineAppendPoint::trigger() {
+    RS_PreviewActionInterface::trigger();
+    RS_Entity* createdEntity = createNewEntityWithAddedControlPoint(entityToModify, vertexToAppend, appendPointsToStart);
+    if (createdEntity != nullptr){
+        if (document) {
+            document->startUndoCycle();
+            createdEntity->setSelected(true);
+            createdEntity->setLayer(entityToModify->getLayer());
+            createdEntity->setPen(entityToModify->getPen());
+            createdEntity->setParent(entityToModify->getParent());
+            container->addEntity(createdEntity);
+            document->addUndoable(createdEntity);
+            deleteEntityUndoable(entityToModify);
+            document->endUndoCycle();
+            moveRelativeZero(vertexToAppend);
+        }
+        entityToModify = createdEntity;
+        vertexToAppend = RS_Vector(false);
+        deleteHighlights();
+    }
+    updateSelectionWidget();
+    graphicView->redraw();
+}
+
+void LC_ActionSplineAppendPoint::finish(bool updateTB) {
+    clean();
+    RS_PreviewActionInterface::finish(updateTB);
+}
+
+void LC_ActionSplineAppendPoint::mouseMoveEvent(QMouseEvent *e) {
+    RS_Vector mouse = snapPoint(e);
+    int status = getStatus();
+    deleteHighlights();
+    switch (status) {
+        case SetEntity: {
+            auto entity = catchEntity(e, enTypeList);
+            if (entity != nullptr){
+                if (mayAppendPointToEntity(entity)) {
+                    highlightHoverWithRefPoints(entity, true);
+                }
+            }
+            break;
+        }
+        case SetFirstControlPoint:{
+            deletePreview();
+            double dist;
+            mouse = getRelZeroAwarePoint(e, mouse);
+            RS_Vector nearestPoint = entityToModify->getNearestEndpoint(mouse, &dist);
+            if (nearestPoint.valid) {
+                bool appendToStart = nearestPoint == entityToModify->getStartpoint();
+                previewRefSelectablePoint(mouse);
+                RS_Entity *previewUpdatedEntity = createNewEntityWithAddedControlPoint(entityToModify, mouse, appendToStart);
+                if (previewUpdatedEntity != nullptr) {
+                    previewEntity(previewUpdatedEntity);
+                }
+            }
+            drawPreview();
+            break;
+        }
+        case SetControlPoint:{
+            deletePreview();
+            previewRefSelectablePoint(mouse);
+            bool appendMode = appendPointsToStart;
+            if (isShift(e)){
+                double dist;
+                RS_Vector nearestPoint = entityToModify->getNearestEndpoint(mouse, &dist);
+                appendMode = nearestPoint == entityToModify->getStartpoint();
+            }
+            RS_Entity *previewUpdatedEntity = createNewEntityWithAddedControlPoint(entityToModify, mouse, appendMode);
+            if (previewUpdatedEntity != nullptr) {
+                previewEntity(previewUpdatedEntity);
+            }
+            drawPreview();
+            break;
+        }
+        default:
+            break;
+    }
+    drawHighlights();
+}
+
+void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+    switch (status){
+        case SetEntity:{
+            auto entity = catchEntity(e, enTypeList);
+            if (entity != nullptr && mayAppendPointToEntity(entity)){
+                entityToModify = entity;
+                entityToModify->setSelected(true);
+                graphicView->redraw(RS2::RedrawDrawing);
+                setStatus(SetFirstControlPoint);
+            }
+            break;
+        }
+        case SetFirstControlPoint: {
+            RS_Vector mouse = snapPoint(e);
+            mouse = getRelZeroAwarePoint(e, mouse);
+            double dist;
+            RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
+            appendPointsToStart = nearestPoint == entityToModify->getStartpoint();
+            if (nearestPoint.valid){
+                vertexToAppend = mouse;
+                trigger();
+                setStatus(SetControlPoint);
+            }
+            break;
+        }
+        case SetControlPoint:{
+            RS_Vector mouse = snapPoint(e);
+            vertexToAppend = mouse;
+            if (isShift(e)){
+                double dist;
+                RS_Vector nearestPoint = entityToModify->getNearestEndpoint(mouse, &dist);
+                appendPointsToStart = nearestPoint == entityToModify->getStartpoint();
+            }
+            trigger();
+        }
+        default:
+            break;
+    }
+}
+
+void LC_ActionSplineAppendPoint::onMouseRightButtonRelease(int status, QMouseEvent *e) {
+    deleteSnapper();
+    deletePreview();
+    drawPreview();
+    int newStatus = status - 1;
+    if (newStatus == SetEntity){
+        clean();
+    }
+    setStatus(newStatus);
+}
+
+// todo - sand - should we allow append to closed splines?
+bool LC_ActionSplineAppendPoint::mayAppendPointToEntity(RS_Entity *e) {
+    switch (e->rtti()) {
+        case RS2::EntitySplinePoints: {
+//            auto *splinePoints = dynamic_cast<LC_SplinePoints *>(e);
+//            return !splinePoints->isClosed();
+            return true;
+        }
+        case RS2::EntitySpline: {
+//            auto *spline = dynamic_cast<RS_Spline *>(e);
+//            return !spline->isClosed();
+            return true;
+        }
+        case RS2::EntityParabola:
+            return true;
+        default:
+            return false;
+    }
+}
+
+void LC_ActionSplineAppendPoint::clean() {
+    if (entityToModify){
+        entityToModify->setSelected(false);
+    }
+    deletePreview();
+    graphicView->redraw();
+}
+
+RS_Entity *LC_ActionSplineAppendPoint::createNewEntityWithAddedControlPoint(RS_Entity *e, RS_Vector controlPoint, bool fromStart) {
+    RS_Entity* result = nullptr;
+    switch (e->rtti()){
+        case RS2::EntitySplinePoints:{
+            auto* splinePoints = dynamic_cast<LC_SplinePoints *>(e->clone());
+            LC_SplinePointsData &data = splinePoints->getData();
+            bool hasSplinePoints = data.splinePoints.size(); // handle spline point data magic :(
+            if (fromStart){
+                if (hasSplinePoints) {
+                    data.splinePoints.insert(data.splinePoints.begin(), controlPoint);
+                }
+                else {
+                    data.controlPoints.insert(data.controlPoints.begin(), controlPoint);
+                }
+            }
+            else{
+                if (hasSplinePoints){
+                    data.splinePoints.push_back(controlPoint);
+                }
+                else {
+                    data.controlPoints.push_back(controlPoint);
+                }
+            }
+
+            splinePoints->update();
+            result = splinePoints;
+            break;
+        }
+        case RS2::EntitySpline:{
+            auto* spline = dynamic_cast<RS_Spline *>(e);
+            RS_SplineData data = spline->getData();
+            if (fromStart){
+                data.controlPoints.insert(data.controlPoints.begin(), controlPoint);
+            }
+            else{
+                data.controlPoints.push_back(controlPoint);
+            }
+            data.knotslist.clear();
+            auto* modifiedSpline= new RS_Spline(nullptr, data);
+            modifiedSpline->update();
+            result = modifiedSpline;
+            break;
+        }
+        case RS2::EntityParabola:{
+            // fixme - sand - complete - there should be ordinary spline instead of parabola?
+            break;
+        }
+        default:
+            break;
+
+    }
+    return result;
+}
+
+void LC_ActionSplineAppendPoint::updateMouseButtonHints() {
+    switch (getStatus()){
+        case SetEntity:{
+            updateMouseWidgetTRCancel(tr("Specify spline or spline points entity"));
+            break;
+        }
+        case SetFirstControlPoint: {
+            updateMouseWidgetTRCancel(tr("Specify first control point"),MOD_SHIFT_RELATIVE_ZERO);
+            break;
+        }
+        case SetControlPoint: {
+            updateMouseWidgetTRCancel(tr("Specify control point"), MOD_SHIFT_LC("Endpoint selection"));
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+RS2::CursorType LC_ActionSplineAppendPoint::doGetMouseCursor(int status) {
+    return RS2::CadCursor;
+}

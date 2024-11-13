@@ -1956,7 +1956,8 @@ bool RS_EntityContainer::ignoredOnModification() const
     switch (rtti()) {
         // commented out Insert to allow snapping on block, bug#523
         // case RS2::EntityInsert:         /**Insert*/
-        case RS2::EntitySpline:
+// fixme - check whether it's safe to allow spline... actually, it's enabled to allow snap to entity for spline, yet probably there might some other side effects?
+//        case RS2::EntitySpline:
         case RS2::EntityMText:        /**< Text 15*/
         case RS2::EntityText:         /**< Text 15*/
         case RS2::EntityDimAligned:   /**< Aligned Dimension */

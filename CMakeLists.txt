@@ -1282,6 +1282,8 @@ set(SOURCES
 		librecad/src/ui/dock_widgets/views_list/lc_namedviewsbutton.cpp
 		librecad/src/actions/drawing/draw/curve/lc_actionremovesplinepoints.h
 		librecad/src/actions/drawing/draw/curve/lc_actionremovesplinepoints.cpp
+		librecad/src/actions/drawing/draw/curve/lc_actionsplineappendpoint.h
+		librecad/src/actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

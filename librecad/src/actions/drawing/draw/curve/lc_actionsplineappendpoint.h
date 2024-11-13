@@ -20,46 +20,49 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#ifndef LC_ACTIONREMOVESPLINEPOINTS_H
-#define LC_ACTIONREMOVESPLINEPOINTS_H
+#ifndef LC_ACTIONSPLINEAPPENDPOINT_H
+#define LC_ACTIONSPLINEAPPENDPOINT_H
 
 #include "rs_previewactioninterface.h"
 
-class LC_ActionRemoveSplinePoints:public RS_PreviewActionInterface
-{
+class LC_ActionSplineAppendPoint:public RS_PreviewActionInterface{
+Q_OBJECT
 public:
-    LC_ActionRemoveSplinePoints(RS_EntityContainer &container, RS_GraphicView &graphicView);
-    ~LC_ActionRemoveSplinePoints() override = default;
-
-    void finish(bool updateTB) override;
+    LC_ActionSplineAppendPoint(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    ~LC_ActionSplineAppendPoint() override = default;
 
     void mouseMoveEvent(QMouseEvent *event) override;
 
     void trigger() override;
 
-    void drawSnapper() override;
+    void finish(bool updateTB) override;
 
 protected:
+
     enum State{
         SetEntity,
+        SetFirstControlPoint,
         SetControlPoint
     };
 
     RS_Entity *entityToModify = nullptr;
-    RS_Vector vertexToDelete = RS_Vector(false);
+    bool appendPointsToStart = false;
+    RS_Vector vertexToAppend = RS_Vector(false);
+
 
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+
+    RS2::CursorType doGetMouseCursor(int status) override;
 
     void updateMouseButtonHints() override;
 
+    bool mayAppendPointToEntity(RS_Entity *e);
+
     void clean();
 
-    RS_Entity *createNewEntityWithoutControlPoint(RS_Entity *e, RS_Vector controlPoint);
-
-    bool mayDeleteControlPoints(RS_Entity *e);
-
-    RS2::CursorType doGetMouseCursor(int status) override;
+    RS_Entity *createNewEntityWithAddedControlPoint(RS_Entity *e, RS_Vector controlPoint, bool fromStart);
 };
 
-#endif // LC_ACTIONREMOVESPLINEPOINTS_H
+#endif // LC_ACTIONSPLINEAPPENDPOINT_H

@@ -995,76 +995,86 @@ RS_Vector LC_SplinePoints::GetSplinePointAtDist(double dDist, int iStartSeg,
 }
 
 RS_Vector LC_SplinePoints::getNearestMiddle(const RS_Vector& coord,
-	double* dist, int middlePoints) const {
-	if(dist) *dist = RS_MAXDOUBLE;
-	RS_Vector vStart(false), vControl(false), vEnd(false), vNext(false), vRes(false);
+                                            double* dist, int middlePoints) const {
+    if(dist) {
+        *dist = RS_MAXDOUBLE;
+    }
+    RS_Vector vStart(false), vControl(false), vEnd(false), vNext(false), vRes(false);
 
-	if(middlePoints < 1) return vRes;
-	if(data.closed) return vRes;
+    if(middlePoints < 1) {
+        return vRes;
+    }
+    if(data.closed) {
+        return vRes;
+    }
 
-	size_t n = data.controlPoints.size();
+    size_t n = data.controlPoints.size();
 
-	if(n < 1) return vRes;
+    if(n < 1) {
+        return vRes;
+    }
 
-	vStart = data.controlPoints.at(0);
+    vStart = data.controlPoints.at(0);
 
-	if(n < 2)	{
-		if(dist) *dist = (vStart - coord).magnitude();
-		return vStart;
-	}
+    if(n < 2)	{
+        if(dist) *dist = (vStart - coord).magnitude();
+        return vStart;
+    }
 
     vEnd = data.controlPoints.at(1);
 
-	if(n < 3)	{
-		return GetNearestMiddleLine(vStart, vEnd, coord, dist, middlePoints);
-	}
+    if(n < 3)	{
+        return GetNearestMiddleLine(vStart, vEnd, coord, dist, middlePoints);
+    }
 
-	int i;
-	double dCurDist, dt{0.};
-	double dMinDist = RS_MAXDOUBLE;
-	double dDist = getLength()/(1.0 + middlePoints);
+    int i;
+    double dCurDist, dt{0.};
+    double dMinDist = RS_MAXDOUBLE;
+    double dDist = getLength()/(1.0 + middlePoints);
 
-	vControl = vEnd;
-	vEnd = data.controlPoints.at(2);
+    vControl = vEnd;
+    vEnd = data.controlPoints.at(2);
 
-	if(n < 4)	{
-		dt = GetQuadPointAtDist(vStart, vControl, vEnd, 0.0, dDist);
-		vRes = GetQuadPoint(vStart, vControl, vEnd, dt);
-		dMinDist = (vRes - coord).magnitude();
-		for(int j = 1; j < middlePoints; j++)
-		{
-			dt = GetQuadPointAtDist(vStart, vControl, vEnd, dt, dDist);
-			vNext = GetQuadPoint(vStart, vControl, vEnd, dt);
-			dCurDist = (vNext - coord).magnitude();
+    if(n < 4)	{
+        dt = GetQuadPointAtDist(vStart, vControl, vEnd, 0.0, dDist);
+        vRes = GetQuadPoint(vStart, vControl, vEnd, dt);
+        dMinDist = (vRes - coord).magnitude();
+        for(int j = 1; j < middlePoints; j++)		{
+            dt = GetQuadPointAtDist(vStart, vControl, vEnd, dt, dDist);
+            vNext = GetQuadPoint(vStart, vControl, vEnd, dt);
+            dCurDist = (vNext - coord).magnitude();
 
-			if(dCurDist < dMinDist)
-			{
-				dMinDist = dCurDist;
-				vRes = vNext;
-			}
-		}
+            if(dCurDist < dMinDist)			{
+                dMinDist = dCurDist;
+                vRes = vNext;
+            }
+        }
 
-		if(dist) *dist = dMinDist;
-		return vRes;
-	}
+        if(dist) *dist = dMinDist;
+        return vRes;
+    }
 
-	int iNext{0};
+    int iNext{0};
     vRes = GetSplinePointAtDist(dDist, 1, 0.0, &iNext, &dt);
-	if(vRes.valid) dMinDist = (vRes - coord).magnitude();
+    if(vRes.valid) {
+        dMinDist = (vRes - coord).magnitude();
+    }
     i = 2;
-	while(vRes.valid && i <= middlePoints)	{
-		vNext = GetSplinePointAtDist(dDist, iNext, dt, &iNext, &dt);
-		dCurDist = (vNext - coord).magnitude();
+    while(vRes.valid && i <= middlePoints)	{
+        vNext = GetSplinePointAtDist(dDist, iNext, dt, &iNext, &dt);
+        dCurDist = (vNext - coord).magnitude();
 
-		if(vNext.valid && dCurDist < dMinDist)		{
-			dMinDist = dCurDist;
-			vRes = vNext;
-		}
-		i++;
-	}
+        if(vNext.valid && dCurDist < dMinDist)		{
+            dMinDist = dCurDist;
+            vRes = vNext;
+        }
+        i++;
+    }
 
-	if(dist) *dist = dMinDist;
-	return vRes;
+    if(dist) {
+        *dist = dMinDist;
+    }
+    return vRes;
 }
 
 RS_Vector LC_SplinePoints::getNearestDist(double /*distance*/,
@@ -1134,12 +1144,14 @@ RS_Entity& LC_SplinePoints::shear(double k){
 
 void LC_SplinePoints::moveRef(const RS_Vector& ref, const RS_Vector& offset){
     for(auto & v: data.splinePoints){
-        if(ref.distanceTo(v) < 1.0e-4)        {
+        // fixme - magic value - replace by constant
+        if(ref.distanceTo(v) < 1.0e-4){
             v.move(offset);
         }
     }
     for(auto & v: data.controlPoints){
-        if(ref.distanceTo(v) < 1.0e-4)        {
+        // fixme - magic value - replace by constant
+        if(ref.distanceTo(v) < 1.0e-4){
             v.move(offset);
         }
     }
@@ -1162,7 +1174,9 @@ void LC_SplinePoints::revertDirection(){
  * @return The reference points of the spline.
  */
 std::vector<RS_Vector> const& LC_SplinePoints::getPoints() const{
-	if(data.cut) return data.controlPoints;
+	if(data.cut) {
+     return data.controlPoints;
+ }
 	return data.splinePoints;
 }
 
@@ -1174,17 +1188,25 @@ std::vector<RS_Vector> LC_SplinePoints::getStrokePoints() const{
     std::vector<RS_Vector> ret;
     int p1 = getGraphicVariableInt("$SPLINESEGS", 8);
     size_t iSplines = data.controlPoints.size();
-    if(!data.closed) iSplines -= 2;
+    if(!data.closed) {
+        iSplines -= 2;
+    }
 
     RS_Vector vStart(false), vControl(false), vEnd(false);
     int iPts;
     for(size_t i = 1; i <= iSplines; ++i)	{
         iPts = GetQuadPoints(i, &vStart, &vControl, &vEnd);
-        if(iPts > 2) StrokeQuad(&ret, vStart, vControl, vEnd, p1);
-        else if(iPts > 1) ret.push_back(vStart);
+        if(iPts > 2) {
+            StrokeQuad(&ret, vStart, vControl, vEnd, p1);
+        }
+        else if(iPts > 1) {
+            ret.push_back(vStart);
+        }
     }
 
-    if(!data.closed && vEnd.valid) ret.push_back(vEnd);
+    if(!data.closed && vEnd.valid) {
+        ret.push_back(vEnd);
+    }
     return ret;
 }
 
@@ -1193,7 +1215,9 @@ std::vector<RS_Vector> LC_SplinePoints::getStrokePoints() const{
  * push_backs the given point to the control points.
  */
 bool LC_SplinePoints::addPoint(const RS_Vector& v){
-    if(data.cut) return false;
+    if(data.cut) {
+        return false;
+    }
 
     if(data.splinePoints.size() < 1 ||
        (v - data.splinePoints.back()).squared() > RS_TOLERANCE2)	{
@@ -1325,138 +1349,154 @@ void LC_SplinePoints::UpdateControlPoints(){
         data.controlPoints.clear();
     }
 
-	size_t n = data.splinePoints.size();
+    size_t n = data.splinePoints.size();
 
-	if(data.closed && n < 3)	{
-		if(n > 0) data.controlPoints.push_back(data.splinePoints.at(0));
-		if(n > 1) data.controlPoints.push_back(data.splinePoints.at(1));
-		return;
-	}
+    if(data.closed && n < 3)	{
+        if(n > 0) {
+            data.controlPoints.push_back(data.splinePoints.at(0));
+        }
+        if(n > 1) {
+            data.controlPoints.push_back(data.splinePoints.at(1));
+        }
+        return;
+    }
 
-	if(!data.closed && n < 4)	{
+    if(!data.closed && n < 4)	{
         // use control points directly, reserved for parabola
-        if (data.useControlPoints && data.controlPoints.size() == 3)
+        if (data.useControlPoints && data.controlPoints.size() == 3) {
             return;
-		if(n > 0) data.controlPoints.push_back(data.splinePoints.at(0));
-		if(n > 2)		{
-			RS_Vector vControl = GetThreePointsControl(data.splinePoints.at(0),
-				data.splinePoints.at(1), data.splinePoints.at(2));
-			if(vControl.valid) data.controlPoints.push_back(vControl);
-		}
-		if(n > 1) data.controlPoints.push_back(data.splinePoints.at(n - 1));
-		return;
-	}
+        }
+        if(n > 0) {
+            data.controlPoints.push_back(data.splinePoints.at(0));
+        }
+        if(n > 2)		{
+            RS_Vector vControl = GetThreePointsControl(data.splinePoints.at(0),
+                                                       data.splinePoints.at(1), data.splinePoints.at(2));
+            if(vControl.valid) {
+                data.controlPoints.push_back(vControl);
+            }
+        }
+        if(n > 1) {
+            data.controlPoints.push_back(data.splinePoints.at(n - 1));
+        }
+        return;
+    }
 
-	int iDim = 0;
-	if(data.closed) iDim = n;
-	else iDim = n - 2;
+    int iDim = 0;
+    if(data.closed) {
+        iDim = n;
+    }
+    else {
+        iDim = n - 2;
+    }
 
     std::vector<double> dt(iDim);
 
-	if(data.closed)	{
+    if(data.closed)	{
         double dl1 = (data.splinePoints.at(n - 1) - data.splinePoints.at(0)).magnitude();
         double dl2 = (data.splinePoints.at(1) - data.splinePoints.at(0)).magnitude();
-		dt[0] = dl1/(dl1 + dl2);
-		for(int i = 1; i < iDim - 1; i++)		{
-			dl1 = dl2;
-			dl2 = (data.splinePoints.at(i + 1) - data.splinePoints.at(i)).magnitude();
-			dt[i] = dl1/(dl1 + dl2);
-		}
-		dl1 = (data.splinePoints.at(n - 1) - data.splinePoints.at(n - 2)).magnitude();
-		dl2 = (data.splinePoints.at(0) - data.splinePoints.at(n - 1)).magnitude();
-		dt[iDim - 1] = dl1/(dl1 + dl2);
-	}
-	else	{
+        dt[0] = dl1/(dl1 + dl2);
+        for(int i = 1; i < iDim - 1; i++)		{
+            dl1 = dl2;
+            dl2 = (data.splinePoints.at(i + 1) - data.splinePoints.at(i)).magnitude();
+            dt[i] = dl1/(dl1 + dl2);
+        }
+        dl1 = (data.splinePoints.at(n - 1) - data.splinePoints.at(n - 2)).magnitude();
+        dl2 = (data.splinePoints.at(0) - data.splinePoints.at(n - 1)).magnitude();
+        dt[iDim - 1] = dl1/(dl1 + dl2);
+    }
+    else	{
         double dl1 = (data.splinePoints.at(1) - data.splinePoints.at(0)).magnitude();
         double dl2 = (data.splinePoints.at(2) - data.splinePoints.at(1)).magnitude();
-		dt[0] = dl1/(dl1 + dl2/2.0);
-		for(int i = 1; i < iDim - 1; i++)		{
-			dl1 = dl2;
-			dl2 = (data.splinePoints.at(i + 2) - data.splinePoints.at(i + 1)).magnitude();
-			dt[i] = dl1/(dl1 + dl2);
-		}
-		dl1 = dl2;
-		dl2 = (data.splinePoints.at(iDim) - data.splinePoints.at(iDim + 1)).magnitude();
-		dt[iDim - 1] = dl1/(dl1 + 2.0*dl2);
-	}
+        dt[0] = dl1/(dl1 + dl2/2.0);
+        for(int i = 1; i < iDim - 1; i++)		{
+            dl1 = dl2;
+            dl2 = (data.splinePoints.at(i + 2) - data.splinePoints.at(i + 1)).magnitude();
+            dt[i] = dl1/(dl1 + dl2);
+        }
+        dl1 = dl2;
+        dl2 = (data.splinePoints.at(iDim) - data.splinePoints.at(iDim + 1)).magnitude();
+        dt[iDim - 1] = dl1/(dl1 + 2.0*dl2);
+    }
 
     std::vector<double> pdMatrix = GetMatrix(n, data.closed, dt);
 
-    if(pdMatrix.empty())
+    if(pdMatrix.empty()) {
         return;
+    }
 
     std::vector<double> dx(iDim);
     std::vector<double> dy(iDim);
     std::vector<double> dx2(iDim);
     std::vector<double> dy2(iDim);
 
-	if(data.closed)	{
+    if(data.closed)	{
         double *pdDiag = pdMatrix.data();
-		double *pdDiag1 = &pdMatrix[n];
-		double *pdDiag2 = &pdMatrix[2*n - 1];
-		double *pdLastCol1 = &pdMatrix[3*n - 2];
-		double *pdLastCol2 = &pdMatrix[4*n - 4];
+        double *pdDiag1 = &pdMatrix[n];
+        double *pdDiag2 = &pdMatrix[2*n - 1];
+        double *pdLastCol1 = &pdMatrix[3*n - 2];
+        double *pdLastCol2 = &pdMatrix[4*n - 4];
 
-		dx[0] = data.splinePoints.at(0).x/pdDiag[0];
-		dy[0] = data.splinePoints.at(0).y/pdDiag[0];
-		for(int i = 1; i < iDim - 1; i++)		{
-			dx[i] = (data.splinePoints.at(i).x - pdDiag2[i - 1]*dx[i - 1])/pdDiag[i];
-			dy[i] = (data.splinePoints.at(i).y - pdDiag2[i - 1]*dy[i - 1])/pdDiag[i];
-		}
+        dx[0] = data.splinePoints.at(0).x/pdDiag[0];
+        dy[0] = data.splinePoints.at(0).y/pdDiag[0];
+        for(int i = 1; i < iDim - 1; i++)		{
+            dx[i] = (data.splinePoints.at(i).x - pdDiag2[i - 1]*dx[i - 1])/pdDiag[i];
+            dy[i] = (data.splinePoints.at(i).y - pdDiag2[i - 1]*dy[i - 1])/pdDiag[i];
+        }
 
-		dx[iDim - 1] = data.splinePoints.at(iDim - 1).x - pdDiag2[iDim - 2]*dx[iDim - 2];
-		dy[iDim - 1] = data.splinePoints.at(iDim - 1).y - pdDiag2[iDim - 2]*dy[iDim - 2];
-		for(int i = 0; i < iDim - 2; i++)		{
-			dx[iDim - 1] -= (dx[i]*pdLastCol2[i]);
-			dy[iDim - 1] -= (dy[i]*pdLastCol2[i]);
-		}
-		dx[iDim - 1] /= pdDiag[iDim - 1];
-		dy[iDim - 1] /= pdDiag[iDim - 1];
+        dx[iDim - 1] = data.splinePoints.at(iDim - 1).x - pdDiag2[iDim - 2]*dx[iDim - 2];
+        dy[iDim - 1] = data.splinePoints.at(iDim - 1).y - pdDiag2[iDim - 2]*dy[iDim - 2];
+        for(int i = 0; i < iDim - 2; i++)		{
+            dx[iDim - 1] -= (dx[i]*pdLastCol2[i]);
+            dy[iDim - 1] -= (dy[i]*pdLastCol2[i]);
+        }
+        dx[iDim - 1] /= pdDiag[iDim - 1];
+        dy[iDim - 1] /= pdDiag[iDim - 1];
 
-		dx2[iDim - 1] = dx[iDim - 1]/pdDiag[iDim - 1];
-		dy2[iDim - 1] = dy[iDim - 1]/pdDiag[iDim - 1];
-		dx2[iDim - 2] = (dx[iDim - 2] - pdDiag1[iDim - 2]*dx2[iDim - 1])/pdDiag[iDim - 2];
-		dy2[iDim - 2] = (dy[iDim - 2] - pdDiag1[iDim - 2]*dy2[iDim - 1])/pdDiag[iDim - 2];
+        dx2[iDim - 1] = dx[iDim - 1]/pdDiag[iDim - 1];
+        dy2[iDim - 1] = dy[iDim - 1]/pdDiag[iDim - 1];
+        dx2[iDim - 2] = (dx[iDim - 2] - pdDiag1[iDim - 2]*dx2[iDim - 1])/pdDiag[iDim - 2];
+        dy2[iDim - 2] = (dy[iDim - 2] - pdDiag1[iDim - 2]*dy2[iDim - 1])/pdDiag[iDim - 2];
 
-		for(int i = iDim - 3; i >= 0; i--)		{
-			dx2[i] = (dx[i] - pdDiag1[i]*dx2[i + 1] - pdLastCol1[i]*dx2[iDim - 1])/pdDiag[i];
-			dy2[i] = (dy[i] - pdDiag1[i]*dy2[i + 1] - pdLastCol1[i]*dy2[iDim - 1])/pdDiag[i];
-		}
+        for(int i = iDim - 3; i >= 0; i--)		{
+            dx2[i] = (dx[i] - pdDiag1[i]*dx2[i + 1] - pdLastCol1[i]*dx2[iDim - 1])/pdDiag[i];
+            dy2[i] = (dy[i] - pdDiag1[i]*dy2[i + 1] - pdLastCol1[i]*dy2[iDim - 1])/pdDiag[i];
+        }
 
-		for(int i = 0; i < iDim; i++)		{
+        for(int i = 0; i < iDim; i++)		{
             data.controlPoints.emplace_back(dx2[i], dy2[i]);
-		}
-	}
- else	{
-     double *pdDiag = pdMatrix.data();
-     double *pdDiag1 = &pdMatrix[n - 2];
-     double *pdDiag2 = &pdMatrix[2*n - 5];
+        }
+    }
+    else	{
+        double *pdDiag = pdMatrix.data();
+        double *pdDiag1 = &pdMatrix[n - 2];
+        double *pdDiag2 = &pdMatrix[2*n - 5];
 
-     dx[0] = (data.splinePoints.at(1).x - data.splinePoints.at(0).x*(1.0 - dt[0])*(1.0 - dt[0]))/pdDiag[0];
-     dy[0] = (data.splinePoints.at(1).y - data.splinePoints.at(0).y*(1.0 - dt[0])*(1.0 - dt[0]))/pdDiag[0];
-     for(int i = 1; i < iDim - 1; i++)		{
-         dx[i] = (data.splinePoints.at(i + 1).x - pdDiag2[i - 1]*dx[i - 1])/pdDiag[i];
-         dy[i] = (data.splinePoints.at(i + 1).y - pdDiag2[i - 1]*dy[i - 1])/pdDiag[i];
-     }
-     dx[iDim - 1] = ((data.splinePoints.at(iDim).x - data.splinePoints.at(iDim + 1).x*dt[n - 3]*dt[n - 3]) -
-                     pdDiag2[iDim - 2]*dx[iDim - 2])/pdDiag[iDim - 1];
-     dy[iDim - 1] = ((data.splinePoints.at(iDim).y - data.splinePoints.at(iDim + 1).y*dt[n - 3]*dt[n - 3]) -
-                     pdDiag2[iDim - 2]*dy[iDim - 2])/pdDiag[iDim - 1];
+        dx[0] = (data.splinePoints.at(1).x - data.splinePoints.at(0).x*(1.0 - dt[0])*(1.0 - dt[0]))/pdDiag[0];
+        dy[0] = (data.splinePoints.at(1).y - data.splinePoints.at(0).y*(1.0 - dt[0])*(1.0 - dt[0]))/pdDiag[0];
+        for(int i = 1; i < iDim - 1; i++)		{
+            dx[i] = (data.splinePoints.at(i + 1).x - pdDiag2[i - 1]*dx[i - 1])/pdDiag[i];
+            dy[i] = (data.splinePoints.at(i + 1).y - pdDiag2[i - 1]*dy[i - 1])/pdDiag[i];
+        }
+        dx[iDim - 1] = ((data.splinePoints.at(iDim).x - data.splinePoints.at(iDim + 1).x*dt[n - 3]*dt[n - 3]) -
+                        pdDiag2[iDim - 2]*dx[iDim - 2])/pdDiag[iDim - 1];
+        dy[iDim - 1] = ((data.splinePoints.at(iDim).y - data.splinePoints.at(iDim + 1).y*dt[n - 3]*dt[n - 3]) -
+                        pdDiag2[iDim - 2]*dy[iDim - 2])/pdDiag[iDim - 1];
 
-     dx2[iDim - 1] = dx[iDim - 1]/pdDiag[iDim - 1];
-     dy2[iDim - 1] = dy[iDim - 1]/pdDiag[iDim - 1];
+        dx2[iDim - 1] = dx[iDim - 1]/pdDiag[iDim - 1];
+        dy2[iDim - 1] = dy[iDim - 1]/pdDiag[iDim - 1];
 
-     for(int i = iDim - 2; i >= 0; i--)		{
-         dx2[i] = (dx[i] - pdDiag1[i]*dx2[i + 1])/pdDiag[i];
-         dy2[i] = (dy[i] - pdDiag1[i]*dy2[i + 1])/pdDiag[i];
-     }
+        for(int i = iDim - 2; i >= 0; i--)		{
+            dx2[i] = (dx[i] - pdDiag1[i]*dx2[i + 1])/pdDiag[i];
+            dy2[i] = (dy[i] - pdDiag1[i]*dy2[i + 1])/pdDiag[i];
+        }
 
-     data.controlPoints.push_back(data.splinePoints.at(0));
-     for(int i = 0; i < iDim; i++)		{
-         data.controlPoints.emplace_back(dx2[i], dy2[i]);
-     }
-     data.controlPoints.push_back(data.splinePoints.at(n - 1));
- }
+        data.controlPoints.push_back(data.splinePoints.at(0));
+        for(int i = 0; i < iDim; i++)		{
+            data.controlPoints.emplace_back(dx2[i], dy2[i]);
+        }
+        data.controlPoints.push_back(data.splinePoints.at(n - 1));
+    }
 }
 
 double GetLinePointAtDist(double dLen, double t1, double dDist){
@@ -3258,20 +3298,17 @@ LC_SplinePoints* LC_SplinePoints::cut(const RS_Vector& pos)
 
 	size_t n = data.controlPoints.size();
 
-	if(data.closed)
-	{
+	if(data.closed){
 		// if the spline is closed, we must delete splinePoints, add the pos
 		// as start and end point and reorder control points. We must return
 		// nullptr since there will still be only one spline
-		for(int i = 0 ; i < iQuad - 1; i++)
-		{
+		for(int i = 0 ; i < iQuad - 1; i++){
 			vNewControl = data.controlPoints.front();
 			data.controlPoints.erase(data.controlPoints.begin());
 			data.controlPoints.push_back(vNewControl);
 		}
 
-		if(iPts > 2)
-		{
+		if(iPts > 2){
 			vNewControl = GetSubQuadControlPoint(vStart, vControl, vEnd, 0.0, dt);
 			data.controlPoints.push_back(vNewControl);
 
@@ -3284,17 +3321,14 @@ LC_SplinePoints* LC_SplinePoints::cut(const RS_Vector& pos)
 		data.closed = false;
 		data.cut = true;
 	}
-	else
-	{
+	else{
 		LC_SplinePointsData newData(false, true);
-		for(size_t i = iQuad + 1; i < n; i++)
-		{
+		for(size_t i = iQuad + 1; i < n; i++){
 			newData.controlPoints.push_back(data.controlPoints.at(iQuad + 1));
 			data.controlPoints.erase(data.controlPoints.begin()+iQuad + 1);
 		}
 
-		if(iPts > 2)
-		{
+		if(iPts > 2){
 			vNewControl = GetSubQuadControlPoint(vStart, vControl, vEnd, 0.0, dt);
 			data.controlPoints[iQuad]= vNewControl;
 
@@ -3313,8 +3347,7 @@ LC_SplinePoints* LC_SplinePoints::cut(const RS_Vector& pos)
 	return ret;
 }
 
-QPolygonF LC_SplinePoints::getBoundingRect(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2)
-{
+QPolygonF LC_SplinePoints::getBoundingRect(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2){
     QPolygonF ret;
     ret << QPointF(x1.x, x1.y);
     //find t for tangent in parallel with x2 - x1

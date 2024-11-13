@@ -1014,6 +1014,7 @@ bool dxfRW::writeSpline(DRW_Spline *ent){
         writer->writeInt16(74, ent->nfit);
         writer->writeDouble(42, ent->tolknot);
         writer->writeDouble(43, ent->tolcontrol);
+        writer->writeDouble(44, ent->tolfit);
         //RLZ: warning check if nknots are correct and ncontrol
         for (int i = 0;  i< ent->nknots; i++){
             writer->writeDouble(40, ent->knotslist.at(i));
@@ -1026,6 +1027,12 @@ bool dxfRW::writeSpline(DRW_Spline *ent){
             writer->writeDouble(10, crd->x);
             writer->writeDouble(20, crd->y);
             writer->writeDouble(30, crd->z);
+        }
+        for (int i = 0;  i< ent->nfit; i++){
+            auto crd = ent->fitlist.at(i);
+            writer->writeDouble(11, crd->x);
+            writer->writeDouble(21, crd->y);
+            writer->writeDouble(31, crd->z);
         }
     } else {
         //RLZ: TODO convert spline in polyline (not exist in acad 12)
