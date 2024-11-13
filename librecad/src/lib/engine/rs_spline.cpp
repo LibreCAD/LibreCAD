@@ -171,7 +171,9 @@ void RS_Spline::update() {
     }
 
     // Issue #1689: allow closed splines by 3 control points
-    if ( (!data.closed && data.controlPoints.size() < size_t(data.degree)+1) || data.controlPoints.size() < 3) {
+    // Issue #1960: DXF import of degree 1 spline with two control points fails in RC 2.2.1_rc4 on windows and MacOS
+    if ( (!data.closed && data.controlPoints.size() < size_t(data.degree)+1) || (data.closed && data.controlPoints.size() < 3) ) {
+
         RS_DEBUG->print("RS_Spline::update: not enough control points");
         return;
     }
