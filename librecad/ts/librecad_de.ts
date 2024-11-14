@@ -256,34 +256,20 @@
 <context>
     <name>LC_ActionCircleDimBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="129"/>
         <source>Not a circle or arc entity</source>
-        <translation type="unfinished">Kein Kreis oder Kreisbogen</translation>
+        <translation type="obsolete">Kein Kreis oder Kreisbogen</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="192"/>
-        <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
         <source>Select arc or circle entity</source>
-        <translation type="unfinished">Kreisbogen oder Kreis wählen</translation>
+        <translation type="obsolete">Kreisbogen oder Kreis wählen</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
-        <source>Free angle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="218"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation type="unfinished">Position der Bemassungslinie angeben oder Winkel eingeben:</translation>
+        <translation type="obsolete">Position der Bemassungslinie angeben oder Winkel eingeben:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="221"/>
         <source>Enter dimension text:</source>
-        <translation type="unfinished">Masstext eingeben:</translation>
+        <translation type="obsolete">Masstext eingeben:</translation>
     </message>
 </context>
 <context>
@@ -393,69 +379,23 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
 <context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="406"/>
-        <source>Select base linear/aligned dimension</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="406"/>
-        <source>Select distant extension point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="409"/>
         <source>Specify second extension line origin</source>
-        <translation type="unfinished">Anfangspunkt der zweiten Hilfslinie angeben</translation>
+        <translation type="obsolete">Anfangspunkt der zweiten Hilfslinie angeben</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="409"/>
-        <source>Mirror offset direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="412"/>
         <source>Specify dimension line location</source>
-        <translation type="unfinished">Position der Bemassungslinie angeben</translation>
+        <translation type="obsolete">Position der Bemassungslinie angeben</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="412"/>
-        <source>Snap to Adjacent Dim</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="415"/>
         <source>Enter dimension text:</source>
-        <translation type="unfinished">Masstext eingeben:</translation>
+        <translation type="obsolete">Masstext eingeben:</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawEllipse1Point</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="262"/>
         <source>Specify ellipse center</source>
-        <translation type="unfinished">Ellipsenzentrum angeben</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="266"/>
-        <source>Specify angle for major axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="270"/>
-        <source>Set start angle of arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="274"/>
-        <source>Set end angle of arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="298"/>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="309"/>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="320"/>
-        <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Ellipsenzentrum angeben</translation>
     </message>
 </context>
 <context>
@@ -936,12 +876,12 @@ or [%2]</source>
 <context>
     <name>LC_ActionFactory</name>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="364"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="365"/>
         <source>&amp;Window Zoom</source>
         <translation>Zoom &amp;Fenster</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="224"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="225"/>
         <source>Zoom &amp;Panning</source>
         <translation>Zoom &amp;Verschieben</translation>
     </message>
@@ -997,7 +937,7 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="111"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="236"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="237"/>
         <source>&amp;Horizontal</source>
         <translation>&amp;Horizontal</translation>
     </message>
@@ -1213,32 +1153,32 @@ or [%2]</source>
         <translation>Bogen &amp;tangential</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="198"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="199"/>
         <source>&amp;Ellipse (Axis)</source>
         <translation>&amp;Ellipse (Achsen)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="199"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="200"/>
         <source>Ellipse &amp;Arc (Axis)</source>
         <translation>Ellipse &amp;Bogen (Achse)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="200"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="201"/>
         <source>Ellipse &amp;Foci Point</source>
         <translation>Ellipse Bre&amp;nnpunkte</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="201"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="202"/>
         <source>Ellipse &amp;4 Point</source>
         <translation>Ellipse &amp;4 Punkte</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="202"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="203"/>
         <source>Ellipse Center and &amp;3 Points</source>
         <translation>Ellipse Mittelpunkt und &amp;3 Punkte</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="203"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="204"/>
         <source>Ellipse &amp;Inscribed</source>
         <translation>Ellipse &amp;innenliegend</translation>
     </message>
@@ -1253,37 +1193,37 @@ or [%2]</source>
         <translation>&amp;Spline durch Punkte</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="209"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="210"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Polylinie</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="210"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="211"/>
         <source>&amp;Add node</source>
         <translation>&amp;Knoten hinzufügen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="211"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="212"/>
         <source>A&amp;ppend node</source>
         <translation>Knoten &amp;anfügen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="212"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="213"/>
         <source>&amp;Delete node</source>
         <translation>Knoten &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="213"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="214"/>
         <source>Delete &amp;between two nodes</source>
         <translation>Löschen &amp;zwischen zwei Knoten</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="214"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="215"/>
         <source>&amp;Trim segments</source>
         <translation>Segmente &amp;trimmen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="215"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="216"/>
         <source>Create &amp;Equidistant Polylines</source>
         <translation>&amp;abstandsgleiche Polylinien erstellen</translation>
     </message>
@@ -1292,67 +1232,67 @@ or [%2]</source>
         <translation type="vanished">Polylinie aus vorhandenen &amp;Objekten erstellen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="225"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="226"/>
         <source>&amp;MText</source>
         <translation>Text &amp;mehrzeilig</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="226"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="227"/>
         <source>&amp;Text</source>
         <translation>&amp;Text</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="227"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="228"/>
         <source>&amp;Hatch</source>
         <translation>&amp;Schraffur</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="228"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="229"/>
         <source>Insert &amp;Image</source>
         <translation>B&amp;ild einfügen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="234"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="235"/>
         <source>&amp;Aligned</source>
         <translation>&amp;Ausgerichtet</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="235"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="236"/>
         <source>&amp;Linear</source>
         <translation>&amp;Linear</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="237"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="238"/>
         <source>&amp;Vertical</source>
         <translation>&amp;Vertikal</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="238"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="239"/>
         <source>&amp;Radial</source>
         <translation>&amp;Radial</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="239"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="240"/>
         <source>&amp;Diametric</source>
         <translation>&amp;Durchmesser</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="240"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="241"/>
         <source>&amp;Angular</source>
         <translation>&amp;Winkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="242"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="243"/>
         <source>&amp;Leader</source>
         <translation>&amp;Führung</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="256"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="257"/>
         <source>&amp;Attributes</source>
         <translation>&amp;Attribute</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="257"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="258"/>
         <source>&amp;Delete</source>
         <translation>&amp;Löschen</translation>
     </message>
@@ -1361,22 +1301,22 @@ or [%2]</source>
         <translation type="vanished">Freihand löschen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="258"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="259"/>
         <source>&amp;Move / Copy</source>
         <translation>&amp;Verschieben / Kopieren</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="259"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="260"/>
         <source>Re&amp;vert direction</source>
         <translation>&amp;Richtung umkehren</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="545"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="546"/>
         <source>Ctrl+R</source>
         <translation>Strg+R</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="260"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="261"/>
         <source>&amp;Rotate</source>
         <translation>&amp;Rotieren</translation>
     </message>
@@ -1391,72 +1331,72 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="217"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="218"/>
         <source>Polyline Arcs to Chords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="261"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="262"/>
         <source>&amp;Scale</source>
         <translation>&amp;Skalieren</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="262"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="263"/>
         <source>&amp;Mirror</source>
         <translation>S&amp;piegeln</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="264"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="265"/>
         <source>Rotate T&amp;wo</source>
         <translation>Rotieren &amp;Zwei</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="265"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="266"/>
         <source>&amp;Properties</source>
         <translation>&amp;Eigenschaften</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="266"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="267"/>
         <source>&amp;Trim</source>
         <translation>&amp;Trimmen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="268"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="269"/>
         <source>&amp;Lengthen</source>
         <translation>&amp;Kürzen/Verlängern</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="270"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="271"/>
         <source>&amp;Divide</source>
         <translation>Au&amp;ftrennen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="271"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="272"/>
         <source>&amp;Stretch</source>
         <translation>&amp;Strecken</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="272"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="273"/>
         <source>&amp;Bevel</source>
         <translation>&amp;Abschrägen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="273"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="274"/>
         <source>&amp;Fillet</source>
         <translation>&amp;Abrunden</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="274"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="275"/>
         <source>&amp;Explode Text into Letters</source>
         <translation>Te&amp;xt in Buchstaben aufbrechen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="349"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="350"/>
         <source>Point inside contour</source>
         <translation>Punkt innerhalb einer Kontur</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="350"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="351"/>
         <source>&amp;Distance Point to Point</source>
         <translation>&amp;Entfernung Punkt zu Punkt</translation>
     </message>
@@ -1465,7 +1405,7 @@ or [%2]</source>
         <translation type="vanished">&amp;Entfernung Objekt zu Punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="353"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="354"/>
         <source>An&amp;gle between two lines</source>
         <translation>&amp;Winkel zwischen zwei Linien</translation>
     </message>
@@ -1474,7 +1414,7 @@ or [%2]</source>
         <translation type="vanished">Gesam&amp;tlänge der ausgewählten Objekte</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="355"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="356"/>
         <source>Polygonal &amp;Area</source>
         <translation>Polygon&amp;fläche</translation>
     </message>
@@ -1483,32 +1423,32 @@ or [%2]</source>
         <translation type="vanished">Maus&amp;zeiger</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="507"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="508"/>
         <source>&amp;Undo</source>
         <translation>&amp;Rückgängig</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="508"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="509"/>
         <source>&amp;Redo</source>
         <translation>&amp;Wiederherstellen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="509"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
         <source>Cu&amp;t</source>
         <translation>Aus&amp;schneiden</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="512"/>
         <source>&amp;Copy</source>
         <translation>&amp;Kopieren</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="513"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="514"/>
         <source>&amp;Paste</source>
         <translation>Ein&amp;fügen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="340"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="341"/>
         <source>move to bottom</source>
         <translation>nach unten verschieben</translation>
     </message>
@@ -1553,322 +1493,327 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="196"/>
-        <source>&amp;Ellipse (1 Point)</source>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="191"/>
+        <source>&amp;Explode spline to lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="197"/>
+        <source>&amp;Ellipse (1 Point)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="198"/>
         <source>&amp;Ellipse Arc (1 Point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="216"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="217"/>
         <source>Polyline from Existing &amp;Segments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="218"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="219"/>
         <source>Polyline Change Segment Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="243"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="244"/>
         <source>&amp;Baseline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="244"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="245"/>
         <source>&amp;Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="276"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="277"/>
         <source>Break/Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="277"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="278"/>
         <source>Line Gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="278"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="279"/>
         <source>Line Join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="279"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="280"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="285"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="286"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="291"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="292"/>
         <source>&amp;Pick Pen From Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="292"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="293"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="293"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="294"/>
         <source>Apply Pen to Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="294"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="295"/>
         <source>Copy Pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="300"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="301"/>
         <source>Snap on grid</source>
         <translation type="unfinished">Raster fangen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="301"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="302"/>
         <source>Snap Middle Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="302"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="303"/>
         <source>Snap on Endpoints</source>
         <translation type="unfinished">Endpunkte fangen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="303"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="304"/>
         <source>Snap on Entity</source>
         <translation type="unfinished">Objekte fangen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="304"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="305"/>
         <source>Snap Center</source>
         <translation type="unfinished">Zentrum fangen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="305"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
         <source>Snap Middle</source>
         <translation type="unfinished">Mittelpunkt fangen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="307"/>
         <source>Snap Distance</source>
         <translation type="unfinished">mit Abstand fangen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="307"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="308"/>
         <source>Snap Intersection</source>
         <translation type="unfinished">Schnittpunkte fangen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="313"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="314"/>
         <source>Restrict Horizontal</source>
         <translation type="unfinished">Horizontal einschränken</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="314"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="315"/>
         <source>Restrict Vertical</source>
         <translation type="unfinished">Vertikal einschränken</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="315"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="316"/>
         <source>Restrict Orthogonal</source>
         <translation type="unfinished">Orthogonal einschränken</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="316"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="317"/>
         <source>Restrict Nothing</source>
         <translation type="unfinished">Keine Einschränkung</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="322"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="323"/>
         <source>Set relative zero position</source>
         <translation type="unfinished">Relativen Nullpunkt setzen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="323"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="324"/>
         <source>Lock relative zero position</source>
         <translation type="unfinished">Relativen Nullpunkt fixieren</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="332"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="333"/>
         <source>Exclusive Snap Mode</source>
         <translation type="unfinished">Exklusiver Rastmodus</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="333"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="334"/>
         <source>Free Snap</source>
         <translation type="unfinished">freies Fangen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="341"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="342"/>
         <source>lower after entity</source>
         <translation>nach unten, hinter Objekt</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="342"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="343"/>
         <source>raise over entity</source>
         <translation>nach oben, über Objekt</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="343"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="344"/>
         <source>move to top</source>
         <translation>nach oben verschieben</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="351"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="352"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="352"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="353"/>
         <source>Distance &amp;Point to Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="354"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="355"/>
         <source>Total &amp;length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="356"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="357"/>
         <source>Entity Pro&amp;perties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="357"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="358"/>
         <source>Collect &amp;Coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="358"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="359"/>
         <source>Ang&amp;le between 3 points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="370"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="371"/>
         <source>&amp;Draft Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="371"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="372"/>
         <source>&amp;Antialiasing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="373"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="374"/>
         <source>&amp;Orthogonal Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="374"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="375"/>
         <source>&amp;Isometric Left Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="375"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="376"/>
         <source>&amp;Isometric Top Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="376"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="377"/>
         <source>&amp;Isometric Right Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="386"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="387"/>
         <source>&amp;Add Layer</source>
         <translation>Ebene &amp;hinzufügen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="387"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="388"/>
         <source>&amp;Remove Layer</source>
         <translation>Ebene &amp;entfernen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="388"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="389"/>
         <source>&amp;Edit Layer</source>
         <translation>Ebene &amp;bearbeiten</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="389"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="390"/>
         <source>Toggle Layer Loc&amp;k</source>
         <translation>&amp;Sperre umschalten </translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="390"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="391"/>
         <source>&amp;Toggle Layer Visibility</source>
         <translation>S&amp;ichtbarkeit umschalten</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="391"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="392"/>
         <source>Toggle Layer &amp;Print</source>
         <translation>Ebene &amp;drucken umschalten</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="392"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="393"/>
         <source>Toggle &amp;Construction Layer</source>
         <translation>&amp;Konstruktionsebene umschalten</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="402"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="403"/>
         <source>&amp;Add Block</source>
         <translation>Block &amp;hinzufügen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="403"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
         <source>&amp;Remove Block</source>
         <translation>Block &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="405"/>
         <source>&amp;Rename Block</source>
         <translation>Block &amp;umbenennen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="405"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="406"/>
         <source>&amp;Edit Block</source>
         <translation>Block &amp;bearbeiten</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="406"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="407"/>
         <source>&amp;Save Block</source>
         <translation>Block &amp;speichern</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="407"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="408"/>
         <source>&amp;Insert Block</source>
         <translation>Block ein&amp;fügen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="408"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="409"/>
         <source>Toggle Block &amp;Visibility</source>
         <translation>S&amp;ichtbarkeit Block umschalten</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="409"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="410"/>
         <source>&amp;Create Block</source>
         <translation>Block &amp;erstellen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="275"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="276"/>
         <source>Ex&amp;plode</source>
         <translation>Aufb&amp;rechen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="419"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="420"/>
         <source>&amp;Application Preferences</source>
         <translation>Anwendungs&amp;einstellungen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="415"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="416"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>&amp;Zeichnungseinstellungen</translation>
     </message>
@@ -1877,194 +1822,194 @@ or [%2]</source>
         <translation type="vanished">ausgewählte Objekte &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="499"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="500"/>
         <source>Select &amp;All</source>
         <translation>&amp;Alles auswählen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="500"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="501"/>
         <source>Deselect &amp;all</source>
         <translation>&amp;Nichts auswählen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="553"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="554"/>
         <source>Ctrl+K</source>
         <translation>Strg+K</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="501"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="502"/>
         <source>Invert Selection</source>
         <translation>Auswahl umkehren</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="473"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="474"/>
         <source>Focus on &amp;Options Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="476"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="477"/>
         <source>Zoom &amp;In</source>
         <translation>H&amp;ineinzoomen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="477"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="478"/>
         <source>Zoom &amp;Out</source>
         <translation>Her&amp;auszoomen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="478"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="479"/>
         <source>&amp;Auto Zoom</source>
         <translation>A&amp;utozoom</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="479"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="480"/>
         <source>Previous &amp;View</source>
         <translation>&amp;Letzte Ansicht</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="480"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="481"/>
         <source>&amp;Redraw</source>
         <translation>&amp;Neuzeichnen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="440"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="441"/>
         <source>&amp;New</source>
         <translation>&amp;Neu</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="441"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="442"/>
         <source>New From &amp;Template</source>
         <translation>Neu von &amp;Vorlage</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="442"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="443"/>
         <source>&amp;Open...</source>
         <translation>Ö&amp;ffnen...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="443"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="444"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="444"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="445"/>
         <source>Save &amp;as...</source>
         <translation>Speichern &amp;unter...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="435"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="436"/>
         <source>&amp;Export as image</source>
         <translation>als Bild &amp;exportieren</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="436"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="437"/>
         <source>&amp;Close</source>
         <translation>&amp;Schließen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="446"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="447"/>
         <source>&amp;Print...</source>
         <translation>&amp;Drucken...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="438"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="439"/>
         <source>Export as PDF</source>
         <translation>als PDF exportieren</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="429"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="430"/>
         <source>Print Pre&amp;view</source>
         <translation>Druck&amp;vorschau</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="447"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="448"/>
         <source>&amp;Quit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="439"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="440"/>
         <source>&amp;Block</source>
         <translation>B&amp;lock</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="367"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="368"/>
         <source>&amp;Fullscreen</source>
         <translation>&amp;Vollbild</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="368"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="369"/>
         <source>&amp;Grid</source>
         <translation>&amp;Raster</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="570"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="571"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation>Strg+G</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="369"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="370"/>
         <source>&amp;Draft</source>
         <translation>&amp;Entwurf</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="372"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="373"/>
         <source>&amp;Statusbar</source>
         <translation>&amp;Statuszeile</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="573"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="574"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
         <translation>Strg+I</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="472"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="473"/>
         <source>Focus on &amp;Command Line</source>
         <translation>&amp;Fokus auf Befehlszeile</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="420"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="421"/>
         <source>Widget Options</source>
         <translation>Widget Optionen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="455"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="456"/>
         <source>Left</source>
         <translation>Links</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="456"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="457"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="457"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="458"/>
         <source>Top</source>
         <translation>Oben</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="458"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="459"/>
         <source>Bottom</source>
         <translation>Unten</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="459"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="460"/>
         <source>Floating</source>
         <translation>Schwebend</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="423"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="424"/>
         <source>Reload Style Sheet</source>
         <translation>Stylesheet neu laden</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="422"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="423"/>
         <source>Device Options</source>
         <translation>Geräteoptionen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="263"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="264"/>
         <source>Mo&amp;ve and Rotate</source>
         <translation>Be&amp;wegen und rotieren</translation>
     </message>
@@ -2079,87 +2024,87 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="267"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="268"/>
         <source>Tr&amp;im Two</source>
         <translation>beide Tr&amp;immen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="269"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="270"/>
         <source>O&amp;ffset</source>
         <translation>O&amp;ffset</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="466"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="467"/>
         <source>Menu Creator</source>
         <translation>Menü erstellen...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="467"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="468"/>
         <source>Toolbar Creator</source>
         <translation>Werkzeugleiste erstellen...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="486"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="487"/>
         <source>&amp;Save View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="488"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="489"/>
         <source>Restore Current View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="489"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="490"/>
         <source>Restore View 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="490"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="491"/>
         <source>Restore View 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="491"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="492"/>
         <source>Restore View 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="492"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="493"/>
         <source>Restore View 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="493"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="494"/>
         <source>Restore View 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
         <source>Cut Quic&amp;k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="512"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="513"/>
         <source>Copy &amp;Quick</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="514"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="515"/>
         <source>Paste &amp;Transform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="515"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="516"/>
         <source>&amp;Delete Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="516"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="517"/>
         <source>&amp;Selection Pointer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="572"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="573"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
         <translation>Strg+D</translation>
@@ -2170,72 +2115,72 @@ or [%2]</source>
         <translation>Pol&amp;ygon (Zentrum,Tangente)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="241"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="242"/>
         <source>&amp;Arc</source>
         <translation>Kreis&amp;bogen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="382"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="383"/>
         <source>&amp;Show all layers</source>
         <translation>Alle Layer ein&amp;schalten</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="383"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="384"/>
         <source>&amp;Hide all layers</source>
         <translation>Alle Layer aussc&amp;halten</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="384"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="385"/>
         <source>&amp;Unlock all</source>
         <translation>Alle entspe&amp;rren</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="385"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="386"/>
         <source>&amp;Lock all</source>
         <translation>A&amp;lle sperren</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="393"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="394"/>
         <source>&amp;Export Selected Layer(s)</source>
         <translation>Ausgewählte Layer &amp;exportieren</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="394"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="395"/>
         <source>Export &amp;Visible Layer(s)</source>
         <translation>Sichtbare Layer exp&amp;ortieren</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="400"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="401"/>
         <source>&amp;Show all blocks</source>
         <translation>Alle Blöcke an&amp;zeigen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="401"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="402"/>
         <source>&amp;Hide all blocks</source>
         <translation>Alle Blöcke ver&amp;bergen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="421"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="422"/>
         <source>Keyboard Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="450"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="451"/>
         <source>Export as CA&amp;M/plain SVG...</source>
         <translation>Exportieren als CA&amp;M/Bereinigtes SVG...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="437"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="438"/>
         <source>Close All</source>
         <translation>Alle schliessen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="465"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="466"/>
         <source>Re-dock Widgets</source>
         <translation>Widgets neu andocken</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="445"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="446"/>
         <source>Save A&amp;ll...</source>
         <translation>A&amp;lle speichern...</translation>
     </message>
@@ -2656,37 +2601,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionPolylineArcsToLines</name>
-    <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinearcstolines.cpp" line="120"/>
-        <source>Specify polyline with arc segments</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionPolylineChangeSegmentType</name>
-    <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="62"/>
-        <source>Invalid arc point to create arc, select another one</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="242"/>
-        <source>Select polyline to modify</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="246"/>
-        <source>Select segment of polyline to modify</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="250"/>
-        <source>Specify position on arc to create</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionPreSelectionAwareBase</name>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionpreselectionawarebase.cpp" line="151"/>
@@ -2751,18 +2665,15 @@ or [%2]</source>
 <context>
     <name>LC_ActionSplineAppendPoint</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp" line="211"/>
-        <source>Select spline or spline points entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp" line="215"/>
         <source>Specify first control point</source>
-        <translation type="unfinished">Ersten Kontrollpunkt bestimmen</translation>
+        <translation type="obsolete">Ersten Kontrollpunkt bestimmen</translation>
     </message>
+</context>
+<context>
+    <name>LC_ActionSplineExplode</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp" line="219"/>
-        <source>Specify control point</source>
+        <location filename="../src/actions/drawing/draw/curve/lc_actionsplineexplode.cpp" line="186"/>
+        <source>Select spline or spline points entity</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3185,59 +3096,44 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="72"/>
-        <source>Version: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="74"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="unfinished">Compiler: Clang %1.%2.%3</translation>
+        <translation type="obsolete">Compiler: Clang %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="76"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="unfinished">Compiler: GNU GCC %1.%2.%3</translation>
+        <translation type="obsolete">Compiler: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="78"/>
         <source>Compiler: Microsoft Visual C++</source>
-        <translation type="unfinished">Kompiler: Microsoft Visual C++</translation>
+        <translation type="obsolete">Kompiler: Microsoft Visual C++</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="80"/>
         <source>Compiled on: %1</source>
-        <translation type="unfinished">Erstellt am: %1</translation>
+        <translation type="obsolete">Erstellt am: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="81"/>
         <source>Qt Version: %1</source>
-        <translation type="unfinished">Qt Version: %1</translation>
+        <translation type="obsolete">Qt Version: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="82"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation type="unfinished">Boost Version: %1.%2.%3</translation>
+        <translation type="obsolete">Boost Version: %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="92"/>
         <source>Contributors</source>
-        <translation type="unfinished">Entwickler</translation>
+        <translation type="obsolete">Entwickler</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="93"/>
         <source>License</source>
-        <translation type="unfinished">Lizenz</translation>
+        <translation type="obsolete">Lizenz</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="94"/>
         <source>The Code</source>
-        <translation type="unfinished">Der Code</translation>
+        <translation type="obsolete">Der Code</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="107"/>
         <source>System</source>
-        <translation type="unfinished">System</translation>
+        <translation type="obsolete">System</translation>
     </message>
 </context>
 <context>
@@ -3330,11 +3226,6 @@ Are you sure you are going to discard changes?</source>
 </context>
 <context>
     <name>LC_DlgNewVersionAvailable</name>
-    <message>
-        <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.cpp" line="110"/>
-        <source>Version Check</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="14"/>
         <source>New Version Available</source>
@@ -5191,161 +5082,6 @@ Are you sure you are going to discard changes?</source>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="227"/>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="251"/>
-        <source>Delete View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="282"/>
-        <source>Are you sure to delete views %1?
-Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="252"/>
-        <source>Are you sure to delete view
- &quot;%1&quot;?
- Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="228"/>
-        <source>Are you sure to delete ALL views?
- Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="282"/>
-        <source>Delete Views</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="312"/>
-        <source>New View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="313"/>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="346"/>
-        <source>View name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="318"/>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="329"/>
-        <source>View Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="318"/>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="351"/>
-        <source>Empty name of View is not allowed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="329"/>
-        <source>View with provided name already exists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="345"/>
-        <source>Rename View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="351"/>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="358"/>
-        <source>View Rename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="358"/>
-        <source>View with provided name already exists, select another one</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="437"/>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="444"/>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="458"/>
-        <source>&amp;Add View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="440"/>
-        <source>R&amp;emove Selected Views</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="447"/>
-        <source>&amp;Restore View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="448"/>
-        <source>Re&amp;name View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="449"/>
-        <source>&amp;Update View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="450"/>
-        <source>R&amp;emove View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="452"/>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="464"/>
-        <source>Remove A&amp;ll Views</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="579"/>
-        <source>Restore View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="579"/>
-        <source>Paper space view is not fully supported yet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_NamedViewsModel</name>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="122"/>
-        <source>Name: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="123"/>
-        <source>Center: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="124"/>
-        <source>Size: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="125"/>
-        <source>In Paperspace: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="125"/>
-        <source>Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="125"/>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LC_OptionsWidgetsHolder</name>
@@ -6226,19 +5962,6 @@ Warning: this action can NOT be undone!</source>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_QTStatusbarManager</name>
-    <message>
-        <location filename="../src/ui/components/status_bar/lc_qtstatusbarmanager.cpp" line="36"/>
-        <source> SHIFT Key: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/components/status_bar/lc_qtstatusbarmanager.cpp" line="40"/>
-        <source> CTRL Key: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7740,19 +7463,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <location filename="../src/ui/main/lc_releasechecker.cpp" line="111"/>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/lc_releasechecker.cpp" line="174"/>
-        <source>Unable to parse response from the server</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LC_Rotate2Options</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="32"/>
@@ -7866,14 +7576,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_SimpleTests</name>
     <message>
-        <location filename="../src/test/lc_simpletests.cpp" line="34"/>
         <source>De&amp;bugging</source>
-        <translation>Deb&amp;ugging</translation>
+        <translation type="vanished">Deb&amp;ugging</translation>
     </message>
     <message>
-        <location filename="../src/test/lc_simpletests.cpp" line="78"/>
         <source>Insert Image</source>
-        <translation>Bild einfügen</translation>
+        <translation type="vanished">Bild einfügen</translation>
     </message>
 </context>
 <context>
@@ -8027,6 +7735,69 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/containers/lc_snapoptionswidgetsholder.ui" line="14"/>
         <source>Form</source>
         <translation type="unfinished">Formular</translation>
+    </message>
+</context>
+<context>
+    <name>LC_SplineExplodeOptions</name>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_splineexplodeoptions.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formular</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_splineexplodeoptions.ui" line="32"/>
+        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_splineexplodeoptions.ui" line="39"/>
+        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_splineexplodeoptions.ui" line="42"/>
+        <source>Keep Originals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_splineexplodeoptions.ui" line="56"/>
+        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_splineexplodeoptions.ui" line="59"/>
+        <source>Use Current Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_splineexplodeoptions.ui" line="73"/>
+        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_splineexplodeoptions.ui" line="76"/>
+        <source>User Current Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_splineexplodeoptions.ui" line="83"/>
+        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_splineexplodeoptions.ui" line="86"/>
+        <source>Custom Segments Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_splineexplodeoptions.ui" line="93"/>
+        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_splineexplodeoptions.ui" line="96"/>
+        <source>To Polyline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9339,17 +9110,17 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1241"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1245"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1242"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1246"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1252"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1256"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>escape</translation>
@@ -16713,124 +16484,84 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation>Alle Dateien (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="210"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="266"/>
         <source>Inch</source>
-        <translation>Inch</translation>
+        <translation type="vanished">Inch</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="212"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="268"/>
         <source>Foot</source>
-        <translation>Fuß</translation>
+        <translation type="vanished">Fuß</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="214"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="270"/>
         <source>Mile</source>
-        <translation>Meile</translation>
+        <translation type="vanished">Meile</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="216"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="272"/>
         <source>Millimeter</source>
-        <translation>Millimeter</translation>
+        <translation type="vanished">Millimeter</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="218"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="274"/>
         <source>Centimeter</source>
-        <translation>Zentimeter</translation>
+        <translation type="vanished">Zentimeter</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="220"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="276"/>
         <source>Meter</source>
-        <translation>Meter</translation>
+        <translation type="vanished">Meter</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="222"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="278"/>
         <source>Kilometer</source>
-        <translation>Kilometer</translation>
+        <translation type="vanished">Kilometer</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="224"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="280"/>
         <source>Microinch</source>
-        <translation>Mikroinch</translation>
+        <translation type="vanished">Mikroinch</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="226"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="282"/>
         <source>Mil</source>
-        <translation>Mil</translation>
+        <translation type="vanished">Mil</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="228"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="284"/>
         <source>Yard</source>
-        <translation>Yard</translation>
+        <translation type="vanished">Yard</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="230"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="286"/>
         <source>Angstrom</source>
-        <translation>Angström</translation>
+        <translation type="vanished">Angström</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="232"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="288"/>
         <source>Nanometer</source>
-        <translation>Nanometer</translation>
+        <translation type="vanished">Nanometer</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="234"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="290"/>
         <source>Micron</source>
-        <translation>Mikrometer</translation>
+        <translation type="vanished">Mikrometer</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="236"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="292"/>
         <source>Decimeter</source>
-        <translation>Dezimeter</translation>
+        <translation type="vanished">Dezimeter</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="238"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="294"/>
         <source>Decameter</source>
-        <translation>Dekameter</translation>
+        <translation type="vanished">Dekameter</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="240"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="296"/>
         <source>Hectometer</source>
-        <translation>Hektometer</translation>
+        <translation type="vanished">Hektometer</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="242"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="298"/>
         <source>Gigameter</source>
-        <translation>Gigameter</translation>
+        <translation type="vanished">Gigameter</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="244"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="300"/>
         <source>Astro</source>
-        <translation>Astronomische Einheit</translation>
+        <translation type="vanished">Astronomische Einheit</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="246"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="302"/>
         <source>Lightyear</source>
-        <translation>Lichtjahr</translation>
+        <translation type="vanished">Lichtjahr</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="248"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="304"/>
         <source>Parsec</source>
-        <translation>Parsec</translation>
+        <translation type="vanished">Parsec</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="485"/>
@@ -16960,54 +16691,44 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation>Altes Zeichnungsformat %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="178"/>
         <source>Opened dwg file version %1.</source>
-        <translation>DWG Datei Version %1 geöffnet.</translation>
+        <translation type="vanished">DWG Datei Version %1 geöffnet.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4194"/>
         <source>unknown error opening dwg file</source>
-        <translation>Unbekannter Fehler beim Öffnen der DWG Datei</translation>
+        <translation type="vanished">Unbekannter Fehler beim Öffnen der DWG Datei</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4198"/>
         <source>can&apos;t open this dwg file</source>
-        <translation>Öffnen der DWG Datei nicht möglich</translation>
+        <translation type="vanished">Öffnen der DWG Datei nicht möglich</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4202"/>
         <source>unsupported dwg version</source>
-        <translation>Nicht unterstützte DWG Version</translation>
+        <translation type="vanished">Nicht unterstützte DWG Version</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4210"/>
         <source>error reading file header in dwg file</source>
-        <translation>Fehler beim Lesen der DWG Kopfdaten</translation>
+        <translation type="vanished">Fehler beim Lesen der DWG Kopfdaten</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4214"/>
         <source>error reading header vars in dwg file</source>
-        <translation>Fehler beim Lesen der DWG Variablen</translation>
+        <translation type="vanished">Fehler beim Lesen der DWG Variablen</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4218"/>
         <source>error reading classes in dwg file</source>
-        <translation>Fehler beim Lesen der DWG Klassen</translation>
+        <translation type="vanished">Fehler beim Lesen der DWG Klassen</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4222"/>
         <source>error reading offsets in dwg file</source>
-        <translation>Fehler beim Lesen der DWG Offsets</translation>
+        <translation type="vanished">Fehler beim Lesen der DWG Offsets</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4226"/>
         <source>error reading tables in dwg file</source>
-        <translation>Fehler beim Lesen der DWG Tabellen</translation>
+        <translation type="vanished">Fehler beim Lesen der DWG Tabellen</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4234"/>
         <source>error reading entities in dwg file</source>
-        <translation>Fehler beim Lesen der DWG Objekte</translation>
+        <translation type="vanished">Fehler beim Lesen der DWG Objekte</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="443"/>
@@ -17015,29 +16736,24 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation>DWG Zeichnung %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="322"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>Datei auf Datenträger verändert! Bitte unter anderem Namen speichern um Datenverlust zu verhindern! Geänderte Datei: %1</translation>
+        <translation type="vanished">Datei auf Datenträger verändert! Bitte unter anderem Namen speichern um Datenverlust zu verhindern! Geänderte Datei: %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1687"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Schraffur nicht möglich, wegen einer Lücke=%1 zwischen (%2, %3) und (%4, %5)</translation>
+        <translation type="vanished">Schraffur nicht möglich, wegen einer Lücke=%1 zwischen (%2, %3) und (%4, %5)</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="113"/>
         <source>Warning</source>
-        <translation>Warnung</translation>
+        <translation type="vanished">Warnung</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4230"/>
         <source>error reading blocks in dwg file</source>
-        <translation>Fehler beim Lesen von Blöcken in DWG Datei</translation>
+        <translation type="vanished">Fehler beim Lesen von Blöcken in DWG Datei</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4238"/>
         <source>error reading objects in dwg file</source>
-        <translation>Fehler beim Lesen von Objekten in DWG Datei</translation>
+        <translation type="vanished">Fehler beim Lesen von Objekten in DWG Datei</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="61"/>
@@ -18170,15 +17886,13 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation type="vanished">berechne</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="208"/>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>Keine</translation>
+        <translation type="vanished">Keine</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4206"/>
         <source>error reading file metadata in dwg file</source>
-        <translation>Fehler beim Lesen von Metadaten in DWG Datei</translation>
+        <translation type="vanished">Fehler beim Lesen von Metadaten in DWG Datei</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="226"/>
@@ -19861,342 +19575,9 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="943"/>
         <source>Custom</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">Benutzerdefiniert</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="945"/>
-        <source>A0</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="946"/>
-        <source>A1</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="947"/>
-        <source>A2</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="948"/>
-        <source>A3</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="949"/>
-        <source>A4</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="953"/>
-        <source>Letter / ANSI A</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="954"/>
-        <source>Legal</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="955"/>
-        <source>Tabloid / ANSI B</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="959"/>
-        <source>ANSI C</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="960"/>
-        <source>ANSI D</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="961"/>
-        <source>ANSI E</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="963"/>
-        <source>Arch A</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="964"/>
-        <source>Arch B</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="965"/>
-        <source>Arch C</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="966"/>
-        <source>Arch D</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="967"/>
-        <source>Arch E</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="985"/>
-        <source>custom</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="988"/>
-        <source>a0</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="990"/>
-        <source>a1</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="992"/>
-        <source>a2</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="994"/>
-        <source>a3</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="996"/>
-        <source>a4</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1001"/>
-        <source>letter</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1003"/>
-        <source>legal</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1005"/>
-        <source>tabloid</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1012"/>
-        <source>ansi c</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1014"/>
-        <source>ansi d</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1016"/>
-        <source>ansi e</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1019"/>
-        <source>arch a</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1021"/>
-        <source>arch b</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1023"/>
-        <source>arch c</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1025"/>
-        <source>arch d</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1027"/>
-        <source>arch e</source>
-        <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="74"/>
-        <source>DWG support is not complete!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
-        <source>If this file fails to open try an older DWG format</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="77"/>
-        <source>or try to find a converter to make it a DXF file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="80"/>
-        <source>Information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
-        <source>Error</source>
-        <comment>fileImport</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="92"/>
-        <source>Import error:</source>
-        <comment>fileImport</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="107"/>
-        <source>Anyhow, there are some entities identified.</source>
-        <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="108"/>
-        <source>If you open the file now, the drawing may be not complete or unusable.</source>
-        <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
-        <source>Ignore error and open the file?</source>
-        <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="107"/>
-        <source>no DXF/DWG error</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
-        <source>error opening DXF/DWG file</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="111"/>
-        <source>unsupported DXF/DWG file version</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="113"/>
-        <source>error reading DXF/DWG meta data</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="115"/>
-        <source>error reading DXF/DWG file header</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="117"/>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="119"/>
-        <source>error reading DXF/DWG object map</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
-        <source>error reading DXF/DWG classes</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
-        <source>error reading DXF/DWG tables</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
-        <source>error reading DXF/DWG blocks</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
-        <source>error reading DXF/DWG entities</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="129"/>
-        <source>error reading DXF/DWG objects</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="131"/>
-        <source>error reading DXF/DWG sections</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="133"/>
-        <source>error reading DXF/DWG code</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Benutzerdefiniert</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterinterface.h" line="92"/>
@@ -20375,9 +19756,8 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/printing/lc_printing.cpp" line="141"/>
         <source>Export as PDF</source>
-        <translation type="unfinished">als PDF exportieren</translation>
+        <translation type="obsolete">als PDF exportieren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="204"/>
@@ -20393,21 +19773,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="210"/>
         <source>- Unchanged -</source>
         <translation type="unfinished">- Unverändert -</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/document/entities/rs_polyline.cpp" line="623"/>
-        <source>Polyline contains arc segments, and scaling by different xy-factors will generate incorrect results</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="63"/>
-        <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="90"/>
-        <source>Hatch:: loading pattern failed: %1</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -22263,14 +21628,8 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionInterface</name>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="502"/>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="511"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation type="obsolete">Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -23575,14 +22934,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="140"/>
         <source>Specify second edge</source>
         <translation>Zweite Ecke angeben</translation>
-    </message>
-</context>
-<context>
-    <name>RS_GraphicView</name>
-    <message>
-        <location filename="../src/lib/gui/rs_graphicview.cpp" line="1955"/>
-        <source>Draft</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

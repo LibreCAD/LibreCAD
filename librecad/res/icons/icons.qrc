@@ -282,5 +282,7 @@
         <file>spline_points_insert.svg</file>
         <file>nview_visible.svg</file>
         <file>nview_add.svg</file>
+        <file>spline_explode.svg</file>
+        <file>spline_from_polyline.svg</file>
     </qresource>
 </RCC>

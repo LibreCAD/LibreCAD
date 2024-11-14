@@ -145,11 +145,11 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawParabolaFD",
         "DrawSpline",
         "DrawSplinePoints",
-        // fixme - sand - restore as actions are ready
         "DrawSplinePointsAppend",
         "DrawSplinePointsAdd",
         "DrawSplinePointsRemove",
-
+        "DrawSplineExplode",
+        "DrawSplineFromPolyline",
         "DrawEllipseArcAxis",
         "DrawEllipseArc1Point",
         "DrawLineFree"

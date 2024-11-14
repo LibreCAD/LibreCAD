@@ -28,15 +28,12 @@
 
 class LC_ActionSplineModifyBase:public RS_PreviewActionInterface{
     Q_OBJECT
-
-    void drawSnapper() override;
-
-    void finish(bool updateTB) override;
-
 public:
     LC_ActionSplineModifyBase(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionSplineModifyBase() override = default;
     void trigger() override;
+    void drawSnapper() override;
+    void finish(bool updateTB) override;
 protected:
     enum State{
         SetEntity,
@@ -52,9 +49,7 @@ protected:
     void clean();
     virtual bool mayModifySplineEntity([[maybe_unused]]RS_Entity *pEntity) {return true;};
     RS2::CursorType doGetMouseCursor(int status) override;
-
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-
     virtual void doCompleteTrigger();
     virtual void doAfterTrigger();
     virtual RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool startDirection)=0;

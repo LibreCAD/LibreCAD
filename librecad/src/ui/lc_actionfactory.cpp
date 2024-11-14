@@ -187,7 +187,9 @@ void LC_ActionFactory::createDrawCurveActions(QMap<QString, QAction*>& map, QAct
         {"DrawSplinePoints",       RS2::ActionDrawSplinePoints,      tr("&Spline through points"),    ":/icons/spline_points.svg"},
         {"DrawSplinePointsAppend", RS2::ActionDrawSplinePointAppend, tr("&Append spline point"),      ":/icons/spline_points_add.svg"},
         {"DrawSplinePointsRemove", RS2::ActionDrawSplinePointRemove, tr("&Remove spline points"),     ":/icons/spline_points_remove.svg"},
-        {"DrawSplinePointsAdd",    RS2::ActionDrawSplinePointAdd,    tr("&Insert spline points"),     ":/icons/spline_points_insert.svg"}
+        {"DrawSplinePointsAdd",    RS2::ActionDrawSplinePointAdd,    tr("&Insert spline points"),     ":/icons/spline_points_insert.svg"},
+        {"DrawSplineExplode",      RS2::ActionDrawSplineExplode,     tr("&Explode spline to lines"),  ":/icons/spline_explode.svg"},
+        {"DrawSplineFromPolyline", RS2::ActionDrawSplineFromPolyline,tr("&Spline from polyline"),     ":/icons/spline_from_polyline.svg"}
     });
 }
 

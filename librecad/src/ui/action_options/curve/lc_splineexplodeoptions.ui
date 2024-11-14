@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LC_SplineExplodeOptions</class>
+ <widget class="QWidget" name="LC_SplineExplodeOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>676</width>
+    <height>24</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>1</number>
+   </property>
+   <item row="0" column="1">
+    <widget class="QSpinBox" name="sbSegmentsCount">
+     <property name="toolTip">
+      <string>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QCheckBox" name="cbKeepOriginals">
+     <property name="toolTip">
+      <string>If unchecked, original spline will be removed, otherwise it will survive.</string>
+     </property>
+     <property name="text">
+      <string>Keep Originals</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QCheckBox" name="cbCurrentAttr">
+     <property name="toolTip">
+      <string>If checked, current attributes will be used for created entities, otherwise - original ones. </string>
+     </property>
+     <property name="text">
+      <string>Use Current Attributes</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
+    <widget class="QCheckBox" name="cbLayer">
+     <property name="toolTip">
+      <string>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</string>
+     </property>
+     <property name="text">
+      <string>User Current Layer</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QCheckBox" name="cbCustomSegmentsCount">
+     <property name="toolTip">
+      <string>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</string>
+     </property>
+     <property name="text">
+      <string>Custom Segments Count</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QCheckBox" name="cbPolyline">
+     <property name="toolTip">
+      <string>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</string>
+     </property>
+     <property name="text">
+      <string>To Polyline</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

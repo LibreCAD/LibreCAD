@@ -35,21 +35,21 @@
  * Holds the data that defines a line.
  */
 struct RS_SplineData {
-	/**
-	 * Default constructor. Leaves the data object uninitialized.
-	 */
-	RS_SplineData() = default;
+/**
+ * Default constructor. Leaves the data object uninitialized.
+ */
+    RS_SplineData() = default;
 
-	RS_SplineData(int degree, bool closed);
+    RS_SplineData(int degree, bool closed);
 
 
-	/** Degree of the spline (1, 2, 3) */
+/** Degree of the spline (1, 2, 3) */
     int degree = 3;
-	/** Closed flag. */
+/** Closed flag. */
     bool closed = false;
-	/** Control points of the spline. */
-	std::vector<RS_Vector> controlPoints;
-	std::vector<double> knotslist;
+/** Control points of the spline. */
+    std::vector<RS_Vector> controlPoints;
+    std::vector<double> knotslist;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_SplineData& ld);
@@ -62,123 +62,124 @@ std::ostream& operator << (std::ostream& os, const RS_SplineData& ld);
 class RS_Spline : public RS_EntityContainer {
 public:
     RS_Spline(RS_EntityContainer* parent,
-            const RS_SplineData& d);
+              const RS_SplineData& d);
 
-	RS_Entity* clone() const override;
+    RS_Entity* clone() const override;
 
 
     /**	@return RS2::EntitySpline */
-	RS2::EntityType rtti() const override{
+    RS2::EntityType rtti() const override{
         return RS2::EntitySpline;
     }
     /** @return false */
-	bool isEdge() const override{
+    bool isEdge() const override{
         return false;
     }
 
-	/** @return Copy of data that defines the spline. */
-	const RS_SplineData& getData() const {
-		return data;
-	}
+/** @return Copy of data that defines the spline. */
+    const RS_SplineData& getData() const {
+        return data;
+    }
 
-	/** Sets the splines degree (1-3). */
+/** Sets the splines degree (1-3). */
     void setDegree(int degree);
 
-	/** @return Degree of this spline curve (1-3).*/
+/** @return Degree of this spline curve (1-3).*/
     int getDegree() const;
 
-	/** @return 0. */
-	int getNumberOfKnots() {
-		return 0;
-	}
+/** @return 0. */
+    int getNumberOfKnots() {
+        return 0;
+    }
 
-	/** @return Number of control points. */
-	size_t getNumberOfControlPoints() const;
+/** @return Number of control points. */
+    size_t getNumberOfControlPoints() const;
 
-	/**
-		 * @retval true if the spline is closed.
-		 * @retval false otherwise.
-		 */
-	bool isClosed() const;
+/**
+  * @retval true if the spline is closed.
+  * @retval false otherwise.
+  */
+    bool isClosed() const;
 
-	/**
-		 * Sets the closed flag of this spline.
-		 */
-	void setClosed(bool c);
+/**
+  * Sets the closed flag of this spline.
+  */
+    void setClosed(bool c);
 
-	RS_VectorSolutions getRefPoints() const override;
-	RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const override;
-	RS_Vector getNearestSelectedRef( const RS_Vector& coord, double* dist = nullptr) const override;
+    RS_VectorSolutions getRefPoints() const override;
+    RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const override;
+    RS_Vector getNearestSelectedRef( const RS_Vector& coord, double* dist = nullptr) const override;
 
     RS_Vector getNearestPointOnEntity(const RS_Vector &coord, bool onEntity, double *dist, RS_Entity **entity) const override;
 
     /** @return Start point of the entity */
-	RS_Vector getStartpoint() const override;
+    RS_Vector getStartpoint() const override;
     /** @return End point of the entity */
-	RS_Vector getEndpoint() const override;
+    RS_Vector getEndpoint() const override;
     /** Sets the startpoint */
     /** Sets the endpoint */
-	void update() override;
+    void update() override;
 
-	RS_Vector getNearestEndpoint(const RS_Vector& coord,
-										 double* dist = nullptr)const override;
-	//RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-	//        bool onEntity=true, double* dist = nullptr, RS_Entity** entity=nullptr);
-	RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = nullptr)const override;
-	RS_Vector getNearestMiddle(const RS_Vector& coord,
-									   double* dist = nullptr,
-									   int middlePoints = 1)const override;
-	RS_Vector getNearestDist(double distance,
-                                     const RS_Vector& coord,
-									 double* dist = nullptr)const override;
+    RS_Vector getNearestEndpoint(const RS_Vector& coord,
+                                 double* dist = nullptr)const override;
+//RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
+//        bool onEntity=true, double* dist = nullptr, RS_Entity** entity=nullptr);
+    RS_Vector getNearestCenter(const RS_Vector& coord,
+                               double* dist = nullptr)const override;
+    RS_Vector getNearestMiddle(const RS_Vector& coord,
+                               double* dist = nullptr,
+                               int middlePoints = 1)const override;
+    RS_Vector getNearestDist(double distance,
+                             const RS_Vector& coord,
+                             double* dist = nullptr)const override;
 
-		void addControlPoint(const RS_Vector& v);
-		void removeLastControlPoint();
+    void addControlPoint(const RS_Vector& v);
+    void removeLastControlPoint();
 
-		void move(const RS_Vector& offset) override;
-		void rotate(const RS_Vector& center, const double& angle) override;
-		void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
-		void scale(const RS_Vector& center, const RS_Vector& factor) override;
-		void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
-        RS_Entity& shear(double k) override;
+    void move(const RS_Vector& offset) override;
+    void rotate(const RS_Vector& center, const double& angle) override;
+    void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+    void scale(const RS_Vector& center, const RS_Vector& factor) override;
+    void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    RS_Entity& shear(double k) override;
 
-		void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
-		void revertDirection() override;
+    void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
+    void revertDirection() override;
 
-		void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
-		const std::vector<RS_Vector>& getControlPoints() const;
+    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+    const std::vector<RS_Vector>& getControlPoints() const;
 
-        friend std::ostream& operator << (std::ostream& os, const RS_Spline& l);
+    friend std::ostream& operator << (std::ostream& os, const RS_Spline& l);
 
-		void calculateBorders() override;
+    void calculateBorders() override;
 
-        friend class RS_FilterDXFRW;
+    void fillStrokePoints(int splineSegments, std::vector<RS_Vector>& points);
+
+    friend class RS_FilterDXFRW;
 
 private:
-		std::vector<double> knot(size_t num, size_t order) const;
-		void rbspline(size_t npts, size_t k, size_t p1,
-		              const std::vector<RS_Vector>& b,
-		              const std::vector<double>& h,
-		              std::vector<RS_Vector>& p) const;
+    std::vector<double> knot(size_t num, size_t order) const;
+    void rbspline(size_t npts, size_t k, size_t p1,
+                  const std::vector<RS_Vector>& b,
+                  const std::vector<double>& h,
+                  std::vector<RS_Vector>& p) const;
 
-		std::vector<double> knotu(size_t num, size_t order) const;
-		void rbsplinu(size_t npts, size_t k, size_t p1,
-		              const std::vector<RS_Vector>& b,
-		              const std::vector<double>& h,
-		              std::vector<RS_Vector>& p) const;
+    std::vector<double> knotu(size_t num, size_t order) const;
+    void rbsplinu(size_t npts, size_t k, size_t p1,
+                  const std::vector<RS_Vector>& b,
+                  const std::vector<double>& h,
+                  std::vector<RS_Vector>& p) const;
 
-        /**
-         * @brief hasWrappedControlPoints whether the control points are wrapped, needed for a closed spline.
-         *          only implemented for cubic splines
-         * @return bool - true, if the control points are already wrapped.
-         *          for a cubic spline with wrapped splines, the last three control points are the same as the first three.
-         */
-        bool hasWrappedControlPoints() const;
+    /**
+     * @brief hasWrappedControlPoints whether the control points are wrapped, needed for a closed spline.
+     *          only implemented for cubic splines
+     * @return bool - true, if the control points are already wrapped.
+     *          for a cubic spline with wrapped splines, the last three control points are the same as the first three.
+     */
+    bool hasWrappedControlPoints() const;
 
 protected:
-		RS_SplineData data;
-}
-;
+    RS_SplineData data;
+};
 
 #endif

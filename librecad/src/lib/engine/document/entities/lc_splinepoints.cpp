@@ -1184,9 +1184,15 @@ std::vector<RS_Vector> const& LC_SplinePoints::getControlPoints() const{
 	return data.controlPoints;
 }
 
+// fixme - sand - this method is used only for writing spline points... do we really neede a copy of the vector there?
 std::vector<RS_Vector> LC_SplinePoints::getStrokePoints() const{
-    std::vector<RS_Vector> ret;
     int p1 = getGraphicVariableInt("$SPLINESEGS", 8);
+    std::vector<RS_Vector> result;
+    fillStrokePoints(p1, result);
+    return result;
+}
+
+void LC_SplinePoints::fillStrokePoints(int segmentsCount, std::vector<RS_Vector> &ret) const {
     size_t iSplines = data.controlPoints.size();
     if(!data.closed) {
         iSplines -= 2;
@@ -1197,7 +1203,7 @@ std::vector<RS_Vector> LC_SplinePoints::getStrokePoints() const{
     for(size_t i = 1; i <= iSplines; ++i)	{
         iPts = GetQuadPoints(i, &vStart, &vControl, &vEnd);
         if(iPts > 2) {
-            StrokeQuad(&ret, vStart, vControl, vEnd, p1);
+            StrokeQuad(&ret, vStart, vControl, vEnd, segmentsCount);
         }
         else if(iPts > 1) {
             ret.push_back(vStart);
@@ -1207,7 +1213,6 @@ std::vector<RS_Vector> LC_SplinePoints::getStrokePoints() const{
     if(!data.closed && vEnd.valid) {
         ret.push_back(vEnd);
     }
-    return ret;
 }
 
 

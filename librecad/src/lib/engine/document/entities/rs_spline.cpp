@@ -178,27 +178,9 @@ void RS_Spline::update() {
 
     resetBorders();
 
-    // wrap control points, if it's not wrapped yet
-    std::vector<RS_Vector>& tControlPoints = data.controlPoints;
-    if (data.closed && (data.degree == 2 || !hasWrappedControlPoints())) {
-        std::vector<RS_Vector> wrappedPoints{data.controlPoints.cbegin(), data.controlPoints.cbegin() + data.degree};
-        tControlPoints.insert(tControlPoints.end(), wrappedPoints.cbegin(), wrappedPoints.cend());
-        RS_DEBUG->print(RS_Debug::D_NOTICE, "%s: controlPoints: size=%llu\n", __func__, data.controlPoints.size());
-    }
-
-    const size_t npts = tControlPoints.size();
-    // order:
-    const size_t  k = data.degree + 1;
-    // resolution:
-    const size_t  p1 = getGraphicVariableInt("$SPLINESEGS", 8) * npts;
-
-    std::vector<double> h(npts+1, 1.);
-    std::vector<RS_Vector> p(p1, {0., 0.});
-    if (data.closed) {
-        rbsplinu(npts,k,p1,tControlPoints,h,p);
-    } else {
-        rbspline(npts,k,p1,tControlPoints,h,p);
-    }
+    int splineSegments = getGraphicVariableInt("$SPLINESEGS", 8);
+    std::vector<RS_Vector> p;
+    fillStrokePoints(splineSegments, p);
 
     RS_Vector prev{};
     for (auto const& vp: p) {
@@ -211,6 +193,32 @@ void RS_Spline::update() {
         prev = vp;
         minV = RS_Vector::minimum(prev, minV);
         maxV = RS_Vector::maximum(prev, maxV);
+    }
+}
+
+void RS_Spline::fillStrokePoints(int splineSegments, std::vector<RS_Vector>& points) {// wrap control points, if it's not wrapped yet
+    std::vector<RS_Vector>& tControlPoints = data.controlPoints;
+    if (data.closed && (data.degree == 2 || !hasWrappedControlPoints())) {
+        std::vector<RS_Vector> wrappedPoints{data.controlPoints.cbegin(), data.controlPoints.cbegin() + data.degree};
+        tControlPoints.insert(tControlPoints.end(), wrappedPoints.cbegin(), wrappedPoints.cend());
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "%s: controlPoints: size=%llu\n", __func__, data.controlPoints.size());
+    }
+
+    const size_t npts = tControlPoints.size();
+
+    // resolution:
+    const size_t  pointsCount = splineSegments * npts;
+
+    // order:
+    const size_t  k = data.degree + 1;
+
+    std::vector<double> h(npts+1, 1.);
+    points.resize(pointsCount);
+    std::fill(points.begin(), points.end(),RS_Vector{0., 0.});
+    if (data.closed) {
+        rbsplinu(npts, k, pointsCount, tControlPoints, h, points);
+    } else {
+        rbspline(npts, k, pointsCount, tControlPoints, h, points);
     }
 }
 
