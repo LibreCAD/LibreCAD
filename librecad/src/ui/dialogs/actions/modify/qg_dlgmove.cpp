@@ -90,4 +90,3 @@ void QG_DlgMove::updateData() {
     data->useCurrentLayer = cbCurrentLayer->isChecked();
     data->multipleCopies = cbMultipleCopies->isChecked();
 }
-

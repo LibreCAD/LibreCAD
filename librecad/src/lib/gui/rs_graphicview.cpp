@@ -699,8 +699,8 @@ void RS_GraphicView::zoomAutoY(bool axis) {
         double maxY = RS_MINDOUBLE;
         bool noChange = false;
 
+        // fixme - sand -- ?? WHY ?? What if there are entities outside lines? This is not reliable at all
         for (auto e: *container) {
-
             if (e->rtti() == RS2::EntityLine) {
                 auto *l = (RS_Line *) e;
                 double x1, x2;
@@ -764,7 +764,7 @@ void RS_GraphicView::zoomWindow(
 
     double zoomX = 480.0;    // Zoom for X-Axis
     double zoomY = 640.0;    // Zoom for Y-Axis   (Set smaller one)
-    int zoomBorder = 0;
+    int zoomBorder = 0; // fixme - what for this variable?
 
 // Switch left/right and top/bottom is necessary:
     if (v1.x > v2.x) {
@@ -775,24 +775,26 @@ void RS_GraphicView::zoomWindow(
     }
 
 // Get zoom in X and zoom in Y:
+    int width = getWidth();
     if (v2.x - v1.x > 1.0e-6) {
-        zoomX = getWidth() / (v2.x - v1.x);
+        zoomX = width / (v2.x - v1.x);
     }
+    int height = getHeight();
     if (v2.y - v1.y > 1.0e-6) {
-        zoomY = getHeight() / (v2.y - v1.y);
+        zoomY = height / (v2.y - v1.y);
     }
 
 // Take smaller zoom:
     if (keepAspectRatio) {
         if (zoomX < zoomY) {
-            if (getWidth() != 0) {
-                zoomX = zoomY = ((double) (getWidth() - 2 * zoomBorder)) /
-                                (double) getWidth() * zoomX;
+            if (width != 0) {
+                zoomX = zoomY = ((double) (width - 2 * zoomBorder)) /
+                                (double) width * zoomX;
             }
         } else {
-            if (getHeight() != 0) {
-                zoomX = zoomY = ((double) (getHeight() - 2 * zoomBorder)) /
-                                (double) getHeight() * zoomY;
+            if (height != 0) {
+                zoomX = zoomY = ((double) (height - 2 * zoomBorder)) /
+                                (double) height * zoomY;
             }
         }
     }
@@ -815,8 +817,8 @@ void RS_GraphicView::zoomWindow(
     saveView();
 
 // Set new offset for zero point:
-    offsetX = -pixLeft + (getWidth() - pixRight + pixLeft) / 2;
-    offsetY = -pixTop + (getHeight() - pixBottom + pixTop) / 2;
+    offsetX = -pixLeft + (width - pixRight + pixLeft) / 2;
+    offsetY = -pixTop + (height - pixBottom + pixTop) / 2;
     factor.x = zoomX;
     factor.y = zoomY;
 

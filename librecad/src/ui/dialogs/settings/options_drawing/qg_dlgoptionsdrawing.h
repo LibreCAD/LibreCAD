@@ -37,9 +37,6 @@ class RS_Vector;
 
 class QG_DlgOptionsDrawing : public LC_Dialog, public Ui::QG_DlgOptionsDrawing{
     Q_OBJECT
-
-
-
 public:
     QG_DlgOptionsDrawing(QWidget* parent = nullptr);
 	~QG_DlgOptionsDrawing();
@@ -76,6 +73,7 @@ private:
     QGraphicsScene* paperScene;
     std::unique_ptr<RS_Vector> spacing;
     void init();
+    void initVariables();
 };
 
 #endif // QG_DLGOPTIONSDRAWING_H

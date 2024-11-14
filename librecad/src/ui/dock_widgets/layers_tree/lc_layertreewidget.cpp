@@ -659,6 +659,7 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
         caption->setPalette(palette);
         caption->setAlignment(Qt::AlignCenter);
 
+
         // Actions for all layers:
 
         QModelIndex index = layerTreeView->indexAt(point);

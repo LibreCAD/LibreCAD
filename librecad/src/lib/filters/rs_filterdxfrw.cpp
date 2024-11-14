@@ -62,6 +62,9 @@
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
 #include "rs_debug.h"
+#include "lc_view.h"
+#include "lc_ucs.h"
+
 #endif
 
 /**
@@ -318,6 +321,64 @@ void RS_FilterDXFRW::addVport(const DRW_Vport &data) {
         }
     }
 }
+
+void RS_FilterDXFRW::addView(const DRW_View &data) {
+    RS_DEBUG->print("RS_FilterDXF::addView");
+    RS_DEBUG->print("  adding view: %s", data.name.c_str());
+
+    RS_DEBUG->print("RS_FilterDXF::addView: creating view");
+
+    QString name = QString::fromUtf8(data.name.c_str());
+    if (!name.isEmpty() && graphic->findNamedView(name) != nullptr) {
+        return;
+    }
+    LC_View* view = new LC_View(name);
+    RS_Vector center = RS_Vector(data.center.x, data.center.y, data.center.z);
+    view->setCenter(center);
+
+    RS_Vector size = RS_Vector(data.size.x, data.size.y, data.size.z);
+    view->setSize(size);
+
+    RS_Vector targetPoint = RS_Vector(data.targetPoint.x, data.targetPoint.y, data.targetPoint.z);
+    view->setTargetPoint(targetPoint);
+
+    RS_Vector viewDirection = RS_Vector(data.viewDirectionFromTarget.x, data.viewDirectionFromTarget.y, data.viewDirectionFromTarget.z);
+    view->setViewDirection(viewDirection);
+
+    view->setLensLen(data.lensLen);
+    view->setCameraPlottable(data.cameraPlottable);
+
+    view->setRenderMode(data.renderMode);
+    view->setBackClippingPlaneOffset(data.backClippingPlaneOffset);
+    view->setFrontClippingPlaneOffset(data.frontClippingPlaneOffset);
+    view->setTwistAngle(data.twistAngle);
+    view->setFlags(data.flags); // todo - review, use differ properties?
+    view->setViewMode(data.viewMode); // todo - probably it might be simpler than long?
+
+    if (data.hasUCS){
+        LC_UCS* ucs = new LC_UCS();
+
+        RS_Vector ucsOrigin = RS_Vector(data.ucsOrigin.x, data.ucsOrigin.y, data.ucsOrigin.z);
+        RS_Vector ucsXAxis = RS_Vector(data.ucsXAxis.x, data.ucsXAxis.y, data.ucsXAxis.z);
+        RS_Vector ucsYAxis = RS_Vector(data.ucsYAxis.x, data.ucsYAxis.y, data.ucsYAxis.z);
+
+        ucs->setOrigin(ucsOrigin);
+        ucs->setXAxis(ucsXAxis);
+        ucs->setYAxis(ucsYAxis);
+        ucs->setElevation(data.ucsElevation);
+        ucs->setOrthoType(data.ucsOrthoType);
+
+        view->setUCS(ucs);
+    }
+
+    RS_DEBUG->print("RS_FilterDXF::addView: set pen");
+
+    RS_DEBUG->print("RS_FilterDXF::addView: add view to graphic");
+    graphic->addNamedView(view);
+    RS_DEBUG->print("RS_FilterDXF::addView: OK");
+
+}
+
 
 /**
  * Implementation of the method which handles blocks.
@@ -1966,6 +2027,68 @@ void RS_FilterDXFRW::writeLayers(){
             RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::writeLayers: layer %s saved as construction layer", lay.name.c_str());
         }
         dxfW->writeLayer(&lay);
+    }
+}
+
+void RS_FilterDXFRW::writeViews() {
+    LC_ViewList* vl = graphic->getViewList();
+    DRW_View vie;
+    for (unsigned int i = 0; i < vl->count(); i++) {
+        vie.reset();
+        LC_View* view = vl->at(i);
+        vie.name = view->getName().toUtf8().data();
+        vie.center.x = view->getCenter().x; 
+        vie.center.y = view->getCenter().y; 
+        vie.center.z = view->getCenter().z;
+
+        vie.targetPoint.x = view->getTargetPoint().x;
+        vie.targetPoint.y = view->getTargetPoint().y;
+        vie.targetPoint.z = view->getTargetPoint().z;
+        
+        vie.size.x = view->getSize().x;
+        vie.size.y = view->getSize().y;
+        vie.size.z = view->getSize().z;        
+        
+        vie.frontClippingPlaneOffset = view->getFrontClippingPlaneOffset();
+        vie.backClippingPlaneOffset = view->getBackClippingPlaneOffset();
+        vie.lensLen = view->getLensLen();
+        vie.flags = view->getFlags();
+        vie.viewMode = view->getViewMode();
+                
+        vie.viewDirectionFromTarget.x = view->getViewDirection().x;
+        vie.viewDirectionFromTarget.y = view->getViewDirection().y;
+        vie.viewDirectionFromTarget.z = view->getViewDirection().z;
+        
+        vie.cameraPlottable = view->isCameraPlottable();
+        vie.renderMode = view->getRenderMode();
+        
+        vie.twistAngle = view->getTwistAngle();        
+        
+        if (view->isHasUCS()){
+            vie.hasUCS = true;
+            LC_UCS *ucs = view->getUCS();
+            vie.ucsOrigin.x = ucs->getOrigin().x;
+            vie.ucsOrigin.y = ucs->getOrigin().y;
+            vie.ucsOrigin.z = ucs->getOrigin().z;
+            
+            vie.ucsOrthoType = ucs->getOrthoType();
+            vie.ucsElevation = ucs->getElevataion();
+
+            vie.ucsXAxis.x = ucs->getXAxis().x;
+            vie.ucsXAxis.y = ucs->getXAxis().y;
+            vie.ucsXAxis.z = ucs->getXAxis().z;
+
+            vie.ucsYAxis.x = ucs->getYAxis().x;
+            vie.ucsYAxis.y = ucs->getYAxis().y;
+            vie.ucsYAxis.z = ucs->getYAxis().z;
+
+            // fixme - complete - base UCS_ID and Named UCS_ID support. That's might be necessary to support views/UCS
+            // created outside of LibreCAD.
+            // Return to this after normal support of UCS.
+//            vie.namedUCS_ID = ucs.
+//            vie.baseUCS_ID = ucs.
+        }
+        dxfW->writeView(&vie);
     }
 }
 
@@ -4100,4 +4223,5 @@ void RS_FilterDXFRW::printDwgError(int le){
         break;
     }
 }
+
 #endif

@@ -3354,6 +3354,36 @@
             </property>
            </widget>
           </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cbAutoBackup">
+            <property name="toolTip">
+             <string>When set, LibreCAD will automatically generate a backup of your current drawing.</string>
+            </property>
+            <property name="text">
+             <string>Auto save backup each</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbUseQtFileOpenDialog">
+            <property name="text">
+             <string>Don't use native OS file open dialog</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
+            <property name="toolTip">
+             <string>If checked, location of dialog will not be saved, but size will</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
+            </property>
+            <property name="text">
+             <string>Persist dialog size only</string>
+            </property>
+           </widget>
+          </item>
           <item row="5" column="0">
            <widget class="QCheckBox" name="cbTabCloseButton">
             <property name="toolTip">
@@ -3364,13 +3394,13 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="cbAutoBackup">
+          <item row="2" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
             <property name="toolTip">
-             <string>When set, LibreCAD will automatically generate a backup of your current drawing.</string>
+             <string>If checked, keyboard shortcut will be shown in tooltip for action</string>
             </property>
             <property name="text">
-             <string>Auto save backup each</string>
+             <string>Show keyboard shortcuts in actions tooltips</string>
             </property>
            </widget>
           </item>
@@ -3388,23 +3418,6 @@
             </item>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbUseQtFileOpenDialog">
-            <property name="text">
-             <string>Don't use native OS file open dialog</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
-            <property name="toolTip">
-             <string>If checked, keyboard shortcut will be shown in tooltip for action</string>
-            </property>
-            <property name="text">
-             <string>Show keyboard shortcuts in actions tooltips</string>
-            </property>
-           </widget>
-          </item>
           <item row="3" column="0" colspan="2">
            <widget class="QCheckBox" name="cbPersistentDialogs">
             <property name="toolTip">
@@ -3415,16 +3428,13 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
+          <item row="6" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbShowCurrentActionIconInOptions">
             <property name="toolTip">
-             <string>If checked, location of dialog will not be saved, but size will</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
+             <string>If checked, the icon for current action will be shown in options toolbar before action's options</string>
             </property>
             <property name="text">
-             <string>Persist dialog size only</string>
+             <string>Show current command icon in options toolbar</string>
             </property>
            </widget>
           </item>
@@ -4047,9 +4057,9 @@
   <tabstop>lePathHatch</tabstop>
  </tabstops>
  <resources>
+  <include location="../../../../../res/icons/icons.qrc"/>
+  <include location="../../../../../res/icons/icons.qrc"/>
   <include location="../../../../../res/ui/ui.qrc"/>
-  <include location="../../../../../res/icons/icons.qrc"/>
-  <include location="../../../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -43,6 +43,7 @@
 #include "lc_mdiapplicationwindow.h"
 #include "lc_releasechecker.h"
 #include "lc_qtstatusbarmanager.h"
+#include "lc_namedviewslistwidget.h"
 
 class LC_ActionGroupManager;
 class LC_CustomToolbar;
@@ -114,6 +115,12 @@ public:
 
     bool eventFilter(QObject *obj, QEvent *event) override;
     QAction* getAction(const QString& name) const;
+
+    void activateWindow(QMdiSubWindow* w){
+        if (w != nullptr) {
+            doActivate(w);
+        }
+    }
 
 public slots:
     void relayAction(QAction* q_action);
@@ -227,6 +234,14 @@ public slots:
 
     void invokeMenuCreator();
     void invokeToolbarCreator();
+    void saveNamedView();
+    void restoreNamedView1();
+    void restoreNamedView2();
+    void restoreNamedView3();
+    void restoreNamedView4();
+    void restoreNamedView5();
+    void restoreNamedViewCurrent();
+    void restoreNamedView(const QString& viewName);
     void createToolbar(const QString& toolbar_name);
     void destroyToolbar(const QString& toolbar_name);
     void destroyMenu(const QString& activator);
@@ -370,6 +385,7 @@ private:
 
     LC_PenWizard* pen_wiz {nullptr};
     LC_PenPaletteWidget* penPaletteWidget {nullptr};
+    LC_NamedViewsListWidget* namedViewsWidget {nullptr};
 
     // --- Statusbar ---
     /** Coordinate widget */
@@ -433,6 +449,7 @@ private:
 
     void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType);
 
+    void doRestoreNamedView(int i) const;
 };
 
 #ifdef _WINDOWS

@@ -82,17 +82,25 @@ QC_MDIWindow::QC_MDIWindow(RS_Document *doc, QWidget *parent, Qt::WindowFlags wf
     id = idCounter++;
     setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     if (document != nullptr) {
-		if (document->getLayerList()) {
+        RS_LayerList *layerList = document->getLayerList();
+        if (layerList) {
             // Link the graphic view to the layer widget
-            document->getLayerList()->addListener(graphicView);
+            layerList->addListener(graphicView);
             // Link this window to the layer widget
-            document->getLayerList()->addListener(this);
+            layerList->addListener(this);
         }
-		if (document->getBlockList()) {
+        RS_BlockList *blockList = document->getBlockList();
+        if (blockList) {
             // Link the graphic view to the block widget
-            document->getBlockList()->addListener(graphicView);
+            blockList->addListener(graphicView);
             // Link this window to the block widget
-            document->getBlockList()->addListener(this);
+            blockList->addListener(this);
+        }
+
+        LC_ViewList* viewList = document->getViewList();
+        if (viewList != nullptr){
+//            viewList->addListener(graphicView);  // todo - sand - decide later wither GraphicView should listen to ViewList
+            viewList->addListener(this);
         }
     }
 }
@@ -106,25 +114,33 @@ QC_MDIWindow::~QC_MDIWindow()
 {
     RS_DEBUG->print("~QC_MDIWindow: begin");
     try {
-    if(!(graphicView != nullptr && graphicView->isCleanUp())){
+        if(!(graphicView != nullptr && graphicView->isCleanUp())){
 
-		//do not clear layer/block lists, if application is being closed
+//do not clear layer/block lists, if application is being closed
 
-		if (document->getLayerList()) {
-			document->getLayerList()->removeListener(graphicView);
-			document->getLayerList()->removeListener(this);
-		}
+            RS_LayerList *layerList = document->getLayerList();
+            if (layerList != nullptr) {
+                layerList->removeListener(graphicView);
+                layerList->removeListener(this);
+            }
 
-		if (document->getBlockList()) {
-			document->getBlockList()->removeListener(graphicView);
-			document->getBlockList()->removeListener(this);
-		}
+            RS_BlockList *blockList = document->getBlockList();
+            if (blockList != nullptr) {
+                blockList->removeListener(graphicView);
+                blockList->removeListener(this);
+            }
 
-        if (m_owner) {
-			delete document;
-		}
-		document = nullptr;
-	}
+            LC_ViewList * viewList = document->getViewList();
+            if (viewList != nullptr){
+//                viewList->removeListener(graphicView); // tmp-sand - decide later wither graphic view should listen to view list
+                viewList->removeListener(this);
+            }
+
+            if (m_owner) {
+                delete document;
+            }
+            document = nullptr;
+        }
     } catch (...) {
         LC_ERR<<__func__<<"(): received exception";
     }
@@ -331,7 +347,7 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
         if (ret) {
             //QString message=tr("Loaded document: ")+fileName;
             //statusBar()->showMessage(message, 2000);
-
+            // fixme - sand - move support of fonts in some separate space?
             if (fileName.endsWith(".lff") || fileName.endsWith(".cxf")) {
                 drawChars();
 

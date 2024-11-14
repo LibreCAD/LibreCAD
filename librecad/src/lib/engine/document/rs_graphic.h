@@ -1,29 +1,24 @@
-/****************************************************************************
-**
-** This file is part of the LibreCAD project, a 2D CAD program
-**
-** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
-**
-** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software
-** Foundation and appearing in the file gpl-2.0.txt included in the
-** packaging of this file.
-**
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU General Public License for more details.
-**
-** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-**
-** This copyright notice MUST APPEAR in all copies of the script!
-**
-**********************************************************************/
+/*******************************************************************************
+ *
+ This file is part of the LibreCAD project, a 2D CAD program
+
+ Copyright (C) 2024 LibreCAD.org
+ Copyright (C) 2024 sand1024
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ ******************************************************************************/
 
 
 #ifndef RS_GRAPHIC_H
@@ -34,6 +29,8 @@
 #include "rs_layerlist.h"
 #include "rs_variabledict.h"
 #include "rs_document.h"
+#include "lc_view.h"
+#include "lc_viewslist.h"
 
 class QG_LayerWidget;
 
@@ -54,6 +51,7 @@ public:
 
     RS_LayerList* getLayerList() override {return &layerList;}
     RS_BlockList* getBlockList() override {return &blockList;}
+    LC_ViewList* getViewList() {return &namedViewsList;}
 
     void newDoc() override;
     bool save(bool isAutoSave = false) override;
@@ -82,6 +80,10 @@ public:
     void lockAllLayers(bool lock) {layerList.lockAll(lock);}
     void addLayerListListener(RS_LayerListListener* listener) {layerList.addListener(listener);}
     void removeLayerListListener(RS_LayerListListener* listener) {layerList.removeListener(listener);}
+
+    void addViewListListener(LC_ViewListListener* listener) { namedViewsList.addListener(listener);}
+    void removeViewListListener(LC_ViewListListener* listener) { namedViewsList.removeListener(listener);}
+
     // Wrapper for block functions:
     void clearBlocks() {blockList.clear();}
     unsigned countBlocks() {return blockList.count();}
@@ -155,15 +157,18 @@ public:
      * @retval true The document has been modified since it was last saved.
      * @retval false The document has not been modified since it was last saved.
      */
-    bool isModified() const override {return modified || layerList.isModified() || blockList.isModified();}
+    bool isModified() const override {return modified || layerList.isModified() || blockList.isModified() || namedViewsList.isModified();}
 
     /**
      * Sets the documents modified status to 'm'.
      */
     void setModified(bool m) override{
         modified = m;
-        layerList.setModified(m);
-        blockList.setModified(m);
+        if (!m) {
+            layerList.setModified(m);
+            blockList.setModified(m);
+            namedViewsList.setModified(m);
+        }
     }
 
     virtual QDateTime getModifyTime(){return modifiedTime;}
@@ -206,6 +211,10 @@ public:
     friend std::ostream& operator << (std::ostream& os, RS_Graphic& g);
     int clean();
 
+    LC_View *findNamedView(QString viewName) {return namedViewsList.find(viewName);};
+
+    void addNamedView(LC_View *view) {namedViewsList.add(view);};
+
 private:
 
     bool BackupDrawingFile(const QString &filename);
@@ -215,6 +224,7 @@ private:
     RS_LayerList layerList;
     RS_BlockList blockList;
     RS_VariableDict variableDict;
+    LC_ViewList namedViewsList;
     //if set to true, will refuse to modify paper scale
     bool paperScaleFixed = false;
 

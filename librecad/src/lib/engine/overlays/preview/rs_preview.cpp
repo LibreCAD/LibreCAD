@@ -29,7 +29,7 @@
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-#include "rs_settings.h"
+#include "settings/rs_settings.h"
 
 /**
  * Constructor.

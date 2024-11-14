@@ -10,7 +10,7 @@ DISABLE_POSTSCRIPT = false
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-LC_VERSION="2.2.2.3-alpha"
+LC_VERSION="2.2.2.5-alpha"
 LC_PRERELEASE = "true";
 
 VERSION=$${LC_VERSION}
@@ -107,6 +107,24 @@ INCLUDEPATH += \
     lib/creation \
     lib/debug \
     lib/engine \
+    lib/engine/document \
+    lib/engine/document/blocks \
+    lib/engine/document/container \
+    lib/engine/document/entities \
+    lib/engine/document/fonts \
+    lib/engine/document/layers \
+    lib/engine/document/patterns \
+    lib/engine/document/ucs \
+    lib/engine/document/variables \
+    lib/engine/document/views \
+    lib/engine/clipboard \
+    lib/engine/overlays \
+    lib/engine/overlays/highlight \
+    lib/engine/overlays/preview \
+    lib/engine/overlays/references \
+    lib/engine/undo \
+    lib/engine/utils \
+    lib/engine/settings \
     lib/fileio \
     lib/filters \
     lib/generators \
@@ -198,6 +216,7 @@ INCLUDEPATH += \
     ui/dock_widgets/library_widget \
     ui/dock_widgets/pen_palette \
     ui/dock_widgets/pen_wizard \
+    ui/dock_widgets/views_list \
     ui/main \
     ui/view \
     # ui/not_used \
@@ -223,79 +242,82 @@ HEADERS += \
     actions/drawing/draw/ellipse/lc_actiondrawellipse1point.h \
     actions/drawing/draw/polyline/lc_actionpolylinearcstolines.h \
     actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.h \
-    lib/actions/lc_highlight.h \
+    lib/engine/overlays/highlight/lc_highlight.h \
     lib/actions/lc_modifiersinfo.h \
     lib/actions/rs_actioninterface.h \
-    lib/actions/rs_preview.h \
+    lib/engine/overlays/preview/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
     lib/actions/rs_snapper.h \
     lib/creation/rs_creation.h \
     lib/debug/rs_debug.h \
-    lib/engine/lc_cachedlengthentity.h \
-    lib/engine/lc_crosshair.h \
-    lib/engine/lc_looputils.h \
-    lib/engine/lc_parabola.h \
-    lib/engine/lc_refarc.h \
-    lib/engine/lc_refcircle.h \
-    lib/engine/lc_refellipse.h \
-    lib/engine/lc_refline.h \
-    lib/engine/lc_refpoint.h \
+    lib/engine/document/ucs/lc_ucs.h \
+    lib/engine/document/views/lc_view.h \
+    lib/engine/document/views/lc_viewslist.h \
+    lib/engine/document/entities/lc_cachedlengthentity.h \
+    lib/engine/overlays/lc_crosshair.h \
+    lib/engine/document/container/lc_looputils.h \
+    lib/engine/document/entities/lc_parabola.h \
+    lib/engine/overlays/references/lc_refarc.h \
+    lib/engine/overlays/references/lc_refcircle.h \
+    lib/engine/overlays/references/lc_refellipse.h \
+    lib/engine/overlays/references/lc_refline.h \
+    lib/engine/overlays/references/lc_refpoint.h \
     lib/engine/rs.h \
-    lib/engine/rs_arc.h \
-    lib/engine/rs_atomicentity.h \
-    lib/engine/rs_block.h \
-    lib/engine/rs_blocklist.h \
-    lib/engine/rs_blocklistlistener.h \
-    lib/engine/rs_clipboard.h \
-    lib/engine/rs_circle.h \
+    lib/engine/document/entities/rs_arc.h \
+    lib/engine/document/entities/rs_atomicentity.h \
+    lib/engine/document/blocks/rs_block.h \
+    lib/engine/document/blocks/rs_blocklist.h \
+    lib/engine/document/blocks/rs_blocklistlistener.h \
+    lib/engine/clipboard/rs_clipboard.h \
+    lib/engine/document/entities/rs_circle.h \
     lib/engine/rs_color.h \
-    lib/engine/rs_constructionline.h \
-    lib/engine/rs_dimaligned.h \
-    lib/engine/rs_dimangular.h \
-    lib/engine/rs_dimdiametric.h \
-    lib/engine/rs_dimension.h \
-    lib/engine/rs_dimlinear.h \
-    lib/engine/rs_dimradial.h \
-    lib/engine/lc_dimarc.h \
-    lib/engine/rs_document.h \
-    lib/engine/rs_ellipse.h \
-    lib/engine/rs_entity.h \
-    lib/engine/rs_entitycontainer.h \
+    lib/engine/document/entities/rs_constructionline.h \
+    lib/engine/document/entities/rs_dimaligned.h \
+    lib/engine/document/entities/rs_dimangular.h \
+    lib/engine/document/entities/rs_dimdiametric.h \
+    lib/engine/document/entities/rs_dimension.h \
+    lib/engine/document/entities/rs_dimlinear.h \
+    lib/engine/document/entities//rs_dimradial.h \
+    lib/engine/document/entities/lc_dimarc.h \
+    lib/engine/document/rs_document.h \
+    lib/engine/document/entities/rs_ellipse.h \
+    lib/engine/document/entities/rs_entity.h \
+    lib/engine/document/container/rs_entitycontainer.h \
     lib/engine/rs_flags.h \
-    lib/engine/rs_font.h \
-    lib/engine/rs_fontchar.h \
-    lib/engine/rs_fontlist.h \
-    lib/engine/rs_graphic.h \
-    lib/engine/rs_hatch.h \
-    lib/engine/lc_hyperbola.h \
-    lib/engine/rs_insert.h \
-    lib/engine/rs_image.h \
-    lib/engine/rs_layer.h \
-    lib/engine/rs_layerlist.h \
-    lib/engine/rs_layerlistlistener.h \
-    lib/engine/rs_leader.h \
-    lib/engine/rs_line.h \
-    lib/engine/rs_mtext.h \
-    lib/engine/rs_overlayline.h \
-    lib/engine/rs_overlaybox.h \
-    lib/engine/rs_pattern.h \
-    lib/engine/rs_patternlist.h \
+    lib/engine/document/fonts/rs_font.h \
+    lib/engine/document/fonts/rs_fontchar.h \
+    lib/engine/document/fonts/rs_fontlist.h \
+    lib/engine/document/rs_graphic.h \
+    lib/engine/document/entities/rs_hatch.h \
+    lib/engine/document/entities/lc_hyperbola.h \
+    lib/engine/document/entities/rs_insert.h \
+    lib/engine/document/entities/rs_image.h \
+    lib/engine/document/layers/rs_layer.h \
+    lib/engine/document/layers/rs_layerlist.h \
+    lib/engine/document/layers/rs_layerlistlistener.h \
+    lib/engine/document/entities/rs_leader.h \
+    lib/engine/document/entities/rs_line.h \
+    lib/engine/document/entities/rs_mtext.h \
+    lib/engine/overlays/rs_overlayline.h \
+    lib/engine/overlays/rs_overlaybox.h \
+    lib/engine/document/patterns/rs_pattern.h \
+    lib/engine/document/patterns/rs_patternlist.h \
     lib/engine/rs_pen.h \
-    lib/engine/rs_point.h \
-    lib/engine/rs_polyline.h \
-    lib/engine/rs_settings.h \
-    lib/engine/rs_solid.h \
-    lib/engine/rs_spline.h \
-    lib/engine/lc_splinepoints.h \
+    lib/engine/document/entities/rs_point.h \
+    lib/engine/document/entities/rs_polyline.h \
+    lib/engine/settings/rs_settings.h \
+    lib/engine/document/entities/rs_solid.h \
+    lib/engine/document/entities/rs_spline.h \
+    lib/engine/document/entities/lc_splinepoints.h \
     lib/engine/rs_system.h \
-    lib/engine/rs_text.h \
-    lib/engine/rs_undo.h \
-    lib/engine/rs_undoable.h \
-    lib/engine/rs_undocycle.h \
+    lib/engine/document/entities/rs_text.h \
+    lib/engine/undo/rs_undo.h \
+    lib/engine/undo/rs_undoable.h \
+    lib/engine/undo/rs_undocycle.h \
     lib/engine/rs_units.h \
-    lib/engine/rs_utility.h \
-    lib/engine/rs_variable.h \
-    lib/engine/rs_variabledict.h \
+    lib/engine/utils/rs_utility.h \
+    lib/engine/document/variables/rs_variable.h \
+    lib/engine/document/variables/rs_variabledict.h \
     lib/engine/rs_vector.h \
     lib/fileio/rs_fileio.h \
     lib/filters/rs_filtercxf.h \
@@ -309,6 +331,11 @@ HEADERS += \
     ui/components/status_bar/lc_qtstatusbarmanager.h \
     ui/dialogs/main/lc_dlgabout.h \
     ui/dialogs/main/lc_dlgnewversionavailable.h \
+    ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.h \
+    ui/dock_widgets/views_list/lc_namedviewsbutton.h \
+    ui/dock_widgets/views_list/lc_namedviewslistoptions.h \
+    ui/dock_widgets/views_list/lc_namedviewslistwidget.h \
+    ui/dock_widgets/views_list/lc_namedviewsmodel.h \
     ui/main/lc_releasechecker.h \
     lib/gui/grid/lc_gridsystem.h \
     lib/gui/grid/lc_isometricgrid.h \
@@ -340,9 +367,9 @@ HEADERS += \
     lib/generators/lc_makercamsvg.h \
     lib/generators/lc_xmlwriterinterface.h \
     lib/generators/lc_xmlwriterqxmlstreamwriter.h \
-    lib/engine/lc_rect.h \
-    lib/engine/lc_rtree.h \
-    lib/engine/lc_undosection.h \
+    lib/engine/document/entities/lc_rect.h \
+    lib/engine/utils/lc_rtree.h \
+    lib/engine/undo/lc_undosection.h \
     lib/printing/lc_printing.h \
     main/lc_application.h \
     ui/action_options/curve/lc_ellipsearcoptions.h \
@@ -357,69 +384,72 @@ SOURCES += \
     actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp \
     actions/drawing/draw/polyline/lc_actionpolylinearcstolines.cpp \
     actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp \
-    lib/actions/lc_highlight.cpp \
+    lib/engine/overlays/highlight/lc_highlight.cpp \
     lib/actions/lc_modifiersinfo.cpp \
     lib/actions/rs_actioninterface.cpp \
-    lib/actions/rs_preview.cpp \
+    lib/engine/overlays/preview/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \
     lib/actions/rs_snapper.cpp \
     lib/creation/rs_creation.cpp \
     lib/debug/rs_debug.cpp \
-    lib/engine/lc_cachedlengthentity.cpp \
-    lib/engine/lc_crosshair.cpp \
-    lib/engine/lc_looputils.cpp \
-    lib/engine/lc_parabola.cpp \
-    lib/engine/lc_refarc.cpp \
-    lib/engine/lc_refcircle.cpp \
-    lib/engine/lc_refellipse.cpp \
-    lib/engine/lc_refline.cpp \
-    lib/engine/lc_refpoint.cpp \
-    lib/engine/rs_arc.cpp \
-    lib/engine/rs_block.cpp \
-    lib/engine/rs_blocklist.cpp \
-    lib/engine/rs_clipboard.cpp \
-    lib/engine/rs_circle.cpp \
-    lib/engine/rs_constructionline.cpp \
-    lib/engine/rs_dimaligned.cpp \
-    lib/engine/rs_dimangular.cpp \
-    lib/engine/rs_dimdiametric.cpp \
-    lib/engine/rs_dimension.cpp \
-    lib/engine/rs_dimlinear.cpp \
-    lib/engine/rs_dimradial.cpp \
-    lib/engine/lc_dimarc.cpp \
-    lib/engine/rs_document.cpp \
-    lib/engine/rs_ellipse.cpp \
-    lib/engine/rs_entity.cpp \
-    lib/engine/rs_entitycontainer.cpp \
-    lib/engine/rs_font.cpp \
-    lib/engine/rs_fontlist.cpp \
-    lib/engine/rs_graphic.cpp \
-    lib/engine/rs_hatch.cpp \
-    lib/engine/lc_hyperbola.cpp \
-    lib/engine/rs_insert.cpp \
-    lib/engine/rs_image.cpp \
-    lib/engine/rs_layer.cpp \
-    lib/engine/rs_layerlist.cpp \
-    lib/engine/rs_leader.cpp \
-    lib/engine/rs_line.cpp \
-    lib/engine/rs_mtext.cpp \
-    lib/engine/rs_overlayline.cpp \
-    lib/engine/rs_overlaybox.cpp \
-    lib/engine/rs_pattern.cpp \
-    lib/engine/rs_patternlist.cpp \
-    lib/engine/rs_point.cpp \
-    lib/engine/rs_polyline.cpp \
-    lib/engine/rs_settings.cpp \
-    lib/engine/rs_solid.cpp \
-    lib/engine/rs_spline.cpp \
-    lib/engine/lc_splinepoints.cpp \
+    lib/engine/document/ucs/lc_ucs.cpp \
+    lib/engine/document/views/lc_view.cpp \
+    lib/engine/document/views/lc_viewslist.cpp \
+    lib/engine/document/entities/lc_cachedlengthentity.cpp \
+    lib/engine/overlays/lc_crosshair.cpp \
+    lib/engine/document/container/lc_looputils.cpp \
+    lib/engine/document/entities/lc_parabola.cpp \
+    lib/engine/overlays/references/lc_refarc.cpp \
+    lib/engine/overlays/references/lc_refcircle.cpp \
+    lib/engine/overlays/references/lc_refellipse.cpp \
+    lib/engine/overlays/references/lc_refline.cpp \
+    lib/engine/overlays/references/lc_refpoint.cpp \
+    lib/engine/document/entities/rs_arc.cpp \
+    lib/engine/document/blocks/rs_block.cpp \
+    lib/engine/document/blocks/rs_blocklist.cpp \
+    lib/engine/clipboard/rs_clipboard.cpp \
+    lib/engine/document/entities/rs_circle.cpp \
+    lib/engine/document/entities/rs_constructionline.cpp \
+    lib/engine/document/entities/rs_dimaligned.cpp \
+    lib/engine/document/entities/rs_dimangular.cpp \
+    lib/engine/document/entities/rs_dimdiametric.cpp \
+    lib/engine/document/entities/rs_dimension.cpp \
+    lib/engine/document/entities/rs_dimlinear.cpp \
+    lib/engine/document/entities/rs_dimradial.cpp \
+    lib/engine/document/entities/lc_dimarc.cpp \
+    lib/engine/document/rs_document.cpp \
+    lib/engine/document/entities/rs_ellipse.cpp \
+    lib/engine/document/entities/rs_entity.cpp \
+    lib/engine/document/container/rs_entitycontainer.cpp \
+    lib/engine/document/fonts/rs_font.cpp \
+    lib/engine/document/fonts/rs_fontlist.cpp \
+    lib/engine/document/rs_graphic.cpp \
+    lib/engine/document/entities/rs_hatch.cpp \
+    lib/engine/document/entities/lc_hyperbola.cpp \
+    lib/engine/document/entities/rs_insert.cpp \
+    lib/engine/document/entities/rs_image.cpp \
+    lib/engine/document/layers/rs_layer.cpp \
+    lib/engine/document/layers/rs_layerlist.cpp \
+    lib/engine/document/entities/rs_leader.cpp \
+    lib/engine/document/entities/rs_line.cpp \
+    lib/engine/document/entities/rs_mtext.cpp \
+    lib/engine/overlays/rs_overlayline.cpp \
+    lib/engine/overlays/rs_overlaybox.cpp \
+    lib/engine/document/patterns/rs_pattern.cpp \
+    lib/engine/document/patterns/rs_patternlist.cpp \
+    lib/engine/document/entities/rs_point.cpp \
+    lib/engine/document/entities/rs_polyline.cpp \
+    lib/engine/settings/rs_settings.cpp \
+    lib/engine/document/entities/rs_solid.cpp \
+    lib/engine/document/entities/rs_spline.cpp \
+    lib/engine/document/entities/lc_splinepoints.cpp \
     lib/engine/rs_system.cpp \
-    lib/engine/rs_text.cpp \
-    lib/engine/rs_undo.cpp \
-    lib/engine/rs_undoable.cpp \
+    lib/engine/document/entities/rs_text.cpp \
+    lib/engine/undo/rs_undo.cpp \
+    lib/engine/undo/rs_undoable.cpp \
     lib/engine/rs_units.cpp \
-    lib/engine/rs_utility.cpp \
-    lib/engine/rs_variabledict.cpp \
+    lib/engine/utils/rs_utility.cpp \
+    lib/engine/document/variables/rs_variabledict.cpp \
     lib/engine/rs_vector.cpp \
     lib/fileio/rs_fileio.cpp \
     lib/filters/rs_filtercxf.cpp \
@@ -432,6 +462,11 @@ SOURCES += \
     ui/components/status_bar/lc_qtstatusbarmanager.cpp \
     ui/dialogs/main/lc_dlgabout.cpp \
     ui/dialogs/main/lc_dlgnewversionavailable.cpp \
+    ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.cpp \
+    ui/dock_widgets/views_list/lc_namedviewsbutton.cpp \
+    ui/dock_widgets/views_list/lc_namedviewslistoptions.cpp \
+    ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp \
+    ui/dock_widgets/views_list/lc_namedviewsmodel.cpp \
     ui/main/lc_releasechecker.cpp \
     lib/gui/grid/lc_gridsystem.cpp \
     lib/gui/grid/lc_isometricgrid.cpp \
@@ -459,12 +494,12 @@ SOURCES += \
     test/lc_simpletests.cpp \
     lib/generators/lc_xmlwriterqxmlstreamwriter.cpp \
     lib/generators/lc_makercamsvg.cpp \
-    lib/engine/rs_atomicentity.cpp \
-    lib/engine/rs_undocycle.cpp \
+    lib/engine/document/entities/rs_atomicentity.cpp \
+    lib/engine/undo/rs_undocycle.cpp \
     lib/engine/rs_flags.cpp \
-    lib/engine/lc_rect.cpp \
-    lib/engine/lc_rtree.cpp \
-    lib/engine/lc_undosection.cpp \
+    lib/engine/document/entities/lc_rect.cpp \
+    lib/engine/utils/lc_rtree.cpp \
+    lib/engine/undo/lc_undosection.cpp \
     lib/engine/rs.cpp \
     lib/printing/lc_printing.cpp \
     main/lc_application.cpp \
@@ -1318,6 +1353,8 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui \
        ui/dock_widgets/pen_palette/lc_penpalettewidget.ui \
        ui/dock_widgets/pen_wizard/colorwizard.ui \
+       ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui \
+       ui/dock_widgets/views_list/lc_namedviewslistwidget.ui \
        ui/not_used/customtoolbarcreator.ui \
        ui/not_used/customwidgetcreator.ui \
        ui/not_used/qg_dimlinearoptions.ui \

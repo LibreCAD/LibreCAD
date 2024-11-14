@@ -44,6 +44,7 @@ public:
     bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
     bool writeLineType(DRW_LType *ent);
     bool writeLayer(DRW_Layer *ent);
+    bool writeView(DRW_View *ent);
     bool writeDimstyle(DRW_Dimstyle *ent);
     bool writeTextstyle(DRW_Textstyle *ent);
     bool writeVport(DRW_Vport *ent);
@@ -92,6 +93,7 @@ private:
     bool processDimStyle();
     bool processTextStyle();
     bool processVports();
+    bool processView();
     bool processAppId();
 
     bool processPoint();
@@ -154,6 +156,7 @@ private:
     std::vector<DRW_ImageDef*> imageDef;  /*!< imageDef list */
 
     int currHandle;
+
 
 };
 

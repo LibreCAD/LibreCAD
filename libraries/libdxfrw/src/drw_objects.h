@@ -375,6 +375,72 @@ public:
     int fontFamily;         /*!< ttf font family, italic and bold flags, code 1071 */
 };
 
+class DRW_View:public DRW_TableEntry{
+    SETOBJFRIENDS
+public:
+    DRW_View() { reset();}
+
+    void reset(){
+        size.x = size.y = size.z = 0.0;
+        center.x = center.y = center.z = 0.0;
+        viewDirectionFromTarget.x = viewDirectionFromTarget.y = viewDirectionFromTarget.z = 0.0;
+        targetPoint.x = targetPoint.y = targetPoint.z = 0.0;
+        lensLen = 0.0;
+        frontClippingPlaneOffset = 0.0;
+        backClippingPlaneOffset = 0.0;
+        twistAngle = 0.0;
+        viewMode = 0;
+        renderMode = 0;
+        hasUCS = false;
+        cameraPlottable = false;
+
+        ucsOrigin.x = ucsOrigin.y = ucsOrigin.z = 0.0;
+        ucsXAxis.x = ucsXAxis.y = ucsXAxis.z = 0.0;
+        ucsYAxis.x = ucsYAxis.y = ucsYAxis.z = 0.0;
+        ucsOrthoType = 1;
+        ucsElevation = 0.0;
+        namedUCS_ID = 0;
+        baseUCS_ID = 0;
+        DRW_TableEntry::reset();
+    }
+
+protected:
+    bool parseCode(int code, dxfReader *reader) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    DRW_Coord size;     // view width/height in DCS, codes 40 & 41
+    DRW_Coord center;   // View center point (in DCS) code 10 & 20
+    DRW_Coord viewDirectionFromTarget;   //View direction from target (in WCS), code 11, 21, 31
+    DRW_Coord targetPoint;   //Target point (in WCS), code 12, 22, 32
+    double lensLen; // Lens length, code 42
+    double frontClippingPlaneOffset; // Front clipping plane (offset from target point), code 43
+    double backClippingPlaneOffset; // Back clipping plane (offset from target point), code 44
+    double twistAngle; // Twist angle, code 50
+    int viewMode; //(?? type) View mode (see VIEWMODE system variable), code 71
+    unsigned int renderMode;  // Render mode: code 281.
+    // 0 = 2D Optimized (classic 2D)
+//    1 = Wireframe
+//    2 = Hidden line
+//    3 = Flat shaded
+//    4 = Gouraud shaded
+//    5 = Flat shaded with wireframe
+//    6 = Gouraud shaded with wireframe
+//    All rendering modes other than 2D Optimized engage the new 3D graphics pipeline. These values directly correspond to the SHADEMODE command and the AcDbAbstractViewTableRecord::RenderMode enum
+
+    bool hasUCS; // 72, 1 if there is a UCS associated to this view; 0 otherwise
+    bool cameraPlottable; // 73, 1 if the camera is plottable
+
+    DRW_Coord ucsOrigin; // UCS origin, 110, 120, 130
+    DRW_Coord ucsXAxis; // UCS X-axis, 111, 121, 131
+    DRW_Coord ucsYAxis; // UCS Y-axis, 112, 122, 132
+    int ucsOrthoType;// Orthographic type of UCS, 0 = UCS is not orthographic, 1 = Top; 2 = Bottom, 3 = Front; 4 = Back, 5 = Left; 6 = Right, code 79
+    double ucsElevation; // UCS elevation, code 146
+    /*dwgHandle*/
+    duint32         namedUCS_ID;// ID/handle of AcDbUCSTableRecord if UCS is a named UCS. If not present, then UCS is unnamed, code 345
+    duint32         baseUCS_ID;// ID/handle of AcDbUCSTableRecord of base UCS if UCS is orthographic, If not present and 79 code is non-zero, then base UCS is taken to be WORLD, code 346
+};
+
 //! Class to handle vport entries
 /*!
 *  Class to handle vport symbol table entries

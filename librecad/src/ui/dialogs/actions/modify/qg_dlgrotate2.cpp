@@ -91,4 +91,3 @@ void QG_DlgRotate2::updateData() {
     data->angle1 = RS_Math::deg2rad(RS_Math::eval(leAngle1->text()));
     data->angle2 = RS_Math::deg2rad(RS_Math::eval(leAngle2->text()));
 }
-

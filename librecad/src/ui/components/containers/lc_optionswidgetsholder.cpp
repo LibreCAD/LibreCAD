@@ -23,6 +23,8 @@
 #include "lc_optionswidgetsholder.h"
 #include "ui_lc_optionswidgetsholder.h"
 #include "rs_debug.h"
+#include "rs_settings.h"
+#include "lc_shortcuts_manager.h"
 
 LC_OptionsWidgetsHolder::LC_OptionsWidgetsHolder(QWidget *parent)
     : QWidget(parent)
@@ -43,6 +45,9 @@ LC_SnapOptionsWidgetsHolder *LC_OptionsWidgetsHolder::getSnapOptionsHolder() {
 
 void LC_OptionsWidgetsHolder::addOptionsWidget(QWidget *optionsWidget) {
     if (optionsWidget != nullptr) {
+        if (hasActionIcon) {
+            ui->vCurrentActionLine->setVisible(true);
+        }
         ui->wOptionsWidgetsContainer->layout()->addWidget(optionsWidget);
 #ifdef DEBUG_WIDGETS_COUNT
         const QObjectList &list = ui->wOptionsWidgetsContainer->children();
@@ -55,6 +60,7 @@ void LC_OptionsWidgetsHolder::addOptionsWidget(QWidget *optionsWidget) {
 }
 
 void LC_OptionsWidgetsHolder::removeOptionsWidget(QWidget *optionsWidget) {
+    ui->vCurrentActionLine->setVisible(false);
     if (optionsWidget != nullptr) {
 #ifdef DEBUG_WIDGETS_COUNT
         const QObjectList &list = ui->wOptionsWidgetsContainer->children();
@@ -68,4 +74,30 @@ void LC_OptionsWidgetsHolder::removeOptionsWidget(QWidget *optionsWidget) {
         LC_ERR << "OPTION WIDGETS AFTER: " << listAfter.size();
 #endif
     }
+}
+
+void LC_OptionsWidgetsHolder::clearActionIcon() {
+   auto i  = QIcon();
+   hasActionIcon = false;
+   doSetIcon(i,"");
+}
+
+void LC_OptionsWidgetsHolder::setCurrentQAction(QAction *a) {
+    QIcon icon;
+    QString text="";
+    if (LC_GET_ONE_BOOL("Appearance", "ShowActionIconInOptions", true)){
+        icon = a->icon();
+        text = LC_ShortcutsManager::getPlainActionToolTip(a);
+        hasActionIcon = true;
+    }
+    else{
+        icon  = QIcon();
+        hasActionIcon = false;
+    }
+    doSetIcon(icon, text);
+}
+
+void LC_OptionsWidgetsHolder::doSetIcon(const QIcon &icon, const QString& text) {
+    ui->lCurrentAction->setPixmap(icon.pixmap(iconSize));
+    ui->lCurrentAction->setToolTip(tr("Current Action:")+ " " + text);
 }

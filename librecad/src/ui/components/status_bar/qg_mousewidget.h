@@ -32,9 +32,6 @@
 class QG_MouseWidget : public QWidget, public Ui::QG_MouseWidget
 {
     Q_OBJECT
-
-
-
 public:
     QG_MouseWidget(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = {});
     ~QG_MouseWidget();
@@ -42,6 +39,7 @@ public:
     virtual void setHelp( const QString & left, const QString & right, const LC_ModifiersInfo& modifiersInfo = LC_ModifiersInfo::NONE()) const;
     void setCurrentQAction(QAction *a);
     void setActionIcon(QIcon icon);
+    void clearActionIcon();
 protected slots:
     virtual void languageChange();
     void setupModifier(QLabel *btn, const QString& helpMsg) const;

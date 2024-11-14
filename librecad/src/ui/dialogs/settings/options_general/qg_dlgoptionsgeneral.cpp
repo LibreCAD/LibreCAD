@@ -290,6 +290,9 @@ void QG_DlgOptionsGeneral::init() {
         else{
             cbTabCloseButtonMode->setCurrentIndex(0);
         }
+
+        checked = LC_GET_BOOL("ShowActionIconInOptions", true);
+        cbShowCurrentActionIconInOptions->setChecked(checked);
     }
     LC_GROUP_END();
 
@@ -546,6 +549,8 @@ void QG_DlgOptionsGeneral::ok(){
 
             LC_SET("ShowCloseButton", cbTabCloseButton->isChecked());
             LC_SET("ShowCloseButtonActiveOnly", cbTabCloseButtonMode->currentIndex() == 1);
+
+            LC_SET("ShowActionIconInOptions", cbShowCurrentActionIconInOptions->isChecked());
         }
         LC_GROUP_END();
 

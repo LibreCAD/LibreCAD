@@ -105,5 +105,3 @@ void QG_PatternBox::slotPatternChanged(int index) {
 
 	emit patternChanged();
 }
-
-
