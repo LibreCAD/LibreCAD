@@ -297,13 +297,14 @@ void LC_QuickInfoEntityData::collectGenericProperties(RS_Entity *e){
     QString colorName = penRegistry->getColorName(color, colorType);
     QString lineTypeName = penRegistry->getLineTypeText(lineType);
     QString lineWidthName = penRegistry->getLineWidthText(lineWidth);
-    QString idStr;
+
     unsigned long id = e->getId();
-    idStr.setNum(id);
-
     entityId = id;
-
-    addProperty(tr("ID"), idStr, OTHER);
+    if (options->displayEntityID) {
+        QString idStr;
+        idStr.setNum(id);
+        addProperty(tr("ID"), idStr, OTHER);
+    }
     addProperty(tr("Layer"), layerName, OTHER);
     if (resolvedColor != color){
         QString actualColorName = penRegistry->getColorName(resolvedColor, colorType);

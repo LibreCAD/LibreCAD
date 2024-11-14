@@ -56,6 +56,8 @@ public:
      */
     bool displayEntityBoundaries = false;
 
+    bool displayEntityID = false;
+
     void load();
     void save() const;
 };

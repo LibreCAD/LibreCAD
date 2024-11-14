@@ -107,6 +107,8 @@ LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *>
     options->load();
     entityData.setOptions(options);
 
+    options->displayEntityID = LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false);
+
     LC_GROUP_GUARD("QuickInfoWidget");
     {
         entityData.setCoordinatesMode(LC_GET_INT("EntityCoordinatesMode", LC_QuickInfoBaseData::COORD_ABSOLUTE));
@@ -133,6 +135,7 @@ void LC_QuickInfoWidget::processEntity(RS_Entity *en){
         clearEntityInfo();
     }
     else { // just delegate action processing to entity data
+        options->displayEntityID = LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false);
         bool updated = entityData.processEntity(en);
         if (updated){
             updateEntityInfoView();
@@ -196,6 +199,7 @@ void LC_QuickInfoWidget::updateEntityInfoView(bool forceUpdate, bool updateView)
             RS_Entity *entity = findEntityById(entityId);
             if (entity != nullptr){
                 entityData.clear();
+                options->displayEntityID = LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false);
                 entityData.processEntity(entity);
             }
         }

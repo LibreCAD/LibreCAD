@@ -28,6 +28,7 @@
 #include "rs_arc.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_DlgArc as a child of 'parent', with the
@@ -69,7 +70,13 @@ void QG_DlgArc::setArc(RS_Arc& a) {
     leAngle2->setText(asStringAngleDeg(arc->getAngle2()));
 
     cbReversed->setChecked(arc->isReversed());
-    lId->setText(QString("ID: %1").arg(arc->getId()));
+    // fixme - sand - refactor to common function
+    if (LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false)){
+        lId->setText(QString("ID: %1").arg(arc->getId()));
+    }
+    else{
+        lId->setVisible(false);
+    }
 }
 
 void QG_DlgArc::updateArc() {

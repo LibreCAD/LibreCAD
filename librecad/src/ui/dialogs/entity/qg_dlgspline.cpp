@@ -31,6 +31,7 @@
 #include "qg_widgetpen.h"
 #include "qg_layerbox.h"
 #include "rs_math.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_DlgSpline as a child of 'parent', with the
@@ -71,7 +72,13 @@ void QG_DlgSpline::setSpline(RS_Spline& e) {
     cbDegree->setCurrentIndex( cbDegree->findText(s) );
 
     cbClosed->setChecked(spline->isClosed());
-    lId->setText(QString("ID: %1").arg(spline->getId()));
+    // fixme - sand - refactor to common function
+    if (LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false)){
+        lId->setText(QString("ID: %1").arg(spline->getId()));
+    }
+    else{
+        lId->setVisible(false);
+    }
 }
 
 void QG_DlgSpline::updateSpline() {

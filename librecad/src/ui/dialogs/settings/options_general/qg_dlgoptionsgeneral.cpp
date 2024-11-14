@@ -293,6 +293,9 @@ void QG_DlgOptionsGeneral::init() {
 
         checked = LC_GET_BOOL("ShowActionIconInOptions", true);
         cbShowCurrentActionIconInOptions->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowEntityIDs", false);
+        cbShowEntityIDs->setChecked(checked);
     }
     LC_GROUP_END();
 
@@ -551,6 +554,8 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("ShowCloseButtonActiveOnly", cbTabCloseButtonMode->currentIndex() == 1);
 
             LC_SET("ShowActionIconInOptions", cbShowCurrentActionIconInOptions->isChecked());
+            LC_SET("ShowEntityIDs", cbShowEntityIDs->isChecked());
+
         }
         LC_GROUP_END();
 
