@@ -3824,23 +3824,23 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Invert vertical scrolling direction</source>
-        <translation>Inverte la direzione di spostamento verticale</translation>
+        <translation>Inverte la direzione di scorrimento verticale</translation>
     </message>
     <message>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation>Inverte la direzione di zoom usando la rotella del mouse.</translation>
+        <translation>Inverte lo zoom usando la rotellina del mouse</translation>
     </message>
     <message>
         <source>Invert zoom direction</source>
-        <translation>Inverte la direzione di zoom</translation>
+        <translation>Inverte lo zoom</translation>
     </message>
     <message>
         <source>Keyboard Settings</source>
-        <translation>Impostazioni di tastiera</translation>
+        <translation>Impostazioni della tastiera</translation>
     </message>
     <message>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation>Valuta i comandi quando la BARRA SPAZIATRICE è premuta</translation>
+        <translation>Valuta i comandi quando è premuta la BARRA SPAZIATRICE</translation>
     </message>
     <message>
         <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
