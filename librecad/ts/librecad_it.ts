@@ -3828,11 +3828,11 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation>Inverte lo zoom usando la rotellina del mouse</translation>
+        <translation>Inverte la direzione dello zoom quando si usa la rotella del mouse.</translation>
     </message>
     <message>
         <source>Invert zoom direction</source>
-        <translation>Inverte lo zoom</translation>
+        <translation>Inversione direzione zoom</translation>
     </message>
     <message>
         <source>Keyboard Settings</source>
@@ -3856,7 +3856,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Automatically zoom drawing when opening</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom automatico del disegno all&apos;apertura</translation>
     </message>
 </context>
 <context>
@@ -3891,7 +3891,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>Esportazione come CAM/ SVG semplice</translation>
     </message>
     <message>
         <source>Default width of elements, mm</source>
@@ -3899,7 +3899,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Images</source>
-        <translation type="unfinished">Immagini</translation>
+        <translation>Immagini</translation>
     </message>
     <message>
         <source>Raster Image export</source>
@@ -3920,38 +3920,46 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation type="unfinished"></translation>
+        <translation>A partire da novembre 2014, MakerCAM non nasconde i contenuti SVG 
+che è stato impostato come invisibile (“display: none” o “visibility: hidden”).</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
 because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>MakerCAM a partire da novembre 2014 non è in grado di gestire correttamente i blocchi,
+perché non tiene conto del punto di riferimento nell&apos;&lt;uso&gt;.</translation>
     </message>
     <message>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished"></translation>
+        <translation>A partire da marzo 2015, MakerCAM non è in grado di visualizzare correttamente le ellissi e gli archi di ellisse, 
+quando vengono creati utilizzando il tag &lt;ellipse&gt; con una rotazione nell&apos;attributo 
+nell&apos;attributo &lt;transform&gt; o come &lt;percorso&gt; utilizzando segmenti di arco ellittico.</translation>
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le immagini esportate possono essere utili negli editor SVG (Inkscape, ecc.), 
+ma sono da evitare in alcuni CAM.</translation>
     </message>
     <message>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation type="unfinished"></translation>
+        <translation>Molti CAM (MakerCAM, EleskCAM, LaserWeb) ignorano lo stile delle linee tratteggiate/dotate, 
+che può essere utile nel taglio laser del compensato o per il papercraft. </translation>
     </message>
     <message>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation type="unfinished"></translation>
+        <translation>La larghezza predefinita degli elementi può influire su alcuni editor CAM/SVG, 
+ma viene ignorata da altri</translation>
     </message>
     <message>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation type="unfinished"></translation>
+        <translation>Lunghezza del modello di linea in relazione allo zoom, 
+quindi il valore di passo predefinito richiesto per la cottura</translation>
     </message>
 </context>
 <context>
@@ -5896,11 +5904,11 @@ Vuoi sovrascrivere?</translation>
     </message>
     <message>
         <source>Tagged Image File Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato file immagine contrassegnato</translation>
     </message>
     <message>
         <source>Old Drawing Exchange %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Scambio di vecchi disegni %1</translation>
     </message>
     <message>
         <source>Opened dwg file version %1.</source>
@@ -5928,19 +5936,19 @@ Vuoi sovrascrivere?</translation>
     </message>
     <message>
         <source>error reading classes in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errore nella lettura di classi in file dwg</translation>
     </message>
     <message>
         <source>error reading offsets in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errore nella lettura di offset in file dwg</translation>
     </message>
     <message>
         <source>error reading tables in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errore nella lettura di tabelle in file dwg</translation>
     </message>
     <message>
         <source>error reading entities in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errore nella lettura di entità in file dwg</translation>
     </message>
     <message>
         <source>dwg Drawing %1</source>
