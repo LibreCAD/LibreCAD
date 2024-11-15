@@ -3820,7 +3820,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation>Inverte la direzione di spostamento usando la rotella del mouse col tasto Ctrl.</translation>
+        <translation>Inverte la direzione di scorrimento usando il mouse con il tasto Ctrl</translation>
     </message>
     <message>
         <source>Invert vertical scrolling direction</source>
