@@ -24,7 +24,7 @@
     </message>
     <message>
         <source>GroupBox</source>
-        <translation type="unfinished"></translation>
+        <translation>Scatola di gruppo</translation>
     </message>
     <message>
         <source>Set</source>
@@ -66,11 +66,11 @@
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation type="unfinished">Seleziona un arco</translation>
+        <translation>Selezionare l&apos;entità dell&apos;arco</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annulla</translation>
+        <translation>Cancellare</translation>
     </message>
     <message>
         <source>Specify dimension arc location</source>
@@ -1645,7 +1645,7 @@ Verificare l&apos;esistenza e i permessi.</translation>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Zulip e Chat</translation>
     </message>
     <message>
         <source>&amp;Release Information</source>
@@ -1949,7 +1949,7 @@ in una finestra separata</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Galleggiare</translation>
     </message>
     <message>
         <source>Command line</source>
@@ -3784,15 +3784,15 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Auto-panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Autopianificazione</translation>
     </message>
     <message>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Nascondere il marcatore relativo e zero</translation>
     </message>
     <message>
         <source>Alt+Z</source>
-        <translation type="unfinished">Alt+Z</translation>
+        <translation>Alt + Z</translation>
     </message>
     <message>
         <source>Visualize the entity under the cursor</source>
@@ -3800,55 +3800,55 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Mouse-over effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Effetti di mouse-over</translation>
     </message>
     <message>
         <source>&amp;Relative-Zero Marker Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Colore del marcatore &amp;Relativo-Zero:</translation>
     </message>
     <message>
         <source>Auto save time (minutes):</source>
-        <translation type="unfinished"></translation>
+        <translation>Tempo di salvataggio automatico (minuti):</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverte la direzione di scorrimento quando si usa la rotellina del mouse con il tasto Maiusc.</translation>
     </message>
     <message>
         <source>Invert horizontal scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverte la direzione di spostamento orizzontale</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverte la direzione di spostamento usando la rotella del mouse col tasto Ctrl.</translation>
     </message>
     <message>
         <source>Invert vertical scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverte la direzione di spostamento verticale</translation>
     </message>
     <message>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverte la direzione di zoom usando la rotella del mouse.</translation>
     </message>
     <message>
         <source>Invert zoom direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverte la direzione di zoom</translation>
     </message>
     <message>
         <source>Keyboard Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni di tastiera</translation>
     </message>
     <message>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Valuta i comandi quando la BARRA SPAZIATRICE è premuta</translation>
     </message>
     <message>
         <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Alterna la modalità snap libero quando la BARRA SPAZIATRICE è premuta e la finestra dei comandi è vuota</translation>
     </message>
     <message>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Alterna la modalità snap libero quando la BARRA SPAZIATRICE è premuta</translation>
     </message>
     <message>
         <source>CAD Preferences</source>
