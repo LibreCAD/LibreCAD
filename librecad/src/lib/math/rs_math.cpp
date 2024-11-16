@@ -300,7 +300,7 @@ double RS_Math::eval(const QString& expr, double def) {
 double RS_Math::convert_unit(const QRegularExpressionMatch& match, const QString& name, double factor, double defval) {
     if (!match.captured(name).isNull())
         LC_ERR <<"name="<<name<<": "<<  match.captured(name);
-    QString input = (!match.captured(name).isNull()) ? match.captured(name) : QString("%1").arg(defval);
+    QString input = (!match.captured(name).isNull()) ? match.captured(name) : QString::number(defval, 'g', 16);
     return input.toDouble() * factor;
 }
 
