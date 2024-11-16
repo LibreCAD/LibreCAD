@@ -51,6 +51,9 @@ void LC_ActionSplineModifyBase::trigger() {
         deleteHighlights();
         doAfterTrigger();
     }
+    else{
+        doOnEntityNotCreated();
+    }
     updateSelectionWidget();
     graphicView->redraw();
 }
@@ -72,6 +75,16 @@ void LC_ActionSplineModifyBase::clean() {
     graphicView->redraw();
 }
 
+void LC_ActionSplineModifyBase::mouseMoveEvent(QMouseEvent *e) {
+    RS_Vector mouse = snapPoint(e);
+    int status = getStatus();
+    deleteHighlights();
+    deletePreview();
+    onMouseMove(mouse, status, e);
+    drawHighlights();
+    drawPreview();
+}
+
 RS2::CursorType LC_ActionSplineModifyBase::doGetMouseCursor([[maybe_unused]]int status) {
     return RS2::CadCursor;
 }
@@ -89,4 +102,7 @@ void LC_ActionSplineModifyBase::onMouseRightButtonRelease(int status, [[maybe_un
         clean();
     }
 
+}
+
+void LC_ActionSplineModifyBase::doOnEntityNotCreated() {
 }

@@ -32,16 +32,17 @@ class LC_ActionSplineAddPoint:public LC_ActionSplineModifyBase{
 public:
     LC_ActionSplineAddPoint(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionSplineAddPoint() override = default;
-    void mouseMoveEvent(QMouseEvent *event) override;
 protected:
-
     bool endpointIsSelected = false;
-
     RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool adjustPosition) override;
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void doCompleteTrigger() override;
     void doAfterTrigger() override;
+
+    void onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) override;
+
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 
 #endif // LC_ACTIONSPLINEADDPOINTACTION_H

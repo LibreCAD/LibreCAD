@@ -39,7 +39,8 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
     :QObject(parent)
     , block(new LC_ActionGroup(this,tr("Block"),tr("Block related operations"), ":/icons/create_block.svg"))
     , circle(new LC_ActionGroup(this,tr("Circle"),tr("Circle drawing commands"),":/icons/circle.svg"))
-    , curve(new LC_ActionGroup(this,tr("Curve"), tr("Curve drawing commands"), ":/icons/line_freehand.svg"))
+    , curve(new LC_ActionGroup(this,tr("Arc"), tr("Arc drawing commands"), ":/icons/arc_center_point_angle.svg"))
+    , spline(new LC_ActionGroup(this,tr("Spline"), tr("Spline drawing commands"), ":/icons/spline_points.svg"))
     , edit(new LC_ActionGroup(this,tr("Edit"), tr("Editing operations"), ":/icons/rename_active_block.svg"))
     , ellipse(new LC_ActionGroup(this,tr("Ellipse"),tr("Ellipse drawing commands") ,":/icons/ellipses.svg"))
     , file(new LC_ActionGroup(this,tr("File"),tr("File Operations"), ":/icons/save.svg"))
@@ -47,6 +48,7 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
     , info(new LC_ActionGroup(this,tr("Info"),tr("Informational commands"), ":/icons/measure.svg"))
     , layer(new LC_ActionGroup(this,tr("Layer"),tr("Layers operations"), ":/icons/deselect_layer.svg"))
     , line(new LC_ActionGroup(this,tr("Line"),tr("Line drawing commands"), ":/icons/line.svg"))
+    , shape(new LC_ActionGroup(this,tr("Polygon"),tr("Polygon drawing commands"), ":/icons/rectangle_2_points.svg"))
     , modify(new LC_ActionGroup(this,tr("Modify"), tr("Modification operations"), ":/icons/move_rotate.svg"))
     , options(new LC_ActionGroup(this,tr("Options"),tr("Options management"), ":/icons/settings.svg"))
     , other(new LC_ActionGroup(this,tr("Other"),tr("Other operations"), ":/icons/text.svg"))
@@ -85,10 +87,12 @@ QList<LC_ActionGroup *> LC_ActionGroupManager::toolGroups() {
     ag_list << block
             << circle
             << curve
+            << spline
             << ellipse
             << dimension
             << info
             << line
+            << shape
             << modify
             << other
             << polyline

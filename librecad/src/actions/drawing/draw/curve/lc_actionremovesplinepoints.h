@@ -31,17 +31,14 @@ class LC_ActionRemoveSplinePoints:public LC_ActionSplineModifyBase{
 public:
     LC_ActionRemoveSplinePoints(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionRemoveSplinePoints() override = default;
-    void mouseMoveEvent(QMouseEvent *event) override;
+    void setStatus(int status) override;
 protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
     RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool direction) override;
     bool mayModifySplineEntity(RS_Entity *e) override;
     void doAfterTrigger() override;
-
-public:
-    void setStatus(int status) override;
-
+    void onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) override;
 };
 
 #endif // LC_ACTIONREMOVESPLINEPOINTS_H

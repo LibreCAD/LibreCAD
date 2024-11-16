@@ -40,11 +40,7 @@ void LC_ActionSplineAppendPoint::doCompleteTrigger() {
     moveRelativeZero(vertexPoint);
 }
 
-void LC_ActionSplineAppendPoint::mouseMoveEvent(QMouseEvent *e) {
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
-    deleteHighlights();
-    deletePreview();
+void LC_ActionSplineAppendPoint::onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) {
     switch (status) {
         case SetEntity: {
             auto entity = catchEntity(e, enTypeList);
@@ -86,8 +82,6 @@ void LC_ActionSplineAppendPoint::mouseMoveEvent(QMouseEvent *e) {
         default:
             break;
     }
-    drawHighlights();
-    drawPreview();
 }
 
 void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
@@ -107,29 +101,45 @@ void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(int status, QMouseEven
             mouse = getRelZeroAwarePoint(e, mouse);
             double dist;
             RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
-            directionFromStart = nearestPoint == entityToModify->getStartpoint();
             if (nearestPoint.valid){
-                vertexPoint = mouse;
-                trigger();
-                setStatus(SetControlPoint);
+                directionFromStart = nearestPoint == entityToModify->getStartpoint();
+                fireCoordinateEvent(mouse);
             }
             break;
         }
         case SetControlPoint:{
             RS_Vector mouse = snapPoint(e);
-            vertexPoint = mouse;
             if (isShift(e)){
                 double dist;
                 RS_Vector nearestPoint = entityToModify->getNearestEndpoint(mouse, &dist);
-                directionFromStart = nearestPoint == entityToModify->getStartpoint();
+                if (nearestPoint.valid) {
+                    directionFromStart = nearestPoint == entityToModify->getStartpoint();
+                }
             }
-            trigger();
+            fireCoordinateEvent(mouse);
         }
         default:
             break;
     }
 }
 
+void LC_ActionSplineAppendPoint::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
+    switch (status){
+        case SetBeforeControlPoint:{
+            vertexPoint = pos;
+            trigger();
+            setStatus(SetControlPoint);
+            break;
+        }
+        case SetControlPoint:{
+            vertexPoint = pos;
+            trigger();
+            break;
+        }
+        default:
+            break;
+    }
+}
 
 // todo - sand - should we allow append to closed splines?
 bool LC_ActionSplineAppendPoint::mayModifySplineEntity(RS_Entity *e) {

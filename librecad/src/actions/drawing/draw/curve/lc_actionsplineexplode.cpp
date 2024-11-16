@@ -103,11 +103,7 @@ void LC_ActionSplineExplode::setupAndAddCreatedEntity(RS_Entity *createdEntity, 
     document->addUndoable(createdEntity);
 }
 
-void LC_ActionSplineExplode::mouseMoveEvent(QMouseEvent *e) {
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
-    deleteHighlights();
-    deletePreview();
+void LC_ActionSplineExplode::onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) {
     switch (status) {
         case SetEntity: {
             auto entity = catchEntity(e, enTypeList);
@@ -125,8 +121,6 @@ void LC_ActionSplineExplode::mouseMoveEvent(QMouseEvent *e) {
         default:
             break;
     }
-    drawHighlights();
-    drawPreview();
 }
 
 void LC_ActionSplineExplode::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {

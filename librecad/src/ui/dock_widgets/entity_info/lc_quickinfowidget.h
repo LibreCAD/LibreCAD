@@ -129,7 +129,7 @@ private:
     void drawPreviewPoint(const RS_Vector &vector);
     RS_Vector retrievePositionForModelIndex(int index) const;
     void processURLCommand(const QString &path, int index);
-    QString getCoordinateMenuName(const char *command, int idx) const;
+    QString getCoordinateMenuName(QString actionName, int idx) const;
     QString retrievePositionStringForModelIndex(int index) const;
     void showNoDataMessage();
     void invokeOptionsDialog();

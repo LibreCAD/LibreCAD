@@ -20,27 +20,36 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#ifndef LC_ACTIONSPLINEAPPENDPOINT_H
-#define LC_ACTIONSPLINEAPPENDPOINT_H
+#ifndef LC_ACTIONSPLINEREMOVEBETWEEN_H
+#define LC_ACTIONSPLINEREMOVEBETWEEN_H
 
-#include "rs_previewactioninterface.h"
+#include <QObject>
 #include "lc_actionsplinemodifybase.h"
 
-class LC_ActionSplineAppendPoint:public LC_ActionSplineModifyBase{
-Q_OBJECT
+class LC_ActionSplineRemoveBetween:public LC_ActionSplineModifyBase{
+    Q_OBJECT
 public:
-    LC_ActionSplineAppendPoint(RS_EntityContainer &container, RS_GraphicView &graphicView);
-    ~LC_ActionSplineAppendPoint() override = default;
+    LC_ActionSplineRemoveBetween(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    ~LC_ActionSplineRemoveBetween() override = default;
+
+    void trigger() override;
 
 protected:
+    bool splineIsClosed = false;
+    RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool startDirection) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void updateMouseButtonHints() override;
-    bool mayModifySplineEntity(RS_Entity *e) override;
-    RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool fromStart) override;
-    void doCompleteTrigger() override;
     void onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void collectPointsThatRemainsAfterDeletion(
+        const RS_Vector &controlPoint, unsigned int splinePointsCount, bool deleteNotFoundPoints, std::vector<RS_Vector> &pointsVector,
+        std::vector<RS_Vector> &remainingPoints) const;
 
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    bool isValidSplinePointsData(unsigned long long int size, bool closed);
+    bool isValidSplineData(unsigned long long int size, bool closed, int degree);
+
+    void doOnEntityNotCreated() override;
+
+    void doCompleteTrigger() override;
 };
 
-#endif // LC_ACTIONSPLINEAPPENDPOINT_H
+#endif // LC_ACTIONSPLINEREMOVEBETWEEN_H

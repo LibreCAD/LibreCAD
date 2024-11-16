@@ -34,6 +34,9 @@ public:
     void trigger() override;
     void drawSnapper() override;
     void finish(bool updateTB) override;
+
+    void mouseMoveEvent(QMouseEvent *event) override;
+
 protected:
     enum State{
         SetEntity,
@@ -53,6 +56,8 @@ protected:
     virtual void doCompleteTrigger();
     virtual void doAfterTrigger();
     virtual RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool startDirection)=0;
+    virtual void onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) = 0;
+    virtual void doOnEntityNotCreated();
 };
 
 #endif // LC_ACTIONSPLINEMODIFYBASE_H

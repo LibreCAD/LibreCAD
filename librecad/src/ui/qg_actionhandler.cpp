@@ -208,6 +208,7 @@
 #include "lc_actionsplineaddpoint.h"
 #include "lc_actionsplineexplode.h"
 #include "lc_actionsplinefrompolyline.h"
+#include "lc_actionsplineremovebetween.h"
 
 /**
  * Constructor
@@ -669,6 +670,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionDrawSplinePointRemove:
             a = new LC_ActionRemoveSplinePoints(*document, *view);
+            break;
+        case RS2::ActionDrawSplinePointDelTwo:
+            a = new LC_ActionSplineRemoveBetween(*document, *view);
             break;
         case RS2::ActionDrawSplinePointAppend:
             a = new LC_ActionSplineAppendPoint(*document, *view);

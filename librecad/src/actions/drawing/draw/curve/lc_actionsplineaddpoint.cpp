@@ -46,11 +46,7 @@ void LC_ActionSplineAddPoint::doAfterTrigger() {
     setStatus(SetBeforeControlPoint);
 }
 
-void LC_ActionSplineAddPoint::mouseMoveEvent(QMouseEvent *e) {
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
-    deleteHighlights();
-    deletePreview();
+void LC_ActionSplineAddPoint::onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) {
     switch (status) {
         case SetEntity: {
             auto entity = catchEntity(e, enTypeList);
@@ -92,8 +88,6 @@ void LC_ActionSplineAddPoint::mouseMoveEvent(QMouseEvent *e) {
         default:
             break;
     }
-    drawHighlights();
-    drawPreview();
 }
 
 void LC_ActionSplineAddPoint::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
@@ -120,13 +114,12 @@ void LC_ActionSplineAddPoint::onMouseLeftButtonRelease(int status, QMouseEvent *
             break;
         }
         case SetControlPoint:{
-            RS_Vector mouse = snapPoint(e);
-            vertexPoint = mouse;
             if (isShift(e)){
                 if (!endpointIsSelected){ // don't let inserting after endpoint
                     directionFromStart = true;
                 }
             }
+            fireCoordinateEventForSnap(e);
             trigger();
         }
         default:
@@ -134,7 +127,7 @@ void LC_ActionSplineAddPoint::onMouseLeftButtonRelease(int status, QMouseEvent *
     }
 }
 
-RS_Entity *LC_ActionSplineAddPoint::createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool ajustPosition) {
+RS_Entity *LC_ActionSplineAddPoint::createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool adjustPosition) {
     RS_Entity* result = nullptr;
     switch (e->rtti()){
         case RS2::EntitySplinePoints:{
@@ -142,7 +135,7 @@ RS_Entity *LC_ActionSplineAddPoint::createModifiedSplineEntity(RS_Entity *e, RS_
             LC_SplinePointsData &data = splinePoints->getData();
             unsigned int controlPointsCount = data.controlPoints.size();
             unsigned int splinePointsCount = data.splinePoints.size();
-            int insertIndexAdjustment = ajustPosition ? 1 : 0;
+            int insertIndexAdjustment = adjustPosition ? 1 : 0;
             if (splinePointsCount > 0){
                 for (unsigned int i = 0; i < splinePointsCount; i++) {
                     RS_Vector cp = data.splinePoints.at(i);
@@ -170,7 +163,7 @@ RS_Entity *LC_ActionSplineAddPoint::createModifiedSplineEntity(RS_Entity *e, RS_
             auto* spline = dynamic_cast<RS_Spline *>(e);
             RS_SplineData data = spline->getData();
             unsigned int controlPointsCount = data.controlPoints.size();
-            int insertIndexAdjustment = ajustPosition ? 1 : 0;
+            int insertIndexAdjustment = adjustPosition ? 1 : 0;
             for (unsigned int i = 0; i < controlPointsCount; i++) {
                 RS_Vector cp = data.controlPoints.at(i);
                 if (cp == selectedVertexPoint) {
@@ -193,6 +186,13 @@ RS_Entity *LC_ActionSplineAddPoint::createModifiedSplineEntity(RS_Entity *e, RS_
 
     }
     return result;
+}
+
+void LC_ActionSplineAddPoint::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
+    if (status == SetControlPoint){
+        vertexPoint = pos;
+        trigger();
+    }
 }
 
 void LC_ActionSplineAddPoint::updateMouseButtonHints() {

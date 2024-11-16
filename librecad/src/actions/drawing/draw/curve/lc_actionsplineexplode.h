@@ -33,8 +33,6 @@ public:
     LC_ActionSplineExplode(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionSplineExplode() override = default;
 
-    void mouseMoveEvent(QMouseEvent *event) override;
-
     int getSegmentsCountFromDrawing();
     bool isUseCurrentAttributes() {return useCurrentAttributes;};
     void setUseCurrentAttributes(bool b) {useCurrentAttributes  = b;};
@@ -59,19 +57,14 @@ protected:
     int customSegmentsCount = 8;
 
     RS_Entity *createPolylineByVertexes(const std::vector<RS_Vector> &strokePoints, bool closed) const;
-
     int obtainSegmentsCount();
-
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-
     void fillStrokePoints(RS_Entity *e, int segmentsCount, std::vector<RS_Vector> &strokePoints, bool &closed) const;
-
     void setupAndAddCreatedEntity(RS_Entity *createdEntity, RS_Layer *layerToSet, const RS_Pen &penToUse);
     void updateMouseButtonHints() override;
-
     RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool startDirection) override;
-
     LC_ActionOptionsWidget *createOptionsWidget() override;
+    void onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) override;
 };
 
 #endif // LC_ACTIONSPLINEEXPLODE_H

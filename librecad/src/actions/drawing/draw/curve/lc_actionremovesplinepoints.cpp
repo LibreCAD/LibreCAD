@@ -31,7 +31,7 @@ namespace {
     const EntityTypeList enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints};
 }
 
-LC_ActionRemoveSplinePoints::LC_ActionRemoveSplinePoints(RS_EntityContainer &container, RS_GraphicView &graphicView):LC_ActionSplineModifyBase("RemovewSplinePoint", container, graphicView) {
+LC_ActionRemoveSplinePoints::LC_ActionRemoveSplinePoints(RS_EntityContainer &container, RS_GraphicView &graphicView):LC_ActionSplineModifyBase("SplineRemovePoint", container, graphicView) {
     actionType = RS2::ActionDrawSplinePointRemove;
 }
 
@@ -42,11 +42,7 @@ void LC_ActionRemoveSplinePoints::doAfterTrigger() {
     }
 }
 
-void LC_ActionRemoveSplinePoints::mouseMoveEvent(QMouseEvent *e) {
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
-    deleteHighlights();
-    deletePreview();
+void LC_ActionRemoveSplinePoints::onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) {
     switch (status) {
         case SetEntity: {
             auto entity = catchEntity(e, enTypeList);
@@ -72,8 +68,6 @@ void LC_ActionRemoveSplinePoints::mouseMoveEvent(QMouseEvent *e) {
         default:
             break;
     }
-    drawHighlights();
-    drawPreview();
 }
 
 void LC_ActionRemoveSplinePoints::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

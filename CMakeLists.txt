@@ -1296,6 +1296,8 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/curve/lc_actionsplinefrompolyline.cpp
 		librecad/src/ui/action_options/curve/lc_splinefrompolylineoptions.h
 		librecad/src/ui/action_options/curve/lc_splinefrompolylineoptions.cpp
+		librecad/src/actions/drawing/draw/curve/lc_actionsplineremovebetween.h
+		librecad/src/actions/drawing/draw/curve/lc_actionsplineremovebetween.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

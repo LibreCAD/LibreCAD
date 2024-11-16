@@ -243,6 +243,7 @@ HEADERS += \
     actions/drawing/draw/curve/lc_actionsplineexplode.h \
     actions/drawing/draw/curve/lc_actionsplinefrompolyline.h \
     actions/drawing/draw/curve/lc_actionsplinemodifybase.h \
+    actions/drawing/draw/curve/lc_actionsplineremovebetween.h \
     actions/drawing/draw/dimensions/lc_actioncircledimbase.h \
     actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.h \
     actions/drawing/draw/ellipse/lc_actiondrawellipse1point.h \
@@ -391,6 +392,7 @@ SOURCES += \
     actions/drawing/draw/curve/lc_actionsplineaddpoint.cpp \
     actions/drawing/draw/curve/lc_actionsplineexplode.cpp \
     actions/drawing/draw/curve/lc_actionsplinefrompolyline.cpp \
+    actions/drawing/draw/curve/lc_actionsplineremovebetween.cpp \
     ui/action_options/curve/lc_splineexplodeoptions.cpp \
     ui/action_options/curve/lc_splinefrompolylineoptions.cpp \
     actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp \
