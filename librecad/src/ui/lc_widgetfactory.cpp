@@ -692,7 +692,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     });
 
 
-    auto views_restore_menu = subMenu(view_menu, tr("&Views Restore"), "view_restore", ":/icons/nview_visible.svg",
+    /*auto views_restore_menu = */subMenu(view_menu, tr("&Views Restore"), "view_restore", ":/icons/nview_visible.svg",
                                       {"ZoomViewRestore1",
                                        "ZoomViewRestore2",
                                        "ZoomViewRestore3",

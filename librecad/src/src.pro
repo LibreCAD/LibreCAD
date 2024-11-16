@@ -241,6 +241,7 @@ HEADERS += \
     actions/drawing/draw/curve/lc_actionsplineaddpoint.h \
     actions/drawing/draw/curve/lc_actionsplineappendpoint.h \
     actions/drawing/draw/curve/lc_actionsplineexplode.h \
+    actions/drawing/draw/curve/lc_actionsplinefrompolyline.h \
     actions/drawing/draw/curve/lc_actionsplinemodifybase.h \
     actions/drawing/draw/dimensions/lc_actioncircledimbase.h \
     actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.h \
@@ -334,6 +335,7 @@ HEADERS += \
     #lib/gui/no_used/rs_painterold.h \
     #lib/gui/no_used/rs_painterqtold.h \
     ui/action_options/curve/lc_splineexplodeoptions.h \
+    ui/action_options/curve/lc_splinefrompolylineoptions.h \
     ui/components/status_bar/lc_qtstatusbarmanager.h \
     ui/dialogs/main/lc_dlgabout.h \
     ui/dialogs/main/lc_dlgnewversionavailable.h \
@@ -386,9 +388,11 @@ HEADERS += \
     
 SOURCES += \
     actions/drawing/draw/curve/lc_actionremovesplinepoints.cpp \
-    actions/drawing/draw/curve/lc_actionsplineaddpoint.cpp \     \
+    actions/drawing/draw/curve/lc_actionsplineaddpoint.cpp \
     actions/drawing/draw/curve/lc_actionsplineexplode.cpp \
-    ui/action_options/curve/lc_splineexplodeoptions.cpp
+    actions/drawing/draw/curve/lc_actionsplinefrompolyline.cpp \
+    ui/action_options/curve/lc_splineexplodeoptions.cpp \
+    ui/action_options/curve/lc_splinefrompolylineoptions.cpp \
     actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp \
     actions/drawing/draw/curve/lc_actionsplinemodifybase.cpp \
     actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp \
@@ -1260,6 +1264,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/action_options/circle/qg_circletan2options.ui \
        ui/action_options/curve/lc_ellipsearcoptions.ui \
        ui/action_options/curve/lc_splineexplodeoptions.ui \
+       ui/action_options/curve/lc_splinefrompolylineoptions.ui \
        ui/action_options/curve/qg_arcoptions.ui \
        ui/action_options/curve/qg_arctangentialoptions.ui \
        ui/action_options/curve/qg_splineoptions.ui \

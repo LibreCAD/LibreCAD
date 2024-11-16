@@ -20,49 +20,44 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#ifndef LC_SPLINEEXPLODEOPTIONS_H
-#define LC_SPLINEEXPLODEOPTIONS_H
+#ifndef LC_SPLINEFROMPOLYLINEOPTIONS_H
+#define LC_SPLINEFROMPOLYLINEOPTIONS_H
 
 #include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
-#include "lc_actionsplineexplode.h"
+#include "lc_actionsplinefrompolyline.h"
 
 namespace Ui {
-class LC_SplineExplodeOptions;
+class LC_SplineFromPolylineOptions;
 }
 
-class LC_SplineExplodeOptions : public LC_ActionOptionsWidgetBase{
-    Q_OBJECT
-
+class LC_SplineFromPolylineOptions : public LC_ActionOptionsWidgetBase{
+Q_OBJECT
 
 public:
-    explicit LC_SplineExplodeOptions();
-    ~LC_SplineExplodeOptions();
-
+    explicit LC_SplineFromPolylineOptions();
+    ~LC_SplineFromPolylineOptions();
 public slots:
     void languageChange() override;
     void cbKeepOriginalsClicked(bool val);
     void cbUseCurrentAttributesClicked(bool val);
     void cbUseCurrentLayerClicked(bool val);
-    void cbCustomSegmentCountClicked(bool val);
-    void cbPolylineClicked(bool val);
-    void sbSegmentsCountValueChanged(int value);
+    void cbUseFitPointsClicked(bool val);
+    void sbDegreeValueChanged(int value);
+    void sbMidPointsValueChanged(int value);
 protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
 private:
-    Ui::LC_SplineExplodeOptions *ui;
-    LC_ActionSplineExplode* action;
-
-    int segmentsCountFromDrawing;
+    Ui::LC_SplineFromPolylineOptions *ui;
+    LC_ActionSplineFromPolyline* action;
 
     void setKeepOriginalsToActionAndView(bool val);
     void setUseCurrentAttributesToActionAndView(bool val);
     void setUseCurrentLayerToActionAndView(bool val);
-    void setUseCustomSegmentCount(bool val);
-    void setPolylineToActionAndView(bool val);
-
-    void setSegmentsCountValueToActionAndView(int value);
+    void setUseFitPointsToActionAndView(bool val);
+    void setMidPointsToActionAndView(int value);
+    void setDegreeToActionAndView(int value);
 };
 
-#endif // LC_SPLINEEXPLODEOPTIONS_H
+#endif // LC_SPLINEFROMPOLYLINEOPTIONS_H

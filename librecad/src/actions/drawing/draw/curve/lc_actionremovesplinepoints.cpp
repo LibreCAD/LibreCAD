@@ -113,7 +113,7 @@ RS_Entity *LC_ActionRemoveSplinePoints::createModifiedSplineEntity(RS_Entity *e,
             unsigned int controlPointsCount = data.controlPoints.size();
             unsigned int splinePointsCount = data.splinePoints.size();
             if (splinePointsCount > 0){
-                for (int i = 0; i < splinePointsCount; i++) {
+                for (unsigned int i = 0; i < splinePointsCount; i++) {
                     RS_Vector cp = data.splinePoints.at(i);
                     if (cp == controlPoint) {
                         data.splinePoints.erase(data.splinePoints.begin() + i);
@@ -124,7 +124,7 @@ RS_Entity *LC_ActionRemoveSplinePoints::createModifiedSplineEntity(RS_Entity *e,
                 }
             }
             else {
-                for (int i = 0; i < controlPointsCount; i++) {
+                for (unsigned int i = 0; i < controlPointsCount; i++) {
                     RS_Vector cp = data.controlPoints.at(i);
                     if (cp == controlPoint) {
                         data.controlPoints.erase(data.controlPoints.begin() + i);
@@ -140,7 +140,7 @@ RS_Entity *LC_ActionRemoveSplinePoints::createModifiedSplineEntity(RS_Entity *e,
             auto* spline = dynamic_cast<RS_Spline *>(e);
             RS_SplineData data = spline->getData();
             unsigned int count = data.controlPoints.size();
-            for (int i = 0; i < count; i++ ){
+            for (unsigned int i = 0; i < count; i++ ){
                 RS_Vector cp = data.controlPoints.at(i);
                 if (cp == controlPoint){
                     data.controlPoints.erase(data.controlPoints.begin() + i);

@@ -284,5 +284,6 @@
         <file>nview_add.svg</file>
         <file>spline_explode.svg</file>
         <file>spline_from_polyline.svg</file>
+        <file>spline_points_remove_two.svg</file>
     </qresource>
 </RCC>

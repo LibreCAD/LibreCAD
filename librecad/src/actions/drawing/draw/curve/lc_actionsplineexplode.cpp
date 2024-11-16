@@ -47,9 +47,9 @@ void LC_ActionSplineExplode::trigger() {
     if (document) {
         int segmentsCount = obtainSegmentsCount();
         std::vector<RS_Vector> strokePoints;
-        fillStrokePoints(entityToModify, segmentsCount, strokePoints);
+        bool closed;
+        fillStrokePoints(entityToModify, segmentsCount, strokePoints, closed);
         if (!strokePoints.empty()) {
-
             RS_Layer *layerToSet;
             if (useCurrentLayer) {
                 layerToSet = graphicView->getGraphic()->getActiveLayer();
@@ -66,16 +66,22 @@ void LC_ActionSplineExplode::trigger() {
 
             document->startUndoCycle();
             if (createPolyline) {
-                RS_Entity *createdEntity = createPolylineByVertexes(strokePoints);
+                RS_Entity *createdEntity = createPolylineByVertexes(strokePoints, closed);
                 setupAndAddCreatedEntity(createdEntity, layerToSet, penToUse);
             } else {
                 RS_Vector startPoint = strokePoints.at(0);
+                RS_Vector firstPoint = startPoint;
                 for (unsigned int i=1; i < strokePoints.size(); i++){
                     RS_Vector end = strokePoints.at(i);
                     RS_Entity* createdEntity = new RS_Line(container, startPoint, end);
                     setupAndAddCreatedEntity(createdEntity, layerToSet, penToUse);
                     startPoint = end;
                 }
+                if (closed){
+                    RS_Entity* createdEntity = new RS_Line(container, startPoint, firstPoint);
+                    setupAndAddCreatedEntity(createdEntity, layerToSet, penToUse);
+                }
+
             }
             if (!keepOriginals){
                 deleteEntityUndoable(entityToModify);
@@ -123,7 +129,7 @@ void LC_ActionSplineExplode::mouseMoveEvent(QMouseEvent *e) {
     drawPreview();
 }
 
-void LC_ActionSplineExplode::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionSplineExplode::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     auto entity = catchEntity(e, enTypeList);
     if (entity != nullptr) {
         if (mayModifySplineEntity(entity)) {
@@ -133,26 +139,31 @@ void LC_ActionSplineExplode::onMouseLeftButtonRelease(int status, QMouseEvent *e
     }
 }
 
-RS_Entity *LC_ActionSplineExplode::createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool startDirection) {
+RS_Entity *LC_ActionSplineExplode::createModifiedSplineEntity(RS_Entity *e, [[maybe_unused]]RS_Vector controlPoint, [[maybe_unused]]bool startDirection) {
     int segmentsCount = obtainSegmentsCount();
     std::vector<RS_Vector> strokePoints;
-    fillStrokePoints(e, segmentsCount, strokePoints);
+    bool closed;
+    fillStrokePoints(e, segmentsCount, strokePoints, closed);
     if (!strokePoints.empty()) {
-        return createPolylineByVertexes(strokePoints);
+        RS_Entity *pEntity = createPolylineByVertexes(strokePoints, closed);
+
+        return pEntity;
     }
     return nullptr;
 }
 
-void  LC_ActionSplineExplode::fillStrokePoints(RS_Entity *e, int segmentsCount, std::vector<RS_Vector> &strokePoints) const {
+void  LC_ActionSplineExplode::fillStrokePoints(RS_Entity *e, int segmentsCount, std::vector<RS_Vector> &strokePoints, bool &closed) const {
     switch (e->rtti()){
         case RS2::EntitySplinePoints:{
             auto* splinePoints = static_cast<LC_SplinePoints *>(e);
             splinePoints->fillStrokePoints(segmentsCount, strokePoints);
+            closed = splinePoints->isClosed();
             break;
         }
         case RS2::EntitySpline:{
             auto* spline = static_cast<RS_Spline *>(e);
             spline->fillStrokePoints(segmentsCount, strokePoints);
+            closed = spline->isClosed();
             break;
         }
         default:
@@ -171,12 +182,13 @@ int LC_ActionSplineExplode::obtainSegmentsCount() {
     return segmentsCount;
 }
 
-RS_Entity *LC_ActionSplineExplode::createPolylineByVertexes(const std::vector<RS_Vector> &strokePoints) const {
+RS_Entity *LC_ActionSplineExplode::createPolylineByVertexes(const std::vector<RS_Vector> &strokePoints, bool closed) const {
     auto result = new RS_Polyline(nullptr);
-    for (int i= 0; i < strokePoints.size(); i++){
+    for (unsigned int i= 0; i < strokePoints.size(); i++){
         RS_Vector vertex = strokePoints[i];
         result->addVertex(vertex);
     }
+    result->setClosed(closed);
     return result;
 }
 
@@ -186,14 +198,6 @@ void LC_ActionSplineExplode::updateMouseButtonHints() {
             updateMouseWidgetTRCancel(tr("Select spline or spline points entity"));
             break;
         }
-        /*case SetBeforeControlPoint: {
-            updateMouseWidgetTRCancel(tr("Specify first control point"),MOD_SHIFT_RELATIVE_ZERO);
-            break;
-        }
-        case SetControlPoint: {
-            updateMouseWidgetTRCancel(tr("Specify control point"), MOD_SHIFT_LC("Append to alternative Endpoint"));
-            break;
-        }*/
         default:
             break;
     }

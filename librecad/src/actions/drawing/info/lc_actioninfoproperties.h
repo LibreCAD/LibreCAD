@@ -25,8 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_previewactioninterface.h"
 
-class LC_ActionInfoProperties:public RS_PreviewActionInterface
-{
+class LC_ActionInfoProperties:public RS_PreviewActionInterface{
+    Q_OBJECT
 public:
     LC_ActionInfoProperties(RS_EntityContainer &container, RS_GraphicView &graphicView);
     void mouseMoveEvent(QMouseEvent *event) override;

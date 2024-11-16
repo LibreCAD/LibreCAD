@@ -207,6 +207,7 @@
 #include "lc_actionsplineappendpoint.h"
 #include "lc_actionsplineaddpoint.h"
 #include "lc_actionsplineexplode.h"
+#include "lc_actionsplinefrompolyline.h"
 
 /**
  * Constructor
@@ -672,11 +673,14 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionDrawSplinePointAppend:
             a = new LC_ActionSplineAppendPoint(*document, *view);
             break;
+        case RS2::ActionDrawSplinePointAdd:
+            a = new LC_ActionSplineAddPoint(*document, *view);
+            break;
         case RS2::ActionDrawSplineExplode:
             a = new LC_ActionSplineExplode(*document, *view);
             break;
-        case RS2::ActionDrawSplinePointAdd:
-            a = new LC_ActionSplineAddPoint(*document, *view);
+        case RS2::ActionDrawSplineFromPolyline:
+            a = new LC_ActionSplineFromPolyline(*document, *view);
             break;
         case RS2::ActionDrawMText:
             a = new RS_ActionDrawMText(*document, *view);

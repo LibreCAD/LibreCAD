@@ -26,8 +26,8 @@
 #include "rs_previewactioninterface.h"
 #include "lc_actionsplinemodifybase.h"
 
-class LC_ActionRemoveSplinePoints:public LC_ActionSplineModifyBase
-{
+class LC_ActionRemoveSplinePoints:public LC_ActionSplineModifyBase{
+    Q_OBJECT
 public:
     LC_ActionRemoveSplinePoints(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionRemoveSplinePoints() override = default;

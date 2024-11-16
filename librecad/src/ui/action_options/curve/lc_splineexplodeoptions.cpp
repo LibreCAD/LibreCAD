@@ -23,7 +23,7 @@
 #include "lc_splineexplodeoptions.h"
 #include "ui_lc_splineexplodeoptions.h"
 
-LC_SplineExplodeOptions::LC_SplineExplodeOptions(QWidget *parent)
+LC_SplineExplodeOptions::LC_SplineExplodeOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionDrawSplineExplode, "Draw", "SplineExplode")
     , ui(new Ui::LC_SplineExplodeOptions), action{nullptr}{
     ui->setupUi(this);

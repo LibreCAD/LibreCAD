@@ -3438,7 +3438,7 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="0">
+          <item row="7" column="0" colspan="2">
            <widget class="QCheckBox" name="cbShowEntityIDs">
             <property name="toolTip">
              <string>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</string>
