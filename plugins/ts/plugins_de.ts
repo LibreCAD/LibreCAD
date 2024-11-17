@@ -843,7 +843,12 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation type="unfinished"></translation>
+        <translation>Start eingeben
+Winkel, in
+Dezimalgrad
+0° auf 3 Uhr
+geht
+gegen den Uhrzeigersinn.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
@@ -901,12 +906,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zusatz (bezogen auf den Modulus)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dedendum (bezogen auf den Modulus)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
