@@ -621,7 +621,7 @@ erste Basis, zweite Basis, erstes Ziel, zweites Ziel.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Wählen Sie eine Linie, einen Kreis oder einen Bogen und drücken Sie die Eingabetaste</translation>
+        <translation>Wählen Sie eine Linie, einen Kreis oder einen Bogen aus und drücken Sie die Eingabetaste</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -901,7 +901,7 @@ gegen den Uhrzeigersinn.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Modulus</source>
-        <translation type="unfinished"></translation>
+        <translation>Modulus</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
