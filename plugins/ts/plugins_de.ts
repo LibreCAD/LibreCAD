@@ -901,27 +901,27 @@ gegen den Uhrzeigersinn.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Modulus</source>
-        <translation>Modulus</translation>
+        <translation>Modul</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation>Zusatz (bezogen auf den Modulus)</translation>
+        <translation>Zusatz (bezogen auf das Modul)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>Dedendum (bezogen auf den Modulus)</translation>
+        <translation>Fußhöhe (bezogen auf das Modul)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der zu zeichnenden Segmente (Fußhöhe)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der zu zeichnenden Segmente (Zusatz)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
