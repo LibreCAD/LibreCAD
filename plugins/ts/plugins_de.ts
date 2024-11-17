@@ -971,12 +971,12 @@ gegen den Uhrzeigersinn.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
         <source>Calculate interference?</source>
-        <translation type="unfinished"></translation>
+        <translation>Interferenzen berechnen?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der zu zeichnenden Segmente (Interferenz)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
