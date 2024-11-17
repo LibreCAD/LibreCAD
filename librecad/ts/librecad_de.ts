@@ -3788,7 +3788,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Alt+Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Z</translation>
     </message>
     <message>
         <source>Visualize the entity under the cursor</source>
@@ -3895,7 +3895,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Images</source>
-        <translation type="unfinished">Bilder</translation>
+        <translation>Bilder</translation>
     </message>
     <message>
         <source>Raster Image export</source>
@@ -5069,7 +5069,7 @@ Der Inhalt von Entwurfsebenen wird nicht ausgedruckt.</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished">&amp;Sperre umschalten</translation>
+        <translation>Ebenen&amp;sperre umschalten</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
@@ -5249,15 +5249,15 @@ p, li { white-space: pre-wrap; }
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation type="unfinished">Linienfarbe</translation>
+        <translation>Linienfarbe</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation type="unfinished">Linienstärke</translation>
+        <translation>Linienbreite</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation type="unfinished">Linientyp</translation>
+        <translation>Linientyp</translation>
     </message>
 </context>
 <context>
@@ -7168,7 +7168,7 @@ Wollen Sie die Datei überschreiben?</translation>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>oder</translation>
     </message>
     <message>
         <source>lineperp</source>
