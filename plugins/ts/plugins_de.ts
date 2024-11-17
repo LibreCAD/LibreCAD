@@ -621,7 +621,7 @@ erste Basis, zweite Basis, erstes Ziel, zweites Ziel.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie eine Linie, einen Kreis oder einen Bogen und drücken Sie die Eingabetaste</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
