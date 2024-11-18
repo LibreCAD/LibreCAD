@@ -337,6 +337,154 @@
     </message>
 </context>
 <context>
+    <name>LC_ActionDrawArc2POptions</name>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="32"/>
+        <source>Height of the arc (the distanсe between chord and top arc point)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="35"/>
+        <source>Height:</source>
+        <translation type="unfinished">Altura:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="54"/>
+        <source>Counterclockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="71"/>
+        <source>Radius of arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="74"/>
+        <source>Radius:</source>
+        <translation type="unfinished">Radio:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="93"/>
+        <source>Clockwise</source>
+        <translation type="unfinished">Dirección del reloj</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="110"/>
+        <source>Central angle of the arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="113"/>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="123"/>
+        <source>Length of the arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="126"/>
+        <source>Length:</source>
+        <translation type="unfinished">Longitud:</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawArc2PointsAngle</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="96"/>
+        <source>Enter value of central angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="100"/>
+        <source>Alternate angle to outer arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawArc2PointsBase</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="111"/>
+        <source>The end point is too close to the start point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="152"/>
+        <source>Positive value is expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="155"/>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Comando no válido</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="192"/>
+        <source>Specify first point of arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="196"/>
+        <source>Specify second point of arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="208"/>
+        <source>Opposite Arc direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawArc2PointsHeight</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="102"/>
+        <source>Enter height of arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="106"/>
+        <source>Alternative arc where diameter is reduced by height</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawArc2PointsLength</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="41"/>
+        <source>The distance between the two points must be less than the arc length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="103"/>
+        <source>Enter length of arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="107"/>
+        <source>Alternate solutions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawArc2PointsRadius</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp" line="95"/>
+        <source>Enter radius of arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp" line="99"/>
+        <source>Create outer arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="220"/>
@@ -9415,17 +9563,17 @@ Please check its existence and permissions.</source>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1253"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1270"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1254"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1271"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1264"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1281"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation type="unfinished"></translation>
@@ -20612,41 +20760,47 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawArc</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="278"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="302"/>
         <source>Length of chord should be non-zero</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="398"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="409"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="429"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="442"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="464"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="422"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="433"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="453"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="466"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="488"/>
         <source>Not a valid expression</source>
         <translation>Comando no válido</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="462"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="486"/>
         <source>Not a valid chord length</source>
         <translation>Longitud no válida</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="486"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="510"/>
         <source>Specify center</source>
         <translation>Especificar centro</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="493"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="517"/>
         <source>Specify start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="506"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="524"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="527"/>
+        <source>Alternative Arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="530"/>
         <source>Specify chord length (negative for alt point):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="506"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="530"/>
         <source>Use alternative arc point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -20655,7 +20809,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="490"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="514"/>
         <source>Specify radius</source>
         <translation>Especificar radio</translation>
     </message>
@@ -20664,17 +20818,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Atrás</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="497"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="521"/>
         <source>Specify start angle:</source>
         <translation>Especificar ángulo de partida:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="524"/>
         <source>Specify end angle or [angle/chordlen]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="503"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="527"/>
         <source>Specify included angle:</source>
         <translation>Especificar ángulo incluido:</translation>
     </message>
@@ -20686,16 +20840,21 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawArc3P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="96"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="80"/>
         <source>Invalid arc data.</source>
         <translation>Dato del arco invalidado.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="238"/>
+        <source>Specify third point</source>
+        <translation type="unfinished">Especificar tercer punto</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation type="vanished">Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="223"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="235"/>
         <source>Specify second point</source>
         <translation>Especificar segundo punto</translation>
     </message>
@@ -20704,12 +20863,11 @@ This block cannot be inserted.</source>
         <translation type="vanished">Atrás</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="226"/>
         <source>Specify endpoint</source>
-        <translation>Especificar punto final</translation>
+        <translation type="vanished">Especificar punto final</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="220"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="232"/>
         <source>Specify startpoint or [center]</source>
         <translation type="unfinished"></translation>
     </message>

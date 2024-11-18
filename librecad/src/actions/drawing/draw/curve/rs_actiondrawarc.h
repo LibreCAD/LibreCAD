@@ -66,6 +66,7 @@ protected:
      * Arc data defined so far.
      */
     std::unique_ptr<RS_ArcData> data;
+    bool alternateArcDirection = false;
     void snapMouseToDiameter(RS_Vector &mouse, RS_Vector &arcStart, RS_Vector &halfCircleArcEnd) const;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
