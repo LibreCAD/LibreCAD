@@ -209,6 +209,10 @@
 #include "lc_actionsplineexplode.h"
 #include "lc_actionsplinefrompolyline.h"
 #include "lc_actionsplineremovebetween.h"
+#include "lc_actiondrawarc2pointsradius.h"
+#include "lc_actiondrawarc2pointsangle.h"
+#include "lc_actiondrawarc2pointsheight.h"
+#include "lc_actiondrawarc2pointslength.h"
 
 /**
  * Constructor
@@ -629,8 +633,21 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionDrawArc3P:
             a = new RS_ActionDrawArc3P(*document, *view);
-            break;    case RS2::ActionDrawArcTangential:
+            break;
+        case RS2::ActionDrawArcTangential:
             a = new RS_ActionDrawArcTangential(*document, *view);
+            break;
+        case RS2::ActionDrawArc2PRadius:
+            a = new LC_ActionDrawArc2PointsRadius(*document, *view);
+            break;
+        case RS2::ActionDrawArc2PAngle:
+            a = new LC_ActionDrawArc2PointsAngle(*document, *view);
+            break;
+        case RS2::ActionDrawArc2PHeight:
+            a = new LC_ActionDrawArc2PointsHeight(*document, *view);
+            break;
+        case RS2::ActionDrawArc2PLength:
+            a = new LC_ActionDrawArc2PointsLength(*document, *view);
             break;
         case RS2::ActionDrawEllipseAxis:
             a = new RS_ActionDrawEllipseAxis(*document, *view, false);

@@ -180,7 +180,7 @@ QString RS_Settings::readStrSingle(const QString& group, const QString &key,cons
     if (!value.isValid()) {
         value = settings->value(fullName, QVariant(def));
         cache[fullName] = value;
-    }    
+    }
     return value.toString();
 }
 

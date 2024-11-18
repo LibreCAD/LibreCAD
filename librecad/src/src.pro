@@ -237,6 +237,11 @@ RESOURCES += ../../licenses/licenses.qrc
 # ################################################################################
 # Library
 HEADERS += \
+    actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.h \
+    actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.h \
+    actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.h \
+    actions/drawing/draw/curve/lc_actiondrawarc2pointslength.h \
+    actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.h \
     actions/drawing/draw/curve/lc_actionremovesplinepoints.h \
     actions/drawing/draw/curve/lc_actionsplineaddpoint.h \
     actions/drawing/draw/curve/lc_actionsplineappendpoint.h \
@@ -335,6 +340,7 @@ HEADERS += \
     lib/filters/rs_filterinterface.h \
     #lib/gui/no_used/rs_painterold.h \
     #lib/gui/no_used/rs_painterqtold.h \
+    ui/action_options/curve/lc_actiondrawarc2poptions.h \
     ui/action_options/curve/lc_splineexplodeoptions.h \
     ui/action_options/curve/lc_splinefrompolylineoptions.h \
     ui/components/status_bar/lc_qtstatusbarmanager.h \
@@ -388,11 +394,17 @@ HEADERS += \
     ui/main/lc_mdiapplicationwindow.h
     
 SOURCES += \
+    actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp \
+    actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp \
+    actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp \
+    actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp \
+    actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp \
     actions/drawing/draw/curve/lc_actionremovesplinepoints.cpp \
     actions/drawing/draw/curve/lc_actionsplineaddpoint.cpp \
     actions/drawing/draw/curve/lc_actionsplineexplode.cpp \
     actions/drawing/draw/curve/lc_actionsplinefrompolyline.cpp \
     actions/drawing/draw/curve/lc_actionsplineremovebetween.cpp \
+    ui/action_options/curve/lc_actiondrawarc2poptions.cpp \
     ui/action_options/curve/lc_splineexplodeoptions.cpp \
     ui/action_options/curve/lc_splinefrompolylineoptions.cpp \
     actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp \
@@ -1264,6 +1276,7 @@ SOURCES += ui/action_options/circle/lc_circlebyarcoptions.cpp \
 FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/action_options/circle/qg_circleoptions.ui \
        ui/action_options/circle/qg_circletan2options.ui \
+       ui/action_options/curve/lc_actiondrawarc2poptions.ui \
        ui/action_options/curve/lc_ellipsearcoptions.ui \
        ui/action_options/curve/lc_splineexplodeoptions.ui \
        ui/action_options/curve/lc_splinefrompolylineoptions.ui \

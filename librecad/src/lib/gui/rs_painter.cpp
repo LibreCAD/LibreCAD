@@ -219,20 +219,22 @@ void RS_Painter::drawLine(const double &x1, const double &y1, const double &x2, 
  * @param reversed true: clockwise, false: counterclockwise
  */
 void RS_Painter::drawArcEntity( const RS_Vector& cp,
-                                  double radius,
+                                  double radiusX,
+                                  double radiusY,
                                   double startAngleDegrees,
                                   double angularLength){
-    if(radius<=minArcDrawingRadius) {
+    if(radiusX<=minArcDrawingRadius) {
         QPainter::drawPoint(QPointF(cp.x, cp.y));
         return;
     }
     // The rect for the circle
     QPainterPath path;
-    double rx = cp.x - radius;
-    double ry = cp.y - radius;
-    double size = radius + radius;
-    path.arcMoveTo(rx, ry, size, size, startAngleDegrees);
-    path.arcTo(rx, ry, size, size, startAngleDegrees, angularLength);
+    double rx = cp.x - radiusX;
+    double ry = cp.y - radiusY;
+    double dX = radiusX + radiusX;
+    double dY = radiusY + radiusY;
+    path.arcMoveTo(rx, ry, dX, dY, startAngleDegrees);
+    path.arcTo(rx, ry, dX, dY, startAngleDegrees, angularLength);
     QPainter::drawPath(path);
 }
 

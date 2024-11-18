@@ -1298,6 +1298,18 @@ set(SOURCES
 		librecad/src/ui/action_options/curve/lc_splinefrompolylineoptions.cpp
 		librecad/src/actions/drawing/draw/curve/lc_actionsplineremovebetween.h
 		librecad/src/actions/drawing/draw/curve/lc_actionsplineremovebetween.cpp
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.h
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.h
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp
+		librecad/src/ui/action_options/curve/lc_actiondrawarc2poptions.h
+		librecad/src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.h
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.h
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.h
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
