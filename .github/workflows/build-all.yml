@@ -20,6 +20,7 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.6.*'
+          modules: 'qt5compat'
 
       - name: Qt6 path
         run: |
@@ -122,6 +123,7 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.6.*'
+          modules: 'qt5compat'
 
       - name: Install boost dependencies
         run: |
