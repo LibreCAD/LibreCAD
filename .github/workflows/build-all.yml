@@ -180,6 +180,7 @@ jobs:
           set-env: 'true'
           tools-only: 'false'
           extra: '--external 7z'
+          modules: 'qt5compat'
 
       - name: install mingw-1120
         run: |
