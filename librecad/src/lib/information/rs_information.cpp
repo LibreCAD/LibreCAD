@@ -476,14 +476,16 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
     }
 
     // unsupported entities / entity combinations:
+    RS2::EntityType e1Type = e1->rtti();
+    RS2::EntityType e2Type = e2->rtti();
     if (
-        e1->rtti()==RS2::EntityMText || e2->rtti()==RS2::EntityMText ||
-        e1->rtti()==RS2::EntityText || e2->rtti()==RS2::EntityText ||
-        isDimension(e1->rtti()) || isDimension(e2->rtti())) {
+        e1Type == RS2::EntityMText || e2Type == RS2::EntityMText ||
+        e1Type == RS2::EntityText || e2Type == RS2::EntityText ||
+        isDimension(e1Type) || isDimension(e2Type)) {
         return ret;
     }
 
-    if (onEntities && !(e1->isConstruction() || e2->isConstruction())) {
+    if (onEntities && !(e1->isConstruction() || e2->isConstruction() || e1Type == RS2::EntityConstructionLine || e2Type == RS2::EntityConstructionLine)) {
 // a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
         LC_Rect const rect1{e1->getMin(), e1->getMax()};
         LC_Rect const rect2{e2->getMin(), e2->getMax()};
@@ -504,32 +506,31 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
         }
     }
 
-    if(e1->rtti() == RS2::EntitySplinePoints || e2->rtti() == RS2::EntitySplinePoints)
-    {
+    if(e1Type == RS2::EntitySplinePoints || e2Type == RS2::EntitySplinePoints){
         ret = LC_SplinePoints::getIntersection(e1, e2);
     }
-    else
-    {
+    else {
 // issue #484 , quadratic intersection solver is not robust enough for quadratic-quadratic
 // TODO, implement a robust algorithm for quadratic based solvers, and detecting entity type
 // circles/arcs can be removed
         // issue #523: TangentFinder cannot handle line-line
-        bool isLineLine = e1->rtti() == RS2::EntityLine && e2->rtti() == RS2::EntityLine;
-        if (isLineLine)
+        bool firstIsLine = e1Type == RS2::EntityLine || e1Type == RS2::EntityConstructionLine;
+        bool secondIsLine = e2Type == RS2::EntityLine || e2Type == RS2::EntityConstructionLine;
+        bool isLineLine = firstIsLine && secondIsLine;
+        if (isLineLine) {
             ret = getIntersectionLineLine(e1, e2);
-
-        if (isArc(e1)) {
+        } else if (isArc(e1)) {
             std::swap(e1, e2);
             if (isArc(e1)) {
-			//use specialized arc-arc intersection solver
-			ret=getIntersectionArcArc(e1, e2);
-            } else if (e1->rtti() == RS2::EntityLine) {
-                ret=getIntersectionLineArc(static_cast<const RS_Line*>(e1), static_cast<const RS_Arc*>(e2));
+//use specialized arc-arc intersection solver
+                ret = getIntersectionArcArc(e1, e2);
+            } else if (e1Type == RS2::EntityLine || e1Type == RS2::EntityConstructionLine) {
+                ret = getIntersectionLineArc(static_cast<const RS_Line *>(e1), static_cast<const RS_Arc *>(e2));
             }
         }
 
         if (ret.empty()) {
-            ret=LC_Quadratic::getIntersection(e1->getQuadratic(), e2->getQuadratic());
+            ret = LC_Quadratic::getIntersection(e1->getQuadratic(), e2->getQuadratic());
             if (!isLineLine && ret.empty()) {
                 // TODO: the following tangent point recovery only works if there's no other intersection
                 // Issue #523: direct intersection finding may fail for tangent points
@@ -538,8 +539,9 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
                 // tangent points with rounding errors.
                 ret = TangentFinder{e1, e2}.GetTangent();
             }
-		}
-	}
+        }
+
+    }
     RS_VectorSolutions ret2;
 	for(const RS_Vector& vp: ret){
 		if (!vp.valid) continue;
