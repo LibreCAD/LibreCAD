@@ -1,4 +1,4 @@
-# LibreCAD [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=master)](https://travis-ci.org/LibreCAD/LibreCAD) 
+# LibreCAD [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=master)](https://travis-ci.org/LibreCAD/LibreCAD) [![Gurubase](https://img.shields.io/badge/Gurubase-Ask%20LibreCAD%20Guru-006BFF)](https://gurubase.io/g/librecad)
 
 [→ Download ←](https://github.com/LibreCAD/LibreCAD/wiki/Download)
 
