@@ -86,6 +86,8 @@ protected:
 
     double angleLength = 0.;
     bool byRadius = false;
+    bool alternateArc = false;
+
     RS_Vector forecastArcCenter() const;
     void updateOptionsRadius(double radius);
     void updateOptionsAngle(double angle);

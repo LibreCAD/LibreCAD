@@ -55,6 +55,7 @@ void RS_ActionDrawArcTangential::reset() {
     isStartPoint = false;
     point = RS_Vector(false);
     data = std::make_unique<RS_ArcData>();
+    alternateArc = false;
 }
 
 void RS_ActionDrawArcTangential::init(int status) {
@@ -72,6 +73,9 @@ void RS_ActionDrawArcTangential::trigger() {
     }
 
     preparePreview();
+    if (alternateArc){
+        data->reversed = !data->reversed;
+    }
     auto* arc = new RS_Arc(container, *data);
     container->addEntity(arc);
     arc->setLayerToActive();
@@ -144,7 +148,16 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
             }
             preparePreview();
             if (data->isValid()){
-                auto arc = previewArc(*data);
+                RS_Arc* arc;
+                bool alternateArcMode = isControl(e);
+                if (alternateArcMode) {
+                    RS_ArcData tmpArcData = *data;
+                    tmpArcData.reversed = !data->reversed;
+                    arc = previewArc(tmpArcData);
+                }
+                else{
+                    arc = previewArc(*data);
+                }
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(data->center);
                     previewRefPoint(arc->getStartpoint());
@@ -228,6 +241,7 @@ void RS_ActionDrawArcTangential::onMouseLeftButtonRelease(int status, QMouseEven
             }else {
                 point = getSnapAngleAwarePoint(e, arcStartPoint, point);
             }
+            alternateArc = isControl(e);
             fireCoordinateEvent(point);
             break;
         }
@@ -264,7 +278,7 @@ void RS_ActionDrawArcTangential::updateMouseButtonHints() {
         if(byRadius) {
             updateMouseWidgetTRBack(tr("Specify end angle"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Alternate arc")));
         } else {
-            updateMouseWidgetTRBack(tr("Specify end point", MOD_CTRL(tr("Alternate Arc"))));
+            updateMouseWidgetTRBack(tr("Specify end point"), MOD_CTRL(tr("Alternate Arc")));
         }
         break;
     default:
