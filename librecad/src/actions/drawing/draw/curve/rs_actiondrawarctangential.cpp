@@ -262,9 +262,9 @@ void RS_ActionDrawArcTangential::updateMouseButtonHints() {
         break;
     case SetEndAngle:
         if(byRadius) {
-            updateMouseWidgetTRBack(tr("Specify end angle"), MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify end angle"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Alternate arc")));
         } else {
-            updateMouseWidgetTRBack(tr("Specify end point"));
+            updateMouseWidgetTRBack(tr("Specify end point", MOD_CTRL(tr("Alternate Arc"))));
         }
         break;
     default:

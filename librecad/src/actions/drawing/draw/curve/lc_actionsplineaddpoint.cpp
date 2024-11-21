@@ -188,7 +188,7 @@ RS_Entity *LC_ActionSplineAddPoint::createModifiedSplineEntity(RS_Entity *e, RS_
     return result;
 }
 
-void LC_ActionSplineAddPoint::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
+void LC_ActionSplineAddPoint::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     if (status == SetControlPoint){
         vertexPoint = pos;
         trigger();

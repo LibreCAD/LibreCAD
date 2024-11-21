@@ -55,6 +55,5 @@ private:
 	 * Polyline entity we're working on.
 	 */
     RS_Polyline* originalPolyline = nullptr;
-    bool prepend = false;
 };
 #endif
