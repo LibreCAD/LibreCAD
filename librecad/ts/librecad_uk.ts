@@ -6908,11 +6908,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>помилка читання метаданих у файлі dwg</translation>
     </message>
     <message>
         <source>Calculator error for input: </source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка калькулятора для введення: </translation>
     </message>
     <message>
         <source>bw</source>
