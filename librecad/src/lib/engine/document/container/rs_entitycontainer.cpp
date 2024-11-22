@@ -277,10 +277,12 @@ void RS_EntityContainer::setHighlighted(bool on) {
     RS_Entity::setHighlighted(on);
 }
 
+
+
 /**
  * Selects all entities within the given area.
  *
- * @param select True to select, False to deselect the entities.
+ * @param select True to select, False to invertSelectionOperation the entities.
  */
 void RS_EntityContainer::selectWindow(
     enum RS2::EntityType typeToSelect, RS_Vector v1, RS_Vector v2,
@@ -289,7 +291,6 @@ void RS_EntityContainer::selectWindow(
     bool included;
 
     for (auto e: entities) {
-
         included = false;
         if (e->isVisible()) {
             if (e->isInWindow(v1, v2)) {
@@ -343,6 +344,77 @@ void RS_EntityContainer::selectWindow(
             } else {
                 e->setSelected(select);
             }
+        }
+    }
+}
+/**
+ * Selects all entities within the given area with given types.
+ *
+ * @param select True to select, False to invertSelectionOperation the entities.
+ */
+void RS_EntityContainer::selectWindow(
+    const QList<RS2::EntityType> &typesToSelect, RS_Vector v1, RS_Vector v2,
+    bool select, bool cross) {
+
+    bool included;
+
+    for (auto e: entities) {
+        if (!typesToSelect.contains(e->rtti())){
+            continue;
+        }
+        included = false;
+        if (e->isVisible()) {
+            if (e->isInWindow(v1, v2)) {
+                //e->setSelected(select);
+                included = true;
+            } else if (cross) {
+                RS_EntityContainer l;
+                l.addRectangle(v1, v2);
+                RS_VectorSolutions sol;
+
+                if (e->isContainer()) {
+                    auto *ec = (RS_EntityContainer *) e;
+                    for (RS_Entity *se = ec->firstEntity(RS2::ResolveAll);
+                         se && included == false;
+                         se = ec->nextEntity(RS2::ResolveAll)) {
+
+                        if (se->rtti() == RS2::EntitySolid) {
+                            included = dynamic_cast<RS_Solid *>(se)->isInCrossWindow(v1, v2);
+                        } else {
+                            for (auto line: l) {
+                                sol = RS_Information::getIntersection(
+                                    se, line, true);
+                                if (sol.hasValid()) {
+                                    included = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                } else if (e->rtti() == RS2::EntitySolid) {
+                    included = dynamic_cast<RS_Solid *>(e)->isInCrossWindow(v1, v2);
+                } else {
+                    for (auto line: l) {
+                        sol = RS_Information::getIntersection(e, line, true);
+                        if (sol.hasValid()) {
+                            included = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (included) {
+          /*  if (typeToSelect != RS2::EntityType::EntityUnknown) {
+                if (typeToSelect == e->rtti()) {
+                    e->setSelected(select);
+                } else {
+                    //Do not select
+                }
+            } else {*/
+                e->setSelected(select);
+//            }
         }
     }
 }

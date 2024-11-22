@@ -343,6 +343,7 @@ HEADERS += \
     ui/action_options/curve/lc_actiondrawarc2poptions.h \
     ui/action_options/curve/lc_splineexplodeoptions.h \
     ui/action_options/curve/lc_splinefrompolylineoptions.h \
+    ui/action_options/selection/lc_selectwindowoptions.h \
     ui/components/status_bar/lc_qtstatusbarmanager.h \
     ui/dialogs/main/lc_dlgabout.h \
     ui/dialogs/main/lc_dlgnewversionavailable.h \
@@ -489,6 +490,7 @@ SOURCES += \
     lib/filters/rs_filterlff.cpp \
     #lib/gui/no_used/rs_painterold.cpp \
    # lib/gui/no_used/rs_painterqtold.cpp \
+    ui/action_options/selection/lc_selectwindowoptions.cpp \
     ui/components/status_bar/lc_qtstatusbarmanager.cpp \
     ui/dialogs/main/lc_dlgabout.cpp \
     ui/dialogs/main/lc_dlgnewversionavailable.cpp \
@@ -1325,6 +1327,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/action_options/polyline/qg_polylineequidistantoptions.ui \
        ui/action_options/polyline/qg_polylineoptions.ui \
        ui/action_options/print_preview/qg_printpreviewoptions.ui \
+       ui/action_options/selection/lc_selectwindowoptions.ui \
        ui/action_options/snap/qg_snapdistoptions.ui \
        ui/action_options/snap/qg_snapmiddleoptions.ui \
        ui/action_options/text/qg_mtextoptions.ui \

@@ -1310,6 +1310,8 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp
 		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.h
 		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp
+		librecad/src/ui/action_options/selection/lc_selectwindowoptions.h
+		librecad/src/ui/action_options/selection/lc_selectwindowoptions.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

@@ -37,6 +37,7 @@
  */
 class RS_ActionSelectWindow:public RS_PreviewActionInterface {
     Q_OBJECT
+
 public:
     RS_ActionSelectWindow(
         RS_EntityContainer &container,
@@ -51,7 +52,11 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void mousePressEvent(QMouseEvent *e) override;
-    enum RS2::EntityType getTypeToSelect();
+    bool isSelectAllEntityTypes();
+    void setSelectAllEntityTypes(bool val);
+    QList<RS2::EntityType> getEntityTypesToSelect();
+    void setEntityTypesToSelect(QList<RS2::EntityType> type);
+
 protected:
     /**
  * Action States.
@@ -63,13 +68,17 @@ protected:
 
     struct Points;
     std::unique_ptr<Points> pPoints;
-    enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
     bool select = false;
     bool selectIntersecting = false;
+    bool invertSelectionOperation = false;
+    bool selectAllEntityTypes = true;
+    QList<RS2::EntityType> entityTypesToSelect;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
+
+    LC_ActionOptionsWidget *createOptionsWidget() override;
 };
 #endif

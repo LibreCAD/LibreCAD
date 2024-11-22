@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LC_SelectWindowOptions</class>
+ <widget class="QWidget" name="LC_SelectWindowOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>968</width>
+    <height>22</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>1</number>
+   </property>
+   <item row="0" column="7">
+    <widget class="QCheckBox" name="cbEllipse">
+     <property name="text">
+      <string>Ellipse</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="15">
+    <widget class="QCheckBox" name="cbDimension">
+     <property name="text">
+      <string>Dimension</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="14">
+    <widget class="QCheckBox" name="cbInsert">
+     <property name="text">
+      <string>Insert</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="9">
+    <widget class="QCheckBox" name="cbSpline">
+     <property name="text">
+      <string>Spline</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="8">
+    <widget class="QCheckBox" name="cbPoint">
+     <property name="text">
+      <string>Point</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QCheckBox" name="cbAll">
+     <property name="text">
+      <string>All</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QCheckBox" name="cbPolyline">
+     <property name="text">
+      <string>Polyline</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="12">
+    <widget class="QCheckBox" name="cbImage">
+     <property name="text">
+      <string>Image</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="11">
+    <widget class="QCheckBox" name="cbMText">
+     <property name="text">
+      <string>MText</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Entity type</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="10">
+    <widget class="QCheckBox" name="cbText">
+     <property name="text">
+      <string>Text</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="13">
+    <widget class="QCheckBox" name="cbHatch">
+     <property name="text">
+      <string>Hatch</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="16">
+    <widget class="QCheckBox" name="cbWipeout">
+     <property name="text">
+      <string>Wipeout</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QCheckBox" name="cbArc">
+     <property name="text">
+      <string>Arc</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QCheckBox" name="cbLine">
+     <property name="text">
+      <string>Line</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QCheckBox" name="cbCircle">
+     <property name="text">
+      <string>Circle</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
