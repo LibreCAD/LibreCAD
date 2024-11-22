@@ -164,8 +164,8 @@ void RS_ActionSelectWindow::onMouseLeftButtonRelease(int status, QMouseEvent *e)
     RS_DEBUG->print("RS_ActionSelectWindow::mouseReleaseEvent()");
     if (status==SetCorner2) {
         pPoints->v2 = toGraph(e);
-        selectIntersecting = isShift(e);
-        invertSelectionOperation = isControl(e);
+        selectIntersecting = isControl(e);
+        invertSelectionOperation = isShift(e);
         trigger();
     }
 }
@@ -184,7 +184,7 @@ void RS_ActionSelectWindow::updateMouseButtonHints() {
             updateMouseWidgetTRCancel(tr("Click and drag for the selection window"));
             break;
         case SetCorner2:
-            updateMouseWidgetTRBack(tr("Choose second edge"), MOD_SHIFT_AND_CTRL(select ? tr("Select Intersecting") : tr("De-select intersecting"), select ? tr("De-select entities") : tr("Select entities")));
+            updateMouseWidgetTRBack(tr("Choose second edge"), MOD_SHIFT_AND_CTRL(select ? tr("De-select entities") : tr("Select entities"), select ? tr("Select Intersecting") : tr("De-select intersecting")));
             break;
         default:
             updateMouseWidget();

@@ -804,7 +804,7 @@ void RS_ActionDefault::updateMouseButtonHints(){
             break;
         }
         case SetCorner2: {
-            updateMouseWidgetTRBack(tr("Choose second edge"));
+            updateMouseWidgetTRBack(tr("Choose second edge"), MOD_SHIFT_LC(tr("Deselect entities")));
             break;
         }
         default: {
