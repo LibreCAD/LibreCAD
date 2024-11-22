@@ -8095,6 +8095,94 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>LC_SelectWindowOptions</name>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Образац</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="32"/>
+        <source>Ellipse</source>
+        <translation type="unfinished">Елипса</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="39"/>
+        <source>Dimension</source>
+        <translation type="unfinished">Кота</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="46"/>
+        <source>Insert</source>
+        <translation type="unfinished">Убаци</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="53"/>
+        <source>Spline</source>
+        <translation type="unfinished">Сплајн</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="60"/>
+        <source>Point</source>
+        <translation type="unfinished">Тачка</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="67"/>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="74"/>
+        <source>Polyline</source>
+        <translation type="unfinished">Полилинија</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="81"/>
+        <source>Image</source>
+        <translation type="unfinished">Слика</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="88"/>
+        <source>MText</source>
+        <translation type="unfinished">МТекст</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="95"/>
+        <source>Entity type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="102"/>
+        <source>Text</source>
+        <translation type="unfinished">Текст</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="109"/>
+        <source>Hatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="116"/>
+        <source>Wipeout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="123"/>
+        <source>Arc</source>
+        <translation type="unfinished">Лук</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="130"/>
+        <source>Line</source>
+        <translation type="unfinished">Линија</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="137"/>
+        <source>Circle</source>
+        <translation type="unfinished">Круг</translation>
+    </message>
+</context>
+<context>
     <name>LC_ShortcutButton</name>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_shortcutbutton.cpp" line="32"/>
@@ -17503,7 +17591,7 @@ Do you want to replace it?</source>
         <translation>Датотека на диску је измењена. Молимо сачувајте другу датотеку како бисте избегли губитак података! Измењена датотека: %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1687"/>
+        <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1759"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation>Шрафирање је неуспело због размака=%1 између (%2, %3) и (%4, %5)</translation>
     </message>
@@ -21059,6 +21147,11 @@ This block cannot be inserted.</source>
         <translation>Изаберите другу ивицу</translation>
     </message>
     <message>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="807"/>
+        <source>Deselect entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Back</source>
         <translation type="vanished">Назад</translation>
     </message>
@@ -21351,16 +21444,26 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="261"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="275"/>
         <source>Specify base entity</source>
         <translation>Одредите базни ентитет</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
+        <source>Alternate arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="281"/>
+        <source>Alternate Arc</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation type="vanished">Откажи</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="265"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
         <source>Specify end angle</source>
         <translation>Одрадите крајњи угао</translation>
     </message>
@@ -21369,7 +21472,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="267"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="281"/>
         <source>Specify end point</source>
         <translation>Одредите крајњу тачку</translation>
     </message>
@@ -22377,7 +22480,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawPolyline</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="613"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="749"/>
         <source>Specify first point</source>
         <translation>Одредите прву тачку</translation>
     </message>
@@ -22386,7 +22489,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Откажи</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="632"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="780"/>
         <source>Specify next point or [%1]</source>
         <translation>Одредите следећу тачку или [%1]</translation>
     </message>
@@ -22395,66 +22498,70 @@ This block cannot be inserted.</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="634"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="782"/>
         <source>Specify next point</source>
         <translation>Одредите следећу тачку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="661"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="803"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
         <translation>Немогуће затворити низ линија: Није још довољно дефинисано ентитета.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="686"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="828"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Немогуће опозвати: Још је недовољно ентитета дефинисано.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="305"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="460"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="384"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="586"/>
         <source>Enter the end point x</source>
         <translation>Унесите координату x крајње тачке</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="340"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="469"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="437"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="595"/>
         <source>Enter number of polylines</source>
         <translation>Унесите број полилинија</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="419"/>
         <source>equation</source>
-        <translation>једначина</translation>
+        <translation type="vanished">једначина</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="420"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="546"/>
         <source>Enter an equation, f(x)</source>
         <translation>Унесите једначину, f(x)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="434"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="560"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="442"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="568"/>
         <source>Enter the start point x</source>
         <translation>Унесите x координату почетне тачке</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="449"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="575"/>
         <source>The entered x is invalid.</source>
         <translation>Унето x је неисправно.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="486"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="612"/>
         <source>The step size entered is invalid.</source>
         <translation>Унета величина корака је неисправна.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="519"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="645"/>
         <source>The value x entered is invalid.</source>
         <translation>Унета вредно x координате је неисправна.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="769"/>
+        <source>Alternative Arc</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -23540,22 +23647,27 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineAppend</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="109"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="141"/>
         <source>No Entity found.</source>
         <translation>Нема пронађених ентитета.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="112"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="144"/>
         <source>Entity must be a polyline.</source>
         <translation>Ентитет мора бити полилинија.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="135"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="185"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
         <translation>Кликните негде близу почетка или краја постојеће полилиније.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="197"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="301"/>
+        <source>Enter number of polylines</source>
+        <translation type="unfinished">Унесите број полилинија</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="338"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
         <translation>Одредите полилинију негде у близини почетне или крајње тачке</translation>
     </message>
@@ -23564,26 +23676,24 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Откажи</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="212"/>
         <source>Specify next point or [%1]</source>
-        <translation>Одредите следећу тачку или [%1]</translation>
+        <translation type="vanished">Одредите следећу тачку или [%1]</translation>
     </message>
     <message>
         <source>Back</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="214"/>
         <source>Specify next point</source>
-        <translation>Одредите следећу тачку</translation>
+        <translation type="vanished">Одредите следећу тачку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="115"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="147"/>
         <source>Can not append nodes in a closed polyline.</source>
         <translation>Не могу да додам чворове у затворену полилинију.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="231"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="358"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Немогуће опозвати: Недовољно ентитета је одређено за сад.</translation>
     </message>
@@ -23990,13 +24100,28 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Откажи</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="171"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
         <source>Choose second edge</source>
         <translation>Изаберите другу ивицу</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="171"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
         <source>Select Intersecting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
+        <source>De-select entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
+        <source>Select entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
+        <source>De-select intersecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24004,7 +24129,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="168"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="184"/>
         <source>Click and drag for the selection window</source>
         <translation>Кликните и вуците за прозор одабира</translation>
     </message>
@@ -25075,6 +25200,7 @@ Point: (%8 , %9)</source>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="96"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="124"/>
         <source>Line</source>
         <translation>Линија</translation>
     </message>
@@ -25090,36 +25216,61 @@ Point: (%8 , %9)</source>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="111"/>
+        <source>Tan Angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="116"/>
         <source>Angle</source>
         <translation>Угао</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="119"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="144"/>
+        <source>Tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="164"/>
+        <source>Tangental arc with fixed radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="184"/>
+        <source>Tangental arc with fixed angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="204"/>
+        <source>Arc with angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="224"/>
         <source>Radius:</source>
         <translation>Полупречник:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="144"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="249"/>
         <source>Radius of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="151"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="256"/>
         <source>Angle:</source>
         <translation>Угао:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="176"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="281"/>
         <source>Angle of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="218"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="323"/>
         <source>Counter Clockwise</source>
         <translation>Супротно од сата</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="204"/>
+        <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="309"/>
         <source>Clockwise</source>
         <translation>У смеру сата</translation>
     </message>
