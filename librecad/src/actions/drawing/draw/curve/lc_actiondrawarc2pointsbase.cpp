@@ -123,7 +123,7 @@ void LC_ActionDrawArc2PointsBase::onMouseLeftButtonRelease(int status, QMouseEve
     }
 }
 
-void LC_ActionDrawArc2PointsBase::onMouseRightButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionDrawArc2PointsBase::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     initPrevious(status);
 }
 

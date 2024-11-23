@@ -26,7 +26,6 @@
 #include "qg_polylineoptions.h"
 
 #include "rs_actiondrawpolyline.h"
-#include "rs_settings.h"
 #include "rs_math.h"
 #include "ui_qg_polylineoptions.h"
 #include "rs_debug.h"
@@ -223,7 +222,7 @@ void QG_PolylineOptions::onRadiusEditingFinished(){
     setRadiusToActionAndView(ui->leRadius->text());
 }
 
-void QG_PolylineOptions::onNegToggled(bool checked){
+void QG_PolylineOptions::onNegToggled([[maybe_unused]]bool checked){
     bool enable = ui->rbNeg->isChecked();
     setReversedToActionAndView(enable);
 }

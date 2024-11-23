@@ -153,7 +153,7 @@ RS_Vector LC_ActionDrawPointsLattice::getLastPointPosition(RS_Vector &pos, bool 
     return pos;
 }
 
-void LC_ActionDrawPointsLattice::onMouseRightButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionDrawPointsLattice::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     switch (status){
         case SetPoint1:
         case SetPoint2:
@@ -170,7 +170,7 @@ void LC_ActionDrawPointsLattice::onMouseRightButtonRelease(int status, QMouseEve
     }
 }
 
-void LC_ActionDrawPointsLattice::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
+void LC_ActionDrawPointsLattice::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     switch (status){
         case SetPoint1:{
             point1 = pos;
@@ -345,7 +345,7 @@ void LC_ActionDrawPointsLattice::setAdjustLastPointToFirst(bool val) {
     adjustLastPointToFirst = val;
 }
 
-RS2::CursorType LC_ActionDrawPointsLattice::doGetMouseCursor(int status) {
+RS2::CursorType LC_ActionDrawPointsLattice::doGetMouseCursor([[maybe_unused]]int status) {
     return RS2::CadCursor;
 }
 

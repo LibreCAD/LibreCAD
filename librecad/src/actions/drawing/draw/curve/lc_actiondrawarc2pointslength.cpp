@@ -30,7 +30,7 @@ LC_ActionDrawArc2PointsLength::LC_ActionDrawArc2PointsLength(RS_EntityContainer 
     actionType = RS2::ActionDrawArc2PLength;
 }
 
-bool LC_ActionDrawArc2PointsLength::createArcData(RS_ArcData &data, int status, RS_Vector pos, bool alternate, bool reportErrors) {
+bool LC_ActionDrawArc2PointsLength::createArcData(RS_ArcData &data, [[maybe_unused]]int status, RS_Vector pos, bool alternate, [[maybe_unused]]bool reportErrors) {
 
     double chordLen = startPoint.distanceTo(pos);
     double chordAngle = startPoint.angleTo(pos);
@@ -91,7 +91,7 @@ bool LC_ActionDrawArc2PointsLength::createArcData(RS_ArcData &data, int status, 
     return true;
 }
 
-void LC_ActionDrawArc2PointsLength::doPreviewOnPoint2Custom(RS_Arc *pArc) {
+void LC_ActionDrawArc2PointsLength::doPreviewOnPoint2Custom([[maybe_unused]]RS_Arc *pArc) {
 
 }
 

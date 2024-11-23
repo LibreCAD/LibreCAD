@@ -144,6 +144,7 @@ INCLUDEPATH += \
     actions/drawing/draw \
     actions/drawing/draw/circle \
     actions/drawing/draw/curve \
+    actions/drawing/draw/spline \
     actions/drawing/draw/dimensions \
     actions/drawing/draw/ellipse \
     actions/drawing/draw/hatch \
@@ -170,6 +171,7 @@ INCLUDEPATH += \
     ui/action_options \
     ui/action_options/circle \
     ui/action_options/curve \
+    ui/action_options/spline \
     ui/action_options/dimensions \
     ui/action_options/edit \
     ui/action_options/image \
@@ -244,13 +246,13 @@ HEADERS += \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointslength.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.h \
-    actions/drawing/draw/curve/lc_actionremovesplinepoints.h \
-    actions/drawing/draw/curve/lc_actionsplineaddpoint.h \
-    actions/drawing/draw/curve/lc_actionsplineappendpoint.h \
-    actions/drawing/draw/curve/lc_actionsplineexplode.h \
-    actions/drawing/draw/curve/lc_actionsplinefrompolyline.h \
-    actions/drawing/draw/curve/lc_actionsplinemodifybase.h \
-    actions/drawing/draw/curve/lc_actionsplineremovebetween.h \
+    actions/drawing/draw/spline/lc_actionremovesplinepoints.h \
+    actions/drawing/draw/spline/lc_actionsplineaddpoint.h \
+    actions/drawing/draw/spline/lc_actionsplineappendpoint.h \
+    actions/drawing/draw/spline/lc_actionsplineexplode.h \
+    actions/drawing/draw/spline/lc_actionsplinefrompolyline.h \
+    actions/drawing/draw/spline/lc_actionsplinemodifybase.h \
+    actions/drawing/draw/spline/lc_actionsplineremovebetween.h \
     actions/drawing/draw/dimensions/lc_actioncircledimbase.h \
     actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.h \
     actions/drawing/draw/ellipse/lc_actiondrawellipse1point.h \
@@ -346,9 +348,9 @@ HEADERS += \
     #lib/gui/no_used/rs_painterold.h \
     #lib/gui/no_used/rs_painterqtold.h \
     ui/action_options/curve/lc_actiondrawarc2poptions.h \
-    ui/action_options/curve/lc_splineexplodeoptions.h \
-    ui/action_options/curve/lc_splinefrompolylineoptions.h \
-    ui/action_options/point/lc_pastetopointsaction.h \
+    ui/action_options/spline/lc_splineexplodeoptions.h \
+    ui/action_options/spline/lc_splinefrompolylineoptions.h \
+    ui/action_options/point/lc_pastetopointsoptions.h \
     ui/action_options/point/lc_pointslatticeoptions.h \
     ui/action_options/selection/lc_selectwindowoptions.h \
     ui/components/status_bar/lc_qtstatusbarmanager.h \
@@ -407,19 +409,19 @@ SOURCES += \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp \
-    actions/drawing/draw/curve/lc_actionremovesplinepoints.cpp \
-    actions/drawing/draw/curve/lc_actionsplineaddpoint.cpp \
-    actions/drawing/draw/curve/lc_actionsplineexplode.cpp \
-    actions/drawing/draw/curve/lc_actionsplinefrompolyline.cpp \
-    actions/drawing/draw/curve/lc_actionsplineremovebetween.cpp \
+    actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp \
+    actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp \
+    actions/drawing/draw/spline/lc_actionsplineexplode.cpp \
+    actions/drawing/draw/spline/lc_actionsplinefrompolyline.cpp \
+    actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp \
     actions/drawing/draw/point/lc_actiondrawpointslattice.cpp \
     actions/drawing/draw/point/lc_actionpastetopoints.cpp \
     actions/drawing/draw/point/lc_actionselectpoints.cpp \
     ui/action_options/curve/lc_actiondrawarc2poptions.cpp \
-    ui/action_options/curve/lc_splineexplodeoptions.cpp \
-    ui/action_options/curve/lc_splinefrompolylineoptions.cpp \
-    actions/drawing/draw/curve/lc_actionsplineappendpoint.cpp \
-    actions/drawing/draw/curve/lc_actionsplinemodifybase.cpp \
+    ui/action_options/spline/lc_splineexplodeoptions.cpp \
+    ui/action_options/spline/lc_splinefrompolylineoptions.cpp \
+    actions/drawing/draw/spline/lc_actionsplineappendpoint.cpp \
+    actions/drawing/draw/spline/lc_actionsplinemodifybase.cpp \
     actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp \
     actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp \
     actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp \
@@ -500,7 +502,7 @@ SOURCES += \
     lib/filters/rs_filterlff.cpp \
     #lib/gui/no_used/rs_painterold.cpp \
    # lib/gui/no_used/rs_painterqtold.cpp \
-    ui/action_options/point/lc_pastetopointsaction.cpp \
+    ui/action_options/point/lc_pastetopointsoptions.cpp \
     ui/action_options/point/lc_pointslatticeoptions.cpp \
     ui/action_options/selection/lc_selectwindowoptions.cpp \
     ui/components/status_bar/lc_qtstatusbarmanager.cpp \
@@ -596,12 +598,12 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/draw/circle/rs_actiondrawcircletan3.h \
     actions/drawing/draw/curve/lc_actiondrawparabola4points.h \
     actions/drawing/draw/curve/lc_actiondrawparabolaFD.h \
-    actions/drawing/draw/curve/lc_actiondrawsplinepoints.h \
+    actions/drawing/draw/spline/lc_actiondrawsplinepoints.h \
     actions/drawing/draw/curve/rs_actiondrawarc.h \
     actions/drawing/draw/curve/rs_actiondrawarc3p.h \
     actions/drawing/draw/curve/rs_actiondrawarctangential.h \
     actions/drawing/draw/curve/rs_actiondrawlinefree.h \
-    actions/drawing/draw/curve/rs_actiondrawspline.h \
+    actions/drawing/draw/spline/rs_actiondrawspline.h \
     actions/drawing/draw/dimensions/lc_actiondimarc.h \
     actions/drawing/draw/dimensions/lc_actiondimlinearbase.h \
     actions/drawing/draw/dimensions/rs_actiondimaligned.h \
@@ -771,12 +773,12 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp \
     actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp \
     actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp \
-    actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp \
+    actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp \
     actions/drawing/draw/curve/rs_actiondrawarc.cpp \
     actions/drawing/draw/curve/rs_actiondrawarc3p.cpp \
     actions/drawing/draw/curve/rs_actiondrawarctangential.cpp \
     actions/drawing/draw/curve/rs_actiondrawlinefree.cpp \
-    actions/drawing/draw/curve/rs_actiondrawspline.cpp \
+    actions/drawing/draw/spline/rs_actiondrawspline.cpp \
     actions/drawing/draw/dimensions/lc_actiondimarc.cpp \
     actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp \
     actions/drawing/draw/dimensions/rs_actiondimaligned.cpp \
@@ -919,7 +921,7 @@ HEADERS += ui/action_options/circle/lc_circlebyarcoptions.h \
     ui/action_options/circle/qg_circletan2options.h \
     ui/action_options/curve/qg_arcoptions.h \
     ui/action_options/curve/qg_arctangentialoptions.h \
-    ui/action_options/curve/qg_splineoptions.h \
+    ui/action_options/spline/qg_splineoptions.h \
     ui/action_options/dimensions/qg_dimoptions.h \
     ui/action_options/edit/lc_pastetransformoptions.h \
     ui/action_options/image/qg_imageoptions.h \
@@ -1107,7 +1109,7 @@ SOURCES += ui/action_options/circle/lc_circlebyarcoptions.cpp \
     ui/action_options/circle/qg_circletan2options.cpp \
     ui/action_options/curve/qg_arcoptions.cpp \
     ui/action_options/curve/qg_arctangentialoptions.cpp \
-    ui/action_options/curve/qg_splineoptions.cpp \
+    ui/action_options/spline/qg_splineoptions.cpp \
     ui/action_options/dimensions/qg_dimoptions.cpp \
     ui/action_options/edit/lc_pastetransformoptions.cpp \
     ui/action_options/image/qg_imageoptions.cpp \
@@ -1292,11 +1294,11 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/action_options/circle/qg_circletan2options.ui \
        ui/action_options/curve/lc_actiondrawarc2poptions.ui \
        ui/action_options/curve/lc_ellipsearcoptions.ui \
-       ui/action_options/curve/lc_splineexplodeoptions.ui \
-       ui/action_options/curve/lc_splinefrompolylineoptions.ui \
+       ui/action_options/spline/lc_splineexplodeoptions.ui \
+       ui/action_options/spline/lc_splinefrompolylineoptions.ui \
        ui/action_options/curve/qg_arcoptions.ui \
        ui/action_options/curve/qg_arctangentialoptions.ui \
-       ui/action_options/curve/qg_splineoptions.ui \
+       ui/action_options/spline/qg_splineoptions.ui \
        ui/action_options/dimensions/qg_dimoptions.ui \
        ui/action_options/edit/lc_pastetransformoptions.ui \
        ui/action_options/ellipse/lc_ellipse1pointoptions.ui \
@@ -1336,7 +1338,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/action_options/modify/qg_moverotateoptions.ui \
        ui/action_options/modify/qg_roundoptions.ui \
        ui/action_options/modify/qg_trimamountoptions.ui \
-       ui/action_options/point/lc_pastetopointsaction.ui \
+       ui/action_options/point/lc_pastetopointsoptions.ui \
        ui/action_options/point/lc_pointslatticeoptions.ui \
        ui/action_options/polyline/qg_polylineequidistantoptions.ui \
        ui/action_options/polyline/qg_polylineoptions.ui \

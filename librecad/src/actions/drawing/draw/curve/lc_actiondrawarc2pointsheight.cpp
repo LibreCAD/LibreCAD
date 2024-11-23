@@ -30,7 +30,7 @@ LC_ActionDrawArc2PointsHeight::LC_ActionDrawArc2PointsHeight(RS_EntityContainer 
     actionType = RS2::ActionDrawArc2PHeight;
 }
 
-bool LC_ActionDrawArc2PointsHeight::createArcData(RS_ArcData &data, int status, RS_Vector pos, bool alternate, bool reportErrors) {
+bool LC_ActionDrawArc2PointsHeight::createArcData(RS_ArcData &data, [[maybe_unused]]int status, RS_Vector pos, bool alternate, [[maybe_unused]]bool reportErrors) {
 
     double chordLen = startPoint.distanceTo(pos);
     double arcHeight = parameterLen;

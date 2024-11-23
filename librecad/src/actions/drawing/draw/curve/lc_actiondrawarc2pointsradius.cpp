@@ -27,7 +27,7 @@ LC_ActionDrawArc2PointsRadius::LC_ActionDrawArc2PointsRadius(RS_EntityContainer 
     actionType = RS2::ActionDrawArc2PRadius;
 }
 
-bool LC_ActionDrawArc2PointsRadius::createArcData(RS_ArcData &data, int status, RS_Vector pos, bool alternate, bool reportErrors) {
+bool LC_ActionDrawArc2PointsRadius::createArcData(RS_ArcData &data, [[maybe_unused]]int status, RS_Vector pos, bool alternate, [[maybe_unused]]bool reportErrors) {
 
     double chordLen = startPoint.distanceTo(pos);
     double chordHalf = chordLen * 0.5;

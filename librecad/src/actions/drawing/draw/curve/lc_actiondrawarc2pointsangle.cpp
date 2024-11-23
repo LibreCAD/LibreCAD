@@ -29,7 +29,7 @@ LC_ActionDrawArc2PointsAngle::LC_ActionDrawArc2PointsAngle(RS_EntityContainer &c
     actionType = RS2::ActionDrawArc2PAngle;
 }
 
-bool LC_ActionDrawArc2PointsAngle::createArcData(RS_ArcData &data, int status, RS_Vector pos, bool alternate, bool reportErrors) {
+bool LC_ActionDrawArc2PointsAngle::createArcData(RS_ArcData &data, [[maybe_unused]]int status, RS_Vector pos, bool alternate, [[maybe_unused]]bool reportErrors) {
 
     double chordAngle = startPoint.angleTo(pos);
     double chordAngleNormal = chordAngle + M_PI_2;

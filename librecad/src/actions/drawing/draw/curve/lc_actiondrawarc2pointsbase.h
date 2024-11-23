@@ -62,7 +62,7 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    virtual void onMouseLeftButtonReleaseForNonPointsStatus(int status, RS_Vector vector, QMouseEvent *pEvent) {};
+    virtual void onMouseLeftButtonReleaseForNonPointsStatus([[maybe_unused]]int status, [[maybe_unused]]RS_Vector vector, [[maybe_unused]]QMouseEvent *pEvent) {};
     LC_ActionOptionsWidget *createOptionsWidget() override;
     RS_Arc *createArc(int status, RS_Vector vector, bool reverse, bool reportErrors = false);
     virtual bool createArcData(RS_ArcData &data, int status, RS_Vector vector, bool alternate, bool reportErrors = false) = 0;
