@@ -20,21 +20,42 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#ifndef LC_ACTIONSELECTPOINTS_H
-#define LC_ACTIONSELECTPOINTS_H
+#ifndef LC_ACTIONPASTETOPOINTS_H
+#define LC_ACTIONPASTETOPOINTS_H
 
-#include "rs_actionselectwindow.h"
+#include <QObject>
+#include "rs_previewactioninterface.h"
+#include "lc_actionpreselectionawarebase.h"
 
-class LC_ActionSelectPoints:public RS_ActionSelectWindow{
-   Q_OBJECT
+class LC_ActionPasteToPoints: public LC_ActionPreSelectionAwareBase{
+    Q_OBJECT
 public:
-    LC_ActionSelectPoints(RS_EntityContainer &container,
-                            RS_GraphicView &graphicView);
+    LC_ActionPasteToPoints(RS_EntityContainer &container,
+                           RS_GraphicView &graphicView);
 
-    ~LC_ActionSelectPoints() override = default;
+    double getAngle() const;
+    void setAngle(double angle);
+    double getScaleFactor() const;
+    void setScaleFactor(double scaleFactor);
+    bool isRemovePointAfterPaste() const;
+    void setRemovePointAfterPaste(bool removePointAfterPaste);
+
+    void trigger() override;
+
+    void init(int status) override;
 
 protected:
     LC_ActionOptionsWidget *createOptionsWidget() override;
+//    void selectionCompleted(bool singleEntity, bool fromInit) override;
+    bool isAllowTriggerOnEmptySelection() override;
+
+    bool isEntityAllowedToSelect(RS_Entity *ent) const override;
+
+    void updateMouseButtonHintsForSelection() override;
+
+    double angle = 0.0;
+    double scaleFactor = 1.0;
+    bool removePointAfterPaste = false;
 };
 
-#endif // LC_ACTIONSELECTPOINTS_H
+#endif // LC_ACTIONPASTETOPOINTS_H

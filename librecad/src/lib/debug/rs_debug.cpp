@@ -166,6 +166,7 @@ RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const void *ptr) {
 
 RS_Debug::LogStream &RS_Debug::LogStream::operator<<(const RS_Vector & v) {
     *m_pStream << "(" << v.x << "," << v.y <<  (v.valid ? ")" : "!)");
+    return *this;
 }
 // end of QTextStream delegation
 

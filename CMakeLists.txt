@@ -1320,6 +1320,10 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp
 		librecad/src/ui/action_options/point/lc_pointslatticeoptions.h
 		librecad/src/ui/action_options/point/lc_pointslatticeoptions.cpp
+		librecad/src/actions/drawing/draw/point/lc_actionpastetopoints.h
+		librecad/src/actions/drawing/draw/point/lc_actionpastetopoints.cpp
+		librecad/src/ui/action_options/point/lc_pastetopointsoptions.h
+		librecad/src/ui/action_options/point/lc_pastetopointsoptions.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

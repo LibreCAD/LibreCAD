@@ -25,8 +25,8 @@
 
 #include "rs_previewactioninterface.h"
 
-class LC_ActionDrawPointsLattice:public RS_PreviewActionInterface
-{
+class LC_ActionDrawPointsLattice:public RS_PreviewActionInterface{
+   Q_OBJECT
 public:
     LC_ActionDrawPointsLattice(RS_EntityContainer &container,
                                RS_GraphicView &graphicView);
@@ -40,7 +40,6 @@ public:
     QStringList getAvailableCommands() override;
     bool isAdjustLastPointToFirst() const;
     void setAdjustLastPointToFirst(bool adjustLastPointToFirst);
-
 protected:
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;

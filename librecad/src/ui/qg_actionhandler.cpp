@@ -215,6 +215,7 @@
 #include "lc_actiondrawarc2pointslength.h"
 #include "lc_actionselectpoints.h"
 #include "lc_actiondrawpointslattice.h"
+#include "lc_actionpastetopoints.h"
 
 /**
  * Constructor
@@ -364,6 +365,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionEditPasteTransform:
             a = new LC_ActionEditPasteTransform(*document, *view);
+            break;
+        case RS2::ActionPasteToPoints:
+            a = new LC_ActionPasteToPoints(*document, *view);
             break;
         case RS2::ActionOrderBottom:
             a = new RS_ActionOrder(*document, *view, RS2::ActionOrderBottom);

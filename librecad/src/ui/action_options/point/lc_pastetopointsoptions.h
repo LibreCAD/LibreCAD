@@ -20,21 +20,43 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#ifndef LC_ACTIONSELECTPOINTS_H
-#define LC_ACTIONSELECTPOINTS_H
+#ifndef LC_PASTETOPOINTSACTION_H
+#define LC_PASTETOPOINTSACTION_H
 
-#include "rs_actionselectwindow.h"
+#include <QWidget>
+#include "lc_actionpastetopoints.h"
+#include "lc_actionoptionswidgetbase.h"
 
-class LC_ActionSelectPoints:public RS_ActionSelectWindow{
-   Q_OBJECT
+namespace Ui {
+class LC_PasteToPointsOptions;
+}
+
+class LC_PasteToPointsOptions :public LC_ActionOptionsWidgetBase{
+    Q_OBJECT
+
 public:
-    LC_ActionSelectPoints(RS_EntityContainer &container,
-                            RS_GraphicView &graphicView);
+    explicit LC_PasteToPointsOptions();
+    ~LC_PasteToPointsOptions();
 
-    ~LC_ActionSelectPoints() override = default;
+protected slots:
+    void languageChange() override;
+    void onAngleEditingFinished();
+    void onFactorEditingFinished();
+    void onRemovePointsClicked(bool clicked);
 
 protected:
-    LC_ActionOptionsWidget *createOptionsWidget() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    void doSaveSettings() override;
+
+private:
+    Ui::LC_PasteToPointsOptions *ui;
+    LC_ActionPasteToPoints* action = nullptr;
+
+    void setAngleToActionAndView(QString val);
+    void setFactorToActionAndView(QString val);
+    void setRemovePointsToActionAndView(bool val);
 };
 
-#endif // LC_ACTIONSELECTPOINTS_H
+
+
+#endif // LC_PASTETOPOINTSACTION_H

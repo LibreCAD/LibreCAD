@@ -2895,9 +2895,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifySelectionBase</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyselectionbase.cpp" line="22"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyselectionbase.cpp" line="44"/>
         <source>No entity selected!</source>
         <translation type="unfinished">Nav izvēlētu objektu!</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionPasteToPoints</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="40"/>
+        <source>Clipboard is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="116"/>
+        <source>Select and paste</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9916,17 +9929,17 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1279"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1283"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1280"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1284"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1290"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1294"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>atsolis</translation>
