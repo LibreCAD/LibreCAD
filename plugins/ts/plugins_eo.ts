@@ -100,7 +100,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="46"/>
         <source>n</source>
-        <translation type="unfinished"></translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="60"/>
@@ -110,12 +110,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="67"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77"/>
@@ -125,7 +125,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="79"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Koloro</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="80"/>
@@ -152,7 +152,7 @@ first base, second base, first target, second target.</source>
         <location filename="../list/list.cpp" line="180"/>
         <location filename="../list/list.cpp" line="222"/>
         <source>in point</source>
-        <translation type="unfinished"></translation>
+        <translation>en punkto</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="94"/>
@@ -162,12 +162,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="99"/>
         <source>from point</source>
-        <translation type="unfinished"></translation>
+        <translation>de punkto</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="102"/>
         <source>to point</source>
-        <translation type="unfinished"></translation>
+        <translation>al punkto</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="107"/>
@@ -227,7 +227,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="141"/>
         <source>area</source>
-        <translation type="unfinished"></translation>
+        <translation>areo</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144"/>
@@ -277,12 +277,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nomo</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191"/>
         <source>Insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Enmeta punkto</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="194"/>
@@ -312,22 +312,22 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="215"/>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermita</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Jes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation type="unfinished"></translation>
+        <translation>Verticoj</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
