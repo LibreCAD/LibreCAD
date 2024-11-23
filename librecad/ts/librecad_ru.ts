@@ -8678,7 +8678,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/curve/lc_splineexplodeoptions.ui" line="83"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation>Если выбранно, то можно задасть количество сегментов между вершинами сплайна. 
+        <translation>Если выбранно, то можно задать количество сегментов между вершинами сплайна. 
 Иначе, будет использоваться значение из настроек чертежа.</translation>
     </message>
     <message>
