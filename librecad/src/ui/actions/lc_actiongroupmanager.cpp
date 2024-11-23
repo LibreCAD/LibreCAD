@@ -48,6 +48,7 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
     , info(new LC_ActionGroup(this,tr("Info"),tr("Informational commands"), ":/icons/measure.svg"))
     , layer(new LC_ActionGroup(this,tr("Layer"),tr("Layers operations"), ":/icons/deselect_layer.svg"))
     , line(new LC_ActionGroup(this,tr("Line"),tr("Line drawing commands"), ":/icons/line.svg"))
+    , point(new LC_ActionGroup(this,tr("Point"),tr("Point drawing commands"), ":/icons/points.svg"))
     , shape(new LC_ActionGroup(this,tr("Polygon"),tr("Polygon drawing commands"), ":/icons/rectangle_2_points.svg"))
     , modify(new LC_ActionGroup(this,tr("Modify"), tr("Modification operations"), ":/icons/move_rotate.svg"))
     , options(new LC_ActionGroup(this,tr("Options"),tr("Options management"), ":/icons/settings.svg"))
@@ -92,6 +93,7 @@ QList<LC_ActionGroup *> LC_ActionGroupManager::toolGroups() {
             << dimension
             << info
             << line
+            << point
             << shape
             << modify
             << other

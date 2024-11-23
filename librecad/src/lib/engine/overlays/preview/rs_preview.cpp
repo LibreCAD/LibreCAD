@@ -72,11 +72,14 @@ void RS_Preview::addEntity(RS_Entity* entity) {
             refEntity = true;
             break;
         }
+        // todo - sand - hm... spline and texts are not included into limit of preview entities?
         case RS2::EntitySpline:
             break;
         case RS2::EntityMText:
             break;
         case RS2::EntityText:
+            break;
+        case RS2::EntityPoint:
             break;
         default: {
             if (entity->isContainer()) {
@@ -213,4 +216,8 @@ void RS_Preview::addReferenceEntitiesToContainer(RS_EntityContainer *container){
     for (auto en: std::as_const(referenceEntities)){
         container->addEntity(en);
     }
+}
+
+int RS_Preview::getMaxAllowedEntities() {
+    return maxEntities;
 }

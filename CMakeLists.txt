@@ -69,6 +69,7 @@ include_directories(librecad/src/actions/drawing/draw/line/shapes/polygon)
 include_directories(librecad/src/actions/drawing/draw/circle)
 include_directories(librecad/src/actions/drawing/draw/curve)
 include_directories(librecad/src/actions/drawing/draw/polyline)
+include_directories(librecad/src/actions/drawing/draw/point)
 include_directories(librecad/src/actions/drawing/draw/ellipse)
 include_directories(librecad/src/actions/drawing/draw/dimensions)
 include_directories(librecad/src/actions/drawing/draw/text)
@@ -155,6 +156,7 @@ include_directories(librecad/src/ui/action_options/select)
 include_directories(librecad/src/ui/action_options/line)
 include_directories(librecad/src/ui/action_options/circle)
 include_directories(librecad/src/ui/action_options/polyline)
+include_directories(librecad/src/ui/action_options/point)
 include_directories(librecad/src/ui/action_options/curve)
 include_directories(librecad/src/ui/action_options/ellipse)
 include_directories(librecad/src/ui/action_options/dimensions)
@@ -1312,6 +1314,12 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp
 		librecad/src/ui/action_options/selection/lc_selectwindowoptions.h
 		librecad/src/ui/action_options/selection/lc_selectwindowoptions.cpp
+		librecad/src/actions/drawing/draw/point/lc_actionselectpoints.h
+		librecad/src/actions/drawing/draw/point/lc_actionselectpoints.cpp
+		librecad/src/actions/drawing/draw/point/lc_actiondrawpointslattice.h
+		librecad/src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp
+		librecad/src/ui/action_options/point/lc_pointslatticeoptions.h
+		librecad/src/ui/action_options/point/lc_pointslatticeoptions.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

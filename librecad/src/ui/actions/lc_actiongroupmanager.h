@@ -28,6 +28,7 @@ public:
     LC_ActionGroup* info;
     LC_ActionGroup* layer;
     LC_ActionGroup* line;
+    LC_ActionGroup* point;
     LC_ActionGroup* shape;
     LC_ActionGroup* modify;
     LC_ActionGroup* options;

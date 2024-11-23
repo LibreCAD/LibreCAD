@@ -45,6 +45,7 @@ public:
 private:
 
     void createDrawLineActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createDrawPointsActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createDrawShapeActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createInfoActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createViewActions(QMap<QString, QAction *> &map, QActionGroup *group);

@@ -285,5 +285,8 @@
         <file>spline_explode.svg</file>
         <file>spline_from_polyline.svg</file>
         <file>spline_points_remove_two.svg</file>
+        <file>points_lattice.svg</file>
+        <file>select_points.svg</file>
+        <file>paste_to_points.svg</file>
     </qresource>
 </RCC>

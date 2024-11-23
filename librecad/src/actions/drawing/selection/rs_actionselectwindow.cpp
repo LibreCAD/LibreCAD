@@ -67,11 +67,12 @@ RS_ActionSelectWindow::RS_ActionSelectWindow(
     , select(select)
 {
     actionType=RS2::ActionSelectWindow;
-    if (typeToSelect == RS2::EntityUnknown){ //todo - actually, this is support of selection from plugin, code here is just to back compatibility
+    if (typeToSelect == RS2::EntityUnknown){
         setSelectAllEntityTypes(true);
     }
     else{
         entityTypesToSelect.append(typeToSelect);
+        setSelectAllEntityTypes(false);
     }
 }
 

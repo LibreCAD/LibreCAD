@@ -149,6 +149,7 @@ INCLUDEPATH += \
     actions/drawing/draw/hatch \
     actions/drawing/draw/image \
     actions/drawing/draw/line \
+    actions/drawing/draw/point \
     actions/drawing/draw/line/shapes \
     actions/drawing/draw/line/shapes/rect \
     actions/drawing/draw/line/shapes/polygon \
@@ -179,6 +180,7 @@ INCLUDEPATH += \
     ui/action_options/ellipse \
     ui/action_options/other \
     ui/action_options/polyline \
+    ui/action_options/point \
     ui/action_options/print_preview \
     ui/action_options/selection \
     ui/action_options/snap \
@@ -252,6 +254,8 @@ HEADERS += \
     actions/drawing/draw/dimensions/lc_actioncircledimbase.h \
     actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.h \
     actions/drawing/draw/ellipse/lc_actiondrawellipse1point.h \
+    actions/drawing/draw/point/lc_actiondrawpointslattice.h \
+    actions/drawing/draw/point/lc_actionselectpoints.h \
     actions/drawing/draw/polyline/lc_actionpolylinearcstolines.h \
     actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.h \
     lib/engine/overlays/highlight/lc_highlight.h \
@@ -343,6 +347,7 @@ HEADERS += \
     ui/action_options/curve/lc_actiondrawarc2poptions.h \
     ui/action_options/curve/lc_splineexplodeoptions.h \
     ui/action_options/curve/lc_splinefrompolylineoptions.h \
+    ui/action_options/point/lc_pointslatticeoptions.h \
     ui/action_options/selection/lc_selectwindowoptions.h \
     ui/components/status_bar/lc_qtstatusbarmanager.h \
     ui/dialogs/main/lc_dlgabout.h \
@@ -405,6 +410,8 @@ SOURCES += \
     actions/drawing/draw/curve/lc_actionsplineexplode.cpp \
     actions/drawing/draw/curve/lc_actionsplinefrompolyline.cpp \
     actions/drawing/draw/curve/lc_actionsplineremovebetween.cpp \
+    actions/drawing/draw/point/lc_actiondrawpointslattice.cpp \
+    actions/drawing/draw/point/lc_actionselectpoints.cpp \
     ui/action_options/curve/lc_actiondrawarc2poptions.cpp \
     ui/action_options/curve/lc_splineexplodeoptions.cpp \
     ui/action_options/curve/lc_splinefrompolylineoptions.cpp \
@@ -490,6 +497,7 @@ SOURCES += \
     lib/filters/rs_filterlff.cpp \
     #lib/gui/no_used/rs_painterold.cpp \
    # lib/gui/no_used/rs_painterqtold.cpp \
+    ui/action_options/point/lc_pointslatticeoptions.cpp \
     ui/action_options/selection/lc_selectwindowoptions.cpp \
     ui/components/status_bar/lc_qtstatusbarmanager.cpp \
     ui/dialogs/main/lc_dlgabout.cpp \
@@ -1324,6 +1332,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/action_options/modify/qg_moverotateoptions.ui \
        ui/action_options/modify/qg_roundoptions.ui \
        ui/action_options/modify/qg_trimamountoptions.ui \
+       ui/action_options/point/lc_pointslatticeoptions.ui \
        ui/action_options/polyline/qg_polylineequidistantoptions.ui \
        ui/action_options/polyline/qg_polylineoptions.ui \
        ui/action_options/print_preview/qg_printpreviewoptions.ui \

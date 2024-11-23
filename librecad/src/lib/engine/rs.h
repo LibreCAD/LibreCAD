@@ -331,6 +331,10 @@ namespace RS2 {
         ActionDrawSliceDivideLine,
         ActionDrawSliceDivideCircle,
         ActionDrawLinePoints,
+        ActionDrawPointsLattice,
+        ActionSelectPoints,
+        ActionPasteToPoints,
+
         ActionDrawStar,
 
         ActionPolylineAdd,

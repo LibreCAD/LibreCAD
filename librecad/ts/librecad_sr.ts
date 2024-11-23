@@ -850,6 +850,65 @@ or [%2]</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionDrawPointsLattice</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="183"/>
+        <source>Second point is too close to the first one</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="194"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="205"/>
+        <source>Third point is too close to the second one</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="251"/>
+        <source>Invalid value provided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="269"/>
+        <source>Specify first point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="273"/>
+        <source>Specify second point</source>
+        <translation type="unfinished">Одредите другу тачку</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="277"/>
+        <source>Specify third point</source>
+        <translation type="unfinished">Одредите трећу тачку</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="281"/>
+        <source>Specify fourth point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="281"/>
+        <source>Last point position is un-adjusted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="282"/>
+        <source>Last point position is adjusted to first</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="286"/>
+        <source>Enter number of points by X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="290"/>
+        <source>Enter number of points by Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawRectangle1Point</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle1point.cpp" line="352"/>
@@ -1084,52 +1143,52 @@ or [%2]</source>
 <context>
     <name>LC_ActionFactory</name>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="378"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="387"/>
         <source>&amp;Window Zoom</source>
         <translation>&amp;Прозорско увећање</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="238"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="247"/>
         <source>Zoom &amp;Panning</source>
         <translation>Увећање и &amp;Померање</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="150"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="159"/>
         <source>Select Entity</source>
         <translation>Изаберите Ентитет</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="151"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="160"/>
         <source>Select Window</source>
         <translation>Изаберите прозор</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="152"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="161"/>
         <source>Deselect Window</source>
         <translation>Искључите Прозор из одабира</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="153"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="162"/>
         <source>(De-)Select &amp;Contour</source>
         <translation>(Де-)селектовати &amp;Контуру</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="154"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="163"/>
         <source>Select Intersected Entities</source>
         <translation>Одаберите Ентитете који се секу</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="155"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="164"/>
         <source>Deselect Intersected Entities</source>
         <translation>Поништите одабир Ентитета који се секу</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="156"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="165"/>
         <source>(De-)Select Layer</source>
         <translation>(Де-)Селектујте Слој</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="121"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="149"/>
         <source>&amp;Points</source>
         <translation>&amp;Тачке</translation>
     </message>
@@ -1145,7 +1204,7 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="124"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="250"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="259"/>
         <source>&amp;Horizontal</source>
         <translation>&amp;Хоризонтала</translation>
     </message>
@@ -1170,7 +1229,7 @@ or [%2]</source>
         <translation>Паралела кроз тачку</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="108"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="109"/>
         <source>Rectangle</source>
         <translation>Правоугаоник</translation>
     </message>
@@ -1205,12 +1264,12 @@ or [%2]</source>
         <translation>Релативни угао</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="109"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="110"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
         <translation>Пол&amp;игон (цен,тач)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="111"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="112"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
         <translation>Полиго&amp;н (лин,лин)</translation>
     </message>
@@ -1230,22 +1289,22 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="113"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="114"/>
         <source>Rectangle (1 Point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="114"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="115"/>
         <source>Rectangle (2 Points)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="115"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="116"/>
         <source>Rectangle (3 Points)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="112"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="113"/>
         <source>Star</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1280,48 +1339,48 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="144"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="150"/>
         <source>Line of Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="162"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="171"/>
         <source>Center, &amp;Point</source>
         <translation>Центар, &amp;Тачка</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="163"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="172"/>
         <source>By Arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="164"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="173"/>
         <source>Center, &amp;Radius</source>
         <translation>Центар, &amp;Полупречник</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="165"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="174"/>
         <source>2 Points</source>
         <translation>2 тачке</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="166"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="175"/>
         <source>2 Points, Radius</source>
         <translation>2 тачке, полупречник</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="167"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="176"/>
         <source>3 Points</source>
         <translation>3 тачке</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="168"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="187"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="177"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="196"/>
         <source>&amp;Concentric</source>
         <translation>&amp;Концентрични</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="169"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="178"/>
         <source>Circle &amp;Inscribed</source>
         <translation>&amp;Уписани круг</translation>
     </message>
@@ -1331,107 +1390,107 @@ or [%2]</source>
         <translation type="vanished">2 тангентна круга, полупречник</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="171"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="180"/>
         <source>Tangential 2 Circles, 1 Point</source>
         <translation>2 Тангенцијална круга, 1 Тачка</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="172"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="181"/>
         <source>Tangential &amp;3 Circles</source>
         <translation>Тангентно &amp;3 круга</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="173"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="182"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation>Тангентно, 2 Т&amp;ачке</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="179"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="188"/>
         <source>&amp;Center, Point, Angles</source>
         <translation>&amp;Центар, Тачка, Углови</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="182"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="191"/>
         <source>&amp;3 Points</source>
         <translation>&amp;3 Тачке</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="188"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="197"/>
         <source>Arc &amp;Tangential</source>
         <translation>Лук и &amp;Тангента</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="212"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="221"/>
         <source>&amp;Ellipse (Axis)</source>
         <translation>&amp;Елипса (Осе)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="213"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="222"/>
         <source>Ellipse &amp;Arc (Axis)</source>
         <translation>Елиптични &amp;Лук (Осе)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="214"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="223"/>
         <source>Ellipse &amp;Foci Point</source>
         <translation>Елипса (&amp;Фокалне тачке)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="215"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="224"/>
         <source>Ellipse &amp;4 Point</source>
         <translation>Елипса &amp;4 Тачке</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="216"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="225"/>
         <source>Ellipse Center and &amp;3 Points</source>
         <translation>Елипса Центар и &amp;3 Тачке</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="217"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="226"/>
         <source>Ellipse &amp;Inscribed</source>
         <translation>&amp;Уписана елипса</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="197"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="206"/>
         <source>&amp;Spline</source>
         <translation>&amp;Сплајн</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="198"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="207"/>
         <source>&amp;Spline through points</source>
         <translation>&amp;Сплајн кроз тачке</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="223"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="232"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Полилинија</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="224"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="233"/>
         <source>&amp;Add node</source>
         <translation>&amp;Додај чвор</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="225"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="234"/>
         <source>A&amp;ppend node</source>
         <translation>&amp;Надовежи чвор</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="226"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="235"/>
         <source>&amp;Delete node</source>
         <translation>&amp;Обриши чвор</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="227"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="236"/>
         <source>Delete &amp;between two nodes</source>
         <translation>Обриши &amp;између два чвора</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="228"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="237"/>
         <source>&amp;Trim segments</source>
         <translation>О&amp;дсеци сегменте</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="229"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="238"/>
         <source>Create &amp;Equidistant Polylines</source>
         <translation>Направи &amp;Еквидистантне полилиније</translation>
     </message>
@@ -1440,67 +1499,67 @@ or [%2]</source>
         <translation type="vanished">Сачини полилинију од постојећих &amp;сегмената</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="239"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="248"/>
         <source>&amp;MText</source>
         <translation>&amp;МТекст</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="240"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="249"/>
         <source>&amp;Text</source>
         <translation>&amp;Текст</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="241"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="250"/>
         <source>&amp;Hatch</source>
         <translation>&amp;Шрафура</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="242"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="251"/>
         <source>Insert &amp;Image</source>
         <translation>Убаци &amp;Слику</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="248"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="257"/>
         <source>&amp;Aligned</source>
         <translation>&amp;Поравнато</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="249"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="258"/>
         <source>&amp;Linear</source>
         <translation>&amp;Линеарно</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="251"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="260"/>
         <source>&amp;Vertical</source>
         <translation>&amp;Вертикално</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="252"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="261"/>
         <source>&amp;Radial</source>
         <translation>&amp;Радијално</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="253"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="262"/>
         <source>&amp;Diametric</source>
         <translation>&amp;Пречник</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="254"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="263"/>
         <source>&amp;Angular</source>
         <translation>&amp;Угаона</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="256"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="265"/>
         <source>&amp;Leader</source>
         <translation>&amp;Ознака</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="270"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="279"/>
         <source>&amp;Attributes</source>
         <translation>&amp;Својства</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="271"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="280"/>
         <source>&amp;Delete</source>
         <translation>&amp;Обриши</translation>
     </message>
@@ -1509,102 +1568,102 @@ or [%2]</source>
         <translation type="vanished">Обриши слободоручно</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="272"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="281"/>
         <source>&amp;Move / Copy</source>
         <translation>&amp;Премести / Умножи</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="273"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="282"/>
         <source>Re&amp;vert direction</source>
         <translation>О&amp;брни смер</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="559"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="568"/>
         <source>Ctrl+R</source>
         <translation>Контр+Р</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="274"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="283"/>
         <source>&amp;Rotate</source>
         <translation>&amp;Ротирај</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="185"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="194"/>
         <source>&amp;2 Points, Length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="186"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="195"/>
         <source>&amp;2 Points, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="231"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="240"/>
         <source>Polyline Arcs to Chords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="275"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="284"/>
         <source>&amp;Scale</source>
         <translation>&amp;Скалирај</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="276"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="285"/>
         <source>&amp;Mirror</source>
         <translation>&amp;У огледалу</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="278"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="287"/>
         <source>Rotate T&amp;wo</source>
         <translation>Обрни Д&amp;ва</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="279"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="288"/>
         <source>&amp;Properties</source>
         <translation>&amp;Својства</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="280"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="289"/>
         <source>&amp;Trim</source>
         <translation>С&amp;крати</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="282"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="291"/>
         <source>&amp;Lengthen</source>
         <translation>П&amp;родужи</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="284"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="293"/>
         <source>&amp;Divide</source>
         <translation>П&amp;одели</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="285"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="294"/>
         <source>&amp;Stretch</source>
         <translation>&amp;Развуци</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="286"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="295"/>
         <source>&amp;Bevel</source>
         <translation>&amp;Заобли</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="287"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="296"/>
         <source>&amp;Fillet</source>
         <translation>З&amp;аокругли</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="288"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="297"/>
         <source>&amp;Explode Text into Letters</source>
         <translation>Рас&amp;тури текст у слова</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="363"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="372"/>
         <source>Point inside contour</source>
         <translation>Тачка унутар контуре</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="364"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="373"/>
         <source>&amp;Distance Point to Point</source>
         <translation>&amp;Растојање Тачке до тачке</translation>
     </message>
@@ -1613,7 +1672,7 @@ or [%2]</source>
         <translation type="vanished">&amp;Растијање Ентитета од Тачке</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="367"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="376"/>
         <source>An&amp;gle between two lines</source>
         <translation>&amp;Угао између две линије</translation>
     </message>
@@ -1622,7 +1681,7 @@ or [%2]</source>
         <translation type="vanished">Укупна &amp;дужина изабраних ентитета</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="369"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="378"/>
         <source>Polygonal &amp;Area</source>
         <translation>Полигона &amp;Површина</translation>
     </message>
@@ -1631,407 +1690,422 @@ or [%2]</source>
         <translation type="vanished">&amp;Показивач избора</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="521"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="530"/>
         <source>&amp;Undo</source>
         <translation>&amp;Опозови</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="522"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="531"/>
         <source>&amp;Redo</source>
         <translation>&amp;Понови</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="523"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="532"/>
         <source>Cu&amp;t</source>
         <translation>&amp;Исеци</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="525"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="534"/>
         <source>&amp;Copy</source>
         <translation>&amp;Умножи</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="527"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="536"/>
         <source>&amp;Paste</source>
         <translation>&amp;Налепи</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="354"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="363"/>
         <source>move to bottom</source>
         <translation>премести на дно</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="170"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="151"/>
+        <source>Lattice of Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="152"/>
+        <source>Select Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="153"/>
+        <source>Paste to Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="179"/>
         <source>Tangential 2 Circles, Radius</source>
         <translation type="unfinished">2 тангентна круга, полупречник</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="180"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="189"/>
         <source>&amp;Center, Point, Chord</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="181"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="190"/>
         <source>&amp;Center, Point, Arc Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="183"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="192"/>
         <source>&amp;2 Points, Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="184"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="193"/>
         <source>&amp;2 Points, Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="195"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="204"/>
         <source>Para&amp;bola 4 points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="196"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="205"/>
         <source>Parabola &amp;Focus Directrix</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="200"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="209"/>
         <source>&amp;Remove spline points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="202"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="211"/>
         <source>&amp;Explode spline to lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="203"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="212"/>
         <source>&amp;Spline from polyline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="204"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="213"/>
         <source>&amp;Remove between two points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="210"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="219"/>
         <source>&amp;Ellipse (1 Point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="211"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="220"/>
         <source>&amp;Ellipse Arc (1 Point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="230"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="239"/>
         <source>Polyline from Existing &amp;Segments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="232"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="241"/>
         <source>Polyline Change Segment Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="257"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="266"/>
         <source>&amp;Baseline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="258"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="267"/>
         <source>&amp;Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="290"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="299"/>
         <source>Break/Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="291"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="300"/>
         <source>Line Gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="292"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="301"/>
         <source>Line Join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="293"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="302"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="299"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="308"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="305"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="314"/>
         <source>&amp;Pick Pen From Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="315"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="307"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="316"/>
         <source>Apply Pen to Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="308"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="317"/>
         <source>Copy Pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="314"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="323"/>
         <source>Snap on grid</source>
         <translation type="unfinished">наведи на мрежу</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="315"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="324"/>
         <source>Snap Middle Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="316"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="325"/>
         <source>Snap on Endpoints</source>
         <translation type="unfinished">наведи на крајње тачке</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="317"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="326"/>
         <source>Snap on Entity</source>
         <translation type="unfinished">наведи на ентитет</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="318"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="327"/>
         <source>Snap Center</source>
         <translation type="unfinished">наведи на центар</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="319"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="328"/>
         <source>Snap Middle</source>
         <translation type="unfinished">наведи на средину</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="320"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="329"/>
         <source>Snap Distance</source>
         <translation type="unfinished">наведи према растојању</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="321"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="330"/>
         <source>Snap Intersection</source>
         <translation type="unfinished">наведи на пресек</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="327"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="336"/>
         <source>Restrict Horizontal</source>
         <translation type="unfinished">ограничи хоризонтално</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="328"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="337"/>
         <source>Restrict Vertical</source>
         <translation type="unfinished">ограничи вертикално</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="329"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="338"/>
         <source>Restrict Orthogonal</source>
         <translation type="unfinished">ограничи правоугаоно</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="330"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="339"/>
         <source>Restrict Nothing</source>
         <translation type="unfinished">не ограничавај ништа</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="336"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="345"/>
         <source>Set relative zero position</source>
         <translation type="unfinished">постави место релативне нуле</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="337"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="346"/>
         <source>Lock relative zero position</source>
         <translation type="unfinished">Закључај место релативне нуле</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="346"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="355"/>
         <source>Exclusive Snap Mode</source>
         <translation type="unfinished">режим ексклузивног навођења</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="347"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="356"/>
         <source>Free Snap</source>
         <translation type="unfinished">слободно навођење</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="355"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="364"/>
         <source>lower after entity</source>
         <translation>спусти испод ентитета</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="356"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="365"/>
         <source>raise over entity</source>
         <translation>подигни изнад ентитета</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="357"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="366"/>
         <source>move to top</source>
         <translation>премести на врх</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="365"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="374"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="366"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="375"/>
         <source>Distance &amp;Point to Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="368"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="377"/>
         <source>Total &amp;length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="370"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="379"/>
         <source>Entity Pro&amp;perties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="371"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="380"/>
         <source>Collect &amp;Coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="372"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="381"/>
         <source>Ang&amp;le between 3 points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="384"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="393"/>
         <source>&amp;Draft Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="385"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="394"/>
         <source>&amp;Antialiasing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="387"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="396"/>
         <source>&amp;Orthogonal Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="388"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="397"/>
         <source>&amp;Isometric Left Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="389"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="398"/>
         <source>&amp;Isometric Top Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="390"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="399"/>
         <source>&amp;Isometric Right Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="400"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="409"/>
         <source>&amp;Add Layer</source>
         <translation>&amp;Додај слој</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="401"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="410"/>
         <source>&amp;Remove Layer</source>
         <translation>&amp;Уклони слој</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="402"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="411"/>
         <source>&amp;Edit Layer</source>
         <translation>У&amp;реди слој</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="403"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="412"/>
         <source>Toggle Layer Loc&amp;k</source>
         <translation>Измени &amp;закључавање слоја</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="413"/>
         <source>&amp;Toggle Layer Visibility</source>
         <translation>Измени &amp;видљивост слоја</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="405"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="414"/>
         <source>Toggle Layer &amp;Print</source>
         <translation>Измени &amp;штампање слоја</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="406"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="415"/>
         <source>Toggle &amp;Construction Layer</source>
         <translation>Измени &amp;конструктивни слој</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="416"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="425"/>
         <source>&amp;Add Block</source>
         <translation>&amp;Додај блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="417"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="426"/>
         <source>&amp;Remove Block</source>
         <translation>&amp;Уклони блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="418"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="427"/>
         <source>&amp;Rename Block</source>
         <translation>&amp;Преименуј блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="419"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="428"/>
         <source>&amp;Edit Block</source>
         <translation>&amp;Уреди блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="420"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="429"/>
         <source>&amp;Save Block</source>
         <translation>&amp;Сачувај блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="421"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="430"/>
         <source>&amp;Insert Block</source>
         <translation>&amp;Убаци блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="422"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="431"/>
         <source>Toggle Block &amp;Visibility</source>
         <translation>&amp;Измени видљивост блока</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="423"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="432"/>
         <source>&amp;Create Block</source>
         <translation>&amp;Направи блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="289"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="298"/>
         <source>Ex&amp;plode</source>
         <translation>Рас&amp;формирај</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="433"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="442"/>
         <source>&amp;Application Preferences</source>
         <translation>&amp;Поставке Апликације</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="429"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="438"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>Поставке &amp;Тренутног цртежа</translation>
     </message>
@@ -2040,365 +2114,365 @@ or [%2]</source>
         <translation type="vanished">&amp;Обриши изабрано</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="513"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="522"/>
         <source>Select &amp;All</source>
         <translation>Изабери &amp;Све</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="514"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="523"/>
         <source>Deselect &amp;all</source>
         <translation>&amp;Искључи одабир свега</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="567"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="576"/>
         <source>Ctrl+K</source>
         <translation>Контр+К</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="515"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="524"/>
         <source>Invert Selection</source>
         <translation>Обрни одабир</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="487"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="496"/>
         <source>Focus on &amp;Options Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="490"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="499"/>
         <source>Zoom &amp;In</source>
         <translation>&amp;Увеличај</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="491"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="500"/>
         <source>Zoom &amp;Out</source>
         <translation>У&amp;мањи</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="492"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="501"/>
         <source>&amp;Auto Zoom</source>
         <translation>&amp;Аутоматско увеличање</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="493"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="502"/>
         <source>Previous &amp;View</source>
         <translation>Претходни &amp;поглед</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="494"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
         <source>&amp;Redraw</source>
         <translation>&amp;Исцртај поново</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="454"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="463"/>
         <source>&amp;New</source>
         <translation>&amp;Нови</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="455"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="464"/>
         <source>New From &amp;Template</source>
         <translation>Нови из &amp;Обрасца</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="456"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="465"/>
         <source>&amp;Open...</source>
         <translation>О&amp;твори...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="457"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="466"/>
         <source>&amp;Save</source>
         <translation>&amp;Сачувај</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="458"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="467"/>
         <source>Save &amp;as...</source>
         <translation>Сачувај &amp;као...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="449"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="458"/>
         <source>&amp;Export as image</source>
         <translation>&amp;Извези као слику</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="450"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="459"/>
         <source>&amp;Close</source>
         <translation>&amp;Затвори</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="460"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="469"/>
         <source>&amp;Print...</source>
         <translation>&amp;Штампај...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="452"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="461"/>
         <source>Export as PDF</source>
         <translation>Извези кадо ПДФ</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="443"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="452"/>
         <source>Print Pre&amp;view</source>
         <translation>Пре&amp;глед штампе</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="461"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="470"/>
         <source>&amp;Quit</source>
         <translation>&amp;Напусти</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="453"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="462"/>
         <source>&amp;Block</source>
         <translation>&amp;Блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="381"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="390"/>
         <source>&amp;Fullscreen</source>
         <translation>&amp;Целоекрански начин</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="382"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="391"/>
         <source>&amp;Grid</source>
         <translation>&amp;Подела</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="584"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="593"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation>Контрл+П</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="383"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="392"/>
         <source>&amp;Draft</source>
         <translation>&amp;Нацрт</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="386"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="395"/>
         <source>&amp;Statusbar</source>
         <translation>&amp;Статусна трака</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="587"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="596"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
         <translation>Контр+И</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="486"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="495"/>
         <source>Focus on &amp;Command Line</source>
         <translation>Фокус на &amp;Командну линију</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="434"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="443"/>
         <source>Widget Options</source>
         <translation>Опције виџета</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="469"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="478"/>
         <source>Left</source>
         <translation>Лево</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="470"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="479"/>
         <source>Right</source>
         <translation>Десно</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="471"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="480"/>
         <source>Top</source>
         <translation>Горе</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="472"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="481"/>
         <source>Bottom</source>
         <translation>Доле</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="473"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="482"/>
         <source>Floating</source>
         <translation>Плутајући</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="437"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="446"/>
         <source>Reload Style Sheet</source>
         <translation>Поново учитај стилове</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="436"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="445"/>
         <source>Device Options</source>
         <translation>Опције Уређаја</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="277"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="286"/>
         <source>Mo&amp;ve and Rotate</source>
         <translation>По&amp;мери и ротирај</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="199"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="208"/>
         <source>&amp;Append spline point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="201"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="210"/>
         <source>&amp;Insert spline points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="281"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="290"/>
         <source>Tr&amp;im Two</source>
         <translation>&amp;Исеци два</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="283"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="292"/>
         <source>O&amp;ffset</source>
         <translation>О&amp;дстојање</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="480"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="489"/>
         <source>Menu Creator</source>
         <translation>Креатор Менија</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="481"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="490"/>
         <source>Toolbar Creator</source>
         <translation>Креатор Трака са алаткама</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="500"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="509"/>
         <source>&amp;Save View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="502"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
         <source>Restore Current View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="512"/>
         <source>Restore View 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="504"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="513"/>
         <source>Restore View 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="505"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="514"/>
         <source>Restore View 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="506"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="515"/>
         <source>Restore View 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="507"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="516"/>
         <source>Restore View 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="524"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="533"/>
         <source>Cut Quic&amp;k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="526"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="535"/>
         <source>Copy &amp;Quick</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="528"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="537"/>
         <source>Paste &amp;Transform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="529"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="538"/>
         <source>&amp;Delete Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="530"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="539"/>
         <source>&amp;Selection Pointer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="586"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="595"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
         <translation>Контрл+Д</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="110"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="111"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
         <translation>Пол&amp;игон (Цен, Тан)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="255"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="264"/>
         <source>&amp;Arc</source>
         <translation>&amp;Лук</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="396"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="405"/>
         <source>&amp;Show all layers</source>
         <translation>&amp;Прикажи све слојеве</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="397"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="406"/>
         <source>&amp;Hide all layers</source>
         <translation>&amp;Склони све слојеве</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="398"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="407"/>
         <source>&amp;Unlock all</source>
         <translation>&amp;Откључај све</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="399"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="408"/>
         <source>&amp;Lock all</source>
         <translation>&amp;Закључај све</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="407"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="416"/>
         <source>&amp;Export Selected Layer(s)</source>
         <translation>И&amp;звези одабране слојеве</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="408"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="417"/>
         <source>Export &amp;Visible Layer(s)</source>
         <translation>Извези &amp;Видљиви слој</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="414"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="423"/>
         <source>&amp;Show all blocks</source>
         <translation>&amp;Прикажи све блокове</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="415"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="424"/>
         <source>&amp;Hide all blocks</source>
         <translation>&amp;Сакриј све блокове</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="435"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="444"/>
         <source>Keyboard Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="464"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="473"/>
         <source>Export as CA&amp;M/plain SVG...</source>
         <translation>Извези као КА&amp;М/обични СВГ...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="451"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="460"/>
         <source>Close All</source>
         <translation>Затвори све</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="479"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="488"/>
         <source>Re-dock Widgets</source>
         <translation>Поново приклони виџете</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="459"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="468"/>
         <source>Save A&amp;ll...</source>
         <translation>Сачувај &amp;Све...</translation>
     </message>
@@ -2529,131 +2603,141 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="51"/>
+        <source>Point</source>
+        <translation type="unfinished">Тачка</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="51"/>
+        <source>Point drawing commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="52"/>
         <source>Polygon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="51"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="52"/>
         <source>Polygon drawing commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="52"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="53"/>
         <source>Modify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="52"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="53"/>
         <source>Modification operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="53"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="54"/>
         <source>Options</source>
         <translation type="unfinished">Опције</translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="53"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="54"/>
         <source>Options management</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="54"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="55"/>
         <source>Other</source>
         <translation type="unfinished">Друго</translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="54"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="55"/>
         <source>Other operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="55"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="56"/>
         <source>Polyline</source>
         <translation type="unfinished">Полилинија</translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="55"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="56"/>
         <source>Polyline drawing commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="56"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="57"/>
         <source>Restriction</source>
         <translation type="unfinished">Ограничење</translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="56"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="57"/>
         <source>Snap restrictions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="57"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="58"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="57"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="58"/>
         <source>Entity selection operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="58"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="59"/>
         <source>Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="58"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="59"/>
         <source>Snapping operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="59"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="60"/>
         <source>Snap Extras</source>
         <translation type="unfinished">Додатни одабири тачке</translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="59"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="60"/>
         <source>Additional Snaps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="60"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="61"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="60"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="61"/>
         <source>View related operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="61"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="62"/>
         <source>Named Views</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="61"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="62"/>
         <source>Persistent Views operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="62"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="63"/>
         <source>Widgets</source>
         <translation type="unfinished">Виџети</translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="62"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="63"/>
         <source>Widgets management</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="63"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="64"/>
         <source>PenTB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="63"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="64"/>
         <source>Pen related operations</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6461,6 +6545,44 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
 </context>
 <context>
+    <name>LC_PointsLatticeOptions</name>
+    <message>
+        <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Образац</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="32"/>
+        <source>Number of points by lattice Y direction (count of lattice rows)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="42"/>
+        <source>Rows Count:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="49"/>
+        <source>Columns Count:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="56"/>
+        <source>Number of points by X lattice direction (count of lattice columns)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="66"/>
+        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="69"/>
+        <source>Adjust last point to first</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_QTStatusbarManager</name>
     <message>
         <location filename="../src/ui/components/status_bar/lc_qtstatusbarmanager.cpp" line="36"/>
@@ -8568,27 +8690,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_WidgetFactory</name>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="453"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="461"/>
         <source>Library Browser</source>
         <translation>Прегледач Библиотеке</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="465"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="473"/>
         <source>Command line</source>
         <translation>Командна линија</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="491"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="499"/>
         <source>Dock</source>
         <translation>Док</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="491"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="499"/>
         <source>Float</source>
         <translation>Плутај</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="602"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="612"/>
         <source>Lines</source>
         <translation>Линије</translation>
     </message>
@@ -8601,37 +8723,37 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Слободоручно</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="607"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="618"/>
         <source>Ellipses</source>
         <translation>Елипсе</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="608"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="619"/>
         <source>PolyLines</source>
         <translation>ПолиЛиније</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="358"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="578"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="609"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="365"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="587"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="620"/>
         <source>Select</source>
         <translation>Одабери</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="351"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="571"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="357"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="579"/>
         <source>Line</source>
         <translation type="unfinished">Линија</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="352"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="572"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="359"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="581"/>
         <source>Polygon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="353"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="573"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="360"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="582"/>
         <source>Circle</source>
         <translation type="unfinished">Круг</translation>
     </message>
@@ -8640,210 +8762,226 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Крива</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="356"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="576"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="363"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="585"/>
         <source>Ellipse</source>
         <translation type="unfinished">Елипса</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="357"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="577"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="364"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="586"/>
         <source>Polyline</source>
         <translation type="unfinished">Полилинија</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="359"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="579"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="366"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="588"/>
         <source>Dimension</source>
         <translation type="unfinished">Кота</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="360"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="580"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="611"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="367"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="622"/>
         <source>Other</source>
         <translation type="unfinished">Друго</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="362"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="582"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="369"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="591"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="363"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="506"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="614"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="370"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="514"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="625"/>
         <source>Order</source>
         <translation type="unfinished">Редослед</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="387"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="395"/>
         <source>Pen Palette</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="397"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="405"/>
         <source>Layer List</source>
         <translation type="unfinished">Списак слојева</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="425"/>
         <source>Layer Tree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="430"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="438"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="443"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="451"/>
         <source>Block List</source>
         <translation type="unfinished">Списак блокова</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="497"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="505"/>
         <source>File</source>
         <translation type="unfinished">Датотека</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="502"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="510"/>
         <source>Edit</source>
         <translation type="unfinished">Уреди</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="511"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="519"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="407"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="516"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="415"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="524"/>
         <source>Named Views</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="354"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="574"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="358"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="580"/>
+        <source>Point</source>
+        <translation type="unfinished">Тачка</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="361"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="583"/>
         <source>Arc</source>
         <translation type="unfinished">Лук</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="355"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="575"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="362"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="584"/>
         <source>Spline</source>
         <translation type="unfinished">Сплајн</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="521"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
         <source>Snap Selection</source>
         <translation type="unfinished">Одабир брзе селекције</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="531"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="539"/>
         <source>Pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="537"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="545"/>
         <source>Tool Options</source>
         <translation type="unfinished">Опције Алата</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="539"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="775"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="547"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="787"/>
         <source>Dock Areas</source>
         <translation type="unfinished">Области за постављање</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="544"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="552"/>
         <source>Creators</source>
         <translation type="unfinished">Креатори</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="548"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="556"/>
         <source>Preferences</source>
         <translation type="unfinished">Опције</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="599"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="609"/>
         <source>Categories</source>
         <translation type="unfinished">Категорије</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="603"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="606"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="613"/>
+        <source>Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="614"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="617"/>
         <source>Polygons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="604"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="615"/>
         <source>Arcs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="605"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="616"/>
         <source>Splines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="610"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="621"/>
         <source>Dimensions</source>
         <translation>Котирање</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="623"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="634"/>
         <source>&amp;File</source>
         <translation type="unfinished">&amp;Датотека</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="634"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="645"/>
         <source>Import</source>
         <translation type="unfinished">Увези</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="639"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="650"/>
         <source>Export</source>
         <translation type="unfinished">Извези</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="656"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="667"/>
         <source>&amp;Options</source>
         <translation type="unfinished">&amp;Опције</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="666"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="677"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;Уреди</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="682"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="693"/>
         <source>Pl&amp;ugins</source>
         <translation type="unfinished">П&amp;рикључци</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="684"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="695"/>
         <source>&amp;View</source>
         <translation type="unfinished">&amp;Преглед</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="714"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="725"/>
         <source>&amp;Views Restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="722"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="733"/>
         <source>&amp;Tools</source>
         <translation type="unfinished">&amp;Алати</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="723"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="734"/>
         <source>&amp;Line</source>
         <translation type="unfinished">&amp;Линија</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="724"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="735"/>
+        <source>Poin&amp;t</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="736"/>
         <source>&amp;Circle</source>
         <translation type="unfinished">&amp;Круг</translation>
     </message>
@@ -8852,190 +8990,190 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">&amp;Крива</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="725"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="737"/>
         <source>&amp;Arc</source>
         <translation type="unfinished">&amp;Лук</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="726"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="738"/>
         <source>Poly&amp;gon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="727"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="739"/>
         <source>Splin&amp;e</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="728"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="740"/>
         <source>&amp;Ellipse</source>
         <translation type="unfinished">&amp;Елипса</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="729"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="741"/>
         <source>&amp;Polyline</source>
         <translation type="unfinished">&amp;Полилинија</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="730"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="742"/>
         <source>&amp;Select</source>
         <translation type="unfinished">&amp;Избор</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="731"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="743"/>
         <source>Dime&amp;nsion</source>
         <translation type="unfinished">&amp;Котирај</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="732"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="744"/>
         <source>Ot&amp;her</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="733"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="745"/>
         <source>&amp;Modify</source>
         <translation type="unfinished">И&amp;змени</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="734"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="746"/>
         <source>&amp;Info</source>
         <translation type="unfinished">И&amp;нформације</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="735"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="747"/>
         <source>&amp;Order</source>
         <translation type="unfinished">&amp;Редослед</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="737"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="749"/>
         <source>&amp;Drawings</source>
         <translation type="unfinished">&amp;Цртежи</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="744"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="756"/>
         <source>&amp;Help</source>
         <translation type="unfinished">Помо&amp;ћ</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="746"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="758"/>
         <source>On&amp;line Docs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="747"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="759"/>
         <source>&amp;Wiki</source>
         <translation type="unfinished">&amp;Вики</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="748"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="760"/>
         <source>User&apos;s &amp;Manual</source>
         <translation type="unfinished">Корисничко &amp;Упутство</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="749"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="761"/>
         <source>&amp;Commands</source>
         <translation type="unfinished">&amp;Команде</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="750"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="762"/>
         <source>&amp;Style Sheets</source>
         <translation type="unfinished">&amp;Листа стилова</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="751"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="763"/>
         <source>Wid&amp;gets</source>
         <translation type="unfinished">Ви&amp;џети</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="755"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="767"/>
         <source>About</source>
         <translation type="unfinished">О</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="762"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="774"/>
         <source>&amp;Forum</source>
         <translation type="unfinished">&amp;Форум</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="763"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="775"/>
         <source>Zulip &amp;Chat</source>
         <translation type="unfinished">Зулип &amp;Ћаскање</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="765"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="777"/>
         <source>&amp;Submit Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="766"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="778"/>
         <source>&amp;Request Feature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="767"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="779"/>
         <source>&amp;Releases Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="771"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="783"/>
         <source>&amp;Donate</source>
         <translation type="unfinished">&amp;Донирајте</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="773"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="785"/>
         <source>Widgets</source>
         <translation type="unfinished">Виџети</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="783"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="795"/>
         <source>Dock Wid&amp;gets</source>
         <translation type="unfinished">Постави Ви&amp;џете</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="811"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="823"/>
         <source>&amp;Toolbars</source>
         <translation type="unfinished">&amp;Траке са алаткама</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1029"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1098"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1041"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1110"/>
         <source>Grid Status</source>
         <translation type="unfinished">Статус поделе</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1063"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1075"/>
         <source>Coordinates</source>
         <translation type="unfinished">Координате</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1070"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1082"/>
         <source>Relative Zero</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1077"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1089"/>
         <source>Mouse</source>
         <translation type="unfinished">Миш</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1084"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1096"/>
         <source>Selection Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1091"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1103"/>
         <source>Active Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="361"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="581"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="612"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="368"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="590"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="623"/>
         <source>Modify</source>
         <translation>Измени</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="613"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="624"/>
         <source>Measure</source>
         <translation>Измери</translation>
     </message>
@@ -9863,17 +10001,17 @@ Please check its existence and permissions.</source>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1270"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1279"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1271"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1280"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1281"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1290"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>назад</translation>
@@ -18815,7 +18953,7 @@ Do you want to replace it?</source>
         <translation type="vanished">Елипса</translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="67"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="68"/>
         <source>File</source>
         <translation>Датотека</translation>
     </message>
@@ -18840,7 +18978,7 @@ Do you want to replace it?</source>
         <translation type="vanished">Промени</translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="68"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="69"/>
         <source>Options</source>
         <translation>Опције</translation>
     </message>
@@ -18950,7 +19088,7 @@ Do you want to replace it?</source>
         <translation>Режим калкулатора: искључен</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="758"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="770"/>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3151"/>
         <source>License</source>
         <translation>Лиценца</translation>
@@ -24100,27 +24238,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Откажи</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="188"/>
         <source>Choose second edge</source>
         <translation>Изаберите другу ивицу</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="188"/>
         <source>Select Intersecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="188"/>
         <source>De-select entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="188"/>
         <source>Select entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="188"/>
         <source>De-select intersecting</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24129,7 +24267,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="184"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="185"/>
         <source>Click and drag for the selection window</source>
         <translation>Кликните и вуците за прозор одабира</translation>
     </message>

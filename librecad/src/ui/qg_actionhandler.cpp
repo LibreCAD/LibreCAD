@@ -213,6 +213,8 @@
 #include "lc_actiondrawarc2pointsangle.h"
 #include "lc_actiondrawarc2pointsheight.h"
 #include "lc_actiondrawarc2pointslength.h"
+#include "lc_actionselectpoints.h"
+#include "lc_actiondrawpointslattice.h"
 
 /**
  * Constructor
@@ -401,6 +403,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             view->killSelectActions();
             a = new RS_ActionSelectWindow(view->getTypeToSelect(),*document, *view, true);
             break;
+        case RS2::ActionSelectPoints:
+            view->killSelectActions();
+            a = new LC_ActionSelectPoints(*document, *view);
+            break;
         case RS2::ActionDeselectWindow:
             view->killSelectActions();
             a = new RS_ActionSelectWindow(*document, *view, false);
@@ -517,6 +523,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionDrawLinePoints:
             a = new LC_ActionDrawLinePoints(*document, *view);
+            break;
+        case RS2::ActionDrawPointsLattice:
+            a = new LC_ActionDrawPointsLattice(*document, *view);
             break;
         case RS2::ActionDrawLineBisector:
             a = new RS_ActionDrawLineBisector(*document, *view);

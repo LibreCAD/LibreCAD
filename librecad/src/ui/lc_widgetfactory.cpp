@@ -104,8 +104,6 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawLineOrthTan",
         "DrawLineOrthogonal",
         "DrawLineRelAngle",
-        "DrawPoint",
-        "DrawLinePoints",
         "DrawCross",
         "DrawLineRel",
         "DrawLineRelX",
@@ -115,6 +113,14 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawLineFromPointToLine",
         "DrawSliceDivideLine",
         "DrawSliceDivideCircle"
+    });
+
+    fillActionsList(point_actions , {
+        "DrawPoint",
+        "DrawLinePoints",
+        "DrawPointLattice",
+        "SelectPoints",
+        "PasteToPoints"
     });
 
     fillActionsList(circle_actions, {
@@ -349,6 +355,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
 
 void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size){
     auto* line = leftDocWidget(tr("Line"), "Line", line_actions, columns, icon_size);
+    auto* point = leftDocWidget(tr("Point"), "Point", point_actions, columns, icon_size);
     auto* shape = leftDocWidget(tr("Polygon"), "Polygon", shape_actions, columns, icon_size);
     auto* circle = leftDocWidget(tr("Circle"), "Circle", circle_actions, columns, icon_size);
     auto* curve = leftDocWidget(tr("Arc"), "Curve", curve_actions, columns, icon_size);
@@ -364,6 +371,7 @@ void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size){
 
     main_window->addDockWidget(Qt::LeftDockWidgetArea, line);
     main_window->tabifyDockWidget(line, polyline);
+    main_window->tabifyDockWidget(polyline, point);
     main_window->tabifyDockWidget(polyline, shape);
     line->raise();
     main_window->addDockWidget(Qt::LeftDockWidgetArea, circle);
@@ -569,6 +577,7 @@ void LC_WidgetFactory::createCADToolbars(){
     QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     auto* line = toolbarWithActions(tr("Line"), "Line", tbPolicy, line_actions);
+    auto* point = toolbarWithActions(tr("Point"), "Point", tbPolicy, point_actions);
     auto* shape = toolbarWithActions(tr("Polygon"), "Polygon", tbPolicy, shape_actions);
     auto* circle = toolbarWithActions(tr("Circle"), "Circle", tbPolicy, circle_actions);
     auto* curve = toolbarWithActions(tr("Arc"), "Curve", tbPolicy, curve_actions);
@@ -582,6 +591,7 @@ void LC_WidgetFactory::createCADToolbars(){
     auto* info = toolbarWithActions(tr("Info"), "Info", tbPolicy, info_actions);
 
     addToBottom(line);
+    addToBottom(point);
     addToBottom(shape);
     addToBottom(circle);
     addToBottom(curve);
@@ -600,6 +610,7 @@ QToolBar *LC_WidgetFactory::createCategoriesToolbar() {
                                          QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding), {});
 
     toolButton(toolbar, tr("Lines"), ":/icons/line.svg", line_actions);
+    toolButton(toolbar, tr("Points"), ":/icons/points.svg", point_actions);
     toolButton(toolbar, tr("Polygons"), ":/icons/circle.svg", circle_actions);
     toolButton(toolbar, tr("Arcs"), ":/icons/arc_center_point_angle.svg", curve_actions);
     toolButton(toolbar, tr("Splines"), ":/icons/spline_points.svg", spline_actions);
@@ -721,6 +732,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
 
     auto tools = menu(tr("&Tools"), "tools", menu_bar);
     subMenuWithActions(tools, tr("&Line"), "line", ":/icons/line.svg", line_actions);
+    subMenuWithActions(tools, tr("Poin&t"), "line", ":/icons/points.svg", point_actions);
     subMenuWithActions(tools, tr("&Circle"), "circle", ":/icons/circle.svg", circle_actions);
     subMenuWithActions(tools, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.svg", curve_actions);
     subMenuWithActions(tools, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.svg", shape_actions);
