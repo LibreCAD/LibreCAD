@@ -207,7 +207,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;2 Points</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;2 punktoj</translation>
     </message>
     <message>
         <source>&amp;Angle</source>
@@ -235,7 +235,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortangulo</translation>
     </message>
     <message>
         <source>Bisector</source>
@@ -259,7 +259,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Relative angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Relativa angulo</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
@@ -271,11 +271,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Center, &amp;Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Centro, &amp;Punkto</translation>
     </message>
     <message>
         <source>Center, &amp;Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Centro, &amp;Radiuso</translation>
     </message>
     <message>
         <source>2 Points</source>
@@ -328,7 +328,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Elipso (akso)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
@@ -340,7 +340,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Ellipse &amp;4 Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Elipso &amp;4 punktoj</translation>
     </message>
     <message>
         <source>Ellipse Center and &amp;3 Points</source>
