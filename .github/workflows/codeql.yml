@@ -39,11 +39,14 @@ jobs:
       uses: jurplel/install-qt-action@v3
       with:
         version: '6.6.*'
+        modules: 'qt5compat'
 
     - name: Install Qt and dependencies
       run: |
         sudo apt-get -y update
-        sudo apt-get -qq install qtchooser libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
+        # ubuntu jammy(22.04) libqt6core5compat6-dev
+        # ubuntu nobel(24.04) qt6-5compat-dev
+        sudo apt-get -qq install qtchooser libqt6core5compat6-dev libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
         sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
         sudo rm -rf /usr/local/lib/android
 

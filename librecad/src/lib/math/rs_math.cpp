@@ -300,7 +300,7 @@ double RS_Math::eval(const QString& expr, double def) {
 double RS_Math::convert_unit(const QRegularExpressionMatch& match, const QString& name, double factor, double defval) {
     if (!match.captured(name).isNull())
         LC_ERR <<"name="<<name<<": "<<  match.captured(name);
-    QString input = (!match.captured(name).isNull()) ? match.captured(name) : QString("%1").arg(defval);
+    QString input = (!match.captured(name).isNull()) ? match.captured(name) : QString::number(defval, 'g', 16);
     return input.toDouble() * factor;
 }
 
@@ -333,7 +333,7 @@ QString RS_Math::derationalize(const QString& expr) {
         total *= sign;
 
         RS_DEBUG->print("RS_Math::derationalize: total = '%f'", total);
-        return QString("%1").arg(total);
+        return QString::number(total, 'g', 16);
     }
     else {
         return expr;
