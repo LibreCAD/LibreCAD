@@ -74,7 +74,7 @@ first base, second base, first target, second target.</source>
         <location filename="../align/align.cpp" line="84"/>
         <location filename="../align/align.cpp" line="89"/>
         <source>second base point:</source>
-        <translation>第二个目标点</translation>
+        <translation>第二个基准点：</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="91"/>
@@ -402,7 +402,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>选择原始实体</translation>
+        <translation>选择原始实体：</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
@@ -1221,7 +1221,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="206"/>
         <source>Separation</source>
-        <translation>分离：</translation>
+        <translation>分离</translation>
     </message>
 </context>
 </TS>
