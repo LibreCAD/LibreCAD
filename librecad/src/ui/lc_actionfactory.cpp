@@ -49,8 +49,11 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     QMap<QString, QAction *> &a_map = agm->getActionsMap();
     createSelectActions(a_map, agm->select);
     createDrawLineActions(a_map, agm->line);
+    createDrawPointsActions(a_map, agm->point);
+    createDrawShapeActions(a_map, agm->shape);
     createDrawCircleActions(a_map, agm->circle);
     createDrawCurveActions(a_map, agm->curve);
+    createDrawSplineActions(a_map, agm->spline);
     createDrawEllipseActions(a_map, agm->ellipse);
     createDrawPolylineActions(a_map, agm->polyline);
     createDrawOtherActions(a_map, agm->other);
@@ -101,11 +104,21 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
 //    a_map["ToolRegenerateDimensions"] = action;
 }
 
-
+void LC_ActionFactory::createDrawShapeActions(QMap<QString, QAction*>& map, QActionGroup* group) {
+    createActionHandlerActions(map, group, {
+        {"DrawLineRectangle",        RS2::ActionDrawLineRectangle,       tr("Rectangle"),              ":/icons/line_rectangle.svg"},
+        {"DrawLinePolygonCenCor",    RS2::ActionDrawLinePolygonCenCor,   tr("Pol&ygon (Cen,Cor)"),     ":/icons/line_polygon_cen_cor.svg"},
+        {"DrawLinePolygonCenTan",    RS2::ActionDrawLinePolygonCenTan,   tr("Pol&ygon (Cen,Tan)"),     ":/icons/line_polygon_cen_tan.svg"},
+        {"DrawLinePolygonCorCor",    RS2::ActionDrawLinePolygonCorCor,   tr("Polygo&n (Cor,Cor)"),     ":/icons/line_polygon_cor_cor.svg"},
+        {"DrawStar",                 RS2::ActionDrawStar,                tr("Star"),                   ":/icons/line_polygon_star.svg"},
+        {"DrawLineRectangle1Point",  RS2::ActionDrawRectangle1Point,     tr("Rectangle (1 Point)"),    ":/icons/rectangle_1_point.svg"},
+        {"DrawLineRectangle2Points", RS2::ActionDrawRectangle2Points,    tr("Rectangle (2 Points)"),   ":/icons/rectangle_2_points.svg"},
+        {"DrawLineRectangle3Points", RS2::ActionDrawRectangle3Points,    tr("Rectangle (3 Points)"),   ":/icons/rectangle_3_points.svg"}
+    });
+}
 
 void LC_ActionFactory::createDrawLineActions(QMap<QString, QAction*>& map, QActionGroup* group){
     createActionHandlerActions(map, group,{
-        {"DrawPoint",                RS2::ActionDrawPoint,               tr("&Points"),                ":/icons/points.svg"},
         {"DrawLine",                 RS2::ActionDrawLine,                tr("&2 Points"),              ":/icons/line_2p.svg"},
         {"DrawLineAngle",            RS2::ActionDrawLineAngle,           tr("&Angle"),                 ":/icons/line_angle.svg"},
         {"DrawLineHorizontal",       RS2::ActionDrawLineHorizontal,      tr("&Horizontal"),            ":/icons/line_horizontal.svg"},
@@ -113,30 +126,31 @@ void LC_ActionFactory::createDrawLineActions(QMap<QString, QAction*>& map, QActi
         {"DrawLineFree",             RS2::ActionDrawLineFree,            tr("&Freehand Line"),         ":/icons/line_freehand.svg"},
         {"DrawLineParallel",         RS2::ActionDrawLineParallel,        tr("&Parallel"),              ":/icons/line_parallel.svg"},
         {"DrawLineParallelThrough",  RS2::ActionDrawLineParallelThrough, tr("Parallel through point"), ":/icons/line_parallel_p.svg"},
-        {"DrawLineRectangle",        RS2::ActionDrawLineRectangle,       tr("Rectangle"),              ":/icons/line_rectangle.svg"},
         {"DrawLineBisector",         RS2::ActionDrawLineBisector,        tr("Bisector"),               ":/icons/line_bisector.svg"},
         {"DrawLineTangent1",         RS2::ActionDrawLineTangent1,        tr("Tangent (P,C)"),          ":/icons/line_tangent_pc.svg"},
         {"DrawLineTangent2",         RS2::ActionDrawLineTangent2,        tr("Tangent (C,C)"),          ":/icons/line_tangent_cc.svg"},
         {"DrawLineOrthTan",          RS2::ActionDrawLineOrthTan,         tr("Tangent &Orthogonal"),    ":/icons/line_tangent_perpendicular.svg"},
         {"DrawLineOrthogonal",       RS2::ActionDrawLineOrthogonal,      tr("Orthogonal"),             ":/icons/line_perpendicular.svg"},
         {"DrawLineRelAngle",         RS2::ActionDrawLineRelAngle,        tr("Relative angle"),         ":/icons/line_relative_angle.svg"},
-        {"DrawLinePolygonCenCor",    RS2::ActionDrawLinePolygonCenCor,   tr("Pol&ygon (Cen,Cor)"),     ":/icons/line_polygon_cen_cor.svg"},
-        {"DrawLinePolygonCenTan",    RS2::ActionDrawLinePolygonCenTan,   tr("Pol&ygon (Cen,Tan)"),     ":/icons/line_polygon_cen_tan.svg"},
-        {"DrawLinePolygonCorCor",    RS2::ActionDrawLinePolygonCorCor,   tr("Polygo&n (Cor,Cor)"),     ":/icons/line_polygon_cor_cor.svg"},
         {"DrawLineRel",              RS2::ActionDrawSnakeLine,           tr("Snake"),                  ":/icons/line_rel.svg"},
         {"DrawLineRelX",             RS2::ActionDrawSnakeLineX,          tr("Snake (X)"),              ":/icons/line_rel_x.svg"},
         {"DrawLineRelY",             RS2::ActionDrawSnakeLineY,          tr("Snake (Y)"),              ":/icons/line_rel_y.svg"},
-        {"DrawLineRectangle1Point",  RS2::ActionDrawRectangle1Point,     tr("Rectangle (1 Point)"),    ":/icons/rectangle_1_point.svg"},
-        {"DrawLineRectangle2Points", RS2::ActionDrawRectangle2Points,    tr("Rectangle (2 Points)"),   ":/icons/rectangle_2_points.svg"},
-        {"DrawLineRectangle3Points", RS2::ActionDrawRectangle3Points,    tr("Rectangle (3 Points)"),   ":/icons/rectangle_3_points.svg"},
-        {"DrawStar",                 RS2::ActionDrawStar,                tr("Star"),                   ":/icons/line_polygon_star.svg"},
         {"DrawLineAngleRel",         RS2::ActionDrawLineAngleRel,        tr("Angle From Line"),        ":/icons/line_angle_rel.svg"},
         {"DrawLineOrthogonalRel",    RS2::ActionDrawLineOrthogonalRel,   tr("Orthogonal From Line"),   ":/icons/line_ortho_rel.svg"},
         {"DrawLineFromPointToLine",  RS2::ActionDrawLineFromPointToLine, tr("From Point To Line"),     ":/icons/line_to_ortho.svg"},
         {"DrawCross",                RS2::ActionDrawCross,               tr("Cross"),                  ":/icons/cross_circle1.svg"},
         {"DrawSliceDivideLine",      RS2::ActionDrawSliceDivideLine,     tr("Slice/Divide Line"),      ":/icons/slice_divide.svg"},
-        {"DrawSliceDivideCircle",    RS2::ActionDrawSliceDivideCircle,   tr("Slice/Divide Circle"),    ":/icons/slice_divide_circle.svg"},
-        {"DrawLinePoints",           RS2::ActionDrawLinePoints,          tr("Line of Points"),         ":/icons/line_points.svg"}
+        {"DrawSliceDivideCircle",    RS2::ActionDrawSliceDivideCircle,   tr("Slice/Divide Circle"),    ":/icons/slice_divide_circle.svg"}
+    });
+}
+
+void LC_ActionFactory::createDrawPointsActions(QMap<QString, QAction*>& map, QActionGroup* group) {
+    createActionHandlerActions(map, group,{
+        {"DrawPoint",                RS2::ActionDrawPoint,               tr("&Points"),                ":/icons/points.svg"},
+        {"DrawLinePoints",           RS2::ActionDrawLinePoints,          tr("Line of Points"),         ":/icons/line_points.svg"},
+        {"DrawPointLattice",         RS2::ActionDrawPointsLattice,       tr("Lattice of Points"),      ":/icons/points_lattice.svg"},
+        {"SelectPoints",             RS2::ActionSelectPoints,            tr("Select Points"),          ":/icons/select_points.svg"},
+        {"PasteToPoints",            RS2::ActionPasteToPoints,           tr("Paste to Points"),        ":/icons/paste_to_points.svg"}
     });
 }
 
@@ -170,24 +184,33 @@ void LC_ActionFactory::createDrawCircleActions(QMap<QString, QAction*>& map, QAc
 }
 
 void LC_ActionFactory::createDrawCurveActions(QMap<QString, QAction*>& map, QActionGroup* group) {
-    createActionHandlerActions(map, group,{
-        {"DrawArc",                RS2::ActionDrawArc,             tr("&Center, Point, Angles"),    ":/icons/arc_center_point_angle.svg"},
-        {"DrawArcChord",           RS2::ActionDrawArcChord,        tr("&Center, Point, Chord"),     ":/icons/arc_center_point_chord.svg"},
-        {"DrawArcAngleLen",        RS2::ActionDrawArcAngleLen,     tr("&Center, Point, Arc Angle"), ":/icons/arc_center_point_anglelen.svg"},
-        {"DrawArc3P",              RS2::ActionDrawArc3P,           tr("&3 Points"),                 ":/icons/arc_3_points.svg"},
-        {"DrawArc2PAngle",         RS2::ActionDrawArc2PAngle,      tr("&2 Points, Angle"),          ":/icons/arc_2p_angle.svg"},
-        {"DrawArc2PRadius",        RS2::ActionDrawArc2PRadius,     tr("&2 Points, Radius"),         ":/icons/arc_2p_radius.svg"},
-        {"DrawArc2PLength",        RS2::ActionDrawArc2PLength,     tr("&2 Points, Length"),         ":/icons/arc_2p_length.svg"},
-        {"DrawArc2PHeight",        RS2::ActionDrawArc2PHeight,     tr("&2 Points, Height"),         ":/icons/arc_2p_height.svg"},
-        {"DrawArcParallel",        RS2::ActionDrawArcParallel,     tr("&Concentric"),               ":/icons/arc_concentric.svg"},     // fixme - why this action is not in list?
-        {"DrawArcTangential",      RS2::ActionDrawArcTangential,   tr("Arc &Tangential"),           ":/icons/arc_continuation.svg"},
-        {"DrawParabola4Points",    RS2::ActionDrawParabola4Points, tr("Para&bola 4 points"),        ":/icons/parabola_4_points.svg"},
-        {"DrawParabolaFD",         RS2::ActionDrawParabolaFD,      tr("Parabola &Focus Directrix"), ":/icons/parabola_focus_directrix.svg"},
-        {"DrawSpline",             RS2::ActionDrawSpline,          tr("&Spline"),                   ":/icons/spline.svg"},
-        {"DrawSplinePoints",       RS2::ActionDrawSplinePoints,    tr("&Spline through points"),    ":/icons/spline_points.svg"},
-        {"DrawSplinePointsAdd",    RS2::ActionDrawSplinePoints,    tr("&Add spline point"),         ":/icons/spline_points_add.svg"},
-        {"DrawSplinePointsRemove", RS2::ActionDrawSplinePoints,    tr("&Remove spline points"),     ":/icons/spline_points_remove.svg"},
-        {"DrawSplinePointsAppend", RS2::ActionDrawSplinePoints,    tr("&Append spline points"),     ":/icons/spline_points_insert.svg"}
+    createActionHandlerActions(map, group, {
+        {"DrawArc",                RS2::ActionDrawArc,               tr("&Center, Point, Angles"),    ":/icons/arc_center_point_angle.svg"},
+        {"DrawArcChord",           RS2::ActionDrawArcChord,          tr("&Center, Point, Chord"),     ":/icons/arc_center_point_chord.svg"},
+        {"DrawArcAngleLen",        RS2::ActionDrawArcAngleLen,       tr("&Center, Point, Arc Angle"), ":/icons/arc_center_point_anglelen.svg"},
+        {"DrawArc3P",              RS2::ActionDrawArc3P,             tr("&3 Points"),                 ":/icons/arc_3_points.svg"},
+        {"DrawArc2PAngle",         RS2::ActionDrawArc2PAngle,        tr("&2 Points, Angle"),          ":/icons/arc_2p_angle.svg"},
+        {"DrawArc2PRadius",        RS2::ActionDrawArc2PRadius,       tr("&2 Points, Radius"),         ":/icons/arc_2p_radius.svg"},
+        {"DrawArc2PLength",        RS2::ActionDrawArc2PLength,       tr("&2 Points, Length"),         ":/icons/arc_2p_length.svg"},
+        {"DrawArc2PHeight",        RS2::ActionDrawArc2PHeight,       tr("&2 Points, Height"),         ":/icons/arc_2p_height.svg"},
+        {"DrawArcParallel",        RS2::ActionDrawArcParallel,       tr("&Concentric"),               ":/icons/arc_concentric.svg"},     // fixme - why this action is not in list?
+        {"DrawArcTangential",      RS2::ActionDrawArcTangential,     tr("Arc &Tangential"),           ":/icons/arc_continuation.svg"}
+
+    });
+}
+
+void LC_ActionFactory::createDrawSplineActions(QMap<QString, QAction*>& map, QActionGroup* group) {
+    createActionHandlerActions(map, group, {
+        {"DrawParabola4Points",    RS2::ActionDrawParabola4Points,   tr("Para&bola 4 points"),        ":/icons/parabola_4_points.svg"},
+        {"DrawParabolaFD",         RS2::ActionDrawParabolaFD,        tr("Parabola &Focus Directrix"), ":/icons/parabola_focus_directrix.svg"},
+        {"DrawSpline",             RS2::ActionDrawSpline,            tr("&Spline"),                   ":/icons/spline.svg"},
+        {"DrawSplinePoints",       RS2::ActionDrawSplinePoints,      tr("&Spline through points"),    ":/icons/spline_points.svg"},
+        {"DrawSplinePointsAppend", RS2::ActionDrawSplinePointAppend, tr("&Append spline point"),      ":/icons/spline_points_add.svg"},
+        {"DrawSplinePointsRemove", RS2::ActionDrawSplinePointRemove, tr("&Remove spline points"),     ":/icons/spline_points_remove.svg"},
+        {"DrawSplinePointsAdd",    RS2::ActionDrawSplinePointAdd,    tr("&Insert spline points"),     ":/icons/spline_points_insert.svg"},
+        {"DrawSplineExplode",      RS2::ActionDrawSplineExplode,     tr("&Explode spline to lines"),  ":/icons/spline_explode.svg"},
+        {"DrawSplineFromPolyline", RS2::ActionDrawSplineFromPolyline,tr("&Spline from polyline"),     ":/icons/spline_from_polyline.svg"},
+        {"DrawSplinePointsDelTwo", RS2::ActionDrawSplinePointDelTwo, tr("&Remove between two points"),":/icons/spline_points_remove_two.svg"}
     });
 }
 

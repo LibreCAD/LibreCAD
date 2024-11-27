@@ -52,6 +52,7 @@ public:
     void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
     void addReferenceEntitiesToContainer(RS_EntityContainer* container);
     void clear() override;
+    int getMaxAllowedEntities();
 private:
     unsigned int maxEntities = 0;
     QList<RS_Entity*> referenceEntities;

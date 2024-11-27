@@ -51,17 +51,15 @@ void RS_ActionPolylineAppend::trigger(){
         return;
     }
 
-    newPolyline->setLayerToActive();
-    newPolyline->setPenToActive();
-
-    graphicView->deleteEntity(originalPolyline);
     originalPolyline->changeUndoState();
 
 // upd. undo list:
     if (document){
         document->startUndoCycle();
         document->addUndoable(newPolyline);
-        document->removeUndoable(originalPolyline);
+//        document->removeUndoable(originalPolyline);
+//        graphicView->deleteEntity(originalPolyline);
+        deleteEntityUndoable(originalPolyline);
         document->endUndoCycle();
     }
 
@@ -84,10 +82,44 @@ void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
         case SetStartpoint: {
             snapPoint(e);
             deleteSnapper();
+            deletePreview();
             auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
             if (polyline != nullptr){
                 highlightHover(polyline);
+
+                if (showRefEntitiesOnPreview) {
+                    auto entFirst = polyline->firstEntity();
+                    auto entLast = polyline->lastEntity();
+
+                    RS_Vector endpointToUse;
+
+                    double dist = graphicView->toGraphDX(catchEntityGuiRange) * 0.9;
+                    const RS_Vector &mouse = toGraph(e);
+                    const RS_Vector &startPoint = polyline->getStartpoint();
+                    const RS_Vector &endPoint = polyline->getEndpoint();
+                    if (entFirst == entLast) { // single segment of polyline
+                        double distToStart = startPoint.distanceTo(mouse);
+                        double distToEnd = endPoint.distanceTo(mouse);
+
+                        if (distToStart < distToEnd) {
+                            endpointToUse = startPoint;
+                        } else {
+                            endpointToUse = endPoint;
+                        }
+                    } else {
+                        auto nearestSegment = polyline->getNearestEntity(mouse, &dist, RS2::ResolveNone);
+                        if (nearestSegment == entFirst) {
+                            endpointToUse = startPoint;
+                        } else if (nearestSegment == entLast) {
+                            endpointToUse = endPoint;
+                        }
+                    }
+                    previewRefSelectablePoint(endpointToUse);
+
+                }
+
             }
+            drawPreview();
             break;
         }
         case SetNextPoint: {
@@ -119,20 +151,39 @@ void RS_ActionPolylineAppend::onMouseLeftButtonRelease(int status, QMouseEvent *
             auto *op = static_cast<RS_Polyline *>(originalPolyline);
             auto entFirst = op->firstEntity();
             auto entLast = op->lastEntity();
+
             double dist = graphicView->toGraphDX(catchEntityGuiRange) * 0.9;
-            auto nearestSegment = originalPolyline->getNearestEntity(toGraph(e), &dist, RS2::ResolveNone);
-            auto *clone = dynamic_cast<RS_Polyline *>(originalPolyline->clone());
-            pPoints->polyline = clone;
-            pPoints->data = clone->getData();
-            container->addEntity(clone);
-            prepend = false;
-            if (nearestSegment == entFirst) {
-                prepend = true;
-                pPoints->point = originalPolyline->getStartpoint();
-            } else if (nearestSegment == entLast) {
-                pPoints->point = originalPolyline->getEndpoint();
+            const RS_Vector &mouse = toGraph(e);
+            if (entFirst == entLast) { // single segment of polyline
+                double distToStart = originalPolyline->getStartpoint().distanceTo(mouse);
+                double distToEnd = originalPolyline->getEndpoint().distanceTo(mouse);
+
+                if (distToStart < distToEnd){
+                    pPoints->point = originalPolyline->getStartpoint();
+                }
+                else{
+                    pPoints->point = originalPolyline->getEndpoint();
+                }
+
+                auto *clone = dynamic_cast<RS_Polyline *>(originalPolyline->clone());
+                pPoints->polyline = clone;
+                pPoints->data = clone->getData();
+                container->addEntity(clone);
             } else {
-                commandMessage(tr("Click somewhere near the beginning or end of existing polyline."));
+                auto nearestSegment = originalPolyline->getNearestEntity(mouse, &dist, RS2::ResolveNone);
+                auto *clone = dynamic_cast<RS_Polyline *>(originalPolyline->clone());
+                pPoints->polyline = clone;
+                pPoints->data = clone->getData();
+                container->addEntity(clone);
+                prepend = false;
+                if (nearestSegment == entFirst) {
+                    prepend = true;
+                    pPoints->point = originalPolyline->getStartpoint();
+                } else if (nearestSegment == entLast) {
+                    pPoints->point = originalPolyline->getEndpoint();
+                } else {
+                    commandMessage(tr("Click somewhere near the beginning or end of existing polyline."));
+                }
             }
         }
         fireCoordinateEventForSnap(e);
@@ -150,7 +201,15 @@ void RS_ActionPolylineAppend::onMouseRightButtonRelease(int status, [[maybe_unus
     initPrevious(status);
 }
 
-void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
+void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
+    RS_Vector mouse;
+    if (m_calculatedSegment){
+        mouse = pPoints->calculatedEndpoint;
+    }
+    else{
+        mouse = pos;
+    }
+
     switch (status) {
         case SetStartpoint: {
             pPoints->history.clear();
@@ -164,10 +223,92 @@ void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] boo
             break;
         }
         case SetNextPoint: {
+            if (!endPointSettingOn) {
+                double bulge = 0.;
+                if (m_mode == Ang) {
+                    if (!prepend) {
+                        if (alternateArc) {
+                            int originalReversed = m_reversed;
+                            m_reversed = m_reversed == -1 ? 1 : -1;
+                            bulge = solveBulge(mouse);
+                            m_reversed = originalReversed;
+                        } else {
+                            bulge = solveBulge(mouse);
+                        }
+                    }
+                    else {
+                        if (!alternateArc){
+                            int originalReversed = m_reversed;
+                            m_reversed = m_reversed == -1 ? 1 : -1;
+                            bulge = solveBulge(mouse);
+                            m_reversed = originalReversed;
+                            RS_ArcData tmpArcData = pPoints->arc_data;
+                            tmpArcData.reversed = !tmpArcData.reversed;
+                            RS_Arc arc = RS_Arc(nullptr, tmpArcData);
+                            bulge = arc.getBulge();
+                        }
+                        else{
+                            int originalReversed = m_reversed;
+//                            m_reversed = m_reversed == -1 ? 1 : -1;
+                            bulge = solveBulge(mouse);
+                            m_reversed = originalReversed;
+                            RS_ArcData tmpArcData = pPoints->arc_data;
+                            tmpArcData.reversed = !tmpArcData.reversed;
+                            RS_Arc arc = RS_Arc(nullptr, tmpArcData);
+                            bulge = arc.getBulge();
+                        }
+                    }
+                }
+                else{
+                    bulge = solveBulge(mouse);
+                }
+
+                if (m_mode != Ang && m_mode != Line){
+                    if (alternateArc) {
+                        if (!prepend) {
+                            RS_ArcData tmpArcData = pPoints->arc_data;
+                            tmpArcData.reversed = !tmpArcData.reversed;
+                            RS_Arc arc = RS_Arc(nullptr, tmpArcData);
+                            bulge = arc.getBulge();
+                        }
+                    }
+                    else{
+                        if (prepend) {
+                            RS_ArcData tmpArcData = pPoints->arc_data;
+                            tmpArcData.reversed = !tmpArcData.reversed;
+                            RS_Arc arc = RS_Arc(nullptr, tmpArcData);
+                            bulge = arc.getBulge();
+                        }
+                    }
+                }
+                alternateArc = false;
+
+                pPoints->point = mouse;
+                pPoints->history.append(mouse);
+                pPoints->bHistory.append(bulge);
+                pPoints->polyline->setNextBulge(bulge);
+                pPoints->polyline->addVertex(mouse, 0.0, prepend);
+                deletePreview();
+                deleteSnapper();
+                graphicView->drawEntity(pPoints->polyline);
+
+                updateMouseButtonHints();
+            } else {
+                endPointSettingOn = false;
+                stepSizeSettingOn = true;
+                endPointX = mouse.x;
+                endPointY = mouse.y;
+                updateMouseWidgetTRBack(tr("Enter number of polylines")); // fixme - check if this is correct
+            }
+            drawSnapper();
             moveRelativeZero(mouse);
-            pPoints->point = mouse;
-            pPoints->history.append(mouse);
-            pPoints->bHistory.append(0.0);
+            break;
+
+
+
+/*
+
+
             RS_Polyline *polyline = pPoints->polyline;
             if (polyline == nullptr){
                 polyline = new RS_Polyline(container, getData());
@@ -184,7 +325,7 @@ void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] boo
                 drawSnapper();
             }
             updateMouseButtonHints();
-            break;
+            break;*/
         }
         default:
             break;
@@ -198,21 +339,7 @@ void RS_ActionPolylineAppend::updateMouseButtonHints(){
             break;
         }
         case SetNextPoint: {
-            QString msg = "";
-
-            if (getHistory().size() >= 3){
-                msg += command("close");
-                msg += "/";
-            }
-            if (getHistory().size() >= 2){
-                msg += command("undo");
-            }
-
-            if (getHistory().size() >= 2){
-                updateMouseWidgetTRBack(tr("Specify next point or [%1]").arg(msg));
-            } else {
-                updateMouseWidgetTRBack(tr("Specify next point"));
-            }
+            updateMouseButtonHintsForNextPoint();
             break;
         }
         default:

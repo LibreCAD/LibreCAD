@@ -309,6 +309,12 @@ namespace RS2 {
         ActionDrawPoint,
         ActionDrawSpline,
         ActionDrawSplinePoints, //interpolation spline
+        ActionDrawSplinePointRemove,
+        ActionDrawSplinePointDelTwo,
+        ActionDrawSplinePointAppend,
+        ActionDrawSplinePointAdd,
+        ActionDrawSplineExplode,
+        ActionDrawSplineFromPolyline,
         ActionDrawPolyline,
         ActionDrawText,
 
@@ -325,6 +331,10 @@ namespace RS2 {
         ActionDrawSliceDivideLine,
         ActionDrawSliceDivideCircle,
         ActionDrawLinePoints,
+        ActionDrawPointsLattice,
+        ActionSelectPoints,
+        ActionPasteToPoints,
+
         ActionDrawStar,
 
         ActionPolylineAdd,

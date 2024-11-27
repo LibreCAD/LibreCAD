@@ -26,7 +26,6 @@
 #include "qg_polylineoptions.h"
 
 #include "rs_actiondrawpolyline.h"
-#include "rs_settings.h"
 #include "rs_math.h"
 #include "ui_qg_polylineoptions.h"
 #include "rs_debug.h"
@@ -43,6 +42,16 @@ QG_PolylineOptions::QG_PolylineOptions()
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_PolylineOptions::onAngleEditingFinished);
     connect(ui->leRadius, &QLineEdit::editingFinished, this, &QG_PolylineOptions::onRadiusEditingFinished);
     connect(ui->rbNeg, &QRadioButton::toggled, this, &QG_PolylineOptions::onNegToggled);
+    connect(ui->rbPos, &QRadioButton::toggled, this, &QG_PolylineOptions::onNegToggled);
+
+    connect(ui->tbLine, &QToolButton::clicked, this, &QG_PolylineOptions::tbLineClicked);
+    connect(ui->tbTangental, &QToolButton::clicked, this, &QG_PolylineOptions::tbTangentalClicked);
+    connect(ui->tbTanRadius, &QToolButton::clicked, this, &QG_PolylineOptions::tbTanRadiusClicked);
+    connect(ui->tbTanAngle, &QToolButton::clicked, this, &QG_PolylineOptions::tbTanAngleClicked);
+    connect(ui->tbArcAngle, &QToolButton::clicked, this, &QG_PolylineOptions::tbArcAngleClicked);
+
+    // hide for now, probably it will be removed later
+    ui->cbMode->setVisible(false);
 }
 
 /*
@@ -117,12 +126,9 @@ void QG_PolylineOptions::setReversedToActionAndView(bool reversed){
 
 void QG_PolylineOptions::setAngleToActionAndView(const QString& strVal){
     double angle;
-    if (toDouble(strVal, angle, 0.0, false)){
+    if (toDoubleAngle(strVal, angle, 0.0, true)){
         if (angle > 359.999){
             angle = 359.999;
-        }
-        else if (angle < 0.0){
-            angle = 0.0;
         }
         action->setAngle(angle);
         ui->leAngle->setText(fromDouble(angle));
@@ -149,15 +155,26 @@ void QG_PolylineOptions::setModeToActionAndView(int m){
 ////	RadAngCenp
 //    };
 
+    ui->tbTanRadius->setChecked(false);
+    ui->tbTanAngle->setChecked(false);
+    ui->tbTangental->setChecked(false);
+    ui->tbLine->setChecked(false);
+    ui->tbArcAngle->setChecked(false);
+
     auto segmentMode = (RS_ActionDrawPolyline::SegmentMode) m;
 
     action->setMode(segmentMode);
     ui->cbMode->setCurrentIndex(m);
 
     switch (segmentMode) {
-        case RS_ActionDrawPolyline::Line:
-        case RS_ActionDrawPolyline::Tangential:
-        default: {
+        case RS_ActionDrawPolyline::Line:{
+            ui->tbLine->setChecked(true);
+            for (QWidget *p: wLists{ui->leRadius, ui->leAngle, ui->lRadius, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
+                p->hide();
+            break;
+        }
+        case RS_ActionDrawPolyline::Tangential:{
+            ui->tbTangental->setChecked(true);
             for (QWidget *p: wLists{ui->leRadius, ui->leAngle, ui->lRadius, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
                 p->hide();
             break;
@@ -167,14 +184,23 @@ void QG_PolylineOptions::setModeToActionAndView(int m){
                 p->hide();
             for (QWidget *p: wLists{ui->leRadius, ui->lRadius})
                 p->show();
+            ui->tbTanRadius->setChecked(true);
             break;
         }
-            //        case TanAng:
+        case RS_ActionDrawPolyline::TanAng: {
+            for (QWidget *p: wLists{ui->leRadius, ui->lRadius, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
+                p->hide();
+            for (QWidget *p: wLists{ui->leAngle, ui->lAngle})
+                p->show();
+            ui->tbTanAngle->setChecked(true);
+            break;
+        }
         case RS_ActionDrawPolyline::Ang: {
             for (QWidget *p: wLists{ui->leRadius, ui->lRadius})
                 p->hide();
             for (QWidget *p: wLists{ui->leAngle, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
                 p->show();
+            ui->tbArcAngle->setChecked(true);
             break;
         }
             /*        case TanRadAng:
@@ -196,6 +222,36 @@ void QG_PolylineOptions::onRadiusEditingFinished(){
     setRadiusToActionAndView(ui->leRadius->text());
 }
 
-void QG_PolylineOptions::onNegToggled(bool checked){
-    setReversedToActionAndView(!checked);
+void QG_PolylineOptions::onNegToggled([[maybe_unused]]bool checked){
+    bool enable = ui->rbNeg->isChecked();
+    setReversedToActionAndView(enable);
+}
+
+void QG_PolylineOptions::tbLineClicked() {
+    if (ui->tbLine->isChecked()){
+        setModeToActionAndView(RS_ActionDrawPolyline::Line);
+    }
+}
+
+void QG_PolylineOptions::tbTangentalClicked() {
+    if (ui->tbTangental->isChecked()){
+        setModeToActionAndView(RS_ActionDrawPolyline::Tangential);
+    }
+}
+
+void QG_PolylineOptions::tbTanRadiusClicked() {
+    if (ui->tbTanRadius->isChecked()) {
+        setModeToActionAndView(RS_ActionDrawPolyline::TanRad);
+    }
+}
+void QG_PolylineOptions::tbTanAngleClicked() {
+    if (ui->tbTanAngle->isChecked()) {
+        setModeToActionAndView(RS_ActionDrawPolyline::TanAng);
+    }
+}
+
+void QG_PolylineOptions::tbArcAngleClicked() {
+    if (ui->tbArcAngle->isChecked()){
+        setModeToActionAndView(RS_ActionDrawPolyline::Ang);
+    }
 }

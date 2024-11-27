@@ -28,6 +28,7 @@
 #include "rs_ellipse.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_DlgEllipse as a child of 'parent', with the
@@ -77,7 +78,14 @@ void QG_DlgEllipse::setEllipse(RS_Ellipse& e) {
     leAngle1->setText(asStringAngleDeg(ellipse->getAngle1()));
     leAngle2->setText(asStringAngleDeg(ellipse->getAngle2()));
     cbReversed->setChecked(ellipse->isReversed());
-    lId->setText(QString("ID: %1").arg(ellipse->getId()));
+
+    // fixme - sand - refactor to common function
+    if (LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false)){
+        lId->setText(QString("ID: %1").arg(ellipse->getId()));
+    }
+    else{
+        lId->setVisible(false);
+    }
 }
 
 void QG_DlgEllipse::updateEllipse() {

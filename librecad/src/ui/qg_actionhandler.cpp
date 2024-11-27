@@ -203,6 +203,19 @@
 #include "lc_actiondrawdimbaseline.h"
 #include "lc_actionpolylinearcstolines.h"
 #include "lc_actionpolylinechangesegmenttype.h"
+#include "lc_actionremovesplinepoints.h"
+#include "lc_actionsplineappendpoint.h"
+#include "lc_actionsplineaddpoint.h"
+#include "lc_actionsplineexplode.h"
+#include "lc_actionsplinefrompolyline.h"
+#include "lc_actionsplineremovebetween.h"
+#include "lc_actiondrawarc2pointsradius.h"
+#include "lc_actiondrawarc2pointsangle.h"
+#include "lc_actiondrawarc2pointsheight.h"
+#include "lc_actiondrawarc2pointslength.h"
+#include "lc_actionselectpoints.h"
+#include "lc_actiondrawpointslattice.h"
+#include "lc_actionpastetopoints.h"
 
 /**
  * Constructor
@@ -353,6 +366,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionEditPasteTransform:
             a = new LC_ActionEditPasteTransform(*document, *view);
             break;
+        case RS2::ActionPasteToPoints:
+            a = new LC_ActionPasteToPoints(*document, *view);
+            break;
         case RS2::ActionOrderBottom:
             a = new RS_ActionOrder(*document, *view, RS2::ActionOrderBottom);
             break;
@@ -390,6 +406,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionSelectWindow:
             view->killSelectActions();
             a = new RS_ActionSelectWindow(view->getTypeToSelect(),*document, *view, true);
+            break;
+        case RS2::ActionSelectPoints:
+            view->killSelectActions();
+            a = new LC_ActionSelectPoints(*document, *view);
             break;
         case RS2::ActionDeselectWindow:
             view->killSelectActions();
@@ -508,6 +528,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionDrawLinePoints:
             a = new LC_ActionDrawLinePoints(*document, *view);
             break;
+        case RS2::ActionDrawPointsLattice:
+            a = new LC_ActionDrawPointsLattice(*document, *view);
+            break;
         case RS2::ActionDrawLineBisector:
             a = new RS_ActionDrawLineBisector(*document, *view);
             break;
@@ -623,8 +646,21 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionDrawArc3P:
             a = new RS_ActionDrawArc3P(*document, *view);
-            break;    case RS2::ActionDrawArcTangential:
+            break;
+        case RS2::ActionDrawArcTangential:
             a = new RS_ActionDrawArcTangential(*document, *view);
+            break;
+        case RS2::ActionDrawArc2PRadius:
+            a = new LC_ActionDrawArc2PointsRadius(*document, *view);
+            break;
+        case RS2::ActionDrawArc2PAngle:
+            a = new LC_ActionDrawArc2PointsAngle(*document, *view);
+            break;
+        case RS2::ActionDrawArc2PHeight:
+            a = new LC_ActionDrawArc2PointsHeight(*document, *view);
+            break;
+        case RS2::ActionDrawArc2PLength:
+            a = new LC_ActionDrawArc2PointsLength(*document, *view);
             break;
         case RS2::ActionDrawEllipseAxis:
             a = new RS_ActionDrawEllipseAxis(*document, *view, false);
@@ -661,6 +697,24 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionDrawSplinePoints:
             a = new LC_ActionDrawSplinePoints(*document, *view);
+            break;
+        case RS2::ActionDrawSplinePointRemove:
+            a = new LC_ActionRemoveSplinePoints(*document, *view);
+            break;
+        case RS2::ActionDrawSplinePointDelTwo:
+            a = new LC_ActionSplineRemoveBetween(*document, *view);
+            break;
+        case RS2::ActionDrawSplinePointAppend:
+            a = new LC_ActionSplineAppendPoint(*document, *view);
+            break;
+        case RS2::ActionDrawSplinePointAdd:
+            a = new LC_ActionSplineAddPoint(*document, *view);
+            break;
+        case RS2::ActionDrawSplineExplode:
+            a = new LC_ActionSplineExplode(*document, *view);
+            break;
+        case RS2::ActionDrawSplineFromPolyline:
+            a = new LC_ActionSplineFromPolyline(*document, *view);
             break;
         case RS2::ActionDrawMText:
             a = new RS_ActionDrawMText(*document, *view);

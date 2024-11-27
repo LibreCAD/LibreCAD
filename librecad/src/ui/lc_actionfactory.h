@@ -45,11 +45,14 @@ public:
 private:
 
     void createDrawLineActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createDrawPointsActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createDrawShapeActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createInfoActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createViewActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createDrawCircleActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createSelectActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createDrawCurveActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createDrawSplineActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createDrawEllipseActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createDrawPolylineActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createDrawOtherActions(QMap<QString, QAction *> &map, QActionGroup *group);

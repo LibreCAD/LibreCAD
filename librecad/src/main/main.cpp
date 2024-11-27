@@ -335,11 +335,12 @@ int main(int argc, char** argv)
     bool reopenLastFiles;
     QString lastFiles;
     QString activeFile;
-    LC_GROUP_GUARD("Startup");
+    LC_GROUP("Startup");
     {
         reopenLastFiles = LC_GET_BOOL("OpenLastOpenedFiles");
         lastFiles = LC_GET_STR("LastOpenFilesList", "");
         activeFile = LC_GET_STR("LastOpenFilesActive", "");
+        bool checkForNewVersion = LC_GET_BOOL("CheckForNewVersions", true);
 
         if (reopenLastFiles && fileList.isEmpty() && !lastFiles.isEmpty()) {
                 foreach(const QString &filename, lastFiles.split(";")) {
@@ -374,11 +375,12 @@ int main(int argc, char** argv)
             splash.release();
         }
 
-        bool checkForNewVersion = LC_GET_BOOL("CheckForNewVersions", true);
+
         if (checkForNewVersion) {
             appWin.checkForNewVersion();
         }
     }
+    LC_GROUP_END();
     if (first_load)
         settings.setValue("Startup/FirstLoad", 0);
 

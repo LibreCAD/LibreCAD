@@ -56,6 +56,8 @@ public:
     void invertSelection();
     void selectWindow(enum RS2::EntityType typeToSelect, const RS_Vector& v1, const RS_Vector& v2,
                       bool select=true, bool cross=false);
+    void selectWindow(const QList<RS2::EntityType> &typesToSelect, const RS_Vector& v1, const RS_Vector& v2,
+                      bool select=true, bool cross=false);
     void deselectWindow(enum RS2::EntityType typeToSelect,const RS_Vector& v1, const RS_Vector& v2) {
         selectWindow(typeToSelect,v1, v2, false);
     }

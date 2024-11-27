@@ -135,7 +135,7 @@ void RS_Selection::invertSelection(){
  *
  * @param v1 First corner of the window to select.
  * @param v2 Second corner of the window to select.
- * @param select true: select, false: deselect
+ * @param select true: select, false: invertSelectionOperation
  */
 void RS_Selection::selectWindow(
     enum RS2::EntityType typeToSelect, const RS_Vector &v1, const RS_Vector &v2,
@@ -148,12 +148,22 @@ void RS_Selection::selectWindow(
     }
 }
 
+void RS_Selection::selectWindow(const QList<RS2::EntityType> &typesToSelect, const RS_Vector &v1, const RS_Vector &v2,
+    bool select, bool cross){
+
+    container->selectWindow(typesToSelect, v1, v2, select, cross);
+
+    if (graphicView){
+        graphicView->redraw();
+    }
+}
+
 /**
  * Selects all entities that are intersected by the given line.
  *
  * @param v1 Startpoint of line.
  * @param v2 Endpoint of line.
- * @param select true: select, false: deselect
+ * @param select true: select, false: invertSelectionOperation
  */
 void RS_Selection::selectIntersected(
     const RS_Vector &v1, const RS_Vector &v2,

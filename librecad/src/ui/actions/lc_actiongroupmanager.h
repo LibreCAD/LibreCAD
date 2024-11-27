@@ -20,6 +20,7 @@ public:
     LC_ActionGroup* block;
     LC_ActionGroup* circle;
     LC_ActionGroup* curve;
+    LC_ActionGroup* spline;
     LC_ActionGroup* edit;
     LC_ActionGroup* ellipse;
     LC_ActionGroup* file;
@@ -27,6 +28,8 @@ public:
     LC_ActionGroup* info;
     LC_ActionGroup* layer;
     LC_ActionGroup* line;
+    LC_ActionGroup* point;
+    LC_ActionGroup* shape;
     LC_ActionGroup* modify;
     LC_ActionGroup* options;
     LC_ActionGroup* other;

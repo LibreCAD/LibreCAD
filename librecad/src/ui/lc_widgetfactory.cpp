@@ -80,12 +80,22 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "FileSaveAll"
     });
 
+    fillActionsList(shape_actions, {
+        "DrawLineRectangle",
+        "DrawLineRectangle1Point",
+        "DrawLineRectangle2Points",
+        "DrawLineRectangle3Points",
+        "DrawLinePolygonCenCor",
+        "DrawLinePolygonCenTan",   //20161226 added by txmy
+        "DrawLinePolygonCorCor",
+        "DrawStar"
+    });
+
     fillActionsList(line_actions, {
         "DrawLine",
         "DrawLineAngle",
         "DrawLineHorizontal",
         "DrawLineVertical",
-        "DrawLineRectangle",
         "DrawLineParallelThrough",
         "DrawLineParallel",
         "DrawLineBisector",
@@ -94,15 +104,6 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawLineOrthTan",
         "DrawLineOrthogonal",
         "DrawLineRelAngle",
-        "DrawLinePolygonCenCor",
-        "DrawLinePolygonCenTan",   //20161226 added by txmy
-        "DrawLinePolygonCorCor",
-        "DrawStar",
-        "DrawPoint",
-        "DrawLinePoints",
-        "DrawLineRectangle1Point",
-        "DrawLineRectangle2Points",
-        "DrawLineRectangle3Points",
         "DrawCross",
         "DrawLineRel",
         "DrawLineRelX",
@@ -112,6 +113,14 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawLineFromPointToLine",
         "DrawSliceDivideLine",
         "DrawSliceDivideCircle"
+    });
+
+    fillActionsList(point_actions , {
+        "DrawPoint",
+        "DrawLinePoints",
+        "DrawPointLattice",
+        "SelectPoints",
+        "PasteToPoints"
     });
 
     fillActionsList(circle_actions, {
@@ -135,21 +144,28 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawArcAngleLen",
         "DrawArc3P",
         // fixme - sand - restore as actions are ready
-//        "DrawArc2PAngle",
-//        "DrawArc2PRadius",
-//        "DrawArc2PLength",
-//        "DrawArc2PHeight",
+        "DrawArc2PAngle",
+        "DrawArc2PRadius",
+        "DrawArc2PLength",
+        "DrawArc2PHeight",
+
         "DrawArcTangential",
+
+        "DrawEllipseArcAxis",
+        "DrawEllipseArc1Point"
+    });
+
+    fillActionsList(spline_actions, {
         "DrawParabola4Points",
         "DrawParabolaFD",
         "DrawSpline",
         "DrawSplinePoints",
-        // fixme - sand - restore as actions are ready
-//        "DrawSplinePointsAppend",
-//        "DrawSplinePointsAdd",
-//        "DrawSplinePointsRemove",
-        "DrawEllipseArcAxis",
-        "DrawEllipseArc1Point",
+        "DrawSplineFromPolyline",
+        "DrawSplinePointsAppend",
+        "DrawSplinePointsAdd",
+        "DrawSplinePointsRemove",
+        "DrawSplinePointsDelTwo",
+        "DrawSplineExplode",
         "DrawLineFree"
     });
 
@@ -321,8 +337,10 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
     });
 
     actionsToDisableInPrintPreview.append(line_actions);
+    actionsToDisableInPrintPreview.append(point_actions);
     actionsToDisableInPrintPreview.append(circle_actions);
     actionsToDisableInPrintPreview.append(curve_actions);
+    actionsToDisableInPrintPreview.append(spline_actions);
     actionsToDisableInPrintPreview.append(ellipse_actions);
     actionsToDisableInPrintPreview.append(polyline_actions);
     actionsToDisableInPrintPreview.append(select_actions);
@@ -338,8 +356,11 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
 
 void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size){
     auto* line = leftDocWidget(tr("Line"), "Line", line_actions, columns, icon_size);
+    auto* point = leftDocWidget(tr("Point"), "Point", point_actions, columns, icon_size);
+    auto* shape = leftDocWidget(tr("Polygon"), "Polygon", shape_actions, columns, icon_size);
     auto* circle = leftDocWidget(tr("Circle"), "Circle", circle_actions, columns, icon_size);
-    auto* curve = leftDocWidget(tr("Curve"), "Curve", curve_actions, columns, icon_size);
+    auto* curve = leftDocWidget(tr("Arc"), "Curve", curve_actions, columns, icon_size);
+    auto* spline = leftDocWidget(tr("Spline"), "Spline", spline_actions, columns, icon_size);
     auto* ellipse = leftDocWidget(tr("Ellipse"), "Ellipse", ellipse_actions, columns, icon_size);
     auto* polyline = leftDocWidget(tr("Polyline"), "Polyline", polyline_actions, columns, icon_size);
     auto* select = leftDocWidget(tr("Select"), "Select", select_actions, columns, icon_size);
@@ -351,10 +372,13 @@ void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size){
 
     main_window->addDockWidget(Qt::LeftDockWidgetArea, line);
     main_window->tabifyDockWidget(line, polyline);
+    main_window->tabifyDockWidget(polyline, point);
+    main_window->tabifyDockWidget(polyline, shape);
     line->raise();
     main_window->addDockWidget(Qt::LeftDockWidgetArea, circle);
     main_window->tabifyDockWidget(circle, curve);
-    main_window->tabifyDockWidget(curve, ellipse);
+    main_window->tabifyDockWidget(curve, spline);
+    main_window->tabifyDockWidget(spline, ellipse);
     circle->raise();
     main_window->addDockWidget(Qt::LeftDockWidgetArea, dimension);
     main_window->tabifyDockWidget(dimension, other);
@@ -554,8 +578,11 @@ void LC_WidgetFactory::createCADToolbars(){
     QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     auto* line = toolbarWithActions(tr("Line"), "Line", tbPolicy, line_actions);
+    auto* point = toolbarWithActions(tr("Point"), "Point", tbPolicy, point_actions);
+    auto* shape = toolbarWithActions(tr("Polygon"), "Polygon", tbPolicy, shape_actions);
     auto* circle = toolbarWithActions(tr("Circle"), "Circle", tbPolicy, circle_actions);
-    auto* curve = toolbarWithActions(tr("Curve"), "Curve", tbPolicy, curve_actions);
+    auto* curve = toolbarWithActions(tr("Arc"), "Curve", tbPolicy, curve_actions);
+    auto* spline = toolbarWithActions(tr("Spline"), "Spline", tbPolicy, curve_actions);
     auto* ellipse = toolbarWithActions(tr("Ellipse"), "Ellipse", tbPolicy, ellipse_actions);
     auto* polyline = toolbarWithActions(tr("Polyline"), "Polyline", tbPolicy, polyline_actions);
     auto* select = toolbarWithActions(tr("Select"), "Select", tbPolicy, select_actions);
@@ -565,8 +592,11 @@ void LC_WidgetFactory::createCADToolbars(){
     auto* info = toolbarWithActions(tr("Info"), "Info", tbPolicy, info_actions);
 
     addToBottom(line);
+    addToBottom(point);
+    addToBottom(shape);
     addToBottom(circle);
     addToBottom(curve);
+    addToBottom(spline);
     addToBottom(ellipse);
     addToBottom(polyline);
     addToBottom(dimension);
@@ -581,8 +611,11 @@ QToolBar *LC_WidgetFactory::createCategoriesToolbar() {
                                          QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding), {});
 
     toolButton(toolbar, tr("Lines"), ":/icons/line.svg", line_actions);
-    toolButton(toolbar, tr("Circles"), ":/icons/circle.svg", circle_actions);
-    toolButton(toolbar, tr("Freehand"), ":/icons/line_freehand.svg", curve_actions);
+    toolButton(toolbar, tr("Points"), ":/icons/points.svg", point_actions);
+    toolButton(toolbar, tr("Polygons"), ":/icons/circle.svg", circle_actions);
+    toolButton(toolbar, tr("Arcs"), ":/icons/arc_center_point_angle.svg", curve_actions);
+    toolButton(toolbar, tr("Splines"), ":/icons/spline_points.svg", spline_actions);
+    toolButton(toolbar, tr("Polygons"), ":/icons/rectangle_2_points.svg", shape_actions);
     toolButton(toolbar, tr("Ellipses"), ":/icons/ellipses.svg", ellipse_actions);
     toolButton(toolbar, tr("PolyLines"), ":/icons/polylines.svg", polyline_actions);
     toolButton(toolbar, tr("Select"), ":/icons/select.svg", select_actions);
@@ -652,6 +685,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         "EditCopy",
         "EditPaste",
         "EditPasteTransform",
+        "PasteToPoints",
         "",
         "EditCutQuick",
         "EditCopyQuick",
@@ -690,7 +724,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     });
 
 
-    auto views_restore_menu = subMenu(view_menu, tr("&Views Restore"), "view_restore", ":/icons/nview_visible.svg",
+    /*auto views_restore_menu = */subMenu(view_menu, tr("&Views Restore"), "view_restore", ":/icons/nview_visible.svg",
                                       {"ZoomViewRestore1",
                                        "ZoomViewRestore2",
                                        "ZoomViewRestore3",
@@ -700,8 +734,11 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
 
     auto tools = menu(tr("&Tools"), "tools", menu_bar);
     subMenuWithActions(tools, tr("&Line"), "line", ":/icons/line.svg", line_actions);
+    subMenuWithActions(tools, tr("Poin&t"), "line", ":/icons/points.svg", point_actions);
     subMenuWithActions(tools, tr("&Circle"), "circle", ":/icons/circle.svg", circle_actions);
-    subMenuWithActions(tools, tr("&Curve"), "curve", ":/icons/line_freehand.svg", curve_actions);
+    subMenuWithActions(tools, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.svg", curve_actions);
+    subMenuWithActions(tools, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.svg", shape_actions);
+    subMenuWithActions(tools, tr("Splin&e"), "spline", ":/icons/spline_points.svg", spline_actions);
     subMenuWithActions(tools, tr("&Ellipse"), "ellipse", ":/icons/ellipses.svg", ellipse_actions);
     subMenuWithActions(tools, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.svg", polyline_actions);
     subMenuWithActions(tools, tr("&Select"), "select", ":/icons/select.svg", select_actions);

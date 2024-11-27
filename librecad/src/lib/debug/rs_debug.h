@@ -28,6 +28,8 @@
 #ifndef RS_DEBUG_H
 #define RS_DEBUG_H
 
+#include "rs_vector.h"
+
 #ifdef __hpux
 #include <sys/_size_t.h>
 #endif
@@ -124,7 +126,9 @@ public:
         LogStream& operator<<(const QByteArray& array);
         LogStream& operator<<(const char *c);
         LogStream& operator<<(const void *ptr);
+        LogStream& operator<<(const RS_Vector &);
         LogStream& operator () (RS_DebugLevel level);
+
     private:
         struct StreamImpl;
         StreamImpl* m_pStream = nullptr;

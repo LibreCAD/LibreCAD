@@ -74,8 +74,11 @@ private:
 
     QList<QAction*> file_actions;
     QList<QAction*> line_actions;
+    QList<QAction*> point_actions;
+    QList<QAction*> shape_actions;
     QList<QAction*> circle_actions;
     QList<QAction*> curve_actions;
+    QList<QAction*> spline_actions;
     QList<QAction*> ellipse_actions;
     QList<QAction*> polyline_actions;
     QList<QAction*> select_actions;

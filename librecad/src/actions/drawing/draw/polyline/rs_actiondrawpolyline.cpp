@@ -103,7 +103,6 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-    double bulge = solveBulge(mouse);
     int status = getStatus();
     switch (status) {
         case SetStartpoint: {
@@ -117,6 +116,18 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
                 mouse = getSnapAngleAwarePoint(e, pPoints->point, mouse, true);
             }
             if (pPoints->point.valid){
+                bool alternateDirection = isControl(e);
+                double bulge = 0.;
+                if (alternateDirection && m_mode == Ang){
+                    int originalReversed = m_reversed;
+                    m_reversed = m_reversed == -1 ? 1: -1;
+                    bulge = solveBulge(mouse);
+                    m_reversed = originalReversed;
+                }
+                else {
+                    bulge = solveBulge(mouse);
+                }
+
                 if (fabs(bulge) < RS_TOLERANCE || m_mode == Line){
                     previewLine(pPoints->point, mouse);
                     if (showRefEntitiesOnPreview) {
@@ -124,11 +135,27 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
                         previewRefSelectablePoint(mouse);
                     }
                 } else {
-                    auto arc = previewArc(pPoints->arc_data);
+                    RS_ArcData tmpArcData = pPoints->arc_data;
+                    if (alternateDirection && m_mode != Ang){
+                        tmpArcData.reversed = !tmpArcData.reversed;
+                    }
+                    auto arc = previewArc(tmpArcData);
                     if (showRefEntitiesOnPreview) {
-                        previewRefPoint(arc->getCenter());
-                        previewRefPoint(arc->getStartpoint());
-                        previewRefSelectablePoint(arc->getEndpoint());
+                        const RS_Vector &center = arc->getCenter();
+                        const RS_Vector &endpoint = arc->getEndpoint();
+                        const RS_Vector &startpoint = arc->getStartpoint();
+                        previewRefPoint(center);
+                        previewRefPoint(startpoint);
+                        previewRefSelectablePoint(endpoint);
+                        previewRefLine(center, endpoint);
+                        previewRefLine(center, startpoint);
+
+                        if (m_mode == Ang || m_mode == TanAng){
+                            auto refArcData = RS_ArcData(arc->getData());
+                            double radius = arc->getRadius() * 0.2;
+                            refArcData.radius = radius;
+                            previewRefArc(refArcData);
+                        }
                     }
                 }
             }
@@ -145,16 +172,20 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
 
 void RS_ActionDrawPolyline::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
 
-     RS_Vector mouse = snapPoint(e);
-    if (status == SetNextPoint && m_mode == Line){
-        mouse = getSnapAngleAwarePoint(e, pPoints->point, mouse, true);
+    RS_Vector mouse = snapPoint(e);
+    if (status == SetNextPoint) {
+        if (m_mode == Line) {
+            mouse = getSnapAngleAwarePoint(e, pPoints->point, mouse, true);
+        } else {
+            alternateArc = isControl(e);
+        }
     }
     if (equationSettingOn || stepSizeSettingOn) return;
 
     if (startPointSettingOn || endPointSettingOn){
         QString pointNumberString(QString::number(snapPoint(e).x)); // fixme - review and check the logic
 
-        if (e->modifiers() == Qt::ControlModifier){
+        if (isControl(e)){
             pointNumberString = QString::number(snapPoint(e).x - graphicView->getRelativeZero().x).prepend("@@");
         }
 
@@ -199,9 +230,16 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
 //        break;
         case Tangential:
             if (pPoints->polyline){
-                lastentity = dynamic_cast<RS_AtomicEntity *>(pPoints->polyline->lastEntity());
-                direction = RS_Math::correctAngle(
-                    lastentity->getDirection2() + M_PI);
+                if (prepend) {
+                    lastentity = dynamic_cast<RS_AtomicEntity *>(pPoints->polyline->firstEntity());
+                    direction = RS_Math::correctAngle(lastentity->getDirection1() + M_PI);
+                }
+                else{
+                    lastentity = dynamic_cast<RS_AtomicEntity *>(pPoints->polyline->lastEntity());
+                    direction = RS_Math::correctAngle(lastentity->getDirection2() + M_PI);
+                }
+
+
                 line.setStartpoint(pPoints->point);
                 line.setEndpoint(mouse);
                 double const direction2 = RS_Math::correctAngle(line.getDirection2() + M_PI);
@@ -234,10 +272,43 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
             // fall-through
         case TanRad: {
             if (pPoints->polyline){
-                lastentity = dynamic_cast<RS_AtomicEntity *>(pPoints->polyline->lastEntity());
-                direction = RS_Math::correctAngle(lastentity->getDirection2() + M_PI);
+                if (prepend){
+                    lastentity = dynamic_cast<RS_AtomicEntity *>(pPoints->polyline->firstEntity());
+                    direction = RS_Math::correctAngle(lastentity->getDirection1() + M_PI);
+                }
+                else{
+                    lastentity = dynamic_cast<RS_AtomicEntity *>(pPoints->polyline->lastEntity());
+                    direction = RS_Math::correctAngle(lastentity->getDirection2() + M_PI);
+                }
                 suc = arc.createFrom2PDirectionRadius(pPoints->point, mouse,
                                                       direction, m_radius);
+                if (suc){
+                    pPoints->arc_data = arc.getData();
+                    b = arc.getBulge();
+                    pPoints->calculatedEndpoint = arc.getEndpoint();
+                    m_calculatedSegment = true;
+
+                }
+//            else
+//                b=0;
+            }
+//        else
+//          b=0;
+            break;
+        }
+
+        case TanAng: {
+            if (pPoints->polyline){
+                if (prepend){
+                    lastentity = dynamic_cast<RS_AtomicEntity *>(pPoints->polyline->firstEntity());
+                    direction = RS_Math::correctAngle(lastentity->getDirection1() + M_PI);
+                }
+                else{
+                    lastentity = dynamic_cast<RS_AtomicEntity *>(pPoints->polyline->lastEntity());
+                    direction = RS_Math::correctAngle(lastentity->getDirection2() + M_PI);
+                }
+                suc = arc.createFrom2PDirectionAngle(pPoints->point, mouse,
+                                                      direction, RS_Math::deg2rad(m_angle));
                 if (suc){
                     pPoints->arc_data = arc.getData();
                     b = arc.getBulge();
@@ -259,8 +330,16 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
         b = std::tan(Reversed*m_angle*M_PI/720.0);
         break;*/
         case Ang: {
-            b = std::tan(m_reversed * m_angle * M_PI / 720.0);
-            suc = arc.createFrom2PBulge(pPoints->point, mouse, b);
+            if (prepend){
+                b = std::tan(m_reversed * m_angle * M_PI / 720.0);
+//                b = std::tan(m_reversed * -1 * m_angle * M_PI / 720.0);
+                suc = arc.createFrom2PBulge( mouse, pPoints->point,b);
+//                suc = arc.createFrom2PBulge(pPoints->point, mouse, b);
+            }
+            else{
+               b = std::tan(m_reversed * m_angle * M_PI / 720.0);
+               suc = arc.createFrom2PBulge(pPoints->point, mouse, b);
+            }
             if (suc)
                 pPoints->arc_data = arc.getData();
             else
@@ -280,7 +359,7 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
 
 void RS_ActionDrawPolyline::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     RS_Vector mouse = pos;
-    double bulge = solveBulge(mouse);
+
     if (m_calculatedSegment)
         mouse = pPoints->calculatedEndpoint;
 
@@ -311,6 +390,24 @@ void RS_ActionDrawPolyline::onCoordinateEvent(int status, [[maybe_unused]]bool i
         }
         case SetNextPoint: {
             if (!endPointSettingOn){
+                double bulge = 0.;
+                if (alternateArc && m_mode == Ang){
+                    int originalReversed = m_reversed;
+                    m_reversed = m_reversed == -1 ? 1: -1;
+                    bulge = solveBulge(mouse);
+                    m_reversed = originalReversed;
+                }
+                else {
+                    bulge = solveBulge(mouse);
+                }
+
+                if (alternateArc && m_mode != Ang && m_mode != Line){
+                    RS_ArcData tmpArcData = pPoints->arc_data;
+                    tmpArcData.reversed = !tmpArcData.reversed;
+                    RS_Arc arc = RS_Arc(nullptr, tmpArcData);
+                    bulge = arc.getBulge();
+                }
+                alternateArc = false;
                 pPoints->point = mouse;
                 pPoints->history.append(mouse);
                 pPoints->bHistory.append(bulge);
@@ -389,6 +486,35 @@ QString RS_ActionDrawPolyline::prepareCommand(RS_CommandEvent *e) const {
 bool RS_ActionDrawPolyline::doProcessCommand(int status, const QString &c) {
 
     bool accept = false;
+    // fixme - sand - register in commands
+    if (checkCommand("li", c)){
+        m_mode = Line;
+        updateOptions();
+        accept = true;
+    }
+    else if (checkCommand("tan",c)){
+        m_mode = Tangential;
+        updateOptions();
+        accept = true;
+    }
+    else if (checkCommand("tar", c)){
+        m_mode = TanRad;
+        updateOptions();
+        accept = true;
+    }
+    else if (checkCommand("taa", c)){
+        m_mode = TanRad;
+        updateOptions();
+        accept = true;
+    }
+    else if (checkCommand("aa", c)){
+        m_mode = Ang;
+        updateOptions();
+        accept = true;
+    }
+    if (accept) {
+        return accept;
+    }
     switch (status) {
         case SetStartpoint: {
             if (checkCommand("close", c)){
@@ -416,7 +542,7 @@ bool RS_ActionDrawPolyline::doProcessCommand(int status, const QString &c) {
         return accept;
     }
 
-    if ((m_mode == Line) && (checkCommand(tr("equation"), c))) {
+    if ((m_mode == Line) && (checkCommand("equation", c))) {
         updateMouseWidgetTRBack(tr("Enter an equation, f(x)"));
         equationSettingOn = true;
         return true;
@@ -587,6 +713,12 @@ void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines) {
 QStringList RS_ActionDrawPolyline::getAvailableCommands() {
     QStringList cmd;
 
+    cmd+=command("li");
+    cmd+=command("tan");
+    cmd+=command("tar");
+    cmd+=command("taa");
+    cmd+=command("aa");
+
     switch (getStatus()) {
         case SetStartpoint:
             break;
@@ -602,6 +734,10 @@ QStringList RS_ActionDrawPolyline::getAvailableCommands() {
             break;
     }
 
+    if (m_mode == Line){
+        cmd += command("equation");
+    }
+
     return cmd;
 }
 
@@ -614,30 +750,36 @@ void RS_ActionDrawPolyline::updateMouseButtonHints() {
             break;
         }
         case SetNextPoint: {
-            QString msg = "";
-            LC_ModifiersInfo modifiers = MOD_NONE;
-            if (m_mode == Line) {
-                modifiers = MOD_SHIFT_ANGLE_SNAP;
-            }
-
-            qsizetype size = pPoints->history.size();
-            if (size >= 3) {
-                msg += command("close");
-                msg += "/";
-            }
-
-            if (size >= 2) {
-                msg += command("undo");
-
-                updateMouseWidgetTRBack(tr("Specify next point or [%1]").arg(msg), modifiers);
-            } else {
-                updateMouseWidgetTRBack(tr("Specify next point"), modifiers);
-            }
+            updateMouseButtonHintsForNextPoint();
             break;
         }
         default:
             updateMouseWidget();
             break;
+    }
+}
+
+void RS_ActionDrawPolyline::updateMouseButtonHintsForNextPoint() {
+    QString msg = "";
+    LC_ModifiersInfo modifiers = MOD_NONE;
+    if (m_mode == Line) {
+        modifiers = MOD_SHIFT_ANGLE_SNAP;
+    }
+    else {
+        modifiers = MOD_CTRL(tr("Alternative Arc"));
+    }
+
+    qsizetype size = pPoints->history.size();
+    if (size >= 3) {
+        msg += command("close");
+        msg += "/";
+    }
+
+    if (size >= 2) {
+        msg += command("undo");
+        updateMouseWidgetTRBack(tr("Specify next point or [%1]").arg(msg), modifiers);
+    } else {
+        updateMouseWidgetTRBack(tr("Specify next point"), modifiers);
     }
 }
 

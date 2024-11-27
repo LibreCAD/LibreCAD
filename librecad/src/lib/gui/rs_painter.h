@@ -96,7 +96,7 @@ public:
     void drawLine(const double &x1, const double &y1, const double &x2, const double &y2);
     void drawLineSimple(const double &x1, const double &y1, const double &x2, const double &y2);
     void drawRect(const RS_Vector& p1, const RS_Vector& p2);
-    void drawArcEntity(const RS_Vector &cp, double radius, double startAngleDegrees, double angularLength);
+    void drawArcEntity(const RS_Vector &cp, double radiusX, double radiusY, double startAngleDegrees, double angularLength);
 
     void drawCircle(const RS_Vector& cp, double radius);
     void drawEllipse(double centerX, double centerY,

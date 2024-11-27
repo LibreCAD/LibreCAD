@@ -241,6 +241,7 @@ public:
     //! \return rectangle as a polygon
     static QPolygonF getBoundingRect(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2);
     //! \}
+    void fillStrokePoints(int splineSegments, std::vector<RS_Vector>& points) const;
 };
 
 #endif

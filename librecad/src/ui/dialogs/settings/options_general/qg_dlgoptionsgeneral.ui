@@ -3354,46 +3354,6 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="cbAutoBackup">
-            <property name="toolTip">
-             <string>When set, LibreCAD will automatically generate a backup of your current drawing.</string>
-            </property>
-            <property name="text">
-             <string>Auto save backup each</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbUseQtFileOpenDialog">
-            <property name="text">
-             <string>Don't use native OS file open dialog</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
-            <property name="toolTip">
-             <string>If checked, location of dialog will not be saved, but size will</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
-            </property>
-            <property name="text">
-             <string>Persist dialog size only</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QCheckBox" name="cbTabCloseButton">
-            <property name="toolTip">
-             <string>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</string>
-            </property>
-            <property name="text">
-             <string>Show Close button on drawings tabs</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0" colspan="2">
            <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
             <property name="toolTip">
@@ -3418,13 +3378,10 @@
             </item>
            </widget>
           </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbPersistentDialogs">
-            <property name="toolTip">
-             <string>If checked, dialogs will be positioned and resized to position/size of last invocation.</string>
-            </property>
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbUseQtFileOpenDialog">
             <property name="text">
-             <string>Persistent dialogs location and size</string>
+             <string>Don't use native OS file open dialog</string>
             </property>
            </widget>
           </item>
@@ -3435,6 +3392,59 @@
             </property>
             <property name="text">
              <string>Show current command icon in options toolbar</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
+            <property name="toolTip">
+             <string>If checked, location of dialog will not be saved, but size will</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
+            </property>
+            <property name="text">
+             <string>Persist dialog size only</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cbAutoBackup">
+            <property name="toolTip">
+             <string>When set, LibreCAD will automatically generate a backup of your current drawing.</string>
+            </property>
+            <property name="text">
+             <string>Auto save backup each</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="cbTabCloseButton">
+            <property name="toolTip">
+             <string>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</string>
+            </property>
+            <property name="text">
+             <string>Show Close button on drawings tabs</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbPersistentDialogs">
+            <property name="toolTip">
+             <string>If checked, dialogs will be positioned and resized to position/size of last invocation.</string>
+            </property>
+            <property name="text">
+             <string>Persistent dialogs location and size</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbShowEntityIDs">
+            <property name="toolTip">
+             <string>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</string>
+            </property>
+            <property name="text">
+             <string>Show internal IDs of entities</string>
             </property>
            </widget>
           </item>
@@ -4057,9 +4067,9 @@
   <tabstop>lePathHatch</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../../../res/icons/icons.qrc"/>
-  <include location="../../../../../res/icons/icons.qrc"/>
   <include location="../../../../../res/ui/ui.qrc"/>
+  <include location="../../../../../res/icons/icons.qrc"/>
+  <include location="../../../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>

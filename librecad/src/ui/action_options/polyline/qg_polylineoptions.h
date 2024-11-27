@@ -49,6 +49,12 @@ public slots:
     void onRadiusEditingFinished();
     void onNegToggled(bool checked);
     void languageChange() override;
+    void tbLineClicked();
+    void tbTangentalClicked();
+    void tbTanRadiusClicked();
+    void tbTanAngleClicked();
+    void tbArcAngleClicked();
+
 protected:
     RS_ActionDrawPolyline* action;
     void doSaveSettings() override;

@@ -108,9 +108,114 @@
      </item>
      <item>
       <property name="text">
+       <string>Tan Angle</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Angle</string>
       </property>
      </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="tbLine">
+     <property name="toolTip">
+      <string>Line</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/line.svg</normaloff>:/icons/line.svg</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="tbTangental">
+     <property name="toolTip">
+      <string>Tangential arc</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/arc_continuation.svg</normaloff>:/icons/arc_continuation.svg</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="tbTanRadius">
+     <property name="toolTip">
+      <string>Tangental arc with fixed radius</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/arc_2p_radius.svg</normaloff>:/icons/arc_2p_radius.svg</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="tbTanAngle">
+     <property name="toolTip">
+      <string>Tangental arc with fixed angle</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/arc_2p_length.svg</normaloff>:/icons/arc_2p_length.svg</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="tbArcAngle">
+     <property name="toolTip">
+      <string>Arc with angle</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/arc_2p_angle.svg</normaloff>:/icons/arc_2p_angle.svg</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item>
@@ -229,26 +334,28 @@
         </property>
        </widget>
       </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>0</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
   <include location="../../../../res/extui/extui.qrc"/>
  </resources>
  <connections>

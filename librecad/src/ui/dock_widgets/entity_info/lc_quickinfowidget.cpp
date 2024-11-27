@@ -107,6 +107,8 @@ LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *>
     options->load();
     entityData.setOptions(options);
 
+    options->displayEntityID = LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false);
+
     LC_GROUP_GUARD("QuickInfoWidget");
     {
         entityData.setCoordinatesMode(LC_GET_INT("EntityCoordinatesMode", LC_QuickInfoBaseData::COORD_ABSOLUTE));
@@ -133,6 +135,7 @@ void LC_QuickInfoWidget::processEntity(RS_Entity *en){
         clearEntityInfo();
     }
     else { // just delegate action processing to entity data
+        options->displayEntityID = LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false);
         bool updated = entityData.processEntity(en);
         if (updated){
             updateEntityInfoView();
@@ -196,6 +199,7 @@ void LC_QuickInfoWidget::updateEntityInfoView(bool forceUpdate, bool updateView)
             RS_Entity *entity = findEntityById(entityId);
             if (entity != nullptr){
                 entityData.clear();
+                options->displayEntityID = LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false);
                 entityData.processEntity(entity);
             }
         }
@@ -333,24 +337,24 @@ void LC_QuickInfoWidget::onViewContextMenu(QPoint pos){
                 if (ok){
                     if (widgetMode == MODE_COORDINATE_COLLECTING){
                         // specific commands for anchors on collected points view
-                        QAction* toCmdAction = contextMenu->addAction(getCoordinateMenuName("&To Cmd", pointIndex));
+                        QAction* toCmdAction = contextMenu->addAction(getCoordinateMenuName(tr("&To Cmd"), pointIndex));
                         connect(toCmdAction, &QAction::triggered, this,  [this, pointIndex]{ onToCmd(pointIndex); });
 
-                        QAction* relZeroAction = contextMenu->addAction(getCoordinateMenuName("&Set Relative Zero",pointIndex));
+                        QAction* relZeroAction = contextMenu->addAction(getCoordinateMenuName(tr("&Set Relative Zero"),pointIndex));
                         connect(relZeroAction, &QAction::triggered, this,  [this, pointIndex]{ onSetRelZero(pointIndex); });
                         contextMenu->addSeparator();
-                        QAction* removeAction = contextMenu->addAction(getCoordinateMenuName("&Remove Coordinate", pointIndex));
+                        QAction* removeAction = contextMenu->addAction(getCoordinateMenuName(tr("&Remove Coordinate"), pointIndex));
                         connect(removeAction, &QAction::triggered, this,  [this, pointIndex]{ onRemoveCoordinate(pointIndex); });
 
-                        QAction* insertAction = contextMenu->addAction(getCoordinateMenuName("&Insert Coordinates", pointIndex));
+                        QAction* insertAction = contextMenu->addAction(getCoordinateMenuName(tr("&Insert Coordinates"), pointIndex));
                         connect(insertAction, &QAction::triggered, this,  [this, pointIndex]{ onInsertCoordinates(pointIndex); });
                     }
                     else{
                         // specific commands for anchors on entity info view
-                        QAction* toCmdAction = contextMenu->addAction(getCoordinateMenuName("&To Cmd", -1));
+                        QAction* toCmdAction = contextMenu->addAction(getCoordinateMenuName(tr("&To Cmd"), -1));
                         connect(toCmdAction, &QAction::triggered, this,  [this, pointIndex]{ onToCmd(pointIndex); });
 
-                        QAction* relZeroAction = contextMenu->addAction(getCoordinateMenuName("&Set Relative Zero",-1));
+                        QAction* relZeroAction = contextMenu->addAction(getCoordinateMenuName(tr("&Set Relative Zero"),-1));
                         connect(relZeroAction, &QAction::triggered, this,  [this, pointIndex]{ onSetRelZero(pointIndex); });
                     }
                 }
@@ -381,8 +385,7 @@ void LC_QuickInfoWidget::onViewContextMenu(QPoint pos){
  * @param idx
  * @return
  */
-QString LC_QuickInfoWidget::getCoordinateMenuName(const char *command, int idx) const{
-    QString actionName = tr(command);
+QString LC_QuickInfoWidget::getCoordinateMenuName(QString actionName, int idx) const{
     if (idx >= 0){
         QString index;
         index.setNum(idx+1);

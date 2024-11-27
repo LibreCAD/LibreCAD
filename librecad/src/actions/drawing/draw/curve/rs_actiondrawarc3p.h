@@ -56,10 +56,26 @@ protected:
     /**
      * Arc data defined so far.
      */
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+
+    struct Points {
+        RS_ArcData data;
+        /**
+         * 1st point.
+         */
+        RS_Vector point1;
+        /**
+         * 2nd point.
+         */
+        RS_Vector point2;
+        /**
+         * 3rd point.
+         */
+        RS_Vector point3;
+    };
+    Points pPoints = Points();
+    bool alternatedPoints = false;
     void reset() override;
-    void preparePreview();
+    void preparePreview(bool alternatePoints);
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;

@@ -438,10 +438,13 @@ void LC_MDIApplicationWindow::setupCADAreaTabbar() {
 void LC_MDIApplicationWindow::onCADTabBarIndexChanged([[maybe_unused]]int index) {
     LC_GROUP("Appearance");
     {
+        QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar *>();
+        if (tabBarList.isEmpty()){
+            return;
+        }
         bool showCloseButtons = LC_GET_BOOL("ShowCloseButton", true);
         bool showActive = LC_GET_BOOL("ShowCloseButtonActiveOnly", true);
 
-        QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar *>();
         QTabBar *tabBar = tabBarList.at(0);
         if (tabBar != nullptr) {
             QTabBar::ButtonPosition closeSide =

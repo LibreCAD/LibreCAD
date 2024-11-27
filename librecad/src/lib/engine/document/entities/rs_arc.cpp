@@ -919,8 +919,9 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     // Adjust dash offset
     updateDashOffset(*painter, *view, patternOffset);
     RS_Vector cp = view->toGui(getCenter());
-    double ra = getRadius() * view->getFactor().x;
-    painter->drawArcEntity(cp, ra, data.startAngleDegrees, data.angularLength);
+    double rx = getRadius() * view->getFactor().x;
+    double ry = getRadius() * view->getFactor().y;
+    painter->drawArcEntity(cp, rx, ry, data.startAngleDegrees, data.angularLength);
 }
 
 /**

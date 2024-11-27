@@ -372,6 +372,31 @@ const LC_CommandItem g_commandList[] = {
             {{"at", QObject::tr("at", "arc tangent")}},
             RS2::ActionDrawArcTangential
         },
+        // draw 2 points arc - Radius
+        {
+            {{"arc2pr", QObject::tr("arc2p3", "draw 2pt arc radius")}},
+            {{"a2r", QObject::tr("a2r", "draw 2pt arc radius")}},
+            RS2::ActionDrawArc2PRadius
+        },
+        // draw 2 points arc - Length
+        {
+            {{"arc2pl", QObject::tr("arc2pl", "draw 2pt arc length")}},
+            {{"a2l", QObject::tr("a2l", "draw 2pt arc length")}},
+            RS2::ActionDrawArc2PLength
+        },
+        // draw 2 points arc - Height
+        {
+            {{"arc2ph", QObject::tr("arc2ph", "draw 2pt arc height")}},
+            {{"a2h", QObject::tr("a2h", "draw 2pt arc height")}},
+            RS2::ActionDrawArc2PHeight
+        },
+        // draw 2 points arc - Angle
+        {
+            {{"arc2pa", QObject::tr("arc2pa", "draw 2pt arc angle")}},
+            {{"a2a", QObject::tr("a2a", "draw 2pt arc angle")}},
+            RS2::ActionDrawArc2PAngle
+        },
+
         // draw spline with degrees freedom
         {
             {{"spline", QObject::tr("spline", "draw spline")}},

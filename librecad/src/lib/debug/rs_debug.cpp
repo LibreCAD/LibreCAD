@@ -163,6 +163,11 @@ RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const void *ptr) {
     *m_pStream << ptr;
     return *this;
 }
+
+RS_Debug::LogStream &RS_Debug::LogStream::operator<<(const RS_Vector & v) {
+    *m_pStream << "(" << v.x << "," << v.y <<  (v.valid ? ")" : "!)");
+    return *this;
+}
 // end of QTextStream delegation
 
 void debugHeader(char const *file, char const *func, int line) {

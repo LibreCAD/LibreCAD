@@ -68,7 +68,9 @@ include_directories(librecad/src/actions/drawing/draw/line/shapes/rect)
 include_directories(librecad/src/actions/drawing/draw/line/shapes/polygon)
 include_directories(librecad/src/actions/drawing/draw/circle)
 include_directories(librecad/src/actions/drawing/draw/curve)
+include_directories(librecad/src/actions/drawing/draw/spline)
 include_directories(librecad/src/actions/drawing/draw/polyline)
+include_directories(librecad/src/actions/drawing/draw/point)
 include_directories(librecad/src/actions/drawing/draw/ellipse)
 include_directories(librecad/src/actions/drawing/draw/dimensions)
 include_directories(librecad/src/actions/drawing/draw/text)
@@ -155,7 +157,9 @@ include_directories(librecad/src/ui/action_options/select)
 include_directories(librecad/src/ui/action_options/line)
 include_directories(librecad/src/ui/action_options/circle)
 include_directories(librecad/src/ui/action_options/polyline)
+include_directories(librecad/src/ui/action_options/point)
 include_directories(librecad/src/ui/action_options/curve)
+include_directories(librecad/src/ui/action_options/spline)
 include_directories(librecad/src/ui/action_options/ellipse)
 include_directories(librecad/src/ui/action_options/dimensions)
 include_directories(librecad/src/ui/action_options/selection)
@@ -296,8 +300,8 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.h
 		librecad/src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon3.cpp
 		librecad/src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon3.h
-		librecad/src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.cpp
-		librecad/src/actions/drawing/draw/curve/lc_actiondrawsplinepoints.h
+		librecad/src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp
+		librecad/src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.h
 		librecad/src/actions/file/lc_actionfileexportmakercam.cpp
 		librecad/src/actions/file/lc_actionfileexportmakercam.h
         librecad/src/actions/dock_widgets/layer/lc_actionlayersexport.cpp
@@ -412,8 +416,8 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/line/rs_actiondrawpoint.h
 		librecad/src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp
 		librecad/src/actions/drawing/draw/polyline/rs_actiondrawpolyline.h
-		librecad/src/actions/drawing/draw/curve/rs_actiondrawspline.cpp
-		librecad/src/actions/drawing/draw/curve/rs_actiondrawspline.h
+		librecad/src/actions/drawing/draw/spline/rs_actiondrawspline.cpp
+		librecad/src/actions/drawing/draw/spline/rs_actiondrawspline.h
 		librecad/src/actions/drawing/draw/text/rs_actiondrawtext.cpp
 		librecad/src/actions/drawing/draw/text/rs_actiondrawtext.h
 		librecad/src/actions/drawing/edit/rs_actioneditcopy.cpp
@@ -964,8 +968,8 @@ set(SOURCES
 		librecad/src/ui/action_options/snap/qg_snapmiddleoptions.h
 		librecad/src/ui/components/toolbars/qg_snaptoolbar.cpp
 		librecad/src/ui/components/toolbars/qg_snaptoolbar.h
-		librecad/src/ui/action_options/curve/qg_splineoptions.cpp
-		librecad/src/ui/action_options/curve/qg_splineoptions.h
+		librecad/src/ui/action_options/spline/qg_splineoptions.cpp
+		librecad/src/ui/action_options/spline/qg_splineoptions.h
 		librecad/src/ui/action_options/text/qg_textoptions.cpp
 		librecad/src/ui/action_options/text/qg_textoptions.h
 		librecad/src/ui/action_options/modify/qg_trimamountoptions.cpp
@@ -1280,6 +1284,48 @@ set(SOURCES
 		librecad/src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.cpp
 		librecad/src/ui/dock_widgets/views_list/lc_namedviewsbutton.h
 		librecad/src/ui/dock_widgets/views_list/lc_namedviewsbutton.cpp
+		librecad/src/actions/drawing/draw/spline/lc_actionremovesplinepoints.h
+		librecad/src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp
+		librecad/src/actions/drawing/draw/spline/lc_actionsplineappendpoint.h
+		librecad/src/actions/drawing/draw/spline/lc_actionsplineappendpoint.cpp
+		librecad/src/actions/drawing/draw/spline/lc_actionsplineaddpoint.h
+		librecad/src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp
+		librecad/src/actions/drawing/draw/spline/lc_actionsplinemodifybase.h
+		librecad/src/actions/drawing/draw/spline/lc_actionsplinemodifybase.cpp
+		librecad/src/actions/drawing/draw/spline/lc_actionsplineexplode.h
+		librecad/src/actions/drawing/draw/spline/lc_actionsplineexplode.cpp
+		librecad/src/ui/action_options/spline/lc_splineexplodeoptions.h
+		librecad/src/ui/action_options/spline/lc_splineexplodeoptions.cpp
+		librecad/src/actions/drawing/draw/spline/lc_actionsplinefrompolyline.h
+		librecad/src/actions/drawing/draw/spline/lc_actionsplinefrompolyline.cpp
+		librecad/src/ui/action_options/spline/lc_splinefrompolylineoptions.h
+		librecad/src/ui/action_options/spline/lc_splinefrompolylineoptions.cpp
+		librecad/src/actions/drawing/draw/spline/lc_actionsplineremovebetween.h
+		librecad/src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.h
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.h
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp
+		librecad/src/ui/action_options/curve/lc_actiondrawarc2poptions.h
+		librecad/src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.h
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.h
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.h
+		librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp
+		librecad/src/ui/action_options/selection/lc_selectwindowoptions.h
+		librecad/src/ui/action_options/selection/lc_selectwindowoptions.cpp
+		librecad/src/actions/drawing/draw/point/lc_actionselectpoints.h
+		librecad/src/actions/drawing/draw/point/lc_actionselectpoints.cpp
+		librecad/src/actions/drawing/draw/point/lc_actiondrawpointslattice.h
+		librecad/src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp
+		librecad/src/ui/action_options/point/lc_pointslatticeoptions.h
+		librecad/src/ui/action_options/point/lc_pointslatticeoptions.cpp
+		librecad/src/actions/drawing/draw/point/lc_actionpastetopoints.h
+		librecad/src/actions/drawing/draw/point/lc_actionpastetopoints.cpp
+		librecad/src/ui/action_options/point/lc_pastetopointsoptions.h
+		librecad/src/ui/action_options/point/lc_pastetopointsoptions.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

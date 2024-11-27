@@ -232,7 +232,7 @@ RS2::CursorType RS_ActionModifyMirror::doGetMouseCursorSelected([[maybe_unused]]
     return RS2::CadCursor;
 }
 
-LC_ModifyOperationFlags *RS_ActionModifyMirror::getModifyOperationFlags() {
+LC_ModifyOperationFlags *RS_ActionModifyMirror::getModifyOperationFlags()  {
     return &pPoints->data;
 }
 
