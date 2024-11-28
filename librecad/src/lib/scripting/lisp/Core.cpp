@@ -1284,7 +1284,7 @@ BUILTIN("getint")
             Lisp_CommandEdit->setPrombt(QObject::tr(qUtf8Printable(prombt)));
             Lisp_CommandEdit->doProcess(false);
             result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit);
-            QRegExp re("[+-]?[0-9]|[+-]?0[xX][0-9A-Fa-f]");
+            QRegExp re("[+-]?[0-9]+|[+-]?0[xX][0-9A-Fa-f]");
             if (re.exactMatch(result))
             {
                 x = result.toInt();
@@ -1331,7 +1331,7 @@ BUILTIN("getreal")
             Lisp_CommandEdit->setPrombt(QObject::tr(qUtf8Printable(prombt)));
             Lisp_CommandEdit->doProcess(false);
             result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit);
-            QRegExp re("[+-]?[0-9]|[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?");  // a digit (\d), zero or more times (*)
+            QRegExp re("[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?");  // a digit (\d), zero or more times (*)
             if (re.exactMatch(result))
             {
                 x = result.toDouble();
