@@ -1,4 +1,4 @@
-# LibreCAD [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=master)](https://travis-ci.org/LibreCAD/LibreCAD) 
+# LibreCAD [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=master)](https://travis-ci.org/LibreCAD/LibreCAD)
 
 [→ Download ←](https://github.com/LibreCAD/LibreCAD/wiki/Download)
 
@@ -50,6 +50,7 @@ $ librecad dxf2svg foo.dxf
 
 - [LibreCAD's Forum](https://forum.librecad.org/)
 - IRC: [#librecad](https://web.libera.chat/#librecad) at libera.chat
+- [Ask LibreCAD Guru](https://gurubase.io/g/librecad), it is a LibreCAD-focused AI to answer your questions.
 
 **Building**
 
