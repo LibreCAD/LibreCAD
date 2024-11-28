@@ -16,6 +16,7 @@ public:
     explicit MainWindowX(QWidget* parent = nullptr);
 
     void sortWidgetsByTitle(QList<QDockWidget*>& list);
+    void sortCommandLines(QList<QDockWidget*>& list);
     void sortWidgetsByTitle(QList<QToolBar*>& list);
     void sortWidgetsByGroupAndTitle(QList<QToolBar*>& list);
 

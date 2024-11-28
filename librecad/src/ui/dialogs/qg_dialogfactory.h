@@ -40,6 +40,10 @@ class QG_CoordinateWidget;
 class QG_SelectionWidget;
 class QG_MouseWidget;
 class QG_CommandWidget;
+#ifdef DEVELOPER
+class QG_Lsp_CommandWidget;
+class QG_Py_CommandWidget;
+#endif // DEVELOPER
 class RS_Document;
 class RS_Vector;
 
@@ -99,7 +103,34 @@ public:
     QG_CommandWidget* getCommandWidget() const{
         return commandWidget;
     }
+#ifdef DEVELOPER
+/**
+ * Links this dialog factory to a lisp command widget.
+ */
+    void setLspCommandWidget(QG_Lsp_CommandWidget* cw) override{
+        lsp_commandWidget = cw;
+    }
 
+/**
+ * @return lisp command widget or nullptr.
+ */
+    QG_Lsp_CommandWidget* getLspCommandWidget() const{
+        return lsp_commandWidget;
+    }
+/**
+ * Links this dialog factory to a python command widget.
+ */
+    void setPyCommandWidget(QG_Py_CommandWidget* cw) override{
+        py_commandWidget = cw;
+    }
+
+/**
+ * @return python command widget or nullptr.
+ */
+    QG_Py_CommandWidget* getPyCommandWidget() const{
+        return py_commandWidget;
+    }
+#endif // DEVELOPER
     void setStatusBarManager(LC_QTStatusbarManager *statusBarManager) override;
 
 
@@ -197,6 +228,10 @@ protected:
     QG_SelectionWidget* selectionWidget = nullptr;
 //! Pointer to the command line widget
     QG_CommandWidget* commandWidget = nullptr;
+#ifdef DEVELOPER
+    QG_Lsp_CommandWidget* lsp_commandWidget = nullptr;
+    QG_Py_CommandWidget* py_commandWidget = nullptr;
+#endif // DEVELOPER
     LC_QTStatusbarManager* statusBarManager = nullptr;
     LC_RelZeroCoordinatesWidget *relZeroCoordinatesWidget;
     QG_SnapToolBar* snapToolbar = nullptr;

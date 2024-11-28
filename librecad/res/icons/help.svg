@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="256"
+   height="256"
+   viewBox="0 0 67.733334 67.733331"
+   version="1.1"
+   id="svg1551"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="help.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1553"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="3.109375"
+     inkscape:cx="127.8392"
+     inkscape:cy="128.48241"
+     inkscape:window-width="1920"
+     inkscape:window-height="1008"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2761"
+       spacingx="16.933333"
+       originx="0"
+       originy="0"
+       spacingy="16.933333" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1548" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       transform="matrix(0.93749995,0,0,0.93749995,15.4494,-4.2732266)"
+       id="g4159">
+      <path
+         sodipodi:nodetypes="ccccccc"
+         inkscape:connector-curvature="0"
+         id="path4161"
+         d="M 7.9022231,64.346671 V 16.933335 l 4.5155559,-4.515556 22.577779,-10e-7 6.773333,6.773334 V 64.346671 H 7.9022231"
+         style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:2.25778;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+    <g
+       id="g4155"
+       transform="matrix(0.93749995,0,0,0.93749995,5.5903171,-0.03989349)">
+      <path
+         style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:2.25778;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 7.9022231,64.346671 V 16.933335 l 4.5155559,-4.515556 22.577779,-10e-7 6.773333,6.773334 V 64.346671 H 7.9022231"
+         id="path4163"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccc" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:43.2776px;fill:#000000;stroke-width:0.264583"
+       x="19.239674"
+       y="51.174629"
+       id="text2382"
+       transform="scale(1.0042417,0.99577622)"><tspan
+         sodipodi:role="line"
+         id="tspan2380"
+         style="fill:#000000;stroke-width:0.264583"
+         x="19.239674"
+         y="51.174629">?</tspan></text>
+  </g>
+</svg>

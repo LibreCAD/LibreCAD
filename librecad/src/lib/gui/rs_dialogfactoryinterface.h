@@ -37,6 +37,8 @@
 
 class QWidget;
 class QG_CommandWidget;
+class QG_Lsp_CommandWidget;
+class QG_Py_CommandWidget;
 class QG_CoordinateWidget;
 class QG_MouseWidget;
 class QG_SelectionWidget;
@@ -442,6 +444,8 @@ public:
     virtual void setRelativeZeroCoordinatesWidget(LC_RelZeroCoordinatesWidget* )=0;
     virtual void setSelectionWidget(QG_SelectionWidget* ) = 0;
     virtual void setCommandWidget(QG_CommandWidget* ) = 0;
+    virtual void setLspCommandWidget(QG_Lsp_CommandWidget* ) = 0;
+    virtual void setPyCommandWidget(QG_Py_CommandWidget* ) = 0;
     virtual void clearMouseWidgetIcon() =0;
     virtual void setStatusBarManager(LC_QTStatusbarManager *statusBarManager)= 0;
     virtual void setCurrentQAction(QAction *action) = 0;

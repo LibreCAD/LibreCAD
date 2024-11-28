@@ -32,7 +32,7 @@
   * - Support for more than one document
   */
 #ifdef RS_OPT_PYTHON
-
+#if 0
 #include <boost/python.hpp>
 using namespace boost::python;
 
@@ -76,7 +76,7 @@ namespace QString_Python_Conversions {
         {
             static PyObject* convert(QString const& s)
             {
-                return boost::python::incref(boost::python::object((const char*)s).ptr());
+                return boost::python::incref(boost::python::object(s.toUtf8().constData()).ptr());
             }
         };
 
@@ -92,7 +92,7 @@ namespace QString_Python_Conversions {
 
             static void* convertible(PyObject* obj_ptr)
             {
-                if (!PyString_Check(obj_ptr)) return 0;
+                if (!PyUnicode_Check(obj_ptr)) return 0;
                 return obj_ptr;
             }
 
@@ -100,7 +100,7 @@ namespace QString_Python_Conversions {
                 PyObject* obj_ptr,
                 boost::python::converter::rvalue_from_python_stage1_data* data)
             {
-                const char* value = PyString_AsString(obj_ptr);
+                const char* value = PyUnicode_AsUTF8(obj_ptr);
                 if (!value)
                     boost::python::throw_error_already_set();
                 void* storage = (
@@ -147,8 +147,8 @@ ADDVERTEX_FUNCTION(RS_EntityContainer_addPoint, RS_Point)
 ADDVERTEX_FUNCTION(RS_EntityContainer_addPolyline, RS_Polyline)
 
 /* Overloaded functions helpers */
-void (RS_LayerList::*RS_LayerList_activate_string)(const QString&) = &RS_LayerList::activate;
-void (RS_LayerList::*RS_LayerList_activate_layer)(RS_Layer*) = &RS_LayerList::activate;
+void (RS_LayerList::*RS_LayerList_activate_string)(const QString&, bool) = &RS_LayerList::activate;
+void (RS_LayerList::*RS_LayerList_activate_layer)(RS_Layer*, bool) = &RS_LayerList::activate;
 void (RS_LayerList::*RS_LayerList_toggle_string)(const QString&) = &RS_LayerList::toggle;
 void (RS_LayerList::*RS_LayerList_toggle_layer)(const QString&) = &RS_LayerList::toggle;
 void (RS_Graphic::*RS_Graphic_toggleLayer_string)(const QString&) = &RS_Graphic::toggleLayer;
@@ -612,5 +612,6 @@ BOOST_PYTHON_MODULE(librecad)
 	.def("endPolyline", &RS_Polyline::endPolyline)
     ;
 }
+#endif
 
 #endif

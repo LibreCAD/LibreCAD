@@ -17,5 +17,7 @@
         <file>splash_librecad.png</file>
         <file>splash_librecad_alpha.png</file>
         <file>splash_librecad_beta.png</file>
+        <file>librelisp.png</file>
+        <file>librepython.png</file>
     </qresource>
 </RCC>

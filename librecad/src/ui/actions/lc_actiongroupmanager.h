@@ -24,6 +24,7 @@ public:
     LC_ActionGroup* edit;
     LC_ActionGroup* ellipse;
     LC_ActionGroup* file;
+    LC_ActionGroup* developer;
     LC_ActionGroup* dimension;
     LC_ActionGroup* info;
     LC_ActionGroup* layer;

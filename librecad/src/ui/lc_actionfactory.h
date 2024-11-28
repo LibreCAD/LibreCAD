@@ -63,6 +63,7 @@ private:
     void createPenActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createOrderActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createLayerActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createLoadScriptActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createBlockActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createOptionsActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createFileActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
