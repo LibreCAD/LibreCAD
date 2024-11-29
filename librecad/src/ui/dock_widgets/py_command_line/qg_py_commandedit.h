@@ -45,10 +45,13 @@ public:
     QG_Py_CommandEdit(QWidget* parent=nullptr);
     virtual ~QG_Py_CommandEdit() { writeHistoryFile(); }
 
-     virtual QString text() const ;
+    virtual QString text() const ;
 
     void runFile(const QString& path);
     void processInput(QString input);
+    void setPrompt(const QString& p) { prom = p; prompt(); }
+    void doProcess(bool proc) { m_doProcess = proc; }
+    QString dockName() const { return parentWidget()->objectName(); }
 
     bool keycode_mode = false;
 
@@ -83,13 +86,16 @@ private:
     QStringList::const_iterator it = historyList.cbegin();
     bool acceptCoordinates = false;
     bool calculator_mode = false;
-    int prombtSize() const { return (int) prom.size(); }
-    const QString prom = ">>> ";
-    void prombt() { QLineEdit::setText(prom); }
+    QString prom = ">>> ";
     /*save history for next session*/
     QString m_path;
     QFile m_histFile;
     QTextStream  m_histFileStream;
+    /* for input mode */
+    bool m_doProcess = true;
+
+    int promptSize() const { return (int) prom.size(); }
+    void prompt() { QLineEdit::setText(prom); }
     void readHistoryFile();
     void writeHistoryFile();
 

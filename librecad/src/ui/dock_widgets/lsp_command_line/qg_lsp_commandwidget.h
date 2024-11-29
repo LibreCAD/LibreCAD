@@ -49,7 +49,7 @@ public:
     void runFile(const QString &path) { leCommand->runFile(path); }
     void setInput(const QString &cmd);
     void processInput(QString input) { leCommand->processInput(input); }
-    void setPrombt(const QString& p) { leCommand->setPrombt(p); }
+    void setPrompt(const QString& p) { leCommand->setPrompt(p); }
 
 public slots:
     virtual void setFocus();

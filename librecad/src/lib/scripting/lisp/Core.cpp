@@ -1269,19 +1269,19 @@ BUILTIN("getint")
 {
     int args = CHECK_ARGS_BETWEEN(0, 1);
     int x = 0;
-    QString prombt = "Enter an integer: ";
+    QString prompt = "Enter an integer: ";
     QString result;
 
     if (args == 1)
     {
         ARG(lclString, str);
-        prombt = str->value().c_str();
+        prompt = str->value().c_str();
     }
 
     if (Lisp_CommandEdit != nullptr)
     {
         while (1) {
-            Lisp_CommandEdit->setPrombt(QObject::tr(qUtf8Printable(prombt)));
+            Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
             Lisp_CommandEdit->doProcess(false);
             result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit);
             QRegExp re("[+-]?[0-9]+|[+-]?0[xX][0-9A-Fa-f]");
@@ -1294,11 +1294,11 @@ BUILTIN("getint")
 
         if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
         {
-            Lisp_CommandEdit->setPrombt("_$ ");
+            Lisp_CommandEdit->setPrompt("_$ ");
         }
         else
         {
-            Lisp_CommandEdit->setPrombt(QObject::tr("Command: "));
+            Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
         }
         return lcl::integer(x);
     }
@@ -1306,7 +1306,7 @@ BUILTIN("getint")
     {
         x = QInputDialog::getInt(nullptr,
                                 "LibreCAD",
-                                QObject::tr(qUtf8Printable(prombt)),
+                                QObject::tr(qUtf8Printable(prompt)),
                                 // , int value = 0, int min = -2147483647, int max = 2147483647, int step = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags())
                                 0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags());
         return lcl::integer(x);
@@ -1317,18 +1317,18 @@ BUILTIN("getreal")
 {
     int args = CHECK_ARGS_BETWEEN(0, 1);
     double x = 0;
-    QString prombt = "Enter a floating point number: ";
+    QString prompt = "Enter a floating point number: ";
     QString result;
 
     if (args == 1)
     {
         ARG(lclString, str);
-        prombt = str->value().c_str();
+        prompt = str->value().c_str();
     }
     if (Lisp_CommandEdit != nullptr)
     {
         while (1) {
-            Lisp_CommandEdit->setPrombt(QObject::tr(qUtf8Printable(prombt)));
+            Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
             Lisp_CommandEdit->doProcess(false);
             result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit);
             QRegExp re("[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?");  // a digit (\d), zero or more times (*)
@@ -1342,11 +1342,11 @@ BUILTIN("getreal")
 
         if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
         {
-            Lisp_CommandEdit->setPrombt("_$ ");
+            Lisp_CommandEdit->setPrompt("_$ ");
         }
         else
         {
-            Lisp_CommandEdit->setPrombt(QObject::tr("Command: "));
+            Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
         }
         return lcl::ldouble(x);
     }
@@ -1354,7 +1354,7 @@ BUILTIN("getreal")
     {
         x = QInputDialog::getDouble(nullptr,
                                     "LibreCAD",
-                                    QObject::tr(qUtf8Printable(prombt)),
+                                    QObject::tr(qUtf8Printable(prompt)),
                                     // double value = 0, double min = -2147483647, double max = 2147483647, int decimals = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), double step = 1)
                                     0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags(), 1);
         return lcl::ldouble(x);
@@ -1383,7 +1383,7 @@ BUILTIN("getkword") {
     if (Lisp_CommandEdit != nullptr)
     {
         while (1) {
-            Lisp_CommandEdit->setPrombt(QObject::tr(msg->value().c_str()));
+            Lisp_CommandEdit->setPrompt(QObject::tr(msg->value().c_str()));
             Lisp_CommandEdit->doProcess(false);
             result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit).toStdString();
 
@@ -1391,11 +1391,11 @@ BUILTIN("getkword") {
                 if (it == result) {
                     if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
                     {
-                        Lisp_CommandEdit->setPrombt("_$ ");
+                        Lisp_CommandEdit->setPrompt("_$ ");
                     }
                     else
                     {
-                        Lisp_CommandEdit->setPrombt(QObject::tr("Command: "));
+                        Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
                     }
                     return lcl::string(result);
                 }
@@ -1403,11 +1403,11 @@ BUILTIN("getkword") {
             if ((bit->value() & 1) != 1) {
                 if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
                 {
-                    Lisp_CommandEdit->setPrombt("_$ ");
+                    Lisp_CommandEdit->setPrompt("_$ ");
                 }
                 else
                 {
-                    Lisp_CommandEdit->setPrombt(QObject::tr("Command: "));
+                    Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
                 }
                 return lcl::nilValue();
             }
@@ -1439,7 +1439,7 @@ BUILTIN("getstring")
 {
     int args = CHECK_ARGS_BETWEEN(0,2);
     QString s = "";
-    QString prombt = "Enter a text: ";
+    QString prompt = "Enter a text: ";
 
     if (args == 2)
     {
@@ -1450,22 +1450,22 @@ BUILTIN("getstring")
     {
         //FIXME T or nil or not exists imput with " " space
         ARG(lclString, str);
-        prombt = str->value().c_str();
+        prompt = str->value().c_str();
     }
     if (Lisp_CommandEdit != nullptr)
     {
-        Lisp_CommandEdit->setPrombt(prombt);
+        Lisp_CommandEdit->setPrompt(prompt);
         Lisp_CommandEdit->doProcess(false);
 
         String result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit).toStdString();
 
         if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
         {
-            Lisp_CommandEdit->setPrombt("_$ ");
+            Lisp_CommandEdit->setPrompt("_$ ");
         }
         else
         {
-            Lisp_CommandEdit->setPrombt(QObject::tr("Command: "));
+            Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
         }
         return lcl::string(result);
     }
@@ -1473,7 +1473,7 @@ BUILTIN("getstring")
     {
         s = QInputDialog::getText(nullptr,
                                   "LibreCAD",
-                                  QObject::tr(qUtf8Printable(prombt)),
+                                  QObject::tr(qUtf8Printable(prompt)),
                                   //QLineEdit::EchoMode mode = QLineEdit::Normal, const QString &text = QString(), bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), Qt::InputMethodHints inputMethodHints = Qt::ImhNone)
                                   QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone);
         return lcl::string(s.toStdString());
@@ -2844,7 +2844,32 @@ BUILTIN("prompt")
 {
     CHECK_ARGS_IS(1);
     ARG(lclString, str);
-    std::cout << str->value();
+
+    if (Lisp_CommandEdit != nullptr)
+    {
+        Lisp_CommandEdit->setPrompt(str->value().c_str());
+        Lisp_CommandEdit->doProcess(false);
+
+        String result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit).toStdString();
+        Q_UNUSED(result);
+
+        if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+        {
+            Lisp_CommandEdit->setPrompt("_$ ");
+        }
+        else
+        {
+            Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
+        }
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("LibreCAD");
+        msgBox.setText(str->value().c_str());
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.exec();
+    }
     return lcl::nilValue();
 }
 

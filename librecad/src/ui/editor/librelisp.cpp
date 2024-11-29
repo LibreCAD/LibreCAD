@@ -18,7 +18,7 @@ LibreLisp::LibreLisp(QWidget *parent, const QString& fileName)
     m_dock = new QDockWidget(tr("LibreLisp"), this);
     m_dock->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::RightDockWidgetArea);
     commandWidget = new QG_Lsp_CommandWidget(this, "Lisp Ide");
-    commandWidget->setPrombt("_$ ");
+    commandWidget->setPrompt("_$ ");
     m_dock->setWidget(commandWidget);
     addDockWidget(Qt::BottomDockWidgetArea, m_dock);
     connect(m_dock, SIGNAL(visibilityChanged(bool)), this, SLOT(docVisibilityChanged(bool)));

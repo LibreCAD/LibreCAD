@@ -71,15 +71,15 @@ QG_Lsp_CommandEdit::QG_Lsp_CommandEdit(QWidget* parent)
     setStyleSheet("selection-color: white; selection-background-color: green;");
     setFrame(false);
     setFocusPolicy(Qt::StrongFocus);
-    prombt();
+    prompt();
 
     QObject::connect(
         this,
         &QLineEdit::cursorPositionChanged,
         this,
         [this](){
-            if (cursorPosition() < prombtSize()) {
-                setCursorPosition(prombtSize());
+            if (cursorPosition() < promptSize()) {
+                setCursorPosition(promptSize());
             }
         });
 
@@ -113,7 +113,6 @@ void QG_Lsp_CommandEdit::writeHistoryFile()
         for (const auto& i : historyList) {
             m_histFileStream << i << "\n";
         }
-        //m_histFile.flush();
         m_histFile.close();
     }
 }
@@ -121,7 +120,7 @@ void QG_Lsp_CommandEdit::writeHistoryFile()
 QString QG_Lsp_CommandEdit::text() const
 {
     QString str = QLineEdit::text();
-    return (QLineEdit::text().size() >= prombtSize()) ? str.remove(0, prombtSize()) : QLineEdit::text();
+    return (QLineEdit::text().size() >= promptSize()) ? str.remove(0, promptSize()) : QLineEdit::text();
 }
 
 /**
@@ -153,16 +152,16 @@ void QG_Lsp_CommandEdit::keyPressEvent(QKeyEvent* e)
                 setText(prom + *it);
             }
             else {
-                prombt();
+                prompt();
             }
         }
         break;
     case Qt::Key_Backspace:
-        if (cursorPosition() == prombtSize())
+        if (cursorPosition() == promptSize())
         {
             break;
         }
-        if (QLineEdit::text().size() > prombtSize())
+        if (QLineEdit::text().size() > promptSize())
         {
             QLineEdit::keyPressEvent(e);
         }
@@ -177,7 +176,7 @@ void QG_Lsp_CommandEdit::keyPressEvent(QKeyEvent* e)
             emit escape();
         }
         else {
-            prombt();
+            prompt();
         }
         break;
     default:
@@ -220,7 +219,7 @@ void QG_Lsp_CommandEdit::processInput(QString input)
     {
         it = historyList.end();
         emit message(prom);
-        prombt();
+        prompt();
     }
     else {
         QString buffer_out = "";
@@ -231,7 +230,7 @@ void QG_Lsp_CommandEdit::processInput(QString input)
         historyList.append(input);
 
         it = historyList.end();
-        prombt();
+        prompt();
 
         emit message(prom + input);
         if (buffer_out.compare("") != 0) {

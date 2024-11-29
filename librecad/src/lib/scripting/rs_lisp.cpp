@@ -104,7 +104,7 @@ std::string RS_Lisp::runCommand(const QString& command)
 
     // go back to old buffer
     std::cout.rdbuf(cout_buff);
-    // add Lisp exec value to Lisp prombt
+    // add Lisp exec value to Lisp prompt
     lispOut << lispValue;
     // print 'lispOut' content
     std::cout << lispOut.str() << std::endl;
@@ -129,7 +129,7 @@ std::string RS_Lisp::runFileCmd(const QString& name)
 
     // go back to old buffer
     std::cout.rdbuf(cout_buff);
-    // add Lisp exec value to Lisp prombt
+    // add Lisp exec value to Lisp prompt
     lispOut << lispValue;
     // print 'lispOut' content
     std::cout << lispOut.str() << std::endl;

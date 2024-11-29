@@ -49,7 +49,7 @@ public:
 
     void runFile(const QString& path);
     void processInput(QString input);
-    void setPrombt(const QString& p) { prom = p; prombt(); }
+    void setPrompt(const QString& p) { prom = p; prompt(); }
     void doProcess(bool proc) { m_doProcess = proc; }
     QString dockName() const { return parentWidget()->objectName(); }
 
@@ -94,8 +94,8 @@ private:
     /* for input mode */
     bool m_doProcess = true;
 
-    int prombtSize() const { return (int) prom.size(); }
-    void prombt() { QLineEdit::setText(prom); }
+    int promptSize() const { return (int) prom.size(); }
+    void prompt() { QLineEdit::setText(prom); }
     void readHistoryFile();
     void writeHistoryFile();
 

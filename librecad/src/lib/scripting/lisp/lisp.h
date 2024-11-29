@@ -3,7 +3,6 @@
 
 #include "lisp_version.h"
 #include "qg_lsp_commandedit.h"
-#include "qg_lsp_commandwidget.h"
 #include <LCL.h>
 
 #include <stdio.h>

@@ -38,6 +38,8 @@
 #include <QApplication>
 #include <cassert>
 
+QG_Py_CommandEdit *Py_CommandEdit = nullptr;
+
 /**
  *
  * Python module emb

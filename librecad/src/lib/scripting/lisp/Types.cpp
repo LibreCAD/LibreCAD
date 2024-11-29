@@ -1216,7 +1216,6 @@ lclBoxedRadioRow::lclBoxedRadioRow(const tile_t& tile)
 #endif
 }
 
-
 lclColumn::lclColumn(const tile_t& tile)
     : lclGui(tile)
     , m_layout(new QVBoxLayout)

@@ -29,6 +29,8 @@
 #ifndef RS_PYTHON_H
 #define RS_PYTHON_H
 
+#include "qg_py_commandedit.h"
+
 #ifdef RS_OPT_PYTHON
 
 #include <QString>
@@ -38,6 +40,8 @@
     "for more information."
 
 #define RS_PYTHON RS_Python::instance()
+
+extern class QG_Py_CommandEdit *Py_CommandEdit;
 
 typedef struct v3 {
     double x = 0.0;

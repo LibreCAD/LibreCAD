@@ -10,6 +10,7 @@ public:
     ~RS_PythonGui();
 
     void Hello();
+    void prompt(const char *prompt);
     void MessageBox(const char *msg);
     void unloadDialog(int id);
 
@@ -19,15 +20,15 @@ public:
     bool modeTile(const char *key, int val);
     bool actionTile(const char *id, const char *action);
 
-    int GetIntDialog(const char *prombt);
+    int GetIntDialog(const char *prompt);
     int loadDialog(const char *fileName);
     int startDialog();
 
-    double GetDoubleDialog(const char *prombt);
+    double GetDoubleDialog(const char *prompt);
 
     char ReadCharDialog();
     const char *OpenFileDialog(const char *title, const char *fileName, const char *fileExt);
-    const char *GetStringDialog(const char *prombt);
+    const char *GetStringDialog(const char *prompt);
     const char *startList(const char *key, int operation, int index);
     const char *addList(const char *val);
 };
