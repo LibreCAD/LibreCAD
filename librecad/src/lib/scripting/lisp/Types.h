@@ -1098,8 +1098,8 @@ private:
     QHBoxLayout* m_layout;
 };
 
-
 extern std::vector<const lclGui*> dclTiles;
+extern void openTile(const lclGui* tile);
 
 namespace lcl {
     lclValuePtr atom(lclValuePtr value);

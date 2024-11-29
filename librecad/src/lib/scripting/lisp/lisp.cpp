@@ -59,7 +59,7 @@ static void installFunctions(lclEnvPtr env);
 //  Installs functions, macros and constants implemented in LCL.
 static void installEvalCore(lclEnvPtr env);
 //  Installs functions from EVAL, implemented in LCL.
-static void openTile(const lclGui* tile);
+//static void openTile(const lclGui* tile);
 
 static void makeArgv(lclEnvPtr env, int argc, char* argv[]);
 static String safeRep(const String& input, lclEnvPtr env);
@@ -635,7 +635,7 @@ static void installEvalCore(lclEnvPtr env) {
     }
 }
 
-static void openTile(const lclGui* tile)
+void openTile(const lclGui* tile)
 {
     qDebug() << "openTile() Name: "<< tile->value().name.c_str();
 

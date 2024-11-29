@@ -3196,7 +3196,7 @@ BUILTIN("start_list")
     }
     if (args > 2)
     {
-        ARG(lclString, operation);
+        AG_INT(operation);
         dclEnv->set("start_list_operation", lcl::integer(operation->value()));
     }
     if (args == 3)

@@ -11,7 +11,6 @@
 //#include "qcolor.h"
 //#include <QPolygonF>
 
-
 //#include "lib/math/lc_quadratic.h"
 //#include "dxf_format.h"
 //#include "rs_point.h"

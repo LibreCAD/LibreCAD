@@ -9,13 +9,27 @@ public:
     RS_PythonGui();
     ~RS_PythonGui();
 
-    void MessageBox(const char *msg);
-    const char *OpenFileDialog(const char *title, const char *path, const char *fileExt);
-    const char *GetStringDialog(const char *prombt);
-    char ReadCharDialog();
-    int GetIntDialog(const char *prombt);
-    double GetDoubleDialog(const char *prombt);
     void Hello();
+    void MessageBox(const char *msg);
+    void unloadDialog(int id);
+
+    bool newDialog(const char *name, int id);
+    bool doneDialog(int id);
+    bool setTile(const char *key, const char *val);
+    bool modeTile(const char *key, int val);
+    bool actionTile(const char *id, const char *action);
+
+    int GetIntDialog(const char *prombt);
+    int loadDialog(const char *fileName);
+    int startDialog();
+
+    double GetDoubleDialog(const char *prombt);
+
+    char ReadCharDialog();
+    const char *OpenFileDialog(const char *title, const char *fileName, const char *fileExt);
+    const char *GetStringDialog(const char *prombt);
+    const char *startList(const char *key, int operation, int index);
+    const char *addList(const char *val);
 };
 
 #endif // RS_PYTHONGUI_H
