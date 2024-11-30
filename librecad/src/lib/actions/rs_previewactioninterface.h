@@ -38,6 +38,7 @@
 #include "rs_ellipse.h"
 #include "lc_defaults.h"
 #include "lc_refellipse.h"
+#include "rs_constructionline.h"
 
 struct RS_CircleData;
 /**
@@ -96,6 +97,7 @@ protected:
     RS_Line* previewLine(const RS_Vector &start, const RS_Vector &end);
     RS_Line* previewLine(const RS_LineData &data);
     RS_Line* previewRefLine(const RS_Vector &start, const RS_Vector &end);
+    RS_ConstructionLine* previewRefConstructionLine(const RS_Vector &start, const RS_Vector &end);
     void previewRefLines(const std::vector<RS_LineData>& points);
     void previewRefSelectableLine(const RS_Vector &start, const RS_Vector &end);
     void previewRefPoint(const RS_Vector &coord);
