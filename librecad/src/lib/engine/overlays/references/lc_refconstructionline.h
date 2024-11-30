@@ -20,16 +20,17 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#ifndef LC_REFLINE_H
-#define LC_REFLINE_H
+#ifndef LC_REFCONSTRUCTIONLINE_H
+#define LC_REFCONSTRUCTIONLINE_H
 
-#include "rs_line.h"
+#include "rs_constructionline.h"
 
-class LC_RefLine:public RS_Line{
+class LC_RefConstructionLine: public RS_ConstructionLine{
 public:
-    LC_RefLine(RS_EntityContainer *parent, const RS_Vector &pStart, const RS_Vector &pEnd);
+    LC_RefConstructionLine(RS_EntityContainer *parent, const RS_Vector &pStart, const RS_Vector &pEnd);
     RS2::EntityType rtti() const override;
     RS_Entity *clone() const override;
 };
 
-#endif // LC_REFLINE_H
+
+#endif // LC_REFCONSTRUCTIONLINE_H
