@@ -29,9 +29,9 @@
 #include "lc_actiondrawlinepoints.h"
 #include "rs_previewactioninterface.h"
 
-LC_ActionDrawLinePoints::LC_ActionDrawLinePoints(RS_EntityContainer &container, RS_GraphicView &graphicView)
+LC_ActionDrawLinePoints::LC_ActionDrawLinePoints(RS_EntityContainer &container, RS_GraphicView &graphicView, bool drawMiddle)
     :LC_AbstractActionDrawLine("LineDrawPoints",container, graphicView){
-    actionType = RS2::ActionDrawLinePoints;
+    actionType = drawMiddle ? RS2::ActionDrawPointsMiddle: RS2::ActionDrawLinePoints;
 }
 
 LC_ActionDrawLinePoints::~LC_ActionDrawLinePoints()= default;
@@ -131,6 +131,9 @@ void LC_ActionDrawLinePoints::doPreparePreviewEntities([[maybe_unused]]QMouseEve
         if (showRefEntitiesOnPreview) {
             createRefSelectablePoint(possibleEndPoint, list);
             createRefPoint(startpoint, list);
+//            if (actionType == RS2::ActionDrawPointsMiddle){
+                createRefLine(startpoint, possibleEndPoint, list);
+//            }
         }
     }
 }
@@ -317,65 +320,63 @@ bool LC_ActionDrawLinePoints::isNonZeroLine(const RS_Vector &possiblePoint) cons
  */
 bool LC_ActionDrawLinePoints::doProceedCommand([[maybe_unused]]int status, const QString &c){
     bool result = true;
-    bool edgeStatus = status == SetEdge;
-    if (checkCommand("edge_none", c)){        //specifies no points in line edges
-        updateEdgePointsMode(DRAW_EDGE_NONE);
+    bool shouldProcess = false;
+    if (actionType == RS2::ActionDrawLinePoints) {
+        bool edgeStatus = status == SetEdge;
+        if (checkCommand("edge_none", c)) {        //specifies no points in line edges
+            updateEdgePointsMode(DRAW_EDGE_NONE);
+        } else if (checkCommand("edge_start", c)) {  // point will be created in start point edge
+            updateEdgePointsMode(DRAW_EDGE_START);
+        } else if (checkCommand("edge_end", c)) {  // point will be created in end point edge
+            updateEdgePointsMode(DRAW_EDGE_END);
+        } else if (checkCommand("edge_both", c)) {  // points will be created in start and end points of line
+            updateEdgePointsMode(DRAW_EDGE_BOTH);
+        } else if (edgeStatus && checkCommand("start", c)) { // point will be created in start point edge
+            updateEdgePointsMode(DRAW_EDGE_START);
+            edgePointsMode = DRAW_EDGE_START;
+            setMajorStatus();
+        } else if (edgeStatus && checkCommand("end", c)) {
+            updateEdgePointsMode(DRAW_EDGE_END);
+            edgePointsMode = DRAW_EDGE_END;
+            setMajorStatus();
+        } else if (edgeStatus && checkCommand("none", c)) {
+            edgePointsMode = DRAW_EDGE_NONE;
+            setMajorStatus();
+        } else if (edgeStatus && checkCommand("both", c)) {
+            edgePointsMode = DRAW_EDGE_BOTH;
+            setMajorStatus();
+        } else if (checkCommand("edges", c)) { // initiates edge entering mode
+            setStatus(SetEdge);
+        } else if (checkCommand("dist_fixed", c)) {  // switches to fixed distance mode
+            fixedDistanceMode = true;
+            updateOptions();
+        } else if (checkCommand("dist_flex", c)) { // switches to flexible distance mode
+            fixedDistanceMode = false;
+            updateOptions();
+        } else if (checkCommand("nofit", c)) { // for fixed distance mode, allows creation points outside of line
+            withinLineMode = false;
+            updateOptions();
+        } else if (checkCommand("fit", c)) { //for fixed distance mode, ensures that all point are within the line
+            withinLineMode = true;
+            updateOptions();
+        } else if (checkCommand("distance", c)) { // initiates entering distance between points (for fixed mode)
+            setStatus(SetFixDistance);
+        }
+        else{
+            shouldProcess = true;
+        }
     }
-    else if (checkCommand("edge_start", c)){  // point will be created in start point edge
-        updateEdgePointsMode(DRAW_EDGE_START);
+    else {
+        shouldProcess = true;
     }
-    else if (checkCommand("edge_end", c)){  // point will be created in end point edge
-        updateEdgePointsMode(DRAW_EDGE_END);
-    }
-    else if (checkCommand("edge_both", c)){  // points will be created in start and end points of line
-        updateEdgePointsMode(DRAW_EDGE_BOTH);
-    }
-    else if (edgeStatus &&checkCommand("start",c)){ // point will be created in start point edge
-        updateEdgePointsMode(DRAW_EDGE_START);
-        edgePointsMode = DRAW_EDGE_START;
-        setMajorStatus();
-    }
-    else if (edgeStatus &&checkCommand("end",c)){
-        updateEdgePointsMode(DRAW_EDGE_END);
-        edgePointsMode = DRAW_EDGE_END;
-        setMajorStatus();
-    }
-    else if (edgeStatus &&checkCommand("none",c)){
-        edgePointsMode = DRAW_EDGE_NONE;
-        setMajorStatus();
-    }
-    else if (edgeStatus &&checkCommand("both",c)){
-        edgePointsMode = DRAW_EDGE_BOTH;
-        setMajorStatus();
-    }
-    else if (checkCommand("edges",c)){ // initiates edge entering mode
-        setStatus(SetEdge);
-    }
-    else if (checkCommand("number", c)){ // initiates entering of points numbers (edges are not counted!)
-        setStatus(SetPointsCount);
-        updateOptions();
-    }
-    else if (checkCommand("dist_fixed", c)){  // switches to fixed distance mode
-        fixedDistanceMode = true;
-        updateOptions();
-    }
-    else if (checkCommand("dist_flex", c)){ // switches to flexible distance mode
-        fixedDistanceMode = false;
-        updateOptions();
-    }
-    else if (checkCommand("nofit", c)){ // for fixed distance mode, allows creation points outside of line
-        withinLineMode = false;
-        updateOptions();
-    }
-    else if (checkCommand("fit", c)){ //for fixed distance mode, ensures that all point are within the line
-        withinLineMode = true;
-        updateOptions();
-    }
-    else if (checkCommand("distance", c)){ // initiates entering distance between points (for fixed mode)
-        setStatus(SetFixDistance);
-    }
-    else{
-        result = false;
+    if (shouldProcess){
+        if (checkCommand("number", c)){ // initiates entering of points numbers (edges are not counted!)
+            setStatus(SetPointsCount);
+            updateOptions();
+        }
+        else{
+            result = false;
+        }
     }
     return result;
 }
@@ -466,22 +467,26 @@ QStringList LC_ActionDrawLinePoints::getAvailableCommands(){
         case SetPointsCount:
         case SetPoint:
         case SetAngle:
-            cmd += command("x");
-            cmd += command("y");
-            cmd += command("p");
-            cmd += command("angle");
+            if (actionType == RS2::ActionDrawLinePoints) {
+                cmd += command("x");
+                cmd += command("y");
+                cmd += command("p");
+                cmd += command("angle");
+                cmd += command("edges");
+                cmd += command("distance");
+                cmd += command("dist_fixed");
+                cmd += command("dist_flex");
+                cmd += command("fit");
+                cmd += command("nofit");
+                cmd += command("fix");
+                cmd += command("nofix");
+                cmd += command("edge_none");
+                cmd += command("edge_start");
+                cmd += command("edge_end");
+                cmd += command("edge_both");
+            }
             cmd += command("number");
-            cmd += command("edges");
-            cmd += command("edges");
-            cmd += command("distance");
-            cmd += command("fit");
-            cmd += command("nofit");
-            cmd += command("fix");
-            cmd += command("nofix");
-//            cmd += command("edge_none");
-//            cmd += command("edge_start");
-//            cmd += command("edge_end");
-//            cmd += command("edge_both");
+
             break;
         default:
             break;
@@ -496,7 +501,12 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
             updateMouseWidgetTRCancel(tr("Specify First Point"),MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint:
-            updateMouseWidgetTRBack(tr("Specify Second Point\nor [number|x|y|angle|p|edges|distance]"),MOD_SHIFT_ANGLE_SNAP);
+            if (actionType == RS2::ActionDrawLinePoints) {
+                updateMouseWidgetTRBack(tr("Specify Second Point\nor [number|x|y|angle|p|edges|distance]"), MOD_SHIFT_ANGLE_SNAP);
+            }
+            else{
+                updateMouseWidgetTRBack(tr("Specify Second Point\nor [number]"), MOD_SHIFT_ANGLE_SNAP);
+            }
             break;
         case SetDirection:
             updateMouseWidgetTRBack(tr("Specify line direction\n[x|y|angle|p|distance]"));
@@ -580,6 +590,10 @@ void LC_ActionDrawLinePoints::setMajorStatus(){
     else{
       setStatus(SetStartPoint);
     }
+}
+
+bool LC_ActionDrawLinePoints::isAllowDirectionCommands() {
+    return actionType == RS2::ActionDrawLinePoints;
 }
 
 /**

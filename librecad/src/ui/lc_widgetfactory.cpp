@@ -111,6 +111,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawLineAngleRel",
         "DrawLineOrthogonalRel",
         "DrawLineFromPointToLine",
+        "DrawLineMiddle",
         "DrawSliceDivideLine",
         "DrawSliceDivideCircle"
     });
@@ -118,6 +119,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
     fillActionsList(point_actions , {
         "DrawPoint",
         "DrawLinePoints",
+        "DrawPointsMiddle",
         "DrawPointLattice",
         "SelectPoints",
         "PasteToPoints"
@@ -228,6 +230,8 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
     fillActionsList(modify_actions, {
         "ModifyMove",
         "ModifyDuplicate",
+        "ModifyAlign",
+        "ModifyAlignOne",
         "ModifyRotate",
         "ModifyScale",
         "ModifyMirror",

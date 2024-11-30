@@ -29,7 +29,7 @@ namespace Ui {
 class LC_LinePointsOptions;
 }
 
-class LC_LinePointsOptions : public LC_ActionOptionsWidgetBase{
+class LC_LinePointsOptions : public LC_ActionOptionsWidget{
     Q_OBJECT
 
 public:
@@ -47,6 +47,13 @@ protected slots:
     void onWithinLineClicked(bool value);
     void onDistanceEditingFinished();
     void onAngleEditingFinished();
+
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
+
+    QString getSettingsGroupName() override;
+
+    QString getSettingsOptionNamePrefix() override;
+
 private:
     Ui::LC_LinePointsOptions *ui = nullptr;
     LC_ActionDrawLinePoints* action = nullptr;

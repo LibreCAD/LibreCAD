@@ -319,6 +319,7 @@ namespace RS2 {
         ActionDrawSplineFromPolyline,
         ActionDrawPolyline,
         ActionDrawText,
+        ActionDrawBoundingBox,
 
         ActionDrawRectangle3Points,
         ActionDrawRectangle1Point,
@@ -387,6 +388,7 @@ namespace RS2 {
         ActionModifyBreakDivide,
         ActionModifyLineGap,
         ActionModifyAlign,
+        ActionModifyAlignOne,
 
         ActionSnapFree,
         ActionSnapGrid,

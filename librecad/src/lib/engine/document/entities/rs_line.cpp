@@ -592,7 +592,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     }
 }
 
-void RS_Line::drawInfinite(RS_Painter *painter, RS_GraphicView *view, double &patternOffset, const RS_Vector &startpoint, const RS_Vector &endpoint) {
+void RS_Line::drawInfinite(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset, const RS_Vector &startpoint, const RS_Vector &endpoint) {
     const LC_Rect viewportRect = view->getViewRect();
 /*    RS_EntityContainer borders(nullptr, true);
     borders.addRectangle(viewportRect.minP(), viewportRect.maxP());

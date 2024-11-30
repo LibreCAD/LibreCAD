@@ -1326,6 +1326,21 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/point/lc_actionpastetopoints.cpp
 		librecad/src/ui/action_options/point/lc_pastetopointsoptions.h
 		librecad/src/ui/action_options/point/lc_pastetopointsoptions.cpp
+		librecad/src/actions/drawing/draw/line/lc_actiondrawmidline.h
+		librecad/src/actions/drawing/draw/line/lc_actiondrawmidline.cpp
+		librecad/src/ui/action_options/line/lc_midlineoptions.h
+		librecad/src/ui/action_options/line/lc_midlineoptions.cpp
+		librecad/src/ui/action_options/modify/lc_modifyalignoptions.h
+		librecad/src/ui/action_options/modify/lc_modifyalignoptions.cpp
+		librecad/src/actions/drawing/modify/lc_actionmodifyalign.h
+		librecad/src/actions/drawing/modify/lc_actionmodifyalign.cpp
+		librecad/src/lib/engine/overlays/references/lc_refconstructionline.h
+		librecad/src/lib/engine/overlays/references/lc_refconstructionline.h
+		librecad/src/lib/engine/overlays/references/lc_refconstructionline.cpp
+		librecad/src/lib/modification/lc_align.h
+		librecad/src/lib/modification/lc_align.cpp
+		librecad/src/actions/drawing/modify/lc_actionmodifyalignsingle.h
+		librecad/src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

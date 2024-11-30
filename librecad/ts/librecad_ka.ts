@@ -634,72 +634,78 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawLinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="496"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="501"/>
         <source>Specify First Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="499"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="505"/>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="502"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="508"/>
+        <source>Specify Second Point
+or [number]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="512"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="505"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="515"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="508"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="518"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="511"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="521"/>
         <source>Specify fixed distance between points
 or[x|y|p|number|edges]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="522"/>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="525"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="532"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="535"/>
         <source>Specify distance (%1)
 or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="522"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="532"/>
         <source>X</source>
         <translation type="unfinished">X</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="522"/>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="525"/>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="530"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="532"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="535"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="540"/>
         <source>Back</source>
         <translation type="unfinished">უკან</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="525"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="535"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="530"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="540"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="535"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp" line="545"/>
         <source>Specify points count</source>
         <translation type="unfinished"></translation>
     </message>
@@ -794,6 +800,29 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577"/>
         <source>Cannot redo: End of history reached</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawMidLine</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawmidline.cpp" line="191"/>
+        <source>Select first entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawmidline.cpp" line="195"/>
+        <source>Select second entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawmidline.cpp" line="195"/>
+        <source>Alternate endpoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawmidline.cpp" line="199"/>
+        <source>Enter offset value</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1142,52 +1171,52 @@ or [%2]</source>
 <context>
     <name>LC_ActionFactory</name>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="387"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="391"/>
         <source>&amp;Window Zoom</source>
         <translation>&amp;ფანჯრის გადიდება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="247"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="249"/>
         <source>Zoom &amp;Panning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="159"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="161"/>
         <source>Select Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="160"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="162"/>
         <source>Select Window</source>
         <translation>ფანჯრის არჩევა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="161"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="163"/>
         <source>Deselect Window</source>
         <translation>ფანჯრის მონიშვნის მოხსნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="162"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="164"/>
         <source>(De-)Select &amp;Contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="163"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="165"/>
         <source>Select Intersected Entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="164"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="166"/>
         <source>Deselect Intersected Entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="165"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="167"/>
         <source>(De-)Select Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="149"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="150"/>
         <source>&amp;Points</source>
         <translation>&amp;წერტილები</translation>
     </message>
@@ -1203,7 +1232,7 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="124"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="259"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="261"/>
         <source>&amp;Horizontal</source>
         <translation>&amp;ჰორიზონტალური</translation>
     </message>
@@ -1323,258 +1352,258 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="141"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="142"/>
         <source>Cross</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="142"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="143"/>
         <source>Slice/Divide Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="143"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="144"/>
         <source>Slice/Divide Circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="150"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="151"/>
         <source>Line of Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="171"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="173"/>
         <source>Center, &amp;Point</source>
         <translation>ცენტრი, &amp;წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="172"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="174"/>
         <source>By Arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="173"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="175"/>
         <source>Center, &amp;Radius</source>
         <translation>ცენტრი, &amp;რადიუსი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="174"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="176"/>
         <source>2 Points</source>
         <translation>2 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="175"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="177"/>
         <source>2 Points, Radius</source>
         <translation>2 წერტლი, რადიუსი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="176"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="178"/>
         <source>3 Points</source>
         <translation>3 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="177"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="196"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="179"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="198"/>
         <source>&amp;Concentric</source>
         <translation>&amp;კონცენტრული</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="178"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="180"/>
         <source>Circle &amp;Inscribed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="180"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="182"/>
         <source>Tangential 2 Circles, 1 Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="181"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="183"/>
         <source>Tangential &amp;3 Circles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="182"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="184"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="188"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="190"/>
         <source>&amp;Center, Point, Angles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="191"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="193"/>
         <source>&amp;3 Points</source>
         <translation>&amp;3 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="194"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="196"/>
         <source>&amp;2 Points, Length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="195"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="197"/>
         <source>&amp;2 Points, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="197"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="199"/>
         <source>Arc &amp;Tangential</source>
         <translation>მხები &amp;რკალი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="208"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="210"/>
         <source>&amp;Append spline point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="210"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="212"/>
         <source>&amp;Insert spline points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="221"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="223"/>
         <source>&amp;Ellipse (Axis)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="222"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="224"/>
         <source>Ellipse &amp;Arc (Axis)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="223"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="225"/>
         <source>Ellipse &amp;Foci Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="224"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="226"/>
         <source>Ellipse &amp;4 Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="225"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="227"/>
         <source>Ellipse Center and &amp;3 Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="226"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="228"/>
         <source>Ellipse &amp;Inscribed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="206"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="208"/>
         <source>&amp;Spline</source>
         <translation>&amp;სპლაინი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="207"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="209"/>
         <source>&amp;Spline through points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="232"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="234"/>
         <source>&amp;Polyline</source>
         <translation>&amp;პოლიხაზი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="233"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="235"/>
         <source>&amp;Add node</source>
         <translation>&amp;კვანძის დამატება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="234"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="236"/>
         <source>A&amp;ppend node</source>
         <translation>&amp;კვანძის ბოლოშიმიწერა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="235"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="237"/>
         <source>&amp;Delete node</source>
         <translation>&amp;კვანძის წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="236"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="238"/>
         <source>Delete &amp;between two nodes</source>
         <translation>წაშლა &amp;ორ კვანძს შუა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="237"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="239"/>
         <source>&amp;Trim segments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="238"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="240"/>
         <source>Create &amp;Equidistant Polylines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="240"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="242"/>
         <source>Polyline Arcs to Chords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="248"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="250"/>
         <source>&amp;MText</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="249"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="251"/>
         <source>&amp;Text</source>
         <translation>&amp;ტექტი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="250"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="252"/>
         <source>&amp;Hatch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="251"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="253"/>
         <source>Insert &amp;Image</source>
         <translation>&amp;სურათის ჩასმა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="257"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="259"/>
         <source>&amp;Aligned</source>
         <translation>&amp;შეწეულია</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="258"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="260"/>
         <source>&amp;Linear</source>
         <translation>&amp;ხაზოვანი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="260"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="262"/>
         <source>&amp;Vertical</source>
         <translation>&amp;ვერტიკალური</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="261"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="263"/>
         <source>&amp;Radial</source>
         <translation>&amp;რადიალური</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="262"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="264"/>
         <source>&amp;Diametric</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="263"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="265"/>
         <source>&amp;Angular</source>
         <translation>&amp;კუთხოვანი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="265"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="267"/>
         <source>&amp;Leader</source>
         <translation>&amp;წამყვანი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="279"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="281"/>
         <source>&amp;Attributes</source>
         <translation>&amp;ატრიბუტები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="280"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="282"/>
         <source>&amp;Delete</source>
         <translation>&amp;წაშლა</translation>
     </message>
@@ -1583,552 +1612,572 @@ or [%2]</source>
         <translation type="vanished">ხელით წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="281"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="283"/>
         <source>&amp;Move / Copy</source>
         <translation>&amp;გადატანა / კოპირება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="282"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="284"/>
         <source>Re&amp;vert direction</source>
         <translation>&amp;მიმართულების შებრუნება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="568"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="572"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="283"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="285"/>
         <source>&amp;Rotate</source>
         <translation>&amp;შემობრუნება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="284"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="286"/>
         <source>&amp;Scale</source>
         <translation>&amp;მასშტაბირება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="285"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="287"/>
         <source>&amp;Mirror</source>
         <translation>&amp;ასლი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="287"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="289"/>
         <source>Rotate T&amp;wo</source>
         <translation>&amp;ორის შემობრუნება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="288"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="290"/>
         <source>&amp;Properties</source>
         <translation>&amp;თვისებები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="289"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="291"/>
         <source>&amp;Trim</source>
         <translation>&amp;დაჭრა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="291"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="293"/>
         <source>&amp;Lengthen</source>
         <translation>&amp;გაგრძელება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="293"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="295"/>
         <source>&amp;Divide</source>
         <translation>გა&amp;ყოფა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="294"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="296"/>
         <source>&amp;Stretch</source>
         <translation>&amp;გაწელვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="295"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="297"/>
         <source>&amp;Bevel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="296"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="298"/>
         <source>&amp;Fillet</source>
         <translation>&amp;მომრგვალებული ნაზოლი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="297"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="299"/>
         <source>&amp;Explode Text into Letters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="372"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="376"/>
         <source>Point inside contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="373"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="377"/>
         <source>&amp;Distance Point to Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="376"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="380"/>
         <source>An&amp;gle between two lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="378"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="382"/>
         <source>Polygonal &amp;Area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="438"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="442"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="509"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="513"/>
         <source>&amp;Save View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="515"/>
         <source>Restore Current View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="512"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="516"/>
         <source>Restore View 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="513"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="517"/>
         <source>Restore View 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="514"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="518"/>
         <source>Restore View 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="515"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="519"/>
         <source>Restore View 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="516"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="520"/>
         <source>Restore View 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="530"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="534"/>
         <source>&amp;Undo</source>
         <translation>&amp;დაბრუნება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="531"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="535"/>
         <source>&amp;Redo</source>
         <translation>&amp;თავიდან გაკეთება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="532"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="536"/>
         <source>Cu&amp;t</source>
         <translation>ამ&amp;ოჭრა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="534"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="538"/>
         <source>&amp;Copy</source>
         <translation>&amp;კოპირება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="536"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="540"/>
         <source>&amp;Paste</source>
         <translation>&amp;ჩასმა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="363"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="367"/>
         <source>move to bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="151"/>
-        <source>Lattice of Points</source>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="141"/>
+        <source>Middle Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="152"/>
-        <source>Select Points</source>
+        <source>Middle Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="153"/>
+        <source>Lattice of Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="154"/>
+        <source>Select Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="155"/>
         <source>Paste to Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="179"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="181"/>
         <source>Tangential 2 Circles, Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="189"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="191"/>
         <source>&amp;Center, Point, Chord</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="190"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="192"/>
         <source>&amp;Center, Point, Arc Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="192"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="194"/>
         <source>&amp;2 Points, Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="193"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="195"/>
         <source>&amp;2 Points, Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="204"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="206"/>
         <source>Para&amp;bola 4 points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="205"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="207"/>
         <source>Parabola &amp;Focus Directrix</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="209"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="211"/>
         <source>&amp;Remove spline points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="211"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="213"/>
         <source>&amp;Explode spline to lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="212"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="214"/>
         <source>&amp;Spline from polyline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="213"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="215"/>
         <source>&amp;Remove between two points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="219"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="221"/>
         <source>&amp;Ellipse (1 Point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="220"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="222"/>
         <source>&amp;Ellipse Arc (1 Point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="239"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="241"/>
         <source>Polyline from Existing &amp;Segments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="241"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="243"/>
         <source>Polyline Change Segment Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="266"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="268"/>
         <source>&amp;Baseline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="267"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="269"/>
         <source>&amp;Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="299"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="301"/>
         <source>Break/Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="300"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="302"/>
         <source>Line Gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="301"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="303"/>
         <source>Line Join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="302"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="304"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="308"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="305"/>
+        <source>Align</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
+        <source>Align One</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="312"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="314"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="318"/>
         <source>&amp;Pick Pen From Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="315"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="319"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="316"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="320"/>
         <source>Apply Pen to Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="317"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="321"/>
         <source>Copy Pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="323"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="327"/>
         <source>Snap on grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="324"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="328"/>
         <source>Snap Middle Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="325"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="329"/>
         <source>Snap on Endpoints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="326"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="330"/>
         <source>Snap on Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="327"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="331"/>
         <source>Snap Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="328"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="332"/>
         <source>Snap Middle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="329"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="333"/>
         <source>Snap Distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="330"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="334"/>
         <source>Snap Intersection</source>
         <translation type="unfinished">კვეთის მიბმა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="336"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="340"/>
         <source>Restrict Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="337"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="341"/>
         <source>Restrict Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="338"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="342"/>
         <source>Restrict Orthogonal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="339"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="343"/>
         <source>Restrict Nothing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="345"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="349"/>
         <source>Set relative zero position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="346"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="350"/>
         <source>Lock relative zero position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="355"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="359"/>
         <source>Exclusive Snap Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="356"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="360"/>
         <source>Free Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="364"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="368"/>
         <source>lower after entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="365"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="369"/>
         <source>raise over entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="366"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="370"/>
         <source>move to top</source>
         <translation>თავში ატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="374"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="378"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="375"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="379"/>
         <source>Distance &amp;Point to Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="377"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="381"/>
         <source>Total &amp;length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="379"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="383"/>
         <source>Entity Pro&amp;perties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="380"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="384"/>
         <source>Collect &amp;Coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="381"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="385"/>
         <source>Ang&amp;le between 3 points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="393"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="397"/>
         <source>&amp;Draft Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="394"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="398"/>
         <source>&amp;Antialiasing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="396"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="400"/>
         <source>&amp;Orthogonal Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="397"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="401"/>
         <source>&amp;Isometric Left Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="398"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="402"/>
         <source>&amp;Isometric Top Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="399"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="403"/>
         <source>&amp;Isometric Right Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="409"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="413"/>
         <source>&amp;Add Layer</source>
         <translation>&amp;ფენის დამატება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="410"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="414"/>
         <source>&amp;Remove Layer</source>
         <translation>&amp;ფენის წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="411"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="415"/>
         <source>&amp;Edit Layer</source>
         <translation>ფენის &amp;ჩასწორება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="412"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="416"/>
         <source>Toggle Layer Loc&amp;k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="413"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="417"/>
         <source>&amp;Toggle Layer Visibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="414"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="418"/>
         <source>Toggle Layer &amp;Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="415"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="419"/>
         <source>Toggle &amp;Construction Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="425"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="429"/>
         <source>&amp;Add Block</source>
         <translation>&amp;ბლოკის დამატება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="426"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="430"/>
         <source>&amp;Remove Block</source>
         <translation>&amp;ბლოკის წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="427"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="431"/>
         <source>&amp;Rename Block</source>
         <translation>ბლოკის &amp;სახელის გადარქმევა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="428"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="432"/>
         <source>&amp;Edit Block</source>
         <translation>ბლოკის &amp;ჩასწორება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="429"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="433"/>
         <source>&amp;Save Block</source>
         <translation>&amp;ბლოკის შენახვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="430"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="434"/>
         <source>&amp;Insert Block</source>
         <translation>&amp;ბლოკს ჩასმა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="431"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="435"/>
         <source>Toggle Block &amp;Visibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="432"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="436"/>
         <source>&amp;Create Block</source>
         <translation>&amp;ბლოკის შექმნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="298"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="300"/>
         <source>Ex&amp;plode</source>
         <translation>&amp;აფეთქება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="442"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="446"/>
         <source>&amp;Application Preferences</source>
         <translation>&amp;აპლიკაციის მორგება</translation>
     </message>
@@ -2137,244 +2186,244 @@ or [%2]</source>
         <translation type="vanished">მონიშნულის &amp;წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="522"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="526"/>
         <source>Select &amp;All</source>
         <translation>ყველაფრის &amp;მონიშვნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="523"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="527"/>
         <source>Deselect &amp;all</source>
         <translation>მონიშვნის &amp;მოხსნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="576"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="580"/>
         <source>Ctrl+K</source>
         <translation>Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="524"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="528"/>
         <source>Invert Selection</source>
         <translation>მონიშვნის ინვერსია</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="496"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="500"/>
         <source>Focus on &amp;Options Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="499"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
         <source>Zoom &amp;In</source>
         <translation>&amp;გადიდება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="500"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="504"/>
         <source>Zoom &amp;Out</source>
         <translation>გადიდება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="501"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="505"/>
         <source>&amp;Auto Zoom</source>
         <translation>ავტომატური &amp;გადიდება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="502"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="506"/>
         <source>Previous &amp;View</source>
         <translation>&amp;წინა ხედი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="507"/>
         <source>&amp;Redraw</source>
         <translation>ე&amp;კრანის გადახატვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="463"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="467"/>
         <source>&amp;New</source>
         <translation>&amp;ახალი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="464"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="468"/>
         <source>New From &amp;Template</source>
         <translation>ნიმუშიდან ახლის &amp;შექმნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="465"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="469"/>
         <source>&amp;Open...</source>
         <translation>&amp;გახსნა...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="466"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="470"/>
         <source>&amp;Save</source>
         <translation>&amp;შენახვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="467"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="471"/>
         <source>Save &amp;as...</source>
         <translation>&amp;შენახვა როგორც...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="458"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="462"/>
         <source>&amp;Export as image</source>
         <translation>გამოსახულების სახით &amp;გატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="459"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="463"/>
         <source>&amp;Close</source>
         <translation>&amp;დახურვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="469"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="473"/>
         <source>&amp;Print...</source>
         <translation>&amp;ამობეჭდვა...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="461"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="465"/>
         <source>Export as PDF</source>
         <translation>PDF-ად გატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="452"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="456"/>
         <source>Print Pre&amp;view</source>
         <translation>საბეჭდის &amp;გადახედვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="470"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="474"/>
         <source>&amp;Quit</source>
         <translation>&amp;გასვლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="462"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="466"/>
         <source>&amp;Block</source>
         <translation>&amp;ბლოკი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="390"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="394"/>
         <source>&amp;Fullscreen</source>
         <translation>&amp;მთელ ეკრანზე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="391"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="395"/>
         <source>&amp;Grid</source>
         <translation>&amp;ბადე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="593"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="597"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="392"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="396"/>
         <source>&amp;Draft</source>
         <translation>&amp;მონახაზი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="395"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="399"/>
         <source>&amp;Statusbar</source>
         <translation>სტატუსის ზოლი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="596"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="600"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="495"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="499"/>
         <source>Focus on &amp;Command Line</source>
         <translation>ფოკუსის შენრჩუნება &amp;ბრძანების სტრიქონზე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="443"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="447"/>
         <source>Widget Options</source>
         <translation>ვიჯეტის მორგება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="478"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="482"/>
         <source>Left</source>
         <translation>მარცხენა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="479"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="483"/>
         <source>Right</source>
         <translation>მარჯვენა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="480"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="484"/>
         <source>Top</source>
         <translation>თავში</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="481"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="485"/>
         <source>Bottom</source>
         <translation>ბოლოში</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="482"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="486"/>
         <source>Floating</source>
         <translation>მცურავი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="446"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="450"/>
         <source>Reload Style Sheet</source>
         <translation>სტილის ფურცლის თავიდან ჩათვირთვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="445"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="449"/>
         <source>Device Options</source>
         <translation>მოწყობილობის მორგება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="286"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="288"/>
         <source>Mo&amp;ve and Rotate</source>
         <translation>&amp;გადატანა და შებრუნება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="290"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="292"/>
         <source>Tr&amp;im Two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="292"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="294"/>
         <source>O&amp;ffset</source>
         <translation>&amp;წანაცვლება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="489"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="493"/>
         <source>Menu Creator</source>
         <translation>მენიუს შექმნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="490"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="494"/>
         <source>Toolbar Creator</source>
         <translation>ხელსაწყოთა ზოლის შექმნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="533"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="537"/>
         <source>Cut Quic&amp;k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="535"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="539"/>
         <source>Copy &amp;Quick</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="537"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="541"/>
         <source>Paste &amp;Transform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="538"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Delete Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="539"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="543"/>
         <source>&amp;Selection Pointer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="595"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="599"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
         <translation>Ctrl+D</translation>
@@ -2385,72 +2434,72 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="264"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="266"/>
         <source>&amp;Arc</source>
         <translation>&amp;რკალი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="405"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="409"/>
         <source>&amp;Show all layers</source>
         <translation>&amp;ყველა ფენის შექმნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="406"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="410"/>
         <source>&amp;Hide all layers</source>
         <translation>&amp;ყველა ფენის დამალვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="407"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="411"/>
         <source>&amp;Unlock all</source>
         <translation>&amp;ყველას განბლოკვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="408"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="412"/>
         <source>&amp;Lock all</source>
         <translation>ყველას &amp;დაბლოკვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="416"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="420"/>
         <source>&amp;Export Selected Layer(s)</source>
         <translation>&amp;მონიშნული ფენების გატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="417"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="421"/>
         <source>Export &amp;Visible Layer(s)</source>
         <translation>&amp;ხილული ფენების გატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="423"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="427"/>
         <source>&amp;Show all blocks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="424"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="428"/>
         <source>&amp;Hide all blocks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="444"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="448"/>
         <source>Keyboard Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="473"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="477"/>
         <source>Export as CA&amp;M/plain SVG...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="460"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="464"/>
         <source>Close All</source>
         <translation>ყველას დახურვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="488"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="492"/>
         <source>Re-dock Widgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="468"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="472"/>
         <source>Save A&amp;ll...</source>
         <translation>&amp;ყველას შენახვა...</translation>
     </message>
@@ -2779,6 +2828,67 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="279"/>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionModifyAlign</name>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="183"/>
+        <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="199"/>
+        <source>Select base alignment entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="202"/>
+        <source>Specify base alignment point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="205"/>
+        <source>Click or Enter to finish align</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="213"/>
+        <source>Select entities to align (Enter to complete)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="213"/>
+        <source>Select and align</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionModifyAlignSingle</name>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="157"/>
+        <source>Select base alignment entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="160"/>
+        <source>Specify base alignment point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="172"/>
+        <source>Select entity to align</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="172"/>
+        <source>Finish alignment after selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="253"/>
+        <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4981,6 +5091,112 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="236"/>
         <source>Angle of line</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_MidLineOptions</name>
+    <message>
+        <location filename="../src/ui/action_options/line/lc_midlineoptions.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">ფორმა</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/line/lc_midlineoptions.ui" line="32"/>
+        <source>Offset:</source>
+        <translation type="unfinished">წანაცვლება:</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ModifyAlignOptions</name>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">ფორმა</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="53"/>
+        <source>No change of horizontal position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="73"/>
+        <source>Align left edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="93"/>
+        <source>Center entities horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="113"/>
+        <source>Align right edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="136"/>
+        <source>Horizontal Align:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="143"/>
+        <source>Vertical Align:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="150"/>
+        <source>Defines the way of selected entities alignment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="154"/>
+        <source>Entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="159"/>
+        <source>Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="164"/>
+        <source>Drawing</source>
+        <translation type="unfinished">ნახატი</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="172"/>
+        <source>If selected, relative positions of entities within selection will be unchanged. Otherwise, each entity will be positioned individually.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="175"/>
+        <source>As Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="182"/>
+        <source>Align to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="210"/>
+        <source>Align top edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="230"/>
+        <source>Center entities vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="250"/>
+        <source>Align bottom edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="270"/>
+        <source>No vertical alignment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8719,27 +8935,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_WidgetFactory</name>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="462"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="466"/>
         <source>Library Browser</source>
         <translation>ბიბლიოთეკის ბრაუზერი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="478"/>
         <source>Command line</source>
         <translation>ბრძანებათა სტრიქონი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="500"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="504"/>
         <source>Dock</source>
         <translation>მიმაგრება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="500"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="504"/>
         <source>Float</source>
         <translation>მცურავი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="613"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="617"/>
         <source>Lines</source>
         <translation>ხაზები</translation>
     </message>
@@ -8752,37 +8968,37 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">ხელით დახატული</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="619"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="623"/>
         <source>Ellipses</source>
         <translation>ოვალები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="620"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="624"/>
         <source>PolyLines</source>
         <translation>პოლიხაზები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="366"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="588"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="621"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="370"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="625"/>
         <source>Select</source>
         <translation>აირჩიეთ</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="358"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="580"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="362"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="584"/>
         <source>Line</source>
         <translation type="unfinished">ხაზი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="360"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="582"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="364"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="586"/>
         <source>Polygon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="361"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="583"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="365"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="587"/>
         <source>Circle</source>
         <translation type="unfinished">წრე</translation>
     </message>
@@ -8791,226 +9007,226 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">მრუდი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="364"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="586"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="368"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="590"/>
         <source>Ellipse</source>
         <translation type="unfinished">ოვალი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="365"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="587"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="369"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="591"/>
         <source>Polyline</source>
         <translation type="unfinished">პოლიხაზი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="367"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="371"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="593"/>
         <source>Dimension</source>
         <translation type="unfinished">განზომილება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="368"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="590"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="623"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="372"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="594"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="627"/>
         <source>Other</source>
         <translation type="unfinished">სხვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="370"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="374"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="596"/>
         <source>Info</source>
         <translation type="unfinished">ინფორმაცია</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="371"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="515"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="626"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="375"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="519"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="630"/>
         <source>Order</source>
         <translation type="unfinished">დალაგება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="396"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="400"/>
         <source>Pen Palette</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="406"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="410"/>
         <source>Layer List</source>
         <translation type="unfinished">ფენების სია</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="426"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="430"/>
         <source>Layer Tree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="439"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="443"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="456"/>
         <source>Block List</source>
         <translation type="unfinished">ბლოკების სია</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="506"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="510"/>
         <source>File</source>
         <translation type="unfinished">ფაილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="511"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="515"/>
         <source>Edit</source>
         <translation type="unfinished">ჩასწორება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="520"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="524"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="416"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="525"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="420"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
         <source>Named Views</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="359"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="581"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="363"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="585"/>
         <source>Point</source>
         <translation type="unfinished">წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="362"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="584"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="366"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="588"/>
         <source>Arc</source>
         <translation type="unfinished">რკალი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="363"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="585"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="367"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
         <source>Spline</source>
         <translation type="unfinished">სპლაინი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="530"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="534"/>
         <source>Snap Selection</source>
         <translation type="unfinished">მონიშნულის მიმაგრება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="540"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="544"/>
         <source>Pen</source>
         <translation type="unfinished">ფანქარი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="546"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="550"/>
         <source>Tool Options</source>
         <translation type="unfinished">ხელსაწყოების გამართვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="548"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="789"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="552"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="793"/>
         <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="553"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="557"/>
         <source>Creators</source>
         <translation type="unfinished">შემქმნელები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="557"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="561"/>
         <source>Preferences</source>
         <translation type="unfinished">პარამეტრები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="610"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="614"/>
         <source>Categories</source>
         <translation type="unfinished">კატეგორიები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="614"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="618"/>
         <source>Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="615"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="618"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="619"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="622"/>
         <source>Polygons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="616"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="620"/>
         <source>Arcs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="617"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="621"/>
         <source>Splines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="622"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="626"/>
         <source>Dimensions</source>
         <translation>ზომები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="635"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="639"/>
         <source>&amp;File</source>
         <translation type="unfinished">&amp;ფაილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="646"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="650"/>
         <source>Import</source>
         <translation type="unfinished">შემოტანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="651"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="655"/>
         <source>Export</source>
         <translation type="unfinished">გატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="668"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="672"/>
         <source>&amp;Options</source>
         <translation type="unfinished">&amp;მორგება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="678"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="682"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;ჩასწორება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="695"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="699"/>
         <source>Pl&amp;ugins</source>
         <translation type="unfinished">&amp;დამატებები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="697"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="701"/>
         <source>&amp;View</source>
         <translation type="unfinished">&amp;ხედი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="727"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="731"/>
         <source>&amp;Views Restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="735"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="739"/>
         <source>&amp;Tools</source>
         <translation type="unfinished">&amp;ხელსაწყოები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="736"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="740"/>
         <source>&amp;Line</source>
         <translation type="unfinished">&amp;ხაზი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="737"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="741"/>
         <source>Poin&amp;t</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="738"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="742"/>
         <source>&amp;Circle</source>
         <translation type="unfinished">&amp;წრე</translation>
     </message>
@@ -9019,190 +9235,190 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">&amp;მრუდი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="739"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="743"/>
         <source>&amp;Arc</source>
         <translation type="unfinished">&amp;რკალი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="740"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="744"/>
         <source>Poly&amp;gon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="741"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="745"/>
         <source>Splin&amp;e</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="742"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="746"/>
         <source>&amp;Ellipse</source>
         <translation type="unfinished">&amp;ოვალი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="743"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="747"/>
         <source>&amp;Polyline</source>
         <translation type="unfinished">&amp;პოლიხაზი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="744"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="748"/>
         <source>&amp;Select</source>
         <translation type="unfinished">&amp;მონიშვნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="745"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="749"/>
         <source>Dime&amp;nsion</source>
         <translation type="unfinished">&amp;განზომილება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="746"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="750"/>
         <source>Ot&amp;her</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="747"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="751"/>
         <source>&amp;Modify</source>
         <translation type="unfinished">&amp;შეცვლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="748"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="752"/>
         <source>&amp;Info</source>
         <translation type="unfinished">&amp;ინფო</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="749"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="753"/>
         <source>&amp;Order</source>
         <translation type="unfinished">&amp;მიმდევრობა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="751"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="755"/>
         <source>&amp;Drawings</source>
         <translation type="unfinished">&amp;ნახაზები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="758"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="762"/>
         <source>&amp;Help</source>
         <translation type="unfinished">&amp;დახმარება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="760"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="764"/>
         <source>On&amp;line Docs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="761"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="765"/>
         <source>&amp;Wiki</source>
         <translation type="unfinished">&amp;ვიკი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="762"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="766"/>
         <source>User&apos;s &amp;Manual</source>
         <translation type="unfinished">მომხმარებლის &amp;სახელმძღვანელო</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="763"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="767"/>
         <source>&amp;Commands</source>
         <translation type="unfinished">&amp;ბრძანებები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="764"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="768"/>
         <source>&amp;Style Sheets</source>
         <translation type="unfinished">&amp;სტილის ცხრილები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="765"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="769"/>
         <source>Wid&amp;gets</source>
         <translation type="unfinished">&amp;ვიჯეტები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="769"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="773"/>
         <source>About</source>
         <translation type="unfinished">პროგრამის შესახებ</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="776"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="780"/>
         <source>&amp;Forum</source>
         <translation type="unfinished">&amp;ფორუმი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="777"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="781"/>
         <source>Zulip &amp;Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="779"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="783"/>
         <source>&amp;Submit Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="780"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="784"/>
         <source>&amp;Request Feature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="781"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="785"/>
         <source>&amp;Releases Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="785"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="789"/>
         <source>&amp;Donate</source>
         <translation type="unfinished">&amp;შეწირვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="787"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="791"/>
         <source>Widgets</source>
         <translation type="unfinished">ვიჯეტები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="797"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="801"/>
         <source>Dock Wid&amp;gets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="825"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="829"/>
         <source>&amp;Toolbars</source>
         <translation type="unfinished">&amp;ხელსაწყოთა ზოლები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1043"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1112"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1047"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1116"/>
         <source>Grid Status</source>
         <translation type="unfinished">ბადის სტატუსი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1077"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1081"/>
         <source>Coordinates</source>
         <translation type="unfinished">კოორდინატები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1084"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1088"/>
         <source>Relative Zero</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1091"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1095"/>
         <source>Mouse</source>
         <translation type="unfinished">თაგუნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1098"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1102"/>
         <source>Selection Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1105"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1109"/>
         <source>Active Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="369"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="591"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="624"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="373"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="595"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="628"/>
         <source>Modify</source>
         <translation>ჩასწორება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="625"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="629"/>
         <source>Measure</source>
         <translation>გაზომვა</translation>
     </message>
@@ -9974,17 +10190,17 @@ Please check its existence and permissions.</source>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1283"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1294"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1284"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1295"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1294"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1305"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>escape</translation>
@@ -17467,13 +17683,13 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="821"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="838"/>
         <source>point</source>
         <comment>draw point</comment>
         <translation>წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="822"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="839"/>
         <source>po</source>
         <comment>draw point</comment>
         <translation>წრტ</translation>
@@ -17497,79 +17713,79 @@ Do you want to replace it?</source>
         <translation>ხ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="486"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="503"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
         <translation>პოლიხაზი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="487"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="504"/>
         <source>pl</source>
         <comment>draw polyline</comment>
         <translation>pl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="439"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="456"/>
         <source>free</source>
         <comment>draw freehand line</comment>
         <translation>თავისუფალია</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="441"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="458"/>
         <source>fhl</source>
         <comment>draw freehand line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="402"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="419"/>
         <source>spline</source>
         <comment>draw spline</comment>
         <translation>სპლაინი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="404"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="421"/>
         <source>spl</source>
         <comment>draw spline</comment>
         <translation>სპლ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="409"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="426"/>
         <source>spline2</source>
         <comment>spline through points</comment>
         <translation>სპლაინი2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="411"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="428"/>
         <source>stp</source>
         <comment>spline through points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="226"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="243"/>
         <source>ptp</source>
         <comment>parallel through point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="233"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="250"/>
         <source>bisect</source>
         <comment>angle bisector</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="232"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="249"/>
         <source>bi</source>
         <comment>angle bisector</comment>
         <translation>bi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="240"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="257"/>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="259"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="276"/>
         <source>ortho</source>
         <comment>perpendicular line</comment>
         <translation>ორთო</translation>
@@ -17581,731 +17797,731 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="285"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="302"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="287"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="304"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="294"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="311"/>
         <source>circle</source>
         <comment>draw circle</comment>
         <translation>წრე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="295"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="312"/>
         <source>ci</source>
         <comment>draw circle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="302"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="319"/>
         <source>c2</source>
         <comment>circle 2 points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="315"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="332"/>
         <source>c3</source>
         <comment>circle 3 points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="351"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="368"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="350"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="367"/>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="477"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="494"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="478"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="495"/>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="479"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="496"/>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
         <translation>ie</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="815"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="832"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="816"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="833"/>
         <source>ha</source>
         <comment>draw hatch</comment>
         <translation>ha</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="801"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="818"/>
         <source>mtext</source>
         <comment>draw mtext</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="803"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="820"/>
         <source>mtxt</source>
         <comment>draw mtext</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="808"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="825"/>
         <source>text</source>
         <comment>draw text</comment>
         <translation type="unfinished">ტექსტი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="810"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="827"/>
         <source>txt</source>
         <comment>draw text</comment>
         <translation>ტქსტ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="961"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="978"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="962"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="979"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="963"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="980"/>
         <source>rg</source>
         <comment>zoom - redraw</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="964"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="981"/>
         <source>zr</source>
         <comment>zoom - redraw</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="981"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="998"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="982"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="999"/>
         <source>zw</source>
         <comment>zoom - window</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="969"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="986"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="970"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="987"/>
         <source>za</source>
         <comment>zoom - auto</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="987"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1004"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="988"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1005"/>
         <source>zp</source>
         <comment>zoom - pan</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="975"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="992"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="976"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="993"/>
         <source>zv</source>
         <comment>zoom - previous</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="930"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="947"/>
         <source>kill</source>
         <comment>kill all actions</comment>
         <translation>მოკვლა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="932"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="949"/>
         <source>k</source>
         <comment>kill all actions</comment>
         <translation>კ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="937"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="954"/>
         <source>undo</source>
         <comment>undo cycle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="939"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="956"/>
         <source>u</source>
         <comment>undo cycle</comment>
         <translation>u</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="944"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="961"/>
         <source>redo</source>
         <comment>redo cycle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="946"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="963"/>
         <source>r</source>
         <comment>redo cycle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="577"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="594"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="589"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="606"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="590"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="607"/>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="595"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="612"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="596"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="613"/>
         <source>dv</source>
         <comment>dimension - vertical</comment>
         <translation>dv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="583"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="600"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="584"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="601"/>
         <source>dl</source>
         <comment>dimension - linear</comment>
         <translation>დლ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="615"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="632"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="617"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="634"/>
         <source>dan</source>
         <comment>dimension - angular</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="602"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="619"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="610"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="627"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="608"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="625"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="609"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="626"/>
         <source>dd</source>
         <comment>dimension - diametric</comment>
         <translation>დდ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="622"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="639"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="623"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="640"/>
         <source>ld</source>
         <comment>dimension - leader</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="628"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="645"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="903"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="920"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="904"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="921"/>
         <source>rn</source>
         <comment>restrict - nothing</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="909"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="926"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="910"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="927"/>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="915"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="932"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="916"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="933"/>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="921"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="938"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="922"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="939"/>
         <source>rv</source>
         <comment>restrict - vertical</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="637"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="654"/>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="708"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="725"/>
         <source>bev</source>
         <comment>modify - bevel</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="709"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="726"/>
         <source>ch</source>
         <comment>modify - bevel</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="715"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="732"/>
         <source>fi</source>
         <comment>modify - fillet</comment>
         <translation>fi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="723"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="740"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
         <translation>ამოჭრა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="724"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="741"/>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="655"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="672"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
         <translation>მი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="674"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="691"/>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="643"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="660"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
         <translation>ro</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="649"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="666"/>
         <source>sz</source>
         <comment>modify - scale</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="680"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="697"/>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="687"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="704"/>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="693"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="710"/>
         <source>le</source>
         <comment>modify - lengthen</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="731"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="748"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
         <translation>ss</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="763"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="780"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="764"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="781"/>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="757"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="774"/>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="836"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="853"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="838"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="855"/>
         <source>os</source>
         <comment>snap - free</comment>
         <translation>ოპერაციული სისტემა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="843"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="860"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="844"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="861"/>
         <source>sc</source>
         <comment>snap - center</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="849"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="866"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="850"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="867"/>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
         <translation>sd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="855"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="872"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="856"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="873"/>
         <source>se</source>
         <comment>snap - end points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="861"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="878"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="862"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="879"/>
         <source>sg</source>
         <comment>snap - grid</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="867"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="884"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="868"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="885"/>
         <source>si</source>
         <comment>snap - intersection</comment>
         <translation>si</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="873"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="890"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="874"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="891"/>
         <source>sm</source>
         <comment>snap - middle points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="879"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="896"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="880"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="897"/>
         <source>sn</source>
         <comment>snap - on entity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="881"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="898"/>
         <source>np</source>
         <comment>snap - on entity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="897"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="914"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="898"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="915"/>
         <source>rz</source>
         <comment>set relative zero position</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="555"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="572"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="556"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="573"/>
         <source>sa</source>
         <comment>Select all entities</comment>
         <translation>სან</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="561"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="578"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="563"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="580"/>
         <source>tn</source>
         <comment>deselect all entities</comment>
         <translation>tn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="744"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="761"/>
         <source>attr</source>
         <comment>modify attribute</comment>
         <translation>attr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="745"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="762"/>
         <source>ma</source>
         <comment>modify attribute</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="737"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="754"/>
         <source>prop</source>
         <comment>modify properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="773"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="790"/>
         <source>dist</source>
         <comment>distance point to point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="774"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="791"/>
         <source>dpp</source>
         <comment>distance point to point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="788"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="805"/>
         <source>ang</source>
         <comment>measure angle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="995"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1088"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1012"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
         <source>angle</source>
         <translation>კუთხე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="996"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1013"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="997"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1014"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
         <source>close</source>
         <translation>დახურვა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="999"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1016"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1120"/>
         <source>columns</source>
         <translation>სვეტები</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1000"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1017"/>
         <source>columnspacing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1002"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1111"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1019"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
         <source>factor</source>
         <translation>ფაქტორი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1003"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1020"/>
         <source>length</source>
         <translation>ხანგრძლივობა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1006"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1023"/>
         <source>number</source>
         <translation>ნომერი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1007"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1024"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1155"/>
         <source>radius</source>
         <translation>რადიუსი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1008"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1025"/>
         <source>rows</source>
         <translation>მწკრივები</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1009"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1026"/>
         <source>rowspacing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1010"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1153"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1027"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1170"/>
         <source>through</source>
         <translation>სადამდე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1011"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1028"/>
         <source>trim</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1089"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
         <source>ang</source>
         <comment>angle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1090"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
         <source>an</source>
         <comment>angle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1092"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1109"/>
         <source>center</source>
         <translation>ცენტრი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1093"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
         <source>cen</source>
         <comment>center</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1111"/>
         <source>ce</source>
         <comment>center</comment>
         <translation type="unfinished"></translation>
@@ -18316,230 +18532,230 @@ Do you want to replace it?</source>
         <translation type="vanished">ცლ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1118"/>
         <source>c</source>
         <comment>close</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1121"/>
         <source>cols</source>
         <comment>columns</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
         <source>co</source>
         <comment>columns</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1124"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1108"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1125"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1109"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
         <translation>cs</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1112"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1129"/>
         <source>fact</source>
         <comment>factor</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1113"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
         <source>f</source>
         <comment>factor</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1119"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
         <source>help</source>
         <translation>დახმარება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1120"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1137"/>
         <source>?</source>
         <comment>help</comment>
         <translation>?</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
         <source>length</source>
         <comment>length</comment>
         <translation>ხანგრძლივობა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1123"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
         <source>len</source>
         <comment>length</comment>
         <translation>სიგრძე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1124"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
         <source>l</source>
         <comment>length</comment>
         <translation>ს</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1143"/>
         <source>length1</source>
         <comment>length1</comment>
         <translation>სიგრძე1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1127"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1144"/>
         <source>len1</source>
         <comment>length1</comment>
         <translation>სგრ1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1145"/>
         <source>l1</source>
         <comment>length1</comment>
         <translation>ს1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1147"/>
         <source>length2</source>
         <comment>length2</comment>
         <translation>სიგრძე2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1148"/>
         <source>len2</source>
         <comment>length2</comment>
         <translation>სგრ2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1132"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1149"/>
         <source>l2</source>
         <comment>length2</comment>
         <translation>ს2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1134"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1151"/>
         <source>number</source>
         <comment>number</comment>
         <translation>ნომერი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1135"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1152"/>
         <source>num</source>
         <comment>number</comment>
         <translation>რიცხვ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1153"/>
         <source>n</source>
         <comment>number</comment>
         <translation>n</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1156"/>
         <source>ra</source>
         <comment>radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1158"/>
         <source>reversed</source>
         <comment>reversed</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1143"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1159"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1160"/>
         <source>rev</source>
         <comment>reversed</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1145"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1162"/>
         <source>row</source>
         <comment>row</comment>
         <translation>მწკრივი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1147"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1164"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1148"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1150"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1167"/>
         <source>text</source>
         <translation>ტექსტი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1151"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
         <source>t</source>
         <comment>text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1154"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1171"/>
         <source>t</source>
         <comment>through</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1156"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1173"/>
         <source>undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1157"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1174"/>
         <source>u</source>
         <comment>undo</comment>
         <translation>u</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1159"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1176"/>
         <source>redo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1160"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1177"/>
         <source>r</source>
         <comment>redo</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1162"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
         <source>back</source>
         <translation>უკან</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1180"/>
         <source>b</source>
         <comment>back</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1185"/>
         <source>paperoffset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1169"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1186"/>
         <source>graphoffset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18589,34 +18805,34 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1182"/>
         <source>bw</source>
         <translation>bw</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1166"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1183"/>
         <source>blackwhite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1167"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1184"/>
         <source>color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="725"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="742"/>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="686"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="703"/>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="738"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="755"/>
         <source>mp</source>
         <comment>modify properties</comment>
         <translation type="unfinished"></translation>
@@ -18773,7 +18989,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="772"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="776"/>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3151"/>
         <source>License</source>
         <translation>ლიცენზია</translation>
@@ -18988,1321 +19204,1357 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="184"/>
+        <source>midpoint</source>
+        <comment>draw middle points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="185"/>
+        <source>mpoint</source>
+        <comment>draw middle of points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="190"/>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="186"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="191"/>
         <source>cba</source>
         <comment>draw circle by arc</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="191"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="196"/>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="192"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="197"/>
         <source>dup</source>
         <comment>duplicate entity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="197"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="202"/>
+        <source>align</source>
+        <comment>align entities</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="203"/>
+        <source>al</source>
+        <comment>align entities</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="208"/>
+        <source>align1</source>
+        <comment>align entities</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="209"/>
+        <source>al1</source>
+        <comment>align entities</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="214"/>
         <source>linejoin</source>
         <comment>lines join</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="198"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="215"/>
         <source>lj</source>
         <comment>lines join</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="203"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="220"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="204"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="221"/>
         <source>bd</source>
         <comment>break or divide entity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="209"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="226"/>
         <source>gapline</source>
         <comment>line gap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="210"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="227"/>
         <source>gl</source>
         <comment>line gap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="215"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="232"/>
         <source>linepar</source>
         <comment>create parallel</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="216"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="233"/>
         <source>parallel</source>
         <comment>create parallel</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="217"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="234"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="218"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="235"/>
         <source>pa</source>
         <comment>create parallel</comment>
         <translation>pa</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="219"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="236"/>
         <source>ll</source>
         <comment>create parallel</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="224"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="241"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="225"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="242"/>
         <source>lp</source>
         <comment>parallel through point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="231"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="248"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="238"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="255"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="239"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="256"/>
         <source>lt</source>
         <comment>tangent point and circle</comment>
         <translation>lt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="245"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="262"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="246"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="263"/>
         <source>lc</source>
         <comment>tangent two circles</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="251"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="268"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="252"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="269"/>
         <source>or</source>
         <comment>tangent line and circle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="257"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="274"/>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="258"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="275"/>
         <source>lo</source>
         <comment>perpendicular line</comment>
         <translation>lo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="264"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="281"/>
         <source>linerelang</source>
         <comment>relative line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="265"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="282"/>
         <source>lr</source>
         <comment>relative line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="270"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="287"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="271"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="288"/>
         <source>pp</source>
         <comment>polygon centre point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="272"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="289"/>
         <source>polycp</source>
         <comment>polygon centre point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="273"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="290"/>
         <source>pcp</source>
         <comment>polygon centre point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="278"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="295"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="279"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="296"/>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="280"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="297"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="286"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="303"/>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
         <translation>p2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="296"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="313"/>
         <source>c</source>
         <comment>draw circle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="301"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="318"/>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="303"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="320"/>
         <source>c2p</source>
         <comment>circle 2 points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="308"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="325"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="309"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="326"/>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
         <translation>cc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="314"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="331"/>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="316"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="333"/>
         <source>c3p</source>
         <comment>circle 3 points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="321"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="338"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="322"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="339"/>
         <source>cr</source>
         <comment>circle point radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="323"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="340"/>
         <source>ccr</source>
         <comment>circle point radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="329"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="346"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="330"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="347"/>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
         <translation>tr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="335"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="352"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="336"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="353"/>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="341"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="358"/>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="342"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="359"/>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="348"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="365"/>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="349"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="366"/>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="358"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="375"/>
         <source>arc</source>
         <comment>arc point radius</comment>
         <translation>რკალი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="359"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="376"/>
         <source>ar</source>
         <comment>arc point radius</comment>
         <translation>ar</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="360"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="377"/>
         <source>a</source>
         <comment>arc point radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="365"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="382"/>
         <source>arc3p</source>
         <comment>draw 3pt arc</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="366"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="383"/>
         <source>a3</source>
         <comment>draw 3pt arc</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="371"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="388"/>
         <source>arctan</source>
         <comment>arc tangent</comment>
         <translation>arctan</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="372"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="389"/>
         <source>at</source>
         <comment>arc tangent</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="377"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="394"/>
         <source>arc2p3</source>
         <comment>draw 2pt arc radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="378"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="395"/>
         <source>a2r</source>
         <comment>draw 2pt arc radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="383"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="400"/>
         <source>arc2pl</source>
         <comment>draw 2pt arc length</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="384"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="401"/>
         <source>a2l</source>
         <comment>draw 2pt arc length</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="389"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="406"/>
         <source>arc2ph</source>
         <comment>draw 2pt arc height</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="390"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="407"/>
         <source>a2h</source>
         <comment>draw 2pt arc height</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="395"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="412"/>
         <source>arc2pa</source>
         <comment>draw 2pt arc angle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="396"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="413"/>
         <source>a2a</source>
         <comment>draw 2pt arc angle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="403"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="420"/>
         <source>sf</source>
         <comment>draw spline</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="410"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="427"/>
         <source>sp</source>
         <comment>spline through points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="416"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="433"/>
         <source>arcellc2ax</source>
         <comment>arc ellipse</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="417"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="434"/>
         <source>ae</source>
         <comment>arc ellipse</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="421"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="438"/>
         <source>arcellc1ax</source>
         <comment>arc ellipse 1 point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="422"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="439"/>
         <source>ae1</source>
         <comment>arc ellipse 1 point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="427"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="444"/>
         <source>parabola4p</source>
         <comment>Parabola 4 points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="428"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="445"/>
         <source>pl4</source>
         <comment>Parabola 4 points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="433"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="450"/>
         <source>parabolafd</source>
         <comment>Parabola focus directrix</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="434"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="451"/>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="440"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="457"/>
         <source>fh</source>
         <comment>draw freehand line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="448"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="465"/>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="449"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="466"/>
         <source>ea</source>
         <comment>ellipse axis</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="453"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="470"/>
         <source>ellipsec1p</source>
         <comment>ellipse 1 point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="454"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="471"/>
         <source>ea1</source>
         <comment>ellipse 1 point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="459"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="476"/>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="460"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="477"/>
         <source>ef</source>
         <comment>ellipse foci</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="465"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="482"/>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="466"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="483"/>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="471"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="488"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="472"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="489"/>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="492"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="493"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="509"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="510"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="498"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="515"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="499"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="516"/>
         <source>rort</source>
         <comment>draw orthogonal</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="504"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="521"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="505"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="522"/>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="511"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="528"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="512"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="529"/>
         <source>pi</source>
         <comment>pl add node</comment>
         <translation>პი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="517"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="534"/>
         <source>plineapp</source>
         <comment>pl append node</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="518"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="535"/>
         <source>pn</source>
         <comment>pl append node</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="523"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="540"/>
         <source>plinedel</source>
         <comment>pl delete node</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="524"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="541"/>
         <source>pd</source>
         <comment>pl delete node</comment>
         <translation>pd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="529"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="546"/>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="530"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="547"/>
         <source>pr</source>
         <comment>pl del between nodes</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="535"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="552"/>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="536"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="553"/>
         <source>pt</source>
         <comment>pl trim segments</comment>
         <translation>წრტ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="541"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="558"/>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="542"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="559"/>
         <source>pe</source>
         <comment>pl equidistant</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="547"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="564"/>
         <source>plinejoin</source>
         <comment>pl join</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="548"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="565"/>
         <source>pj</source>
         <comment>pl join</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="562"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="579"/>
         <source>sx</source>
         <comment>deselect all entities</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="568"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="585"/>
         <source>invertselect</source>
         <comment>invert select</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="569"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="586"/>
         <source>is</source>
         <comment>invert select</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="578"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="595"/>
         <source>ds</source>
         <comment>dimension - aligned</comment>
         <translation>დწმ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="601"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="618"/>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="603"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="620"/>
         <source>dr</source>
         <comment>dimension - radial</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="616"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="633"/>
         <source>da</source>
         <comment>dimension - angular</comment>
         <translation>da</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="629"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="646"/>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
         <translation>დგ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="636"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="653"/>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="642"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="659"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="648"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="665"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="654"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="671"/>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="660"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="677"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="661"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="678"/>
         <source>mr</source>
         <comment>modify - move rotate</comment>
         <translation>mr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="666"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="683"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="667"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="684"/>
         <source>r2</source>
         <comment>modify - rotate2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="672"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="689"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="673"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="690"/>
         <source>md</source>
         <comment>modify -  revert direction</comment>
         <translation>md</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="679"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="696"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="685"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="702"/>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="692"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="709"/>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="698"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="715"/>
         <source>modoffset</source>
         <comment>modify - offset</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="699"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="716"/>
         <source>offset</source>
         <comment>modify - offset</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="701"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="718"/>
         <source>mo</source>
         <comment>modify - offset</comment>
         <translation>თვ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="702"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="719"/>
         <source>moff</source>
         <comment>modify - offset</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="707"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="724"/>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="714"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="731"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="716"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="733"/>
         <source>fillet</source>
         <comment>modify - fillet</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="717"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="734"/>
         <source>bevel</source>
         <comment>modify - fillet</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="722"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="739"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="730"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="747"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="736"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="753"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="743"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="760"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="750"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="767"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="751"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="768"/>
         <source>xt</source>
         <comment>explode text strings</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="756"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="773"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="762"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="779"/>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="771"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="788"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="772"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="789"/>
         <source>id</source>
         <comment>distance point to point</comment>
         <translation>id</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="779"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="796"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="780"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="797"/>
         <source>ii</source>
         <comment>distance entity to point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="781"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="798"/>
         <source>dep</source>
         <comment>distance entity to point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="786"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="803"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="787"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>ia</source>
         <comment>measure angle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="793"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="810"/>
         <source>infoarea</source>
         <comment>measure area</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="794"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="811"/>
         <source>aa</source>
         <comment>measure area</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="802"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="819"/>
         <source>mt</source>
         <comment>draw mtext</comment>
         <translation>mt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="809"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="826"/>
         <source>tx</source>
         <comment>draw text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="837"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="854"/>
         <source>so</source>
         <comment>snap - free</comment>
         <translation>so</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="888"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="905"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="889"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="906"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="890"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="907"/>
         <source>smm</source>
         <comment>snap middle manual</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="931"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="948"/>
         <source>ki</source>
         <comment>kill all actions</comment>
         <translation>ki</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="938"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="955"/>
         <source>un</source>
         <comment>undo cycle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="945"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="962"/>
         <source>rd</source>
         <comment>redo cycle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="953"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="970"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="954"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="971"/>
         <source>dp</source>
         <comment>drawing preferences</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="998"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1015"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1113"/>
         <source>chordlen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1001"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1115"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1018"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1132"/>
         <source>equation</source>
         <translation>ტოლობა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1004"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1021"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
         <translation>სიგრძე1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1005"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1022"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
         <translation>სიგრძე2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1014"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1031"/>
         <source>x</source>
         <translation type="unfinished">x</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1015"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1032"/>
         <source>y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1016"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1033"/>
         <source>p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1017"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1034"/>
         <source>anglerel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1018"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1035"/>
         <source>start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1021"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1038"/>
         <source>offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1022"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1039"/>
         <source>linesnap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1023"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1040"/>
         <source>ticksnap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1026"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1043"/>
         <source>width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1027"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1044"/>
         <source>height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1028"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1045"/>
         <source>pos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1029"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1046"/>
         <source>size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1030"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1036"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1047"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1053"/>
         <source>bevels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1031"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1048"/>
         <source>nopoly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1032"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1049"/>
         <source>usepoly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1033"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1050"/>
         <source>corners</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1034"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1051"/>
         <source>str</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1035"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1052"/>
         <source>round</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1037"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1054"/>
         <source>snap1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1038"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1055"/>
         <source>topl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1039"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1056"/>
         <source>top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1040"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1057"/>
         <source>topr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1041"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1058"/>
         <source>left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1042"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1059"/>
         <source>middle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1043"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1060"/>
         <source>right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1044"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1061"/>
         <source>bottoml</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1045"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1062"/>
         <source>bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1046"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1063"/>
         <source>bottomr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1047"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1064"/>
         <source>snapcorner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1048"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1065"/>
         <source>snapshift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1049"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1066"/>
         <source>sizein</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1050"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1067"/>
         <source>sizeout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1051"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1068"/>
         <source>hor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1052"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1069"/>
         <source>vert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1055"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1072"/>
         <source>snap2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1056"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1073"/>
         <source>corner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1057"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1074"/>
         <source>mid-vert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1058"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1075"/>
         <source>mid-hor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1060"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1077"/>
         <source>quad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1061"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1078"/>
         <source>noquad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1062"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1079"/>
         <source>angle_inner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1065"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1082"/>
         <source>edges</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1066"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1083"/>
         <source>edge-none</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1067"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1084"/>
         <source>edge-both</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1068"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1085"/>
         <source>edge-start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1069"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1086"/>
         <source>edge-end</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1070"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1087"/>
         <source>end</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1071"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1088"/>
         <source>both</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1072"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1089"/>
         <source>none</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1073"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1090"/>
         <source>fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1074"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1091"/>
         <source>nofit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1075"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1092"/>
         <source>dist_fixed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1076"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1093"/>
         <source>dist_flex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1077"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
         <source>distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
         <source>sym</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1082"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>nosym</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1115"/>
         <source>cl</source>
         <comment>chordlen</comment>
         <translation type="unfinished">ცლ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1116"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
         <source>eqn</source>
         <comment>equation</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1134"/>
         <source>eq</source>
         <comment>equation</comment>
         <translation type="unfinished"></translation>
@@ -23950,7 +24202,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_GraphicView</name>
     <message>
-        <location filename="../src/lib/gui/rs_graphicview.cpp" line="1955"/>
+        <location filename="../src/lib/gui/rs_graphicview.cpp" line="1956"/>
         <source>Draft</source>
         <translation type="unfinished"></translation>
     </message>

@@ -1,4 +1,4 @@
-    /****************************************************************************
+/****************************************************************************
 **
 * Options widget for "LinePoints" action.
 
@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 
 LC_LinePointsOptions::LC_LinePointsOptions() :
-    LC_ActionOptionsWidgetBase(RS2::ActionDrawLinePoints, "Draw", "LinePoints"),
+    LC_ActionOptionsWidget(nullptr),
     ui(new Ui::LC_LinePointsOptions),
     action(nullptr){
     ui->setupUi(this);
@@ -45,38 +45,77 @@ LC_LinePointsOptions::~LC_LinePointsOptions(){
     action = nullptr;
 }
 
+bool LC_LinePointsOptions::checkActionRttiValid(RS2::ActionType actionType) {
+    return actionType ==  RS2::ActionDrawLinePoints || actionType == RS2::ActionDrawPointsMiddle;
+}
+
+QString LC_LinePointsOptions::getSettingsGroupName() {
+    return "Draw";
+}
+
+QString LC_LinePointsOptions::getSettingsOptionNamePrefix() {
+    switch (action->rtti()){
+        case RS2::ActionDrawLinePoints:
+            return "LinePoints";
+        case RS2::ActionDrawPointsMiddle:
+            return "PointsMiddle";
+        default:
+            return "";
+    }
+}
+
 void LC_LinePointsOptions::doSetAction(RS_ActionInterface *a, bool update){
     if (inUpdateCycle){
         return;
     }
     inUpdateCycle = true;
     action = dynamic_cast<LC_ActionDrawLinePoints *>(a);
-    int pointsCount;
-    int edgePointMode;
-    bool fixedDistanceMode;
-    bool withinLine;
+    int pointsCount = 1;
+    int edgePointMode = 0; /*LC_ActionDrawLinePoints::DRAW_EDGE_NONE*/;
+    bool fixedDistanceMode = false;
+    bool withinLine = false;
     QString distance;
     QString angle;
     bool angleMode;
+    bool showAllControls =  action->rtti() == RS2::ActionDrawLinePoints;
+
     int direction = action->getDirection();
     angleMode = direction == LC_AbstractActionDrawLine::DIRECTION_ANGLE;
+
+    if (!showAllControls){
+        angleMode = false;
+    }
+
     if (update){
         pointsCount = action->getPointsCount();
-        edgePointMode = action->getEdgePointsMode();
-        fixedDistanceMode = action->isFixedDistanceMode();
-        withinLine = action->isWithinLineMode();
-        distance = fromDouble(action->getPointsDistance());
-
-        angle = fromDouble(action->getAngle());
+        if (showAllControls) {
+            edgePointMode = action->getEdgePointsMode();
+            fixedDistanceMode = action->isFixedDistanceMode();
+            withinLine = action->isWithinLineMode();
+            distance = fromDouble(action->getPointsDistance());
+            angle = fromDouble(action->getAngle());
+        }
     }
     else{
         pointsCount = loadInt("Count", 1);
-        edgePointMode = loadInt("EdgeMode", 1);
-        fixedDistanceMode = loadBool("UseFixedDistance", false);
-        withinLine = loadBool("FitToLine",true);
-        distance = load("PointsDistance", "1.0");
-        angle = load("Angle", "0.0");
+        if (showAllControls) {
+            edgePointMode = loadInt("EdgeMode", 1);
+            fixedDistanceMode = loadBool("UseFixedDistance", false);
+            withinLine = loadBool("FitToLine", true);
+            distance = load("PointsDistance", "1.0");
+            angle = load("Angle", "0.0");
+        }
     }
+
+    ui->cbAngle->setVisible(showAllControls);
+    ui->leAngle->setVisible(showAllControls);
+    ui->line_2->setVisible(showAllControls);
+    ui->cbFixedDistance->setVisible(showAllControls);
+    ui->frmFixed->setVisible(showAllControls);
+    ui->line->setVisible(showAllControls);
+    ui->label_2->setVisible(showAllControls);
+    ui->cbEdgePoints->setVisible(showAllControls);
+
     setPointsCountActionAndView(pointsCount);
     setEdgePointsModeToActionAndView(edgePointMode);
     setFixedDistanceModeToActionAndView(fixedDistanceMode);
@@ -89,11 +128,13 @@ void LC_LinePointsOptions::doSetAction(RS_ActionInterface *a, bool update){
 
 void LC_LinePointsOptions::doSaveSettings(){
     save("Count", ui->sbPointsCount->value());
-    save("EdgeMode", ui->cbEdgePoints->currentIndex());
-    save("UseFixedDistance", ui->cbFixedDistance->isChecked());
-    save("FitToLine", ui->cbWithinLine->isChecked());
-    save("PointsDistance", ui->leDistance->text());
-    save("Angle", ui->leAngle->text());
+    if (action->rtti() == RS2::ActionDrawLinePoints) {
+        save("EdgeMode", ui->cbEdgePoints->currentIndex());
+        save("UseFixedDistance", ui->cbFixedDistance->isChecked());
+        save("FitToLine", ui->cbWithinLine->isChecked());
+        save("PointsDistance", ui->leDistance->text());
+        save("Angle", ui->leAngle->text());
+    }
 }
 
 void LC_LinePointsOptions::onPointsCountValueChanged(int value){
@@ -137,7 +178,7 @@ void LC_LinePointsOptions::onAngleClicked(bool value){
 void LC_LinePointsOptions::setFixedDistanceModeToActionAndView(bool value){
     ui->cbFixedDistance->setChecked(value);
     action->setFixedDistanceMode(value);
-    ui->frmFixed->setVisible(value);
+    ui->frmFixed->setVisible(value && action->rtti()==RS2::ActionDrawLinePoints);
 
     if (!value){
         ui->sbPointsCount->setEnabled(true);
@@ -145,10 +186,10 @@ void LC_LinePointsOptions::setFixedDistanceModeToActionAndView(bool value){
 }
 
 void LC_LinePointsOptions::setWithinLineModeToActionAndView(bool value){
-   ui->cbWithinLine->setChecked(value);
-   action->setWithinLineMode(value);
+    ui->cbWithinLine->setChecked(value);
+    action->setWithinLineMode(value);
 
-   ui->sbPointsCount->setEnabled(!value);
+    ui->sbPointsCount->setEnabled(!value);
 }
 
 void LC_LinePointsOptions::onWithinLineClicked(bool value){

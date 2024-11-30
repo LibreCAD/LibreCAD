@@ -246,6 +246,7 @@ HEADERS += \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointslength.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.h \
+    actions/drawing/draw/line/lc_actiondrawmidline.h \
     actions/drawing/draw/spline/lc_actionremovesplinepoints.h \
     actions/drawing/draw/spline/lc_actionsplineaddpoint.h \
     actions/drawing/draw/spline/lc_actionsplineappendpoint.h \
@@ -261,6 +262,8 @@ HEADERS += \
     actions/drawing/draw/point/lc_actionselectpoints.h \
     actions/drawing/draw/polyline/lc_actionpolylinearcstolines.h \
     actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.h \
+    actions/drawing/modify/lc_actionmodifyalign.h \
+    actions/drawing/modify/lc_actionmodifyalignsingle.h \
     lib/engine/overlays/highlight/lc_highlight.h \
     lib/actions/lc_modifiersinfo.h \
     lib/actions/rs_actioninterface.h \
@@ -278,6 +281,7 @@ HEADERS += \
     lib/engine/document/entities/lc_parabola.h \
     lib/engine/overlays/references/lc_refarc.h \
     lib/engine/overlays/references/lc_refcircle.h \
+    lib/engine/overlays/references/lc_refconstructionline.h \
     lib/engine/overlays/references/lc_refellipse.h \
     lib/engine/overlays/references/lc_refline.h \
     lib/engine/overlays/references/lc_refpoint.h \
@@ -347,7 +351,10 @@ HEADERS += \
     lib/filters/rs_filterinterface.h \
     #lib/gui/no_used/rs_painterold.h \
     #lib/gui/no_used/rs_painterqtold.h \
+    lib/modification/lc_align.h \
     ui/action_options/curve/lc_actiondrawarc2poptions.h \
+    ui/action_options/line/lc_midlineoptions.h \
+    ui/action_options/modify/lc_modifyalignoptions.h \
     ui/action_options/spline/lc_splineexplodeoptions.h \
     ui/action_options/spline/lc_splinefrompolylineoptions.h \
     ui/action_options/point/lc_pastetopointsoptions.h \
@@ -409,6 +416,7 @@ SOURCES += \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp \
+    actions/drawing/draw/line/lc_actiondrawmidline.cpp \
     actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp \
     actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp \
     actions/drawing/draw/spline/lc_actionsplineexplode.cpp \
@@ -417,7 +425,13 @@ SOURCES += \
     actions/drawing/draw/point/lc_actiondrawpointslattice.cpp \
     actions/drawing/draw/point/lc_actionpastetopoints.cpp \
     actions/drawing/draw/point/lc_actionselectpoints.cpp \
+    actions/drawing/modify/lc_actionmodifyalign.cpp \
+    actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
+    lib/engine/overlays/references/lc_refconstructionline.cpp \
+    lib/modification/lc_align.cpp \
     ui/action_options/curve/lc_actiondrawarc2poptions.cpp \
+    ui/action_options/line/lc_midlineoptions.cpp \
+    ui/action_options/modify/lc_modifyalignoptions.cpp \
     ui/action_options/spline/lc_splineexplodeoptions.cpp \
     ui/action_options/spline/lc_splinefrompolylineoptions.cpp \
     actions/drawing/draw/spline/lc_actionsplineappendpoint.cpp \
@@ -1294,6 +1308,8 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/action_options/circle/qg_circletan2options.ui \
        ui/action_options/curve/lc_actiondrawarc2poptions.ui \
        ui/action_options/curve/lc_ellipsearcoptions.ui \
+       ui/action_options/line/lc_midlineoptions.ui \
+       ui/action_options/modify/lc_modifyalignoptions.ui \
        ui/action_options/spline/lc_splineexplodeoptions.ui \
        ui/action_options/spline/lc_splinefrompolylineoptions.ui \
        ui/action_options/curve/qg_arcoptions.ui \

@@ -180,17 +180,34 @@ const LC_CommandItem g_commandList[] = {
             {{"lpoints", QObject::tr("lpoints", "draw line of points")}},
             RS2::ActionDrawLinePoints
         },
+        {
+            {{"midpoint", QObject::tr("midpoint", "draw middle points")}},
+            {{"mpoint", QObject::tr("mpoint", "draw middle of points")}},
+            RS2::ActionDrawPointsMiddle
+        },
         // draw circle by arc
         {
             {{"circlebyarc", QObject::tr("criclebyarc", "draw circle by arc")}},
             {{"cba", QObject::tr("cba", "draw circle by arc")}},
             RS2::ActionDrawCircleByArc
         },
-        // draw circle by arc
+        // modify - duplicate
         {
             {{"duplicate", QObject::tr("duplicate", "duplicate entity")}},
             {{"dup", QObject::tr("dup", "duplicate entity")}},
             RS2::ActionModifyDuplicate
+        },
+        //  modify - align
+        {
+            {{"align", QObject::tr("align", "align entities")}},
+            {{"al", QObject::tr("al", "align entities")}},
+            RS2::ActionModifyAlign
+        },
+        //  modify - align one
+        {
+            {{"align1", QObject::tr("align1", "align entities")}},
+            {{"al1", QObject::tr("al1", "align entities")}},
+            RS2::ActionModifyAlignOne
         },
         // line join
         {
