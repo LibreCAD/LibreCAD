@@ -226,11 +226,23 @@ LispHighlighter::LispHighlighter(QTextDocument *parent)
 
 //! [4]
     quotationFormat.setForeground(QColor(191,3,3));
-    rule.pattern = QRegularExpression(QStringLiteral("\"([^\"]*)\""));
+    rule.pattern = QRegularExpression(QStringLiteral("\"((?:\\\"|[^\"])*)\""));
     rule.format = quotationFormat;
     highlightingRules.append(rule);
 
 //! [5]
+    innerQuotationFormat.setForeground(QColor(146,76,157));
+    rule.pattern = QRegularExpression(QStringLiteral("(\\\\\")|(\\\\\')"));
+    rule.format = innerQuotationFormat;
+    highlightingRules.append(rule);
+
+//! [6]
+    placeholderFormat.setForeground(QColor(61,174,237));
+    rule.pattern = QRegularExpression(QStringLiteral("[$](x|y|value|key)"));
+    rule.format = placeholderFormat;
+    highlightingRules.append(rule);
+
+//! [7]
     singleLineCommentFormat.setForeground(QColor(137,136,135));
     rule.pattern = QRegularExpression(QStringLiteral(";(?=[^\"]*(?:(?:\"[^\"]*){2})*$).*"));
     rule.format = singleLineCommentFormat;

@@ -12,35 +12,35 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
     HighlightingRule rule;
     commentFormat.setForeground(QColor(137,136,135));
 
-    // rule multiline comment '''
+// rule multiline comment '''
     triSingle.expression = QRegExp(QStringLiteral("\'\'\'"));
     triSingle.nth = 1;
     triSingle.format = commentFormat;
 
-    // rule multiline comment """
+// rule multiline comment """
     triDouble.expression = QRegExp(QStringLiteral("\"\"\""));
     triDouble.nth = 2;
     triDouble.format = commentFormat;
 
-    // rule [0]
+// rule [0]
     symbolFormat.setForeground(QColor(202,96,202));
     rule.expression = QRegExp(QStringLiteral("([-+<>=*/%&!|\\~^])"));
     rule.format = symbolFormat;
     highlightingRules.append(rule);
 
-    // rule [1]
+// rule [1]
     numberFormat.setForeground(QColor(176,128,0));
     rule.expression = QRegExp(QStringLiteral("\\b[+-]?[0-9]+[lL]?\\b|\\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\\b|\\b[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b"));
     rule.format = numberFormat;
     highlightingRules.append(rule);
 
-    // rule [2]
+// rule [2]
     expFormat.setForeground(QColor(0,110,40));
     rule.expression = QRegExp(QStringLiteral("([A-Za-z]+(Error|Iteration))"));
     rule.format = expFormat;
     highlightingRules.append(rule);
 
-    // rule [3]
+// rule [3]
     const QString keywordPatternsModule[] = {
         QStringLiteral("\\bimport\\b"),
         QStringLiteral("\\bas\\b"),
@@ -54,7 +54,7 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
         highlightingRules.append(rule);
     }
 
-    // rule [4]
+// rule [4]
     const QString keywordPatternsStatement[] = {
         QStringLiteral("\\band\\b"),
         QStringLiteral("\\bassert\\b"),
@@ -96,7 +96,7 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
         highlightingRules.append(rule);
     }
 
-    // rule [5]
+// rule [5]
     const QString keywordPatternsFunctions[] = {
         QStringLiteral("\\b__import__\\b"),
         QStringLiteral("\\babs\\b"),
@@ -163,7 +163,7 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
         highlightingRules.append(rule);
     }
 
-    // rule [6]
+// rule [6]
     const QString keywordPatternsBlue[] = {
         QStringLiteral("\\bNone\\b"),
         QStringLiteral("\\bFalse\\b"),
@@ -175,7 +175,7 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
         QStringLiteral("\\b__value__\\b"),
     };
 
-    // rule [7]
+// rule [7]
     valuesFormat.setForeground(QColor(0, 87, 174));
     for (const QString &pattern : keywordPatternsBlue) {
         rule.expression = QRegExp(pattern);
@@ -183,55 +183,60 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
         highlightingRules.append(rule);
     }
 
-    // rule [8]
+// rule [8]
     classValuesFormat.setForeground(QColor(146,76,157));
     rule.expression = QRegExp(QStringLiteral("([_]{2}[a-z]+[_]{2})"));
     rule.format = classValuesFormat;
     highlightingRules.append(rule);
 
-    // rule [9]
+// rule [9]
     connectFormat.setFontWeight(QFont::Bold);
     connectFormat.setForeground(QColor(61,174,237)); //100,49,255
     rule.expression = QRegExp(QStringLiteral("(connect)"));
     rule.format = connectFormat;
     highlightingRules.append(rule);
 
-    // rule [10]
+// rule [10]
     quoteFormat.setForeground(QColor(191,3,3));
     //rule.expression = QRegExp(QStringLiteral("\"([^\"]*)\"|\'([^\']*)\'"));
     rule.expression = QRegExp(QStringLiteral("\"((?:\\\"|[^\"])*)\"|\'((?:\\\'|[^\'])*)\'"));
     rule.format = quoteFormat;
     highlightingRules.append(rule);
 
-    // rule [10]
+// rule [11]
     rule.expression = QRegExp(QStringLiteral("(\\\\\")|(\\\\\')"));
     rule.format = classValuesFormat;
     highlightingRules.append(rule);
 
-    // rule [11]
+// rule [12]
     rule.expression = QRegExp(QStringLiteral("b\"([^\"]*)\"|b\'([^\']*)\'|r\"([^\"]*)\"|r\'([^\']*)\'"));
     rule.format = quoteFormat;
     highlightingRules.append(rule);
 
-    // rule [12]
+// rule [13]
     placeholderFormat.setForeground(QColor(61,174,237));
     rule.expression = QRegExp(QStringLiteral("(%)(\\d+d|d|\\d+i|i|o|u|\\d+[.]{1}\\d+x|\\d+x|x|\\d+[.]{1}\\d+X|\\d+X|X|\\d+[.]{1}\\d+e|e|\\d+[.]{1}\\d+E|E|\\d+[.]{1}\\d+f|F|\\d+[.]{1}\\d+g|g|\\d+[.]{1}\\d+G|G|c|s|r)"));
     rule.format = placeholderFormat;
     highlightingRules.append(rule);
 
-    // rule [13]
+// rule [14]
     bytesFormat.setForeground(QColor(146,76,157));
     rule.expression = QRegExp(QStringLiteral("\\\\x\\d+"));
     rule.format = bytesFormat;
     highlightingRules.append(rule);
 
-    // rule [14]
+// rule [15]
     atFormat.setForeground(QColor(0, 87, 174));
     rule.expression = QRegExp(QStringLiteral("@[^\'\"].*$"));
     rule.format = atFormat;
     highlightingRules.append(rule);
 
-    // rule [15] - last befor multiline comment
+// rule [16]
+    rule.expression = QRegExp(QStringLiteral("[$](x|y|value|key)"));
+    rule.format = placeholderFormat;
+    highlightingRules.append(rule);
+
+// rule [17] - last befor multiline comment
     rule.expression = QRegExp(QStringLiteral("^\\s*#.*$"));
     rule.format = commentFormat;
     highlightingRules.append(rule);

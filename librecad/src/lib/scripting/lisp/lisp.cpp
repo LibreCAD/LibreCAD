@@ -412,7 +412,7 @@ lclValuePtr EVAL(lclValuePtr ast, lclEnvPtr env)
                             value |= 2;
                         }
                     }
-                    return (value & 1 | 2) ? lcl::trueValue() : lcl::falseValue();
+                    return (value & (1 | 2)) ? lcl::trueValue() : lcl::falseValue();
                 }
 
                 if (special == "quasiquote") {

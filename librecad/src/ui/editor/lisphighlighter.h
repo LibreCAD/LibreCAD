@@ -38,6 +38,8 @@ private:
     QTextCharFormat bracketFormat;
     QTextCharFormat singleLineCommentFormat;
     QTextCharFormat quotationFormat;
+    QTextCharFormat innerQuotationFormat;
+    QTextCharFormat placeholderFormat;
 };
 
 #endif // DEVELOPER

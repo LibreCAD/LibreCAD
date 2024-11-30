@@ -538,6 +538,7 @@ void RS_PythonGui::prompt(const char *prompt)
     if (Py_CommandEdit != nullptr)
     {
         Py_CommandEdit->setPrompt(prompt);
+        Py_CommandEdit->setFocus();
         Py_CommandEdit->doProcess(false);
 
         String result = RS_Py_InputHandle::readLine(Py_CommandEdit).toStdString();

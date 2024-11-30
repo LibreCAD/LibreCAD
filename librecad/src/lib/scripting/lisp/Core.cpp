@@ -1305,6 +1305,7 @@ BUILTIN("getint")
     {
         while (1) {
             Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+            Lisp_CommandEdit->setFocus();
             Lisp_CommandEdit->doProcess(false);
             result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit);
             QRegExp re("[+-]?[0-9]+|[+-]?0[xX][0-9A-Fa-f]");
@@ -1352,6 +1353,7 @@ BUILTIN("getreal")
     {
         while (1) {
             Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+            Lisp_CommandEdit->setFocus();
             Lisp_CommandEdit->doProcess(false);
             result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit);
             QRegExp re("[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?");  // a digit (\d), zero or more times (*)
@@ -1407,6 +1409,7 @@ BUILTIN("getkword") {
     {
         while (1) {
             Lisp_CommandEdit->setPrompt(QObject::tr(msg->value().c_str()));
+            Lisp_CommandEdit->setFocus();
             Lisp_CommandEdit->doProcess(false);
             result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit).toStdString();
 
@@ -1478,6 +1481,7 @@ BUILTIN("getstring")
     if (Lisp_CommandEdit != nullptr)
     {
         Lisp_CommandEdit->setPrompt(prompt);
+        Lisp_CommandEdit->setFocus();
         Lisp_CommandEdit->doProcess(false);
 
         String result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit).toStdString();
@@ -2871,6 +2875,7 @@ BUILTIN("prompt")
     if (Lisp_CommandEdit != nullptr)
     {
         Lisp_CommandEdit->setPrompt(str->value().c_str());
+        Lisp_CommandEdit->setFocus();
         Lisp_CommandEdit->doProcess(false);
 
         String result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit).toStdString();
