@@ -92,7 +92,7 @@
 %}
 
 %include "std_array.i"
-%template(IntegerArray10) std::array<int, 2>;
+%template(IntegerArray2) std::array<int, 2>;
 
 //%include "carrays.i"
 //%array_functions(int, intArray)

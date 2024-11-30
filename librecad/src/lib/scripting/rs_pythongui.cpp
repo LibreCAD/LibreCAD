@@ -156,7 +156,7 @@ void RS_PythonGui::unloadDialog(int id)
 std::array<int, 2>  RS_PythonGui::doneDialog(int res)
 {
     int result = -1;
-    std::array<int, 2> dlgSize = {-0xffff , -0xffff};
+    std::array<int, 2> dlgPos = {-0xffff , -0xffff};
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
     if(dialogId)
@@ -169,7 +169,7 @@ std::array<int, 2>  RS_PythonGui::doneDialog(int res)
                 const lclInteger *dlg_result = VALUE_CAST(lclInteger, dclEnv->get(std::to_string(dialogId->value()) + "_dcl_result"));
 
                 result = dlg_result->value();
-                dlgSize = {dlg->widget()->x(), dlg->widget()->y()};
+                dlgPos = {dlg->widget()->x(), dlg->widget()->y()};
 
                 qDebug() << "result:" << result;
                 if (res > 1)
@@ -182,7 +182,7 @@ std::array<int, 2>  RS_PythonGui::doneDialog(int res)
             }
         }
     }
-    return dlgSize;
+    return dlgPos;
 }
 
 bool RS_PythonGui::setTile(const char *key, const char *val)

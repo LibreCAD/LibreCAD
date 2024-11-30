@@ -98,6 +98,7 @@ QG_Lsp_CommandWidget::QG_Lsp_CommandWidget(QWidget* parent, const char* name, Qt
 
     options_button->addAction(m_docking);
     teHistory->setText(RS_LISP->Lisp_GetVersionString());
+    Lisp_CommandEdit = leCommand;
 }
 
 /*

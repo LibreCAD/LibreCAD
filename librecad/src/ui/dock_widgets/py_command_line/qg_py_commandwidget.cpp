@@ -99,6 +99,7 @@ QG_Py_CommandWidget::QG_Py_CommandWidget(QWidget* parent, const char* name, Qt::
 
     options_button->addAction(m_docking);
     teHistory->setText(RS_PYTHON->Py_GetVersionString());
+    Py_CommandEdit = leCommand;
 }
 
 /*

@@ -1011,7 +1011,19 @@ BUILTIN("eval")
 BUILTIN("exit")
 {
     CHECK_ARGS_IS(0);
-    throw("application terminated by exit!");
+#if 0
+    try{
+        throw -1;
+    }
+
+    catch (int) // not caught: exception not thrown within try
+    {
+        std::cout << "exit by user" << std::endl;
+    }
+#endif
+    throw -1;
+
+    return lcl::nilValue();
 }
 
 BUILTIN("exp")

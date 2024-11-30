@@ -17,7 +17,7 @@
 #include <QVBoxLayout>
 #include <QListWidgetItem>
 
-#define MAX_FUNC 22
+#define MAX_FUNC 23
 
 static const char* lclEvalFunctionTable[MAX_FUNC] = {
 //    "bla",
@@ -32,6 +32,7 @@ static const char* lclEvalFunctionTable[MAX_FUNC] = {
     "lambda",
     "let*",
     "new_dialog",
+    "not",
     "or",
     "progn",
     "quasiquote",
@@ -166,387 +167,402 @@ lclValuePtr EVAL(lclValuePtr ast, lclEnvPtr env)
     if (!env) {
         env = replEnv;
     }
-    while (1) {
 
-        const lclEnvPtr dbgenv = env->find("DEBUG-EVAL");
-        if (dbgenv && dbgenv->get("DEBUG-EVAL")->isTrue()) {
-            std::cout << "EVAL: " << PRINT(ast) << "\n";
-        }
+    try {
+        while (1)
+        {
+            const lclEnvPtr dbgenv = env->find("DEBUG-EVAL");
+            if (dbgenv && dbgenv->get("DEBUG-EVAL")->isTrue()) {
+                std::cout << "EVAL: " << PRINT(ast) << "\n";
+            }
 
-        if (traceDebug) {
-            std::cout << "TRACE: " << PRINT(ast) << std::endl;
-        }
-
-        const lclList* list = DYNAMIC_CAST(lclList, ast);
-        if (!list || (list->count() == 0)) {
-            return ast->eval(env);
-        }
-
-        // From here on down we are evaluating a non-empty list.
-        // First handle the special forms.
-        if (const lclSymbol* symbol = DYNAMIC_CAST(lclSymbol, list->item(0))) {
-            String special = symbol->value();
-
-            const lclEnvPtr traceEnv = shadowEnv->find(strToUpper(special));
-            if (traceEnv && traceEnv->get(strToUpper(special))->print(true) != "nil") {
-                traceDebug = true;
+            if (traceDebug) {
                 std::cout << "TRACE: " << PRINT(ast) << std::endl;
             }
-            int argCount = list->count() - 1;
 
-            if (special == "and") {
-                checkArgsAtLeast("and", 2, argCount);
-                int value = 0;
-                for (int i = 1; i < argCount+1; i++) {
-                    if (EVAL(list->item(i), env)->isTrue()) {
-                        value |= 1;
-                    }
-                    else {
-                        value |= 2;
-                    }
+            const lclList* list = DYNAMIC_CAST(lclList, ast);
+            if (!list || (list->count() == 0)) {
+                return ast->eval(env);
+            }
+
+            // From here on down we are evaluating a non-empty list.
+            // First handle the special forms.
+            if (const lclSymbol* symbol = DYNAMIC_CAST(lclSymbol, list->item(0))) {
+                String special = symbol->value();
+
+                const lclEnvPtr traceEnv = shadowEnv->find(strToUpper(special));
+                if (traceEnv && traceEnv->get(strToUpper(special))->print(true) != "nil") {
+                    traceDebug = true;
+                    std::cout << "TRACE: " << PRINT(ast) << std::endl;
                 }
-                return value == 3 ? lcl::falseValue() : lcl::trueValue();
-            }
-#if 0
-            if (special == "bla") {
-                checkArgsIs(special.c_str(), 1, argCount);
-                std::cout << "bla da" << std::endl;
-                const lclString  *key = VALUE_CAST(lclString, list->item(1));
-                return lcl::string(key->value());
-            }
+                int argCount = list->count() - 1;
 
-                lclValuePtr foo = list->item(1);
-
-                shadowEnv->set("TRACE", lcl::string(list->item(1)->print(true)));
-                return lcl::symbol(list->item(1)->print(true));
-#if 0
-                lclValueVec *items = new lclValueVec(2);
-                const lclSymbol* bla = new lclSymbol("do");
-                //bla = EVAL(bla, env);
-
-                std::cout << "bla: " << bla->print(true) << std::endl;
-                items->at(0) = READ("do");  //lcl::symbol("do");
-                items->at(0) = list->item(1);
-                lclValuePtr exec = new lclList(items);
-                exec->eval(env);
-                //std::cout << "bla da 3" << lcl::list(items)->print(true) << std::endl;
-                //EVAL(lcl::list(items), env);
-#endif
-                return lcl::nilValue();
-            }
-#endif
-            if (special == "debug-eval") {
-                checkArgsIs("debug-eval", 1, argCount);
-                if (list->item(1) == lcl::trueValue()) {
-                    env->set("DEBUG-EVAL", lcl::trueValue());
-                    return lcl::trueValue();
-                }
-                else {
-                    env->set("DEBUG-EVAL", lcl::falseValue());
-                    return lcl::falseValue();
-                }
-            }
-
-            if (special == "def!") {
-                checkArgsIs("def!", 2, argCount);
-                const lclSymbol* id = VALUE_CAST(lclSymbol, list->item(1));
-                return env->set(id->value(), EVAL(list->item(2), env));
-            }
-
-            if (special == "defmacro!") {
-                checkArgsIs("defmacro!", 2, argCount);
-
-                const lclSymbol* id = VALUE_CAST(lclSymbol, list->item(1));
-                lclValuePtr body = EVAL(list->item(2), env);
-                const lclLambda* lambda = VALUE_CAST(lclLambda, body);
-                return env->set(id->value(), lcl::macro(*lambda));
-            }
-
-            if (special == "defun") {
-                checkArgsAtLeast("defun", 3, argCount);
-
-                String macro = "(do";
-                const lclSymbol* id = VALUE_CAST(lclSymbol, list->item(1));
-                const lclSequence* bindings =
-                    VALUE_CAST(lclSequence, list->item(2));
-                StringVec params;
-                for (int i = 0; i < bindings->count(); i++) {
-                    const lclSymbol* sym =
-                        VALUE_CAST(lclSymbol, bindings->item(i));
-                    params.push_back(sym->value());
-                }
-
-                for (int i = 3; i <= argCount; i++) {
-                    macro += " ";
-                    macro += list->item(i)->print(true);
-#if 0
-                    for (auto it = params.begin(); it != params.end(); it++) {
-                        if (list->item(i)->print(true).find(*it) != std::string::npos) {
-                            std::cout << "parameter '" << *it << "' in: " << list->item(i)->print(true) << std::endl;
+                if (special == "and") {
+                    checkArgsAtLeast("and", 2, argCount);
+                    int value = 0;
+                    for (int i = 1; i < argCount+1; i++) {
+                        if (EVAL(list->item(i), env)->isTrue()) {
+                            value |= 1;
+                        }
+                        else {
+                            value |= 2;
                         }
                     }
-#endif
+                    return value == 3 ? lcl::falseValue() : lcl::trueValue();
                 }
-                macro += ")";
-                lclValuePtr body = READ(macro);
-                const lclLambda* lambda = new lclLambda(params, body, env);
-                return env->set(id->value(), new lclLambda(*lambda, true));
-            }
-
-            if (special == "do" || special == "progn") {
-                checkArgsAtLeast(special.c_str(), 1, argCount);
-
-                for (int i = 1; i < argCount; i++) {
-                    EVAL(list->item(i), env);
-                }
-                ast = list->item(argCount);
-                continue; // TCO
-            }
-
-            if (special == "fn*" || special == "lambda") {
-                checkArgsIs(special.c_str(), 2, argCount);
-
-                const lclSequence* bindings =
-                    VALUE_CAST(lclSequence, list->item(1));
-                StringVec params;
-                for (int i = 0; i < bindings->count(); i++) {
-                    const lclSymbol* sym =
-                        VALUE_CAST(lclSymbol, bindings->item(i));
-                    params.push_back(sym->value());
-                }
-                return lcl::lambda(params, list->item(2), env);
-            }
-
-            if (special == "foreach") {
-                checkArgsIs("foreach", 3, argCount);
-                const lclSymbol* sym =
-                        VALUE_CAST(lclSymbol, list->item(1));
-                lclSequence* each =
-                    VALUE_CAST(lclSequence, EVAL(list->item(2), env));
-
-                lclEnvPtr inner(new lclEnv(env));
-                inner->set(sym->value(), lcl::nilValue());
-                int count = each->count();
-                lclValuePtr result = NULL;
-                for (int i=0; i < count; i++) {
-                    inner->set(sym->value(), each->item(i));
-                    result = EVAL(list->item(3), inner);
-                }
-                if (result) {
-                    return result;
-                }
-                return lcl::nilValue();
-            }
-
-            if (special == "if") {
-                checkArgsBetween("if", 2, 3, argCount);
-
-                bool isTrue = EVAL(list->item(1), env)->isTrue();
-                if (!isTrue && (argCount == 2)) {
+#if 0
+                if (special == "bla") {
+                    checkArgsAtLeast("bla", 2, argCount);
                     return lcl::nilValue();
                 }
-                ast = list->item(isTrue ? 2 : 3);
-                continue; // TCO
-            }
-
-            if (special == "let*") {
-                checkArgsIs("let*", 2, argCount);
-                const lclSequence* bindings =
-                    VALUE_CAST(lclSequence, list->item(1));
-                int count = checkArgsEven("let*", bindings->count());
-                lclEnvPtr inner(new lclEnv(env));
-                for (int i = 0; i < count; i += 2) {
-                    const lclSymbol* var =
-                        VALUE_CAST(lclSymbol, bindings->item(i));
-                    inner->set(var->value(), EVAL(bindings->item(i+1), inner));
-                }
-                ast = list->item(2);
-                env = inner;
-                continue; // TCO
-            }
-
-            if (special == "new_dialog") {
-                checkArgsAtLeast("new_dialog", 2, argCount);
-                const lclString*  dlgName = DYNAMIC_CAST(lclString, list->item(1));
-                const lclInteger* id      = DYNAMIC_CAST(lclInteger, EVAL(list->item(2), env));
-                const lclGui*     gui     = DYNAMIC_CAST(lclGui, dclEnv->get(STRF("#builtin-gui(%d)", id->value())));
-                lclValueVec*      items   = new lclValueVec(gui->value().tiles->size());
-                std::copy(gui->value().tiles->begin(), gui->value().tiles->end(), items->begin());
-
-                for (auto it = items->begin(), end = items->end(); it != end; it++) {
-                    const lclGui* dlg = DYNAMIC_CAST(lclGui, *it);
-                    qDebug() << "Dialog: " << dlg->value().name.c_str();
-                    if (dlg->value().name == dlgName->value()) {
-                        openTile(dlg);
+#endif
+                if (special == "debug-eval") {
+                    checkArgsIs("debug-eval", 1, argCount);
+                    if (list->item(1) == lcl::trueValue()) {
+                        env->set("DEBUG-EVAL", lcl::trueValue());
                         return lcl::trueValue();
                     }
-                }
-                return lcl::nilValue();
-            }
-
-            if (special == "or") {
-                checkArgsAtLeast("or", 2, argCount);
-                int value = 0;
-                for (int i = 1; i < argCount+1; i++) {
-                    if (EVAL(list->item(i), env)->isTrue()) {
-                        value |= 1;
-                    }
                     else {
-                        value |= 2;
+                        env->set("DEBUG-EVAL", lcl::falseValue());
+                        return lcl::falseValue();
                     }
                 }
-                return value == 3 ? lcl::trueValue() : lcl::falseValue();
-            }
 
-            if (special == "quasiquote") {
-                checkArgsIs("quasiquote", 1, argCount);
-                ast = quasiquote(list->item(1));
-                continue; // TCO
-            }
+                if (special == "def!") {
+                    checkArgsIs("def!", 2, argCount);
+                    const lclSymbol* id = VALUE_CAST(lclSymbol, list->item(1));
+                    return env->set(id->value(), EVAL(list->item(2), env));
+                }
 
-            if (special == "quote") {
-                checkArgsIs("quote", 1, argCount);
-                return list->item(1);
-            }
+                if (special == "defmacro!") {
+                    checkArgsIs("defmacro!", 2, argCount);
 
-            if (special == "repeat") {
-                checkArgsAtLeast("repeat", 2, argCount);
-                const lclInteger* loop = VALUE_CAST(lclInteger, list->item(1));
-                lclValuePtr loopBody;
+                    const lclSymbol* id = VALUE_CAST(lclSymbol, list->item(1));
+                    lclValuePtr body = EVAL(list->item(2), env);
+                    const lclLambda* lambda = VALUE_CAST(lclLambda, body);
+                    return env->set(id->value(), lcl::macro(*lambda));
+                }
 
-                for (int i = 0; i < loop->value(); i++) {
-                    for (int j = 1; j < argCount; j++)
-                    {
-                        loopBody = EVAL(list->item(j+1), env);
+                if (special == "defun") {
+                    checkArgsAtLeast("defun", 3, argCount);
+
+                    String macro = "(do";
+                    const lclSymbol* id = VALUE_CAST(lclSymbol, list->item(1));
+                    const lclSequence* bindings =
+                        VALUE_CAST(lclSequence, list->item(2));
+                    StringVec params;
+                    for (int i = 0; i < bindings->count(); i++) {
+                        const lclSymbol* sym =
+                                VALUE_CAST(lclSymbol, bindings->item(i));
+                        params.push_back(sym->value());
                     }
-                }
-                ast = loopBody;
-                continue; // TCO
-            }
 
-            if (special == "set") {
-                checkArgsIs("set", 2, argCount);
-                const lclSymbol* id = new lclSymbol(list->item(1)->print(true));
-                return env->set(id->value(), EVAL(list->item(2), env));
-            }
-
-            if (special == "setq") {
-                LCL_CHECK(checkArgsAtLeast(special.c_str(), 2, argCount) % 2 == 0, "setq: missing odd number");
-                int i;
-                for (i = 1; i < argCount - 2; i += 2) {
-                    const lclSymbol* id = VALUE_CAST(lclSymbol, list->item(i));
-                    env->set(id->value(), EVAL(list->item(i+1), env));
-                }
-                const lclSymbol* id = VALUE_CAST(lclSymbol, list->item(i));
-                return env->set(id->value(), EVAL(list->item(i+1), env));
-            }
+                    for (int i = 3; i <= argCount; i++) {
+                        macro += " ";
+                        macro += list->item(i)->print(true);
 #if 0
-            if (special == "setvar") {
-                checkArgsIs("setvar", 2, argCount);
-                const lclSymbol* id = VALUE_CAST(lclSymbol, list->item(1));
-                return shadowEnv->set(id->value(), EVAL(list->item(2), env));
-            }
+                        for (auto it = params.begin(); it != params.end(); it++) {
+                            if (list->item(i)->print(true).find(*it) != std::string::npos) {
+                                std::cout << "parameter '" << *it << "' in: " << list->item(i)->print(true) << std::endl;
+                            }
+                        }
 #endif
-            if (special == "trace") {
-                checkArgsIs("trace", 1, argCount);
-                shadowEnv->set(strToUpper(list->item(1)->print(true)), lcl::trueValue());
-                return lcl::symbol(list->item(1)->print(true));
-            }
+                    }
+                    macro += ")";
+                    lclValuePtr body = READ(macro);
+                    const lclLambda* lambda = new lclLambda(params, body, env);
+                    return env->set(id->value(), new lclLambda(*lambda, true));
+                }
 
-            if (special == "untrace") {
-                checkArgsIs("untrace", 1, argCount);
-                shadowEnv->set(strToUpper(list->item(1)->print(true)), lcl::nilValue());
-                return lcl::symbol(strToUpper(list->item(1)->print(true)));
-            }
+                if (special == "do" || special == "progn") {
+                    checkArgsAtLeast(special.c_str(), 1, argCount);
 
-            if (special == "try*") {
-                lclValuePtr tryBody = list->item(1);
-
-                if (argCount == 1) {
-                    ast = tryBody;
+                    for (int i = 1; i < argCount; i++) {
+                        EVAL(list->item(i), env);
+                    }
+                    ast = list->item(argCount);
                     continue; // TCO
                 }
-                checkArgsIs("try*", 2, argCount);
-                const lclList* catchBlock = VALUE_CAST(lclList, list->item(2));
 
-                checkArgsIs("catch*", 2, catchBlock->count() - 1);
-                LCL_CHECK(VALUE_CAST(lclSymbol,
-                    catchBlock->item(0))->value() == "catch*",
-                    "catch block must begin with catch*");
+                if (special == "fn*" || special == "lambda") {
+                    checkArgsIs(special.c_str(), 2, argCount);
 
-                // We don't need excSym at this scope, but we want to check
-                // that the catch block is valid always, not just in case of
-                // an exception.
-                const lclSymbol* excSym =
-                    VALUE_CAST(lclSymbol, catchBlock->item(1));
-
-                lclValuePtr excVal;
-
-                try {
-                    return EVAL(tryBody, env);
+                    const lclSequence* bindings =
+                        VALUE_CAST(lclSequence, list->item(1));
+                    StringVec params;
+                    for (int i = 0; i < bindings->count(); i++) {
+                        const lclSymbol* sym =
+                            VALUE_CAST(lclSymbol, bindings->item(i));
+                        params.push_back(sym->value());
+                    }
+                    return lcl::lambda(params, list->item(2), env);
                 }
-                catch(String& s) {
-                    excVal = lcl::string(s);
-                }
-                catch (lclEmptyInputException&) {
-                    // Not an error, continue as if we got nil
-                    ast = lcl::nilValue();
-                }
-                catch(lclValuePtr& o) {
-                    excVal = o;
-                };
 
-                if (excVal) {
-                    // we got some exception
-                    env = lclEnvPtr(new lclEnv(env));
-                    env->set(excSym->value(), excVal);
-                    ast = catchBlock->item(2);
+                if (special == "foreach") {
+                    checkArgsIs("foreach", 3, argCount);
+                    const lclSymbol* sym =
+                            VALUE_CAST(lclSymbol, list->item(1));
+                    lclSequence* each =
+                        VALUE_CAST(lclSequence, EVAL(list->item(2), env));
+
+                    lclEnvPtr inner(new lclEnv(env));
+                    inner->set(sym->value(), lcl::nilValue());
+                    int count = each->count();
+                    lclValuePtr result = NULL;
+                    for (int i=0; i < count; i++) {
+                        inner->set(sym->value(), each->item(i));
+                        result = EVAL(list->item(3), inner);
+                    }
+                    if (result) {
+                        return result;
+                    }
+                    return lcl::nilValue();
                 }
-                continue; // TCO
-            }
 
-            if (special == "while") {
-                checkArgsAtLeast("while", 2, argCount);
-                lclValuePtr loop = list->item(1);
-                lclValuePtr loopBody;
+                if (special == "if") {
+                    checkArgsBetween("if", 2, 3, argCount);
 
-                while (1) {
-                    for (int i = 1; i < argCount; i++)
+                    bool isTrue = EVAL(list->item(1), env)->isTrue();
+                    if (!isTrue && (argCount == 2)) {
+                        return lcl::nilValue();
+                    }
+                    ast = list->item(isTrue ? 2 : 3);
+                    continue; // TCO
+                }
+
+                if (special == "let*") {
+                    checkArgsIs("let*", 2, argCount);
+                    const lclSequence* bindings =
+                        VALUE_CAST(lclSequence, list->item(1));
+                    int count = checkArgsEven("let*", bindings->count());
+                    lclEnvPtr inner(new lclEnv(env));
+                    for (int i = 0; i < count; i += 2) {
+                        const lclSymbol* var =
+                            VALUE_CAST(lclSymbol, bindings->item(i));
+                        inner->set(var->value(), EVAL(bindings->item(i+1), inner));
+                    }
+                    ast = list->item(2);
+                    env = inner;
+                    continue; // TCO
+                }
+
+                if (special == "new_dialog") {
+                    checkArgsAtLeast("new_dialog", 2, argCount);
+                    const lclString*  dlgName = DYNAMIC_CAST(lclString, list->item(1));
+                    const lclInteger* id      = DYNAMIC_CAST(lclInteger, EVAL(list->item(2), env));
+                    const lclGui*     gui     = DYNAMIC_CAST(lclGui, dclEnv->get(STRF("#builtin-gui(%d)", id->value())));
+                    lclValueVec*      items   = new lclValueVec(gui->value().tiles->size());
+                    std::copy(gui->value().tiles->begin(), gui->value().tiles->end(), items->begin());
+
+                    for (auto it = items->begin(), end = items->end(); it != end; it++) {
+                        const lclGui* dlg = DYNAMIC_CAST(lclGui, *it);
+                        qDebug() << "Dialog: " << dlg->value().name.c_str();
+                        if (dlg->value().name == dlgName->value()) {
+                            openTile(dlg);
+                            return lcl::trueValue();
+                        }
+                    }
+                    return lcl::nilValue();
+                }
+
+                if (special == "not") {
+                    checkArgsIs("not", 1, argCount);
+
+                    lclValuePtr cond = list->item(1);
+
+                    if(cond->print(true) == "nil" ||
+                        cond->print(true) == "false" )
                     {
-                        loopBody = EVAL(list->item(i+1), env);
-                        loop = EVAL(list->item(1), env);
+                        //qDebug() << "not print nil";
+                        return lcl::trueValue();
+                    }
+
+                    if (lcl::nilValue() == cond ||
+                        lcl::falseValue() == cond)
+                    {
+                        //qDebug() << "not is nil or false type";
+                        return lcl::trueValue();
+                    }
+#if 0
+                    else
+                    {
+                        qDebug() << "not is not nil or not false type";
+                    }
+#endif
+                    cond = EVAL(cond, env);
+
+                    if (cond->print(true) == "nil" ||
+                        cond->print(true) == "false" ||
+                        !cond->isTrue())
+                    {
+                        //qDebug() << "not EVAL cond: " << cond->print(true);
+                        return lcl::trueValue();
+                    }
+                    return lcl::falseValue();
+                }
+
+                if (special == "or") {
+                    checkArgsAtLeast("or", 2, argCount);
+                    int value = 0;
+                    for (int i = 1; i < argCount+1; i++) {
+                        if (EVAL(list->item(i), env)->isTrue()) {
+                            value |= 1;
+                        }
+                        else {
+                            value |= 2;
+                        }
+                    }
+                    return (value & 1 | 2) ? lcl::trueValue() : lcl::falseValue();
+                }
+
+                if (special == "quasiquote") {
+                    checkArgsIs("quasiquote", 1, argCount);
+                    ast = quasiquote(list->item(1));
+                    continue; // TCO
+                }
+
+                if (special == "quote") {
+                    checkArgsIs("quote", 1, argCount);
+                    return list->item(1);
+                }
+
+                if (special == "repeat") {
+                    checkArgsAtLeast("repeat", 2, argCount);
+                    const lclInteger* loop = VALUE_CAST(lclInteger, list->item(1));
+                    lclValuePtr loopBody;
+
+                    for (int i = 0; i < loop->value(); i++) {
+                        for (int j = 1; j < argCount; j++)
+                        {
+                            loopBody = EVAL(list->item(j+1), env);
+                        }
+                    }
+                    ast = loopBody;
+                    continue; // TCO
+                }
+
+                if (special == "set") {
+                    checkArgsIs("set", 2, argCount);
+                    const lclSymbol* id = new lclSymbol(list->item(1)->print(true));
+                    return env->set(id->value(), EVAL(list->item(2), env));
+                }
+
+                if (special == "setq") {
+                    LCL_CHECK(checkArgsAtLeast(special.c_str(), 2, argCount) % 2 == 0, "setq: missing odd number");
+                    int i;
+                    for (i = 1; i < argCount - 2; i += 2) {
+                        const lclSymbol* id = VALUE_CAST(lclSymbol, list->item(i));
+                        env->set(id->value(), EVAL(list->item(i+1), env));
+                    }
+                    const lclSymbol* id = VALUE_CAST(lclSymbol, list->item(i));
+                    return env->set(id->value(), EVAL(list->item(i+1), env));
+                }
+                if (special == "trace") {
+                    checkArgsIs("trace", 1, argCount);
+                    shadowEnv->set(strToUpper(list->item(1)->print(true)), lcl::trueValue());
+                    return lcl::symbol(list->item(1)->print(true));
+                }
+
+                if (special == "untrace") {
+                    checkArgsIs("untrace", 1, argCount);
+                    shadowEnv->set(strToUpper(list->item(1)->print(true)), lcl::nilValue());
+                    return lcl::symbol(strToUpper(list->item(1)->print(true)));
+                }
+
+                if (special == "try*") {
+                    lclValuePtr tryBody = list->item(1);
+
+                    if (argCount == 1) {
+                        ast = tryBody;
+                        continue; // TCO
+                    }
+                    checkArgsIs("try*", 2, argCount);
+                    const lclList* catchBlock = VALUE_CAST(lclList, list->item(2));
+
+                    checkArgsIs("catch*", 2, catchBlock->count() - 1);
+                    LCL_CHECK(VALUE_CAST(lclSymbol,
+                        catchBlock->item(0))->value() == "catch*",
+                        "catch block must begin with catch*");
+
+                    // We don't need excSym at this scope, but we want to check
+                    // that the catch block is valid always, not just in case of
+                    // an exception.
+                    const lclSymbol* excSym =
+                        VALUE_CAST(lclSymbol, catchBlock->item(1));
+
+                    lclValuePtr excVal;
+
+                    try {
+                        return EVAL(tryBody, env);
+                    }
+                    catch(String& s) {
+                        excVal = lcl::string(s);
+                    }
+                    catch (lclEmptyInputException&) {
+                        // Not an error, continue as if we got nil
+                        ast = lcl::nilValue();
+                    }
+                    catch(lclValuePtr& o) {
+                        excVal = o;
+                    };
+
+                    if (excVal) {
+                        // we got some exception
+                        env = lclEnvPtr(new lclEnv(env));
+                        env->set(excSym->value(), excVal);
+                        ast = catchBlock->item(2);
+                    }
+                    continue; // TCO
+                }
+
+                if (special == "while") {
+                    checkArgsAtLeast("while", 2, argCount);
+                    lclValuePtr loop = list->item(1);
+                    lclValuePtr loopBody;
+
+                    while (1) {
+                        for (int i = 1; i < argCount; i++)
+                        {
+                            loopBody = EVAL(list->item(i+1), env);
+                            loop = EVAL(list->item(1), env);
+
+                            if (!loop->isTrue()) {
+                                break;
+                            }
+                        }
 
                         if (!loop->isTrue()) {
+                            ast = loopBody;
                             break;
                         }
                     }
-
-                    if (!loop->isTrue()) {
-                        ast = loopBody;
-                        break;
-                    }
+                    continue; // TCO
                 }
-                continue; // TCO
             }
-        }
-        // Now we're left with the case of a regular list to be evaluated.
-        lclValuePtr op = EVAL(list->item(0), env);
-        if (const lclLambda* lambda = DYNAMIC_CAST(lclLambda, op)) {
-            if (lambda->isMacro()) {
-                ast = lambda->apply(list->begin()+1, list->end());
+            // Now we're left with the case of a regular list to be evaluated.
+            lclValuePtr op = EVAL(list->item(0), env);
+            if (const lclLambda* lambda = DYNAMIC_CAST(lclLambda, op)) {
+                if (lambda->isMacro()) {
+                    ast = lambda->apply(list->begin()+1, list->end());
+                    traceDebug = false;
+                    continue; // TCO
+                }
+                lclValueVec* items = STATIC_CAST(lclList, list->rest())->evalItems(env);
+                ast = lambda->getBody();
+                env = lambda->makeEnv(items->begin(), items->end());
                 traceDebug = false;
                 continue; // TCO
             }
-            lclValueVec* items = STATIC_CAST(lclList, list->rest())->evalItems(env);
-            ast = lambda->getBody();
-            env = lambda->makeEnv(items->begin(), items->end());
-            traceDebug = false;
-            continue; // TCO
+            else {
+                lclValueVec* items = STATIC_CAST(lclList, list->rest())->evalItems(env);
+                return APPLY(op, items->begin(), items->end());
+            }
         }
-        else {
-            lclValueVec* items = STATIC_CAST(lclList, list->rest())->evalItems(env);
-            return APPLY(op, items->begin(), items->end());
-        }
+    }
+    catch(int)
+    {
+        qDebug() << "exit by user";
+        return lcl::nilValue();
     }
 }
 
@@ -610,7 +626,6 @@ static lclValuePtr quasiquote(lclValuePtr obj)
 static const char* lclFunctionTable[] = {
     "(defmacro! cond (fn* (& xs) (if (> (count xs) 0) (list 'if (first xs) (if (> (count xs) 1) (nth xs 1) (throw \"odd number of forms to cond\")) (cons 'cond (rest (rest xs)))))))",
     "(defmacro! 2+ (fn* (zahl)(+ zahl 2)))",
-    "(def! not (fn* (cond) (if cond false true)))",
     "(def! load-file (fn* (filename) \
         (eval (read-string (str \"(do \" (slurp filename) \"\nnil)\")))))",
     "(def! *host-language* \"C++\")",
