@@ -2,6 +2,7 @@
 
 #ifndef RS_PYTHONGUI_H
 #define RS_PYTHONGUI_H
+#include <array>
 
 class RS_PythonGui
 {
@@ -15,7 +16,7 @@ public:
     void unloadDialog(int id);
 
     bool newDialog(const char *name, int id);
-    bool doneDialog(int id);
+    std::array<int, 2> doneDialog(int res=-1);
     bool setTile(const char *key, const char *val);
     bool modeTile(const char *key, int val);
     bool actionTile(const char *id, const char *action);

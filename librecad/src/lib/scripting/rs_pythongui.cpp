@@ -118,18 +118,11 @@ int RS_PythonGui::startDialog()
                 dlg->widget()->show();
                 dlg->widget()->setFixedSize(dlg->widget()->geometry().width(),
                                             dlg->widget()->geometry().height());
-                break;
+                return dlg->widget()->exec();
             }
         }
     }
-
-    /*
-     * The start_dialog function returns the optional status passed to done_dialog.
-     * The default value is 1 if the user presses OK, 0 if the user presses Cancel, or -1 if all dialog boxes are terminated with term_dialog.
-     * If done_dialog is passed an integer status greater than 1, start_dialog returns this value, whose meaning is determined by the application.
-     */
-
-    return 0;
+    return -2;
 }
 
 void RS_PythonGui::unloadDialog(int id)
@@ -160,10 +153,10 @@ void RS_PythonGui::unloadDialog(int id)
     dclEnv->set("load_dialog_id", lcl::nilValue());
 }
 
-bool RS_PythonGui::doneDialog(int id)
+std::array<int, 2>  RS_PythonGui::doneDialog(int res)
 {
-    Q_UNUSED(id);
-    /* int args = 0-1 */
+    int result = -1;
+    std::array<int, 2> dlgSize = {-0xffff , -0xffff};
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
     if(dialogId)
@@ -173,19 +166,23 @@ bool RS_PythonGui::doneDialog(int id)
             if (tile->value().dialog_Id == dialogId->value())
             {
                 const lclWidget* dlg = static_cast<const lclWidget*>(tile);
-                dlg->widget()->show();
+                const lclInteger *dlg_result = VALUE_CAST(lclInteger, dclEnv->get(std::to_string(dialogId->value()) + "_dcl_result"));
 
-                lclValueVec* items = new lclValueVec(2);
-                items->at(0) = lcl::integer(dlg->widget()->x());
-                items->at(1) = lcl::integer(dlg->widget()->y());
-                dlg->widget()->close();
-                // FIXME type list
-                //return lcl::list(items);
-                return true;
+                result = dlg_result->value();
+                dlgSize = {dlg->widget()->x(), dlg->widget()->y()};
+
+                qDebug() << "result:" << result;
+                if (res > 1)
+                {
+                    result = res;
+                }
+                qDebug() << "res:" << res;
+                dlg->widget()->done(result);
+                break;
             }
         }
     }
-    return false;
+    return dlgSize;
 }
 
 bool RS_PythonGui::setTile(const char *key, const char *val)

@@ -952,7 +952,8 @@ BUILTIN("dissoc")
 }
 
 BUILTIN("done_dialog") {
-    /* int args = */ CHECK_ARGS_BETWEEN(0, 1);
+    int args = CHECK_ARGS_BETWEEN(0, 1);
+    int result = -1;
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
     if(dialogId)
@@ -962,12 +963,22 @@ BUILTIN("done_dialog") {
             if (tile->value().dialog_Id == dialogId->value())
             {
                 const lclWidget* dlg = static_cast<const lclWidget*>(tile);
-                dlg->widget()->show();
+                const lclInteger *dlg_result = VALUE_CAST(lclInteger, dclEnv->get(std::to_string(dialogId->value()) + "_dcl_result"));
+                result = dlg_result->value();
 
                 lclValueVec* items = new lclValueVec(2);
                 items->at(0) = lcl::integer(dlg->widget()->x());
                 items->at(1) = lcl::integer(dlg->widget()->y());
-                dlg->widget()->close();
+
+                if (args == 1)
+                {
+                    AG_INT(val);
+                    if (val->value() > 1)
+                    {
+                        result = val->value();
+                    }
+                }
+                dlg->widget()->done(result);
                 return lcl::list(items);
             }
         }
@@ -3195,18 +3206,11 @@ BUILTIN("start_dialog") {
                 dlg->widget()->show();
                 dlg->widget()->setFixedSize(dlg->widget()->geometry().width(),
                                             dlg->widget()->geometry().height());
-                break;
+                return lcl::integer(dlg->widget()->exec());
             }
         }
     }
-
-    /*
-                 * The start_dialog function returns the optional status passed to done_dialog.
-                 * The default value is 1 if the user presses OK, 0 if the user presses Cancel, or -1 if all dialog boxes are terminated with term_dialog.
-                 * If done_dialog is passed an integer status greater than 1, start_dialog returns this value, whose meaning is determined by the application.
-                 */
-
-    return lcl::integer(0);
+    return lcl::nilValue();
 }
 
 BUILTIN("start_list")

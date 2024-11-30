@@ -849,7 +849,7 @@ lclValuePtr lclGui::conj(lclValueIter argsBegin,
 
 lclWidget::lclWidget(const tile_t& tile)
     : lclGui(tile)
-    , m_widget(new QWidget)
+    , m_widget(new QDialog)
     , m_layout(new QVBoxLayout(m_widget))
 {
     if(noQuotes(tile.label).empty())
@@ -924,8 +924,14 @@ void lclButton::clicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
-        lclValuePtr action_expr = lcl::string(action);
-        qDebug() << "lclButton::clicked action_expr:" << action_expr->print(true).c_str();
+        qDebug() << "lclButton::clicked action_expr:" << action.c_str();
+
+        if (QString::fromStdString(noQuotes(this->value().key)) == "accept" ||
+            QString::fromStdString(noQuotes(this->value().label)).toUpper() == "OK")
+        {
+            dclEnv->set(std::to_string(this->value().dialog_Id) + "_dcl_result", lcl::integer(1));
+        }
+
         LispRun_SimpleString(action.c_str());
     }
 }

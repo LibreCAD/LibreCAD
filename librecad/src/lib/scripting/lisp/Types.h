@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include <QWidget>
+#include <QDialog>
 #include <QLabel>
 #include <QLineEdit>
 #include <QListWidget>
@@ -725,11 +726,11 @@ public:
 
     WITH_META(lclWidget)
 
-    QWidget* widget() const { return m_widget; }
+    QDialog* widget() const { return m_widget; }
     virtual QVBoxLayout* vlayout() const { return m_layout; }
 
 private:
-    QWidget* m_widget;
+    QDialog* m_widget;
     QVBoxLayout* m_layout;
 };
 

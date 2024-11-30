@@ -22,6 +22,8 @@
 //#include "lc_parabola.h"
 
 #include "lc_rect.h"
+
+#include <array>
 #include "rs_pythongui.h"
 
 //#include "rs_arc.h"
@@ -88,6 +90,12 @@
 #include "rs_vector.h"
 //#include "rs_settings.h"
 %}
+
+%include "std_array.i"
+%template(IntegerArray10) std::array<int, 2>;
+
+//%include "carrays.i"
+//%array_functions(int, intArray)
 
 //#define signals public
 //%include "qcolormap.h"
