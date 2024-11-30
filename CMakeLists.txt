@@ -412,8 +412,8 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/line/rs_actiondrawlinetangent2.h
 		librecad/src/actions/drawing/draw/text/rs_actiondrawmtext.cpp
 		librecad/src/actions/drawing/draw/text/rs_actiondrawmtext.h
-		librecad/src/actions/drawing/draw/line/rs_actiondrawpoint.cpp
-		librecad/src/actions/drawing/draw/line/rs_actiondrawpoint.h
+		librecad/src/actions/drawing/draw/point/rs_actiondrawpoint.cpp
+		librecad/src/actions/drawing/draw/point/rs_actiondrawpoint.h
 		librecad/src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp
 		librecad/src/actions/drawing/draw/polyline/rs_actiondrawpolyline.h
 		librecad/src/actions/drawing/draw/spline/rs_actiondrawspline.cpp
@@ -1119,8 +1119,8 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/circle/lc_actiondrawcirclebyarc.cpp
 		librecad/src/actions/drawing/modify/lc_actionmodifylinejoin.cpp
 		librecad/src/ui/action_options/modify/lc_linejoinoptions.cpp
-		librecad/src/actions/drawing/draw/line/lc_actiondrawlinepoints.h
-		librecad/src/actions/drawing/draw/line/lc_actiondrawlinepoints.cpp
+		librecad/src/actions/drawing/draw/point/lc_actiondrawlinepoints.h
+		librecad/src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp
 		librecad/src/ui/action_options/line/lc_linepointsoptions.h
 		librecad/src/ui/action_options/line/lc_linepointsoptions.cpp
         librecad/src/lib/math/lc_linemath.h
