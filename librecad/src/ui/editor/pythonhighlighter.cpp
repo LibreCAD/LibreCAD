@@ -204,7 +204,7 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
     highlightingRules.append(rule);
 
 // rule [11]
-    rule.expression = QRegExp(QStringLiteral("(\\\\\")|(\\\\\')"));
+    rule.expression = QRegExp(QStringLiteral("(\\\\\")|(\\\\\')|(\\\\n)"));
     rule.format = classValuesFormat;
     highlightingRules.append(rule);
 

@@ -705,7 +705,7 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-1; i >= 0 ; i--)
                 {
-                    qDebug() << "openTile()" << i << dclTiles.at(i)->value().name.c_str();
+                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -770,6 +770,7 @@ void openTile(const lclGui* tile)
         }
             break;
         case ROW:
+        case CONCATENATION:
         {
             if (!dclTiles.size())
             {
@@ -792,7 +793,7 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "openTile()" << i << dclTiles.at(i)->value().name.c_str();
+                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -835,7 +836,7 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "openTile()" << i << dclTiles.at(i)->value().name.c_str();
+                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -878,7 +879,7 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "openTile()" << i << dclTiles.at(i)->value().name.c_str();
+                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -899,6 +900,7 @@ void openTile(const lclGui* tile)
         }
             break;
         case COLUMN:
+        case PARAGRAPH:
         {
             if (!dclTiles.size())
             {
@@ -911,7 +913,8 @@ void openTile(const lclGui* tile)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        dlg->vlayout()->addLayout(c->hlayout());
+                        qDebug() << "[openTile] to dlg";
+                        dlg->vlayout()->addLayout(c->vlayout());
                         break;
                     }
                 }
@@ -921,17 +924,19 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "openTile()" << i << dclTiles.at(i)->value().name.c_str();
+                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
                             if (dclTiles.at(i)->value().id & LAYOUT_ROW)
                             {
+                                qDebug() << "[openTile] to hlayout()";
                                 dclTiles.at(i)->hlayout()->addLayout(c->vlayout());
                             }
                             else
                             {
+                                qDebug() << "[openTile] to vlayout()";
                                 dclTiles.at(i)->vlayout()->addLayout(c->vlayout());
                             }
                             break;
@@ -964,7 +969,7 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "openTile()" << i << dclTiles.at(i)->value().name.c_str();
+                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -1007,7 +1012,7 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "openTile()" << i << dclTiles.at(i)->value().name.c_str();
+                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -1028,6 +1033,7 @@ void openTile(const lclGui* tile)
         }
             break;
         case TEXT:
+        case TEXT_PART:
         case ERRTILE:
         {
             if (!dclTiles.size())
@@ -1051,7 +1057,7 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "openTile()" << i << dclTiles.at(i)->value().name.c_str();
+                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -1441,7 +1447,7 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "openTile()" << i << dclTiles.at(i)->value().name.c_str();
+                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -1487,7 +1493,7 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "openTile()" << i << dclTiles.at(i)->value().name.c_str();
+                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -1534,7 +1540,7 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "openTile()" << i << dclTiles.at(i)->value().name.c_str();
+                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)

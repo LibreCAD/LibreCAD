@@ -1105,6 +1105,10 @@ lclRow::lclRow(const tile_t& tile)
         }
     }
 #endif
+    if(tile.id == CONCATENATION)
+    {
+        m_layout->setSpacing(0);
+    }
 }
 
 lclBoxedColumn::lclBoxedColumn(const tile_t& tile)
@@ -1330,12 +1334,18 @@ lclColumn::lclColumn(const tile_t& tile)
         }
     }
 #endif
+
+    if(tile.id == PARAGRAPH)
+    {
+        m_layout->setSpacing(0);
+    }
 }
 
 lclLabel::lclLabel(const tile_t& tile)
     : lclGui(tile)
     , m_label(new QLabel)
 {
+    qDebug() << "lclLabel::lclLabel" << int(tile.height);
     m_label->setText(noQuotes(tile.label).c_str());
 
     if (tile.is_bold)
@@ -1350,7 +1360,9 @@ lclLabel::lclLabel(const tile_t& tile)
 
     if(int(tile.height))
     {
+        qDebug() << "lclLabel::lclLabel" << QString("font-size: %L1px;").arg(int(tile.height));
         m_label->setMinimumHeight(int(tile.height));
+        m_label->setStyleSheet(QString("font-size: %L1px;").arg(int(tile.height)));
     }
 
     if (tile.fixed_width)
@@ -1386,9 +1398,11 @@ lclLabel::lclLabel(const tile_t& tile)
             m_label->setAlignment(Qt::AlignRight);
             break;
         case TOP:
+            m_label->setMinimumHeight(int(tile.height * 1.5));
             m_label->setAlignment(Qt::AlignTop);
             break;
         case BOTTOM:
+            m_label->setMinimumHeight(int(tile.height * 1.5));
             m_label->setAlignment(Qt::AlignBottom);
             break;
         case CENTERED:

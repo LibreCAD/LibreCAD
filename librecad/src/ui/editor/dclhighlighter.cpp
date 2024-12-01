@@ -11,7 +11,7 @@ DclHighlighter::DclHighlighter(QTextDocument *parent)
 
 //! [0]
     symbolFormat.setForeground(QColor(202,96,202));
-    rule.pattern = QRegularExpression(QStringLiteral("([-+<>=*/%&!|\\~^])"));
+    rule.pattern = QRegularExpression(QStringLiteral("([-+<>=*/%&!|\\~^;])"));
     rule.format = symbolFormat;
     highlightingRules.append(rule);
 
@@ -24,6 +24,7 @@ DclHighlighter::DclHighlighter(QTextDocument *parent)
     keywordFormat.setForeground(QColor(31, 28, 27));
     keywordFormat.setFontWeight(QFont::Bold);
     const QString keywordPatterns[] = {
+        QStringLiteral("[:]"),
         QStringLiteral("\\bboxed_column\\b"),
         QStringLiteral("\\bboxed_radio_column\\b"),
         QStringLiteral("\\bboxed_radio_row\\b"),
@@ -67,40 +68,40 @@ DclHighlighter::DclHighlighter(QTextDocument *parent)
     arttibuteFormat.setForeground(QColor(146,76,157));
     const QString arttibutePatterns[] = {
         QStringLiteral("\\baction\\b"),
-            QStringLiteral("\\balignment\\b"),
-            QStringLiteral("\\ballow_accept\\b"),
-            QStringLiteral("\\baspect_ratio\\b"),
-            QStringLiteral("\\bbig_increment\\b"),
-            QStringLiteral("\\bchildren_alignment\\b"),
-            QStringLiteral("\\bchildren_fixed_height\\b"),
-            QStringLiteral("\\bchildren_fixed_width\\b"),
-            QStringLiteral("\\bcolor\\b"),
-            QStringLiteral("\\bedit_limit\\b"),
-            QStringLiteral("\\bedit_width\\b"),
-            QStringLiteral("\\bfixed_height\\b"),
-            QStringLiteral("\\bfixed_width\\b"),
-            QStringLiteral("\\bfixed_width_font\\b"),
-            QStringLiteral("\\bheight\\b"),
-            QStringLiteral("\\binitial_focus\\b"),
-            QStringLiteral("\\bis_bold\\b"),
-            QStringLiteral("\\bis_cancel\\b"),
-            QStringLiteral("\\bis_default\\b"),
-            QStringLiteral("\\bis_enabled\\b"),
-            QStringLiteral("\\bis_tab_stop\\b"),
-            QStringLiteral("\\bkey\\b"),
-            QStringLiteral("\\blabel\\b"),
-            QStringLiteral("\\blayout\\b"),
-            QStringLiteral("\\blist\\b"),
-            QStringLiteral("\\bmax_value\\b"),
-            QStringLiteral("\\bmin_value\\b"),
-            QStringLiteral("\\bmnemonic\\b"),
-            QStringLiteral("\\bmultiple_select\\b"),
-            QStringLiteral("\\bpassword_char\\b"),
-            QStringLiteral("\\bsmall_increment\\b"),
-            QStringLiteral("\\btabs\\b"),
-            QStringLiteral("\\btab_truncate\\b"),
-            QStringLiteral("\\bvalue\\b"),
-            QStringLiteral("\\bwidth\\b"),
+        QStringLiteral("\\balignment\\b"),
+        QStringLiteral("\\ballow_accept\\b"),
+        QStringLiteral("\\baspect_ratio\\b"),
+        QStringLiteral("\\bbig_increment\\b"),
+        QStringLiteral("\\bchildren_alignment\\b"),
+        QStringLiteral("\\bchildren_fixed_height\\b"),
+        QStringLiteral("\\bchildren_fixed_width\\b"),
+        QStringLiteral("\\bcolor\\b"),
+        QStringLiteral("\\bedit_limit\\b"),
+        QStringLiteral("\\bedit_width\\b"),
+        QStringLiteral("\\bfixed_height\\b"),
+        QStringLiteral("\\bfixed_width\\b"),
+        QStringLiteral("\\bfixed_width_font\\b"),
+        QStringLiteral("\\bheight\\b"),
+        QStringLiteral("\\binitial_focus\\b"),
+        QStringLiteral("\\bis_bold\\b"),
+        QStringLiteral("\\bis_cancel\\b"),
+        QStringLiteral("\\bis_default\\b"),
+        QStringLiteral("\\bis_enabled\\b"),
+        QStringLiteral("\\bis_tab_stop\\b"),
+        QStringLiteral("\\bkey\\b"),
+        QStringLiteral("\\blabel\\b"),
+        QStringLiteral("\\blayout\\b"),
+        QStringLiteral("\\blist\\b"),
+        QStringLiteral("\\bmax_value\\b"),
+        QStringLiteral("\\bmin_value\\b"),
+        QStringLiteral("\\bmnemonic\\b"),
+        QStringLiteral("\\bmultiple_select\\b"),
+        QStringLiteral("\\bpassword_char\\b"),
+        QStringLiteral("\\bsmall_increment\\b"),
+        QStringLiteral("\\btabs\\b"),
+        QStringLiteral("\\btab_truncate\\b"),
+        QStringLiteral("\\bvalue\\b"),
+        QStringLiteral("\\bwidth\\b"),
     };
 
 //! [3]
@@ -112,7 +113,7 @@ DclHighlighter::DclHighlighter(QTextDocument *parent)
 
     valueFormat.setForeground(QColor(0, 87, 174));
     const QString valuePatterns[] = {
-    QStringLiteral("\\bnopos\\b"),
+        QStringLiteral("\\bnopos\\b"),
         QStringLiteral("\\bleft\\b"),
         QStringLiteral("\\bright\\b"),
         QStringLiteral("\\btop\\b"),
@@ -123,6 +124,7 @@ DclHighlighter::DclHighlighter(QTextDocument *parent)
         QStringLiteral("\\bdialog_line\\b"),
         QStringLiteral("\\bdialog_foreground\\b"),
         QStringLiteral("\\bdialog_background\\b"),
+        QStringLiteral("\\bfalse\\b"),
         QStringLiteral("\\bgraphics_background\\b"),
         QStringLiteral("\\bblack\\b"),
         QStringLiteral("\\bred\\b"),
@@ -131,6 +133,7 @@ DclHighlighter::DclHighlighter(QTextDocument *parent)
         QStringLiteral("\\bcyan\\b"),
         QStringLiteral("\\bblue\\b"),
         QStringLiteral("\\bmagenta\\b"),
+        QStringLiteral("\\btrue\\b"),
         QStringLiteral("\\bwhite\\b"),
         QStringLiteral("\\bgraphics_foreground\\b")
     };

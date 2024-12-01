@@ -214,7 +214,7 @@ static void readTile(Tokeniser& tokeniser, tile_t& tile);
 static void copyTile(const tile_t &a, tile_t &b);
 static bool ends_with(const std::string& str, const std::string& suffix);
 static bool isLclAlias(const String& alias);
-static const String &lclCom(const String& alias);
+static const String lclCom(const String& alias);
 static bool getDclBool(const String& str);
 static bool isdclAttribute(const String& str);
 #if 0
@@ -382,7 +382,7 @@ static bool isLclAlias(const String& alias)
     return false;
 }
 
-static const String &lclCom(const String& alias)
+static const String lclCom(const String& alias)
 {
     for (auto & com : LclCom)
     {
@@ -391,7 +391,7 @@ static const String &lclCom(const String& alias)
             return com.command;
         }
     }
-    return "";
+    return String("");
 }
 
 static lclValuePtr readDclFile(Tokeniser& tokeniser, bool start, bool parent)
@@ -502,7 +502,7 @@ static lclValuePtr readDclFile(Tokeniser& tokeniser, bool start, bool parent)
 
 static void readTile(Tokeniser& tokeniser, tile_t& tile)
 {
-    qDebug() << "readTile() >>>>> START FOR >>>>>" <<"("<<tile.name.c_str()<<")";
+    qDebug() << "[readTile] >>>>> START FOR >>>>>" <<"("<<tile.name.c_str()<<")";
     String token;
     int parent = true;
 
@@ -513,7 +513,7 @@ static void readTile(Tokeniser& tokeniser, tile_t& tile)
     }
 
     while (1) {
-        qDebug() <<"readTile() ("<<tile.name.c_str()<<") AT TOP";
+        qDebug() <<"[readTile] ("<<tile.name.c_str()<<") AT TOP";
 
         if (tokeniser.eof()) {
             return;
@@ -523,24 +523,24 @@ static void readTile(Tokeniser& tokeniser, tile_t& tile)
             //qDebug() <<"("<<tile.name.c_str()<<") - end";
             //qDebug() << " ... } -> bye bye...";
             tokeniser.next();
-            qDebug() << "readTile() <<<<< END FOR <<<<" <<"("<<tile.name.c_str()<<")";
+            qDebug() << "[readTile] <<<<< END FOR <<<<" <<"("<<tile.name.c_str()<<")";
             return;
         }
 
         if (tokeniser.peek() == "{") {
-            qDebug() <<"readTile() ("<<tile.name.c_str()<<") open bracet - start";
+            qDebug() <<"[readTile] ("<<tile.name.c_str()<<") open bracet - start";
             qDebug() << " -> { ...";
             tokeniser.next();
             continue;
         }
 
         if (tokeniser.peek() == ":") {
-            qDebug() <<"readTile() ("<<tile.name.c_str()<<") ";
-            qDebug() << "readTile() ':' [<- readDclFile(tokeniser, false) token: " << tokeniser.peek().c_str();
+            qDebug() <<"[readTile] ("<<tile.name.c_str()<<") ";
+            qDebug() << "[readTile] ':' [<- readDclFile(tokeniser, false) token: " << tokeniser.peek().c_str();
             tile.tiles->push_back(readDclFile(tokeniser, false, parent));
         }
 
-        qDebug() << "readTile() isdclAttribute for: " <<"("<<tile.name.c_str()<<") ?";
+        qDebug() << "[readTile] isdclAttribute for: " <<"("<<tile.name.c_str()<<") ?";
         if (isdclAttribute(tokeniser.peek())) {
 
             qDebug() << "got attribute...";
@@ -591,7 +591,7 @@ static void readTile(Tokeniser& tokeniser, tile_t& tile)
               tile.fixed_width_font = getDclBool(tokeniser.peek());
                 break;
             case HEIGHT:
-              tile.height = atof(tokeniser.peek().c_str());
+                tile.height = atof(tokeniser.peek().c_str());
                 break;
             case INITIAL_FOCUS:
               tile.initial_focus = tokeniser.peek();
@@ -665,14 +665,14 @@ static void readTile(Tokeniser& tokeniser, tile_t& tile)
         }
 
         if (std::regex_match(tokeniser.peek(), dclRegex)) {
-            qDebug() << "readTile() ("<<tile.name.c_str()<<") ";
-            qDebug() << "readTile() 'dclRegex' [<- readDclFile(tokeniser, false) token: " << tokeniser.peek().c_str();
+            qDebug() << "[readTile] ("<<tile.name.c_str()<<") ";
+            qDebug() << "[readTile] 'dclRegex' [<- readDclFile(tokeniser, false) token: " << tokeniser.peek().c_str();
             lclValuePtr result = readDclFile(tokeniser, false, parent);
             if (result) {
                 tile.tiles->push_back(result);
             }
         }
-        qDebug() <<"readTile() ("<<tile.name.c_str()<<") AT BOTTOM";
+        qDebug() <<"[readTile] ("<<tile.name.c_str()<<") AT BOTTOM";
     }
 }
 
@@ -819,10 +819,8 @@ static lclValuePtr addTile(tile_t tile)
         return lcl::button(tile);
     case COLUMN:
         return lcl::column(tile);
-#if 0
     case CONCATENATION:
-        return lcl::concatenation(tile);
-#endif
+        return lcl::row(tile);
     case DIALOG:
         return lcl::widget(tile);
     case EDIT_BOX:
@@ -861,11 +859,8 @@ static lclValuePtr addTile(tile_t tile)
         tile.dialog_Id = dclId;
         return lcl::button(tile);
     }
-#if 0
-        return lcl::ok_only(tile);
     case PARAGRAPH:
-        return lcl::paragraph(tile);
-#endif
+        return lcl::column(tile);
     case POPUP_LIST:
         return lcl::popuplist(tile);
     case RADIO_BUTTON:
@@ -890,10 +885,8 @@ static lclValuePtr addTile(tile_t tile)
 #endif
     case TEXT:
         return lcl::label(tile);
-#if 0
     case TEXT_PART:
-        return lcl::text_part(tile);
-#endif
+        return lcl::label(tile);
     case TOGGLE:
         return lcl::toggle(tile);
     default:

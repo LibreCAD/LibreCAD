@@ -232,7 +232,7 @@ LispHighlighter::LispHighlighter(QTextDocument *parent)
 
 //! [5]
     innerQuotationFormat.setForeground(QColor(146,76,157));
-    rule.pattern = QRegularExpression(QStringLiteral("(\\\\\")|(\\\\\')"));
+    rule.pattern = QRegularExpression(QStringLiteral("(\\\\\")|(\\\\\')|(\\\\n)"));
     rule.format = innerQuotationFormat;
     highlightingRules.append(rule);
 
