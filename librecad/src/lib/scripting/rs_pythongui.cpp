@@ -114,11 +114,11 @@ int RS_PythonGui::startDialog()
         {
             if (tile->value().dialog_Id == dialogId->value())
             {
-                const lclWidget* dlg = static_cast<const lclWidget*>(tile);
-                dlg->widget()->show();
-                dlg->widget()->setFixedSize(dlg->widget()->geometry().width(),
-                                            dlg->widget()->geometry().height());
-                return dlg->widget()->exec();
+                const lclDialog* dlg = static_cast<const lclDialog*>(tile);
+                dlg->dialog()->show();
+                dlg->dialog()->setFixedSize(dlg->dialog()->geometry().width(),
+                                            dlg->dialog()->geometry().height());
+                return dlg->dialog()->exec();
             }
         }
     }
@@ -133,8 +133,8 @@ void RS_PythonGui::unloadDialog(int id)
         {
             if (tile->value().dialog_Id == id)
             {
-                const lclWidget* dlg = static_cast<const lclWidget*>(tile);
-                delete dlg->widget();
+                const lclDialog* dlg = static_cast<const lclDialog*>(tile);
+                delete dlg->dialog();
 
                 break;
             }
@@ -165,11 +165,11 @@ std::array<int, 2>  RS_PythonGui::doneDialog(int res)
         {
             if (tile->value().dialog_Id == dialogId->value())
             {
-                const lclWidget* dlg = static_cast<const lclWidget*>(tile);
+                const lclDialog* dlg = static_cast<const lclDialog*>(tile);
                 const lclInteger *dlg_result = VALUE_CAST(lclInteger, dclEnv->get(std::to_string(dialogId->value()) + "_dcl_result"));
 
                 result = dlg_result->value();
-                dlgPos = {dlg->widget()->x(), dlg->widget()->y()};
+                dlgPos = {dlg->dialog()->x(), dlg->dialog()->y()};
 
                 qDebug() << "result:" << result;
                 if (res > 1)
@@ -177,7 +177,7 @@ std::array<int, 2>  RS_PythonGui::doneDialog(int res)
                     result = res;
                 }
                 qDebug() << "res:" << res;
-                dlg->widget()->done(result);
+                dlg->dialog()->done(result);
                 break;
             }
         }
@@ -578,6 +578,16 @@ const char *RS_PythonGui::addList(const char *val)
                         operation->value() == 3)
                     {
                         lb->list()->addItem(new QListWidgetItem(val, lb->list()));
+                        if(noQuotes(tile->value().value) != "")
+                        {
+                            bool ok;
+                            int i = QString::fromStdString(noQuotes(tile->value().value)).toInt(&ok);
+
+                            if (ok && lb->list()->count() == i)
+                            {
+                                lb->list()->setCurrentRow(i-1);
+                            }
+                        }
                         return val;
                     }
                 }
@@ -602,6 +612,7 @@ const char *RS_PythonGui::addList(const char *val)
                     if(operation->value() == 2 ||
                         operation->value() == 3)
                     {
+                        pl->list()->addItem(val);
                         if(noQuotes(tile->value().value) != "")
                         {
                             bool ok;
@@ -612,8 +623,6 @@ const char *RS_PythonGui::addList(const char *val)
                                 pl->list()->setCurrentIndex(i-1);
                             }
                         }
-
-                        pl->list()->addItem(val);
                         return val;
                     }
                 }

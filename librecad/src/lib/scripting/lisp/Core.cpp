@@ -514,6 +514,18 @@ BUILTIN("add_list")
                         operation->value() == 3)
                     {
                         lb->list()->addItem(new QListWidgetItem(val->value().c_str(), lb->list()));
+
+                        if(noQuotes(tile->value().value) != "")
+                        {
+                            bool ok;
+                            int i = QString::fromStdString(noQuotes(tile->value().value)).toInt(&ok);
+
+                            if (ok && lb->list()->count() == i)
+                            {
+                                lb->list()->setCurrentRow(i-1);
+                            }
+                        }
+
                         return lcl::string(val->value());
                     }
                 }
@@ -538,6 +550,8 @@ BUILTIN("add_list")
                     if(operation->value() == 2 ||
                         operation->value() == 3)
                     {
+                        pl->list()->addItem(val->value().c_str());
+
                         if(noQuotes(tile->value().value) != "")
                         {
                             bool ok;
@@ -549,7 +563,6 @@ BUILTIN("add_list")
                             }
                         }
 
-                        pl->list()->addItem(val->value().c_str());
                         return lcl::string(val->value());
                     }
                 }
@@ -1042,13 +1055,13 @@ BUILTIN("done_dialog") {
         {
             if (tile->value().dialog_Id == dialogId->value())
             {
-                const lclWidget* dlg = static_cast<const lclWidget*>(tile);
+                const lclDialog* dlg = static_cast<const lclDialog*>(tile);
                 const lclInteger *dlg_result = VALUE_CAST(lclInteger, dclEnv->get(std::to_string(dialogId->value()) + "_dcl_result"));
                 result = dlg_result->value();
 
                 lclValueVec* items = new lclValueVec(2);
-                items->at(0) = lcl::integer(dlg->widget()->x());
-                items->at(1) = lcl::integer(dlg->widget()->y());
+                items->at(0) = lcl::integer(dlg->dialog()->x());
+                items->at(1) = lcl::integer(dlg->dialog()->y());
 
                 if (args == 1)
                 {
@@ -1058,7 +1071,7 @@ BUILTIN("done_dialog") {
                         result = val->value();
                     }
                 }
-                dlg->widget()->done(result);
+                dlg->dialog()->done(result);
                 return lcl::list(items);
             }
         }
@@ -3353,11 +3366,11 @@ BUILTIN("start_dialog") {
         {
             if (tile->value().dialog_Id == dialogId->value())
             {
-                const lclWidget* dlg = static_cast<const lclWidget*>(tile);
-                dlg->widget()->show();
-                dlg->widget()->setFixedSize(dlg->widget()->geometry().width(),
-                                            dlg->widget()->geometry().height());
-                return lcl::integer(dlg->widget()->exec());
+                const lclDialog* dlg = static_cast<const lclDialog*>(tile);
+                dlg->dialog()->show();
+                dlg->dialog()->setFixedSize(dlg->dialog()->geometry().width(),
+                                            dlg->dialog()->geometry().height());
+                return lcl::integer(dlg->dialog()->exec());
             }
         }
     }
@@ -3578,8 +3591,8 @@ BUILTIN("unload_dialog")
         {
             if (tile->value().dialog_Id == id->value())
             {
-                const lclWidget* dlg = static_cast<const lclWidget*>(tile);
-                delete dlg->widget();
+                const lclDialog* dlg = static_cast<const lclDialog*>(tile);
+                delete dlg->dialog();
 
                 break;
             }

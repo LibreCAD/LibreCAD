@@ -716,23 +716,23 @@ public:
     WITH_META(lclDclGui)
 };
 
-class lclWidget : public lclGui {
+class lclDialog : public lclGui {
 public:
-    lclWidget(const tile_t& tile);
-    lclWidget(const lclWidget& that, lclValuePtr meta)
+    lclDialog(const tile_t& tile);
+    lclDialog(const lclDialog& that, lclValuePtr meta)
         : lclGui(that, meta) { }
 
-    virtual ~lclWidget() { delete m_widget; delete m_layout; }
+    virtual ~lclDialog() { delete m_dialog; delete m_layout; }
 
-    WITH_META(lclWidget)
+    WITH_META(lclDialog)
 
-    QDialog* widget() const { return m_widget; }
+    QDialog* dialog() const { return m_dialog; }
     virtual QVBoxLayout* vlayout() const { return m_layout; }
 
     void addShortcut(const QString & key, QWidget *w);
 
 private:
-    QDialog* m_widget;
+    QDialog* m_dialog;
     QVBoxLayout* m_layout;
 };
 
@@ -1128,7 +1128,7 @@ namespace lcl {
     lclValuePtr vector(lclValueIter begin, lclValueIter end);
 
     lclValuePtr dclgui(const tile_t& tile);
-    lclValuePtr widget(const tile_t& tile);
+    lclValuePtr dialog(const tile_t& tile);
     lclValuePtr boxedcolumn(const tile_t& tile);
     lclValuePtr boxedrow(const tile_t& tile);
     lclValuePtr button(const tile_t& tile);

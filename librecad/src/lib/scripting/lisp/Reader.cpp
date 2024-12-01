@@ -819,7 +819,7 @@ static lclValuePtr addTile(tile_t tile)
     case CONCATENATION:
         return lcl::row(tile);
     case DIALOG:
-        return lcl::widget(tile);
+        return lcl::dialog(tile);
     case EDIT_BOX:
         return lcl::edit(tile);
     case LIST_BOX:

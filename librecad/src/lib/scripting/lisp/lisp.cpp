@@ -669,7 +669,7 @@ void openTile(const lclGui* tile)
     switch (tile->value().id) {
         case DIALOG:
         {
-            //const lclWidget* dlg = static_cast<const lclWidget*>(tile);
+            //const lclDialog* dlg = static_cast<const lclDialog*>(tile);
             qDebug() << "openTile() init DIALOG";
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_dcl_result", lcl::integer(0));
             dclTiles.push_back(tile);

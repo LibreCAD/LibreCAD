@@ -242,8 +242,8 @@ namespace lcl {
         return lclValuePtr(new lclDclGui(tile));
     }
 
-    lclValuePtr widget(const tile_t& tile) {
-        return lclValuePtr(new lclWidget(tile));
+    lclValuePtr dialog(const tile_t& tile) {
+        return lclValuePtr(new lclDialog(tile));
     }
 
     lclValuePtr boxedcolumn(const tile_t& tile) {
@@ -835,30 +835,30 @@ lclValuePtr lclGui::conj(lclValueIter argsBegin,
     return lcl::dclgui(m_value);
 }
 
-lclWidget::lclWidget(const tile_t& tile)
+lclDialog::lclDialog(const tile_t& tile)
     : lclGui(tile)
-    , m_widget(new QDialog)
-    , m_layout(new QVBoxLayout(m_widget))
+    , m_dialog(new QDialog)
+    , m_layout(new QVBoxLayout(m_dialog))
 {
     if(noQuotes(tile.label).empty())
     {
-        m_widget->setWindowTitle(QObject::tr("LibreCAD [unnamed dialog]"));
+        m_dialog->setWindowTitle(QObject::tr("LibreCAD [unnamed dialog]"));
     }
     else
     {
-        m_widget->setWindowTitle(noQuotes(tile.label).c_str());
+        m_dialog->setWindowTitle(noQuotes(tile.label).c_str());
     }
 
-    m_widget->setWindowFlags( Qt::Dialog | Qt::WindowTitleHint );
-    m_widget->setLayout(m_layout);
+    m_dialog->setWindowFlags( Qt::Dialog | Qt::WindowTitleHint );
+    m_dialog->setLayout(m_layout);
 }
 
-void lclWidget::addShortcut(const QString & key, QWidget *w)
+void lclDialog::addShortcut(const QString & key, QWidget *w)
 {
     Q_UNUSED(key)
     Q_UNUSED(w)
 #if 0
-    QShortcut *shortcut = new QShortcut(QKeySequence(key), m_widget);
+    QShortcut *shortcut = new QShortcut(QKeySequence(key), m_dialog);
     QObject::connect(shortcut, SIGNAL(activated()), w, SLOT(yourSlotHere()));
 #endif
 }
