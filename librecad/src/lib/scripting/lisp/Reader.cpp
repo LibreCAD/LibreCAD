@@ -528,14 +528,14 @@ static void readTile(Tokeniser& tokeniser, tile_t& tile)
         }
 
         if (tokeniser.peek() == "{") {
-            qDebug() <<"[readTile] ("<<tile.name.c_str()<<") open bracet - start";
+            qDebug() << "[readTile] ("<<tile.name.c_str()<<") open bracet - start";
             qDebug() << " -> { ...";
             tokeniser.next();
             continue;
         }
 
         if (tokeniser.peek() == ":") {
-            qDebug() <<"[readTile] ("<<tile.name.c_str()<<") ";
+            qDebug() << "[readTile] ("<<tile.name.c_str()<<") ";
             qDebug() << "[readTile] ':' [<- readDclFile(tokeniser, false) token: " << tokeniser.peek().c_str();
             tile.tiles->push_back(readDclFile(tokeniser, false, parent));
         }
@@ -694,7 +694,7 @@ static tile_id_t getDclId(const String& str)
 {
     tile_id_t id = NONE;
     for (int i =0; i < MAX_DCL_TILES; i++) {
-        if (ends_with(str, dclTile[i].name)) {
+        if (str == dclTile[i].name) {
             return dclTile[i].id;
         }
     }
@@ -725,7 +725,7 @@ static pos_t getDclPos(const String& str)
 {
     pos_t pos = NOPOS;
     for (int i =0; i < MAX_DCL_TILES; i++) {
-        if (ends_with(str, dclPosition[i].name)) {
+        if (str == dclPosition[i].name) {
             return dclPosition[i].pos;
         }
     }
@@ -736,7 +736,7 @@ static color_t getDclColor(const String& str)
 {
     color_t color = WHITE;
     for (int i =0; i < MAX_DCL_COLOR; i++) {
-        if (ends_with(str, dclColor[i].name)) {
+        if (str == dclColor[i].name) {
             return dclColor[i].color;
         }
     }
@@ -806,18 +806,15 @@ static lclValuePtr addTile(tile_t tile)
     switch(tile.id) {
 
     case BOXED_COLUMN:
-        return lcl::boxedcolumn(tile);
-#if 0
     case BOXED_RADIO_COLUMN:
-        return lcl::boxed_radio_column(tile);
-    case BOXED_RADIO_ROW:
-        return lcl::boxed_radio_row(tile);
-#endif
+        return lcl::boxedcolumn(tile);
     case BOXED_ROW:
+    case BOXED_RADIO_ROW:
         return lcl::boxedrow(tile);
     case BUTTON:
         return lcl::button(tile);
     case COLUMN:
+    case RADIO_COLUMN:
         return lcl::column(tile);
     case CONCATENATION:
         return lcl::row(tile);
@@ -865,12 +862,7 @@ static lclValuePtr addTile(tile_t tile)
         return lcl::popuplist(tile);
     case RADIO_BUTTON:
         return lcl::radiobutton(tile);
-#if 0
-    case RADIO_COLUMN:
-        return lcl::radio_column(tile);
     case RADIO_ROW:
-        return lcl::radio_row(tile);
-#endif
     case ROW:
         return lcl::row(tile);
     case SLIDER:

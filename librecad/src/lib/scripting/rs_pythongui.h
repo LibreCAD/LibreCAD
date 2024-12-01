@@ -24,7 +24,11 @@ public:
 
     int GetIntDialog(const char *prompt);
     int loadDialog(const char *fileName);
+    int dimxTile(const char *key);
+    int dimyTile(const char *key);
     int startDialog();
+    int fillImage(int x1, int y1, int width, int height, int color);
+
 
     double GetDoubleDialog(const char *prompt);
 
@@ -34,6 +38,7 @@ public:
     const char *getTile(const char *key);
     const char *startList(const char *key, int operation=-1, int index=-1);
     const char *addList(const char *val);
+    const char *startImage(const char *key);
 };
 
 #endif // RS_PYTHONGUI_H

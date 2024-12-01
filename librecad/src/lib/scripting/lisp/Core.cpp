@@ -538,6 +538,17 @@ BUILTIN("add_list")
                     if(operation->value() == 2 ||
                         operation->value() == 3)
                     {
+                        if(noQuotes(tile->value().value) != "")
+                        {
+                            bool ok;
+                            int i = QString::fromStdString(noQuotes(tile->value().value)).toInt(&ok);
+
+                            if (ok && pl->list()->count() == i)
+                            {
+                                pl->list()->setCurrentIndex(i-1);
+                            }
+                        }
+
                         pl->list()->addItem(val->value().c_str());
                         return lcl::string(val->value());
                     }
@@ -942,6 +953,76 @@ BUILTIN("deref")
     return atom->deref();
 }
 
+BUILTIN("dimx_tile")
+{
+    CHECK_ARGS_IS(1);
+    ARG(lclString, key);
+
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key->value())
+        {
+            switch (tile->value().id)
+            {
+            case IMAGE:
+            {
+                return lcl::integer(int(tile->value().width));
+            }
+            break;
+            case IMAGE_BUTTON:
+            {
+                return lcl::nilValue();
+            }
+            break;
+            default:
+                return lcl::nilValue();
+            }
+        }
+    }
+    return lcl::nilValue();
+}
+
+BUILTIN("dimy_tile")
+{
+    CHECK_ARGS_IS(1);
+    ARG(lclString, key);
+
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key->value())
+        {
+            switch (tile->value().id)
+            {
+            case IMAGE:
+            {
+                return lcl::integer(int(tile->value().height));
+            }
+            break;
+            case IMAGE_BUTTON:
+            {
+                return lcl::nilValue();
+            }
+            break;
+            default:
+                return lcl::nilValue();
+            }
+        }
+    }
+    return lcl::nilValue();
+}
+
 BUILTIN("dissoc")
 {
     CHECK_ARGS_AT_LEAST(1);
@@ -1071,6 +1152,48 @@ BUILTIN("expt")
     }
 }
 
+BUILTIN("fill_image")
+{
+    CHECK_ARGS_IS(5);
+    AG_INT(x1);
+    AG_INT(y1);
+    AG_INT(width);
+    AG_INT(height);
+    AG_INT(color);
+
+    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key->value())
+        {
+            switch (tile->value().id)
+            {
+            case IMAGE:
+            {
+                const lclImage* img = static_cast<const lclImage*>(tile);
+                //img->image();
+                return lcl::integer(color->value());
+            }
+            break;
+            case IMAGE_BUTTON:
+            {
+                return lcl::nilValue();
+            }
+            break;
+            default:
+                return lcl::nilValue();
+            }
+        }
+    }
+    return lcl::nilValue();
+}
+
 BUILTIN("first")
 {
     CHECK_ARGS_IS(1);
@@ -1191,7 +1314,7 @@ BUILTIN("get_tile")
             {
                 qDebug() << "get_tile POPUP_LIST";
                 const lclPopupList* pl = static_cast<const lclPopupList*>(tile);
-                return lcl::string(pl->list()->currentText().toStdString());
+                return lcl::string(std::to_string(pl->list()->currentIndex()));
             }
             break;
             default:
@@ -3241,6 +3364,17 @@ BUILTIN("start_dialog") {
     return lcl::nilValue();
 }
 
+BUILTIN("start_image")
+{
+    CHECK_ARGS_IS(1);
+    ARG(lclString, key);
+
+    return dclEnv->set("start_image_key", lcl::string(key->value()));
+
+    // FIXMI check if not in current
+    //return lcl::nilValue();
+}
+
 BUILTIN("start_list")
 {
     int args = CHECK_ARGS_BETWEEN(1, 3);
@@ -3261,7 +3395,10 @@ BUILTIN("start_list")
         AG_INT(index);
         dclEnv->set("start_list_index", lcl::integer(index->value()));
     }
-    return dclEnv->set("start_list_key", lcl::string(key->value().c_str()));
+    return dclEnv->set("start_list_key", lcl::string(key->value()));
+
+    // FIXMI check if not in current
+    //return lcl::nilValue();
 }
 
 BUILTIN("startapp")

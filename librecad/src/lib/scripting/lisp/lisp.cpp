@@ -661,7 +661,8 @@ static void installEvalCore(lclEnvPtr env) {
 
 void openTile(const lclGui* tile)
 {
-    qDebug() << "openTile() Name: "<< tile->value().name.c_str();
+    qDebug() << "[openTile] Name: "<< tile->value().name.c_str();
+    //qDebug() << "openTile] Id: "<< (int)tile->value().id;
 
     int dlgId = tile->value().dialog_Id;
 
@@ -705,7 +706,6 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-1; i >= 0 ; i--)
                 {
-                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -770,6 +770,7 @@ void openTile(const lclGui* tile)
         }
             break;
         case ROW:
+        case RADIO_ROW:
         case CONCATENATION:
         {
             if (!dclTiles.size())
@@ -793,7 +794,6 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -814,6 +814,7 @@ void openTile(const lclGui* tile)
         }
             break;
         case BOXED_ROW:
+        case BOXED_RADIO_ROW:
         {
             if (!dclTiles.size())
             {
@@ -836,7 +837,6 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -856,51 +856,9 @@ void openTile(const lclGui* tile)
             }
         }
             break;
-        case BOXED_RADIO_ROW:
-        {
-            if (!dclTiles.size())
-            {
-                break;
-            }
-            const lclBoxedRadioRow* brr = static_cast<const lclBoxedRadioRow*>(tile);
-            dclTiles.push_back(tile);
-            if (!brr->value().has_parent) {
-                for (auto & dlg : dclTiles)
-                {
-                    if (dlg->value().dialog_Id == dlgId)
-                    {
-                        dlg->vlayout()->addWidget(brr->groupbox());
-                        break;
-                    }
-                }
-                break;
-            }
-            else
-            {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
-                {
-                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
-                    if(LAYOUT_TILE & dclTiles.at(i)->value().id)
-                    {
-                        if (LAYOUT_ROW & dclTiles.at(i)->value().id)
-                        {
-                            if (dclTiles.at(i)->value().id & LAYOUT_ROW)
-                            {
-                                dclTiles.at(i)->hlayout()->addWidget(brr->groupbox());
-                            }
-                            else
-                            {
-                                dclTiles.at(i)->vlayout()->addWidget(brr->groupbox());
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-            break;
         case COLUMN:
         case PARAGRAPH:
+        case RADIO_COLUMN:
         {
             if (!dclTiles.size())
             {
@@ -913,7 +871,6 @@ void openTile(const lclGui* tile)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        qDebug() << "[openTile] to dlg";
                         dlg->vlayout()->addLayout(c->vlayout());
                         break;
                     }
@@ -924,19 +881,16 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
                             if (dclTiles.at(i)->value().id & LAYOUT_ROW)
                             {
-                                qDebug() << "[openTile] to hlayout()";
                                 dclTiles.at(i)->hlayout()->addLayout(c->vlayout());
                             }
                             else
                             {
-                                qDebug() << "[openTile] to vlayout()";
                                 dclTiles.at(i)->vlayout()->addLayout(c->vlayout());
                             }
                             break;
@@ -947,6 +901,7 @@ void openTile(const lclGui* tile)
         }
             break;
         case BOXED_COLUMN:
+        case BOXED_RADIO_COLUMN:
         {
             if (!dclTiles.size())
             {
@@ -981,49 +936,6 @@ void openTile(const lclGui* tile)
                             else
                             {
                                 dclTiles.at(i)->vlayout()->addWidget(bc->groupbox());
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-            break;
-        case BOXED_RADIO_COLUMN:
-        {
-            if (!dclTiles.size())
-            {
-                break;
-            }
-            const lclBoxedRadioColumn* brc = static_cast<const lclBoxedRadioColumn*>(tile);
-            dclTiles.push_back(tile);
-            if (!brc->value().has_parent) {
-                for (auto & dlg : dclTiles)
-                {
-                    if (dlg->value().dialog_Id == dlgId)
-                    {
-                        dlg->vlayout()->addWidget(brc->groupbox());
-                        break;
-                    }
-                }
-                break;
-            }
-            else
-            {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
-                {
-                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
-                    if(LAYOUT_TILE & dclTiles.at(i)->value().id)
-                    {
-                        if (LAYOUT_ROW & dclTiles.at(i)->value().id)
-                        {
-                            if (dclTiles.at(i)->value().id & LAYOUT_ROW)
-                            {
-                                dclTiles.at(i)->hlayout()->addWidget(brc->groupbox());
-                            }
-                            else
-                            {
-                                dclTiles.at(i)->vlayout()->addWidget(brc->groupbox());
                             }
                             break;
                         }
@@ -1124,7 +1036,6 @@ void openTile(const lclGui* tile)
             break;
         case OK_ONLY:
         {
-            qDebug() << "openTile() >>> OK_ONLY";
             if (!dclTiles.size())
             {
                 break;
@@ -1342,7 +1253,6 @@ void openTile(const lclGui* tile)
             }
             const lclSpacer* s = static_cast<const lclSpacer*>(tile);
             dclTiles.push_back(tile);
-
             if (!s->value().has_parent) {
                 for (auto & dlg : dclTiles)
                 {

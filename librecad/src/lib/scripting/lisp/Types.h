@@ -507,7 +507,7 @@ enum TILE_ID {
     ROW = 4096
 };
 
-#define LAYOUT_TILE (COLUMN | BOXED_COLUMN | BOXED_ROW | ROW | CONCATENATION | PARAGRAPH )
+#define LAYOUT_TILE (COLUMN | BOXED_COLUMN | BOXED_ROW | ROW | CONCATENATION | PARAGRAPH)
 #define LAYOUT_ROW (BOXED_ROW | ROW | CONCATENATION)
 
 typedef enum TILE_ID tile_id_t;
@@ -868,24 +868,6 @@ private:
     QGroupBox* m_groupbox;
 };
 
-class lclBoxedRadioRow : public lclGui {
-public:
-    lclBoxedRadioRow(const tile_t& tile);
-    lclBoxedRadioRow(const lclBoxedRadioRow& that, lclValuePtr meta)
-        : lclGui(that, meta) { }
-
-    virtual ~lclBoxedRadioRow() { delete m_layout; delete m_groupbox; }
-
-    WITH_META(lclBoxedRadioRow)
-
-    virtual QHBoxLayout* hlayout() const { return m_layout; }
-    QGroupBox* groupbox() const { return m_groupbox; }
-
-private:
-    QHBoxLayout* m_layout;
-    QGroupBox* m_groupbox;
-};
-
 class lclColumn : public lclGui {
 public:
     lclColumn(const tile_t& tile);
@@ -911,24 +893,6 @@ public:
     virtual ~lclBoxedColumn() { delete m_layout; delete m_groupbox; }
 
     WITH_META(lclBoxedColumn)
-
-    virtual QVBoxLayout* vlayout() const { return m_layout; }
-    QGroupBox* groupbox() const { return m_groupbox; }
-
-private:
-    QVBoxLayout* m_layout;
-    QGroupBox* m_groupbox;
-};
-
-class lclBoxedRadioColumn : public lclGui {
-public:
-    lclBoxedRadioColumn(const tile_t& tile);
-    lclBoxedRadioColumn(const lclBoxedRadioColumn& that, lclValuePtr meta)
-        : lclGui(that, meta) { }
-
-    virtual ~lclBoxedRadioColumn() { delete m_layout; delete m_groupbox; }
-
-    WITH_META(lclBoxedRadioColumn)
 
     virtual QVBoxLayout* vlayout() const { return m_layout; }
     QGroupBox* groupbox() const { return m_groupbox; }
@@ -1167,8 +1131,6 @@ namespace lcl {
     lclValuePtr widget(const tile_t& tile);
     lclValuePtr boxedcolumn(const tile_t& tile);
     lclValuePtr boxedrow(const tile_t& tile);
-    lclValuePtr boxedradiocolumn(const tile_t& tile);
-    lclValuePtr boxedradiorow(const tile_t& tile);
     lclValuePtr button(const tile_t& tile);
     lclValuePtr column(const tile_t& tile);
     lclValuePtr label(const tile_t& tile);

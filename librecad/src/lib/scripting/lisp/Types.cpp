@@ -73,11 +73,7 @@ namespace lcl {
     {
         return lclValuePtr(new lclFile(path, mode));
     }
-#if 0
-    lclValuePtr gui(const tile_t& tile) {
-        return lclValuePtr(new lclGui(tile));
-    }
-#endif
+
     lclValuePtr hash(const lclHash::Map& map) {
         return lclValuePtr(new lclHash(map));
     }
@@ -256,14 +252,6 @@ namespace lcl {
 
     lclValuePtr boxedrow(const tile_t& tile) {
         return lclValuePtr(new lclBoxedRow(tile));
-    }
-
-    lclValuePtr boxedradiocolumn(const tile_t& tile) {
-        return lclValuePtr(new lclBoxedRadioColumn(tile));
-    }
-
-    lclValuePtr boxedradiorow(const tile_t& tile) {
-        return lclValuePtr(new lclBoxedRadioRow(tile));
     }
 
     lclValuePtr button(const tile_t& tile) {
@@ -954,8 +942,12 @@ lclButton::lclButton(const tile_t& tile)
 void lclButton::clicked(bool checked)
 {
     Q_UNUSED(checked)
-    qDebug() << "lclButton::clicked key:" << this->value().key.c_str();
     qDebug() << "lclButton::clicked key:" << noQuotes(this->value().key).c_str();
+
+    if (noQuotes(this->value().key) == "")
+    {
+        return;
+    }
 
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_" + noQuotes(this->value().key).c_str());
     qDebug() << "lclButton::clicked val:" << val->print(true).c_str();
@@ -1048,6 +1040,16 @@ lclRadioButton::lclRadioButton(const tile_t& tile)
         m_button->setEnabled(false);
     }
 
+    if(noQuotes(tile.value) == "1")
+    {
+        m_button->setChecked(true);
+    }
+
+    if(noQuotes(tile.value) == "0")
+    {
+        m_button->setChecked(false);
+    }
+
     QObject::connect(m_button, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { clicked(checked); });
 }
 
@@ -1055,6 +1057,12 @@ void lclRadioButton::clicked(bool checked)
 {
     qDebug() << "lclRadioButton::clicked checked:" << checked;
     qDebug() << "lclRadioButton::clicked key:" << noQuotes(this->value().key).c_str();
+
+    if (noQuotes(this->value().key) == "")
+    {
+        return;
+    }
+
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_" + noQuotes(this->value().key).c_str());
     if (val->print(true).compare("nil") != 0) {
         const lclString *str = VALUE_CAST(lclString, val);
@@ -1158,98 +1166,6 @@ lclBoxedColumn::lclBoxedColumn(const tile_t& tile)
 }
 
 lclBoxedRow::lclBoxedRow(const tile_t& tile)
-    : lclGui(tile)
-    , m_layout(new QHBoxLayout)
-    , m_groupbox(new QGroupBox)
-{
-    m_groupbox->setTitle(noQuotes(tile.label).c_str());
-    m_groupbox->setStyleSheet("QGroupBox { border: 1px solid silver; border-radius: 5px;margin-top: 5px; }"
-                              " QGroupBox::title { subcontrol-origin: margin;left: 5px;padding: -10px 2px 0px 2px;}" );
-    //m_layout->addStretch(1);
-    m_groupbox->setLayout(m_layout);
-#if 0
-    if(int(tile.width))
-    {
-        m_groupbox->setMinimumWidth(int(tile.width * 10));
-    }
-
-    if(int(tile.height))
-    {
-        m_groupbox->setMinimumHeight(int(tile.height * 10));
-    }
-
-    if (tile.fixed_width)
-    {
-        if(int(tile.width)) {
-            m_groupbox->setFixedWidth(int(tile.width * 10));
-        }
-        else
-        {
-            m_groupbox->setFixedWidth(80);
-        }
-    }
-
-    if (tile.fixed_height)
-    {
-        if(int(tile.height))
-        {
-            m_groupbox->setMinimumHeight(int(tile.height * 10));
-        }
-        else
-        {
-            m_groupbox->setFixedWidth(32);
-        }
-    }
-#endif
-}
-
-lclBoxedRadioColumn::lclBoxedRadioColumn(const tile_t& tile)
-    : lclGui(tile)
-    , m_layout(new QVBoxLayout)
-    , m_groupbox(new QGroupBox)
-{
-    m_groupbox->setTitle(noQuotes(tile.label).c_str());
-    m_groupbox->setStyleSheet("QGroupBox { border: 1px solid silver; border-radius: 5px;margin-top: 5px; }"
-                              " QGroupBox::title { subcontrol-origin: margin;left: 5px;padding: -10px 2px 0px 2px;}" );
-    //m_layout->addStretch(1);
-    m_groupbox->setLayout(m_layout);
-#if 0
-    if(int(tile.width))
-    {
-        m_groupbox->setMinimumWidth(int(tile.width * 10));
-    }
-
-    if(int(tile.height))
-    {
-        m_groupbox->setMinimumHeight(int(tile.height * 10));
-    }
-
-    if (tile.fixed_width)
-    {
-        if(int(tile.width)) {
-            m_groupbox->setFixedWidth(int(tile.width * 10));
-        }
-        else
-        {
-            m_groupbox->setFixedWidth(80);
-        }
-    }
-
-    if (tile.fixed_height)
-    {
-        if(int(tile.height))
-        {
-            m_groupbox->setMinimumHeight(int(tile.height * 10));
-        }
-        else
-        {
-            m_groupbox->setFixedWidth(32);
-        }
-    }
-#endif
-}
-
-lclBoxedRadioRow::lclBoxedRadioRow(const tile_t& tile)
     : lclGui(tile)
     , m_layout(new QHBoxLayout)
     , m_groupbox(new QGroupBox)
@@ -1564,6 +1480,12 @@ lclEdit::lclEdit(const tile_t& tile)
 void lclEdit::textEdited(const QString &text)
 {
     qDebug() << "lclEdit::textEdited text:" << text;
+
+    if (noQuotes(this->value().key) == "")
+    {
+        return;
+    }
+
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_" + noQuotes(this->value().key).c_str());
     qDebug() << "lclEdit::textEdited val:" << val->print(true).c_str();
     if (val->print(true).compare("nil") != 0) {
@@ -1657,6 +1579,12 @@ lclListBox::lclListBox(const tile_t& tile)
 void lclListBox::currentTextChanged(const QString &currentText)
 {
     qDebug() << "lclListBox::currentTextChanged currentText:" << currentText;
+
+    if (noQuotes(this->value().key) == "")
+    {
+        return;
+    }
+
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_" + noQuotes(this->value().key).c_str());
     if (val->print(true).compare("nil") != 0)
     {
@@ -1745,8 +1673,12 @@ lclSlider::lclSlider(const tile_t& tile)
 
 void lclSlider::valueChanged()
 {
-    qDebug() << "lclSlider::valueChanged key:" << this->value().key.c_str();
     qDebug() << "lclSlider::valueChanged key:" << noQuotes(this->value().key).c_str();
+
+    if (noQuotes(this->value().key) == "")
+    {
+        return;
+    }
 
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_" + noQuotes(this->value().key).c_str());
     qDebug() << "lclSlider::valueChanged val:" << val->print(true).c_str();
@@ -1893,8 +1825,12 @@ lclToggle::lclToggle(const tile_t& tile)
 void lclToggle::stateChanged(int state)
 {
     Q_UNUSED(state)
-    qDebug() << "lclToggle::stateChanged key:" << this->value().key.c_str();
     qDebug() << "lclToggle::stateChanged key:" << noQuotes(this->value().key).c_str();
+
+    if (noQuotes(this->value().key) == "")
+    {
+        return;
+    }
 
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_" + noQuotes(this->value().key).c_str());
     qDebug() << "lclToggle::stateChanged val:" << val->print(true).c_str();
@@ -1911,6 +1847,7 @@ void lclToggle::stateChanged(int state)
         {
             replaceValue(action, "0");
         }
+        qDebug() << "lclToggle::stateChanged action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
 }
@@ -2003,9 +1940,6 @@ lclOkCancel::lclOkCancel(const tile_t& tile)
 void lclOkCancel::okClicked(bool checked)
 {
     Q_UNUSED(checked)
-    qDebug() << "lclOkCancel::clicked key:" << this->value().key.c_str();
-    qDebug() << "lclOkCancel::clicked key:" << noQuotes(this->value().key).c_str();
-
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_accept");
     qDebug() << "lclOkCancel::clicked val:" << val->print(true).c_str();
     if (val->print(true).compare("nil") != 0)
@@ -2022,9 +1956,6 @@ void lclOkCancel::okClicked(bool checked)
 void lclOkCancel::cancelClicked(bool checked)
 {
     Q_UNUSED(checked)
-    qDebug() << "lclOkCancel::cancelClicked key:" << this->value().key.c_str();
-    qDebug() << "lclOkCancel::cancelClicked key:" << noQuotes(this->value().key).c_str();
-
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_cancel");
     qDebug() << "lclOkCancel::cancelClicked val:" << val->print(true).c_str();
     if (val->print(true).compare("nil") != 0)
@@ -2066,9 +1997,6 @@ lclOkCancelHelp::lclOkCancelHelp(const tile_t& tile)
 void lclOkCancelHelp::okClicked(bool checked)
 {
     Q_UNUSED(checked)
-    qDebug() << "lclOkCancelHelp::okClicked key:" << this->value().key.c_str();
-    qDebug() << "lclOkCancelHelp::okClicked key:" << noQuotes(this->value().key).c_str();
-
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_accept");
     qDebug() << "lclOkCancelHelp::okClicked val:" << val->print(true).c_str();
     if (val->print(true).compare("nil") != 0)
@@ -2085,9 +2013,6 @@ void lclOkCancelHelp::okClicked(bool checked)
 void lclOkCancelHelp::cancelClicked(bool checked)
 {
     Q_UNUSED(checked)
-    qDebug() << "lclOkCancelHelp::cancelClicked key:" << this->value().key.c_str();
-    qDebug() << "lclOkCancelHelp::cancelClicked key:" << noQuotes(this->value().key).c_str();
-
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_cancel");
     qDebug() << "lclOkCancelHelp::cancelClicked val:" << val->print(true).c_str();
     if (val->print(true).compare("nil") != 0)
@@ -2104,9 +2029,6 @@ void lclOkCancelHelp::cancelClicked(bool checked)
 void lclOkCancelHelp::helpClicked(bool checked)
 {
     Q_UNUSED(checked)
-    qDebug() << "lclOkCancelHelp::helpClicked key:" << this->value().key.c_str();
-    qDebug() << "lclOkCancelHelp::helpClicked key:" << noQuotes(this->value().key).c_str();
-
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_help");
     qDebug() << "lclOkCancelHelp::helpClicked val:" << val->print(true).c_str();
     if (val->print(true).compare("nil") != 0)
@@ -2153,9 +2075,6 @@ lclOkCancelHelpInfo::lclOkCancelHelpInfo(const tile_t& tile)
 void lclOkCancelHelpInfo::okClicked(bool checked)
 {
     Q_UNUSED(checked)
-    qDebug() << "lclOkCancelHelpInfo::okClicked key:" << this->value().key.c_str();
-    qDebug() << "lclOkCancelHelpInfo::okClicked key:" << noQuotes(this->value().key).c_str();
-
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_accept");
     qDebug() << "lclOkCancelHelpInfo::okClicked val:" << val->print(true).c_str();
     if (val->print(true).compare("nil") != 0)
@@ -2172,9 +2091,6 @@ void lclOkCancelHelpInfo::okClicked(bool checked)
 void lclOkCancelHelpInfo::cancelClicked(bool checked)
 {
     Q_UNUSED(checked)
-    qDebug() << "lclOkCancelHelpInfo::cancelClicked key:" << this->value().key.c_str();
-    qDebug() << "lclOkCancelHelpInfo::cancelClicked key:" << noQuotes(this->value().key).c_str();
-
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_cancel");
     qDebug() << "lclOkCancelHelpInfo::cancelClicked val:" << val->print(true).c_str();
     if (val->print(true).compare("nil") != 0)
@@ -2191,9 +2107,6 @@ void lclOkCancelHelpInfo::cancelClicked(bool checked)
 void lclOkCancelHelpInfo::helpClicked(bool checked)
 {
     Q_UNUSED(checked)
-    qDebug() << "lclOkCancelHelpInfo::helpClicked key:" << this->value().key.c_str();
-    qDebug() << "lclOkCancelHelpInfo::helpClicked key:" << noQuotes(this->value().key).c_str();
-
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_help");
     qDebug() << "lclOkCancelHelpInfo::helpClicked val:" << val->print(true).c_str();
     if (val->print(true).compare("nil") != 0)
@@ -2210,9 +2123,6 @@ void lclOkCancelHelpInfo::helpClicked(bool checked)
 void lclOkCancelHelpInfo::infoClicked(bool checked)
 {
     Q_UNUSED(checked)
-    qDebug() << "lclOkCancelHelpInfo::infoClicked key:" << this->value().key.c_str();
-    qDebug() << "lclOkCancelHelpInfo::infoClicked key:" << noQuotes(this->value().key).c_str();
-
     lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_info");
     qDebug() << "lclOkCancelHelpInfo::infoClicked val:" << val->print(true).c_str();
     if (val->print(true).compare("nil") != 0)
@@ -2229,15 +2139,33 @@ void lclOkCancelHelpInfo::infoClicked(bool checked)
 
 static inline void replaceValue(std::string &com, const std::string& value)
 {
+    std::size_t pyCom = com.find("(py-");
+
     while(com.find("$value") != std::string::npos) {
-        com.replace(com.find("$value"),6, "\"" + value + "\"");
+        if (pyCom != std::string::npos)
+        {
+            com.replace(com.find("$value"),6, "\'" + value + "\'");
+        }
+        else
+        {
+            com.replace(com.find("$value"),6, "\"" + value + "\"");
+        }
     }
 }
 
 static inline void replaceKey(std::string &com, const std::string& key)
 {
+    std::size_t pyCom = com.find("(py-");
+
     while(com.find("$key") != std::string::npos) {
-        com.replace(com.find("$key"),4, "\"" + key + "\"");
+        if (pyCom != std::string::npos)
+        {
+            com.replace(com.find("$key"),4, "\'" + key + "\'");
+        }
+        else
+        {
+            com.replace(com.find("$key"),4, "\"" + key + "\"");
+        }
     }
 }
 

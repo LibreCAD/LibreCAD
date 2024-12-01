@@ -203,24 +203,38 @@ bool RS_PythonGui::setTile(const char *key, const char *val)
                 const lclEdit* edit = static_cast<const lclEdit*>(tile);
                 edit->edit()->setText(val);
             }
-            break;
+                break;
             case TEXT:
             {
                 const lclLabel* l = static_cast<const lclLabel*>(tile);
                 l->label()->setText(val);
             }
+                break;
+            case TOGGLE:
+            {
+                const lclToggle* tb = static_cast<const lclToggle*>(tile);
+                if(String("0") == val)
+                {
+                    tb->toggle()->setChecked(false);
+                }
+                if(String("1") == val)
+                {
+                    tb->toggle()->setChecked(true);
+                }
+            }
+                break;
             case BUTTON:
             {
                 const lclButton* b = static_cast<const lclButton*>(tile);
                 b->button()->setText(val);
             }
-            break;
+                break;
             case RADIO_BUTTON:
             {
                 const lclRadioButton* rb = static_cast<const lclRadioButton*>(tile);
                 rb->button()->setText(val);
             }
-            break;
+                break;
             default:
                 return false;
             }
@@ -296,7 +310,7 @@ const char *RS_PythonGui::getTile(const char *key)
             {
                 qDebug() << "getTile POPUP_LIST";
                 const lclPopupList* pl = static_cast<const lclPopupList*>(tile);
-                return qUtf8Printable(pl->list()->currentText());
+                return std::to_string(pl->list()->currentIndex()).c_str();
             }
             break;
             default:
@@ -532,7 +546,7 @@ const char *RS_PythonGui::addList(const char *val)
 
     if (key)
     {
-        qDebug() << "add_list key: " << key->value().c_str();
+        qDebug() << "addList key: " << key->value().c_str();
         for (auto & tile : dclTiles)
         {
             if(tile->value().dialog_Id != dialogId->value())
@@ -543,7 +557,7 @@ const char *RS_PythonGui::addList(const char *val)
             {
                 if (tile->value().id == LIST_BOX)
                 {
-                    qDebug() << "add_list got LIST_BOX";
+                    qDebug() <<  "addList got LIST_BOX";
                     const lclListBox *lb = static_cast<const lclListBox*>(tile);
                     if(operation->value() == 1)
                     {
@@ -569,7 +583,7 @@ const char *RS_PythonGui::addList(const char *val)
                 }
                 if (tile->value().id == POPUP_LIST)
                 {
-                    qDebug() << "add_list got POPUP_LIST";
+                    qDebug() <<  "addList got POPUP_LIST";
                     const lclPopupList *pl = static_cast<const lclPopupList*>(tile);
                     if(operation->value() == 1)
                     {
@@ -588,6 +602,17 @@ const char *RS_PythonGui::addList(const char *val)
                     if(operation->value() == 2 ||
                         operation->value() == 3)
                     {
+                        if(noQuotes(tile->value().value) != "")
+                        {
+                            bool ok;
+                            int i = QString::fromStdString(noQuotes(tile->value().value)).toInt(&ok);
+
+                            if (ok && pl->list()->count() == i)
+                            {
+                                pl->list()->setCurrentIndex(i-1);
+                            }
+                        }
+
                         pl->list()->addItem(val);
                         return val;
                     }
@@ -630,4 +655,114 @@ void RS_PythonGui::prompt(const char *prompt)
 void RS_PythonGui::Hello()
 {
     qDebug() << "Hello, LibreCAD!";
+}
+
+int RS_PythonGui::dimxTile(const char *key)
+{
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key)
+        {
+            switch (tile->value().id)
+            {
+            case IMAGE:
+            {
+                return int(tile->value().width);
+            }
+            break;
+            case IMAGE_BUTTON:
+            {
+                return 0;
+            }
+            break;
+            default:
+                return 0;
+            }
+        }
+    }
+    return 0;
+}
+
+int RS_PythonGui::dimyTile(const char *key)
+{
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key)
+        {
+            switch (tile->value().id)
+            {
+            case IMAGE:
+            {
+                return int(tile->value().height);
+            }
+            break;
+            case IMAGE_BUTTON:
+            {
+                return 0;
+            }
+            break;
+            default:
+                return 0;
+            }
+        }
+    }
+    return 0;
+}
+
+int RS_PythonGui::fillImage(int x1, int y1, int width, int height, int color)
+{
+    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key->value())
+        {
+            switch (tile->value().id)
+            {
+            case IMAGE:
+            {
+                const lclImage* img = static_cast<const lclImage*>(tile);
+                //img->image();
+                return color;
+            }
+            break;
+            case IMAGE_BUTTON:
+            {
+                return -1;
+            }
+            break;
+            default:
+                return -1;
+            }
+        }
+    }
+    return -1;
+}
+
+const char *RS_PythonGui::startImage(const char *key)
+{
+
+    dclEnv->set("start_image_key", lcl::string(key));
+
+    return key;
+
+    // FIXMI check if not in current
+    //return lcl::nilValue();
 }
