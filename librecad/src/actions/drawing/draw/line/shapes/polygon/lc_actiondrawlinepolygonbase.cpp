@@ -38,7 +38,7 @@ void LC_ActionDrawLinePolygonBase::mouseMoveEvent(QMouseEvent* e) {
                     previewRefPoint(pPoints->point1);
                     previewRefLine(pPoints->point1,mouse);
                     previewRefSelectablePoint(mouse);
-                    previewAdditionalReferences();
+                    previewAdditionalReferences(mouse);
                 }
             }
             drawPreview();

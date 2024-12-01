@@ -59,7 +59,7 @@ protected:
     virtual QString getPoint2Hint() const = 0;
 
     virtual void previewPolygon(const RS_Vector &mouse) const = 0;
-    virtual void previewAdditionalReferences() {};
+    virtual void previewAdditionalReferences(const RS_Vector &mouse) {};
 };
 
 #endif // LC_ACTIONDRAWLINEPOLYGONBASE_H

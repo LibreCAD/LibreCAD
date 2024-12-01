@@ -50,13 +50,13 @@ protected:
     SetPoint2 - Setting corner.
   */
 
-    RS_Vector determinePolygonCenter() const;
+    RS_Vector determinePolygonCenter(const RS_Vector &mouse) const;
     QString getPoint1Hint() const override;
     QString getPoint2Hint() const override;
 
     void previewPolygon(const RS_Vector &mouse) const override;
 
-    void previewAdditionalReferences() override;
+    void previewAdditionalReferences(const RS_Vector &mouse) override;
 };
 
 #endif

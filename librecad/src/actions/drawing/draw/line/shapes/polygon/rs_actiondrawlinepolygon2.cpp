@@ -67,8 +67,8 @@ void RS_ActionDrawLinePolygonCorCor::trigger() {
     }
 }
 
-void RS_ActionDrawLinePolygonCorCor::previewAdditionalReferences() {
-    RS_Vector center = determinePolygonCenter();
+void RS_ActionDrawLinePolygonCorCor::previewAdditionalReferences(const RS_Vector &mouse) {
+    RS_Vector center = determinePolygonCenter(mouse);
     previewRefPoint(center);
 }
 
@@ -77,12 +77,12 @@ void RS_ActionDrawLinePolygonCorCor::previewPolygon(const RS_Vector &mouse) cons
     creation.createPolygon2(pPoints->point1, mouse, number);
 }
 
-RS_Vector RS_ActionDrawLinePolygonCorCor::determinePolygonCenter() const{
+RS_Vector RS_ActionDrawLinePolygonCorCor::determinePolygonCenter(const RS_Vector &mouse) const{
     // angle for edge
-    double edgeAngle = pPoints->point1.angleTo(pPoints->point2);
+    double edgeAngle = pPoints->point1.angleTo(mouse);
 
     // rotate second corner so edge will be horizontal
-    RS_Vector rotatedCorner2 = pPoints->point2;
+    RS_Vector rotatedCorner2 = mouse;
     rotatedCorner2 = rotatedCorner2.rotate(pPoints->point1, -edgeAngle);
 
     // half inner angle of polygon
