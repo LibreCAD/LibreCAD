@@ -112,11 +112,20 @@ std::string Lisp_EvalString(const String& input)
 #endif
 }
 
+void initAlias()
+{
+    LclCom.push_back({ { "copyright" },   { "copyright" }   });
+    LclCom.push_back({ { "credits" },     { "credits" }     });
+    LclCom.push_back({ { "help" },        { "help" }        });
+    LclCom.push_back({ { "license" },     { "license" }     });
+}
+
 int Lisp_Initialize(int argc, char* argv[])
 {
     installCore(replEnv);
     installEvalCore(replEnv);
     installFunctions(replEnv);
+    initAlias();
     makeArgv(replEnv, argc, argv);
     if (argc > 1) {
         String filename = escape(argv[1]);

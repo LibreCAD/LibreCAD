@@ -16,7 +16,7 @@
 #ifndef __LISP__
 #define LISP_MAJOR_VER  1
 #define LISP_MINOR_VER  0
-#define LISP_PATCHLEVEL 1
+#define LISP_PATCHLEVEL 2
 #define LISP_BUILD "devel"
 
 #define LISP_VERSION LISP_MAJOR_VER * 10000 \
@@ -37,7 +37,7 @@
     LISP_VERSION_STR_HELPER(__LISP__,LISP_BUILD,__DATE__,__TIME__)
 
 #define LISP_COPYRIGHT \
-    "\nType (help), (copyright), (credits) or (license) " \
+    "\nType help, copyright, credits or license " \
     "for more information."
 #endif
 
