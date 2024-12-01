@@ -42,25 +42,15 @@ public:
                               RS_GraphicView& graphicView);
     ~LC_ActionDrawLinePolygonCenTan() override;
     void trigger() override;
-    void mouseMoveEvent(QMouseEvent* e) override;
-    QStringList getAvailableCommands() override;
+//    void mouseMoveEvent(QMouseEvent* e) override;
+
 protected:
-    enum Status {
-        SetCenter,    /**< Setting center. */
-        SetTangent,    /**< Setting tangent. */
-        SetNumber     /**< Setting number in the command line. */
-    };
+    /* Status
+    SetPoint1 - Setting center.
+    SetPoint2 - Setting tangent.
+*/
+    QString getPoint2Hint() const override;
 
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-
-    /** Last status before entering text. */
-    Status lastStatus = SetCenter;
-
-    void updateMouseButtonHints() override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-    bool doProcessCommand(int status, const QString &command) override;
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void previewPolygon(const RS_Vector &mouse) const override;
 };
 #endif // LC_ACTIONDRAWLINEPOLYGON3_H

@@ -299,5 +299,6 @@
         <file>halign_left.svg</file>
         <file>no_align.svg</file>
         <file>align_one.svg</file>
+        <file>line_polygon_size_size.svg</file>
     </qresource>
 </RCC>

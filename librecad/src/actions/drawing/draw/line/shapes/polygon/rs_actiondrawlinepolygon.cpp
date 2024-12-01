@@ -36,12 +36,6 @@
 #include "rs_graphicview.h"
 #include "rs_preview.h"
 
-struct RS_ActionDrawLinePolygonCenCor::Points {
-/** Center of polygon */
-    RS_Vector center;
-/** Edge */
-    RS_Vector corner;
-};
 
 // fixme - support creation of polygone as polyline
 // fixme - support of rounded corners
@@ -49,8 +43,8 @@ struct RS_ActionDrawLinePolygonCenCor::Points {
 RS_ActionDrawLinePolygonCenCor::RS_ActionDrawLinePolygonCenCor(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView)
-    :LC_ActionDrawLinePolygonBase("Draw Polygons (Center,Corner)", container, graphicView, actionType = RS2::ActionDrawLinePolygonCenCor),
-    pPoints(std::make_unique<Points>()), lastStatus(SetCenter){
+    :LC_ActionDrawLinePolygonBase("Draw Polygons (Center,Corner)", container, graphicView, actionType = RS2::ActionDrawLinePolygonCenCor)
+   {
 }
 
 RS_ActionDrawLinePolygonCenCor::~RS_ActionDrawLinePolygonCenCor() = default;
@@ -60,34 +54,31 @@ void RS_ActionDrawLinePolygonCenCor::trigger() {
     deletePreview();
 
     RS_Creation creation(container, graphicView);
-    bool ok = creation.createPolygon(pPoints->center, pPoints->corner, number);
+    bool ok = creation.createPolygon(pPoints->point1, pPoints->point2, number);
 
     if (!ok){
         RS_DEBUG->print("RS_ActionDrawLinePolygon::trigger:"
                         " No polygon added\n");
     }
 }
-
+/*
 void RS_ActionDrawLinePolygonCenCor::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLinePolygon::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
-        case SetCenter: {
+        case SetPoint1: {
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
-        case SetCorner: {
+        case SetPoint2: {
             deletePreview();
-            if (pPoints->center.valid){
-                mouse = getSnapAngleAwarePoint(e, pPoints->center, mouse, true);
-                pPoints->corner = mouse;
-                RS_Creation creation(preview.get(), nullptr, false);
-                creation.createPolygon(pPoints->center, pPoints->corner, number);
-
+            if (pPoints->point1.valid){
+                mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
+                previewPolygon(mouse);
                 if (showRefEntitiesOnPreview) {
-                    previewRefPoint(pPoints->center);
-                    previewRefLine(pPoints->center, mouse);
+                    previewRefPoint(pPoints->point1);
+                    previewRefLine(pPoints->point1, mouse);
                     previewRefSelectablePoint(mouse);
                 }
             }
@@ -97,95 +88,11 @@ void RS_ActionDrawLinePolygonCenCor::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
+}*/
+
+void RS_ActionDrawLinePolygonCenCor::previewPolygon(const RS_Vector &mouse) const {
+    RS_Creation creation(preview.get(), nullptr, false);
+    creation.createPolygon(pPoints->point1, mouse, number);
 }
 
-void RS_ActionDrawLinePolygonCenCor::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector coord = snapPoint(e);
-    if (status == SetCorner){
-        coord = getSnapAngleAwarePoint(e, pPoints->center, coord);
-    }
-    fireCoordinateEvent(coord);
-}
-
-void RS_ActionDrawLinePolygonCenCor::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
-    deletePreview();
-    initPrevious(status);
-}
-
-void RS_ActionDrawLinePolygonCenCor::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
-    switch (status) {
-        case SetCenter: {
-            pPoints->center = mouse;
-            setStatus(SetCorner);
-            graphicView->moveRelativeZero(mouse);
-            break;
-        }
-        case SetCorner: {
-            pPoints->corner = mouse;
-            trigger();
-            break;
-        }
-        default:
-            break;
-    }
-}
-
-void RS_ActionDrawLinePolygonCenCor::updateMouseButtonHints() {
-    switch (getStatus()) {
-        case SetCenter:
-            updateMouseWidgetTRCancel(tr("Specify center"), MOD_SHIFT_RELATIVE_ZERO);
-            break;
-        case SetCorner:
-            updateMouseWidgetTRBack(tr("Specify a corner"), MOD_SHIFT_ANGLE_SNAP);
-            break;
-        case SetNumber:
-            updateMouseWidgetTRBack(tr("Enter number:"));
-            break;
-        default:
-            updateMouseWidget();
-            break;
-    }
-}
-
-// fixme - move to base polygon action?
-bool RS_ActionDrawLinePolygonCenCor::doProcessCommand(int status, const QString &c) {
-    bool accept = false;
-    switch (status) {
-        case SetCenter:
-        case SetCorner: {
-            if (checkCommand("number", c)){
-                deletePreview();
-                lastStatus = (Status) status;
-                setStatus(SetNumber);
-                accept = true;
-            }
-            break;
-        }
-        case SetNumber: {
-            accept = parseNumber(c);
-            if (accept){
-                updateOptions();
-                setStatus(lastStatus);
-            }
-            break;
-        }
-        default:
-            break;
-    }
-    return accept;
-}
-
-QStringList RS_ActionDrawLinePolygonCenCor::getAvailableCommands(){
-    QStringList cmd;
-
-    switch (getStatus()) {
-        case SetCenter:
-        case SetCorner:
-            cmd += command("number");
-            break;
-        default:
-            break;
-    }
-
-    return cmd;
-}
+QString RS_ActionDrawLinePolygonCenCor::getPoint2Hint() const { return tr("Specify a corner"); }

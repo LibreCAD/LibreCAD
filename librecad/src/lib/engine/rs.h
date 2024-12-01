@@ -301,6 +301,7 @@ namespace RS2 {
         ActionDrawLinePolygonCenCor,
         ActionDrawLinePolygonCenTan,//add by txmy
         ActionDrawLinePolygonCorCor,
+        ActionDrawLinePolygonSideSide,
         ActionDrawLineRectangle,
         ActionDrawLineRelAngle,
         ActionDrawLineTangent1,

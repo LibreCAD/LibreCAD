@@ -28,14 +28,15 @@
 #include "ui_qg_linepolygonoptions.h"
 #include "rs_debug.h"
 
-/*
- *  Constructs a QG_LinePolygonOptions as a child of 'parent', with the
- *  name 'name' and widget flags set to 'f'.
- */
 QG_LinePolygonOptions::QG_LinePolygonOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionNone, "Draw", "LinePolygon")
-	    , ui(new Ui::Ui_LinePolygonOptions{}){
-	ui->setupUi(this);
+    , ui(new Ui::Ui_LinePolygonOptions{}){
+    ui->setupUi(this);
+    connect(ui->sbNumber, &QSpinBox::valueChanged, this, &QG_LinePolygonOptions::onNumberValueChanged);
+    connect(ui->cbPolyline, &QCheckBox::toggled, this, &QG_LinePolygonOptions::onPolylineToggled);
+    connect(ui->cbRadius, &QCheckBox::toggled, this, &QG_LinePolygonOptions::onRadiusToggled);
+    connect(ui->cbVertexToVertex, &QCheckBox::toggled, this, &QG_LinePolygonOptions::onVertexToggled);
+    connect(ui->leRadius, &QLineEdit::editingFinished, this, &QG_LinePolygonOptions::onRadiusEditingFinished);
 }
 
 /*
@@ -48,29 +49,39 @@ QG_LinePolygonOptions::~QG_LinePolygonOptions() = default;
  *  language.
  */
 void QG_LinePolygonOptions::languageChange(){
-	ui->retranslateUi(this);
+    ui->retranslateUi(this);
 }
 
 bool QG_LinePolygonOptions::checkActionRttiValid(RS2::ActionType actionType){
+    sideSideAction = actionType == RS2::ActionDrawLinePolygonSideSide;
     return actionType == RS2::ActionDrawLinePolygonCenCor ||
            actionType == RS2::ActionDrawLinePolygonCenTan ||
-           actionType == RS2::ActionDrawLinePolygonCorCor;
+           actionType == RS2::ActionDrawLinePolygonCorCor ||
+           sideSideAction;
 }
 
 void QG_LinePolygonOptions::doSaveSettings(){
-	save("Number", ui->sbNumber->text());
+    save("Number", ui->sbNumber->text());
+    save("Polyline", ui->cbPolyline->isChecked());
+    save("Rounded", ui->cbRadius->isChecked());
+    save("Radius", ui->leRadius->text());
+    if (sideSideAction){
+        save("VertexVertex", ui->cbVertexToVertex->isChecked());
+    }
 }
 
 QString QG_LinePolygonOptions::getSettingsOptionNamePrefix(){
     switch (action->rtti()){
         case RS2::ActionDrawLinePolygonCenCor:
-            return "/LinePolygon";
+            return "LinePolygon";
         case RS2::ActionDrawLinePolygonCenTan:
-            return "/LinePolygon3";            
+            return "LinePolygon3";
         case RS2::ActionDrawLinePolygonCorCor:
-            return "/LinePolygon2";
+            return "LinePolygon2";
+        case RS2::ActionDrawLinePolygonSideSide:
+            return "LinePolygonSS";
         default:
-            return "/LinePolygon";
+            return "LinePolygon";
     }
 }
 
@@ -78,12 +89,58 @@ void QG_LinePolygonOptions::doSetAction(RS_ActionInterface *a, bool update){
     action = dynamic_cast<LC_ActionDrawLinePolygonBase*>(a);
 
     int number;
+    bool polyline;
+    bool rounded;
+    QString radius;
+    bool vertextVertex;
     if (update){
         number = action->getNumber();
+        polyline = action->isPolyline();
+        rounded = action->isCornersRounded();
+        radius = fromDouble(action->getRoundingRadius());
+        if (sideSideAction){
+            // fixme - sand - complete parameter extraction as action will be available!!!
+        }
     } else {
         number = loadInt("Number", 3);
+        polyline = loadBool("Polyline", false);
+        rounded = loadBool("Rounded", false);
+        radius = load("Radius", "0.0");
+        vertextVertex = loadBool("VertexVertex", false);
     }
+
+    ui->cbVertexToVertex->setVisible(sideSideAction);
     setNumberToActionAndView(number);
+    setPolylineToActionAndView(polyline);
+    setRoundedToActionAndView(rounded);
+    setRadiusToActionAndView(radius);
+    if (sideSideAction){
+        setVertexVertexToActionAndView(vertextVertex);
+    }
+}
+
+void QG_LinePolygonOptions::setPolylineToActionAndView(bool val) {
+    action->setPolyline(val);
+    ui->cbPolyline->setChecked(val);
+}
+
+void QG_LinePolygonOptions::setRoundedToActionAndView(bool val) {
+    action->setCornersRounded(val);
+    ui->cbRadius->setChecked(val);
+}
+
+void QG_LinePolygonOptions::setVertexVertexToActionAndView(bool val) {
+    // fixme - sand - complete parameter extraction as action will be available!!!
+//    action->setPolyline(val);
+    ui->cbVertexToVertex->setChecked(val);
+}
+
+void QG_LinePolygonOptions::setRadiusToActionAndView(const QString &val) {
+    double value;
+    if (toDouble(val, value, 0.0, true)){
+        action->setRoundingRadius(value);
+        ui->leRadius->setText(fromDouble(value));
+    }
 }
 
 void QG_LinePolygonOptions::setNumberToActionAndView(int number){
@@ -91,6 +148,22 @@ void QG_LinePolygonOptions::setNumberToActionAndView(int number){
     ui->sbNumber->setValue(number);
 }
 
-void QG_LinePolygonOptions::on_sbNumber_valueChanged( [[maybe_unused]]int number){
+void QG_LinePolygonOptions::onNumberValueChanged( [[maybe_unused]]int number){
     setNumberToActionAndView(ui->sbNumber->value());
+}
+
+void QG_LinePolygonOptions::onPolylineToggled(bool value) {
+    setPolylineToActionAndView(ui->cbPolyline->isChecked());
+}
+
+void QG_LinePolygonOptions::onRadiusToggled(bool val) {
+    setRoundedToActionAndView(ui->cbRadius->isChecked());
+}
+
+void QG_LinePolygonOptions::onVertexToggled(bool val) {
+    setVertexVertexToActionAndView(ui->cbVertexToVertex->isChecked());
+}
+
+void QG_LinePolygonOptions::onRadiusEditingFinished() {
+    setRadiusToActionAndView(ui->leRadius->text());
 }

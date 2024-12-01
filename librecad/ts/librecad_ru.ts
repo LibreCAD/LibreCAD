@@ -2928,7 +2928,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="172"/>
         <source>Finish alignment after selection</source>
-        <translation type="unfinished">Выровнять и закончить после выбора объекта</translation>
+        <translation>Выровнять и закончить после выбора объекта</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="253"/>

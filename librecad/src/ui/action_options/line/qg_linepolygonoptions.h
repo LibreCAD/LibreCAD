@@ -44,17 +44,27 @@ public:
     QG_LinePolygonOptions();
     ~QG_LinePolygonOptions() override;
 public slots:
-    void on_sbNumber_valueChanged(int number);
+    void onNumberValueChanged(int number);
+    void onPolylineToggled(bool value);
+    void onRadiusToggled(bool val);
+    void onVertexToggled(bool val);
+    void onRadiusEditingFinished();
     void languageChange() override;
+
 protected:
+    bool sideSideAction = false;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
     QString getSettingsOptionNamePrefix() override;
 private:
     LC_ActionDrawLinePolygonBase* action;
-	  std::unique_ptr<Ui::Ui_LinePolygonOptions> ui;
+	   std::unique_ptr<Ui::Ui_LinePolygonOptions> ui;
     void setNumberToActionAndView(int number);
+    void setPolylineToActionAndView(bool val);
+    void setRoundedToActionAndView(bool val);
+    void setVertexVertexToActionAndView(bool val);
+    void setRadiusToActionAndView(const QString &val);
 };
 
 #endif // QG_LINEPOLYGONOPTIONS_H

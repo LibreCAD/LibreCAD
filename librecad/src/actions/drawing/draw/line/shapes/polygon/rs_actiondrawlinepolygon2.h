@@ -42,25 +42,21 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawLinePolygonCorCor() override;
     void trigger() override;
-    void mouseMoveEvent(QMouseEvent *e) override;
-    QStringList getAvailableCommands() override;
-protected:
-    enum Status {
-        SetCorner1,    /**< Setting center 1. */
-        SetCorner2,    /**< Setting corner 2. */
-        SetNumber      /**< Setting number in the command line. */
-    };
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-/** Last status before entering text. */
-    Status lastStatus = SetCorner1;
-    RS_Vector determinePolygonCenter() const;
 
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-    bool doProcessCommand(int status, const QString & command) override;
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
+protected:
+
+ /* Status
+    SetPoint1 - Setting corner.
+    SetPoint2 - Setting corner.
+  */
+
+    RS_Vector determinePolygonCenter() const;
+    QString getPoint1Hint() const override;
+    QString getPoint2Hint() const override;
+
+    void previewPolygon(const RS_Vector &mouse) const override;
+
+    void previewAdditionalReferences() override;
 };
 
 #endif

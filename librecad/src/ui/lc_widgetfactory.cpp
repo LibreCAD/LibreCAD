@@ -88,6 +88,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawLinePolygonCenCor",
         "DrawLinePolygonCenTan",   //20161226 added by txmy
         "DrawLinePolygonCorCor",
+        "DrawLinePolygonSideSide",
         "DrawStar"
     });
 

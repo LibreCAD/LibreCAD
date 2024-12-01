@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>104</width>
-    <height>22</height>
+    <width>506</width>
+    <height>24</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -24,14 +24,14 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>140</width>
-    <height>22</height>
+    <width>16777215</width>
+    <height>24</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Polygon Options</string>
   </property>
-  <layout class="QHBoxLayout">
+  <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -44,7 +44,7 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item>
+   <item row="1" column="0">
     <widget class="QLabel" name="lNumber">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -60,7 +60,54 @@
      </property>
     </widget>
    </item>
-   <item>
+   <item row="1" column="5">
+    <widget class="QCheckBox" name="cbRadius">
+     <property name="toolTip">
+      <string>If checked, vertexes of polygon will be rounded. </string>
+     </property>
+     <property name="text">
+      <string>Radius</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="8">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="4">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <widget class="QCheckBox" name="cbPolyline">
+     <property name="toolTip">
+      <string>If selected, singel polyline will be created for polygon shape. Otherwise, the set of lines will be created.</string>
+     </property>
+     <property name="text">
+      <string>Polyline</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
     <widget class="QSpinBox" name="sbNumber">
      <property name="toolTip">
       <string>Number of edges</string>
@@ -73,18 +120,22 @@
      </property>
     </widget>
    </item>
-   <item>
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+   <item row="1" column="6">
+    <widget class="QLineEdit" name="leRadius">
+     <property name="toolTip">
+      <string>Rounding radius for vertex bevel.</string>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
+    </widget>
+   </item>
+   <item row="1" column="7">
+    <widget class="QCheckBox" name="cbVertexToVertex">
+     <property name="toolTip">
+      <string>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </string>
      </property>
-    </spacer>
+     <property name="text">
+      <string>Vertex to Vertex</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

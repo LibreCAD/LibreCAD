@@ -110,6 +110,7 @@ void LC_ActionFactory::createDrawShapeActions(QMap<QString, QAction*>& map, QAct
         {"DrawLinePolygonCenCor",    RS2::ActionDrawLinePolygonCenCor,   tr("Pol&ygon (Cen,Cor)"),     ":/icons/line_polygon_cen_cor.svg"},
         {"DrawLinePolygonCenTan",    RS2::ActionDrawLinePolygonCenTan,   tr("Pol&ygon (Cen,Tan)"),     ":/icons/line_polygon_cen_tan.svg"},
         {"DrawLinePolygonCorCor",    RS2::ActionDrawLinePolygonCorCor,   tr("Polygo&n (Cor,Cor)"),     ":/icons/line_polygon_cor_cor.svg"},
+        {"DrawLinePolygonSideSide",  RS2::ActionDrawLinePolygonCorCor,   tr("Polygo&n (Side,Side)"),   ":/icons/line_polygon_size_size.svg"},
         {"DrawStar",                 RS2::ActionDrawStar,                tr("Star"),                   ":/icons/line_polygon_star.svg"},
         {"DrawLineRectangle1Point",  RS2::ActionDrawRectangle1Point,     tr("Rectangle (1 Point)"),    ":/icons/rectangle_1_point.svg"},
         {"DrawLineRectangle2Points", RS2::ActionDrawRectangle2Points,    tr("Rectangle (2 Points)"),   ":/icons/rectangle_2_points.svg"},
