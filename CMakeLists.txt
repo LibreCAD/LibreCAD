@@ -1341,6 +1341,8 @@ set(SOURCES
 		librecad/src/lib/modification/lc_align.cpp
 		librecad/src/actions/drawing/modify/lc_actionmodifyalignsingle.h
 		librecad/src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp
+		librecad/src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon4.h
+		librecad/src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon4.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

@@ -297,6 +297,12 @@ const LC_CommandItem g_commandList[] = {
              {"polyct", QObject::tr("polyct", "polygon centre vertex")}},
             RS2::ActionDrawLinePolygonCenTan
         },
+    // draw polygon by vertex and vertex - or side and side
+        {
+            {{"polygonvv", QObject::tr("polygonvv", "polygon vertex vertex")}},
+            {{"pvv", QObject::tr("pvv", "polygon vertex vertex")}},   // - v2.2.0r2
+            RS2::ActionDrawLinePolygonSideSide
+        },
         // draw polygon by 2 vertices
         {
             {{"polygon2v", QObject::tr("polygon2v", "polygon by 2 vertices")}},

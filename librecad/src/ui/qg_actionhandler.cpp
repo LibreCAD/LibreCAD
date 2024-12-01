@@ -219,6 +219,7 @@
 #include "lc_actiondrawmidline.h"
 #include "lc_actionmodifyalign.h"
 #include "lc_actionmodifyalignsingle.h"
+#include "lc_actiondrawlinepolygon4.h"
 
 /**
  * Constructor
@@ -604,6 +605,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionDrawLinePolygonCenTan:                      //20161223 added by txmy
             a = new LC_ActionDrawLinePolygonCenTan(*document, *view);
+            break;
+        case RS2::ActionDrawLinePolygonSideSide:
+            a = new LC_ActionDrawLinePolygon4(*document, *view);
             break;
         case RS2::ActionDrawLinePolygonCorCor:
             a = new RS_ActionDrawLinePolygonCorCor(*document, *view);

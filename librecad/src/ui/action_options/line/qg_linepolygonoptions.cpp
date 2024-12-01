@@ -27,6 +27,7 @@
 
 #include "ui_qg_linepolygonoptions.h"
 #include "rs_debug.h"
+#include "lc_actiondrawlinepolygon4.h"
 
 QG_LinePolygonOptions::QG_LinePolygonOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionNone, "Draw", "LinePolygon")
@@ -99,14 +100,17 @@ void QG_LinePolygonOptions::doSetAction(RS_ActionInterface *a, bool update){
         rounded = action->isCornersRounded();
         radius = fromDouble(action->getRoundingRadius());
         if (sideSideAction){
-            // fixme - sand - complete parameter extraction as action will be available!!!
+            auto* specificAction = dynamic_cast<LC_ActionDrawLinePolygon4 *>(a);
+            vertextVertex = specificAction->isVertexVertexMode();
         }
     } else {
         number = loadInt("Number", 3);
         polyline = loadBool("Polyline", false);
         rounded = loadBool("Rounded", false);
         radius = load("Radius", "0.0");
-        vertextVertex = loadBool("VertexVertex", false);
+        if (sideSideAction) {
+            vertextVertex = loadBool("VertexVertex", false);
+        }
     }
 
     ui->cbVertexToVertex->setVisible(sideSideAction);
@@ -130,8 +134,10 @@ void QG_LinePolygonOptions::setRoundedToActionAndView(bool val) {
 }
 
 void QG_LinePolygonOptions::setVertexVertexToActionAndView(bool val) {
-    // fixme - sand - complete parameter extraction as action will be available!!!
-//    action->setPolyline(val);
+    if (sideSideAction){
+        auto* specificAction = dynamic_cast<LC_ActionDrawLinePolygon4 *>(action);
+        specificAction->setVertexVertexMode(val);
+    }
     ui->cbVertexToVertex->setChecked(val);
 }
 
@@ -152,15 +158,15 @@ void QG_LinePolygonOptions::onNumberValueChanged( [[maybe_unused]]int number){
     setNumberToActionAndView(ui->sbNumber->value());
 }
 
-void QG_LinePolygonOptions::onPolylineToggled(bool value) {
+void QG_LinePolygonOptions::onPolylineToggled([[maybe_unused]]bool value) {
     setPolylineToActionAndView(ui->cbPolyline->isChecked());
 }
 
-void QG_LinePolygonOptions::onRadiusToggled(bool val) {
+void QG_LinePolygonOptions::onRadiusToggled([[maybe_unused]]bool val) {
     setRoundedToActionAndView(ui->cbRadius->isChecked());
 }
 
-void QG_LinePolygonOptions::onVertexToggled(bool val) {
+void QG_LinePolygonOptions::onVertexToggled([[maybe_unused]]bool val) {
     setVertexVertexToActionAndView(ui->cbVertexToVertex->isChecked());
 }
 

@@ -40,10 +40,6 @@
 #include "rs_actioninterface.h"
 #include "lc_actiondrawlinepolygonbase.h"
 
-
-// fixme - support creation of polygone as polyline
-// fixme - support of rounded corners
-
 RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
@@ -53,28 +49,27 @@ RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(
 RS_ActionDrawLinePolygonCorCor::~RS_ActionDrawLinePolygonCorCor() = default;
 
 
-void RS_ActionDrawLinePolygonCorCor::trigger() {
-    RS_PreviewActionInterface::trigger();
-
-    deletePreview();
-
-    RS_Creation creation(container, graphicView);
-    bool ok = creation.createPolygon2(pPoints->point1, pPoints->point2, number);
-
-    if (!ok){
-        RS_DEBUG->print("RS_ActionDrawLinePolygon2::trigger:"
-                        " No polygon added\n");
-    }
-}
-
 void RS_ActionDrawLinePolygonCorCor::previewAdditionalReferences(const RS_Vector &mouse) {
     RS_Vector center = determinePolygonCenter(mouse);
     previewRefPoint(center);
 }
 
-void RS_ActionDrawLinePolygonCorCor::previewPolygon(const RS_Vector &mouse) const {
-    RS_Creation creation(preview.get(), nullptr, false);
-    creation.createPolygon2(pPoints->point1, mouse, number);
+void RS_ActionDrawLinePolygonCorCor::preparePolygonInfo(LC_ActionDrawLinePolygonBase::PolygonInfo &polygonInfo, const RS_Vector &snap) {
+//    creation.createPolygon2(pPoints->point1, mouse, number);
+    double const len = pPoints->point1.distanceTo(snap);
+    double const da = 2.*M_PI/number;
+    polygonInfo.vertexRadius = 0.5*len/sin(0.5*da);
+
+    double const angle1 = pPoints->point1.angleTo(snap);
+    RS_Vector center = (pPoints->point1 + snap)*0.5;
+
+    //TODO, the center or the polygon could be at left or right side
+    //left is chosen here
+    center += RS_Vector::polar(0.5*len/tan(0.5*da), angle1 + M_PI_2);
+
+    polygonInfo.centerPoint = center;
+
+    polygonInfo.startingAngle = center.angleTo(pPoints->point1);
 }
 
 RS_Vector RS_ActionDrawLinePolygonCorCor::determinePolygonCenter(const RS_Vector &mouse) const{

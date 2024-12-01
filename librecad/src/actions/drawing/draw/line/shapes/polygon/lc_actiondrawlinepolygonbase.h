@@ -23,6 +23,9 @@ public:
     double getRoundingRadius(){return roundingRadius;}
     void setRoundingRadius(double val){roundingRadius = val;}
     void updateMouseButtonHints() override;
+
+    void trigger() override;
+
 protected:
     /** Number of edges. */
     int number = 0;
@@ -30,12 +33,19 @@ protected:
     enum Status {
         SetPoint1,
         SetPoint2,
-        SetNumber
+        SetNumber,
+        SetRadius
     };
 
     struct Points {
         RS_Vector point1;
         RS_Vector point2;
+    };
+
+    struct PolygonInfo{
+        RS_Vector centerPoint{false};
+        double startingAngle = 0.0;
+        double vertexRadius = 0.0;
     };
 
     std::unique_ptr<Points> pPoints;
@@ -47,8 +57,9 @@ protected:
     bool roundedCorners = false;
     double roundingRadius = 0.0;
 
+    bool completeActionOnTrigger = false;
+
     LC_ActionOptionsWidget* createOptionsWidget() override;
-    bool parseNumber(const QString &c);
     RS2::CursorType doGetMouseCursor(int status) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
@@ -58,8 +69,10 @@ protected:
     virtual QString getPoint1Hint() const;
     virtual QString getPoint2Hint() const = 0;
 
-    virtual void previewPolygon(const RS_Vector &mouse) const = 0;
-    virtual void previewAdditionalReferences(const RS_Vector &mouse) {};
+    void createPolygonPreview(const RS_Vector& mouse);
+    virtual void previewAdditionalReferences([[maybe_unused]]const RS_Vector &mouse) {};
+    virtual void preparePolygonInfo([[maybe_unused]]PolygonInfo &polygonInfo, [[maybe_unused]]const RS_Vector &snap){};
+    RS_Polyline *createShapePolyline(PolygonInfo &polygonInfo, bool preview);
 };
 
 #endif // LC_ACTIONDRAWLINEPOLYGONBASE_H

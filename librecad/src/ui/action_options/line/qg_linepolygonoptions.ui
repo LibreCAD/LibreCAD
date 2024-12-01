@@ -100,7 +100,7 @@
    <item row="1" column="3">
     <widget class="QCheckBox" name="cbPolyline">
      <property name="toolTip">
-      <string>If selected, singel polyline will be created for polygon shape. Otherwise, the set of lines will be created.</string>
+      <string>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </string>
      </property>
      <property name="text">
       <string>Polyline</string>

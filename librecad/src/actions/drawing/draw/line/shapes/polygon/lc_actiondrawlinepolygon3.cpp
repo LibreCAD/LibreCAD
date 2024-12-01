@@ -40,10 +40,6 @@
 #include "rs_actioninterface.h"
 #include "lc_actiondrawlinepolygonbase.h"
 
-
-// TODO - sand - support creation of polygone as polyline
-// TODO - sand - support of rounded corners?
-
 LC_ActionDrawLinePolygonCenTan::LC_ActionDrawLinePolygonCenTan(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
@@ -52,50 +48,18 @@ LC_ActionDrawLinePolygonCenTan::LC_ActionDrawLinePolygonCenTan(
 
 LC_ActionDrawLinePolygonCenTan::~LC_ActionDrawLinePolygonCenTan() = default;
 
-void LC_ActionDrawLinePolygonCenTan::trigger() {
-    RS_PreviewActionInterface::trigger();
+void LC_ActionDrawLinePolygonCenTan::preparePolygonInfo(LC_ActionDrawLinePolygonBase::PolygonInfo &polygonInfo, const RS_Vector &snap) {
+    //  creation.createPolygon3(pPoints->point1, mouse, number);
+    double angle = 2.*M_PI/number/2.0;
+    double tangensAngle = tan(angle);
 
-    deletePreview();
+    RS_Vector vertex(0, 0);
+    vertex.x = snap.x + (pPoints->point1.y - snap.y) * tangensAngle;
+    vertex.y = snap.y + (snap.x - pPoints->point1.x) * tangensAngle;
 
-    RS_Creation creation(container, graphicView);
-    bool ok = creation.createPolygon3(pPoints->point1, pPoints->point2, number);
-
-    if (!ok) {
-        RS_DEBUG->print("RS_ActionDrawLinePolygon::trigger:  No polygon added\n");
-    }
-}
-
-//void LC_ActionDrawLinePolygonCenTan::mouseMoveEvent(QMouseEvent* e) {
-//    RS_DEBUG->print("RS_ActionDrawLinePolygon::mouseMoveEvent begin");
-//
-//    RS_Vector mouse = snapPoint(e);
-//    switch (getStatus()) {
-//        case SetPoint1: {
-//            trySnapToRelZeroCoordinateEvent(e);
-//            break;
-//        }
-//        case SetPoint2: {
-//            deletePreview();
-//            if (pPoints->point1.valid){
-//                mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
-//                previewPolygon(mouse);
-//                if (showRefEntitiesOnPreview) {
-//                    previewRefPoint(pPoints->point1);
-//                    previewRefLine(pPoints->point1, mouse);
-//                    previewRefSelectablePoint(mouse);
-//                }
-//            }
-//            drawPreview();
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//}
-
-void LC_ActionDrawLinePolygonCenTan::previewPolygon(const RS_Vector &mouse) const {
-    RS_Creation creation(preview.get(), nullptr, false);
-    creation.createPolygon3(pPoints->point1, mouse, number);
+    polygonInfo.vertexRadius = pPoints->point1.distanceTo(vertex);
+    polygonInfo.startingAngle = pPoints->point1.angleTo(vertex);
+    polygonInfo.centerPoint = pPoints->point1;
 }
 
 QString LC_ActionDrawLinePolygonCenTan::getPoint2Hint() const { return tr("Specify a tangent"); }

@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWLINEPOLYGON_H
 #define RS_ACTIONDRAWLINEPOLYGON_H
 
-
 #include "lc_actiondrawlinepolygonbase.h"
 
 /**
@@ -41,19 +40,12 @@ public:
     RS_ActionDrawLinePolygonCenCor(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView);
     ~RS_ActionDrawLinePolygonCenCor() override;
-
-    void trigger() override;
-
-//    void mouseMoveEvent(QMouseEvent* e) override;
-
 protected:
     /* Status
         SetPoint1 - Setting center.
         SetPoint2 - Setting corner.
     */
-
     QString getPoint2Hint() const override;
-
-    void previewPolygon(const RS_Vector &mouse) const override;
+    void preparePolygonInfo(PolygonInfo &polygonInfo, const RS_Vector &snap) override;
 };
 #endif

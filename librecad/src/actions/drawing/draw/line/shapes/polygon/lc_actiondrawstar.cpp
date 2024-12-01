@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_staroptions.h"
 #include "rs_math.h"
 #include "rs_polyline.h"
+#include "rs_point.h"
 #include "rs_previewactioninterface.h"
 
 LC_ActionDrawStar::LC_ActionDrawStar(RS_EntityContainer &container, RS_GraphicView &graphicView)
@@ -241,7 +242,7 @@ void LC_ActionDrawStar::addPolylineToEntitiesList(RS_Polyline *polyline, QList<R
 
 // defines whether debug visualization of rounding calculation logic will be included into preview.(DEBUG_OUTPUT_DRAW_OUTER)
 // THESE SHOULD NOT BE DEFINED IN PRODUCTION MODE!!
-#define DEBUG_OUTPUT_DRAW_OUTER_NO
+#define DEBUG_OUTPUT_DRAW_ROUNDING _NO
 #define DEBUG_OUTPUT_DRAW_INNER_NO
 
 // basically, that's convenient for debug purposes, but also provides the user more clear indication
@@ -416,7 +417,7 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
             // save the angle from center to out join point for later drawing. Here we don't consider the angle from center to outer, as it is zero
             outerAngleCorrection = centerPoint.angleTo(outerJoint1);
 
-#ifdef DEBUG_OUTPUT_DRAW_OUTER
+#ifdef DEBUG_OUTPUT_DRAW_ROUNDING
             if (preview){
                 // this is internal drawing used for debugging that illustrates calculation logic for outer ray rounding
                 // we visualize all entities used in calculations during preview mode
@@ -444,8 +445,8 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
                 RS_Point *intersection = new RS_Point(nullptr, outerIntersection);
                 list << intersection;
 
-                RS_Point *intersectionOriginal = new RS_Point(nullptr, outerIntersectionOriginal);
-                list << intersectionOriginal;
+               /* RS_Point *intersectionOriginal = new RS_Point(nullptr, outerIntersectionOriginal);
+                list << intersectionOriginal;*/
 
                 RS_Point *p3 = new RS_Point(nullptr, outerP3);
                 list << p3;

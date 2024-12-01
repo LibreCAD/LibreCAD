@@ -41,22 +41,16 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     ~RS_ActionDrawLinePolygonCorCor() override;
-    void trigger() override;
-
 protected:
-
  /* Status
     SetPoint1 - Setting corner.
     SetPoint2 - Setting corner.
   */
-
     RS_Vector determinePolygonCenter(const RS_Vector &mouse) const;
     QString getPoint1Hint() const override;
     QString getPoint2Hint() const override;
-
-    void previewPolygon(const RS_Vector &mouse) const override;
-
     void previewAdditionalReferences(const RS_Vector &mouse) override;
+    void preparePolygonInfo(PolygonInfo &polygonInfo, const RS_Vector &snap) override;
 };
 
 #endif

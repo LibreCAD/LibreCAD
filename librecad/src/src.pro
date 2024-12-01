@@ -247,6 +247,7 @@ HEADERS += \
     actions/drawing/draw/curve/lc_actiondrawarc2pointslength.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.h \
     actions/drawing/draw/line/lc_actiondrawmidline.h \
+    actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon4.h \
     actions/drawing/draw/spline/lc_actionremovesplinepoints.h \
     actions/drawing/draw/spline/lc_actionsplineaddpoint.h \
     actions/drawing/draw/spline/lc_actionsplineappendpoint.h \
@@ -417,6 +418,7 @@ SOURCES += \
     actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp \
     actions/drawing/draw/line/lc_actiondrawmidline.cpp \
+    actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon4.cpp \
     actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp \
     actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp \
     actions/drawing/draw/spline/lc_actionsplineexplode.cpp \
@@ -639,7 +641,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/draw/line/lc_actiondrawcross.h \
     actions/drawing/draw/line/lc_actiondrawlineanglerel.h \
     actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.h \
-    actions/drawing/draw/line/lc_actiondrawlinepoints.h \
+    actions/drawing/draw/point/lc_actiondrawlinepoints.h \
     actions/drawing/draw/line/lc_actiondrawlinesnake.h \
     actions/drawing/draw/line/lc_actiondrawslicedivide.h \
     actions/drawing/draw/line/rs_actiondrawline.h \
@@ -652,7 +654,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/draw/line/rs_actiondrawlinerelangle.h \
     actions/drawing/draw/line/rs_actiondrawlinetangent1.h \
     actions/drawing/draw/line/rs_actiondrawlinetangent2.h \
-    actions/drawing/draw/line/rs_actiondrawpoint.h \
+    actions/drawing/draw/point/rs_actiondrawpoint.h \
     actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon3.h \
     actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygonbase.h \
     actions/drawing/draw/line/shapes/polygon/lc_actiondrawstar.h \
@@ -814,7 +816,7 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/draw/line/lc_actiondrawcross.cpp \
     actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp \
     actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp \
-    actions/drawing/draw/line/lc_actiondrawlinepoints.cpp \
+    actions/drawing/draw/point/lc_actiondrawlinepoints.cpp \
     actions/drawing/draw/line/lc_actiondrawlinesnake.cpp \
     actions/drawing/draw/line/lc_actiondrawslicedivide.cpp \
     actions/drawing/draw/line/rs_actiondrawline.cpp \
@@ -827,7 +829,7 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp \
     actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp \
     actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp \
-    actions/drawing/draw/line/rs_actiondrawpoint.cpp \
+    actions/drawing/draw/point/rs_actiondrawpoint.cpp \
     actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon3.cpp \
     actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygonbase.cpp \
     actions/drawing/draw/line/shapes/polygon/lc_actiondrawstar.cpp \
