@@ -722,7 +722,7 @@ public:
     lclWidget(const lclWidget& that, lclValuePtr meta)
         : lclGui(that, meta) { }
 
-    virtual ~lclWidget() { delete m_widget; }
+    virtual ~lclWidget() { delete m_widget; delete m_layout; }
 
     WITH_META(lclWidget)
 
@@ -803,7 +803,7 @@ public:
     lclListBox(const lclListBox& that, lclValuePtr meta)
         : lclGui(that, meta) { }
 
-    virtual ~lclListBox() { delete m_list; }
+    virtual ~lclListBox() { delete m_list; delete m_vlayout; delete m_hlayout; }
 
     WITH_META(lclListBox)
 
@@ -960,7 +960,7 @@ public:
     lclPopupList(const lclPopupList& that, lclValuePtr meta)
         : lclGui(that, meta) { }
 
-    virtual ~lclPopupList() { delete m_list; }
+    virtual ~lclPopupList() { delete m_list; delete m_vlayout; delete m_hlayout; }
 
     WITH_META(lclPopupList)
 
@@ -980,7 +980,7 @@ public:
     lclSlider(const lclSlider& that, lclValuePtr meta)
         : lclGui(that, meta) { }
 
-    virtual ~lclSlider() { delete m_slider; }
+    virtual ~lclSlider() { delete m_slider; delete m_vlayout; delete m_hlayout; }
 
     WITH_META(lclSlider)
 
@@ -1041,7 +1041,7 @@ public:
     lclOkCancel(const lclOkCancel& that, lclValuePtr meta)
         : lclGui(that, meta) { }
 
-    virtual ~lclOkCancel() { delete m_btnCancel; delete m_btnOk; }
+    virtual ~lclOkCancel() { delete m_btnCancel; delete m_btnOk; delete m_layout; }
 
     WITH_META(lclOkCancel)
 
@@ -1065,7 +1065,7 @@ public:
     lclOkCancelHelp(const lclOkCancelHelp& that, lclValuePtr meta)
         : lclGui(that, meta) { }
 
-    virtual ~lclOkCancelHelp() { delete m_btnCancel; delete m_btnOk; delete m_btnHelp; }
+    virtual ~lclOkCancelHelp() { delete m_btnCancel; delete m_btnOk; delete m_btnHelp; delete m_layout; }
 
     WITH_META(lclOkCancelHelp)
 
@@ -1092,7 +1092,7 @@ public:
     lclOkCancelHelpInfo(const lclOkCancelHelpInfo& that, lclValuePtr meta)
         : lclGui(that, meta) { }
 
-    virtual ~lclOkCancelHelpInfo() { delete m_btnCancel; delete m_btnOk; delete m_btnHelp; delete m_btnInfo; }
+    virtual ~lclOkCancelHelpInfo() { delete m_btnCancel; delete m_btnOk; delete m_btnHelp; delete m_btnInfo; delete m_layout; }
 
     WITH_META(lclOkCancelHelpInfo)
 
