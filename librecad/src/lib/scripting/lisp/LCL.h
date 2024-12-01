@@ -31,6 +31,12 @@ extern void installCore(lclEnvPtr env);
 extern String noQuotes(const String& s);
 
 // Reader.cpp
+
+typedef struct LclAlias {
+    String alias = "", command = "";
+} LclAlias_t;
+
+extern std::vector<LclAlias_t> LclCom;
 extern lclValuePtr readStr(const String& input);
 extern lclValuePtr loadDcl(const String& path);
 

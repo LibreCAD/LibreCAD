@@ -30,6 +30,7 @@ static const Regex tokenRegexes[] = {
 int dclId = -1;
 
 std::vector<tile_t> dclProtoTile;
+std::vector<LclAlias_t> LclCom;
 
 static attribute_prop_t dclAttribute[MAX_DCL_ATTR] = {
     { "action", ACTION },
@@ -212,6 +213,8 @@ lclValuePtr readStr(const String& input)
 static void readTile(Tokeniser& tokeniser, tile_t& tile);
 static void copyTile(const tile_t &a, tile_t &b);
 static bool ends_with(const std::string& str, const std::string& suffix);
+static bool isLclAlias(const String& alias);
+static const String &lclCom(const String& alias);
 static bool getDclBool(const String& str);
 static bool isdclAttribute(const String& str);
 #if 0
@@ -343,6 +346,9 @@ static lclValuePtr readAtom(Tokeniser& tokeniser)
     if (token[0] == '!') {
         return lcl::symbol(token.erase(0, 1));
     }
+    if (isLclAlias(token)) {
+        return lcl::list(lcl::symbol(lclCom(token)));
+    }
     return lcl::symbol(token);
 }
 
@@ -362,6 +368,30 @@ static void readList(Tokeniser& tokeniser, lclValueVec* items,
 static lclValuePtr processMacro(Tokeniser& tokeniser, const String& symbol)
 {
     return lcl::list(lcl::symbol(symbol), readForm(tokeniser));
+}
+
+static bool isLclAlias(const String& alias)
+{
+    for (auto & com : LclCom)
+    {
+        if (com.alias == alias)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+static const String &lclCom(const String& alias)
+{
+    for (auto & com : LclCom)
+    {
+        if (com.alias == alias)
+        {
+            return com.command;
+        }
+    }
+    return "";
 }
 
 static lclValuePtr readDclFile(Tokeniser& tokeniser, bool start, bool parent)
@@ -799,10 +829,11 @@ static lclValuePtr addTile(tile_t tile)
         return lcl::edit(tile);
     case LIST_BOX:
         return lcl::listbox(tile);
-#if 0
     case ERRTILE:
-        return lcl::errtile(tile);
-#endif
+    {
+        tile.key = "error";
+        return lcl::label(tile);
+    }
     case IMAGE:
         return lcl::image(tile);
 #if 0
@@ -824,7 +855,7 @@ static lclValuePtr addTile(tile_t tile)
         return lcl::okcancelhelpinfo(tile);
     case OK_ONLY:
     {
-        tile.label = qUtf8Printable(QObject::tr("\"OK\""));
+        tile.label = qUtf8Printable(QObject::tr("\"&Ok\""));
         tile.key = "\"accept\"";
         tile.width = 8.0;
         tile.dialog_Id = dclId;

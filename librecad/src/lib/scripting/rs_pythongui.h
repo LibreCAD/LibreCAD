@@ -14,6 +14,7 @@ public:
     void prompt(const char *prompt);
     void MessageBox(const char *msg);
     void unloadDialog(int id);
+    void endList();
 
     bool newDialog(const char *name, int id);
     std::array<int, 2> doneDialog(int res=-1);
@@ -30,7 +31,8 @@ public:
     char ReadCharDialog();
     const char *OpenFileDialog(const char *title, const char *fileName, const char *fileExt);
     const char *GetStringDialog(const char *prompt);
-    const char *startList(const char *key, int operation, int index);
+    const char *getTile(const char *key);
+    const char *startList(const char *key, int operation=-1, int index=-1);
     const char *addList(const char *val);
 };
 

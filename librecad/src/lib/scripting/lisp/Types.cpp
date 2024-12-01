@@ -865,11 +865,21 @@ lclWidget::lclWidget(const tile_t& tile)
     m_widget->setLayout(m_layout);
 }
 
+void lclWidget::addShortcut(const QString & key, QWidget *w)
+{
+    Q_UNUSED(key)
+    Q_UNUSED(w)
+#if 0
+    QShortcut *shortcut = new QShortcut(QKeySequence(key), m_widget);
+    QObject::connect(shortcut, SIGNAL(activated()), w, SLOT(yourSlotHere()));
+#endif
+}
+
 lclButton::lclButton(const tile_t& tile)
     : lclGui(tile)
     , m_button(new QPushButton)
-//    , m_vlayout(new QVBoxLayout)
-//    , m_hlayout(new QHBoxLayout)
+    , m_vlayout(new QVBoxLayout)
+    , m_hlayout(new QHBoxLayout)
 {
     m_button->setText(noQuotes(tile.label).c_str());
     m_button->setDefault(tile.is_default);
@@ -908,6 +918,36 @@ lclButton::lclButton(const tile_t& tile)
         }
     }
 
+    m_vlayout->addWidget(m_button);
+    m_hlayout->addLayout(m_vlayout);
+
+    switch (tile.alignment)
+    {
+    case LEFT:
+        m_hlayout->setAlignment(Qt::AlignLeft);
+        break;
+    case RIGHT:
+        m_hlayout->setAlignment(Qt::AlignRight);
+        break;
+    case TOP:
+        m_vlayout->setAlignment(Qt::AlignTop);
+        break;
+    case BOTTOM:
+        m_vlayout->setAlignment(Qt::AlignBottom);
+        break;
+    case CENTERED:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    default: {}
+    break;
+    }
+
+    if(!tile.is_enabled)
+    {
+        m_button->setEnabled(false);
+    }
+
     QObject::connect(m_button, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { clicked(checked); });
 }
 
@@ -924,7 +964,7 @@ void lclButton::clicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
-        qDebug() << "lclButton::clicked action_expr:" << action.c_str();
+        qDebug() << "lclButton::clicked action:" << action.c_str();
 
         if (QString::fromStdString(noQuotes(this->value().key)) == "accept" ||
             QString::fromStdString(noQuotes(this->value().label)).toUpper() == "OK")
@@ -939,8 +979,8 @@ void lclButton::clicked(bool checked)
 lclRadioButton::lclRadioButton(const tile_t& tile)
     : lclGui(tile)
     , m_button(new QRadioButton)
-//    , m_vlayout(new QVBoxLayout)
-//    , m_hlayout(new QHBoxLayout)
+    , m_vlayout(new QVBoxLayout)
+    , m_hlayout(new QHBoxLayout)
 {
     m_button->setText(noQuotes(tile.label).c_str());
 
@@ -978,6 +1018,36 @@ lclRadioButton::lclRadioButton(const tile_t& tile)
         }
     }
 
+    m_vlayout->addWidget(m_button);
+    m_hlayout->addLayout(m_vlayout);
+
+    switch (tile.alignment)
+    {
+    case LEFT:
+        m_hlayout->setAlignment(Qt::AlignLeft);
+        break;
+    case RIGHT:
+        m_hlayout->setAlignment(Qt::AlignRight);
+        break;
+    case TOP:
+        m_vlayout->setAlignment(Qt::AlignTop);
+        break;
+    case BOTTOM:
+        m_vlayout->setAlignment(Qt::AlignBottom);
+        break;
+    case CENTERED:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    default: {}
+    break;
+    }
+
+    if(!tile.is_enabled)
+    {
+        m_button->setEnabled(false);
+    }
+
     QObject::connect(m_button, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { clicked(checked); });
 }
 
@@ -991,8 +1061,7 @@ void lclRadioButton::clicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
-        lclValuePtr action_expr = lcl::string(action);
-        qDebug() << "lclButton::clicked action_expr:" << action_expr->print(true).c_str();
+        qDebug() << "lclButton::clicked action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
 }
@@ -1333,6 +1402,8 @@ lclLabel::lclLabel(const tile_t& tile)
 lclPopupList::lclPopupList(const tile_t& tile)
     : lclGui(tile)
     , m_list(new QComboBox)
+    , m_vlayout(new QVBoxLayout)
+    , m_hlayout(new QHBoxLayout)
 {
     if(int(tile.width))
     {
@@ -1366,13 +1437,42 @@ lclPopupList::lclPopupList(const tile_t& tile)
             m_list->setFixedWidth(m_list->height());
         }
     }
+
+    m_vlayout->addWidget(m_list);
+    m_hlayout->addLayout(m_vlayout);
+
+    switch (tile.alignment)
+    {
+    case LEFT:
+        m_hlayout->setAlignment(Qt::AlignLeft);
+        break;
+    case RIGHT:
+        m_hlayout->setAlignment(Qt::AlignRight);
+        break;
+    case TOP:
+        m_vlayout->setAlignment(Qt::AlignTop);
+        break;
+    case BOTTOM:
+        m_vlayout->setAlignment(Qt::AlignBottom);
+        break;
+    case CENTERED:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    default: {}
+    break;
+    }
+
+    if(!tile.is_enabled)
+    {
+        m_list->setEnabled(false);
+    }
 }
 
 lclEdit::lclEdit(const tile_t& tile)
     : lclGui(tile)
     , m_edit(new QLineEdit)
 {
-    //[signal] void QLineEdit::textEdited(const QString &text)
     m_edit->setText(noQuotes(tile.label).c_str());
     if(int(tile.width))
     {
@@ -1406,6 +1506,44 @@ lclEdit::lclEdit(const tile_t& tile)
             m_edit->setFixedWidth(m_edit->height());
         }
     }
+
+    switch (tile.alignment)
+    {
+    case LEFT:
+        m_edit->setAlignment(Qt::AlignLeft);
+        break;
+    case RIGHT:
+        m_edit->setAlignment(Qt::AlignRight);
+        break;
+    case TOP:
+        m_edit->setAlignment(Qt::AlignTop);
+        break;
+    case BOTTOM:
+        m_edit->setAlignment(Qt::AlignBottom);
+        break;
+    case CENTERED:
+        m_edit->setAlignment(Qt::AlignCenter);
+        break;
+    case HORIZONTAL:
+        m_edit->setAlignment(Qt::AlignHCenter);
+        break;
+    case VERTICAL:
+        m_edit->setAlignment(Qt::AlignVCenter);
+        break;
+    default:
+        break;
+    }
+
+    if(!tile.is_enabled)
+    {
+        m_edit->setEnabled(false);
+    }
+
+    if(!tile.is_tab_stop)
+    {
+        //m_edit->setT
+    }
+
     QObject::connect(m_edit, QOverload<const QString&>::of(&QLineEdit::textEdited), [&](const QString& text) { textEdited(text); });
 }
 
@@ -1428,8 +1566,9 @@ void lclEdit::textEdited(const QString &text)
 lclListBox::lclListBox(const tile_t& tile)
     : lclGui(tile)
     , m_list(new QListWidget)
+    , m_vlayout(new QVBoxLayout)
+    , m_hlayout(new QHBoxLayout)
 {
-    //[signal] void QListWidget::currentTextChanged(const QString &currentText)
     if(int(tile.width))
     {
         m_list->setMinimumWidth(int(tile.width));
@@ -1462,6 +1601,42 @@ lclListBox::lclListBox(const tile_t& tile)
             m_list->setFixedWidth(m_list->height());
         }
     }
+
+    if(!tile.is_enabled)
+    {
+        m_list->setEnabled(false);
+    }
+
+    m_vlayout->addWidget(m_list);
+    m_hlayout->addLayout(m_vlayout);
+
+    switch (tile.alignment)
+    {
+    case LEFT:
+        m_hlayout->setAlignment(Qt::AlignLeft);
+        break;
+    case RIGHT:
+        m_hlayout->setAlignment(Qt::AlignRight);
+        break;
+    case TOP:
+        m_vlayout->setAlignment(Qt::AlignTop);
+        break;
+    case BOTTOM:
+        m_vlayout->setAlignment(Qt::AlignBottom);
+        break;
+    case CENTERED:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    default: {}
+    break;
+    }
+
+    if(!tile.is_enabled)
+    {
+        m_list->setEnabled(false);
+    }
+
     QObject::connect(m_list, QOverload<const QString&>::of(&QListWidget::currentTextChanged), [&](const QString& currentText) { currentTextChanged(currentText); });
 }
 
@@ -1484,6 +1659,8 @@ void lclListBox::currentTextChanged(const QString &currentText)
 lclSlider::lclSlider(const tile_t& tile)
     : lclGui(tile)
     , m_slider(new QSlider)
+    , m_vlayout(new QVBoxLayout)
+    , m_hlayout(new QHBoxLayout)
 {
     if(int(tile.width))
     {
@@ -1517,6 +1694,36 @@ lclSlider::lclSlider(const tile_t& tile)
         {
             m_slider->setFixedWidth(32);
         }
+    }
+
+    m_vlayout->addWidget(m_slider);
+    m_hlayout->addLayout(m_vlayout);
+
+    switch (tile.alignment)
+    {
+    case LEFT:
+        m_hlayout->setAlignment(Qt::AlignLeft);
+        break;
+    case RIGHT:
+        m_hlayout->setAlignment(Qt::AlignRight);
+        break;
+    case TOP:
+        m_vlayout->setAlignment(Qt::AlignTop);
+        break;
+    case BOTTOM:
+        m_vlayout->setAlignment(Qt::AlignBottom);
+        break;
+    case CENTERED:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    default: {}
+    break;
+    }
+
+    if(!tile.is_enabled)
+    {
+        m_slider->setEnabled(false);
     }
 
     QObject::connect(m_slider, &QSlider::valueChanged, [&] { valueChanged(); });
@@ -1598,6 +1805,8 @@ lclSpacer::lclSpacer(const tile_t& tile)
 lclToggle::lclToggle(const tile_t& tile)
     : lclGui(tile)
     , m_toggle(new QCheckBox)
+    , m_vlayout(new QVBoxLayout)
+    , m_hlayout(new QHBoxLayout)
 {
     m_toggle->setText(noQuotes(tile.label).c_str());
 
@@ -1620,7 +1829,6 @@ lclToggle::lclToggle(const tile_t& tile)
         {
             m_toggle->setFixedWidth(80);
         }
-
     }
 
     if (tile.fixed_height)
@@ -1633,6 +1841,36 @@ lclToggle::lclToggle(const tile_t& tile)
         {
             m_toggle->setFixedWidth(32);
         }
+    }
+
+    m_vlayout->addWidget(m_toggle);
+    m_hlayout->addLayout(m_vlayout);
+
+    switch (tile.alignment)
+    {
+    case LEFT:
+        m_hlayout->setAlignment(Qt::AlignLeft);
+        break;
+    case RIGHT:
+        m_hlayout->setAlignment(Qt::AlignRight);
+        break;
+    case TOP:
+        m_vlayout->setAlignment(Qt::AlignTop);
+        break;
+    case BOTTOM:
+        m_vlayout->setAlignment(Qt::AlignBottom);
+        break;
+    case CENTERED:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    default: {}
+        break;
+    }
+
+    if(!tile.is_enabled)
+    {
+        m_toggle->setEnabled(false);
     }
 
     QObject::connect(m_toggle, QOverload<int>::of(&QCheckBox::stateChanged), [&](int state) { stateChanged(state); });
@@ -1651,7 +1889,14 @@ void lclToggle::stateChanged(int state)
         String action = "(do";
         action += str->value();
         action += ")";
-        replaceValue(action, std::to_string(state).c_str());
+        if (state > 0)
+        {
+            replaceValue(action, "1");
+        }
+        else
+        {
+            replaceValue(action, "0");
+        }
         LispRun_SimpleString(action.c_str());
     }
 }
@@ -1727,8 +1972,8 @@ lclOkCancel::lclOkCancel(const tile_t& tile)
     , m_btnCancel(new QPushButton)
     , m_layout(new QHBoxLayout)
 {
-    m_btnOk->setText(QObject::tr("OK"));
-    m_btnCancel->setText(QObject::tr("Cancel"));
+    m_btnOk->setText(QObject::tr("&OK"));
+    m_btnCancel->setText(QObject::tr("&Cancel"));
     m_btnOk->setDefault(true);
 
     m_btnOk->setMinimumWidth(80);
@@ -1786,9 +2031,9 @@ lclOkCancelHelp::lclOkCancelHelp(const tile_t& tile)
     , m_btnHelp(new QPushButton)
     , m_layout(new QHBoxLayout)
 {
-    m_btnOk->setText(QObject::tr("OK"));
-    m_btnCancel->setText(QObject::tr("Cancel"));
-    m_btnHelp->setText(QObject::tr("Help"));
+    m_btnOk->setText(QObject::tr("&OK"));
+    m_btnCancel->setText(QObject::tr("&Cancel"));
+    m_btnHelp->setText(QObject::tr("&Help"));
     m_btnOk->setDefault(tile.is_default);
 
     m_btnOk->setMinimumWidth(80);
@@ -1869,10 +2114,10 @@ lclOkCancelHelpInfo::lclOkCancelHelpInfo(const tile_t& tile)
     , m_btnInfo(new QPushButton)
     , m_layout(new QHBoxLayout)
 {
-    m_btnOk->setText(QObject::tr("OK"));
-    m_btnCancel->setText(QObject::tr("Cancel"));
-    m_btnHelp->setText(QObject::tr("Help"));
-    m_btnInfo->setText(QObject::tr("Info"));
+    m_btnOk->setText(QObject::tr("&OK"));
+    m_btnCancel->setText(QObject::tr("&Cancel"));
+    m_btnHelp->setText(QObject::tr("&Help"));
+    m_btnInfo->setText(QObject::tr("&Info"));
     m_btnOk->setDefault(tile.is_default);
 
     m_btnOk->setMinimumWidth(80);

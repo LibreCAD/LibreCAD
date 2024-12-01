@@ -60,7 +60,7 @@ static void installFunctions(lclEnvPtr env);
 //  Installs functions, macros and constants implemented in LCL.
 static void installEvalCore(lclEnvPtr env);
 //  Installs functions from EVAL, implemented in LCL.
-//static void openTile(const lclGui* tile);
+static void checkForAlias(const String& com);
 
 static void makeArgv(lclEnvPtr env, int argc, char* argv[]);
 static String safeRep(const String& input, lclEnvPtr env);
@@ -271,6 +271,7 @@ lclValuePtr EVAL(lclValuePtr ast, lclEnvPtr env)
                     macro += ")";
                     lclValuePtr body = READ(macro);
                     const lclLambda* lambda = new lclLambda(params, body, env);
+                    checkForAlias(id->value());
                     return env->set(id->value(), new lclLambda(*lambda, true));
                 }
 
@@ -630,7 +631,6 @@ static const char* lclFunctionTable[] = {
         (eval (read-string (str \"(do \" (slurp filename) \"\nnil)\")))))",
     "(def! *host-language* \"C++\")",
     "(def! append concat)",
-    "(def! car first)",
     "(def! length count)",
     "(def! load load-file)",
     "(def! strcat str)",
@@ -734,7 +734,7 @@ void openTile(const lclGui* tile)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        dlg->vlayout()->addWidget(list->list());
+                        dlg->vlayout()->addLayout(list->hlayout());
                         break;
                     }
                 }
@@ -744,21 +744,17 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "openTile()" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            if (dclTiles.at(i)->value().id & LAYOUT_ROW)
-                            {
-                                dclTiles.at(i)->hlayout()->addWidget(list->list());
-                            }
-                            else
-                            {
-                                dclTiles.at(i)->vlayout()->addWidget(list->list());
-                            }
-                            break;
+                            dclTiles.at(i)->hlayout()->addLayout(list->hlayout());
                         }
+                        else
+                        {
+                            dclTiles.at(i)->vlayout()->addLayout(list->hlayout());
+                        }
+                        break;
                     }
                 }
             }
@@ -1023,6 +1019,7 @@ void openTile(const lclGui* tile)
         }
             break;
         case TEXT:
+        case ERRTILE:
         {
             if (!dclTiles.size())
             {
@@ -1084,7 +1081,7 @@ void openTile(const lclGui* tile)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        dlg->vlayout()->addWidget(b->button());
+                        dlg->vlayout()->addLayout(b->hlayout());
                         break;
                     }
                 }
@@ -1098,40 +1095,18 @@ void openTile(const lclGui* tile)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            dclTiles.at(i)->hlayout()->addWidget(b->button());
+                            dclTiles.at(i)->hlayout()->addLayout(b->hlayout());
                         }
                         else
                         {
-                            dclTiles.at(i)->vlayout()->addWidget(b->button());
+                            dclTiles.at(i)->vlayout()->addLayout(b->hlayout());
                         }
                         break;
                     }
                 }
             }
-#if 0
-            switch (tile->value().alignment) {
-            case LEFT:
-                vLayout->
-                break;
-            case RIGHT:
-
-                break;
-            case TOP:
-
-                break;
-            case BOTTOM:
-
-                break;
-            case CENTERED:
-
-                break;
-            default:
-                break;
-            }
-#endif
         }
             break;
-
         case OK_ONLY:
         {
             qDebug() << "openTile() >>> OK_ONLY";
@@ -1188,7 +1163,7 @@ void openTile(const lclGui* tile)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        dlg->vlayout()->addWidget(lp->list());
+                        dlg->vlayout()->addLayout(lp->hlayout());
                         break;
                     }
                 }
@@ -1202,11 +1177,11 @@ void openTile(const lclGui* tile)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            dclTiles.at(i)->hlayout()->addWidget(lp->list());
+                            dclTiles.at(i)->hlayout()->addLayout(lp->hlayout());
                         }
                         else
                         {
-                            dclTiles.at(i)->vlayout()->addWidget(lp->list());
+                            dclTiles.at(i)->vlayout()->addLayout(lp->hlayout());
                         }
                         break;
                     }
@@ -1232,7 +1207,7 @@ void openTile(const lclGui* tile)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        dlg->vlayout()->addWidget(rb->button());
+                        dlg->vlayout()->addLayout(rb->hlayout());
                         break;
                     }
                 }
@@ -1242,15 +1217,15 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    if((BOXED_RADIO_COLUMN | BOXED_RADIO_ROW) & dclTiles.at(i)->value().id)
+                    if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
-                        if (BOXED_RADIO_ROW & dclTiles.at(i)->value().id)
+                        if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            dclTiles.at(i)->hlayout()->addWidget(rb->button());
+                            dclTiles.at(i)->hlayout()->addLayout(rb->hlayout());
                         }
                         else
                         {
-                            dclTiles.at(i)->vlayout()->addWidget(rb->button());
+                            dclTiles.at(i)->vlayout()->addLayout(rb->hlayout());
                         }
                         break;
                     }
@@ -1264,14 +1239,14 @@ void openTile(const lclGui* tile)
             {
                 break;
             }
-            const lclImage* l = static_cast<const lclImage*>(tile);
+            const lclImage* img = static_cast<const lclImage*>(tile);
             dclTiles.push_back(tile);
-            if (!l->value().has_parent) {
+            if (!img->value().has_parent) {
                 for (auto & dlg : dclTiles)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        dlg->vlayout()->addWidget(l->image());
+                        dlg->vlayout()->addLayout(img->hlayout());
                         break;
                     }
                 }
@@ -1281,16 +1256,15 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "openTile()" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            dclTiles.at(i)->hlayout()->addWidget(l->image());
+                            dclTiles.at(i)->hlayout()->addLayout(img->hlayout());
                         }
                         else
                         {
-                            dclTiles.at(i)->vlayout()->addWidget(l->image());
+                            dclTiles.at(i)->vlayout()->addLayout(img->hlayout());
                         }
                         break;
                     }
@@ -1304,7 +1278,7 @@ void openTile(const lclGui* tile)
             {
                 break;
             }
-            const lclSlider* b = static_cast<const lclSlider*>(tile);
+            const lclSlider* sl = static_cast<const lclSlider*>(tile);
             dclTiles.push_back(tile);
             if (tile->value().key != "")
             {
@@ -1314,13 +1288,12 @@ void openTile(const lclGui* tile)
             {
                 dclEnv->set(std::to_string(tile->value().dialog_Id) + "_" + noQuotes(tile->value().key).c_str(), lcl::string(tile->value().action));
             }
-
-            if (!b->value().has_parent) {
+            if (!sl->value().has_parent) {
                 for (auto & dlg : dclTiles)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        dlg->vlayout()->addWidget(b->slider());
+                        dlg->vlayout()->addLayout(sl->hlayout());
                         break;
                     }
                 }
@@ -1334,11 +1307,11 @@ void openTile(const lclGui* tile)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            dclTiles.at(i)->hlayout()->addWidget(b->slider());
+                            dclTiles.at(i)->hlayout()->addLayout(sl->hlayout());
                         }
                         else
                         {
-                            dclTiles.at(i)->vlayout()->addWidget(b->slider());
+                            dclTiles.at(i)->vlayout()->addLayout(sl->hlayout());
                         }
                         break;
                     }
@@ -1392,7 +1365,7 @@ void openTile(const lclGui* tile)
             {
                 break;
             }
-            const lclToggle* b = static_cast<const lclToggle*>(tile);
+            const lclToggle* tb = static_cast<const lclToggle*>(tile);
             dclTiles.push_back(tile);
             if (tile->value().key != "")
             {
@@ -1403,12 +1376,12 @@ void openTile(const lclGui* tile)
                 dclEnv->set(std::to_string(tile->value().dialog_Id) + "_" + noQuotes(tile->value().key).c_str(), lcl::string(tile->value().action));
             }
 
-            if (!b->value().has_parent) {
+            if (!tb->value().has_parent) {
                 for (auto & dlg : dclTiles)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        dlg->vlayout()->addWidget(b->toggle());
+                        dlg->vlayout()->addLayout(tb->hlayout());
                         break;
                     }
                 }
@@ -1422,11 +1395,11 @@ void openTile(const lclGui* tile)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            dclTiles.at(i)->hlayout()->addWidget(b->toggle());
+                            dclTiles.at(i)->hlayout()->addLayout(tb->hlayout());
                         }
                         else
                         {
-                            dclTiles.at(i)->vlayout()->addWidget(b->toggle());
+                            dclTiles.at(i)->vlayout()->addLayout(tb->hlayout());
                         }
                         break;
                     }
@@ -1597,6 +1570,28 @@ String strToUpper(String s)
 String noQuotes(const String& s)
 {
     return s.size() >= 2 ? s.substr(1, s.size() - 2) : "";
+}
+
+static void checkForAlias(const String& com)
+{
+    if (com.size() < 3 ||
+        std::toupper(com[0]) != 'C' ||  // correct
+        com[1] != ':')
+    {
+        return;
+    }
+
+    String alias = com.substr(2);
+
+    for (std::vector<LclAlias_t>::iterator it = LclCom.begin(); it != LclCom.end();)
+    {
+        if (it->alias == alias)
+            it = LclCom.erase(it);
+        else
+            ++it;
+    }
+
+    LclCom.push_back({ { alias }, { com } });
 }
 
 #endif // DEVELOPER

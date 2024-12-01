@@ -243,6 +243,70 @@ bool RS_PythonGui::actionTile(const char *id, const char *action)
     return false;
 }
 
+const char *RS_PythonGui::getTile(const char *key)
+{
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key)
+        {
+            switch (tile->value().id)
+            {
+            case EDIT_BOX:
+            {
+                qDebug() << "getTile EDIT_BOX";
+                const lclEdit* e = static_cast<const lclEdit*>(tile);
+                return qUtf8Printable(e->edit()->text());
+            }
+            break;
+            case LIST_BOX:
+            {
+                qDebug() << "getTile LIST_BOX";
+                const lclListBox* lb = static_cast<const lclListBox*>(tile);
+                return std::to_string(lb->list()->currentRow()).c_str();
+            }
+            break;
+            case BUTTON:
+            {
+                qDebug() << "getTile BUTTON";
+                const lclButton* b = static_cast<const lclButton*>(tile);
+                return qUtf8Printable(b->button()->text());
+            }
+            break;
+            case RADIO_BUTTON:
+            {
+                qDebug() << "getTile RADIO_BUTTON";
+                const lclButton* rb = static_cast<const lclButton*>(tile);
+                return qUtf8Printable(rb->button()->text());
+            }
+            break;
+            case TEXT:
+            {
+                qDebug() << "getTile TEXT";
+                const lclLabel* l = static_cast<const lclLabel*>(tile);
+                return qUtf8Printable(l->label()->text());
+            }
+            break;
+            case POPUP_LIST:
+            {
+                qDebug() << "getTile POPUP_LIST";
+                const lclPopupList* pl = static_cast<const lclPopupList*>(tile);
+                return qUtf8Printable(pl->list()->currentText());
+            }
+            break;
+            default:
+                return "";
+            }
+        }
+    }
+    return "";
+}
+
 bool RS_PythonGui::modeTile(const char *key, int val)
 {
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
@@ -437,7 +501,7 @@ const char *RS_PythonGui::startList(const char *key, int operation, int index)
 {
     //FIXME !env->find => ""
 
-    if (operation == 0)
+    if (operation == -1)
     {
         dclEnv->set("start_list_operation", lcl::integer(2));
     }
@@ -446,7 +510,7 @@ const char *RS_PythonGui::startList(const char *key, int operation, int index)
         dclEnv->set("start_list_operation", lcl::integer(operation));
     }
 
-    if (index == 0)
+    if (index == -1)
     {
         dclEnv->set("start_list_index", lcl::nilValue());
     }
@@ -454,6 +518,7 @@ const char *RS_PythonGui::startList(const char *key, int operation, int index)
     {
         dclEnv->set("start_list_index", lcl::integer(index));
     }
+
     dclEnv->set("start_list_key", lcl::string(key));
 
     return key;
@@ -531,6 +596,13 @@ const char *RS_PythonGui::addList(const char *val)
         }
     }
     return "";
+}
+
+void RS_PythonGui::endList()
+{
+    dclEnv->set("start_list_operation", lcl::nilValue());
+    dclEnv->set("start_list_index", lcl::nilValue());
+    dclEnv->set("start_list_key", lcl::nilValue());
 }
 
 void RS_PythonGui::prompt(const char *prompt)

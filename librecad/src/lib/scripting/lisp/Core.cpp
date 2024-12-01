@@ -744,7 +744,6 @@ BUILTIN("boundp")
     return lcl::trueValue();
 }
 
-#if 0
 BUILTIN("car")
 {
     CHECK_ARGS_IS(1);
@@ -754,7 +753,7 @@ BUILTIN("car")
 
     return seq->first();
 }
-#endif
+
 BUILTIN("cadr")
 {
     CHECK_ARGS_IS(1);
@@ -1164,7 +1163,7 @@ BUILTIN("get_tile")
             {
                 qDebug() << "get_tile LIST_BOX";
                 const lclListBox* lb = static_cast<const lclListBox*>(tile);
-                return lcl::string(lb->list()->currentItem()->text().toStdString());
+                return lcl::string(std::to_string(lb->list()->currentRow()));
             }
             break;
             case BUTTON:
@@ -1198,7 +1197,6 @@ BUILTIN("get_tile")
             default:
                 return lcl::string("");
             }
-            return lcl::trueValue();
         }
     }
     return lcl::string("");
@@ -3161,6 +3159,19 @@ BUILTIN("set_tile")
             {
                 const lclRadioButton* rb = static_cast<const lclRadioButton*>(tile);
                 rb->button()->setText(val->value().c_str());
+            }
+            break;
+            case TOGGLE:
+            {
+                const lclToggle* tb = static_cast<const lclToggle*>(tile);
+                if(val->value() == "0")
+                {
+                    tb->toggle()->setChecked(false);
+                }
+                if(val->value() == "1")
+                {
+                    tb->toggle()->setChecked(true);
+                }
             }
             break;
             default:

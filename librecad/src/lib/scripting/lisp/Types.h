@@ -729,6 +729,8 @@ public:
     QDialog* widget() const { return m_widget; }
     virtual QVBoxLayout* vlayout() const { return m_layout; }
 
+    void addShortcut(const QString & key, QWidget *w);
+
 private:
     QDialog* m_widget;
     QVBoxLayout* m_layout;
@@ -741,18 +743,19 @@ public:
     lclButton(const lclButton& that, lclValuePtr meta)
         : lclGui(that, meta) { }
 
-    virtual ~lclButton() { delete m_button; }
+    virtual ~lclButton() { delete m_button; delete m_vlayout; delete m_hlayout; }
 
     WITH_META(lclButton)
 
     QPushButton* button() const { return m_button; }
+    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
 
     void clicked(bool checked);
 
 private:
     QPushButton* m_button;
-//    QVBoxLayout* m_vlayout;
-//    QHBoxLayout* m_hlayout;
+    QVBoxLayout* m_vlayout;
+    QHBoxLayout* m_hlayout;
 };
 
 class lclRadioButton : public lclGui {
@@ -761,18 +764,19 @@ public:
     lclRadioButton(const lclRadioButton& that, lclValuePtr meta)
         : lclGui(that, meta) { }
 
-    virtual ~lclRadioButton() { delete m_button; }
+    virtual ~lclRadioButton() { delete m_button; delete m_vlayout; delete m_hlayout; }
 
     WITH_META(lclRadioButton)
 
     QRadioButton* button() const { return m_button; }
+    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
 
     void clicked(bool checked);
 
 private:
     QRadioButton* m_button;
-//    QVBoxLayout* m_vlayout;
-//    QHBoxLayout* m_hlayout;
+    QVBoxLayout* m_vlayout;
+    QHBoxLayout* m_hlayout;
 };
 
 class lclEdit : public lclGui {
@@ -804,11 +808,14 @@ public:
     WITH_META(lclListBox)
 
     QListWidget* list() const { return m_list; }
+    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
 
     void currentTextChanged(const QString &currentText);
 
 private:
     QListWidget* m_list;
+    QVBoxLayout* m_vlayout;
+    QHBoxLayout* m_hlayout;
 };
 
 class lclLabel : public lclGui {
@@ -958,9 +965,12 @@ public:
     WITH_META(lclPopupList)
 
     QComboBox* list() const { return m_list; }
+    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
 
 private:
     QComboBox* m_list;
+    QVBoxLayout* m_vlayout;
+    QHBoxLayout* m_hlayout;
 };
 
 class lclSlider : public lclGui {
@@ -975,11 +985,14 @@ public:
     WITH_META(lclSlider)
 
     QSlider* slider() const { return m_slider; }
+    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
 
     void valueChanged();
 
 private:
     QSlider* m_slider;
+    QVBoxLayout* m_vlayout;
+    QHBoxLayout* m_hlayout;
 };
 
 class lclSpacer : public lclGui {
@@ -1010,12 +1023,15 @@ public:
 
     WITH_META(lclToggle)
 
-    QCheckBox* toggle() const { return m_toggle; }
+    QCheckBox* toggle() const { return m_toggle; delete m_vlayout; delete m_hlayout; }
+    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
 
     void stateChanged(int state);
 
 private:
     QCheckBox* m_toggle;
+    QVBoxLayout* m_vlayout;
+    QHBoxLayout* m_hlayout;
 };
 
 class lclOkCancel : public lclGui {
