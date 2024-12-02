@@ -45,8 +45,6 @@ public:
     RS_ActionModifyOffset(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
     ~RS_ActionModifyOffset() override;
-    void trigger() override;
-
     double getDistance();
     void setDistance(double distance);
     bool isFixedDistance() {return distanceIsFixed;};
@@ -72,5 +70,6 @@ protected:
     void updateMouseButtonHintsForSelected(int status) override;
     bool isAllowTriggerOnEmptySelection() override;
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
+    void doTrigger(bool keepSelected) override;
 };
 #endif

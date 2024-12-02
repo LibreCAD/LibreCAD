@@ -35,9 +35,8 @@ public:
     ~LC_ActionPreSelectionAwareBase() override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void init(int status) override;
-
     void drawSnapper() override;
-
+    void trigger() override;
 protected:
     bool selectionComplete = false;
     bool countDeep = false;
@@ -59,6 +58,7 @@ protected:
     void setSelectionComplete(bool allowEmptySelection, bool fromInit);
     virtual bool isAllowTriggerOnEmptySelection(){return true;};
     void updateMouseButtonHints() override;
+    virtual void doTrigger(bool keepSelected) = 0;
 };
 
 #endif // LC_ACTIONPRESELECTIONAWAREBASE_H

@@ -22,13 +22,25 @@
 
 #include "lc_actionpreselectionawarebase.h"
 #include "rs_document.h"
+#include "rs_graphicview.h"
 #include "rs_debug.h"
+#include "rs_settings.h"
 
 LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
     const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView,
     const QList<RS2::EntityType> &entityTypeList, const bool countSelectionDeep)
     :RS_ActionSelectBase(name, container, graphicView, entityTypeList),
     countDeep(countSelectionDeep){}
+
+void LC_ActionPreSelectionAwareBase::trigger() {
+    RS_PreviewActionInterface::trigger();
+    bool keepSelected = LC_GET_ONE_BOOL("Modify", "KeepModifiedSelected", true);
+    doTrigger(keepSelected);
+
+    updateSelectionWidget();
+    updateMouseButtonHints();
+    graphicView->redraw();
+}
 
 LC_ActionPreSelectionAwareBase::~LC_ActionPreSelectionAwareBase() {
     selectedEntities.clear();

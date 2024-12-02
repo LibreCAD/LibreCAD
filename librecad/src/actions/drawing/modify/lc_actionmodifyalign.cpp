@@ -42,9 +42,7 @@ void LC_ActionModifyAlign::selectionCompleted([[maybe_unused]]bool singleEntity,
     updateSelectionWidget();
 }
 
-void LC_ActionModifyAlign::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+void LC_ActionModifyAlign::doTrigger(bool keepSelected) {
     QList<RS_Entity *> entitiesToCreate;
     createAlignedEntities(entitiesToCreate, alignMin, alignMax, false);
     if (!entitiesToCreate.isEmpty()) {
@@ -52,6 +50,7 @@ void LC_ActionModifyAlign::trigger() {
             document->startUndoCycle();
 
             for (auto e: entitiesToCreate) {
+                // fixme - review!!
                 // todo - this is a place to think about regarding usability and consistency. Other Modify actions does not clear "selected" status.
                 // todo - however, from the usability point of view - if the user would like to continue aligning operation, not cleared selection is not convenient.
                 e->setSelected(false);
@@ -69,10 +68,6 @@ void LC_ActionModifyAlign::trigger() {
             document->endUndoCycle();
         }
     }
-    deleteHighlights();
-    updateSelectionWidget();
-    updateMouseButtonHints();
-    graphicView->redraw();
 }
 
 void LC_ActionModifyAlign::mouseMoveEventSelected(QMouseEvent *e) {

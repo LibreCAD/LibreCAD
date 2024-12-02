@@ -41,11 +41,10 @@ Q_OBJECT
 public:
     RS_ActionBlocksExplode(RS_EntityContainer& container,
                            RS_GraphicView& graphicView);
-
-    void trigger() override;
 protected:
     bool isEntityAllowedToSelect(RS_Entity *ent) const override;
     void updateMouseButtonHintsForSelection() override;
+    void doTrigger(bool selected) override;
 };
 
 #endif

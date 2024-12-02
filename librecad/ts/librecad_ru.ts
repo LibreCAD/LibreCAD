@@ -5403,7 +5403,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="59"/>
         <source>Keep Originals</source>
-        <translation></translation>
+        <translation>&amp;Сохранить оригиналы</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="66"/>

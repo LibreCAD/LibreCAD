@@ -33,9 +33,6 @@ public:
     LC_ActionModifyAlignRef(RS_EntityContainer &container, RS_GraphicView &graphicView);
     void setScale(bool val);
     bool isScale();
-
-    void trigger() override;
-
 protected:
     enum State{
         SetRefPoint1,
@@ -64,10 +61,9 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
-
     bool isAllowTriggerOnEmptySelection() override;
-
     void prepareAlignRefData(const RS_Vector &snap);
+    void doTrigger(bool keepSelected) override;
 };
 
 #endif // LC_ACTIONMODIFYALIGNREF_H

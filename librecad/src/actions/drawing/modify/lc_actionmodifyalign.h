@@ -53,7 +53,6 @@ public:
     LC_ActionModifyAlign(RS_EntityContainer &container, RS_GraphicView &graphicView);
     void setAlignType(int a) override;
     void init(int status) override;
-    void trigger() override;
 protected:
     RS_Vector alignMin = RS_Vector(false);
     RS_Vector alignMax = RS_Vector(false);
@@ -70,6 +69,8 @@ protected:
     void selectionCompleted(bool singleEntity, bool fromInit) override;
     void previewAlignGuideLines(const RS_Vector &min, const RS_Vector &max);
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+
+    void doTrigger(bool selected) override;
 };
 
 #endif // LC_ACTIONMODIFYALIGN_H

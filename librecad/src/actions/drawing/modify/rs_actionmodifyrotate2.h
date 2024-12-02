@@ -44,7 +44,6 @@ public:
     ~RS_ActionModifyRotate2() override;
 
     void init(int status) override;
-    void trigger() override;
     void setAngle1(double d);
     double getAngle1();
     void setAngle2(double d);
@@ -76,5 +75,6 @@ protected:
     bool isAllowTriggerOnEmptySelection() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
+    void doTrigger(bool keepSelected) override;
 };
 #endif

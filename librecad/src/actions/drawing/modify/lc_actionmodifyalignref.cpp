@@ -33,17 +33,11 @@ LC_ActionModifyAlignRef::LC_ActionModifyAlignRef(RS_EntityContainer &container, 
     actionType = RS2::ActionModifyAlignRef;
 }
 
-void LC_ActionModifyAlignRef::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+void LC_ActionModifyAlignRef::doTrigger(bool keepSelected) {
     prepareAlignRefData(pPoints.targetPoint2);
-
     RS_Modification m(*container, graphicView);
-    m.alignRef(pPoints.data, selectedEntities, false, true);
-
-    updateSelectionWidget();
+    m.alignRef(pPoints.data, selectedEntities, false, keepSelected);
     finish(false);
-    graphicView->redraw();
 }
 
 void LC_ActionModifyAlignRef::mouseMoveEventSelected(QMouseEvent *e) {

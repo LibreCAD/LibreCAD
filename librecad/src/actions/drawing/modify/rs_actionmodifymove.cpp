@@ -34,6 +34,7 @@
 #include "rs_modification.h"
 #include "rs_preview.h"
 #include "lc_moveoptions.h"
+#include "rs_settings.h"
 
 struct RS_ActionModifyMove::Points {
 	RS_MoveData data;
@@ -50,14 +51,10 @@ RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
 
 RS_ActionModifyMove::~RS_ActionModifyMove() = default;
 
-void RS_ActionModifyMove::trigger(){
-
+void RS_ActionModifyMove::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMove::trigger()");
-
     RS_Modification m(*container, graphicView);
-    m.move(pPoints->data, selectedEntities, false, false);
-
-    updateSelectionWidget();
+    m.move(pPoints->data, selectedEntities, false, keepSelected);
     finish(false);
 }
 

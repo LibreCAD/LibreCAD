@@ -38,7 +38,7 @@ RS_ActionModifyAttributes::RS_ActionModifyAttributes(
     actionType=RS2::ActionModifyAttributes;
 }
 
-void RS_ActionModifyAttributes::trigger() {
+void RS_ActionModifyAttributes::doTrigger(bool keepSelected){
     RS_DEBUG->print("RS_ActionModifyAttributes::trigger()");
 
     RS_AttributesData data;
@@ -53,7 +53,7 @@ void RS_ActionModifyAttributes::trigger() {
         graphicView->setForcedActionKillAllowed(false);
         if (RS_DIALOGFACTORY->requestAttributesDialog(data,*graphic->getLayerList())) {
             RS_Modification m(*container, graphicView);
-            m.changeAttributes(data, selectedEntities, container);
+            m.changeAttributes(data, selectedEntities, container, keepSelected);
         }
         graphicView->setForcedActionKillAllowed(true);
     }
