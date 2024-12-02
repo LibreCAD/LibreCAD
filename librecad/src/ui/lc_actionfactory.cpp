@@ -246,12 +246,13 @@ void LC_ActionFactory::createDrawPolylineActions(QMap<QString, QAction *> &map, 
 }
 
 void LC_ActionFactory::createDrawOtherActions(QMap<QString, QAction *> &map, QActionGroup *group) {
-    createActionHandlerActions(map, group,{
-        {"ZoomPan",   RS2::ActionZoomPan,   tr("Zoom &Panning"), ":/icons/zoom_pan.svg"},
-        {"DrawMText", RS2::ActionDrawMText, tr("&MText"),        ":/icons/mtext.svg"},
-        {"DrawText",  RS2::ActionDrawText,  tr("&Text"),         ":/icons/text.svg"},
-        {"DrawHatch", RS2::ActionDrawHatch, tr("&Hatch"),        ":/icons/hatch.svg"},
-        {"DrawImage", RS2::ActionDrawImage, tr("Insert &Image"), ":/icons/camera.svg"}
+    createActionHandlerActions(map, group, {
+        {"ZoomPan",         RS2::ActionZoomPan,         tr("Zoom &Panning"), ":/icons/zoom_pan.svg"},
+        {"DrawMText",       RS2::ActionDrawMText,       tr("&MText"),        ":/icons/mtext.svg"},
+        {"DrawText",        RS2::ActionDrawText,        tr("&Text"),         ":/icons/text.svg"},
+        {"DrawHatch",       RS2::ActionDrawHatch,       tr("&Hatch"),        ":/icons/hatch.svg"},
+        {"DrawImage",       RS2::ActionDrawImage,       tr("Insert &Image"), ":/icons/camera.svg"},
+        {"DrawBoundingBox", RS2::ActionDrawBoundingBox, tr("Bounding &Box"), ":/icons/bounding_box.svg"}
     });
 }
 
@@ -304,7 +305,8 @@ void LC_ActionFactory::createModifyActions(QMap<QString, QAction *> &map, QActio
         {"ModifyLineJoin",        RS2::ActionModifyLineJoin,        tr("Line Join"),                  ":/icons/line_join.svg"},
         {"ModifyDuplicate",       RS2::ActionModifyDuplicate,       tr("Duplicate"),                  ":/icons/duplicate.svg"},
         {"ModifyAlign",           RS2::ActionModifyAlign,           tr("Align"),                      ":/icons/halign_left.svg"},
-        {"ModifyAlignOne",        RS2::ActionModifyAlignOne,        tr("Align One"),                  ":/icons/align_one.svg"}
+        {"ModifyAlignOne",        RS2::ActionModifyAlignOne,        tr("Align One"),                  ":/icons/align_one.svg"},
+        {"ModifyAlignRef",        RS2::ActionModifyAlignRef,        tr("Align Reference Points"),     ":/icons/align_ref.svg"}
     });
 }
 

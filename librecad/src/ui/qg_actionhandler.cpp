@@ -220,6 +220,7 @@
 #include "lc_actionmodifyalign.h"
 #include "lc_actionmodifyalignsingle.h"
 #include "lc_actiondrawlinepolygon4.h"
+#include "lc_actionmodifyalignref.h"
 
 /**
  * Constructor
@@ -874,6 +875,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionModifyAlignOne:
             a = new LC_ActionModifyAlignSingle(*document, *view);
+            break;
+        case RS2::ActionModifyAlignRef:
+            a = new LC_ActionModifyAlignRef(*document, *view);
             break;
             // Snapping actions:
             //

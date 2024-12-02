@@ -69,7 +69,7 @@ void RS_ActionModifyMirror::mouseMoveEventSelected(QMouseEvent *e) {
     switch (getStatus()) {
         case SetAxisPoint1: {
             if (mirrorToExistingLine){
-                deleteSnapper();
+//                deleteSnapper();
                 RS_Entity* en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
                 if (en != nullptr){
                     auto line = dynamic_cast<RS_Line *>(en);

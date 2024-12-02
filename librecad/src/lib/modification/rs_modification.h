@@ -71,6 +71,14 @@ struct RS_MoveData : public LC_ModifyOperationFlags{
     RS_Vector offset;
 };
 
+struct LC_AlignRefData: public LC_ModifyOperationFlags{
+    bool scale;
+    RS_Vector rotationCenter;
+    RS_Vector offset;
+    double rotationAngle = 0.0;
+    double scaleFactor = 0.0;
+};
+
 struct RS_BoundData{
     RS_BoundData(const RS_Vector &left, const RS_Vector &top) {
         min = left;
@@ -363,6 +371,7 @@ public:
         bool createOnly);
     static RS_BoundData getBoundingRect(std::vector<RS_Entity *> &selected); // todo - probably it should be located in other utility class..
     void collectSelectedEntities(std::vector<RS_Entity *> &entitiesList) const;
+    bool alignRef(LC_AlignRefData &data, const std::vector<RS_Entity *> &entitiesList, bool forPreviewOnly, bool keepSelected);
 private:
     void copyEntity(RS_Entity *e, const RS_Vector &ref, bool cut);
     void copyLayers(RS_Entity *e);
@@ -387,6 +396,8 @@ protected:
 
     void deleteOriginalAndAddNewEntities(const std::vector<RS_Entity *> &addList, const std::vector<RS_Entity*> &originalEntities,
                                          bool addOnly, bool deleteOriginals, bool forceUndoable = false);
+
+
 };
 
 #endif

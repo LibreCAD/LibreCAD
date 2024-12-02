@@ -264,6 +264,7 @@ HEADERS += \
     actions/drawing/draw/polyline/lc_actionpolylinearcstolines.h \
     actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.h \
     actions/drawing/modify/lc_actionmodifyalign.h \
+    actions/drawing/modify/lc_actionmodifyalignref.h \
     actions/drawing/modify/lc_actionmodifyalignsingle.h \
     lib/engine/overlays/highlight/lc_highlight.h \
     lib/actions/lc_modifiersinfo.h \
@@ -356,6 +357,7 @@ HEADERS += \
     ui/action_options/curve/lc_actiondrawarc2poptions.h \
     ui/action_options/line/lc_midlineoptions.h \
     ui/action_options/modify/lc_modifyalignoptions.h \
+    ui/action_options/modify/lc_modifyalignrefoptions.h \
     ui/action_options/spline/lc_splineexplodeoptions.h \
     ui/action_options/spline/lc_splinefrompolylineoptions.h \
     ui/action_options/point/lc_pastetopointsoptions.h \
@@ -428,12 +430,14 @@ SOURCES += \
     actions/drawing/draw/point/lc_actionpastetopoints.cpp \
     actions/drawing/draw/point/lc_actionselectpoints.cpp \
     actions/drawing/modify/lc_actionmodifyalign.cpp \
+    actions/drawing/modify/lc_actionmodifyalignref.cpp \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
     lib/engine/overlays/references/lc_refconstructionline.cpp \
     lib/modification/lc_align.cpp \
     ui/action_options/curve/lc_actiondrawarc2poptions.cpp \
     ui/action_options/line/lc_midlineoptions.cpp \
     ui/action_options/modify/lc_modifyalignoptions.cpp \
+    ui/action_options/modify/lc_modifyalignrefoptions.cpp \
     ui/action_options/spline/lc_splineexplodeoptions.cpp \
     ui/action_options/spline/lc_splinefrompolylineoptions.cpp \
     actions/drawing/draw/spline/lc_actionsplineappendpoint.cpp \
@@ -1312,6 +1316,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/action_options/curve/lc_ellipsearcoptions.ui \
        ui/action_options/line/lc_midlineoptions.ui \
        ui/action_options/modify/lc_modifyalignoptions.ui \
+       ui/action_options/modify/lc_modifyalignrefoptions.ui \
        ui/action_options/spline/lc_splineexplodeoptions.ui \
        ui/action_options/spline/lc_splinefrompolylineoptions.ui \
        ui/action_options/curve/qg_arcoptions.ui \

@@ -28,7 +28,7 @@ LC_ModifyMirrorOptions::LC_ModifyMirrorOptions()
     , ui(new Ui::LC_ModifyMirrorOptions), action(nullptr){
     ui->setupUi(this);
 
-    connect(ui->cbMirrorToLine, SIGNAL(clicked(bool)), this, SLOT(onMirrorToLineClicked(bool)));
+    connect(ui->cbMirrorToLine, &QCheckBox::toggled, this, &LC_ModifyMirrorOptions::onMirrorToLineClicked);
     connect(ui->cbKeepOriginals, &QCheckBox::clicked, this, &LC_ModifyMirrorOptions::cbKeepOriginalsClicked);
     connect(ui->cbCurrentAttr, &QCheckBox::clicked, this, &LC_ModifyMirrorOptions::cbUseCurrentAttributesClicked);
     connect(ui->cbLayer, &QCheckBox::clicked, this, &LC_ModifyMirrorOptions::cbUseCurrentLayerClicked);

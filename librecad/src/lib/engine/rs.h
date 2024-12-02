@@ -390,6 +390,7 @@ namespace RS2 {
         ActionModifyLineGap,
         ActionModifyAlign,
         ActionModifyAlignOne,
+        ActionModifyAlignRef,
 
         ActionSnapFree,
         ActionSnapGrid,

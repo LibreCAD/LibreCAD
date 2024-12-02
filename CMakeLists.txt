@@ -1343,6 +1343,11 @@ set(SOURCES
 		librecad/src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp
 		librecad/src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon4.h
 		librecad/src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon4.cpp
+		librecad/src/actions/drawing/modify/lc_actionmodifyalignref.h
+		librecad/src/actions/drawing/modify/lc_actionmodifyalignref.cpp
+		librecad/src/actions/drawing/modify/lc_actionmodifyalignref.h
+		librecad/src/ui/action_options/modify/lc_modifyalignrefoptions.h
+		librecad/src/ui/action_options/modify/lc_modifyalignrefoptions.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

@@ -225,7 +225,8 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawText",
         "DrawMText",
         "DrawHatch",
-        "DrawImage"
+        "DrawImage",
+        "DrawBoundingBox"
     });
 
     fillActionsList(modify_actions, {
@@ -233,6 +234,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "ModifyDuplicate",
         "ModifyAlign",
         "ModifyAlignOne",
+        "ModifyAlignRef",
         "ModifyRotate",
         "ModifyScale",
         "ModifyMirror",

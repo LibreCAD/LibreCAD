@@ -49,6 +49,7 @@
 #include "rs_units.h"
 #include "lc_splinepoints.h"
 #include "lc_undosection.h"
+#include "lc_linemath.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -1893,6 +1894,7 @@ bool RS_Modification::move(RS_MoveData& data, const std::vector<RS_Entity*> &ent
 
             ec->move(data.offset*num);
             if (!forPreviewOnly){
+                // fixme - move out of cycle
                 if (data.useCurrentLayer) {
                     ec->setLayerToActive();
                 }
@@ -1914,6 +1916,49 @@ bool RS_Modification::move(RS_MoveData& data, const std::vector<RS_Entity*> &ent
     return true;
 }
 
+bool RS_Modification::alignRef(LC_AlignRefData & data, const std::vector<RS_Entity*> &entitiesList, bool forPreviewOnly, bool keepSelected) {
+
+    int numberOfCopies = 1; /*data.obtainNumberOfCopies();*/
+    std::vector<RS_Entity*> addList;
+
+    RS_Vector offset = data.offset;
+
+    // too slow:
+    for(auto e: entitiesList){
+        // Create new entities
+        for (int num = 1; num <= numberOfCopies; num++) {
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy() : e->clone();
+
+            ec->rotate(data.rotationCenter, data.rotationAngle);
+
+            if (data.scale && LC_LineMath::isMeaningful(data.scaleFactor - 1.0)){
+                ec->scale(data.rotationCenter, data.scaleFactor);
+            }
+
+            ec->move(offset*num);
+            // fixme - sand - rework later on for efficiency - collect current layer and pen BEFORE FOR Cycle and reused them!!!
+            // fixme - sand - review other methods and do the same
+            if (!forPreviewOnly){
+                if (data.useCurrentLayer) {
+                    ec->setLayerToActive();
+                }
+                if (data.useCurrentAttributes) {
+                    ec->setPenToActive();
+                }
+            }
+            if (ec->rtti()==RS2::EntityInsert) {
+                ((RS_Insert*)ec)->update();
+            }
+            // since 2.0.4.0: keep selection
+            ec->setSelected(keepSelected);
+            addList.push_back(ec);
+        }
+    }
+
+    deleteOriginalAndAddNewEntities(addList, entitiesList, forPreviewOnly, !data.keepOriginals);
+    addList.clear();
+    return true;
+}
 
 /**
  * Offset all selected entities with the given mouse position and distance
@@ -1950,6 +1995,7 @@ bool RS_Modification::offset(const RS_OffsetData& data, const std::vector<RS_Ent
                 continue;
             }
             if (!forPreviewOnly) {
+                // fixme - move out of cycle
                 if (data.useCurrentLayer) {
                     ec->setLayerToActive();
                 }
@@ -2017,6 +2063,7 @@ bool RS_Modification::rotate(RS_RotateData& data, const std::vector<RS_Entity*> 
                 ec->rotate(rotatedRefPoint, secondRotationAngle);
             }
             if (!forPreviewOnly) {
+                // fixme - move out of cycle
                 if (data.useCurrentLayer) {
                     ec->setLayerToActive();
                 }
@@ -2091,7 +2138,7 @@ bool RS_Modification::scale(RS_ScaleData& data, const std::vector<RS_Entity*> &e
                 ec->setSelected(false);
 
                 ec->scale(data.referencePoint, RS_Math::pow(data.factor, num));
-
+                // fixme - move out of cycle
                 if (!forPreviewOnly) {
                     if (data.useCurrentLayer) {
                         ec->setLayerToActive();
@@ -2147,6 +2194,7 @@ bool RS_Modification::mirror(RS_MirrorData& data, const std::vector<RS_Entity*> 
 
             ec->mirror(data.axisPoint1, data.axisPoint2);
             if (!forPreviewOnly) {
+                // fixme - move out of cycle
                 if (data.useCurrentLayer) {
                     ec->setLayerToActive();
                 }
@@ -2203,6 +2251,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data, const std::vector<RS_Entity*
 
             ec->rotate(center2, angle2ForCopy);
             if (!forPreviewOnly) {
+                // fixme - move out of cycle
                 if (data.useCurrentLayer) {
                     ec->setLayerToActive();
                 }
@@ -2267,6 +2316,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData &data, const std::vector<RS_E
             double angleForCopy = data.sameAngleForCopies ?  data.angle : data.angle * num;
             ec->rotate(data.referencePoint + offset, angleForCopy);
             if (forPreviewOnly) {
+                // fixme - move out of cycle
                 if (data.useCurrentLayer) {
                     ec->setLayerToActive();
                 }
