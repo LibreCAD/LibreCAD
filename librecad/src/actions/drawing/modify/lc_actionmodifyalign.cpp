@@ -42,7 +42,7 @@ void LC_ActionModifyAlign::selectionCompleted([[maybe_unused]]bool singleEntity,
     updateSelectionWidget();
 }
 
-void LC_ActionModifyAlign::doTrigger(bool keepSelected) {
+void LC_ActionModifyAlign::doTrigger([[maybe_unused]]bool keepSelected) {
     QList<RS_Entity *> entitiesToCreate;
     createAlignedEntities(entitiesToCreate, alignMin, alignMax, false);
     if (!entitiesToCreate.isEmpty()) {

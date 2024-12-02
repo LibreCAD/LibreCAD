@@ -75,7 +75,7 @@ void LC_ModifyAlignRefOptions::languageChange() {
     ui->retranslateUi(this);
 }
 
-void LC_ModifyAlignRefOptions::onScaleClicked(bool clicked) {
+void LC_ModifyAlignRefOptions::onScaleClicked([[maybe_unused]]bool clicked) {
     setScaleToActionAndView(ui->cbScale->isChecked());
 }
 

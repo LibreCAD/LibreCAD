@@ -137,7 +137,7 @@ void LC_ActionModifyAlignRef::mouseLeftButtonReleaseEventSelected(int status, QM
     fireCoordinateEvent(snap);
 }
 
-void LC_ActionModifyAlignRef::mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) {
+void LC_ActionModifyAlignRef::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]QMouseEvent *pEvent) {
     if (status == SetRefPoint1){
         if (selectionComplete){
             selectionComplete = false;
@@ -156,7 +156,7 @@ LC_ModifyOperationFlags *LC_ActionModifyAlignRef::getModifyOperationFlags() {
     return &pPoints.data;
 }
 
-void LC_ActionModifyAlignRef::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
+void LC_ActionModifyAlignRef::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     switch (status){
         case SetRefPoint1:{
             pPoints.referencePoint1 = pos;
@@ -227,7 +227,7 @@ void LC_ActionModifyAlignRef::updateMouseButtonHintsForSelected(int status) {
     }
 }
 
-RS2::CursorType LC_ActionModifyAlignRef::doGetMouseCursorSelected(int status) {
+RS2::CursorType LC_ActionModifyAlignRef::doGetMouseCursorSelected([[maybe_unused]]int status) {
     return RS2::CadCursor;
 }
 
