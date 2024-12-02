@@ -3002,12 +3002,12 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="965"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="980"/>
         <source>Select line, arc or circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="965"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="980"/>
         <source>Proceed even if no intersections</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5857,47 +5857,47 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="22"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="37"/>
         <source>Create vew for current zoom and offset of drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="39"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="54"/>
         <source>Restores selected view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="53"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="68"/>
         <source>Update selected view by current zoom/position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="67"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="82"/>
         <source>Edit selected view name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="96"/>
         <source>Removes selected view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="84"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="99"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="114"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="129"/>
         <source>Filtering views by name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="117"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="132"/>
         <source>Filter...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="129"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="144"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9587,6 +9587,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1127"/>
+        <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="376"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="598"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="631"/>
@@ -10280,22 +10285,13 @@ Please check its existence and permissions.</source>
         <translation type="unfinished">ਚੋਣ</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="71"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
+        <source>Name of Current Active Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10440,7 +10436,7 @@ in a separate window</source>
     <name>QG_ColorBox</name>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="106"/>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="285"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="284"/>
         <source>By Layer</source>
         <translation>ਪਰਤ ਨਾਲ</translation>
     </message>
@@ -10455,53 +10451,52 @@ in a separate window</source>
         <translation>ਲਾਲ</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="120"/>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="122"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="125"/>
         <source>Yellow</source>
         <translation>ਪੀਲੀ</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="124"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="127"/>
         <source>Green</source>
         <translation>ਹਰਾ</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="126"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="129"/>
         <source>Cyan</source>
         <translation>ਨੀਲਾ-ਹਰਾ</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="128"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="131"/>
         <source>Blue</source>
         <translation>ਨੀਲਾ</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="130"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="133"/>
         <source>Magenta</source>
         <translation>ਕਿਰਮਚੀ</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="135"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="121"/>
         <source>Orange</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="136"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="123"/>
         <source>Dark Orange</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="139"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="138"/>
         <source>Black / White</source>
         <translation>ਕਾਲਾ / ਚਿੱਟਾ</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="143"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="142"/>
         <source>Gray</source>
         <translation>ਸਲੇਟੀ</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="145"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="144"/>
         <source>Light Gray</source>
         <translation>ਹਲਕਾ ਸਲੇਟੀ</translation>
     </message>
@@ -10512,48 +10507,47 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="119"/>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="121"/>
         <source>Dark Red</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="123"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="126"/>
         <source>Dark Yellow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="125"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="128"/>
         <source>Dark Green</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="127"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="130"/>
         <source>Dark Cyan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="129"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="132"/>
         <source>Dark Blue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="131"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="134"/>
         <source>Dark Magenta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="144"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="143"/>
         <source>Dark Gray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="111"/>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="323"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="322"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="172"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="171"/>
         <source>Custom Picked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16789,20 +16783,12 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="139"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>Number of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="177"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="173"/>
+        <source>Total length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

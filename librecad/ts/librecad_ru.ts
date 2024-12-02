@@ -3046,12 +3046,12 @@ or [%2]</source>
         <translation>Выбран неподходящий объект - нет сегментов между пересечениями с другими объектами</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="965"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="980"/>
         <source>Select line, arc or circle</source>
         <translation>Выделите линию, дугу или окружность</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="965"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="980"/>
         <source>Proceed even if no intersections</source>
         <translation>Также удалять объекты без пересечений</translation>
     </message>
@@ -5963,47 +5963,47 @@ Are you sure you are going to discard changes?</source>
         <translation>Форма</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="22"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="37"/>
         <source>Create vew for current zoom and offset of drawing</source>
         <translation>Создать новый Вид согласно текущему виду чертежа</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="39"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="54"/>
         <source>Restores selected view</source>
         <translation>Восстановить выбранный Вид</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="53"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="68"/>
         <source>Update selected view by current zoom/position</source>
         <translation>Обновить выбраный вид по текущему виду чертежа</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="67"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="82"/>
         <source>Edit selected view name</source>
         <translation>Редактирование имени выбранного вида</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="96"/>
         <source>Removes selected view</source>
         <translation>Удаление выбранного вида</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="84"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="99"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="114"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="129"/>
         <source>Filtering views by name</source>
         <translation>Фильтрация видов по имени</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="117"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="132"/>
         <source>Filter...</source>
         <translation>Фильтр...</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="129"/>
+        <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="144"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
@@ -9783,6 +9783,11 @@ p, li { white-space: pre-wrap; }
         <translation>Активный Слой</translation>
     </message>
     <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1127"/>
+        <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
+        <translation>Текущий размер сетки/дополнительной сетки. Щелкните мышью для изменения.</translation>
+    </message>
+    <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="376"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="598"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="631"/>
@@ -10643,9 +10648,13 @@ Please check its existence and permissions.</source>
         <translation>Выбор</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="71"/>
+        <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
+        <source>Name of Current Active Layer</source>
+        <translation>Название текущего активного слоя.</translation>
+    </message>
+    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
@@ -10653,13 +10662,12 @@ Please check its existence and permissions.</source>
         <translation>Текущий слой</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">Название текущего активного слоя</translation>
+        <translation type="obsolete">Название текущего активного слоя</translation>
     </message>
 </context>
 <context>
@@ -10803,7 +10811,7 @@ in a separate window</source>
     <name>QG_ColorBox</name>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="106"/>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="285"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="284"/>
         <source>By Layer</source>
         <translation>По слою</translation>
     </message>
@@ -10818,53 +10826,52 @@ in a separate window</source>
         <translation>Красный</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="120"/>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="122"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="125"/>
         <source>Yellow</source>
         <translation>Желтый</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="124"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="127"/>
         <source>Green</source>
         <translation>Зеленый</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="126"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="129"/>
         <source>Cyan</source>
         <translation>Голубой</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="128"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="131"/>
         <source>Blue</source>
         <translation>Синий</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="130"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="133"/>
         <source>Magenta</source>
         <translation>Пурпурный</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="135"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="121"/>
         <source>Orange</source>
         <translation>Оранжевый</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="136"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="123"/>
         <source>Dark Orange</source>
         <translation>Темно-оранжевый</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="139"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="138"/>
         <source>Black / White</source>
         <translation>Черный / белый</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="143"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="142"/>
         <source>Gray</source>
         <translation>Серый</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="145"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="144"/>
         <source>Light Gray</source>
         <translation>Светло-серый</translation>
     </message>
@@ -10875,43 +10882,42 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="119"/>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="121"/>
         <source>Dark Red</source>
         <translation>Тёмно-красный</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="123"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="126"/>
         <source>Dark Yellow</source>
         <translation>Тёмно-жёлтый</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="125"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="128"/>
         <source>Dark Green</source>
         <translation>Тёмно-зелёный</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="127"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="130"/>
         <source>Dark Cyan</source>
         <translation>Тёмно-голубой</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="129"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="132"/>
         <source>Dark Blue</source>
         <translation>Тёмно-синий</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="131"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="134"/>
         <source>Dark Magenta</source>
         <translation>Тёмно-пурпурный</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="144"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="143"/>
         <source>Dark Gray</source>
         <translation>Тёмно-серый</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="111"/>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="323"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="322"/>
         <source>Custom</source>
         <translation>Специальный</translation>
     </message>
@@ -10920,7 +10926,7 @@ in a separate window</source>
         <translation type="vanished">/Палитра</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="172"/>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="171"/>
         <source>Custom Picked</source>
         <translation>Выбрать</translation>
     </message>
@@ -13365,7 +13371,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="757"/>
         <source>Automatically Scale Grid:</source>
-        <translation>Автоматически мастштабировать сетку</translation>
+        <translation>Автоматически масштабировать сетку</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="764"/>
@@ -13390,7 +13396,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="916"/>
         <source>Select or enter values for grid spacing (they will affect Grid drawing and Snap to Grid):</source>
-        <translation>Выберите или введите промежутоки сетки. Они вляют на отрисовку сетки и Привязку к Сетке</translation>
+        <translation type="unfinished">Выберите или введите промежутоки сетки. Они влияют на отрисовку сетки и Привязку к Сетке</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="944"/>
@@ -17358,25 +17364,33 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="139"/>
+        <source>Number of selected entities</source>
+        <translation>Количество выделенных объектов</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="173"/>
+        <source>Total length of selected entities</source>
+        <translation>Общая длина выделенных объектов</translation>
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Число выбранных объектов&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="177"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;

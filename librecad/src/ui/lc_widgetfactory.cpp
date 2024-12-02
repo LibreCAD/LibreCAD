@@ -1124,7 +1124,7 @@ void LC_WidgetFactory::initStatusBar() {
 
         main_window->statusbarManager->setup();
 
-        main_window->grid_status->setToolTip("Current size of Grid/MetaGrid. Click to change grid size.");
+        main_window->grid_status->setToolTip(tr("Current size of Grid/MetaGrid. Click to change grid size."));
 
         connect(main_window->grid_status, &TwoStackedLabels::clicked, main_window, &QC_ApplicationWindow::slotShowDrawingOptions);
 
