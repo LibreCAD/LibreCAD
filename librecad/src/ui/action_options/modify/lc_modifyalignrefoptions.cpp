@@ -93,7 +93,7 @@ void LC_ModifyAlignRefOptions::cbUseCurrentLayerClicked(bool val) {
 
 void LC_ModifyAlignRefOptions::setScaleToActionAndView(bool val) {
     action->setScale(val);
-    ui->cbLayer->setChecked(val);
+    ui->cbScale->setChecked(val);
 }
 
 void LC_ModifyAlignRefOptions::setUseCurrentLayerToActionAndView(bool val) {
