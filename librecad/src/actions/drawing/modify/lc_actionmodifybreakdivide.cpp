@@ -733,6 +733,14 @@ LC_ActionModifyBreakDivide::LineSegmentData *LC_ActionModifyBreakDivide::findLin
             }
         }
     }
+    else{ // there are intersections only on edges. We may return the entire line as segment if SHIFT is pressed and the user would like to delete the entire entity
+        if (alternativeActionMode && removeSegments/* && removeSelected*/){
+            result = new LineSegmentData();
+            result->segmentDisposition = SEGMENT_INSIDE;
+            result->snapSegmentStart = line->getStartpoint();
+            result->snapSegmentEnd = line->getEndpoint();
+        }
+    }
     return result;
 }
 /**
@@ -842,7 +850,14 @@ LC_ActionModifyBreakDivide::ArcSegmentData *LC_ActionModifyBreakDivide::findArcS
         if (reversed){
             std::swap(result->snapSegmentEndAngle, result->snapSegmentStartAngle);
         }
-
+    }
+    else { // there are intersections only on edges. We may return the entire line as segment if SHIFT is pressed and the user would like to delete the entire entity
+        if (alternativeActionMode && removeSegments/* && removeSelected*/){
+            result = new ArcSegmentData();
+            result->segmentDisposition = SEGMENT_INSIDE;
+            result->snapSegmentStartAngle = arcStartAngle;
+            result->snapSegmentEndAngle = arcEndAngle;
+        }
     }
     return result;
 }
