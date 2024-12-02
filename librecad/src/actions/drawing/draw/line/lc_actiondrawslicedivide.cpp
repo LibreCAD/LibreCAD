@@ -285,7 +285,7 @@ bool LC_ActionDrawSliceDivide::checkShouldDivideEntity(const RS_Entity *e, const
 void LC_ActionDrawSliceDivide::createLineSegments(RS_Line *pLine, QList<RS_Entity *> &list){
     uint count = ticksData.size();
     if (count > 2){ // we always set 2 ticks for edges
-        RS_Pen originalPen = pLine->getPen();
+        RS_Pen originalPen = pLine->getPen(false);
         RS_Layer *originalLayer = pLine->getLayer();
 
         for (uint i = 1; i < count; i++) {
@@ -337,7 +337,7 @@ void LC_ActionDrawSliceDivide::doCreateArcSegments(RS_Entity *pArc, const RS_Vec
     size_t count = ticksData.size();
 
     if (count > 2){ // we always set 2 ticks for edges
-        RS_Pen originalPen = pArc->getPen();
+        RS_Pen originalPen = pArc->getPen(false);
         RS_Layer* originalLayer = pArc->getLayer();
 
 

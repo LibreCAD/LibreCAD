@@ -657,7 +657,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                     clone->setSelected(true);
 
                     clone->setLayer(refMovingEntity->getLayer());
-                    clone->setPen(refMovingEntity->getPen());
+                    clone->setPen(refMovingEntity->getPen(false));
                     container->addEntity(clone);
                     document->addUndoable(clone);
 

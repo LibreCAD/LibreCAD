@@ -1059,11 +1059,11 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
 		return nullptr;
     }
 
-    RS_Polyline* newPolyline = new RS_Polyline(container);
+    auto newPolyline = new RS_Polyline(container);
     newPolyline->setClosed(polyline.isClosed());
     newPolyline->setSelected(polyline.isSelected());
     newPolyline->setLayer(polyline.getLayer());
-    newPolyline->setPen(polyline.getPen());
+    newPolyline->setPen(polyline.getPen(false));
 
     // copy polyline and add new node:
     bool first = true;
@@ -1071,7 +1071,7 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
 	for(auto e: polyline){
 
         if (e->isAtomic()) {
-            RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
+            auto ae = (RS_AtomicEntity*)e;
             double bulge = 0.0;
             if (ae->rtti()==RS2::EntityArc) {
                 RS_DEBUG->print("RS_Modification::addPolylineNode: arc segment");
@@ -1226,7 +1226,7 @@ void RS_Modification::deleteLineNode(RS_Line* line, const RS_Vector& node)
             RS_Line* newLine { new RS_Line(container, startEndPoints[0], startEndPoints[1]) };
 
             newLine->setLayer(line->getLayer());
-            newLine->setPen(line->getPen());
+            newLine->setPen(line->getPen(false));
 
             container->addEntity(newLine);
 
@@ -1325,7 +1325,7 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
     if (!createOnly){
         newPolyline->setSelected(polyline.isSelected());
         newPolyline->setLayer(polyline.getLayer());
-        newPolyline->setPen(polyline.getPen());
+        newPolyline->setPen(polyline.getPen(false));
     }
 
     // copy polyline and drop deleted node:
@@ -1510,7 +1510,7 @@ RS_Polyline *RS_Modification::deletePolylineNodesBetween(
     if (!createOnly){
         newPolyline->setSelected(polyline.isSelected());
         newPolyline->setLayer(polyline.getLayer());
-        newPolyline->setPen(polyline.getPen());
+        newPolyline->setPen(polyline.getPen(false));
     }
 
     if (startpointInvolved && deleteStart && polyline.isClosed()){
@@ -1694,7 +1694,7 @@ RS_Polyline *RS_Modification::polylineTrim(
     if (!createOnly){
         newPolyline->setSelected(polyline.isSelected());
         newPolyline->setLayer(polyline.getLayer());
-        newPolyline->setPen(polyline.getPen());
+        newPolyline->setPen(polyline.getPen(false));
     }
 
     // normal trimming: start removing nodes at trim segment. ends stay the same
@@ -2997,7 +2997,7 @@ LC_BevelResult* RS_Modification::bevel(
         if (!previewOnly){
             bevel->setSelected(baseContainer->isSelected());
             bevel->setLayer(baseContainer->getLayer());
-            bevel->setPen(baseContainer->getPen());
+            bevel->setPen(baseContainer->getPen(false));
         }
 
         // insert bevel at the right position:
@@ -3241,7 +3241,7 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
 
         arc->setSelected(baseContainer->isSelected());
         arc->setLayer(baseContainer->getLayer());
-        arc->setPen(baseContainer->getPen());
+        arc->setPen(baseContainer->getPen(false));
 
         RS_DEBUG->print("RS_Modification::round: idx1<idx2: %d", (int) (idx1 < idx2));
         RS_DEBUG->print("RS_Modification::round: idx1!=0: %d", (int) (idx1 != 0));
@@ -3558,7 +3558,7 @@ bool RS_Modification::explodeTextIntoLetters(RS_MText* text, std::vector<RS_Enti
                                      RS2::Update));
 
                     tl->setLayer(text->getLayer());
-                    tl->setPen(text->getPen());
+                    tl->setPen(text->getPen(false));
 
                     addList.push_back(tl);
                     tl->update();
@@ -3602,7 +3602,7 @@ bool RS_Modification::explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entit
                             RS2::Update));
 
             tl->setLayer(text->getLayer());
-            tl->setPen(text->getPen());
+            tl->setPen(text->getPen(false));
 
             addList.push_back(tl);
             tl->update();
