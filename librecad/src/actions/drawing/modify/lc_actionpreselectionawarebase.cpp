@@ -49,7 +49,6 @@ LC_ActionPreSelectionAwareBase::~LC_ActionPreSelectionAwareBase() {
 }
 
 
-
 void LC_ActionPreSelectionAwareBase::init(int status) {
     RS_PreviewActionInterface::init(status);
     if (status < 0){

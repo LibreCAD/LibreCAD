@@ -188,53 +188,53 @@
 <context>
     <name>LC_AbstractActionDrawRectangle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_abstractactiondrawrectangle.cpp" line="202"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="202"/>
         <source>Invalid Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_abstractactiondrawrectangle.cpp" line="213"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="213"/>
         <source>Invalid radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_abstractactiondrawrectangle.cpp" line="353"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="353"/>
         <source>Invalid value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_abstractactiondrawrectangle.cpp" line="409"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="409"/>
         <source>Specify insertion point</source>
         <translation type="unfinished">Одредите тачку уметања</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_abstractactiondrawrectangle.cpp" line="412"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="412"/>
         <source>Specify angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_abstractactiondrawrectangle.cpp" line="415"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="415"/>
         <source>Specify size (width, height)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_abstractactiondrawrectangle.cpp" line="418"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="418"/>
         <source>Specify corners type
 [str|round|bevels]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_abstractactiondrawrectangle.cpp" line="421"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="421"/>
         <source>Specify corner bevel length (x,y)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_abstractactiondrawrectangle.cpp" line="424"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="424"/>
         <source>Specify corner radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_abstractactiondrawrectangle.cpp" line="427"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="427"/>
         <source>Specify edges mode
 [both|hor|vert]</source>
         <translation type="unfinished"></translation>
@@ -485,6 +485,19 @@
     </message>
 </context>
 <context>
+    <name>LC_ActionDrawBoundingBox</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="22"/>
+        <source>Select entities for bounding box (Enter to complete)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="22"/>
+        <source>Select and draw</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="220"/>
@@ -533,7 +546,7 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawCross</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawcross.cpp" line="285"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawcross.cpp" line="285"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished">Изаберите круг, лук или елипсу</translation>
     </message>
@@ -714,22 +727,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygon4</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon4.cpp" line="33"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="33"/>
         <source>Specify second corner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon4.cpp" line="36"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="36"/>
         <source>Specify second tangent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon4.cpp" line="42"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="42"/>
         <source>Specify first corner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon4.cpp" line="45"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="45"/>
         <source>Specify first tangent</source>
         <translation type="unfinished"></translation>
     </message>
@@ -737,32 +750,32 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygonbase.cpp" line="175"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="175"/>
         <source>Not a valid number. Try 1..9999</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygonbase.cpp" line="187"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="187"/>
         <source>Invalid value of rounding radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygonbase.cpp" line="197"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="197"/>
         <source>Not a valid expression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygonbase.cpp" line="229"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="229"/>
         <source>Enter number:</source>
         <translation type="unfinished">Унесите број:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygonbase.cpp" line="232"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="232"/>
         <source>Enter rounding radius:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygonbase.cpp" line="240"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="240"/>
         <source>Specify center</source>
         <translation type="unfinished">Одредите центар</translation>
     </message>
@@ -774,7 +787,7 @@ or [%2]</source>
         <translation type="vanished">Одредите центар</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawlinepolygon3.cpp" line="65"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="65"/>
         <source>Specify a tangent</source>
         <translation>Дефинишите тангенту</translation>
     </message>
@@ -848,22 +861,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawMidLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawmidline.cpp" line="191"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="191"/>
         <source>Select first entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawmidline.cpp" line="195"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="195"/>
         <source>Select second entity</source>
         <translation type="unfinished">Изаберите други ентитет</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawmidline.cpp" line="195"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="195"/>
         <source>Alternate endpoints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawmidline.cpp" line="199"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="199"/>
         <source>Enter offset value</source>
         <translation type="unfinished"></translation>
     </message>
@@ -981,32 +994,32 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawRectangle1Point</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle1point.cpp" line="352"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="352"/>
         <source>Specify height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle1point.cpp" line="355"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="355"/>
         <source>Specify width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle1point.cpp" line="358"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="358"/>
         <source>Specify size (width, height))</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle1point.cpp" line="361"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="361"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle1point.cpp" line="364"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="364"/>
         <source>Specify point that defines base angle for rectangle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle1point.cpp" line="364"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="364"/>
         <source>Don&apos;t keep insertion point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1014,27 +1027,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawRectangle2Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle2points.cpp" line="275"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="275"/>
         <source>Specify second point</source>
         <translation type="unfinished">Одредите другу тачку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle2points.cpp" line="275"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="275"/>
         <source>Draw Square</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle2points.cpp" line="278"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="278"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle2points.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="281"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle2points.cpp" line="284"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="284"/>
         <source>Specify size (width, height)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1042,48 +1055,48 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawRectangle3Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle3points.cpp" line="553"/>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle3points.cpp" line="571"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="553"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="571"/>
         <source>Specify first point first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle3points.cpp" line="562"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="562"/>
         <source>Specify width or second point first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle3points.cpp" line="591"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="591"/>
         <source>Specify width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle3points.cpp" line="594"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="594"/>
         <source>Specify height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle3points.cpp" line="597"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="597"/>
         <source>Specify start point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle3points.cpp" line="600"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="600"/>
         <source>Specify second point</source>
         <translation type="unfinished">Одредите другу тачку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle3points.cpp" line="603"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="603"/>
         <source>Specify third point</source>
         <translation type="unfinished">Одредите трећу тачку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle3points.cpp" line="606"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="606"/>
         <source>Specify angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/lc_actiondrawrectangle3points.cpp" line="609"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="609"/>
         <source>Specify inner angle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1157,37 +1170,37 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawStar</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawstar.cpp" line="185"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="185"/>
         <source>Invalid rays number, should be in range [3..99]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawstar.cpp" line="193"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="193"/>
         <source>Invalid value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawstar.cpp" line="620"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="620"/>
         <source>Set center point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawstar.cpp" line="623"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="623"/>
         <source>Set outer point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawstar.cpp" line="626"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="626"/>
         <source>Set inner point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawstar.cpp" line="629"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="629"/>
         <source>Set rounding radiuses (outer, inner)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/lc_actiondrawstar.cpp" line="632"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="632"/>
         <source>Set rays number</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2912,32 +2925,32 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyAlign</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="183"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="178"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="199"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="194"/>
         <source>Select base alignment entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="202"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="197"/>
         <source>Specify base alignment point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="205"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="200"/>
         <source>Click or Enter to finish align</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="213"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="208"/>
         <source>Select entities to align (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="213"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="208"/>
         <source>Select and align</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2945,32 +2958,32 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyAlignRef</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="210"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="204"/>
         <source>Select to align (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="210"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="204"/>
         <source>Align immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="216"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="210"/>
         <source>Select first reference point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="220"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="214"/>
         <source>Select first target point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="224"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="218"/>
         <source>Select second reference point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="228"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="222"/>
         <source>Select second target point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3107,7 +3120,7 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="116"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="114"/>
         <source>Select and paste</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3172,7 +3185,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionPreSelectionAwareBase</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionpreselectionawarebase.cpp" line="151"/>
+        <location filename="../src/actions/drawing/modify/lc_actionpreselectionawarebase.cpp" line="204"/>
         <source>No valid entities selected, select them first</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3193,17 +3206,17 @@ or [%2]</source>
 <context>
     <name>LC_ActionSnapMiddleManual</name>
     <message>
-        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="238"/>
+        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="240"/>
         <source>Specify percentage / start-point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="241"/>
+        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="243"/>
         <source>Specify start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="244"/>
+        <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="246"/>
         <source>Specify end point</source>
         <translation type="unfinished">Одредите крајњу тачку</translation>
     </message>
@@ -3585,62 +3598,62 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_CrossOptions</name>
     <message>
-        <location filename="../src/ui/action_options/line/lc_crossoptions.ui" line="20"/>
+        <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="20"/>
         <source>Form</source>
         <translation type="unfinished">Образац</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_crossoptions.ui" line="38"/>
+        <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="38"/>
         <source>X:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_crossoptions.ui" line="45"/>
+        <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="45"/>
         <source>Angle:</source>
         <translation type="unfinished">Угао:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_crossoptions.ui" line="52"/>
+        <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="52"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_crossoptions.ui" line="90"/>
+        <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="90"/>
         <source>Horizontal dimension of cross</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_crossoptions.ui" line="115"/>
+        <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="115"/>
         <source>Defines how to apply dimensions of cross</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_crossoptions.ui" line="131"/>
+        <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="131"/>
         <source>Extension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_crossoptions.ui" line="136"/>
+        <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="136"/>
         <source>Total Length</source>
         <translation type="unfinished">Укупна дужина</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_crossoptions.ui" line="141"/>
+        <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="141"/>
         <source>Percent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_crossoptions.ui" line="167"/>
+        <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="167"/>
         <source>Vertical dimension of the cross</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_crossoptions.ui" line="192"/>
+        <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="192"/>
         <source>Rotation angle for cross around center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_crossoptions.ui" line="199"/>
+        <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="199"/>
         <source>Y:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3988,6 +4001,44 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/LC_DlgParabola.cpp" line="109"/>
         <source>Parabola control points cannot be collinear</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_DrawBoundingBoxOptions</name>
+    <message>
+        <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Образац</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="32"/>
+        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="35"/>
+        <source>Selection As Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="42"/>
+        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="45"/>
+        <source>Corner points only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="52"/>
+        <source>If selected, bounding box is drawn as polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="58"/>
+        <source>Polyline</source>
+        <translation type="unfinished">Полилинија</translation>
     </message>
 </context>
 <context>
@@ -5120,87 +5171,87 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_LinePointsOptions</name>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="20"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="20"/>
         <source>Form</source>
         <translation type="unfinished">Образац</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="44"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="44"/>
         <source>Controls how points on the edges (start/end points) should be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="48"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="48"/>
         <source>None</source>
         <translation type="unfinished">Ништа</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="53"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="53"/>
         <source>Both</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="58"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="58"/>
         <source>Start</source>
         <translation type="unfinished">Почетак</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="63"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="63"/>
         <source>End</source>
         <translation type="unfinished">Крај</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="71"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="71"/>
         <source>Number of points to create</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="97"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="97"/>
         <source>Edge Points:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="138"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="138"/>
         <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="141"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="141"/>
         <source>Fit Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="166"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="166"/>
         <source>Distance between points.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="179"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="179"/>
         <source>If checked, line of points will be drawn with specified angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="182"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="182"/>
         <source>Angle:</source>
         <translation type="unfinished">Угао:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="195"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="195"/>
         <source>Number of points:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="208"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="208"/>
         <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="211"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="211"/>
         <source>Fixed Distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_linepointsoptions.ui" line="236"/>
+        <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="236"/>
         <source>Angle of line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5208,12 +5259,12 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_MidLineOptions</name>
     <message>
-        <location filename="../src/ui/action_options/line/lc_midlineoptions.ui" line="14"/>
+        <location filename="../src/ui/action_options/misc/lc_midlineoptions.ui" line="14"/>
         <source>Form</source>
         <translation type="unfinished">Образац</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_midlineoptions.ui" line="32"/>
+        <location filename="../src/ui/action_options/misc/lc_midlineoptions.ui" line="32"/>
         <source>Offset:</source>
         <translation type="unfinished">Размак:</translation>
     </message>
@@ -7966,217 +8017,217 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_Rectangle1PointOptions</name>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="14"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="14"/>
         <source>Form</source>
         <translation type="unfinished">Образац</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="59"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="59"/>
         <source>Edges:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="66"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="66"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="69"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="69"/>
         <source>Snap shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="88"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="88"/>
         <source>Length of bevel corner for Y direction. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="95"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="95"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="99"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="99"/>
         <source>Both</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="104"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="104"/>
         <source>Vertical</source>
         <translation type="unfinished">Вертикала</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="109"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="109"/>
         <source>Horizontal</source>
         <translation type="unfinished">Хоризонтални</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="129"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="129"/>
         <source>Width of rectangle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="136"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="136"/>
         <source>Controls how corners of rectangle should be drawn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="140"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="140"/>
         <source>Straight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="145"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="145"/>
         <source>Round</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="150"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="150"/>
         <source>Bevel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="158"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="158"/>
         <source>If checked, rectangle will be rotated on specified angle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="161"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="161"/>
         <source>Base Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="168"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="168"/>
         <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="171"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="171"/>
         <source>Size inner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="178"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="178"/>
         <source>Length Y:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="185"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="185"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="188"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="188"/>
         <source>Polyline</source>
         <translation type="unfinished">Полилинија</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="195"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="195"/>
         <source>Snap:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="202"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="202"/>
         <source>Height:</source>
         <translation type="unfinished">Висина:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="209"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="209"/>
         <source>Radius:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="228"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="228"/>
         <source>Length of bevel corner for X direction. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="235"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="235"/>
         <source>Length X:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="254"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="254"/>
         <source>Height of rectangle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="273"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="273"/>
         <source>Radius of rounded corners.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="280"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="280"/>
         <source>Point of rectangle wich will be placed to insertion point.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="284"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="284"/>
         <source>Top-left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="289"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="289"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="294"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="294"/>
         <source>Top-right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="299"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="299"/>
         <source>Left</source>
         <translation type="unfinished">Лево</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="304"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="304"/>
         <source>Middle</source>
         <translation type="unfinished">Средина</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="309"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="309"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="314"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="314"/>
         <source>Bottom-left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="319"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="319"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="324"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="324"/>
         <source>Bottom-right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="344"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="344"/>
         <source>Rotation angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="351"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="351"/>
         <source>Width:</source>
         <translation type="unfinished">Ширина:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="365"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="365"/>
         <source>Corners:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="372"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="372"/>
         <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle1pointoptions.ui" line="375"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="375"/>
         <source>Free</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8184,166 +8235,166 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_Rectangle2PointsOptions</name>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="14"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="14"/>
         <source>Form</source>
         <translation type="unfinished">Образац</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="32"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="32"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="36"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="36"/>
         <source>Both</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="41"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="41"/>
         <source>Vertical</source>
         <translation type="unfinished">Вертикала</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="46"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="46"/>
         <source>Horizontal</source>
         <translation type="unfinished">Хоризонтални</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="54"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="54"/>
         <source>Defines which point of rectangle should be placed into start point position.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="58"/>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="92"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="58"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="92"/>
         <source>Corner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="63"/>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="97"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="63"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="97"/>
         <source>Mid-Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="68"/>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="102"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="68"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="102"/>
         <source>Mid-Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="73"/>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="107"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="73"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="107"/>
         <source>Middle</source>
         <translation type="unfinished">Средина</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="81"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="81"/>
         <source>Corners:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="88"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="88"/>
         <source>Defines which point of rectangle should be placed into end point position. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="115"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="115"/>
         <source>Edges:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="129"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="129"/>
         <source>Start Snap:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="148"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="148"/>
         <source>Length of bevel in Y direction. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="155"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="155"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="158"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="158"/>
         <source>Snap shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="165"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="165"/>
         <source>Length X:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="179"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="179"/>
         <source>Radius:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="186"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="186"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="189"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="189"/>
         <source>Base Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="208"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="208"/>
         <source>Rectangle rotation angle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="215"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="215"/>
         <source>End Snap:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="222"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="222"/>
         <source>Defines how corners of rectangle should be drawn. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="226"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="226"/>
         <source>Straight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="231"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="231"/>
         <source>Round</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="236"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="236"/>
         <source>Bevel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="256"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="256"/>
         <source>Radius of rounded corners. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="263"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="263"/>
         <source>Length Y:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="283"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="283"/>
         <source>If checked, the entire rectangle will be drawn as polyline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="286"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="286"/>
         <source>Polyline</source>
         <translation type="unfinished">Полилинија</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle2pointsoptions.ui" line="305"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="305"/>
         <source>Length of bevel in X direction.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8351,147 +8402,147 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_Rectangle3PointsOptions</name>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="14"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="14"/>
         <source>Form</source>
         <translation type="unfinished">Образац</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="74"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="74"/>
         <source>Inner angle of quadrangle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="94"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="94"/>
         <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="97"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="97"/>
         <source>Fixed Inner Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="125"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="125"/>
         <source>Base angle of rectangle. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="153"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="153"/>
         <source>Length X:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="178"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="178"/>
         <source>Length of bevel in X direction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="185"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="185"/>
         <source>Defines how corners should be drawn for rectangle. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="189"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="189"/>
         <source>Straight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="194"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="194"/>
         <source>Round</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="199"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="199"/>
         <source>Bevel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="207"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="207"/>
         <source>Corners:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="214"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="214"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="217"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="217"/>
         <source>Snap shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="224"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="224"/>
         <source>Length Y:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="249"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="249"/>
         <source>Length of bevel in Y direction. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="274"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="274"/>
         <source>Radius of rounded corners.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="281"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="281"/>
         <source>Radius:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="291"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="291"/>
         <source>If checked, the shape will be created as polyline. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="294"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="294"/>
         <source>Polyline</source>
         <translation type="unfinished">Полилинија</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="301"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="301"/>
         <source>Edges:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="315"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="315"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="319"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="319"/>
         <source>Both</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="324"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="324"/>
         <source>Vertical</source>
         <translation type="unfinished">Вертикала</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="329"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="329"/>
         <source>Horizontal</source>
         <translation type="unfinished">Хоризонтални</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="337"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="337"/>
         <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="340"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="340"/>
         <source>Fixed Base Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="354"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="354"/>
         <source>If checked, quadrangle will be created instead of rectangle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_rectangle3pointsoptions.ui" line="357"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="357"/>
         <source>Quadrangle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9026,67 +9077,67 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_StarOptions</name>
     <message>
-        <location filename="../src/ui/action_options/line/lc_staroptions.ui" line="14"/>
+        <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="14"/>
         <source>Form</source>
         <translation type="unfinished">Образац</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_staroptions.ui" line="48"/>
+        <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="48"/>
         <source>If checked, symmetric star will be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_staroptions.ui" line="51"/>
+        <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="51"/>
         <source>Symmetric</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_staroptions.ui" line="70"/>
+        <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="70"/>
         <source>Radius for inner edges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_staroptions.ui" line="77"/>
+        <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="77"/>
         <source>Number:</source>
         <translation type="unfinished">Број:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_staroptions.ui" line="84"/>
+        <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="84"/>
         <source>Number of rays.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_staroptions.ui" line="94"/>
+        <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="94"/>
         <source>If checked, outer edges will be rounded. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_staroptions.ui" line="97"/>
+        <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="97"/>
         <source>Radius Outer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_staroptions.ui" line="104"/>
+        <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="104"/>
         <source>If checked, inner edges will be rounded. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_staroptions.ui" line="107"/>
+        <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="107"/>
         <source>Radius Inner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_staroptions.ui" line="114"/>
+        <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="114"/>
         <source>If checked, the star will be drawn as polyline. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_staroptions.ui" line="117"/>
+        <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="117"/>
         <source>Polyline</source>
         <translation type="unfinished">Полилинија</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_staroptions.ui" line="136"/>
+        <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="136"/>
         <source>Radius for outer rays (edges).</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10405,17 +10456,17 @@ Please check its existence and permissions.</source>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1302"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1306"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1303"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1307"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1313"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1317"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>назад</translation>
@@ -13492,7 +13543,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2799"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1201"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1025"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1029"/>
         <source>Dwg Units</source>
         <translation>Јединице цртежа</translation>
     </message>
@@ -13533,7 +13584,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1199"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1023"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1027"/>
         <source>Screen %</source>
         <translation>Екран %</translation>
     </message>
@@ -13541,32 +13592,32 @@ Please choose the unit you want to use for new drawings and your preferred langu
 <context>
     <name>QG_DlgOptionsGeneral</name>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="686"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="690"/>
         <source>Preferences</source>
         <translation>Опције</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3913"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3929"/>
         <source>Translations:</source>
         <translation>Преводи:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3813"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3829"/>
         <source>Hatch Patterns:</source>
         <translation>Облици шрафура:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3923"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3939"/>
         <source>Fonts:</source>
         <translation>Фонтови:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3878"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3894"/>
         <source>Part Libraries:</source>
         <translation>Библиотеке делова:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3599"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3656"/>
         <source>Language</source>
         <translation>Језик</translation>
     </message>
@@ -13580,7 +13631,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Подешавања програма</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3508"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3717"/>
         <source>Defaults for new drawings</source>
         <translation>Подразумевано за нове цртеже</translation>
     </message>
@@ -13589,17 +13640,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">&amp;Изглед</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3605"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3662"/>
         <source>&amp;GUI Language:</source>
         <translation>&amp;Језик графичког корисничког интерфејса:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3625"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3682"/>
         <source>&amp;Command Language:</source>
         <translation>&amp;Језик команди:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3793"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3809"/>
         <source>&amp;Paths</source>
         <translation>&amp;Путање</translation>
     </message>
@@ -13609,7 +13660,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&amp;Подразумеване вредности</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3567"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3782"/>
         <source>&amp;Unit:</source>
         <translation>&amp;Јединице:</translation>
     </message>
@@ -13641,7 +13692,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">&amp;Означена боја:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="687"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="691"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>Молимо Вас, поново покрените апликацију како би се примениле све промене.</translation>
     </message>
@@ -13656,7 +13707,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Алт+У</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3338"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3325"/>
         <source>Program Defaults</source>
         <translation>Подразумеване вредности програма</translation>
     </message>
@@ -13665,12 +13716,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">Јединица цртежа.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3344"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3331"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>Време између аутоматских чувања документа у минутима.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3414"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3401"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>Када је подешено, LibreCAD ће аутоматски направити резервну копију тренутног цртежа.</translation>
     </message>
@@ -13679,7 +13730,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">Аутоматско прављење резервне копије</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4000"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4016"/>
         <source>Template:</source>
         <translation>Образац:</translation>
     </message>
@@ -13731,27 +13782,27 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">Промените слој изабраних ентитета, на  активацији слоја</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3483"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3538"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3551"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3766"/>
         <source>Left  Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3531"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3746"/>
         <source>RIght Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3541"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3756"/>
         <source>Orthogonal Grid</source>
         <translation type="unfinished">Правоугаона мрежа</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3514"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3723"/>
         <source>Top Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13822,97 +13873,107 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3391"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3378"/>
         <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3394"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3381"/>
         <source>Show current command icon in options toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3444"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3431"/>
         <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3447"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3434"/>
         <source>Show internal IDs of entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3703"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3467"/>
+        <source>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3470"/>
+        <source>Keep modified entities selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3574"/>
         <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3709"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3580"/>
         <source>Duplicate prompt messages of actions in statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3580"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3795"/>
         <source>If checked, new drawing will be created with grid disabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3583"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3798"/>
         <source>Grid is Off </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3648"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3480"/>
         <source>New Versions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3654"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3486"/>
         <source>Check GitHub for new releases of LibreCAD on program startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3657"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3489"/>
         <source>Check for new versions on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3664"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3496"/>
         <source>If checked, pre-release versions will be ignored</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3670"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3502"/>
         <source>Ignore pre-release versions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3739"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3610"/>
         <source>Open last opened files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3726"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3597"/>
         <source>If enabled, drop-down menus may become floating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3729"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3600"/>
         <source>Allow menus detaching</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3716"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3587"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3719"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3590"/>
         <source>Use &quot;classic&quot; statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3837"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3853"/>
         <source>Clear Settings</source>
         <translation>Очистити подешавања</translation>
     </message>
@@ -13921,7 +13982,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">враћа геометрију/распоред програма на почетно стање</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3852"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3868"/>
         <source>Layout</source>
         <translation>Распоред</translation>
     </message>
@@ -13930,7 +13991,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">враћа програм на почетно стање</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3868"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3884"/>
         <source>All</source>
         <translation>Сви</translation>
     </message>
@@ -13953,32 +14014,32 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Сакриј показивач током аутоматског избора</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3759"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3630"/>
         <source>Start in tab mode</source>
         <translation>Покрени у режиму картица</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3680"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3551"/>
         <source>Startup</source>
         <translation>Покретање</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3769"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3640"/>
         <source>Display loading screen</source>
         <translation>Прикажи екран за учитавање</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3749"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3620"/>
         <source>Start with main window maximized</source>
         <translation>Покрени са увећаним главним прозором</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3696"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3567"/>
         <source>Enable CAD dockwidgets</source>
         <translation>Омогући CAD виџете докова</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3686"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3557"/>
         <source>Enable CAD toolbars</source>
         <translation>Омогући CAD траке са алаткама</translation>
     </message>
@@ -13989,22 +14050,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>#1E90FF</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="801"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="805"/>
         <source>Clear settings</source>
         <translation>Очисти подешавања</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="802"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="806"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation>Ово ће такође укључити меније и траке са алаткама. Да ли желите да наставите?</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3306"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3450"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Када је омогућено, активирање слоја модификује све означене ентитете да припадају том слоју. За промену слоја више ентитета: прво означите више ентитета; активирајте слој у виџету слојева. Ово ће учинити да се сви ентитети промене тако да припадају новом слоју.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3933"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3949"/>
         <source>Variable File:</source>
         <translation>Датотека променљивих:</translation>
     </message>
@@ -14019,7 +14080,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Б&amp;рој ентитета за преглед:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3384"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3371"/>
         <source>Don&apos;t use native OS file open dialog</source>
         <translation>Не користи подразумевани изборник за отварање датотека оперативног система</translation>
     </message>
@@ -14896,172 +14957,172 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3309"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3453"/>
         <source>Modify layer of selected entities, at layer activation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3424"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3411"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3427"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3414"/>
         <source>Show Close button on drawings tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3371"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3358"/>
         <source>Always</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3376"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3363"/>
         <source>Active Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3360"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3347"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3363"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3350"/>
         <source>Show keyboard shortcuts in actions tooltips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3417"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3404"/>
         <source>Auto save backup each</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3401"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3388"/>
         <source>If checked, location of dialog will not be saved, but size will</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3407"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3394"/>
         <source>Persist dialog size only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3347"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3334"/>
         <source> minutes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3434"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3421"/>
         <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3437"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3424"/>
         <source>Persistent dialogs location and size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3470"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3525"/>
         <source>Keyboard Settings</source>
         <translation>Подешавања тастатуре</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3476"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3531"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
         <translation>Процени команде када је размакница притиснута</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3524"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3739"/>
         <source>Drawing units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3618"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3675"/>
         <source>Languages for commands in Cmd Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3638"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3695"/>
         <source>Language to use for GUI and messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3766"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3637"/>
         <source>Defines whether splash screen will be shown on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3756"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3627"/>
         <source>Controls default mode for drawings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3746"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3617"/>
         <source>If checked, after start the main window will be maximized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3736"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3607"/>
         <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3799"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3888"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3902"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3954"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4010"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3815"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3904"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3918"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3970"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4026"/>
         <source>Click to select directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3823"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3839"/>
         <source>Path to folder with fonts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3830"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3846"/>
         <source>Path to file with keyboard shortcuts mapping variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3849"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3865"/>
         <source>Restores program geometry/layout to original state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3865"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3881"/>
         <source>Restores the program settings to its original state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3940"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3968"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3956"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3984"/>
         <source>Click to select file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3979"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3995"/>
         <source>Path to folder with hatch patterns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3986"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4002"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3993"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4009"/>
         <source>Path to file with variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4021"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4037"/>
         <source>Path to folder with translation files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4028"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4044"/>
         <source>Shortcuts Mappings:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15070,17 +15131,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="vanished">Промени начин слободног избора када је размакница притиснута и командни прозор је празан</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3486"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3541"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
         <translation>Промени начин слободног избора када је размакница притиснута</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3300"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3444"/>
         <source>CAD Preferences</source>
         <translation>CAD подешавања</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3316"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3460"/>
         <source>Automatically zoom drawing when opening</source>
         <translation>Аутоматски подеси величину цртежа приликом отварања</translation>
     </message>
@@ -18163,13 +18224,13 @@ Do you want to replace it?</source>
         <translation>: дуплирана команда: %1 је већ заузето са %2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="844"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="854"/>
         <source>point</source>
         <comment>draw point</comment>
         <translation>тачка</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="845"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="855"/>
         <source>po</source>
         <comment>draw point</comment>
         <translation>та</translation>
@@ -18193,79 +18254,79 @@ Do you want to replace it?</source>
         <translation>л</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="509"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="519"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
         <translation>полилинија</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="510"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="520"/>
         <source>pl</source>
         <comment>draw polyline</comment>
         <translation>пл</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="462"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="472"/>
         <source>free</source>
         <comment>draw freehand line</comment>
         <translation>слободно</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="464"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="474"/>
         <source>fhl</source>
         <comment>draw freehand line</comment>
         <translation>осл</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="425"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="435"/>
         <source>spline</source>
         <comment>draw spline</comment>
         <translation>сплајн</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="427"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="437"/>
         <source>spl</source>
         <comment>draw spline</comment>
         <translation>спл</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="432"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="442"/>
         <source>spline2</source>
         <comment>spline through points</comment>
         <translation>сплајн2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="434"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="444"/>
         <source>stp</source>
         <comment>spline through points</comment>
         <translation>сп2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="243"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="253"/>
         <source>ptp</source>
         <comment>parallel through point</comment>
         <translation>поч</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="250"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="260"/>
         <source>bisect</source>
         <comment>angle bisector</comment>
         <translation>бисектриса</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="249"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="259"/>
         <source>bi</source>
         <comment>angle bisector</comment>
         <translation>би</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="257"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="267"/>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
         <translation>тантк</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="276"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="286"/>
         <source>ortho</source>
         <comment>perpendicular line</comment>
         <translation>орто</translation>
@@ -18277,649 +18338,649 @@ Do you want to replace it?</source>
         <translation>прав</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="308"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="318"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
         <translation>полигон2в</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="310"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="320"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
         <translation>поли2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="317"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="327"/>
         <source>circle</source>
         <comment>draw circle</comment>
         <translation>круг</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="318"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="328"/>
         <source>ci</source>
         <comment>draw circle</comment>
         <translation>кр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="325"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="335"/>
         <source>c2</source>
         <comment>circle 2 points</comment>
         <translation>к2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="338"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="348"/>
         <source>c3</source>
         <comment>circle 3 points</comment>
         <translation>к3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="374"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="384"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
         <translation>тан3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="373"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="383"/>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
         <translation>цт3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="500"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="510"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
         <translation>уписанаелипса</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="501"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="511"/>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
         <translation>уе</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="502"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="512"/>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
         <translation>ие</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="838"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="848"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
         <translation>шрафура</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="839"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="849"/>
         <source>ha</source>
         <comment>draw hatch</comment>
         <translation>шр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="824"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="834"/>
         <source>mtext</source>
         <comment>draw mtext</comment>
         <translation>мтекст</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="826"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="836"/>
         <source>mtxt</source>
         <comment>draw mtext</comment>
         <translation>мтк</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="831"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="841"/>
         <source>text</source>
         <comment>draw text</comment>
         <translation>текст</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="833"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="843"/>
         <source>txt</source>
         <comment>draw text</comment>
         <translation>ткст</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="984"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="994"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
         <translation>регенериши</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="985"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="995"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
         <translation>прецртај</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="986"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="996"/>
         <source>rg</source>
         <comment>zoom - redraw</comment>
         <translation>рг</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="987"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="997"/>
         <source>zr</source>
         <comment>zoom - redraw</comment>
         <translation>нл</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1004"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1014"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
         <translation>зумпрозор</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1005"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1015"/>
         <source>zw</source>
         <comment>zoom - window</comment>
         <translation>зп</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="992"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1002"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
         <translation>зумауто</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="993"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1003"/>
         <source>za</source>
         <comment>zoom - auto</comment>
         <translation>за</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1010"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1020"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
         <translation>зумпомери</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1011"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1021"/>
         <source>zp</source>
         <comment>zoom - pan</comment>
         <translation>зпом</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="998"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1008"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
         <translation>зумпретходни</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="999"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1009"/>
         <source>zv</source>
         <comment>zoom - previous</comment>
         <translation>зпрет</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="953"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="963"/>
         <source>kill</source>
         <comment>kill all actions</comment>
         <translation>убиј</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="955"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="965"/>
         <source>k</source>
         <comment>kill all actions</comment>
         <translation>у</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="960"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="970"/>
         <source>undo</source>
         <comment>undo cycle</comment>
         <translation>назад</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="962"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="972"/>
         <source>u</source>
         <comment>undo cycle</comment>
         <translation>наз</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="967"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="977"/>
         <source>redo</source>
         <comment>redo cycle</comment>
         <translation>понови</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="969"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="979"/>
         <source>r</source>
         <comment>redo cycle</comment>
         <translation>пон</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="600"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="610"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
         <translation>котпоравната</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="612"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="622"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
         <translation>котхориз</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="613"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="623"/>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
         <translation>кх</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="618"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="628"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
         <translation>котверт</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="619"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="629"/>
         <source>dv</source>
         <comment>dimension - vertical</comment>
         <translation>кв</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="606"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="616"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
         <translation>котлин</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="607"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="617"/>
         <source>dl</source>
         <comment>dimension - linear</comment>
         <translation>кл</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="638"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="648"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
         <translation>котугла</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="640"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="650"/>
         <source>dan</source>
         <comment>dimension - angular</comment>
         <translation>ку</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="625"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="635"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
         <translation>котрад</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="633"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="643"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
         <translation>котпреч</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="631"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="641"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
         <translation>котпречн</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="632"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="642"/>
         <source>dd</source>
         <comment>dimension - diametric</comment>
         <translation>кп</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="645"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="655"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
         <translation>котпоказивач</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="646"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="656"/>
         <source>ld</source>
         <comment>dimension - leader</comment>
         <translation>котп</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="651"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="661"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
         <translation>котреген</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="926"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="936"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
         <translation>неогранич</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="927"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="937"/>
         <source>rn</source>
         <comment>restrict - nothing</comment>
         <translation>неогр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="932"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="942"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
         <translation>огранорто</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="933"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="943"/>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
         <translation>оо</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="938"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="948"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
         <translation>огранхориз</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="939"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="949"/>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
         <translation>ох</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="944"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="954"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
         <translation>огранверт</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="945"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="955"/>
         <source>rv</source>
         <comment>restrict - vertical</comment>
         <translation>ов</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="660"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="670"/>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
         <translation>пом</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="731"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="741"/>
         <source>bev</source>
         <comment>modify - bevel</comment>
         <translation>закоси</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="732"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="742"/>
         <source>ch</source>
         <comment>modify - bevel</comment>
         <translation>пром</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="738"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="748"/>
         <source>fi</source>
         <comment>modify - fillet</comment>
         <translation>фи</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="746"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="756"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
         <translation>исеци</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="747"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="757"/>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
         <translation>под</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="678"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="688"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
         <translation>ми</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="697"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="707"/>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
         <translation>уназ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="666"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="676"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
         <translation>ро</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="672"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="682"/>
         <source>sz</source>
         <comment>modify - scale</comment>
         <translation>вел</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="703"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="713"/>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
         <translation>транс</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="710"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="720"/>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation>трн2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="716"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="726"/>
         <source>le</source>
         <comment>modify - lengthen</comment>
         <translation>продж</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="754"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="764"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
         <translation>раз</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="786"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="796"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
         <translation>обр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="787"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="797"/>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
         <translation>об</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="780"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="790"/>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
         <translation>експл</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="859"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="869"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
         <translation>слободни одабир</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="861"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="871"/>
         <source>os</source>
         <comment>snap - free</comment>
         <translation>со</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="866"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="876"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
         <translation>одабир центра</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="867"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="877"/>
         <source>sc</source>
         <comment>snap - center</comment>
         <translation>оц</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="872"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="882"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
         <translation>одабир на растојању</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="873"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="883"/>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
         <translation>ор</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="878"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="888"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
         <translation>одабир крајева</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="879"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="889"/>
         <source>se</source>
         <comment>snap - end points</comment>
         <translation>ок</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="884"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="894"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
         <translation>одабир мреже</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="885"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="895"/>
         <source>sg</source>
         <comment>snap - grid</comment>
         <translation>ом</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="890"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="900"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
         <translation>одабир пресека</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="891"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="901"/>
         <source>si</source>
         <comment>snap - intersection</comment>
         <translation>оп</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="896"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="906"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
         <translation>одабир средње тачке</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="897"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="907"/>
         <source>sm</source>
         <comment>snap - middle points</comment>
         <translation>ост</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="902"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="912"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
         <translation>одабир на ентитету</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="903"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="913"/>
         <source>sn</source>
         <comment>snap - on entity</comment>
         <translation>оне</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="904"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="914"/>
         <source>np</source>
         <comment>snap - on entity</comment>
         <translation>ент</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="920"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="930"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
         <translation>подеси релативну нулу</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="921"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="931"/>
         <source>rz</source>
         <comment>set relative zero position</comment>
         <translation>рн</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="578"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="588"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
         <translation>изабери све</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="579"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="589"/>
         <source>sa</source>
         <comment>Select all entities</comment>
         <translation>ис</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="584"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="594"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
         <translation>деселектуј све</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="586"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="596"/>
         <source>tn</source>
         <comment>deselect all entities</comment>
         <translation>дс</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="767"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="777"/>
         <source>attr</source>
         <comment>modify attribute</comment>
         <translation>атр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="768"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="778"/>
         <source>ma</source>
         <comment>modify attribute</comment>
         <translation>модатр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="760"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="770"/>
         <source>prop</source>
         <comment>modify properties</comment>
         <translation>особ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="796"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="806"/>
         <source>dist</source>
         <comment>distance point to point</comment>
         <translation>растој</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="797"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="807"/>
         <source>dpp</source>
         <comment>distance point to point</comment>
         <translation>дист</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="811"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="821"/>
         <source>ang</source>
         <comment>measure angle</comment>
         <translation>уг</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1018"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1111"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1028"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1121"/>
         <source>angle</source>
         <translation>угао</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1019"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1029"/>
         <source>dpi</source>
         <translation>тпи</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1020"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1123"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1030"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
         <source>close</source>
         <translation>затвори</translation>
     </message>
@@ -18928,84 +18989,84 @@ Do you want to replace it?</source>
         <translation type="vanished">дужина жице</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1022"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1032"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
         <source>columns</source>
         <translation>колоне</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1023"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1033"/>
         <source>columnspacing</source>
         <translation>размак колона</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1025"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1134"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1035"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1144"/>
         <source>factor</source>
         <translation>множилац</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1026"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1036"/>
         <source>length</source>
         <translation>дужина</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1029"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1039"/>
         <source>number</source>
         <translation>број</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1030"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1161"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1040"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1171"/>
         <source>radius</source>
         <translation>полупречник</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1031"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1041"/>
         <source>rows</source>
         <translation>редови</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1032"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1042"/>
         <source>rowspacing</source>
         <translation>размак редова</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1033"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1176"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1043"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1186"/>
         <source>through</source>
         <translation>кроз</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1034"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1044"/>
         <source>trim</source>
         <translation>исеци</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1112"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
         <source>ang</source>
         <comment>angle</comment>
         <translation>уг</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1113"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1123"/>
         <source>an</source>
         <comment>angle</comment>
         <translation>уг</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1115"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1125"/>
         <source>center</source>
         <translation>центар</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1116"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
         <source>cen</source>
         <comment>center</comment>
         <translation>цен</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1127"/>
         <source>ce</source>
         <comment>center</comment>
         <translation>це</translation>
@@ -19016,230 +19077,230 @@ Do you want to replace it?</source>
         <translation type="vanished">дужина жице</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1124"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1134"/>
         <source>c</source>
         <comment>close</comment>
         <translation>ц</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1127"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1137"/>
         <source>cols</source>
         <comment>columns</comment>
         <translation>кол</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
         <source>co</source>
         <comment>columns</comment>
         <translation>ко</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation>размак колона</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation>колраз</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1132"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
         <translation>колр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1135"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1145"/>
         <source>fact</source>
         <comment>factor</comment>
         <translation>факт</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1146"/>
         <source>f</source>
         <comment>factor</comment>
         <translation>ф</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1152"/>
         <source>help</source>
         <translation>помоћ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1143"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1153"/>
         <source>?</source>
         <comment>help</comment>
         <translation>?</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1145"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1155"/>
         <source>length</source>
         <comment>length</comment>
         <translation>дужина</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1146"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1156"/>
         <source>len</source>
         <comment>length</comment>
         <translation>дуж</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1147"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1157"/>
         <source>l</source>
         <comment>length</comment>
         <translation>д</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1149"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1159"/>
         <source>length1</source>
         <comment>length1</comment>
         <translation>дужина1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1150"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1160"/>
         <source>len1</source>
         <comment>length1</comment>
         <translation>дуж1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1151"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1161"/>
         <source>l1</source>
         <comment>length1</comment>
         <translation>д1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1153"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
         <source>length2</source>
         <comment>length2</comment>
         <translation>дужина2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1154"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1164"/>
         <source>len2</source>
         <comment>length2</comment>
         <translation>дуж2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1155"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>l2</source>
         <comment>length2</comment>
         <translation>д2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1157"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1167"/>
         <source>number</source>
         <comment>number</comment>
         <translation>број</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1158"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
         <source>num</source>
         <comment>number</comment>
         <translation>бр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1159"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1169"/>
         <source>n</source>
         <comment>number</comment>
         <translation>б</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1162"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1172"/>
         <source>ra</source>
         <comment>radius</comment>
         <translation>ра</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1164"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1174"/>
         <source>reversed</source>
         <comment>reversed</comment>
         <translation>обрнуто</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1166"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1175"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1176"/>
         <source>rev</source>
         <comment>reversed</comment>
         <translation>обр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1178"/>
         <source>row</source>
         <comment>row</comment>
         <translation>ред</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1170"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1180"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
         <translation>размак редова</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1171"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1181"/>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
         <translation>рр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1173"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1183"/>
         <source>text</source>
         <translation>текст</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1174"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1184"/>
         <source>t</source>
         <comment>text</comment>
         <translation>т</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1177"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1187"/>
         <source>t</source>
         <comment>through</comment>
         <translation>т</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1189"/>
         <source>undo</source>
         <translation>опозови</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1180"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1190"/>
         <source>u</source>
         <comment>undo</comment>
         <translation>оп</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1182"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1192"/>
         <source>redo</source>
         <translation>понови</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1183"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1193"/>
         <source>r</source>
         <comment>redo</comment>
         <translation>пон</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1185"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1195"/>
         <source>back</source>
         <translation>назад</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1186"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1196"/>
         <source>b</source>
         <comment>back</comment>
         <translation>наз</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1191"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1201"/>
         <source>paperoffset</source>
         <translation>офсетпапира</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1192"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1202"/>
         <source>graphoffset</source>
         <translation>офсетграфике</translation>
     </message>
@@ -19304,34 +19365,34 @@ Do you want to replace it?</source>
         <translation>Грешка калкулатора за унос: </translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1188"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1198"/>
         <source>bw</source>
         <translation>цб</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1189"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1199"/>
         <source>blackwhite</source>
         <translation>црнобело</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1190"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1200"/>
         <source>color</source>
         <translation>боја</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="748"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="758"/>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
         <translation>преч</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="709"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="719"/>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation>т2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="761"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="771"/>
         <source>mp</source>
         <comment>modify properties</comment>
         <translation>особ</translation>
@@ -19695,1381 +19756,1405 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="178"/>
+        <source>bbox</source>
+        <comment>draw bound box</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="179"/>
+        <source>bb</source>
+        <comment>draw bound box</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="184"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="180"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="185"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="184"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="189"/>
         <source>midpoint</source>
         <comment>draw middle points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="185"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="190"/>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="190"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="195"/>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="191"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="196"/>
         <source>cba</source>
         <comment>draw circle by arc</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="196"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="201"/>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="197"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="202"/>
         <source>dup</source>
         <comment>duplicate entity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="202"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="207"/>
         <source>align</source>
         <comment>align entities</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="203"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="208"/>
         <source>al</source>
         <comment>align entities</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="208"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="213"/>
         <source>align1</source>
         <comment>align entities</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="209"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="214"/>
         <source>al1</source>
         <comment>align entities</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="214"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="218"/>
+        <source>alignref</source>
+        <comment>align references</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="219"/>
+        <source>alr</source>
+        <comment>align references</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="224"/>
         <source>linejoin</source>
         <comment>lines join</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="215"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="225"/>
         <source>lj</source>
         <comment>lines join</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="220"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="230"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="221"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="231"/>
         <source>bd</source>
         <comment>break or divide entity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="226"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="236"/>
         <source>gapline</source>
         <comment>line gap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="227"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="237"/>
         <source>gl</source>
         <comment>line gap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="232"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="242"/>
         <source>linepar</source>
         <comment>create parallel</comment>
         <translation>линпар</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="233"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="243"/>
         <source>parallel</source>
         <comment>create parallel</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="234"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="244"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
         <translation>линискљ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="235"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="245"/>
         <source>pa</source>
         <comment>create parallel</comment>
         <translation>па</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="236"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="246"/>
         <source>ll</source>
         <comment>create parallel</comment>
         <translation>лл</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="241"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="251"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
         <translation>линпаркроз</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="242"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="252"/>
         <source>lp</source>
         <comment>parallel through point</comment>
         <translation>лпк</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="248"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="258"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
         <translation>линијабисект</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="255"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="265"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
         <translation>линтанкт</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="256"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="266"/>
         <source>lt</source>
         <comment>tangent point and circle</comment>
         <translation>лт</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="262"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="272"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
         <translation>линтан2ц</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="263"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="273"/>
         <source>lc</source>
         <comment>tangent two circles</comment>
         <translation>лц</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="268"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="278"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
         <translation>линтанцпер</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="269"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="279"/>
         <source>or</source>
         <comment>tangent line and circle</comment>
         <translation>или</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="274"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="284"/>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
         <translation>линправ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="275"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="285"/>
         <source>lo</source>
         <comment>perpendicular line</comment>
         <translation>лпр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="281"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="291"/>
         <source>linerelang</source>
         <comment>relative line</comment>
         <translation>линрел</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="282"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="292"/>
         <source>lr</source>
         <comment>relative line</comment>
         <translation>лрел</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="287"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="297"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
         <translation>полигонцентач</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="288"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="298"/>
         <source>pp</source>
         <comment>polygon centre point</comment>
         <translation>пп</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="289"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="299"/>
         <source>polycp</source>
         <comment>polygon centre point</comment>
         <translation>полицт</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="290"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="300"/>
         <source>pcp</source>
         <comment>polygon centre point</comment>
         <translation>пцт</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="295"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="305"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
         <translation>полицентанг</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="296"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="306"/>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
         <translation>пв</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="297"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="307"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
         <translation>полигцт</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="302"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="312"/>
         <source>polygonvv</source>
         <comment>polygon vertex vertex</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="303"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="313"/>
         <source>pvv</source>
         <comment>polygon vertex vertex</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="309"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="319"/>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
         <translation>п2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="319"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="329"/>
         <source>c</source>
         <comment>draw circle</comment>
         <translation>ц</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="324"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="334"/>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
         <translation>круг2т</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="326"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="336"/>
         <source>c2p</source>
         <comment>circle 2 points</comment>
         <translation>к2т</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="331"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="341"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
         <translation>круг2тачрад</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="332"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="342"/>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
         <translation>цц</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="337"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="347"/>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
         <translation>круг3т</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="339"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="349"/>
         <source>c3p</source>
         <comment>circle 3 points</comment>
         <translation>к3т</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="344"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="354"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
         <translation>кругцентрад</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="345"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="355"/>
         <source>cr</source>
         <comment>circle point radius</comment>
         <translation>кцр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="346"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="356"/>
         <source>ccr</source>
         <comment>circle point radius</comment>
         <translation>ккр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="352"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="362"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
         <translation>кругтан2цт</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="353"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="363"/>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
         <translation>тантач</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="358"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="368"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
         <translation>круг2тантач</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="359"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="369"/>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
         <translation>кц2т</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="364"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="374"/>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
         <translation>кругтан2рад</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="365"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="375"/>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
         <translation>кц</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="371"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="381"/>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
         <translation>кругтан3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="372"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="382"/>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
         <translation>кт3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="381"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="391"/>
         <source>arc</source>
         <comment>arc point radius</comment>
         <translation>лук</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="382"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="392"/>
         <source>ar</source>
         <comment>arc point radius</comment>
         <translation>лк</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="383"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="393"/>
         <source>a</source>
         <comment>arc point radius</comment>
         <translation>лу</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="388"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="398"/>
         <source>arc3p</source>
         <comment>draw 3pt arc</comment>
         <translation>лук3т</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="389"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="399"/>
         <source>a3</source>
         <comment>draw 3pt arc</comment>
         <translation>л3т</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="394"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="404"/>
         <source>arctan</source>
         <comment>arc tangent</comment>
         <translation>луктанг</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="395"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="405"/>
         <source>at</source>
         <comment>arc tangent</comment>
         <translation>лтанг</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="400"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="410"/>
         <source>arc2p3</source>
         <comment>draw 2pt arc radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="401"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="411"/>
         <source>a2r</source>
         <comment>draw 2pt arc radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="406"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="416"/>
         <source>arc2pl</source>
         <comment>draw 2pt arc length</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="407"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="417"/>
         <source>a2l</source>
         <comment>draw 2pt arc length</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="412"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="422"/>
         <source>arc2ph</source>
         <comment>draw 2pt arc height</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="413"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="423"/>
         <source>a2h</source>
         <comment>draw 2pt arc height</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="418"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="428"/>
         <source>arc2pa</source>
         <comment>draw 2pt arc angle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="419"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="429"/>
         <source>a2a</source>
         <comment>draw 2pt arc angle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="426"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="436"/>
         <source>sf</source>
         <comment>draw spline</comment>
         <translation>ссл</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="433"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="443"/>
         <source>sp</source>
         <comment>spline through points</comment>
         <translation>сп</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="439"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="449"/>
         <source>arcellc2ax</source>
         <comment>arc ellipse</comment>
         <translation>лучелипцен2осе</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="440"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="450"/>
         <source>ae</source>
         <comment>arc ellipse</comment>
         <translation>лукел</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="444"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="454"/>
         <source>arcellc1ax</source>
         <comment>arc ellipse 1 point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="445"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="455"/>
         <source>ae1</source>
         <comment>arc ellipse 1 point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="450"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="460"/>
         <source>parabola4p</source>
         <comment>Parabola 4 points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="451"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="461"/>
         <source>pl4</source>
         <comment>Parabola 4 points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="456"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="466"/>
         <source>parabolafd</source>
         <comment>Parabola focus directrix</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="457"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="467"/>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="463"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="473"/>
         <source>fh</source>
         <comment>draw freehand line</comment>
         <translation>слободна</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="471"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="481"/>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
         <translation>елиппсац2т</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="472"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="482"/>
         <source>ea</source>
         <comment>ellipse axis</comment>
         <translation>еа</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="476"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="486"/>
         <source>ellipsec1p</source>
         <comment>ellipse 1 point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="477"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="487"/>
         <source>ea1</source>
         <comment>ellipse 1 point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="482"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="492"/>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
         <translation>елипса3т</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="483"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="493"/>
         <source>ef</source>
         <comment>ellipse foci</comment>
         <translation>елф</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="488"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="498"/>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
         <translation>елипса4т</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="489"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="499"/>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
         <translation>е4</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="494"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="504"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
         <translation>елипсац3п</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="495"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="505"/>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
         <translation>е3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="515"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="516"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="525"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="526"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="521"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="531"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="522"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="532"/>
         <source>rort</source>
         <comment>draw orthogonal</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="527"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="537"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="528"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="538"/>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="534"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="544"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
         <translation>плдод</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="535"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="545"/>
         <source>pi</source>
         <comment>pl add node</comment>
         <translation>плд</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="540"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="550"/>
         <source>plineapp</source>
         <comment>pl append node</comment>
         <translation>плдодајл</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="541"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="551"/>
         <source>pn</source>
         <comment>pl append node</comment>
         <translation>плдј</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="546"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="556"/>
         <source>plinedel</source>
         <comment>pl delete node</comment>
         <translation>плобр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="547"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="557"/>
         <source>pd</source>
         <comment>pl delete node</comment>
         <translation>пло</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="552"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="562"/>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
         <translation>плоизм</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="553"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="563"/>
         <source>pr</source>
         <comment>pl del between nodes</comment>
         <translation>плиз</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="558"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="568"/>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
         <translation>плинисећ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="559"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="569"/>
         <source>pt</source>
         <comment>pl trim segments</comment>
         <translation>плис</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="564"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="574"/>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
         <translation>плпар</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="565"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="575"/>
         <source>pe</source>
         <comment>pl equidistant</comment>
         <translation>пекв</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="570"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="580"/>
         <source>plinejoin</source>
         <comment>pl join</comment>
         <translation>плспој</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="571"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="581"/>
         <source>pj</source>
         <comment>pl join</comment>
         <translation>плс</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="585"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="595"/>
         <source>sx</source>
         <comment>deselect all entities</comment>
         <translation>сс</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="591"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="601"/>
         <source>invertselect</source>
         <comment>invert select</comment>
         <translation>обрс</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="592"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="602"/>
         <source>is</source>
         <comment>invert select</comment>
         <translation>инводаб</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="601"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="611"/>
         <source>ds</source>
         <comment>dimension - aligned</comment>
         <translation>кпорав</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="624"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="634"/>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
         <translation>крад</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="626"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="636"/>
         <source>dr</source>
         <comment>dimension - radial</comment>
         <translation>крадиал</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="639"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="649"/>
         <source>da</source>
         <comment>dimension - angular</comment>
         <translation>кугао</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="652"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="662"/>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
         <translation>крег</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="659"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="669"/>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
         <translation>модпрем</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="665"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="675"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
         <translation>модрот</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="671"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="681"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
         <translation>модразм</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="677"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="687"/>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
         <translation>модогл</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="683"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="693"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
         <translation>модпомрот</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="684"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="694"/>
         <source>mr</source>
         <comment>modify - move rotate</comment>
         <translation>мпр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="689"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="699"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
         <translation>мод2рот</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="690"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="700"/>
         <source>r2</source>
         <comment>modify - rotate2</comment>
         <translation>ро2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="695"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="705"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
         <translation>модобрн</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="696"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="706"/>
         <source>md</source>
         <comment>modify -  revert direction</comment>
         <translation>мо</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="702"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="712"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
         <translation>модпрод</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="708"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="718"/>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation>модпродвише</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="715"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="725"/>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
         <translation>модиздужи</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="721"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="731"/>
         <source>modoffset</source>
         <comment>modify - offset</comment>
         <translation>модофсет</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="722"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="732"/>
         <source>offset</source>
         <comment>modify - offset</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="724"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="734"/>
         <source>mo</source>
         <comment>modify - offset</comment>
         <translation>модо</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="725"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="735"/>
         <source>moff</source>
         <comment>modify - offset</comment>
         <translation>моф</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="730"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="740"/>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
         <translation>модзаоб</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="737"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="747"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
         <translation>модзакос</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="739"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="749"/>
         <source>fillet</source>
         <comment>modify - fillet</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="740"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="750"/>
         <source>bevel</source>
         <comment>modify - fillet</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="745"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="755"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
         <translation>модпод</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="753"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="763"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
         <translation>модразв</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="759"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="769"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
         <translation>модпроп</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="766"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="776"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
         <translation>модатр</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="773"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="783"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
         <translation>модексплтекст</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="774"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="784"/>
         <source>xt</source>
         <comment>explode text strings</comment>
         <translation>ексткст</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="779"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="789"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
         <translation>модекспл</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="785"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="795"/>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
         <translation>модобриши</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="794"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
         <translation>инфорастојање</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="795"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="805"/>
         <source>id</source>
         <comment>distance point to point</comment>
         <translation>ир</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="802"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="812"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
         <translation>инфорасојт</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="803"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="813"/>
         <source>ii</source>
         <comment>distance entity to point</comment>
         <translation>ии</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="804"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="814"/>
         <source>dep</source>
         <comment>distance entity to point</comment>
         <translation>рут</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="809"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="819"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
         <translation>инфоугао</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="810"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="820"/>
         <source>ia</source>
         <comment>measure angle</comment>
         <translation>иу</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="816"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="826"/>
         <source>infoarea</source>
         <comment>measure area</comment>
         <translation>инфоповршина</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="817"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="827"/>
         <source>aa</source>
         <comment>measure area</comment>
         <translation>ип</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="825"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="835"/>
         <source>mt</source>
         <comment>draw mtext</comment>
         <translation>мт</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="832"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="842"/>
         <source>tx</source>
         <comment>draw text</comment>
         <translation>тк</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="860"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="870"/>
         <source>so</source>
         <comment>snap - free</comment>
         <translation>ос</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="911"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="921"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="912"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="922"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="913"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="923"/>
         <source>smm</source>
         <comment>snap middle manual</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="954"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="964"/>
         <source>ki</source>
         <comment>kill all actions</comment>
         <translation>уб</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="961"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="971"/>
         <source>un</source>
         <comment>undo cycle</comment>
         <translation>уназ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="968"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="978"/>
         <source>rd</source>
         <comment>redo cycle</comment>
         <translation>понов</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="976"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="986"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
         <translation>подцрт</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="977"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="987"/>
         <source>dp</source>
         <comment>drawing preferences</comment>
         <translation>пц</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1021"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1119"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1031"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1129"/>
         <source>chordlen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1024"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1034"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1148"/>
         <source>equation</source>
         <translation>једначина</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1027"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1037"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
         <translation>дужина1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1028"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1038"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
         <translation>дужина2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1037"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1047"/>
         <source>x</source>
         <translation type="unfinished">x</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1038"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1048"/>
         <source>y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1039"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1049"/>
         <source>p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1040"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1050"/>
         <source>anglerel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1041"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1051"/>
         <source>start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1044"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1054"/>
         <source>offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1045"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1055"/>
         <source>linesnap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1046"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1056"/>
         <source>ticksnap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1049"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1059"/>
         <source>width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1050"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1060"/>
         <source>height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1051"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1061"/>
         <source>pos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1052"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1062"/>
         <source>size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1053"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1059"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1063"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1069"/>
         <source>bevels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1054"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1064"/>
         <source>nopoly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1055"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1065"/>
         <source>usepoly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1056"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1066"/>
         <source>corners</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1057"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1067"/>
         <source>str</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1058"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1068"/>
         <source>round</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1060"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1070"/>
         <source>snap1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1061"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1071"/>
         <source>topl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1062"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1072"/>
         <source>top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1063"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1073"/>
         <source>topr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1064"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1074"/>
         <source>left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1065"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1075"/>
         <source>middle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1066"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1076"/>
         <source>right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1067"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1077"/>
         <source>bottoml</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1068"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1078"/>
         <source>bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1069"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1079"/>
         <source>bottomr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1070"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1080"/>
         <source>snapcorner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1071"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
         <source>snapshift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1072"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1082"/>
         <source>sizein</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1073"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1083"/>
         <source>sizeout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1074"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1084"/>
         <source>hor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1075"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1085"/>
         <source>vert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1078"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1088"/>
         <source>snap2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1079"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1089"/>
         <source>corner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1080"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1090"/>
         <source>mid-vert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1091"/>
         <source>mid-hor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1083"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1093"/>
         <source>quad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1084"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
         <source>noquad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1085"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1095"/>
         <source>angle_inner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1088"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
         <source>edges</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1089"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>edge-none</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1090"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
         <source>edge-both</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1091"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
         <source>edge-start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1092"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1102"/>
         <source>edge-end</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1093"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
         <source>end</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
         <source>both</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1095"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
         <source>none</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
         <source>fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1097"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
         <source>nofit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1108"/>
         <source>dist_fixed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1109"/>
         <source>dist_flex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
         <source>distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1114"/>
         <source>sym</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1115"/>
         <source>nosym</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1121"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
         <source>cl</source>
         <comment>chordlen</comment>
         <translation type="unfinished">дужина жице</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1149"/>
         <source>eqn</source>
         <comment>equation</comment>
         <translation>једн</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1150"/>
         <source>eq</source>
         <comment>equation</comment>
         <translation>јед</translation>
@@ -21735,57 +21820,62 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDefault</name>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="780"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="781"/>
         <source>Set new position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="788"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="781"/>
+        <source>Create a copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="789"/>
         <source>Lengthen Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="791"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="792"/>
         <source>Lengthen/Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="791"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="792"/>
         <source>Lengthen Chord</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="794"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="795"/>
         <source>Move in Previous segment direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="794"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="795"/>
         <source>Move in Next segment direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="799"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="800"/>
         <source>Set new ref position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="803"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="804"/>
         <source>Scroll horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="803"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="804"/>
         <source>Scroll Vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="807"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="808"/>
         <source>Choose second edge</source>
         <translation>Изаберите другу ивицу</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="807"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="808"/>
         <source>Deselect entities</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22926,7 +23016,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Одредите центар</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/rs_actiondrawlinepolygon.cpp" line="52"/>
+        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="52"/>
         <source>Specify a corner</source>
         <translation>Одредите ћошак</translation>
     </message>
@@ -22946,7 +23036,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygonCorCor</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/rs_actiondrawlinepolygon2.cpp" line="106"/>
+        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="106"/>
         <source>Specify first corner</source>
         <translation>Одредите први ћошак</translation>
     </message>
@@ -22955,7 +23045,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Откажи</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/polygon/rs_actiondrawlinepolygon2.cpp" line="107"/>
+        <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="107"/>
         <source>Specify second corner</source>
         <translation>Одредите други ћошак</translation>
     </message>
@@ -22979,7 +23069,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineRectangle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/rs_actiondrawlinerectangle.cpp" line="143"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="143"/>
         <source>Specify first corner</source>
         <translation>Одредите први ћошак</translation>
     </message>
@@ -22988,7 +23078,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Откажи</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/shapes/rect/rs_actiondrawlinerectangle.cpp" line="146"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="146"/>
         <source>Specify second corner</source>
         <translation>Одредите други ћошак</translation>
     </message>
@@ -23702,12 +23792,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyDelete</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="44"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="45"/>
         <source>Select to delete (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="44"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="45"/>
         <source>Delete immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23799,12 +23889,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyExplodeText</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyexplodetext.cpp" line="48"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyexplodetext.cpp" line="49"/>
         <source>Select to explode text (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyexplodetext.cpp" line="48"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyexplodetext.cpp" line="49"/>
         <source>Explode immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23812,17 +23902,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyMirror</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="201"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="198"/>
         <source>Select to mirror (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="208"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="205"/>
         <source>Specify mirror line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="211"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="208"/>
         <source>Specify first point of mirror line</source>
         <translation>Одредите прву тачку огледалне линије</translation>
     </message>
@@ -23831,7 +23921,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Откажи</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="216"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="213"/>
         <source>Specify second point of mirror line</source>
         <translation>Одредите другу тачку огледалне линије</translation>
     </message>
@@ -23843,17 +23933,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyMove</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="180"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="177"/>
         <source>Specify reference point</source>
         <translation>Одредите референтну тачку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="192"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="189"/>
         <source>Select to move (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="192"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="189"/>
         <source>Move immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23862,7 +23952,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Откажи</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="183"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="180"/>
         <source>Specify target point</source>
         <translation>Одаберите циљану тачку</translation>
     </message>
@@ -23878,22 +23968,22 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="263"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="260"/>
         <source>Not a valid expression</source>
         <translation>Неисправан израз</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="299"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="296"/>
         <source>Specify reference point</source>
         <translation>Одредите референтну тачку</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="318"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="315"/>
         <source>Select to move and rotate  (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="318"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="315"/>
         <source>Move and rotate immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23902,7 +23992,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Откажи</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="302"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="299"/>
         <source>Specify target point</source>
         <translation>Одредите циљану тачку</translation>
     </message>
@@ -23911,7 +24001,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="305"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="302"/>
         <source>Enter rotation angle:</source>
         <translation>Унесите угао ротације:</translation>
     </message>
@@ -23919,23 +24009,23 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyOffset</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="180"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="178"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="185"/>
         <source>Specify direction of offset</source>
         <translation>Одредите смер офсета</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="183"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="181"/>
         <source>Specify reference point for direction of offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="196"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="194"/>
         <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="196"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="194"/>
         <source>Offset immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23947,12 +24037,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRevertDirection</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="49"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="48"/>
         <source>Select to revert direction (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="49"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="48"/>
         <source>Revert immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23960,7 +24050,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="526"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="524"/>
         <source>Specify reference point</source>
         <translation>Одредите референтну тачку</translation>
     </message>
@@ -23969,33 +24059,33 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="520"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="518"/>
         <source>Select to rotate (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="520"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="518"/>
         <source>Rotate immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="526"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="529"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="524"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="527"/>
         <source>Snap to center of selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="529"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="527"/>
         <source>Specify rotation center</source>
         <translation>Одредите центар ротације</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="532"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="530"/>
         <source>Specify target point to rotate to</source>
         <translation>Одредите циљну тачку у односу на коју се ротира</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="535"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="533"/>
         <source>Specify target point for rotation around reference point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24003,17 +24093,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRotate2</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="162"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="158"/>
         <source>Select for two axis rotation  (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="162"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="158"/>
         <source>Rotate 2 Axis immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="168"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="164"/>
         <source>Specify absolute reference point</source>
         <translation>Одредите абсолутну референтну тачку</translation>
     </message>
@@ -24022,7 +24112,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Откажи</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="171"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="167"/>
         <source>Specify relative reference point</source>
         <translation>Одредите релативну референтну тачку</translation>
     </message>
@@ -24074,37 +24164,37 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Откажи</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="357"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="356"/>
         <source>Specify scale center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="357"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="356"/>
         <source>Snap to center of selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="361"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="360"/>
         <source>Specify source point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="364"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="363"/>
         <source>Specify target point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="364"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="363"/>
         <source>Free snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="373"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="372"/>
         <source>Select to scale  (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="373"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="372"/>
         <source>Scale immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24213,22 +24303,22 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionOrder</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="118"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="122"/>
         <source>No Entity found.</source>
         <translation>Нема пронађених ентитета.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="135"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="139"/>
         <source>Choose entities (Enter to Complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="135"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="139"/>
         <source>Order immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="139"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="143"/>
         <source>Choose entity for order</source>
         <translation>Изаберите ентитет за редослед</translation>
     </message>
@@ -25566,52 +25656,52 @@ Point: (%8 , %9)</source>
 <context>
     <name>Ui_LinePolygonOptions</name>
     <message>
-        <location filename="../src/ui/action_options/line/qg_linepolygonoptions.ui" line="32"/>
+        <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="32"/>
         <source>Polygon Options</source>
         <translation>Опције полигона</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_linepolygonoptions.ui" line="56"/>
+        <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="56"/>
         <source>Number:</source>
         <translation>Број:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_linepolygonoptions.ui" line="66"/>
+        <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="66"/>
         <source>If checked, vertexes of polygon will be rounded. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_linepolygonoptions.ui" line="69"/>
+        <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="69"/>
         <source>Radius</source>
         <translation type="unfinished">Полупречник</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_linepolygonoptions.ui" line="103"/>
+        <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="103"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_linepolygonoptions.ui" line="106"/>
+        <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="106"/>
         <source>Polyline</source>
         <translation type="unfinished">Полилинија</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_linepolygonoptions.ui" line="113"/>
+        <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="113"/>
         <source>Number of edges</source>
         <translation>Број ивица</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_linepolygonoptions.ui" line="126"/>
+        <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="126"/>
         <source>Rounding radius for vertex bevel.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_linepolygonoptions.ui" line="133"/>
+        <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="133"/>
         <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_linepolygonoptions.ui" line="136"/>
+        <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="136"/>
         <source>Vertex to Vertex</source>
         <translation type="unfinished"></translation>
     </message>

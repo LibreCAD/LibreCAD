@@ -221,6 +221,7 @@
 #include "lc_actionmodifyalignsingle.h"
 #include "lc_actiondrawlinepolygon4.h"
 #include "lc_actionmodifyalignref.h"
+#include "lc_actiondrawboundingbox.h"
 
 /**
  * Constructor
@@ -510,6 +511,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionDrawCross:
             a = new LC_ActionDrawCross(*document, *view);
+            break;
+        case RS2::ActionDrawBoundingBox:
+            a = new LC_ActionDrawBoundingBox(*document, *view);
             break;
         case RS2::ActionDrawSnakeLine:
             a = new LC_ActionDrawLineSnake(*document, *view, LC_ActionDrawLineSnake::DIRECTION_POINT);

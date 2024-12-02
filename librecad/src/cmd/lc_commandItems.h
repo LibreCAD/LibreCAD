@@ -174,6 +174,11 @@ const LC_CommandItem g_commandList[] = {
             {{"cx", QObject::tr("cx", "draw cross for circle")}},
             RS2::ActionDrawCross
         },
+        {
+            {{"bbox", QObject::tr("bbox", "draw bound box")}},
+            {{"bb", QObject::tr("bb", "draw bound box")}},
+            RS2::ActionDrawBoundingBox
+        },
         // draw line of points
         {
             {{"linepoints", QObject::tr("linepoints", "draw line of points")}},
@@ -208,6 +213,11 @@ const LC_CommandItem g_commandList[] = {
             {{"align1", QObject::tr("align1", "align entities")}},
             {{"al1", QObject::tr("al1", "align entities")}},
             RS2::ActionModifyAlignOne
+        },
+        {
+            {{"alignref", QObject::tr("alignref", "align references")}},
+            {{"alr", QObject::tr("alr", "align references")}},
+            RS2::ActionModifyAlignRef
         },
         // line join
         {
