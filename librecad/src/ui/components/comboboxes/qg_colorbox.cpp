@@ -116,9 +116,12 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     addColor(Qt::red,red);
     colorIndexStart=findText(red); // keep the starting point of static colors
     addColors(*this, {
-        {Qt::darkRed,tr("Dark Red")},
-        {Qt::yellow,tr("Yellow")},
-        {Qt::darkRed,tr("Dark Red")},
+        {Qt::darkRed, tr("Dark Red")},
+    });
+    addColor(QColor("orange"), tr("Orange"));
+//    addColor(QColor("darkorange"), tr("Dark Orange"));
+    addColor(QColor(127,78,0), tr("Dark Orange"));
+    addColors(*this, {
         {Qt::yellow,tr("Yellow")},
         {Qt::darkYellow,tr("Dark Yellow")},
         {Qt::green,tr("Green")},
@@ -130,11 +133,6 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
         {Qt::magenta,tr("Magenta")},
         {Qt::darkMagenta,tr("Dark Magenta")},
     });
-    // todo - location of it not intuitive and it should be in upper position within colors
-    // todo - yet that will rework of addColors, may be later
-    addColor(QColor("orange"), tr("Orange"));
-//    addColor(QColor("darkorange"), tr("Dark Orange"));
-    addColor(QColor(127,78,0), tr("Dark Orange"));
 
     // a special "Black/White" color
     addItem(QIcon(":/ui/color07.png"), tr("Black / White"), QColor(Qt::black));
