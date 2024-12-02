@@ -133,7 +133,8 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     // todo - location of it not intuitive and it should be in upper position within colors
     // todo - yet that will rework of addColors, may be later
     addColor(QColor("orange"), tr("Orange"));
-    addColor(QColor("darkorange"), tr("Dark Orange"));
+//    addColor(QColor("darkorange"), tr("Dark Orange"));
+    addColor(QColor(127,78,0), tr("Dark Orange"));
 
     // a special "Black/White" color
     addItem(QIcon(":/ui/color07.png"), tr("Black / White"), QColor(Qt::black));
