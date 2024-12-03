@@ -659,6 +659,22 @@ RS_VectorSolutions RS_MText::getRefPoints() const {
     return {data.insertionPoint};
 }
 
+RS_Vector RS_MText::getNearestRef(const RS_Vector &coord, double *dist) const {
+    return RS_Entity::getNearestRef(coord, dist);
+}
+
+RS_Vector RS_MText::getNearestSelectedRef(const RS_Vector &coord, double *dist) const {
+    return RS_Entity::getNearestSelectedRef(coord, dist);
+}
+
+void RS_MText::moveRef(const RS_Vector &ref, const RS_Vector &offset) {
+    move(offset);
+}
+
+void RS_MText::moveSelectedRef(const RS_Vector &ref, const RS_Vector &offset) {
+    move(offset);
+}
+
 void RS_MText::move(const RS_Vector &offset) {
     RS_EntityContainer::move(offset);
     data.insertionPoint.move(offset);
