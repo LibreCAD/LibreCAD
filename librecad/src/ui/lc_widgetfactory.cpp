@@ -105,16 +105,16 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawLineOrthTan",
         "DrawLineOrthogonal",
         "DrawLineRelAngle",
-        "DrawCross",
         "DrawLineRel",
         "DrawLineRelX",
         "DrawLineRelY",
         "DrawLineAngleRel",
         "DrawLineOrthogonalRel",
         "DrawLineFromPointToLine",
-        "DrawLineMiddle",
         "DrawSliceDivideLine",
-        "DrawSliceDivideCircle"
+        "DrawSliceDivideCircle",
+        "DrawCross",
+        "DrawLineMiddle"
     });
 
     fillActionsList(point_actions , {

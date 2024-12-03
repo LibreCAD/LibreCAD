@@ -179,6 +179,11 @@ const LC_CommandItem g_commandList[] = {
             {{"bb", QObject::tr("bb", "draw bound box")}},
             RS2::ActionDrawBoundingBox
         },
+        {
+            {{"midline", QObject::tr("midline", "draw middle line")}},
+            {{"ml", QObject::tr("ml", "draw mid line")}},
+            RS2::ActionDrawLineMiddle
+        },
         // draw line of points
         {
             {{"linepoints", QObject::tr("linepoints", "draw line of points")}},
