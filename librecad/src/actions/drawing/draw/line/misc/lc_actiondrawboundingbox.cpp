@@ -6,6 +6,7 @@
 #include "rs_document.h"
 #include "rs_point.h"
 #include "rs_polyline.h"
+#include "lc_linemath.h"
 
 LC_ActionDrawBoundingBox::LC_ActionDrawBoundingBox(
     RS_EntityContainer &container,
@@ -34,27 +35,27 @@ void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {
             LC_Align::collectSelectionBounds(selectedEntities, selectionMin, selectionMax);
 
             if (cornerPointsOnly){
-                createCornerPoints(activeLayer, pen, selectionMin, selectionMax);
+                createCornerPoints(activeLayer, pen, selectionMin-offset, selectionMax+offset);
             }
             else{
                 if (createPolyline){
-                    createBoxPolyline(activeLayer, pen, selectionMin, selectionMax);
+                    createBoxPolyline(activeLayer, pen, selectionMin-offset, selectionMax+offset);
                 }
                 else {
-                    createBoxLines(activeLayer, pen, selectionMin, selectionMax);
+                    createBoxLines(activeLayer, pen, selectionMin-offset, selectionMax+offset);
                 }
             }
         } else {
             for (auto e: selectedEntities){
                 if (cornerPointsOnly){
-                    createCornerPoints(activeLayer, pen, e->getMin(), e->getMax());
+                    createCornerPoints(activeLayer, pen, e->getMin()-offset, e->getMax()+offset);
                 }
                 else{
                     if (createPolyline) {
-                        createBoxPolyline(activeLayer, pen, e->getMin(), e->getMax());
+                        createBoxPolyline(activeLayer, pen, e->getMin()-offset, e->getMax()+offset);
                     }
                     else{
-                        createBoxLines(activeLayer, pen, e->getMin(), e->getMax());
+                        createBoxLines(activeLayer, pen, e->getMin()-offset, e->getMax()+offset);
                     }
                 }
             }

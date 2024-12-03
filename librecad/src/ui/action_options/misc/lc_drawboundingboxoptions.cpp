@@ -30,6 +30,7 @@ LC_DrawBoundingBoxOptions::LC_DrawBoundingBoxOptions()
     connect(ui->cbAsGroup, &QCheckBox::toggled, this, &LC_DrawBoundingBoxOptions::onAsGroupToggled);
     connect(ui->cbCornerPointsOnly, &QCheckBox::toggled, this, &LC_DrawBoundingBoxOptions::onCornerPointsToggled);
     connect(ui->cbPolyline, &QCheckBox::toggled, this, &LC_DrawBoundingBoxOptions::onPolylineToggled);
+    connect(ui->leOffset, &QLineEdit::editingFinished, this, &LC_DrawBoundingBoxOptions::onOffsetEditingFinished);
 }
 
 LC_DrawBoundingBoxOptions::~LC_DrawBoundingBoxOptions(){
@@ -40,6 +41,7 @@ void LC_DrawBoundingBoxOptions::doSaveSettings() {
     save("AsGroup", ui->cbAsGroup->isChecked());
     save("CornerPoints", ui->cbCornerPointsOnly->isChecked());
     save("Polyline", ui->cbPolyline->isChecked());
+    save("Offset", ui->leOffset->text());
 }
 
 void LC_DrawBoundingBoxOptions::doSetAction(RS_ActionInterface *a, bool update) {
@@ -47,19 +49,23 @@ void LC_DrawBoundingBoxOptions::doSetAction(RS_ActionInterface *a, bool update) 
     bool asGroup;
     bool cornerPoints;
     bool polyline;
+    QString offset;
     if (update){
         asGroup = action->isSelectionAsGroup();
         cornerPoints = action->isCornerPointsOnly();
         polyline = action->isCreatePolyline();
+        offset = fromDouble(action->getOffset());
     }
     else{
         asGroup = loadBool("AsGroup", true);
         cornerPoints = loadBool("CornerPoints", false);
         polyline = loadBool("Polyline", false);
+        offset = load("Offset", "0.0");
     }
     setAsGroupToActionAndView(asGroup);
     setCornerPointsOnlyToActionAndView(cornerPoints);
     setPolylineToActionAndView(polyline);
+    setOffsetToActionAndView(offset);
 }
 
 void LC_DrawBoundingBoxOptions::languageChange() {
@@ -91,4 +97,17 @@ void LC_DrawBoundingBoxOptions::setCornerPointsOnlyToActionAndView(bool val) {
 void LC_DrawBoundingBoxOptions::setPolylineToActionAndView(bool p) {
     action->setCreatePolyline(p);
     ui->cbPolyline->setChecked(p);
+}
+
+void LC_DrawBoundingBoxOptions::onOffsetEditingFinished(){
+    const QString &expr = ui->leOffset->text();
+    setOffsetToActionAndView(expr);
+}
+
+void LC_DrawBoundingBoxOptions::setOffsetToActionAndView(const QString& val){
+    double value = 0.;
+    if (toDouble(val, value, 0.0, false)){
+        action->setOffset(value);
+        ui->leOffset->setText(fromDouble(value));
+    }
 }

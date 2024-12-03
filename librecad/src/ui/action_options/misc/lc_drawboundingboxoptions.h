@@ -42,6 +42,7 @@ protected slots:
     void onAsGroupToggled(bool val);
     void onCornerPointsToggled(bool val);
     void onPolylineToggled(bool val);
+    void onOffsetEditingFinished();
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
@@ -51,6 +52,7 @@ private:
     void setAsGroupToActionAndView(bool group);
     void setCornerPointsOnlyToActionAndView(bool val);
     void setPolylineToActionAndView(bool p);
+    void setOffsetToActionAndView(const QString& val);
 };
 
 #endif // LC_DRAWBOUNDINGBOXOPTIONS_H
