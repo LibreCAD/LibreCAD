@@ -667,11 +667,11 @@ RS_Vector RS_MText::getNearestSelectedRef(const RS_Vector &coord, double *dist) 
     return RS_Entity::getNearestSelectedRef(coord, dist);
 }
 
-void RS_MText::moveRef(const RS_Vector &ref, const RS_Vector &offset) {
+void RS_MText::moveRef([[maybe_unused]]const RS_Vector &ref, const RS_Vector &offset) {
     move(offset);
 }
 
-void RS_MText::moveSelectedRef(const RS_Vector &ref, const RS_Vector &offset) {
+void RS_MText::moveSelectedRef([[maybe_unused]]const RS_Vector &ref, const RS_Vector &offset) {
     move(offset);
 }
 

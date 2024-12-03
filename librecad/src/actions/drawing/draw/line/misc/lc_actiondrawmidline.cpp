@@ -248,7 +248,7 @@ bool LC_ActionDrawMidLine::doProcessCommand(int status, const QString &command) 
     return accept;
 }
 
-void LC_ActionDrawMidLine::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
+void LC_ActionDrawMidLine::onCoordinateEvent(int status, bool isZero, [[maybe_unused]]const RS_Vector &pos) {
     if (status == SetOffset){
         if (isZero){
             setOffset(0.0);

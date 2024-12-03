@@ -434,11 +434,11 @@ RS_Vector RS_Text::getNearestSelectedRef(const RS_Vector &coord, double *dist) c
     return RS_Entity::getNearestSelectedRef(coord, dist);
 }
 
-void RS_Text::moveRef(const RS_Vector &ref, const RS_Vector &offset) {
+void RS_Text::moveRef([[maybe_unused]]const RS_Vector &ref, const RS_Vector &offset) {
     move(offset);
 }
 
-void RS_Text::moveSelectedRef(const RS_Vector &ref, const RS_Vector &offset) {
+void RS_Text::moveSelectedRef([[maybe_unused]]const RS_Vector &ref, const RS_Vector &offset) {
 //    RS_EntityContainer::moveSelectedRef(ref, offset);
     move(offset);
 }
