@@ -187,8 +187,8 @@ void LC_LayerTreeOptionsDialog::validate(){
 }
 
 void LC_LayerTreeOptionsDialog::showInvalidColorMessage(QString name){
-    QMessageBox::warning(this, QMessageBox::tr("Error"),
-                             QMessageBox::tr("Invalid value provide for %1 color.\n"
+    QMessageBox::warning(this, tr("Error"),
+                             tr("Invalid value provide for %1 color.\n"
                                              "Please specify a different value.").arg(name),QMessageBox::Ok);
 }
 

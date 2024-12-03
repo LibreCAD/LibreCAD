@@ -79,7 +79,8 @@ void LC_ActionModifyAlign::mouseMoveEventSelected(QMouseEvent *e) {
     bool showPreview = true;
     switch (alignType) {
         case LC_Align::ENTITY: {
-            RS_Entity *entity = catchEntity(snap);
+            RS2::ResolveLevel resolveLevel = isControl(e) ? RS2::ResolveAll : RS2::ResolveNone;
+            RS_Entity *entity = catchEntity(snap, resolveLevel);
             if (entity != nullptr) {
                 min = entity->getMin();
                 max = entity->getMax();
@@ -134,13 +135,13 @@ void LC_ActionModifyAlign::previewAlignGuideLines(const RS_Vector &min, const RS
     }
 }
 
-
 void LC_ActionModifyAlign::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, QMouseEvent *e) {
     RS_Vector snap = snapPoint(e);
     bool mayTrigger = true;
     switch (alignType) {
         case LC_Align::ENTITY: {
-            RS_Entity *entity = catchEntity(snap);
+            RS2::ResolveLevel resolveLevel = isControl(e) ? RS2::ResolveAll : RS2::ResolveNone;
+            RS_Entity *entity  = catchEntity(snap, resolveLevel);
             if (entity != nullptr) {
                 alignMin = entity->getMin();
                 alignMax = entity->getMax();
@@ -191,7 +192,7 @@ void LC_ActionModifyAlign::mouseRightButtonReleaseEventSelected(int status, [[ma
 void LC_ActionModifyAlign::updateMouseButtonHintsForSelected([[maybe_unused]]int status) {
     switch (alignType) {
         case LC_Align::ENTITY:
-            updateMouseWidgetTRBack(tr("Select base alignment entity"));
+            updateMouseWidgetTRBack(tr("Select base alignment entity"), MOD_CTRL(tr("Select child entities of containers")));
             break;
         case LC_Align::POSITION:
             updateMouseWidgetTRBack(tr("Specify base alignment point"), MOD_SHIFT_RELATIVE_ZERO);
