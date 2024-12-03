@@ -48,6 +48,8 @@
 #include "lc_refcircle.h"
 #include "rs_actioninterface.h"
 #include "lc_refellipse.h"
+#include "rs_constructionline.h"
+#include "lc_refconstructionline.h"
 
 // fixme - sand - consider more generic support of overlays and containers,
 // with them working with preview etc might be more generic.. currently, preview handles both preview and reference points..
@@ -322,6 +324,12 @@ void RS_PreviewActionInterface::previewRefLines(const std::vector<RS_LineData>& 
 
 RS_Line* RS_PreviewActionInterface::previewRefLine(const RS_Vector &start, const RS_Vector &end){
     auto *line = new LC_RefLine(this->preview.get(), start, end);
+    preview->addEntity(line);
+    return line;
+}
+
+RS_ConstructionLine* RS_PreviewActionInterface::previewRefConstructionLine(const RS_Vector &start, const RS_Vector &end){
+    auto *line = new LC_RefConstructionLine(this->preview.get(), start, end);
     preview->addEntity(line);
     return line;
 }

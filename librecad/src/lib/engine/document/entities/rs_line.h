@@ -187,7 +187,6 @@ public:
                              double* dist = nullptr) const override;
     RS_Vector getNearestDist(double distance,
                              bool startp) const override;
-
     /**
      * implementations must revert the direction of an atomic entity
      */
@@ -209,12 +208,9 @@ public:
                  const RS_Vector& secondCorner,
                  const RS_Vector& offset) override;
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
-
     /** whether the entity's bounding box intersects with visible portion of graphic view */
     void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
-
     friend std::ostream& operator << (std::ostream& os, const RS_Line& l);
-
     void calculateBorders() override;
     /**
      * @brief getQuadratic() returns the equation of the entity
@@ -234,18 +230,16 @@ public:
      * \oint x dy = 0.5*(x0+x1)*(y1-y0)
      */
     double areaLineIntegral() const override;
-
+    static void drawInfinite(RS_Painter* painter, RS_GraphicView* view, double& patternOffset, const RS_Vector &start, const RS_Vector &end);
 protected:
     /**
      * @brief drawInfinite draw the line as an infinite line
      * @param painter - a painter
      * @param view - the rendering view
      */
-    void drawInfinite(RS_Painter& painter, RS_GraphicView& view);
+    void drawInfinite(RS_Painter* painter, RS_GraphicView* view);
     RS_LineData data;
-
-    private:
-
-        RS_Vector highlightedVertex;
+private:
+    RS_Vector highlightedVertex;
 
 };

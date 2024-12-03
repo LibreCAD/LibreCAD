@@ -43,7 +43,6 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     ~RS_ActionModifyMirror() override;
-    void trigger() override;
     bool isMirrorToExistingLine() const {return mirrorToExistingLine;};
     void setMirrorToExistingLine(bool value);
 protected:
@@ -70,5 +69,6 @@ protected:
     void doTrigger();
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+    void doTrigger(bool keepSelected) override;
 };
 #endif

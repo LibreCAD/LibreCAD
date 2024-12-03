@@ -216,6 +216,12 @@
 #include "lc_actionselectpoints.h"
 #include "lc_actiondrawpointslattice.h"
 #include "lc_actionpastetopoints.h"
+#include "lc_actiondrawmidline.h"
+#include "lc_actionmodifyalign.h"
+#include "lc_actionmodifyalignsingle.h"
+#include "lc_actiondrawlinepolygon4.h"
+#include "lc_actionmodifyalignref.h"
+#include "lc_actiondrawboundingbox.h"
 
 /**
  * Constructor
@@ -430,13 +436,11 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             view->killSelectActions();
             a = new RS_ActionSelectLayer(*document, *view);
             break;
-
             // Tool actions:
             //
         case RS2::ActionToolRegenerateDimensions:
             a = new RS_ActionToolRegenerateDimensions(*document, *view);
             break;
-
             // Zooming actions:
             //
         case RS2::ActionZoomIn:
@@ -460,7 +464,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionZoomRedraw:
             a = new RS_ActionZoomRedraw(*document, *view);
             break;
-
             // Drawing actions:
             //
         case RS2::ActionDrawPoint:
@@ -503,12 +506,14 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionDrawRectangle2Points:
             a = new LC_ActionDrawRectangle2Points(*document, *view);
             break;
-
         case RS2::ActionDrawRectangle1Point:
             a = new LC_ActionDrawRectangle1Point(*document, *view);
             break;
         case RS2::ActionDrawCross:
             a = new LC_ActionDrawCross(*document, *view);
+            break;
+        case RS2::ActionDrawBoundingBox:
+            a = new LC_ActionDrawBoundingBox(*document, *view);
             break;
         case RS2::ActionDrawSnakeLine:
             a = new LC_ActionDrawLineSnake(*document, *view, LC_ActionDrawLineSnake::DIRECTION_POINT);
@@ -526,7 +531,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new LC_ActionDrawSliceDivide(*document, *view, true);
             break;
         case RS2::ActionDrawLinePoints:
-            a = new LC_ActionDrawLinePoints(*document, *view);
+            a = new LC_ActionDrawLinePoints(*document, *view,  false);
+            break;
+        case RS2::ActionDrawPointsMiddle:
+            a = new LC_ActionDrawLinePoints(*document, *view, true);
             break;
         case RS2::ActionDrawPointsLattice:
             a = new LC_ActionDrawPointsLattice(*document, *view);
@@ -560,6 +568,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionDrawLineFromPointToLine:{
             a = new LC_ActionDrawLineFromPointToLine(this, *document, *view);
+            break;
+        }
+        case RS2::ActionDrawLineMiddle:{
+            a = new LC_ActionDrawMidLine(*document, *view);
             break;
         }
         case RS2::ActionDrawStar:{
@@ -598,6 +610,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionDrawLinePolygonCenTan:                      //20161223 added by txmy
             a = new LC_ActionDrawLinePolygonCenTan(*document, *view);
+            break;
+        case RS2::ActionDrawLinePolygonSideSide:
+            a = new LC_ActionDrawLinePolygon4(*document, *view);
             break;
         case RS2::ActionDrawLinePolygonCorCor:
             a = new RS_ActionDrawLinePolygonCorCor(*document, *view);
@@ -859,7 +874,15 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 */
             a = new RS_ActionModifyExplodeText(*document, *view);
             break;
-
+        case RS2::ActionModifyAlign:
+            a = new LC_ActionModifyAlign(*document, *view);
+            break;
+        case RS2::ActionModifyAlignOne:
+            a = new LC_ActionModifyAlignSingle(*document, *view);
+            break;
+        case RS2::ActionModifyAlignRef:
+            a = new LC_ActionModifyAlignRef(*document, *view);
+            break;
             // Snapping actions:
             //
         case RS2::ActionSnapFree:

@@ -72,15 +72,14 @@ void RS_ActionModifyScale::init(int status) {
     LC_ActionPreSelectionAwareBase::init(status);
 }
 
-void RS_ActionModifyScale::trigger() {
+void RS_ActionModifyScale::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyScale::trigger()");
     deletePreview();
     if (pPoints->data.isotropicScaling){
         pPoints->data.factor.y = pPoints->data.factor.x;
     }
     RS_Modification m(*container, graphicView);
-    m.scale(pPoints->data, selectedEntities, false);
-    updateSelectionWidget();
+    m.scale(pPoints->data, selectedEntities, false, keepSelected);
 }
 
 #define DRAW_TRIANGLES_ON_PREVIEW_NO
@@ -204,7 +203,7 @@ void RS_ActionModifyScale::showPreview(){
 
 void RS_ActionModifyScale::showPreview(RS_ScaleData &previewData) {
     RS_Modification m(*preview, graphicView, false);
-    m.scale(previewData, selectedEntities, true);
+    m.scale(previewData, selectedEntities, true, false);
 
     if (showRefEntitiesOnPreview) {
         int numberOfCopies = previewData.obtainNumberOfCopies();

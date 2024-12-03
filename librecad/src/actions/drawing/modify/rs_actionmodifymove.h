@@ -42,7 +42,6 @@ public:
     RS_ActionModifyMove(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
     ~RS_ActionModifyMove() override;
-    void trigger() override;
 protected:
     /**
  * Action States.
@@ -63,5 +62,6 @@ protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void doTrigger(bool keepSelected) override;
 };
 #endif

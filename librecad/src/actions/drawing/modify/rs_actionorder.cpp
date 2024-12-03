@@ -56,7 +56,8 @@ void RS_ActionOrder::selectionCompleted([[maybe_unused]]bool singleEntity, bool 
     }
 }
 
-void RS_ActionOrder::trigger() {
+void RS_ActionOrder::doTrigger(bool keepSelected) {
+    // fixme - sand - review SELECTION STATE
     RS_DEBUG->print("RS_ActionOrder::trigger()");
 
     QList<RS_Entity *> entList;
@@ -94,7 +95,10 @@ void RS_ActionOrder::trigger() {
                 break;
         }
     }
-    deselectAll();
+    // todo - sand - override mode with ctrl?
+    if (!keepSelected){
+        deselectAll();
+    }
     setStatus(getStatus()-1);
 }
 

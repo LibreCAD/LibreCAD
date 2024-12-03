@@ -50,15 +50,10 @@ void RS_ActionPolylineAppend::trigger(){
     if (newPolyline == nullptr){
         return;
     }
-
-    originalPolyline->changeUndoState();
-
 // upd. undo list:
     if (document){
         document->startUndoCycle();
         document->addUndoable(newPolyline);
-//        document->removeUndoable(originalPolyline);
-//        graphicView->deleteEntity(originalPolyline);
         deleteEntityUndoable(originalPolyline);
         document->endUndoCycle();
     }

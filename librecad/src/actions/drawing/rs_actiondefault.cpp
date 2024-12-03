@@ -513,6 +513,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                 data.number = 0;
                 data.useCurrentLayer = false;
                 data.useCurrentAttributes = false;
+                data.keepOriginals = isControl(e);
                 data.offset = pPoints->v2 - pPoints->v1;
                 m.move(data);
                 goToNeutralStatus();
@@ -656,7 +657,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                     clone->setSelected(true);
 
                     clone->setLayer(refMovingEntity->getLayer());
-                    clone->setPen(refMovingEntity->getPen());
+                    clone->setPen(refMovingEntity->getPen(false));
                     container->addEntity(clone);
                     document->addUndoable(clone);
 
@@ -777,7 +778,7 @@ QStringList RS_ActionDefault::getAvailableCommands(){
 void RS_ActionDefault::updateMouseButtonHints(){    
     switch (getStatus()) {
         case Moving:{
-            updateMouseWidgetTRCancel(tr("Set new position"), MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRCancel(tr("Set new position"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Create a copy")));
             break;
         }
         case MovingRef: {

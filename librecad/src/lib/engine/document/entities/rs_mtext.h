@@ -218,6 +218,14 @@ public:
 
     void drawDraft(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
 
+    void moveRef(const RS_Vector &ref, const RS_Vector &offset) override;
+
+    RS_Vector getNearestRef(const RS_Vector &coord, double *dist) const override;
+
+    RS_Vector getNearestSelectedRef(const RS_Vector &coord, double *dist) const override;
+
+    void moveSelectedRef(const RS_Vector &ref, const RS_Vector &offset) override;
+
 
 protected:
     // fixme - this is prof of the concept for better drawing mtext on small zooms - instead of drawing just rectangles, draw the set of baselines for text.

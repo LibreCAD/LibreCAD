@@ -38,7 +38,7 @@ void LC_ActionPolylineChangeSegmentType::trigger() {
     auto* createdPolyline =  createModifiedPolyline();
     if (createdPolyline != nullptr) {
         createdPolyline->setLayer(polyline->getLayer());
-        createdPolyline->setPen(polyline->getPen());
+        createdPolyline->setPen(polyline->getPen(false));
 
         container->addEntity(createdPolyline);
 

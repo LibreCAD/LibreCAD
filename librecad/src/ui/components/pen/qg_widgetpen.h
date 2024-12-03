@@ -54,6 +54,8 @@ protected slots:
     virtual void languageChange();
 
 protected:
+    bool initialized = false;
+
     void focusInEvent(QFocusEvent *event) override;
     void focusOutEvent(QFocusEvent *event) override;
 

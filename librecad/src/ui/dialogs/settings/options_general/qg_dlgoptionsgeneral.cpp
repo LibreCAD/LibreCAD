@@ -433,6 +433,9 @@ void QG_DlgOptionsGeneral::init() {
         auto toActive = LC_GET_BOOL("ModifyEntitiesToActiveLayer");
         cbToActiveLayer->setChecked(toActive);
         LC_SET("ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked());
+
+        bool keepModify = LC_GET_BOOL("KeepModifiedSelected", true);
+        cbKeepModifiedSelected->setChecked(keepModify);
     }
     LC_GROUP_END();
 
@@ -649,6 +652,7 @@ void QG_DlgOptionsGeneral::ok(){
         LC_GROUP("Modify");
         {
             LC_SET("ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked());
+            LC_SET("KeepModifiedSelected", cbKeepModifiedSelected->isChecked());
         }
         LC_GROUP_END();
 

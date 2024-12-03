@@ -84,5 +84,7 @@ protected:
     int doGetStatusForInitialSnapToRelativeZero() override;
     void doInitialSnapToRelativeZero(RS_Vector vector) override;
     void setStatusForValidStartPoint(int newStatus);
+
+    virtual bool isAllowDirectionCommands();
 };
 #endif //LIBRECAD_LC_ABSTRACTACTIONDRAWLINE_H

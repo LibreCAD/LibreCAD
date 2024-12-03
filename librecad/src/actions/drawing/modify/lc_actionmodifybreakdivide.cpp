@@ -213,7 +213,7 @@ void LC_ActionModifyBreakDivide::createEntitiesForLine(RS_Line *line, RS_Vector 
                 }
 
                 // attributes of original entity
-                RS_Pen pen = line->getPen();
+                RS_Pen pen = line->getPen(false);
                 RS_Layer* layer = line->getLayer(true);
 
                 // creating snap segment (where snap was performed)
@@ -322,7 +322,7 @@ void LC_ActionModifyBreakDivide::createEntitiesForCircle(RS_Circle *circle, RS_V
             }
 
             // attributes of original circle
-            RS_Pen pen = circle->getPen();
+            RS_Pen pen = circle->getPen(false);
             RS_Layer* layer = circle->getLayer();
 
             // create snap arc segment
@@ -391,7 +391,7 @@ void LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &sn
                 }
 
                 // current arc attributes
-                RS_Pen pen = arc->getPen();
+                RS_Pen pen = arc->getPen(false);
                 RS_Layer* layer = arc->getLayer(true);
 
                 // create segment where arc was selected, if necessary
@@ -733,6 +733,14 @@ LC_ActionModifyBreakDivide::LineSegmentData *LC_ActionModifyBreakDivide::findLin
             }
         }
     }
+    else{ // there are intersections only on edges. We may return the entire line as segment if SHIFT is pressed and the user would like to delete the entire entity
+        if (alternativeActionMode && removeSegments/* && removeSelected*/){
+            result = new LineSegmentData();
+            result->segmentDisposition = SEGMENT_INSIDE;
+            result->snapSegmentStart = line->getStartpoint();
+            result->snapSegmentEnd = line->getEndpoint();
+        }
+    }
     return result;
 }
 /**
@@ -842,7 +850,14 @@ LC_ActionModifyBreakDivide::ArcSegmentData *LC_ActionModifyBreakDivide::findArcS
         if (reversed){
             std::swap(result->snapSegmentEndAngle, result->snapSegmentStartAngle);
         }
-
+    }
+    else { // there are intersections only on edges. We may return the entire line as segment if SHIFT is pressed and the user would like to delete the entire entity
+        if (alternativeActionMode && removeSegments/* && removeSelected*/){
+            result = new ArcSegmentData();
+            result->segmentDisposition = SEGMENT_INSIDE;
+            result->snapSegmentStartAngle = arcStartAngle;
+            result->snapSegmentEndAngle = arcEndAngle;
+        }
     }
     return result;
 }

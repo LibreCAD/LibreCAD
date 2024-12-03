@@ -43,7 +43,6 @@ public:
     ~RS_ActionModifyScale() override;
 
     void init(int status) override;
-    void trigger() override;
     bool isIsotropicScaling();
     void setIsotropicScaling(bool enable);
     double getFactorX();
@@ -82,5 +81,6 @@ protected:
     void tryTrigger();
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
+    void doTrigger(bool keepSelected) override;
 };
 #endif

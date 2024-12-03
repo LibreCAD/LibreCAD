@@ -107,7 +107,7 @@ void LC_ActionDrawLineAngleRel::divideOriginalLine(LC_ActionDrawLineAngleRel::Ti
     // create segments only if tick snap point is between of original lines endpoints
     if (nearestPoint != start && nearestPoint != end){
         // our snap point is not outside of line
-        RS_Pen pen = line->getPen();
+        RS_Pen pen = line->getPen(false);
         RS_Layer* layer = line->getLayer();
 
         // create first segment

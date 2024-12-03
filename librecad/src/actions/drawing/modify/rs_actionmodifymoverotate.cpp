@@ -51,15 +51,12 @@ RS_ActionModifyMoveRotate::RS_ActionModifyMoveRotate(RS_EntityContainer& contain
 
 RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate() = default;
 
-void RS_ActionModifyMoveRotate::trigger() {
-
+void RS_ActionModifyMoveRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMoveRotate::trigger()");
-
     RS_Modification m(*container, graphicView);
-	   m.moveRotate(pPoints->data, selectedEntities, false);
+	   m.moveRotate(pPoints->data, selectedEntities, false, keepSelected);
     pPoints->targetPoint = RS_Vector(false);
     finish(false);
-    updateSelectionWidget();
 }
 
 void RS_ActionModifyMoveRotate::mouseMoveEventSelected(QMouseEvent *e) {
@@ -78,7 +75,7 @@ void RS_ActionModifyMoveRotate::mouseMoveEventSelected(QMouseEvent *e) {
                 mouse = getSnapAngleAwarePoint(e, pPoints->data.referencePoint, mouse, true);
                 pPoints->data.offset = mouse - pPoints->data.referencePoint;
                 RS_Modification m(*preview, graphicView);
-                m.moveRotate(pPoints->data, selectedEntities, true);
+                m.moveRotate(pPoints->data, selectedEntities, true, false);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->data.referencePoint);
                     previewRefSelectablePoint(mouse);

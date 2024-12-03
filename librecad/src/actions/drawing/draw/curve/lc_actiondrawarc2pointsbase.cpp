@@ -158,7 +158,7 @@ bool LC_ActionDrawArc2PointsBase::doProcessCommand(int status, const QString &co
    return accept;
 }
 
-void LC_ActionDrawArc2PointsBase::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
+void LC_ActionDrawArc2PointsBase::onCoordinateEvent(int status,[[maybe_unused]] bool isZero, const RS_Vector &pos) {
     switch (status){
         case SetPoint1:{
             startPoint = pos;
@@ -207,7 +207,7 @@ void LC_ActionDrawArc2PointsBase::updateMouseButtonHints() {
 
 QString LC_ActionDrawArc2PointsBase::getAlternativePoint2Prompt() const { return tr("Opposite Arc direction"); }
 
-RS2::CursorType LC_ActionDrawArc2PointsBase::doGetMouseCursor(int status) {
+RS2::CursorType LC_ActionDrawArc2PointsBase::doGetMouseCursor([[maybe_unused]]int status) {
     return RS2::CadCursor;
 }
 

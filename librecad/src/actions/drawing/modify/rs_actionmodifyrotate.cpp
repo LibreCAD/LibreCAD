@@ -64,13 +64,11 @@ void RS_ActionModifyRotate::selectionCompleted(bool singleEntity, bool fromInit)
     }
 }
 
-void RS_ActionModifyRotate::trigger(){
+void RS_ActionModifyRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyRotate::trigger()");
-
     RS_Modification m(*container, graphicView);
-    m.rotate(*data, selectedEntities, false);
+    m.rotate(*data, selectedEntities, false, keepSelected);
     moveRelativeZero(data->center);
-    updateSelectionWidget();
 }
 
 void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
@@ -108,7 +106,7 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
                     RS_RotateData tmpData = *data;
                     tmpData.refPoint = mouse;
                     RS_Modification m(*preview, graphicView, false);
-                    m.rotate(tmpData, selectedEntities, true);
+                    m.rotate(tmpData, selectedEntities, true, false);
                     previewRotationCircleAndPoints(data->center, mouse, data->angle);
                 }
             }
@@ -132,7 +130,7 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
                     RS_RotateData tmpData = *data;
                     tmpData.center = mouse;
                     RS_Modification m(*preview, graphicView, false);
-                    m.rotate(tmpData, selectedEntities, true);
+                    m.rotate(tmpData, selectedEntities, true, false);
                     previewRotationCircleAndPoints(mouse, data->refPoint, data->angle);
                 }
             } else {
@@ -179,7 +177,7 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
             tmpData.angle = rotationAngle;
 
             RS_Modification m(*preview, graphicView, false);
-            m.rotate(tmpData, selectedEntities, true);
+            m.rotate(tmpData, selectedEntities, true, false);
 
             // todo - sand - we can temporarily add a copy of circle to the document, so intersection snap for target reference point will work.
             previewRotationCircleAndPoints(data->center, data->refPoint, rotationAngle);
@@ -202,7 +200,7 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
             tmpData.secondAngle = secondRotationAngle;
 
             RS_Modification m(*preview, graphicView, false);
-            m.rotate(tmpData, selectedEntities, true);
+            m.rotate(tmpData, selectedEntities, true, false);
 
             currentAngle2 = secondRotationAngle;
             updateOptionsUI(LC_ModifyRotateOptions::UpdateMode::UPDATE_ANGLE2);

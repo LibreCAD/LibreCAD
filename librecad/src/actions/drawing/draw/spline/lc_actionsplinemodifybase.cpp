@@ -38,7 +38,7 @@ void LC_ActionSplineModifyBase::trigger() {
             document->startUndoCycle();
             createdEntity->setSelected(true);
             createdEntity->setLayer(entityToModify->getLayer());
-            createdEntity->setPen(entityToModify->getPen());
+            createdEntity->setPen(entityToModify->getPen(false));
             createdEntity->setParent(entityToModify->getParent());
             container->addEntity(createdEntity);
             document->addUndoable(createdEntity);

@@ -114,4 +114,3 @@ void RS_ActionSelectBase::deselectAll(){
     RS_Selection s(*container, graphicView);
     s.selectAll(false);
 }
-

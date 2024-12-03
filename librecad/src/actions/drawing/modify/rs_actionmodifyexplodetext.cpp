@@ -39,9 +39,10 @@ RS_ActionModifyExplodeText::RS_ActionModifyExplodeText(RS_EntityContainer& conta
 
 RS_ActionModifyExplodeText::~RS_ActionModifyExplodeText() = default;
 
-void RS_ActionModifyExplodeText::trigger() {
+
+void RS_ActionModifyExplodeText::doTrigger(bool keepSelected) {
     RS_Modification m(*container, graphicView);
-    m.explodeTextIntoLetters(selectedEntities);
+    m.explodeTextIntoLetters(selectedEntities, keepSelected);
 }
 
 void RS_ActionModifyExplodeText::updateMouseButtonHintsForSelection() {

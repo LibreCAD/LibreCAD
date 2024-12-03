@@ -288,5 +288,18 @@
         <file>points_lattice.svg</file>
         <file>select_points.svg</file>
         <file>paste_to_points.svg</file>
+        <file>points_middle.svg</file>
+        <file>line_middle.svg</file>
+        <file>bounding_box.svg</file>
+        <file>halign_middle.svg</file>
+        <file>valign_middle.svg</file>
+        <file>valign_top.svg</file>
+        <file>valign_bottom.svg</file>
+        <file>halign_right.svg</file>
+        <file>halign_left.svg</file>
+        <file>no_align.svg</file>
+        <file>align_one.svg</file>
+        <file>line_polygon_size_size.svg</file>
+        <file>align_ref.svg</file>
     </qresource>
 </RCC>

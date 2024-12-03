@@ -164,11 +164,11 @@ void LC_SelectWindowOptions::doSetAction(RS_ActionInterface *a, bool update) {
     setEntityTypesToActinAndView(entityTypes);
 }
 
-void LC_SelectWindowOptions::onAllToggled(bool value) {
+void LC_SelectWindowOptions::onAllToggled([[maybe_unused]]bool value) {
     setSelectAllToActionAndView(ui->cbAll->isChecked());
 }
 
-void LC_SelectWindowOptions::onTypeToggled(bool value) {
+void LC_SelectWindowOptions::onTypeToggled([[maybe_unused]]bool value) {
     QList<RS2::EntityType> entityTypes;
     if (ui->cbLine->isChecked()){
         entityTypes << RS2::EntityLine;

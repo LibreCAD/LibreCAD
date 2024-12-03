@@ -101,21 +101,21 @@ bool LC_AbstractActionDrawLine::doCheckMayDrawPreview([[maybe_unused]]QMouseEven
  */
 bool LC_AbstractActionDrawLine::doProcessCommand(int status, const QString &c){
     bool accept = true;
-
+    bool allowDirectionCommands = isAllowDirectionCommands();
     // line by X coordinate
-    if (checkCommand("x", c)){
+    if (checkCommand("x", c) && allowDirectionCommands){
        setSetXDirectionState();
     }
     // line by Y coordinate
-    else if (checkCommand("y", c)){
+    else if (checkCommand("y", c) && allowDirectionCommands){
        setSetYDirectionState();
     }
     // line to arbitrary point
-    else if (checkCommand("p", c)){
+    else if (checkCommand("p", c) && allowDirectionCommands){
        setSetPointDirectionState();
     }
     // line to angle
-    else if (checkCommand("angle", c)){
+    else if (checkCommand("angle", c) && allowDirectionCommands){
         setSetAngleState(false);
     }
     else if (doProceedCommand(status, c)){ // delegate other commands to inherited actions
@@ -256,4 +256,8 @@ void LC_AbstractActionDrawLine::doOnLeftMouseButtonRelease([[maybe_unused]]QMous
 
 bool LC_AbstractActionDrawLine::isStartPointValid() const{
     return false;
+}
+
+bool LC_AbstractActionDrawLine::isAllowDirectionCommands() {
+    return true;
 }

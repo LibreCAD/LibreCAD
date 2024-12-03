@@ -62,15 +62,15 @@ void LC_PointsLatticeOptions::doSetAction(RS_ActionInterface *a, bool update) {
     setAdjustLastPointToActionAndView(adjustLastPoint);
 }
 
-void LC_PointsLatticeOptions::onColumnsChanged(int value) {
+void LC_PointsLatticeOptions::onColumnsChanged([[maybe_unused]]int value) {
     setColumnsToActionAndView(ui->sbNumX->value());
 }
 
-void LC_PointsLatticeOptions::onRowsChanged(int value) {
+void LC_PointsLatticeOptions::onRowsChanged([[maybe_unused]]int value) {
     setRowsToActionAndView(ui->sbNumY->value());
 }
 
-void LC_PointsLatticeOptions::onAdjustLastPointToggled(bool value) {
+void LC_PointsLatticeOptions::onAdjustLastPointToggled([[maybe_unused]]bool value) {
     setAdjustLastPointToActionAndView(ui->cbAdjustLastPoint->isChecked());
 }
 

@@ -29,7 +29,6 @@
 
 #include "lc_actionpreselectionawarebase.h"
 
-
 /**
  * This action class allows to revert the direction of selected entities.
  *
@@ -40,12 +39,11 @@ Q_OBJECT
 public:
     RS_ActionModifyRevertDirection(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView);
-
-    void trigger() override;
 protected:
     void updateMouseButtonHintsForSelection() override;
     bool isEntityAllowedToSelect(RS_Entity *ent) const override;
     bool isShowRefPointsOnHighlight() override;
+    void doTrigger(bool keepSelected) override;
 };
 
 #endif

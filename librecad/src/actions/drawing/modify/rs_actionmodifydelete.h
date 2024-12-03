@@ -39,7 +39,6 @@ class RS_ActionModifyDelete : public LC_ActionPreSelectionAwareBase {
 public:
     RS_ActionModifyDelete(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    void trigger() override;
 protected:
     /**
      * Action States.
@@ -49,5 +48,6 @@ protected:
     };
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     void updateMouseButtonHintsForSelection() override;
+    void doTrigger(bool keepSelected) override;
 };
 #endif

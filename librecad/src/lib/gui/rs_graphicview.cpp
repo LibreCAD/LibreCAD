@@ -1119,6 +1119,7 @@ void RS_GraphicView::setPenForOverlayEntity(RS_Painter *painter, RS_Entity *e, d
         case RS2::EntityRefEllipse:
         case RS2::EntityRefPoint:
         case RS2::EntityRefLine:
+        case RS2::EntityRefConstructionLine:
         case RS2::EntityRefCircle:
         case RS2::EntityRefArc: {
             // todo - if not ref point are enabled, draw as transparent? Actually, if actions are correct, we should not be there..
