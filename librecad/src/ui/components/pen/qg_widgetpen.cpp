@@ -50,9 +50,12 @@ QG_WidgetPen::QG_WidgetPen(QWidget* parent, Qt::WindowFlags fl)
 
 void QG_WidgetPen::setPen(RS_Pen pen, bool showByLayer, 
                           bool showUnchanged, const QString& title) {
-    cbColor->init(showByLayer, showUnchanged);
-    cbWidth->init(showByLayer, showUnchanged);
-    cbLineType->init(showByLayer, showUnchanged);
+    if (!initialized) {
+        cbColor->init(showByLayer, showUnchanged);
+        cbWidth->init(showByLayer, showUnchanged);
+        cbLineType->init(showByLayer, showUnchanged);
+        initialized = true;
+    }
     if (!showUnchanged) {
        cbColor->setColor(pen.getColor());
        cbWidth->setWidth(pen.getWidth());
@@ -127,8 +130,7 @@ QG_WidgetPen::~QG_WidgetPen()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_WidgetPen::languageChange()
-{
+void QG_WidgetPen::languageChange(){
     retranslateUi(this);
 }
 
