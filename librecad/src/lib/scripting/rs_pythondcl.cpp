@@ -747,14 +747,14 @@ void RS_PythonDcl::endImage()
                 const lclImage* img = static_cast<const lclImage*>(tile);
                 img->image()->repaint();
             }
-            break;
+                break;
             case IMAGE_BUTTON:
             {
 
             }
-            break;
-            default:
-
+                break;
+            default: {}
+                break;
             }
         }
     }

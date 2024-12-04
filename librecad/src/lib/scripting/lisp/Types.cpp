@@ -13,6 +13,7 @@
 #include <typeinfo>
 
 #include <QObject>
+#include <QApplication>
 
 static inline void replaceValue(std::string &com, const std::string& value);
 static inline void replaceKey(std::string &com, const std::string& key);
@@ -2229,14 +2230,30 @@ static inline void replaceY(std::string &com, int y)
     }
 }
 
-QColor getDclQColor(color_t c)
+QColor getDclQColor(int c)
 {
     QColor color = Qt::black;
-    for (int i =0; i < MAX_DCL_COLOR; i++) {
-        if (c == dclQColor[i].color) {
-            return dclQColor[i].qcolor;
+    if ((c < 257) && (c > -1))
+    {
+        return dclQColor[c];
+    }
+
+    if ((c < 0) && (c > -1002))
+    {
+        if (c == -1000)
+        {
+            return QApplication::palette().color(QPalette::WindowText);
+        }
+        if (c == -1001)
+        {
+            return QApplication::palette().color(QPalette::Window);
+        }
+        if (c == -1002)
+        {
+            return QApplication::palette().color(QPalette::Base);
         }
     }
+
     return color;
 }
 

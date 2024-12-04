@@ -82,21 +82,20 @@ static position_prop_t dclPosition[MAX_DCL_POS] = {
 };
 
 static color_prop_t dclColor[MAX_DCL_COLOR] = {
-    { "dialog_line", DIALOG_LINE },
-    { "dialog_foreground", DIALOG_FOREGROUND },
-    { "dialog_background", DIALOG_BACKGROUND },
-    { "graphics_background", GRAPHICS_BACKGROUND },
-    { "black", BLACK },
-    { "red", RED },
-    { "yellow", YELLOW },
-    { "green", GREEN },
-    { "cyan", CYAN },
-    { "blue", BLUE },
-    { "magenta", MAGENTA },
-    { "white", WHITE },
-    { "graphics_foreground", GRAPHICS_FOREGROUND }
+    { "dialog_line", -1002 },
+    { "dialog_background", -1001},
+    { "dialog_foreground", -1000 },
+    { "graphics_background", 0 },
+    { "black", 0 },
+    { "red", 1 },
+    { "yellow", 2 },
+    { "green", 3 },
+    { "cyan", 4 },
+    { "blue", 5 },
+    { "magenta", 6 },
+    { "white", 7 },
+    { "graphics_foreground", 7 }
 };
-
 
 class Tokeniser
 {
@@ -222,7 +221,7 @@ static bool isdclTile(const String& str);
 #endif
 static pos_t getDclPos(const String& str);
 static tile_id_t getDclId(const String& str);
-static color_t getDclColor(const String& str);
+static int getDclColor(const String& str);
 static attribute_id_t getDclAttributeId(const String& str);
 static lclValuePtr readDclFile(Tokeniser& tokeniser, bool start = false, bool parent=false);
 static lclValuePtr addTile(tile_t tile);
@@ -549,109 +548,123 @@ static void readTile(Tokeniser& tokeniser, tile_t& tile)
             tokeniser.next();
             switch (getDclAttributeId(token)) {
             case ACTION:
-              tile.action = tokeniser.peek();
+                tile.action = tokeniser.peek();
                 break;
             case ALIGNMENT:
-              tile.alignment = getDclPos(tokeniser.peek());
+                tile.alignment = getDclPos(tokeniser.peek());
                 break;
             case ALLOW_ACCEPT:
-              tile.allow_accept = getDclBool(tokeniser.peek());
+                tile.allow_accept = getDclBool(tokeniser.peek());
                 break;
             case ASPECT_RATIO:
-              tile.aspect_ratio = atof(tokeniser.peek().c_str());
+                tile.aspect_ratio = atof(tokeniser.peek().c_str());
                 break;
             case BIG_INCREMENT:
-              tile.big_increment = atoi(tokeniser.peek().c_str());
+                tile.big_increment = atoi(tokeniser.peek().c_str());
                 break;
             case CHILDREN_ALIGNMENT:
-              tile.children_alignment = getDclPos(tokeniser.peek());
+                tile.children_alignment = getDclPos(tokeniser.peek());
                 break;
             case CHILDREN_FIXED_HEIGHT:
               tile.children_fixed_height = getDclBool(tokeniser.peek());
                 break;
             case CHILDREN_FIXED_WIDTH:
-              tile.children_fixed_width = getDclBool(tokeniser.peek());
+                tile.children_fixed_width = getDclBool(tokeniser.peek());
                 break;
             case COLOR:
-              tile.color = getDclColor(tokeniser.peek());
+            {
+                int color = 0;
+                if (std::regex_match(tokeniser.peek(), intRegex)) {
+                    if (((color < 257) && (color > -1)) ||
+                        ((color < 0) && (color > -1002)))
+                    {
+                        color = std::stoi(tokeniser.peek());
+                    }
+                    tile.color = color;
+                }
+                else
+                {
+                    tile.color = getDclColor(tokeniser.peek());
+                }
+            }
                 break;
             case EDIT_LIMIT:
-              tile.edit_limit = atoi(tokeniser.peek().c_str());
+                tile.edit_limit = atoi(tokeniser.peek().c_str());
                 break;
             case EDIT_WIDTH:
-              tile.edit_width = atof(tokeniser.peek().c_str());
+                tile.edit_width = atof(tokeniser.peek().c_str());
                 break;
             case FIXED_HEIGHT:
-              tile.fixed_height = getDclBool(tokeniser.peek());
+                tile.fixed_height = getDclBool(tokeniser.peek());
                 break;
             case FIXED_WIDTH:
-              tile.fixed_width = getDclBool(tokeniser.peek());
+                tile.fixed_width = getDclBool(tokeniser.peek());
                 break;
             case FIXED_WIDTH_FONT:
-              tile.fixed_width_font = getDclBool(tokeniser.peek());
+                tile.fixed_width_font = getDclBool(tokeniser.peek());
                 break;
             case HEIGHT:
                 tile.height = atof(tokeniser.peek().c_str());
                 break;
             case INITIAL_FOCUS:
-              tile.initial_focus = tokeniser.peek();
+                tile.initial_focus = tokeniser.peek();
                 break;
             case IS_BOLD:
-              tile.is_bold = getDclBool(tokeniser.peek());
+                tile.is_bold = getDclBool(tokeniser.peek());
                 break;
             case IS_CANCEL:
-              tile.is_cancel = getDclBool(tokeniser.peek());
+                tile.is_cancel = getDclBool(tokeniser.peek());
                 break;
             case IS_DEFAULT:
-              tile.is_default = getDclBool(tokeniser.peek());
+                tile.is_default = getDclBool(tokeniser.peek());
                 break;
             case IS_ENABLED:
-              tile.is_enabled = getDclBool(tokeniser.peek());
+                tile.is_enabled = getDclBool(tokeniser.peek());
                 break;
             case IS_TAB_STOP:
-              tile.is_tab_stop = getDclBool(tokeniser.peek());
+                tile.is_tab_stop = getDclBool(tokeniser.peek());
                 break;
             case KEY:
-              tile.key = tokeniser.peek();
+                tile.key = tokeniser.peek();
                 break;
             case LABEL:
-              tile.label = tokeniser.peek();
+                tile.label = tokeniser.peek();
                 break;
             case LAYOUT:
-              tile.layout = getDclPos(tokeniser.peek());
+                tile.layout = getDclPos(tokeniser.peek());
                 break;
             case LIST:
-              tile.list = tokeniser.peek();
+                tile.list = tokeniser.peek();
                 break;
             case MAX_VALUE:
-              tile.max_value = atoi(tokeniser.peek().c_str());
+                tile.max_value = atoi(tokeniser.peek().c_str());
                 break;
             case MIN_VALUE:
-              tile.min_value = atoi(tokeniser.peek().c_str());
+                tile.min_value = atoi(tokeniser.peek().c_str());
                 break;
             case MNEMONIC:
-              tile.mnemonic = tokeniser.peek();
+                tile.mnemonic = tokeniser.peek();
                 break;
             case MULTIPLE_SELECT:
-              tile.multiple_select = getDclBool(tokeniser.peek());
+                tile.multiple_select = getDclBool(tokeniser.peek());
                 break;
             case PASSWORD_CHAR:
-              tile.password_char = tokeniser.peek();
+                tile.password_char = tokeniser.peek();
                 break;
             case SMALL_INCREMENT:
-              tile.small_increment = atoi(tokeniser.peek().c_str());
+                tile.small_increment = atoi(tokeniser.peek().c_str());
                 break;
             case TABS:
-              tile.tabs = tokeniser.peek();
+                tile.tabs = tokeniser.peek();
                 break;
             case TAB_TRUNCATE:
-              tile.tab_truncate = getDclBool(tokeniser.peek());
+                tile.tab_truncate = getDclBool(tokeniser.peek());
                 break;
             case VALUE:
-              tile.value = tokeniser.peek();
+                tile.value = tokeniser.peek();
                 break;
             case WIDTH:
-              tile.width = atof(tokeniser.peek().c_str());
+                tile.width = atof(tokeniser.peek().c_str());
                 break;
             default:
                 break;
@@ -732,7 +745,7 @@ static pos_t getDclPos(const String& str)
     return pos;
 }
 
-static color_t getDclColor(const String& str)
+static int getDclColor(const String& str)
 {
     color_t color = WHITE;
     for (int i =0; i < MAX_DCL_COLOR; i++) {
