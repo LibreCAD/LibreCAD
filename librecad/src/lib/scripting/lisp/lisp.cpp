@@ -1172,7 +1172,7 @@ void openTile(const lclGui* tile)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        dlg->vlayout()->addLayout(img->hlayout());
+                        dlg->vlayout()->addWidget(img->image());
                         break;
                     }
                 }
@@ -1186,11 +1186,11 @@ void openTile(const lclGui* tile)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            dclTiles.at(i)->hlayout()->addLayout(img->hlayout());
+                            dclTiles.at(i)->hlayout()->addWidget(img->image());
                         }
                         else
                         {
-                            dclTiles.at(i)->vlayout()->addLayout(img->hlayout());
+                            dclTiles.at(i)->vlayout()->addWidget(img->image());
                         }
                         break;
                     }

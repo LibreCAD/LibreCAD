@@ -10,35 +10,16 @@ public:
     RS_PythonGui();
     ~RS_PythonGui();
 
-    void Hello();
     void prompt(const char *prompt);
     void MessageBox(const char *msg);
-    void unloadDialog(int id);
-    void endList();
-
-    bool newDialog(const char *name, int id);
-    std::array<int, 2> doneDialog(int res=-1);
-    bool setTile(const char *key, const char *val);
-    bool modeTile(const char *key, int val);
-    bool actionTile(const char *id, const char *action);
 
     int GetIntDialog(const char *prompt);
-    int loadDialog(const char *fileName);
-    int dimxTile(const char *key);
-    int dimyTile(const char *key);
-    int startDialog();
-    int fillImage(int x1, int y1, int width, int height, int color);
-
-
     double GetDoubleDialog(const char *prompt);
 
     char ReadCharDialog();
     const char *OpenFileDialog(const char *title, const char *fileName, const char *fileExt);
     const char *GetStringDialog(const char *prompt);
-    const char *getTile(const char *key);
-    const char *startList(const char *key, int operation=-1, int index=-1);
-    const char *addList(const char *val);
-    const char *startImage(const char *key);
+
 };
 
 #endif // RS_PYTHONGUI_H

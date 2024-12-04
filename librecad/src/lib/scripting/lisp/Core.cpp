@@ -27,6 +27,8 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QRegExp>
+#include <QPainter>
+#include <QPen>
 
 /* temp defined */
 #include <regex>
@@ -1087,6 +1089,42 @@ BUILTIN("empty?")
     return lcl::boolean(seq->isEmpty());
 }
 
+BUILTIN("end_image")
+{
+    CHECK_ARGS_IS(0);
+    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key->value())
+        {
+            switch (tile->value().id)
+            {
+            case IMAGE:
+            {
+                const lclImage* img = static_cast<const lclImage*>(tile);
+                img->image()->repaint();
+            }
+            break;
+            case IMAGE_BUTTON:
+            {
+
+            }
+            break;
+            default:
+
+            }
+        }
+    }
+
+    return dclEnv->set("start_image_key",  lcl::nilValue());
+}
+
 BUILTIN("end_list")
 {
     CHECK_ARGS_IS(0);
@@ -1190,7 +1228,7 @@ BUILTIN("fill_image")
             case IMAGE:
             {
                 const lclImage* img = static_cast<const lclImage*>(tile);
-                //img->image();
+                img->image()->addRect(x1->value(), y1->value(), width->value(), height->value(), color->value());
                 return lcl::integer(color->value());
             }
             break;
@@ -4013,11 +4051,95 @@ BUILTIN("vl-position")
     return lcl::nilValue();
 }
 
+BUILTIN("slide_image")
+{
+    CHECK_ARGS_IS(5);
+    AG_INT(x1);
+    AG_INT(y1);
+    AG_INT(width);
+    AG_INT(height);
+    ARG(lclString, filename);
+
+    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key->value())
+        {
+            switch (tile->value().id)
+            {
+            case IMAGE:
+            {
+                const lclImage* img = static_cast<const lclImage*>(tile);
+                //img->image();
+                return lcl::string(filename->value());
+            }
+            break;
+            case IMAGE_BUTTON:
+            {
+                return lcl::nilValue();
+            }
+            break;
+            default:
+                return lcl::nilValue();
+            }
+        }
+    }
+    return lcl::nilValue();
+}
+
 BUILTIN("symbol")
 {
     CHECK_ARGS_IS(1);
     if(argsBegin->ptr()->type() == LCLTYPE::SYM) {
         return lcl::trueValue();
+    }
+    return lcl::nilValue();
+}
+
+BUILTIN("vector_image")
+{
+    CHECK_ARGS_IS(5);
+    AG_INT(x1);
+    AG_INT(y1);
+    AG_INT(x2);
+    AG_INT(y2);
+    AG_INT(color);
+
+    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key->value())
+        {
+            switch (tile->value().id)
+            {
+            case IMAGE:
+            {
+                const lclImage* img = static_cast<const lclImage*>(tile);
+                img->image()->addLine(x1->value(), y1->value(), x2->value(), y2->value(), color->value());
+                return lcl::integer(color->value());
+            }
+            break;
+            case IMAGE_BUTTON:
+            {
+                return lcl::nilValue();
+            }
+            break;
+            default:
+                return lcl::nilValue();
+            }
+        }
     }
     return lcl::nilValue();
 }

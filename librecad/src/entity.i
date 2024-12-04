@@ -24,7 +24,9 @@
 #include "lc_rect.h"
 
 #include <array>
+#include "rs_pythondcl.h"
 #include "rs_pythongui.h"
+
 
 //#include "rs_arc.h"
 //#include "lc_refarc.h"
@@ -116,6 +118,7 @@
 //%include "lib/engine/document/entities/lc_looputils.h"
 %ignore operator<<;
 %include "lib/engine/document/entities/lc_rect.h"
+%include "lib/scripting/rs_pythondcl.h"
 %include "lib/scripting/rs_pythongui.h"
 
 //%include "lib/engine/document/entities/rs_arc.h"

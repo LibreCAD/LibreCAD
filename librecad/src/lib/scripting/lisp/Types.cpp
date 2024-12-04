@@ -2,6 +2,7 @@
 #include "Environment.h"
 #include "Types.h"
 #include "lisp.h"
+#include "rs_color.h"
 
 #ifdef DEVELOPER
 
@@ -1854,13 +1855,8 @@ void lclToggle::stateChanged(int state)
 
 lclImage::lclImage(const tile_t& tile)
     : lclGui(tile)
-    , m_image(new QLabel)
+    , m_image(new QDclLabel)
 {
-    if (tile.is_bold)
-    {
-        m_image->setStyleSheet("font-weight: bold");
-    }
-
     if(int(tile.width))
     {
         m_image->setMinimumWidth(int(tile.width));
@@ -1880,7 +1876,6 @@ lclImage::lclImage(const tile_t& tile)
         {
             m_image->setFixedWidth(m_image->width());
         }
-
     }
 
     if (tile.fixed_height)
@@ -1915,6 +1910,16 @@ lclImage::lclImage(const tile_t& tile)
     default: {}
     break;
     }
+
+    if(!tile.is_enabled)
+    {
+        m_image->setEnabled(false);
+    }
+
+    m_image->setAutoFillBackground(true); // importent!
+    QPalette p = m_image->palette();
+    p.setColor(QPalette::Window, QColor(getDclQColor(tile.color)));
+    m_image->setPalette(p);
 }
 
 lclOkCancel::lclOkCancel(const tile_t& tile)
@@ -2136,6 +2141,47 @@ void lclOkCancelHelpInfo::infoClicked(bool checked)
     }
 }
 
+QDclLabel::QDclLabel(QWidget *parent)
+    : QLabel(parent)
+    , m_pixs(new dclVectors(0))
+{
+
+}
+
+void QDclLabel::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+
+    for (auto & l : *m_pixs)
+    {
+        if (l.action == DCL_LINE)
+        {
+            color_t color = static_cast<color_t>(l.color);
+            painter.setPen(QPen(getDclQColor(color)));
+            painter.drawLine(l.x1, l.y1, l.x2, l.y2);
+        }
+
+        if (l.action == DCL_RECT)
+        {
+            color_t color = static_cast<color_t>(l.color);
+            painter.fillRect(l.x1, l.y1, l.x2, l.y2, QBrush(getDclQColor(color), Qt::SolidPattern));
+        }
+    }
+
+    QLabel::paintEvent(event);
+}
+
+void QDclLabel::addLine(int x1,int y1,int x2,int y2, int color)
+{
+    dclVector v = { x1, y1, x2, y2, color, DCL_LINE };
+    m_pixs->push_back(v);
+}
+
+void QDclLabel::addRect(int x1,int y1,int width, int height, int color)
+{
+    dclVector v = { x1, y1, width, height, color, DCL_RECT };
+    m_pixs->push_back(v);
+}
 
 static inline void replaceValue(std::string &com, const std::string& value)
 {
@@ -2181,6 +2227,17 @@ static inline void replaceY(std::string &com, int y)
     while(com.find("$y") != std::string::npos) {
         com.replace(com.find("$y"),2, std::to_string(y));
     }
+}
+
+QColor getDclQColor(color_t c)
+{
+    QColor color = Qt::black;
+    for (int i =0; i < MAX_DCL_COLOR; i++) {
+        if (c == dclQColor[i].color) {
+            return dclQColor[i].qcolor;
+        }
+    }
+    return color;
 }
 
 #endif // DEVELOPER

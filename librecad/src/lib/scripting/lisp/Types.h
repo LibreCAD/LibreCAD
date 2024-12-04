@@ -24,6 +24,8 @@
 #include <QSlider>
 #include <QCheckBox>
 #include <QSpacerItem>
+#include <QColor>
+#include <QPainter>
 
 #ifdef DEVELOPER
 
@@ -617,7 +619,7 @@ typedef struct position_prop {
 enum COLOR {
     DIALOG_LINE,
     DIALOG_FOREGROUND,
-    DIALOG_BACKGROUND,
+    DIALOG_BACKGROUND, //FIXME color = widget->palette()->color(QPalette::Background);
     GRAPHICS_BACKGROUND = 0,
     BLACK = 0,
     RED,
@@ -626,7 +628,7 @@ enum COLOR {
     CYAN,
     BLUE,
     MAGENTA,
-    WHITE,
+    WHITE = 7,
     GRAPHICS_FOREGROUND = 7
 };
 
@@ -635,6 +637,23 @@ typedef struct color_prop {
     const char* name;
     color_t color;
 } color_prop_t;
+
+typedef struct qcolor {
+    color_t color;
+    QColor qcolor;
+} qcolor_t;
+
+// FIXME current colors on init
+static qcolor_t dclQColor[8] = {
+    { BLACK, Qt::black },
+    { RED, Qt::red },
+    { YELLOW, Qt::yellow },
+    { GREEN, Qt::green },
+    { CYAN, Qt::cyan },
+    { BLUE, Qt::blue },
+    { MAGENTA, Qt::magenta },
+    { WHITE, Qt::white },
+};
 
 typedef struct guitile {
     bool            allow_accept = false;
@@ -678,6 +697,41 @@ typedef struct guitile {
     String          value = "";
     lclValueVec*    tiles;
 } tile_t;
+
+enum PaintAction { DCL_NON, DCL_LINE, DCL_RECT};
+
+typedef struct dclVector
+{
+    int x1 = 0;
+    int y1 = 0;
+    int x2 = 0;
+    int y2 = 0;
+    int color = 0;
+    PaintAction action = DCL_NON;
+} dclVector_t;
+
+typedef std::vector<dclVector_t> dclVectors;
+
+QColor getDclQColor(color_t c);
+
+class QDclLabel : public QLabel
+{
+
+public:
+
+    QDclLabel(QWidget *parent=nullptr);
+    ~QDclLabel() { delete m_pixs; }
+
+    void addLine(int x1, int y1, int x2, int y2, int color);
+    void addRect(int x1, int y1, int width, int height, int color);
+
+protected:
+    virtual void paintEvent(QPaintEvent *event);
+
+private:
+    dclVectors *m_pixs;
+};
+
 
 class lclGui : public lclValue {
 public:
@@ -912,10 +966,10 @@ public:
 
     WITH_META(lclImage)
 
-    QLabel* image() const { return m_image; }
+    QDclLabel* image() const { return m_image; }
 
 private:
-    QLabel* m_image;
+    QDclLabel* m_image;
 };
 
 class lclPopupList : public lclGui {

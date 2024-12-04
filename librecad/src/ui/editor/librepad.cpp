@@ -399,6 +399,7 @@ void Librepad::saveAs()
         return;
     }
     editor->saveAs();
+    // FIXME
     qDebug() << __func__ << editor->path();
     m_fileName = editor->path();
     writeRecentSettings(editor->path());

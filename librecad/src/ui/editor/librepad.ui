@@ -415,10 +415,13 @@
      <normaloff>:/icons/run.svg</normaloff>:/icons/run.svg</iconset>
    </property>
    <property name="text">
-    <string>Run</string>
+    <string>&amp;Run</string>
    </property>
    <property name="toolTip">
     <string>run script</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
    </property>
   </action>
   <action name="actionLoadScript">
