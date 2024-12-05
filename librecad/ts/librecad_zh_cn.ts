@@ -4526,12 +4526,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="683"/>
         <source>St&amp;art Handle Color:</source>
-        <translation type="unfinished">起始句柄颜色(&amp;A)</translation>
+        <translation>起始句柄颜色(&amp;A):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="767"/>
         <source>&amp;Handle Color:</source>
-        <translation>名柄颜色(&amp;H):</translation>
+        <translation>句柄颜色(&amp;H):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="378"/>
@@ -9431,7 +9431,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="898"/>
         <location filename="../src/cmd/rs_commands.cpp" line="919"/>
         <source>angle</source>
-        <translation type="unfinished">角度</translation>
+        <translation>角度</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="899"/>
@@ -9803,7 +9803,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1117"/>
         <source>Command: %1 (%2)</source>
-        <translation type="unfinished">命令: %1 (%2)</translation>
+        <translation>命令: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
@@ -9813,7 +9813,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1178"/>
         <source>Command not found: %1</source>
-        <translation type="unfinished">命令未找到：%1</translation>
+        <translation>命令未找到: %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1164"/>
@@ -9835,7 +9835,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1217"/>
         <source>Available commands:</source>
-        <translation type="unfinished">可用命令:</translation>
+        <translation>可用命令:</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
@@ -12853,12 +12853,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="156"/>
         <source>Printout in Black/White</source>
-        <translation type="unfinished">以黑白打印</translation>
+        <translation>黑白打印</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="161"/>
         <source>Printout in color</source>
-        <translation type="unfinished">彩色打印</translation>
+        <translation>彩色打印</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="166"/>
@@ -13291,7 +13291,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
         <source>Angle:</source>
-        <translation type="unfinished">角度:</translation>
+        <translation>角度:</translation>
     </message>
 </context>
 <context>
@@ -13591,7 +13591,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="56"/>
         <source>Distance:</source>
-        <translation type="unfinished">距离:</translation>
+        <translation>距离:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="72"/>
@@ -13632,7 +13632,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation type="unfinished">多边形选项</translation>
+        <translation>多边形选项</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="56"/>
@@ -13642,7 +13642,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="66"/>
         <source>Number of edges</source>
-        <translation type="unfinished">边数</translation>
+        <translation>边数</translation>
     </message>
 </context>
 <context>
@@ -13650,7 +13650,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation type="unfinished">多边形选项</translation>
+        <translation>多边形选项</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="56"/>
@@ -13660,7 +13660,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="66"/>
         <source>Number of edges</source>
-        <translation type="unfinished">边数</translation>
+        <translation>边数</translation>
     </message>
 </context>
 <context>
@@ -13673,7 +13673,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="56"/>
         <source>Angle:</source>
-        <translation type="unfinished">角度:</translation>
+        <translation>角度:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="72"/>
@@ -13683,7 +13683,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="85"/>
         <source>Length:</source>
-        <translation type="unfinished">长度:</translation>
+        <translation>长度:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="101"/>
@@ -13696,17 +13696,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_mtextoptions.ui" line="32"/>
         <source>Text Options</source>
-        <translation type="unfinished">文本选项</translation>
+        <translation>文本选项</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mtextoptions.ui" line="53"/>
         <source>Text:</source>
-        <translation type="unfinished">文本:</translation>
+        <translation>文本:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mtextoptions.ui" line="91"/>
         <source>Angle:</source>
-        <translation type="unfinished">角度:</translation>
+        <translation>角度:</translation>
     </message>
 </context>
 <context>
@@ -13714,7 +13714,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation type="unfinished">修改偏移选项</translation>
+        <translation>修改偏移选项</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
@@ -13732,7 +13732,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">移动旋转选项</translation>
+        <translation>移动旋转选项</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="50"/>
