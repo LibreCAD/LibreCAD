@@ -10,7 +10,7 @@ SWIG_USE_FILE += \
     -I$$[QT_INSTALL_LIBS]/qt6
 
 SWIG_FLAGS += \
-    -v -c++ -python
+    -v -c++ -python -w314
 
 SWIG_INCLUDE += \
     -I${QMAKE_INCDIR}
@@ -21,7 +21,7 @@ SWIG += \
 swig.target = $${TARGET}_wrap.cxx
 swig.input = SWIG_INPUT
 swig.variable_out = $$GENERATED_SOURCES
-swig.commands = $$SWIG $$SWIG_FLAGS $$SWIG_USE_FILE  -outdir $${INSTALLDIR} -o ${QMAKE_FILE_OUT} ${QMAKE_FILE_NAME}
+swig.commands = $$SWIG $$SWIG_FLAGS $$SWIG_USE_FILE -outdir $${INSTALLDIR} -o ${QMAKE_FILE_OUT} ${QMAKE_FILE_NAME}
 swig.output = $${TARGET}_wrap.cxx
 
 QMAKE_EXTRA_COMPILERS += swig

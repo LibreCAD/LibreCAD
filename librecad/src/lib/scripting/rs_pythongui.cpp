@@ -2,6 +2,7 @@
 #include "rs_pythongui.h"
 #include "rs_dialogs.h"
 #include "rs_py_inputhandle.h"
+#include "qc_applicationwindow.h"
 
 #include <QMessageBox>
 #include <QFileDialog>
@@ -13,6 +14,27 @@ RS_PythonGui::RS_PythonGui()
 
 RS_PythonGui::~RS_PythonGui()
 {
+}
+
+RS_Document* RS_PythonGui::getDocument() const
+{
+    return QC_ApplicationWindow::getAppWindow()->getDocument();
+}
+
+RS_Graphic* RS_PythonGui::getGraphic() const
+{
+    auto& appWin=QC_ApplicationWindow::getAppWindow();
+    RS_Document* d = appWin->getDocument();
+
+    if (d && d->rtti()==RS2::EntityGraphic)
+    {
+        RS_Graphic* graphic = (RS_Graphic*)d;
+        if (graphic==NULL) {
+            return NULL;
+        }
+        return graphic;
+    }
+    return NULL;
 }
 
 void RS_PythonGui::MessageBox(const char *msg)
