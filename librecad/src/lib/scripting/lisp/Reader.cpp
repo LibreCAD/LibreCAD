@@ -878,6 +878,8 @@ static lclValuePtr addTile(tile_t tile)
     case RADIO_ROW:
     case ROW:
         return lcl::row(tile);
+    case REGISTER:
+        return lcl::tabwidget(tile);
     case SLIDER:
         return lcl::slider(tile);
     case SPACER:
@@ -888,6 +890,8 @@ static lclValuePtr addTile(tile_t tile)
     case SPACER_1:
         return lcl::spacer_1(tile);
 #endif
+    case TAB:
+        return lcl::widget(tile);
     case TEXT:
         return lcl::label(tile);
     case TEXT_PART:

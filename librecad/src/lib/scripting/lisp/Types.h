@@ -15,6 +15,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QListWidget>
+#include <QTabWidget>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QComboBox>
@@ -33,7 +34,7 @@ class lclEmptyInputException : public std::exception { };
 
 enum class LCLTYPE { ATOM, BUILTIN, BOOLEAN, FILE, GUI, INT, LIST, MAP, REAL, STR, SYM, UNDEF, VEC, KEYW };
 
-#define MAX_DCL_TILES 31
+#define MAX_DCL_TILES 33
 #define MAX_DCL_ATTR 35
 #define MAX_DCL_POS 8
 #define MAX_DCL_COLOR 257
@@ -491,6 +492,7 @@ enum TILE_ID {
     RADIO_BUTTON,
     RADIO_COLUMN,
     RADIO_ROW,
+    REGISTER,
     SLIDER,
     SPACER,
     SPACER_0,
@@ -506,10 +508,11 @@ enum TILE_ID {
     COLUMN = 512,
     CONCATENATION = 1024,
     PARAGRAPH = 2048,
-    ROW = 4096
+    ROW = 4096,
+    TAB = 8192
 };
 
-#define LAYOUT_TILE (COLUMN | BOXED_COLUMN | BOXED_ROW | ROW | CONCATENATION | PARAGRAPH)
+#define LAYOUT_TILE (COLUMN | BOXED_COLUMN | BOXED_ROW | ROW | CONCATENATION | PARAGRAPH | TAB)
 #define LAYOUT_ROW (BOXED_ROW | ROW | CONCATENATION)
 
 typedef enum TILE_ID tile_id_t;
@@ -543,11 +546,13 @@ static const tile_prop_t dclTile[MAX_DCL_TILES] = {
    { "radio_button", RADIO_BUTTON },
    { "radio_column", RADIO_COLUMN },
    { "radio_row", RADIO_ROW },
+   { "register", REGISTER },
    { "row", ROW },
    { "slider", SLIDER },
    { "spacer", SPACER },
    { "spacer_0", SPACER_0 },
    { "spacer_1", SPACER_1 },
+   { "tab", TAB },
    { "text", TEXT },
    { "text_part", TEXT_PART },
    { "toggle", TOGGLE }
@@ -619,7 +624,7 @@ typedef struct position_prop {
 enum COLOR {
     DIALOG_LINE,
     DIALOG_FOREGROUND,
-    DIALOG_BACKGROUND, //FIXME color = widget->palette()->color(QPalette::Background);
+    DIALOG_BACKGROUND,
     GRAPHICS_BACKGROUND = 0,
     BLACK = 0,
     RED,
@@ -1037,6 +1042,40 @@ private:
     QVBoxLayout* m_layout;
 };
 
+class lclTabWidget : public lclGui {
+public:
+    lclTabWidget(const tile_t& tile);
+    lclTabWidget(const lclTabWidget& that, lclValuePtr meta)
+        : lclGui(that, meta) { }
+
+    virtual ~lclTabWidget() { delete m_widget; }
+
+    WITH_META(lclTabWidget)
+
+    QTabWidget* widget() const { return m_widget; }
+
+private:
+    QTabWidget* m_widget;
+};
+
+class lclWidget : public lclGui {
+public:
+    lclWidget(const tile_t& tile);
+    lclWidget(const lclWidget& that, lclValuePtr meta)
+        : lclGui(that, meta) { }
+
+    virtual ~lclWidget() { delete m_widget; delete m_layout; }
+
+    WITH_META(lclWidget)
+
+    QWidget* widget() const { return m_widget; }
+    virtual QVBoxLayout* vlayout() const { return m_layout; }
+
+private:
+    QWidget* m_widget;
+    QVBoxLayout* m_layout;
+};
+
 class lclButton : public lclGui {
 
 public:
@@ -1086,16 +1125,21 @@ public:
     lclEdit(const lclEdit& that, lclValuePtr meta)
         : lclGui(that, meta) { }
 
-    virtual ~lclEdit() { delete m_edit; }
+    virtual ~lclEdit() { delete m_edit; delete m_label; delete m_layout; }
 
     WITH_META(lclEdit)
 
     QLineEdit* edit() const { return m_edit; }
+    QLabel* label() const { return m_label; }
+
+    virtual QHBoxLayout* hlayout() const { return m_layout; }
 
     void textEdited(const QString &text);
 
 private:
     QLineEdit* m_edit;
+    QLabel* m_label;
+    QHBoxLayout* m_layout;
 };
 
 class lclListBox : public lclGui {
@@ -1252,7 +1296,8 @@ public:
     QSlider* slider() const { return m_slider; }
     virtual QHBoxLayout* hlayout() const { return m_hlayout; }
 
-    void valueChanged();
+    void valueChanged(int value);
+    void sliderReleased();
 
 private:
     QSlider* m_slider;
@@ -1461,6 +1506,8 @@ namespace lcl {
 
     lclValuePtr dclgui(const tile_t& tile);
     lclValuePtr dialog(const tile_t& tile);
+    lclValuePtr tabwidget(const tile_t& tile);
+    lclValuePtr widget(const tile_t& tile);
     lclValuePtr boxedcolumn(const tile_t& tile);
     lclValuePtr boxedrow(const tile_t& tile);
     lclValuePtr button(const tile_t& tile);

@@ -854,8 +854,6 @@ BUILTIN("command")
 
     for (auto it = argsBegin; it != argsEnd; ++it)
     {
-
-
         switch(it->ptr()->type())
         {
             case LCLTYPE::STR:
@@ -917,7 +915,6 @@ BUILTIN("command")
             }
                 break;
         }
-
         std::cout << "parameter: " << it->ptr()->print(true) << " type: " << (int)it->ptr()->type() << std::endl;
     }
 

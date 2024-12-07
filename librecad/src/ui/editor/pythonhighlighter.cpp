@@ -232,7 +232,7 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
     highlightingRules.append(rule);
 
 // rule [16]
-    rule.expression = QRegExp(QStringLiteral("[$](x|y|value|key)"));
+    rule.expression = QRegExp(QStringLiteral("[$](x|y|value|key|reason)"));
     rule.format = placeholderFormat;
     highlightingRules.append(rule);
 

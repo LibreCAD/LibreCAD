@@ -246,7 +246,7 @@ LispHighlighter::LispHighlighter(QTextDocument *parent)
 
 //! [6]
     placeholderFormat.setForeground(QColor(61,174,237));
-    rule.pattern = QRegularExpression(QStringLiteral("[$](x|y|value|key)"));
+    rule.pattern = QRegularExpression(QStringLiteral("[$](x|y|value|key|reason)"));
     rule.format = placeholderFormat;
     highlightingRules.append(rule);
 

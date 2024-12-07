@@ -422,7 +422,7 @@ lclValuePtr EVAL(lclValuePtr ast, lclEnvPtr env)
                             value |= 2;
                         }
                     }
-                    return (value & (1 | 2)) ? lcl::trueValue() : lcl::falseValue();
+                    return (value & 1) ? lcl::trueValue() : lcl::falseValue();
                 }
 
                 if (special == "quasiquote") {
@@ -696,7 +696,7 @@ void openTile(const lclGui* tile)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        dlg->vlayout()->addWidget(edit->edit());
+                        dlg->vlayout()->addLayout(edit->hlayout());
                         break;
                     }
                 }
@@ -710,11 +710,11 @@ void openTile(const lclGui* tile)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            dclTiles.at(i)->hlayout()->addWidget(edit->edit());
+                            dclTiles.at(i)->hlayout()->addLayout(edit->hlayout());
                         }
                         else
                         {
-                            dclTiles.at(i)->vlayout()->addWidget(edit->edit());
+                            dclTiles.at(i)->vlayout()->addLayout(edit->hlayout());
                         }
                         break;
                     }
@@ -798,16 +798,13 @@ void openTile(const lclGui* tile)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            if (dclTiles.at(i)->value().id & LAYOUT_ROW)
-                            {
-                                dclTiles.at(i)->hlayout()->addLayout(r->hlayout());
-                            }
-                            else
-                            {
-                                dclTiles.at(i)->vlayout()->addLayout(r->hlayout());
-                            }
-                            break;
+                            dclTiles.at(i)->hlayout()->addLayout(r->hlayout());
                         }
+                        else
+                        {
+                            dclTiles.at(i)->vlayout()->addLayout(r->hlayout());
+                        }
+                        break;
                     }
                 }
             }
@@ -841,16 +838,13 @@ void openTile(const lclGui* tile)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            if (dclTiles.at(i)->value().id & LAYOUT_ROW)
-                            {
-                                dclTiles.at(i)->hlayout()->addWidget(br->groupbox());
-                            }
-                            else
-                            {
-                                dclTiles.at(i)->vlayout()->addWidget(br->groupbox());
-                            }
-                            break;
+                            dclTiles.at(i)->hlayout()->addWidget(br->groupbox());
                         }
+                        else
+                        {
+                            dclTiles.at(i)->vlayout()->addWidget(br->groupbox());
+                        }
+                        break;
                     }
                 }
             }
@@ -885,16 +879,13 @@ void openTile(const lclGui* tile)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            if (dclTiles.at(i)->value().id & LAYOUT_ROW)
-                            {
-                                dclTiles.at(i)->hlayout()->addLayout(c->vlayout());
-                            }
-                            else
-                            {
-                                dclTiles.at(i)->vlayout()->addLayout(c->vlayout());
-                            }
-                            break;
+                            dclTiles.at(i)->hlayout()->addLayout(c->vlayout());
                         }
+                        else
+                        {
+                            dclTiles.at(i)->vlayout()->addLayout(c->vlayout());
+                        }
+                        break;
                     }
                 }
             }
@@ -929,16 +920,13 @@ void openTile(const lclGui* tile)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            if (dclTiles.at(i)->value().id & LAYOUT_ROW)
-                            {
-                                dclTiles.at(i)->hlayout()->addWidget(bc->groupbox());
-                            }
-                            else
-                            {
-                                dclTiles.at(i)->vlayout()->addWidget(bc->groupbox());
-                            }
-                            break;
+                            dclTiles.at(i)->hlayout()->addWidget(bc->groupbox());
                         }
+                        else
+                        {
+                            dclTiles.at(i)->vlayout()->addWidget(bc->groupbox());
+                        }
+                        break;
                     }
                 }
             }
@@ -1198,6 +1186,78 @@ void openTile(const lclGui* tile)
             }
         }
             break;
+        case REGISTER:
+        {
+            if (!dclTiles.size())
+            {
+                break;
+            }
+            const lclTabWidget* r = static_cast<const lclTabWidget*>(tile);
+            dclTiles.push_back(tile);
+            //dclEnv->set(std::to_string(tile->value().dialog_Id) + "_" + noQuotes(tile->value().key).c_str(), lcl::nilValue());
+
+            if (!r->value().has_parent) {
+                for (auto & dlg : dclTiles)
+                {
+                    if (dlg->value().dialog_Id == dlgId)
+                    {
+                        qDebug() << "openTile() == DIALOG" << dlg->value().name.c_str();
+                        dlg->vlayout()->addWidget(r->widget());
+                        //const lclDialog* dialog = static_cast<const lclDialog*>(dlg);
+                        //dialog->dialog()->layout()->addWidget(r->widget());
+                        break;
+                    }
+                }
+                break;
+            }
+            else
+            {
+                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                {
+                    if(LAYOUT_TILE & dclTiles.at(i)->value().id)
+                    {
+                        if (LAYOUT_ROW & dclTiles.at(i)->value().id)
+                        {
+                            dclTiles.at(i)->hlayout()->addWidget(r->widget());
+                        }
+                        else
+                        {
+                            dclTiles.at(i)->vlayout()->addWidget(r->widget());
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+            break;
+        case TAB:
+        {
+            if (!dclTiles.size())
+            {
+                break;
+            }
+            const lclWidget* tab = static_cast<const lclWidget*>(tile);
+            dclTiles.push_back(tile);
+            //dclEnv->set(std::to_string(tile->value().dialog_Id) + "_" + noQuotes(tile->value().key).c_str(), lcl::nilValue());
+
+            for (int i = dclTiles.size()-2; i >= 0 ; i--)
+            {
+                if(REGISTER == dclTiles.at(i)->value().id)
+                {
+                    const lclTabWidget* tabWidget = static_cast<const lclTabWidget*>(dclTiles.at(i));
+                    if (tabWidget && tab)
+                    {
+                        //tabWidget->widget()
+                        tabWidget->widget()->addTab(tab->widget(), tile->value().label.c_str()); // FIXME crashes second time ??
+                    }
+                    else
+                    {
+                        qDebug() << "FUCK :-XXXXXXX";
+                    }
+                }
+            }
+        }
+            break;
         case SLIDER:
         {
             if (!dclTiles.size())
@@ -1362,16 +1422,13 @@ void openTile(const lclGui* tile)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            if (dclTiles.at(i)->value().id & LAYOUT_ROW)
-                            {
-                                dclTiles.at(i)->hlayout()->addLayout(okc->hlayout());
-                            }
-                            else
-                            {
-                                dclTiles.at(i)->vlayout()->addLayout(okc->hlayout());
-                            }
-                            break;
+                            dclTiles.at(i)->hlayout()->addLayout(okc->hlayout());
                         }
+                        else
+                        {
+                            dclTiles.at(i)->vlayout()->addLayout(okc->hlayout());
+                        }
+                        break;
                     }
                 }
             }
@@ -1408,16 +1465,13 @@ void openTile(const lclGui* tile)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            if (dclTiles.at(i)->value().id & LAYOUT_ROW)
-                            {
-                                dclTiles.at(i)->hlayout()->addLayout(okch->hlayout());
-                            }
-                            else
-                            {
-                                dclTiles.at(i)->vlayout()->addLayout(okch->hlayout());
-                            }
-                            break;
+                             dclTiles.at(i)->hlayout()->addLayout(okch->hlayout());
                         }
+                        else
+                        {
+                            dclTiles.at(i)->vlayout()->addLayout(okch->hlayout());
+                        }
+                        break;
                     }
                 }
             }
@@ -1455,16 +1509,13 @@ void openTile(const lclGui* tile)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            if (dclTiles.at(i)->value().id & LAYOUT_ROW)
-                            {
-                                dclTiles.at(i)->hlayout()->addLayout(okchi->hlayout());
-                            }
-                            else
-                            {
-                                dclTiles.at(i)->vlayout()->addLayout(okchi->hlayout());
-                            }
-                            break;
+                            dclTiles.at(i)->hlayout()->addLayout(okchi->hlayout());
                         }
+                        else
+                        {
+                            dclTiles.at(i)->vlayout()->addLayout(okchi->hlayout());
+                        }
+                        break;
                     }
                 }
             }
@@ -1501,16 +1552,13 @@ void openTile(const lclGui* tile)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            if (dclTiles.at(i)->value().id & LAYOUT_ROW)
-                            {
-                                dclTiles.at(i)->hlayout()->addLayout(okche->vlayout());
-                            }
-                            else
-                            {
-                                dclTiles.at(i)->vlayout()->addLayout(okche->vlayout());
-                            }
-                            break;
+                            dclTiles.at(i)->hlayout()->addLayout(okche->vlayout());
                         }
+                        else
+                        {
+                            dclTiles.at(i)->vlayout()->addLayout(okche->vlayout());
+                        }
+                        break;
                     }
                 }
             }

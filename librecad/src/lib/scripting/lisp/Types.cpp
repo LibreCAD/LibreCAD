@@ -11,11 +11,16 @@
 #include <algorithm>
 #include <memory>
 #include <typeinfo>
+#include <regex>
 
 #include <QObject>
 #include <QApplication>
 
+typedef std::regex              Regex;
+static const Regex intRegex("^[-+]?\\d+$");
+
 static inline void replaceValue(std::string &com, const std::string& value);
+static inline void replaceReason(std::string &com, const std::string& reason);
 static inline void replaceKey(std::string &com, const std::string& key);
 static inline void replaceX(std::string &com, int x);
 static inline void replaceY(std::string &com, int y);
@@ -246,6 +251,14 @@ namespace lcl {
 
     lclValuePtr dialog(const tile_t& tile) {
         return lclValuePtr(new lclDialog(tile));
+    }
+
+    lclValuePtr widget(const tile_t& tile) {
+        return lclValuePtr(new lclWidget(tile));
+    }
+
+    lclValuePtr tabwidget(const tile_t& tile) {
+        return lclValuePtr(new lclTabWidget(tile));
     }
 
     lclValuePtr boxedcolumn(const tile_t& tile) {
@@ -869,6 +882,20 @@ void lclDialog::addShortcut(const QString & key, QWidget *w)
 #endif
 }
 
+lclWidget::lclWidget(const tile_t& tile)
+    : lclGui(tile)
+    , m_widget(new QWidget)
+    , m_layout(new QVBoxLayout(m_widget))
+{
+    m_widget->setLayout(m_layout);
+}
+
+lclTabWidget::lclTabWidget(const tile_t& tile)
+    : lclGui(tile)
+    , m_widget(new QTabWidget)
+{
+}
+
 lclButton::lclButton(const tile_t& tile)
     : lclGui(tile)
     , m_button(new QPushButton)
@@ -1408,8 +1435,10 @@ lclPopupList::lclPopupList(const tile_t& tile)
 lclEdit::lclEdit(const tile_t& tile)
     : lclGui(tile)
     , m_edit(new QLineEdit)
+    , m_label(new QLabel)
+    , m_layout(new QHBoxLayout)
 {
-    m_edit->setText(noQuotes(tile.label).c_str());
+    m_edit->setText(noQuotes(tile.value).c_str());
     if(int(tile.width))
     {
         m_edit->setMinimumWidth(int(tile.width));
@@ -1479,6 +1508,13 @@ lclEdit::lclEdit(const tile_t& tile)
     {
         //m_edit->setT
     }
+
+    if(noQuotes(tile.label) != "")
+    {
+        m_label->setText(noQuotes(tile.label).c_str());
+        m_layout->addWidget(m_label);
+    }
+    m_layout->addWidget(m_edit);
 
     QObject::connect(m_edit, QOverload<const QString&>::of(&QLineEdit::textEdited), [&](const QString& text) { textEdited(text); });
 }
@@ -1574,11 +1610,6 @@ lclListBox::lclListBox(const tile_t& tile)
     break;
     }
 
-    if(!tile.is_enabled)
-    {
-        m_list->setEnabled(false);
-    }
-
     QObject::connect(m_list, QOverload<const QString&>::of(&QListWidget::currentTextChanged), [&](const QString& currentText) { currentTextChanged(currentText); });
 }
 
@@ -1610,6 +1641,43 @@ lclSlider::lclSlider(const tile_t& tile)
     , m_vlayout(new QVBoxLayout)
     , m_hlayout(new QHBoxLayout)
 {
+    if(int(tile.min_value))
+    {
+        m_slider->setMinimum(int(tile.min_value));
+    }
+    else
+    {
+        m_slider->setMinimum(0);
+    }
+    if(int(tile.max_value))
+    {
+        m_slider->setMaximum(int(tile.max_value));
+    }
+    else
+    {
+        m_slider->setMaximum(0);
+    }
+
+    // FIX ME
+    if(int(tile.small_increment))
+    {
+        m_slider->setTickInterval(int(tile.small_increment));
+    }
+    // FIX ME
+    if(int(tile.big_increment))
+    {
+        m_slider->setTickInterval(int(tile.big_increment));
+    }
+
+    if (int(tile.height) > int(tile.width))
+    {
+        m_slider->setOrientation(Qt::Vertical);
+    }
+    else
+    {
+        m_slider->setOrientation(Qt::Horizontal);
+    }
+
     if(int(tile.width))
     {
         m_slider->setMinimumWidth(int(tile.width * 10));
@@ -1629,7 +1697,6 @@ lclSlider::lclSlider(const tile_t& tile)
         {
             m_slider->setFixedWidth(80);
         }
-
     }
 
     if (tile.fixed_height)
@@ -1674,10 +1741,17 @@ lclSlider::lclSlider(const tile_t& tile)
         m_slider->setEnabled(false);
     }
 
-    QObject::connect(m_slider, &QSlider::valueChanged, [&] { valueChanged(); });
+    if (std::regex_match(noQuotes(tile.value).c_str(), intRegex))
+    {
+        int value = atoi(noQuotes(tile.value).c_str());
+        m_slider->setValue(value);
+    }
+
+    QObject::connect(m_slider, &QSlider::valueChanged, [&] (int value) { valueChanged(value); });
+    QObject::connect(m_slider, &QSlider::sliderReleased, [&] { sliderReleased(); });
 }
 
-void lclSlider::valueChanged()
+void lclSlider::valueChanged(int value)
 {
     qDebug() << "lclSlider::valueChanged key:" << noQuotes(this->value().key).c_str();
 
@@ -1693,10 +1767,44 @@ void lclSlider::valueChanged()
         String action = "(do";
         action += str->value();
         action += ")";
-        replaceValue(action, std::to_string(m_slider->tickInterval()).c_str());
+        replaceValue(action, std::to_string(value).c_str());
+
+        if(m_slider->tickInterval())
+        {
+            replaceReason(action, "1");
+        }
+        else
+        {
+            replaceReason(action, "3");
+        }
+        qDebug() << "lclSlider::valueChanged action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
 }
+
+void lclSlider::sliderReleased()
+{
+    qDebug() << "lclSlider::valueChanged key:" << noQuotes(this->value().key).c_str();
+
+    if (noQuotes(this->value().key) == "")
+    {
+        return;
+    }
+
+    lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_" + noQuotes(this->value().key).c_str());
+    qDebug() << "lclSlider::valueChanged val:" << val->print(true).c_str();
+    if (val->print(true).compare("nil") != 0) {
+        const lclString *str = VALUE_CAST(lclString, val);
+        String action = "(do";
+        action += str->value();
+        action += ")";
+        replaceValue(action, std::to_string(m_slider->value()).c_str());
+        replaceReason(action, "2");
+        qDebug() << "lclSlider::valueChanged action:" << action.c_str();
+        LispRun_SimpleString(action.c_str());
+    }
+}
+
 
 lclSpacer::lclSpacer(const tile_t& tile)
     : lclGui(tile)
@@ -1937,10 +2045,9 @@ lclOkCancel::lclOkCancel(const tile_t& tile)
     m_btnCancel->setText(QObject::tr("&Cancel"));
     m_btnOk->setDefault(true);
 
-    //m_btnOk->setMinimumWidth(80);
-    m_btnCancel->setMinimumWidth(80);
-    m_btnOk->setMaximumWidth(80);
-    m_btnCancel->setMaximumWidth(80);
+    m_btnCancel->setFixedWidth(80);
+    m_btnOk->setFixedWidth(80);
+    m_btnCancel->setFixedWidth(80);
 
     m_layout->addWidget(m_btnOk);
     m_layout->addWidget(m_btnCancel);
@@ -1993,9 +2100,9 @@ lclOkCancelHelp::lclOkCancelHelp(const tile_t& tile)
     m_btnHelp->setText(QObject::tr("&Help"));
     m_btnOk->setDefault(tile.is_default);
 
-    m_btnOk->setMinimumWidth(80);
-    m_btnCancel->setMinimumWidth(80);
-    m_btnHelp->setMinimumWidth(80);
+    m_btnOk->setFixedWidth(80);
+    m_btnCancel->setFixedWidth(80);
+    m_btnHelp->setFixedWidth(80);
 
     m_layout->addWidget(m_btnOk);
     m_layout->addWidget(m_btnCancel);
@@ -2068,10 +2175,10 @@ lclOkCancelHelpInfo::lclOkCancelHelpInfo(const tile_t& tile)
     m_btnInfo->setText(QObject::tr("&Info"));
     m_btnOk->setDefault(tile.is_default);
 
-    m_btnOk->setMinimumWidth(80);
-    m_btnCancel->setMinimumWidth(80);
-    m_btnHelp->setMinimumWidth(80);
-    m_btnInfo->setMinimumWidth(80);
+    m_btnOk->setFixedWidth(80);
+    m_btnCancel->setFixedWidth(80);
+    m_btnHelp->setFixedWidth(80);
+    m_btnInfo->setFixedWidth(80);
 
     m_layout->addWidget(m_btnOk);
     m_layout->addWidget(m_btnCancel);
@@ -2162,9 +2269,9 @@ lclOkCancelHelpErrtile::lclOkCancelHelpErrtile(const tile_t& tile)
     m_btnHelp->setText(QObject::tr("&Help"));
     m_btnOk->setDefault(tile.is_default);
 
-    m_btnOk->setMinimumWidth(80);
-    m_btnCancel->setMinimumWidth(80);
-    m_btnHelp->setMinimumWidth(80);
+    m_btnOk->setFixedWidth(80);
+    m_btnCancel->setFixedWidth(80);
+    m_btnHelp->setFixedWidth(80);
 
     m_hlayout->addWidget(m_btnOk);
     m_hlayout->addWidget(m_btnCancel);
@@ -2276,12 +2383,19 @@ static inline void replaceValue(std::string &com, const std::string& value)
     while(com.find("$value") != std::string::npos) {
         if (pyCom != std::string::npos)
         {
-            com.replace(com.find("$value"),6, "\'" + value + "\'");
+            com.replace(com.find("$value"), 6, "\'" + value + "\'");
         }
         else
         {
-            com.replace(com.find("$value"),6, "\"" + value + "\"");
+            com.replace(com.find("$value"), 6, "\"" + value + "\"");
         }
+    }
+}
+
+static inline void replaceReason(std::string &com, const std::string& reason)
+{
+    while(com.find("$reason") != std::string::npos) {
+        com.replace(com.find("$reason"), 7, reason);
     }
 }
 
@@ -2292,11 +2406,11 @@ static inline void replaceKey(std::string &com, const std::string& key)
     while(com.find("$key") != std::string::npos) {
         if (pyCom != std::string::npos)
         {
-            com.replace(com.find("$key"),4, "\'" + key + "\'");
+            com.replace(com.find("$key"), 4, "\'" + key + "\'");
         }
         else
         {
-            com.replace(com.find("$key"),4, "\"" + key + "\"");
+            com.replace(com.find("$key"), 4, "\"" + key + "\"");
         }
     }
 }
