@@ -44,6 +44,9 @@ public:
      * Note that this is voluntarily. The default implementation 
      * returns RS2::UndoableUnknown.
      */
+
+
+
 	virtual RS2::UndoableType undoRtti() const {
         return RS2::UndoableUnknown;
     }

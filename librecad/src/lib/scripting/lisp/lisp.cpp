@@ -1383,7 +1383,7 @@ void openTile(const lclGui* tile)
             {
                 break;
             }
-            const lclOkCancel* okch = static_cast<const lclOkCancel*>(tile);
+            const lclOkCancelHelp* okch = static_cast<const lclOkCancelHelp*>(tile);
             dclTiles.push_back(tile);
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_accept", lcl::nilValue());
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_cancel", lcl::nilValue());
@@ -1429,18 +1429,18 @@ void openTile(const lclGui* tile)
             {
                 break;
             }
-            const lclOkCancel* okc = static_cast<const lclOkCancel*>(tile);
+            const lclOkCancelHelpInfo* okchi = static_cast<const lclOkCancelHelpInfo*>(tile);
             dclTiles.push_back(tile);
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_accept", lcl::nilValue());
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_cancel", lcl::nilValue());
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_help", lcl::nilValue());
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_info", lcl::nilValue());
-            if (!okc->value().has_parent) {
+            if (!okchi->value().has_parent) {
                 for (auto & dlg : dclTiles)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        dlg->vlayout()->addLayout(okc->hlayout());
+                        dlg->vlayout()->addLayout(okchi->hlayout());
                         break;
                     }
                 }
@@ -1457,11 +1457,57 @@ void openTile(const lclGui* tile)
                         {
                             if (dclTiles.at(i)->value().id & LAYOUT_ROW)
                             {
-                                dclTiles.at(i)->hlayout()->addLayout(okc->hlayout());
+                                dclTiles.at(i)->hlayout()->addLayout(okchi->hlayout());
                             }
                             else
                             {
-                                dclTiles.at(i)->vlayout()->addLayout(okc->hlayout());
+                                dclTiles.at(i)->vlayout()->addLayout(okchi->hlayout());
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+            break;
+        case OK_CANCEL_HELP_ERRTILE:
+        {
+            if (!dclTiles.size())
+            {
+                break;
+            }
+            const lclOkCancelHelpErrtile* okche = static_cast<const lclOkCancelHelpErrtile*>(tile);
+            dclTiles.push_back(tile);
+            dclEnv->set(std::to_string(tile->value().dialog_Id) + "_accept", lcl::nilValue());
+            dclEnv->set(std::to_string(tile->value().dialog_Id) + "_cancel", lcl::nilValue());
+            dclEnv->set(std::to_string(tile->value().dialog_Id) + "_help", lcl::nilValue());
+            if (!okche->value().has_parent) {
+                for (auto & dlg : dclTiles)
+                {
+                    if (dlg->value().dialog_Id == dlgId)
+                    {
+                        dlg->vlayout()->addLayout(okche->vlayout());
+                        break;
+                    }
+                }
+                break;
+            }
+            else
+            {
+                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                {
+                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
+                    if(LAYOUT_TILE & dclTiles.at(i)->value().id)
+                    {
+                        if (LAYOUT_ROW & dclTiles.at(i)->value().id)
+                        {
+                            if (dclTiles.at(i)->value().id & LAYOUT_ROW)
+                            {
+                                dclTiles.at(i)->hlayout()->addLayout(okche->vlayout());
+                            }
+                            else
+                            {
+                                dclTiles.at(i)->vlayout()->addLayout(okche->vlayout());
                             }
                             break;
                         }

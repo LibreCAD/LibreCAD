@@ -331,6 +331,10 @@ public:
 
     void updateActionsAndWidgetsForPrintPreview(bool printPreviewOn);
 
+#ifdef DEVELOPER
+    QG_ActionHandler* getActionHandler() { return actionHandler; }
+#endif
+
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open

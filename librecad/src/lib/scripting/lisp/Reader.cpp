@@ -854,10 +854,10 @@ static lclValuePtr addTile(tile_t tile)
     case OK_CANCEL_HELP:
         tile.dialog_Id = dclId;
         return lcl::okcancelhelp(tile);
-#if 0
+
     case OK_CANCEL_HELP_ERRTILE:
-        return lcl::ok_cancel_help_errtile(tile);
-#endif
+        return lcl::okcancelhelperrtile(tile);
+
     case OK_CANCEL_HELP_INFO:
         tile.dialog_Id = dclId;
         return lcl::okcancelhelpinfo(tile);

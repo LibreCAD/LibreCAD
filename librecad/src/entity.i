@@ -1,4 +1,4 @@
-%module librecad;
+%module(directors="1") librecad;
 
 %rename(__aref__)             *::operator[];
 %rename(__lshift__)           *::operator<<;
@@ -15,12 +15,12 @@
 #include "rs_pythongui.h"
 #include "rs_pythondcl.h"
 
-#include "rs_undo.h"
+#include "rs.h"
 #include "rs_flags.h"
-#include "rs_units.h"
 #include "rs_undoable.h"
 #include "rs_undocycle.h"
-#include "lc_undosection.h"
+#include "rs_undo.h"
+#include "rs_units.h"
 #include "rs_vector.h"
 #include "lc_defaults.h"
 #include "lc_convert.h"
@@ -59,8 +59,8 @@
 #include "rs_point.h"
 #include "dxf_format.h"
 #include "rs_document.h"
+#include "lc_undosection.h"
 #include "rs_graphic.h"
-#include "rs.h"
 #include "rs_color.h"
 #include "rs_pen.h"
 #include "lc_looputils.h"
@@ -101,6 +101,12 @@
 //#include "rs_utility.h"                  // problem child X-(
 
 %}
+%feature("director") RS_Undoable;
+%feature("director") RS_Entity;
+%feature("director") RS_AtomicEntity;
+%feature("director") LC_CachedLengthEntity;
+%feature("director") RS_Line;
+
 %include "std_array.i"
 
 %include "lib/scripting/rs_pythondcl.h"
@@ -110,12 +116,12 @@
 %ignore operator<<;
 %ignore RS_Undo::test();
 %ignore LoopSorter;
-%include "lib/engine/undo/rs_undo.h"
+%include "lib/engine/rs.h"
 %include "lib/engine/rs_flags.h"
-%include "lib/engine/rs_units.h"
 %include "lib/engine/undo/rs_undoable.h"
 %include "lib/engine/undo/rs_undocycle.h"
-%include "lib/engine/undo/lc_undosection.h"
+%include "lib/engine/undo/rs_undo.h"
+%include "lib/engine/rs_units.h"
 %include "lib/math/lc_convert.h"
 %include "lib/math/lc_linemath.h"
 %include "lib/math/lc_quadratic.h"
@@ -128,6 +134,7 @@
 %include "lib/engine/document/container/rs_entitycontainer.h"
 %include "lib/engine/document/dxf_format.h"
 %include "lib/engine/document/rs_document.h"
+%include "lib/engine/undo/lc_undosection.h"
 %include "lib/engine/document/rs_graphic.h"
 %include "lib/engine/document/entities/lc_cachedlengthentity.h"
 %include "lib/engine/document/entities/rs_ellipse.h"
@@ -177,7 +184,6 @@
 %include "lib/engine/clipboard/rs_clipboard.h"
 %include "lib/modification/rs_modification.h"
 %include "lib/modification/rs_selection.h"
-%include "lib/engine/rs.h"
 %include "lib/engine/rs_color.h"
 %include "lib/engine/rs_pen.h"
 //%include "lib/engine/settings/rs_settings.h"                               // Qt problem child X-(

@@ -292,6 +292,10 @@ namespace lcl {
         return lclValuePtr(new lclOkCancelHelpInfo(tile));
     }
 
+    lclValuePtr okcancelhelperrtile(const tile_t& tile) {
+        return lclValuePtr(new lclOkCancelHelpErrtile(tile));
+    }
+
     lclValuePtr popuplist(const tile_t& tile) {
         return lclValuePtr(new lclPopupList(tile));
     }
@@ -1933,8 +1937,10 @@ lclOkCancel::lclOkCancel(const tile_t& tile)
     m_btnCancel->setText(QObject::tr("&Cancel"));
     m_btnOk->setDefault(true);
 
-    m_btnOk->setMinimumWidth(80);
+    //m_btnOk->setMinimumWidth(80);
     m_btnCancel->setMinimumWidth(80);
+    m_btnOk->setMaximumWidth(80);
+    m_btnCancel->setMaximumWidth(80);
 
     m_layout->addWidget(m_btnOk);
     m_layout->addWidget(m_btnCancel);
@@ -2141,6 +2147,85 @@ void lclOkCancelHelpInfo::infoClicked(bool checked)
         LispRun_SimpleString(action.c_str());
     }
 }
+
+lclOkCancelHelpErrtile::lclOkCancelHelpErrtile(const tile_t& tile)
+    : lclGui(tile)
+    , m_btnOk(new QPushButton)
+    , m_btnCancel(new QPushButton)
+    , m_btnHelp(new QPushButton)
+    , m_errTile(new QLabel)
+    , m_hlayout(new QHBoxLayout)
+    , m_layout(new QVBoxLayout)
+{
+    m_btnOk->setText(QObject::tr("&OK"));
+    m_btnCancel->setText(QObject::tr("&Cancel"));
+    m_btnHelp->setText(QObject::tr("&Help"));
+    m_btnOk->setDefault(tile.is_default);
+
+    m_btnOk->setMinimumWidth(80);
+    m_btnCancel->setMinimumWidth(80);
+    m_btnHelp->setMinimumWidth(80);
+
+    m_hlayout->addWidget(m_btnOk);
+    m_hlayout->addWidget(m_btnCancel);
+    m_hlayout->addWidget(m_btnHelp);
+
+    m_layout->addLayout(m_hlayout);
+    m_layout->addWidget(m_errTile);
+
+    QObject::connect(m_btnOk, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { okClicked(checked); });
+    QObject::connect(m_btnCancel, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { cancelClicked(checked); });
+    QObject::connect(m_btnHelp, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { helpClicked(checked); });
+}
+
+void lclOkCancelHelpErrtile::okClicked(bool checked)
+{
+    Q_UNUSED(checked)
+    lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_accept");
+    qDebug() << "lclOkCancelHelpErrtile::okClicked val:" << val->print(true).c_str();
+    if (val->print(true).compare("nil") != 0)
+    {
+        const lclString *str = VALUE_CAST(lclString, val);
+        String action = "(do";
+        action += str->value();
+        action += ")";
+        qDebug() << "lclOkCancel::okClicked action:" << action.c_str();
+        LispRun_SimpleString(action.c_str());
+    }
+}
+
+void lclOkCancelHelpErrtile::cancelClicked(bool checked)
+{
+    Q_UNUSED(checked)
+    lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_cancel");
+    qDebug() << "lclOkCancelHelpErrtile::cancelClicked val:" << val->print(true).c_str();
+    if (val->print(true).compare("nil") != 0)
+    {
+        const lclString *str = VALUE_CAST(lclString, val);
+        String action = "(do";
+        action += str->value();
+        action += ")";
+        qDebug() << "lclOkCancel::cancelClicked action:" << action.c_str();
+        LispRun_SimpleString(action.c_str());
+    }
+}
+
+void lclOkCancelHelpErrtile::helpClicked(bool checked)
+{
+    Q_UNUSED(checked)
+    lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_help");
+    qDebug() << "lclOkCancelHelpErrtile::helpClicked val:" << val->print(true).c_str();
+    if (val->print(true).compare("nil") != 0)
+    {
+        const lclString *str = VALUE_CAST(lclString, val);
+        String action = "(do";
+        action += str->value();
+        action += ")";
+        qDebug() << "lclOkCancel::helpClicked action:" << action.c_str();
+        LispRun_SimpleString(action.c_str());
+    }
+}
+
 
 QDclLabel::QDclLabel(QWidget *parent)
     : QLabel(parent)

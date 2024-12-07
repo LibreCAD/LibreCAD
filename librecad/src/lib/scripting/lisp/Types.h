@@ -1380,6 +1380,37 @@ private:
     QHBoxLayout* m_layout;
 };
 
+class lclOkCancelHelpErrtile : public lclGui {
+
+public:
+    lclOkCancelHelpErrtile(const tile_t& tile);
+    lclOkCancelHelpErrtile(const lclOkCancelHelpErrtile& that, lclValuePtr meta)
+        : lclGui(that, meta) { }
+
+    virtual ~lclOkCancelHelpErrtile() { delete m_btnCancel; delete m_btnOk; delete m_btnHelp; delete m_errTile; delete m_layout; delete m_hlayout;}
+
+    WITH_META(lclOkCancelHelpErrtile)
+
+    QPushButton* binOK() const { return m_btnOk; }
+    QPushButton* btnCancel() const { return m_btnCancel; }
+    QPushButton* btnHelp() const { return m_btnHelp; }
+    QLabel* errtile() const { return m_errTile; }
+    virtual QVBoxLayout* vlayout() const { return m_layout; }
+
+    void okClicked(bool checked);
+    void cancelClicked(bool checked);
+    void helpClicked(bool checked);
+
+private:
+    QPushButton* m_btnOk;
+    QPushButton* m_btnCancel;
+    QPushButton* m_btnHelp;
+    QLabel* m_errTile;
+    QHBoxLayout* m_hlayout;
+    QVBoxLayout* m_layout;
+};
+
+
 extern std::vector<const lclGui*> dclTiles;
 extern void openTile(const lclGui* tile);
 
@@ -1444,6 +1475,7 @@ namespace lcl {
     lclValuePtr okcancel(const tile_t& tile);
     lclValuePtr okcancelhelp(const tile_t& tile);
     lclValuePtr okcancelhelpinfo(const tile_t& tile);
+    lclValuePtr okcancelhelperrtile(const tile_t& tile);
 
     lclValuePtr image(const tile_t& tile);
     lclValuePtr slider(const tile_t& tile);

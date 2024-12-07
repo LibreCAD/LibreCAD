@@ -14,6 +14,7 @@ public:
     ~RS_PythonGui();
 
     void prompt(const char *prompt);
+    void command(const char *cmd);
     void MessageBox(const char *msg);
 
     int GetIntDialog(const char *prompt);

@@ -6,6 +6,8 @@
 #include "lisp.h"
 #include "rs_dialogs.h"
 #include "rs_lsp_inputhandle.h"
+#include "qc_applicationwindow.h"
+#include "qg_actionhandler.h"
 
 #ifdef DEVELOPER
 
@@ -845,9 +847,78 @@ BUILTIN("close")
 BUILTIN("command")
 {
     CHECK_ARGS_AT_LEAST(1);
-    for (auto it = argsBegin; it != argsEnd; ++it) {
-        const lclValuePtr arg = *it;
-        std::cout << "parameter: " << it->ptr()->print(true) << "type: " << (int)it->ptr()->type() << std::endl;
+
+    QG_ActionHandler* actionHandler = nullptr;
+    actionHandler = QC_ApplicationWindow::getAppWindow()->getActionHandler();
+    QString cmd = "";
+
+    for (auto it = argsBegin; it != argsEnd; ++it)
+    {
+
+
+        switch(it->ptr()->type())
+        {
+            case LCLTYPE::STR:
+            {
+                const lclString* s = DYNAMIC_CAST(lclString,*it);
+                cmd = s->value().c_str();
+                cmd = cmd.simplified();
+
+                if (actionHandler) {
+                    actionHandler->command(cmd);
+                    qDebug() << "command:" << cmd;
+                    cmd = "";
+                }
+            }
+                break;
+            case LCLTYPE::LIST:
+            {
+                const lclList* l = DYNAMIC_CAST(lclList, *it);
+
+                for (int i = 0; i < l->count(); i++)
+                {
+                    cmd += l->item(i)->print(true).c_str();
+                    if (i < l->count()-1)
+                    {
+                        cmd += ",";
+                    }
+                }
+
+                cmd = cmd.simplified();
+
+                if (actionHandler) {
+                    actionHandler->command(cmd);
+                    qDebug() << "command:" << cmd;
+                    cmd = "";
+                }
+            }
+                break;
+
+            case LCLTYPE::INT:
+            case LCLTYPE::REAL:
+            {
+                cmd += it->ptr()->print(true).c_str();
+                cmd = cmd.simplified();
+
+                if (actionHandler) {
+                    actionHandler->command(cmd);
+                    qDebug() << "command:" << cmd;
+                    cmd = "";
+                }
+            }
+                break;
+            default:
+            {
+                if (actionHandler) {
+                    actionHandler->command("");
+                    qDebug() << "command: ''";
+                    cmd = "";
+                }
+            }
+                break;
+        }
+
+        std::cout << "parameter: " << it->ptr()->print(true) << " type: " << (int)it->ptr()->type() << std::endl;
     }
 
     return lcl::nilValue();
