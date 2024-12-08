@@ -1166,8 +1166,8 @@ lclBoxedColumn::lclBoxedColumn(const tile_t& tile)
     , m_groupbox(new QGroupBox)
 {
     m_groupbox->setTitle(noQuotes(tile.label).c_str());
-    m_groupbox->setStyleSheet("QGroupBox { border: 1px solid silver; border-radius: 5px;margin-top: 5px; }"
-                                " QGroupBox::title { subcontrol-origin: margin;left: 5px;padding: -10px 2px 0px 2px;}" );
+    m_groupbox->setStyleSheet("QGroupBox { border: 1px solid silver; border-radius: 5px; margin-top: 5px; }"
+                             " QGroupBox::title { subcontrol-origin: margin; left: 6px; padding: -8px 2px 0px 2px;}" );
     //m_layout->addStretch(1);
     m_groupbox->setLayout(m_layout);
 #if 0
@@ -1212,8 +1212,8 @@ lclBoxedRow::lclBoxedRow(const tile_t& tile)
     , m_groupbox(new QGroupBox)
 {
     m_groupbox->setTitle(noQuotes(tile.label).c_str());
-    m_groupbox->setStyleSheet("QGroupBox { border: 1px solid silver; border-radius: 5px;margin-top: 5px; }"
-                              " QGroupBox::title { subcontrol-origin: margin;left: 5px;padding: -10px 2px 0px 2px;}" );
+    m_groupbox->setStyleSheet("QGroupBox { border: 1px solid silver; border-radius: 5px; margin-top: 5px; }"
+                              " QGroupBox::title { subcontrol-origin: margin; left: 6px; padding: -8px 2px 0px 2px;}" );
     //m_layout->addStretch(1);
     m_groupbox->setLayout(m_layout);
 #if 0
@@ -1472,6 +1472,18 @@ lclEdit::lclEdit(const tile_t& tile)
     , m_layout(new QHBoxLayout)
 {
     m_edit->setText(noQuotes(tile.value).c_str());
+    m_edit->setMaxLength(tile.edit_limit);
+
+    if(int(tile.edit_width))
+    {
+        m_edit->setFixedWidth(m_edit->fontMetrics().horizontalAdvance("X")
+            * (int(tile.edit_width) + 1)
+            + m_edit->contentsMargins().left()
+            + m_edit->contentsMargins().right()
+            + m_edit->textMargins().left()
+            + m_edit->textMargins().right());
+    }
+
     if(int(tile.width))
     {
         m_edit->setMinimumWidth(int(tile.width));

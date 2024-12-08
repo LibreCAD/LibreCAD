@@ -366,7 +366,7 @@ lclValuePtr EVAL(lclValuePtr ast, lclEnvPtr env)
 
                     for (auto it = items->begin(), end = items->end(); it != end; it++) {
                         const lclGui* dlg = DYNAMIC_CAST(lclGui, *it);
-                        qDebug() << "Dialog: " << dlg->value().name.c_str();
+                        qDebug() << "[EVAL] Dialog name: " << dlg->value().name.c_str();
                         if (dlg->value().name == dlgName->value()) {
                             openTile(dlg);
                             return lcl::trueValue();
@@ -383,29 +383,21 @@ lclValuePtr EVAL(lclValuePtr ast, lclEnvPtr env)
                     if(cond->print(true) == "nil" ||
                         cond->print(true) == "false" )
                     {
-                        //qDebug() << "not print nil";
                         return lcl::trueValue();
                     }
 
                     if (lcl::nilValue() == cond ||
                         lcl::falseValue() == cond)
                     {
-                        //qDebug() << "not is nil or false type";
                         return lcl::trueValue();
                     }
-#if 0
-                    else
-                    {
-                        qDebug() << "not is not nil or not false type";
-                    }
-#endif
+
                     cond = EVAL(cond, env);
 
                     if (cond->print(true) == "nil" ||
                         cond->print(true) == "false" ||
                         !cond->isTrue())
                     {
-                        //qDebug() << "not EVAL cond: " << cond->print(true);
                         return lcl::trueValue();
                     }
                     return lcl::falseValue();
@@ -571,7 +563,7 @@ lclValuePtr EVAL(lclValuePtr ast, lclEnvPtr env)
     }
     catch(int)
     {
-        qDebug() << "exit by user";
+        qDebug() << "[EVAL] exit by user";
         return lcl::nilValue();
     }
 }
@@ -661,8 +653,8 @@ static void installEvalCore(lclEnvPtr env) {
 
 void openTile(const lclGui* tile)
 {
-    qDebug() << "[openTile] Name: "<< tile->value().name.c_str();
-    //qDebug() << "openTile] Id: "<< (int)tile->value().id;
+    qDebug() << "[openTile] start Name: " << tile->value().name.c_str();
+    //qDebug() << "[openTile] start Id: " << (int)tile->value().id;
 
     int dlgId = tile->value().dialog_Id;
 
@@ -670,7 +662,7 @@ void openTile(const lclGui* tile)
         case DIALOG:
         {
             //const lclDialog* dlg = static_cast<const lclDialog*>(tile);
-            qDebug() << "openTile() init DIALOG";
+            qDebug() << "[openTile] DIALOG init";
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_dcl_result", lcl::integer(0));
             dclTiles.push_back(tile);
         }
@@ -915,7 +907,6 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -957,7 +948,6 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -974,7 +964,7 @@ void openTile(const lclGui* tile)
             }
             if(tile->value().id == ERRTILE)
             {
-                dclEnv->set(std::to_string(tile->value().dialog_Id) + "_errtile", lcl::nilValue());
+                dclEnv->set(std::to_string(tile->value().dialog_Id) + "_error", lcl::nilValue());
             }
         }
             break;
@@ -1041,7 +1031,6 @@ void openTile(const lclGui* tile)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        qDebug() << "openTile() == DIALOG" << dlg->value().name.c_str();
                         dlg->vlayout()->addWidget(b->button());
                         break;
                     }
@@ -1131,12 +1120,12 @@ void openTile(const lclGui* tile)
                         break;
                     }
                 }
-                break;
             }
             else
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
+
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -1206,7 +1195,6 @@ void openTile(const lclGui* tile)
 
             for (auto it = tiles->begin(), end = tiles->end(); it != end; it++) {
                 const lclGui* child = DYNAMIC_CAST(lclGui, *it);
-                qDebug() << "found: " << child->value().name.c_str();
                 if (child->value().id == TAB)
                 {
                     const lclWidget* tab = static_cast<const lclWidget*>(child);
@@ -1226,7 +1214,6 @@ void openTile(const lclGui* tile)
             {
                 if (dlg->value().dialog_Id == dlgId)
                 {
-                    qDebug() << "openTile() == DIALOG" << dlg->value().name.c_str();
                     dlg->vlayout()->addWidget(r->widget());
                     break;
                 }
@@ -1289,6 +1276,8 @@ void openTile(const lclGui* tile)
         }
             break;
         case SPACER:
+        case SPACER_0:
+        case SPACER_1:
         {
             if (!dclTiles.size())
             {
@@ -1400,7 +1389,6 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -1443,7 +1431,6 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -1487,7 +1474,6 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -1515,7 +1501,8 @@ void openTile(const lclGui* tile)
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_accept", lcl::nilValue());
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_cancel", lcl::nilValue());
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_help", lcl::nilValue());
-            dclEnv->set(std::to_string(tile->value().dialog_Id) + "_errtile", lcl::nilValue());
+            dclEnv->set(std::to_string(tile->value().dialog_Id) + "_error", lcl::nilValue());
+
             if (!okche->value().has_parent) {
                 for (auto & dlg : dclTiles)
                 {
@@ -1531,7 +1518,6 @@ void openTile(const lclGui* tile)
             {
                 for (int i = dclTiles.size()-2; i >= 0 ; i--)
                 {
-                    qDebug() << "[openTile]" << i << dclTiles.at(i)->value().name.c_str();
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
@@ -1557,7 +1543,7 @@ void openTile(const lclGui* tile)
 
     for (auto it = tiles->begin(), end = tiles->end(); it != end; it++) {
         const lclGui* tile = DYNAMIC_CAST(lclGui, *it);
-        qDebug() << "found: " << tile->value().name.c_str();
+        qDebug() << "[openTile] end: found: " << tile->value().name.c_str();
         openTile(tile);
     }
 }

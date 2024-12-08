@@ -817,95 +817,103 @@ static lclValuePtr addTile(tile_t tile)
     qDebug() << __func__ << tile.name.c_str();
 
     switch(tile.id) {
-
-    case BOXED_COLUMN:
-    case BOXED_RADIO_COLUMN:
-        return lcl::boxedcolumn(tile);
-    case BOXED_ROW:
-    case BOXED_RADIO_ROW:
-        return lcl::boxedrow(tile);
-    case BUTTON:
-        return lcl::button(tile);
-    case COLUMN:
-    case RADIO_COLUMN:
-        return lcl::column(tile);
-    case CONCATENATION:
-        return lcl::row(tile);
-    case DIALOG:
-        return lcl::dialog(tile);
-    case EDIT_BOX:
-        return lcl::edit(tile);
-    case LIST_BOX:
-        return lcl::listbox(tile);
-    case ERRTILE:
-    {
-        tile.key = "error";
-        return lcl::label(tile);
-    }
-    case IMAGE:
-        return lcl::image(tile);
+        case BOXED_COLUMN:
+        case BOXED_RADIO_COLUMN:
+            return lcl::boxedcolumn(tile);
+        case BOXED_ROW:
+        case BOXED_RADIO_ROW:
+            return lcl::boxedrow(tile);
+        case BUTTON:
+            return lcl::button(tile);
+        case COLUMN:
+        case PARAGRAPH:
+        case RADIO_COLUMN:
+            return lcl::column(tile);
+        case DIALOG:
+            return lcl::dialog(tile);
+        case EDIT_BOX:
+            return lcl::edit(tile);
+        case LIST_BOX:
+            return lcl::listbox(tile);
+        case ERRTILE:
+        {
+            tile.key = "\"error\"";
+            return lcl::label(tile);
+        }
+        case IMAGE:
+            return lcl::image(tile);
 #if 0
-    case IMAGE_BUTTON:
-        return lcl::image_button(tile);
+        case IMAGE_BUTTON:
+            return lcl::imagebutton(tile);
 #endif
-    case OK_CANCEL:
-        tile.dialog_Id = dclId;
-        return lcl::okcancel(tile);
-    case OK_CANCEL_HELP:
-        tile.dialog_Id = dclId;
-        return lcl::okcancelhelp(tile);
-
-    case OK_CANCEL_HELP_ERRTILE:
-        tile.key = "\"errtile\"";
-        tile.dialog_Id = dclId;
-        return lcl::okcancelhelperrtile(tile);
-
-    case OK_CANCEL_HELP_INFO:
-        tile.dialog_Id = dclId;
-        return lcl::okcancelhelpinfo(tile);
-    case OK_ONLY:
-    {
-        tile.label = qUtf8Printable(QObject::tr("\"&Ok\""));
-        tile.key = "\"accept\"";
-        tile.width = 8.0;
-        tile.dialog_Id = dclId;
-        return lcl::button(tile);
-    }
-    case PARAGRAPH:
-        return lcl::column(tile);
-    case POPUP_LIST:
-        return lcl::popuplist(tile);
-    case RADIO_BUTTON:
-        return lcl::radiobutton(tile);
-    case RADIO_ROW:
-    case ROW:
-        return lcl::row(tile);
-    case REGISTER:
-        return lcl::tabwidget(tile);
-    case SCROLL:
-        return lcl::scroll(tile);
-    case DIAL:
-        return lcl::dial(tile);
-    case SLIDER:
-        return lcl::slider(tile);
-    case SPACER:
-        return lcl::spacer(tile);
-#if 0
-    case SPACER_0:
-        return lcl::spacer_0(tile);
-    case SPACER_1:
-        return lcl::spacer_1(tile);
-#endif
-    case TAB:
-        return lcl::widget(tile);
-    case TEXT:
-        return lcl::label(tile);
-    case TEXT_PART:
-        return lcl::label(tile);
-    case TOGGLE:
-        return lcl::toggle(tile);
-    default:
-        return lcl::dclgui(tile);
+        case OK_CANCEL:
+        {
+            tile.dialog_Id = dclId;
+            return lcl::okcancel(tile);
+        }
+        case OK_CANCEL_HELP:
+        {
+            tile.dialog_Id = dclId;
+            return lcl::okcancelhelp(tile);
+        }
+        case OK_CANCEL_HELP_ERRTILE:
+        {
+            tile.key = "\"error\"";
+            tile.dialog_Id = dclId;
+            return lcl::okcancelhelperrtile(tile);
+        }
+        case OK_CANCEL_HELP_INFO:
+        {
+            tile.dialog_Id = dclId;
+            return lcl::okcancelhelpinfo(tile);
+        }
+        case OK_ONLY:
+        {
+            tile.key = "\"accept\"";
+            tile.label = qUtf8Printable(QObject::tr("\"&Ok\""));
+            tile.width = 8.0;
+            tile.dialog_Id = dclId;
+            return lcl::button(tile);
+        }
+        case POPUP_LIST:
+            return lcl::popuplist(tile);
+        case RADIO_BUTTON:
+            return lcl::radiobutton(tile);
+        case ROW:
+        case RADIO_ROW:
+        case CONCATENATION:
+            return lcl::row(tile);
+        case REGISTER:
+            return lcl::tabwidget(tile);
+        case SCROLL:
+            return lcl::scroll(tile);
+        case DIAL:
+            return lcl::dial(tile);
+        case SLIDER:
+            return lcl::slider(tile);
+        case SPACER:
+            return lcl::spacer(tile);
+        case SPACER_0:
+        {
+            tile.dialog_Id = dclId;
+            return lcl::spacer(tile);
+        }
+        case SPACER_1:
+        {
+            tile.width = 1;
+            tile.height = 1;
+            tile.dialog_Id = dclId;
+            return lcl::spacer(tile);
+        }
+        case TAB:
+            return lcl::widget(tile);
+        case TEXT:
+        case TEXT_PART:
+            return lcl::label(tile);
+        case TOGGLE:
+            return lcl::toggle(tile);
+        default:
+            return lcl::dclgui(tile);
     }
 }
 
