@@ -1199,7 +1199,7 @@ void openTile(const lclGui* tile)
                 {
                     const lclWidget* tab = static_cast<const lclWidget*>(child);
                     dclTiles.push_back(child);
-                    r->widget()->addTab(tab->widget(), child->value().label.c_str());
+                    r->widget()->addTab(tab->widget(), noQuotes(child->value().label).c_str());
                     if (noQuotes(child->value().value) == "1")
                     {
                         r->widget()->setCurrentWidget(tab->widget());

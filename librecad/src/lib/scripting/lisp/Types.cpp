@@ -2595,7 +2595,7 @@ lclOkCancelHelpInfo::lclOkCancelHelpInfo(const tile_t& tile)
     QObject::connect(m_btnOk, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { okClicked(checked); });
     QObject::connect(m_btnCancel, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { cancelClicked(checked); });
     QObject::connect(m_btnHelp, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { helpClicked(checked); });
-    QObject::connect(m_btnInfo, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { helpClicked(checked); });
+    QObject::connect(m_btnInfo, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { infoClicked(checked); });
 }
 
 void lclOkCancelHelpInfo::okClicked(bool checked)
