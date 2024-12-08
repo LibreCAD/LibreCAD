@@ -856,6 +856,8 @@ static lclValuePtr addTile(tile_t tile)
         return lcl::okcancelhelp(tile);
 
     case OK_CANCEL_HELP_ERRTILE:
+        tile.key = "\"errtile\"";
+        tile.dialog_Id = dclId;
         return lcl::okcancelhelperrtile(tile);
 
     case OK_CANCEL_HELP_INFO:
@@ -880,6 +882,10 @@ static lclValuePtr addTile(tile_t tile)
         return lcl::row(tile);
     case REGISTER:
         return lcl::tabwidget(tile);
+    case SCROLL:
+        return lcl::scroll(tile);
+    case DIAL:
+        return lcl::dial(tile);
     case SLIDER:
         return lcl::slider(tile);
     case SPACER:

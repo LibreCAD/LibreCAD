@@ -23,6 +23,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QSlider>
+#include <QScrollBar>
+#include <QDial>
 #include <QCheckBox>
 #include <QSpacerItem>
 #include <QColor>
@@ -34,7 +36,7 @@ class lclEmptyInputException : public std::exception { };
 
 enum class LCLTYPE { ATOM, BUILTIN, BOOLEAN, FILE, GUI, INT, LIST, MAP, REAL, STR, SYM, UNDEF, VEC, KEYW };
 
-#define MAX_DCL_TILES 33
+#define MAX_DCL_TILES 35
 #define MAX_DCL_ATTR 35
 #define MAX_DCL_POS 8
 #define MAX_DCL_COLOR 257
@@ -478,6 +480,8 @@ private:
 enum TILE_ID {
     NONE,
     BUTTON,
+    DIAL,
+    DIALOG,
     EDIT_BOX,
     ERRTILE,
     IMAGE,
@@ -493,6 +497,7 @@ enum TILE_ID {
     RADIO_COLUMN,
     RADIO_ROW,
     REGISTER,
+    SCROLL,
     SLIDER,
     SPACER,
     SPACER_0,
@@ -500,7 +505,6 @@ enum TILE_ID {
     TEXT,
     TEXT_PART,
     TOGGLE,
-    DIALOG,
     BOXED_COLUMN = 32,
     BOXED_RADIO_COLUMN = 64,
     BOXED_RADIO_ROW = 128,
@@ -530,6 +534,7 @@ static const tile_prop_t dclTile[MAX_DCL_TILES] = {
    { "button", BUTTON },
    { "column", COLUMN },
    { "concatenation", CONCATENATION },
+   { "dial", DIAL },
    { "dialog", DIALOG },
    { "edit_box", EDIT_BOX },
    { "errtile", ERRTILE },
@@ -548,6 +553,7 @@ static const tile_prop_t dclTile[MAX_DCL_TILES] = {
    { "radio_row", RADIO_ROW },
    { "register", REGISTER },
    { "row", ROW },
+   { "scroll", SCROLL },
    { "slider", SLIDER },
    { "spacer", SPACER },
    { "spacer_0", SPACER_0 },
@@ -968,7 +974,6 @@ QColor getDclQColor(int c);
 
 class QDclLabel : public QLabel
 {
-
 public:
 
     QDclLabel(QWidget *parent=nullptr);
@@ -1077,7 +1082,6 @@ private:
 };
 
 class lclButton : public lclGui {
-
 public:
     lclButton(const tile_t& tile);
     lclButton(const lclButton& that, lclValuePtr meta)
@@ -1282,8 +1286,30 @@ private:
     QHBoxLayout* m_hlayout;
 };
 
-class lclSlider : public lclGui {
+class lclScrollBar : public lclGui {
+public:
+    lclScrollBar(const tile_t& tile);
+    lclScrollBar(const lclScrollBar& that, lclValuePtr meta)
+        : lclGui(that, meta) { }
 
+    virtual ~lclScrollBar() { delete m_slider; delete m_vlayout; delete m_hlayout; }
+
+    WITH_META(lclScrollBar)
+
+    QScrollBar* slider() const { return m_slider; }
+    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
+
+    void valueChanged(int value);
+    void sliderReleased();
+
+private:
+    QScrollBar* m_slider;
+    QVBoxLayout* m_vlayout;
+    QHBoxLayout* m_hlayout;
+};
+
+
+class lclSlider : public lclGui {
 public:
     lclSlider(const tile_t& tile);
     lclSlider(const lclSlider& that, lclValuePtr meta)
@@ -1305,8 +1331,29 @@ private:
     QHBoxLayout* m_hlayout;
 };
 
-class lclSpacer : public lclGui {
+class lclDial : public lclGui {
+public:
+    lclDial(const tile_t& tile);
+    lclDial(const lclDial& that, lclValuePtr meta)
+        : lclGui(that, meta) { }
 
+    virtual ~lclDial() { delete m_slider; delete m_vlayout; delete m_hlayout; }
+
+    WITH_META(lclDial)
+
+    QDial* slider() const { return m_slider; }
+    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
+
+    void valueChanged(int value);
+    void sliderReleased();
+
+private:
+    QDial* m_slider;
+    QVBoxLayout* m_vlayout;
+    QHBoxLayout* m_hlayout;
+};
+
+class lclSpacer : public lclGui {
 public:
     lclSpacer(const tile_t& tile);
     lclSpacer(const lclSpacer& that, lclValuePtr meta)
@@ -1323,7 +1370,6 @@ private:
 };
 
 class lclToggle : public lclGui {
-
 public:
     lclToggle(const tile_t& tile);
     lclToggle(const lclToggle& that, lclValuePtr meta)
@@ -1345,7 +1391,6 @@ private:
 };
 
 class lclOkCancel : public lclGui {
-
 public:
     lclOkCancel(const tile_t& tile);
     lclOkCancel(const lclOkCancel& that, lclValuePtr meta)
@@ -1369,7 +1414,6 @@ private:
 };
 
 class lclOkCancelHelp : public lclGui {
-
 public:
     lclOkCancelHelp(const tile_t& tile);
     lclOkCancelHelp(const lclOkCancelHelp& that, lclValuePtr meta)
@@ -1396,7 +1440,6 @@ private:
 };
 
 class lclOkCancelHelpInfo : public lclGui {
-
 public:
     lclOkCancelHelpInfo(const tile_t& tile);
     lclOkCancelHelpInfo(const lclOkCancelHelpInfo& that, lclValuePtr meta)
@@ -1426,7 +1469,6 @@ private:
 };
 
 class lclOkCancelHelpErrtile : public lclGui {
-
 public:
     lclOkCancelHelpErrtile(const tile_t& tile);
     lclOkCancelHelpErrtile(const lclOkCancelHelpErrtile& that, lclValuePtr meta)
@@ -1454,7 +1496,6 @@ private:
     QHBoxLayout* m_hlayout;
     QVBoxLayout* m_layout;
 };
-
 
 extern std::vector<const lclGui*> dclTiles;
 extern void openTile(const lclGui* tile);
@@ -1525,7 +1566,9 @@ namespace lcl {
     lclValuePtr okcancelhelperrtile(const tile_t& tile);
 
     lclValuePtr image(const tile_t& tile);
+    lclValuePtr scroll(const tile_t& tile);
     lclValuePtr slider(const tile_t& tile);
+    lclValuePtr dial(const tile_t& tile);
     lclValuePtr spacer(const tile_t& tile);
     lclValuePtr toggle(const tile_t& tile);
 

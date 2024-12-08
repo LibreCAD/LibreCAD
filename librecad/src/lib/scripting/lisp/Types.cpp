@@ -321,8 +321,16 @@ namespace lcl {
         return lclValuePtr(new lclRow(tile));
     }
 
+    lclValuePtr scroll(const tile_t& tile) {
+        return lclValuePtr(new lclScrollBar(tile));
+    }
+
     lclValuePtr slider(const tile_t& tile) {
         return lclValuePtr(new lclSlider(tile));
+    }
+
+    lclValuePtr dial(const tile_t& tile) {
+        return lclValuePtr(new lclDial(tile));
     }
 
     lclValuePtr spacer(const tile_t& tile) {
@@ -1805,6 +1813,338 @@ void lclSlider::sliderReleased()
     }
 }
 
+lclScrollBar::lclScrollBar(const tile_t& tile)
+    : lclGui(tile)
+    , m_slider(new QScrollBar)
+    , m_vlayout(new QVBoxLayout)
+    , m_hlayout(new QHBoxLayout)
+{
+    if(int(tile.min_value))
+    {
+        m_slider->setMinimum(int(tile.min_value));
+    }
+    else
+    {
+        m_slider->setMinimum(0);
+    }
+    if(int(tile.max_value))
+    {
+        m_slider->setMaximum(int(tile.max_value));
+    }
+    else
+    {
+        m_slider->setMaximum(0);
+    }
+
+    if (int(tile.height) > int(tile.width))
+    {
+        m_slider->setOrientation(Qt::Vertical);
+    }
+    else
+    {
+        m_slider->setOrientation(Qt::Horizontal);
+    }
+
+    if(int(tile.width))
+    {
+        m_slider->setMinimumWidth(int(tile.width * 10));
+    }
+
+    if(int(tile.height))
+    {
+        m_slider->setMinimumHeight(int(tile.height * 10));
+    }
+
+    if (tile.fixed_width)
+    {
+        if(int(tile.width)) {
+            m_slider->setFixedWidth(int(tile.width * 10));
+        }
+        else
+        {
+            m_slider->setFixedWidth(80);
+        }
+    }
+
+    if (tile.fixed_height)
+    {
+        if(int(tile.height))
+        {
+            m_slider->setMinimumHeight(int(tile.height * 10));
+        }
+        else
+        {
+            m_slider->setFixedWidth(32);
+        }
+    }
+
+    m_vlayout->addWidget(m_slider);
+    m_hlayout->addLayout(m_vlayout);
+
+    switch (tile.alignment)
+    {
+    case LEFT:
+        m_hlayout->setAlignment(Qt::AlignLeft);
+        break;
+    case RIGHT:
+        m_hlayout->setAlignment(Qt::AlignRight);
+        break;
+    case TOP:
+        m_vlayout->setAlignment(Qt::AlignTop);
+        break;
+    case BOTTOM:
+        m_vlayout->setAlignment(Qt::AlignBottom);
+        break;
+    case CENTERED:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    default: {}
+    break;
+    }
+
+    if(!tile.is_enabled)
+    {
+        m_slider->setEnabled(false);
+    }
+
+    if (std::regex_match(noQuotes(tile.value).c_str(), intRegex))
+    {
+        int value = atoi(noQuotes(tile.value).c_str());
+        m_slider->setValue(value);
+    }
+
+    QObject::connect(m_slider, &QScrollBar::valueChanged, [&] (int value) { valueChanged(value); });
+    QObject::connect(m_slider, &QScrollBar::sliderReleased, [&] { sliderReleased(); });
+}
+
+void lclScrollBar::valueChanged(int value)
+{
+    qDebug() << "lclScrollBar::valueChanged key:" << noQuotes(this->value().key).c_str();
+
+    if (noQuotes(this->value().key) == "")
+    {
+        return;
+    }
+
+    lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_" + noQuotes(this->value().key).c_str());
+    qDebug() << "lclScrollBar::valueChanged val:" << val->print(true).c_str();
+    if (val->print(true).compare("nil") != 0) {
+        const lclString *str = VALUE_CAST(lclString, val);
+        String action = "(do";
+        action += str->value();
+        action += ")";
+        replaceValue(action, std::to_string(value).c_str());
+#if 0
+        if(m_slider->tickInterval())
+        {
+            replaceReason(action, "1");
+        }
+        else
+        {
+            replaceReason(action, "3");
+        }
+#endif
+        replaceReason(action, "1");
+        qDebug() << "lclScrollBar::valueChanged action:" << action.c_str();
+        LispRun_SimpleString(action.c_str());
+    }
+}
+
+void lclScrollBar::sliderReleased()
+{
+    qDebug() << "lclScrollBar::valueChanged key:" << noQuotes(this->value().key).c_str();
+
+    if (noQuotes(this->value().key) == "")
+    {
+        return;
+    }
+
+    lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_" + noQuotes(this->value().key).c_str());
+    qDebug() << "lclScrollBar::valueChanged val:" << val->print(true).c_str();
+    if (val->print(true).compare("nil") != 0) {
+        const lclString *str = VALUE_CAST(lclString, val);
+        String action = "(do";
+        action += str->value();
+        action += ")";
+        replaceValue(action, std::to_string(m_slider->value()).c_str());
+        replaceReason(action, "2");
+        qDebug() << "lclScrollBar::valueChanged action:" << action.c_str();
+        LispRun_SimpleString(action.c_str());
+    }
+}
+
+lclDial::lclDial(const tile_t& tile)
+    : lclGui(tile)
+    , m_slider(new QDial)
+    , m_vlayout(new QVBoxLayout)
+    , m_hlayout(new QHBoxLayout)
+{
+    if(int(tile.min_value))
+    {
+        m_slider->setMinimum(int(tile.min_value));
+    }
+    else
+    {
+        m_slider->setMinimum(0);
+    }
+    if(int(tile.max_value))
+    {
+        m_slider->setMaximum(int(tile.max_value));
+    }
+    else
+    {
+        m_slider->setMaximum(0);
+    }
+#if 0
+    // FIX ME
+    if(int(tile.small_increment))
+    {
+        m_slider->setTickInterval(int(tile.small_increment));
+    }
+    // FIX ME
+    if(int(tile.big_increment))
+    {
+        m_slider->setTickInterval(int(tile.big_increment));
+    }
+#endif
+    if (int(tile.height) > int(tile.width))
+    {
+        m_slider->setOrientation(Qt::Vertical);
+    }
+    else
+    {
+        m_slider->setOrientation(Qt::Horizontal);
+    }
+
+    if(int(tile.width))
+    {
+        m_slider->setMinimumWidth(int(tile.width * 10));
+    }
+
+    if(int(tile.height))
+    {
+        m_slider->setMinimumHeight(int(tile.height * 10));
+    }
+
+    if (tile.fixed_width)
+    {
+        if(int(tile.width)) {
+            m_slider->setFixedWidth(int(tile.width * 10));
+        }
+        else
+        {
+            m_slider->setFixedWidth(80);
+        }
+    }
+
+    if (tile.fixed_height)
+    {
+        if(int(tile.height))
+        {
+            m_slider->setMinimumHeight(int(tile.height * 10));
+        }
+        else
+        {
+            m_slider->setFixedWidth(80);
+        }
+    }
+
+    m_vlayout->addWidget(m_slider);
+    m_hlayout->addLayout(m_vlayout);
+
+    switch (tile.alignment)
+    {
+    case LEFT:
+        m_hlayout->setAlignment(Qt::AlignLeft);
+        break;
+    case RIGHT:
+        m_hlayout->setAlignment(Qt::AlignRight);
+        break;
+    case TOP:
+        m_vlayout->setAlignment(Qt::AlignTop);
+        break;
+    case BOTTOM:
+        m_vlayout->setAlignment(Qt::AlignBottom);
+        break;
+    case CENTERED:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    default: {}
+    break;
+    }
+
+    if(!tile.is_enabled)
+    {
+        m_slider->setEnabled(false);
+    }
+
+    if (std::regex_match(noQuotes(tile.value).c_str(), intRegex))
+    {
+        int value = atoi(noQuotes(tile.value).c_str());
+        m_slider->setValue(value);
+    }
+
+    QObject::connect(m_slider, &QDial::valueChanged, [&] (int value) { valueChanged(value); });
+    QObject::connect(m_slider, &QDial::sliderReleased, [&] { sliderReleased(); });
+}
+
+void lclDial::valueChanged(int value)
+{
+    qDebug() << "lclDial::valueChanged key:" << noQuotes(this->value().key).c_str();
+
+    if (noQuotes(this->value().key) == "")
+    {
+        return;
+    }
+
+    lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_" + noQuotes(this->value().key).c_str());
+    qDebug() << "lclDial::valueChanged val:" << val->print(true).c_str();
+    if (val->print(true).compare("nil") != 0) {
+        const lclString *str = VALUE_CAST(lclString, val);
+        String action = "(do";
+        action += str->value();
+        action += ")";
+        replaceValue(action, std::to_string(value).c_str());
+#if 0
+        if(m_slider->tickInterval())
+        {
+            replaceReason(action, "1");
+        }
+        else
+        {
+            replaceReason(action, "3");
+        }
+#endif
+        replaceReason(action, "1");
+        qDebug() << "lclDial::valueChanged action:" << action.c_str();
+        LispRun_SimpleString(action.c_str());
+    }
+}
+
+void lclDial::sliderReleased()
+{
+    qDebug() << "lclDial::valueChanged key:" << noQuotes(this->value().key).c_str();
+
+    if (noQuotes(this->value().key) == "")
+    {
+        return;
+    }
+
+    lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_" + noQuotes(this->value().key).c_str());
+    qDebug() << "lclDial::valueChanged val:" << val->print(true).c_str();
+    if (val->print(true).compare("nil") != 0) {
+        const lclString *str = VALUE_CAST(lclString, val);
+        String action = "(do";
+        action += str->value();
+        action += ")";
+        replaceValue(action, std::to_string(m_slider->value()).c_str());
+        replaceReason(action, "2");
+        qDebug() << "lclDial::valueChanged action:" << action.c_str();
+        LispRun_SimpleString(action.c_str());
+    }
+}
 
 lclSpacer::lclSpacer(const tile_t& tile)
     : lclGui(tile)
@@ -2051,6 +2391,7 @@ lclOkCancel::lclOkCancel(const tile_t& tile)
 
     m_layout->addWidget(m_btnOk);
     m_layout->addWidget(m_btnCancel);
+    m_layout->setAlignment(Qt::AlignLeft);
 
     QObject::connect(m_btnOk, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { okClicked(checked); });
     QObject::connect(m_btnCancel, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { cancelClicked(checked); });
@@ -2107,6 +2448,7 @@ lclOkCancelHelp::lclOkCancelHelp(const tile_t& tile)
     m_layout->addWidget(m_btnOk);
     m_layout->addWidget(m_btnCancel);
     m_layout->addWidget(m_btnHelp);
+    m_layout->setAlignment(Qt::AlignLeft);
 
     QObject::connect(m_btnOk, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { okClicked(checked); });
     QObject::connect(m_btnCancel, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { cancelClicked(checked); });
@@ -2184,6 +2526,7 @@ lclOkCancelHelpInfo::lclOkCancelHelpInfo(const tile_t& tile)
     m_layout->addWidget(m_btnCancel);
     m_layout->addWidget(m_btnHelp);
     m_layout->addWidget(m_btnInfo);
+    m_layout->setAlignment(Qt::AlignLeft);
 
     QObject::connect(m_btnOk, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { okClicked(checked); });
     QObject::connect(m_btnCancel, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { cancelClicked(checked); });
@@ -2279,6 +2622,7 @@ lclOkCancelHelpErrtile::lclOkCancelHelpErrtile(const tile_t& tile)
 
     m_layout->addLayout(m_hlayout);
     m_layout->addWidget(m_errTile);
+    m_layout->setAlignment(Qt::AlignLeft);
 
     QObject::connect(m_btnOk, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { okClicked(checked); });
     QObject::connect(m_btnCancel, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { cancelClicked(checked); });

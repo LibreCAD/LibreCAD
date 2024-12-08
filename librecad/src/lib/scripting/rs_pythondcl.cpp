@@ -159,6 +159,7 @@ bool RS_PythonDcl::setTile(const char *key, const char *val)
             }
                 break;
             case TEXT:
+            case ERRTILE:
             {
                 const lclLabel* l = static_cast<const lclLabel*>(tile);
                 l->label()->setText(val);
@@ -187,6 +188,12 @@ bool RS_PythonDcl::setTile(const char *key, const char *val)
             {
                 const lclRadioButton* rb = static_cast<const lclRadioButton*>(tile);
                 rb->button()->setText(val);
+            }
+                break;
+            case OK_CANCEL_HELP_ERRTILE:
+            {
+                const lclOkCancelHelpErrtile* err = static_cast<const lclOkCancelHelpErrtile*>(tile);
+                err->errtile()->setText(val);
             }
                 break;
             default:

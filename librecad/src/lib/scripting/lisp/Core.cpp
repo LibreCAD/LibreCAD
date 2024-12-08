@@ -3385,24 +3385,26 @@ BUILTIN("set_tile")
                 const lclEdit* edit = static_cast<const lclEdit*>(tile);
                 edit->edit()->setText(val->value().c_str());
             }
-            break;
+                break;
             case TEXT:
+            case ERRTILE:
             {
                 const lclLabel* l = static_cast<const lclLabel*>(tile);
                 l->label()->setText(val->value().c_str());
             }
+                break;
             case BUTTON:
             {
                 const lclButton* b = static_cast<const lclButton*>(tile);
                 b->button()->setText(val->value().c_str());
             }
-            break;
+                break;
             case RADIO_BUTTON:
             {
                 const lclRadioButton* rb = static_cast<const lclRadioButton*>(tile);
                 rb->button()->setText(val->value().c_str());
             }
-            break;
+                break;
             case TOGGLE:
             {
                 const lclToggle* tb = static_cast<const lclToggle*>(tile);
@@ -3415,7 +3417,13 @@ BUILTIN("set_tile")
                     tb->toggle()->setChecked(true);
                 }
             }
-            break;
+                break;
+            case OK_CANCEL_HELP_ERRTILE:
+            {
+                const lclOkCancelHelpErrtile* err = static_cast<const lclOkCancelHelpErrtile*>(tile);
+                err->errtile()->setText(val->value().c_str());
+            }
+                break;
             default:
                 return lcl::nilValue();
             }

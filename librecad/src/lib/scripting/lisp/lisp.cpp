@@ -972,6 +972,10 @@ void openTile(const lclGui* tile)
                     }
                 }
             }
+            if(tile->value().id == ERRTILE)
+            {
+                dclEnv->set(std::to_string(tile->value().dialog_Id) + "_errtile", lcl::nilValue());
+            }
         }
             break;
         case BUTTON:
@@ -1194,71 +1198,48 @@ void openTile(const lclGui* tile)
             }
             const lclTabWidget* r = static_cast<const lclTabWidget*>(tile);
             dclTiles.push_back(tile);
+
+            lclValueVec* tiles = new lclValueVec(tile->value().tiles->size());
+            std::copy(tile->value().tiles->begin(), tile->value().tiles->end(), tiles->begin());
+
+            for (auto it = tiles->begin(), end = tiles->end(); it != end; it++) {
+                const lclGui* child = DYNAMIC_CAST(lclGui, *it);
+                qDebug() << "found: " << child->value().name.c_str();
+                if (child->value().id == TAB)
+                {
+                    const lclWidget* tab = static_cast<const lclWidget*>(child);
+                    dclTiles.push_back(child);
+                    r->widget()->addTab(tab->widget(), child->value().label.c_str());
+                    if (noQuotes(child->value().value) == "1")
+                    {
+                        r->widget()->setCurrentWidget(tab->widget());
+                    }
+                    openTile(child);
+                }
+            }
+
             //dclEnv->set(std::to_string(tile->value().dialog_Id) + "_" + noQuotes(tile->value().key).c_str(), lcl::nilValue());
 
-            if (!r->value().has_parent) {
-                for (auto & dlg : dclTiles)
-                {
-                    if (dlg->value().dialog_Id == dlgId)
-                    {
-                        qDebug() << "openTile() == DIALOG" << dlg->value().name.c_str();
-                        dlg->vlayout()->addWidget(r->widget());
-                        //const lclDialog* dialog = static_cast<const lclDialog*>(dlg);
-                        //dialog->dialog()->layout()->addWidget(r->widget());
-                        break;
-                    }
-                }
-                break;
-            }
-            else
+            for (auto & dlg : dclTiles)
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                if (dlg->value().dialog_Id == dlgId)
                 {
-                    if(LAYOUT_TILE & dclTiles.at(i)->value().id)
-                    {
-                        if (LAYOUT_ROW & dclTiles.at(i)->value().id)
-                        {
-                            dclTiles.at(i)->hlayout()->addWidget(r->widget());
-                        }
-                        else
-                        {
-                            dclTiles.at(i)->vlayout()->addWidget(r->widget());
-                        }
-                        break;
-                    }
+                    qDebug() << "openTile() == DIALOG" << dlg->value().name.c_str();
+                    dlg->vlayout()->addWidget(r->widget());
+                    break;
                 }
             }
+            return;
         }
             break;
         case TAB:
         {
-            if (!dclTiles.size())
-            {
-                break;
-            }
-            const lclWidget* tab = static_cast<const lclWidget*>(tile);
-            dclTiles.push_back(tile);
-            //dclEnv->set(std::to_string(tile->value().dialog_Id) + "_" + noQuotes(tile->value().key).c_str(), lcl::nilValue());
-
-            for (int i = dclTiles.size()-2; i >= 0 ; i--)
-            {
-                if(REGISTER == dclTiles.at(i)->value().id)
-                {
-                    const lclTabWidget* tabWidget = static_cast<const lclTabWidget*>(dclTiles.at(i));
-                    if (tabWidget && tab)
-                    {
-                        //tabWidget->widget()
-                        tabWidget->widget()->addTab(tab->widget(), tile->value().label.c_str()); // FIXME crashes second time ??
-                    }
-                    else
-                    {
-                        qDebug() << "FUCK :-XXXXXXX";
-                    }
-                }
-            }
+            break;
         }
             break;
         case SLIDER:
+        case SCROLL:
+        case DIAL:
         {
             if (!dclTiles.size())
             {
@@ -1532,6 +1513,7 @@ void openTile(const lclGui* tile)
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_accept", lcl::nilValue());
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_cancel", lcl::nilValue());
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_help", lcl::nilValue());
+            dclEnv->set(std::to_string(tile->value().dialog_Id) + "_errtile", lcl::nilValue());
             if (!okche->value().has_parent) {
                 for (auto & dlg : dclTiles)
                 {
