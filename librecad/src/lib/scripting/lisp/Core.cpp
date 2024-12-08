@@ -38,7 +38,6 @@
 unsigned int tmpFileCount = 0;
 
 typedef std::regex Regex;
-
 static const Regex intRegex("^[-+]?\\d+$");
 static const Regex floatRegex("^[+-]?\\d+[.]{1}\\d+$");
 static const Regex floatPointRegex("[.]{1}\\d+$");
@@ -3422,6 +3421,33 @@ BUILTIN("set_tile")
             {
                 const lclOkCancelHelpErrtile* err = static_cast<const lclOkCancelHelpErrtile*>(tile);
                 err->errtile()->setText(val->value().c_str());
+            }
+                break;
+            case DIAL:
+            {
+                const lclDial* sc = static_cast<const lclDial*>(tile);
+                if (std::regex_match(val->value().c_str(), intRegex))
+                {
+                    sc->slider()->setValue(atoi(val->value().c_str()));
+                }
+            }
+             break;
+            case SCROLL:
+            {
+                const lclScrollBar* sc = static_cast<const lclScrollBar*>(tile);
+                if (std::regex_match(val->value().c_str(), intRegex))
+                {
+                    sc->slider()->setValue(atoi(val->value().c_str()));
+                }
+            }
+                break;
+            case SLIDER:
+            {
+                const lclSlider* sc = static_cast<const lclSlider*>(tile);
+                if (std::regex_match(val->value().c_str(), intRegex))
+                {
+                    sc->slider()->setValue(atoi(val->value().c_str()));
+                }
             }
                 break;
             default:

@@ -10,6 +10,12 @@
 #include <QFileDialog>
 #include <QInputDialog>
 
+#include <regex>
+
+typedef std::regex              Regex;
+
+static const Regex intRegex("^[-+]?\\d+$");
+
 RS_PythonDcl::RS_PythonDcl()
 {
 }
@@ -194,6 +200,33 @@ bool RS_PythonDcl::setTile(const char *key, const char *val)
             {
                 const lclOkCancelHelpErrtile* err = static_cast<const lclOkCancelHelpErrtile*>(tile);
                 err->errtile()->setText(val);
+            }
+                break;
+            case DIAL:
+            {
+                const lclDial* sc = static_cast<const lclDial*>(tile);
+                if (std::regex_match(val, intRegex))
+                {
+                    sc->slider()->setValue(atoi(val));
+                }
+            }
+                break;
+            case SCROLL:
+            {
+                const lclScrollBar* sc = static_cast<const lclScrollBar*>(tile);
+                if (std::regex_match(val, intRegex))
+                {
+                    sc->slider()->setValue(atoi(val));
+                }
+            }
+                break;
+            case SLIDER:
+            {
+                const lclSlider* sc = static_cast<const lclSlider*>(tile);
+                if (std::regex_match(val, intRegex))
+                {
+                    sc->slider()->setValue(atoi(val));
+                }
             }
                 break;
             default:

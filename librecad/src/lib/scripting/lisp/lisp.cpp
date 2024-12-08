@@ -1076,6 +1076,8 @@ void openTile(const lclGui* tile)
             }
             const lclPopupList* lp = static_cast<const lclPopupList*>(tile);
             dclTiles.push_back(tile);
+            dclEnv->set(std::to_string(tile->value().dialog_Id) + "_" + noQuotes(tile->value().key).c_str(), lcl::nilValue());
+
             if (!lp->value().has_parent) {
                 for (auto & dlg : dclTiles)
                 {

@@ -51,6 +51,7 @@ private:
     QTextCharFormat statementFormat;
     QTextCharFormat symbolFormat;
     QTextCharFormat valuesFormat;
+    QTextCharFormat dclFormat;
 
     HighlightingRule triSingle;
     HighlightingRule triDouble;

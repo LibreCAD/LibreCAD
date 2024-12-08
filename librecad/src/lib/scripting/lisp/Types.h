@@ -1280,6 +1280,8 @@ public:
     QComboBox* list() const { return m_list; }
     virtual QHBoxLayout* hlayout() const { return m_hlayout; }
 
+    void currentTextChanged(const QString &currentText);
+
 private:
     QComboBox* m_list;
     QVBoxLayout* m_vlayout;

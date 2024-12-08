@@ -162,8 +162,46 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
         rule.format = functionsFormat;
         highlightingRules.append(rule);
     }
-
 // rule [6]
+    const QString dcLkeywordPatternsFunctions[] = {
+        QStringLiteral("\\b.MessageBox\\b"),
+        QStringLiteral("\\b.OpenFileDialog\\b"),
+        QStringLiteral("\\b.GetIntDialog\\b"),
+        QStringLiteral("\\b.GetDoubleDialog\\b"),
+        QStringLiteral("\\b.GetStringDialog\\b"),
+        QStringLiteral("\\b.ReadCharDialog\\b"),
+        QStringLiteral("\\b.prompt\\b"),
+        QStringLiteral("\\b.command\\b"),
+        QStringLiteral("\\b.unloadDialog\\b"),
+        QStringLiteral("\\b.endList\\b"),
+        QStringLiteral("\\b.endImage\\b"),
+        QStringLiteral("\\b.newDialog\\b"),
+        QStringLiteral("\\b.doneDialog\\b"),
+        QStringLiteral("\\b.setTile\\b"),
+        QStringLiteral("\\b.modeTile\\b"),
+        QStringLiteral("\\b.actionTile\\b"),
+        QStringLiteral("\\b.loadDialog\\b"),
+        QStringLiteral("\\b.dimxTile\\b"),
+        QStringLiteral("\\b.dimyTile\\b"),
+        QStringLiteral("\\b.startDialog\\b"),
+        QStringLiteral("\\b.fillImage\\b"),
+        QStringLiteral("\\b.vectorImage\\b"),
+        QStringLiteral("\\b.getTile\\b"),
+        QStringLiteral("\\b.startList\\b"),
+        QStringLiteral("\\b.addList\\b"),
+        QStringLiteral("\\b.startImage\b")
+    };
+
+    dclFormat.setForeground(QColor(0, 87, 174));
+    dclFormat.setFontWeight(QFont::Bold);
+    dclFormat.setFontItalic(true);
+
+    for (const QString &pattern : dcLkeywordPatternsFunctions) {
+        rule.expression = QRegExp(pattern);
+        rule.format = dclFormat;
+        highlightingRules.append(rule);
+    }
+// rule [7]
     const QString keywordPatternsBlue[] = {
         QStringLiteral("\\bNone\\b"),
         QStringLiteral("\\bFalse\\b"),
@@ -175,7 +213,7 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
         QStringLiteral("\\b__value__\\b"),
     };
 
-// rule [7]
+// rule [8]
     valuesFormat.setForeground(QColor(0, 87, 174));
     for (const QString &pattern : keywordPatternsBlue) {
         rule.expression = QRegExp(pattern);
@@ -183,60 +221,60 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
         highlightingRules.append(rule);
     }
 
-// rule [8]
+// rule [9]
     classValuesFormat.setForeground(QColor(146,76,157));
     rule.expression = QRegExp(QStringLiteral("([_]{2}[a-z]+[_]{2})"));
     rule.format = classValuesFormat;
     highlightingRules.append(rule);
 
-// rule [9]
+// rule [10]
     connectFormat.setFontWeight(QFont::Bold);
     connectFormat.setForeground(QColor(61,174,237)); //100,49,255
     rule.expression = QRegExp(QStringLiteral("(connect)"));
     rule.format = connectFormat;
     highlightingRules.append(rule);
 
-// rule [10]
+// rule [11]
     quoteFormat.setForeground(QColor(191,3,3));
     //rule.expression = QRegExp(QStringLiteral("\"([^\"]*)\"|\'([^\']*)\'"));
     rule.expression = QRegExp(QStringLiteral("\"((?:\\\"|[^\"])*)\"|\'((?:\\\'|[^\'])*)\'"));
     rule.format = quoteFormat;
     highlightingRules.append(rule);
 
-// rule [11]
+// rule [12]
     rule.expression = QRegExp(QStringLiteral("(\\\\\")|(\\\\\')|(\\\\n)"));
     rule.format = classValuesFormat;
     highlightingRules.append(rule);
 
-// rule [12]
+// rule [13]
     rule.expression = QRegExp(QStringLiteral("b\"([^\"]*)\"|b\'([^\']*)\'|r\"([^\"]*)\"|r\'([^\']*)\'"));
     rule.format = quoteFormat;
     highlightingRules.append(rule);
 
-// rule [13]
+// rule [14]
     placeholderFormat.setForeground(QColor(61,174,237));
     rule.expression = QRegExp(QStringLiteral("(%)(\\d+d|d|\\d+i|i|o|u|\\d+[.]{1}\\d+x|\\d+x|x|\\d+[.]{1}\\d+X|\\d+X|X|\\d+[.]{1}\\d+e|e|\\d+[.]{1}\\d+E|E|\\d+[.]{1}\\d+f|F|\\d+[.]{1}\\d+g|g|\\d+[.]{1}\\d+G|G|c|s|r)"));
     rule.format = placeholderFormat;
     highlightingRules.append(rule);
 
-// rule [14]
+// rule [15]
     bytesFormat.setForeground(QColor(146,76,157));
     rule.expression = QRegExp(QStringLiteral("\\\\x\\d+"));
     rule.format = bytesFormat;
     highlightingRules.append(rule);
 
-// rule [15]
+// rule [16]
     atFormat.setForeground(QColor(0, 87, 174));
     rule.expression = QRegExp(QStringLiteral("@[^\'\"].*$"));
     rule.format = atFormat;
     highlightingRules.append(rule);
 
-// rule [16]
+// rule [17]
     rule.expression = QRegExp(QStringLiteral("[$](x|y|value|key|reason)"));
     rule.format = placeholderFormat;
     highlightingRules.append(rule);
 
-// rule [17] - last befor multiline comment
+// rule [18] - last befor multiline comment
     rule.expression = QRegExp(QStringLiteral("^\\s*#.*$"));
     rule.format = commentFormat;
     highlightingRules.append(rule);

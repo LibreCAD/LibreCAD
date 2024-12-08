@@ -1438,7 +1438,32 @@ lclPopupList::lclPopupList(const tile_t& tile)
     {
         m_list->setEnabled(false);
     }
+    QObject::connect(m_list, QOverload<const QString&>::of(&QComboBox::currentTextChanged), [&](const QString& currentText) { currentTextChanged(currentText); });
 }
+
+void lclPopupList::currentTextChanged(const QString &currentText)
+{
+    qDebug() << "lclPopupList::currentTextChanged currentText:" << currentText;
+
+    if (noQuotes(this->value().key) == "")
+    {
+        return;
+    }
+
+    lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_" + noQuotes(this->value().key).c_str());
+    if (val->print(true).compare("nil") != 0)
+    {
+        const lclString *str = VALUE_CAST(lclString, val);
+        String action = "(do";
+        action += str->value();
+        action += ")";
+        replaceValue(action, currentText.toStdString());
+        replaceReason(action, "1");
+        qDebug() << "lclPopupList::currentTextChanged action:" << action.c_str();
+        LispRun_SimpleString(action.c_str());
+    }
+}
+
 
 lclEdit::lclEdit(const tile_t& tile)
     : lclGui(tile)
@@ -1544,6 +1569,7 @@ void lclEdit::textEdited(const QString &text)
         action += str->value();
         action += ")";
         replaceValue(action, text.toStdString());
+        replaceReason(action, "1");
         qDebug() << "lclEdit::textEdited action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -1638,6 +1664,7 @@ void lclListBox::currentTextChanged(const QString &currentText)
         action += str->value();
         action += ")";
         replaceValue(action, currentText.toStdString());
+        replaceReason(action, "1");
         qDebug() << "lclListBox::currentTextChanged action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
