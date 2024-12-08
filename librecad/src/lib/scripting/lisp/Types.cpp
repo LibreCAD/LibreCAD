@@ -15,6 +15,7 @@
 
 #include <QObject>
 #include <QApplication>
+#include <QStyle>
 
 typedef std::regex              Regex;
 static const Regex intRegex("^[-+]?\\d+$");
@@ -24,6 +25,7 @@ static inline void replaceReason(std::string &com, const std::string& reason);
 static inline void replaceKey(std::string &com, const std::string& key);
 static inline void replaceX(std::string &com, int x);
 static inline void replaceY(std::string &com, int y);
+static int getIcon(const char* label);
 
 namespace lcl {
     lclValuePtr atom(lclValuePtr value) {
@@ -912,6 +914,14 @@ lclButton::lclButton(const tile_t& tile)
 {
     m_button->setText(noQuotes(tile.label).c_str());
     m_button->setDefault(tile.is_default);
+
+    int icon = getIcon(noQuotes(tile.label).c_str());
+
+    if (icon != -1)
+    {
+        QStyle *style = m_button->style();
+        m_button->setIcon(style->standardIcon(QStyle::StandardPixmap(icon)));
+    }
 
     if(int(tile.width))
     {
@@ -2424,6 +2434,10 @@ lclOkCancel::lclOkCancel(const tile_t& tile)
     m_btnCancel->setText(QObject::tr("&Cancel"));
     m_btnOk->setDefault(true);
 
+    QStyle *style = m_btnOk->style();
+    m_btnOk->setIcon(style->standardIcon(QStyle::StandardPixmap(QStyle::SP_DialogOkButton)));
+    m_btnCancel->setIcon(style->standardIcon(QStyle::StandardPixmap(QStyle::SP_DialogCancelButton)));
+
     m_btnCancel->setFixedWidth(80);
     m_btnOk->setFixedWidth(80);
     m_btnCancel->setFixedWidth(80);
@@ -2479,6 +2493,11 @@ lclOkCancelHelp::lclOkCancelHelp(const tile_t& tile)
     m_btnCancel->setText(QObject::tr("&Cancel"));
     m_btnHelp->setText(QObject::tr("&Help"));
     m_btnOk->setDefault(tile.is_default);
+
+    QStyle *style = m_btnOk->style();
+    m_btnOk->setIcon(style->standardIcon(QStyle::StandardPixmap(QStyle::SP_DialogOkButton)));
+    m_btnCancel->setIcon(style->standardIcon(QStyle::StandardPixmap(QStyle::SP_DialogCancelButton)));
+    m_btnHelp->setIcon(style->standardIcon(QStyle::StandardPixmap(QStyle::SP_DialogHelpButton)));
 
     m_btnOk->setFixedWidth(80);
     m_btnCancel->setFixedWidth(80);
@@ -2555,6 +2574,12 @@ lclOkCancelHelpInfo::lclOkCancelHelpInfo(const tile_t& tile)
     m_btnHelp->setText(QObject::tr("&Help"));
     m_btnInfo->setText(QObject::tr("&Info"));
     m_btnOk->setDefault(tile.is_default);
+
+    QStyle *style = m_btnOk->style();
+    m_btnOk->setIcon(style->standardIcon(QStyle::StandardPixmap(QStyle::SP_DialogOkButton)));
+    m_btnCancel->setIcon(style->standardIcon(QStyle::StandardPixmap(QStyle::SP_DialogCancelButton)));
+    m_btnHelp->setIcon(style->standardIcon(QStyle::StandardPixmap(QStyle::SP_DialogHelpButton)));
+    m_btnInfo->setIcon(style->standardIcon(QStyle::StandardPixmap(QStyle::SP_FileDialogInfoView)));
 
     m_btnOk->setFixedWidth(80);
     m_btnCancel->setFixedWidth(80);
@@ -2650,6 +2675,11 @@ lclOkCancelHelpErrtile::lclOkCancelHelpErrtile(const tile_t& tile)
     m_btnCancel->setText(QObject::tr("&Cancel"));
     m_btnHelp->setText(QObject::tr("&Help"));
     m_btnOk->setDefault(tile.is_default);
+
+    QStyle *style = m_btnOk->style();
+    m_btnOk->setIcon(style->standardIcon(QStyle::StandardPixmap(QStyle::SP_DialogOkButton)));
+    m_btnCancel->setIcon(style->standardIcon(QStyle::StandardPixmap(QStyle::SP_DialogCancelButton)));
+    m_btnHelp->setIcon(style->standardIcon(QStyle::StandardPixmap(QStyle::SP_DialogHelpButton)));
 
     m_btnOk->setFixedWidth(80);
     m_btnCancel->setFixedWidth(80);
@@ -2837,6 +2867,26 @@ QColor getDclQColor(int c)
     }
 
     return color;
+}
+
+static int getIcon(const char* label)
+{
+    int id = -1;
+    QString str = label;
+
+    str = str.toLower();
+    str = str.replace("&","");
+    str = str.replace(" ","");
+
+    qDebug() << "[getIcon] str:" << str;
+
+    for (int i = 0; i < MAX_DCL_ICONS; i++) {
+        if (str == dclIcon[i].name) {
+            return dclIcon[i].id;
+        }
+    }
+    qDebug() << "[getIcon] id:" << id;
+    return id;
 }
 
 #endif // DEVELOPER

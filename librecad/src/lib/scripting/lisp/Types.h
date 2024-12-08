@@ -40,6 +40,7 @@ enum class LCLTYPE { ATOM, BUILTIN, BOOLEAN, FILE, GUI, INT, LIST, MAP, REAL, ST
 #define MAX_DCL_ATTR 35
 #define MAX_DCL_POS 8
 #define MAX_DCL_COLOR 257
+#define MAX_DCL_ICONS 18
 
 class lclValue : public RefCounted {
 public:
@@ -913,6 +914,32 @@ static QColor dclQColor[MAX_DCL_COLOR] = {
     QColor(255, 255, 255)
 };
 
+typedef struct button_icon {
+    const char* name;
+    int id;
+} button_icon_t;
+
+static const button_icon_t dclIcon[MAX_DCL_ICONS] = {
+    { "ok", QStyle::SP_DialogOkButton },
+    { "save", QStyle::SP_DialogSaveButton },
+    { "open", QStyle::SP_DialogOpenButton },
+    { "cancel", QStyle::SP_DialogCancelButton },
+    { "close", QStyle::SP_DialogCloseButton },
+    { "apply", QStyle::SP_DialogApplyButton },
+    { "reset", QStyle::SP_DialogResetButton },
+    { "help", QStyle::SP_DialogHelpButton },
+    { "discard", QStyle::SP_DialogDiscardButton },
+    { "yes", QStyle::SP_DialogYesButton },
+    { "no", QStyle::SP_DialogNoButton },
+    { "yestoall", QStyle::SP_DialogYesToAllButton },
+    { "notoall", QStyle::SP_DialogNoToAllButton },
+    { "saveall", QStyle::SP_DialogSaveAllButton },
+    { "abort", QStyle::SP_DialogAbortButton },
+    { "retry", QStyle::SP_DialogRetryButton },
+    { "ignore", QStyle::SP_DialogIgnoreButton },
+    { "defaults", QStyle::SP_RestoreDefaultsButton }
+};
+
 typedef struct guitile {
     bool            allow_accept = false;
     bool            children_fixed_height = false;
@@ -971,6 +998,8 @@ typedef struct dclVector
 typedef std::vector<dclVector_t> dclVectors;
 
 QColor getDclQColor(int c);
+
+
 
 class QDclLabel : public QLabel
 {
