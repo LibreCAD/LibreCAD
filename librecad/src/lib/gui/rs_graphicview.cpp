@@ -135,6 +135,9 @@ void RS_GraphicView::loadSettings() {
         extendAxisModeY = LC_GET_INT("ExtendModeYAxis",0);
         ignoreDraftForHighlight = LC_GET_BOOL("IgnoreDraftForHighlight", false);
         draftLinesMode = LC_GET_BOOL("DraftLinesMode", false);
+
+        m_panOnZoom = LC_GET_BOOL("PanOnZoom", true);
+        m_skipFirstZoom = LC_GET_BOOL("FirstTimeNoZoom", true);
     }
     LC_GROUP_END();
     LC_GROUP("Render");{
@@ -2512,4 +2515,14 @@ void RS_GraphicView::setDraftLinesMode(bool mode) {
 
 void RS_GraphicView::setForcedActionKillAllowed(bool enabled) {
     forcedActionKillAllowed = enabled;
+}
+
+
+bool RS_GraphicView::getPanOnZoom() const
+{
+    return m_panOnZoom;
+}
+bool RS_GraphicView::getSkipFirstZoom() const
+{
+    return m_skipFirstZoom;
 }

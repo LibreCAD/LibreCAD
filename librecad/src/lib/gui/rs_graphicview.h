@@ -386,6 +386,10 @@ public:
     bool isDraftLinesMode() const;
     void setDraftLinesMode(bool draftLinesMode);
     void setForcedActionKillAllowed(bool forcedActionKillAllowed);
+
+    bool getPanOnZoom() const;
+    bool getSkipFirstZoom() const;
+
 protected:
 
     RS_EntityContainer *container = nullptr; // Holds a pointer to all the enties
@@ -514,6 +518,10 @@ private:
 signals:
     void relative_zero_changed(const RS_Vector &);
     void previous_zoom_state(bool);
+private:
+
+    bool m_panOnZoom = false;
+    bool m_skipFirstZoom = false;
 };
 
 #endif

@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 
 #include <QDebug>
@@ -899,20 +900,29 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
         RS2::ZoomDirection zoomDirection = ((angleDeltaY > 0) != invZoom) ? RS2::In : RS2::Out;
 
-        RS_Vector& zoomCenter = mouse;
-        // todo - well, actually this is one-shot action... and it will lead to full action processing chain in action handler
-        // todo - are we REALLY need it there? alternatively, zoom may be part of this class)
+        QPoint mdl(getWidth()/2, getHeight()/2);
+        QPoint cp = e->position().toPoint();
+        QPoint delta(mdl.x()-cp.x(), mdl.y()-cp.y());
 
-        auto zoomAction = new RS_ActionZoomIn(*container, *this, zoomDirection, RS2::Both, &zoomCenter,
-                                              scrollZoomFactor);
-        if (isPrintPreview()) { // small optimization for print-preview, so options will not be recreated
-            zoomAction->trigger();
-            delete zoomAction;
+        if (getPanOnZoom()) {
+            QCursor::setPos(mapToGlobal(mdl));
+            zoomPan(delta.x(), delta.y());
         }
-        else{
-//            setCurrentAction(zoomAction);
-            zoomAction->trigger();
-            delete zoomAction;
+
+        if (!getPanOnZoom() || !getSkipFirstZoom() || (abs(delta.x())<32 && abs(delta.y())<32)) {
+            RS_Vector& zoomCenter = mouse;
+            // todo - well, actually this is one-shot action... and it will lead to full action processing chain in action handler
+            // todo - are we REALLY need it there? alternatively, zoom may be part of this class)
+
+            auto zoomAction = std::make_unique<RS_ActionZoomIn>(*container, *this, zoomDirection, RS2::Both, &zoomCenter,
+                                                scrollZoomFactor);
+            if (isPrintPreview()) { // small optimization for print-preview, so options will not be recreated
+                zoomAction->trigger();
+            }
+            else{
+    //            setCurrentAction(zoomAction);
+                zoomAction->trigger();
+            }
         }
     }
     redraw();
