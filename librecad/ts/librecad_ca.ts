@@ -5088,11 +5088,11 @@ El contingut d&apos;una capa de construcció no hauria d&apos;aparèixer en la s
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Refresca</translation>
     </message>
     <message>
         <source>Rebuild</source>
-        <translation type="unfinished"></translation>
+        <translation>Reconstrueix</translation>
     </message>
 </context>
 <context>
