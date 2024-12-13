@@ -1461,7 +1461,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="250"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="489"/>
         <source>Dimension</source>
-        <translation></translation>
+        <translation>Ulottuvuus</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="255"/>
@@ -1789,7 +1789,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1626"/>
         <source>New document from template: </source>
-        <translation>Uusi dokumentti mallipohjasta:</translation>
+        <translation>Uusi dokumentti mallipohjasta: </translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1674"/>
@@ -1890,7 +1890,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1790"/>
         <source>Warning: File already opened : </source>
-        <translation>Varoitus: Tiedosto on jo avattu:</translation>
+        <translation>Varoitus: Tiedosto on jo avattu: </translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2356"/>
@@ -1929,7 +1929,7 @@ Tarkista tiedoston käyttöoikeudet.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="500"/>
         <source>Saved drawing: %1</source>
-        <translation>Piirros %1 tallennettu.</translation>
+        <translation>Piirros tallennettu: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="515"/>
