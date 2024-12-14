@@ -839,6 +839,7 @@ namespace RS2 {
      * Wrapper for Qt
      */
     LineWidth intToLineWidth(int w);
+    int LineWidthToInt(LineWidth width);
 
     /**
      * Enum of cursor types.

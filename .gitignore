@@ -3,6 +3,7 @@
 /*.sh
 /*.txt
 /\.*
+/build/
 
 # Apple generated directories
 LibreCAD.app/

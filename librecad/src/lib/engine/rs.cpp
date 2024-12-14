@@ -32,6 +32,17 @@
 #include "rs.h"
 
 namespace {
+
+std::map<RS2::LineWidth, int> constructReversedMap(std::map<int, RS2::LineWidth> originalMap) {
+    std::map<int, RS2::LineWidth>::iterator it;
+    std::map<RS2::LineWidth, int> reverseMap;
+
+    for(it = originalMap.begin(); it != originalMap.end(); it++)
+        reverseMap[it->second] = it->first;
+
+    return reverseMap;
+}
+
 std::map<int, RS2::LineWidth> constructInt2LineWidth() {
     using namespace RS2;
     return  {
@@ -76,4 +87,10 @@ RS2::LineWidth RS2::intToLineWidth(int w) {
         return Width00;
     auto it = g_int2LineWidth.find(w);
     return (it != g_int2LineWidth.cend()) ? it->second : Width00;
+}
+
+int RS2::LineWidthToInt(RS2::LineWidth lw){
+    static const std::map<RS2::LineWidth, int> g_lineWidth2int = constructReversedMap(g_int2LineWidth);
+    auto it = g_lineWidth2int.find(lw);
+    return (it != g_lineWidth2int.cend()) ? it->second : -2;
 }
