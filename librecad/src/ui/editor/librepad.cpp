@@ -17,8 +17,9 @@
 #include <QAction>
 
 #include "librepad.h"
-#include "texteditor.h"
+#include "lpmessage.h"
 #include "ui_librepad.h"
+
 
 #ifdef DEVELOPER
 
@@ -34,10 +35,9 @@ Librepad::Librepad(QWidget *parent, const QString& name, const QString& fileName
     ui->setupUi(this);
     setCentralWidget(ui->tabWidget);
     ui->tabWidget->tabBar()->setTabsClosable(true);
-
-    m_searchLineEdit = new QLineEdit;
-    m_searchLineEdit->setMaximumWidth(180);
-    ui->searchToolBar->addWidget(m_searchLineEdit);
+    m_searchWidget = new LpSearchBar(this, this);
+    /* must be hidden bevor binding to statusBar */
+    m_searchWidget->hide();
 
     QAction* recentFileAction = 0;
     for(unsigned int i = 0; i < m_maxFileNr; ++i){
@@ -48,7 +48,6 @@ Librepad::Librepad(QWidget *parent, const QString& name, const QString& fileName
         m_recentFileActionList.append(recentFileAction);
         ui->menuOpen_Recent->addAction(recentFileAction);
     }
-
     updateRecentActionList();
 
     connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &Librepad::slotTabClose);
@@ -56,7 +55,13 @@ Librepad::Librepad(QWidget *parent, const QString& name, const QString& fileName
     connect(ui->actionOpen, &QAction::triggered, this, &Librepad::open);
     connect(ui->actionSave, &QAction::triggered, this, &Librepad::save);
     connect(ui->actionSave_as, &QAction::triggered, this, &Librepad::saveAs);
+    connect(ui->actionSelectAll, &QAction::triggered, this, &Librepad::selectAll);
+    connect(ui->actionDeselect, &QAction::triggered, this, &Librepad::deselect);
+    connect(ui->actionCopy, &QAction::triggered, this, &Librepad::copy);
+    connect(ui->actionPaste, &QAction::triggered, this, &Librepad::paste);
     connect(ui->actionReload, &QAction::triggered, this, &Librepad::reload);
+    connect(ui->actionReplace, &QAction::triggered, this, &Librepad::replace);
+    connect(ui->actionFind, &QAction::triggered, this, &Librepad::find);
     connect(ui->actionPrint, &QAction::triggered, this, &Librepad::print);
     connect(ui->actionExit, &QAction::triggered, this, &QWidget::close);
     connect(ui->actionUndo, &QAction::triggered, this, &Librepad::undo);
@@ -64,26 +69,12 @@ Librepad::Librepad(QWidget *parent, const QString& name, const QString& fileName
     connect(ui->actionFont, &QAction::triggered, this, &Librepad::setFont);
     connect(ui->actionAbout, &QAction::triggered, this, &Librepad::about);
     connect(ui->actionHelp, &QAction::triggered, this, &Librepad::help);
-
-    connect(ui->actionCmdDock, &QAction::triggered, this, &Librepad::cmdDock);
-
-    connect(ui->actionToolBarMain, &QAction::triggered, this, &Librepad::toolBarMain);
-    connect(ui->actionToolBarSearch, &QAction::triggered, this, &Librepad::toolBarSearch);
-    connect(ui->actionToolBarBuild, &QAction::triggered, this, &Librepad::toolBarBuild);
-
     connect(ui->actionRun, &QAction::triggered, this, &Librepad::run);
     connect(ui->actionLoadScript, &QAction::triggered, this, &Librepad::loadScript);
-    connect(ui->actionPrevious, &QAction::triggered, this, [=]() {
-        slotSearchChanged(m_searchLineEdit->text(), false, false);
-    });
-    connect(ui->actionNext, &QAction::triggered, this, [=]() {
-        slotSearchChanged(m_searchLineEdit->text(), true, false);
-    });
-    connect(m_searchLineEdit, &QLineEdit::textChanged, this, [=]() {
-        slotSearchChanged(m_searchLineEdit->text(), true, true);});
 
-    connect(ui->actionCopy, &QAction::triggered, this, &Librepad::copy);
-    connect(ui->actionPaste, &QAction::triggered, this, &Librepad::paste);
+    connect(ui->actionToolBarMain, &QAction::triggered, this, &Librepad::toolBarMain);
+    connect(ui->actionToolBarBuild, &QAction::triggered, this, &Librepad::toolBarBuild);
+    connect(ui->actionCmdDock, &QAction::triggered, this, &Librepad::cmdDock);
 
     ui->actionAbout->setToolTip("about " + editorName());
 
@@ -95,7 +86,6 @@ Librepad::Librepad(QWidget *parent, const QString& name, const QString& fileName
     else {
         addNewTab(m_fileName);
     }
-
 }
 
 void Librepad::slotTabChanged(int index) {
@@ -130,9 +120,10 @@ void Librepad::closeEvent(QCloseEvent *event)
         if (editor->document()->isModified())
         {
             QMessageBox::StandardButton btn = QMessageBox::question(this,
-                                                                    tr("Save document"),
-                                                                    tr("Save changes to the following item?\n%1").arg(editor->fileName()),
-                                                                    QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+                tr("Save document"),
+                tr("Save changes to the following item?\n%1").arg(editor->fileName()),
+                QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+
             if (btn == QMessageBox::Save)
             {
                 event->ignore();
@@ -164,156 +155,75 @@ void Librepad::setCmdWidgetChecked(bool val)
 
 QString Librepad::toPlainText() const
 {
-    TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->widget(ui->tabWidget->currentIndex()));
-    if (editor == nullptr)
+    if (editor() != nullptr)
     {
-        return "";
+        return editor()->toPlainText();
     }
-    return editor->toPlainText();
+    return "";
 }
 
 void Librepad::reload()
 {
-    TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->widget(ui->tabWidget->currentIndex()));
-    if (editor == nullptr)
+    if (editor() != nullptr)
     {
-        return;
+        editor()->reload();
     }
-    editor->reload();
 }
-
 
 void Librepad::redo()
 {
-    TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->widget(ui->tabWidget->currentIndex()));
-    if (editor == nullptr)
+    if (editor() != nullptr)
     {
-        return;
+        connect(editor(), &QPlainTextEdit::redoAvailable, ui->actionRedo, &QAction::setEnabled);
+        editor()->redo();
     }
-    connect(editor, &QPlainTextEdit::redoAvailable, ui->actionRedo, &QAction::setEnabled);
-    editor->redo();
 }
 
 void Librepad::undo()
 {
-    TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->widget(ui->tabWidget->currentIndex()));
-    if (editor == nullptr)
+    if (editor() != nullptr)
     {
-        return;
+        connect(editor(), &QPlainTextEdit::undoAvailable, ui->actionUndo, &QAction::setEnabled);
+        editor()->undo();
     }
-    connect(editor, &QPlainTextEdit::undoAvailable, ui->actionUndo, &QAction::setEnabled);
-    editor->undo();
 }
 
 void Librepad::copy()
 {
-    TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->widget(ui->tabWidget->currentIndex()));
-    if (editor == nullptr)
+    if (editor() != nullptr)
     {
-        return;
+        editor()->copy();
     }
-    editor->copy();
 }
 
 void Librepad::paste()
 {
-    TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->widget(ui->tabWidget->currentIndex()));
-    if (editor == nullptr)
+    if (editor() != nullptr)
     {
-        return;
-    }
-    editor->paste();
-}
-
-void Librepad::slotSearchChanged(const QString &text, bool direction, bool reset)
-{
-    QString search_text = text;
-    if (search_text.trimmed().isEmpty())
-    {
-        return;
-    }
-
-    TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->currentWidget());
-    if (editor == nullptr)
-    {
-        return;
-    }
-
-    QTextDocument *document = editor->document();
-    QTextCursor    cur      = editor->textCursor();
-
-    static QList<QTextCursor> highlight_cursors;
-    static int                index = 0;
-    if (reset)
-    {
-        /* Traverse and search all */
-        cur = editor->textCursor();
-        cur.clearSelection();
-        cur.movePosition(QTextCursor::Start);
-
-        highlight_cursors.clear();
-        QTextCursor highlight_cursor = document->find(search_text);
-        while (!highlight_cursor.isNull())
-        {
-            highlight_cursors.append(highlight_cursor);
-            highlight_cursor = document->find(search_text, highlight_cursor);
-        }
-    }
-    else
-    {
-        if (direction)
-        {
-            index += 1;
-        }
-        else
-        {
-            index -= 1;
-        }
-        index = qMax(0, index);
-
-        index = index % highlight_cursors.size();
-    }
-
-    QList<QTextEdit::ExtraSelection> list; /* = editor->extraSelections();*/
-
-    if (highlight_cursors.size() > 0 && index < highlight_cursors.size())
-    {
-        QTextCharFormat highlightFormat;
-        highlightFormat.setBackground(Qt::yellow);
-        highlightFormat.setForeground(Qt::blue);
-        QTextEdit::ExtraSelection selection;
-        selection.cursor = highlight_cursors[index];
-        selection.format = highlightFormat;
-
-        list.append(selection);
-
-        editor->setTextCursor(highlight_cursors[index]);
-        editor->setExtraSelections(list);
+        editor()->paste();
     }
 }
 
 void Librepad::slotTabClose(int index)
 {
-    TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->widget(index));
-    if (editor == nullptr)
+    if (editor() != nullptr)
     {
-        return;
-    }
-
-    if (editor->document()->isModified())
-    {
-        QMessageBox::StandardButton btn = QMessageBox::question(this,
-                                                                tr("Save document"),
-                                                                tr("The changes were not saved. Do you still want to close it?"));
-        if (btn != QMessageBox::Yes)
+        if (editor()->document()->isModified())
         {
-            ui->tabWidget->setCurrentWidget(editor);
-            editor->saveAs();
+            QMessageBox::StandardButton btn = QMessageBox::question(this,
+                tr("Save document"),
+                tr("The changes were not saved. Do you still want to close it?"));
+
+            if (btn != QMessageBox::Yes)
+            {
+                ui->tabWidget->setCurrentWidget(editor());
+                editor()->saveAs();
+            }
         }
+        ui->tabWidget->removeTab(index);
+        setWindowTitle(editorName());
+        delete editor();
     }
-    ui->tabWidget->removeTab(index);
-    setWindowTitle(editorName());
-    delete editor;
 }
 
 void Librepad::addNewTab(const QString& path)
@@ -345,7 +255,6 @@ void Librepad::addNewTab(const QString& path)
     {
         writeRecentSettings(path);
     }
-
 }
 
 Librepad::~Librepad()
@@ -383,81 +292,91 @@ void Librepad::openRecent()
 
 void Librepad::save()
 {
-    TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->widget(ui->tabWidget->currentIndex()));
-    if (editor == nullptr)
+    if (editor() != nullptr)
     {
-        return;
+        editor()->save();
     }
-    editor->save();
 }
 
 void Librepad::saveAs()
 {
-    TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->widget(ui->tabWidget->currentIndex()));
-    if (editor == nullptr)
+    if (editor() != nullptr)
     {
-        return;
+        editor()->saveAs();
+
+        connect(editor(), &TextEditor::documentChanged, this, [=]() {
+            m_fileName = editor()->path();
+            writeRecentSettings(editor()->path());
+            setWindowTitle(editorName() + " - [ " + editor()->fileName() + " ]");
+        });
     }
-    editor->saveAs();
-    // FIXME
-    qDebug() << __func__ << editor->path();
-    m_fileName = editor->path();
-    writeRecentSettings(editor->path());
-    setWindowTitle(editorName() + " - [ " + editor->fileName() + " ]");
+}
+
+void Librepad::selectAll()
+{
+    if (editor() != nullptr)
+    {
+        editor()->selectAll();
+    }
+}
+
+void Librepad::deselect()
+{
+    if (editor() != nullptr)
+    {
+        QTextCursor cursor = editor()->textCursor();
+        cursor.movePosition(QTextCursor::End);
+        editor()->setTextCursor(cursor);
+    }
 }
 
 void Librepad::print()
 {
-    TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->widget(ui->tabWidget->currentIndex()));
-    if (editor == nullptr)
+    if (editor() != nullptr)
     {
-        return;
+        editor()->printer();
     }
-    editor->printer();
 }
 
 void Librepad::setFont()
 {
     bool ok;
-    QFont font = QFontDialog::getFont(
-        &ok, QFont("Monospace", 10), this);
+    QFont font = QFontDialog::getFont(&ok, QFont("Monospace", 10), this);
+
     if (ok) {
-        TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->widget(ui->tabWidget->currentIndex()));
-        if (editor == nullptr)
+        if (editor() != nullptr)
         {
-            return;
+            m_font = font;
+            writeFontSettings();
+            editor()->setFont(font);
         }
-        m_font = font;
-        writeFontSettings();
-        editor->setFont(font);
     }
 }
 
 bool Librepad::firstSave() const
 {
-    TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->widget(ui->tabWidget->currentIndex()));
-    if (editor == nullptr)
+    if (editor() != nullptr)
     {
-        return false;
+        return editor()->firstSave();
     }
-
-    return editor->firstSave();
+    return false;
 }
 
 void Librepad::about()
 {
     QMessageBox::about(this,
-                       tr("About ") + editorName(),
-                       QString("<b>" + editorName() + "</b>") + tr("<br>LibreCAD embedded IDE</br><br>by Emanuel GPLv2 (c) 2024</br>")
-                      );
+        tr("About ") + editorName(),
+        QString("<b>" + editorName() + "</b>") +
+        tr("<br>LibreCAD embedded IDE</br><br>by Emanuel GPLv2 (c) 2024</br>")
+    );
 }
 
 void Librepad::help()
 {
     QMessageBox::about(this,
-                       editorName(),
-                       QString("<b>Help</b>") + tr("<br>not implemented yet!</br><br>X-(</br>")
-                       );
+        editorName(),
+        QString("<b>Help</b>") + tr("<br>not implemented yet!</br><br>X-(</br>")
+    );
 }
 
 void Librepad::toolBarMain()
@@ -469,18 +388,6 @@ void Librepad::toolBarMain()
     else
     {
         ui->mainToolBar->hide();
-    }
-}
-
-void Librepad::toolBarSearch()
-{
-    if (ui->searchToolBar->isHidden())
-    {
-        ui->searchToolBar->show();
-    }
-    else
-    {
-        ui->searchToolBar->hide();
     }
 }
 
@@ -504,9 +411,12 @@ void Librepad::writeSettings()
     settings.setValue(editorNametolower() + "/geometry", saveGeometry());
     settings.endGroup();
 
+    settings.beginGroup("Search");
+    settings.setValue(editorNametolower() + "/searchbar", m_searchWidget->isHidden());
+    settings.endGroup();
+
     settings.beginGroup("Toolbars");
     settings.setValue(editorNametolower() + "/mainToolBar", ui->mainToolBar->isHidden());
-    settings.setValue(editorNametolower() + "/searchToolBar", ui->searchToolBar->isHidden());
     settings.setValue(editorNametolower() + "/scriptToolBar", ui->buildToolBar->isHidden());
     settings.endGroup();
 }
@@ -521,6 +431,143 @@ void Librepad::writeFontSettings()
     settings.setValue(editorNametolower() + "/fontbold", m_font.bold());
     settings.setValue(editorNametolower() + "/fontitalic", m_font.italic());
     settings.endGroup();
+}
+
+void Librepad::writePowerMatchCase(bool enabled)
+{
+    QSettings settings("Librepad", "Librepad");
+
+    settings.beginGroup("Search");
+    settings.setValue(editorNametolower() + "/powermatchcase", enabled);
+    settings.endGroup();
+}
+
+void Librepad::writeIncMatchCase(bool enabled)
+{
+    QSettings settings("Librepad", "Librepad");
+
+    settings.beginGroup("Search");
+    settings.setValue(editorNametolower() + "/incmatchcase", enabled);
+    settings.endGroup();
+}
+
+void Librepad::writePowerSearch(bool enabled)
+{
+    QSettings settings("Librepad", "Librepad");
+
+    settings.beginGroup("Search");
+    settings.setValue(editorNametolower() + "/powersearch", enabled);
+    settings.endGroup();
+}
+
+void Librepad::writePowerMode(int index)
+{
+    QSettings settings("Librepad", "Librepad");
+
+    settings.beginGroup("Search");
+    settings.setValue(editorNametolower() + "/powermatchmode", index);
+    settings.endGroup();
+}
+
+bool Librepad::powerMatchCase()
+{
+    QSettings settings("Librepad", "Librepad");
+    settings.beginGroup("Search");
+
+    const auto matchcase = settings.value(editorNametolower() + "/powermatchcase").toBool();
+
+    if (settings.contains(editorNametolower() + "/powermatchcase"))
+    {
+        settings.endGroup();
+        return matchcase;
+    }
+
+    settings.endGroup();
+    return false;
+}
+
+bool Librepad::incMatchCase()
+{
+    QSettings settings("Librepad", "Librepad");
+    settings.beginGroup("Search");
+
+    const auto matchcase = settings.value(editorNametolower() + "/incmatchcase").toBool();
+
+    if (settings.contains(editorNametolower() + "/incmatchcase"))
+    {
+        settings.endGroup();
+        return matchcase;
+    }
+
+    settings.endGroup();
+    return false;
+}
+
+int Librepad::powerMatchMode()
+{
+    QSettings settings("Librepad", "Librepad");
+    settings.beginGroup("Search");
+
+    const auto matchmode = settings.value(editorNametolower() + "/powermatchmode").toInt();
+
+    if (settings.contains(editorNametolower() + "/powermatchmode"))
+    {
+        settings.endGroup();
+        return matchmode;
+    }
+
+    settings.endGroup();
+    return 0;
+}
+
+bool Librepad::powerSearch()
+{
+    QSettings settings("Librepad", "Librepad");
+    settings.beginGroup("Search");
+
+    const auto matchcase = settings.value(editorNametolower() + "/powersearch").toBool();
+
+    if (settings.contains(editorNametolower() + "/powersearch"))
+    {
+        settings.endGroup();
+        return matchcase;
+    }
+
+    settings.endGroup();
+    return false;
+}
+
+void Librepad::writeSearchHistory(const QString &path, const QStringList &list)
+{
+    QSettings settings("Librepad", "Librepad");
+    settings.beginGroup("Search");
+
+    settings.beginWriteArray(editorNametolower() + path);
+
+    for (int i = 0; i < list.size(); i++) {
+        settings.setArrayIndex(i);
+        settings.setValue("item", list.at(i));
+    }
+    settings.endArray();
+    settings.endGroup();
+}
+
+QStringList Librepad::searchHistory(const QString &path)
+{
+    QStringList list;
+    QSettings settings("Librepad", "Librepad");
+    settings.beginGroup("Search");
+
+    int size = settings.beginReadArray(editorNametolower() + path);
+
+    for (int i = 0; i < size; ++i) {
+        settings.setArrayIndex(i);
+        list.append(settings.value("item").toString());
+    }
+    settings.endArray();
+    settings.endGroup();
+
+    return list;
 }
 
 void Librepad::writeRecentSettings(const QString &filePath)
@@ -553,6 +600,24 @@ void Librepad::readSettings()
     else
     {
         restoreGeometry(geometry);
+    }
+    settings.endGroup();
+
+    settings.beginGroup("Search");
+    const auto isHidden = settings.value(editorNametolower() + "/searchbar").toBool();
+    if (settings.contains(editorNametolower() + "/searchbar"))
+    {
+        if(!isHidden)
+        {
+            if(powerSearch())
+            {
+                replace();
+            }
+            else
+            {
+                find();
+            }
+        }
     }
     settings.endGroup();
 
@@ -608,20 +673,6 @@ void Librepad::readSettings()
         }
     }
 
-    if (settings.contains(editorNametolower() + "/searchToolBar")) {
-        const bool isHidden = settings.value(editorNametolower() + "/searchToolBar").toBool();
-        if (!isHidden)
-        {
-            ui->actionToolBarSearch->setChecked(true);
-            ui->searchToolBar->show();
-        }
-        else
-        {
-            ui->actionToolBarSearch->setChecked(false);
-            ui->searchToolBar->hide();
-        }
-    }
-
     if (settings.contains(editorNametolower() + "/scriptToolBar")) {
         const bool isHidden = settings.value(editorNametolower() + "/scriptToolBar").toBool();
         if (!isHidden)
@@ -667,6 +718,33 @@ void Librepad::updateRecentActionList()
     for (auto i = itEnd; i < m_maxFileNr; ++i)
         m_recentFileActionList.at(i)->setVisible(false);
 
+}
+
+void Librepad::hideSearch()
+{
+    m_searchWidget->setFixedHeight(0);
+    ui->statusBar->removeWidget(m_searchWidget);
+}
+
+void Librepad::replace()
+{
+    m_searchWidget->setFixedHeight(113);
+    m_searchWidget->enterPowerMode();
+    ui->statusBar->addPermanentWidget(m_searchWidget, 1);
+    m_searchWidget->show();
+}
+
+void Librepad::find()
+{
+    m_searchWidget->setFixedHeight(50);
+    m_searchWidget->enterIncrementalMode();
+    ui->statusBar->addPermanentWidget(m_searchWidget, 1);
+    m_searchWidget->show();
+}
+
+void Librepad::message(const QString &msg)
+{
+    LpMessage::info(msg, this);
 }
 
 #endif // DEVELOPER

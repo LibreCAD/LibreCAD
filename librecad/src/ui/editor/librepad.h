@@ -5,9 +5,16 @@
 #define NOTEPAD_H
 
 #include <QMainWindow>
+#include <QDockWidget>
 #include <QLineEdit>
 #include <QCloseEvent>
 #include <QToolBar>
+#include <QStringList>
+
+#include "texteditor.h"
+#include "lpsearchbar.h"
+
+#include "ui_librepad.h"
 
 #ifdef DEVELOPER
 
@@ -16,6 +23,8 @@ namespace Ui {
 class Librepad;
 }
 QT_END_NAMESPACE
+
+class LpSearchBar;
 
 class Librepad : public QMainWindow
 {
@@ -26,6 +35,35 @@ public:
     explicit Librepad(QWidget *parent = nullptr, const QString& name="Librepad", const QString& fileName="");
     ~Librepad();
 
+    void showScriptToolBar();
+    void hideScriptToolBar();
+
+    void writePowerMatchCase(bool enabled);
+    void writeIncMatchCase(bool enabled);
+    void writePowerMode(int index);
+    void writePowerSearch(bool enabled);
+    void writeSearchHistory(const QString &path, const QStringList &list);
+    void writeIncFind(QStringList list) { writeSearchHistory("/incfind", list); }
+    void writePowerFind(QStringList list) { writeSearchHistory("/powerfind", list); }
+    void writePowerReplace(QStringList list) { writeSearchHistory("/powerreplace", list); }
+    void message(const QString &msg);
+
+    TextEditor *editor() const { return dynamic_cast<TextEditor *>(ui->tabWidget->widget(ui->tabWidget->currentIndex())); }
+
+    virtual void setName() { m_editorName = "Librepad"; }
+    virtual void setHistoryHeight() {}
+    virtual int historyHeight() const { return 0; }
+
+    bool incMatchCase();
+    bool powerMatchCase();
+    bool powerSearch();
+    int powerMatchMode();
+
+    QStringList searchHistory(const QString &path);
+
+    QStringList incFind() { return searchHistory("/incfind"); }
+    QStringList powerFind() { return searchHistory("/powerfind"); }
+    QStringList powerReplace() { return searchHistory("/powerreplace"); }
     void enableIDETools();
     void setCmdWidgetChecked(bool val);
 
@@ -34,24 +72,28 @@ public:
     QString editorNametolower() const { return m_editorName.toLower(); }
     QString editorName() const { return m_editorName; }
 
-    void closeEvent(QCloseEvent *event) override;
+    QTabWidget *tabWidget() { return ui->tabWidget; }
 
 public slots:
     void save();
+    void replace();
+    void find();
     virtual void run() {}
     virtual void loadScript() {}
     virtual void cmdDock() {}
+    void hideSearch();
     virtual void help();
 
 
 private slots:
     void slotTabChanged(int index);
-    void slotSearchChanged(const QString &text, bool direction, bool reset);
     void slotTabClose(int index);
     void newDocument();
     void open();
     void openRecent();
     void saveAs();
+    void selectAll();
+    void deselect();
     void reload();
     void print();
     void undo();
@@ -61,14 +103,16 @@ private slots:
     void setFont();
     void about();
     void toolBarMain();
-    void toolBarSearch();
     void toolBarBuild();
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     QString m_fileName;
     QFont m_font;
     Ui::Librepad *ui;
-    QLineEdit *m_searchLineEdit;
+    LpSearchBar * m_searchWidget;
 
     const unsigned int m_maxFileNr;
     QList<QAction*> m_recentFileActionList;

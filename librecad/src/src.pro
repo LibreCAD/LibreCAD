@@ -1131,6 +1131,8 @@ HEADERS += ui/action_options/circle/lc_circlebyarcoptions.h \
     ui/editor/librepython.h \
     ui/editor/dclhighlighter.h \
     ui/editor/lisphighlighter.h \
+    ui/editor/lpmessage.h \
+    ui/editor/lpsearchbar.h \
     ui/editor/pythonhighlighter.h \
     ui/editor/texteditor.h \
     ui/lc_actionfactory.h \
@@ -1330,6 +1332,8 @@ SOURCES += ui/action_options/circle/lc_circlebyarcoptions.cpp \
     ui/editor/librepython.cpp \
     ui/editor/dclhighlighter.cpp \
     ui/editor/lisphighlighter.cpp \
+    ui/editor/lpmessage.cpp \
+    ui/editor/lpsearchbar.cpp \
     ui/editor/pythonhighlighter.cpp \
     ui/editor/texteditor.cpp \
     ui/lc_actionfactory.cpp \
@@ -1485,6 +1489,8 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui \
        ui/dock_widgets/views_list/lc_namedviewslistwidget.ui \
        ui/editor/librepad.ui \
+       ui/editor/searchbarincremental.ui \
+       ui/editor/searchbarpower.ui \
        ui/not_used/customtoolbarcreator.ui \
        ui/not_used/customwidgetcreator.ui \
        ui/not_used/qg_dimlinearoptions.ui \
