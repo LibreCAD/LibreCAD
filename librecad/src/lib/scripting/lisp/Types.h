@@ -983,7 +983,7 @@ typedef struct guitile {
     lclValueVec*    tiles;
 } tile_t;
 
-enum PaintAction { DCL_NON, DCL_LINE, DCL_RECT};
+enum PaintAction { DCL_NON, DCL_LINE, DCL_RECT, DCL_TXT, DCL_PIX, DCL_SLD};
 
 typedef struct dclVector
 {
@@ -992,6 +992,7 @@ typedef struct dclVector
     int x2 = 0;
     int y2 = 0;
     int color = 0;
+    QString str = "";
     PaintAction action = DCL_NON;
 } dclVector_t;
 
@@ -1010,6 +1011,9 @@ public:
 
     void addLine(int x1, int y1, int x2, int y2, int color);
     void addRect(int x1, int y1, int width, int height, int color);
+    void addPicture(int x1, int y1, int width, int height, double aspect_ratio, const QString &name);
+    void addSlide(int x1,int y1,int width, int height, double aspect_ratio, const QString &name);
+    void addText(int x1, int y1, int width, int height, const QString &text, int color);
 
 protected:
     virtual void paintEvent(QPaintEvent *event);

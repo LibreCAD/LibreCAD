@@ -20,6 +20,9 @@
 #include "lpmessage.h"
 #include "ui_librepad.h"
 
+#include "lc_dlgabout.h"
+#include "textfileviewer.h"
+
 
 #ifdef DEVELOPER
 
@@ -68,15 +71,18 @@ Librepad::Librepad(QWidget *parent, const QString& name, const QString& fileName
     connect(ui->actionRedo, &QAction::triggered, this, &Librepad::redo);
     connect(ui->actionFont, &QAction::triggered, this, &Librepad::setFont);
     connect(ui->actionAbout, &QAction::triggered, this, &Librepad::about);
+    connect(ui->actionAboutIde, &QAction::triggered, this, &Librepad::aboutIde);
+    connect(ui->actionLicense, &QAction::triggered, this, &Librepad::licence);
     connect(ui->actionHelp, &QAction::triggered, this, &Librepad::help);
     connect(ui->actionRun, &QAction::triggered, this, &Librepad::run);
     connect(ui->actionLoadScript, &QAction::triggered, this, &Librepad::loadScript);
 
     connect(ui->actionToolBarMain, &QAction::triggered, this, &Librepad::toolBarMain);
     connect(ui->actionToolBarBuild, &QAction::triggered, this, &Librepad::toolBarBuild);
+    connect(ui->actionToolBarSearch, &QAction::triggered, this, &Librepad::toolBarSearch);
     connect(ui->actionCmdDock, &QAction::triggered, this, &Librepad::cmdDock);
 
-    ui->actionAbout->setToolTip("about " + editorName());
+    ui->actionAboutIde->setToolTip("about " + editorName());
 
     readSettings();
 
@@ -231,6 +237,9 @@ void Librepad::addNewTab(const QString& path)
     TextEditor *editor = new TextEditor(this, path);
     editor->setFont(m_font);
 
+    //QIcon icon = QIcon::fromTheme(QStringLiteral("document-save")));
+    //QIcon icon = QIcon::fromTheme(QStringLiteral("text-x-generic")));
+
     ui->tabWidget->addTab(editor, editor->fileName());
     int index = ui->tabWidget->count() - 1;
     ui->tabWidget->setCurrentIndex(index);
@@ -362,23 +371,6 @@ bool Librepad::firstSave() const
     return false;
 }
 
-void Librepad::about()
-{
-    QMessageBox::about(this,
-        tr("About ") + editorName(),
-        QString("<b>" + editorName() + "</b>") +
-        tr("<br>LibreCAD embedded IDE</br><br>by Emanuel GPLv2 (c) 2024</br>")
-    );
-}
-
-void Librepad::help()
-{
-    QMessageBox::about(this,
-        editorName(),
-        QString("<b>Help</b>") + tr("<br>not implemented yet!</br><br>X-(</br>")
-    );
-}
-
 void Librepad::toolBarMain()
 {
     if (ui->mainToolBar->isHidden())
@@ -388,6 +380,18 @@ void Librepad::toolBarMain()
     else
     {
         ui->mainToolBar->hide();
+    }
+}
+
+void Librepad::toolBarSearch()
+{
+    if (ui->searchToolBar->isHidden())
+    {
+        ui->searchToolBar->show();
+    }
+    else
+    {
+        ui->searchToolBar->hide();
     }
 }
 
@@ -418,6 +422,7 @@ void Librepad::writeSettings()
     settings.beginGroup("Toolbars");
     settings.setValue(editorNametolower() + "/mainToolBar", ui->mainToolBar->isHidden());
     settings.setValue(editorNametolower() + "/scriptToolBar", ui->buildToolBar->isHidden());
+    settings.setValue(editorNametolower() + "/searchToolBar", ui->searchToolBar->isHidden());
     settings.endGroup();
 }
 
@@ -609,12 +614,15 @@ void Librepad::readSettings()
     {
         if(!isHidden)
         {
+            qDebug() << "!isHidden";
             if(powerSearch())
             {
+                qDebug() << "powerSearch()";
                 replace();
             }
             else
             {
+                qDebug() << "!powerSearch()";
                 find();
             }
         }
@@ -687,6 +695,20 @@ void Librepad::readSettings()
         }
     }
 
+    if (settings.contains(editorNametolower() + "/searchToolBar")) {
+        const bool isHidden = settings.value(editorNametolower() + "/searchToolBar").toBool();
+        if (!isHidden)
+        {
+            ui->actionToolBarSearch->setChecked(true);
+            ui->searchToolBar->show();
+        }
+        else
+        {
+            ui->actionToolBarSearch->setChecked(false);
+            ui->searchToolBar->hide();
+        }
+    }
+
     settings.endGroup();
 }
 
@@ -740,6 +762,46 @@ void Librepad::find()
     m_searchWidget->enterIncrementalMode();
     ui->statusBar->addPermanentWidget(m_searchWidget, 1);
     m_searchWidget->show();
+}
+
+void Librepad::about()
+{
+    LC_DlgAbout dlg(this);
+    dlg.exec();
+}
+
+void Librepad::aboutIde()
+{
+    QMessageBox::about(this,
+        tr("About ") + editorName(),
+        QString("<b>" + editorName() + "</b>") +
+        tr("<br>LibreCAD embedded IDE</br><br>by Emanuel GPLv2 (c) 2024</br>")
+    );
+}
+
+void Librepad::licence()
+{
+    QDialog dlg;
+    dlg.setWindowTitle(QObject::tr("License"));
+
+    auto viewer = new TextFileViewer(&dlg);
+    auto layout = new QVBoxLayout;
+    layout->addWidget(viewer);
+    dlg.setLayout(layout);
+
+    viewer->addFile("readme", ":/readme.md");
+    viewer->addFile("GPLv2", ":/gpl-2.0.txt");
+    viewer->setFile("readme");
+
+    dlg.exec();
+}
+
+void Librepad::help()
+{
+    QMessageBox::about(this,
+                       editorName(),
+                       QString("<b>Help</b>") + tr("<br>not implemented yet!</br><br>X-(</br>")
+                       );
 }
 
 void Librepad::message(const QString &msg)

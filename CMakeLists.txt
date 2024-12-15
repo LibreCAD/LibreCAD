@@ -790,6 +790,10 @@ set(SOURCES
         librecad/src/lib/scripting/rs_py_inputhandle.h
         librecad/src/lib/scripting/rs_python.cpp
         librecad/src/lib/scripting/rs_python.h
+        librecad/src/lib/scripting/rs_pythondcl.cpp
+        librecad/src/lib/scripting/rs_pythondcl.h
+        librecad/src/lib/scripting/rs_pythongui.cpp
+        librecad/src/lib/scripting/rs_pythongui.h
         librecad/src/lib/scripting/rs_python_wrappers.cpp
         librecad/src/lib/scripting/rs_python_wrappers.h
         librecad/src/lib/scripting/rs_script.cpp
@@ -1050,10 +1054,16 @@ set(SOURCES
 		librecad/src/ui/editor/librepython.h
 		librecad/src/ui/editor/dclhighlighter.cpp
 		librecad/src/ui/editor/dclhighlighter.h
+		librecad/src/ui/editor/pythonhighlighter.cpp
+		librecad/src/ui/editor/pythonhighlighter.h
 		librecad/src/ui/editor/lisphighlighter.cpp
 		librecad/src/ui/editor/lisphighlighter.h
-		librecad/src/ui/editor/pythonhighlighter.h
+		librecad/src/ui/editor/lpmessage.cpp
+		librecad/src/ui/editor/lpmessage.h
+		librecad/src/ui/editor/lpsearchbar.cpp
+		librecad/src/ui/editor/lpsearchbar.h
 		librecad/src/ui/editor/texteditor.cpp
+		librecad/src/ui/editor/texteditor.h
         librecad/src/ui/lc_widgetfactory.cpp
         librecad/src/ui/lc_widgetfactory.h
 		librecad/src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.cpp
@@ -1498,6 +1508,8 @@ qt6_wrap_ui(SOURCES
 ./librecad/src/ui/forms/qg_widgetpen.ui
 ./librecad/src/ui/generic/colorwizard.ui
 ./librecad/src/ui/editor/librepad.ui
+./librecad/src/ui/editor/searchbarincremental.ui
+./librecad/src/ui/editor/searchbarpower.ui
 ./librecad/src/ui/generic/comboboxoption.ui
 ./librecad/src/ui/generic/customtoolbarcreator.ui
 ./librecad/src/ui/generic/customwidgetcreator.ui

@@ -1700,9 +1700,43 @@ BUILTIN("getkword") {
     return lcl::nilValue();
 }
 
+BUILTIN("getpoint")
+{
+    int args = CHECK_ARGS_BETWEEN(0, 2);
+
+    QString prompt = "Enter a point: ";
+
+    if (args == 0)
+    {
+
+    }
+    else if (args == 1)
+    {
+        //FIXME T or nil or not exists imput with " " space
+        if (argsBegin->ptr()->type() == LCLTYPE::STR)
+        {
+            ARG(lclString, msg);
+            prompt = msg->value().c_str();
+        }
+        else
+        {
+            ARG(lclSequence, ptn);
+        }
+    }
+    else
+    {
+        //FIXME T or nil or not exists imput with " " space
+        ARG(lclSequence, ptn);
+        ARG(lclString, msg);
+        prompt = msg->value().c_str();
+    }
+
+    return lcl::nilValue();
+}
+
 BUILTIN("getstring")
 {
-    int args = CHECK_ARGS_BETWEEN(0,2);
+    int args = CHECK_ARGS_BETWEEN(0, 2);
     QString s = "";
     QString prompt = "Enter a text: ";
 
@@ -2470,6 +2504,48 @@ BUILTIN("open")
     lclFile* pf = new lclFile(filename->value().c_str(), mode);
 
     return pf->open();
+}
+
+BUILTIN("pix_image")
+{
+    CHECK_ARGS_IS(5);
+    AG_INT(x1);
+    AG_INT(y1);
+    AG_INT(width);
+    AG_INT(height);
+    ARG(lclString, filename);
+
+    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key->value())
+        {
+            switch (tile->value().id)
+            {
+            case IMAGE:
+            {
+                const lclImage* img = static_cast<const lclImage*>(tile);
+                img->image()->addPicture(x1->value(), y1->value(), width->value(), height->value(), tile->value().aspect_ratio, filename->value().c_str());
+                return lcl::string(filename->value());
+            }
+            break;
+            case IMAGE_BUTTON:
+            {
+                return lcl::nilValue();
+            }
+            break;
+            default:
+                return lcl::nilValue();
+            }
+        }
+    }
+    return lcl::nilValue();
 }
 
 BUILTIN("polar")
@@ -4178,7 +4254,7 @@ BUILTIN("slide_image")
             case IMAGE:
             {
                 const lclImage* img = static_cast<const lclImage*>(tile);
-                //img->image();
+                img->image()->addSlide(x1->value(), y1->value(), width->value(), height->value(), tile->value().aspect_ratio, filename->value().c_str());
                 return lcl::string(filename->value());
             }
             break;

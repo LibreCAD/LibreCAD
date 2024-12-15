@@ -5,7 +5,6 @@
 #define NOTEPAD_H
 
 #include <QMainWindow>
-#include <QDockWidget>
 #include <QLineEdit>
 #include <QCloseEvent>
 #include <QToolBar>
@@ -76,14 +75,13 @@ public:
 
 public slots:
     void save();
-    void replace();
     void find();
+    void replace();
+    void hideSearch();
     virtual void run() {}
     virtual void loadScript() {}
     virtual void cmdDock() {}
-    void hideSearch();
     virtual void help();
-
 
 private slots:
     void slotTabChanged(int index);
@@ -102,8 +100,11 @@ private slots:
     void paste();
     void setFont();
     void about();
+    void aboutIde();
+    void licence();
     void toolBarMain();
     void toolBarBuild();
+    void toolBarSearch();
 
 protected:
     void closeEvent(QCloseEvent *event) override;

@@ -2746,7 +2746,6 @@ void lclOkCancelHelpErrtile::helpClicked(bool checked)
     }
 }
 
-
 QDclLabel::QDclLabel(QWidget *parent)
     : QLabel(parent)
     , m_pixs(new dclVectors(0))
@@ -2772,6 +2771,40 @@ void QDclLabel::paintEvent(QPaintEvent *event)
             color_t color = static_cast<color_t>(l.color);
             painter.fillRect(l.x1, l.y1, l.x2, l.y2, QBrush(getDclQColor(color), Qt::SolidPattern));
         }
+
+        if (l.action == DCL_TXT)
+        {
+            QRect boundingRect;
+            color_t color = static_cast<color_t>(l.color);
+            painter.setPen(QPen(getDclQColor(color)));
+            painter.drawText(l.x1, l.y1, l.x2, l.y2, (Qt::AlignLeft | Qt::AlignTop), l.str, &boundingRect);
+        }
+
+        if (l.action == DCL_PIX)
+        {
+            if (QFile::exists(l.str))
+            {
+                const QRect target(l.x1, l.y1, l.x2, l.y2);
+                painter.drawImage(target, QImage(l.str));
+            }
+            else
+            {
+                qDebug() << "[QDclLabel::paintEvent] file not found:" << l.str;
+            }
+        }
+
+        if (l.action == DCL_SLD)
+        {
+            if (QFile::exists(l.str))
+            {
+                const QRect target(l.x1, l.y1, l.x2, l.y2);
+                painter.drawImage(target, QImage(l.str));
+            }
+            else
+            {
+                qDebug() << "[QDclLabel::paintEvent] file not found:" << l.str;
+            }
+        }
     }
 
     QLabel::paintEvent(event);
@@ -2779,13 +2812,33 @@ void QDclLabel::paintEvent(QPaintEvent *event)
 
 void QDclLabel::addLine(int x1,int y1,int x2,int y2, int color)
 {
-    dclVector v = { x1, y1, x2, y2, color, DCL_LINE };
+    dclVector v = { x1, y1, x2, y2, color, "", DCL_LINE };
     m_pixs->push_back(v);
 }
 
 void QDclLabel::addRect(int x1,int y1,int width, int height, int color)
 {
-    dclVector v = { x1, y1, width, height, color, DCL_RECT };
+    dclVector v = { x1, y1, width, height, color, "", DCL_RECT };
+    m_pixs->push_back(v);
+}
+
+void QDclLabel::addText(int x1,int y1,int width, int height, const QString &text, int color)
+{
+    dclVector v = { x1, y1, width, height, color, text, DCL_TXT };
+    m_pixs->push_back(v);
+}
+
+void QDclLabel::addPicture(int x1,int y1,int width, int height, double aspect_ratio, const QString &name)
+{
+    int ar = int(aspect_ratio * 100);
+    dclVector v = { x1, y1, width, height, ar, name, DCL_PIX };
+    m_pixs->push_back(v);
+}
+
+void QDclLabel::addSlide(int x1,int y1,int width, int height, double aspect_ratio, const QString &name)
+{
+    int ar = int(aspect_ratio * 100);
+    dclVector v = { x1, y1, width, height, ar, name, DCL_SLD };
     m_pixs->push_back(v);
 }
 
