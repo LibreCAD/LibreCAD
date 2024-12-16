@@ -97,6 +97,10 @@ void TextEditor::keyPressEvent(QKeyEvent *event)
                     {
                         insertPlainText(" ");
                     }
+                    else if (c == '\t')
+                    {
+                        insertPlainText("    ");
+                    }
                     else
                     {
                         break;

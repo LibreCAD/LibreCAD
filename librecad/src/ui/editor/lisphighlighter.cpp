@@ -92,6 +92,7 @@ LispHighlighter::LispHighlighter(QTextDocument *parent)
         QStringLiteral("\\bgetenv\\b"),
         QStringLiteral("\\bgetint\\b"),
         QStringLiteral("\\bgetkword\\b"),
+        QStringLiteral("\\bgetpoint\\b"),
         QStringLiteral("\\bgetreal\\b"),
         QStringLiteral("\\bgetstring\\b"),
         QStringLiteral("\\bgetvar\\b"),

@@ -6,8 +6,12 @@
 #include "lisp.h"
 #include "rs_dialogs.h"
 #include "rs_lsp_inputhandle.h"
+
+#include "rs_eventhandler.h"
+#include "rs_graphicview.h"
 #include "qc_applicationwindow.h"
-#include "qg_actionhandler.h"
+#include "intern/qc_actiongetpoint.h"
+
 
 #ifdef DEVELOPER
 
@@ -25,6 +29,7 @@
 #include <iostream>
 #include <filesystem>
 
+#include <QEventLoop>
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QInputDialog>
@@ -1172,19 +1177,18 @@ BUILTIN("end_image")
         {
             switch (tile->value().id)
             {
-            case IMAGE:
-            {
-                const lclImage* img = static_cast<const lclImage*>(tile);
-                img->image()->repaint();
-            }
-            break;
-            case IMAGE_BUTTON:
-            {
+                case IMAGE:
+                {
+                    const lclImage* img = static_cast<const lclImage*>(tile);
+                    img->image()->repaint();
+                }
+                    break;
+                case IMAGE_BUTTON:
+                {
 
-            }
-            break;
-            default:
-
+                }
+                break;
+                default: {}
             }
         }
     }
@@ -1617,10 +1621,11 @@ BUILTIN("getreal")
     else
     {
         x = QInputDialog::getDouble(nullptr,
-                                    "LibreCAD",
-                                    QObject::tr(qUtf8Printable(prompt)),
-                                    // double value = 0, double min = -2147483647, double max = 2147483647, int decimals = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), double step = 1)
-                                    0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags(), 1);
+                "LibreCAD",
+                QObject::tr(qUtf8Printable(prompt)),
+                // double value = 0, double min = -2147483647, double max = 2147483647, int decimals = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), double step = 1)
+                0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags(), 1
+            );
         return lcl::ldouble(x);
     }
 }
@@ -1682,9 +1687,10 @@ BUILTIN("getkword") {
     {
         while (1) {
             result = QInputDialog::getText(nullptr,
-                                    "LibreCAD",
-                                    QObject::tr(msg->value().c_str()),
-                                    QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone).toStdString();
+                        "LibreCAD",
+                        QObject::tr(msg->value().c_str()),
+                        QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone
+                     ).toStdString();
 
             for (auto &it : StringList) {
                 if (it == result) {
@@ -1729,6 +1735,64 @@ BUILTIN("getpoint")
         ARG(lclSequence, ptn);
         ARG(lclString, msg);
         prompt = msg->value().c_str();
+    }
+#if 0
+    RS_EntityContainer container = graphicView->getContainer();
+#endif
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_Document* doc = appWin->getDocument();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+
+    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
+    {
+        return lcl::nilValue();
+    }
+
+    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
+    if (a)
+    {
+        QPointF *point = new QPointF;
+        bool status = false;
+
+        if (!(prompt.isEmpty()))
+        {
+            a->setMessage(prompt);
+        }
+
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+#if 0
+        if (base) a->setBasepoint(base);
+#endif
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!graphicView->getEventHandler()->hasAction())
+                break;
+        }
+        if (a->isCompleted() && !a->wasCanceled())
+        {
+            a->getPoint(point);
+            status = true;
+        }
+        //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
+        graphicView->killAllActions();
+
+        if(status)
+        {
+            lclValueVec *ptn = new lclValueVec(3);
+            ptn->at(0) = lcl::ldouble(point->x());
+            ptn->at(1) = lcl::ldouble(point->y());
+            ptn->at(2) = lcl::ldouble(0);
+            delete point;
+            return lcl::list(ptn);
+        }
+        else
+        {
+            delete point;
+        }
     }
 
     return lcl::nilValue();

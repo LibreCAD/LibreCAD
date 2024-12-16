@@ -237,10 +237,18 @@ void Librepad::addNewTab(const QString& path)
     TextEditor *editor = new TextEditor(this, path);
     editor->setFont(m_font);
 
-    //QIcon icon = QIcon::fromTheme(QStringLiteral("document-save")));
-    //QIcon icon = QIcon::fromTheme(QStringLiteral("text-x-generic")));
+    QIcon icon;
 
-    ui->tabWidget->addTab(editor, editor->fileName());
+    if (path.at(0) == '*')
+    {
+        icon = QIcon::fromTheme(QStringLiteral("document-save"));
+    }
+    else
+    {
+        icon = QIcon::fromTheme(QStringLiteral("text-x-generic"));
+    }
+
+    ui->tabWidget->addTab(editor, icon, editor->fileName());
     int index = ui->tabWidget->count() - 1;
     ui->tabWidget->setCurrentIndex(index);
     ui->tabWidget->tabBar()->setTabText(index, editor->fileName());
@@ -315,7 +323,7 @@ void Librepad::saveAs()
 
         connect(editor(), &TextEditor::documentChanged, this, [=]() {
             m_fileName = editor()->path();
-            writeRecentSettings(editor()->path());
+            writeRecentSettings(m_fileName);
             setWindowTitle(editorName() + " - [ " + editor()->fileName() + " ]");
         });
     }
@@ -614,15 +622,12 @@ void Librepad::readSettings()
     {
         if(!isHidden)
         {
-            qDebug() << "!isHidden";
             if(powerSearch())
             {
-                qDebug() << "powerSearch()";
                 replace();
             }
             else
             {
-                qDebug() << "!powerSearch()";
                 find();
             }
         }
@@ -739,7 +744,6 @@ void Librepad::updateRecentActionList()
 
     for (auto i = itEnd; i < m_maxFileNr; ++i)
         m_recentFileActionList.at(i)->setVisible(false);
-
 }
 
 void Librepad::hideSearch()
@@ -799,9 +803,9 @@ void Librepad::licence()
 void Librepad::help()
 {
     QMessageBox::about(this,
-                       editorName(),
-                       QString("<b>Help</b>") + tr("<br>not implemented yet!</br><br>X-(</br>")
-                       );
+        editorName(),
+        QString("<b>Help</b>") + tr("<br>not implemented yet!</br><br>X-(</br>")
+    );
 }
 
 void Librepad::message(const QString &msg)
