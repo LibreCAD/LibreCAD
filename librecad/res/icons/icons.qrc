@@ -290,6 +290,5 @@
         <file>paste_to_points.svg</file>
         <file>run.svg</file>
         <file>open_script.svg</file>
-        <file>help.svg</file>
     </qresource>
 </RCC>

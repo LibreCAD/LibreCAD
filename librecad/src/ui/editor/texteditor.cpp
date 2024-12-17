@@ -13,6 +13,7 @@
 #include <QPrintDialog>
 #include <QPrinter>
 #include <QDir>
+#include <QRect>
 
 #ifdef DEVELOPER
 
@@ -22,7 +23,9 @@ TextEditor::TextEditor(QWidget *parent, const QString& fileName)
     , m_fileName(fileName)
     , m_firstSave(false)
 {
-    setViewportMargins(43, 0, 0, 0);
+    //setStyleSheet("QPlainTextEdit { border: 0.1ex solid #7cfc00; }");
+    setStyleSheet("QPlainTextEdit { border: 0.1ex solid green; border-radius: 0.1em; }");
+    setViewportMargins(50, 0, 0, 0);
     initHighlighter();
     highlightCurrentLine();
 
@@ -133,7 +136,12 @@ void TextEditor::lineNumberPaintEvent(QPaintEvent *e)
 {
     QTextBlock block = firstVisibleBlock();
     QPainter painter(m_lineNumberWidget);
-    painter.fillRect(e->rect(), QColor(200, 200, 200, 100));
+    painter.fillRect(e->rect().left()+1,
+                     e->rect().top()+1,
+                     e->rect().x(),
+                     e->rect().y(),
+                     QColor(240, 240, 240));
+
     painter.setPen(QColor(80, 80, 80));
 
     int top    = blockBoundingGeometry(block).translated(contentOffset()).top() + 1;
@@ -147,11 +155,11 @@ void TextEditor::lineNumberPaintEvent(QPaintEvent *e)
         {
             lineHeight -= 4;
         }
-        QRect rect(0, top, getLineNumberWidth() - 2, lineHeight);
+        QRect rect(0, top, getLineNumberWidth(), lineHeight);
         QFont font = painter.font();
         font.setPointSize(9);
         painter.setFont(font);
-        painter.drawText(rect, Qt::AlignLeft | Qt::AlignVCenter, QString::number(lineNumber + 1));
+        painter.drawText(rect, Qt::AlignRight | Qt::AlignVCenter, QString::number(lineNumber + 1));
 
         block  = block.next();
         top    = bottom;
@@ -338,9 +346,9 @@ void TextEditor::updateLineNumberMargin()
 int TextEditor::getLineNumberWidth()
 {
     //int default = 22;
-    int defalut = 40;
+    int defalut = 35;
     defalut     = 4 + QString::number(blockCount()).length() * fontMetrics().horizontalAdvance('0');
-    defalut     = qMax(40, defalut);
+    defalut     = qMax(35, defalut);
 
     return defalut;
 }

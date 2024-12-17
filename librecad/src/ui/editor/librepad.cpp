@@ -34,10 +34,13 @@ Librepad::Librepad(QWidget *parent, const QString& name, const QString& fileName
     , ui(new Ui::Librepad)
     , m_maxFileNr(10)
 {
-    this->hide();
     ui->setupUi(this);
     setCentralWidget(ui->tabWidget);
-    ui->tabWidget->tabBar()->setTabsClosable(true);
+    QString sheet = QString::fromLatin1("QTabBar::tab::selected "
+                        "{ border-top: 4px solid #7cfc00; background-color: %1 }")
+                        .arg(QApplication::palette().color(QPalette::Window).name());
+    ui->tabWidget->tabBar()->setStyleSheet(sheet);
+
     m_searchWidget = new LpSearchBar(this, this);
     /* must be hidden bevor binding to statusBar */
     m_searchWidget->hide();
@@ -54,6 +57,7 @@ Librepad::Librepad(QWidget *parent, const QString& name, const QString& fileName
     updateRecentActionList();
 
     connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &Librepad::slotTabClose);
+    connect(ui->tabWidget,  SIGNAL(currentChanged(int)), this, SLOT(slotTabChanged(int)));
     connect(ui->actionNew, &QAction::triggered, this, &Librepad::newDocument);
     connect(ui->actionOpen, &QAction::triggered, this, &Librepad::open);
     connect(ui->actionSave, &QAction::triggered, this, &Librepad::save);
@@ -77,9 +81,12 @@ Librepad::Librepad(QWidget *parent, const QString& name, const QString& fileName
     connect(ui->actionRun, &QAction::triggered, this, &Librepad::run);
     connect(ui->actionLoadScript, &QAction::triggered, this, &Librepad::loadScript);
 
-    connect(ui->actionToolBarMain, &QAction::triggered, this, &Librepad::toolBarMain);
-    connect(ui->actionToolBarBuild, &QAction::triggered, this, &Librepad::toolBarBuild);
-    connect(ui->actionToolBarSearch, &QAction::triggered, this, &Librepad::toolBarSearch);
+    QMenu *submenu = new QMenu("&ToolBars");
+    submenu->addAction(ui->mainToolBar->toggleViewAction());
+    submenu->addAction(ui->buildToolBar->toggleViewAction());
+    submenu->addAction(ui->searchToolBar->toggleViewAction());
+    ui->menu_Widgets->insertMenu(ui->actionCmdDock, submenu);
+    ui->menu_Widgets->insertSeparator(ui->actionCmdDock);
     connect(ui->actionCmdDock, &QAction::triggered, this, &Librepad::cmdDock);
 
     ui->actionAboutIde->setToolTip("about " + editorName());
@@ -115,6 +122,8 @@ void Librepad::slotTabChanged(int index) {
 void Librepad::closeEvent(QCloseEvent *event)
 {
     writeSettings();
+
+    qDebug() << "Librepad::closeEvent";
 
     for(int i = 0; i < ui->tabWidget->count(); i++) {
         TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->widget(i));
@@ -228,7 +237,6 @@ void Librepad::slotTabClose(int index)
         }
         ui->tabWidget->removeTab(index);
         setWindowTitle(editorName());
-        delete editor();
     }
 }
 
@@ -325,6 +333,7 @@ void Librepad::saveAs()
             m_fileName = editor()->path();
             writeRecentSettings(m_fileName);
             setWindowTitle(editorName() + " - [ " + editor()->fileName() + " ]");
+            ui->tabWidget->tabBar()->setTabIcon(ui->tabWidget->currentIndex(), QIcon::fromTheme(QStringLiteral("text-x-generic")));
         });
     }
 }
@@ -676,12 +685,10 @@ void Librepad::readSettings()
         const bool isHidden = settings.value(editorNametolower() + "/mainToolBar").toBool();
         if (!isHidden)
         {
-            ui->actionToolBarMain->setChecked(true);
             ui->mainToolBar->show();
         }
         else
         {
-            ui->actionToolBarMain->setChecked(false);
             ui->mainToolBar->hide();
         }
     }
@@ -690,12 +697,10 @@ void Librepad::readSettings()
         const bool isHidden = settings.value(editorNametolower() + "/scriptToolBar").toBool();
         if (!isHidden)
         {
-            ui->actionToolBarBuild->setChecked(true);
             ui->buildToolBar->show();
         }
         else
         {
-            ui->actionToolBarBuild->setChecked(false);
             ui->buildToolBar->hide();
         }
     }
@@ -704,12 +709,10 @@ void Librepad::readSettings()
         const bool isHidden = settings.value(editorNametolower() + "/searchToolBar").toBool();
         if (!isHidden)
         {
-            ui->actionToolBarSearch->setChecked(true);
             ui->searchToolBar->show();
         }
         else
         {
-            ui->actionToolBarSearch->setChecked(false);
             ui->searchToolBar->hide();
         }
     }

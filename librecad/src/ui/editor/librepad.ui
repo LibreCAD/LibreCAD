@@ -23,7 +23,55 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTabWidget::pane { 
+	border-top: 0.1ex solid #A7A8A9;
+	padding-top: 18px; 
+	padding-left: 3px; 
+	padding-right: 3px; 
+	padding-bottom: 3px; 
+	margin: 1px;
+	top: -2px;
+}
+
+QTabBar
+{
+    qproperty-drawBase: 0;
+    left: 0.5ex;
+    border-radius: 0.3ex;
+}
+
+QTabBar::tab
+{
+	border-top: 0.1ex solid #A7A8A9;
+	border-left: 0.1ex solid #A7A8A9;
+	border-right: 0.1ex solid #A7A8A9;
+	border-top-left-radius: 0.1em;
+	border-top-right-radius: 0.1em;
+
+	text-align: center;
+	padding: 0.5ex;
+}
+
+QTabBar::tab:!selected {
+	background-color:  #A7A8A9;
+}
+
+QTabBar::tab:top:!selected:hover
+{
+	background-color: rgba(124, 252, 00, 0.2);
+}</string>
+      </property>
+      <property name="documentMode">
+       <bool>false</bool>
+      </property>
       <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <property name="movable">
        <bool>true</bool>
       </property>
      </widget>
@@ -111,19 +159,6 @@
     <property name="title">
      <string>&amp;Widgets</string>
     </property>
-    <widget class="QMenu" name="menu_Toolbars">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="title">
-      <string>&amp;Toolbars</string>
-     </property>
-     <addaction name="actionToolBarMain"/>
-     <addaction name="actionToolBarBuild"/>
-     <addaction name="actionToolBarSearch"/>
-    </widget>
-    <addaction name="menu_Toolbars"/>
-    <addaction name="separator"/>
     <addaction name="actionCmdDock"/>
    </widget>
    <addaction name="menuFile"/>
@@ -136,14 +171,14 @@
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
    <property name="minimumSize">
     <size>
-     <width>447</width>
+     <width>367</width>
      <height>0</height>
     </size>
    </property>
@@ -154,7 +189,7 @@
     </size>
    </property>
    <property name="windowTitle">
-    <string>ToolBar &amp;File</string>
+    <string>&amp;File</string>
    </property>
    <property name="allowedAreas">
     <set>Qt::BottomToolBarArea|Qt::TopToolBarArea</set>
@@ -178,10 +213,6 @@
    <addaction name="separator"/>
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
-   <addaction name="separator"/>
-   <addaction name="actionFont"/>
-   <addaction name="separator"/>
-   <addaction name="actionExit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="buildToolBar">
@@ -204,7 +235,7 @@
     </size>
    </property>
    <property name="windowTitle">
-    <string>ToolBar &amp;Build</string>
+    <string>&amp;Build</string>
    </property>
    <property name="allowedAreas">
     <set>Qt::BottomToolBarArea|Qt::TopToolBarArea</set>
@@ -238,7 +269,7 @@
     </size>
    </property>
    <property name="windowTitle">
-    <string>ToolBar &amp;Search</string>
+    <string>&amp;Search</string>
    </property>
    <property name="allowedAreas">
     <set>Qt::BottomToolBarArea|Qt::TopToolBarArea</set>
@@ -484,39 +515,9 @@
     <bool>false</bool>
    </property>
   </action>
-  <action name="actionToolBarMain">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset theme="user-desktop">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
-   <property name="text">
-    <string>&amp;File</string>
-   </property>
-  </action>
-  <action name="actionToolBarBuild">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset theme="system-run">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
-   <property name="text">
-    <string>&amp;Build</string>
-   </property>
-  </action>
   <action name="actionHelp">
    <property name="icon">
-    <iconset resource="../../../res/icons/icons.qrc">
+    <iconset theme="help-contents">
      <normaloff>:/icons/help.svg</normaloff>:/icons/help.svg</iconset>
    </property>
    <property name="text">
@@ -587,21 +588,6 @@
    </property>
    <property name="text">
     <string>&amp;License</string>
-   </property>
-  </action>
-  <action name="actionToolBarSearch">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset theme="edit-find">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
-   <property name="text">
-    <string>&amp;Search</string>
-   </property>
-   <property name="toolTip">
-    <string>ToolBar Search</string>
    </property>
   </action>
  </widget>

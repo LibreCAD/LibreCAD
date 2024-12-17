@@ -237,7 +237,9 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
 // rule [11]
     quoteFormat.setForeground(QColor(191,3,3));
     //rule.expression = QRegExp(QStringLiteral("\"([^\"]*)\"|\'([^\']*)\'"));
-    rule.expression = QRegExp(QStringLiteral("\"((?:\\\"|[^\"])*)\"|\'((?:\\\'|[^\'])*)\'"));
+    //rule.expression = QRegExp(QStringLiteral("\"((?:\\\"|[^\"])*)\"|\'((?:\\\'|[^\'])*)\'"));
+    //rule.expression = QRegExp(QStringLiteral("\"((?:\"|[^\"])*)\""));
+    rule.expression = QRegExp(QStringLiteral("([^\"\\]|\\.)*"));
     rule.format = quoteFormat;
     highlightingRules.append(rule);
 
