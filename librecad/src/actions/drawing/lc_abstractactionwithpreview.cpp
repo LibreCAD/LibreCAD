@@ -702,7 +702,7 @@ void LC_AbstractActionWithPreview::applyPenAndLayerBySourceEntity(const RS_Entit
             break;
         }
         case PEN_ORIGINAL: {
-            target->setPen(source->getPen());
+            target->setPen(source->getPen(false));
             break;
         }
         case PEN_ORIGINAL_RESOLVED: {

@@ -115,11 +115,11 @@ void LC_ActionPenApply::onMouseLeftButtonRelease([[maybe_unused]]int status, QMo
                     data.changeLayer = false;
 
                     // this is temporary selection, it is needed as RS_Modification relies on selected entities.
-                    // TODO - should RS_Modification be expanded for support of explicitly provided entities instead of selected ones?
+                    // fixme - sand - replace by version with explicitly provided entity rather than one that relies on selection
                     en->setSelected(true);
 
                     RS_Modification m(*container, graphicView);
-                    m.changeAttributes(data);
+                    m.changeAttributes(data, false);
                     graphicView->drawEntity(en);
                 }
                 break;

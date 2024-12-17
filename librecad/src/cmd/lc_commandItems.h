@@ -174,11 +174,26 @@ const LC_CommandItem g_commandList[] = {
             {{"cx", QObject::tr("cx", "draw cross for circle")}},
             RS2::ActionDrawCross
         },
+        {
+            {{"bbox", QObject::tr("bbox", "draw bound box")}},
+            {{"bb", QObject::tr("bb", "draw bound box")}},
+            RS2::ActionDrawBoundingBox
+        },
+        {
+            {{"midline", QObject::tr("midline", "draw middle line")}},
+            {{"ml", QObject::tr("ml", "draw mid line")}},
+            RS2::ActionDrawLineMiddle
+        },
         // draw line of points
         {
             {{"linepoints", QObject::tr("linepoints", "draw line of points")}},
             {{"lpoints", QObject::tr("lpoints", "draw line of points")}},
             RS2::ActionDrawLinePoints
+        },
+        {
+            {{"midpoint", QObject::tr("midpoint", "draw middle points")}},
+            {{"mpoint", QObject::tr("mpoint", "draw middle of points")}},
+            RS2::ActionDrawPointsMiddle
         },
         // draw circle by arc
         {
@@ -186,11 +201,28 @@ const LC_CommandItem g_commandList[] = {
             {{"cba", QObject::tr("cba", "draw circle by arc")}},
             RS2::ActionDrawCircleByArc
         },
-        // draw circle by arc
+        // modify - duplicate
         {
             {{"duplicate", QObject::tr("duplicate", "duplicate entity")}},
             {{"dup", QObject::tr("dup", "duplicate entity")}},
             RS2::ActionModifyDuplicate
+        },
+        //  modify - align
+        {
+            {{"align", QObject::tr("align", "align entities")}},
+            {{"al", QObject::tr("al", "align entities")}},
+            RS2::ActionModifyAlign
+        },
+        //  modify - align one
+        {
+            {{"align1", QObject::tr("align1", "align entities")}},
+            {{"al1", QObject::tr("al1", "align entities")}},
+            RS2::ActionModifyAlignOne
+        },
+        {
+            {{"alignref", QObject::tr("alignref", "align references")}},
+            {{"alr", QObject::tr("alr", "align references")}},
+            RS2::ActionModifyAlignRef
         },
         // line join
         {
@@ -279,6 +311,12 @@ const LC_CommandItem g_commandList[] = {
             {{"pv", QObject::tr("pv", "polygon centre vertex")},   // - v2.2.0r2
              {"polyct", QObject::tr("polyct", "polygon centre vertex")}},
             RS2::ActionDrawLinePolygonCenTan
+        },
+    // draw polygon by vertex and vertex - or side and side
+        {
+            {{"polygonvv", QObject::tr("polygonvv", "polygon vertex vertex")}},
+            {{"pvv", QObject::tr("pvv", "polygon vertex vertex")}},   // - v2.2.0r2
+            RS2::ActionDrawLinePolygonSideSide
         },
         // draw polygon by 2 vertices
         {

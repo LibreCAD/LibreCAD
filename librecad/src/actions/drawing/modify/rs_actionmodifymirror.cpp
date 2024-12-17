@@ -52,13 +52,10 @@ RS_ActionModifyMirror::RS_ActionModifyMirror(RS_EntityContainer& container,
 RS_ActionModifyMirror::~RS_ActionModifyMirror() = default;
 
 
-void RS_ActionModifyMirror::trigger() {
+void RS_ActionModifyMirror::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMirror::trigger()");
-
     RS_Modification m(*container, graphicView);
-    m.mirror(pPoints->data, selectedEntities, false);
-
-    updateSelectionWidget();
+    m.mirror(pPoints->data, selectedEntities, false, keepSelected);
 }
 
 void RS_ActionModifyMirror::mouseMoveEventSelected(QMouseEvent *e) {
@@ -69,7 +66,7 @@ void RS_ActionModifyMirror::mouseMoveEventSelected(QMouseEvent *e) {
     switch (getStatus()) {
         case SetAxisPoint1: {
             if (mirrorToExistingLine){
-                deleteSnapper();
+//                deleteSnapper();
                 RS_Entity* en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
                 if (en != nullptr){
                     auto line = dynamic_cast<RS_Line *>(en);
@@ -102,7 +99,7 @@ void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, con
     RS_MirrorData tmpData;
     tmpData.axisPoint1 = mirrorLinePoint1;
     tmpData.axisPoint2 = mirrorLinePoint2;
-    m.mirror(tmpData, selectedEntities, true);
+    m.mirror(tmpData, selectedEntities, true, false);
     previewLine(mirrorLinePoint1, mirrorLinePoint2);
 
     if (showRefEntitiesOnPreview) {

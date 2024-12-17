@@ -246,6 +246,14 @@ public:
 
     RS_Entity *cloneProxy() const override;
 
+    RS_Vector getNearestSelectedRef(const RS_Vector &coord, double *dist) const override;
+
+    void moveSelectedRef(const RS_Vector &ref, const RS_Vector &offset) override;
+
+    RS_Vector getNearestRef(const RS_Vector &coord, double *dist) const override;
+
+    void moveRef(const RS_Vector &ref, const RS_Vector &offset) override;
+
 protected:
     RS_TextData data;
 

@@ -38,26 +38,17 @@ class RS_ActionOrder : public LC_ActionPreSelectionAwareBase {
 public:
     RS_ActionOrder(RS_EntityContainer& container,
                    RS_GraphicView& graphicView, RS2::ActionType type);
-
-    void trigger() override;
     void drawSnapper() override;
-
 protected:
     RS_Entity* targetEntity = nullptr;
-
     void mouseMoveEventSelected(QMouseEvent *e) override;
-
     void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
-
     void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
-
     void updateMouseButtonHintsForSelected(int status) override;
-
     RS2::CursorType doGetMouseCursorSelected(int status) override;
-
     void updateMouseButtonHintsForSelection() override;
-
     void selectionCompleted(bool singleEntity, bool fromInit) override;
+    void doTrigger(bool keepSelected) override;
 };
 
 #endif

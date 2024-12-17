@@ -46,13 +46,10 @@ void LC_ActionPasteToPoints::init(int status) {
     }
 }
 
-void LC_ActionPasteToPoints::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+void LC_ActionPasteToPoints::doTrigger(bool keepSelected) {
     document->startUndoCycle();
 
     RS_Modification m(*container, graphicView, false);
-
     for (auto p: selectedEntities){
         RS_Vector currentPoint = p->getCenter();
         const RS_PasteData &pasteData = RS_PasteData(currentPoint, scaleFactor , angle, false, "");
@@ -63,10 +60,11 @@ void LC_ActionPasteToPoints::trigger() {
         if (removePointAfterPaste){
             deleteEntityUndoable(p);
         }
+        else{
+            p->setSelected(keepSelected);
+        }
     }
-
     document->endUndoCycle();
-    graphicView->redraw();
 }
 
 /*void LC_ActionPasteToPoints::selectionCompleted([[maybe_unused]] bool singleEntity, bool fromInit) {

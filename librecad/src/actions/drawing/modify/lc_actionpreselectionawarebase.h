@@ -34,14 +34,18 @@ public:
 
     ~LC_ActionPreSelectionAwareBase() override;
     void mouseMoveEvent(QMouseEvent *event) override;
+    void mousePressEvent(QMouseEvent*) override;
     void init(int status) override;
-
     void drawSnapper() override;
-
+    void trigger() override;
 protected:
     bool selectionComplete = false;
     bool countDeep = false;
     std::vector<RS_Entity*> selectedEntities;
+
+    RS_Vector selectionCorner1 = RS_Vector(false);
+    bool inBoxSelectionMode = false;
+
     void selectionFinishedByKey(QKeyEvent *e, bool escape) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
@@ -59,6 +63,7 @@ protected:
     void setSelectionComplete(bool allowEmptySelection, bool fromInit);
     virtual bool isAllowTriggerOnEmptySelection(){return true;};
     void updateMouseButtonHints() override;
+    virtual void doTrigger(bool keepSelected) = 0;
 };
 
 #endif // LC_ACTIONPRESELECTIONAWAREBASE_H

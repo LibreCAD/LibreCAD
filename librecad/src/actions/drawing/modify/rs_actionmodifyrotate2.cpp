@@ -52,15 +52,11 @@ void RS_ActionModifyRotate2::init(int status) {
     LC_ActionModifyBase::init(status);
 }
 
-void RS_ActionModifyRotate2::trigger(){
+void RS_ActionModifyRotate2::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyRotate2::trigger()");
-
     RS_Modification m(*container, graphicView);
-    m.rotate2(*data, selectedEntities,false);
-
+    m.rotate2(*data, selectedEntities,false, keepSelected);
     finish(false);
-
-    updateSelectionWidget();
 }
 
 void RS_ActionModifyRotate2::mouseMoveEventSelected(QMouseEvent *e) {
@@ -79,7 +75,7 @@ void RS_ActionModifyRotate2::mouseMoveEventSelected(QMouseEvent *e) {
                 mouse = getSnapAngleAwarePoint(e, data->center1, mouse, true);
                 data->center2 = mouse;
                 RS_Modification m(*preview, graphicView, false);
-                m.rotate2(*data, selectedEntities, true);
+                m.rotate2(*data, selectedEntities, true, false);
 
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(data->center1);

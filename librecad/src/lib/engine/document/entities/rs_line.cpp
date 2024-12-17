@@ -584,7 +584,7 @@ void RS_Line::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
     if (isConstruction()) {
         // draw construction lines as infinite lines
-        drawInfinite(*painter, *view);
+        drawInfinite(painter, view);
     } else {
         // Adjust dash offset
         updateDashOffset(*painter, *view, patternOffset);
@@ -592,8 +592,8 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     }
 }
 
-void RS_Line::drawInfinite(RS_Painter& painter, RS_GraphicView& view){
-   const LC_Rect viewportRect = view.getViewRect();
+void RS_Line::drawInfinite(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset, const RS_Vector &startpoint, const RS_Vector &endpoint) {
+    const LC_Rect viewportRect = view->getViewRect();
 /*    RS_EntityContainer borders(nullptr, true);
     borders.addRectangle(viewportRect.minP(), viewportRect.maxP());
 
@@ -635,21 +635,21 @@ void RS_Line::drawInfinite(RS_Painter& painter, RS_GraphicView& view){
 
     RS_Vector start(false);
 
-    double offsetX = view.toGuiDX(0.25);
-    double offsetY = view.toGuiDY(0.25);
+    double offsetX = view->toGuiDX(0.25);
+    double offsetY = view->toGuiDY(0.25);
 
-    RS_Vector pLeft = LC_LineMath::getIntersectionInfiniteLineLineFast(data.startpoint, data.endpoint,
+    RS_Vector pLeft = LC_LineMath::getIntersectionInfiniteLineLineFast(startpoint, endpoint,
                                                                        viewportRect.minP(), RS_Vector(viewportRect.minP().x, viewportRect.maxP().y),
                                                                        offsetX, offsetY);
     if (pLeft.valid){
         start = pLeft;
     }
-    RS_Vector pBottom = LC_LineMath::getIntersectionInfiniteLineLineFast(data.startpoint, data.endpoint,
+    RS_Vector pBottom = LC_LineMath::getIntersectionInfiniteLineLineFast(startpoint, endpoint,
                                                                          viewportRect.minP(), RS_Vector(viewportRect.maxP().x, viewportRect.minP().y),
                                                                          offsetX, offsetY);
     if (pBottom.valid){
         if (start.valid){
-            painter.drawLine(view.toGui(start), view.toGui(pBottom));
+            painter->drawLine(view->toGui(start), view->toGui(pBottom));
             return;
         }
         else{
@@ -657,12 +657,12 @@ void RS_Line::drawInfinite(RS_Painter& painter, RS_GraphicView& view){
         }
     }
 
-    RS_Vector pRight = LC_LineMath::getIntersectionInfiniteLineLineFast(data.startpoint, data.endpoint,
+    RS_Vector pRight = LC_LineMath::getIntersectionInfiniteLineLineFast(startpoint, endpoint,
                                                                         RS_Vector(viewportRect.maxP().x, viewportRect.minP().y),viewportRect.maxP(),
                                                                         offsetX, offsetY);
     if (pRight.valid){
         if (start.valid){
-            painter.drawLine(view.toGui(start), view.toGui(pRight));
+            painter->drawLine(view->toGui(start), view->toGui(pRight));
             return;
         }
         else {
@@ -670,14 +670,18 @@ void RS_Line::drawInfinite(RS_Painter& painter, RS_GraphicView& view){
         }
     }
     if (start.valid) {
-        RS_Vector pTop = LC_LineMath::getIntersectionInfiniteLineLineFast(data.startpoint, data.endpoint,
+        RS_Vector pTop = LC_LineMath::getIntersectionInfiniteLineLineFast(startpoint, endpoint,
                                                                           RS_Vector(viewportRect.minP().x, viewportRect.maxP().y), viewportRect.maxP(),
                                                                           offsetX, offsetY);
         if (pTop.valid){
-            painter.drawLine(view.toGui(start), view.toGui(pTop));
+            painter->drawLine(view->toGui(start), view->toGui(pTop));
         }
     }
+}
 
+void RS_Line::drawInfinite(RS_Painter* painter, RS_GraphicView* view){
+    double patternOffset = 0.0;
+    drawInfinite(painter, view, patternOffset, data.startpoint, data.endpoint);
 }
 
 /**

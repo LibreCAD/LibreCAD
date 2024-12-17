@@ -30,6 +30,9 @@
 #include "rs_debug.h"
 #include "lc_quadratic.h"
 #include "rs_math.h"
+#include "lc_rect.h"
+#include "rs_graphicview.h"
+#include "rs_line.h"
 
 RS_ConstructionLineData::RS_ConstructionLineData(const RS_Vector& point1,
 						const RS_Vector& point2):
@@ -264,6 +267,10 @@ RS_Entity& RS_ConstructionLine::shear(double k){
     data.point1.shear(k);
     data.point2.shear(k);
     return *this;
+}
+
+void RS_ConstructionLine::draw(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) {
+    RS_Line::drawInfinite(painter, view, patternOffset, data.point1, data.point2);
 }
 
 /**

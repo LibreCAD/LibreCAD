@@ -39,19 +39,13 @@ public:
     void setScaleFactor(double scaleFactor);
     bool isRemovePointAfterPaste() const;
     void setRemovePointAfterPaste(bool removePointAfterPaste);
-
-    void trigger() override;
-
     void init(int status) override;
-
 protected:
     LC_ActionOptionsWidget *createOptionsWidget() override;
-//    void selectionCompleted(bool singleEntity, bool fromInit) override;
     bool isAllowTriggerOnEmptySelection() override;
-
     bool isEntityAllowedToSelect(RS_Entity *ent) const override;
-
     void updateMouseButtonHintsForSelection() override;
+    void doTrigger(bool selected) override;
 
     double angle = 0.0;
     double scaleFactor = 1.0;

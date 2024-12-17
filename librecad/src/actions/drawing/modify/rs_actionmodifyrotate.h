@@ -44,7 +44,6 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionModifyRotate() override;
     void init(int status) override;
-    void trigger() override;
     double getAngle();
     void setAngle(double angle);
     void setFreeAngle(bool enable);
@@ -91,6 +90,7 @@ protected:
     void tryTrigger();
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
+    void doTrigger(bool keepSelected) override;
 };
 
 #endif
