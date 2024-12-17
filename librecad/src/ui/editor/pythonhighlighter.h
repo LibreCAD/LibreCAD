@@ -6,7 +6,7 @@
 
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
-#include <QRegExp>
+#include <QRegularExpression>
 
 #ifdef DEVELOPER
 
@@ -14,6 +14,7 @@ QT_BEGIN_NAMESPACE
 class QTextDocument;
 QT_END_NAMESPACE
 
+//! [0]
 class PythonHighlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
@@ -27,15 +28,14 @@ protected:
 private:
     struct HighlightingRule
     {
-        QRegExp expression;
         int nth = 0;
+        QRegularExpression pattern;
         QTextCharFormat format;
     };
-
-    QList<int> tripleQuoteIndexes;
-    QList<int> tripleQuoutesWithinStrings;
-
     QList<HighlightingRule> highlightingRules;
+
+    QRegularExpression commentStartExpression;
+    QRegularExpression commentEndExpression;
 
     QTextCharFormat atFormat;
     QTextCharFormat bytesFormat;
@@ -56,7 +56,7 @@ private:
     HighlightingRule triSingle;
     HighlightingRule triDouble;
 
-    bool matchMultiline(const QString& text, const QRegExp& delimiter, int inState, const QTextCharFormat& format);
+    bool matchMultiline(const QString& text, const QRegularExpression& delimiter, int inState, const QTextCharFormat& format);
 };
 
 #endif // DEVELOPER

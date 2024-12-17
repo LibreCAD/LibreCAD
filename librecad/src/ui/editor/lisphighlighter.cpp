@@ -235,7 +235,7 @@ LispHighlighter::LispHighlighter(QTextDocument *parent)
 
 //! [4]
     quotationFormat.setForeground(QColor(191,3,3));
-    rule.pattern = QRegularExpression(QStringLiteral("\"((?:\\\"|[^\"])*)\""));
+    rule.pattern = QRegularExpression(QStringLiteral(R"**((?<!\\)([\"])(.*?)(?<!\\)\1)**"));
     rule.format = quotationFormat;
     highlightingRules.append(rule);
 

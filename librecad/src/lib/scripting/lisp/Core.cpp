@@ -33,7 +33,6 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QInputDialog>
-#include <QRegExp>
 #include <QPainter>
 #include <QPen>
 
@@ -43,8 +42,8 @@
 unsigned int tmpFileCount = 0;
 
 typedef std::regex Regex;
-static const Regex intRegex("^[-+]?\\d+$");
-static const Regex floatRegex("^[+-]?\\d+[.]{1}\\d+$");
+static const Regex intRegex("[+-]?[0-9]+|[+-]?0[xX][0-9A-Fa-f]");
+static const Regex floatRegex("[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?");
 static const Regex floatPointRegex("[.]{1}\\d+$");
 
 #include <math.h>
@@ -1550,9 +1549,9 @@ BUILTIN("getint")
             Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
             Lisp_CommandEdit->setFocus();
             Lisp_CommandEdit->doProcess(false);
+
             result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit);
-            QRegExp re("[+-]?[0-9]+|[+-]?0[xX][0-9A-Fa-f]");
-            if (re.exactMatch(result))
+            if (std::regex_match(qUtf8Printable(result), intRegex))
             {
                 x = result.toInt();
                 break;
@@ -1598,14 +1597,13 @@ BUILTIN("getreal")
             Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
             Lisp_CommandEdit->setFocus();
             Lisp_CommandEdit->doProcess(false);
+
             result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit);
-            QRegExp re("[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?");  // a digit (\d), zero or more times (*)
-            if (re.exactMatch(result))
+            if (std::regex_match(qUtf8Printable(result), floatRegex))
             {
                 x = result.toDouble();
                 break;
             }
-
         }
 
         if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)

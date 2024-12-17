@@ -31,7 +31,7 @@ CONFIG += qt \
     verbose \
     depend_includepath
 
-QT += widgets printsupport network core5compat
+QT += widgets printsupport network
 CONFIG += c++17
 
 # using qt5 connections for UI forms

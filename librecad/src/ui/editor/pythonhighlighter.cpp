@@ -12,35 +12,35 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
     HighlightingRule rule;
     commentFormat.setForeground(QColor(137,136,135));
 
-// rule multiline comment '''
-    triSingle.expression = QRegExp(QStringLiteral("\'\'\'"));
+    // rule multiline comment '''
+    triSingle.pattern = QRegularExpression(QStringLiteral("\'\'\'"));
     triSingle.nth = 1;
     triSingle.format = commentFormat;
 
-// rule multiline comment """
-    triDouble.expression = QRegExp(QStringLiteral("\"\"\""));
+    // rule multiline comment """
+    triDouble.pattern = QRegularExpression(QStringLiteral("\"\"\""));
     triDouble.nth = 2;
     triDouble.format = commentFormat;
 
-// rule [0]
+    // rule [0]
     symbolFormat.setForeground(QColor(202,96,202));
-    rule.expression = QRegExp(QStringLiteral("([-+<>=*/%&!|\\~^])"));
+    rule.pattern = QRegularExpression(QStringLiteral("([-+<>=*/%&!|\\~^])"));
     rule.format = symbolFormat;
     highlightingRules.append(rule);
 
-// rule [1]
+    // rule [1]
     numberFormat.setForeground(QColor(176,128,0));
-    rule.expression = QRegExp(QStringLiteral("\\b[+-]?[0-9]+[lL]?\\b|\\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\\b|\\b[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b"));
+    rule.pattern = QRegularExpression(QStringLiteral("\\b[+-]?[0-9]+[lL]?\\b|\\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\\b|\\b[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b"));
     rule.format = numberFormat;
     highlightingRules.append(rule);
 
-// rule [2]
+    // rule [2]
     expFormat.setForeground(QColor(0,110,40));
-    rule.expression = QRegExp(QStringLiteral("([A-Za-z]+(Error|Iteration))"));
+    rule.pattern = QRegularExpression(QStringLiteral("([A-Za-z]+(Error|Iteration))"));
     rule.format = expFormat;
     highlightingRules.append(rule);
 
-// rule [3]
+    // rule [3]
     const QString keywordPatternsModule[] = {
         QStringLiteral("\\bimport\\b"),
         QStringLiteral("\\bas\\b"),
@@ -49,12 +49,12 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
 
     moduleFormat.setForeground(QColor(255, 85, 0));
     for (const QString &pattern : keywordPatternsModule) {
-        rule.expression = QRegExp(pattern);
+        rule.pattern = QRegularExpression(pattern);
         rule.format = moduleFormat;
         highlightingRules.append(rule);
     }
 
-// rule [4]
+    // rule [4]
     const QString keywordPatternsStatement[] = {
         QStringLiteral("\\band\\b"),
         QStringLiteral("\\bassert\\b"),
@@ -84,6 +84,7 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
         QStringLiteral("\\bwhile\\b"),
         QStringLiteral("\\blambda\\b"),
         QStringLiteral("\\bmatch\\b"),
+        QStringLiteral("\\braise\\b"),
         QStringLiteral("\\btry\\b"),
         QStringLiteral("\\byield\\b"),
     };
@@ -91,12 +92,12 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
     statementFormat.setFontWeight(QFont::Bold);
     statementFormat.setForeground(QColor(31, 28, 27));
     for (const QString &pattern : keywordPatternsStatement) {
-        rule.expression = QRegExp(pattern);
+        rule.pattern = QRegularExpression(pattern);
         rule.format = statementFormat;
         highlightingRules.append(rule);
     }
 
-// rule [5]
+    // rule [5]
     const QString keywordPatternsFunctions[] = {
         QStringLiteral("\\b__import__\\b"),
         QStringLiteral("\\babs\\b"),
@@ -158,7 +159,7 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
     functionsFormat.setForeground(QColor(100,74,155));
 
     for (const QString &pattern : keywordPatternsFunctions) {
-        rule.expression = QRegExp(pattern);
+        rule.pattern = QRegularExpression(pattern);
         rule.format = functionsFormat;
         highlightingRules.append(rule);
     }
@@ -197,7 +198,7 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
     dclFormat.setFontItalic(true);
 
     for (const QString &pattern : dcLkeywordPatternsFunctions) {
-        rule.expression = QRegExp(pattern);
+        rule.pattern = QRegularExpression(pattern);
         rule.format = dclFormat;
         highlightingRules.append(rule);
     }
@@ -216,173 +217,147 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
 // rule [8]
     valuesFormat.setForeground(QColor(0, 87, 174));
     for (const QString &pattern : keywordPatternsBlue) {
-        rule.expression = QRegExp(pattern);
+        rule.pattern = QRegularExpression(pattern);
         rule.format = valuesFormat;
         highlightingRules.append(rule);
     }
 
 // rule [9]
     classValuesFormat.setForeground(QColor(146,76,157));
-    rule.expression = QRegExp(QStringLiteral("([_]{2}[a-z]+[_]{2})"));
+    rule.pattern = QRegularExpression(QStringLiteral("([_]{2}[a-z]+[_]{2})"));
     rule.format = classValuesFormat;
     highlightingRules.append(rule);
 
 // rule [10]
     connectFormat.setFontWeight(QFont::Bold);
     connectFormat.setForeground(QColor(61,174,237)); //100,49,255
-    rule.expression = QRegExp(QStringLiteral("(connect)"));
+    rule.pattern = QRegularExpression(QStringLiteral("(connect)"));
     rule.format = connectFormat;
     highlightingRules.append(rule);
 
 // rule [11]
     quoteFormat.setForeground(QColor(191,3,3));
-    //rule.expression = QRegExp(QStringLiteral("\"([^\"]*)\"|\'([^\']*)\'"));
-    //rule.expression = QRegExp(QStringLiteral("\"((?:\\\"|[^\"])*)\"|\'((?:\\\'|[^\'])*)\'"));
-    //rule.expression = QRegExp(QStringLiteral("\"((?:\"|[^\"])*)\""));
-    rule.expression = QRegExp(QStringLiteral("([^\"\\]|\\.)*"));
+    rule.pattern = QRegularExpression(QStringLiteral(R"**((?<!\\)([\"'])(.*?)(?<!\\)\1)**"));
     rule.format = quoteFormat;
     highlightingRules.append(rule);
 
 // rule [12]
-    rule.expression = QRegExp(QStringLiteral("(\\\\\")|(\\\\\')|(\\\\n)"));
+    rule.pattern = QRegularExpression(QStringLiteral("(\\\\\")|(\\\\\')|(\\\\n)"));
     rule.format = classValuesFormat;
     highlightingRules.append(rule);
 
 // rule [13]
-    rule.expression = QRegExp(QStringLiteral("b\"([^\"]*)\"|b\'([^\']*)\'|r\"([^\"]*)\"|r\'([^\']*)\'"));
-    rule.format = quoteFormat;
+    placeholderFormat.setForeground(QColor(61,174,237));
+    rule.pattern = QRegularExpression(QStringLiteral("(%)(\\d+d|d|\\d+i|i|o|u|\\d+[.]{1}\\d+x|\\d+x|x|\\d+[.]{1}\\d+X|\\d+X|X|\\d+[.]{1}\\d+e|e|\\d+[.]{1}\\d+E|E|\\d+[.]{1}\\d+f|F|\\d+[.]{1}\\d+g|g|\\d+[.]{1}\\d+G|G|c|s|r)"));
+    rule.format = placeholderFormat;
     highlightingRules.append(rule);
 
 // rule [14]
-    placeholderFormat.setForeground(QColor(61,174,237));
-    rule.expression = QRegExp(QStringLiteral("(%)(\\d+d|d|\\d+i|i|o|u|\\d+[.]{1}\\d+x|\\d+x|x|\\d+[.]{1}\\d+X|\\d+X|X|\\d+[.]{1}\\d+e|e|\\d+[.]{1}\\d+E|E|\\d+[.]{1}\\d+f|F|\\d+[.]{1}\\d+g|g|\\d+[.]{1}\\d+G|G|c|s|r)"));
-    rule.format = placeholderFormat;
-    highlightingRules.append(rule);
-
-// rule [15]
     bytesFormat.setForeground(QColor(146,76,157));
-    rule.expression = QRegExp(QStringLiteral("\\\\x\\d+"));
+    rule.pattern = QRegularExpression(QStringLiteral("\\\\x\\d+"));
     rule.format = bytesFormat;
     highlightingRules.append(rule);
 
-// rule [16]
+// rule [15]
     atFormat.setForeground(QColor(0, 87, 174));
-    rule.expression = QRegExp(QStringLiteral("@[^\'\"].*$"));
+    rule.pattern = QRegularExpression(QStringLiteral("@[^\'\"].*$"));
     rule.format = atFormat;
     highlightingRules.append(rule);
 
-// rule [17]
-    rule.expression = QRegExp(QStringLiteral("[$](x|y|value|key|reason)"));
+// rule [16]
+    rule.pattern = QRegularExpression(QStringLiteral("[$](x|y|value|key|reason)"));
     rule.format = placeholderFormat;
     highlightingRules.append(rule);
 
-// rule [18] - last befor multiline comment
-    rule.expression = QRegExp(QStringLiteral("^\\s*#.*$"));
+// rule [17] - last befor multiline comment
+    rule.pattern = QRegularExpression(QStringLiteral("^\\s*#.*$"));
     rule.format = commentFormat;
     highlightingRules.append(rule);
 }
 
 void PythonHighlighter::highlightBlock(const QString &text)
 {
-    if (text == "") {
-        return;
-    }
-    tripleQuoutesWithinStrings.clear();
+    for (const HighlightingRule &rule : std::as_const(highlightingRules))
+    {
+        QRegularExpression      expression  = rule.pattern;
+        QRegularExpressionMatch match       = expression.match(text);
+        int                     index       = match.capturedStart();
+        QTextCharFormat         format      = rule.format;
 
-    int index = 0;
-    for (const HighlightingRule &rule : std::as_const(highlightingRules)) {
-        QRegExp            expression = rule.expression;
-        QTextCharFormat    format     = rule.format;
-        int                nth        = rule.nth;
-
-        index = expression.indexIn(text, 0);
-
-        if (index >= 0 ) {
-            if (QString("\"[^\"\\]*(\\.[^\"\\]*)*\"").contains(expression.pattern()) ||
-                QString("\'[^\'\\]*(\\.[^'\\]*)*\'").contains(expression.pattern()))
-            {
-                int innerIndex = triSingle.expression.indexIn(text, index + 1);
-
-                if (innerIndex == -1) {
-                    innerIndex = triDouble.expression.indexIn(text, index + 1);
-                }
-
-                if (innerIndex != -1) {
-                    for (int i = innerIndex; i >= innerIndex + 3; i++) {
-                        tripleQuoteIndexes.push_back(i);
-                    }
-                    tripleQuoutesWithinStrings += tripleQuoteIndexes;
-                }
-            }
-        }
-
-        while (index >= 0) {
-            for (auto& it : tripleQuoutesWithinStrings) {
-                if (index == it) {
-                    index++;
-                    expression.indexIn(text, index);
-                    continue;
-                }
-            }
-
-            index = expression.pos(nth);
-            int length = expression.cap(nth).size();
+        while (index >= 0)
+        {
+            int length = match.capturedLength();
             setFormat(index, length, format);
-            index = expression.indexIn(text, index + length);
+            match = expression.match(text, index + length);
+            index = match.capturedStart();
         }
-
-        setCurrentBlockState(0);
     }
 
-    bool inMultiline = matchMultiline(text, triSingle.expression, triSingle.nth, triSingle.format);
-    if (!inMultiline) {
-        inMultiline = matchMultiline(text, triDouble.expression, triDouble.nth , triDouble.format);
-    }
+    setCurrentBlockState(0);
 
+    bool inMultiline = matchMultiline(text, triSingle.pattern, triSingle.nth, triSingle.format);
+    if (!inMultiline)
+    {
+        // qDebug() << "[PythonHighlighter::highlightBlock] in Multiline";
+        inMultiline = matchMultiline(text, triDouble.pattern, triDouble.nth , triDouble.format);
+    }
 }
 
-bool PythonHighlighter::matchMultiline(const QString &text, const QRegExp& delimiter, int inState, const QTextCharFormat& format)
+bool PythonHighlighter::matchMultiline(const QString &text, const QRegularExpression& delimiter, int inState, const QTextCharFormat& format)
 {
-    int start = 0;
-    int end = 0;
-    int add = 0;
-    int length;
+    int start = -1;
+    int add = -1;
+    QRegularExpressionMatch match;
 
-    if (previousBlockState() == inState) {
+    /* If inside triple-single quotes, start at 0 */
+    if (previousBlockState() == inState)
+    {
         start = 0;
         add = 0;
     }
-    else {
-        start = delimiter.indexIn(text);
-
-        for (auto &it : tripleQuoutesWithinStrings) {
-            if (start == it)  {
-                return false;
-            }
-        }
-
-        add = delimiter.matchedLength();
-        setCurrentBlockState(0);
+    /* Otherwise, look for the delimiter on this line */
+    else
+    {
+        match = delimiter.match(text);
+        start = match.capturedStart();
+        add = match.capturedLength();
     }
 
-    while (start >= 0) {
-        end = delimiter.indexIn(text, start + add);
-        if (end >= add) {
-            length = end - start + add + delimiter.matchedLength();
+    // As long as there's a delimiter match on this line...
+    while (start >= 0)
+    {
+        int length = -1;
+        int end = -1;
+        // Look for the ending delimiter
+        match = delimiter.match(text, start + add);
+        end = match.capturedStart();
+
+        // Ending delimiter on this line?
+        if (end >= add)
+        {
+            length = end - start + add + match.capturedLength();
             setCurrentBlockState(0);
         }
-        else {
+        // No; multi-line string
+        else
+        {
             setCurrentBlockState(inState);
             length = text.size() - start + add;
         }
+        // Apply formatting
         setFormat(start, length, format);
-        start = delimiter.indexIn(text, start + length);
+        // Look for the next match
+        match = delimiter.match(text, start + length);
+        start = match.capturedStart();
     }
 
-    if (currentBlockState() == inState) {
+    // Return True if still inside a multi-line string, False otherwise
+    if (currentBlockState() == inState)
+    {
         return true;
     }
-    else {
+    else
+    {
         return false;
     }
 }
