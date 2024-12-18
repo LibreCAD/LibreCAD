@@ -51,7 +51,7 @@ public:
 
     RS_LayerList* getLayerList() override {return &layerList;}
     RS_BlockList* getBlockList() override {return &blockList;}
-    LC_ViewList* getViewList() {return &namedViewsList;}
+    LC_ViewList* getViewList() override {return &namedViewsList;}
 
     void newDoc() override;
     bool save(bool isAutoSave = false) override;

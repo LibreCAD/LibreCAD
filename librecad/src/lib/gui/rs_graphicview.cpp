@@ -136,8 +136,8 @@ void RS_GraphicView::loadSettings() {
         ignoreDraftForHighlight = LC_GET_BOOL("IgnoreDraftForHighlight", false);
         draftLinesMode = LC_GET_BOOL("DraftLinesMode", false);
 
-        m_panOnZoom = LC_GET_BOOL("PanOnZoom", true);
-        m_skipFirstZoom = LC_GET_BOOL("FirstTimeNoZoom", true);
+        m_panOnZoom = LC_GET_BOOL("PanOnZoom", false);
+        m_skipFirstZoom = LC_GET_BOOL("FirstTimeNoZoom", false);
     }
     LC_GROUP_END();
     LC_GROUP("Render");{
