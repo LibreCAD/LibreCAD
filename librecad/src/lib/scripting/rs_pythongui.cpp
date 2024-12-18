@@ -2,8 +2,11 @@
 #include "rs_pythongui.h"
 #include "rs_dialogs.h"
 #include "rs_py_inputhandle.h"
+
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
+#include "rs_eventhandler.h"
+#include "intern/qc_actiongetpoint.h"
 
 #include <QMessageBox>
 #include <QFileDialog>
@@ -20,6 +23,13 @@ RS_PythonGui::~RS_PythonGui()
 RS_Document* RS_PythonGui::getDocument() const
 {
     return QC_ApplicationWindow::getAppWindow()->getDocument();
+}
+
+RS_EntityContainer* RS_PythonGui::getContainer() const
+{
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+    return graphicView->getContainer();
 }
 
 RS_Graphic* RS_PythonGui::getGraphic() const
@@ -77,6 +87,73 @@ const char *RS_PythonGui::GetStringDialog(const char *prompt)
                                                 QObject::tr(prompt),
                                                 //QLineEdit::EchoMode mode = QLineEdit::Normal, const QString &text = QString(), bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), Qt::InputMethodHints inputMethodHints = Qt::ImhNone)
                                                 QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone));
+}
+
+RS_Vector RS_PythonGui::getPoint(const char *msg) const
+{
+    double x;
+    double y;
+
+    QString prompt = msg;
+    if (prompt.compare("") != -1)
+    {
+        prompt = "Enter a point: ";
+    }
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_Document* doc = appWin->getDocument();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+
+    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
+    {
+        return RS_Vector(-16777215.0, -16777215.0);
+    }
+
+    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
+    if (a)
+    {
+        QPointF *point = new QPointF;
+        bool status = false;
+
+        if (!(prompt.isEmpty()))
+        {
+            a->setMessage(prompt);
+        }
+
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+#if 0
+        if (base) a->setBasepoint(base);
+#endif
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!graphicView->getEventHandler()->hasAction())
+                break;
+        }
+        if (a->isCompleted() && !a->wasCanceled())
+        {
+            a->getPoint(point);
+            status = true;
+        }
+        //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
+        graphicView->killAllActions();
+
+        if(status)
+        {
+            x = point->x();
+            y = point->y();
+            delete point;
+            RS_Vector(x, y);
+        }
+        else
+        {
+            delete point;
+        }
+    }
+
+    return RS_Vector(-16777215.0, -16777215.0);
 }
 
 char RS_PythonGui::ReadCharDialog()

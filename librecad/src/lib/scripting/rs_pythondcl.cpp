@@ -265,50 +265,50 @@ const char *RS_PythonDcl::getTile(const char *key)
         {
             switch (tile->value().id)
             {
-            case EDIT_BOX:
-            {
-                qDebug() << "getTile EDIT_BOX";
-                const lclEdit* e = static_cast<const lclEdit*>(tile);
-                return qUtf8Printable(e->edit()->text());
-            }
-            break;
-            case LIST_BOX:
-            {
-                qDebug() << "getTile LIST_BOX";
-                const lclListBox* lb = static_cast<const lclListBox*>(tile);
-                return std::to_string(lb->list()->currentRow()).c_str();
-            }
-            break;
-            case BUTTON:
-            {
-                qDebug() << "getTile BUTTON";
-                const lclButton* b = static_cast<const lclButton*>(tile);
-                return qUtf8Printable(b->button()->text());
-            }
-            break;
-            case RADIO_BUTTON:
-            {
-                qDebug() << "getTile RADIO_BUTTON";
-                const lclButton* rb = static_cast<const lclButton*>(tile);
-                return qUtf8Printable(rb->button()->text());
-            }
-            break;
-            case TEXT:
-            {
-                qDebug() << "getTile TEXT";
-                const lclLabel* l = static_cast<const lclLabel*>(tile);
-                return qUtf8Printable(l->label()->text());
-            }
-            break;
-            case POPUP_LIST:
-            {
-                qDebug() << "getTile POPUP_LIST";
-                const lclPopupList* pl = static_cast<const lclPopupList*>(tile);
-                return std::to_string(pl->list()->currentIndex()).c_str();
-            }
-            break;
-            default:
-                return "";
+                case EDIT_BOX:
+                {
+                    qDebug() << "getTile EDIT_BOX";
+                    const lclEdit* e = static_cast<const lclEdit*>(tile);
+                    return qUtf8Printable(e->edit()->text());
+                }
+                    break;
+                case LIST_BOX:
+                {
+                    qDebug() << "getTile LIST_BOX";
+                    const lclListBox* lb = static_cast<const lclListBox*>(tile);
+                    return std::to_string(lb->list()->currentRow()).c_str();
+                }
+                    break;
+                case BUTTON:
+                {
+                    qDebug() << "getTile BUTTON";
+                    const lclButton* b = static_cast<const lclButton*>(tile);
+                    return qUtf8Printable(b->button()->text());
+                }
+                    break;
+                case RADIO_BUTTON:
+                {
+                    qDebug() << "getTile RADIO_BUTTON";
+                    const lclButton* rb = static_cast<const lclButton*>(tile);
+                    return qUtf8Printable(rb->button()->text());
+                }
+                    break;
+                case TEXT:
+                {
+                    qDebug() << "getTile TEXT";
+                    const lclLabel* l = static_cast<const lclLabel*>(tile);
+                    return qUtf8Printable(l->label()->text());
+                }
+                    break;
+                case POPUP_LIST:
+                {
+                    qDebug() << "getTile POPUP_LIST";
+                    const lclPopupList* pl = static_cast<const lclPopupList*>(tile);
+                    return std::to_string(pl->list()->currentIndex()).c_str();
+                }
+                    break;
+                default:
+                    return "";
             }
         }
     }
@@ -336,28 +336,28 @@ bool RS_PythonDcl::modeTile(const char *key, int val)
                 const lclEdit* e = static_cast<const lclEdit*>(tile);
                 switch (val)
                 {
-                case 0:
-                {
-                    e->edit()->setEnabled(true);
-                }
-                break;
-                case 1:
-                {
-                    e->edit()->setEnabled(false);
-                }
-                break;
-                case 2:
-                {
-                    e->edit()->setFocus();
-                }
-                break;
-                case 3:
-                {
-                    e->edit()->selectAll();
-                }
-                break;
-                default:
-                    return false;
+                    case 0:
+                    {
+                        e->edit()->setEnabled(true);
+                    }
+                        break;
+                    case 1:
+                    {
+                        e->edit()->setEnabled(false);
+                    }
+                        break;
+                    case 2:
+                    {
+                        e->edit()->setFocus();
+                    }
+                        break;
+                    case 3:
+                    {
+                        e->edit()->selectAll();
+                    }
+                        break;
+                    default:
+                        return false;
                 }
             }
             break;
@@ -367,28 +367,28 @@ bool RS_PythonDcl::modeTile(const char *key, int val)
                 const lclListBox* e = static_cast<const lclListBox*>(tile);
                 switch (val)
                 {
-                case 0:
-                {
-                    e->list()->setEnabled(true);
-                }
-                break;
-                case 1:
-                {
-                    e->list()->setEnabled(false);
-                }
-                break;
-                case 2:
-                {
-                    e->list()->setFocus();
-                }
-                break;
-                case 3:
-                {
-                    e->list()->selectAll();
-                }
-                break;
-                default:
-                    return false;
+                    case 0:
+                    {
+                        e->list()->setEnabled(true);
+                    }
+                        break;
+                    case 1:
+                    {
+                        e->list()->setEnabled(false);
+                    }
+                        break;
+                    case 2:
+                    {
+                        e->list()->setFocus();
+                    }
+                        break;
+                    case 3:
+                    {
+                        e->list()->selectAll();
+                    }
+                        break;
+                    default:
+                        return false;
                 }
             }
             break;
@@ -398,23 +398,23 @@ bool RS_PythonDcl::modeTile(const char *key, int val)
                 const lclButton* b = static_cast<const lclButton*>(tile);
                 switch (val)
                 {
-                case 0:
-                {
-                    b->button()->setEnabled(true);
-                }
-                break;
-                case 1:
-                {
-                    b->button()->setEnabled(false);
-                }
-                break;
-                case 2:
-                {
-                    b->button()->setFocus();
-                }
-                break;
-                default:
-                    return false;
+                    case 0:
+                    {
+                        b->button()->setEnabled(true);
+                    }
+                        break;
+                    case 1:
+                    {
+                        b->button()->setEnabled(false);
+                    }
+                        break;
+                    case 2:
+                    {
+                        b->button()->setFocus();
+                    }
+                        break;
+                    default:
+                        return false;
                 }
             }
             break;
@@ -424,23 +424,23 @@ bool RS_PythonDcl::modeTile(const char *key, int val)
                 const lclButton* rb = static_cast<const lclButton*>(tile);
                 switch (val)
                 {
-                case 0:
-                {
-                    rb->button()->setEnabled(true);
-                }
-                break;
-                case 1:
-                {
-                    rb->button()->setEnabled(false);
-                }
-                break;
-                case 2:
-                {
-                    rb->button()->setFocus();
-                }
-                break;
-                default:
-                    return false;
+                    case 0:
+                    {
+                        rb->button()->setEnabled(true);
+                    }
+                        break;
+                    case 1:
+                    {
+                        rb->button()->setEnabled(false);
+                    }
+                        break;
+                    case 2:
+                    {
+                        rb->button()->setFocus();
+                    }
+                        break;
+                    default:
+                        return false;
                 }
             }
             break;
@@ -450,23 +450,23 @@ bool RS_PythonDcl::modeTile(const char *key, int val)
                 const lclLabel* l = static_cast<const lclLabel*>(tile);
                 switch (val)
                 {
-                case 0:
-                {
-                    l->label()->setEnabled(true);
-                }
-                break;
-                case 1:
-                {
-                    l->label()->setEnabled(false);
-                }
-                break;
-                case 2:
-                {
-                    l->label()->setFocus();
-                }
-                break;
-                default:
-                    return false;
+                    case 0:
+                    {
+                        l->label()->setEnabled(true);
+                    }
+                        break;
+                    case 1:
+                    {
+                        l->label()->setEnabled(false);
+                    }
+                        break;
+                    case 2:
+                    {
+                        l->label()->setFocus();
+                    }
+                        break;
+                    default:
+                        return false;
                 }
             }
             break;
@@ -476,26 +476,26 @@ bool RS_PythonDcl::modeTile(const char *key, int val)
                 const lclPopupList* pl = static_cast<const lclPopupList*>(tile);
                 switch (val)
                 {
-                case 0:
-                {
-                    pl->list()->setEnabled(true);
-                }
-                break;
-                case 1:
-                {
-                    pl->list()->setEnabled(false);
-                }
-                break;
-                case 2:
-                {
-                    pl->list()->setFocus();
-                }
-                break;
-                default:
-                    return false;
+                    case 0:
+                    {
+                        pl->list()->setEnabled(true);
+                    }
+                       break;
+                    case 1:
+                    {
+                        pl->list()->setEnabled(false);
+                    }
+                        break;
+                    case 2:
+                    {
+                        pl->list()->setFocus();
+                    }
+                        break;
+                    default:
+                        return false;
                 }
             }
-            break;
+                break;
             default:
                 return false;
             }
@@ -647,18 +647,18 @@ int RS_PythonDcl::dimxTile(const char *key)
         {
             switch (tile->value().id)
             {
-            case IMAGE:
-            {
-                return int(tile->value().width);
-            }
-            break;
-            case IMAGE_BUTTON:
-            {
-                return 0;
-            }
-            break;
-            default:
-                return 0;
+                case IMAGE:
+                {
+                    return int(tile->value().width);
+                }
+                    break;
+                case IMAGE_BUTTON:
+                {
+                    return 0;
+                }
+                    break;
+                default:
+                    return 0;
             }
         }
     }
@@ -679,18 +679,18 @@ int RS_PythonDcl::dimyTile(const char *key)
         {
             switch (tile->value().id)
             {
-            case IMAGE:
-            {
-                return int(tile->value().height);
-            }
-            break;
-            case IMAGE_BUTTON:
-            {
-                return 0;
-            }
-            break;
-            default:
-                return 0;
+                case IMAGE:
+                {
+                    return int(tile->value().height);
+                }
+                    break;
+                case IMAGE_BUTTON:
+                {
+                    return 0;
+                }
+                    break;
+                default:
+                    return 0;
             }
         }
     }
@@ -712,20 +712,20 @@ int RS_PythonDcl::fillImage(int x1, int y1, int width, int height, int color)
         {
             switch (tile->value().id)
             {
-            case IMAGE:
-            {
-                const lclImage* img = static_cast<const lclImage*>(tile);
-                img->image()->addRect(x1, y1, width, height, color);
-                return color;
-            }
-            break;
-            case IMAGE_BUTTON:
-            {
-                return -1;
-            }
-            break;
-            default:
-                return -1;
+                case IMAGE:
+                {
+                    const lclImage* img = static_cast<const lclImage*>(tile);
+                    img->image()->addRect(x1, y1, width, height, color);
+                    return color;
+                }
+                    break;
+                case IMAGE_BUTTON:
+                {
+                    return -1;
+                }
+                    break;
+                default:
+                    return -1;
             }
         }
     }
@@ -747,24 +747,94 @@ int RS_PythonDcl::vectorImage(int x1, int y1, int x2, int y2, int color)
         {
             switch (tile->value().id)
             {
-            case IMAGE:
-            {
-                const lclImage* img = static_cast<const lclImage*>(tile);
-                img->image()->addLine(x1, y1, x2, y2, color);
-                return color;
-            }
-            break;
-            case IMAGE_BUTTON:
-            {
-                return -1;
-            }
-            break;
-            default:
-                return -1;
+                case IMAGE:
+                {
+                    const lclImage* img = static_cast<const lclImage*>(tile);
+                    img->image()->addLine(x1, y1, x2, y2, color);
+                    return color;
+                }
+                break;
+                case IMAGE_BUTTON:
+                {
+                    return -1;
+                }
+                    break;
+                default:
+                    return -1;
             }
         }
     }
     return -1;
+}
+
+const char *RS_PythonDcl::pixImage(int x1, int y1, int x2, int y2, const char *path)
+{
+    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key->value())
+        {
+            switch (tile->value().id)
+            {
+                case IMAGE:
+                {
+                    const lclImage* img = static_cast<const lclImage*>(tile);
+                    img->image()->addPicture(x1, y1, x2, y2, tile->value().aspect_ratio, path);
+                    return path;
+                }
+                    break;
+                case IMAGE_BUTTON:
+                {
+                    return "";
+                }
+                    break;
+                default:
+                    return "";
+            }
+        }
+    }
+    return "";
+}
+
+const char *RS_PythonDcl::textImage(int x1, int y1, int x2, int y2, const char *text, int color)
+{
+    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key->value())
+        {
+            switch (tile->value().id)
+            {
+                case IMAGE:
+                {
+                    const lclImage* img = static_cast<const lclImage*>(tile);
+                    img->image()->addText(x1, y1, x2, y2, text, color);
+                    return text;
+                }
+                break;
+                case IMAGE_BUTTON:
+                {
+                    return "";
+                }
+                break;
+                default:
+                    return "";
+            }
+        }
+    }
+    return "";
 }
 
 void RS_PythonDcl::endImage()
@@ -782,19 +852,19 @@ void RS_PythonDcl::endImage()
         {
             switch (tile->value().id)
             {
-            case IMAGE:
-            {
-                const lclImage* img = static_cast<const lclImage*>(tile);
-                img->image()->repaint();
-            }
-                break;
-            case IMAGE_BUTTON:
-            {
+                case IMAGE:
+                {
+                    const lclImage* img = static_cast<const lclImage*>(tile);
+                    img->image()->repaint();
+                }
+                    break;
+                case IMAGE_BUTTON:
+                {
 
-            }
-                break;
-            default: {}
-                break;
+                }
+                    break;
+                default: {}
+                    break;
             }
         }
     }

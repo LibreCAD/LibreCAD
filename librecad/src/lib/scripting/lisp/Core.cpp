@@ -3829,6 +3829,53 @@ BUILTIN("terpri")
     return lcl::nilValue();
 }
 
+BUILTIN("text_image")
+{
+    CHECK_ARGS_IS(6);
+    AG_INT(x1);
+    AG_INT(y1);
+    AG_INT(width);
+    AG_INT(height);
+    ARG(lclString, text);
+    AG_INT(color);
+
+    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key->value())
+        {
+            switch (tile->value().id)
+            {
+            case IMAGE:
+            {
+                const lclImage* img = static_cast<const lclImage*>(tile);
+                img->image()->addText(x1->value(), y1->value(),
+                                    width->value(), height->value(),
+                                    text->value().c_str(),
+                                    color->value());
+
+                return lcl::string(text->value());
+            }
+            break;
+            case IMAGE_BUTTON:
+            {
+                return lcl::nilValue();
+            }
+            break;
+            default:
+                return lcl::nilValue();
+            }
+        }
+    }
+    return lcl::nilValue();
+}
+
 BUILTIN("throw")
 {
     CHECK_ARGS_IS(1);

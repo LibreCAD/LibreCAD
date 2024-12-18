@@ -27,6 +27,9 @@ public:
     int fillImage(int x1, int y1, int width, int height, int color);
     int vectorImage(int x1, int y1, int x2, int y2, int color);
 
+    const char *pixImage(int x1, int y1, int x2, int y2, const char *path);
+    const char *textImage(int x1, int y1, int x2, int y2, const char *text, int color);
+
     const char *getTile(const char *key);
     const char *startList(const char *key, int operation=-1, int index=-1);
     const char *addList(const char *val);

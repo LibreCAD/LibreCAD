@@ -1131,6 +1131,7 @@ HEADERS += ui/action_options/circle/lc_circlebyarcoptions.h \
     ui/editor/librepython.h \
     ui/editor/dclhighlighter.h \
     ui/editor/lisphighlighter.h \
+    ui/editor/lp_version.h \
     ui/editor/lpmessage.h \
     ui/editor/lpsearchbar.h \
     ui/editor/pythonhighlighter.h \

@@ -28,7 +28,7 @@
       </property>
       <property name="styleSheet">
        <string notr="true">QTabWidget::pane { 
-	border-top: 0.1ex solid #A7A8A9;
+	border-top: 0.1ex solid #c4c7cb;
 	padding-top: 18px; 
 	padding-left: 3px; 
 	padding-right: 3px; 
@@ -46,9 +46,9 @@ QTabBar
 
 QTabBar::tab
 {
-	border-top: 0.1ex solid #A7A8A9;
-	border-left: 0.1ex solid #A7A8A9;
-	border-right: 0.1ex solid #A7A8A9;
+	border-top: 0.1ex solid #c4c7cb;
+	border-left: 0.1ex solid #c4c7cb;
+	border-right: 0.1ex solid #c4c7cb;
 	border-top-left-radius: 0.1em;
 	border-top-right-radius: 0.1em;
 
@@ -57,7 +57,7 @@ QTabBar::tab
 }
 
 QTabBar::tab:!selected {
-	background-color:  #A7A8A9;
+	background-color:  #c4c7cb;
 }
 
 QTabBar::tab:top:!selected:hover

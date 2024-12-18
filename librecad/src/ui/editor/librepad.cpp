@@ -18,6 +18,7 @@
 
 #include "librepad.h"
 #include "lpmessage.h"
+#include "lp_version.h"
 #include "ui_librepad.h"
 
 #include "lc_dlgabout.h"
@@ -779,10 +780,20 @@ void Librepad::about()
 
 void Librepad::aboutIde()
 {
+    qDebug() << LP_VERSION_STR;
     QMessageBox::about(this,
         tr("About ") + editorName(),
-        QString("<b>" + editorName() + "</b>") +
-        tr("<br>LibreCAD embedded IDE</br><br>by Emanuel GPLv2 (c) 2024</br>")
+        QString("<b>" + editorName() + " </b>") +
+        tr("Version: <b>%1</b>").arg(LP_VERSION_STR) + "<br/>" +
+        tr("<br>LibreCAD embedded IDE</br><br>by Emanuel GPLv2 (c) 2024</br><br>") +
+        QString(R"(<a href="https://github.com/LibreCAD/LibreCAD/graphs/contributors">%1</a>)"
+            "<br/>"
+            R"(<a href="https://github.com/LibreCAD/LibreCAD/blob/master/LICENSE">%2</a>)"
+            "<br/>"
+            R"(<a href="https://github.com/LibreCAD/LibreCAD/">%3</a>)")
+                .arg(tr("Contributors"))
+                .arg(tr("License"))
+                .arg(tr("The Code"))
     );
 }
 
