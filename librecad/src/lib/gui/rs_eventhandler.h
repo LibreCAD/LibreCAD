@@ -57,6 +57,7 @@ public:
     ~RS_EventHandler();
 
     void setQAction(QAction* action);
+    QAction* getQAction();
 
     void back();
     void enter();

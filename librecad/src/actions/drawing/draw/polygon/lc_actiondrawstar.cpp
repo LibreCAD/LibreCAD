@@ -67,6 +67,7 @@ RS_Vector LC_ActionDrawStar::doGetMouseSnapPoint(QMouseEvent *e){
  */
 void LC_ActionDrawStar::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     RS_Polyline* polyline = createShapePolyline(snap, list, status, true);
+    // fixme - info about start to be created (center, inner/outer radiuses)
     addPolylineToEntitiesList(polyline,  list, true);
 }
 /**

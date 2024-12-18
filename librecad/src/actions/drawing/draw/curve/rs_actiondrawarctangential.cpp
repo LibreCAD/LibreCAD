@@ -128,7 +128,7 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
     switch (status){
         case SetBaseEntity: {
             deleteSnapper();
-            RS_Entity *entity = catchEntity(e, RS2::ResolveAll);
+            RS_Entity *entity = catchEntityOnPreview(e, RS2::ResolveAll);
             if (entity != nullptr){
                 if (entity->isAtomic()){
                     highlightHover(entity);
@@ -153,10 +153,10 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
                 if (alternateArcMode) {
                     RS_ArcData tmpArcData = *data;
                     tmpArcData.reversed = !data->reversed;
-                    arc = previewArc(tmpArcData);
+                    arc = previewToCreateArc(tmpArcData);
                 }
                 else{
-                    arc = previewArc(*data);
+                    arc = previewToCreateArc(*data);
                 }
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(data->center);

@@ -66,6 +66,7 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createFileActions(a_map, agm->file);
 
     createSnapActions(a_map, agm->snap);
+    createInfoCursorActions(a_map, agm->infoCursor);
     createSnapExtraActions(a_map, agm->snap_extras);
     createRestrictActions(a_map, agm->restriction);
     createOtherActions(a_map, agm->other);
@@ -325,6 +326,20 @@ void LC_ActionFactory::createPenActions(QMap<QString, QAction *> &map, QActionGr
     });
 }
 
+void LC_ActionFactory::createInfoCursorActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActionHandlerActions(map, group, {
+        {"EntityInfoOrSelection", RS2::ActionEntityInfoSelectSingle, tr("Info/Selection"), ":/icons/entity_description_info.svg"},
+    });
+    createActions(map, group, {
+        {"InfoCursorEnable", tr("Enable Info Cursor"), ":/icons/info_cursor_enable.svg"},
+        {"InfoCursorAbs", tr("Absolute Pos"), ":/icons/info_cursor_zone1.svg"},
+        {"InfoCursorSnap", tr("Snap"), ":/icons/info_cursor_zone2.svg"},
+        {"InfoCursorRel", tr("Relative"), ":/icons/info_cursor_zone3.svg"},
+        {"InfoCursorPrompt", tr("Prompt"), ":/icons/info_cursor_zone4.svg"},
+        {"InfoCursorCatchedEntity", tr("Catched Entity"), ":/icons/info_cursor_zone2_entity.svg"},
+    });
+}
+
 void LC_ActionFactory::createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group) {
     createActions(map, group, {
         {"SnapGrid",         tr("Snap on grid"),       ":/icons/snap_grid.svg"},
@@ -356,7 +371,6 @@ void LC_ActionFactory::createOtherActions(QMap<QString, QAction *> &map, QAction
     });
 }
 
-
 void LC_ActionFactory::createSnapExtraActions(QMap<QString, QAction *> &map, QActionGroup *group) {
     createActions(map, group, {
         {"ExclusiveSnapMode", tr("Exclusive Snap Mode"), ":/icons/exclusive.svg"},
@@ -365,12 +379,11 @@ void LC_ActionFactory::createSnapExtraActions(QMap<QString, QAction *> &map, QAc
 }
 
 void LC_ActionFactory::createOrderActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
-
     createActionHandlerActions(map, group, {
-        {"OrderBottom", RS2::ActionOrderBottom, tr("move to bottom"), ":/icons/downmost.svg"},
-        {"OrderLower",  RS2::ActionOrderLower, tr("lower after entity"), ":/icons/down.svg"},
-        {"OrderRaise",  RS2::ActionOrderRaise, tr("raise over entity"), ":/icons/up.svg"},
-        {"OrderTop",    RS2::ActionOrderTop, tr("move to top"), ":/icons/upmost.svg"}
+        {"OrderBottom", RS2::ActionOrderBottom, tr("Move to Bottom"), ":/icons/downmost.svg"},
+        {"OrderLower",  RS2::ActionOrderLower, tr("Lower After Entity"), ":/icons/down.svg"},
+        {"OrderRaise",  RS2::ActionOrderRaise, tr("Raise Over Entity"), ":/icons/up.svg"},
+        {"OrderTop",    RS2::ActionOrderTop, tr("Move to Top"), ":/icons/upmost.svg"}
     });
 }
 

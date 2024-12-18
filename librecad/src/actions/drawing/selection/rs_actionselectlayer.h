@@ -46,6 +46,9 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+
+    void updateMouseButtonHints() override;
+
 private:
     RS_Entity* en = nullptr;
 };

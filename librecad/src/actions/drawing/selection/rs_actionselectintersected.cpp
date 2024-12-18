@@ -76,16 +76,17 @@ void RS_ActionSelectIntersected::trigger(){
 }
 
 void RS_ActionSelectIntersected::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_Vector snap = snapPoint(e);
     if (getStatus() == SetPoint2 && pPoints->v1.valid){
         pPoints->v2 = snap;
-        deletePreview();
         previewLine(pPoints->v1, pPoints->v2);
         // todo - of course, ideally it will be also to highlight entities that will be selected...
         // however, calculating of intersections as it is currently is may be quite costly operation for mouse move
         // todo - review preview for selected entities after indexing
-        drawPreview();
+
     }
+    drawPreview();
 }
 
 void RS_ActionSelectIntersected::mousePressEvent(QMouseEvent *e){

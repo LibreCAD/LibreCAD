@@ -294,7 +294,7 @@ void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent *event){
     deletePreview();
     deleteSnapper();
     if (getStatus() == ChooseEntity){
-        auto en = catchEntity(event, RS2::EntityPolyline);
+        auto en = catchEntityOnPreview(event, RS2::EntityPolyline);
         if (en != nullptr){
             highlightHover(en);
             auto polyline = dynamic_cast<RS_Polyline *>(en);

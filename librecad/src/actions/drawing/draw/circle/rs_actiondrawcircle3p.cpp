@@ -134,7 +134,7 @@ void RS_ActionDrawCircle3P::mouseMoveEvent(QMouseEvent *e){
             preparePreview();
             deletePreview();
             if (pPoints->data.isValid()) {
-                previewCircle(pPoints->data);
+                previewToCreateCircle(pPoints->data);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->data.center);
                     previewRefPoint(pPoints->point1);

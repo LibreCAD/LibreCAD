@@ -177,7 +177,7 @@ void LC_ActionDrawCircleByArc::drawSnapper() {
 
 void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
 
-    RS_Entity *en = catchEntity(e, circleType, RS2::ResolveAll);
+    RS_Entity *en = catchEntityOnPreview(e, circleType, RS2::ResolveAll);
     if (en != nullptr){
         highlightHover(en);
         int rtti = en->rtti();
@@ -187,11 +187,12 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]QMouseEv
 
             RS_CircleData circleData = createCircleData(arc);
             RS_Entity *circle = new RS_Circle(container, circleData);
+            prepareEntityDescription(circle, RS2::EntityDescriptionLevel::DescriptionCreating);
             list << circle;
 
             if (showRefEntitiesOnPreview) {
                 createRefPoint(circleData.center, list);
-            };
+            }
 
             entity = arc;
         } else {
@@ -201,6 +202,7 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]QMouseEv
                 if (ellipseArc->isEllipticArc()){
                     RS_EllipseData ellipseData = createEllipseData(ellipseArc);
                     auto ellipse = new RS_Ellipse(container, ellipseData);
+                    prepareEntityDescription(ellipse, RS2::EntityDescriptionLevel::DescriptionCreating);
                     list << ellipse;
 
                     if (showRefEntitiesOnPreview) {
@@ -221,7 +223,6 @@ void LC_ActionDrawCircleByArc::doOnLeftMouseButtonRelease([[maybe_unused]]QMouse
         trigger();
     }
 }
-
 
 void LC_ActionDrawCircleByArc::updateMouseButtonHints(){
     switch (getStatus()) {

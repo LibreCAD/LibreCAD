@@ -97,5 +97,12 @@ protected:
     void highlightHoveredEntities(QMouseEvent* currentMousePosition);
     void highlightEntity(RS_Entity* entity);
     void updateMouseButtonHints() override;
+
+    void createEditedLineDescription(RS_Line* clone, bool ctrlPressed, bool shiftPressed);
+    void createEditedArcDescription(RS_Arc* clone, bool ctrlPressed, bool shiftPressed);
+    void createEditedCircleDescription(RS_Circle* clone, bool ctrlPressed, bool shiftPressed);
+
+    bool isShowEntityDescriptionOnHighlight();
+    void forceUpdateInfoCursor(const QMouseEvent *event);
 };
 #endif

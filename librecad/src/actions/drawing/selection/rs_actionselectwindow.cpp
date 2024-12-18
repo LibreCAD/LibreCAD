@@ -51,8 +51,7 @@ RS_ActionSelectWindow::RS_ActionSelectWindow(RS_EntityContainer& container,
     : RS_PreviewActionInterface("Select Window",
                                 container, graphicView)
     , pPoints(std::make_unique<Points>())
-    , select(select)
-{
+    , select(select){
     actionType=RS2::ActionSelectWindow;
 }
 
@@ -64,8 +63,7 @@ RS_ActionSelectWindow::RS_ActionSelectWindow(
     : RS_PreviewActionInterface("Select Window",
                                 container, graphicView)
     , pPoints(std::make_unique<Points>())
-    , select(select)
-{
+    , select(select){
     actionType=RS2::ActionSelectWindow;
     if (typeToSelect == RS2::EntityUnknown){
         setSelectAllEntityTypes(true);
@@ -89,10 +87,8 @@ void RS_ActionSelectWindow::init(int status) {
 
 void RS_ActionSelectWindow::trigger(){
     RS_PreviewActionInterface::trigger();
-
     if (pPoints->v1.valid && pPoints->v2.valid){
         if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
-
             bool cross = (pPoints->v1.x > pPoints->v2.x) || selectIntersecting;
             RS_Selection s(*container, graphicView);
             bool doSelect = select;
@@ -113,11 +109,13 @@ void RS_ActionSelectWindow::trigger(){
 
 void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
     drawSnapper();
+    deletePreview();
+    snapPoint(e);
     RS_Vector snapped = toGraph(e);
     updateCoordinateWidgetByRelZero(snapped);
     if (getStatus()==SetCorner2 && pPoints->v1.valid) {
         pPoints->v2 = snapped;
-        deletePreview();
+
         auto* ob=new RS_OverlayBox(preview.get(), RS_OverlayBoxData(pPoints->v1, pPoints->v2));
         preview->addEntity(ob);
 
@@ -141,8 +139,9 @@ void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
                 e->setPen(pen);
         preview->addEntity(e);*/
 
-        drawPreview();
+
     }
+    drawPreview();
 }
 
 void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {

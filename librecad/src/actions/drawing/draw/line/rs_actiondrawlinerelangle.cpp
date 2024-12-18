@@ -94,9 +94,11 @@ void RS_ActionDrawLineRelAngle::trigger() {
 void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineRelAngle::mouseMoveEvent begin");
     deleteHighlights();
+    deletePreview();
+    RS_Vector snap = snapPoint(e);
     switch (getStatus()) {
         case SetEntity: {
-            entity = catchEntity(e, enTypeList, RS2::ResolveAll);
+            entity = catchEntityOnPreview(e, enTypeList, RS2::ResolveAll);
             if (entity != nullptr){
                 highlightHover(entity);
             }
@@ -106,7 +108,7 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent *e){
             highlightSelected(entity);
             //length = graphicView->toGraphDX(graphicView->getWidth());
             //RS_Vector mouse = snapPoint(e);
-            RS_Vector snap = snapPoint(e);
+
             *pos = getRelZeroAwarePoint(e, snap);
 
             /*RS_Creation creation(nullptr, nullptr);
@@ -115,12 +117,12 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent *e){
                              angle,
                              length);*/
 
-            deletePreview();
-
             RS_Creation creation(preview.get(), nullptr, false);
             double angleRad = RS_Math::deg2rad(angle);
             RS_Line* lineToCreate = creation.createLineRelAngle(*pos,entity, angleRad, length);
-
+            if (lineToCreate != nullptr){
+                previewEntityToCreate(lineToCreate, false);
+            }
             if (showRefEntitiesOnPreview) {
                 if (lineToCreate != nullptr) {
                     auto const vp = entity->getNearestPointOnEntity(*pos, false);
@@ -128,13 +130,12 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent *e){
                     previewRefPoint(lineToCreate->getEndpoint());
                 }
             }
-
-            drawPreview();
             break;
         }
         default:
             break;
     }
+    drawPreview();
     drawHighlights();
 
     RS_DEBUG->print("RS_ActionDrawLineRelAngle::mouseMoveEvent end");
@@ -252,7 +253,7 @@ void RS_ActionDrawLineRelAngle::updateMouseButtonHints(){
             updateMouseWidgetTRCancel(tr("Select base entity"));
             break;
         case SetPos:
-            updateMouseWidgetTRBack(tr("Specify position"));
+            updateMouseWidgetTRBack(tr("Specify position"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         default:
             updateMouseWidget();

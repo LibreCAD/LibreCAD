@@ -147,9 +147,8 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e){
             deletePreview();
             RS_Vector &startPoint = pPoints->data.startpoint;
             if (startPoint.valid){
-                // Snapping to angle(15*) if shift key is pressed
                 mouse = getSnapAngleAwarePoint(e, startPoint, mouse, true);
-                previewLine(startPoint, mouse);
+                previewToCreateLine(startPoint, mouse);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(startPoint);
                     previewRefSelectablePoint(mouse);

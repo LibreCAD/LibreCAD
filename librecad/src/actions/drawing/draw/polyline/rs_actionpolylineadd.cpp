@@ -81,7 +81,7 @@ void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent *e){
     switch (status) {
         case ChooseSegment: {
             deleteSnapper();
-            auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e, RS2::EntityPolyline));
+            auto polyline = dynamic_cast<RS_Polyline *>(catchEntityOnPreview(e, RS2::EntityPolyline));
             if (polyline != nullptr){
                 highlightHover(polyline);
             }
@@ -97,7 +97,7 @@ void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent *e){
             if (polyline == polylineToModify){
                 RS_Vector coordinate = polyline->getNearestPointOnEntity(snap, true);
                 previewRefSelectablePoint(coordinate);
-                RS_Entity * segment = catchEntity(coordinate, RS2::ResolveAll);
+                RS_Entity * segment = catchEntityOnPreview(coordinate, RS2::ResolveAll);
                 highlightHover(segment);
             }
             drawPreview();

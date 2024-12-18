@@ -58,7 +58,11 @@ void LC_ActionDrawRectangle2Points::doInitialSnapToRelativeZero(RS_Vector zero){
     setMainStatus(SetPoint2);
 }
 
-RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snapPoint) {
+LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snapPoint) {
+
+    ShapeData result;
+
+    result.snapPoint = snapPoint;
 
     RS_Vector c2 = snapPoint;
     RS_Vector c1 = corner1;
@@ -149,6 +153,8 @@ RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snap
     // ensure proper order of corners
     normalizeCorners(bottomLeftCorner, bottomRightCorner, topRightCorner, topLeftCorner);
 
+
+
     if (drawBulge && snapToCornerArcCenter){
 
         // adjust corners coordinates, so we'll snap to arc centers
@@ -163,15 +169,21 @@ RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snap
         topRightCorner = topRightCorner + radiusShiftX + radiusShiftY;
     }
 
+    result.height = bottomLeftCorner.distanceTo(topLeftCorner);
+    result.width = bottomLeftCorner.distanceTo(bottomRightCorner);
+    result.centerPoint = (bottomLeftCorner + topRightCorner) / 2;
+
     RS_Polyline *polyline = createPolylineByVertexes(bottomLeftCorner, bottomRightCorner, topRightCorner, topLeftCorner, drawBulge, drawComplex, radiusX, radiusY);
 
     if (rotate) {
         // rotate corners:
         // now we'll rotate shape on specific angle
         polyline->rotate(corner1, angleRad);
+        result.centerPoint = result.centerPoint.rotate(corner1, angleRad);
     }
 
-    return polyline;
+    result.resultingPolyline = polyline;
+    return result;
 }
 
 void LC_ActionDrawRectangle2Points::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){

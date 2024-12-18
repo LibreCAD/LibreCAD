@@ -189,11 +189,16 @@ void RS_EventHandler::checkLastActionCompletedAndUncheckQAction(const std::share
  * Called by QG_GraphicView
  */
 void RS_EventHandler::mouseMoveEvent(QMouseEvent* e){
-    if(hasAction())
-        currentActions.last()->mouseMoveEvent(e);
-
-    else if (defaultAction)
+    if(hasAction()) {
+        std::shared_ptr<RS_ActionInterface> &lastAction = currentActions.last();
+        lastAction->mouseMoveEvent(e);
+        checkLastActionCompletedAndUncheckQAction(lastAction);
+        cleanUp();
+        e->accept();
+    }
+    else if (defaultAction) {
         defaultAction->mouseMoveEvent(e);
+    }
 }
 
 /**
@@ -642,6 +647,10 @@ void RS_EventHandler::debugActions() const{
                         i, currentActions.at(i)->getName().toLatin1().data(),
                         currentActions.at(i)->isFinished() ? "finished" : "active");
     }
+}
+
+QAction* RS_EventHandler::getQAction(){
+  return q_action;
 }
 
 void RS_EventHandler::setQAction(QAction *action) {

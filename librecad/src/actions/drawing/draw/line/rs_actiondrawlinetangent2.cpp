@@ -116,18 +116,18 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent *e){
     deleteSnapper();
     deletePreview();
     deleteHighlights();
+    snapPoint(e);
     switch (getStatus()) {
         case SetCircle1: {
             deletePreview();
-            auto *en = catchEntity(e, circleType, RS2::ResolveAll);
+            auto *en = catchEntityOnPreview(e, circleType, RS2::ResolveAll);
             if (en != nullptr){
                 highlightHover(en);
             }
-            drawPreview();
             break;
         }
         case SetCircle2: {
-            RS_Entity *en = catchEntity(e, circleType, RS2::ResolveAll);
+            RS_Entity *en = catchEntityOnPreview(e, circleType, RS2::ResolveAll);
             highlightSelected(m_pPoints->circle1);
             if (en != nullptr && en != m_pPoints->circle1){
                 highlightHover(en);
@@ -142,12 +142,14 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent *e){
             break;
         }
         case SelectLine: {
+            // FIXME _ SAND _ is there not-necessary click?
             highlightSelected(m_pPoints->circle1);
             highlightSelected(m_pPoints->circle2);
             preparePreview(e);
             break;
         }
     }
+    drawPreview();
     drawHighlights();
 }
 
@@ -213,7 +215,7 @@ void RS_ActionDrawLineTangent2::preparePreview(QMouseEvent *e){
                 previewRefSelectablePoint(line->getData().endpoint);
             }
             const RS_LineData &lineData = m_pPoints->tangents.front()->getData();
-            previewLine(lineData.startpoint, lineData.endpoint);
+            previewToCreateLine(lineData.startpoint, lineData.endpoint);
             drawPreview();
             break;
         }

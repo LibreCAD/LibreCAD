@@ -115,7 +115,7 @@ void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent *e){
     RS_Vector mouse = toGraph(e);
     // it seems that bevel works properly with lines only... it relies on trimEndpoint/moveEndpoint methods, which
     // have some support for arc and ellipse, yet still...
-    RS_Entity *se = catchEntity(e, RS2::EntityLine, RS2::ResolveAllButTextImage);
+    RS_Entity *se = catchEntityOnPreview(e, RS2::EntityLine, RS2::ResolveAllButTextImage);
 
     deleteHighlights();
 

@@ -255,6 +255,17 @@ void LC_ActionDrawLinePolygonBase::createPolygonPreview(const RS_Vector &mouse) 
     RS_Polyline* polyline = createShapePolyline(polygonInfo, true);
     if (polyline != nullptr){
         previewEntity(polyline);
+        QString msg = tr("To be created: ").append(tr("Polygon"));
+        msg.append("\n");
+        msg.append(tr("Start angle: "));
+        msg.append(formatAngle(polygonInfo.startingAngle));
+        msg.append("\n");
+        msg.append(tr("Radius: "));
+        msg.append(formatLinear(polygonInfo.vertexRadius));
+        msg.append("\n");
+        msg.append(tr("Center: "));
+        msg.append(formatVector(polygonInfo.centerPoint));
+        appendInfoCursorEntityCreationMessage(msg);
     }
 }
 

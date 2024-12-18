@@ -136,7 +136,7 @@ void RS_ActionOrder::mouseRightButtonReleaseEventSelected(int status, [[maybe_un
 }
 
 void RS_ActionOrder::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Choose entities (Enter to Complete)"),  MOD_CTRL(tr("Order immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Choose entities (Enter to Complete)"), MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Order immediately after selection")));
 }
 
 void RS_ActionOrder::updateMouseButtonHintsForSelected([[maybe_unused]]int status) {

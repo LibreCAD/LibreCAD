@@ -101,7 +101,8 @@ void RS_ActionDrawPolyline::trigger() {
 
 void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent begin");
-
+    deleteHighlights();
+    deletePreview();
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
     switch (status) {
@@ -110,8 +111,6 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
             break;
         }
         case SetNextPoint: {
-            deleteHighlights();
-            deletePreview();
             if (m_mode == Line){
                 mouse = getSnapAngleAwarePoint(e, pPoints->point, mouse, true);
             }
@@ -129,7 +128,7 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
                 }
 
                 if (fabs(bulge) < RS_TOLERANCE || m_mode == Line){
-                    previewLine(pPoints->point, mouse);
+                    previewToCreateLine(pPoints->point, mouse);
                     if (showRefEntitiesOnPreview) {
                         previewRefPoint(pPoints->point);
                         previewRefSelectablePoint(mouse);
@@ -139,7 +138,7 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
                     if (alternateDirection && m_mode != Ang){
                         tmpArcData.reversed = !tmpArcData.reversed;
                     }
-                    auto arc = previewArc(tmpArcData);
+                    auto arc = previewToCreateArc(tmpArcData);
                     if (showRefEntitiesOnPreview) {
                         const RS_Vector &center = arc->getCenter();
                         const RS_Vector &endpoint = arc->getEndpoint();
@@ -159,14 +158,14 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
                     }
                 }
             }
-            drawHighlights();
-            drawPreview();
+
             break;
         }
         default:
             break;
     }
-
+    drawHighlights();
+    drawPreview();
     RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent end");
 }
 

@@ -92,6 +92,13 @@ public:
     static constexpr char const* overlayBoxLine = "#3232ff";
     static constexpr char const* overlayBoxFill = "#0909ff";
 
+    static constexpr char const* overlayInfoCursorAbsolutePos = "Yellow";
+    static constexpr char const* overlayInfoCursorSnap = "Cyan";
+    static constexpr char const* overlayInfoCursorRelativePos = "Orange";
+    static constexpr char const* overlayInfoCursorCommandPrompt = "Gray";
+
+
+
     // Used to have RAII style GroupGuard: endGroup is called automatically whenever a unique_ptr<GroupGuard>
     // goes out of scope
     class GroupGuard {

@@ -68,7 +68,7 @@ void LC_ActionDrawMidLine::mouseMoveEvent(QMouseEvent *e) {
     deleteHighlights();
     switch (getStatus()){
         case SetEntity1: {
-            RS_Entity* ent = catchEntity(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
+            RS_Entity* ent = catchEntityOnPreview(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
                 highlightHover(ent);
             }
@@ -76,7 +76,7 @@ void LC_ActionDrawMidLine::mouseMoveEvent(QMouseEvent *e) {
         }
         case SetEntity2:{
             highlightSelected(firstEntity);
-            RS_Entity* ent = catchEntity(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
+            RS_Entity* ent = catchEntityOnPreview(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
                 highlightHover(ent);
                 bool alternate = isShift(e);
@@ -93,7 +93,7 @@ void LC_ActionDrawMidLine::mouseMoveEvent(QMouseEvent *e) {
                         previewRefPoint(lineInfo.middlePoint1);
                         previewRefPoint(lineInfo.middlePoint2);
                     }
-                    previewEntity(lineInfo.line);
+                    previewEntityToCreate(lineInfo.line);
                 }
             }
             break;

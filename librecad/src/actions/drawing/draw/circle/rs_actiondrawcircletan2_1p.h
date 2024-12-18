@@ -62,7 +62,7 @@ protected:
     };
     struct Points;
     std::unique_ptr<Points> pPoints;
-    RS_Entity* catchCircle(QMouseEvent* e);
+    RS_Entity* catchCircle(QMouseEvent* e, bool forPreview);
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;

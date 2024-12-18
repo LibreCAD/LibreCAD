@@ -40,14 +40,17 @@ RS_ActionSelectLayer::RS_ActionSelectLayer(
 }
 
 void RS_ActionSelectLayer::mouseMoveEvent(QMouseEvent *event){
-    snapPoint(event);
+    deletePreview();
     deleteSnapper();
     deleteHighlights();
-    auto ent = catchEntity(event);
+    snapPoint(event);
+
+    auto ent = catchEntityOnPreview(event);
     if (ent != nullptr){
         highlightHover(ent);
     }
     drawHighlights();
+    drawPreview();
 }
 
 void RS_ActionSelectLayer::trigger(){
@@ -72,4 +75,8 @@ void RS_ActionSelectLayer::onMouseRightButtonRelease(int status, [[maybe_unused]
 
 RS2::CursorType RS_ActionSelectLayer::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;
+}
+
+void RS_ActionSelectLayer::updateMouseButtonHints() {
+   updateMouseWidgetTRCancel(tr("Specify entity with desired layer"));
 }

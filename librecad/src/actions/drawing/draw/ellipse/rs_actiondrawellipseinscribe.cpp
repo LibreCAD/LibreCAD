@@ -110,17 +110,16 @@ void RS_ActionDrawEllipseInscribe::drawSnapper() {
 
 void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawEllipse4Line::mouseMoveEvent begin");
-
-    snapPoint(e);
     deleteHighlights();
     deletePreview();
+    snapPoint(e);
     int status = getStatus();
 
     for(RS_AtomicEntity* const pc: pPoints->lines) { // highlight already selected
         highlightSelected(pc);
     }
 
-    RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
+    RS_Entity *en = catchModifiableEntityOnPreview(e, RS2::EntityLine);
    // bool shouldIgnore = false;
     if (en != nullptr){
         auto *line = dynamic_cast<RS_Line *>(en);
@@ -156,7 +155,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent *e){
                         tangent.reserve(4);
                         if (preparePreview(line, tangent)){
                             highlightHover(line);
-                            auto ellipse = previewEllipse(pPoints->eData);
+                            auto ellipse = previewToCreateEllipse(pPoints->eData);
                             if (showRefEntitiesOnPreview) {
                                 RS_Vector ellipseCenter = ellipse->getCenter();
 

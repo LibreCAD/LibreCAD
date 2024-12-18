@@ -42,6 +42,7 @@ public:
     LC_ActionGroup* namedViews;
     LC_ActionGroup* widgets;
     LC_ActionGroup* pen;
+    LC_ActionGroup* infoCursor;
 
     QList<LC_ActionGroup*> toolGroups();
     QMap<QString, LC_ActionGroup*> allGroups();

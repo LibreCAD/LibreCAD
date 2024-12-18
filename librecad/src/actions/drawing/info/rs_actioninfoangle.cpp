@@ -65,6 +65,7 @@ void RS_ActionInfoAngle::init(int status){
     RS_PreviewActionInterface::init(status);
 }
 
+
 void RS_ActionInfoAngle::drawSnapper() {
     // disable snapper
 }
@@ -79,17 +80,15 @@ void RS_ActionInfoAngle::trigger(){
                 auto line = dynamic_cast<RS_Line*>(entity1);
                 double angle1 = line->getAngle1();
                 double angle2 = line->getAngle2();
-                RS2::AngleFormat angleFormat = graphic->getAngleFormat();
-                int anglePrec = graphic->getAnglePrecision();
-                QString strAngle1 = RS_Units::formatAngle(angle1, angleFormat, anglePrec);
+                QString strAngle1 = formatAngle(angle1);
                 if (angle1 < 0.) {
                     strAngle1 += " or ";
-                    strAngle1 += RS_Units::formatAngle(angle1 + 2. * M_PI, angleFormat, anglePrec);
+                    strAngle1 += formatAngle(angle1 + 2. * M_PI);
                 }
-                QString strAngle2 = RS_Units::formatAngle(angle2, angleFormat, anglePrec);
+                QString strAngle2 = formatAngle(angle2);
                 if (angle2 < 0.) {
                     strAngle2 += " or ";
-                    strAngle2 += RS_Units::formatAngle(angle2 + 2. * M_PI, angleFormat, anglePrec);
+                    strAngle2 += formatAngle(angle2 + 2. * M_PI);
                 }
                 commandMessage("---");
                 const QString &msgTemplate = tr("Angle 1: %1\nAngle 2: %2");
@@ -108,17 +107,12 @@ void RS_ActionInfoAngle::trigger(){
                     double angle1 = pPoints->intersection.angleTo(pPoints->point1);
                     double angle2 = pPoints->intersection.angleTo(pPoints->point2);
                     double angle = remainder(angle2 - angle1, 2. * M_PI);
-                    RS2::AngleFormat angleFormat = graphic->getAngleFormat();
-                    int anglePrec = graphic->getAnglePrecision();
-                    QString str = RS_Units::formatAngle(angle, angleFormat, anglePrec);
-                    RS2::LinearFormat linearFormat = graphic->getLinearFormat();
-                    RS2::Unit linearUnit = graphic->getUnit();
-                    int linearPrecision = graphic->getLinearPrecision();
-                    QString intersectX = RS_Units::formatLinear(pPoints->intersection.x, linearUnit, linearFormat, linearPrecision);
-                    QString intersectY = RS_Units::formatLinear(pPoints->intersection.y, linearUnit, linearFormat, linearPrecision);
+                    QString str = formatAngle(angle);
+                    QString intersectX = formatLinear(pPoints->intersection.x);
+                    QString intersectY = formatLinear(pPoints->intersection.y);
                     if (angle < 0.) {
                         str += " or ";
-                        str += RS_Units::formatAngle(angle + 2. * M_PI, angleFormat, anglePrec);
+                        str += formatAngle(angle + 2. * M_PI);
                     }
 
                     RS_Vector relPoint = graphicView->getRelativeZero();
@@ -129,8 +123,8 @@ void RS_ActionInfoAngle::trigger(){
                         intersectRel = pPoints->intersection;
                     }
 
-                    QString intersectRelX = RS_Units::formatLinear(intersectRel.x, linearUnit, linearFormat, linearPrecision);
-                    QString intersectRelY = RS_Units::formatLinear(intersectRel.y, linearUnit, linearFormat, linearPrecision);
+                    QString intersectRelX = formatLinear(intersectRel.x);
+                    QString intersectRelY = formatLinear(intersectRel.y);
 
                     const QString &msgTemplate = tr("Angle: %1\nIntersection: (%2 , %3)\nIntersection :@(%4, %5)");
                     const QString &msg = msgTemplate.arg(str, intersectX, intersectY, intersectRelX, intersectRelY);
@@ -159,7 +153,7 @@ void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent *event){
 
     switch (status) {
         case SetEntity1: {
-            auto en = catchEntity(event, RS2::ResolveAll);
+            auto en = catchEntityOnPreview(event, RS2::ResolveAll);
             if (isLine(en)){
                 RS_Vector p = en->getNearestPointOnEntity(mouse);
                 highlightHover(en);
@@ -168,7 +162,11 @@ void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent *event){
             break;
         }
         case SetEntity2: {
-            auto en = catchEntity(event, RS2::ResolveAll);
+            auto en = catchEntityOnPreview(event, RS2::ResolveAll);
+            highlightSelected(entity1);
+            if (showRefEntitiesOnPreview) {
+                previewRefPoint(pPoints->point1);
+            }
             if (isLine(en)){
                 RS_VectorSolutions const &sol = RS_Information::getIntersection(entity1, en, false);
                 if (sol.hasValid()){
@@ -177,16 +175,18 @@ void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent *event){
                         RS_Vector p2 = en->getNearestPointOnEntity(mouse);
                         previewRefSelectablePoint(p2);
                         RS_Vector intersection = sol.get(0);
+                        updateInfoCursor(p2,intersection);
                         previewRefArc(intersection, pPoints->point1, p2, true);
                         previewRefPoint(intersection);
                         previewRefLine(intersection, pPoints->point1);
                         previewRefLine(intersection, p2);
                     }
                 }
-            }
-            highlightSelected(entity1);
-            if (showRefEntitiesOnPreview) {
-                previewRefPoint(pPoints->point1);
+                else{
+                    if (infoCursorOverlayPrefs->enabled){
+                        appendInfoCursorZoneMessage(tr("Lines are parallel"), 2, false);
+                    }
+                }
             }
             break;
         }
@@ -249,4 +249,34 @@ void RS_ActionInfoAngle::updateMouseButtonHints(){
 
 RS2::CursorType RS_ActionInfoAngle::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;
+}
+
+void RS_ActionInfoAngle::updateInfoCursor(const RS_Vector &point2, const RS_Vector &intersection) {
+    if (infoCursorOverlayPrefs->enabled){
+        double angle1 = intersection.angleTo(pPoints->point1);
+        double angle2 = intersection.angleTo(point2);
+        double angle = remainder(angle2 - angle1, 2. * M_PI);
+        QString str = formatAngle(angle);
+
+        QString msg = tr("Info");
+        msg.append("\n");
+        msg.append(tr("Angle: "));
+        msg.append(formatAngle(angle));
+        if (angle < 0) {
+            msg.append("\n");
+            msg.append(tr("Angle (alt): "));
+            msg.append(formatAngle(angle + 2. * M_PI));
+        }
+        msg.append("\n");
+        msg.append(tr("Intersection: "));
+        msg.append(formatVector(intersection));
+        msg.append("\n");
+        msg.append(tr("Line 1 Angle: "));
+        msg.append(formatAngle(angle1));
+        msg.append("\n");
+        msg.append(tr("Line 2 Angle: "));
+        msg.append(formatAngle(angle2));
+
+        appendInfoCursorZoneMessage(msg, 2, true);
+    }
 }

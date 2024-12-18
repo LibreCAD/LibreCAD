@@ -77,6 +77,8 @@ void LC_ActionModifyAlign::mouseMoveEventSelected(QMouseEvent *e) {
     RS_Vector min;
     RS_Vector max;
     bool showPreview = true;
+
+    // defining boundaries
     switch (alignType) {
         case LC_Align::ENTITY: {
             RS2::ResolveLevel resolveLevel = isControl(e) ? RS2::ResolveAll : RS2::ResolveNone;
@@ -104,30 +106,76 @@ void LC_ActionModifyAlign::mouseMoveEventSelected(QMouseEvent *e) {
         default:
             break;
     }
+
+    // reference points
+    double verticalRef;
+    bool drawVertical  = LC_Align::getVerticalRefCoordinate(min, max, hAlign, verticalRef);
+    double horizontalRef;
+    bool drawHorizontal = LC_Align::getHorizontalRefCoordinate(min, max, vAlign, horizontalRef);
+
+
+    // preview entities
     if (showPreview) {
         QList<RS_Entity *> entitiesList;
-        createAlignedEntities(entitiesList, min, max, true);
+        RS_Vector groupOffset = createAlignedEntities(entitiesList, min, max, true);
         for (auto ent: entitiesList) {
             previewEntity(ent);
         }
         if (showRefEntitiesOnPreview) {
-            previewAlignGuideLines(min, max);
+            previewRefLines(drawVertical, verticalRef, drawHorizontal, horizontalRef);
+        }
+
+        // info cursor
+        if (infoCursorOverlayPrefs->enabled){
+            QString msg = tr("Align to ");
+            switch (alignType) {
+                case LC_Align::ENTITY:{
+                    msg.append(tr("Entity"));
+                    break;
+                }
+                case LC_Align::POSITION:{
+                    msg.append(tr("Position"));
+                    break;
+                }
+                case LC_Align::DRAWING:{
+                    msg.append(tr("Drawing"));
+                    break;
+                }
+            }
+            msg.append("\n");
+            msg.append(tr("Reference: "));
+            if (drawVertical){
+                msg.append("X: ");
+                msg.append(formatLinear(verticalRef));
+                msg.append(" ");
+            }
+
+            if (drawHorizontal){
+                msg.append("Y: ");
+                msg.append(formatLinear(horizontalRef));
+            }
+            if (groupOffset.valid) {
+                msg.append("\n");
+                msg.append(tr("Offset:"));
+                msg.append("\n");
+                msg.append(formatRelative(groupOffset));
+                msg.append("\n");
+                msg.append(formatRelativePolar(groupOffset));
+            }
+            appendInfoCursorZoneMessage(msg, 2, false);
         }
     }
+
     drawHighlights();
     drawPreview();
 }
 
-void LC_ActionModifyAlign::previewAlignGuideLines(const RS_Vector &min, const RS_Vector &max) {
-    double verticalRef;
-    bool drawVertical  = LC_Align::getVerticalRefCoordinate(min, max, hAlign, verticalRef);
+void LC_ActionModifyAlign::previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef) {
     if (drawVertical) {
         double g0 = graphicView->toGraphY(0);
         double gHeight = graphicView->toGraphY(graphicView->getHeight());
         previewRefConstructionLine({verticalRef, g0}, {verticalRef, gHeight});
     }
-    double horizontalRef;
-    bool drawHorizontal = LC_Align::getHorizontalRefCoordinate(min, max, vAlign, horizontalRef);
     if (drawHorizontal) {
         double g0 = graphicView->toGraphX(0);
         double gWidth = graphicView->toGraphX(graphicView->getWidth());
@@ -206,7 +254,7 @@ void LC_ActionModifyAlign::updateMouseButtonHintsForSelected([[maybe_unused]]int
 }
 
 void LC_ActionModifyAlign::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select entities to align (Enter to complete)"), MOD_CTRL(tr("Select and align")));
+    updateMouseWidgetTRCancel(tr("Select entities to align (Enter to complete)"),  MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Select and align")));
 }
 
 RS2::CursorType LC_ActionModifyAlign::doGetMouseCursorSelected([[maybe_unused]]int status) {
@@ -226,18 +274,22 @@ LC_ActionOptionsWidget *LC_ActionModifyAlign::createOptionsWidget() {
     return new LC_ModifyAlignOptions();
 }
 
-void LC_ActionModifyAlign::createAlignedEntities(QList<RS_Entity *> &list, RS_Vector min, RS_Vector max, bool previewOnly) {
-    RS_Vector targetPoint = getReferencePoint(min, max);
+RS_Vector LC_ActionModifyAlign::createAlignedEntities(QList<RS_Entity *> &list, RS_Vector min, RS_Vector max, bool previewOnly) {
+    RS_Vector result =  RS_Vector(false);
 
+    RS_Vector targetPoint = getReferencePoint(min, max);
     bool updateAttributes = !previewOnly;
 
-    if (asGroup) {
+    if (asGroup || selectedEntities.size() == 1) {
         RS_Vector selectionMin;
         RS_Vector selectionMax;
 
         LC_Align::collectSelectionBounds(selectedEntities, selectionMin, selectionMax);
         RS_Vector selectionRefPoint = getReferencePoint(selectionMin, selectionMax);
         RS_Vector offset = targetPoint - selectionRefPoint;
+
+        result = offset;
+        result.valid = true;
 
         for (auto e: selectedEntities) {
             RS_Entity* clone = LC_Align::createCloneMovedToOffset(e, offset, updateAttributes);
@@ -249,6 +301,7 @@ void LC_ActionModifyAlign::createAlignedEntities(QList<RS_Entity *> &list, RS_Ve
             list << clone;
         }
     }
+    return result;
 }
 
 RS_Vector LC_ActionModifyAlign::getReferencePoint(const RS_Vector &min, const RS_Vector &max) {

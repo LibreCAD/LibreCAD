@@ -94,14 +94,14 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
     int status = getStatus();
     switch (status) {
         case ChooseLimitEntity: {
-            RS_Entity *se = catchEntity(e, RS2::ResolveAllButTextImage);
+            RS_Entity *se = catchEntityOnPreview(e, RS2::ResolveAllButTextImage);
             if (se != nullptr) {
                 highlightHover(se);
             }
             break;
         }
         case ChooseTrimEntity: {
-            RS_Entity *se = catchEntity(e, RS2::ResolveNone);
+            RS_Entity *se = catchEntityOnPreview(e, RS2::ResolveNone);
             bool trimInvalid = true;
 
             if (se != nullptr && se != limitEntity) {

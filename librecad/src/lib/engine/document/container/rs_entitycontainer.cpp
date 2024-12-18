@@ -630,7 +630,7 @@ void RS_EntityContainer::collectSelected(std::vector<RS_Entity*> &collect, bool 
         }
     }
 }
-
+// fixme - sand - avoid usage in actions as it enumerates all entities. Rework or rely on entities list!!!!
 RS_EntityContainer::LC_SelectionInfo RS_EntityContainer::getSelectionInfo(/*bool deep, */const QList<RS2::EntityType> &types) {
     LC_SelectionInfo result;
 
@@ -653,6 +653,7 @@ RS_EntityContainer::LC_SelectionInfo RS_EntityContainer::getSelectionInfo(/*bool
     return result;
 }
 
+// fixme - sand - avoid usage in actions as it enumerates all entities. Rework or rely on entities list!!!!
 /**
  * Counts the selected entities in this container.
  */

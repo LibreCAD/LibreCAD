@@ -78,7 +78,7 @@ void RS_ActionPolylineDel::mouseMoveEvent(QMouseEvent *e){
     deleteHighlights();
     switch (status) {
         case SetPolyline: {
-            auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
+            auto polyline = dynamic_cast<RS_Polyline *>(catchEntityOnPreview(e));
             if (polyline != nullptr){
                 highlightHover(polyline);
             }

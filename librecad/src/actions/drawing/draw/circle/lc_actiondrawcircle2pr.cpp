@@ -119,7 +119,7 @@ bool LC_ActionDrawCircle2PR::preparePreview(const RS_Vector &mouse, RS_Vector& a
 
 void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
     RS_Vector mouse = snapPoint(e);
-
+    deletePreview();
     switch (getStatus()) {
         case SetPoint1:
             pPoints->point1 = mouse;
@@ -127,8 +127,6 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
             break;
 
         case SetPoint2: {
-            deletePreview();
-
             mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
             if (mouse.distanceTo(pPoints->point1) <= 2. * data->radius) {
                 pPoints->point2 = mouse;
@@ -148,8 +146,6 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
                     previewRefSelectablePoint(altCenter);
                 }
             }
-
-            drawPreview();
             break;
         }
         case SelectCenter: {
@@ -165,17 +161,14 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
                     }
                 }
                 if (!existing){
-                    deletePreview();
-                    previewCircle(*data);
+                    previewToCreateCircle(*data);
                     previewRefSelectablePoint(data->center);
                     previewRefSelectablePoint(altCenter);
-
                     if (showRefEntitiesOnPreview) {
                         previewRefPoint(pPoints->point1);
                         previewRefPoint(pPoints->point2);
                         previewRefLine(pPoints->point1, pPoints->point2);
                     }
-                    drawPreview();
                 }
             } else {
                 if (data->isValid()){
@@ -184,6 +177,7 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
             }
         }
     }
+    drawPreview();
 }
 
 void LC_ActionDrawCircle2PR::onMouseLeftButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {

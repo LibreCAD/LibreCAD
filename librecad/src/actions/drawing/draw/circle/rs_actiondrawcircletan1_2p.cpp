@@ -122,7 +122,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
     switch (getStatus()) {
         case SetCircle1:{
             deleteSnapper();
-            RS_Entity *en = catchCircle(e);
+            RS_Entity *en = catchCircle(e, true);
             if (en != nullptr){
                 highlightHover(en);
             }
@@ -167,7 +167,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
                     return;
             }
 
-            previewCircle(pPoints->cData);
+            previewToCreateCircle(pPoints->cData);
             break;
         }
         case SetPoint2: {
@@ -177,7 +177,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
             pPoints->coord = mouse;
             if (getCenters()){
                 if (preparePreview()){
-                    previewCircle((pPoints->cData));
+                    previewToCreateCircle((pPoints->cData));
                     if (showRefEntitiesOnPreview) {
                         previewRefPoint(pPoints->points.at(0));
                         previewRefPoint(pPoints->cData.center);
@@ -200,7 +200,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
             highlightSelected(baseEntity);
             pPoints->coord = toGraph(e);
             if (preparePreview()){
-                previewCircle(pPoints->cData);
+                previewToCreateCircle(pPoints->cData);
                 for (const auto &center: pPoints->centers) {
                     previewRefSelectablePoint(center);
                 }
@@ -309,9 +309,16 @@ bool RS_ActionDrawCircleTan1_2P::preparePreview(){
     return true;
 }
 
-RS_Entity *RS_ActionDrawCircleTan1_2P::catchCircle(QMouseEvent *e){
+RS_Entity *RS_ActionDrawCircleTan1_2P::catchCircle(QMouseEvent *e, bool forPreview){
     RS_Entity *ret = nullptr;
-    RS_Entity *en = catchModifiableEntity(e, enTypeList);
+    RS_Entity *en;
+    if (forPreview){
+        en = catchModifiableEntityOnPreview(e, enTypeList);
+    }
+    else{
+        en = catchModifiableEntity(e, enTypeList);
+    }
+
     if (en == nullptr) {
         return ret;
     }
@@ -324,7 +331,7 @@ RS_Entity *RS_ActionDrawCircleTan1_2P::catchCircle(QMouseEvent *e){
 void RS_ActionDrawCircleTan1_2P::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case SetCircle1: {
-            RS_Entity *en = catchCircle(e);
+            RS_Entity *en = catchCircle(e, false);
             if (en == nullptr){
                 return;
             }

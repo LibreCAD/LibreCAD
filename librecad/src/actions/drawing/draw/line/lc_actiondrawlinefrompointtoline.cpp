@@ -146,7 +146,7 @@ bool LC_ActionDrawLineFromPointToLine::doCheckMayDrawPreview([[maybe_unused]] QM
 void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     if (status == SelectLine){
         deleteSnapper();
-        RS_Entity* en = catchModifiableEntity(e, RS2::EntityLine);
+        RS_Entity* en = catchModifiableEntityOnPreview(e, RS2::EntityLine);
         RS_Line* line;
         if (en != nullptr){
             auto potentialLine = dynamic_cast<RS_Line *>(en);
@@ -163,6 +163,7 @@ void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]
         else{
             line = new RS_Line(startPoint, snap);
         }
+        previewEntityToCreate(line, false);
         if (showRefEntitiesOnPreview) {
             createRefSelectablePoint(snap, list);
             createRefPoint(startPoint, list);

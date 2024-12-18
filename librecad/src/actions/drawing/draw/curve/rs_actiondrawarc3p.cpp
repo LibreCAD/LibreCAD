@@ -132,7 +132,7 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent *e){
             bool alternatePoints = isControl(e) || alternatedPoints;
             preparePreview(alternatePoints);
             if (pPoints.data.isValid()){
-                previewArc(pPoints.data);
+                previewToCreateArc(pPoints.data);
 
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints.data.center);

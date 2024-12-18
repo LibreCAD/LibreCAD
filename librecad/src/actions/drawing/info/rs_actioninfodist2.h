@@ -67,7 +67,7 @@ protected:
     RS_Entity *entity = nullptr;
     RS_Vector point = RS_Vector(false);
     int selectionMode = FIRST_IS_ENTITY;
-    RS_Entity *doCatchEntity(QMouseEvent *e);
+    RS_Entity *doCatchEntity(QMouseEvent *e, bool preview);
     bool nearestPointShouldBeOnEntity = true;
 
     RS_Vector savedRelZero = RS_Vector{false};
@@ -80,6 +80,7 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateMouseButtonHints() override;
+    void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint);
 };
 
 #endif

@@ -124,7 +124,7 @@ void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
         pPoints->pos = position;
         deletePreview();
         preparePreview();
-        previewLine(pPoints->data.startpoint, pPoints->data.endpoint);
+        previewToCreateLine(pPoints->data.startpoint, pPoints->data.endpoint);
         previewRefSelectablePoint(position);
         drawPreview();
     }

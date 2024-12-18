@@ -84,10 +84,10 @@ void RS_ActionDrawLineParallel::trigger(){
 
 void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent begin");
-
+    snapPoint(e);
     *coord = {toGraph(e)};
 
-    entity = catchEntity(e, RS2::ResolveAll);
+    entity = catchEntityOnPreview(e, RS2::ResolveAll);
 
     switch (getStatus()) {
         case SetEntity: {
@@ -100,6 +100,12 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
                                         entity);
                 if (createdParallel != nullptr){
                     highlightHover(entity);
+                    if (number == 1){
+                        prepareEntityDescription(createdParallel, RS2::EntityDescriptionLevel::DescriptionCreating);
+                    }
+                    else{
+                       appendInfoCursorZoneMessage(QString::number(number) + tr(" entities will be created"), 2, false);
+                    }
                     if (showRefEntitiesOnPreview) {
                         RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
                         previewRefPoint(nearest);

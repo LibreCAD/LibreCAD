@@ -186,6 +186,38 @@ void RS_GraphicView::loadSettings() {
     if (grid != nullptr){
         grid->loadSettings();
     }
+
+
+    LC_GROUP("InfoOverlayCursor");
+    {
+        infoCursorOverlayPreferences.enabled = LC_GET_BOOL("Enabled", true);
+        if (infoCursorOverlayPreferences.enabled) {
+            infoCursorOverlayPreferences.showAbsolutePosition = LC_GET_BOOL("ShowAbsolute", true);
+            infoCursorOverlayPreferences.showRelativePositionDistAngle = LC_GET_BOOL("ShowRelativeDA", true);
+            infoCursorOverlayPreferences.showRelativePositionDeltas = LC_GET_BOOL("ShowRelativeDD", true);
+            infoCursorOverlayPreferences.showSnapType = LC_GET_BOOL("ShowSnapInfo", true);
+            infoCursorOverlayPreferences.showCurrentActionName = LC_GET_BOOL("ShowActionName", true);
+            infoCursorOverlayPreferences.showCommandPrompt = LC_GET_BOOL("ShowPrompt", true);
+            infoCursorOverlayPreferences.showLabels = LC_GET_BOOL("ShowLabels", false);
+            infoCursorOverlayPreferences.multiLine = !LC_GET_BOOL("SingleLine", true);
+
+            infoCursorOverlayPreferences.options.fontSize = LC_GET_INT("FontSize", 10);
+            infoCursorOverlayPreferences.options.fontName = LC_GET_STR("FontName", "Helvetica");
+            infoCursorOverlayPreferences.options.offset = LC_GET_INT("OffsetFromCursor", 10);
+        }
+    }
+
+    LC_GROUP("Colors");
+    {
+        if (infoCursorOverlayPreferences.enabled) {
+            infoCursorOverlayPreferences.options.zone1Settings.color = QColor(LC_GET_STR("info_overlay_absolute", RS_Settings::overlayInfoCursorAbsolutePos));
+            infoCursorOverlayPreferences.options.zone2Settings.color = QColor(LC_GET_STR("info_overlay_snap", RS_Settings::overlayInfoCursorSnap));
+            infoCursorOverlayPreferences.options.zone3Settings.color = QColor(LC_GET_STR("info_overlay_relative", RS_Settings::overlayInfoCursorRelativePos));
+            infoCursorOverlayPreferences.options.zone4Settings.color = QColor(LC_GET_STR("info_overlay_prompt", RS_Settings::overlayInfoCursorCommandPrompt));
+        }
+    }
+    LC_GROUP_END();
+
 }
 
 RS_GraphicView::~RS_GraphicView(){
@@ -342,6 +374,30 @@ RS_ActionInterface *RS_GraphicView::getCurrentAction() {
         return nullptr;
     }
 }
+
+QString  RS_GraphicView::getCurrentActionName() {
+    if (eventHandler) {
+        QAction* qaction = eventHandler->getQAction();
+        if (qaction != nullptr){
+//            return qaction->text();
+          // todo - sand - actually, this is bad dependency, should be refactored
+          return LC_ShortcutsManager::getPlainActionToolTip(qaction);
+        }
+    }
+    return "";
+}
+
+QIcon RS_GraphicView::getCurrentActionIcon() {
+    if (eventHandler) {
+        QAction* qaction = eventHandler->getQAction();
+        if (qaction != nullptr){
+            return qaction->icon();
+        }
+    }
+    return QIcon();
+}
+
+
 
 /**
  * Sets the current action of the event handler.
@@ -2512,4 +2568,8 @@ void RS_GraphicView::setDraftLinesMode(bool mode) {
 
 void RS_GraphicView::setForcedActionKillAllowed(bool enabled) {
     forcedActionKillAllowed = enabled;
+}
+
+QString RS_GraphicView::obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel descriptionLevel) {
+    return "";
 }

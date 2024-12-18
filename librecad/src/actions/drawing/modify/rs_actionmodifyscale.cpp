@@ -369,7 +369,7 @@ void RS_ActionModifyScale::updateMouseButtonHintsForSelected(int status) {
 }
 
 void RS_ActionModifyScale::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select to scale  (Enter to complete)"), MOD_CTRL(tr("Scale immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Select to scale  (Enter to complete)"),  MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Scale immediately after selection")));
 }
 
 RS2::CursorType RS_ActionModifyScale::doGetMouseCursorSelected([[maybe_unused]] int status){

@@ -54,6 +54,7 @@ public:
     void setDocumentAndView(RS_Document *document, QG_GraphicView* view);
 
     void processEntity(RS_Entity *en);
+    QString getEntityDescription(RS_Entity *en, RS2::EntityDescriptionLevel shortDescription);
     void processCoordinate(const RS_Vector& point);
     void endAddingCoordinates();
 

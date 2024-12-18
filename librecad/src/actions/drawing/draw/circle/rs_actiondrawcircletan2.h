@@ -68,7 +68,7 @@ protected:
     struct Points;
     std::unique_ptr<Points> pPoints;
 
-    RS_Entity *catchCircle(QMouseEvent *e);
+    RS_Entity *catchCircle(QMouseEvent *e, bool forPreview);
     RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, const RS_AtomicEntity * circle);
     LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;

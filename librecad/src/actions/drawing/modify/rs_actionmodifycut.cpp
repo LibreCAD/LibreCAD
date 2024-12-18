@@ -83,7 +83,7 @@ void RS_ActionModifyCut::mouseMoveEvent(QMouseEvent *e){
     switch (getStatus()) {
         case ChooseCutEntity: {
             deleteSnapper();
-            auto en = catchEntity(e);
+            auto en = catchEntityOnPreview(e);
             if (en != nullptr &&  en->trimmable()){
                 highlightHover(en);
                 RS_Vector nearest = en->getNearestPointOnEntity(snap, true);

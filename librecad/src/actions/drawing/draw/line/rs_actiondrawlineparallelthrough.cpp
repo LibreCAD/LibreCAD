@@ -74,11 +74,12 @@ void RS_ActionDrawLineParallelThrough::trigger(){
 
 void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent begin");
-
+    const RS_Vector &snap = snapPoint(e);
+    deletePreview();
     deleteHighlights();
     switch (getStatus()) {
         case SetEntity: {
-            entity = catchEntity(e, RS2::ResolveAll);
+            entity = catchEntityOnPreview(e, RS2::ResolveAll);
             if (entity != nullptr){
                 highlightHover(entity);
                 if (showRefEntitiesOnPreview) {
@@ -89,15 +90,20 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
             break;
         }
         case SetPos: {
-            *coord = getFreeSnapAwarePoint(e, snapPoint(e));
-
-            deletePreview();
+            *coord = getFreeSnapAwarePoint(e, snap);
             highlightSelected(entity);
             RS_Creation creation(preview.get(), nullptr, false);
             auto en = creation.createParallelThrough(*coord, number, entity, symmetric);
             if (en != nullptr){
                 RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
                 moveRelativeZero(nearest); // fixme - should we restore original relzero?
+                if (number == 1 && !symmetric){
+                    prepareEntityDescription(en, RS2::EntityDescriptionLevel::DescriptionCreating);
+                }
+                else{
+                    int creatingNumber = number * (symmetric ? 2 : 1);
+                    appendInfoCursorEntityCreationMessage(QString::number(creatingNumber) + tr(" entities will be created"));
+                }
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(nearest);
                     previewRefLine(nearest, *coord);
@@ -109,13 +115,12 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
                     }
                 }
             }
-
-            drawPreview();
             break;
         }
         default:
             break;
     }
+    drawPreview();
     drawHighlights();
 
     RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent end");

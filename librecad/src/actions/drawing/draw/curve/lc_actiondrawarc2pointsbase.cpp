@@ -77,7 +77,7 @@ void LC_ActionDrawArc2PointsBase::mouseMoveEvent(QMouseEvent *e) {
             bool alternate = isControl(e);
             RS_Arc* arc = createArc(status, mouse, alternate);
             if (arc != nullptr){
-                previewEntity(arc);
+                previewEntityToCreate(arc);
                 RS_Vector center = arc->getCenter();
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(startPoint);

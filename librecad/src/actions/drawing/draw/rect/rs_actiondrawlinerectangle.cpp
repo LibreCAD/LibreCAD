@@ -83,6 +83,7 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineRectangle::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
+    deletePreview();
     int status = getStatus();
     switch (status){
         case SetCorner1:{
@@ -92,19 +93,21 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
         case SetCorner2:{
             if (pPoints->corner1.valid){
                 pPoints->corner2 = mouse;
-                deletePreview();
                 preview->addRectangle(pPoints->corner1, pPoints->corner2);
+                QString creatingRectInfoMessage = prepareCreatingRectInfoMessage(pPoints->corner1, pPoints->corner2);
+                appendInfoCursorEntityCreationMessage(creatingRectInfoMessage);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->corner1);
                     previewRefPoint(pPoints->corner2);
+                    previewRefPoint((pPoints->corner1 + pPoints->corner2) * 0.5); // center of rect
                 }
-                drawPreview();
             }
             break;
         }
         default:
             break;
     }
+    drawPreview();
 
     RS_DEBUG->print("RS_ActionDrawLineRectangle::mouseMoveEvent end");
 }
@@ -153,4 +156,18 @@ void RS_ActionDrawLineRectangle::updateMouseButtonHints(){
 
 RS2::CursorType RS_ActionDrawLineRectangle::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::CadCursor;
+}
+
+QString RS_ActionDrawLineRectangle::prepareCreatingRectInfoMessage(RS_Vector vector, RS_Vector vector1) {
+    QString result = tr("To be created: ").append(tr("RECT"));
+    result.append("\n");
+    result.append(tr("Width: "));
+    result.append(formatLinear(abs(vector1.x - vector.x)));
+    result.append("\n");
+    result.append(tr("Height: "));
+    result.append(formatLinear(abs(vector1.y - vector.y)));
+    result.append("\n");
+    result.append(tr("Center: "));
+    result.append(formatVector((vector1 + vector)*0.5));
+    return result;
 }

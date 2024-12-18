@@ -85,7 +85,7 @@ void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent *e){
     deleteHighlights();
     switch (getStatus()) {
         case SetLine: {
-            RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
+            RS_Entity *en = catchModifiableEntityOnPreview(e, RS2::EntityLine);
             if (en != nullptr){
                 highlightHover(en);
             }
@@ -96,7 +96,7 @@ void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent *e){
             highlightSelected(normal);
             deleteSnapper();
             deletePreview();
-            RS_Entity *en = catchEntity(e, circleList, RS2::ResolveAll);
+            RS_Entity *en = catchEntityOnPreview(e, circleList, RS2::ResolveAll);
             if (en != nullptr){
                 circle = en;
                 highlightHover(en);
@@ -107,7 +107,7 @@ void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent *e){
                                                      normal,
                                                      circle, alternativeTangentPoint);
                 if (tangent != nullptr){
-                    previewEntity(tangent);
+                    previewEntityToCreate(tangent, false);
                     previewRefSelectablePoint(alternativeTangentPoint);
                     previewRefSelectablePoint(tangent->getEndpoint());
                     if (showRefEntitiesOnPreview) {

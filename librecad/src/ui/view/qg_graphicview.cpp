@@ -1638,3 +1638,12 @@ void QG_GraphicView::autoPanStep(){
 
     zoomPan(m_panData->panOffset.x(), m_panData->panOffset.y());
 }
+
+QString QG_GraphicView::obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription) {
+    LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
+    if (entityInfoWidget != nullptr){
+        QString result = entityInfoWidget->getEntityDescription(entity, shortDescription);
+        return result;
+    }
+    return "";
+}

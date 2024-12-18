@@ -177,7 +177,7 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyRound::mouseMoveEvent begin");
 
     RS_Vector mouse = toGraph(e);
-    RS_Entity *se = catchEntity(e, eType, RS2::ResolveAllButTextImage);
+    RS_Entity *se = catchEntityOnPreview(e, eType, RS2::ResolveAllButTextImage);
     deleteHighlights();
     deletePreview();
 

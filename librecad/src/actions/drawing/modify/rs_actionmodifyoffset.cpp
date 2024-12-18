@@ -191,7 +191,7 @@ void RS_ActionModifyOffset::updateMouseButtonHintsForSelected(int status) {
 }
 
 void RS_ActionModifyOffset::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select line, polyline, circle or arc to create offset (Enter to complete)"),MOD_CTRL(tr("Offset immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Select line, polyline, circle or arc to create offset (Enter to complete)"), MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Offset immediately after selection")));
 }
 
 LC_ModifyOperationFlags* RS_ActionModifyOffset::getModifyOperationFlags() {

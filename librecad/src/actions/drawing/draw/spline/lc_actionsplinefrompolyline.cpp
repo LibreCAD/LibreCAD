@@ -89,7 +89,7 @@ void LC_ActionSplineFromPolyline::mouseMoveEvent(QMouseEvent *e) {
     deletePreview();
     switch (status) {
         case SetEntity: {
-            auto polyline = catchEntity(e, RS2::EntityPolyline);
+            auto polyline = catchEntityOnPreview(e, RS2::EntityPolyline);
             if (polyline != nullptr) {
                 highlightHoverWithRefPoints(polyline, true);
                 auto splinePreview = createSplineForPolyline(polyline);

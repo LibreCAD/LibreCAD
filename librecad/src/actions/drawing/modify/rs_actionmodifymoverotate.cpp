@@ -312,7 +312,7 @@ RS2::CursorType RS_ActionModifyMoveRotate::doGetMouseCursorSelected([[maybe_unus
 }
 
 void RS_ActionModifyMoveRotate::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select to move and rotate  (Enter to complete)"), MOD_CTRL(tr("Move and rotate immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Select to move and rotate  (Enter to complete)"),  MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Move and rotate immediately after selection")));
 }
 
 LC_ModifyOperationFlags *RS_ActionModifyMoveRotate::getModifyOperationFlags() {

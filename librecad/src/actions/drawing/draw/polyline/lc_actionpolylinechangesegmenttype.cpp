@@ -72,14 +72,14 @@ void LC_ActionPolylineChangeSegmentType::mouseMoveEvent(QMouseEvent *e) {
     int status = getStatus();
     switch (status){
         case SetEntity: {
-            auto entity = catchEntity(e, RS2::EntityPolyline);
+            auto entity = catchEntityOnPreview(e, RS2::EntityPolyline);
             if (entity != nullptr){
                 highlightHover(entity);
             }
             break;
         }
         case SetSegment:{
-            auto entity = catchEntity(e, RS2::ResolveAllButTextImage);
+            auto entity = catchEntityOnPreview(e, RS2::ResolveAllButTextImage);
             bool segmentFound = false;
             if (entity != nullptr && entity->isAtomic()){
                 if (polyline == entity->getParent()){

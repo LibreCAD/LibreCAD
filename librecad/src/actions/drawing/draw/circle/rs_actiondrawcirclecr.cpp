@@ -98,7 +98,7 @@ void RS_ActionDrawCircleCR::mouseMoveEvent(QMouseEvent *e){
             if (!trySnapToRelZeroCoordinateEvent(e)){
                 data->center = mouse;
                 deletePreview();
-                previewCircle(*data);
+                previewToCreateCircle(*data);
                 previewRefSelectablePoint(data->center);
                 drawPreview();
             } else {

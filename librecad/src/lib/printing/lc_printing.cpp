@@ -198,6 +198,7 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
         if (bStartPrinting
             && (!equalPaperSize(printerSizeMm, paperSizeMm) || !equalMargins(paperMargins))) {
             QMessageBox msgBox(&mdiWindow);
+            // FIXME - SAND - localization
             msgBox.setWindowTitle("Paper settings");
             msgBox.setText("Paper size and/or margins have been changed!");
             msgBox.setInformativeText("Do you want to apply changes to current drawing?");

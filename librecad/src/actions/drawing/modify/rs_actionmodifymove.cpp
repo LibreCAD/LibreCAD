@@ -98,6 +98,13 @@ void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
                         }
                     }
                 }
+                if (infoCursorOverlayPrefs->enabled){
+                    QString msg = tr("Moving Offset\n");
+                    msg.append(formatRelative(offset));
+                    msg.append("\n");
+                    msg.append(formatRelativePolar(offset));
+                    appendInfoCursorZoneMessage(msg, 2, false);
+                }
                 drawPreview();
             }
             break;
@@ -186,7 +193,7 @@ void RS_ActionModifyMove::updateMouseButtonHintsForSelected(int status) {
 }
 
 void RS_ActionModifyMove::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select to move (Enter to complete)"), MOD_CTRL(tr("Move immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Select to move (Enter to complete)"),  MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Move immediately after selection")));
 }
 
 RS2::CursorType RS_ActionModifyMove::doGetMouseCursorSelected([[maybe_unused]]int status) {

@@ -72,6 +72,8 @@ private:
     void createSelectActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createInfoCursorActions(QMap<QString, QAction *> &map, QActionGroup *group);
+
     void createSnapExtraActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void setDefaultShortcuts(QMap<QString, QAction *> &map, LC_ActionGroupManager* agm);
     void setupCreatedActions(QMap<QString, QAction *> &map);

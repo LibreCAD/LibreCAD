@@ -99,13 +99,13 @@ void RS_ActionInfoDist2::trigger(){
 
 void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent begin");
-    RS_Vector snap = snapPoint(e);
     deleteHighlights();
     deletePreview();
+    RS_Vector snap = snapPoint(e);
     switch (getStatus()) {
         case SetEntity: {
             deleteSnapper();
-            auto en = doCatchEntity(e);
+            auto en = doCatchEntity(e, true);
             if (en != nullptr){
                 highlightHover(en);
                 deleteSnapper();
@@ -113,6 +113,7 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
                     if (selectionMode == FIRST_IS_POINT){
                         RS_Vector nearest = en->getNearestPointOnEntity(point, nearestPointShouldBeOnEntity);
                         previewLine(nearest, point);
+                        updateInfoCursor(nearest,point);
                         if (showRefEntitiesOnPreview) {
                             previewRefLine(nearest, point);
                             previewRefPoint(point);
@@ -125,6 +126,7 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
             } else {
                 if (selectionMode == FIRST_IS_POINT){
                     previewLine(snap, point);
+                    updateInfoCursor(snap, point);
                     if (showRefEntitiesOnPreview) {
                         previewRefLine(snap, point);
                         previewRefPoint(point);
@@ -148,6 +150,7 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
                         snap = getRelZeroAwarePoint(e, snap);
                         RS_Vector nearest = obtainNearestPointOnEntity(snap);
                         previewLine(nearest, snap);
+                        updateInfoCursor(snap, nearest);
                         if (showRefEntitiesOnPreview) {
                             previewRefLine(nearest, snap);
                             previewLine(nearest, snap);
@@ -177,7 +180,7 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
 void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            entity = doCatchEntity(e);
+            entity = doCatchEntity(e, false);
             if (entity != nullptr){
                 switch (selectionMode) {
                     case FIRST_IS_POINT: {
@@ -241,12 +244,17 @@ RS_Vector RS_ActionInfoDist2::obtainNearestPointOnEntity(const RS_Vector &snap) 
     return entity->getNearestPointOnEntity(snap, nearestPointShouldBeOnEntity);
 }
 
-RS_Entity *RS_ActionInfoDist2::doCatchEntity(QMouseEvent *e){
+RS_Entity *RS_ActionInfoDist2::doCatchEntity(QMouseEvent *e, bool preview){
     RS2::ResolveLevel level = RS2::ResolveAll;
     if (isControl(e)){
         level = RS2::ResolveNone;
     }
-    return catchEntity(e, level);
+    if (preview) {
+        return catchEntityOnPreview(e, level);
+    }
+    else{
+        return catchEntity(e, level);
+    }
 }
 
 void RS_ActionInfoDist2::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
@@ -295,6 +303,28 @@ RS2::CursorType RS_ActionInfoDist2::doGetMouseCursor([[maybe_unused]] int status
         default:{
             return RS2::CadCursor;
         }
+    }
+}
+
+// todo - refactor, this is a copy from RS_ActionInfoDist
+void RS_ActionInfoDist2::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) {
+    if (infoCursorOverlayPrefs->enabled){
+        double distance = startPoint.distanceTo(mouse);
+        QString msg = tr("Info");
+        msg.append("\n");
+        msg.append(tr("Distance: "));
+        msg.append(formatLinear(distance));
+        msg.append("\n");
+        msg.append(tr("Angle: "));
+        msg.append(this->formatAngle(startPoint.angleTo(mouse)));
+        msg.append("\n");
+        msg.append(tr("From: "));
+        msg.append(this->formatVector(startPoint));
+        msg.append("\n");
+        msg.append(tr("To: "));
+        msg.append(this->formatVector(mouse));
+        msg.append("\n");
+        appendInfoCursorZoneMessage(msg, 2, false);
     }
 }
 

@@ -31,6 +31,7 @@
 #include <memory>
 #include <QList>
 #include "rs.h"
+#include "lc_cursoroverlayinfo.h"
 
 class RS_Entity;
 class RS_GraphicView;
@@ -108,7 +109,8 @@ using EntityTypeList = QList<RS2::EntityType>;
  *
  * @author Andrew Mustun
  */
-class RS_Snapper {
+class RS_Snapper: public QObject{
+    Q_OBJECT
 public:
     RS_Snapper(RS_EntityContainer &container, RS_GraphicView &graphicView);
     virtual ~RS_Snapper();
@@ -184,7 +186,7 @@ public:
     RS_Entity *catchEntity(
         QMouseEvent *e, const EntityTypeList &enTypeList,
         RS2::ResolveLevel level = RS2::ResolveNone);
-    RS_Entity *catchEntity(
+    RS_Entity * catchEntity(
         const RS_Vector &pos, const EntityTypeList &enTypeList,
         RS2::ResolveLevel level = RS2::ResolveNone);
     /**
@@ -195,14 +197,13 @@ public:
     /**
      * Resumes this snapper after it has been suspended.
      */
-    virtual void resume(){
-        drawSnapper();
-    }
+    virtual void resume();
     void hideSnapOptions();
     virtual void drawSnapper();
-
+    void drawInfoCursor();
 protected:
     void deleteSnapper();
+    void deleteInfoCursor();
     double getSnapRange() const;
     RS_EntityContainer *container = nullptr;
     RS_GraphicView *graphicView = nullptr;
@@ -225,12 +226,34 @@ protected:
     int catchEntityGuiRange = 32;
     bool finished{false};
 
-    const RS_Vector toGraph(const QMouseEvent *e) const;
+    InfoCursorOverlayPrefs* infoCursorOverlayPrefs;
+    LC_InfoCursorData infoCursorOverlayData;
 
+    RS2::LinearFormat linearFormat;
+    int linearPrecision;
+    RS2::AngleFormat angleFormat;
+    int anglePrecision;
+    RS2::Unit unit;
+
+    const RS_Vector toGraph(const QMouseEvent *e) const;
     void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false);
     void updateCoordinateWidgetByRelZero(const RS_Vector& abs, bool updateFormat=false);
     void updateCoordinateWidgetFormat();
     void invalidateSnapSpot();
+    QString getSnapName(int snapType);
+    QString getRestrictionName(int restriction);
+    void preparePositionsInfoCursorOverlay(bool updateFormat, const RS_Vector &abs, const RS_Vector &relative);
+    LC_InfoCursor* obtainInfoCursor();
+    void clearInfoCursor();
+    InfoCursorOverlayPrefs* getInfoCursorOverlayPrefs() const;
+
+    QString formatLinear(double value);
+    QString formatAngle(double value);
+    QString formatVector(const RS_Vector& value);
+    QString formatRelative(const RS_Vector& value);
+    QString formatPolar(const RS_Vector& value);
+    QString formatRelativePolar(const RS_Vector& value);
+    void forceUpdateInfoCursor(const RS_Vector &pos);
 private:
     struct ImpData;
     std::unique_ptr<ImpData> pImpData;

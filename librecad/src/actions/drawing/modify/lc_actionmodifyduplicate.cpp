@@ -198,6 +198,13 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(QMouseEvent *e, [[maybe_
                     RS_Entity *clone = en->clone();
                     clone->move(offset);
                     list << clone;
+                    if (infoCursorOverlayPrefs->enabled){
+                        QString msg = tr("Duplicate Offset\n");
+                        msg.append(formatRelative(offset));
+                        msg.append("\n");
+                        msg.append(formatRelativePolar(offset));
+                        appendInfoCursorZoneMessage(msg, 2, false);
+                    }
                 }
             }
             break;
@@ -227,6 +234,13 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(QMouseEvent *e, [[maybe_
                         data.majorP = RS_Vector(std::abs(offsetX), 0, 0);
                         data.ratio = std::abs(offsetY / offsetX);
                         previewRefEllipse(data);
+                    }
+                    if (infoCursorOverlayPrefs->enabled){
+                        QString msg = tr("Duplicate Offset\n");
+                        msg.append(formatRelative(offset));
+                        msg.append("\n");
+                        msg.append(formatRelativePolar(offset));
+                        appendInfoCursorZoneMessage(msg, 2, false);
                     }
                 }
             }

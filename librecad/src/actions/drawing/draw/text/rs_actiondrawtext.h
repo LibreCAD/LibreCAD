@@ -69,6 +69,7 @@ protected:
     std::unique_ptr<Points> pPoints;
     std::unique_ptr<RS_TextData> data;
     bool textChanged = false;
+    bool snappedToRelZero = false;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;

@@ -82,7 +82,7 @@ void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]QMouseEv
     ticksData.clear();
     deleteSnapper();
     EntityTypeList catchEntityTypes = getCatchEntityTypeList();
-    RS_Entity *en = catchModifiableEntity(e, catchEntityTypes);
+    RS_Entity *en = catchModifiableEntityOnPreview(e, catchEntityTypes);
     int optionsMode = SELECTION_NONE;
     if (en != nullptr){
         int rtti = en->rtti();

@@ -157,7 +157,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
             if (alternateDirection) {
                 tmpData.reversed = !tmpData.reversed;
             }
-            auto arc = previewArc(tmpData);
+            auto arc = previewToCreateArc(tmpData);
 
             if (showRefEntitiesOnPreview) {
                 previewRefPoints({data->center, arc->getStartpoint()});
@@ -178,7 +178,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
             if (alternateDirection) {
                 tmpData.reversed = !tmpData.reversed;
             }
-            auto arc = previewArc(tmpData);
+            auto arc = previewToCreateArc(tmpData);
 
             if (showRefEntitiesOnPreview) {
                 previewRefPoint(data->center);
@@ -224,7 +224,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
                 dataCopy.reversed = !data->reversed ;
             }
             if (LC_LineMath::isMeaningfulDistance(mouse, arcStart)) {
-                auto arc = previewArc(dataCopy);
+                auto arc = previewToCreateArc(dataCopy);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(arc->getEndpoint());
                     previewRefLine(arcStart, mouse);

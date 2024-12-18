@@ -223,7 +223,7 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vect
     switch (status) {
         case SetLine:{ // line select state
             deleteSnapper();
-            RS_Entity* en = catchModifiableEntity(e, enTypeList);
+            RS_Entity* en = catchModifiableEntityOnPreview(e, enTypeList);
             if (en != nullptr){
                 auto* line = dynamic_cast<RS_Line *>(en);
 
@@ -239,8 +239,11 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vect
 
                 // create line and add it to preview
                 // todo - createLine()
-                auto *previewLine = new RS_Line{container, data->tickLineData};
-                list << previewLine;
+                /*auto *previewLine = new RS_Line{container, data->tickLineData};
+                list << previewLine;*/
+
+                auto * previewLine = createLine(data->tickLineData.startpoint, data->tickLineData.endpoint, list);
+                previewEntityToCreate(previewLine, false);
 
                 if (showRefEntitiesOnPreview) {
                     // add reference points
@@ -265,8 +268,11 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vect
             TickData* data = prepareLineData( tickData->line, tickData->tickSnapPosition, snap, alternativeActionMode);
 
             // create preview line
-            auto *previewLine = new RS_Line{container, data->tickLineData};
-            list<< previewLine;
+            /*auto *previewLine = new RS_Line{container, data->tickLineData};
+            list<< previewLine;*/
+
+            auto * previewLine = createLine(data->tickLineData.startpoint, data->tickLineData.endpoint, list);
+            previewEntityToCreate(previewLine, false);
 
             if (showRefEntitiesOnPreview) {
                 // add reference points

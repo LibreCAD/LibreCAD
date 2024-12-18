@@ -107,7 +107,7 @@ double RS_ActionModifyTrimAmount::determineDistance(const RS_AtomicEntity *e) co
 void RS_ActionModifyTrimAmount::mouseMoveEvent(QMouseEvent *e){
     snapPoint(e);
     RS_Vector coord =  toGraph(e);
-    auto en = catchEntity(e, enTypeList, RS2::ResolveNone);
+    auto en = catchEntityOnPreview(e, enTypeList, RS2::ResolveNone);
     deletePreview();
     deleteHighlights();
     deleteSnapper();

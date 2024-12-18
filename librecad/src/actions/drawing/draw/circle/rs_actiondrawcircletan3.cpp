@@ -90,13 +90,9 @@ void RS_ActionDrawCircleTan3::finish(bool updateTB){
 void RS_ActionDrawCircleTan3::trigger(){
 
     RS_PreviewActionInterface::trigger();
-
     auto circle = new RS_Circle(container, *pPoints->cData);
-
     container->addEntity(circle);
-
     addToDocumentUndoable(circle);
-
     graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
@@ -114,6 +110,7 @@ void RS_ActionDrawCircleTan3::trigger(){
 void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawCircleTan3::mouseMoveEvent begin");
     deleteHighlights();
+    deletePreview();
     snapPoint(e);
     for(RS_AtomicEntity* const pc: pPoints->circles) { // highlight already selected
         highlightSelected(pc);
@@ -121,14 +118,14 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent *e){
     switch (getStatus()) {
         case SetCircle1:
         case SetCircle2: {
-            auto *c = catchCircle(e);
+            auto *c = catchCircle(e, true); // fixme - sand - CHECK! Modifiable catch for preview?
             if (c != nullptr){
                 highlightHover(c);
             }
             break;
         }
         case SetCircle3: {
-            auto *c = catchCircle(e);
+            auto *c = catchCircle(e, true);
             if (c != nullptr){
                 bool canBuildCircle = getData(c);
                 if (canBuildCircle){
@@ -139,10 +136,9 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent *e){
         }
         case SetCenter: {
             pPoints->coord = toGraph(e);
-            deletePreview();
-            if (preparePreview()){
-                previewCircle(*pPoints->cData);
 
+            if (preparePreview()){
+                previewToCreateCircle(*pPoints->cData);
                 for (auto &c: pPoints->candidates) {
                     previewRefSelectablePoint(c->center);
                 }
@@ -157,13 +153,13 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent *e){
                         }
                     }
                 }
-                drawPreview();
             }
             break;
         }
         default:
             break;
     }
+    drawPreview();
     drawHighlights();
     RS_DEBUG->print("RS_ActionDrawCircleTan3::mouseMoveEvent end");
 }
@@ -365,9 +361,16 @@ bool RS_ActionDrawCircleTan3::preparePreview(){
     return pPoints->valid;
 }
 
-RS_Entity *RS_ActionDrawCircleTan3::catchCircle(QMouseEvent *e){
+RS_Entity *RS_ActionDrawCircleTan3::catchCircle(QMouseEvent *e, bool forPreview) {
     RS_Entity *ret = nullptr;
-    RS_Entity *en = catchModifiableEntity(e, enTypeList);
+    RS_Entity *en;
+    if (forPreview){
+        en = catchModifiableEntityOnPreview(e, enTypeList);
+    }
+    else{
+        en = catchModifiableEntity(e, enTypeList);
+    }
+
     if (!en) return ret;
     if (!en->isVisible()) return ret;
     for (int i = 0; i < getStatus(); ++i) {
@@ -380,7 +383,7 @@ void RS_ActionDrawCircleTan3::onMouseLeftButtonRelease(int status, QMouseEvent *
     switch (status) {
         case SetCircle1:
         case SetCircle2:{
-            RS_Entity *en = catchCircle(e);
+            RS_Entity *en = catchCircle(e, false);
             if (en != nullptr){
                 pPoints->circles.resize(status);// todo - what for? Why not have fixes size
                 for (const RS_AtomicEntity *const pc: pPoints->circles) {
@@ -394,7 +397,7 @@ void RS_ActionDrawCircleTan3::onMouseLeftButtonRelease(int status, QMouseEvent *
             break;
         }
         case SetCircle3: {
-            RS_Entity *en = catchCircle(e);
+            RS_Entity *en = catchCircle(e,false);
             if (en != nullptr){
                 pPoints->circles.resize(getStatus());// todo - what for? Why not have fixes size
                 for (const RS_AtomicEntity *const pc: pPoints->circles) {

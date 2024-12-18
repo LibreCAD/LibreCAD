@@ -60,5 +60,7 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
+
+    QString prepareCreatingRectInfoMessage(RS_Vector vector, RS_Vector vector1);
 };
 #endif

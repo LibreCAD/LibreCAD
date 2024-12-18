@@ -97,7 +97,7 @@ void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent *e){
             pPoints->p2 = p2y;
         deletePreview();
         pPoints->data = {pPoints->p1, pPoints->p2};
-        previewLine(pPoints->p1, pPoints->p2);
+        previewToCreateLine(pPoints->p1, pPoints->p2);
         drawPreview();
     }
 

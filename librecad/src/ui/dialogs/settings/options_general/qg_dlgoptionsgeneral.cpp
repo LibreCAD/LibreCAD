@@ -95,6 +95,15 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
             this,&QG_DlgOptionsGeneral::on_cbClassicStatusBarToggled);
     connect(cbTabCloseButton, stateChangedSignal,
             this,&QG_DlgOptionsGeneral::onTabCloseButtonChanged);
+
+    connect(cbInfoOverlayAbsolutePosition, stateChangedSignal,
+            this,&QG_DlgOptionsGeneral::onInfoCursorAbsolutePositionChanged);
+    connect(cbInfoOverlayRelative, stateChangedSignal,
+            this,&QG_DlgOptionsGeneral::onInfoCursorRelativeChanged);
+    connect(cbInfoOverlaySnap, stateChangedSignal,
+            this,&QG_DlgOptionsGeneral::onInfoCursorSnapChanged);
+    connect(cbInfoOverlayCommandPrompt, stateChangedSignal,
+            this,&QG_DlgOptionsGeneral::onInfoCursorPromptChanged);
 }
 
 /*
@@ -296,8 +305,58 @@ void QG_DlgOptionsGeneral::init() {
 
         checked = LC_GET_BOOL("ShowEntityIDs", false);
         cbShowEntityIDs->setChecked(checked);
+
     }
     LC_GROUP_END();
+
+    LC_GROUP("InfoOverlayCursor");
+    {
+        bool checked = LC_GET_BOOL("Enabled", true);
+        cbInfoOverlayEnable->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowAbsolute", true);
+        cbInfoOverlayAbsolutePosition->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowRelativeDA", true);
+        cbInfoOverlayRelative->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowRelativeDD", true);
+        cbInfoOverlayRelativeDeltas->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowSnapInfo", true);
+        cbInfoOverlaySnap->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowPrompt", true);
+        cbInfoOverlayCommandPrompt->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowActionName", true);
+        cbInfoOverlayCommandName->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowLabels", false);
+        cbInfoOverlayShowLabels->setChecked(checked);
+
+        checked = LC_GET_BOOL("SingleLine", true);
+        cbInfoOverlayInOneLine->setChecked(checked);
+
+        int fontSize = LC_GET_INT("FontSize", 10);
+        sbInfoOverlayFontSize->setValue(fontSize);
+
+        QString fontName = LC_GET_STR("FontName", "Verdana");
+        QFont font(fontName);
+        fcbInfoOverlayFont->setCurrentFont(font);
+
+        int offset = LC_GET_INT("OffsetFromCursor", 15);
+        sbInfoOverlayOffset->setValue(offset);
+
+        checked = LC_GET_BOOL("ShowPropertiesCatched", true);
+        cbInfoOverlaySnapEntityInfo->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowPropertiesEdit", true);
+        cbInfoOverlayPreviewEditingEntity->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowPropertiesCreating", true);
+        cbInfoOverlayPreviewCreatingEntity->setChecked(checked);
+    }
 
     LC_GROUP("Render");
     {
@@ -352,6 +411,11 @@ void QG_DlgOptionsGeneral::init() {
         initComboBox(cbOverlayBoxFill, LC_GET_STR("overlay_box_fill", RS_Settings::overlayBoxFill));
         initComboBox(cbOverlayBoxLineInverted, LC_GET_STR("overlay_box_line_inv", RS_Settings::overlayBoxLineInverted));
         initComboBox(cbOverlayBoxFillInverted, LC_GET_STR("overlay_box_fill_inv", RS_Settings::overlayBoxFillInverted));
+
+        initComboBox(cbInfoOverlayAbsolutePositionColor, LC_GET_STR("info_overlay_absolute",RS_Settings::overlayInfoCursorAbsolutePos));
+        initComboBox(cbInfoOverlaySnapColor, LC_GET_STR("info_overlay_snap", RS_Settings::overlayInfoCursorSnap));
+        initComboBox(cbInfoOverlayCommandPromptColor, LC_GET_STR("info_overlay_prompt", RS_Settings::overlayInfoCursorCommandPrompt));
+        initComboBox(cbInfoOverlayRelativeColor, LC_GET_STR("info_overlay_relative",RS_Settings::overlayInfoCursorRelativePos));
 
         int overlayTransparency = LC_GET_INT("overlay_box_transparency",90);
         sbOverlayBoxTransparency->setValue(overlayTransparency);
@@ -562,6 +626,25 @@ void QG_DlgOptionsGeneral::ok(){
         }
         LC_GROUP_END();
 
+        LC_GROUP("InfoOverlayCursor");
+        {
+            LC_SET("Enabled", cbInfoOverlayEnable->isChecked());
+            LC_SET("ShowAbsolute", cbInfoOverlayAbsolutePosition->isChecked());
+            LC_SET("ShowRelativeDA", cbInfoOverlayRelative->isChecked());
+            LC_SET("ShowRelativeDD", cbInfoOverlayRelativeDeltas->isChecked());
+            LC_SET("ShowSnapInfo", cbInfoOverlaySnap->isChecked());
+            LC_SET("ShowPrompt", cbInfoOverlayCommandPrompt->isChecked());
+            LC_SET("ShowActionName", cbInfoOverlayCommandName->isChecked());
+            LC_SET("ShowLabels", cbInfoOverlayShowLabels->isChecked());
+            LC_SET("SingleLine", cbInfoOverlayInOneLine->isChecked());
+            LC_SET("FontSize", sbInfoOverlayFontSize->value());
+            LC_SET("FontName",fcbInfoOverlayFont->currentText());
+            LC_SET("OffsetFromCursor", sbInfoOverlayOffset->value());
+            LC_SET("ShowPropertiesCatched", cbInfoOverlaySnapEntityInfo->isChecked());
+            LC_SET("ShowPropertiesEdit", cbInfoOverlayPreviewEditingEntity->isChecked());
+            LC_SET("ShowPropertiesCreating", cbInfoOverlayPreviewCreatingEntity->isChecked());
+        }
+
         LC_GROUP("Render");
         {
             LC_SET("MinRenderableTextHeightPx", sbTextMinHeight->value());
@@ -597,6 +680,12 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("overlay_box_line_inv", cbOverlayBoxLineInverted->currentText());
             LC_SET("overlay_box_fill_inv", cbOverlayBoxFillInverted->currentText());
             LC_SET("overlay_box_transparency",sbOverlayBoxTransparency->value());
+
+
+            LC_SET("info_overlay_absolute",cbInfoOverlayAbsolutePositionColor->currentText());
+            LC_SET("info_overlay_snap", cbInfoOverlaySnapColor->currentText());
+            LC_GET_STR("info_overlay_prompt",cbInfoOverlayCommandPromptColor->currentText());
+            LC_GET_STR("info_overlay_relative",cbInfoOverlayRelativeColor->currentText());
         }
         LC_GROUP_END();
 
@@ -800,6 +889,22 @@ void QG_DlgOptionsGeneral::on_pbOverlayBoxFillInverted_clicked() {
     set_color(cbOverlayBoxFillInverted, QColor(RS_Settings::overlayBoxFillInverted));
 }
 
+void QG_DlgOptionsGeneral::on_pbcbInfoOverlayAbsolutePositionColor_clicked() {
+    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::overlayInfoCursorAbsolutePos));
+}
+
+void QG_DlgOptionsGeneral::on_pbInfoOverlaySnapColor_clicked() {
+    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::overlayInfoCursorSnap));
+}
+
+void QG_DlgOptionsGeneral::on_pbInfoOverlayRelativeColor_clicked() {
+    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::overlayInfoCursorRelativePos));
+}
+
+void QG_DlgOptionsGeneral::on_pbInfoOverlayCommandPromptColor_clicked() {
+    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::overlayInfoCursorCommandPrompt));
+}
+
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked() {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, tr("Clear settings"),
@@ -898,6 +1003,23 @@ void QG_DlgOptionsGeneral::on_cbClassicStatusBarToggled(){
 void QG_DlgOptionsGeneral::onTabCloseButtonChanged(){
     cbTabCloseButtonMode->setEnabled(cbTabCloseButton->isChecked());
 }
+
+void QG_DlgOptionsGeneral::onInfoCursorPromptChanged(){
+
+}
+
+void QG_DlgOptionsGeneral::onInfoCursorAbsolutePositionChanged() {
+
+}
+
+void QG_DlgOptionsGeneral::onInfoCursorRelativeChanged() {
+
+}
+
+void QG_DlgOptionsGeneral::onInfoCursorSnapChanged() {
+
+}
+
 
 void QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled() {
     bool extend = cbGridExtendAxisLines->isChecked();

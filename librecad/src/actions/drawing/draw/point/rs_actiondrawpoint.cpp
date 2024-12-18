@@ -60,7 +60,7 @@ void RS_ActionDrawPoint::mouseMoveEvent(QMouseEvent *e){
     deletePreview();
     if (!trySnapToRelZeroCoordinateEvent(e)){
         pos = getFreeSnapAwarePointAlt(e, pos);
-        previewPoint(pos);
+        previewToCreatePoint(pos); // is it really necessary??
         previewRefSelectablePoint(pos);
         drawPreview();
     };

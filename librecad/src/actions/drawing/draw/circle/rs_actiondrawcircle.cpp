@@ -90,7 +90,7 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
                 //mouse = getFreeSnapAwarePoint(e, mouse);
                 data->radius = data->center.distanceTo(mouse);
                 deletePreview();
-                previewCircle(*data);
+                previewToCreateCircle(*data);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(data->center);
                     previewRefSelectablePoint(mouse);

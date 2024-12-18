@@ -34,11 +34,9 @@ public:
 private:
     RS_Entity* highlightedEntity = nullptr;
     void updateQuickInfoWidget(RS_Entity *pEntity);
-    void clearHighLighting();
     void clearQuickInfoWidget();
-    void highlightHoveredEntity(QMouseEvent *event);
-    void highlightEntity(RS_Entity *entity);
-    void highlightAndShowEntityInfo(QMouseEvent *e);
+    void highlightHoveredEntity(QMouseEvent *event, bool resolveChildren);
+    void highlightAndShowEntityInfo(QMouseEvent *e, bool resolveChildren);
 protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;

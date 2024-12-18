@@ -141,15 +141,17 @@ protected:
      * Stores shape and snap for rectangle shape
      */
     struct ShapeData{
-
         RS_Polyline *resultingPolyline;
         RS_Vector snapPoint;
+        RS_Vector centerPoint;
+        double width;
+        double height;
     };
 
     /*
      * shape data
      */
-    ShapeData* shapeData {nullptr};
+    ShapeData shapeData;
 
     void prepareCornersDrawMode(double &radiusX, double &radiusY, bool &drawComplex, bool &drawBulge) const;
     RS_Polyline* createPolylineByVertexes( RS_Vector bottomLeftCorner, RS_Vector bottomRightCorner,
@@ -157,7 +159,7 @@ protected:
                                            bool drawBulge, bool drawComplex,
                                            double radiusX, double radiusY) const;
 
-    virtual RS_Polyline *createPolyline(const RS_Vector &snapPoint)  = 0;
+    virtual ShapeData createPolyline(const RS_Vector &snapPoint)  = 0;
 
     void createShapeData(const RS_Vector &snapPoint);
     virtual void processCommandValue(double value, bool &toMainStatus) = 0;

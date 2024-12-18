@@ -516,7 +516,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     file->addAction(ag_manager->getActionByName("FilePrintPreview"));
 
     auto *edit = createGenericToolbar(tr("Edit"), "Edit", tbPolicy, {
-        "EditKillAllActions", "", "EditUndo", "EditRedo", "", "EditCut", "EditCopy", "EditPaste", "EditPasteTransform"
+        "EditKillAllActions", "EntityInfoOrSelection", "", "EditUndo", "EditRedo", "", "EditCut", "EditCopy", "EditPaste", "EditPasteTransform"
     });
 
     auto *order = createGenericToolbar(tr("Order"), "Order", tbPolicy, {
@@ -528,6 +528,9 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
         "ViewGrid", "ViewDraft", "ViewLinesDraft", "ViewAntialiasing", "", "ZoomRedraw", "ZoomIn",
         "ZoomOut", "ZoomAuto", "ZoomPrevious", "ZoomWindow", "ZoomPan"
     });
+
+
+
 
     auto *viewsList = createNamedViewsToolbar(tr("Named Views"), "Views", tbPolicy);
 
@@ -541,8 +544,11 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
 
     action_handler->set_snap_toolbar(snap_toolbar);
 
-    connect( main_window,  &QC_ApplicationWindow::signalEnableRelativeZeroSnaps, 
+    connect( main_window,  &QC_ApplicationWindow::signalEnableRelativeZeroSnaps,
              snap_toolbar, &QG_SnapToolBar::slotEnableRelativeZeroSnaps);
+
+
+//    snap_toolbar = new QG_SnapToolBar(main_window, action_handler, ag_manager,ag_manager->getActionsMap());
 
     pen_toolbar = new QG_PenToolBar(tr("Pen"), main_window);
     pen_toolbar->setSizePolicy(tbPolicy);
@@ -551,12 +557,21 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     pen_toolbar->setProperty("_group", 0);
 
     options_toolbar = createGenericToolbar(tr("Tool Options"), "Tool Options", tbPolicy, {});
-    
+
+//    edit->addAction("InfoCursorEnable")
+
+    auto infoCursorTB = createGenericToolbar(tr("Info Cursor"), "Info Cursor", tbPolicy, {
+        "InfoCursorEnable", "InfoCursorAbs","InfoCursorSnap","InfoCursorRel",
+        "InfoCursorPrompt","InfoCursorCatchedEntity"
+    });
+
+    addToTop(infoCursorTB);
+
     auto *dockareas = createGenericToolbar(tr("Dock Areas"), "Dock Areas", tbPolicy, {
         "LeftDockAreaToggle", "RightDockAreaToggle", "TopDockAreaToggle",
         "BottomDockAreaToggle", "FloatingDockwidgetsToggle"
     });
-    
+
     auto *creators = createGenericToolbar(tr("Creators"), "Creators", tbPolicy, {
         "InvokeMenuCreator", "InvokeToolbarCreator"
     });

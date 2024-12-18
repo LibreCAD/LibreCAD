@@ -76,7 +76,7 @@ void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
     switch (getStatus()) {
         case ChooseEntity: {
             deleteSnapper();
-            RS_Entity *pl = catchEntity(e, RS2::EntityPolyline);
+            RS_Entity *pl = catchEntityOnPreview(e, RS2::EntityPolyline);
             if (pl != nullptr){
                 highlightHover(pl);
             }

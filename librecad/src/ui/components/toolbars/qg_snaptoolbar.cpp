@@ -90,6 +90,7 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
 
     //connect(bRelZero, SIGNAL(triggered()), this, SLOT(slotSetRelativeZero()));
     bLockRelZero = justAddAction("LockRelativeZero", actionsMap);
+    bLockRelZero->setCheckable(true);
     connect(bLockRelZero, &QAction::triggered, actionHandler, &QG_ActionHandler::slotLockRelativeZero);
 
     //restore snapMode from saved preferences
@@ -117,7 +118,6 @@ void QG_SnapToolBar::setSnaps ( RS_SnapMode const& s ){
     snapMiddle->setChecked(s.snapMiddle);
     snapDistance->setChecked(s.snapDistance);
     snapIntersection->setChecked(s.snapIntersection);
-
 
     bool restHorizontal = s.restriction == RS2::RestrictHorizontal;
     bool restOrtho = s.restriction == RS2::RestrictOrthogonal;

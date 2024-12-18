@@ -35,15 +35,14 @@
 RS_ActionSelectContour::RS_ActionSelectContour(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
 		:RS_PreviewActionInterface("Select Contours", container, graphicView)
-		,en(nullptr)
-{
+		,en(nullptr){
 	actionType=RS2::ActionSelectContour;
 }
 
 void RS_ActionSelectContour::mouseMoveEvent(QMouseEvent *event){
     snapPoint(event);
     deleteHighlights();
-    auto ent = catchEntity(event);
+    auto ent = catchEntityOnPreview(event);
     if (ent != nullptr){
         // fixme - proper highlighting of planned selection - yet after fixing underlying logic!
 //        RS_Selection s(*container, graphicView);
@@ -74,6 +73,11 @@ void RS_ActionSelectContour::onMouseLeftButtonRelease([[maybe_unused]] int statu
 void RS_ActionSelectContour::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     initPrevious(status);
 }
+
 RS2::CursorType RS_ActionSelectContour::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;
+}
+
+void RS_ActionSelectContour::updateMouseButtonHints() {
+     updateMouseWidgetTRCancel(tr("Specify entity to select"));
 }

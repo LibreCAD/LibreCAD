@@ -55,14 +55,17 @@ void LC_ActionPenPick::finish(bool updateTB){
 }
 
 void LC_ActionPenPick::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
     if (getStatus() == SelectEntity){
-        RS_Entity *en = catchEntity(e, RS2::ResolveNone);
+        RS_Entity *en = catchEntityOnPreview(e, RS2::ResolveNone);
         deleteHighlights();
         if (en != nullptr){
             highlightHover(en);
         }
-        drawHighlights();
     }
+    drawHighlights();
+    drawPreview();
 }
 
 void LC_ActionPenPick::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

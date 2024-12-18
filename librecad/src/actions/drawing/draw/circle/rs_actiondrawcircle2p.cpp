@@ -116,7 +116,7 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
             pPoints->point2 = mouse;
             preparePreview();
             if (data->isValid()){
-                previewCircle(*data);
+                previewToCreateCircle(*data);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(data->center);
                     previewRefPoint(pPoints->point1);

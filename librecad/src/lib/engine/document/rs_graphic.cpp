@@ -611,6 +611,7 @@ void RS_Graphic::setIsoView(RS2::IsoGridViewType viewType){
  * Sets the unit of this graphic to 'u'
  */
 void RS_Graphic::setUnit(RS2::Unit u) {
+    // fixme - sand - add caching
     setPaperSize(RS_Units::convert(getPaperSize(), getUnit(), u));
     addVariable("$INSUNITS", (int)u, 70);
 }
@@ -619,6 +620,7 @@ void RS_Graphic::setUnit(RS2::Unit u) {
  * Gets the unit of this graphic
  */
 RS2::Unit RS_Graphic::getUnit() const {
+    // fixme - sand - add caching
     return static_cast<RS2::Unit>(getVariableInt("$INSUNITS", 0));
 }
 
@@ -627,6 +629,7 @@ RS2::Unit RS_Graphic::getUnit() const {
  * This is determined by the variable "$LUNITS".
  */
 RS2::LinearFormat RS_Graphic::getLinearFormat() {
+    // fixme - sand - add caching
     int lunits = getVariableInt("$LUNITS", 2);
     return getLinearFormat(lunits);
 /* changed by RS2::LinearFormat getLinearFormat(int f)
@@ -683,6 +686,7 @@ RS2::LinearFormat RS_Graphic::getLinearFormat(int f){
  * This is determined by the variable "$LUPREC".
  */
 int RS_Graphic::getLinearPrecision() {
+    // fixme - sand - add caching
     return getVariableInt("$LUPREC", 4);
 }
 
@@ -691,6 +695,7 @@ int RS_Graphic::getLinearPrecision() {
  * This is determined by the variable "$AUNITS".
  */
 RS2::AngleFormat RS_Graphic::getAngleFormat() {
+    // fixme - sand - add caching
     int aunits = getVariableInt("$AUNITS", 0);
 
     switch (aunits) {
@@ -714,6 +719,7 @@ RS2::AngleFormat RS_Graphic::getAngleFormat() {
  * This is determined by the variable "$LUPREC".
  */
 int RS_Graphic::getAnglePrecision() {
+    // fixme - sand - add caching
     return getVariableInt("$AUPREC", 4);
 }
 

@@ -20,7 +20,7 @@ void LC_ActionDrawBoundingBox::init(int status) {
 }
 
 void LC_ActionDrawBoundingBox::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select entities for bounding box (Enter to complete)"), MOD_CTRL(tr("Select and draw")));
+    updateMouseWidgetTRCancel(tr("Select entities for bounding box (Enter to complete)"), MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Select and draw")));
 }
 
 void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {

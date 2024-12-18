@@ -82,6 +82,21 @@ void LC_ActionModifyAlignRef::mouseMoveEventSelected(QMouseEvent *e) {
             RS_Modification m(*preview, graphicView, false);
             m.alignRef(pPoints.data, selectedEntities, true, true);
 
+            if (infoCursorOverlayPrefs->enabled) {
+                QString msg = tr("Align References");
+                msg.append("\n");
+                msg.append("Offset:");
+                msg.append(formatRelative(pPoints.data.offset));
+                msg.append("\n");
+                msg.append("Angle:");
+                msg.append(formatAngle(pPoints.data.rotationAngle));
+                msg.append("\n");
+                msg.append("Scale:");
+                msg.append(formatLinear(pPoints.data.scaleFactor));
+
+                appendInfoCursorZoneMessage(msg, 2, false);
+            }
+
             break;
         }
         default:
@@ -201,7 +216,7 @@ bool LC_ActionModifyAlignRef::doProcessCommand(int status, const QString &comman
 }
 
 void LC_ActionModifyAlignRef::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select to align (Enter to complete)"), MOD_CTRL(tr("Align immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Select to align (Enter to complete)"),  MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Align immediately after selection")));
 }
 
 void LC_ActionModifyAlignRef::updateMouseButtonHintsForSelected(int status) {

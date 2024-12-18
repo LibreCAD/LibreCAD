@@ -86,13 +86,12 @@ void RS_ActionDrawEllipse4Points::trigger(){
 
 void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent *e){
 //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent begin");
-
+    deletePreview();
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
     if (status == SetPoint1){
         trySnapToRelZeroCoordinateEvent(e);
     }
-    deletePreview();
 
     if (showRefEntitiesOnPreview) {
         for (int i = SetPoint2; i <= status; i++) {
@@ -112,7 +111,7 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent *e){
             }
             case SetPoint3: {
                 if (pPoints->valid){
-                    previewCircle(pPoints->cData);
+                    previewToCreateCircle(pPoints->cData);
 
                     if (showRefEntitiesOnPreview) {
                         previewRefPoint(pPoints->cData.center);
@@ -122,7 +121,7 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent *e){
             }
             case SetPoint4: {
                 if (pPoints->evalid) {
-                    auto ellipse = previewEllipse(pPoints->eData);
+                    auto ellipse = previewToCreateEllipse(pPoints->eData);
                     if (showRefEntitiesOnPreview) {
                         previewEllipseReferencePoints(ellipse, true);
                         previewRefSelectablePoint(mouse);

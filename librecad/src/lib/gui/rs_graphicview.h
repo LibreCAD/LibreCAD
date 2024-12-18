@@ -38,6 +38,7 @@
 #include "lc_rect.h"
 #include "rs.h"
 #include "rs_pen.h"
+#include "lc_cursoroverlayinfo.h"
 
 #define DEBUG_RENDERING_
 
@@ -228,6 +229,8 @@ public:
     RS_ActionInterface *getDefaultAction();
     void setCurrentAction(RS_ActionInterface *action);
     RS_ActionInterface *getCurrentAction();
+    QString getCurrentActionName();
+    QIcon getCurrentActionIcon();
     void killSelectActions();
     void killAllActions();
     void back();
@@ -386,7 +389,13 @@ public:
     bool isDraftLinesMode() const;
     void setDraftLinesMode(bool draftLinesMode);
     void setForcedActionKillAllowed(bool forcedActionKillAllowed);
+    virtual QString obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription);
+
+    InfoCursorOverlayPrefs*getInfoCursorOverlayPreferences(){
+        return &infoCursorOverlayPreferences;
+    }
 protected:
+
 
     RS_EntityContainer *container = nullptr; // Holds a pointer to all the enties
     RS_EventHandler *eventHandler = nullptr;
@@ -411,6 +420,8 @@ protected:
     bool lastPaintedHighlighted = false;
     bool lastPaintedSelected = false;
     bool lastPaintOverlay = false;
+
+    InfoCursorOverlayPrefs infoCursorOverlayPreferences = InfoCursorOverlayPrefs();
 
         enum ExtendAxisArea{
         Both,
@@ -470,7 +481,6 @@ protected:
 #endif
 
     int determinePointScreenSize(RS_Painter *painter, double pdsize) const;
-
     double minCircleDrawingRadius = 2.0;
     double minArcDrawingRadius = 0.5;
     double minEllipseMajorRadius = 2.;

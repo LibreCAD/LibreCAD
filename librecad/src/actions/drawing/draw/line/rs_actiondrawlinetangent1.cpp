@@ -73,10 +73,11 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineTangent1::mouseMoveEvent begin");
 
     RS_Vector mouse{toGraph(e)};
+    const RS_Vector &snap = snapPoint(e);
 
     switch (getStatus()) {
         case SetPoint: {
-            *point = snapPoint(e);
+            *point = snap;
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
@@ -84,11 +85,10 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
             deleteSnapper();
             deletePreview();
             deleteHighlights();
-            RS_Entity *en = catchEntity(e, circleType, RS2::ResolveAll);
+            RS_Entity *en = catchEntityOnPreview(e, circleType, RS2::ResolveAll);
             if (en && (en->isArc() ||
                        en->rtti() == RS2::EntityParabola ||
                        en->rtti() == RS2::EntitySplinePoints)){
-
 
                 RS_Vector tangentPoint;
                 RS_Vector altTangentPoint;
@@ -99,7 +99,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
 
                 if (tangentLine != nullptr){
                     highlightHover(en);
-                    previewEntity(tangent->clone());
+                    previewEntityToCreate(tangent->clone(), false);
                     previewRefSelectablePoint(tangentPoint);
                     previewRefSelectablePoint(altTangentPoint);
                     if (showRefEntitiesOnPreview) {

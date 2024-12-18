@@ -65,5 +65,6 @@ protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
+    void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &intersection);
 };
 #endif

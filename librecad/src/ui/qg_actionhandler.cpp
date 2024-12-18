@@ -738,19 +738,11 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionDrawText(*document, *view);
             break;
         case RS2::ActionDrawHatch:
-            if(!document->countSelected())
-            {
-                a = new RS_ActionSelect(this, *document, *view, RS2::ActionDrawHatchNoSelect);
-                break;
-            }
-            // fall-through
-        case RS2::ActionDrawHatchNoSelect:
             a = new RS_ActionDrawHatch(*document, *view);
             break;
         case RS2::ActionDrawImage:
             a = new RS_ActionDrawImage(*document, *view);
             break;
-
             // Dimensioning actions:
             //
         case RS2::ActionDimAligned:
@@ -951,9 +943,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionUnlockRelativeZero:
             a = new RS_ActionLockRelativeZero(*document, *view, false);
             break;
-
             // pen actions
-
         case RS2::ActionPenPick:
             a = new LC_ActionPenPick(*document, *view,  false);
             break;
@@ -991,12 +981,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new LC_ActionInfo3PointsAngle(*document, *view);
             break;
         case RS2::ActionInfoTotalLength:
-            if(!document->countSelected()){
-                a = new RS_ActionSelect(this, *document, *view, RS2::ActionInfoTotalLengthNoSelect);
-                break;
-            }
-            // fall-through
-        case RS2::ActionInfoTotalLengthNoSelect:
             a = new RS_ActionInfoTotalLength(*document, *view);
             break;
         case RS2::ActionInfoArea:
@@ -2030,9 +2014,8 @@ void QG_ActionHandler::slotSetRelativeZero() {
     setCurrentAction(RS2::ActionSetRelativeZero);
 }
 
-void QG_ActionHandler::slotLockRelativeZero(bool on)
-{
-	if (snap_toolbar) {
+void QG_ActionHandler::slotLockRelativeZero(bool on){
+	   if (snap_toolbar) {
         snap_toolbar->setLockedRelativeZero(on);
     }
     if (on) {

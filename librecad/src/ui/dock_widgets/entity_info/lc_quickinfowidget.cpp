@@ -143,10 +143,14 @@ void LC_QuickInfoWidget::processEntity(RS_Entity *en){
     }
  }
 
- /**
-  * Central method for processing collected coordinates
-  * @param point coordinate
-  */
+QString LC_QuickInfoWidget::getEntityDescription(RS_Entity *en, RS2::EntityDescriptionLevel shortDescription) {
+    return entityData.getEntityDescription(en, shortDescription);
+}
+
+/**
+ * Central method for processing collected coordinates
+ * @param point coordinate
+ */
 void LC_QuickInfoWidget::processCoordinate(const RS_Vector &point){
     setWidgetMode(MODE_COORDINATE_COLLECTING);
     pointsData.processCoordinate(point); // delegate processing

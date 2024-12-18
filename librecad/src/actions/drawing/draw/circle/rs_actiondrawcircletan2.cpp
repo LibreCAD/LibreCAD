@@ -117,6 +117,7 @@ void RS_ActionDrawCircleTan2::drawSnapper() {
 
 void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent begin");
+    deletePreview();
     deleteHighlights();
     snapPoint(e);
     for (RS_AtomicEntity *const pc: pPoints->circles) { // highlight already selected
@@ -124,14 +125,14 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent *e){
     }
     switch (getStatus()) {
         case SetCircle1: {
-            auto *c = catchCircle(e);
+            auto *c = catchCircle(e, true);
             if (c != nullptr){
                 highlightHover(c);
             }
             break;
         }
         case SetCircle2: {
-            auto *c = catchCircle(e);
+            auto *c = catchCircle(e, true);
             if (c != nullptr){
                 if (getCenters(c)){
                     highlightHover(c);
@@ -141,15 +142,11 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent *e){
         }
         case SetCenter: {
             pPoints->coord = toGraph(e);
-
             if (preparePreview()){
-                deletePreview();
-                previewCircle(pPoints->cData);
-
+                previewToCreateCircle(pPoints->cData);
                 for (const auto &center: pPoints->centers) {
                     previewRefSelectablePoint(center);
                 }
-
                 if (showRefEntitiesOnPreview) {
                     for (RS_AtomicEntity *const pc: pPoints->circles) { // highlight already selected // fixme - test and review, which cicle center is used
                         RS_Vector candidateCircleCenter = pPoints->cData.center;
@@ -160,13 +157,14 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent *e){
                         }
                     }
                 }
-                drawPreview();
+
             }
-        }
             break;
+        }
         default:
             break;
     }
+    drawPreview();
     drawHighlights();
     RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent end");
 }
@@ -202,8 +200,15 @@ bool RS_ActionDrawCircleTan2::preparePreview(){
     return pPoints->valid;
 }
 
-RS_Entity *RS_ActionDrawCircleTan2::catchCircle(QMouseEvent *e){
-    RS_Entity *en = catchModifiableEntity(e, enTypeList);  // fixme - sand - check whether snap is used for entity selection?  Ensure free snap?
+RS_Entity *RS_ActionDrawCircleTan2::catchCircle(QMouseEvent *e, bool forPreview){
+    RS_Entity *en;
+    // fixme - sand - check whether snap is used for entity selection?  Ensure free snap?
+    if (forPreview) {
+        en = catchModifiableEntityOnPreview(e, enTypeList);
+    }
+    else{
+        en = catchModifiableEntity(e, enTypeList);
+    }
     if (!en) return nullptr;
     if (!en->isVisible()) return nullptr;
     for (int i = 0; i < getStatus(); i++) {
@@ -216,7 +221,7 @@ RS_Entity *RS_ActionDrawCircleTan2::catchCircle(QMouseEvent *e){
 void RS_ActionDrawCircleTan2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case SetCircle1: {
-            RS_Entity *en = catchCircle(e);
+            RS_Entity *en = catchCircle(e,false);
             if (en != nullptr){
                 pPoints->circles.resize(SetCircle1); // todo - what for? Why not have fixes size
                 pPoints->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
@@ -225,7 +230,7 @@ void RS_ActionDrawCircleTan2::onMouseLeftButtonRelease(int status, QMouseEvent *
             break;
         }
         case SetCircle2: {
-            RS_Entity *en = catchCircle(e);
+            RS_Entity *en = catchCircle(e, false);
             if (en != nullptr){
                 pPoints->circles.resize(getStatus());
                 bool hasCenters = getCenters(en);

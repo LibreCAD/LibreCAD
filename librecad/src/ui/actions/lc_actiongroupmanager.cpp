@@ -61,7 +61,8 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
     , view(new LC_ActionGroup(this,tr("View"),tr("View related operations"), ":/icons/zoom_in.svg"))
     , namedViews(new LC_ActionGroup(this,tr("Named Views"),tr("Persistent Views operations"), ":/icons/visible.svg"))
     , widgets(new LC_ActionGroup(this,tr("Widgets"), tr("Widgets management"),":/icons/dockwidgets_bottom.svg"))
-    , pen(new LC_ActionGroup(this,tr("PenTB"),tr("Pen related operations"), ":/icons/pen_apply.svg")){
+    , pen(new LC_ActionGroup(this,tr("PenTB"),tr("Pen related operations"), ":/icons/pen_apply.svg"))
+    , infoCursor(new LC_ActionGroup(this,tr("InfoCursor"),tr("Informational Cursor"), ":/icons/info_cursor_enable.svg")){
 
     for (auto const& ag : findChildren<QActionGroup*>()) {
         ag->setExclusive(false);

@@ -59,10 +59,10 @@ void LC_ActionPolylineArcsToLines::trigger() {
 }
 
 void LC_ActionPolylineArcsToLines::mouseMoveEvent(QMouseEvent *e) {
-    snapPoint(e);
-    auto entity = catchEntity(e, RS2::EntityPolyline);
     deleteHighlights();
     deletePreview();
+    snapPoint(e);
+    auto entity = catchEntityOnPreview(e, RS2::EntityPolyline);
     if (entity != nullptr){
         auto* selectedPolyline = dynamic_cast<RS_Polyline*>(entity);
         if (hasArcsSegments(selectedPolyline)) {
@@ -84,6 +84,7 @@ void LC_ActionPolylineArcsToLines::onMouseLeftButtonRelease([[maybe_unused]] int
 }
 
 void LC_ActionPolylineArcsToLines::init(int status) {
+    RS_PreviewActionInterface::init(status);
     if (status < 0){
        polyline = nullptr;
     }

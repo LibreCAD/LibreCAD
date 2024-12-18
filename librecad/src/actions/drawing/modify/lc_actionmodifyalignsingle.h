@@ -56,6 +56,10 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void previewAlignRefPoint(const RS_Vector &min, const RS_Vector &max);
+
+    void previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef);
+
+    QString prepareInfoCursorMessage(double verticalRef, bool drawVertical, double horizontalRef, bool drawHorizontal);
 };
 
 #endif // LC_ACTIONMODIFYALIGNSINGLE_H

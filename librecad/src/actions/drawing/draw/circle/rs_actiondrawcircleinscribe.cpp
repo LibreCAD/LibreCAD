@@ -110,7 +110,7 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
     for(RS_AtomicEntity* const pc: pPoints->lines) { // highlight already selected
         highlightSelected(pc);
     }
-    auto en = catchModifiableEntity(e, RS2::EntityLine);  // fixme - check whether snap is used for entity selection?  Ensure free snap?
+    auto en = catchModifiableEntityOnPreview(e, RS2::EntityLine);  // fixme - check whether snap is used for entity selection?  Ensure free snap?
 
     if (en != nullptr){
         auto *line = dynamic_cast<RS_Line *>(en);
@@ -130,14 +130,13 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
                     pPoints->coord = toGraph(e);
                     if (preparePreview(line)){
                         highlightHover(en);
-                        previewCircle(pPoints->cData);
+                        previewToCreateCircle(pPoints->cData);
                         if (showRefEntitiesOnPreview) {
                             RS_Vector &center = pPoints->cData.center;
                             previewRefPoint(pPoints->lines[SetLine1]->getNearestPointOnEntity(center, false));
                             previewRefPoint(pPoints->lines[SetLine2]->getNearestPointOnEntity(center, false));
                             previewRefPoint(pPoints->lines[SetLine3]->getNearestPointOnEntity(center, false));
                         }
-                        drawPreview();
                     }
                 }
                 break;
@@ -146,6 +145,7 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
                 break;
         }
     }
+    drawPreview();
     drawHighlights();
     RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent end");
 }
