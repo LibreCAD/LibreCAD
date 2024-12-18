@@ -111,6 +111,7 @@ void LC_ActionFactory::createDrawShapeActions(QMap<QString, QAction*>& map, QAct
         {"DrawLinePolygonCenCor",    RS2::ActionDrawLinePolygonCenCor,   tr("Pol&ygon (Cen,Cor)"),     ":/icons/line_polygon_cen_cor.svg"},
         {"DrawLinePolygonCenTan",    RS2::ActionDrawLinePolygonCenTan,   tr("Pol&ygon (Cen,Tan)"),     ":/icons/line_polygon_cen_tan.svg"},
         {"DrawLinePolygonCorCor",    RS2::ActionDrawLinePolygonCorCor,   tr("Polygo&n (Cor,Cor)"),     ":/icons/line_polygon_cor_cor.svg"},
+        {"DrawLinePolygonSideSide",  RS2::ActionDrawLinePolygonSideSide, tr("Polygo&n (Tan,Tan)"),   ":/icons/line_polygon_size_size.svg"},
         {"DrawStar",                 RS2::ActionDrawStar,                tr("Star"),                   ":/icons/line_polygon_star.svg"},
         {"DrawLineRectangle1Point",  RS2::ActionDrawRectangle1Point,     tr("Rectangle (1 Point)"),    ":/icons/rectangle_1_point.svg"},
         {"DrawLineRectangle2Points", RS2::ActionDrawRectangle2Points,    tr("Rectangle (2 Points)"),   ":/icons/rectangle_2_points.svg"},
@@ -139,6 +140,7 @@ void LC_ActionFactory::createDrawLineActions(QMap<QString, QAction*>& map, QActi
         {"DrawLineAngleRel",         RS2::ActionDrawLineAngleRel,        tr("Angle From Line"),        ":/icons/line_angle_rel.svg"},
         {"DrawLineOrthogonalRel",    RS2::ActionDrawLineOrthogonalRel,   tr("Orthogonal From Line"),   ":/icons/line_ortho_rel.svg"},
         {"DrawLineFromPointToLine",  RS2::ActionDrawLineFromPointToLine, tr("From Point To Line"),     ":/icons/line_to_ortho.svg"},
+        {"DrawLineMiddle",           RS2::ActionDrawLineMiddle,          tr("Middle Line"),            ":/icons/line_middle.svg"},
         {"DrawCross",                RS2::ActionDrawCross,               tr("Cross"),                  ":/icons/cross_circle1.svg"},
         {"DrawSliceDivideLine",      RS2::ActionDrawSliceDivideLine,     tr("Slice/Divide Line"),      ":/icons/slice_divide.svg"},
         {"DrawSliceDivideCircle",    RS2::ActionDrawSliceDivideCircle,   tr("Slice/Divide Circle"),    ":/icons/slice_divide_circle.svg"}
@@ -149,6 +151,7 @@ void LC_ActionFactory::createDrawPointsActions(QMap<QString, QAction*>& map, QAc
     createActionHandlerActions(map, group,{
         {"DrawPoint",                RS2::ActionDrawPoint,               tr("&Points"),                ":/icons/points.svg"},
         {"DrawLinePoints",           RS2::ActionDrawLinePoints,          tr("Line of Points"),         ":/icons/line_points.svg"},
+        {"DrawPointsMiddle",         RS2::ActionDrawPointsMiddle,        tr("Middle Points"),         ":/icons/points_middle.svg"},
         {"DrawPointLattice",         RS2::ActionDrawPointsLattice,       tr("Lattice of Points"),      ":/icons/points_lattice.svg"},
         {"SelectPoints",             RS2::ActionSelectPoints,            tr("Select Points"),          ":/icons/select_points.svg"},
         {"PasteToPoints",            RS2::ActionPasteToPoints,           tr("Paste to Points"),        ":/icons/paste_to_points.svg"}
@@ -244,12 +247,13 @@ void LC_ActionFactory::createDrawPolylineActions(QMap<QString, QAction *> &map, 
 }
 
 void LC_ActionFactory::createDrawOtherActions(QMap<QString, QAction *> &map, QActionGroup *group) {
-    createActionHandlerActions(map, group,{
-        {"ZoomPan",   RS2::ActionZoomPan,   tr("Zoom &Panning"), ":/icons/zoom_pan.svg"},
-        {"DrawMText", RS2::ActionDrawMText, tr("&MText"),        ":/icons/mtext.svg"},
-        {"DrawText",  RS2::ActionDrawText,  tr("&Text"),         ":/icons/text.svg"},
-        {"DrawHatch", RS2::ActionDrawHatch, tr("&Hatch"),        ":/icons/hatch.svg"},
-        {"DrawImage", RS2::ActionDrawImage, tr("Insert &Image"), ":/icons/camera.svg"}
+    createActionHandlerActions(map, group, {
+        {"ZoomPan",         RS2::ActionZoomPan,         tr("Zoom &Panning"), ":/icons/zoom_pan.svg"},
+        {"DrawMText",       RS2::ActionDrawMText,       tr("&MText"),        ":/icons/mtext.svg"},
+        {"DrawText",        RS2::ActionDrawText,        tr("&Text"),         ":/icons/text.svg"},
+        {"DrawHatch",       RS2::ActionDrawHatch,       tr("&Hatch"),        ":/icons/hatch.svg"},
+        {"DrawImage",       RS2::ActionDrawImage,       tr("Insert &Image"), ":/icons/camera.svg"},
+        {"DrawBoundingBox", RS2::ActionDrawBoundingBox, tr("Bounding &Box"), ":/icons/bounding_box.svg"}
     });
 }
 
@@ -300,7 +304,10 @@ void LC_ActionFactory::createModifyActions(QMap<QString, QAction *> &map, QActio
         {"ModifyBreakDivide",     RS2::ActionModifyBreakDivide,     tr("Break/Divide"),               ":/icons/break_out_trim.svg"},
         {"ModifyLineGap",         RS2::ActionModifyLineGap,         tr("Line Gap"),                   ":/icons/line_gap.svg"},
         {"ModifyLineJoin",        RS2::ActionModifyLineJoin,        tr("Line Join"),                  ":/icons/line_join.svg"},
-        {"ModifyDuplicate",       RS2::ActionModifyDuplicate,       tr("Duplicate"),                  ":/icons/duplicate.svg"}
+        {"ModifyDuplicate",       RS2::ActionModifyDuplicate,       tr("Duplicate"),                  ":/icons/duplicate.svg"},
+        {"ModifyAlign",           RS2::ActionModifyAlign,           tr("Align"),                      ":/icons/halign_left.svg"},
+        {"ModifyAlignOne",        RS2::ActionModifyAlignOne,        tr("Align One"),                  ":/icons/align_one.svg"},
+        {"ModifyAlignRef",        RS2::ActionModifyAlignRef,        tr("Align Reference Points"),     ":/icons/align_ref.svg"}
     });
 }
 

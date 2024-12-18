@@ -100,40 +100,40 @@ void LC_LayerTreeOptionsDialog::validate(){
 
     QString itemsGridColorName = cbGridColor->currentText();
 
-    QColor itemsGridColor = QColor(itemsGridColorName);
+    auto itemsGridColor = QColor(itemsGridColorName);
     if (!itemsGridColor.isValid()){
-        showInvalidColorMessage("grid");
+        showInvalidColorMessage(tr("grid"));
         cbGridColor ->setFocus();
         doAccept = false;
     }
     QString higlightedColorName = cbHighlightedColor->currentText();
 
-    QColor highlightedColor = QColor(higlightedColorName);
+    auto highlightedColor = QColor(higlightedColorName);
     if (!highlightedColor.isValid()){
-        showInvalidColorMessage("highlighted item");
+        showInvalidColorMessage(tr("highlighted item"));
         cbHighlightedColor ->setFocus();
         doAccept = false;
     }
     QString virtualLayerBgColorName = cbVirtualLayerBackgroundColor->currentText();
-    QColor virtualLayerBgColor = QColor(virtualLayerBgColorName);
+    auto virtualLayerBgColor = QColor(virtualLayerBgColorName);
     if (!virtualLayerBgColor.isValid()){
-        showInvalidColorMessage("virtual layer background");
+        showInvalidColorMessage(tr("virtual layer background"));
         cbVirtualLayerBackgroundColor ->setFocus();
         doAccept = false;
     }
 
     QString selectedItemBgColorName = cbSelectedItemBgColor->currentText();
-    QColor selectedItemBgColor = QColor(selectedItemBgColorName);
+    auto selectedItemBgColor = QColor(selectedItemBgColorName);
     if (!selectedItemBgColor.isValid()){
-        showInvalidColorMessage("selected item background");
+        showInvalidColorMessage(tr("selected item background"));
         cbSelectedItemBgColor->setFocus();
         doAccept = false;
     }
 
     QString activeLayerBgColorName = cbActiveLayerBgColor->currentText();
-    QColor activeLayerBgColor = QColor(activeLayerBgColorName);
+    auto activeLayerBgColor = QColor(activeLayerBgColorName);
     if (!activeLayerBgColor.isValid()){
-        showInvalidColorMessage("active layer background");
+        showInvalidColorMessage(tr("active layer background"));
         cbActiveLayerBgColor->setFocus();
         doAccept = false;
     }
@@ -187,11 +187,9 @@ void LC_LayerTreeOptionsDialog::validate(){
 }
 
 void LC_LayerTreeOptionsDialog::showInvalidColorMessage(QString name){
-    QMessageBox::warning(this, QMessageBox::tr("Error"),
-                             QMessageBox::tr("Invalid value provide for %1 color.\n"
-                                             "Please specify a different value.")
-                             .arg(QMessageBox::tr(name.toStdString().c_str())),
-                             QMessageBox::Ok);
+    QMessageBox::warning(this, tr("Error"),
+                             tr("Invalid value provide for %1 color.\n"
+                                             "Please specify a different value.").arg(name),QMessageBox::Ok);
 }
 
 void LC_LayerTreeOptionsDialog::pb_highlightedColorClicked(){
@@ -212,7 +210,6 @@ void LC_LayerTreeOptionsDialog::pbActiveLayerBgColorClicked(){
     set_color(cbActiveLayerBgColor, options->activeLayerBgColor);
 }
 
-
 void LC_LayerTreeOptionsDialog::showIndentedClicked(){
     sbIndentSize->setEnabled(cbShowIdented->isChecked());
 }
@@ -227,8 +224,7 @@ void LC_LayerTreeOptionsDialog::initComboBox(QComboBox* cb, const QColor color) 
     cb->setCurrentIndex( idx );
 }
 
-void LC_LayerTreeOptionsDialog::set_color(QComboBox* combo, QColor custom)
-{
+void LC_LayerTreeOptionsDialog::set_color(QComboBox* combo, QColor custom){
     QColor current = QColor::fromString(combo->lineEdit()->text());
 
     QColorDialog dlg;
@@ -240,6 +236,5 @@ void LC_LayerTreeOptionsDialog::set_color(QComboBox* combo, QColor custom)
         combo->lineEdit()->setText(color.name());
     }
 }
-
 
 LC_LayerTreeOptionsDialog::~LC_LayerTreeOptionsDialog(){}

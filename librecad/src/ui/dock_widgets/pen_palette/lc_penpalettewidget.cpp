@@ -544,7 +544,7 @@ void LC_PenPaletteWidget::doApplyPenAttributesToSelection(RS2::LineType lineType
         data.changeLayer = false;
 
         RS_Modification m(*container, graphicView);
-        m.changeAttributes(data);
+        m.changeAttributes(data, false);
     }
 }
 

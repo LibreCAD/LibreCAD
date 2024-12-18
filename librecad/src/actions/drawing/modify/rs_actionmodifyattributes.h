@@ -40,7 +40,6 @@ class RS_ActionModifyAttributes : public LC_ActionPreSelectionAwareBase {
 public:
     RS_ActionModifyAttributes(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    void trigger() override;
 protected:
     /**
     * Action States.
@@ -49,5 +48,6 @@ protected:
         Acknowledge    /**< Acknowledge or cancel. */
     };
     void updateMouseButtonHintsForSelection() override;
+    void doTrigger(bool keepSelected) override;
 };
 #endif

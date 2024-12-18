@@ -34,11 +34,10 @@ RS_ActionModifyRevertDirection::RS_ActionModifyRevertDirection(RS_EntityContaine
     actionType = RS2::ActionModifyRevertDirection;
 }
 
-void RS_ActionModifyRevertDirection::trigger() {
+void RS_ActionModifyRevertDirection::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyRevertDirection::trigger");
-
     RS_Modification m(*container, graphicView);
-    m.revertDirection(selectedEntities);
+    m.revertDirection(selectedEntities, keepSelected);
 }
 
 bool RS_ActionModifyRevertDirection::isShowRefPointsOnHighlight() {

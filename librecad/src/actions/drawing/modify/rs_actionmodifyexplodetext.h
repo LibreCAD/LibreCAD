@@ -42,9 +42,9 @@ public:
     RS_ActionModifyExplodeText(RS_EntityContainer& container,
                                RS_GraphicView& graphicView);
     ~RS_ActionModifyExplodeText() override;
-    void trigger() override;
 protected:
     void updateMouseButtonHintsForSelection() override;
+    void doTrigger(bool keepSelected) override;
 };
 
 #endif

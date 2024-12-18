@@ -92,6 +92,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawLinePolygonCenCor",
         "DrawLinePolygonCenTan",   //20161226 added by txmy
         "DrawLinePolygonCorCor",
+        "DrawLinePolygonSideSide",
         "DrawStar"
     });
 
@@ -108,7 +109,6 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawLineOrthTan",
         "DrawLineOrthogonal",
         "DrawLineRelAngle",
-        "DrawCross",
         "DrawLineRel",
         "DrawLineRelX",
         "DrawLineRelY",
@@ -116,12 +116,15 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawLineOrthogonalRel",
         "DrawLineFromPointToLine",
         "DrawSliceDivideLine",
-        "DrawSliceDivideCircle"
+        "DrawSliceDivideCircle",
+        "DrawCross",
+        "DrawLineMiddle"
     });
 
     fillActionsList(point_actions , {
         "DrawPoint",
         "DrawLinePoints",
+        "DrawPointsMiddle",
         "DrawPointLattice",
         "SelectPoints",
         "PasteToPoints"
@@ -226,12 +229,16 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawText",
         "DrawMText",
         "DrawHatch",
-        "DrawImage"
+        "DrawImage",
+        "DrawBoundingBox"
     });
 
     fillActionsList(modify_actions, {
         "ModifyMove",
         "ModifyDuplicate",
+        "ModifyAlign",
+        "ModifyAlignOne",
+        "ModifyAlignRef",
         "ModifyRotate",
         "ModifyScale",
         "ModifyMirror",
@@ -1162,7 +1169,7 @@ void LC_WidgetFactory::initStatusBar() {
 
         main_window->statusbarManager->setup();
 
-        main_window->grid_status->setToolTip("Current size of Grid/MetaGrid. Click to change grid size.");
+        main_window->grid_status->setToolTip(tr("Current size of Grid/MetaGrid. Click to change grid size."));
 
         connect(main_window->grid_status, &TwoStackedLabels::clicked, main_window, &QC_ApplicationWindow::slotShowDrawingOptions);
 

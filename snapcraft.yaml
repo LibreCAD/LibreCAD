@@ -1,83 +1,124 @@
 name: librecad
-version: '2.2.1-beta'
+version: '2.2.2-alpha'
 grade: stable
 base: core22
 confinement: strict
 license: GPL-2.0
 summary: "librecad: is a 2D open source CAD"
+compression: lzo
 description: |
-        LibreCAD is a cross-platform 2D CAD program written in C++17. It can read DXF/DWG files
-        and can write DXF/PDF/SVG files. It supports point/line/circle/ellipse/parabola/spline
-        primitives. The user interface is highly customizable, and has dozens of translations.
-        Code repository:
-        https://www.github.com/LibreCAD/LibreCAD
+  LibreCAD is a cross-platform 2D CAD program written in C++17. It can read DXF/DWG files
+  and can write DXF/PDF/SVG files. It supports point/line/circle/ellipse/parabola/spline
+  primitives. The user interface is highly customizable, and has dozens of translations.
+  Code repository:
+  https://www.github.com/LibreCAD/LibreCAD
 environment:
-        LD_LIBRARY_PATH: $SNAP/usr/local/lib/:$SNAP/usr/lib/x86_64-linux-gnu/:$SNAP/usr/lib64/:$LD_LIBRARY_PATH
+  LD_LIBRARY_PATH: $SNAP/usr/local/lib/:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/:$SNAP/usr/lib64/:$LD_LIBRARY_PATH
 
 apps:
-        librecad:
-                command: usr/bin/librecad
+  librecad:
+    command: usr/bin/librecad
+    plugs:
+      - home
+      - desktop
+      - desktop-legacy
+      - opengl
+      - wayland
+      - unity7
+      - x11
+    desktop: usr/share/applications/org.librecad.librecad.desktop
+    common-id: org.librecad.librecad.desktop
+    extensions:
+      - kde-neon-6
+      
+plugs:
+  desktop:
+    mount-host-font-cache: false
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes
+  sound-themes:
+    interface: content
+    target: $SNAP/data-dir/sounds
+    default-provider: gtk-common-themes
+    #kf5-5-113-qt-5-15-11-core22:
+    #content: kf5-5-113-qt-5-15-11-core22-all
+    #interface: content
+    #default-provider: kf5-5-113-qt-5-15-11-core22
+    #target: $SNAP/kf5
+  #kf6-core24-sdk:
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
+
 parts:
-        librecad:
-                plugin: qmake
-                source: .
-                build-packages:
-                        - qtbase5-dev
-                        - qttools5-dev
-                        - qttools5-dev-tools
-                        - librsvg2-bin
-                        - libfreetype6-dev
-                        - libicu-dev
-                        - libqt5opengl5-dev
-                        - git
-                        - g++
-                        - libcairo2-dev
-                        - libpango-1.0-0
-                        - libpango1.0-dev
-                        - libboost-dev
-                        - libqt5svg5-dev
-                        - libgtest-dev
-                        - libcurl4-gnutls-dev
-                        - libgtk-3-dev
-                        - libbz2-dev
+  librecad:
+    plugin: cmake
+    #qmake-parameters:
+    #  - "QMAKE_CFLAGS+=-march=x86_64"
+    #  - "QMAKE_CXXFLAGS+=-march=x86-64"
+    build-environment:
+      - QT_SELECT: qt6
+    source: .
+    #build-snaps:
+    #  - kde-qt6-core22-sdk
+    build-packages:
+      - build-essential
+      #- qtbase5-dev #qt6-base-dev
+      #- qttools5-dev #qt6-tools-dev
+      #- qttools5-dev-tools #qt6-tools-dev-tools
+      #- librsvg2-bin
+      #- libqt5waylandclient5-dev #qt6-wayland-dev
+      - libfreetype6-dev
+      #- libicu-dev
+      #- libqt5opengl5-dev #libqt6opengl6-dev
+      #- libcairo2-dev
+      #- libpango-1.0-0
+      #- libpango1.0-dev
+      - libboost-dev
+      - libgl1-mesa-dev # avoid openGL fatal error: GL/gl.h: No such file or directory
+      #- libqt5svg5-dev #libqt6svg6-dev
+      #- libgtest-dev
+      #- libcurl4-gnutls-dev
+      #- libgtk-3-dev
+      - rsync
+    override-build: |
+      # craftctl default
+      export QT_SELECT=qt6
+      pwd
+      cmake ../../../project
+      make -r -j$(nproc)
+      #/snap/kde-qt6-core22-sdk/33/usr/bin/qt6/qmake6 -r 'QMAKESPEC=/snap/kde-qt6-core22-sdk/current/usr/lib/x86_64-linux-gnu/qt6/mkspecs QMAKE_CFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_CXXFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_LFLAGS+=-L$CRAFT_STAGE/lib -L$CRAFT_STAGE/usr/lib -L$CRAFT_STAGE/usr/lib/x86_64-linux-gnu'
+      #/snap/kf6-core22/current/usr/bin/qt6/qmake -r 'QMAKE_CC=clang QMAKE_CXX=clang++ QMAKE_CFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_CXXFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_LFLAGS+=-L$CRAFT_STAGE/lib -L$CRAFT_STAGE/usr/lib -L$CRAFT_STAGE/usr/lib/x86_64-linux-gnu'
+      #make -r -j$(nproc)
 
-                stage-packages:
-                        - libc-bin
-                        - libc6
-                        - libcairo2
-                        - libfreetype6
-                        - libgcc1
-                        - libicu70
-                        - libpango-1.0-0
-                        - libqt5widgets5
-                        - librsvg2-bin
+    #stage-packages:
+      #- libfreetype6
+      #- libqt5gui5 #libqt6gui6
+      #- libqt5printsupport5 #libqt6printsupport6
+    stage:
+      - -usr/share/pkgconfig
 
-                override-stage: |
-                        echo "1"
-                        echo $PWD 
-                        find .. -type f -name librecad
-                        export SRC_DIR=../parts/librecad/build/unix
-                        echo "2"
-                        echo $SNAPCRAFT_STAGE
-                        mkdir -p $SNAPCRAFT_STAGE/usr/bin
-                        mkdir -p $SNAPCRAFT_STAGE/usr/share/librecad
-                        mkdir -p usr/bin
-                        mkdir -p usr/share/librecad
-                        cp -a $SRC_DIR/librecad $SNAPCRAFT_STAGE/usr/bin/
-                        cp -a $SRC_DIR/ttf2lff $SNAPCRAFT_STAGE/usr/bin/
-                        cp -a $SRC_DIR/resources/* $SNAPCRAFT_STAGE/usr/share/librecad/
-                        snapcraftctl stage 
-                override-prime: |
-                        echo "1"
-                        echo $PWD
-                        cp -a ../stage/* ./
-                        snapcraftctl prime 
-                #For 18.04
-                #configflags:
-                #        - "-DCMAKE_STAGE_PREFIX=/usr"
-                #        - "-DBUILD_SHARED_LIBS=On"
-
-                #For 18.04
-                #configflags:
-                #        - "-DBUILD_SHARED_LIBS=On"
-
+    override-stage: |
+      #echo "1"
+      #echo $PWD 
+      #find .. -type f -name librecad
+      export SRC_DIR=../parts/librecad/build/
+      echo $CRAFT_STAGE
+      mkdir -p $CRAFT_STAGE/usr/bin
+      mkdir -p $CRAFT_STAGE/usr/share/librecad
+      mkdir -p $CRAFT_STAGE/usr/share/applications
+      mkdir -p usr/bin
+      mkdir -p usr/share/librecad
+      cp -a $SRC_DIR/librecad $CRAFT_STAGE/usr/bin/
+      #cp -a $SRC_DIR/ttf2lff $CRAFT_STAGE/usr/bin/
+      cp -a $SRC_DIR/../src/unix/resources/* $CRAFT_STAGE/usr/share/librecad/
+      export DESKTOP_DIR=../parts/librecad/src/desktop
+      cp -a $DESKTOP_DIR/*.desktop $CRAFT_STAGE/usr/share/applications/org.librecad.librecad.desktop
+      cp -a $DESKTOP_DIR/org.librecad.*.xml $CRAFT_STAGE/usr/share/applications/org.librecad.librecad.xml
+      craftctl default
+    override-prime: |
+      rsync -av ../stage/* ./
+      craftctl default

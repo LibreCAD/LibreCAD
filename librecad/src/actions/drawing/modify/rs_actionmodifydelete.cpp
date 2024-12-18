@@ -34,11 +34,12 @@ RS_ActionModifyDelete::RS_ActionModifyDelete(RS_EntityContainer &container,RS_Gr
     actionType=RS2::ActionModifyDelete;
 }
 
-void RS_ActionModifyDelete::trigger() {
+void RS_ActionModifyDelete::doTrigger([[maybe_unused]] bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyDelete::trigger()");
     RS_Modification m(*container, graphicView);
     m.remove(selectedEntities);
 }
+
 
 void RS_ActionModifyDelete::updateMouseButtonHintsForSelection() {
     updateMouseWidgetTRCancel(tr("Select to delete (Enter to complete)"),MOD_CTRL(tr("Delete immediately after selection")));

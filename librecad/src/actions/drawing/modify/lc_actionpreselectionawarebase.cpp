@@ -22,7 +22,11 @@
 
 #include "lc_actionpreselectionawarebase.h"
 #include "rs_document.h"
+#include "rs_graphicview.h"
 #include "rs_debug.h"
+#include "rs_settings.h"
+#include "rs_selection.h"
+#include "rs_overlaybox.h"
 
 LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
     const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView,
@@ -30,9 +34,20 @@ LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
     :RS_ActionSelectBase(name, container, graphicView, entityTypeList),
     countDeep(countSelectionDeep){}
 
+void LC_ActionPreSelectionAwareBase::trigger() {
+    RS_PreviewActionInterface::trigger();
+    bool keepSelected = LC_GET_ONE_BOOL("Modify", "KeepModifiedSelected", true);
+    doTrigger(keepSelected);
+
+    updateSelectionWidget();
+    updateMouseButtonHints();
+    graphicView->redraw();
+}
+
 LC_ActionPreSelectionAwareBase::~LC_ActionPreSelectionAwareBase() {
     selectedEntities.clear();
 }
+
 
 void LC_ActionPreSelectionAwareBase::init(int status) {
     RS_PreviewActionInterface::init(status);
@@ -69,18 +84,44 @@ void LC_ActionPreSelectionAwareBase::selectionFinishedByKey([[maybe_unused]]QKey
     }
 }
 
+void LC_ActionPreSelectionAwareBase::mousePressEvent(QMouseEvent * e) {
+    if (!selectionComplete){
+        if (e->button() == Qt::LeftButton){
+            selectionCorner1 = toGraph(e);
+        }
+    }
+}
+
 void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     if (selectionComplete){
         mouseLeftButtonReleaseEventSelected(status, e);
     }
     else{
-        entityToSelect = catchEntity(e, catchForSelectionEntityTypes);
-        if (entityToSelect != nullptr){
-            selectEntity();
-            if (isControl(e)){
-                selectionCompleted(true, false);
+        if (inBoxSelectionMode){
+            RS_Vector mouse = toGraph(e);
+            deletePreview();
+            bool cross = (selectionCorner1.x > mouse.x);
+            RS_Selection s(*container, graphicView);
+            bool select = (e->modifiers() & Qt::ShiftModifier) == 0;
+            if (catchForSelectionEntityTypes.isEmpty()){
+                s.selectWindow(RS2::EntityUnknown, selectionCorner1, mouse, select, cross);
+            }
+            else {
+                s.selectWindow(catchForSelectionEntityTypes, selectionCorner1, mouse, select, cross);
+            }
+            updateSelectionWidget();
+        }
+        else{
+            entityToSelect = catchEntity(e, catchForSelectionEntityTypes);
+            if (entityToSelect != nullptr){
+                selectEntity();
+                if (isControl(e)){
+                    selectionCompleted(true, false);
+                }
             }
         }
+        inBoxSelectionMode = false;
+        selectionCorner1.valid = false;
         invalidateSnapSpot();
     }
 }
@@ -100,7 +141,19 @@ void LC_ActionPreSelectionAwareBase::mouseMoveEvent(QMouseEvent *event) {
         mouseMoveEventSelected(event);
     }
     else{
-        selectionMouseMove(event);
+        RS_Vector mouse = toGraph(event);
+        if (selectionCorner1.valid && (graphicView->toGuiDX(selectionCorner1.distanceTo(mouse)) > 10.0)){
+            inBoxSelectionMode = true;
+        }
+        if (inBoxSelectionMode){
+            deletePreview();
+            auto ob = new RS_OverlayBox(nullptr,RS_OverlayBoxData(selectionCorner1, mouse));
+            previewEntity(ob);
+            drawPreview();
+        }
+        else {
+            selectionMouseMove(event);
+        }
     }
 }
 

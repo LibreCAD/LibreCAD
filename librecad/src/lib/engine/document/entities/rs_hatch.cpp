@@ -214,7 +214,7 @@ void RS_Hatch::update() {
     updateRunning = true;
 
     // save attributes for the current hatch
-    RS_Layer* hatch_layer = this->getLayer();
+    RS_Layer* hatch_layer = this->getLayer(); // fixme - sand - is it really necessary to use resolved pen there?
     RS_Pen hatch_pen = this->getPen();
 
     // delete old hatch:
