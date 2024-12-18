@@ -94,17 +94,34 @@ jobs:
           name: linuxAssets
           path: LibreCAD*.AppImage
           retention-days: 2
-#
-#      - name: Create snapcraft
-#        run: |
-#          ./scripts/createSnap.sh
-#
-#      - name: Uploading snap
-#        uses: actions/upload-artifact@main
-#        with:
-#          name: snapAssets
-#          path: librecad*.snap
-#
+
+  BuildSnap:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@main
+      with:
+        fetch-depth: 0
+        ref: master
+
+    - name: install snap
+      uses: samuelmeuli/action-snapcraft@v2
+          
+    - name: Create snapcraft
+      run: |
+          pwd
+          ls
+          ls scripts
+          bash ./scripts/createSnap.sh
+          mv librecad*.snap LibreCAD-`git describe --always`.snap
+
+    - name: Uploading snap
+      uses: actions/upload-artifact@v4
+      with:
+        name: snapAssets
+        path: ${{github.workspace}}/LibreCAD*.snap
+        retention-days: 2
+
   BuildMacOS:
     runs-on: macos-14
     outputs:
@@ -257,7 +274,7 @@ jobs:
 
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD'
-    needs: [BuildLinux, BuildMacOS, BuildWindows64]
+    needs: [BuildLinux, BuildMacOS, BuildWindows64，BuildSnap]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -284,5 +301,5 @@ jobs:
             linuxAssets/LibreCAD*.AppImage
             macOSAssets/LibreCAD*.dmg
             win64Assets/LibreCAD*.exe
-            snapAssets/librecad*.snap
+            snapAssets/LibreCAD*.snap
             LICENSE
