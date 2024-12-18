@@ -297,7 +297,7 @@ void QG_DlgOptionsGeneral::init() {
         checked = LC_GET_BOOL("ShowEntityIDs", false);
         cbShowEntityIDs->setChecked(checked);
 
-        checked = LC_GET_BOOL("PanOnZoom", true);
+        checked = LC_GET_BOOL("PanOnZoom", false);
         cbPanOnWheelZoom->setChecked(checked);
 
         checked = LC_GET_BOOL("FirstTimeNoZoom", false);

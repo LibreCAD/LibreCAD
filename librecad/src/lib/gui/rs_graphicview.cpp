@@ -138,9 +138,11 @@ void RS_GraphicView::loadSettings() {
 
         m_panOnZoom = LC_GET_BOOL("PanOnZoom", false);
         m_skipFirstZoom = LC_GET_BOOL("FirstTimeNoZoom", false);
-    }
+    } // Appearance group
     LC_GROUP_END();
-    LC_GROUP("Render");{
+
+    LC_GROUP("Render");
+    {
         minRenderableTextHeightInPx = LC_GET_INT("MinRenderableTextHeightPx", 4);
         int minArcRadius100 = LC_GET_INT("MinArcRadius", 80);
         minArcDrawingRadius = minArcRadius100 / 100.0;
@@ -156,8 +158,9 @@ void RS_GraphicView::loadSettings() {
 
         int minEllipseMinor100 = LC_GET_INT("MinEllipseMinor", 200);
         minEllipseMinorRadius = minEllipseMinor100 / 100.0;
-    }
+    } // Render group
     LC_GROUP_END();
+
     LC_GROUP_GUARD("Colors");
     {
         setBackground(QColor(LC_GET_STR("background", RS_Settings::background)));
@@ -184,7 +187,7 @@ void RS_GraphicView::loadSettings() {
         tmp = QColor(LC_GET_STR("overlay_box_fill_inv", RS_Settings::overlayBoxFillInverted));
         RS_Color fillColorInverted(tmp.red(), tmp.green(), tmp.blue(), overlayTransparency);
         setOverlayBoxFillInvertedColor(fillColorInverted);
-    }
+    } // colors group
 
     if (grid != nullptr){
         grid->loadSettings();

@@ -127,9 +127,10 @@ void LC_NamedViewsListWidget::createModel() {
     tableView->setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
-void LC_NamedViewsListWidget::setGraphicView(RS_GraphicView* gv, QMdiSubWindow* w) {
-    LC_ViewList* viewsList = nullptr;    
-    if (gv != nullptr) {
+void LC_NamedViewsListWidget::setGraphicView(RS_GraphicView *gv,
+                                             QMdiSubWindow *w) {
+    LC_ViewList *viewsList = nullptr;
+    if (gv != nullptr && gv->getGraphic() != nullptr) {
         RS_Graphic *graphic = gv->getGraphic();
         linearFormat = graphic->getLinearFormat();
         precision = graphic->getLinearPrecision();
@@ -142,16 +143,10 @@ void LC_NamedViewsListWidget::setGraphicView(RS_GraphicView* gv, QMdiSubWindow* 
 }
 
 void LC_NamedViewsListWidget::setViewsList(LC_ViewList *viewsList) {
-    if (viewsList == nullptr){
-        currentViewList = nullptr;
-        updateData(false);
-    }
-    else{
-        currentViewList = viewsList;
-        updateData(false);
-        if (viewsModel->count() > 0){
-           selectView(currentViewList->at(0));
-        }
+    currentViewList = viewsList;
+    updateData(false);
+    if (nullptr != viewsList && viewsModel->count() > 0){
+        selectView(currentViewList->at(0));
     }
 }
 
