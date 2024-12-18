@@ -88,7 +88,7 @@ parts:
       # craftctl default
       export QT_SELECT=qt6
       pwd
-      cmake ../../../project
+      cmake ../../..
       make -r -j$(nproc)
       #/snap/kde-qt6-core22-sdk/33/usr/bin/qt6/qmake6 -r 'QMAKESPEC=/snap/kde-qt6-core22-sdk/current/usr/lib/x86_64-linux-gnu/qt6/mkspecs QMAKE_CFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_CXXFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_LFLAGS+=-L$CRAFT_STAGE/lib -L$CRAFT_STAGE/usr/lib -L$CRAFT_STAGE/usr/lib/x86_64-linux-gnu'
       #/snap/kf6-core22/current/usr/bin/qt6/qmake -r 'QMAKE_CC=clang QMAKE_CXX=clang++ QMAKE_CFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_CXXFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_LFLAGS+=-L$CRAFT_STAGE/lib -L$CRAFT_STAGE/usr/lib -L$CRAFT_STAGE/usr/lib/x86_64-linux-gnu'
