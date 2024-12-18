@@ -274,7 +274,7 @@ jobs:
 
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD'
-    needs: [BuildLinux, BuildMacOS, BuildWindows64，BuildSnap]
+    needs: [BuildLinux, BuildMacOS, BuildWindows64, BuildSnap]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
