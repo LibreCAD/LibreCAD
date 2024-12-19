@@ -38,12 +38,14 @@
 #include "lc_isometricgrid.h"
 
 
-static constexpr const int MINIMAL_GRID_UI_STEP = 2;
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
 
 namespace {
+
+constexpr int MINIMAL_GRID_UI_STEP = 2;
+
 //maximum number grid points to draw, for performance consideration
 const int maxGridPoints=1000000;
 //minimum grid width to consider
