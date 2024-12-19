@@ -52,39 +52,34 @@ RS_SimplePython* RS_SimplePython::instance() {
  */
 int RS_SimplePython::launch(const QString& script) {
     long answer;
-    PyObject *modname, *mod, *mdict, *func, *rslt;
+    PyObject *mod, *mdict, *func, *rslt;
     //Py_SetProgramName(argv[0]);
     Py_Initialize();
     init_pyextension();
-    modname = PyString_FromString(script);
-    mod = PyImport_Import(modname);
+    mod = PyImport_ImportModule(qUtf8Printable(script));
     if (mod) {
         //printf( "mod\n");
         mdict = PyModule_GetDict(mod);
 
         // Borrowed reference to start function
         func = PyDict_GetItemString(mdict, "start");
-        if (func) {
-            //printf( "func\n");
-            if (PyCallable_Check(func)) {
-                //printf("calling..\n");
-                rslt = PyObject_CallFunction(func, "(s)", "noparam");
-                //printf("calling ok\n");
-                if (rslt) {
-                    //printf("c: rslt\n");
-                    answer = PyInt_AsLong(rslt);
-                    //printf("c: answer is: %ld\n", answer);
-                    Py_XDECREF(rslt);
-                }
-            }
+        if (func && PyCallable_Check(func)) {
+            //printf("calling..\n");
+            rslt = PyObject_CallFunction(func, "(s)", "noparam");
+            //printf("calling ok\n");
+            if (rslt) {
+                //printf("c: rslt\n");
+                answer = PyLong_AsLong(rslt);
+                //printf("c: answer is: %ld\n", answer);
+                Py_XDECREF(rslt);
+        }
         } else {
             printf("no such function: start\n");
         }
         Py_XDECREF(mod);
     } else {
-        printf("no such module: %s\n", script.latin1());
+        printf("no such module: %s\n", qUtf8Printable(script));
     }
-    Py_XDECREF(modname);
     Py_Finalize();
     return 0;
 }
@@ -157,7 +152,7 @@ static PyMethodDef rsLibreCADMethods[] =
  */
 void init_pyextension() {
     printf("c: adding module: librecad\n");
-    PyImport_AddModule("librecad");
+    PyImport_ImportModule("librecad");
     Py_InitModule("librecad", rsLibreCADMethods);
     printf("c: module librecad: OK\n");
 }
