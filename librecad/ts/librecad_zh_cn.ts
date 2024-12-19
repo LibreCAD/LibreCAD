@@ -1867,7 +1867,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1790"/>
         <source>Warning: File already opened : </source>
-        <translation>警告: 文件已被打开.</translation>
+        <translation>警告: 文件已被打开: </translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2356"/>
@@ -13222,7 +13222,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="32"/>
         <source>Bevel Options</source>
-        <translation type="unfinished">倒角选项</translation>
+        <translation>倒角选项</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
