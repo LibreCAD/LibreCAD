@@ -819,7 +819,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation type="unfinished"></translation>
+        <translation>Poli&amp;gonoa (Zentroa, Tangente)</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
@@ -1612,7 +1612,7 @@ Ikus ea dagoen eta baimenak.</translation>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Panela</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -1628,15 +1628,15 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>&amp;Style Sheets</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Estilo-orriak</translation>
     </message>
     <message>
         <source>Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Trepetak</translation>
     </message>
     <message>
         <source>&amp;Forum</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Foroa</translation>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
@@ -1644,15 +1644,15 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>&amp;Release Information</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bertsioaren informazioa</translation>
     </message>
     <message>
         <source>On&amp;line</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Linean</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation type="unfinished"></translation>
+        <translation>$Dohaintza egin</translation>
     </message>
 </context>
 <context>
@@ -1787,15 +1787,15 @@ beste lehio batean</translation>
     </message>
     <message>
         <source>Remove block</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendu blokea</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Iragazkia</translation>
     </message>
     <message>
         <source>Looking for matching block names</source>
-        <translation type="unfinished"></translation>
+        <translation>Bat datozen blokeen izenak bilatzen</translation>
     </message>
 </context>
 <context>
@@ -1886,7 +1886,7 @@ beste lehio batean</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautapen pertsonalizatua</translation>
     </message>
 </context>
 <context>
@@ -1940,11 +1940,11 @@ beste lehio batean</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation>Panela</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Flotatu</translation>
     </message>
     <message>
         <source>Command line</source>
@@ -1952,7 +1952,7 @@ beste lehio batean</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cmd</translation>
     </message>
 </context>
 <context>
@@ -2057,11 +2057,12 @@ beste lehio batean</translation>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikatu atributuak hautatutako INSERT-eko azpi-entitate guztiei ere.
+Horrek Blokearen beraren entitate guztiak modu errekurtsiboan aldatzen ditu.</translation>
     </message>
     <message>
         <source>Apply attributes Block-deep</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikatu atributuak Blokearen sakoneran</translation>
     </message>
 </context>
 <context>
@@ -2251,7 +2252,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Select an image file</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu irudi-fitxategi bat</translation>
     </message>
 </context>
 <context>
@@ -2368,7 +2369,7 @@ Mesedez, aukeratu irudietan erabili nahi dituzun unitateak eta hizkuntza.&lt;br&
     </message>
     <message>
         <source>ID: </source>
-        <translation type="unfinished"></translation>
+        <translation>ID: </translation>
     </message>
 </context>
 <context>
@@ -2975,23 +2976,23 @@ Mesedez, aukeratu irudietan erabili nahi dituzun unitateak eta hizkuntza.&lt;br&
     </message>
     <message>
         <source>Font Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Letra-tipoaren ezarpenak</translation>
     </message>
     <message>
         <source>Font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Letra-tipoa:</translation>
     </message>
     <message>
         <source>Text Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Testuaren noranzkoa</translation>
     </message>
     <message>
         <source>Left to right</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezkerretik eskuinera</translation>
     </message>
     <message>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>Eskuinetik ezkerrera</translation>
     </message>
 </context>
 <context>
@@ -3267,15 +3268,15 @@ Mesedez, aukeratu irudietan erabili nahi dituzun unitateak eta hizkuntza.&lt;br&
     </message>
     <message>
         <source>Number of line segments per spline patch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Spline segmentuko lerro-segmentu kopurua:</translation>
     </message>
     <message>
         <source>Crosshair</source>
-        <translation type="unfinished"></translation>
+        <translation>Gurutze-punteroa</translation>
     </message>
     <message>
         <source>Left crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezkerreko gurutze-punteroa sareta isometrikoarekin</translation>
     </message>
     <message>
         <source>Left</source>
@@ -3283,7 +3284,7 @@ Mesedez, aukeratu irudietan erabili nahi dituzun unitateak eta hizkuntza.&lt;br&
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Goiko gurutze-punteroa sareta isometrikoarekin</translation>
     </message>
     <message>
         <source>Top</source>
@@ -3291,7 +3292,7 @@ Mesedez, aukeratu irudietan erabili nahi dituzun unitateak eta hizkuntza.&lt;br&
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Eskuineko gurutze-punteroa sareta isometrikoarekin</translation>
     </message>
     <message>
         <source>Right</source>
@@ -3299,19 +3300,19 @@ Mesedez, aukeratu irudietan erabili nahi dituzun unitateak eta hizkuntza.&lt;br&
     </message>
     <message>
         <source>Use orthogonal grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Erabili sareta ortogonala</translation>
     </message>
     <message>
         <source>Orthogonal Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Sareta ortogonala</translation>
     </message>
     <message>
         <source>Use isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Erabili sareta isometrikoa</translation>
     </message>
     <message>
         <source>Isometric Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Sareta isometrikoa</translation>
     </message>
     <message>
         <source>Tick size:</source>
@@ -3319,71 +3320,71 @@ Mesedez, aukeratu irudietan erabili nahi dituzun unitateak eta hizkuntza.&lt;br&
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kota-markaren tamaina. 0-an ezarrita, kotaren marka desgaituko da. Kota-gezia ez da marraztuko kota-marka gaituta dagoenean.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontala</translation>
     </message>
     <message>
         <source>General Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eskala orokorra:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kota guztien balioak biderkatzeko faktorea.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kota geometriko guztiak biderkatzeko eskala.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Testu estiloa:</translation>
     </message>
     <message>
         <source>&apos;.&apos; (Period)</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;.&apos; (Periodoa)</translation>
     </message>
     <message>
         <source>&apos;,&apos; (Comma)</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;,&apos; (koma)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hamartarren bereizlea:</translation>
     </message>
     <message>
         <source>Linear units:</source>
-        <translation type="unfinished"></translation>
+        <translation>Unitate linealak:</translation>
     </message>
     <message>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolorea:</translation>
     </message>
     <message>
         <source>Length Factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Luzera-faktorea:</translation>
     </message>
     <message>
         <source>Angular units:</source>
-        <translation type="unfinished"></translation>
+        <translation>Angelu-unitateak:</translation>
     </message>
     <message>
         <source>Linear zeros:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zero linealak:</translation>
     </message>
     <message>
         <source>Format units</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatu-unitateak</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Testuen arteko distantzia&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text size &amp; position</source>
-        <translation type="unfinished"></translation>
+        <translation>Testuaren tamaina eta kokapena</translation>
     </message>
     <message>
         <source>Length to enlarge over dimension line</source>
