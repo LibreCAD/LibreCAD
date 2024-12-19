@@ -25,23 +25,12 @@
 **
 **********************************************************************/
 
-#include<climits>
+#include<limits>
 #include<map>
-#include<vector>
-#include<utility>
+
 #include "rs.h"
 
 namespace {
-
-std::map<RS2::LineWidth, int> constructReversedMap(std::map<int, RS2::LineWidth> originalMap) {
-    std::map<int, RS2::LineWidth>::iterator it;
-    std::map<RS2::LineWidth, int> reverseMap;
-
-    for(it = originalMap.begin(); it != originalMap.end(); it++)
-        reverseMap[it->second] = it->first;
-
-    return reverseMap;
-}
 
 std::map<int, RS2::LineWidth> constructInt2LineWidth() {
     using namespace RS2;
@@ -74,22 +63,35 @@ std::map<int, RS2::LineWidth> constructInt2LineWidth() {
         {150, Width20},
         {180, Width21},
         {206, Width22},
-        {INT_MAX, Width23}
+        {std::numeric_limits<int>::max(), Width23}
     };
 }
 
-const std::map<int, RS2::LineWidth> g_int2LineWidth = constructInt2LineWidth();
+std::map<RS2::LineWidth, int> constructReversedMap(const std::map<int, RS2::LineWidth>& originalMap) {
+    std::map<RS2::LineWidth, int> reverseMap;
+
+    for(const auto [key, lineWidth]: originalMap)
+        reverseMap[lineWidth] = key;
+
+    return reverseMap;
+}
+
+const std::map<int, RS2::LineWidth>& getInt2LineWidthMap() {
+    static std::map<int, RS2::LineWidth> g_int2LineWidth = constructInt2LineWidth();
+    return g_int2LineWidth;
+}
 }
 
 RS2::LineWidth RS2::intToLineWidth(int w) {
     // for w < 3, return Width00
     // if (w <= 2) return Width00;
-    auto it = g_int2LineWidth.find(w);
-    return (it != g_int2LineWidth.cend()) ? it->second : Width00;
+    const std::map<int, RS2::LineWidth>& int2LineWidthMap = getInt2LineWidthMap();
+    auto it = int2LineWidthMap.find(w);
+    return (it != int2LineWidthMap.cend()) ? it->second : Width00;
 }
 
 int RS2::LineWidthToInt(RS2::LineWidth lw){
-    static const std::map<RS2::LineWidth, int> g_lineWidth2int = constructReversedMap(g_int2LineWidth);
+    static const std::map<RS2::LineWidth, int> g_lineWidth2int = constructReversedMap(getInt2LineWidthMap());
     auto it = g_lineWidth2int.find(lw);
     return (it != g_lineWidth2int.cend()) ? it->second : -2;
 }
