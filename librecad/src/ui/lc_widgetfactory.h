@@ -23,6 +23,10 @@ class QG_BlockWidget;
 class QG_ActionHandler;
 class QG_LibraryWidget;
 class QG_CommandWidget;
+#ifdef DEVELOPER
+class QG_Lsp_CommandWidget;
+class QG_Py_CommandWidget;
+#endif // DEVELOPER
 class LC_CustomToolbar;
 class LC_DockWidget;
 class QC_ApplicationWindow;
@@ -63,8 +67,14 @@ public:
     QG_BlockWidget* block_widget = nullptr;
     QG_LibraryWidget* library_widget = nullptr;
     QG_CommandWidget* command_widget = nullptr;
-
+#ifdef DEVELOPER
+    QG_Lsp_CommandWidget* lsp_command_widget = nullptr;
+    QG_Py_CommandWidget* py_command_widget = nullptr;
+#endif // DEVELOPER
     QMenu* file_menu = nullptr;
+#ifdef DEVELOPER
+    QMenu* dev_menu = nullptr;
+#endif // DEVELOPER
     QMenu* windows_menu = nullptr;
     QList<QAction*> actionsToDisableInPrintPreview;
 

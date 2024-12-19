@@ -301,5 +301,7 @@
         <file>align_one.svg</file>
         <file>line_polygon_size_size.svg</file>
         <file>align_ref.svg</file>
+        <file>run.svg</file>
+        <file>open_script.svg</file>
     </qresource>
 </RCC>
