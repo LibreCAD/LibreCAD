@@ -83,8 +83,7 @@ const std::map<int, RS2::LineWidth> g_int2LineWidth = constructInt2LineWidth();
 
 RS2::LineWidth RS2::intToLineWidth(int w) {
     // for w < 3, return Width00
-    if (w <= 2)
-        return Width00;
+    // if (w <= 2) return Width00;
     auto it = g_int2LineWidth.find(w);
     return (it != g_int2LineWidth.cend()) ? it->second : Width00;
 }
