@@ -367,10 +367,13 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
         cbDimFxLon->setChecked(false);
     }
     int dimlwd = graphic->getVariableInt("$DIMLWD", -2); //default ByBlock
+    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLWD="<<dimlwd;
     RS2::LineWidth lineWidth = RS2::intToLineWidth(dimlwd);
     cbDimLwD->setWidth(lineWidth);
     int dimlwe = graphic->getVariableInt("$DIMLWE", -2); //default ByBlock
     cbDimLwE->setWidth(RS2::intToLineWidth(dimlwe));
+    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLwe="<<dimlwe;
+
 
     // Dimensions / length format:
     int dimlunit = graphic->getVariableInt("$DIMLUNIT", lunits);
@@ -734,11 +737,13 @@ void QG_DlgOptionsDrawing::validate() {
 
         RS2::LineWidth dimLwDLineWidth = cbDimLwD->getWidth();
         int lineWidthDValue = RS2::lineWidthToInt(dimLwDLineWidth);
-        graphic->addVariable("$DIMLWD", lineWidthDValue, 70);
+                graphic->addVariable("$DIMLWD", lineWidthDValue, 70);
+    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLWD="<<lineWidthDValue;
 
         RS2::LineWidth dimLwELineWidth = cbDimLwE->getWidth();
         int lineWidthEValue = RS2::lineWidthToInt(dimLwELineWidth);
         graphic->addVariable("$DIMLWE", lineWidthEValue, 70);
+    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLWE="<<lineWidthEValue;
 
         graphic->addVariable("$DIMFXL", cbDimFxL->value(), 40);
         graphic->addVariable("$DIMFXLON", cbDimFxLon->isChecked() ? 1 : 0, 70);

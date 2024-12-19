@@ -28,6 +28,14 @@ apps:
       - x11
     desktop: usr/share/applications/org.librecad.librecad.desktop
     common-id: org.librecad.librecad.desktop
+    environment:
+      SNAP_DESKTOP_RUNTIME: $SNAP
+      QTCHOOSER_NO_GLOBAL_DIR: 1
+      QT_SELECT: snappy-qt6
+      HOME: $SNAP_USER_DATA
+      QTDIR: /snap/kde-qt6-core22-sdk/current/qt6
+      QT_PLUGIN_PATH: /snap/kde-qt6-core22-sdk/current/qt6/plugins
+
     extensions:
       - kde-neon-6
       
@@ -48,6 +56,16 @@ plugs:
     #default-provider: kf5-5-113-qt-5-15-11-core22
     #target: $SNAP/kf5
   #kf6-core24-sdk:
+  kf-qt-latest:
+    interface: content
+    content: kde-qt6-core22
+    default-provider: kde-qt6-core22
+    target: kf6
+  kf-qt-ext-latest:
+    interface: content
+    content: kf6-core22
+    default-provider: kf6-core22
+    target: kf6
   gtk-3-themes:
     interface: content
     target: $SNAP/data-dir/themes
@@ -56,6 +74,8 @@ plugs:
 parts:
   librecad:
     plugin: cmake
+    #make-parameters: ["FLAVOR=qt6"]
+    #plugin: cmake
     #qmake-parameters:
     #  - "QMAKE_CFLAGS+=-march=x86_64"
     #  - "QMAKE_CXXFLAGS+=-march=x86-64"
@@ -84,11 +104,22 @@ parts:
       #- libcurl4-gnutls-dev
       #- libgtk-3-dev
       - rsync
+      - libqt6opengl6-dev
+      - qt6-base-dev
+      - qt6-declarative-dev
+      - qt6-declarative-private-dev
+      - qt6-multimedia-dev
+      - qt6-tools-dev
+      - qt6-tools-dev-tools
+      - qt6-wayland-dev
+      - qt6-wayland-dev-tools
+      - qt6-image-formats-plugins
+      - qt6-qmltooling-plugins
     override-build: |
       # craftctl default
-      export QT_SELECT=qt6
-      pwd
-      cmake ../../../project
+      #export QT_SELECT=qt6
+      #pwd
+      cmake ../../..
       make -r -j$(nproc)
       #/snap/kde-qt6-core22-sdk/33/usr/bin/qt6/qmake6 -r 'QMAKESPEC=/snap/kde-qt6-core22-sdk/current/usr/lib/x86_64-linux-gnu/qt6/mkspecs QMAKE_CFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_CXXFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_LFLAGS+=-L$CRAFT_STAGE/lib -L$CRAFT_STAGE/usr/lib -L$CRAFT_STAGE/usr/lib/x86_64-linux-gnu'
       #/snap/kf6-core22/current/usr/bin/qt6/qmake -r 'QMAKE_CC=clang QMAKE_CXX=clang++ QMAKE_CFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_CXXFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_LFLAGS+=-L$CRAFT_STAGE/lib -L$CRAFT_STAGE/usr/lib -L$CRAFT_STAGE/usr/lib/x86_64-linux-gnu'
@@ -105,16 +136,25 @@ parts:
       #echo "1"
       #echo $PWD 
       #find .. -type f -name librecad
+      echo "current folder"
+      pwd
+      ls
+      pushd ..
+      echo "parent folder"
+      pwd
+      ls
+      popd
       export SRC_DIR=../parts/librecad/build/
       echo $CRAFT_STAGE
       mkdir -p $CRAFT_STAGE/usr/bin
-      mkdir -p $CRAFT_STAGE/usr/share/librecad
+      mkdir -p $CRAFT_STAGE/usr/share/librecad/resources/qm
       mkdir -p $CRAFT_STAGE/usr/share/applications
       mkdir -p usr/bin
       mkdir -p usr/share/librecad
       cp -a $SRC_DIR/librecad $CRAFT_STAGE/usr/bin/
       #cp -a $SRC_DIR/ttf2lff $CRAFT_STAGE/usr/bin/
-      cp -a $SRC_DIR/../src/unix/resources/* $CRAFT_STAGE/usr/share/librecad/
+      cp -a $SRC_DIR/*.qm $CRAFT_STAGE/usr/share/librecad/resources/qm
+      rsync -vaut ../librecad/support/* $CRAFT_STAGE/usr/share/librecad/resources/
       export DESKTOP_DIR=../parts/librecad/src/desktop
       cp -a $DESKTOP_DIR/*.desktop $CRAFT_STAGE/usr/share/applications/org.librecad.librecad.desktop
       cp -a $DESKTOP_DIR/org.librecad.*.xml $CRAFT_STAGE/usr/share/applications/org.librecad.librecad.xml

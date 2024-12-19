@@ -78,11 +78,7 @@ std::map<int, RS2::LineWidth> constructInt2LineWidth() {
     };
 }
 
-
-
 const std::map<int, RS2::LineWidth> g_int2LineWidth = constructInt2LineWidth();
-
-const std::map<RS2::LineWidth, int> g_lineWidth2int = constructReversedMap(g_int2LineWidth);
 }
 
 RS2::LineWidth RS2::intToLineWidth(int w) {
@@ -94,6 +90,7 @@ RS2::LineWidth RS2::intToLineWidth(int w) {
 }
 
 int RS2::lineWidthToInt(LineWidth lw){
+    static const std::map<RS2::LineWidth, int> g_lineWidth2int = constructReversedMap(g_int2LineWidth);
     auto it = g_lineWidth2int.find(lw);
     return (it != g_lineWidth2int.cend()) ? it->second : -2;
 }

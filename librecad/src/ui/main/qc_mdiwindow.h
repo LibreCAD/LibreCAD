@@ -100,7 +100,7 @@ public:
         setWindowModified(document->isModified());
     }
 
-    void viewsListModified([[maybe_unused]]bool changed) {
+    void viewsListModified([[maybe_unused]]bool changed) override {
         setWindowModified(document->isModified());
     }
 
