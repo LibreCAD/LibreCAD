@@ -394,6 +394,10 @@ public:
     InfoCursorOverlayPrefs*getInfoCursorOverlayPreferences(){
         return &infoCursorOverlayPreferences;
     }
+
+    bool getPanOnZoom() const;
+    bool getSkipFirstZoom() const;
+
 protected:
 
 
@@ -481,6 +485,7 @@ protected:
 #endif
 
     int determinePointScreenSize(RS_Painter *painter, double pdsize) const;
+
     double minCircleDrawingRadius = 2.0;
     double minArcDrawingRadius = 0.5;
     double minEllipseMajorRadius = 2.;
@@ -524,6 +529,10 @@ private:
 signals:
     void relative_zero_changed(const RS_Vector &);
     void previous_zoom_state(bool);
+private:
+
+    bool m_panOnZoom = false;
+    bool m_skipFirstZoom = false;
 };
 
 #endif

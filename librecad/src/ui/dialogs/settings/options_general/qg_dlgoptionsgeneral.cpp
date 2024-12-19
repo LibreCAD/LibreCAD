@@ -95,15 +95,6 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent)
             this,&QG_DlgOptionsGeneral::on_cbClassicStatusBarToggled);
     connect(cbTabCloseButton, stateChangedSignal,
             this,&QG_DlgOptionsGeneral::onTabCloseButtonChanged);
-
-    connect(cbInfoOverlayAbsolutePosition, stateChangedSignal,
-            this,&QG_DlgOptionsGeneral::onInfoCursorAbsolutePositionChanged);
-    connect(cbInfoOverlayRelative, stateChangedSignal,
-            this,&QG_DlgOptionsGeneral::onInfoCursorRelativeChanged);
-    connect(cbInfoOverlaySnap, stateChangedSignal,
-            this,&QG_DlgOptionsGeneral::onInfoCursorSnapChanged);
-    connect(cbInfoOverlayCommandPrompt, stateChangedSignal,
-            this,&QG_DlgOptionsGeneral::onInfoCursorPromptChanged);
 }
 
 /*
@@ -305,6 +296,12 @@ void QG_DlgOptionsGeneral::init() {
 
         checked = LC_GET_BOOL("ShowEntityIDs", false);
         cbShowEntityIDs->setChecked(checked);
+
+        checked = LC_GET_BOOL("PanOnZoom", false);
+        cbPanOnWheelZoom->setChecked(checked);
+
+        checked = LC_GET_BOOL("FirstTimeNoZoom", false);
+        cbFirstTimeNoZoom->setChecked(checked);
 
     }
     LC_GROUP_END();
@@ -623,6 +620,8 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("ShowActionIconInOptions", cbShowCurrentActionIconInOptions->isChecked());
             LC_SET("ShowEntityIDs", cbShowEntityIDs->isChecked());
 
+            LC_SET("PanOnZoom", cbPanOnWheelZoom->isChecked());
+            LC_SET("FirstTimeNoZoom", cbFirstTimeNoZoom->isChecked());
         }
         LC_GROUP_END();
 

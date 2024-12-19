@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 
 #include <QDebug>
@@ -899,20 +900,21 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
         RS2::ZoomDirection zoomDirection = ((angleDeltaY > 0) != invZoom) ? RS2::In : RS2::Out;
 
-        RS_Vector& zoomCenter = mouse;
-        // todo - well, actually this is one-shot action... and it will lead to full action processing chain in action handler
-        // todo - are we REALLY need it there? alternatively, zoom may be part of this class)
+        const QPoint viewCenter{getWidth()/2, getHeight()/2};
+        const QPoint delta = viewCenter - e->position().toPoint();
 
-        auto zoomAction = new RS_ActionZoomIn(*container, *this, zoomDirection, RS2::Both, &zoomCenter,
-                                              scrollZoomFactor);
-        if (isPrintPreview()) { // small optimization for print-preview, so options will not be recreated
-            zoomAction->trigger();
-            delete zoomAction;
+        if (getPanOnZoom()) {
+            QCursor::setPos(mapToGlobal(viewCenter));
+            zoomPan(delta.x(), delta.y());
         }
-        else{
-//            setCurrentAction(zoomAction);
+        if (!getPanOnZoom() || !getSkipFirstZoom() || (abs(delta.x())<32 && abs(delta.y())<32)) {
+            RS_Vector& zoomCenter = mouse;
+
+            // todo - well, actually this is one-shot action... and it will lead to full action processing chain in action handler
+            // todo - are we REALLY need it there? alternatively, zoom may be part of this class)
+            auto zoomAction = std::make_unique<RS_ActionZoomIn>(*container, *this, zoomDirection, RS2::Both, &zoomCenter,
+                                                scrollZoomFactor);
             zoomAction->trigger();
-            delete zoomAction;
         }
     }
     redraw();
