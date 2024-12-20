@@ -1402,73 +1402,101 @@ BUILTIN("get_attr")
                 case ACTION:
                     return lcl::string(tile->value().action);
                 case ALIGNMENT:
-                    return lcl::integer((int)tile->value().alignment);
+                    return lcl::string(std::to_string((int)tile->value().alignment));
                 case ALLOW_ACCEPT:
-                    return lcl::boolean(tile->value().allow_accept);
+                    return lcl::string(boolToString(tile->value().allow_accept));
                 case ASPECT_RATIO:
-                    return lcl::ldouble(tile->value().aspect_ratio);
+                    return lcl::string(std::to_string(tile->value().aspect_ratio));
                 case BIG_INCREMENT:
-                    return lcl::integer(tile->value().big_increment);
+                    return lcl::string(std::to_string(tile->value().big_increment));
                 case CHILDREN_ALIGNMENT:
-                    return lcl::integer((int)tile->value().children_alignment);
+                {
+                    for (int i = 0; i < MAX_DCL_POS; i++)
+                    {
+                        if (tile->value().children_alignment == dclPosition[i].pos)
+                        {
+                            return lcl::string(dclPosition[i].name);
+                        }
+                    }
+                    break;
+                }
                 case CHILDREN_FIXED_HEIGHT:
-                    return lcl::boolean(tile->value().children_fixed_height);
+                    return lcl::string(boolToString(tile->value().children_fixed_height));
                 case CHILDREN_FIXED_WIDTH:
-                    return lcl::boolean(tile->value().children_fixed_width);
+                    return lcl::string(boolToString(tile->value().children_fixed_width));
                 case COLOR:
-                    return lcl::integer((int)tile->value().color);
+                {
+                    for (int i = 0; i < MAX_DCL_COLOR; i++)
+                    {
+                        if (tile->value().color == dclColor[i].color)
+                        {
+                            return lcl::string(dclColor[i].name);
+                        }
+                    }
+                    return lcl::string(std::to_string((int)tile->value().color));
+                    break;
+                }
                 case EDIT_LIMIT:
-                    return lcl::integer(tile->value().edit_limit);
+                    return lcl::string(std::to_string(tile->value().edit_limit));
                 case EDIT_WIDTH:
-                    return lcl::ldouble(tile->value().edit_width);
+                    return lcl::string(std::to_string(tile->value().edit_width));
                 case FIXED_HEIGHT:
-                    return lcl::boolean(tile->value().fixed_height);
+                    return lcl::string(boolToString(tile->value().fixed_height));
                 case FIXED_WIDTH:
-                    return lcl::boolean(tile->value().fixed_width);
+                    return lcl::string(boolToString(tile->value().fixed_width));
                 case FIXED_WIDTH_FONT:
-                    return lcl::boolean(tile->value().fixed_width_font);
+                    return lcl::string(boolToString(tile->value().fixed_width_font));
                 case HEIGHT:
-                    return lcl::ldouble(tile->value().height);
+                    return lcl::string(std::to_string(tile->value().height));
                 case INITIAL_FOCUS:
                     return lcl::string(tile->value().initial_focus);
                 case IS_BOLD:
-                    return lcl::boolean(tile->value().is_bold);
+                    return lcl::string(boolToString(tile->value().is_bold));
                 case IS_CANCEL:
-                    return lcl::boolean(tile->value().is_cancel);
+                    return lcl::string(boolToString(tile->value().is_cancel));
                 case IS_DEFAULT:
-                    return lcl::boolean(tile->value().is_default);
+                    return lcl::string(boolToString(tile->value().is_default));
                 case IS_ENABLED:
-                    return lcl::boolean(tile->value().is_enabled);
+                    return lcl::string(boolToString(tile->value().is_enabled));
                 case IS_TAB_STOP:
-                    return lcl::boolean(tile->value().is_tab_stop);
+                    return lcl::string(boolToString(tile->value().is_tab_stop));
                 case KEY:
                     return lcl::string(tile->value().key);
                 case LABEL:
                     return lcl::string(tile->value().label);
                 case LAYOUT:
-                    return lcl::integer((int)tile->value().layout);
+                {
+                    for (int i = 0; i < MAX_DCL_POS; i++)
+                    {
+                        if (tile->value().layout == dclPosition[i].pos)
+                        {
+                            return lcl::string(dclPosition[i].name);
+                        }
+                    }
+                }
+                    break;
                 case LIST:
                     return lcl::string(tile->value().list);
                 case MAX_VALUE:
-                    return lcl::integer(tile->value().max_value);
+                    return lcl::string(std::to_string(tile->value().max_value));
                 case MIN_VALUE:
-                    return lcl::integer(tile->value().min_value);
+                    return lcl::string(std::to_string(tile->value().min_value));
                 case MNEMONIC:
                     return lcl::string(tile->value().mnemonic);
                 case MULTIPLE_SELECT:
-                    return lcl::boolean(tile->value().multiple_select);
+                    return lcl::string(boolToString(tile->value().multiple_select));
                 case PASSWORD_CHAR:
                     return lcl::string(tile->value().password_char);
                 case SMALL_INCREMENT:
-                    return lcl::integer(tile->value().small_increment);
+                    return lcl::string(std::to_string(tile->value().small_increment));
                 case TABS:
                     return lcl::string(tile->value().tabs);
                 case TAB_TRUNCATE:
-                    return lcl::boolean(tile->value().tab_truncate);
+                    return lcl::string(boolToString(tile->value().tab_truncate));
                 case VALUE:
                     return lcl::string(tile->value().value);
                 case WIDTH:
-                    return lcl::ldouble(tile->value().width);
+                    return lcl::string(std::to_string(tile->value().width));
                 default:
                     return lcl::nilValue();
             }
@@ -3733,7 +3761,8 @@ BUILTIN("sqrt")
     BUILTIN_FUNCTION(sqrt);
 }
 
-BUILTIN("start_dialog") {
+BUILTIN("start_dialog")
+{
     CHECK_ARGS_IS(0);
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
@@ -3747,6 +3776,87 @@ BUILTIN("start_dialog") {
                 dlg->dialog()->show();
                 dlg->dialog()->setFixedSize(dlg->dialog()->geometry().width(),
                                             dlg->dialog()->geometry().height());
+                if(tile->value().initial_focus != "")
+                {
+                    for (auto & child : dclTiles)
+                    {
+                        if (child->value().dialog_Id == dialogId->value() &&
+                            child->value().key == tile->value().initial_focus)
+                        {
+                            switch (child->value().id)
+                            {
+                                case BUTTON:
+                                {
+                                    const lclButton* b = static_cast<const lclButton*>(tile);
+                                    b->button()->setFocus();
+                                }
+                                    break;
+                                case EDIT_BOX:
+                                {
+                                    const lclEdit* edit = static_cast<const lclEdit*>(tile);
+                                    edit->edit()->setFocus();
+                                }
+                                    break;
+                                case IMAGE_BUTTON:
+                                {
+                                    const lclImageButton* ib = static_cast<const lclImageButton*>(tile);
+                                    ib->button()->setFocus();
+                                }
+                                    break;
+                                case LIST_BOX:
+                                {
+                                    const lclListBox* l = static_cast<const lclListBox*>(tile);
+                                    l->list()->setFocus();
+                                }
+                                    break;
+                                case POPUP_LIST:
+                                {
+                                    const lclPopupList* pl = static_cast<const lclPopupList*>(tile);
+                                    pl->list()->setFocus();
+                                }
+                                    break;
+                                case RADIO_BUTTON:
+                                {
+                                    const lclRadioButton* rb = static_cast<const lclRadioButton*>(tile);
+                                    rb->button()->setFocus();
+                                }
+                                    break;
+                                case SCROLL:
+                                {
+                                    const lclScrollBar* sb = static_cast<const lclScrollBar*>(tile);
+                                    sb->slider()->setFocus();
+                                }
+                                    break;
+                                case SLIDER:
+                                {
+                                    const lclSlider* sl = static_cast<const lclSlider*>(tile);
+                                    sl->slider()->setFocus();
+                                }
+                                    break;
+                                case DIAL:
+                                {
+                                    const lclDial* sc = static_cast<const lclDial*>(tile);
+                                    sc->slider()->setFocus();
+                                }
+                                    break;
+                                case TOGGLE:
+                                {
+                                    const lclToggle* tb = static_cast<const lclToggle*>(tile);
+                                    tb->toggle()->setFocus();
+                                }
+                                    break;
+                                case TAB:
+                                {
+                                    const lclWidget* w = static_cast<const lclWidget*>(tile);
+                                    w->widget()->setFocus();
+                                }
+                                break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                }
                 return lcl::integer(dlg->dialog()->exec());
             }
         }
@@ -3919,6 +4029,24 @@ BUILTIN("symbol")
 BUILTIN("tan")
 {
     BUILTIN_FUNCTION(tan);
+}
+
+BUILTIN("term_dialog")
+{
+    for (int i = dclTiles.size() - 1; i >= 0; i--)
+    {
+        if (dclTiles.at(i)->value().id == DIALOG)
+        {
+            const lclDialog* dlg = static_cast<const lclDialog*>(dclTiles.at(i));
+            dlg->dialog()->done(0);
+            dlg->dialog()->deleteLater();
+            dclEnv->set(STRF("#builtin-gui(%d)", dclTiles.at(i)->value().dialog_Id), lcl::nilValue());
+        }
+    }
+    dclTiles.clear();
+    dclEnv->set("load_dialog_id", lcl::nilValue());
+
+    return lcl::nilValue();
 }
 
 BUILTIN("terpri")

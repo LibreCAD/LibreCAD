@@ -43,6 +43,11 @@ enum class LCLTYPE { ATOM, BUILTIN, BOOLEAN, FILE, GUI, INT, LIST, MAP, REAL, ST
 #define MAX_DCL_COLOR 257
 #define MAX_DCL_ICONS 18
 
+inline const char * const boolToString(bool b)
+{
+    return b ? "true" : "false";
+}
+
 class lclValue : public RefCounted {
 public:
     lclValue() {
@@ -629,6 +634,17 @@ typedef struct position_prop {
     pos_t pos;
 } position_prop_t;
 
+static position_prop_t dclPosition[MAX_DCL_POS] = {
+    { "nopos", NOPOS },
+    { "left", LEFT },
+    { "right", RIGHT },
+    { "top", TOP },
+    { "bottom", BOTTOM },
+    { "centered", CENTERED },
+    { "horizontal", HORIZONTAL },
+    { "vertical", VERTICAL }
+};
+
 enum COLOR {
     DIALOG_LINE,
     DIALOG_FOREGROUND,
@@ -650,6 +666,22 @@ typedef struct color_prop {
     const char* name;
     int color;
 } color_prop_t;
+
+static color_prop_t dclColor[MAX_DCL_COLOR] = {
+    { "dialog_line", -1002 },
+    { "dialog_background", -1001},
+    { "dialog_foreground", -1000 },
+    { "graphics_background", 0 },
+    { "black", 0 },
+    { "red", 1 },
+    { "yellow", 2 },
+    { "green", 3 },
+    { "cyan", 4 },
+    { "blue", 5 },
+    { "magenta", 6 },
+    { "white", 7 },
+    { "graphics_foreground", 7 }
+};
 
 typedef struct qcolor {
     int color;

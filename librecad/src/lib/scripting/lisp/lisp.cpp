@@ -744,7 +744,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -785,7 +785,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -825,7 +825,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -866,7 +866,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -906,7 +906,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -947,7 +947,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -999,7 +999,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -1040,7 +1040,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -1081,7 +1081,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -1124,7 +1124,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
 
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
@@ -1164,7 +1164,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -1212,7 +1212,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -1306,7 +1306,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -1347,7 +1347,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -1395,7 +1395,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -1436,7 +1436,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -1478,7 +1478,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -1521,7 +1521,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {
@@ -1565,7 +1565,7 @@ void openTile(const lclGui* tile)
             }
             else
             {
-                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                for (int i = dclTiles.size() - 2; i >= 0; i--)
                 {
                     if(LAYOUT_TILE & dclTiles.at(i)->value().id)
                     {

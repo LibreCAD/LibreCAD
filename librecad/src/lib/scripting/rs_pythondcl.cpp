@@ -113,6 +113,22 @@ void RS_PythonDcl::unloadDialog(int id)
     dclEnv->set("load_dialog_id", lcl::nilValue());
 }
 
+void RS_PythonDcl::termDialog()
+{
+    for (int i = dclTiles.size() - 1; i >= 0; i--)
+    {
+        if (dclTiles.at(i)->value().id == DIALOG)
+        {
+            const lclDialog* dlg = static_cast<const lclDialog*>(dclTiles.at(i));
+            dlg->dialog()->done(0);
+            dlg->dialog()->deleteLater();
+            dclEnv->set(STRF("#builtin-gui(%d)", dclTiles.at(i)->value().dialog_Id), lcl::nilValue());
+        }
+    }
+    dclTiles.clear();
+    dclEnv->set("load_dialog_id", lcl::nilValue());
+}
+
 std::array<int, 2> RS_PythonDcl::doneDialog(int res)
 {
     int result = -1;
@@ -309,6 +325,125 @@ const char *RS_PythonDcl::getTile(const char *key)
                     break;
                 default:
                     return "";
+            }
+        }
+    }
+    return "";
+}
+
+const char *RS_PythonDcl::getAttr(const char *key, const char *attr)
+{
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key)
+        {
+            switch (getDclAttributeId(attr)) {
+            case ACTION:
+                return tile->value().action.c_str();
+            case ALIGNMENT:
+                return std::to_string((int)tile->value().alignment).c_str();
+            case ALLOW_ACCEPT:
+                return boolToString(tile->value().allow_accept);
+            case ASPECT_RATIO:
+                return std::to_string(tile->value().aspect_ratio).c_str();
+            case BIG_INCREMENT:
+                return std::to_string(tile->value().big_increment).c_str();
+            case CHILDREN_ALIGNMENT:
+            {
+                for (int i = 0; i < MAX_DCL_POS; i++)
+                {
+                    if (tile->value().children_alignment == dclPosition[i].pos)
+                    {
+                        return dclPosition[i].name;
+                    }
+                }
+                break;
+            }
+            case CHILDREN_FIXED_HEIGHT:
+                return boolToString(tile->value().children_fixed_height);
+            case CHILDREN_FIXED_WIDTH:
+                return boolToString(tile->value().children_fixed_width);
+            case COLOR:
+            {
+                for (int i = 0; i < MAX_DCL_COLOR; i++)
+                {
+                    if (tile->value().color == dclColor[i].color)
+                    {
+                        return dclColor[i].name;
+                    }
+                }
+                return std::to_string((int)tile->value().color).c_str();
+                break;
+            }
+            case EDIT_LIMIT:
+                return std::to_string(tile->value().edit_limit).c_str();
+            case EDIT_WIDTH:
+                return std::to_string(tile->value().edit_width).c_str();
+            case FIXED_HEIGHT:
+                return boolToString(tile->value().fixed_height);
+            case FIXED_WIDTH:
+                return boolToString(tile->value().fixed_width);
+            case FIXED_WIDTH_FONT:
+                return boolToString(tile->value().fixed_width_font);
+            case HEIGHT:
+                return std::to_string(tile->value().height).c_str();
+            case INITIAL_FOCUS:
+                return tile->value().initial_focus.c_str();
+            case IS_BOLD:
+                return boolToString(tile->value().is_bold);
+            case IS_CANCEL:
+                return boolToString(tile->value().is_cancel);
+            case IS_DEFAULT:
+                return boolToString(tile->value().is_default);
+            case IS_ENABLED:
+                return boolToString(tile->value().is_enabled);
+            case IS_TAB_STOP:
+                return boolToString(tile->value().is_tab_stop);
+            case KEY:
+                return tile->value().key.c_str();
+            case LABEL:
+                return tile->value().label.c_str();
+            case LAYOUT:
+            {
+                for (int i = 0; i < MAX_DCL_POS; i++)
+                {
+                    if (tile->value().layout == dclPosition[i].pos)
+                    {
+                        return dclPosition[i].name;
+                    }
+                }
+            }
+            break;
+            case LIST:
+                return tile->value().list.c_str();
+            case MAX_VALUE:
+                return std::to_string(tile->value().max_value).c_str();
+            case MIN_VALUE:
+                return std::to_string(tile->value().min_value).c_str();
+            case MNEMONIC:
+                return tile->value().mnemonic.c_str();
+            case MULTIPLE_SELECT:
+                return boolToString(tile->value().multiple_select);
+            case PASSWORD_CHAR:
+                return tile->value().password_char.c_str();
+            case SMALL_INCREMENT:
+                return std::to_string(tile->value().small_increment).c_str();
+            case TABS:
+                return tile->value().tabs.c_str();
+            case TAB_TRUNCATE:
+                return boolToString(tile->value().tab_truncate);
+            case VALUE:
+                return tile->value().value.c_str();
+            case WIDTH:
+                return std::to_string(tile->value().width).c_str();
+            default:
+                return "";
             }
         }
     }

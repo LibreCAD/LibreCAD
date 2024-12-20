@@ -31,71 +31,6 @@ int dclId = -1;
 
 std::vector<tile_t> dclProtoTile;
 std::vector<LclAlias_t> LclCom;
-#if 0
-static attribute_prop_t dclAttribute[MAX_DCL_ATTR] = {
-    { "action", ACTION },
-    { "alignment", ALIGNMENT },
-    { "allow_accept", ALLOW_ACCEPT },
-    { "aspect_ratio", ASPECT_RATIO },
-    { "big_increment", BIG_INCREMENT },
-    { "children_alignment", CHILDREN_ALIGNMENT },
-    { "children_fixed_height", CHILDREN_FIXED_HEIGHT },
-    { "children_fixed_width", CHILDREN_FIXED_WIDTH },
-    { "color", COLOR },
-    { "edit_limit", EDIT_LIMIT },
-    { "edit_width", EDIT_WIDTH },
-    { "fixed_height", FIXED_HEIGHT },
-    { "fixed_width", FIXED_WIDTH },
-    { "fixed_width_font", FIXED_WIDTH_FONT },
-    { "height", HEIGHT },
-    { "initial_focus", INITIAL_FOCUS },
-    { "is_bold", IS_BOLD },
-    { "is_cancel", IS_CANCEL },
-    { "is_default", IS_DEFAULT },
-    { "is_enabled", IS_ENABLED },
-    { "is_tab_stop", IS_TAB_STOP },
-    { "key", KEY },
-    { "label", LABEL },
-    { "layout", LAYOUT },
-    { "list", LIST },
-    { "max_value", MAX_VALUE },
-    { "min_value", MIN_VALUE },
-    { "mnemonic", MNEMONIC },
-    { "multiple_select", MULTIPLE_SELECT },
-    { "password_char", PASSWORD_CHAR },
-    { "small_increment", SMALL_INCREMENT },
-    { "tabs", TABS },
-    { "tab_truncate", TAB_TRUNCATE },
-    { "value", VALUE },
-    { "width", WIDTH }
-};
-#endif
-static position_prop_t dclPosition[MAX_DCL_POS] = {
-    { "nopos", NOPOS },
-    { "left", LEFT },
-    { "right", RIGHT },
-    { "top", TOP },
-    { "bottom", BOTTOM },
-    { "centered", CENTERED },
-    { "horizontal", HORIZONTAL },
-    { "vertical", VERTICAL }
-};
-
-static color_prop_t dclColor[MAX_DCL_COLOR] = {
-    { "dialog_line", -1002 },
-    { "dialog_background", -1001},
-    { "dialog_foreground", -1000 },
-    { "graphics_background", 0 },
-    { "black", 0 },
-    { "red", 1 },
-    { "yellow", 2 },
-    { "green", 3 },
-    { "cyan", 4 },
-    { "blue", 5 },
-    { "magenta", 6 },
-    { "white", 7 },
-    { "graphics_foreground", 7 }
-};
 
 class Tokeniser
 {
@@ -705,7 +640,7 @@ static bool isdclTile(const String& str) {
 static tile_id_t getDclId(const String& str)
 {
     tile_id_t id = NONE;
-    for (int i =0; i < MAX_DCL_TILES; i++) {
+    for (int i = 0; i < MAX_DCL_TILES; i++) {
         if (str == dclTile[i].name) {
             return dclTile[i].id;
         }
@@ -714,7 +649,7 @@ static tile_id_t getDclId(const String& str)
 }
 
 static bool isdclAttribute(const String& str) {
-    for (int i =0; i < MAX_DCL_ATTR; i++) {
+    for (int i = 0; i < MAX_DCL_ATTR; i++) {
         if (str == dclAttribute[i].name) {
             return true;
         }
@@ -725,7 +660,7 @@ static bool isdclAttribute(const String& str) {
 static pos_t getDclPos(const String& str)
 {
     pos_t pos = NOPOS;
-    for (int i =0; i < MAX_DCL_TILES; i++) {
+    for (int i = 0; i < MAX_DCL_POS; i++) {
         if (str == dclPosition[i].name) {
             return dclPosition[i].pos;
         }
@@ -736,7 +671,7 @@ static pos_t getDclPos(const String& str)
 static int getDclColor(const String& str)
 {
     color_t color = WHITE;
-    for (int i =0; i < MAX_DCL_COLOR; i++) {
+    for (int i = 0; i < MAX_DCL_COLOR; i++) {
         if (str == dclColor[i].name) {
             return dclColor[i].color;
         }

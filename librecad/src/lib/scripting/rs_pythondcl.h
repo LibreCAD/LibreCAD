@@ -13,6 +13,7 @@ public:
     void unloadDialog(int id);
     void endList();
     void endImage();
+    void termDialog();
 
     bool newDialog(const char *name, int id);
     std::array<int, 2> doneDialog(int res=-1);
@@ -31,6 +32,7 @@ public:
     const char *textImage(int x1, int y1, int x2, int y2, const char *text, int color);
 
     const char *getTile(const char *key);
+    const char *getAttr(const char *key, const char *attr);
     const char *startList(const char *key, int operation=-1, int index=-1);
     const char *addList(const char *val);
     const char *startImage(const char *key);
