@@ -378,18 +378,7 @@ bool RS_Circle::testTan3(const std::vector<RS_AtomicEntity*>& circles) const
     if(circles.size()!=3)
         return false;
 
-//        std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
-//        std::cout<<"to verify Center = ( "<<data.center.x<<" , "<<data.center.y<<" ), r= "<<data.radius<<std::endl;
     for(auto const& c: circles){
-        const double r0 = std::abs(data.radius);
-        const double r1 = std::abs(c->getRadius());
-
-        const double dist=std::abs((data.center - c->getCenter()).magnitude());
-//        DEBUG_HEADER
-//        std::cout<<"testing: "<<getCenter()<<" r="<<getRadius()<<". \twith Center = ( "<<(*it)->getCenter().x<<" , "<<(*it)->getCenter().y<<" ), r= "<<(*it)->getRadius()<<std::endl;
-//        std::cout<<"r0="<<r0<<"\tr1="<<r1<<"\tdist="<<dist<<"\tdelta0="<<std::abs(dist - std::abs(r0 - r1)) <<"\tdelta1="<<std::abs(dist - std::abs(r0 + r1))
-//                <<"\t"<<sqrt(DBL_EPSILON)*qMax(r0,r1)<<std::endl;
-
         if (!c->isTangent(data))
             return false;
     }
