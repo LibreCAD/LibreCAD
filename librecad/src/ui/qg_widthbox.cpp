@@ -172,7 +172,7 @@ void QG_WidthBox::setWidth(RS2::LineWidth w) {
         return;
     }
 
-    if (it->first == currentIndex())
+    if (it->second == currentIndex())
         return;
 
     setCurrentIndex(it->second);
