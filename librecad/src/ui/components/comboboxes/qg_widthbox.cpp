@@ -24,9 +24,72 @@
 **
 **********************************************************************/
 
+#include <tuple>
+
 #include "qg_widthbox.h"
+
 #include "rs_debug.h"
 
+namespace {
+std::tuple<QString, QString, RS2::LineWidth> g_boxItems[] = {
+    {":ui/width00.png", QObject::tr("-Unchanged-"),
+     RS2::WidthUnchanged /*utilitytypefornotchangedlinewidthduringediting*/},
+    {":ui/width00.png", QObject::tr("ByLayer"),
+     RS2::WidthByLayer /**<Linewidthdefinedbylayernotentity.*/},
+    {":ui/width00.png", QObject::tr("ByBlock"),
+     RS2::WidthByBlock /**<Linewidthdefinedbyblocknotentity.*/},
+    {":ui/width01.png", QObject::tr("Default"),
+     RS2::WidthDefault /**<Linewidthdefaultstothepredefinedlinewidth.*/},
+    {":ui/width01.png", QObject::tr("0.00mm"),
+     RS2::Width00 /**<Width1.(0.00mm)*/},
+    {":ui/width01.png", QObject::tr("0.05mm"),
+     RS2::Width01 /**<Width2.(0.05mm)*/},
+    {":ui/width01.png", QObject::tr("0.09mm"),
+     RS2::Width02 /**<Width3.(0.09mm)*/},
+    {":ui/width01.png", QObject::tr("0.13mmISO"),
+     RS2::Width03 /**<Width4.(0.13mm)*/},
+    {":ui/width01.png", QObject::tr("0.15mm"),
+     RS2::Width04 /**<Width5.(0.15mm)*/},
+    {":ui/width01.png", QObject::tr("0.18mmISO"),
+     RS2::Width05 /**<Width6.(0.18mm)*/},
+    {":ui/width01.png", QObject::tr("0.20mm"),
+     RS2::Width06 /**<Width7.(0.20mm)*/},
+    {":ui/width01.png", QObject::tr("0.25mmISO"),
+     RS2::Width07 /**<Width8.(0.25mm)*/},
+    {":ui/width01.png", QObject::tr("0.30mm"),
+     RS2::Width08 /**<Width9.(0.30mm)*/},
+    {":ui/width03.png", QObject::tr("0.35mmISO"),
+     RS2::Width09 /**<Width10.(0.35mm)*/},
+    {":ui/width03.png", QObject::tr("0.40mm"),
+     RS2::Width10 /**<Width11.(0.40mm)*/},
+    {":ui/width04.png", QObject::tr("0.50mmISO"),
+     RS2::Width11 /**<Width12.(0.50mm)*/},
+    {":ui/width05.png", QObject::tr("0.53mm"),
+     RS2::Width12 /**<Width13.(0.53mm)*/},
+    {":ui/width05.png", QObject::tr("0.60mm"),
+     RS2::Width13 /**<Width14.(0.60mm)*/},
+    {":ui/width06.png", QObject::tr("0.70mmISO"),
+     RS2::Width14 /**<Width15.(0.70mm)*/},
+    {":ui/width07.png", QObject::tr("0.80mm"),
+     RS2::Width15 /**<Width16.(0.80mm)*/},
+    {":ui/width08.png", QObject::tr("0.90mm"),
+     RS2::Width16 /**<Width17.(0.90mm)*/},
+    {":ui/width09.png", QObject::tr("1.00mmISO"),
+     RS2::Width17 /**<Width18.(1.00mm)*/},
+    {":ui/width10.png", QObject::tr("1.06mm"),
+     RS2::Width18 /**<Width19.(1.06mm)*/},
+    {":ui/width10.png", QObject::tr("1.20mm"),
+     RS2::Width19 /**<Width20.(1.20mm)*/},
+    {":ui/width12.png", QObject::tr("1.40mmISO"),
+     RS2::Width20 /**<Width21.(1.40mm)*/},
+    {":ui/width12.png", QObject::tr("1.58mm"),
+     RS2::Width21 /**<Width22.(1.58mm)*/},
+    {":ui/width12.png", QObject::tr("2.00mmISO"),
+     RS2::Width22 /**<Width23.(2.00mm)*/},
+    {":ui/width12.png", QObject::tr("2.11mm"),
+     RS2::Width23 /**<Width24.(2.11mm)*/}
+};
+}
 /**
  * Default Constructor. You must call init manually if you choose
  * to use this constructor.
@@ -71,38 +134,23 @@ void QG_WidthBox::init(bool showByLayer, bool showUnchanged) {
     this->showByLayer = showByLayer;
 	this->showUnchanged = showUnchanged;
 
-    if (showUnchanged) {
-        addItem(QIcon(":ui/width00.png"), tr("- Unchanged -"));
+    for(const auto& [icon, text, lineWidth]: g_boxItems) {
+        switch (lineWidth) {
+        case RS2::WidthUnchanged:
+            if (!showUnchanged)
+                continue;
+            break;
+        case RS2::WidthByLayer:
+        case RS2::WidthByBlock:
+            if (!showByLayer)
+                continue;
+            break;
+        default:
+            break;
+        }
+        addItem(QIcon(icon), text, lineWidth);
+        m_width2Index.emplace(lineWidth, count() - 1);
     }
-    if (showByLayer) {
-        addItem(QIcon(":ui/width00.png"), tr("By Layer"));
-        addItem(QIcon(":ui/width00.png"), tr("By Block"));
-    }
-    addItem(QIcon(":ui/width01.png"), tr("Default"));
-    addItem(QIcon(":ui/width01.png"), tr("0.00mm"));
-    addItem(QIcon(":ui/width01.png"), tr("0.05mm"));
-    addItem(QIcon(":ui/width01.png"), tr("0.09mm"));
-    addItem(QIcon(":ui/width01.png"), tr("0.13mm (ISO)"));
-    addItem(QIcon(":ui/width01.png"), tr("0.15mm"));
-    addItem(QIcon(":ui/width01.png"), tr("0.18mm (ISO)"));
-    addItem(QIcon(":ui/width01.png"), tr("0.20mm"));
-    addItem(QIcon(":ui/width01.png"), tr("0.25mm (ISO)"));
-    addItem(QIcon(":ui/width01.png"), tr("0.30mm"));
-    addItem(QIcon(":ui/width03.png"), tr("0.35mm (ISO)"));
-    addItem(QIcon(":ui/width03.png"), tr("0.40mm"));
-    addItem(QIcon(":ui/width04.png"), tr("0.50mm (ISO)"));
-    addItem(QIcon(":ui/width05.png"), tr("0.53mm"));
-    addItem(QIcon(":ui/width05.png"), tr("0.60mm"));
-    addItem(QIcon(":ui/width06.png"), tr("0.70mm (ISO)"));
-    addItem(QIcon(":ui/width07.png"), tr("0.80mm"));
-    addItem(QIcon(":ui/width08.png"), tr("0.90mm"));
-    addItem(QIcon(":ui/width09.png"), tr("1.00mm (ISO)"));
-    addItem(QIcon(":ui/width10.png"), tr("1.06mm"));
-    addItem(QIcon(":ui/width10.png"), tr("1.20mm"));
-    addItem(QIcon(":ui/width12.png"), tr("1.40mm (ISO)"));
-    addItem(QIcon(":ui/width12.png"), tr("1.58mm"));
-    addItem(QIcon(":ui/width12.png"), tr("2.00mm (ISO)"));
-    addItem(QIcon(":ui/width12.png"), tr("2.11mm"));
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotWidthChanged(int)));
@@ -118,103 +166,16 @@ void QG_WidthBox::setWidth(RS2::LineWidth w) {
 
     RS_DEBUG->print("QG_WidthBox::setWidth %d\n", (int)w);
 
-    int offset = (int)showByLayer*2 + (int)showUnchanged;
-
-    switch (w) {
-    case RS2::WidthByLayer:
-        if (showByLayer) {
-			setCurrentIndex((int)showUnchanged);
-        } else {
-        	RS_DEBUG->print(RS_Debug::D_WARNING,
-            	"QG_WidthBox::setWidth: Unsupported width.");
-        }
-        break;
-    case RS2::WidthByBlock:
-        if (showByLayer) {
-            setCurrentIndex(1 + (int)showUnchanged);
-        } else {
-        	RS_DEBUG->print(RS_Debug::D_WARNING,
-            	"QG_WidthBox::setWidth: Unsupported width.");
-        }
-        break;
-    case RS2::WidthDefault:
-        setCurrentIndex(0 + offset);
-        break;
-    case RS2::Width00:
-        setCurrentIndex(1 + offset);
-        break;
-    case RS2::Width01:
-        setCurrentIndex(2 + offset);
-        break;
-    case RS2::Width02:
-        setCurrentIndex(3 + offset);
-        break;
-    case RS2::Width03:
-        setCurrentIndex(4 + offset);
-        break;
-    case RS2::Width04:
-        setCurrentIndex(5 + offset);
-        break;
-    case RS2::Width05:
-        setCurrentIndex(6 + offset);
-        break;
-    case RS2::Width06:
-        setCurrentIndex(7 + offset);
-        break;
-    case RS2::Width07:
-        setCurrentIndex(8 + offset);
-        break;
-    case RS2::Width08:
-        setCurrentIndex(9 + offset);
-        break;
-    case RS2::Width09:
-        setCurrentIndex(10 + offset);
-        break;
-    case RS2::Width10:
-        setCurrentIndex(11 + offset);
-        break;
-    case RS2::Width11:
-        setCurrentIndex(12 + offset);
-        break;
-    case RS2::Width12:
-        setCurrentIndex(13 + offset);
-        break;
-    case RS2::Width13:
-        setCurrentIndex(14 + offset);
-        break;
-    case RS2::Width14:
-        setCurrentIndex(15 + offset);
-        break;
-    case RS2::Width15:
-        setCurrentIndex(16 + offset);
-        break;
-    case RS2::Width16:
-        setCurrentIndex(17 + offset);
-        break;
-    case RS2::Width17:
-        setCurrentIndex(18 + offset);
-        break;
-    case RS2::Width18:
-        setCurrentIndex(19 + offset);
-        break;
-    case RS2::Width19:
-        setCurrentIndex(20 + offset);
-        break;
-    case RS2::Width20:
-        setCurrentIndex(21 + offset);
-        break;
-    case RS2::Width21:
-        setCurrentIndex(22 + offset);
-        break;
-    case RS2::Width22:
-        setCurrentIndex(23 + offset);
-        break;
-    case RS2::Width23:
-        setCurrentIndex(24 + offset);
-        break;
-    default:
-        break;
+    auto it = m_width2Index.find(w);
+    if (it == m_width2Index.end()) {
+        LC_ERR<<"QG_WidthBox::"<<__func__<<"(): error: unknown LineWidth="<<w<<" : ignored";
+        return;
     }
+
+    if (it->second == currentIndex())
+        return;
+
+    setCurrentIndex(it->second);
 
     slotWidthChanged(currentIndex());
 }
@@ -300,109 +261,13 @@ void QG_WidthBox::slotWidthChanged(int index) {
 
     RS_DEBUG->print("QG_WidthBox::slotWidthChanged %d\n", index);
 
-    bool done = false;
 
-	if (showUnchanged && !index) {
+    if (showUnchanged && index == 0) {
         unchanged = true;
-        done = true;
     } else {
         unchanged = false;
+        currentWidth = static_cast<RS2::LineWidth>(itemData(index).toInt());
     }
-
-    if (!done && showByLayer) {
-        if (index==0 + (int)showUnchanged) {
-            currentWidth = RS2::WidthByLayer;
-            done = true;
-        } else if (index==1 + (int)showUnchanged) {
-            currentWidth = RS2::WidthByBlock;
-            done = true;
-        }
-    }
-
-    if (!done) {
-        switch (index-((int)showByLayer*2)-((int)showUnchanged)) {
-        case 0:
-            currentWidth = RS2::WidthDefault;
-            break;
-        case 1:
-            currentWidth = RS2::Width00;
-            break;
-        case 2:
-            currentWidth = RS2::Width01;
-            break;
-        case 3:
-            currentWidth = RS2::Width02;
-            break;
-        case 4:
-            currentWidth = RS2::Width03;
-            break;
-        case 5:
-            currentWidth = RS2::Width04;
-            break;
-        case 6:
-            currentWidth = RS2::Width05;
-            break;
-        case 7:
-            currentWidth = RS2::Width06;
-            break;
-        case 8:
-            currentWidth = RS2::Width07;
-            break;
-        case 9:
-            currentWidth = RS2::Width08;
-            break;
-        case 10:
-            currentWidth = RS2::Width09;
-            break;
-        case 11:
-            currentWidth = RS2::Width10;
-            break;
-        case 12:
-            currentWidth = RS2::Width11;
-            break;
-        case 13:
-            currentWidth = RS2::Width12;
-            break;
-        case 14:
-            currentWidth = RS2::Width13;
-            break;
-        case 15:
-            currentWidth = RS2::Width14;
-            break;
-        case 16:
-            currentWidth = RS2::Width15;
-            break;
-        case 17:
-            currentWidth = RS2::Width16;
-            break;
-        case 18:
-            currentWidth = RS2::Width17;
-            break;
-        case 19:
-            currentWidth = RS2::Width18;
-            break;
-        case 20:
-            currentWidth = RS2::Width19;
-            break;
-        case 21:
-            currentWidth = RS2::Width20;
-            break;
-        case 22:
-            currentWidth = RS2::Width21;
-            break;
-        case 23:
-            currentWidth = RS2::Width22;
-            break;
-        case 24:
-            currentWidth = RS2::Width23;
-            break;
-        default:
-            break;
-        }
-    }
-    //currentWidth = (RS2::LineWidth)(index-1);
-    //currentWidth = (RS2::LineWidth)(currentText().left(4).toDouble()*100);
-    //}
 
     RS_DEBUG->print("Current width is (%d): %d\n",
                     index, ((int)currentWidth));
