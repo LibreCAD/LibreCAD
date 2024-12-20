@@ -232,7 +232,7 @@ QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
 void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
     RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
 
-    bool cancel = true;
+    bool cancel = false;
     bool hasParent = getParentWindow() != nullptr;
     const auto& appWin = QC_ApplicationWindow::getAppWindow();
     if (getDocument()->isModified() && !hasParent) {

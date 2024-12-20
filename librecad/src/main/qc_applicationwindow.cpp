@@ -638,6 +638,7 @@ void QC_ApplicationWindow::doActivate(QMdiSubWindow * w)
  */
 int QC_ApplicationWindow::showCloseDialog(QC_MDIWindow * w, bool showSaveAll)
 {
+    LC_LOG<<"QC_ApplicationWindow::showCloseDialog(): begin";
 	QG_ExitDialog dlg(this);
 	dlg.setShowSaveAll(showSaveAll);
 	dlg.setTitle(tr("Closing Drawing"));
@@ -649,9 +650,11 @@ int QC_ApplicationWindow::showCloseDialog(QC_MDIWindow * w, bool showSaveAll)
 			fn = QString("%1...%2").arg(fn.left(24)).arg(fn.right(24));
 
 		dlg.setText(tr("Save changes to the following item?\n%1").arg(fn));
-		return dlg.exec();
+        LC_LOG<<"QC_ApplicationWindow::showCloseDialog(): showing dialog";
+        return dlg.exec();
 	}
-	return -1; // should never get here; please send only modified documents
+    LC_LOG<<"QC_ApplicationWindow::showCloseDialog(): failed";
+    return -1; // should never get here; please send only modified documents
 }
 
 /**
