@@ -408,15 +408,15 @@ protected:
   * Current default snap restriction for this graphic view. Used for new
   * actions.
   */
-    RS2::SnapRestriction defaultSnapRes;
-    RS2::DrawingMode drawingMode;
+    RS2::SnapRestriction defaultSnapRes{};
+    RS2::DrawingMode drawingMode{};
 
-    RS_Pen lastPaintEntityPen = RS_Pen();
+    RS_Pen lastPaintEntityPen = {};
     bool lastPaintedHighlighted = false;
     bool lastPaintedSelected = false;
     bool lastPaintOverlay = false;
 
-        enum ExtendAxisArea{
+    enum ExtendAxisArea{
         Both,
         Positive,
         Negative,
@@ -442,14 +442,14 @@ protected:
 
     // painting cached values
 
-    double unitFactor;
-    double unitFactor100;
-    double defaultWidthFactor;
-    double paperScale;
+    double unitFactor = 1.0;
+    double unitFactor100 = 0.01;
+    double defaultWidthFactor = 1.0;
+    double paperScale = 1.0;
     // points rendering settings
-    int pdmode;
-    double pdsize;
-    int screenPDSize;
+    int pdmode = 1;
+    double pdsize = 1;
+    int screenPDSize = 1;
 #ifdef DEBUG_RENDERING
     QElapsedTimer drawTimer;
     QElapsedTimer isVisibleTimer;
@@ -461,16 +461,16 @@ protected:
     QElapsedTimer drawLayer2Timer;
     QElapsedTimer drawLayer3Timer;
     // painting debug
-    int drawEntityCount;
-    long long entityDrawTime;
-    long long isVisibleTime;
-    long long isConstructionTime;
-    long long setPenTime;
-    long long painterSetPenTime;
-    long long getPenTime;
-    long layer1Time;
-    long layer2Time;
-    long layer3Time;
+    int drawEntityCount = 1;
+    long long entityDrawTime = 0;
+    long long isVisibleTime = 0;
+    long long isConstructionTime = 0;
+    long long setPenTime = 0;
+    long long painterSetPenTime = 0;
+    long long getPenTime = 0;
+    long layer1Time = 0;
+    long layer2Time = 0;
+    long layer3Time = 0;
 #endif
 
     int determinePointScreenSize(RS_Painter *painter, double pdsize) const;
