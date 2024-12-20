@@ -27,6 +27,8 @@
 #ifndef QG_WIDTHBOX_H
 #define QG_WIDTHBOX_H
 
+#include <map>
+
 #include <QComboBox>
 
 #include "rs.h"
@@ -59,6 +61,7 @@ signals:
 
 private:
     RS2::LineWidth currentWidth = RS2::Width00;
+    std::map<RS2::LineWidth, int> m_width2Index;
     bool showByLayer = false;
     bool showUnchanged = false;
     bool unchanged = false;
