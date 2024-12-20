@@ -654,7 +654,7 @@ int RS_PythonDcl::dimxTile(const char *key)
                     break;
                 case IMAGE_BUTTON:
                 {
-                    return 0;
+                    return int(tile->value().width);
                 }
                     break;
                 default:
@@ -686,7 +686,7 @@ int RS_PythonDcl::dimyTile(const char *key)
                     break;
                 case IMAGE_BUTTON:
                 {
-                    return 0;
+                    return int(tile->value().height);
                 }
                     break;
                 default:
@@ -721,7 +721,9 @@ int RS_PythonDcl::fillImage(int x1, int y1, int width, int height, int color)
                     break;
                 case IMAGE_BUTTON:
                 {
-                    return -1;
+                    const lclImageButton* img = static_cast<const lclImageButton*>(tile);
+                    img->button()->addRect(x1, y1, width, height, color);
+                    return color;
                 }
                     break;
                 default:
@@ -756,7 +758,9 @@ int RS_PythonDcl::vectorImage(int x1, int y1, int x2, int y2, int color)
                 break;
                 case IMAGE_BUTTON:
                 {
-                    return -1;
+                    const lclImageButton* img = static_cast<const lclImageButton*>(tile);
+                    img->button()->addLine(x1, y1, x2, y2, color);
+                    return color;
                 }
                     break;
                 default:
@@ -791,7 +795,9 @@ const char *RS_PythonDcl::pixImage(int x1, int y1, int x2, int y2, const char *p
                     break;
                 case IMAGE_BUTTON:
                 {
-                    return "";
+                    const lclImageButton* img = static_cast<const lclImageButton*>(tile);
+                    img->button()->addPicture(x1, y1, x2, y2, tile->value().aspect_ratio, path);
+                    return path;
                 }
                     break;
                 default:
@@ -826,7 +832,9 @@ const char *RS_PythonDcl::textImage(int x1, int y1, int x2, int y2, const char *
                 break;
                 case IMAGE_BUTTON:
                 {
-                    return "";
+                    const lclImageButton* img = static_cast<const lclImageButton*>(tile);
+                    img->button()->addText(x1, y1, x2, y2, text, color);
+                    return text;
                 }
                 break;
                 default:
@@ -860,7 +868,8 @@ void RS_PythonDcl::endImage()
                     break;
                 case IMAGE_BUTTON:
                 {
-
+                    const lclImageButton* img = static_cast<const lclImageButton*>(tile);
+                    img->button()->repaint();
                 }
                     break;
                 default: {}

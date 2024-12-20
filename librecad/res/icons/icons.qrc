@@ -303,5 +303,10 @@
         <file>align_ref.svg</file>
         <file>run.svg</file>
         <file>open_script.svg</file>
+        <file>debug.svg</file>
+        <file>trace.svg</file>
+        <file>recent.svg</file>
+        <file>untrace.svg</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

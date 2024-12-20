@@ -19,6 +19,11 @@ public:
     void loadScript() override;
     void cmdDock() override;
 
+public slots:
+    void debug() override;
+    void trace() override;
+    void untrace() override;
+
 private slots:
     void docVisibilityChanged(bool visible);
 

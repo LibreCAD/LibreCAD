@@ -1,8 +1,8 @@
 #ifndef LISP_VERSION_H
 #define LISP_VERSION_H
 
-#define STR_HELPER(x) #x
-#define _STR(x) STR_HELPER(x)
+#define LISP_STR_HELPER(x) #x
+#define LISP_STR(x) LISP_STR_HELPER(x)
 
 #ifdef __GNUG__
 #define COMPILER "GCC"
@@ -16,7 +16,7 @@
 #ifndef __LISP__
 #define LISP_MAJOR_VER  1
 #define LISP_MINOR_VER  1
-#define LISP_PATCHLEVEL 2
+#define LISP_PATCHLEVEL 3
 #define LISP_BUILD "devel"
 
 #define LISP_VERSION LISP_MAJOR_VER * 10000 \
@@ -24,11 +24,11 @@
     + LISP_PATCHLEVEL
 
 #define __LISP__ \
-    _STR(LISP_MAJOR_VER) \
+    LISP_STR(LISP_MAJOR_VER) \
     "." \
-    _STR(LISP_MINOR_VER) \
+    LISP_STR(LISP_MINOR_VER) \
     "." \
-    _STR(LISP_PATCHLEVEL)
+    LISP_STR(LISP_PATCHLEVEL)
 
 #define LISP_VERSION_STR_HELPER(rel, build, date, time) \
     "LibreLisp " rel " (" build ", " date ", " time ") [" COMPILER " " __VERSION__ "] on " HOST

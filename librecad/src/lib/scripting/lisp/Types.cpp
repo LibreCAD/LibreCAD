@@ -16,6 +16,7 @@
 #include <QObject>
 #include <QApplication>
 #include <QStyle>
+#include <QAccessible>
 
 typedef std::regex              Regex;
 static const Regex intRegex("^[-+]?\\d+$");
@@ -281,6 +282,10 @@ namespace lcl {
 
     lclValuePtr image(const tile_t& tile) {
         return lclValuePtr(new lclImage(tile));
+    }
+
+    lclValuePtr imagebutton(const tile_t& tile) {
+        return lclValuePtr(new lclImageButton(tile));
     }
 
     lclValuePtr label(const tile_t& tile) {
@@ -979,12 +984,29 @@ lclButton::lclButton(const tile_t& tile)
         m_hlayout->setAlignment(Qt::AlignHCenter);
         break;
     default: {}
-    break;
+        break;
     }
 
     if(!tile.is_enabled)
     {
         m_button->setEnabled(false);
+    }
+
+    if(!tile.is_tab_stop)
+    {
+        m_button->setFocusPolicy(Qt::NoFocus);
+    }
+
+    if(noQuotes(tile.mnemonic).size() == 1)
+    {
+        QString label = noQuotes(tile.label).c_str();
+
+        if(!label.contains("&") &&
+            label.contains(noQuotes(tile.mnemonic).c_str()))
+        {
+            label.replace(label.indexOf(noQuotes(tile.mnemonic).c_str()), 1, label.first(1) + "&");
+            m_button->setText(label);
+        }
     }
 
     QObject::connect(m_button, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { clicked(checked); });
@@ -1014,7 +1036,7 @@ void lclButton::clicked(bool checked)
         {
             dclEnv->set(std::to_string(this->value().dialog_Id) + "_dcl_result", lcl::integer(1));
         }
-
+        replaceKey(action, noQuotes(this->value().key));
         LispRun_SimpleString(action.c_str());
     }
 }
@@ -1025,6 +1047,12 @@ lclRadioButton::lclRadioButton(const tile_t& tile)
     , m_vlayout(new QVBoxLayout)
     , m_hlayout(new QHBoxLayout)
 {
+    if(tile.is_default)
+    {
+        m_button->setShortcut(Qt::Key_Return);
+        m_button->setShortcut(Qt::Key_Enter);
+    }
+
     m_button->setText(noQuotes(tile.label).c_str());
 
     if(int(tile.width))
@@ -1083,7 +1111,7 @@ lclRadioButton::lclRadioButton(const tile_t& tile)
         m_hlayout->setAlignment(Qt::AlignHCenter);
         break;
     default: {}
-    break;
+        break;
     }
 
     if(!tile.is_enabled)
@@ -1099,6 +1127,23 @@ lclRadioButton::lclRadioButton(const tile_t& tile)
     if(noQuotes(tile.value) == "0")
     {
         m_button->setChecked(false);
+    }
+
+    if(!tile.is_tab_stop)
+    {
+        m_button->setFocusPolicy(Qt::NoFocus);
+    }
+
+    if(noQuotes(tile.mnemonic).size() == 1)
+    {
+        QString label = noQuotes(tile.label).c_str();
+
+        if(!label.contains("&") &&
+            label.contains(noQuotes(tile.mnemonic).c_str()))
+        {
+            label.replace(label.indexOf(noQuotes(tile.mnemonic).c_str()), 1, label.first(1) + "&");
+            m_button->setText(label);
+        }
     }
 
     QObject::connect(m_button, QOverload<bool>::of(&QPushButton::clicked), [&](bool checked) { clicked(checked); });
@@ -1120,7 +1165,8 @@ void lclRadioButton::clicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
-        qDebug() << "lclButton::clicked action:" << action.c_str();
+        qDebug() << "lclRadioButton::clicked action:" << action.c_str();
+        replaceKey(action, noQuotes(this->value().key));
         LispRun_SimpleString(action.c_str());
     }
 }
@@ -1176,11 +1222,11 @@ lclBoxedColumn::lclBoxedColumn(const tile_t& tile)
     , m_groupbox(new QGroupBox)
 {
     m_groupbox->setTitle(noQuotes(tile.label).c_str());
-    m_groupbox->setStyleSheet("QGroupBox { border: 1px solid silver; border-radius: 5px; margin-top: 5px; }"
+    m_groupbox->setStyleSheet("QGroupBox { border: 1px solid silver; border-radius: 2px; margin-top: 5px; }"
                              " QGroupBox::title { subcontrol-origin: margin; left: 6px; padding: -8px 2px 0px 2px;}" );
     //m_layout->addStretch(1);
     m_groupbox->setLayout(m_layout);
-#if 0
+
     if(int(tile.width))
     {
         m_groupbox->setMinimumWidth(int(tile.width * 10));
@@ -1213,7 +1259,27 @@ lclBoxedColumn::lclBoxedColumn(const tile_t& tile)
             m_groupbox->setFixedWidth(32);
         }
     }
-#endif
+
+    switch (tile.alignment)
+    {
+    case LEFT:
+        m_groupbox->setAlignment(Qt::AlignLeft);
+        break;
+    case RIGHT:
+        m_groupbox->setAlignment(Qt::AlignRight);
+        break;
+    case TOP:
+        m_groupbox->setAlignment(Qt::AlignTop);
+        break;
+    case BOTTOM:
+        m_groupbox->setAlignment(Qt::AlignBottom);
+        break;
+    case CENTERED:
+        m_groupbox->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+        break;
+    default: {}
+        break;
+    }
 }
 
 lclBoxedRow::lclBoxedRow(const tile_t& tile)
@@ -1222,11 +1288,11 @@ lclBoxedRow::lclBoxedRow(const tile_t& tile)
     , m_groupbox(new QGroupBox)
 {
     m_groupbox->setTitle(noQuotes(tile.label).c_str());
-    m_groupbox->setStyleSheet("QGroupBox { border: 1px solid silver; border-radius: 5px; margin-top: 5px; }"
+    m_groupbox->setStyleSheet("QGroupBox { border: 1px solid silver; border-radius: 2px; margin-top: 5px; }"
                               " QGroupBox::title { subcontrol-origin: margin; left: 6px; padding: -8px 2px 0px 2px;}" );
     //m_layout->addStretch(1);
     m_groupbox->setLayout(m_layout);
-#if 0
+
     if(int(tile.width))
     {
         m_groupbox->setMinimumWidth(int(tile.width * 10));
@@ -1259,7 +1325,27 @@ lclBoxedRow::lclBoxedRow(const tile_t& tile)
             m_groupbox->setFixedWidth(32);
         }
     }
-#endif
+
+    switch (tile.alignment)
+    {
+    case LEFT:
+        m_groupbox->setAlignment(Qt::AlignLeft);
+        break;
+    case RIGHT:
+        m_groupbox->setAlignment(Qt::AlignRight);
+        break;
+    case TOP:
+        m_groupbox->setAlignment(Qt::AlignTop);
+        break;
+    case BOTTOM:
+        m_groupbox->setAlignment(Qt::AlignBottom);
+        break;
+    case CENTERED:
+        m_groupbox->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+        break;
+    default: {}
+        break;
+    }
 }
 
 lclColumn::lclColumn(const tile_t& tile)
@@ -1386,6 +1472,16 @@ lclPopupList::lclPopupList(const tile_t& tile)
     , m_vlayout(new QVBoxLayout)
     , m_hlayout(new QHBoxLayout)
 {
+    if(int(tile.edit_width))
+    {
+        QLabel label;
+        m_list->setFixedWidth(label.fontMetrics().horizontalAdvance("0")
+            * (int(tile.edit_width) + 1)
+            + m_list->contentsMargins().left()
+            + m_list->contentsMargins().right()
+            + label.margin());
+    }
+
     if(int(tile.width))
     {
         m_list->setMinimumWidth(int(tile.width));
@@ -1448,6 +1544,21 @@ lclPopupList::lclPopupList(const tile_t& tile)
     {
         m_list->setEnabled(false);
     }
+
+    if(!tile.is_tab_stop)
+    {
+        m_list->setFocusPolicy(Qt::NoFocus);
+    }
+
+    /*
+     * FIXME
+     * allow_accept
+     * fixed_width_font
+     * list
+     * tab_truncate
+     * tabs
+    */
+
     QObject::connect(m_list, QOverload<const QString&>::of(&QComboBox::currentTextChanged), [&](const QString& currentText) { currentTextChanged(currentText); });
 }
 
@@ -1469,11 +1580,11 @@ void lclPopupList::currentTextChanged(const QString &currentText)
         action += ")";
         replaceValue(action, currentText.toStdString());
         replaceReason(action, "1");
+        replaceKey(action, noQuotes(this->value().key));
         qDebug() << "lclPopupList::currentTextChanged action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
 }
-
 
 lclEdit::lclEdit(const tile_t& tile)
     : lclGui(tile)
@@ -1486,7 +1597,7 @@ lclEdit::lclEdit(const tile_t& tile)
 
     if(int(tile.edit_width))
     {
-        m_edit->setFixedWidth(m_edit->fontMetrics().horizontalAdvance("X")
+        m_edit->setFixedWidth(m_edit->fontMetrics().horizontalAdvance("0")
             * (int(tile.edit_width) + 1)
             + m_edit->contentsMargins().left()
             + m_edit->contentsMargins().right()
@@ -1554,14 +1665,9 @@ lclEdit::lclEdit(const tile_t& tile)
         break;
     }
 
-    if(!tile.is_enabled)
-    {
-        m_edit->setEnabled(false);
-    }
-
     if(!tile.is_tab_stop)
     {
-        //m_edit->setT
+        m_edit->setFocusPolicy(Qt::NoFocus);
     }
 
     if(noQuotes(tile.label) != "")
@@ -1570,6 +1676,27 @@ lclEdit::lclEdit(const tile_t& tile)
         m_layout->addWidget(m_label);
     }
     m_layout->addWidget(m_edit);
+
+
+    /* FIXME set focus to QLineEdit */
+    if(noQuotes(tile.mnemonic).size() == 1)
+    {
+        QString label = noQuotes(tile.label).c_str();
+
+        if(!label.contains("&") &&
+            label.contains(noQuotes(tile.mnemonic).c_str()))
+        {
+            label.replace(label.indexOf(noQuotes(tile.mnemonic).c_str()), 1, label.first(1) + "&");
+            m_label->setText(label);
+        }
+    }
+
+    /* FIXME password_char */
+
+    if(!tile.is_enabled)
+    {
+        m_edit->setEnabled(false);
+    }
 
     QObject::connect(m_edit, QOverload<const QString&>::of(&QLineEdit::textEdited), [&](const QString& text) { textEdited(text); });
 }
@@ -1592,6 +1719,7 @@ void lclEdit::textEdited(const QString &text)
         action += ")";
         replaceValue(action, text.toStdString());
         replaceReason(action, "1");
+        replaceKey(action, noQuotes(this->value().key));
         qDebug() << "lclEdit::textEdited action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -1600,9 +1728,19 @@ void lclEdit::textEdited(const QString &text)
 lclListBox::lclListBox(const tile_t& tile)
     : lclGui(tile)
     , m_list(new QListWidget)
+    , m_label(new QLabel)
     , m_vlayout(new QVBoxLayout)
     , m_hlayout(new QHBoxLayout)
 {
+    if(int(tile.edit_width))
+    {
+        m_list->setFixedWidth(m_label->fontMetrics().horizontalAdvance("0")
+            * (int(tile.edit_width) + 1)
+            + m_list->contentsMargins().left()
+            + m_list->contentsMargins().right()
+            + m_label->margin());
+    }
+
     if(int(tile.width))
     {
         m_list->setMinimumWidth(int(tile.width));
@@ -1636,9 +1774,10 @@ lclListBox::lclListBox(const tile_t& tile)
         }
     }
 
-    if(!tile.is_enabled)
+    if(noQuotes(tile.label) != "")
     {
-        m_list->setEnabled(false);
+        m_label->setText(noQuotes(tile.label).c_str());
+        m_vlayout->addWidget(m_label);
     }
 
     m_vlayout->addWidget(m_list);
@@ -1663,7 +1802,44 @@ lclListBox::lclListBox(const tile_t& tile)
         m_hlayout->setAlignment(Qt::AlignHCenter);
         break;
     default: {}
-    break;
+        break;
+    }
+
+    if(!tile.is_tab_stop)
+    {
+        m_list->setFocusPolicy(Qt::NoFocus);
+    }
+
+    /* FIXME set focus to Q */
+    if(noQuotes(tile.mnemonic).size() == 1)
+    {
+        QString label = noQuotes(tile.label).c_str();
+
+        if(!label.contains("&") &&
+            label.contains(noQuotes(tile.mnemonic).c_str()))
+        {
+            label.replace(label.indexOf(noQuotes(tile.mnemonic).c_str()), 1, label.first(1) + "&");
+            //m_list->setText(label);
+        }
+    }
+
+    /*
+     * FIXME
+     * allow_accept
+     * fixed_width_font
+     * list
+     * tab_truncate
+     * tabs
+    */
+
+    if(!tile.is_enabled)
+    {
+        m_list->setEnabled(false);
+    }
+
+    if(tile.multiple_select)
+    {
+        m_list->setSelectionMode(QAbstractItemView::MultiSelection);
     }
 
     QObject::connect(m_list, QOverload<const QString&>::of(&QListWidget::currentTextChanged), [&](const QString& currentText) { currentTextChanged(currentText); });
@@ -1687,6 +1863,7 @@ void lclListBox::currentTextChanged(const QString &currentText)
         action += ")";
         replaceValue(action, currentText.toStdString());
         replaceReason(action, "1");
+        replaceKey(action, noQuotes(this->value().key));
         qDebug() << "lclListBox::currentTextChanged action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -1726,7 +1903,7 @@ lclSlider::lclSlider(const tile_t& tile)
         m_slider->setTickInterval(int(tile.big_increment));
     }
 
-    if (int(tile.height) > int(tile.width))
+    if (tile.layout == VERTICAL)
     {
         m_slider->setOrientation(Qt::Vertical);
     }
@@ -1790,7 +1967,7 @@ lclSlider::lclSlider(const tile_t& tile)
         m_hlayout->setAlignment(Qt::AlignHCenter);
         break;
     default: {}
-    break;
+        break;
     }
 
     if(!tile.is_enabled)
@@ -1803,6 +1980,33 @@ lclSlider::lclSlider(const tile_t& tile)
         int value = atoi(noQuotes(tile.value).c_str());
         m_slider->setValue(value);
     }
+
+    if(!tile.is_tab_stop)
+    {
+        m_slider->setFocusPolicy(Qt::NoFocus);
+    }
+
+    /* FIXME set focus to Q */
+    if(noQuotes(tile.mnemonic).size() == 1)
+    {
+        QString label = noQuotes(tile.label).c_str();
+
+        if(!label.contains("&") &&
+            label.contains(noQuotes(tile.mnemonic).c_str()))
+        {
+            label.replace(label.indexOf(noQuotes(tile.mnemonic).c_str()), 1, label.first(1) + "&");
+            //m_list->setText(label);
+        }
+    }
+
+    /*
+     * FIXME
+     * big_increment
+     * label
+     * mnemonic
+     * small_increment
+     *
+    */
 
     QObject::connect(m_slider, &QSlider::valueChanged, [&] (int value) { valueChanged(value); });
     QObject::connect(m_slider, &QSlider::sliderReleased, [&] { sliderReleased(); });
@@ -1834,6 +2038,7 @@ void lclSlider::valueChanged(int value)
         {
             replaceReason(action, "3");
         }
+        replaceKey(action, noQuotes(this->value().key));
         qDebug() << "lclSlider::valueChanged action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -1857,6 +2062,7 @@ void lclSlider::sliderReleased()
         action += ")";
         replaceValue(action, std::to_string(m_slider->value()).c_str());
         replaceReason(action, "2");
+        replaceKey(action, noQuotes(this->value().key));
         qDebug() << "lclSlider::valueChanged action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -1885,7 +2091,7 @@ lclScrollBar::lclScrollBar(const tile_t& tile)
         m_slider->setMaximum(0);
     }
 
-    if (int(tile.height) > int(tile.width))
+    if (tile.layout == VERTICAL)
     {
         m_slider->setOrientation(Qt::Vertical);
     }
@@ -1949,7 +2155,7 @@ lclScrollBar::lclScrollBar(const tile_t& tile)
         m_hlayout->setAlignment(Qt::AlignHCenter);
         break;
     default: {}
-    break;
+        break;
     }
 
     if(!tile.is_enabled)
@@ -1962,6 +2168,33 @@ lclScrollBar::lclScrollBar(const tile_t& tile)
         int value = atoi(noQuotes(tile.value).c_str());
         m_slider->setValue(value);
     }
+
+    if(!tile.is_tab_stop)
+    {
+        m_slider->setFocusPolicy(Qt::NoFocus);
+    }
+
+    /* FIXME set focus to Q */
+    if(noQuotes(tile.mnemonic).size() == 1)
+    {
+        QString label = noQuotes(tile.label).c_str();
+
+        if(!label.contains("&") &&
+            label.contains(noQuotes(tile.mnemonic).c_str()))
+        {
+            label.replace(label.indexOf(noQuotes(tile.mnemonic).c_str()), 1, label.first(1) + "&");
+            //m_list->setText(label);
+        }
+    }
+
+    /*
+     * FIXME
+     * big_increment
+     * label
+     * mnemonic
+     * small_increment
+     *
+    */
 
     QObject::connect(m_slider, &QScrollBar::valueChanged, [&] (int value) { valueChanged(value); });
     QObject::connect(m_slider, &QScrollBar::sliderReleased, [&] { sliderReleased(); });
@@ -1995,6 +2228,7 @@ void lclScrollBar::valueChanged(int value)
         }
 #endif
         replaceReason(action, "1");
+        replaceKey(action, noQuotes(this->value().key));
         qDebug() << "lclScrollBar::valueChanged action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2018,6 +2252,7 @@ void lclScrollBar::sliderReleased()
         action += ")";
         replaceValue(action, std::to_string(m_slider->value()).c_str());
         replaceReason(action, "2");
+        replaceKey(action, noQuotes(this->value().key));
         qDebug() << "lclScrollBar::valueChanged action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2046,18 +2281,18 @@ lclDial::lclDial(const tile_t& tile)
         m_slider->setMaximum(0);
     }
 #if 0
-    // FIX ME
+    // FIXME
     if(int(tile.small_increment))
     {
         m_slider->setTickInterval(int(tile.small_increment));
     }
-    // FIX ME
+    // FIXME
     if(int(tile.big_increment))
     {
         m_slider->setTickInterval(int(tile.big_increment));
     }
 #endif
-    if (int(tile.height) > int(tile.width))
+    if (tile.layout == VERTICAL)
     {
         m_slider->setOrientation(Qt::Vertical);
     }
@@ -2135,6 +2370,33 @@ lclDial::lclDial(const tile_t& tile)
         m_slider->setValue(value);
     }
 
+    if(!tile.is_tab_stop)
+    {
+        m_slider->setFocusPolicy(Qt::NoFocus);
+    }
+
+    /* FIXME set focus to Q */
+    if(noQuotes(tile.mnemonic).size() == 1)
+    {
+        QString label = noQuotes(tile.label).c_str();
+
+        if(!label.contains("&") &&
+            label.contains(noQuotes(tile.mnemonic).c_str()))
+        {
+            label.replace(label.indexOf(noQuotes(tile.mnemonic).c_str()), 1, label.first(1) + "&");
+            //m_list->setText(label);
+        }
+    }
+
+    /*
+     * FIXME
+     * big_increment
+     * label
+     * mnemonic
+     * small_increment
+     *
+    */
+
     QObject::connect(m_slider, &QDial::valueChanged, [&] (int value) { valueChanged(value); });
     QObject::connect(m_slider, &QDial::sliderReleased, [&] { sliderReleased(); });
 }
@@ -2167,6 +2429,7 @@ void lclDial::valueChanged(int value)
         }
 #endif
         replaceReason(action, "1");
+        replaceKey(action, noQuotes(this->value().key));
         qDebug() << "lclDial::valueChanged action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2190,6 +2453,7 @@ void lclDial::sliderReleased()
         action += ")";
         replaceValue(action, std::to_string(m_slider->value()).c_str());
         replaceReason(action, "2");
+        replaceKey(action, noQuotes(this->value().key));
         qDebug() << "lclDial::valueChanged action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2259,6 +2523,12 @@ lclToggle::lclToggle(const tile_t& tile)
 {
     m_toggle->setText(noQuotes(tile.label).c_str());
 
+    if(tile.is_default)
+    {
+        m_toggle->setShortcut(Qt::Key_Return);
+        m_toggle->setShortcut(Qt::Key_Enter);
+    }
+
     if(int(tile.width))
     {
         m_toggle->setMinimumWidth(int(tile.width * 10));
@@ -2322,6 +2592,28 @@ lclToggle::lclToggle(const tile_t& tile)
         m_toggle->setEnabled(false);
     }
 
+    if(!tile.is_tab_stop)
+    {
+        m_toggle->setFocusPolicy(Qt::NoFocus);
+    }
+
+    if(noQuotes(tile.value) == "1")
+    {
+        m_toggle->setChecked(true);
+    }
+
+    if(noQuotes(tile.mnemonic).size() == 1)
+    {
+        QString label = noQuotes(tile.label).c_str();
+
+        if(!label.contains("&") &&
+            label.contains(noQuotes(tile.mnemonic).c_str()))
+        {
+            label.replace(label.indexOf(noQuotes(tile.mnemonic).c_str()), 1, label.first(1) + "&");
+            m_toggle->setText(label);
+        }
+    }
+
     QObject::connect(m_toggle, QOverload<int>::of(&QCheckBox::stateChanged), [&](int state) { stateChanged(state); });
 }
 
@@ -2350,7 +2642,138 @@ void lclToggle::stateChanged(int state)
         {
             replaceValue(action, "0");
         }
+        replaceKey(action, noQuotes(this->value().key));
         qDebug() << "lclToggle::stateChanged action:" << action.c_str();
+        LispRun_SimpleString(action.c_str());
+    }
+}
+
+lclImageButton::lclImageButton(const tile_t& tile)
+    : lclGui(tile)
+    , m_button(new QDclButton)
+    , m_vlayout(new QVBoxLayout)
+    , m_hlayout(new QHBoxLayout)
+{
+    if(tile.is_default)
+    {
+        m_button->setShortcut(Qt::Key_Return);
+        m_button->setShortcut(Qt::Key_Enter);
+    }
+
+    if(int(tile.width))
+    {
+        qDebug() << "[lclImageButton::lclImageButton] width" << int(tile.width);
+        m_button->setMinimumWidth(int(tile.width));
+    }
+
+    if(int(tile.height))
+    {
+        qDebug() << "[lclImageButton::lclImageButton] heigth" << int(tile.height);
+        m_button->setMinimumHeight(int(tile.height));
+    }
+
+    if (tile.fixed_width)
+    {
+        if(int(tile.width)) {
+            qDebug() << "[lclImageButton::lclImageButton] fixed_width" << int(tile.width);
+            m_button->setFixedWidth(int(tile.width));
+        }
+        else
+        {
+            qDebug() << "[lclImageButton::lclImageButton] opt fixed_width" << int(tile.width);
+            m_button->setFixedWidth(82);
+        }
+
+    }
+
+    if (tile.fixed_height)
+    {
+        if(int(tile.height))
+        {
+            qDebug() << "[lclImageButton::lclImageButton] fixed_height" << int(tile.height);
+            m_button->setMinimumHeight(int(tile.height));
+        }
+        else
+        {
+            qDebug() << "[lclImageButton::lclImageButton] opt fixed_height" << m_button->height();
+            m_button->setFixedWidth(m_button->height());
+        }
+    }
+
+    m_vlayout->addWidget(m_button);
+    m_hlayout->addLayout(m_vlayout);
+
+    switch (tile.alignment)
+    {
+    case LEFT:
+        m_hlayout->setAlignment(Qt::AlignLeft);
+        break;
+    case RIGHT:
+        m_hlayout->setAlignment(Qt::AlignRight);
+        break;
+    case TOP:
+        m_vlayout->setAlignment(Qt::AlignTop);
+        break;
+    case BOTTOM:
+        m_vlayout->setAlignment(Qt::AlignBottom);
+        break;
+    case CENTERED:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    default: {}
+    break;
+    }
+
+    if(!tile.is_enabled)
+    {
+        m_button->setEnabled(false);
+    }
+
+    m_button->setAutoFillBackground(true); // importent!
+    QPalette p = m_button->palette();
+    p.setColor(QPalette::Window, QColor(getDclQColor(tile.color)));
+    m_button->setPalette(p);
+
+    if(!tile.is_tab_stop)
+    {
+        m_button->setFocusPolicy(Qt::NoFocus);
+    }
+
+    /* FIXME aspect_ratio */
+
+    QObject::connect(m_button, QOverload<bool>::of(&QDclButton::clicked), [&](bool checked) { clicked(checked); });
+}
+
+void lclImageButton::clicked(bool checked)
+{
+    Q_UNUSED(checked)
+    qDebug() << "lclImageButton::clicked key:" << noQuotes(this->value().key).c_str();
+    qDebug() << "lclImageButton::clicked width:" << m_button->width() << "height:" << m_button->height();
+
+    if (noQuotes(this->value().key) == "")
+    {
+        return;
+    }
+
+    lclValuePtr val = dclEnv->get(std::to_string(this->value().dialog_Id) + "_" + noQuotes(this->value().key).c_str());
+    qDebug() << "lclImageButton::clicked val:" << val->print(true).c_str();
+    if (val->print(true).compare("nil") != 0) {
+        const lclString *str = VALUE_CAST(lclString, val);
+        String action = "(do";
+        action += str->value();
+        action += ")";
+        qDebug() << "lclImageButton::clicked action:" << action.c_str();
+
+        if (QString::fromStdString(noQuotes(this->value().key)) == "accept" ||
+            QString::fromStdString(noQuotes(this->value().label)).toUpper() == "OK")
+        {
+            dclEnv->set(std::to_string(this->value().dialog_Id) + "_dcl_result", lcl::integer(1));
+        }
+
+        replaceX(action, m_button->width());
+        replaceY(action, m_button->height());
+        replaceKey(action, noQuotes(this->value().key));
         LispRun_SimpleString(action.c_str());
     }
 }
@@ -2418,10 +2841,17 @@ lclImage::lclImage(const tile_t& tile)
         m_image->setEnabled(false);
     }
 
+    if(!tile.is_tab_stop)
+    {
+        m_image->setFocusPolicy(Qt::NoFocus);
+    }
+
     m_image->setAutoFillBackground(true); // importent!
     QPalette p = m_image->palette();
     p.setColor(QPalette::Window, QColor(getDclQColor(tile.color)));
     m_image->setPalette(p);
+
+    /* FIXME aspect_ratio */
 }
 
 lclOkCancel::lclOkCancel(const tile_t& tile)
@@ -2461,6 +2891,7 @@ void lclOkCancel::okClicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
+        replaceKey(action, "accept");
         qDebug() << "lclOkCancel::okClicked action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2477,6 +2908,7 @@ void lclOkCancel::cancelClicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
+        replaceKey(action, "cancel");
         qDebug() << "lclOkCancel::okClicked action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2524,6 +2956,7 @@ void lclOkCancelHelp::okClicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
+        replaceKey(action, "accept");
         qDebug() << "lclOkCancel::okClicked action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2540,6 +2973,7 @@ void lclOkCancelHelp::cancelClicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
+        replaceKey(action, "cancel");
         qDebug() << "lclOkCancel::cancelClicked action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2556,6 +2990,7 @@ void lclOkCancelHelp::helpClicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
+        replaceKey(action, "help");
         qDebug() << "lclOkCancel::helpClicked action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2609,6 +3044,7 @@ void lclOkCancelHelpInfo::okClicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
+        replaceKey(action, "accept");
         qDebug() << "lclOkCancel::okClicked action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2625,6 +3061,7 @@ void lclOkCancelHelpInfo::cancelClicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
+        replaceKey(action, "cancel");
         qDebug() << "lclOkCancel::cancelClicked action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2641,6 +3078,7 @@ void lclOkCancelHelpInfo::helpClicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
+        replaceKey(action, "help");
         qDebug() << "lclOkCancel::helpClicked action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2657,6 +3095,7 @@ void lclOkCancelHelpInfo::infoClicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
+        replaceKey(action, "info");
         qDebug() << "lclOkCancel::helpClicked action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2709,6 +3148,7 @@ void lclOkCancelHelpErrtile::okClicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
+        replaceKey(action, "accept");
         qDebug() << "lclOkCancel::okClicked action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2725,6 +3165,7 @@ void lclOkCancelHelpErrtile::cancelClicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
+        replaceKey(action, "cancel");
         qDebug() << "lclOkCancel::cancelClicked action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2741,6 +3182,7 @@ void lclOkCancelHelpErrtile::helpClicked(bool checked)
         String action = "(do";
         action += str->value();
         action += ")";
+        replaceKey(action, "help");
         qDebug() << "lclOkCancel::helpClicked action:" << action.c_str();
         LispRun_SimpleString(action.c_str());
     }
@@ -2775,7 +3217,10 @@ void QDclLabel::paintEvent(QPaintEvent *event)
         if (l.action == DCL_TXT)
         {
             QRect boundingRect;
-            color_t color = static_cast<color_t>(l.color);
+            QFont font = painter.font();
+            font.setPixelSize(l.y2);
+            painter.setFont(font);
+            const color_t color = static_cast<color_t>(l.color);
             painter.setPen(QPen(getDclQColor(color)));
             painter.drawText(l.x1, l.y1, l.x2, l.y2, (Qt::AlignLeft | Qt::AlignTop), l.str, &boundingRect);
         }
@@ -2836,6 +3281,105 @@ void QDclLabel::addPicture(int x1,int y1,int width, int height, double aspect_ra
 }
 
 void QDclLabel::addSlide(int x1,int y1,int width, int height, double aspect_ratio, const QString &name)
+{
+    int ar = int(aspect_ratio * 100);
+    dclVector v = { x1, y1, width, height, ar, name, DCL_SLD };
+    m_pixs->push_back(v);
+}
+
+QDclButton::QDclButton(QWidget *parent)
+    : QAbstractButton(parent)
+    , m_pixs(new dclVectors(0))
+{
+}
+
+void QDclButton::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event)
+    QPainter painter(this);
+
+    for (auto & l : *m_pixs)
+    {
+        if (l.action == DCL_LINE)
+        {
+            const color_t color = static_cast<color_t>(l.color);
+            painter.setPen(QPen(getDclQColor(color)));
+            painter.drawLine(l.x1, l.y1, l.x2, l.y2);
+        }
+
+        if (l.action == DCL_RECT)
+        {
+            const color_t color = static_cast<color_t>(l.color);
+            painter.fillRect(l.x1, l.y1, l.x2, l.y2, QBrush(getDclQColor(color), Qt::SolidPattern));
+        }
+
+        if (l.action == DCL_TXT)
+        {
+            QRect boundingRect;
+            QFont font = painter.font();
+            font.setPixelSize(l.y2);
+            painter.setFont(font);
+            const color_t color = static_cast<color_t>(l.color);
+            painter.setPen(QPen(getDclQColor(color)));
+            painter.drawText(l.x1, l.y1, l.x2, l.y2, (Qt::AlignLeft | Qt::AlignTop), l.str, &boundingRect);
+        }
+
+        if (l.action == DCL_PIX)
+        {
+            if (QFile::exists(l.str))
+            {
+                const QRect target(l.x1, l.y1, l.x2, l.y2);
+                painter.drawImage(target, QImage(l.str));
+            }
+            else
+            {
+                qDebug() << "[QDclButton::paintEvent] file not found:" << l.str;
+            }
+        }
+
+        if (l.action == DCL_SLD)
+        {
+            if (QFile::exists(l.str))
+            {
+                const QRect target(l.x1, l.y1, l.x2, l.y2);
+                painter.drawImage(target, QImage(l.str));
+            }
+            else
+            {
+                qDebug() << "[QDclButton::paintEvent] file not found:" << l.str;
+            }
+        }
+    }
+
+    //painter.drawRect(event->rect());
+}
+
+void QDclButton::addLine(int x1,int y1,int x2,int y2, int color)
+{
+    dclVector v = { x1, y1, x2, y2, color, "", DCL_LINE };
+    m_pixs->push_back(v);
+}
+
+void QDclButton::addRect(int x1,int y1,int width, int height, int color)
+{
+    dclVector v = { x1, y1, width, height, color, "", DCL_RECT };
+    m_pixs->push_back(v);
+}
+
+void QDclButton::addText(int x1,int y1,int width, int height, const QString &text, int color)
+{
+    dclVector v = { x1, y1, width, height, color, text, DCL_TXT };
+    m_pixs->push_back(v);
+}
+
+void QDclButton::addPicture(int x1,int y1,int width, int height, double aspect_ratio, const QString &name)
+{
+    int ar = int(aspect_ratio * 100);
+    dclVector v = { x1, y1, width, height, ar, name, DCL_PIX };
+    m_pixs->push_back(v);
+}
+
+void QDclButton::addSlide(int x1,int y1,int width, int height, double aspect_ratio, const QString &name)
 {
     int ar = int(aspect_ratio * 100);
     dclVector v = { x1, y1, width, height, ar, name, DCL_SLD };
@@ -2939,6 +3483,17 @@ static int getIcon(const char* label)
         }
     }
     qDebug() << "[getIcon] id:" << id;
+    return id;
+}
+
+attribute_id_t getDclAttributeId(const String& str)
+{
+    attribute_id_t id = NOATTR;
+    for (int i =0; i < MAX_DCL_ATTR; i++) {
+        if (str == dclAttribute[i].name) {
+            return dclAttribute[i].id;
+        }
+    }
     return id;
 }
 

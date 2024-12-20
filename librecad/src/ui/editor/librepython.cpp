@@ -15,6 +15,7 @@ LibrePython::LibrePython(QWidget *parent, const QString& fileName)
 {
     enableIDETools();
     m_dock = new QDockWidget(tr("LibrePython"), this);
+    m_dock->setObjectName("CmdLine" + editorName());
     m_dock->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::RightDockWidgetArea);
     commandWidget = new QG_Py_CommandWidget(this, "Python Ide");
     m_dock->setWidget(commandWidget);

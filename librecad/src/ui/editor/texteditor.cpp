@@ -25,7 +25,7 @@ TextEditor::TextEditor(QWidget *parent, const QString& fileName)
 {
     //setStyleSheet("QPlainTextEdit { border: 0.1ex solid #7cfc00; }");
     setStyleSheet("QPlainTextEdit { border: 0.1ex solid green; border-radius: 0.1em; }");
-    setViewportMargins(50, 0, 0, 0);
+    setViewportMargins(36, 0, 0, 0);
     initHighlighter();
     highlightCurrentLine();
 
@@ -126,7 +126,6 @@ void TextEditor::keyPressEvent(QKeyEvent *event)
     }
 }
 
-
 TextEditor::~TextEditor()
 {
     removeHighlighter();
@@ -136,10 +135,11 @@ void TextEditor::lineNumberPaintEvent(QPaintEvent *e)
 {
     QTextBlock block = firstVisibleBlock();
     QPainter painter(m_lineNumberWidget);
-    painter.fillRect(e->rect().left()+1,
-                     e->rect().top()+1,
-                     e->rect().x(),
-                     e->rect().y(),
+
+    painter.fillRect(e->rect().x() + 1,
+                     e->rect().y() + 1,
+                     e->rect().width() - 1,
+                     e->rect().height() - 1,
                      QColor(240, 240, 240));
 
     painter.setPen(QColor(80, 80, 80));
@@ -155,7 +155,7 @@ void TextEditor::lineNumberPaintEvent(QPaintEvent *e)
         {
             lineHeight -= 4;
         }
-        QRect rect(0, top, getLineNumberWidth(), lineHeight);
+        QRect rect(-4, top, getLineNumberWidth(), lineHeight);
         QFont font = painter.font();
         font.setPointSize(9);
         painter.setFont(font);
@@ -165,6 +165,16 @@ void TextEditor::lineNumberPaintEvent(QPaintEvent *e)
         top    = bottom;
         bottom = top + blockBoundingGeometry(block).height();
     }
+
+    QPen pen;
+    pen.setWidth(1);
+    pen.setColor(QColor(220, 220, 220));
+
+    painter.setPen(pen);
+    painter.drawLine(e->rect().width() - 1,
+                    e->rect().y() + 1,
+                    e->rect().width() - 1,
+                    contentsRect().height() - 1);
 }
 
 void TextEditor::load(QString fileName)
@@ -334,7 +344,6 @@ void TextEditor::highlightCurrentLine()
     selection.cursor = textCursor();
 
     extraSelections.append(selection);
-
     setExtraSelections(extraSelections);
 }
 
@@ -345,12 +354,10 @@ void TextEditor::updateLineNumberMargin()
 
 int TextEditor::getLineNumberWidth()
 {
-    //int default = 22;
-    int defalut = 35;
-    defalut     = 4 + QString::number(blockCount()).length() * fontMetrics().horizontalAdvance('0');
-    defalut     = qMax(35, defalut);
-
-    return defalut;
+    int width = 36;
+    width     = 4 + QString::number(blockCount()).length() * fontMetrics().horizontalAdvance('0');
+    width     = qMax(36, width);
+    return width;
 }
 
 LineNumberWidget::LineNumberWidget(TextEditor *editor)

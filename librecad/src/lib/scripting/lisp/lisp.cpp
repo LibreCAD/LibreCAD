@@ -661,6 +661,7 @@ void openTile(const lclGui* tile)
     switch (tile->value().id) {
         case DIALOG:
         {
+            /* FIXME initial_focus */
             //const lclDialog* dlg = static_cast<const lclDialog*>(tile);
             qDebug() << "[openTile] DIALOG init";
             dclEnv->set(std::to_string(tile->value().dialog_Id) + "_dcl_result", lcl::integer(0));
@@ -1174,6 +1175,54 @@ void openTile(const lclGui* tile)
                         else
                         {
                             dclTiles.at(i)->vlayout()->addWidget(img->image());
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+            break;
+        case IMAGE_BUTTON:
+        {
+            if (!dclTiles.size())
+            {
+                break;
+            }
+            const lclImageButton* b = static_cast<const lclImageButton*>(tile);
+            dclTiles.push_back(tile);
+            if (tile->value().key != "")
+            {
+                dclEnv->set(std::to_string(tile->value().dialog_Id) + "_" + noQuotes(tile->value().key).c_str(), lcl::nilValue());
+            }
+            if (tile->value().action != "")
+            {
+                dclEnv->set(std::to_string(tile->value().dialog_Id) + "_" + noQuotes(tile->value().key).c_str(), lcl::string(tile->value().action));
+            }
+
+            if (!b->value().has_parent) {
+                for (auto & dlg : dclTiles)
+                {
+                    if (dlg->value().dialog_Id == dlgId)
+                    {
+                        dlg->vlayout()->addLayout(b->hlayout());
+                        break;
+                    }
+                }
+                break;
+            }
+            else
+            {
+                for (int i = dclTiles.size()-2; i >= 0 ; i--)
+                {
+                    if(LAYOUT_TILE & dclTiles.at(i)->value().id)
+                    {
+                        if (LAYOUT_ROW & dclTiles.at(i)->value().id)
+                        {
+                            dclTiles.at(i)->hlayout()->addLayout(b->hlayout());
+                        }
+                        else
+                        {
+                            dclTiles.at(i)->vlayout()->addLayout(b->hlayout());
                         }
                         break;
                     }

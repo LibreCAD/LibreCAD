@@ -15,6 +15,15 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
+    <property name="topMargin">
+     <number>9</number>
+    </property>
+    <property name="verticalSpacing">
+     <number>6</number>
+    </property>
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="sizePolicy">
@@ -27,14 +36,14 @@
        <bool>false</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">QTabWidget::pane { 
+       <string notr="true">
+QTabWidget::pane { 
 	border-top: 0.1ex solid #c4c7cb;
 	padding-top: 18px; 
-	padding-left: 3px; 
-	padding-right: 3px; 
-	padding-bottom: 3px; 
-	margin: 1px;
-	top: -2px;
+	padding-left: 2px; 
+	padding-right: 2px; 
+	padding-bottom: 2px; 
+	top: -1px;
 }
 
 QTabBar
@@ -65,6 +74,9 @@ QTabBar::tab:top:!selected:hover
 	background-color: rgba(124, 252, 00, 0.2);
 }</string>
       </property>
+      <property name="tabShape">
+       <enum>QTabWidget::Rounded</enum>
+      </property>
       <property name="documentMode">
        <bool>false</bool>
       </property>
@@ -91,18 +103,18 @@ QTabBar::tab:top:!selected:hover
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <widget class="QMenu" name="menuOpen_Recent">
+    <widget class="QMenu" name="menuOpenRecent">
      <property name="title">
       <string>&amp;Recent Files</string>
      </property>
      <property name="icon">
       <iconset resource="../../../res/icons/icons.qrc">
-       <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+       <normaloff>:/icons/recent.svg</normaloff>:/icons/recent.svg</iconset>
      </property>
     </widget>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
-    <addaction name="menuOpen_Recent"/>
+    <addaction name="menuOpenRecent"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_as"/>
     <addaction name="actionReload"/>
@@ -171,14 +183,14 @@ QTabBar::tab:top:!selected:hover
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
    <property name="minimumSize">
     <size>
-     <width>367</width>
+     <width>188</width>
      <height>0</height>
     </size>
    </property>
@@ -191,8 +203,14 @@ QTabBar::tab:top:!selected:hover
    <property name="windowTitle">
     <string>&amp;File</string>
    </property>
+   <property name="movable">
+    <bool>true</bool>
+   </property>
    <property name="allowedAreas">
     <set>Qt::BottomToolBarArea|Qt::TopToolBarArea</set>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -206,15 +224,72 @@ QTabBar::tab:top:!selected:hover
    <addaction name="actionSave_as"/>
    <addaction name="separator"/>
    <addaction name="actionPrint"/>
+  </widget>
+  <widget class="QToolBar" name="editToolBar">
+   <property name="windowTitle">
+    <string>&amp;Edit</string>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomToolBarArea|Qt::TopToolBarArea</set>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
    <addaction name="separator"/>
    <addaction name="actionCopy"/>
    <addaction name="actionCut"/>
    <addaction name="actionPaste"/>
    <addaction name="separator"/>
-   <addaction name="actionUndo"/>
-   <addaction name="actionRedo"/>
+   <addaction name="actionSelectAll"/>
+   <addaction name="actionDeselect"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="searchToolBar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>89</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>720</width>
+     <height>39</height>
+    </size>
+   </property>
+   <property name="windowTitle">
+    <string>&amp;Search</string>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomToolBarArea|Qt::TopToolBarArea</set>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionFind"/>
+   <addaction name="separator"/>
+   <addaction name="actionReplace"/>
+  </widget>
   <widget class="QToolBar" name="buildToolBar">
    <property name="sizePolicy">
     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -240,6 +315,9 @@ QTabBar::tab:top:!selected:hover
    <property name="allowedAreas">
     <set>Qt::BottomToolBarArea|Qt::TopToolBarArea</set>
    </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -249,33 +327,21 @@ QTabBar::tab:top:!selected:hover
    <addaction name="actionRun"/>
    <addaction name="actionLoadScript"/>
   </widget>
-  <widget class="QToolBar" name="searchToolBar">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
+  <widget class="QToolBar" name="debugToolBar">
    <property name="minimumSize">
     <size>
-     <width>82</width>
+     <width>0</width>
      <height>0</height>
     </size>
    </property>
-   <property name="maximumSize">
-    <size>
-     <width>16777215</width>
-     <height>39</height>
-    </size>
-   </property>
    <property name="windowTitle">
-    <string>&amp;Search</string>
+    <string>&amp;Debug</string>
    </property>
    <property name="allowedAreas">
     <set>Qt::BottomToolBarArea|Qt::TopToolBarArea</set>
    </property>
    <property name="floatable">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -283,9 +349,11 @@ QTabBar::tab:top:!selected:hover
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionFind"/>
+   <addaction name="actionDebug"/>
    <addaction name="separator"/>
-   <addaction name="actionReplace"/>
+   <addaction name="actionTrace"/>
+   <addaction name="actionUntrace"/>
+   <addaction name="actionCleanTraceHistory"/>
   </widget>
   <action name="actionNew">
    <property name="icon">
@@ -448,7 +516,7 @@ QTabBar::tab:top:!selected:hover
   </action>
   <action name="actionFont">
    <property name="icon">
-    <iconset resource="../../../res/icons/icons.qrc">
+    <iconset theme="format-text-subscript" resource="../../../res/icons/icons.qrc">
      <normaloff>:/icons/text.svg</normaloff>:/icons/text.svg</iconset>
    </property>
    <property name="text">
@@ -517,8 +585,8 @@ QTabBar::tab:top:!selected:hover
   </action>
   <action name="actionHelp">
    <property name="icon">
-    <iconset theme="help-contents">
-     <normaloff>:/icons/help.svg</normaloff>:/icons/help.svg</iconset>
+    <iconset resource="../../../res/main/main.qrc">
+     <normaloff>:/main/manual.png</normaloff>:/main/manual.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Help</string>
@@ -590,12 +658,60 @@ QTabBar::tab:top:!selected:hover
     <string>&amp;License</string>
    </property>
   </action>
+  <action name="actionDebug">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../../res/icons/icons.qrc">
+     <normaloff>:/icons/debug.svg</normaloff>:/icons/debug.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Debug</string>
+   </property>
+   <property name="toolTip">
+    <string>Debug All</string>
+   </property>
+  </action>
+  <action name="actionTrace">
+   <property name="icon">
+    <iconset resource="../../../res/icons/icons.qrc">
+     <normaloff>:/icons/trace.svg</normaloff>:/icons/trace.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Trace</string>
+   </property>
+   <property name="toolTip">
+    <string>add Function  (Trace)</string>
+   </property>
+  </action>
+  <action name="actionUntrace">
+   <property name="icon">
+    <iconset resource="../../../res/icons/icons.qrc">
+     <normaloff>:/icons/untrace.svg</normaloff>:/icons/untrace.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Untrace</string>
+   </property>
+   <property name="toolTip">
+    <string>Remove Function (Untrace)</string>
+   </property>
+  </action>
+  <action name="actionCleanTraceHistory">
+   <property name="icon">
+    <iconset resource="../../../res/main/main.qrc">
+     <normaloff>:/main/editclear.png</normaloff>:/main/editclear.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Clean Trace History</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../../res/icons/icons.qrc"/>
-  <include location="../../../res/icons/icons.qrc"/>
   <include location="../../../res/main/main.qrc"/>
+  <include location="../../../res/icons/icons.qrc"/>
+  <include location="../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>
 </ui>

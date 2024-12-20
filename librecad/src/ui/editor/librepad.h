@@ -9,6 +9,7 @@
 #include <QCloseEvent>
 #include <QToolBar>
 #include <QStringList>
+#include <QComboBox>
 
 #include "texteditor.h"
 #include "lpsearchbar.h"
@@ -45,7 +46,9 @@ public:
     void writeIncFind(QStringList list) { writeSearchHistory("/incfind", list); }
     void writePowerFind(QStringList list) { writeSearchHistory("/powerfind", list); }
     void writePowerReplace(QStringList list) { writeSearchHistory("/powerreplace", list); }
+    void writeLispTrace(QStringList list) { writeSearchHistory("/lisptrace", list); }
     void message(const QString &msg);
+    void freeTrace() { m_debugCombo->setCurrentText(""); }
 
     TextEditor *editor() const { return dynamic_cast<TextEditor *>(ui->tabWidget->widget(ui->tabWidget->currentIndex())); }
 
@@ -58,11 +61,17 @@ public:
     bool powerSearch();
     int powerMatchMode();
 
+    bool debugging() { return ui->actionDebug->isChecked(); }
+    bool tracing() { return ui->actionTrace->isChecked(); }
+    QString debugFunc() { return m_debugFunc; }
+
     QStringList searchHistory(const QString &path);
 
     QStringList incFind() { return searchHistory("/incfind"); }
     QStringList powerFind() { return searchHistory("/powerfind"); }
     QStringList powerReplace() { return searchHistory("/powerreplace"); }
+    QStringList lispTrace() { return searchHistory("/lisptrace"); }
+
     void enableIDETools();
     void setCmdWidgetChecked(bool val);
 
@@ -82,6 +91,10 @@ public slots:
     virtual void loadScript() {}
     virtual void cmdDock() {}
     virtual void help();
+    virtual void trace();
+    virtual void untrace() {}
+    virtual void debug() {}
+    virtual void traceFuncChanged(const QString &text) { m_debugFunc = text; }
 
 private slots:
     void slotTabChanged(int index);
@@ -105,6 +118,7 @@ private slots:
     void toolBarMain();
     void toolBarBuild();
     void toolBarSearch();
+    void freeTraceHistory();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -113,10 +127,13 @@ private:
     QString m_fileName;
     QFont m_font;
     Ui::Librepad *ui;
-    LpSearchBar * m_searchWidget;
+    LpSearchBar *m_searchWidget;
 
     const unsigned int m_maxFileNr;
     QList<QAction*> m_recentFileActionList;
+    QLineEdit *m_debugEdit;
+    QString m_debugFunc;
+    QComboBox *m_debugCombo;
 
     void addNewTab(const QString& path);
     QFont font() const { return m_font; }

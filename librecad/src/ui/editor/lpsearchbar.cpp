@@ -131,7 +131,7 @@ LpSearchBar::LpSearchBar(QWidget *parent, Librepad *lpad)
 #endif
 
     centralWidget()->setLayout(m_layout);
-    m_layout->setContentsMargins(30, 0, 0, 0);
+    m_layout->setContentsMargins(0, 0, 0, 0);
 
     m_incMatchCase = m_librePad->incMatchCase();
     m_powerMatchCase = m_librePad->powerMatchCase();
@@ -356,15 +356,11 @@ void LpSearchBar::addCurrentTextToHistory(QComboBox *combo)
     const QString text = combo->currentText();
     const int index = combo->findText(text);
 
-    qDebug() << "[LpSearchBar::addCurrentTextToHistory] count:" << combo->count();
-
     if (index > 0) {
-        qDebug() << "[LpSearchBar::addCurrentTextToHistory] remove item index:" << index << combo->itemText(index);
         combo->removeItem(index);
     }
 
     if (index != 0) {
-        qDebug() << "[LpSearchBar::addCurrentTextToHistory] insert item index: 0" << text;
         combo->insertItem(0, text);
         combo->setCurrentIndex(0);
     }
@@ -374,7 +370,6 @@ void LpSearchBar::addCurrentTextToHistory(QComboBox *combo)
 
     for (int i = 0; i < combo->count(); i++)
     {
-        qDebug() << "[LpSearchBar::addCurrentTextToHistory] item Text(i)" << combo->itemText(i);
         hist.append(combo->itemText(i));
     }
 

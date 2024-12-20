@@ -16,6 +16,7 @@ LibreLisp::LibreLisp(QWidget *parent, const QString& fileName)
     enableIDETools();
 
     m_dock = new QDockWidget(tr("LibreLisp"), this);
+    m_dock->setObjectName("CmdLine" + editorName());
     m_dock->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::RightDockWidgetArea);
     commandWidget = new QG_Lsp_CommandWidget(this, "Lisp Ide");
     commandWidget->setPrompt("_$ ");
@@ -55,6 +56,55 @@ void LibreLisp::run()
         file.close();
         commandWidget->runFile(file.fileName());
         file.remove();
+    }
+}
+
+void LibreLisp::debug()
+{
+
+    if (debugging())
+    {
+        qDebug() << "[LibreLisp::debug} enable";
+        commandWidget->processInput("(debug-eval true)");
+    }
+    else
+    {
+        qDebug() << "[LibreLisp::debug} disable";
+        commandWidget->processInput("(debug-eval false)");
+    }
+}
+
+void LibreLisp::trace()
+{
+    if(debugFunc() == "")
+    {
+        qDebug() << "[LibreLisp::trace} error! no function";
+    }
+    else
+    {
+        qDebug() << "[LibreLisp::trace} func:" << debugFunc();
+        QString com = "(trace \"";
+        com += debugFunc();
+        com += "\")";
+        commandWidget->processInput(com);
+        Librepad::trace();
+    }
+}
+
+void LibreLisp::untrace()
+{
+    if(debugFunc() == "")
+    {
+        qDebug() << "[LibreLisp::trace} error! no function";
+    }
+    else
+    {
+        qDebug() << "[LibreLisp::untrace} disable clear Edit";
+        QString com = "(untrace \"";
+        com += debugFunc();
+        com += "\")";
+        commandWidget->processInput(com);
+        //freeTrace();
     }
 }
 

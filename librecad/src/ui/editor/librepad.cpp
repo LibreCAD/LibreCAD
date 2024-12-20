@@ -16,6 +16,9 @@
 #include <QToolBar>
 #include <QAction>
 
+#include <QMimeDatabase>
+#include <QMimeType>
+
 #include "librepad.h"
 #include "lpmessage.h"
 #include "lp_version.h"
@@ -33,7 +36,7 @@ Librepad::Librepad(QWidget *parent, const QString& name, const QString& fileName
     , m_fileName(fileName)
     , m_font(QFont("Monospace",10))
     , ui(new Ui::Librepad)
-    , m_maxFileNr(10)
+    , m_maxFileNr(12)
 {
     ui->setupUi(this);
     setCentralWidget(ui->tabWidget);
@@ -46,15 +49,23 @@ Librepad::Librepad(QWidget *parent, const QString& name, const QString& fileName
     /* must be hidden bevor binding to statusBar */
     m_searchWidget->hide();
 
+    QMenu *submenuRecent = new QMenu(tr("&Recent"));
     QAction* recentFileAction = 0;
+    QToolButton * tb = new QToolButton;
+    tb->setIcon(QIcon(":/icons/recent.svg"));
+    tb->setMenu(submenuRecent);
+    tb->setPopupMode(QToolButton::InstantPopup);
+
     for(unsigned int i = 0; i < m_maxFileNr; ++i){
         recentFileAction = new QAction(this);
         recentFileAction->setVisible(false);
         QObject::connect(recentFileAction, &QAction::triggered,
-                         this, &Librepad::openRecent);
+                this, &Librepad::openRecent);
         m_recentFileActionList.append(recentFileAction);
-        ui->menuOpen_Recent->addAction(recentFileAction);
+        ui->menuOpenRecent->addAction(recentFileAction);
+        submenuRecent->addAction(recentFileAction);
     }
+    ui->mainToolBar->insertWidget(ui->actionSave, tb);
     updateRecentActionList();
 
     connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &Librepad::slotTabClose);
@@ -84,12 +95,12 @@ Librepad::Librepad(QWidget *parent, const QString& name, const QString& fileName
 
     QMenu *submenu = new QMenu("&ToolBars");
     submenu->addAction(ui->mainToolBar->toggleViewAction());
+    submenu->addAction(ui->editToolBar->toggleViewAction());
     submenu->addAction(ui->buildToolBar->toggleViewAction());
     submenu->addAction(ui->searchToolBar->toggleViewAction());
     ui->menu_Widgets->insertMenu(ui->actionCmdDock, submenu);
     ui->menu_Widgets->insertSeparator(ui->actionCmdDock);
     connect(ui->actionCmdDock, &QAction::triggered, this, &Librepad::cmdDock);
-
     ui->actionAboutIde->setToolTip("about " + editorName());
 
     readSettings();
@@ -113,7 +124,7 @@ void Librepad::slotTabChanged(int index) {
     connect(editor, &QPlainTextEdit::undoAvailable, ui->actionUndo, &QAction::setEnabled);
     connect(editor, &TextEditor::documentChanged, this, [=]() {
         ui->tabWidget->tabBar()->setTabText(index, editor->fileName());
-        ui->tabWidget->tabBar()->setTabToolTip(index, editor->fileName());
+        ui->tabWidget->tabBar()->setTabToolTip(index, editor->path());
     });
 
     setWindowTitle(editorName() + " - [ " + editor->fileName() + " ]");
@@ -123,8 +134,6 @@ void Librepad::slotTabChanged(int index) {
 void Librepad::closeEvent(QCloseEvent *event)
 {
     writeSettings();
-
-    qDebug() << "Librepad::closeEvent";
 
     for(int i = 0; i < ui->tabWidget->count(); i++) {
         TextEditor *editor = dynamic_cast<TextEditor *>(ui->tabWidget->widget(i));
@@ -159,9 +168,74 @@ void Librepad::closeEvent(QCloseEvent *event)
 
 void Librepad::enableIDETools()
 {
+    if(editorName() == "LibreLisp")
+    {
+        m_debugCombo = new QComboBox();
+        m_debugCombo->setEditable(true);
+        m_debugCombo->setToolTip(tr("Typ Function Name"));
+        m_debugCombo->setMinimumWidth(200);
+        m_debugCombo->setDuplicatesEnabled(false);
+        m_debugCombo->setInsertPolicy(QComboBox::InsertAtTop);
+
+        QStringList hist = lispTrace();
+        if(hist.size())
+        {
+            qDebug() << "[Librepad::enableIDETools] history size:" << hist.size();
+            qDebug() << "[Librepad::enableIDETools] history:" << hist;
+            m_debugCombo->setMaxCount(hist.size());
+            m_debugCombo->addItems(hist);
+        }
+
+        m_debugCombo->lineEdit()->setClearButtonEnabled(true);
+        m_debugCombo->setCompleter(nullptr);
+        m_debugCombo->setCurrentIndex(-1);
+
+        ui->debugToolBar->insertWidget(ui->actionCleanTraceHistory, m_debugCombo);
+        ui->debugToolBar->hide();
+        ui->debugToolBar->show();
+
+        connect(m_debugCombo, &QComboBox::currentTextChanged, this, &Librepad::traceFuncChanged);
+        connect(ui->actionDebug, &QAction::triggered, this, &Librepad::debug);
+        connect(ui->actionTrace, &QAction::triggered, this, &Librepad::trace);
+        connect(ui->actionUntrace, &QAction::triggered, this, &Librepad::untrace);
+        connect(ui->actionCleanTraceHistory, &QAction::triggered, this, &Librepad::freeTraceHistory);
+    }
+
     ui->buildToolBar->show();
     ui->actionCmdDock->setVisible(true);
     ui->actionCmdDock->setEnabled(true);
+}
+
+void Librepad::trace()
+{
+    const QString text = m_debugCombo->currentText();
+    const int index = m_debugCombo->findText(text);
+
+    if (index > 0) {
+        m_debugCombo->removeItem(index);
+    }
+
+    if (index != 0) {
+        m_debugCombo->insertItem(0, text);
+        m_debugCombo->setCurrentIndex(0);
+    }
+
+    // sync to application config
+    QStringList hist;
+
+    for (int i = 0; i < m_debugCombo->count(); i++)
+    {
+        hist.append(m_debugCombo->itemText(i));
+    }
+
+    writeLispTrace(hist);
+}
+
+void Librepad::freeTraceHistory()
+{
+    m_debugCombo->clear();
+    const QStringList hist;
+    writeLispTrace(hist);
 }
 
 void Librepad::setCmdWidgetChecked(bool val)
@@ -245,7 +319,6 @@ void Librepad::addNewTab(const QString& path)
 {
     TextEditor *editor = new TextEditor(this, path);
     editor->setFont(m_font);
-
     QIcon icon;
 
     if (path.at(0) == '*')
@@ -254,20 +327,22 @@ void Librepad::addNewTab(const QString& path)
     }
     else
     {
-        icon = QIcon::fromTheme(QStringLiteral("text-x-generic"));
+        QMimeDatabase db;
+        const QMimeType mimeType = db.mimeTypeForFile(path);
+        icon = QIcon::fromTheme(mimeType.iconName());
     }
 
     ui->tabWidget->addTab(editor, icon, editor->fileName());
     int index = ui->tabWidget->count() - 1;
     ui->tabWidget->setCurrentIndex(index);
     ui->tabWidget->tabBar()->setTabText(index, editor->fileName());
-    ui->tabWidget->tabBar()->setTabToolTip(index, editor->fileName());
+    ui->tabWidget->tabBar()->setTabToolTip(index, editor->path());
     setWindowTitle(editorName() + " - [ " + editor->fileName() + " ]");
 
     connect(editor, &TextEditor::documentChanged, this, [=]() {
         setWindowTitle(editorName() + " - [ " + editor->fileName() + " ]");
         ui->tabWidget->tabBar()->setTabText(index, editor->fileName());
-        ui->tabWidget->tabBar()->setTabToolTip(index, editor->fileName());
+        ui->tabWidget->tabBar()->setTabToolTip(index, editor->path());
     });
 
     ui->actionRedo->setEnabled(false);
@@ -334,7 +409,9 @@ void Librepad::saveAs()
             m_fileName = editor()->path();
             writeRecentSettings(m_fileName);
             setWindowTitle(editorName() + " - [ " + editor()->fileName() + " ]");
-            ui->tabWidget->tabBar()->setTabIcon(ui->tabWidget->currentIndex(), QIcon::fromTheme(QStringLiteral("text-x-generic")));
+            QMimeDatabase db;
+            const QMimeType mimeType = db.mimeTypeForFile(editor()->fileName());
+            ui->tabWidget->tabBar()->setTabIcon(ui->tabWidget->currentIndex(), QIcon::fromTheme(mimeType.iconName()));
         });
     }
 }
@@ -431,6 +508,7 @@ void Librepad::writeSettings()
 
     settings.beginGroup("MainWindow");
     settings.setValue(editorNametolower() + "/geometry", saveGeometry());
+    settings.setValue(editorNametolower() + "/windowstate", saveState());
     settings.endGroup();
 
     settings.beginGroup("Search");
@@ -439,6 +517,7 @@ void Librepad::writeSettings()
 
     settings.beginGroup("Toolbars");
     settings.setValue(editorNametolower() + "/mainToolBar", ui->mainToolBar->isHidden());
+    settings.setValue(editorNametolower() + "/editToolBar", ui->editToolBar->isHidden());
     settings.setValue(editorNametolower() + "/scriptToolBar", ui->buildToolBar->isHidden());
     settings.setValue(editorNametolower() + "/searchToolBar", ui->searchToolBar->isHidden());
     settings.endGroup();
@@ -624,6 +703,17 @@ void Librepad::readSettings()
     {
         restoreGeometry(geometry);
     }
+
+    const auto state = settings.value(editorNametolower() + "/windowstate", QByteArray()).toByteArray();
+    if (geometry.isEmpty())
+    {
+        //restoreState(320, 280, 1280, 720);
+    }
+    else
+    {
+        restoreState(state);
+    }
+
     settings.endGroup();
 
     settings.beginGroup("Search");
@@ -694,6 +784,18 @@ void Librepad::readSettings()
         }
     }
 
+    if (settings.contains(editorNametolower() + "/editToolBar")) {
+        const bool isHidden = settings.value(editorNametolower() + "/editToolBar").toBool();
+        if (!isHidden)
+        {
+            ui->searchToolBar->show();
+        }
+        else
+        {
+            ui->searchToolBar->hide();
+        }
+    }
+
     if (settings.contains(editorNametolower() + "/scriptToolBar")) {
         const bool isHidden = settings.value(editorNametolower() + "/scriptToolBar").toBool();
         if (!isHidden)
@@ -739,11 +841,21 @@ void Librepad::updateRecentActionList()
         itEnd = m_maxFileNr;
     }
 
-    for (auto i = 0u; i < itEnd; ++i) {
-        QString strippedName = QFileInfo(recentFilePaths.at(i)).fileName();
-        m_recentFileActionList.at(i)->setText(strippedName);
+    QMimeDatabase db;
+    for (auto i = 0u; i < itEnd; ++i)
+    {
+        const QFileInfo fileinfo = QFileInfo(recentFilePaths.at(i));
+
+        if (!fileinfo.exists())
+        {
+            continue;
+        }
+
+        const QMimeType mimeType = db.mimeTypeForFile(recentFilePaths.at(i));
+        m_recentFileActionList.at(i)->setText(fileinfo.fileName());
         m_recentFileActionList.at(i)->setData(recentFilePaths.at(i));
         m_recentFileActionList.at(i)->setVisible(true);
+        m_recentFileActionList.at(i)->setIcon(QIcon::fromTheme(mimeType.iconName()));
     }
 
     for (auto i = itEnd; i < m_maxFileNr; ++i)

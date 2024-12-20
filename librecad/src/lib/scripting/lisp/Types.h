@@ -17,6 +17,7 @@
 #include <QListWidget>
 #include <QTabWidget>
 #include <QPushButton>
+#include <QAbstractButton>
 #include <QRadioButton>
 #include <QComboBox>
 #include <QGroupBox>
@@ -418,7 +419,7 @@ public:
 private:
     [[maybe_unused]] bool m_inEval;
     const String m_name;
-    ApplyFunc* m_handler;
+    ApplyFunc *m_handler;
 };
 
 class lclLambda : public lclApplicable {
@@ -983,6 +984,45 @@ typedef struct guitile {
     lclValueVec*    tiles;
 } tile_t;
 
+static attribute_prop_t dclAttribute[MAX_DCL_ATTR] = {
+    { "action", ACTION },
+    { "alignment", ALIGNMENT },
+    { "allow_accept", ALLOW_ACCEPT },
+    { "aspect_ratio", ASPECT_RATIO },
+    { "big_increment", BIG_INCREMENT },
+    { "children_alignment", CHILDREN_ALIGNMENT },
+    { "children_fixed_height", CHILDREN_FIXED_HEIGHT },
+    { "children_fixed_width", CHILDREN_FIXED_WIDTH },
+    { "color", COLOR },
+    { "edit_limit", EDIT_LIMIT },
+    { "edit_width", EDIT_WIDTH },
+    { "fixed_height", FIXED_HEIGHT },
+    { "fixed_width", FIXED_WIDTH },
+    { "fixed_width_font", FIXED_WIDTH_FONT },
+    { "height", HEIGHT },
+    { "initial_focus", INITIAL_FOCUS },
+    { "is_bold", IS_BOLD },
+    { "is_cancel", IS_CANCEL },
+    { "is_default", IS_DEFAULT },
+    { "is_enabled", IS_ENABLED },
+    { "is_tab_stop", IS_TAB_STOP },
+    { "key", KEY },
+    { "label", LABEL },
+    { "layout", LAYOUT },
+    { "list", LIST },
+    { "max_value", MAX_VALUE },
+    { "min_value", MIN_VALUE },
+    { "mnemonic", MNEMONIC },
+    { "multiple_select", MULTIPLE_SELECT },
+    { "password_char", PASSWORD_CHAR },
+    { "small_increment", SMALL_INCREMENT },
+    { "tabs", TABS },
+    { "tab_truncate", TAB_TRUNCATE },
+    { "value", VALUE },
+    { "width", WIDTH }
+};
+
+
 enum PaintAction { DCL_NON, DCL_LINE, DCL_RECT, DCL_TXT, DCL_PIX, DCL_SLD};
 
 typedef struct dclVector
@@ -999,8 +1039,7 @@ typedef struct dclVector
 typedef std::vector<dclVector_t> dclVectors;
 
 QColor getDclQColor(int c);
-
-
+extern attribute_id_t getDclAttributeId(const String& str);
 
 class QDclLabel : public QLabel
 {
@@ -1016,12 +1055,31 @@ public:
     void addText(int x1, int y1, int width, int height, const QString &text, int color);
 
 protected:
-    virtual void paintEvent(QPaintEvent *event);
+    virtual void paintEvent(QPaintEvent *event) override;
 
 private:
     dclVectors *m_pixs;
 };
 
+class QDclButton : public QAbstractButton
+{
+public:
+
+    QDclButton(QWidget *parent=nullptr);
+    ~QDclButton() { delete m_pixs; }
+
+    void addLine(int x1, int y1, int x2, int y2, int color);
+    void addRect(int x1, int y1, int width, int height, int color);
+    void addPicture(int x1, int y1, int width, int height, double aspect_ratio, const QString &name);
+    void addSlide(int x1,int y1,int width, int height, double aspect_ratio, const QString &name);
+    void addText(int x1, int y1, int width, int height, const QString &text, int color);
+
+protected:
+    virtual void paintEvent(QPaintEvent *event);
+
+private:
+    dclVectors *m_pixs;
+};
 
 class lclGui : public lclValue {
 public:
@@ -1076,8 +1134,8 @@ public:
     void addShortcut(const QString & key, QWidget *w);
 
 private:
-    QDialog* m_dialog;
-    QVBoxLayout* m_layout;
+    QDialog *m_dialog;
+    QVBoxLayout *m_layout;
 };
 
 class lclTabWidget : public lclGui {
@@ -1093,7 +1151,7 @@ public:
     QTabWidget* widget() const { return m_widget; }
 
 private:
-    QTabWidget* m_widget;
+    QTabWidget *m_widget;
 };
 
 class lclWidget : public lclGui {
@@ -1110,8 +1168,8 @@ public:
     virtual QVBoxLayout* vlayout() const { return m_layout; }
 
 private:
-    QWidget* m_widget;
-    QVBoxLayout* m_layout;
+    QWidget *m_widget;
+    QVBoxLayout *m_layout;
 };
 
 class lclButton : public lclGui {
@@ -1130,9 +1188,9 @@ public:
     void clicked(bool checked);
 
 private:
-    QPushButton* m_button;
-    QVBoxLayout* m_vlayout;
-    QHBoxLayout* m_hlayout;
+    QPushButton *m_button;
+    QVBoxLayout *m_vlayout;
+    QHBoxLayout *m_hlayout;
 };
 
 class lclRadioButton : public lclGui {
@@ -1151,9 +1209,30 @@ public:
     void clicked(bool checked);
 
 private:
-    QRadioButton* m_button;
-    QVBoxLayout* m_vlayout;
-    QHBoxLayout* m_hlayout;
+    QRadioButton *m_button;
+    QVBoxLayout *m_vlayout;
+    QHBoxLayout *m_hlayout;
+};
+
+class lclImageButton : public lclGui {
+public:
+    lclImageButton(const tile_t& tile);
+    lclImageButton(const lclImageButton& that, lclValuePtr meta)
+        : lclGui(that, meta) { }
+
+    virtual ~lclImageButton() { delete m_button; delete m_vlayout; delete m_hlayout; }
+
+    WITH_META(lclImageButton)
+
+    QDclButton* button() const { return m_button; }
+    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
+
+    void clicked(bool checked);
+
+private:
+    QDclButton *m_button;
+    QVBoxLayout *m_vlayout;
+    QHBoxLayout *m_hlayout;
 };
 
 class lclEdit : public lclGui {
@@ -1174,9 +1253,9 @@ public:
     void textEdited(const QString &text);
 
 private:
-    QLineEdit* m_edit;
-    QLabel* m_label;
-    QHBoxLayout* m_layout;
+    QLineEdit *m_edit;
+    QLabel *m_label;
+    QHBoxLayout *m_layout;
 };
 
 class lclListBox : public lclGui {
@@ -1190,14 +1269,16 @@ public:
     WITH_META(lclListBox)
 
     QListWidget* list() const { return m_list; }
+    QLabel* label() const { return m_label; }
     virtual QHBoxLayout* hlayout() const { return m_hlayout; }
 
     void currentTextChanged(const QString &currentText);
 
 private:
-    QListWidget* m_list;
-    QVBoxLayout* m_vlayout;
-    QHBoxLayout* m_hlayout;
+    QListWidget *m_list;
+    QLabel *m_label;
+    QVBoxLayout *m_vlayout;
+    QHBoxLayout *m_hlayout;
 };
 
 class lclLabel : public lclGui {
@@ -1213,7 +1294,7 @@ public:
     QLabel* label() const { return m_label; }
 
 private:
-    QLabel* m_label;
+    QLabel *m_label;
 };
 
 class lclRow : public lclGui {
@@ -1229,7 +1310,7 @@ public:
     virtual QHBoxLayout* hlayout() const { return m_layout; }
 
 private:
-    QHBoxLayout* m_layout;
+    QHBoxLayout *m_layout;
 };
 
 class lclBoxedRow : public lclGui {
@@ -1246,8 +1327,8 @@ public:
     QGroupBox* groupbox() const { return m_groupbox; }
 
 private:
-    QHBoxLayout* m_layout;
-    QGroupBox* m_groupbox;
+    QHBoxLayout *m_layout;
+    QGroupBox *m_groupbox;
 };
 
 class lclColumn : public lclGui {
@@ -1263,7 +1344,7 @@ public:
     virtual QVBoxLayout* vlayout() const { return m_layout; }
 
 private:
-    QVBoxLayout* m_layout;
+    QVBoxLayout *m_layout;
 };
 
 class lclBoxedColumn : public lclGui {
@@ -1280,8 +1361,8 @@ public:
     QGroupBox* groupbox() const { return m_groupbox; }
 
 private:
-    QVBoxLayout* m_layout;
-    QGroupBox* m_groupbox;
+    QVBoxLayout *m_layout;
+    QGroupBox *m_groupbox;
 };
 
 class lclImage : public lclGui {
@@ -1297,7 +1378,7 @@ public:
     QDclLabel* image() const { return m_image; }
 
 private:
-    QDclLabel* m_image;
+    QDclLabel *m_image;
 };
 
 class lclPopupList : public lclGui {
@@ -1316,9 +1397,9 @@ public:
     void currentTextChanged(const QString &currentText);
 
 private:
-    QComboBox* m_list;
-    QVBoxLayout* m_vlayout;
-    QHBoxLayout* m_hlayout;
+    QComboBox *m_list;
+    QVBoxLayout *m_vlayout;
+    QHBoxLayout *m_hlayout;
 };
 
 class lclScrollBar : public lclGui {
@@ -1338,11 +1419,10 @@ public:
     void sliderReleased();
 
 private:
-    QScrollBar* m_slider;
-    QVBoxLayout* m_vlayout;
-    QHBoxLayout* m_hlayout;
+    QScrollBar *m_slider;
+    QVBoxLayout *m_vlayout;
+    QHBoxLayout *m_hlayout;
 };
-
 
 class lclSlider : public lclGui {
 public:
@@ -1361,9 +1441,9 @@ public:
     void sliderReleased();
 
 private:
-    QSlider* m_slider;
-    QVBoxLayout* m_vlayout;
-    QHBoxLayout* m_hlayout;
+    QSlider *m_slider;
+    QVBoxLayout *m_vlayout;
+    QHBoxLayout *m_hlayout;
 };
 
 class lclDial : public lclGui {
@@ -1383,9 +1463,9 @@ public:
     void sliderReleased();
 
 private:
-    QDial* m_slider;
-    QVBoxLayout* m_vlayout;
-    QHBoxLayout* m_hlayout;
+    QDial *m_slider;
+    QVBoxLayout *m_vlayout;
+    QHBoxLayout *m_hlayout;
 };
 
 class lclSpacer : public lclGui {
@@ -1401,7 +1481,7 @@ public:
     QSpacerItem* spacer() const { return m_spacer; }
 
 private:
-    QSpacerItem* m_spacer;
+    QSpacerItem *m_spacer;
 };
 
 class lclToggle : public lclGui {
@@ -1420,9 +1500,9 @@ public:
     void stateChanged(int state);
 
 private:
-    QCheckBox* m_toggle;
-    QVBoxLayout* m_vlayout;
-    QHBoxLayout* m_hlayout;
+    QCheckBox *m_toggle;
+    QVBoxLayout *m_vlayout;
+    QHBoxLayout *m_hlayout;
 };
 
 class lclOkCancel : public lclGui {
@@ -1443,9 +1523,9 @@ public:
     void cancelClicked(bool checked);
 
 private:
-    QPushButton* m_btnOk;
-    QPushButton* m_btnCancel;
-    QHBoxLayout* m_layout;
+    QPushButton *m_btnOk;
+    QPushButton *m_btnCancel;
+    QHBoxLayout *m_layout;
 };
 
 class lclOkCancelHelp : public lclGui {
@@ -1468,10 +1548,10 @@ public:
     void helpClicked(bool checked);
 
 private:
-    QPushButton* m_btnOk;
-    QPushButton* m_btnCancel;
-    QPushButton* m_btnHelp;
-    QHBoxLayout* m_layout;
+    QPushButton *m_btnOk;
+    QPushButton *m_btnCancel;
+    QPushButton *m_btnHelp;
+    QHBoxLayout *m_layout;
 };
 
 class lclOkCancelHelpInfo : public lclGui {
@@ -1496,11 +1576,11 @@ public:
     void infoClicked(bool checked);
 
 private:
-    QPushButton* m_btnOk;
-    QPushButton* m_btnCancel;
-    QPushButton* m_btnHelp;
-    QPushButton* m_btnInfo;
-    QHBoxLayout* m_layout;
+    QPushButton *m_btnOk;
+    QPushButton *m_btnCancel;
+    QPushButton *m_btnHelp;
+    QPushButton *m_btnInfo;
+    QHBoxLayout *m_layout;
 };
 
 class lclOkCancelHelpErrtile : public lclGui {
@@ -1524,12 +1604,12 @@ public:
     void helpClicked(bool checked);
 
 private:
-    QPushButton* m_btnOk;
-    QPushButton* m_btnCancel;
-    QPushButton* m_btnHelp;
-    QLabel* m_errTile;
-    QHBoxLayout* m_hlayout;
-    QVBoxLayout* m_layout;
+    QPushButton *m_btnOk;
+    QPushButton *m_btnCancel;
+    QPushButton *m_btnHelp;
+    QLabel *m_errTile;
+    QHBoxLayout *m_hlayout;
+    QVBoxLayout *m_layout;
 };
 
 extern std::vector<const lclGui*> dclTiles;
@@ -1601,6 +1681,7 @@ namespace lcl {
     lclValuePtr okcancelhelperrtile(const tile_t& tile);
 
     lclValuePtr image(const tile_t& tile);
+    lclValuePtr imagebutton(const tile_t& tile);
     lclValuePtr scroll(const tile_t& tile);
     lclValuePtr slider(const tile_t& tile);
     lclValuePtr dial(const tile_t& tile);

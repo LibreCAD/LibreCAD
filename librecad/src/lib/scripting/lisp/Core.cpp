@@ -1063,7 +1063,7 @@ BUILTIN("dimx_tile")
             break;
             case IMAGE_BUTTON:
             {
-                return lcl::nilValue();
+                return lcl::integer(int(tile->value().width));
             }
             break;
             default:
@@ -1098,7 +1098,7 @@ BUILTIN("dimy_tile")
             break;
             case IMAGE_BUTTON:
             {
-                return lcl::nilValue();
+                return lcl::integer(int(tile->value().height));
             }
             break;
             default:
@@ -1184,7 +1184,8 @@ BUILTIN("end_image")
                     break;
                 case IMAGE_BUTTON:
                 {
-
+                    const lclImageButton* img = static_cast<const lclImageButton*>(tile);
+                    img->button()->repaint();
                 }
                 break;
                 default: {}
@@ -1304,7 +1305,9 @@ BUILTIN("fill_image")
             break;
             case IMAGE_BUTTON:
             {
-                return lcl::nilValue();
+                const lclImageButton* img = static_cast<const lclImageButton*>(tile);
+                img->button()->addRect(x1->value(), y1->value(), width->value(), height->value(), color->value());
+                return lcl::integer(color->value());
             }
             break;
             default:
@@ -1378,6 +1381,100 @@ BUILTIN("get")
     }
     ARG(lclHash, hash);
     return hash->get(*argsBegin);
+}
+
+BUILTIN("get_attr")
+{
+    CHECK_ARGS_IS(2);
+    ARG(lclString, key);
+    ARG(lclString, attr);
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key->value())
+        {
+            switch (getDclAttributeId(attr->value())) {
+                case ACTION:
+                    return lcl::string(tile->value().action);
+                case ALIGNMENT:
+                    return lcl::integer((int)tile->value().alignment);
+                case ALLOW_ACCEPT:
+                    return lcl::boolean(tile->value().allow_accept);
+                case ASPECT_RATIO:
+                    return lcl::ldouble(tile->value().aspect_ratio);
+                case BIG_INCREMENT:
+                    return lcl::integer(tile->value().big_increment);
+                case CHILDREN_ALIGNMENT:
+                    return lcl::integer((int)tile->value().children_alignment);
+                case CHILDREN_FIXED_HEIGHT:
+                    return lcl::boolean(tile->value().children_fixed_height);
+                case CHILDREN_FIXED_WIDTH:
+                    return lcl::boolean(tile->value().children_fixed_width);
+                case COLOR:
+                    return lcl::integer((int)tile->value().color);
+                case EDIT_LIMIT:
+                    return lcl::integer(tile->value().edit_limit);
+                case EDIT_WIDTH:
+                    return lcl::ldouble(tile->value().edit_width);
+                case FIXED_HEIGHT:
+                    return lcl::boolean(tile->value().fixed_height);
+                case FIXED_WIDTH:
+                    return lcl::boolean(tile->value().fixed_width);
+                case FIXED_WIDTH_FONT:
+                    return lcl::boolean(tile->value().fixed_width_font);
+                case HEIGHT:
+                    return lcl::ldouble(tile->value().height);
+                case INITIAL_FOCUS:
+                    return lcl::string(tile->value().initial_focus);
+                case IS_BOLD:
+                    return lcl::boolean(tile->value().is_bold);
+                case IS_CANCEL:
+                    return lcl::boolean(tile->value().is_cancel);
+                case IS_DEFAULT:
+                    return lcl::boolean(tile->value().is_default);
+                case IS_ENABLED:
+                    return lcl::boolean(tile->value().is_enabled);
+                case IS_TAB_STOP:
+                    return lcl::boolean(tile->value().is_tab_stop);
+                case KEY:
+                    return lcl::string(tile->value().key);
+                case LABEL:
+                    return lcl::string(tile->value().label);
+                case LAYOUT:
+                    return lcl::integer((int)tile->value().layout);
+                case LIST:
+                    return lcl::string(tile->value().list);
+                case MAX_VALUE:
+                    return lcl::integer(tile->value().max_value);
+                case MIN_VALUE:
+                    return lcl::integer(tile->value().min_value);
+                case MNEMONIC:
+                    return lcl::string(tile->value().mnemonic);
+                case MULTIPLE_SELECT:
+                    return lcl::boolean(tile->value().multiple_select);
+                case PASSWORD_CHAR:
+                    return lcl::string(tile->value().password_char);
+                case SMALL_INCREMENT:
+                    return lcl::integer(tile->value().small_increment);
+                case TABS:
+                    return lcl::string(tile->value().tabs);
+                case TAB_TRUNCATE:
+                    return lcl::boolean(tile->value().tab_truncate);
+                case VALUE:
+                    return lcl::string(tile->value().value);
+                case WIDTH:
+                    return lcl::ldouble(tile->value().width);
+                default:
+                    return lcl::nilValue();
+            }
+        }
+    }
+    return lcl::nilValue();
 }
 
 BUILTIN("get_tile")
@@ -2599,7 +2696,9 @@ BUILTIN("pix_image")
             break;
             case IMAGE_BUTTON:
             {
-                return lcl::nilValue();
+                const lclImageButton* img = static_cast<const lclImageButton*>(tile);
+                img->button()->addPicture(x1->value(), y1->value(), width->value(), height->value(), tile->value().aspect_ratio, filename->value().c_str());
+                return lcl::string(filename->value());
             }
             break;
             default:
@@ -3865,7 +3964,13 @@ BUILTIN("text_image")
             break;
             case IMAGE_BUTTON:
             {
-                return lcl::nilValue();
+                const lclImageButton* img = static_cast<const lclImageButton*>(tile);
+                img->button()->addText(x1->value(), y1->value(),
+                                      width->value(), height->value(),
+                                      text->value().c_str(),
+                                      color->value());
+
+                return lcl::string(text->value());
             }
             break;
             default:
@@ -4369,7 +4474,9 @@ BUILTIN("slide_image")
             break;
             case IMAGE_BUTTON:
             {
-                return lcl::nilValue();
+                const lclImageButton* img = static_cast<const lclImageButton*>(tile);
+                img->button()->addSlide(x1->value(), y1->value(), width->value(), height->value(), tile->value().aspect_ratio, filename->value().c_str());
+                return lcl::string(filename->value());
             }
             break;
             default:
@@ -4420,7 +4527,9 @@ BUILTIN("vector_image")
             break;
             case IMAGE_BUTTON:
             {
-                return lcl::nilValue();
+                const lclImageButton* img = static_cast<const lclImageButton*>(tile);
+                img->button()->addLine(x1->value(), y1->value(), x2->value(), y2->value(), color->value());
+                return lcl::integer(color->value());
             }
             break;
             default:

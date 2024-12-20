@@ -8,7 +8,7 @@
 #ifndef __LP__
 #define LP_MAJOR_VER  1
 #define LP_MINOR_VER  1
-#define LP_PATCHLEVEL 0
+#define LP_PATCHLEVEL 1
 #define LP_BUILD "devel"
 
 #define LP_VERSION LP_MAJOR_VER * 10000 \
