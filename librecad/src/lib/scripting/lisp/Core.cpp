@@ -1850,6 +1850,7 @@ BUILTIN("getpoint")
         else
         {
             ARG(lclSequence, ptn);
+            Q_UNUSED(ptn)
         }
     }
     else
@@ -1858,6 +1859,7 @@ BUILTIN("getpoint")
         ARG(lclSequence, ptn);
         ARG(lclString, msg);
         prompt = msg->value().c_str();
+        Q_UNUSED(ptn)
     }
 #if 0
     RS_EntityContainer container = graphicView->getContainer();
@@ -4033,6 +4035,7 @@ BUILTIN("tan")
 
 BUILTIN("term_dialog")
 {
+    CHECK_ARGS_IS(0);
     for (int i = dclTiles.size() - 1; i >= 0; i--)
     {
         if (dclTiles.at(i)->value().id == DIALOG)

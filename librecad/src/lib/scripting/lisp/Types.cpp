@@ -941,11 +941,11 @@ lclButton::lclButton(const tile_t& tile)
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_button->setFixedWidth(int(tile.width * 10));
+            m_button->setMaximumWidth(int(tile.width * 10));
         }
         else
         {
-            m_button->setFixedWidth(80);
+            m_button->setMaximumWidth(80);
         }
 
     }
@@ -954,11 +954,11 @@ lclButton::lclButton(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_button->setMinimumHeight(int(tile.height * 10));
+            m_button->setMaximumHeight(int(tile.height * 10));
         }
         else
         {
-            m_button->setFixedWidth(32);
+            m_button->setMaximumWidth(32);
         }
     }
 
@@ -982,6 +982,12 @@ lclButton::lclButton(const tile_t& tile)
     case CENTERED:
         m_vlayout->setAlignment(Qt::AlignVCenter);
         m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case HORIZONTAL:
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case VERTICAL:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
         break;
     default: {}
         break;
@@ -1068,11 +1074,11 @@ lclRadioButton::lclRadioButton(const tile_t& tile)
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_button->setFixedWidth(int(tile.width * 10));
+            m_button->setMaximumWidth(int(tile.width * 10));
         }
         else
         {
-            m_button->setFixedWidth(80);
+            m_button->setMaximumWidth(80);
         }
 
     }
@@ -1081,11 +1087,11 @@ lclRadioButton::lclRadioButton(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_button->setMinimumHeight(int(tile.height * 10));
+            m_button->setMaximumHeight(int(tile.height * 10));
         }
         else
         {
-            m_button->setFixedWidth(32);
+            m_button->setMaximumWidth(32);
         }
     }
 
@@ -1109,6 +1115,12 @@ lclRadioButton::lclRadioButton(const tile_t& tile)
     case CENTERED:
         m_vlayout->setAlignment(Qt::AlignVCenter);
         m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case HORIZONTAL:
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case VERTICAL:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
         break;
     default: {}
         break;
@@ -1239,12 +1251,13 @@ lclBoxedColumn::lclBoxedColumn(const tile_t& tile)
 
     if (tile.fixed_width)
     {
-        if(int(tile.width)) {
-            m_groupbox->setFixedWidth(int(tile.width * 10));
+        if(int(tile.width))
+        {
+            m_groupbox->setMaximumWidth(int(tile.height * 10));
         }
         else
         {
-            m_groupbox->setFixedWidth(80);
+            m_groupbox->setMaximumWidth(32);
         }
     }
 
@@ -1252,11 +1265,11 @@ lclBoxedColumn::lclBoxedColumn(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_groupbox->setMinimumHeight(int(tile.height * 10));
+            m_groupbox->setMaximumHeight(int(tile.height * 10));
         }
         else
         {
-            m_groupbox->setFixedWidth(32);
+            m_groupbox->setMaximumHeight(32);
         }
     }
 
@@ -1275,8 +1288,14 @@ lclBoxedColumn::lclBoxedColumn(const tile_t& tile)
         m_groupbox->setAlignment(Qt::AlignBottom);
         break;
     case CENTERED:
-        m_groupbox->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+        m_groupbox->setAlignment(Qt::AlignCenter);
         break;
+    case HORIZONTAL:
+        m_groupbox->setAlignment(Qt::AlignHCenter);
+        break;
+    case VERTICAL:
+        m_groupbox->setAlignment(Qt::AlignVCenter);
+	break;
     default: {}
         break;
     }
@@ -1306,11 +1325,11 @@ lclBoxedRow::lclBoxedRow(const tile_t& tile)
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_groupbox->setFixedWidth(int(tile.width * 10));
+            m_groupbox->setMaximumWidth(int(tile.width * 10));
         }
         else
         {
-            m_groupbox->setFixedWidth(80);
+            m_groupbox->setMaximumWidth(m_groupbox->width());
         }
     }
 
@@ -1318,11 +1337,11 @@ lclBoxedRow::lclBoxedRow(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_groupbox->setMinimumHeight(int(tile.height * 10));
+            m_groupbox->setMaximumHeight(int(tile.height * 10));
         }
         else
         {
-            m_groupbox->setFixedWidth(32);
+            m_groupbox->setMaximumHeight(m_groupbox->height());
         }
     }
 
@@ -1341,8 +1360,14 @@ lclBoxedRow::lclBoxedRow(const tile_t& tile)
         m_groupbox->setAlignment(Qt::AlignBottom);
         break;
     case CENTERED:
-        m_groupbox->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+        m_groupbox->setAlignment(Qt::AlignCenter);
         break;
+    case HORIZONTAL:
+        m_groupbox->setAlignment(Qt::AlignHCenter);
+        break;
+    case VERTICAL:
+        m_groupbox->setAlignment(Qt::AlignVCenter);
+	break;
     default: {}
         break;
     }
@@ -1421,11 +1446,11 @@ lclLabel::lclLabel(const tile_t& tile)
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_label->setFixedWidth(int(tile.width));
+            m_label->setMaximumWidth(int(tile.width));
         }
         else
         {
-            m_label->setFixedWidth(m_label->width());
+            m_label->setMaximumWidth(m_label->width());
         }
 
     }
@@ -1434,11 +1459,11 @@ lclLabel::lclLabel(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_label->setMinimumHeight(int(tile.height));
+            m_label->setMaximumHeight(int(tile.height));
         }
         else
         {
-            m_label->setFixedWidth(m_label->height());
+            m_label->setMaximumHeight(m_label->height());
         }
     }
 
@@ -1460,6 +1485,12 @@ lclLabel::lclLabel(const tile_t& tile)
             break;
         case CENTERED:
             m_label->setAlignment(Qt::AlignCenter);
+            break;
+        case HORIZONTAL:
+            m_label->setAlignment(Qt::AlignHCenter);
+            break;
+        case VERTICAL:
+            m_label->setAlignment(Qt::AlignVCenter);
             break;
         default: {}
             break;
@@ -1495,11 +1526,11 @@ lclPopupList::lclPopupList(const tile_t& tile)
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_list->setFixedWidth(int(tile.width));
+            m_list->setMaximumWidth(int(tile.width));
         }
         else
         {
-            m_list->setFixedWidth(m_list->width());
+            m_list->setMaximumWidth(m_list->width());
         }
     }
 
@@ -1507,11 +1538,11 @@ lclPopupList::lclPopupList(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_list->setMinimumHeight(int(tile.height));
+            m_list->setMaximumHeight(int(tile.height));
         }
         else
         {
-            m_list->setFixedWidth(m_list->height());
+            m_list->setMaximumHeight(m_list->height());
         }
     }
 
@@ -1536,8 +1567,14 @@ lclPopupList::lclPopupList(const tile_t& tile)
         m_vlayout->setAlignment(Qt::AlignVCenter);
         m_hlayout->setAlignment(Qt::AlignHCenter);
         break;
+    case HORIZONTAL:
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case VERTICAL:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
+        break;
     default: {}
-    break;
+    	break;
     }
 
     if(!tile.is_enabled)
@@ -1618,11 +1655,11 @@ lclEdit::lclEdit(const tile_t& tile)
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_edit->setFixedWidth(int(tile.width));
+            m_edit->setMaximumWidth(int(tile.width));
         }
         else
         {
-            m_edit->setFixedWidth(m_edit->width());
+            m_edit->setMaximumWidth(m_edit->width());
         }
     }
 
@@ -1630,11 +1667,11 @@ lclEdit::lclEdit(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_edit->setMinimumHeight(int(tile.height));
+            m_edit->setMaximumHeight(int(tile.height));
         }
         else
         {
-            m_edit->setFixedWidth(m_edit->height());
+            m_edit->setMaximumHeight(m_edit->height());
         }
     }
 
@@ -1754,11 +1791,11 @@ lclListBox::lclListBox(const tile_t& tile)
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_list->setFixedWidth(int(tile.width));
+            m_list->setMaximumWidth(int(tile.width));
         }
         else
         {
-            m_list->setFixedWidth(m_list->width());
+            m_list->setMaximumWidth(m_list->width());
         }
     }
 
@@ -1766,11 +1803,11 @@ lclListBox::lclListBox(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_list->setMinimumHeight(int(tile.height));
+            m_list->setMaximumHeight(int(tile.height));
         }
         else
         {
-            m_list->setFixedWidth(m_list->height());
+            m_list->setMaximumHeight(m_list->height());
         }
     }
 
@@ -1800,6 +1837,12 @@ lclListBox::lclListBox(const tile_t& tile)
     case CENTERED:
         m_vlayout->setAlignment(Qt::AlignVCenter);
         m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case HORIZONTAL:
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case VERTICAL:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
         break;
     default: {}
         break;
@@ -1925,11 +1968,11 @@ lclSlider::lclSlider(const tile_t& tile)
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_slider->setFixedWidth(int(tile.width * 10));
+            m_slider->setMaximumWidth(int(tile.width * 10));
         }
         else
         {
-            m_slider->setFixedWidth(80);
+            m_slider->setMaximumWidth(m_slider->width());
         }
     }
 
@@ -1937,11 +1980,11 @@ lclSlider::lclSlider(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_slider->setMinimumHeight(int(tile.height * 10));
+            m_slider->setMaximumHeight(int(tile.height * 10));
         }
         else
         {
-            m_slider->setFixedWidth(32);
+            m_slider->setMaximumHeight(m_slider->height());
         }
     }
 
@@ -1965,6 +2008,12 @@ lclSlider::lclSlider(const tile_t& tile)
     case CENTERED:
         m_vlayout->setAlignment(Qt::AlignVCenter);
         m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case HORIZONTAL:
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case VERTICAL:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
         break;
     default: {}
         break;
@@ -2113,11 +2162,11 @@ lclScrollBar::lclScrollBar(const tile_t& tile)
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_slider->setFixedWidth(int(tile.width * 10));
+            m_slider->setMaximumWidth(int(tile.width * 10));
         }
         else
         {
-            m_slider->setFixedWidth(80);
+            m_slider->setMaximumWidth(m_slider->width());
         }
     }
 
@@ -2125,11 +2174,11 @@ lclScrollBar::lclScrollBar(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_slider->setMinimumHeight(int(tile.height * 10));
+            m_slider->setMaximumHeight(int(tile.height * 10));
         }
         else
         {
-            m_slider->setFixedWidth(32);
+            m_slider->setMaximumHeight(m_slider->height());
         }
     }
 
@@ -2153,6 +2202,12 @@ lclScrollBar::lclScrollBar(const tile_t& tile)
     case CENTERED:
         m_vlayout->setAlignment(Qt::AlignVCenter);
         m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case HORIZONTAL:
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case VERTICAL:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
         break;
     default: {}
         break;
@@ -2314,11 +2369,11 @@ lclDial::lclDial(const tile_t& tile)
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_slider->setFixedWidth(int(tile.width * 10));
+            m_slider->setMaximumWidth(int(tile.width * 10));
         }
         else
         {
-            m_slider->setFixedWidth(80);
+            m_slider->setMaximumWidth(m_slider->width());
         }
     }
 
@@ -2326,11 +2381,11 @@ lclDial::lclDial(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_slider->setMinimumHeight(int(tile.height * 10));
+            m_slider->setMaximumHeight(int(tile.height * 10));
         }
         else
         {
-            m_slider->setFixedWidth(80);
+            m_slider->setMaximumHeight(m_slider->height());
         }
     }
 
@@ -2355,8 +2410,14 @@ lclDial::lclDial(const tile_t& tile)
         m_vlayout->setAlignment(Qt::AlignVCenter);
         m_hlayout->setAlignment(Qt::AlignHCenter);
         break;
+    case HORIZONTAL:
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case VERTICAL:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
+        break;
     default: {}
-    break;
+        break;
     }
 
     if(!tile.is_enabled)
@@ -2466,11 +2527,11 @@ lclSpacer::lclSpacer(const tile_t& tile)
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_spacer->widget()->setFixedWidth(int(tile.width * 10));
+            m_spacer->widget()->setMaximumWidth(int(tile.width * 10));
         }
         else
         {
-            m_spacer->widget()->setFixedWidth(80);
+            m_spacer->widget()->setMaximumWidth(80);
         }
 
     }
@@ -2479,11 +2540,11 @@ lclSpacer::lclSpacer(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_spacer->widget()->setFixedHeight(int(tile.height * 10));
+            m_spacer->widget()->setMaximumWidth(int(tile.height * 10));
         }
         else
         {
-            m_spacer->widget()->setFixedHeight(32);
+            m_spacer->widget()->setMaximumWidth(32);
         }
     }
 
@@ -2542,11 +2603,11 @@ lclToggle::lclToggle(const tile_t& tile)
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_toggle->setFixedWidth(int(tile.width * 10));
+            m_toggle->setMaximumWidth(int(tile.width * 10));
         }
         else
         {
-            m_toggle->setFixedWidth(80);
+            m_toggle->setMaximumWidth(80);
         }
     }
 
@@ -2554,11 +2615,11 @@ lclToggle::lclToggle(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_toggle->setMinimumHeight(int(tile.height * 10));
+            m_toggle->setMaximumHeight(int(tile.height * 10));
         }
         else
         {
-            m_toggle->setFixedWidth(32);
+            m_toggle->setMaximumHeight(32);
         }
     }
 
@@ -2582,6 +2643,12 @@ lclToggle::lclToggle(const tile_t& tile)
     case CENTERED:
         m_vlayout->setAlignment(Qt::AlignVCenter);
         m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case HORIZONTAL:
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case VERTICAL:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
         break;
     default: {}
         break;
@@ -2676,12 +2743,12 @@ lclImageButton::lclImageButton(const tile_t& tile)
     {
         if(int(tile.width)) {
             qDebug() << "[lclImageButton::lclImageButton] fixed_width" << int(tile.width);
-            m_button->setFixedWidth(int(tile.width));
+            m_button->setMaximumWidth(int(tile.width));
         }
         else
         {
             qDebug() << "[lclImageButton::lclImageButton] opt fixed_width" << int(tile.width);
-            m_button->setFixedWidth(82);
+            m_button->setMaximumWidth(82);
         }
 
     }
@@ -2691,12 +2758,12 @@ lclImageButton::lclImageButton(const tile_t& tile)
         if(int(tile.height))
         {
             qDebug() << "[lclImageButton::lclImageButton] fixed_height" << int(tile.height);
-            m_button->setMinimumHeight(int(tile.height));
+            m_button->setMaximumHeight(int(tile.height));
         }
         else
         {
             qDebug() << "[lclImageButton::lclImageButton] opt fixed_height" << m_button->height();
-            m_button->setFixedWidth(m_button->height());
+            m_button->setMaximumHeight(m_button->height());
         }
     }
 
@@ -2720,6 +2787,12 @@ lclImageButton::lclImageButton(const tile_t& tile)
     case CENTERED:
         m_vlayout->setAlignment(Qt::AlignVCenter);
         m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case HORIZONTAL:
+        m_hlayout->setAlignment(Qt::AlignHCenter);
+        break;
+    case VERTICAL:
+        m_vlayout->setAlignment(Qt::AlignVCenter);
         break;
     default: {}
     break;
@@ -2795,11 +2868,11 @@ lclImage::lclImage(const tile_t& tile)
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_image->setFixedWidth(int(tile.width));
+            m_image->setMaximumWidth(int(tile.width));
         }
         else
         {
-            m_image->setFixedWidth(m_image->width());
+            m_image->setMaximumWidth(m_image->width());
         }
     }
 
@@ -2807,11 +2880,11 @@ lclImage::lclImage(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_image->setMinimumHeight(int(tile.height));
+            m_image->setMaximumHeight(int(tile.height));
         }
         else
         {
-            m_image->setFixedWidth(m_image->height());
+            m_image->setMaximumHeight(m_image->height());
         }
     }
 
@@ -2824,9 +2897,11 @@ lclImage::lclImage(const tile_t& tile)
         m_image->setAlignment(Qt::AlignRight);
         break;
     case TOP:
+        m_image->setMinimumHeight(int(value().height * 1.5));
         m_image->setAlignment(Qt::AlignTop);
         break;
     case BOTTOM:
+        m_image->setMinimumHeight(int(value().height * 1.5));
         m_image->setAlignment(Qt::AlignBottom);
         break;
     case CENTERED:

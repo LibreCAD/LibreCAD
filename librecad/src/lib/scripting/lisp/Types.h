@@ -43,7 +43,7 @@ enum class LCLTYPE { ATOM, BUILTIN, BOOLEAN, FILE, GUI, INT, LIST, MAP, REAL, ST
 #define MAX_DCL_COLOR 257
 #define MAX_DCL_ICONS 18
 
-inline const char * const boolToString(bool b)
+inline const char * boolToString(bool b)
 {
     return b ? "true" : "false";
 }
@@ -93,7 +93,7 @@ T* value_cast(lclValuePtr obj, const char* typeName) {
 #define STATIC_CAST(Type, Value)   (static_cast<Type*>((Value).ptr()))
 
 #define WITH_META(Type) \
-    virtual lclValuePtr doWithMeta(lclValuePtr meta) const { \
+    virtual lclValuePtr doWithMeta(lclValuePtr meta) const override { \
         return new Type(*this, meta); \
     } \
 
@@ -524,6 +524,7 @@ enum TILE_ID {
 };
 
 #define LAYOUT_TILE (COLUMN | RADIO_COLUMN | BOXED_COLUMN | BOXED_RADIO_COLUMN | ROW | RADIO_ROW | BOXED_ROW | BOXED_RADIO_ROW | CONCATENATION | PARAGRAPH | TAB)
+#define LAYOUT_PARENT_TILE (COLUMN | RADIO_COLUMN | BOXED_COLUMN | BOXED_RADIO_COLUMN | ROW | RADIO_ROW | BOXED_ROW | BOXED_RADIO_ROW)
 #define LAYOUT_ROW (ROW | RADIO_ROW | BOXED_ROW | BOXED_RADIO_ROW | CONCATENATION)
 
 typedef enum TILE_ID tile_id_t;
@@ -1000,7 +1001,7 @@ typedef struct guitile {
     double          height = 0.0;
     double          width = 0.0;
     pos_t           alignment = LEFT;
-    pos_t           children_alignment = LEFT;
+    pos_t           children_alignment = NOPOS;
     pos_t           layout = HORIZONTAL;
     tile_id_t       id = NONE;
     String          action = "";
@@ -1015,6 +1016,12 @@ typedef struct guitile {
     String          value = "";
     lclValueVec*    tiles;
 } tile_t;
+
+typedef struct child_config {
+    bool            children_fixed_height = false;
+    bool            children_fixed_width = false;
+    pos_t           children_alignment = NOPOS;
+} child_config_t;
 
 static attribute_prop_t dclAttribute[MAX_DCL_ATTR] = {
     { "action", ACTION },
@@ -1161,7 +1168,7 @@ public:
     WITH_META(lclDialog)
 
     QDialog* dialog() const { return m_dialog; }
-    virtual QVBoxLayout* vlayout() const { return m_layout; }
+    virtual QVBoxLayout* vlayout() const override { return m_layout; }
 
     void addShortcut(const QString & key, QWidget *w);
 
@@ -1197,7 +1204,7 @@ public:
     WITH_META(lclWidget)
 
     QWidget* widget() const { return m_widget; }
-    virtual QVBoxLayout* vlayout() const { return m_layout; }
+    virtual QVBoxLayout* vlayout() const override { return m_layout; }
 
 private:
     QWidget *m_widget;
@@ -1215,7 +1222,8 @@ public:
     WITH_META(lclButton)
 
     QPushButton* button() const { return m_button; }
-    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
+    virtual QVBoxLayout* vlayout() const override { return m_vlayout; }
+    virtual QHBoxLayout* hlayout() const override { return m_hlayout; }
 
     void clicked(bool checked);
 
@@ -1236,7 +1244,8 @@ public:
     WITH_META(lclRadioButton)
 
     QRadioButton* button() const { return m_button; }
-    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
+    virtual QVBoxLayout* vlayout() const override { return m_vlayout; }
+    virtual QHBoxLayout* hlayout() const override { return m_hlayout; }
 
     void clicked(bool checked);
 
@@ -1257,7 +1266,8 @@ public:
     WITH_META(lclImageButton)
 
     QDclButton* button() const { return m_button; }
-    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
+    virtual QVBoxLayout* vlayout() const override { return m_vlayout; }
+    virtual QHBoxLayout* hlayout() const override { return m_hlayout; }
 
     void clicked(bool checked);
 
@@ -1280,7 +1290,7 @@ public:
     QLineEdit* edit() const { return m_edit; }
     QLabel* label() const { return m_label; }
 
-    virtual QHBoxLayout* hlayout() const { return m_layout; }
+    virtual QHBoxLayout* hlayout() const override { return m_layout; }
 
     void textEdited(const QString &text);
 
@@ -1302,7 +1312,8 @@ public:
 
     QListWidget* list() const { return m_list; }
     QLabel* label() const { return m_label; }
-    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
+    virtual QVBoxLayout* vlayout() const override { return m_vlayout; }
+    virtual QHBoxLayout* hlayout() const override { return m_hlayout; }
 
     void currentTextChanged(const QString &currentText);
 
@@ -1339,7 +1350,7 @@ public:
 
     WITH_META(lclRow)
 
-    virtual QHBoxLayout* hlayout() const { return m_layout; }
+    virtual QHBoxLayout* hlayout() const override { return m_layout; }
 
 private:
     QHBoxLayout *m_layout;
@@ -1355,7 +1366,7 @@ public:
 
     WITH_META(lclBoxedRow)
 
-    virtual QHBoxLayout* hlayout() const { return m_layout; }
+    virtual QHBoxLayout* hlayout() const override { return m_layout; }
     QGroupBox* groupbox() const { return m_groupbox; }
 
 private:
@@ -1373,7 +1384,7 @@ public:
 
     WITH_META(lclColumn)
 
-    virtual QVBoxLayout* vlayout() const { return m_layout; }
+    virtual QVBoxLayout* vlayout() const override { return m_layout; }
 
 private:
     QVBoxLayout *m_layout;
@@ -1389,7 +1400,7 @@ public:
 
     WITH_META(lclBoxedColumn)
 
-    virtual QVBoxLayout* vlayout() const { return m_layout; }
+    virtual QVBoxLayout* vlayout() const override { return m_layout; }
     QGroupBox* groupbox() const { return m_groupbox; }
 
 private:
@@ -1424,7 +1435,8 @@ public:
     WITH_META(lclPopupList)
 
     QComboBox* list() const { return m_list; }
-    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
+    virtual QVBoxLayout* vlayout() const override { return m_vlayout; }
+    virtual QHBoxLayout* hlayout() const override { return m_hlayout; }
 
     void currentTextChanged(const QString &currentText);
 
@@ -1445,7 +1457,8 @@ public:
     WITH_META(lclScrollBar)
 
     QScrollBar* slider() const { return m_slider; }
-    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
+    virtual QVBoxLayout* vlayout() const override { return m_vlayout; }
+    virtual QHBoxLayout* hlayout() const override { return m_hlayout; }
 
     void valueChanged(int value);
     void sliderReleased();
@@ -1467,7 +1480,8 @@ public:
     WITH_META(lclSlider)
 
     QSlider* slider() const { return m_slider; }
-    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
+    virtual QVBoxLayout* vlayout() const override { return m_vlayout; }
+    virtual QHBoxLayout* hlayout() const override { return m_hlayout; }
 
     void valueChanged(int value);
     void sliderReleased();
@@ -1489,7 +1503,8 @@ public:
     WITH_META(lclDial)
 
     QDial* slider() const { return m_slider; }
-    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
+    virtual QVBoxLayout* vlayout() const override { return m_vlayout; }
+    virtual QHBoxLayout* hlayout() const override { return m_hlayout; }
 
     void valueChanged(int value);
     void sliderReleased();
@@ -1527,7 +1542,8 @@ public:
     WITH_META(lclToggle)
 
     QCheckBox* toggle() const { return m_toggle; delete m_vlayout; delete m_hlayout; }
-    virtual QHBoxLayout* hlayout() const { return m_hlayout; }
+    virtual QVBoxLayout* vlayout() const override { return m_vlayout; }
+    virtual QHBoxLayout* hlayout() const override { return m_hlayout; }
 
     void stateChanged(int state);
 
@@ -1549,7 +1565,7 @@ public:
 
     QPushButton* binOK() const { return m_btnOk; }
     QPushButton* btnCancel() const { return m_btnCancel; }
-    virtual QHBoxLayout* hlayout() const { return m_layout; }
+    virtual QHBoxLayout* hlayout() const override { return m_layout; }
 
     void okClicked(bool checked);
     void cancelClicked(bool checked);
@@ -1573,7 +1589,7 @@ public:
     QPushButton* binOK() const { return m_btnOk; }
     QPushButton* btnCancel() const { return m_btnCancel; }
     QPushButton* btnHelp() const { return m_btnHelp; }
-    virtual QHBoxLayout* hlayout() const { return m_layout; }
+    virtual QHBoxLayout* hlayout() const override { return m_layout; }
 
     void okClicked(bool checked);
     void cancelClicked(bool checked);
@@ -1600,7 +1616,7 @@ public:
     QPushButton* btnCancel() const { return m_btnCancel; }
     QPushButton* btnHelp() const { return m_btnHelp; }
     QPushButton* btnInfo() const { return m_btnInfo; }
-    virtual QHBoxLayout* hlayout() const { return m_layout; }
+    virtual QHBoxLayout* hlayout() const override { return m_layout; }
 
     void okClicked(bool checked);
     void cancelClicked(bool checked);
@@ -1629,7 +1645,7 @@ public:
     QPushButton* btnCancel() const { return m_btnCancel; }
     QPushButton* btnHelp() const { return m_btnHelp; }
     QLabel* errtile() const { return m_errTile; }
-    virtual QVBoxLayout* vlayout() const { return m_layout; }
+    virtual QVBoxLayout* vlayout() const override { return m_layout; }
 
     void okClicked(bool checked);
     void cancelClicked(bool checked);
@@ -1645,7 +1661,7 @@ private:
 };
 
 extern std::vector<const lclGui*> dclTiles;
-extern void openTile(const lclGui* tile);
+extern void openTile(const lclGui* tile, const child_config_t child_cfg = { false, false, NOPOS });
 
 namespace lcl {
     lclValuePtr atom(lclValuePtr value);

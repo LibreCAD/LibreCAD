@@ -651,7 +651,7 @@ static void installEvalCore(lclEnvPtr env) {
     }
 }
 
-void openTile(const lclGui* tile)
+void openTile(const lclGui* tile, const child_config_t child_cfg)
 {
     qDebug() << "[openTile] start Name: " << tile->value().name.c_str();
     //qDebug() << "[openTile] start Id: " << (int)tile->value().id;
@@ -713,6 +713,58 @@ void openTile(const lclGui* tile)
                     }
                 }
             }
+            if (child_cfg.children_alignment != NOPOS)
+            {
+                switch (child_cfg.children_alignment)
+                {
+                case LEFT:
+                    edit->edit()->setAlignment(Qt::AlignLeft);
+                    break;
+                case RIGHT:
+                    edit->edit()->setAlignment(Qt::AlignRight);
+                    break;
+                case TOP:
+                    edit->edit()->setAlignment(Qt::AlignTop);
+                    break;
+                case BOTTOM:
+                    edit->edit()->setAlignment(Qt::AlignBottom);
+                    break;
+                case CENTERED:
+                    edit->edit()->setAlignment(Qt::AlignCenter);
+                    break;
+                case HORIZONTAL:
+                    edit->edit()->setAlignment(Qt::AlignHCenter);
+                    break;
+                case VERTICAL:
+                    edit->edit()->setAlignment(Qt::AlignVCenter);
+                    break;
+                default:
+                    break;
+                }
+            }
+
+            if (child_cfg.children_fixed_width)
+            {
+                if(int(edit->value().width)) {
+                    edit->edit()->setMaximumWidth(int(edit->value().width));
+                }
+                else
+                {
+                    edit->edit()->setMaximumWidth(edit->edit()->width());
+                }
+            }
+
+            if (child_cfg.children_fixed_height)
+            {
+                if(int(edit->value().height))
+                {
+                    edit->edit()->setMaximumHeight(int(edit->value().height));
+                }
+                else
+                {
+                    edit->edit()->setMaximumHeight(edit->edit()->height());
+                }
+            }
         }
             break;
         case LIST_BOX:
@@ -758,6 +810,57 @@ void openTile(const lclGui* tile)
                         }
                         break;
                     }
+                }
+            }
+            if (child_cfg.children_alignment != NOPOS)
+            {
+                switch (child_cfg.children_alignment)
+                {
+                case LEFT:
+                    list->hlayout()->setAlignment(Qt::AlignLeft);
+                    break;
+                case RIGHT:
+                    list->hlayout()->setAlignment(Qt::AlignRight);
+                    break;
+                case TOP:
+                    list->vlayout()->setAlignment(Qt::AlignTop);
+                    break;
+                case BOTTOM:
+                    list->vlayout()->setAlignment(Qt::AlignBottom);
+                    break;
+                case CENTERED:
+                    list->vlayout()->setAlignment(Qt::AlignVCenter);
+                    list->hlayout()->setAlignment(Qt::AlignHCenter);
+                case HORIZONTAL:
+                    list->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
+                case VERTICAL:
+                    list->vlayout()->setAlignment(Qt::AlignVCenter);
+                default: {}
+                    break;
+                }
+            }
+
+            if (child_cfg.children_fixed_width)
+            {
+                if(int(list->value().width)) {
+                    list->list()->setMaximumWidth(int(list->value().width * 10));
+                }
+                else
+                {
+                    list->list()->setMaximumWidth(list->list()->width());
+                }
+            }
+
+            if (child_cfg.children_fixed_height)
+            {
+                if(int(list->value().height))
+                {
+                    list->list()->setMaximumHeight(int(list->value().height * 10));
+                }
+                else
+                {
+                    list->list()->setMaximumHeight(list->list()->height());
                 }
             }
         }
@@ -841,6 +944,58 @@ void openTile(const lclGui* tile)
                     }
                 }
             }
+            if (child_cfg.children_alignment != NOPOS)
+            {
+                switch(child_cfg.children_alignment)
+                {
+                case LEFT:
+                    br->groupbox()->setAlignment(Qt::AlignLeft);
+                    break;
+                case RIGHT:
+                    br->groupbox()->setAlignment(Qt::AlignRight);
+                    break;
+                case TOP:
+                    br->groupbox()->setAlignment(Qt::AlignTop);
+                    break;
+                case BOTTOM:
+                    br->groupbox()->setAlignment(Qt::AlignBottom);
+                    break;
+                case CENTERED:
+                    br->groupbox()->setAlignment(Qt::AlignCenter);
+                    break;
+                case HORIZONTAL:
+                    br->groupbox()->setAlignment(Qt::AlignHCenter);
+                    break;
+                case VERTICAL:
+                    br->groupbox()->setAlignment(Qt::AlignVCenter);
+                    break;
+                default: {}
+                break;
+                }
+            }
+
+            if (child_cfg.children_fixed_width)
+            {
+                if(int(br->value().width)) {
+                    br->groupbox()->setMaximumWidth(int(br->value().width));
+                }
+                else
+                {
+                    br->groupbox()->setMaximumWidth(br->groupbox()->width());
+                }
+            }
+
+            if (child_cfg.children_fixed_height)
+            {
+                if(int(br->value().height))
+                {
+                    br->groupbox()->setMaximumHeight(int(br->value().height));
+                }
+                else
+                {
+                    br->groupbox()->setMaximumHeight(br->groupbox()->height());
+                }
+            }
         }
             break;
         case COLUMN:
@@ -922,6 +1077,58 @@ void openTile(const lclGui* tile)
                     }
                 }
             }
+            if (child_cfg.children_alignment != NOPOS)
+            {
+                switch(child_cfg.children_alignment)
+                {
+                case LEFT:
+                    bc->groupbox()->setAlignment(Qt::AlignLeft);
+                    break;
+                case RIGHT:
+                    bc->groupbox()->setAlignment(Qt::AlignRight);
+                    break;
+                case TOP:
+                    bc->groupbox()->setAlignment(Qt::AlignTop);
+                    break;
+                case BOTTOM:
+                    bc->groupbox()->setAlignment(Qt::AlignBottom);
+                    break;
+                case CENTERED:
+                    bc->groupbox()->setAlignment(Qt::AlignCenter);
+                    break;
+                case HORIZONTAL:
+                    bc->groupbox()->setAlignment(Qt::AlignHCenter);
+                    break;
+                case VERTICAL:
+                    bc->groupbox()->setAlignment(Qt::AlignVCenter);
+                    break;
+                default: {}
+                    break;
+                }
+            }
+
+            if (child_cfg.children_fixed_width)
+            {
+                if(int(bc->value().width)) {
+                    bc->groupbox()->setMaximumWidth(int(bc->value().width));
+                }
+                else
+                {
+                    bc->groupbox()->setMaximumWidth(bc->groupbox()->width());
+                }
+            }
+
+            if (child_cfg.children_fixed_height)
+            {
+                if(int(bc->value().height))
+                {
+                    bc->groupbox()->setMaximumHeight(int(bc->value().height));
+                }
+                else
+                {
+                    bc->groupbox()->setMaximumHeight(bc->groupbox()->height());
+                }
+            }
         }
             break;
         case TEXT:
@@ -967,6 +1174,60 @@ void openTile(const lclGui* tile)
             {
                 dclEnv->set(std::to_string(tile->value().dialog_Id) + "_error", lcl::nilValue());
             }
+
+            if (child_cfg.children_alignment != NOPOS)
+            {
+                switch(child_cfg.children_alignment)
+                {
+                case LEFT:
+                    l->label()->setAlignment(Qt::AlignLeft);
+                    break;
+                case RIGHT:
+                    l->label()->setAlignment(Qt::AlignRight);
+                    break;
+                case TOP:
+                    l->label()->setMinimumHeight(int(l->value().height * 1.5));
+                    l->label()->setAlignment(Qt::AlignTop);
+                    break;
+                case BOTTOM:
+                    l->label()->setMinimumHeight(int(l->value().height * 1.5));
+                    l->label()->setAlignment(Qt::AlignBottom);
+                    break;
+                case CENTERED:
+                    l->label()->setAlignment(Qt::AlignCenter);
+                case HORIZONTAL:
+                    l->label()->setAlignment(Qt::AlignHCenter);
+                    break;
+                case VERTICAL:
+                    l->label()->setAlignment(Qt::AlignVCenter);
+                    break;
+                default: {}
+                    break;
+                }
+            }
+
+            if (child_cfg.children_fixed_width)
+            {
+                if(int(l->value().width)) {
+                    l->label()->setMaximumWidth(int(l->value().width));
+                }
+                else
+                {
+                    l->label()->setMaximumWidth(l->label()->width());
+                }
+            }
+
+            if (child_cfg.children_fixed_height)
+            {
+                if(int(l->value().height))
+                {
+                    l->label()->setMaximumHeight(int(l->value().height));
+                }
+                else
+                {
+                    l->label()->setMaximumHeight(l->label()->height());
+                }
+            }
         }
             break;
         case BUTTON:
@@ -995,7 +1256,6 @@ void openTile(const lclGui* tile)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -1013,6 +1273,59 @@ void openTile(const lclGui* tile)
                         }
                         break;
                     }
+                }
+            }
+
+            if (child_cfg.children_alignment != NOPOS)
+            {
+                switch (child_cfg.children_alignment)
+                {
+                case LEFT:
+                    b->hlayout()->setAlignment(Qt::AlignLeft);
+                    break;
+                case RIGHT:
+                    b->hlayout()->setAlignment(Qt::AlignRight);
+                    break;
+                case TOP:
+                    b->vlayout()->setAlignment(Qt::AlignTop);
+                    break;
+                case BOTTOM:
+                    b->vlayout()->setAlignment(Qt::AlignBottom);
+                    break;
+                case CENTERED:
+                    b->vlayout()->setAlignment(Qt::AlignVCenter);
+                    b->hlayout()->setAlignment(Qt::AlignHCenter);
+                case HORIZONTAL:
+                    b->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
+                case VERTICAL:
+                    b->vlayout()->setAlignment(Qt::AlignVCenter);
+                    break;
+                default: {}
+                break;
+                }
+            }
+
+            if (child_cfg.children_fixed_width)
+            {
+                if(int(b->value().width)) {
+                    b->button()->setMaximumWidth(int(b->value().width * 10));
+                }
+                else
+                {
+                    b->button()->setMaximumWidth(80);
+                }
+            }
+
+            if (child_cfg.children_fixed_height)
+            {
+                if(int(b->value().height))
+                {
+                    b->button()->setMaximumHeight(int(b->value().height * 10));
+                }
+                else
+                {
+                    b->button()->setMaximumHeight(32);
                 }
             }
         }
@@ -1056,6 +1369,58 @@ void openTile(const lclGui* tile)
                     }
                 }
             }
+
+            if (child_cfg.children_alignment != NOPOS)
+            {
+                switch (child_cfg.children_alignment)
+                {
+                case LEFT:
+                    b->hlayout()->setAlignment(Qt::AlignLeft);
+                    break;
+                case RIGHT:
+                    b->hlayout()->setAlignment(Qt::AlignRight);
+                    break;
+                case TOP:
+                    b->vlayout()->setAlignment(Qt::AlignTop);
+                    break;
+                case BOTTOM:
+                    b->vlayout()->setAlignment(Qt::AlignBottom);
+                    break;
+                case CENTERED:
+                    b->vlayout()->setAlignment(Qt::AlignVCenter);
+                    b->hlayout()->setAlignment(Qt::AlignHCenter);
+                case HORIZONTAL:
+                    b->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
+                case VERTICAL:
+                    b->vlayout()->setAlignment(Qt::AlignVCenter);
+                default: {}
+                    break;
+                }
+            }
+
+            if (child_cfg.children_fixed_width)
+            {
+                if(int(b->value().width)) {
+                    b->button()->setMaximumWidth(int(b->value().width * 10));
+                }
+                else
+                {
+                    b->button()->setMaximumWidth(80);
+                }
+            }
+
+            if (child_cfg.children_fixed_height)
+            {
+                if(int(b->value().height))
+                {
+                    b->button()->setMaximumHeight(int(b->value().height * 10));
+                }
+                else
+                {
+                    b->button()->setMaximumHeight(32);
+                }
+            }
         }
             break;
         case POPUP_LIST:
@@ -1095,6 +1460,58 @@ void openTile(const lclGui* tile)
                         }
                         break;
                     }
+                }
+            }
+            if (child_cfg.children_alignment != NOPOS)
+            {
+                switch (child_cfg.children_alignment)
+                {
+                case LEFT:
+                    lp->hlayout()->setAlignment(Qt::AlignLeft);
+                    break;
+                case RIGHT:
+                    lp->hlayout()->setAlignment(Qt::AlignRight);
+                    break;
+                case TOP:
+                    lp->vlayout()->setAlignment(Qt::AlignTop);
+                    break;
+                case BOTTOM:
+                    lp->vlayout()->setAlignment(Qt::AlignBottom);
+                    break;
+                case CENTERED:
+                    lp->vlayout()->setAlignment(Qt::AlignVCenter);
+                    lp->hlayout()->setAlignment(Qt::AlignHCenter);
+                case HORIZONTAL:
+                    lp->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
+                case VERTICAL:
+                    lp->vlayout()->setAlignment(Qt::AlignVCenter);
+                    break;
+                default: {}
+                break;
+                }
+            }
+
+            if (child_cfg.children_fixed_width)
+            {
+                if(int(lp->value().width)) {
+                    lp->list()->setMaximumWidth(int(lp->value().width * 10));
+                }
+                else
+                {
+                    lp->list()->setMaximumWidth(lp->list()->width());
+                }
+            }
+
+            if (child_cfg.children_fixed_height)
+            {
+                if(int(lp->value().height))
+                {
+                    lp->list()->setMaximumHeight(int(lp->value().height * 10));
+                }
+                else
+                {
+                    lp->list()->setMaximumHeight(lp->list()->height());
                 }
             }
         }
@@ -1141,6 +1558,59 @@ void openTile(const lclGui* tile)
                     }
                 }
             }
+
+            if (child_cfg.children_alignment != NOPOS)
+            {
+                switch (child_cfg.children_alignment)
+                {
+                case LEFT:
+                    rb->hlayout()->setAlignment(Qt::AlignLeft);
+                    break;
+                case RIGHT:
+                    rb->hlayout()->setAlignment(Qt::AlignRight);
+                    break;
+                case TOP:
+                    rb->vlayout()->setAlignment(Qt::AlignTop);
+                    break;
+                case BOTTOM:
+                    rb->vlayout()->setAlignment(Qt::AlignBottom);
+                    break;
+                case CENTERED:
+                    rb->vlayout()->setAlignment(Qt::AlignVCenter);
+                    rb->hlayout()->setAlignment(Qt::AlignHCenter);
+                case HORIZONTAL:
+                    rb->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
+                case VERTICAL:
+                    rb->vlayout()->setAlignment(Qt::AlignVCenter);
+                    break;
+                default: {}
+                break;
+                }
+            }
+
+            if (child_cfg.children_fixed_width)
+            {
+                if(int(rb->value().width)) {
+                    rb->button()->setMaximumWidth(int(rb->value().width * 10));
+                }
+                else
+                {
+                    rb->button()->setMaximumWidth(80);
+                }
+            }
+
+            if (child_cfg.children_fixed_height)
+            {
+                if(int(rb->value().height))
+                {
+                    rb->button()->setMaximumHeight(int(rb->value().height * 10));
+                }
+                else
+                {
+                    rb->button()->setMaximumHeight(32);
+                }
+            }
         }
             break;
         case IMAGE:
@@ -1178,6 +1648,54 @@ void openTile(const lclGui* tile)
                         }
                         break;
                     }
+                }
+            }
+            if (child_cfg.children_alignment != NOPOS)
+            {
+                switch(child_cfg.children_alignment)
+                {
+                case LEFT:
+                    img->image()->setAlignment(Qt::AlignLeft);
+                    break;
+                case RIGHT:
+                    img->image()->setAlignment(Qt::AlignRight);
+                    break;
+                case TOP:
+                    img->image()->setMinimumHeight(int(img->value().height * 1.5));
+                    img->image()->setAlignment(Qt::AlignTop);
+                    break;
+                case BOTTOM:
+                    img->image()->setMinimumHeight(int(img->value().height * 1.5));
+                    img->image()->setAlignment(Qt::AlignBottom);
+                    break;
+                case CENTERED:
+                    img->image()->setAlignment(Qt::AlignCenter);
+                    break;
+                default: {}
+                    break;
+                }
+            }
+
+            if (child_cfg.children_fixed_width)
+            {
+                if(int(img->value().width)) {
+                    img->image()->setMaximumWidth(int(img->value().width));
+                }
+                else
+                {
+                    img->image()->setMaximumWidth(img->image()->width());
+                }
+            }
+
+            if (child_cfg.children_fixed_height)
+            {
+                if(int(img->value().height))
+                {
+                    img->image()->setMaximumHeight(int(img->value().height));
+                }
+                else
+                {
+                    img->image()->setMaximumHeight(img->image()->height());
                 }
             }
         }
@@ -1228,6 +1746,58 @@ void openTile(const lclGui* tile)
                     }
                 }
             }
+            if (child_cfg.children_alignment != NOPOS)
+            {
+                switch (child_cfg.children_alignment)
+                {
+                case LEFT:
+                    b->hlayout()->setAlignment(Qt::AlignLeft);
+                    break;
+                case RIGHT:
+                    b->hlayout()->setAlignment(Qt::AlignRight);
+                    break;
+                case TOP:
+                    b->vlayout()->setAlignment(Qt::AlignTop);
+                    break;
+                case BOTTOM:
+                    b->vlayout()->setAlignment(Qt::AlignBottom);
+                    break;
+                case CENTERED:
+                    b->vlayout()->setAlignment(Qt::AlignVCenter);
+                    b->hlayout()->setAlignment(Qt::AlignHCenter);
+                case HORIZONTAL:
+                    b->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
+                case VERTICAL:
+                    b->vlayout()->setAlignment(Qt::AlignVCenter);
+                    break;
+                default: {}
+                break;
+                }
+            }
+
+            if (child_cfg.children_fixed_width)
+            {
+                if(int(b->value().width)) {
+                    b->button()->setMaximumWidth(int(b->value().width * 10));
+                }
+                else
+                {
+                    b->button()->setMaximumWidth(80);
+                }
+            }
+
+            if (child_cfg.children_fixed_height)
+            {
+                if(int(b->value().height))
+                {
+                    b->button()->setMaximumHeight(int(b->value().height * 10));
+                }
+                else
+                {
+                    b->button()->setMaximumHeight(32);
+                }
+            }
         }
             break;
         case REGISTER:
@@ -1272,7 +1842,6 @@ void openTile(const lclGui* tile)
             break;
         case TAB:
         {
-            break;
         }
             break;
         case SLIDER:
@@ -1322,6 +1891,58 @@ void openTile(const lclGui* tile)
                     }
                 }
             }
+            if (child_cfg.children_alignment != NOPOS)
+            {
+                switch (child_cfg.children_alignment)
+                {
+                case LEFT:
+                    sl->hlayout()->setAlignment(Qt::AlignLeft);
+                    break;
+                case RIGHT:
+                    sl->hlayout()->setAlignment(Qt::AlignRight);
+                    break;
+                case TOP:
+                    sl->vlayout()->setAlignment(Qt::AlignTop);
+                    break;
+                case BOTTOM:
+                    sl->vlayout()->setAlignment(Qt::AlignBottom);
+                    break;
+                case CENTERED:
+                    sl->vlayout()->setAlignment(Qt::AlignVCenter);
+                    sl->hlayout()->setAlignment(Qt::AlignHCenter);
+                case HORIZONTAL:
+                    sl->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
+                case VERTICAL:
+                    sl->vlayout()->setAlignment(Qt::AlignVCenter);
+                    break;
+                default: {}
+                    break;
+                }
+            }
+
+            if (child_cfg.children_fixed_width)
+            {
+                if(int(sl->value().width)) {
+                    sl->slider()->setMaximumWidth(int(sl->value().width * 10));
+                }
+                else
+                {
+                    sl->slider()->setMaximumWidth(sl->slider()->width());
+                }
+            }
+
+            if (child_cfg.children_fixed_height)
+            {
+                if(int(sl->value().height))
+                {
+                    sl->slider()->setMaximumHeight(int(sl->value().height * 10));
+                }
+                else
+                {
+                    sl->slider()->setMaximumHeight(sl->slider()->height());
+                }
+            }
         }
             break;
         case SPACER:
@@ -1361,6 +1982,58 @@ void openTile(const lclGui* tile)
                         }
                         break;
                     }
+                }
+            }
+            if (child_cfg.children_alignment != NOPOS)
+            {
+                switch (child_cfg.children_alignment)
+                {
+                case LEFT:
+                    s->spacer()->setAlignment(Qt::AlignLeft);
+                    break;
+                case RIGHT:
+                    s->spacer()->setAlignment(Qt::AlignRight);
+                    break;
+                case TOP:
+                    s->spacer()->setAlignment(Qt::AlignTop);
+                    break;
+                case BOTTOM:
+                    s->spacer()->setAlignment(Qt::AlignBottom);
+                    break;
+                case CENTERED:
+                    s->spacer()->setAlignment(Qt::AlignCenter);
+                    break;
+                case HORIZONTAL:
+                    s->spacer()->setAlignment(Qt::AlignHCenter);
+                    break;
+                case VERTICAL:
+                    s->spacer()->setAlignment(Qt::AlignVCenter);
+                    break;
+                default:
+                    break;
+                }
+            }
+
+            if (child_cfg.children_fixed_width)
+            {
+                if(int(s->value().width)) {
+                    s->spacer()->widget()->setMaximumWidth(int(s->value().width * 10));
+                }
+                else
+                {
+                    s->spacer()->widget()->setMaximumWidth(80);
+                }
+            }
+
+            if (child_cfg.children_fixed_height)
+            {
+                if(int(s->value().height))
+                {
+                    s->spacer()->widget()->setMaximumHeight(int(s->value().height * 10));
+                }
+                else
+                {
+                    s->spacer()->widget()->setMaximumHeight(32);
                 }
             }
         }
@@ -1409,6 +2082,57 @@ void openTile(const lclGui* tile)
                         }
                         break;
                     }
+                }
+            }
+            if (child_cfg.children_alignment != NOPOS)
+            {
+                switch (child_cfg.children_alignment)
+                {
+                case LEFT:
+                    tb->hlayout()->setAlignment(Qt::AlignLeft);
+                    break;
+                case RIGHT:
+                    tb->hlayout()->setAlignment(Qt::AlignRight);
+                    break;
+                case TOP:
+                    tb->vlayout()->setAlignment(Qt::AlignTop);
+                    break;
+                case BOTTOM:
+                    tb->vlayout()->setAlignment(Qt::AlignBottom);
+                    break;
+                case CENTERED:
+                    tb->vlayout()->setAlignment(Qt::AlignVCenter);
+                    tb->hlayout()->setAlignment(Qt::AlignHCenter);
+                case HORIZONTAL:
+                    tb->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
+                case VERTICAL:
+                    tb->vlayout()->setAlignment(Qt::AlignVCenter);
+                default: {}
+                    break;
+                }
+            }
+
+            if (child_cfg.children_fixed_width)
+            {
+                if(int(tb->value().width)) {
+                    tb->toggle()->setMaximumWidth(int(tb->value().width * 10));
+                }
+                else
+                {
+                    tb->toggle()->setMaximumWidth(80);
+                }
+            }
+
+            if (child_cfg.children_fixed_height)
+            {
+                if(int(tb->value().height))
+                {
+                    tb->toggle()->setMaximumHeight(int(tb->value().height * 10));
+                }
+                else
+                {
+                    tb->toggle()->setMaximumHeight(32);
                 }
             }
         }
@@ -1587,13 +2311,23 @@ void openTile(const lclGui* tile)
             break;
     }
 
+    child_config_t cfg = { false, false, LEFT };
+
+    if(tile->value().id & LAYOUT_PARENT_TILE)
+    {
+        cfg.children_fixed_height = tile->value().children_fixed_height;
+        cfg.children_fixed_width = tile->value().children_fixed_width;
+        cfg.children_alignment = tile->value().children_alignment;
+    }
+
     lclValueVec* tiles = new lclValueVec(tile->value().tiles->size());
     std::copy(tile->value().tiles->begin(), tile->value().tiles->end(), tiles->begin());
 
-    for (auto it = tiles->begin(), end = tiles->end(); it != end; it++) {
+    for (auto it = tiles->begin(), end = tiles->end(); it != end; it++)
+    {
         const lclGui* tile = DYNAMIC_CAST(lclGui, *it);
         qDebug() << "[openTile] end: found: " << tile->value().name.c_str();
-        openTile(tile);
+        openTile(tile, cfg);
     }
 }
 
