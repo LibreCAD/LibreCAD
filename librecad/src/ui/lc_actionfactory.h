@@ -43,7 +43,6 @@ public:
     LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler);
     void fillActionContainer(LC_ActionGroupManager* agm, bool useTheme);
 private:
-
     void createDrawLineActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createDrawPointsActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createDrawShapeActions(QMap<QString, QAction *> &map, QActionGroup *group);

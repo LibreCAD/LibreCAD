@@ -193,7 +193,7 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
 
 
 
-void RS_ActionDrawHatch::doSelectEntity(RS_Entity* entityToSelect, bool selectContour) const {
+void RS_ActionDrawHatch::doSelectEntity(RS_Entity* entityToSelect, [[maybe_unused]] bool selectContour) const {
     // try to minimize selection clicks - and select contour based on selected entity. May be optional, but what for?
     RS_ActionSelectBase::doSelectEntity(entityToSelect, true);
 }

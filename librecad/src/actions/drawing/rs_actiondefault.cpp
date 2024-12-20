@@ -562,9 +562,9 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                 if (infoCursorOverlayPrefs->enabled) {
                     bool cross = (pPoints->v1.x > pPoints->v2.x);
                     bool deselect = isShift(e);
-                    QString msg = deselect ? "De-Selecting" : tr("Selecting");
-                    msg.append(" entities ");
-                    msg.append(cross? tr("that intersect with box") : "that are within box");
+                    QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
+                    msg.append(tr(" entities "));
+                    msg.append(cross? tr("that intersect with box") : tr("that are within box"));
                     infoCursorOverlayData.setZone2(msg);
                     forceUpdateInfoCursor(e);
                 }
@@ -932,11 +932,11 @@ void RS_ActionDefault::updateMouseButtonHints(){
             break;
         }
         case Neutral: {
-            updateMouseWidget(tr("Zoom, pan or select entity"), "", MOD_SHIFT_AND_CTRL(tr("Scroll horizontally / Select contour"), tr("Scroll Vertically / Select child objects")));
+            updateMouseWidget(tr("Zoom, pan or select entity"), "", MOD_SHIFT_AND_CTRL(tr("Scroll Horizontally / Select Contour"), tr("Scroll Vertically / Select Child entities")));
             break;
         }
         case SetCorner2: {
-            updateMouseWidgetTRBack(tr("Choose second edge"), MOD_SHIFT_LC(tr("Deselect entities")));
+            updateMouseWidgetTRBack(tr("Choose second edge"), MOD_SHIFT_LC(tr("De-Select entities")));
             break;
         }
         default: {

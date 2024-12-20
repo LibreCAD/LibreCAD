@@ -166,7 +166,6 @@ void RS_ActionInfoArea::onCoordinateEvent(int status, [[maybe_unused]] bool isZe
     if (shouldComplete){
         ia->push_back(mouse);
         commandMessage(tr("Closing Point: %1").arg(formatVector(mouse)));
-        commandMessage(tr("Closing Point: %1").arg(formatVector(mouse)));
         trigger();
         return;
     }

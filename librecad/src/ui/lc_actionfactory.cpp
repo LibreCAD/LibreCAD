@@ -336,7 +336,7 @@ void LC_ActionFactory::createInfoCursorActions(QMap<QString, QAction *> &map, QA
         {"InfoCursorSnap", tr("Snap"), ":/icons/info_cursor_zone2.svg"},
         {"InfoCursorRel", tr("Relative"), ":/icons/info_cursor_zone3.svg"},
         {"InfoCursorPrompt", tr("Prompt"), ":/icons/info_cursor_zone4.svg"},
-        {"InfoCursorCatchedEntity", tr("Catched Entity"), ":/icons/info_cursor_zone2_entity.svg"},
+        {"InfoCursorCatchedEntity", tr("Caught Entity"), ":/icons/info_cursor_zone2_entity.svg"},
     });
 }
 
