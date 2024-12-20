@@ -35,10 +35,10 @@ namespace {
 std::map<int, RS2::LineWidth> constructInt2LineWidth() {
     using namespace RS2;
     return  {
-        {-3, WidthUnchanged},
-        {-2, WidthDefault}, //for w = -3
-        {-1, WidthByBlock}, //for w = -2
-        {0, WidthByLayer}, //for w = -1
+        {-4, WidthUnchanged},
+        {-3, WidthDefault}, //for w = -3
+        {-2, WidthByBlock}, //for w = -2
+        {-1, WidthByLayer}, //for w = -1
         // for w < 3, return Width00
         {3, Width00},
         {8, Width01},
