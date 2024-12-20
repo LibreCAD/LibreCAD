@@ -46,7 +46,7 @@ bool RS_ActionInfoTotalLength::isAllowTriggerOnEmptySelection() {
     return false;
 }
 
-void RS_ActionInfoTotalLength::doTrigger(bool selected) {
+void RS_ActionInfoTotalLength::doTrigger([[maybe_unused]]bool selected) {
     RS_DEBUG->print("RS_ActionInfoTotalLength::trigger()");
     double l=container->totalSelectedLength();
 
@@ -60,7 +60,7 @@ void RS_ActionInfoTotalLength::doTrigger(bool selected) {
     finish(false);
 }
 
-void RS_ActionInfoTotalLength::finishMouseMoveOnSelection(QMouseEvent *event) {
+void RS_ActionInfoTotalLength::finishMouseMoveOnSelection([[maybe_unused]] QMouseEvent *event) {
     const RS_EntityContainer::LC_SelectionInfo &selectionInfo = container->getSelectionInfo();
     unsigned int selectedCount = selectionInfo.count;
     QString msg = tr("Selected:");

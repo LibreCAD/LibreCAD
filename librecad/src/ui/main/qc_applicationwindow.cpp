@@ -2357,6 +2357,19 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
     redrawAll();
 }
 
+void QC_ApplicationWindow::slotShowEntityDescriptionOnHover(bool toggle) {
+    RS_DEBUG->print("QC_ApplicationWindow::slotViewEntityInfo()");
+
+//    LC_SET_ONE("InfoOverlayCursor","ShowEntityDescription", toggle);
+
+    for (QC_MDIWindow *win: window_list) {
+        QG_GraphicView *graphicView = win->getGraphicView();
+        graphicView->setShowEntityDescriptionOnHover(toggle);
+    }
+    emit showEntityDescriptionOnHoverChanged(toggle);
+    redrawAll();
+}
+
 void QC_ApplicationWindow::slotViewDraftLines(bool toggle) {
     RS_DEBUG->print("QC_ApplicationWindow::slotViewLinesDraft()");
 
@@ -2511,6 +2524,12 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
                     }
                 }
             }
+        }
+        
+        bool infoCursorEnabled = LC_GET_ONE_BOOL("InfoOverlayCursor", "Enabled", true);
+        QAction *action = getAction("EntityDescriptionInfo");
+        if (action != nullptr){
+            action->setVisible(infoCursorEnabled);
         }
     }
 }

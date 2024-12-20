@@ -136,7 +136,7 @@ RS_Entity *RS_EntityContainer::clone() const {
     return ec;
 }
 
-RS_Entity *RS_EntityContainer::cloneProxy() const {
+RS_Entity *RS_EntityContainer::cloneProxy(RS_GraphicView *view) const {
     RS_DEBUG->print("RS_EntityContainer::cloneproxy: ori autoDel: %d",
                     autoDelete);
 
@@ -144,7 +144,7 @@ RS_Entity *RS_EntityContainer::cloneProxy() const {
     if (isOwner()) {
         for (const auto *entity: std::as_const(entities)) {
             if (entity != nullptr) {
-                ec->entities.push_back(entity->cloneProxy());
+                ec->entities.push_back(entity->cloneProxy(view));
             }
         }
     } else {

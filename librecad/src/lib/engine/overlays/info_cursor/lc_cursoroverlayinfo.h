@@ -33,10 +33,18 @@ struct  LC_InfoCursorOptions{
     struct ZoneSetup{
         QColor color;
         int fontSize = 10;
-
         ZoneSetup(const QColor &color, int fontSize):color(color), fontSize(fontSize) {};
-
     };
+
+    void setFontSize(int size){
+        fontSize = size;
+        // todo - potentally, later we may use different font sizes for different zones?
+
+        zone1Settings.fontSize = size;
+        zone2Settings.fontSize = size;
+        zone3Settings.fontSize = size;
+        zone4Settings.fontSize = size;
+    }
 
     ZoneSetup zone1Settings = ZoneSetup(Qt::green, 10);
     ZoneSetup zone2Settings = ZoneSetup(Qt::cyan, 10);
@@ -97,7 +105,7 @@ protected:
 
 };
 
-struct InfoCursorOverlayPrefs{
+struct LC_InfoCursorOverlayPrefs{
     bool enabled = true;
     bool showAbsolutePosition = false;
     bool showRelativePositionDistAngle = false;

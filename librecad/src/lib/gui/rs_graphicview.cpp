@@ -136,6 +136,7 @@ void RS_GraphicView::loadSettings() {
         ignoreDraftForHighlight = LC_GET_BOOL("IgnoreDraftForHighlight", false);
         draftLinesMode = LC_GET_BOOL("DraftLinesMode", false);
 
+
         m_panOnZoom = LC_GET_BOOL("PanOnZoom", false);
         m_skipFirstZoom = LC_GET_BOOL("FirstTimeNoZoom", false);
     } // Appearance group
@@ -158,6 +159,9 @@ void RS_GraphicView::loadSettings() {
 
         int minEllipseMinor100 = LC_GET_INT("MinEllipseMinor", 200);
         minEllipseMinorRadius = minEllipseMinor100 / 100.0;
+
+        drawTextsAsDraftForPanning = LC_GET_BOOL("DrawTextsAsDraftInPanning", true);
+        drawTextsAsDraftForPreview = LC_GET_BOOL("DrawTextsAsDraftInPreview", true);
     } // Render group
     LC_GROUP_END();
 
@@ -207,7 +211,13 @@ void RS_GraphicView::loadSettings() {
             infoCursorOverlayPreferences.showLabels = LC_GET_BOOL("ShowLabels", false);
             infoCursorOverlayPreferences.multiLine = !LC_GET_BOOL("SingleLine", true);
 
-            infoCursorOverlayPreferences.options.fontSize = LC_GET_INT("FontSize", 10);
+            infoCursorOverlayPreferences.showEntityInfoOnCatch = LC_GET_BOOL("ShowPropertiesCatched", true);
+            infoCursorOverlayPreferences.showEntityInfoOnCreation = LC_GET_BOOL("ShowPropertiesCreating", true);
+            infoCursorOverlayPreferences.showEntityInfoOnModification = LC_GET_BOOL("ShowPropertiesEdit", true);
+
+            int infoCursorFontSize = LC_GET_INT("FontSize", 10);
+            // todo - potentially, we may use different font sizes for different zones later
+            infoCursorOverlayPreferences.options.setFontSize(infoCursorFontSize);
             infoCursorOverlayPreferences.options.fontName = LC_GET_STR("FontName", "Helvetica");
             infoCursorOverlayPreferences.options.offset = LC_GET_INT("OffsetFromCursor", 10);
         }
@@ -1618,8 +1628,9 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
             drawEntityPlain(painter, e, patternOffset);
         }
         else {
+            RS2::EntityType entityType = e->rtti();
             if (isDraftMode()) {
-                switch (e->rtti()) {
+                switch (entityType) {
                     case RS2::EntityMText:
                     case RS2::EntityText:
                     case RS2::EntityImage:
@@ -1635,14 +1646,49 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
                         drawEntityPlain(painter, e, patternOffset);
                 }
             } else {
-                // set pen (color):
-                if (draftLinesMode) {
-                    setPenForDraftEntity(painter, e, patternOffset, false);
+                // the code below is ugly as code for normal painting is duplicated.
+                // however, it's intentional and made for perfromance reasons - to avoid additional checks or method calls during painting
+                if (isPanning()){
+                    switch (entityType){
+                        case RS2::EntityMText:
+                        case RS2::EntityText:{
+                            if (drawTextsAsDraftForPanning){
+                                setPenForDraftEntity(painter, e, patternOffset, false);
+                                e->drawDraft(painter, this, patternOffset);
+                            }
+                            else{
+                                // normal painting
+                                if (draftLinesMode) {
+                                    setPenForDraftEntity(painter, e, patternOffset, false);
+                                } else {
+                                    setPenForEntity(painter, e, patternOffset, false);
+                                }
+                                drawEntityPlain(painter, e, patternOffset);
+                            }
+                            break;
+                        }
+                        default:
+                            // normal painting
+                            // set pen (color):
+                            if (draftLinesMode) {
+                                setPenForDraftEntity(painter, e, patternOffset, false);
+                            } else {
+                                setPenForEntity(painter, e, patternOffset, false);
+                            }
+                            drawEntityPlain(painter, e, patternOffset);
+                            break;
+                    }
                 }
-                else{
-                    setPenForEntity(painter, e, patternOffset, false);
+                else {
+                    // normal painting
+                    // set pen (color):
+                    if (draftLinesMode) {
+                        setPenForDraftEntity(painter, e, patternOffset, false);
+                    } else {
+                        setPenForEntity(painter, e, patternOffset, false);
+                    }
+                    drawEntityPlain(painter, e, patternOffset);
                 }
-                drawEntityPlain(painter, e, patternOffset);
             }
 
             // draw reference points:
@@ -2576,16 +2622,24 @@ void RS_GraphicView::setForcedActionKillAllowed(bool enabled) {
     forcedActionKillAllowed = enabled;
 }
 
-QString RS_GraphicView::obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel descriptionLevel) {
+QString RS_GraphicView::obtainEntityDescription([[maybe_unused]]RS_Entity *entity, [[maybe_unused]]RS2::EntityDescriptionLevel descriptionLevel) {
     return "";
 }
 
+void RS_GraphicView::setShowEntityDescriptionOnHover(bool show) {
+    showEntityDescriptionOnHover = show;
+}
 
-bool RS_GraphicView::getPanOnZoom() const
-{
+
+bool RS_GraphicView::getPanOnZoom() const{
     return m_panOnZoom;
 }
-bool RS_GraphicView::getSkipFirstZoom() const
-{
+
+bool RS_GraphicView::getSkipFirstZoom() const{
     return m_skipFirstZoom;
+}
+
+
+bool RS_GraphicView::isDrawTextsAsDraftForPreview() const {
+    return drawTextsAsDraftForPreview;
 }

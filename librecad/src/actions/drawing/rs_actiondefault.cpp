@@ -156,7 +156,9 @@ void RS_ActionDefault::keyReleaseEvent(QKeyEvent *e){
 void RS_ActionDefault::highlightHoveredEntities(QMouseEvent *event){
 //    clearHighLighting();
 
-    bool shouldShowQuickInfoWidget = allowEntityQuickInfoAuto || (event->modifiers() & (Qt::ControlModifier | Qt::MetaModifier) && allowEntityQuickInfoForCTRL);
+    bool controlPressed = isControl(event);
+
+    bool shouldShowQuickInfoWidget = allowEntityQuickInfoAuto || (controlPressed && allowEntityQuickInfoForCTRL);
     bool showHighlightEntity = highlightEntitiesOnHover || shouldShowQuickInfoWidget;
     bool showEntityDescriptions = isShowEntityDescriptionOnHighlight();
 
@@ -164,17 +166,15 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent *event){
         return;
 
     RS_Entity *entity = nullptr;
-    if (isControl(event)){
+
+    if (controlPressed){
         entity = catchEntity(event, RS2::ResolveAll);
     }
     else{
         entity = catchEntity(event);
     }
     if (entity == nullptr) {
-       /* infoCursorOverlayData.setZone1("");
         infoCursorOverlayData.setZone2("");
-        infoCursorOverlayData.setZone3("");*/
-        deleteInfoCursor();
         return;
     }
     if (!entity->isVisible()){
@@ -184,8 +184,6 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent *event){
     if (showEntityDescriptions){
         QString entityInfoStr = obtainEntityDescriptionForInfoCursor(entity, RS2::EntityDescriptionLevel::DescriptionLong);
         if (!entityInfoStr.isEmpty()) {
-            infoCursorOverlayData.setZone1("");
-            infoCursorOverlayData.setZone3("");
             infoCursorOverlayData.setZone2(entityInfoStr);
             forceUpdateInfoCursor(event);
         }
@@ -235,7 +233,7 @@ void RS_ActionDefault::forceUpdateInfoCursor(const QMouseEvent *event) {
 }
 
 bool RS_ActionDefault::isShowEntityDescriptionOnHighlight(){
-    return false; // fixme - temporary, complete by state of action
+    return graphicView->isShowEntityDescriptionOnHover() && (infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled);
 }
 
 void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
@@ -251,8 +249,12 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
         case Neutral: {
             deleteSnapper();
             highlightHoveredEntities(e);
-            infoCursorOverlayData.setZone2("");
-            RS_Snapper::forceUpdateInfoCursor(mouse);
+            if (infoCursorOverlayPrefs->enabled){
+                if (!isShowEntityDescriptionOnHighlight()) {
+                    infoCursorOverlayData.setZone2("");
+                }
+                RS_Snapper::forceUpdateInfoCursor(mouse);
+            }
             drawHighlights();
             break;
         }
@@ -328,12 +330,14 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                         pPoints->v2 = mouse;
                         previewRefLine(pPoints->v2, pPoints->v1);
                     }
-                    createEditedLineDescription(nullptr, ctrlPressed, shiftPressed);
+                    if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnModification) {
+                        createEditedLineDescription(nullptr, ctrlPressed, shiftPressed);
+                    }
                     break;
                 }
                 case RS2::EntityArc: {
                     auto *refMovingArc = dynamic_cast<RS_Arc *>(refMovingEntity);
-                    auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->cloneProxy());
+                    auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->cloneProxy(graphicView));
 
                     const RS_Vector &arcCenter = refMovingArc->getCenter();
                     const RS_Vector &arcMiddle = refMovingArc->getMiddlePoint();
@@ -424,7 +428,9 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                         addClone = false;
                     }
 
-                    createEditedArcDescription(clone, ctrlPressed, shiftPressed);
+                    if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnModification) {
+                        createEditedArcDescription(clone, ctrlPressed, shiftPressed);
+                    }
                     break;
                 }
                 case RS2::EntityPolyline:{
@@ -449,7 +455,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                 case RS2::EntityCircle:{
                     // fixme -sand - add morphing of circle to ellipse
                     auto *refMovingCircle = dynamic_cast<RS_Circle *>(refMovingEntity);
-                    auto *clone = dynamic_cast<RS_Circle *>(refMovingCircle->cloneProxy());
+                    auto *clone = dynamic_cast<RS_Circle *>(refMovingCircle->cloneProxy(graphicView));
                     pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
 
                     if (showRefEntitiesOnPreview) {
@@ -457,7 +463,9 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                     }
                     clone->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
                     preview->addEntity(clone);
-                    createEditedCircleDescription(clone, ctrlPressed, shiftPressed);
+                    if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnModification) {
+                        createEditedCircleDescription(clone, ctrlPressed, shiftPressed);
+                    }
                     addClone = false;
                     break;
                 }
@@ -487,7 +495,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                 clone->moveRef(pPoints->v1, offset);
                 preview->addEntity(clone);
 
-                if (infoCursorOverlayPrefs->enabled){
+                if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnModification) {
                     QString msg = tr("Offset\n");
                     msg.append(formatRelative(offset));
                     msg.append("\n");
@@ -514,7 +522,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
             pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
             updateCoordinateWidgetByRelZero(pPoints->v2);
 
-            preview->addSelectionFrom(*container);
+            preview->addSelectionFrom(*container,graphicView);
             const RS_Vector &offset = pPoints->v2 - pPoints->v1;
             preview->move(offset);
 
@@ -578,7 +586,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
     }
 }
 
-void RS_ActionDefault::createEditedLineDescription([[maybe_unused]]RS_Line* clone,bool ctrlPressed, bool shiftPressed) {
+void RS_ActionDefault::createEditedLineDescription([[maybe_unused]]RS_Line* clone, [[maybe_unused]]bool ctrlPressed,  [[maybe_unused]]bool shiftPressed) {
     QString msg = tr("Line").append("\n");
     msg.append(tr("Length: "));
     msg.append(formatLinear(pPoints->v1.distanceTo(pPoints->v2)));
@@ -588,7 +596,7 @@ void RS_ActionDefault::createEditedLineDescription([[maybe_unused]]RS_Line* clon
     appendInfoCursorZoneMessage(msg, 2, true);
 }
 
-void RS_ActionDefault::createEditedArcDescription(RS_Arc* clone, bool ctrlPressed, bool shiftPressed) {
+void RS_ActionDefault::createEditedArcDescription(RS_Arc* clone,  [[maybe_unused]]bool ctrlPressed, [[maybe_unused]] bool shiftPressed) {
     QString msg = tr("Arc").append("\n");
     msg.append(tr("Radius: "));
     msg.append(formatLinear(clone->getRadius()));
@@ -610,7 +618,7 @@ void RS_ActionDefault::createEditedArcDescription(RS_Arc* clone, bool ctrlPresse
     appendInfoCursorZoneMessage(msg, 2, true);
 }
 
-void RS_ActionDefault::createEditedCircleDescription(RS_Circle* clone, bool ctrlPressed, bool shiftPressed) {
+void RS_ActionDefault::createEditedCircleDescription(RS_Circle* clone,  [[maybe_unused]]bool ctrlPressed,  [[maybe_unused]]bool shiftPressed) {
     QString msg = tr("Circle").append("\n");
     msg.append(tr("Radius: "));
     msg.append(formatLinear(clone->getRadius()));
@@ -924,12 +932,7 @@ void RS_ActionDefault::updateMouseButtonHints(){
             break;
         }
         case Neutral: {
-            if (isShowEntityDescriptionOnHighlight()){
-                updateMouseWidget(tr(""), "", MOD_SHIFT_AND_CTRL(tr("Scroll horizontally / Select contour"), tr("Scroll Vertically / Select child objects")));
-            }
-            else{
-                updateMouseWidget(tr("Zoom, pan or select entity"), "",  MOD_SHIFT_AND_CTRL(tr("Scroll horizontally / Select contour"), tr("Scroll Vertically / Select child objects")));
-            }
+            updateMouseWidget(tr("Zoom, pan or select entity"), "", MOD_SHIFT_AND_CTRL(tr("Scroll horizontally / Select contour"), tr("Scroll Vertically / Select child objects")));
             break;
         }
         case SetCorner2: {

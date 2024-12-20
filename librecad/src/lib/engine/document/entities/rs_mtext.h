@@ -285,7 +285,7 @@ protected:
 
     void rotateLinesRefs() const;
 
-    RS_Entity *cloneProxy() const override;
+    RS_Entity *cloneProxy(RS_GraphicView* view) const override;
 };
 
 #endif

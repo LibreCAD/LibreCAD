@@ -255,6 +255,7 @@ public slots:
     void checkForNewVersion();
     void forceCheckForNewVersion();
     void slotRedockWidgets();
+    void slotShowEntityDescriptionOnHover(bool toggle);
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);
@@ -263,6 +264,7 @@ signals:
     void printPreviewChanged(bool on);
     void windowsChanged(bool windowsLeft);
     void signalEnableRelativeZeroSnaps(const bool);
+    void showEntityDescriptionOnHoverChanged(bool show);
 public:
     /**
      * @return Pointer to application window.
@@ -450,6 +452,8 @@ private:
     void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType);
 
     void doRestoreNamedView(int i) const;
+
+
 };
 
 #ifdef _WINDOWS

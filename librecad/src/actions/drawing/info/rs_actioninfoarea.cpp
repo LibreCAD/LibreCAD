@@ -156,7 +156,7 @@ void RS_ActionInfoArea::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionInfoArea::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionInfoArea::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
     trigger();
 //    initPrevious(status);
 }

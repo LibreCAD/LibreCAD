@@ -44,10 +44,10 @@ public:
         return RS2::EntityPreview;
     }
     void addEntity(RS_Entity* entity) override;
-    void addCloneOf(RS_Entity* entity);
-    virtual void addSelectionFrom(RS_EntityContainer& container);
-    virtual void addAllFrom(RS_EntityContainer& container);
-    virtual void addStretchablesFrom(RS_EntityContainer& container,
+    void addCloneOf(RS_Entity* entity, RS_GraphicView* view);
+    void addSelectionFrom(RS_EntityContainer& container, RS_GraphicView* view);
+    void addAllFrom(RS_EntityContainer& container, RS_GraphicView* view);
+    void addStretchablesFrom(RS_EntityContainer& container, RS_GraphicView* view,
                                      const RS_Vector& v1, const RS_Vector& v2);
     void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
     void addReferenceEntitiesToContainer(RS_EntityContainer* container);

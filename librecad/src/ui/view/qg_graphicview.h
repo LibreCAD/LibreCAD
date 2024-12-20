@@ -107,6 +107,7 @@ public:
     void destroyMenu(const QString& activator);
     void setMenu(const QString& activator, QMenu* menu);
     QString obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription) override;
+
 protected:
     void mousePressEvent(QMouseEvent* e) override;
     void mouseDoubleClickEvent(QMouseEvent* e) override;
@@ -178,6 +179,8 @@ private:
 signals:
     void xbutton1_released();
     void gridStatusChanged(QString);
+
+
 };
 
 #endif

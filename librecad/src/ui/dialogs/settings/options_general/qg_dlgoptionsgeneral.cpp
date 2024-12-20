@@ -379,6 +379,12 @@ void QG_DlgOptionsGeneral::init() {
         int minEllipseMinor100 = LC_GET_INT("MinEllipseMinor", 200);
         double minEllipseMinor = minEllipseMinor100 / 100.0;
         sbRenderMinEllipseMinor->setValue(minEllipseMinor);
+
+        bool drawTextsAsDraftInPanning = LC_GET_BOOL("DrawTextsAsDraftInPanning", true);
+        cbTextDraftOnPanning->setChecked(drawTextsAsDraftInPanning);
+
+        bool drawTextsAsDraftInPreview = LC_GET_BOOL("DrawTextsAsDraftInPreview", true);
+        cbTextDraftInPreview->setChecked(drawTextsAsDraftInPreview);
     }
 
     LC_GROUP("NewDrawingDefaults");
@@ -652,6 +658,8 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("MinLineLen", (int)(sbRenderMinLineLen->value()*100));
             LC_SET("MinEllipseMajor", (int)(sbRenderMinEllipseMajor->value()*100));
             LC_SET("MinEllipseMinor", (int)(sbRenderMinEllipseMinor->value()*100));
+            LC_SET("DrawTextsAsDraftInPanning", cbTextDraftOnPanning->isChecked());
+            LC_SET("DrawTextsAsDraftInPreview", cbTextDraftInPreview->isChecked());
         }
 
         LC_GROUP("Colors");

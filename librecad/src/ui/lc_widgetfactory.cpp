@@ -516,7 +516,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     file->addAction(ag_manager->getActionByName("FilePrintPreview"));
 
     auto *edit = createGenericToolbar(tr("Edit"), "Edit", tbPolicy, {
-        "EditKillAllActions", "EntityInfoOrSelection", "", "EditUndo", "EditRedo", "", "EditCut", "EditCopy", "EditPaste", "EditPasteTransform"
+        "EditKillAllActions", "EntityDescriptionInfo", "", "EditUndo", "EditRedo", "", "EditCut", "EditCopy", "EditPaste", "EditPasteTransform"
     });
 
     auto *order = createGenericToolbar(tr("Order"), "Order", tbPolicy, {

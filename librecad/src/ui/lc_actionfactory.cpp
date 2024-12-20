@@ -327,8 +327,8 @@ void LC_ActionFactory::createPenActions(QMap<QString, QAction *> &map, QActionGr
 }
 
 void LC_ActionFactory::createInfoCursorActions(QMap<QString, QAction *> &map, QActionGroup *group) {
-    createActionHandlerActions(map, group, {
-        {"EntityInfoOrSelection", RS2::ActionEntityInfoSelectSingle, tr("Info/Selection"), ":/icons/entity_description_info.svg"},
+    createMainWindowActions(map, group, {
+        {"EntityDescriptionInfo", SLOT(slotShowEntityDescriptionOnHover(bool)), tr("Show Entity Description"), ":/icons/entity_description_info.svg"}
     });
     createActions(map, group, {
         {"InfoCursorEnable", tr("Enable Info Cursor"), ":/icons/info_cursor_enable.svg"},
@@ -574,8 +574,13 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     connect(main_window, &QC_ApplicationWindow::draftChanged, map["ViewDraft"], &QAction::setChecked);
     connect(main_window, &QC_ApplicationWindow::draftChanged, map["ViewLinesDraft"], &QAction::setDisabled);
     connect(main_window, &QC_ApplicationWindow::antialiasingChanged, map["ViewAntialiasing"], &QAction::setChecked);
-
     connect(main_window, &QC_ApplicationWindow::windowsChanged, map["OptionsDrawing"], &QAction::setEnabled);
+
+    QAction *&entityInfoAction = map["EntityDescriptionInfo"];
+    connect(main_window, &QC_ApplicationWindow::showEntityDescriptionOnHoverChanged, entityInfoAction, &QAction::setChecked);
+
+    bool infoCursorEnabled = LC_GET_ONE_BOOL("InfoOverlayCursor", "Enabled", true);
+    entityInfoAction->setVisible(infoCursorEnabled);
 }
 
 void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_ActionGroupManager* agm) {

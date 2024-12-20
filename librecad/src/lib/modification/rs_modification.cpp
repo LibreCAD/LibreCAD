@@ -1890,7 +1890,7 @@ bool RS_Modification::move(RS_MoveData& data, const std::vector<RS_Entity*> &ent
     for(auto e: entitiesList){
         // Create new entities
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy() : e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(graphicView) : e->clone();
             ec->move(data.offset*num);
             clonesList.push_back(ec);
         }
@@ -1944,7 +1944,7 @@ bool RS_Modification::alignRef(LC_AlignRefData & data, const std::vector<RS_Enti
     for(auto e: entitiesList){
         // Create new entities
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy() : e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(graphicView) : e->clone();
 
             ec->rotate(data.rotationCenter, data.rotationAngle);
 
@@ -2033,7 +2033,7 @@ bool RS_Modification::rotate(RS_RotateData& data, const std::vector<RS_Entity*> 
     int numberOfCopies = data.obtainNumberOfCopies();
     for (auto e: entitiesList) {
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy() : e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(graphicView) : e->clone();
 
             double rotationAngle = data.angle * num;
             ec->rotate(data.center, rotationAngle);
@@ -2119,7 +2119,7 @@ bool RS_Modification::scale(RS_ScaleData& data, const std::vector<RS_Entity*> &e
     for(RS_Entity* e: selectedList) {
         if (e != nullptr) {
             for (int num= 1; num <= numberOfCopies; num++) {
-                RS_Entity* ec = forPreviewOnly ? e->cloneProxy() : e->clone();
+                RS_Entity* ec = forPreviewOnly ? e->cloneProxy(graphicView) : e->clone();
                 ec->scale(data.referencePoint, RS_Math::pow(data.factor, num));
                 clonesList.push_back(ec);
             }
@@ -2158,7 +2158,7 @@ bool RS_Modification::mirror(RS_MirrorData& data, const std::vector<RS_Entity*> 
 
     for(auto e: entitiesList){
         for (int num=1; num<=numberOfCopies; ++num) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy() : e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(graphicView) : e->clone();
 
             ec->mirror(data.axisPoint1, data.axisPoint2);
 
@@ -2196,7 +2196,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data, const std::vector<RS_Entity*
 
     for(auto e: entitiesList){
         for (int num= 1; num <= numberOfCopies; num++) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy() : e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(graphicView) : e->clone();
 
             double angle1ForCopy = /*data.sameAngle1ForCopies ?  data.angle1 :*/ data.angle1 * num;
             double angle2ForCopy = data.sameAngle2ForCopies ?  data.angle2 : data.angle2 * num;
@@ -2255,7 +2255,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData &data, const std::vector<RS_E
     // Create new entities
     for(auto e: entitiesList){
         for (int num=1; num <= numberOfCopies; ++num) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy() : e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(graphicView) : e->clone();
 
             const RS_Vector &offset = data.offset * num;
             ec->move(offset);

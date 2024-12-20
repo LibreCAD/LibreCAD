@@ -29,6 +29,7 @@
 #define RS_SNAPPER_H
 
 #include <memory>
+#include <QObject>
 #include <QList>
 #include "rs.h"
 #include "lc_cursoroverlayinfo.h"
@@ -226,8 +227,8 @@ protected:
     int catchEntityGuiRange = 32;
     bool finished{false};
 
-    InfoCursorOverlayPrefs* infoCursorOverlayPrefs;
-    LC_InfoCursorData infoCursorOverlayData;
+    LC_InfoCursorOverlayPrefs* infoCursorOverlayPrefs = nullptr;
+    LC_InfoCursorData infoCursorOverlayData = LC_InfoCursorData();
 
     RS2::LinearFormat linearFormat;
     int linearPrecision;
@@ -235,7 +236,7 @@ protected:
     int anglePrecision;
     RS2::Unit unit;
 
-    const RS_Vector toGraph(const QMouseEvent *e) const;
+    RS_Vector toGraph(const QMouseEvent *e) const;
     void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false);
     void updateCoordinateWidgetByRelZero(const RS_Vector& abs, bool updateFormat=false);
     void updateCoordinateWidgetFormat();
@@ -245,7 +246,7 @@ protected:
     void preparePositionsInfoCursorOverlay(bool updateFormat, const RS_Vector &abs, const RS_Vector &relative);
     LC_InfoCursor* obtainInfoCursor();
     void clearInfoCursor();
-    InfoCursorOverlayPrefs* getInfoCursorOverlayPrefs() const;
+    LC_InfoCursorOverlayPrefs* getInfoCursorOverlayPrefs() const;
 
     QString formatLinear(double value);
     QString formatAngle(double value);

@@ -94,7 +94,7 @@ void LC_ActionEditPasteTransform::mouseMoveEvent(QMouseEvent *e) {
     if (getStatus()==SetReferencePoint) {
         *referencePoint = snapPoint(e);
         deletePreview();
-        preview->addAllFrom(*RS_CLIPBOARD->getGraphic());
+        preview->addAllFrom(*RS_CLIPBOARD->getGraphic(),graphicView);
         preview->move(*referencePoint);
 
         if (graphic) {

@@ -154,9 +154,9 @@ void LC_ActionPreSelectionAwareBase::mouseMoveEvent(QMouseEvent *event) {
             if (infoCursorOverlayPrefs->enabled) {
                 bool cross = (selectionCorner1.x > mouse.x);
                 bool deselect = isShift(event);
-                QString msg = deselect ? "De-Selecting" : tr("Selecting");
-                msg.append(" entities ");
-                msg.append(cross? tr("that intersect with box") : "that are within box");
+                QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
+                msg.append(tr(" entities "));
+                msg.append(cross? tr("that intersect with box") : tr("that are within box"));
                 infoCursorOverlayData.setZone2(msg);
                 RS_Snapper::forceUpdateInfoCursor(mouse);
             }
@@ -246,7 +246,7 @@ RS2::CursorType LC_ActionPreSelectionAwareBase::doGetMouseCursorSelected([[maybe
     return RS2::CadCursor;
 }
 
-void LC_ActionPreSelectionAwareBase::finishMouseMoveOnSelection(QMouseEvent *event) {
+void LC_ActionPreSelectionAwareBase::finishMouseMoveOnSelection([[maybe_unused]]QMouseEvent *event) {
 
 }
 

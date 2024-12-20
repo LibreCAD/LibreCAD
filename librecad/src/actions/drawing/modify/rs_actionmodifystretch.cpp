@@ -106,7 +106,7 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
                 mouse= getSnapAngleAwarePoint(e, pPoints->referencePoint, mouse, true);
                 pPoints->targetPoint = mouse;
                 // fixme - isn't it more reliable to rely on RS_Modification::stretch there?
-                preview->addStretchablesFrom(*container, pPoints->firstCorner, pPoints->secondCorner);
+                preview->addStretchablesFrom(*container, graphicView, pPoints->firstCorner, pPoints->secondCorner);
                 //preview->move(targetPoint-referencePoint);
                 preview->stretch(pPoints->firstCorner, pPoints->secondCorner,
                                  pPoints->targetPoint - pPoints->referencePoint);

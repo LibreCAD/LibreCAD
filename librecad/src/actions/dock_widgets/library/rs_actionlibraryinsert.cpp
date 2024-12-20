@@ -88,7 +88,7 @@ void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
 
             //if (block) {
             deletePreview();
-            preview->addAllFrom(pPoints->prev);
+            preview->addAllFrom(pPoints->prev, graphicView);
             preview->move(pPoints->data.insertionPoint);
             preview->scale(pPoints->data.insertionPoint,
                            RS_Vector(pPoints->data.factor, pPoints->data.factor));

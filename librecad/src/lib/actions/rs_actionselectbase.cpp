@@ -85,7 +85,7 @@ bool RS_ActionSelectBase::selectEntity(RS_Entity* entityToSelect, bool selectCon
 //    entityToSelect = nullptr;
 }
 
-void RS_ActionSelectBase::doSelectEntity(RS_Entity* entityToSelect, bool selectContour) const {
+void RS_ActionSelectBase::doSelectEntity(RS_Entity* entityToSelect,  [[maybe_unused]]bool selectContour) const {
     RS_Selection s(*container, graphicView);
     s.selectSingle(entityToSelect);
 }

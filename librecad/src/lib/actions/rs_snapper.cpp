@@ -962,7 +962,7 @@ void RS_Snapper::drawInfoCursor(){
             infoCursor->setOptions(&infoCursorOverlayPrefs->options);
             infoCursor->setPos(pImpData->snapCoord);
         }
-        InfoCursorOverlayPrefs* prefs = getInfoCursorOverlayPrefs();
+        LC_InfoCursorOverlayPrefs* prefs = getInfoCursorOverlayPrefs();
         if (prefs->showSnapType) {
             QString snapName = getSnapName(pImpData->snapType);
             QString restrictionName;
@@ -1083,7 +1083,7 @@ RS_Vector RS_Snapper::snapToAngle(
     }
 }
 
-const RS_Vector RS_Snapper::toGraph(const QMouseEvent* e) const{
+ RS_Vector RS_Snapper::toGraph(const QMouseEvent* e) const{
     RS_Vector result = graphicView->toGraph(e->position());
     return result;
 }
@@ -1107,12 +1107,12 @@ void RS_Snapper::updateCoordinateWidgetByRelZero(const RS_Vector& abs, bool upda
     RS_DIALOGFACTORY->updateCoordinateWidget(abs, relative, updateFormat);
 }
 
-InfoCursorOverlayPrefs* RS_Snapper::getInfoCursorOverlayPrefs() const {
+LC_InfoCursorOverlayPrefs* RS_Snapper::getInfoCursorOverlayPrefs() const {
     return infoCursorOverlayPrefs;
 }
 
 void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_Vector &abs,  const RS_Vector &relative) {
-    InfoCursorOverlayPrefs* prefs = getInfoCursorOverlayPrefs();
+    LC_InfoCursorOverlayPrefs* prefs = getInfoCursorOverlayPrefs();
 
     QString coordAbs = "";
     QString coordPolar = "";
@@ -1188,8 +1188,6 @@ QString RS_Snapper::formatRelativePolar(const RS_Vector &value) {
 
 void RS_Snapper::forceUpdateInfoCursor(const RS_Vector &pos) {
     LC_InfoCursor* infoCursor = obtainInfoCursor();
-    if (infoCursor != nullptr){
-        infoCursor->setPos(pos);
-        infoCursor->setZonesData(&infoCursorOverlayData);
-    }
+    infoCursor->setPos(pos);
+    infoCursor->setZonesData(&infoCursorOverlayData);
 }

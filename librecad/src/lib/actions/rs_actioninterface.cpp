@@ -506,7 +506,7 @@ void RS_ActionInterface::updateMouseWidgetTRBack(const QString &msg, const LC_Mo
 
 void RS_ActionInterface::preparePromptForInfoCursorOverlay(const QString &msg, const LC_ModifiersInfo &modifiers) {
     QString prompt = "";
-    InfoCursorOverlayPrefs* prefs = getInfoCursorOverlayPrefs();
+    LC_InfoCursorOverlayPrefs* prefs = getInfoCursorOverlayPrefs();
     if (prefs->showCommandPrompt){
         if (prefs->showCurrentActionName) {
             QString actionName = graphicView->getCurrentActionName();

@@ -713,7 +713,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/modify/lc_actionmodifyduplicate.h \
     actions/drawing/modify/lc_actionmodifylinegap.h \
     actions/drawing/modify/lc_actionmodifylinejoin.h \
-    lib/actions/lc_actionmodifyselectionbase.h \
+    actions/drawing/modify/lc_actionmodifyselectionbase.h \
     lib/actions/lc_actionpreselectionawarebase.h \
     actions/drawing/modify/rs_actionblocksexplode.h \
     actions/drawing/modify/rs_actionmodifyattributes.h \
@@ -744,7 +744,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/rs_actiondefault.h \
     actions/drawing/selection/rs_actionselect.h \
     actions/drawing/selection/rs_actionselectall.h \
-    actions/drawing/selection/rs_actionselectbase.h \
+    lib/actions/rs_actionselectbase.h \
     actions/drawing/selection/rs_actionselectcontour.h \
     actions/drawing/selection/rs_actionselectintersected.h \
     actions/drawing/selection/rs_actionselectinvert.h \
@@ -889,7 +889,7 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/modify/lc_actionmodifylinegap.cpp \
     actions/drawing/modify/lc_actionmodifylinejoin.cpp \
     actions/drawing/modify/lc_actionmodifyselectionbase.cpp \
-    actions/drawing/modify/lc_actionpreselectionawarebase.cpp \
+    lib/actions/lc_actionpreselectionawarebase.cpp \
     actions/drawing/modify/rs_actionblocksexplode.cpp \
     actions/drawing/modify/rs_actionmodifyattributes.cpp \
     actions/drawing/modify/rs_actionmodifybevel.cpp \
@@ -919,7 +919,7 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/rs_actiondefault.cpp \
     actions/drawing/selection/rs_actionselect.cpp \
     actions/drawing/selection/rs_actionselectall.cpp \
-    actions/drawing/selection/rs_actionselectbase.cpp \
+    lib/actions/rs_actionselectbase.cpp \
     actions/drawing/selection/rs_actionselectcontour.cpp \
     actions/drawing/selection/rs_actionselectintersected.cpp \
     actions/drawing/selection/rs_actionselectinvert.cpp \

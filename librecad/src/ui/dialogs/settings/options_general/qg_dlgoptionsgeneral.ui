@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>751</width>
+    <width>759</width>
     <height>636</height>
    </rect>
   </property>
@@ -32,7 +32,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -1963,32 +1963,26 @@
           <string>Rendering Minimums</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_27">
-          <item row="0" column="2">
-           <widget class="QSpinBox" name="sbTextMinHeight">
+          <item row="0" column="4">
+           <widget class="QDoubleSpinBox" name="sbRenderMinArcRadius">
             <property name="toolTip">
-             <string>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</string>
+             <string>If screen radius of arc is less than value, arc is drawn as point</string>
             </property>
             <property name="suffix">
              <string> px</string>
             </property>
-            <property name="prefix">
-             <string/>
-            </property>
-            <property name="minimum">
-             <number>3</number>
-            </property>
             <property name="maximum">
-             <number>15</number>
+             <double>5.000000000000000</double>
             </property>
             <property name="singleStep">
-             <number>1</number>
+             <double>0.010000000000000</double>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_13">
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_14">
             <property name="text">
-             <string>Line length:</string>
+             <string>Arc Radius:</string>
             </property>
            </widget>
           </item>
@@ -1999,42 +1993,10 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="3">
-           <widget class="QLabel" name="label_17">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_13">
             <property name="text">
-             <string>Ellipse Major Axis:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="4">
-           <widget class="QDoubleSpinBox" name="sbRenderMinEllipseMinor">
-            <property name="toolTip">
-             <string>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="maximum">
-             <double>5.000000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QDoubleSpinBox" name="sbRenderMinLineLen">
-            <property name="toolTip">
-             <string>If screen length of line is less than value, the line is drawn as point</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="maximum">
-             <double>5.000000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
+             <string>Line length:</string>
             </property>
            </widget>
           </item>
@@ -2061,17 +2023,17 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="3">
-           <widget class="QLabel" name="label_14">
+          <item row="2" column="3">
+           <widget class="QLabel" name="label_17">
             <property name="text">
-             <string>Arc Radius:</string>
+             <string>Ellipse Major Axis:</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="4">
-           <widget class="QDoubleSpinBox" name="sbRenderMinArcRadius">
+          <item row="2" column="4">
+           <widget class="QDoubleSpinBox" name="sbRenderMinEllipseMinor">
             <property name="toolTip">
-             <string>If screen radius of arc is less than value, arc is drawn as point</string>
+             <string>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</string>
             </property>
             <property name="suffix">
              <string> px</string>
@@ -2081,13 +2043,6 @@
             </property>
             <property name="singleStep">
              <double>0.010000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_16">
-            <property name="text">
-             <string>Ellipse Minor Axis:</string>
             </property>
            </widget>
           </item>
@@ -2104,6 +2059,71 @@
             </property>
             <property name="singleStep">
              <double>0.010000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QSpinBox" name="sbTextMinHeight">
+            <property name="toolTip">
+             <string>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</string>
+            </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="prefix">
+             <string/>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>15</number>
+            </property>
+            <property name="singleStep">
+             <number>1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QDoubleSpinBox" name="sbRenderMinLineLen">
+            <property name="toolTip">
+             <string>If screen length of line is less than value, the line is drawn as point</string>
+            </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="maximum">
+             <double>5.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="5">
+           <widget class="QCheckBox" name="cbTextDraftOnPanning">
+            <property name="statusTip">
+             <string>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </string>
+            </property>
+            <property name="text">
+             <string>Draw text as draft within paning operations</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Ellipse Minor Axis:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="5">
+           <widget class="QCheckBox" name="cbTextDraftInPreview">
+            <property name="toolTip">
+             <string>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </string>
+            </property>
+            <property name="text">
+             <string>Draw text as draft in preview</string>
             </property>
            </widget>
           </item>
@@ -4532,9 +4552,9 @@
   <tabstop>lePathHatch</tabstop>
  </tabstops>
  <resources>
+  <include location="../../../../../res/icons/icons.qrc"/>
+  <include location="../../../../../res/icons/icons.qrc"/>
   <include location="../../../../../res/ui/ui.qrc"/>
-  <include location="../../../../../res/icons/icons.qrc"/>
-  <include location="../../../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>

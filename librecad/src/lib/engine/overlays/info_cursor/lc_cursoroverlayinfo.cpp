@@ -29,7 +29,7 @@ LC_InfoCursor::LC_InfoCursor(RS_EntityContainer *parent, const RS_Vector &coord,
     options = cursorOverlaySettings;
 }
 
-void LC_InfoCursor::draw(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) {
+void LC_InfoCursor::draw(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset) {
     RS_Vector offset = RS_Vector(options->offset,options->offset);
     QString zone1String = zonesData->getZone1();
     painter->save();
