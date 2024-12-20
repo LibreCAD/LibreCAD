@@ -256,6 +256,7 @@ public slots:
     void forceCheckForNewVersion();
     void slotRedockWidgets();
     void slotShowEntityDescriptionOnHover(bool toggle);
+    void slotInfoCursorSetting(bool toggle);
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);
@@ -265,6 +266,7 @@ signals:
     void windowsChanged(bool windowsLeft);
     void signalEnableRelativeZeroSnaps(const bool);
     void showEntityDescriptionOnHoverChanged(bool show);
+    void showInfoCursorSettingChanged(bool enabled);
 public:
     /**
      * @return Pointer to application window.

@@ -2370,6 +2370,60 @@ void QC_ApplicationWindow::slotShowEntityDescriptionOnHover(bool toggle) {
     redrawAll();
 }
 
+void QC_ApplicationWindow::slotInfoCursorSetting(bool toggle) {
+    RS_DEBUG->print("QC_ApplicationWindow::slotInfoCursorSetting()");
+
+    auto *action = qobject_cast<QAction*>(sender());
+    if (action != nullptr) {
+        QVariant tag = action->property("InfoCursorActionTag");
+        if (tag.isValid()){
+            bool ok;
+            int tagValue = tag.toInt(&ok);
+            if (ok){
+                bool doUpdate = true;
+                switch (tagValue){
+                    case 0:{
+                        LC_SET_ONE("InfoOverlayCursor","Enabled", toggle);
+                        emit showInfoCursorSettingChanged(toggle);
+                        break;
+                    }
+                    case 1:{
+                        LC_SET_ONE("InfoOverlayCursor","ShowAbsolute", toggle);
+                        break;
+                    }
+                    case 2:{
+                        LC_SET_ONE("InfoOverlayCursor","ShowSnapInfo", toggle);
+                        break;
+                    }
+                    case 3:{
+                        LC_SET_ONE("InfoOverlayCursor","ShowRelativeDA", toggle);
+                        break;
+                    }
+                    case 4:{
+                        LC_SET_ONE("InfoOverlayCursor","ShowPrompt", toggle);
+                        break;
+                    }
+                    case 5:{
+                        LC_SET_ONE("InfoOverlayCursor","ShowPropertiesCatched", toggle);
+                        break;
+                    }
+                    default:
+                        doUpdate = false;
+                        break;
+                }
+
+                if (doUpdate){
+                    for (QC_MDIWindow *win: window_list) {
+                        QG_GraphicView *graphicView = win->getGraphicView();
+                        graphicView->loadSettings();
+                    }
+                    redrawAll();
+                }
+            }
+        }
+    }
+}
+
 void QC_ApplicationWindow::slotViewDraftLines(bool toggle) {
     RS_DEBUG->print("QC_ApplicationWindow::slotViewLinesDraft()");
 
@@ -2525,12 +2579,29 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
                 }
             }
         }
-        
-        bool infoCursorEnabled = LC_GET_ONE_BOOL("InfoOverlayCursor", "Enabled", true);
-        QAction *action = getAction("EntityDescriptionInfo");
-        if (action != nullptr){
-            action->setVisible(infoCursorEnabled);
+
+        // fixme - sand - consider emitting signal on properties change instead of processing changes there
+
+        LC_GROUP("InfoOverlayCursor");
+        {
+            bool infoCursorEnabled = LC_GET_BOOL("Enabled", true);
+            QAction *action = getAction("EntityDescriptionInfo");
+            if (action != nullptr) {
+                action->setVisible(infoCursorEnabled);
+            }
+
+            action = getAction("InfoCursorEnable");
+            if (action != nullptr) {
+                action->setChecked(infoCursorEnabled);
+            }
+            // todo - is necessary to check for null there?
+            getAction("InfoCursorAbs")->setChecked(LC_GET_BOOL("ShowAbsolute", true));
+            getAction("InfoCursorSnap")->setChecked(LC_GET_BOOL("ShowSnapInfo", true));
+            getAction("InfoCursorRel")->setChecked(LC_GET_BOOL("ShowRelativeDA", true));
+            getAction("InfoCursorPrompt")->setChecked(LC_GET_BOOL("ShowPrompt", true));
+            getAction("InfoCursorCatchedEntity")->setChecked(LC_GET_BOOL("ShowPropertiesCatched", true));
         }
+        LC_GROUP_END();
     }
 }
 
@@ -2559,7 +2630,7 @@ void QC_ApplicationWindow::slotImportBlock() {
             RS_ActionInterface *a =
                 actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
             if (a) {
-                RS_ActionLibraryInsert *action = (RS_ActionLibraryInsert *) a;
+                auto *action = (RS_ActionLibraryInsert *) a;
                 action->setFile(dxfPath);
             } else {
                 RS_DEBUG->print(RS_Debug::D_ERROR,

@@ -578,9 +578,29 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
 
     QAction *&entityInfoAction = map["EntityDescriptionInfo"];
     connect(main_window, &QC_ApplicationWindow::showEntityDescriptionOnHoverChanged, entityInfoAction, &QAction::setChecked);
+    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, entityInfoAction, &QAction::setVisible);
 
-    bool infoCursorEnabled = LC_GET_ONE_BOOL("InfoOverlayCursor", "Enabled", true);
-    entityInfoAction->setVisible(infoCursorEnabled);
+    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorAbs"], &QAction::setEnabled);
+    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorSnap"], &QAction::setEnabled);
+    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorRel"], &QAction::setEnabled);
+    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorPrompt"], &QAction::setEnabled);
+    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorCatchedEntity"], &QAction::setEnabled);
+
+    LC_GROUP("InfoOverlayCursor");
+    {
+        bool cursorEnabled = LC_GET_BOOL("Enabled", true);
+        map["InfoCursorEnable"]->setChecked(cursorEnabled);
+        map["InfoCursorAbs"]->setChecked(LC_GET_BOOL("ShowAbsolute", true));
+        map["InfoCursorSnap"]->setChecked(LC_GET_BOOL("ShowSnapInfo", true));
+        map["InfoCursorRel"]->setChecked(LC_GET_BOOL("ShowRelativeDA", true));
+        map["InfoCursorPrompt"]->setChecked(LC_GET_BOOL("ShowPrompt", true));
+        map["InfoCursorCatchedEntity"]->setChecked(LC_GET_BOOL("ShowPropertiesCatched", true));
+
+        map["EntityDescriptionInfo"]->setChecked(false);
+
+        entityInfoAction->setVisible(cursorEnabled);
+
+    }
 }
 
 void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_ActionGroupManager* agm) {

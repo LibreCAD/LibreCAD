@@ -110,12 +110,12 @@ private:
     QAction* urlActionTR(const QString& title, const char *url);
     void addAction(QMenu *menu, const char *actionName);
     void addAction(QToolBar* toolbar, const char* actionName);
-
     void sortToolbarsByByGroupAndTitle(QList<QToolBar *> &list);
-
     QToolBar *createNamedViewsToolbar(const QString &title, const QString &name, QSizePolicy toolBarPolicy);
-
     void makeActionsInvisible(const std::vector<QString> &actionNames);
+    QToolBar *doCreateToolBar(const QString title, const QString &name, const QSizePolicy &toolBarPolicy) const;
+    void createInfoCursorToolbar(QSizePolicy &tbPolicy);
+    void addInfoCursorOptionAction(QMenu *menu, const char *name, int tag);
 };
 
 #endif // LC_WIDGETFACTORY_H
