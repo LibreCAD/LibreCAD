@@ -1211,6 +1211,11 @@ RS_Vector RS_Ellipse::getNearestOrthTan(
     return getCenter() + vp;
 }
 
+double RS_Ellipse::getBulge() const
+{
+    double bulge = std::tan(std::abs(getAngleLength()) / 4.0);
+    return isReversed() ? -bulge : bulge;
+}
 
 RS_Vector RS_Ellipse::dualLineTangentPoint(const RS_Vector& line) const{
     // u x + v y = 1
@@ -1503,7 +1508,6 @@ RS_Entity& RS_Ellipse::shear(double k)
     *this = e1;
     return *this;
 }
-
 
 /**
  * is the Ellipse an Arc

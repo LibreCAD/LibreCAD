@@ -31,9 +31,8 @@
 #include <QObject>
 
 #include "qc_applicationwindow.h"
-#include "rs_arc.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
+#include "rs_ellipse.h"
 #include "rs_document.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
@@ -244,11 +243,14 @@ std::unique_ptr<RS_Entity> RS_Polyline::createVertex(const RS_Vector& v, double 
         double a1 = center.angleTo(prepend ? v : data.endpoint);
         double a2 = center.angleTo(prepend ? data.startpoint : v);
 
-        RS_ArcData const d(center, radius,
-                           a1, a2,
-                           reversed);
+        RS_EllipseData const d{
+            center,
+            RS_Vector{radius, 0.},
+            1.,
+            a1, a2,
+            reversed};
 
-        entity = std::make_unique<RS_Arc>(this, d);
+        entity = std::make_unique<RS_Ellipse>(this, d);
         entity->setSelected(isSelected());
         entity->setPen(RS_Pen(RS2::FlagInvalid));
         entity->setLayer(nullptr);
@@ -338,8 +340,8 @@ RS_Vector RS_Polyline::getEndpoint() const {
 double RS_Polyline::getClosingBulge() const{
     if (isClosed()) {
         RS_Entity const* e = last();
-        if (e && e->rtti()==RS2::EntityArc) {
-            return static_cast<RS_Arc const*>(e)->getBulge();
+        if (e && e->rtti()==RS2::EntityEllipse) {
+            return static_cast<RS_Ellipse const*>(e)->getBulge();
         }
     }
 

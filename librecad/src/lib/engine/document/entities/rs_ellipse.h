@@ -201,6 +201,8 @@ public:
                                 const RS_Line& normal,
                                 bool onEntity = false) const override;
 
+    double getBulge() const;
+
     RS_Vector dualLineTangentPoint(const RS_Vector& line) const override;
 
     bool switchMajorMinor(void); //switch major minor axes to keep major the longer ellipse radius
