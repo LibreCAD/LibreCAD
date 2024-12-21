@@ -1642,6 +1642,14 @@ lclEdit::lclEdit(const tile_t& tile)
             + m_edit->textMargins().right());
     }
 
+    if(noQuotes(tile.password_char) != "")
+    {
+        m_edit->setEchoMode(QLineEdit::Password);
+        DclEditStyle *style = new DclEditStyle(edit()->style());
+        style->setPasswordCharacter(noQuotes(tile.password_char).at(0));
+        edit()->setStyle(style);
+    }
+
     if(int(tile.width))
     {
         m_edit->setMinimumWidth(int(tile.width));
@@ -1714,7 +1722,7 @@ lclEdit::lclEdit(const tile_t& tile)
     }
     m_layout->addWidget(m_edit);
 
-
+#if 0
     /* FIXME set focus to QLineEdit */
     if(noQuotes(tile.mnemonic).size() == 1)
     {
@@ -1727,8 +1735,7 @@ lclEdit::lclEdit(const tile_t& tile)
             m_label->setText(label);
         }
     }
-
-    /* FIXME password_char */
+#endif
 
     if(!tile.is_enabled)
     {
@@ -1852,7 +1859,7 @@ lclListBox::lclListBox(const tile_t& tile)
     {
         m_list->setFocusPolicy(Qt::NoFocus);
     }
-
+#if 0
     /* FIXME set focus to Q */
     if(noQuotes(tile.mnemonic).size() == 1)
     {
@@ -1865,7 +1872,7 @@ lclListBox::lclListBox(const tile_t& tile)
             //m_list->setText(label);
         }
     }
-
+#endif
     /*
      * FIXME
      * allow_accept
@@ -2034,7 +2041,7 @@ lclSlider::lclSlider(const tile_t& tile)
     {
         m_slider->setFocusPolicy(Qt::NoFocus);
     }
-
+#if 0
     /* FIXME set focus to Q */
     if(noQuotes(tile.mnemonic).size() == 1)
     {
@@ -2047,7 +2054,7 @@ lclSlider::lclSlider(const tile_t& tile)
             //m_list->setText(label);
         }
     }
-
+#endif
     /*
      * FIXME
      * big_increment
@@ -2228,7 +2235,7 @@ lclScrollBar::lclScrollBar(const tile_t& tile)
     {
         m_slider->setFocusPolicy(Qt::NoFocus);
     }
-
+#if 0
     /* FIXME set focus to Q */
     if(noQuotes(tile.mnemonic).size() == 1)
     {
@@ -2241,7 +2248,7 @@ lclScrollBar::lclScrollBar(const tile_t& tile)
             //m_list->setText(label);
         }
     }
-
+#endif
     /*
      * FIXME
      * big_increment
@@ -2436,6 +2443,7 @@ lclDial::lclDial(const tile_t& tile)
         m_slider->setFocusPolicy(Qt::NoFocus);
     }
 
+#if 0
     /* FIXME set focus to Q */
     if(noQuotes(tile.mnemonic).size() == 1)
     {
@@ -2448,6 +2456,7 @@ lclDial::lclDial(const tile_t& tile)
             //m_list->setText(label);
         }
     }
+#endif
 
     /*
      * FIXME

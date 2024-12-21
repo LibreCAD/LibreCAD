@@ -165,6 +165,10 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
     }
 // rule [6]
     const QString dcLkeywordPatternsFunctions[] = {
+        QStringLiteral("\\b.RunSimpleString\\b"),
+        QStringLiteral("\\b.RunSimpleFile\\b"),
+        QStringLiteral("\\b.EvalSimpleString\\b"),
+        QStringLiteral("\\b.EvalSimpleFile\\b"),
         QStringLiteral("\\b.MessageBox\\b"),
         QStringLiteral("\\b.OpenFileDialog\\b"),
         QStringLiteral("\\b.GetIntDialog\\b"),

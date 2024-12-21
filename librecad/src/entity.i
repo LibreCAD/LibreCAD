@@ -1,4 +1,5 @@
-%module(directors="1") librecad;
+//%module(directors="1") librecad;
+%module librecad;
 
 %rename(__aref__)             *::operator[];
 %rename(__lshift__)           *::operator<<;
@@ -14,6 +15,7 @@
 
 #include "rs_pythongui.h"
 #include "rs_pythondcl.h"
+#include "rs_pythonlisp.h"
 
 #include "rs.h"
 #include "rs_flags.h"
@@ -101,16 +103,19 @@
 //#include "rs_utility.h"                  // problem child X-(
 
 %}
+/*
 %feature("director") RS_Undoable;
 %feature("director") RS_Entity;
 %feature("director") RS_AtomicEntity;
 %feature("director") LC_CachedLengthEntity;
 %feature("director") RS_Line;
+*/
 
 %include "std_array.i"
 
 %include "lib/scripting/rs_pythondcl.h"
 %include "lib/scripting/rs_pythongui.h"
+%include "lib/scripting/rs_pythonlisp.h"
 
 %template(IntegerArray2) std::array<int, 2>;
 %ignore operator<<;

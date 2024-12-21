@@ -30,6 +30,7 @@
 #include <QSpacerItem>
 #include <QColor>
 #include <QPainter>
+#include <QProxyStyle>
 
 #ifdef DEVELOPER
 
@@ -103,9 +104,9 @@ public:
     lclConstant(const lclConstant& that, lclValuePtr meta)
         : lclValue(meta), m_name(that.m_name) { }
 
-    virtual String print(bool) const { return m_name; }
+    virtual String print(bool) const override { return m_name; }
 
-    virtual LCLTYPE type() const {
+    virtual LCLTYPE type() const override {
         if ((m_name.compare("false") ||
             (m_name.compare("true")))) {
             return LCLTYPE::BOOLEAN; }
@@ -113,7 +114,7 @@ public:
             return LCLTYPE::UNDEF; }
     }
 
-    virtual bool doIsEqualTo(const lclValue* rhs) const {
+    virtual bool doIsEqualTo(const lclValue* rhs) const override {
         return this == rhs; // these are singletons
     }
 
@@ -129,15 +130,15 @@ public:
     lclInteger(const lclInteger& that, lclValuePtr meta)
         : lclValue(meta), m_value(that.m_value) { }
 
-    virtual String print(bool) const {
+    virtual String print(bool) const override {
         return std::to_string(m_value);
     }
 
-    virtual LCLTYPE type() const { return LCLTYPE::INT; }
+    virtual LCLTYPE type() const override { return LCLTYPE::INT; }
 
     int64_t value() const { return m_value; }
 
-    virtual bool doIsEqualTo(const lclValue* rhs) const;
+    virtual bool doIsEqualTo(const lclValue* rhs) const override;
 
     WITH_META(lclInteger)
 
@@ -151,16 +152,16 @@ public:
     lclDouble(const lclDouble& that, lclValuePtr meta)
         : lclValue(meta), m_value(that.m_value) { }
 
-    virtual String print(bool) const {
+    virtual String print(bool) const override {
         return std::to_string(m_value);
     }
 
     virtual bool isFloat() const { return true; }
-    virtual LCLTYPE type() const { return LCLTYPE::REAL; }
+    virtual LCLTYPE type() const override { return LCLTYPE::REAL; }
 
     double value() const { return m_value; }
 
-    virtual bool doIsEqualTo(const lclValue* rhs) const;
+    virtual bool doIsEqualTo(const lclValue* rhs) const override;
 
     WITH_META(lclDouble)
 
@@ -178,16 +179,16 @@ public:
     lclFile(const lclFile& that, lclValuePtr meta)
         : lclValue(meta), m_value(that.m_value) { }
 
-    virtual String print(bool) const {
+    virtual String print(bool) const override {
         String path = "#<file \"";
         path += m_path;
         path += "\">";
         return path;
     }
 
-    virtual LCLTYPE type() const { return LCLTYPE::FILE; }
+    virtual LCLTYPE type() const override { return LCLTYPE::FILE; }
 
-    virtual bool doIsEqualTo(const lclValue* rhs) const {
+    virtual bool doIsEqualTo(const lclValue* rhs) const override {
         return value() == static_cast<const lclFile*>(rhs)->value();
     }
 
@@ -215,7 +216,7 @@ public:
     lclStringBase(const lclStringBase& that, lclValuePtr meta)
         : lclValue(meta), m_value(that.value()) { }
 
-    virtual String print(bool) const { return m_value; }
+    virtual String print(bool) const override { return m_value; }
 
     String value() const { return m_value; }
 
@@ -230,12 +231,12 @@ public:
     lclString(const lclString& that, lclValuePtr meta)
         : lclStringBase(that, meta) { }
 
-    virtual String print(bool readably) const;
-    virtual LCLTYPE type() const { return LCLTYPE::STR; }
+    virtual String print(bool readably) const override;
+    virtual LCLTYPE type() const override { return LCLTYPE::STR; }
 
     String escapedValue() const;
 
-    virtual bool doIsEqualTo(const lclValue* rhs) const {
+    virtual bool doIsEqualTo(const lclValue* rhs) const override {
         return value() == static_cast<const lclString*>(rhs)->value();
     }
 
@@ -249,11 +250,11 @@ public:
     lclKeyword(const lclKeyword& that, lclValuePtr meta)
         : lclStringBase(that, meta) { }
 
-    virtual bool doIsEqualTo(const lclValue* rhs) const {
+    virtual bool doIsEqualTo(const lclValue* rhs) const override {
         return value() == static_cast<const lclKeyword*>(rhs)->value();
     }
 
-    virtual LCLTYPE type() const { return LCLTYPE::KEYW; }
+    virtual LCLTYPE type() const override { return LCLTYPE::KEYW; }
 
     WITH_META(lclKeyword)
 };
@@ -265,13 +266,13 @@ public:
     lclSymbol(const lclSymbol& that, lclValuePtr meta)
         : lclStringBase(that, meta) { }
 
-    virtual lclValuePtr eval(lclEnvPtr env);
+    virtual lclValuePtr eval(lclEnvPtr env) override;
 
-    virtual bool doIsEqualTo(const lclValue* rhs) const {
+    virtual bool doIsEqualTo(const lclValue* rhs) const override {
         return value() == static_cast<const lclSymbol*>(rhs)->value();
     }
 
-    virtual LCLTYPE type() const { return LCLTYPE::SYM; }
+    virtual LCLTYPE type() const override { return LCLTYPE::SYM; }
 
     WITH_META(lclSymbol)
 };
@@ -283,7 +284,7 @@ public:
     lclSequence(const lclSequence& that, lclValuePtr meta);
     virtual ~lclSequence();
 
-    virtual String print(bool readably) const;
+    virtual String print(bool readably) const override;
 
     lclValueVec* evalItems(lclEnvPtr env) const;
     int count() const { return m_items->size(); }
@@ -294,7 +295,7 @@ public:
     lclValueIter begin() const { return m_items->begin(); }
     lclValueIter end()   const { return m_items->end(); }
 
-    virtual bool doIsEqualTo(const lclValue* rhs) const;
+    virtual bool doIsEqualTo(const lclValue* rhs) const override;
 
     virtual lclValuePtr conj(lclValueIter argsBegin,
                               lclValueIter argsEnd) const = 0;
@@ -322,12 +323,12 @@ public:
     lclList(const lclList& that, lclValuePtr meta)
         : lclSequence(that, meta) { }
 
-    virtual String print(bool readably) const;
-    virtual LCLTYPE type() const { return LCLTYPE::LIST; }
-    virtual lclValuePtr eval(lclEnvPtr env);
+    virtual String print(bool readably) const override;
+    virtual LCLTYPE type() const override { return LCLTYPE::LIST; }
+    virtual lclValuePtr eval(lclEnvPtr env) override;
 
     virtual lclValuePtr conj(lclValueIter argsBegin,
-                             lclValueIter argsEnd) const;
+                             lclValueIter argsEnd) const override;
 
     WITH_META(lclList)
 };
@@ -340,12 +341,12 @@ public:
     lclVector(const lclVector& that, lclValuePtr meta)
         : lclSequence(that, meta) { }
 
-    virtual lclValuePtr eval(lclEnvPtr env);
-    virtual String print(bool readably) const;
-    virtual LCLTYPE type() const { return LCLTYPE::VEC; }
+    virtual lclValuePtr eval(lclEnvPtr env) override;
+    virtual String print(bool readably) const override;
+    virtual LCLTYPE type() const override { return LCLTYPE::VEC; }
 
     virtual lclValuePtr conj(lclValueIter argsBegin,
-                             lclValueIter argsEnd) const;
+                             lclValueIter argsEnd) const override;
 
     WITH_META(lclVector)
 };
@@ -371,16 +372,16 @@ public:
     lclValuePtr assoc(lclValueIter argsBegin, lclValueIter argsEnd) const;
     lclValuePtr dissoc(lclValueIter argsBegin, lclValueIter argsEnd) const;
     bool contains(lclValuePtr key) const;
-    lclValuePtr eval(lclEnvPtr env);
+    lclValuePtr eval(lclEnvPtr env) override;
     lclValuePtr get(lclValuePtr key) const;
     lclValuePtr keys() const;
     lclValuePtr values() const;
 
-    virtual String print(bool readably) const;
+    virtual String print(bool readably) const override;
 
-    virtual bool doIsEqualTo(const lclValue* rhs) const;
+    virtual bool doIsEqualTo(const lclValue* rhs) const override;
 
-    virtual LCLTYPE type() const { return LCLTYPE::MAP; }
+    virtual LCLTYPE type() const override { return LCLTYPE::MAP; }
 
     WITH_META(lclHash)
 
@@ -405,19 +406,19 @@ public:
     : lclApplicable(meta), m_name(that.m_name), m_handler(that.m_handler) { }
 
     virtual lclValuePtr apply(lclValueIter argsBegin,
-                              lclValueIter argsEnd) const;
+                              lclValueIter argsEnd) const override;
 
-    virtual String print(bool) const {
+    virtual String print(bool) const override {
         return STRF("#builtin-function(%s)", m_name.c_str());
     }
 
-    virtual bool doIsEqualTo(const lclValue* rhs) const {
+    virtual bool doIsEqualTo(const lclValue* rhs) const override {
         return this == rhs; // these are singletons
     }
 
     String name() const { return m_name; }
 
-    virtual LCLTYPE type() const { return LCLTYPE::BUILTIN; }
+    virtual LCLTYPE type() const override { return LCLTYPE::BUILTIN; }
 
     WITH_META(lclBuiltIn)
 
@@ -434,22 +435,22 @@ public:
     lclLambda(const lclLambda& that, bool isMacro);
 
     virtual lclValuePtr apply(lclValueIter argsBegin,
-                              lclValueIter argsEnd) const;
+                              lclValueIter argsEnd) const override;
 
     lclValuePtr getBody() const { return m_body; }
     lclEnvPtr makeEnv(lclValueIter argsBegin, lclValueIter argsEnd) const;
 
-    virtual bool doIsEqualTo(const lclValue* rhs) const {
+    virtual bool doIsEqualTo(const lclValue* rhs) const override {
         return this == rhs; // do we need to do a deep inspection?
     }
 
-    virtual String print(bool) const {
+    virtual String print(bool) const override {
         return STRF("#user-%s(%p)", m_isMacro ? "macro" : "function", this);
     }
 
     bool isMacro() const { return m_isMacro; }
 
-    virtual lclValuePtr doWithMeta(lclValuePtr meta) const;
+    virtual lclValuePtr doWithMeta(lclValuePtr meta) const override;
 
 private:
     const StringVec   m_bindings;
@@ -464,15 +465,15 @@ public:
     lclAtom(const lclAtom& that, lclValuePtr meta)
         : lclValue(meta), m_value(that.m_value) { }
 
-    virtual bool doIsEqualTo(const lclValue* rhs) const {
+    virtual bool doIsEqualTo(const lclValue* rhs) const override {
         return this->m_value->isEqualTo(rhs);
     }
 
-    virtual String print(bool readably) const {
+    virtual String print(bool readably) const override {
         return "(atom " + m_value->print(readably) + ")";
     };
 
-    virtual LCLTYPE type() const { return LCLTYPE::ATOM; }
+    virtual LCLTYPE type() const override { return LCLTYPE::ATOM; }
 
     lclValuePtr deref() const { return m_value; }
 
@@ -1120,6 +1121,24 @@ private:
     dclVectors *m_pixs;
 };
 
+class DclEditStyle : public QProxyStyle
+{
+public:
+    DclEditStyle(QStyle *style = 0) : QProxyStyle(style) { }
+
+    int styleHint(StyleHint hint, const QStyleOption * option = 0,
+                  const QWidget * widget = 0, QStyleHintReturn * returnData = 0 ) const
+    {
+        if (hint==QStyle::SH_LineEdit_PasswordCharacter)
+            return m_char;
+        return QProxyStyle::styleHint(hint, option, widget, returnData);
+    }
+
+    void setPasswordCharacter(const char pwchar) { m_char = pwchar; }
+private:
+    char m_char;
+};
+
 class lclGui : public lclValue {
 public:
     lclGui(const tile_t& tile) : m_value(tile) { }
@@ -1130,13 +1149,13 @@ public:
 
     tile_t value() const { return m_value; }
 
-    virtual String print(bool) const {
+    virtual String print(bool) const override {
         return STRF("#builtin-gui(%s)", m_value.name.c_str());
     }
 
-    virtual LCLTYPE type() const { return LCLTYPE::GUI; }
+    virtual LCLTYPE type() const override { return LCLTYPE::GUI; }
 
-    virtual bool doIsEqualTo(const lclValue*) const { return false; }
+    virtual bool doIsEqualTo(const lclValue*) const override { return false; }
 
     virtual lclValuePtr conj(lclValueIter argsBegin,
                              lclValueIter argsEnd) const;

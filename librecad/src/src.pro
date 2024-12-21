@@ -441,6 +441,7 @@ HEADERS += \
     lib/scripting/rs_python.h \
     lib/scripting/rs_pythondcl.h \
     lib/scripting/rs_pythongui.h \
+    lib/scripting/rs_pythonlisp.h \
     lib/scripting/rs_python_wrappers.h \
     lib/scripting/rs_script.h \
     lib/scripting/rs_scriptlist.h \
@@ -624,6 +625,7 @@ SOURCES += \
     lib/scripting/rs_python.cpp \
     lib/scripting/rs_pythondcl.cpp \
     lib/scripting/rs_pythongui.cpp \
+    lib/scripting/rs_pythonlisp.cpp \
     lib/scripting/rs_python_wrappers.cpp \
     lib/scripting/rs_script.cpp \
     lib/scripting/rs_scriptlist.cpp \
