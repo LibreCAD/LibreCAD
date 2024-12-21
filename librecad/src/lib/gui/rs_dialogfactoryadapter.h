@@ -83,6 +83,8 @@ public:
  void setRelativeZeroCoordinatesWidget([[maybe_unused]]LC_RelZeroCoordinatesWidget *widget) override {}
  void setSelectionWidget(QG_SelectionWidget* ) override {}
 	void setCommandWidget(QG_CommandWidget* ) override {}
+    void setLspCommandWidget(QG_Lsp_CommandWidget* ) override {}
+    void setPyCommandWidget(QG_Py_CommandWidget* ) override {}
 	void displayBlockName(const QString&, const bool&) override {}
  void hideSnapOptions() override {};
  void removeOptionsWidget([[maybe_unused]]QWidget *options) override {}
