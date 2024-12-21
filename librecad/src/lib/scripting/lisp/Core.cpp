@@ -1,4 +1,5 @@
 #include "rs_python.h"
+#include "rs_lisp.h"
 #include "LCL.h"
 #include "Environment.h"
 #include "StaticList.h"
@@ -25,6 +26,7 @@
 #include <cctype>
 #include <climits>
 #include <chrono>
+#include <ctime>
 #include <fstream>
 #include <iostream>
 #include <filesystem>
@@ -3478,6 +3480,13 @@ BUILTIN("py-simple-file")
     return lcl::integer(RS_PYTHON->runFile(com->value().c_str()));
 }
 
+BUILTIN("rand")
+{
+    CHECK_ARGS_IS(1);
+    AG_INT(max);
+    return lcl::integer(rand() % max->value());
+}
+
 BUILTIN("read-string")
 {
     CHECK_ARGS_IS(1);
@@ -4128,6 +4137,14 @@ BUILTIN("time-ms")
     );
 
     return lcl::integer(ms.count());
+}
+
+BUILTIN("timeout")
+{
+    CHECK_ARGS_IS(1);
+    AG_INT(timeout);
+    SleeperThread::msleep(timeout->value());
+    return lcl::nilValue();
 }
 
 BUILTIN("type?")

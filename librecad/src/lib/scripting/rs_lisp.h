@@ -28,6 +28,7 @@
 #define RS_LISP_H
 
 #include <QString>
+#include <QThread>
 #include "lisp.h"
 
 #ifdef DEVELOPER
@@ -67,6 +68,15 @@ public:
 private:
     RS_Lisp();
     static RS_Lisp* unique;
+};
+
+class SleeperThread : public QThread
+{
+public:
+    static void msleep(unsigned long msecs)
+    {
+        QThread::msleep(msecs);
+    }
 };
 
 #endif // DEVELOPER
