@@ -166,16 +166,12 @@ namespace {
                         blockList->activate(*pointer);
                 }};
                 auto* action = new RS_ActionBlocksEdit(*container, view);
-                if (action == nullptr)
-                    return;
                 view.setCurrentAction(action);
                 break;
             }
             default:
             {
-                auto* action = new RS_ActionModifyEntity(*container, view);
-                if (action == nullptr)
-                    return;
+                auto* action = new RS_ActionModifyEntity(*container, view, false);
                 action->setEntity(&entity);
                 view.setCurrentAction(action);
                 action->trigger();
@@ -440,18 +436,15 @@ void QG_GraphicView::mousePressEvent(QMouseEvent* event){
     }
 }
 
-void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e)
-{
-    switch(e->button())
-    {
+void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e){
+    switch(e->button()){
         default:
             break;
         case Qt::MiddleButton:
             setCurrentAction(new RS_ActionZoomAuto(*container, *this));
             break;
         case Qt::LeftButton:
-            if (menus.contains("Double-Click"))
-            {
+            if (menus.contains("Double-Click")){
                 killAllActions();
                 menus["Double-Click"]->popup(mapToGlobal(e->pos()));
             } else {
@@ -463,8 +456,7 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e)
     e->accept();
 }
 
-void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
-{
+void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent");
 
     event->accept();

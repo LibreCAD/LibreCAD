@@ -34,10 +34,11 @@
 #include "rs_graphicview.h"
 
 RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
+        RS_GraphicView& graphicView, bool changeCursor)
 		:RS_PreviewActionInterface("Modify Entity", container, graphicView)
 		,en(nullptr){
-	actionType=RS2::ActionModifyEntity;
+	  actionType=RS2::ActionModifyEntity;
+   modifyCursor = changeCursor;
 }
 
 void RS_ActionModifyEntity::setDisplaySelected(bool highlighted){
@@ -116,7 +117,12 @@ void RS_ActionModifyEntity::onMouseRightButtonRelease(int status, [[maybe_unused
 }
 
 RS2::CursorType RS_ActionModifyEntity::doGetMouseCursor([[maybe_unused]] int status){
-    return RS2::SelectCursor;
+    if (modifyCursor) {
+        return RS2::SelectCursor;
+    }
+    else{
+        return RS2::NoCursorChange;
+    }
 }
 
 void RS_ActionModifyEntity::updateMouseButtonHints() {

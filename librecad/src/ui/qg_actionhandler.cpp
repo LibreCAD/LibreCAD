@@ -831,7 +831,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionModifyRotate2(*document, *view);
             break;
         case RS2::ActionModifyEntity:
-            a = new RS_ActionModifyEntity(*document, *view);
+            a = new RS_ActionModifyEntity(*document, *view, true);
             break;
         case RS2::ActionModifyTrim:
             a = new RS_ActionModifyTrim(*document, *view, false);
