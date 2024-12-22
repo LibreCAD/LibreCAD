@@ -1185,27 +1185,29 @@ void lclRadioButton::clicked(bool checked)
 
 lclRow::lclRow(const tile_t& tile)
     : lclGui(tile)
+    , m_widget(new QWidget)
     , m_layout(new QHBoxLayout)
 {
-#if 0
+    m_widget->setLayout(m_layout);
+
     if(int(tile.width))
     {
-        m_layout->setMinimumWidth(int(tile.width * 10));
+        m_widget->setMinimumWidth(int(tile.width * 10));
     }
 
     if(int(tile.height))
     {
-        m_layout->setMinimumHeight(int(tile.height * 10));
+        m_widget->setMinimumHeight(int(tile.height * 10));
     }
 
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_layout->setFixedWidth(int(tile.width * 10));
+            m_widget->setFixedWidth(int(tile.width * 10));
         }
         else
         {
-            m_layout->setFixedWidth(80);
+            m_widget->setFixedWidth(m_widget->width());
         }
 
     }
@@ -1214,14 +1216,14 @@ lclRow::lclRow(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_layout->setMinimumHeight(int(tile.height * 10));
+            m_widget->setMinimumHeight(int(tile.height * 10));
         }
         else
         {
-            m_layout->setFixedWidth(32);
+            m_widget->setFixedWidth(m_widget->height());
         }
     }
-#endif
+
     if(tile.id == CONCATENATION)
     {
         m_layout->setSpacing(0);
@@ -1375,27 +1377,29 @@ lclBoxedRow::lclBoxedRow(const tile_t& tile)
 
 lclColumn::lclColumn(const tile_t& tile)
     : lclGui(tile)
+    , m_widget(new QWidget)
     , m_layout(new QVBoxLayout)
 {
-#if 0
+    m_widget->setLayout(m_layout);
+
     if(int(tile.width))
     {
-        m_layout->setMinimumWidth(int(tile.width * 10));
+        m_widget->setMinimumWidth(int(tile.width * 10));
     }
 
     if(int(tile.height))
     {
-        m_layout->setMinimumHeight(int(tile.height * 10));
+        m_widget->setMinimumHeight(int(tile.height * 10));
     }
 
     if (tile.fixed_width)
     {
         if(int(tile.width)) {
-            m_layout->setFixedWidth(int(tile.width * 10));
+            m_widget->setFixedWidth(int(tile.width * 10));
         }
         else
         {
-            m_layout->setFixedWidth(80);
+            m_widget->setFixedWidth(m_widget->width());
         }
 
     }
@@ -1404,14 +1408,13 @@ lclColumn::lclColumn(const tile_t& tile)
     {
         if(int(tile.height))
         {
-            m_layout->setMinimumHeight(int(tile.height * 10));
+            m_widget->setMinimumHeight(int(tile.height * 10));
         }
         else
         {
-            m_layout->setFixedWidth(32);
+            m_widget->setFixedWidth(m_widget->height());
         }
     }
-#endif
 
     if(tile.id == PARAGRAPH)
     {
@@ -1497,6 +1500,24 @@ lclLabel::lclLabel(const tile_t& tile)
     }
 }
 
+bool ListEvent::eventFilter(QObject *o, QEvent *e)
+{
+    if (e->type() == QEvent::MouseButtonPress) {
+        qDebug() << "QEvent::MouseButtonPress:";
+        o->dumpObjectInfo();
+    } else if (e->type() == QEvent::MouseButtonRelease) {
+        qDebug() << "QEvent::MouseButtonRelease:";
+        o->dumpObjectInfo();
+    }   if (e->type() == QEvent::KeyPress) {
+        qDebug() << "QEvent::KeyPress:";
+        o->dumpObjectInfo();
+    } else if (e->type() == QEvent::KeyRelease) {
+        qDebug() << "QEvent::KeyRelease:";
+        o->dumpObjectInfo();
+    }
+    return false;
+}
+
 lclPopupList::lclPopupList(const tile_t& tile)
     : lclGui(tile)
     , m_list(new QComboBox)
@@ -1512,7 +1533,24 @@ lclPopupList::lclPopupList(const tile_t& tile)
             + m_list->contentsMargins().right()
             + label.margin());
     }
+#if 0
+    if(tile.allow_accept)
+    {
+        QObject::connect(m_list, &QComboBox::doubleClicked, [&], {  }; );
+    }
+#endif
 
+#if 0
+    ListEvent *listEvent = new ListEvent();
+
+    m_list->installEventFilter(listEvent);
+    m_list->view(); // or any other dummy call to force the private container to get instantiated
+
+    foreach (QObject * cobj, m_list->children())
+    {
+        cobj->installEventFilter(listEvent);
+    }
+#endif
     if(int(tile.width))
     {
         m_list->setMinimumWidth(int(tile.width));
@@ -1587,13 +1625,19 @@ lclPopupList::lclPopupList(const tile_t& tile)
         m_list->setFocusPolicy(Qt::NoFocus);
     }
 
+    if(noQuotes(tile.list) != "")
+    {
+        QString list = noQuotes(tile.list).c_str();
+        QStringList entryList = list.split( "\n" );
+        m_list->insertItems(0, entryList);
+    }
+
     /*
      * FIXME
-     * allow_accept
-     * fixed_width_font
-     * list
-     * tab_truncate
-     * tabs
+     * allow_accept: double click/Return/Enter
+     * fixed_width_font: Specifies whether a list box or pop-up list will display text in a fixed pitch font.
+     * tab_truncate: Specifies whether the text in a list box or pop-up list is truncated if it is larger than the associated tab stop.
+     * tabs: This attribute specifies tab spacing, which is useful for creating vertical columns of text. string: a string of real numbers or integers, each separated by a space.
     */
 
     QObject::connect(m_list, QOverload<const QString&>::of(&QComboBox::currentTextChanged), [&](const QString& currentText) { currentTextChanged(currentText); });
@@ -1722,21 +1766,6 @@ lclEdit::lclEdit(const tile_t& tile)
     }
     m_layout->addWidget(m_edit);
 
-#if 0
-    /* FIXME set focus to QLineEdit */
-    if(noQuotes(tile.mnemonic).size() == 1)
-    {
-        QString label = noQuotes(tile.label).c_str();
-
-        if(!label.contains("&") &&
-            label.contains(noQuotes(tile.mnemonic).c_str()))
-        {
-            label.replace(label.indexOf(noQuotes(tile.mnemonic).c_str()), 1, label.first(1) + "&");
-            m_label->setText(label);
-        }
-    }
-#endif
-
     if(!tile.is_enabled)
     {
         m_edit->setEnabled(false);
@@ -1859,27 +1888,13 @@ lclListBox::lclListBox(const tile_t& tile)
     {
         m_list->setFocusPolicy(Qt::NoFocus);
     }
-#if 0
-    /* FIXME set focus to Q */
-    if(noQuotes(tile.mnemonic).size() == 1)
-    {
-        QString label = noQuotes(tile.label).c_str();
 
-        if(!label.contains("&") &&
-            label.contains(noQuotes(tile.mnemonic).c_str()))
-        {
-            label.replace(label.indexOf(noQuotes(tile.mnemonic).c_str()), 1, label.first(1) + "&");
-            //m_list->setText(label);
-        }
-    }
-#endif
     /*
      * FIXME
-     * allow_accept
-     * fixed_width_font
-     * list
-     * tab_truncate
-     * tabs
+     * allow_accept: double click/Return/Enter
+     * fixed_width_font: Specifies whether a list box or pop-up list will display text in a fixed pitch font.
+     * tab_truncate: Specifies whether the text in a list box or pop-up list is truncated if it is larger than the associated tab stop.
+     * tabs: This attribute specifies tab spacing, which is useful for creating vertical columns of text. string: a string of real numbers or integers, each separated by a space.
     */
 
     if(!tile.is_enabled)
@@ -1890,6 +1905,13 @@ lclListBox::lclListBox(const tile_t& tile)
     if(tile.multiple_select)
     {
         m_list->setSelectionMode(QAbstractItemView::MultiSelection);
+    }
+
+    if(noQuotes(tile.list) != "")
+    {
+        QString list = noQuotes(tile.list).c_str();
+        QStringList entryList = list.split( "\n" );
+        m_list->insertItems(0, entryList);
     }
 
     QObject::connect(m_list, QOverload<const QString&>::of(&QListWidget::currentTextChanged), [&](const QString& currentText) { currentTextChanged(currentText); });
@@ -1942,12 +1964,21 @@ lclSlider::lclSlider(const tile_t& tile)
         m_slider->setMaximum(0);
     }
 
-    // FIX ME
+    /* FIXME
+     * This attribute specifies how much a slider increments when the user clicks the end arrows of the slider.
+     */
+
     if(int(tile.small_increment))
     {
         m_slider->setTickInterval(int(tile.small_increment));
     }
-    // FIX ME
+
+    /* FIXME
+     * This attribute specifies how much a slider increments when the user clicks the central portion of the slider.
+     * The default amount is 1/10 of the total range between the minimum value (specified by the min_value attribute)
+     *  and the maximum value, specified by the max_value attribute.
+     */
+
     if(int(tile.big_increment))
     {
         m_slider->setTickInterval(int(tile.big_increment));
@@ -2041,25 +2072,11 @@ lclSlider::lclSlider(const tile_t& tile)
     {
         m_slider->setFocusPolicy(Qt::NoFocus);
     }
-#if 0
-    /* FIXME set focus to Q */
-    if(noQuotes(tile.mnemonic).size() == 1)
-    {
-        QString label = noQuotes(tile.label).c_str();
 
-        if(!label.contains("&") &&
-            label.contains(noQuotes(tile.mnemonic).c_str()))
-        {
-            label.replace(label.indexOf(noQuotes(tile.mnemonic).c_str()), 1, label.first(1) + "&");
-            //m_list->setText(label);
-        }
-    }
-#endif
     /*
      * FIXME
      * big_increment
      * label
-     * mnemonic
      * small_increment
      *
     */
@@ -2235,25 +2252,11 @@ lclScrollBar::lclScrollBar(const tile_t& tile)
     {
         m_slider->setFocusPolicy(Qt::NoFocus);
     }
-#if 0
-    /* FIXME set focus to Q */
-    if(noQuotes(tile.mnemonic).size() == 1)
-    {
-        QString label = noQuotes(tile.label).c_str();
 
-        if(!label.contains("&") &&
-            label.contains(noQuotes(tile.mnemonic).c_str()))
-        {
-            label.replace(label.indexOf(noQuotes(tile.mnemonic).c_str()), 1, label.first(1) + "&");
-            //m_list->setText(label);
-        }
-    }
-#endif
     /*
      * FIXME
      * big_increment
      * label
-     * mnemonic
      * small_increment
      *
     */
@@ -2443,26 +2446,10 @@ lclDial::lclDial(const tile_t& tile)
         m_slider->setFocusPolicy(Qt::NoFocus);
     }
 
-#if 0
-    /* FIXME set focus to Q */
-    if(noQuotes(tile.mnemonic).size() == 1)
-    {
-        QString label = noQuotes(tile.label).c_str();
-
-        if(!label.contains("&") &&
-            label.contains(noQuotes(tile.mnemonic).c_str()))
-        {
-            label.replace(label.indexOf(noQuotes(tile.mnemonic).c_str()), 1, label.first(1) + "&");
-            //m_list->setText(label);
-        }
-    }
-#endif
-
     /*
      * FIXME
      * big_increment
      * label
-     * mnemonic
      * small_increment
      *
     */

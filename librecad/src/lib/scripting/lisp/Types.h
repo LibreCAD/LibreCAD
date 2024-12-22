@@ -1139,6 +1139,13 @@ private:
     char m_char;
 };
 
+class ListEvent: public QObject
+{
+    Q_OBJECT
+public:
+    bool eventFilter(QObject *o, QEvent *e);
+};
+
 class lclGui : public lclValue {
 public:
     lclGui(const tile_t& tile) : m_value(tile) { }
@@ -1365,13 +1372,15 @@ public:
     lclRow(const lclRow& that, lclValuePtr meta)
         : lclGui(that, meta) { }
 
-    virtual ~lclRow() { delete m_layout; }
+    virtual ~lclRow() { delete m_widget; delete m_layout; }
 
     WITH_META(lclRow)
 
+    QWidget* widget() const { return m_widget; }
     virtual QHBoxLayout* hlayout() const override { return m_layout; }
 
 private:
+    QWidget *m_widget;
     QHBoxLayout *m_layout;
 };
 
@@ -1399,13 +1408,15 @@ public:
     lclColumn(const lclColumn& that, lclValuePtr meta)
         : lclGui(that, meta) { }
 
-    virtual ~lclColumn() { delete m_layout; }
+    virtual ~lclColumn() { delete m_widget; delete m_layout; }
 
     WITH_META(lclColumn)
 
+    QWidget* widget() const { return m_widget; }
     virtual QVBoxLayout* vlayout() const override { return m_layout; }
 
 private:
+    QWidget *m_widget;
     QVBoxLayout *m_layout;
 };
 

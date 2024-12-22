@@ -16,6 +16,8 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QListWidgetItem>
+#include <QKeySequence>
+#include <QShortcut>
 
 #define MAX_FUNC 23
 
@@ -684,7 +686,8 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
             {
                 dclEnv->set(std::to_string(tile->value().dialog_Id) + "_" + noQuotes(tile->value().key).c_str(), lcl::string(tile->value().action));
             }
-            if (!edit->value().has_parent) {
+            if (!edit->value().has_parent)
+            {
                 for (auto & dlg : dclTiles)
                 {
                     if (dlg->value().dialog_Id == dlgId)
@@ -693,7 +696,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -765,6 +767,38 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                     edit->edit()->setMaximumHeight(edit->edit()->height());
                 }
             }
+
+            if(noQuotes(edit->value().mnemonic).size())
+            {
+                for (auto & dlg : dclTiles)
+                {
+                    if (dlg->value().dialog_Id == dlgId)
+                    {
+                        qDebug() << "[openTile] (mnemonic) edit:" << noQuotes(edit->value().key).c_str();
+
+                        const lclDialog* d = static_cast<const lclDialog*>(dlg);
+                        QShortcut *shortcut = new QShortcut(QKeySequence(noQuotes(edit->value().mnemonic).c_str()), d->dialog());
+                        QObject::connect(shortcut, &QShortcut::activated, edit->edit(), [=]() { edit->edit()->setFocus(); });
+                        break;
+                    }
+                }
+            }
+
+            if(edit->value().allow_accept)
+            {
+                for (auto & dlg : dclTiles)
+                {
+                    if (dlg->value().dialog_Id == dlgId)
+                    {
+#if 0
+                        const lclDialog* d = static_cast<const lclDialog*>(dlg);
+                        QShortcut *shortcut = new QShortcut(Qt::Key_Return|Qt::Key_Enter, d->dialog());
+                        QObject::connect(shortcut, &QShortcut::activated, edit->value(), [&] { edit->value()->clicked(false); });
+#endif
+                        break;
+                    }
+                }
+            }
         }
             break;
         case LIST_BOX:
@@ -792,7 +826,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -863,6 +896,38 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                     list->list()->setMaximumHeight(list->list()->height());
                 }
             }
+
+            if(noQuotes(list->value().mnemonic).size())
+            {
+                for (auto & dlg : dclTiles)
+                {
+                    if (dlg->value().dialog_Id == dlgId)
+                    {
+                        qDebug() << "[openTile] (mnemonic) edit:" << noQuotes(list->value().key).c_str();
+
+                        const lclDialog* d = static_cast<const lclDialog*>(dlg);
+                        QShortcut *shortcut = new QShortcut(QKeySequence(noQuotes(list->value().mnemonic).c_str()), d->dialog());
+                        QObject::connect(shortcut, &QShortcut::activated, list->list(), [=]() { list->list()->setFocus(); });
+                        break;
+                    }
+                }
+            }
+
+            if(list->value().allow_accept)
+            {
+                for (auto & dlg : dclTiles)
+                {
+                    if (dlg->value().dialog_Id == dlgId)
+                    {
+#if 0
+                        const lclDialog* d = static_cast<const lclDialog*>(dlg);
+                        QShortcut *shortcut = new QShortcut(Qt::Key_Return|Qt::Key_Enter, d->dialog());
+                        QObject::connect(shortcut, &QShortcut::activated, list->value(), [&] {list->value()->clicked(false); });
+#endif
+                        break;
+                    }
+                }
+            }
         }
             break;
         case ROW:
@@ -880,11 +945,10 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        dlg->vlayout()->addLayout(r->hlayout());
+                        dlg->vlayout()->addWidget(r->widget());
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -894,11 +958,11 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            dclTiles.at(i)->hlayout()->addLayout(r->hlayout());
+                            dclTiles.at(i)->hlayout()->addWidget(r->widget());
                         }
                         else
                         {
-                            dclTiles.at(i)->vlayout()->addLayout(r->hlayout());
+                            dclTiles.at(i)->vlayout()->addWidget(r->widget());
                         }
                         break;
                     }
@@ -924,7 +988,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -1013,11 +1076,10 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                 {
                     if (dlg->value().dialog_Id == dlgId)
                     {
-                        dlg->vlayout()->addLayout(c->vlayout());
+                        dlg->vlayout()->addWidget(c->widget());
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -1027,11 +1089,11 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                     {
                         if (LAYOUT_ROW & dclTiles.at(i)->value().id)
                         {
-                            dclTiles.at(i)->hlayout()->addLayout(c->vlayout());
+                            dclTiles.at(i)->hlayout()->addWidget(c->widget());
                         }
                         else
                         {
-                            dclTiles.at(i)->vlayout()->addLayout(c->vlayout());
+                            dclTiles.at(i)->vlayout()->addWidget(c->widget());
                         }
                         break;
                     }
@@ -1057,7 +1119,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -1150,7 +1211,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -1349,7 +1409,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -1442,7 +1501,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -1512,6 +1570,22 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                 else
                 {
                     lp->list()->setMaximumHeight(lp->list()->height());
+                }
+            }
+
+            if(noQuotes(lp->value().mnemonic).size())
+            {
+                for (auto & dlg : dclTiles)
+                {
+                    if (dlg->value().dialog_Id == dlgId)
+                    {
+                        qDebug() << "[openTile] (mnemonic) edit:" << noQuotes(lp->value().key).c_str();
+
+                        const lclDialog* d = static_cast<const lclDialog*>(dlg);
+                        QShortcut *shortcut = new QShortcut(QKeySequence(noQuotes(lp->value().mnemonic).c_str()), d->dialog());
+                        QObject::connect(shortcut, &QShortcut::activated, lp->list(), [=]() { lp->list()->setFocus(); });
+                        break;
+                    }
                 }
             }
         }
@@ -1630,7 +1704,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -1726,7 +1799,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -1796,6 +1868,20 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                 else
                 {
                     b->button()->setMaximumHeight(32);
+                }
+            }
+
+            if(b->value().allow_accept && !b->value().is_default)
+            {
+                for (auto & dlg : dclTiles)
+                {
+                    if (dlg->value().dialog_Id == dlgId)
+                    {
+                        const lclDialog* d = static_cast<const lclDialog*>(dlg);
+                        QShortcut *shortcut = new QShortcut(Qt::Key_Return|Qt::Key_Enter, d->dialog());
+                        QObject::connect(shortcut, &QShortcut::activated, b->button(), [&] { b->button()->clicked(false); });
+                        break;
+                    }
                 }
             }
         }
@@ -1871,7 +1957,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -1943,6 +2028,22 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                     sl->slider()->setMaximumHeight(sl->slider()->height());
                 }
             }
+
+            if(noQuotes(sl->value().mnemonic).size())
+            {
+                for (auto & dlg : dclTiles)
+                {
+                    if (dlg->value().dialog_Id == dlgId)
+                    {
+                        qDebug() << "[openTile] (mnemonic) edit:" << noQuotes(sl->value().key).c_str();
+
+                        const lclDialog* d = static_cast<const lclDialog*>(dlg);
+                        QShortcut *shortcut = new QShortcut(QKeySequence(noQuotes(sl->value().mnemonic).c_str()), d->dialog());
+                        QObject::connect(shortcut, &QShortcut::activated, sl->slider(), [=]() { sl->slider()->setFocus(); });
+                        break;
+                    }
+                }
+            }
         }
             break;
         case SPACER:
@@ -1964,7 +2065,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -2064,7 +2164,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -2156,7 +2255,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -2198,7 +2296,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -2241,7 +2338,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
@@ -2285,7 +2381,6 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                         break;
                     }
                 }
-                break;
             }
             else
             {
