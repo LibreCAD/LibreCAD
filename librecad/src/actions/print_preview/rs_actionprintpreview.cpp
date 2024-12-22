@@ -36,8 +36,8 @@
 #include "rs_units.h"
 
 struct RS_ActionPrintPreview::Points {
-    RS_Vector v1;
-    RS_Vector v2;
+    RS_Vector v1{};
+    RS_Vector v2{};
 };
 
 /**
@@ -57,10 +57,6 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
 }
 
 RS_ActionPrintPreview::~RS_ActionPrintPreview()=default;
-
-void invokeSettingsDialog();
-
-void zoomPageExWithBorder(int borderSize);
 
 void RS_ActionPrintPreview::init(int status) {
     RS_ActionInterface::init(status);
@@ -283,20 +279,22 @@ void RS_ActionPrintPreview::fit() {
     }
 }
 
-bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
-    if (graphic) {
-        if(std::abs(f - graphic->getPaperScale()) < RS_TOLERANCE )
+bool RS_ActionPrintPreview::setScale(double newScale, bool autoZoom) {
+    if (graphic != nullptr) {
+        if(std::abs(newScale - graphic->getPaperScale()) < RS_TOLERANCE )
             return false;
-//        auto pinBase = graphic->getPaperInsertionBase();
-        // double oldScale = graphic->getPaperScale();
 
-        graphic->setPaperScale(f);
+        auto pinBase = graphic->getPaperInsertionBase();
+        double oldScale = graphic->getPaperScale();
+
+        graphic->setPaperScale(newScale);
 
         // changing scale around the drawing center
-//        pinBase += graphic->getSize()*(oldScale - f)*0.5;
-//        graphic->setPaperInsertionBase(pinBase);
-
-        // pinBase *= f;
+        // insertion base = center - 0.5 * size * scale
+        // To keep the center position, the difference in insertion base is
+        //   0.5 * size * (oldScale - newScale)
+        pinBase += graphic->getSize()*(oldScale - newScale)*0.5;
+        graphic->setPaperInsertionBase(pinBase);
 
         if(autoZoom) {
             zoomPageExWithBorder(100);

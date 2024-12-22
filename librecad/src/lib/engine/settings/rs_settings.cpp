@@ -217,14 +217,13 @@ int RS_Settings::readIntSingle(const QString& group, const QString &key, int def
     return result;
 }
 
-const QByteArray& RS_Settings::readByteArray(const QString &key) {
+QByteArray RS_Settings::readByteArray(const QString &key) {
     return readByteArraySingle(m_group, key);
 }
 
-const QByteArray& RS_Settings::readByteArraySingle(const QString& group, const QString &key) {
+QByteArray RS_Settings::readByteArraySingle(const QString& group, const QString &key) {
     QString fullName = getFullName(group, key);
-    const QByteArray &array = settings->value(fullName, "").toByteArray();
-    return array;
+    return settings->value(fullName, "").toByteArray();
 }
 
 QVariant RS_Settings::readEntryCache(const QString &key) {
