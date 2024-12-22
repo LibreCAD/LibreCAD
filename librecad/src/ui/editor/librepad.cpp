@@ -65,7 +65,7 @@ Librepad::Librepad(QWidget *parent, const QString& name, const QString& fileName
         ui->menuOpenRecent->addAction(recentFileAction);
         submenuRecent->addAction(recentFileAction);
     }
-    ui->mainToolBar->insertWidget(ui->actionSave, tb);
+    ui->mainToolBar->insertWidget(ui->actionOpen, tb);
     updateRecentActionList();
 
     connect(ui->tabWidget, &QTabWidget::tabCloseRequested, this, &Librepad::slotTabClose);

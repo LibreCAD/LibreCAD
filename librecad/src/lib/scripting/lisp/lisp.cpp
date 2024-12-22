@@ -715,6 +715,7 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                     }
                 }
             }
+
             if (child_cfg.children_alignment != NOPOS)
             {
                 switch (child_cfg.children_alignment)
@@ -2406,7 +2407,7 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
             break;
     }
 
-    child_config_t cfg = { false, false, LEFT };
+    child_config_t cfg = { false, false, NOPOS };
 
     if(tile->value().id & LAYOUT_PARENT_TILE)
     {

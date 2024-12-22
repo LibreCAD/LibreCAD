@@ -1146,6 +1146,7 @@ BUILTIN("done_dialog") {
                         result = val->value();
                     }
                 }
+                // FIXME do try eval list??
                 dlg->dialog()->done(result);
                 return lcl::list(items);
             }
