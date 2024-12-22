@@ -198,8 +198,9 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(QMouseEvent *e, [[maybe_
                     RS_Entity *clone = en->clone();
                     clone->move(offset);
                     list << clone;
-                    if (infoCursorOverlayPrefs->enabled){
-                        QString msg = tr("Duplicate Offset\n");
+                    if (isInfoCursorForModificationEnabled()){
+                        QString msg = tr("Duplicate Offset");
+                        msg.append("\n");
                         msg.append(formatRelative(offset));
                         msg.append("\n");
                         msg.append(formatRelativePolar(offset));
@@ -235,8 +236,9 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(QMouseEvent *e, [[maybe_
                         data.ratio = std::abs(offsetY / offsetX);
                         previewRefEllipse(data);
                     }
-                    if (infoCursorOverlayPrefs->enabled){
-                        QString msg = tr("Duplicate Offset\n");
+                    if (isInfoCursorForModificationEnabled()){
+                        QString msg = tr("Duplicate Offset");
+                        msg.append("\n");
                         msg.append(formatRelative(offset));
                         msg.append("\n");
                         msg.append(formatRelativePolar(offset));

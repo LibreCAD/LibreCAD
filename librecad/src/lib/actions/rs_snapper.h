@@ -255,6 +255,8 @@ protected:
     QString formatPolar(const RS_Vector& value);
     QString formatRelativePolar(const RS_Vector& value);
     void forceUpdateInfoCursor(const RS_Vector &pos);
+    bool isInfoCursorForModificationEnabled() const;
+
 private:
     struct ImpData;
     std::unique_ptr<ImpData> pImpData;

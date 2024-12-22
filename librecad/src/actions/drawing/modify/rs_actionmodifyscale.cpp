@@ -169,6 +169,34 @@ void RS_ActionModifyScale::mouseMoveEventSelected(QMouseEvent* e) {
             pPoints->targetPoint = mouse;
 
             showPreview();
+
+            if (isInfoCursorForModificationEnabled()) {
+                RS_Vector centerPoint =  pPoints->data.referencePoint;
+                RS_Vector offset = pPoints->sourcePoint - mouse;
+                QString msg = tr("Scale");
+                msg.append("\n");
+                msg.append(tr("Center:"));
+                msg.append(formatVector(centerPoint));
+                msg.append("\n");
+                msg.append(tr("Source Point:"));
+                msg.append(formatVector(pPoints->sourcePoint));
+                msg.append("\n");
+                msg.append(tr("Target Point:"));
+                msg.append(formatVector(mouse));
+                msg.append("\n");
+                msg.append(tr("Offset:"));
+                msg.append("\n");
+                msg.append(formatRelative(offset));
+                msg.append("\n");
+                msg.append(formatRelativePolar(offset));
+                msg.append("\n");
+                msg.append(tr("Scale by X:"));
+                msg.append(formatLinear(pPoints->data.factor.x));
+                msg.append("\n");
+                msg.append(tr("Scale by Y:"));
+                msg.append(formatLinear(pPoints->data.factor.y));
+                appendInfoCursorZoneMessage(msg, 2, false);
+            }
             break;
         }
         default:

@@ -330,7 +330,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                         pPoints->v2 = mouse;
                         previewRefLine(pPoints->v2, pPoints->v1);
                     }
-                    if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnModification) {
+                    if (isInfoCursorForModificationEnabled()) {
                         createEditedLineDescription(nullptr, ctrlPressed, shiftPressed);
                     }
                     break;
@@ -428,7 +428,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                         addClone = false;
                     }
 
-                    if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnModification) {
+                    if (isInfoCursorForModificationEnabled()) {
                         createEditedArcDescription(clone, ctrlPressed, shiftPressed);
                     }
                     break;
@@ -463,7 +463,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                     }
                     clone->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
                     preview->addEntity(clone);
-                    if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnModification) {
+                    if (isInfoCursorForModificationEnabled()) {
                         createEditedCircleDescription(clone, ctrlPressed, shiftPressed);
                     }
                     addClone = false;
@@ -495,7 +495,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                 clone->moveRef(pPoints->v1, offset);
                 preview->addEntity(clone);
 
-                if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnModification) {
+                if (isInfoCursorForModificationEnabled()) {
                     QString msg = tr("Offset\n");
                     msg.append(formatRelative(offset));
                     msg.append("\n");
@@ -534,7 +534,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                 previewRefSelectablePoint(pPoints->v2);
             }
             line->setSelected(true);
-            if (infoCursorOverlayPrefs->enabled){
+            if (isInfoCursorForModificationEnabled()){
                 QString msg;
                 if (isControl(e)) {
                     msg = tr("Copy Offset\n");
@@ -559,7 +559,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                                             RS_OverlayBoxData(pPoints->v1, pPoints->v2));
                 preview->addEntity(ob);
 
-                if (infoCursorOverlayPrefs->enabled) {
+                if (isInfoCursorForModificationEnabled()) {
                     bool cross = (pPoints->v1.x > pPoints->v2.x);
                     bool deselect = isShift(e);
                     QString msg = deselect ? tr("De-Selecting") : tr("Selecting");

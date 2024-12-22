@@ -1111,6 +1111,10 @@ LC_InfoCursorOverlayPrefs* RS_Snapper::getInfoCursorOverlayPrefs() const {
     return infoCursorOverlayPrefs;
 }
 
+bool RS_Snapper::isInfoCursorForModificationEnabled() const {
+    return infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnModification;
+}
+
 void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_Vector &abs,  const RS_Vector &relative) {
     LC_InfoCursorOverlayPrefs* prefs = getInfoCursorOverlayPrefs();
 

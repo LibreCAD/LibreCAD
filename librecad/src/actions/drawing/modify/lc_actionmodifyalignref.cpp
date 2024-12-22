@@ -82,16 +82,16 @@ void LC_ActionModifyAlignRef::mouseMoveEventSelected(QMouseEvent *e) {
             RS_Modification m(*preview, graphicView, false);
             m.alignRef(pPoints.data, selectedEntities, true, true);
 
-            if (infoCursorOverlayPrefs->enabled) {
+            if (isInfoCursorForModificationEnabled()) {
                 QString msg = tr("Align References");
                 msg.append("\n");
-                msg.append("Offset:");
+                msg.append(tr("Offset:"));
                 msg.append(formatRelative(pPoints.data.offset));
                 msg.append("\n");
-                msg.append("Angle:");
+                msg.append(tr("Angle:"));
                 msg.append(formatAngle(pPoints.data.rotationAngle));
                 msg.append("\n");
-                msg.append("Scale:");
+                msg.append(tr("Scale:"));
                 msg.append(formatLinear(pPoints.data.scaleFactor));
 
                 appendInfoCursorZoneMessage(msg, 2, false);

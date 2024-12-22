@@ -147,7 +147,7 @@ void LC_ActionModifyAlignSingle::mouseMoveEvent(QMouseEvent *e) {
                 }
             }
 
-            if (infoCursorOverlayPrefs->enabled){
+            if (isInfoCursorForModificationEnabled()){
                 QString msg = prepareInfoCursorMessage(verticalRef, drawVertical, horizontalRef, drawHorizontal);
                 if (entity != nullptr){
                     msg.append("\n");

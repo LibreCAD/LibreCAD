@@ -98,7 +98,7 @@ void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
                         }
                     }
                 }
-                if (infoCursorOverlayPrefs->enabled){
+                if (isInfoCursorForModificationEnabled()){
                     QString msg = tr("Moving Offset\n");
                     msg.append(formatRelative(offset));
                     msg.append("\n");

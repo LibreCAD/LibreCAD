@@ -154,11 +154,13 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
 
             double rotationAngle = data->center.angleTo(mouse);
 
+            RS_Vector newRefPoint = data->center.relative(radius, rotationAngle);
+
             if (showRefEntitiesOnPreview) {
                 RS_Vector originalReferencePoint = data->refPoint;
                 RS_Vector xAxisPoint = data->center.relative(radius, 0);
-                RS_Vector circlePoint = data->center.relative(radius, rotationAngle);
-                previewRefSelectablePoint(circlePoint);
+
+                previewRefSelectablePoint(newRefPoint);
 
                 previewRefPoint(xAxisPoint);
                 previewRefLine(data->center, xAxisPoint);
@@ -181,6 +183,28 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
 
             // todo - sand - we can temporarily add a copy of circle to the document, so intersection snap for target reference point will work.
             previewRotationCircleAndPoints(data->center, data->refPoint, rotationAngle);
+
+            if (isInfoCursorForModificationEnabled()) {
+                RS_Vector offset = newRefPoint - data->refPoint;
+                QString msg = tr("Rotation");
+                msg.append("\n");
+                msg.append(tr("Angle:"));
+                msg.append(formatAngle(rotationAngle));
+                msg.append("\n");
+                msg.append(tr("Source Point:"));
+                msg.append(formatVector(data->refPoint));
+                msg.append("\n");
+                msg.append(tr("Target Point:"));
+                msg.append(formatVector(newRefPoint));
+                msg.append("\n");
+                msg.append(tr("Offset:"));
+                msg.append("\n");
+                msg.append(formatRelative(offset));
+                msg.append("\n");
+                msg.append(formatRelativePolar(offset));
+                msg.append("\n");
+                appendInfoCursorZoneMessage(msg, 2, false);
+            }
             break;
         }
         case SetTargetPoint2ndRotation:{
@@ -205,6 +229,31 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
             currentAngle2 = secondRotationAngle;
             updateOptionsUI(LC_ModifyRotateOptions::UpdateMode::UPDATE_ANGLE2);
 
+            if (isInfoCursorForModificationEnabled()) {
+                RS_Vector originalRefPoint = data->refPoint;
+                RS_Vector newRefPoint =  originalRefPoint.rotate(data->center, data->angle);
+                RS_Vector offset = newRefPoint - data->refPoint;
+                QString msg = tr("Rotation");
+                msg.append("\n");
+                msg.append(tr("Angle:"));
+                msg.append(formatAngle(data->angle));
+                msg.append("\n");
+                msg.append(tr("Source Point:"));
+                msg.append(formatVector(data->refPoint));
+                msg.append("\n");
+                msg.append(tr("Target Point:"));
+                msg.append(formatVector(newRefPoint));
+                msg.append("\n");
+                msg.append(tr("Offset:"));
+                msg.append("\n");
+                msg.append(formatRelative(offset));
+                msg.append("\n");
+                msg.append(formatRelativePolar(offset));
+                msg.append("\n");
+                msg.append(tr("Second Angle:"));
+                msg.append(formatAngle(secondRotationAngle));
+                appendInfoCursorZoneMessage(msg, 2, false);
+            }
             break;
         }
 

@@ -35,6 +35,7 @@
 #include "rs_modification.h"
 #include "rs_preview.h"
 #include "lc_modifymirroroptions.h"
+#include "lc_align.h"
 
 struct RS_ActionModifyMirror::Points {
     RS_MirrorData data;
@@ -67,10 +68,24 @@ void RS_ActionModifyMirror::mouseMoveEventSelected(QMouseEvent *e) {
         case SetAxisPoint1: {
             if (mirrorToExistingLine){
 //                deleteSnapper();
-                RS_Entity* en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
-                if (en != nullptr){
-                    auto line = dynamic_cast<RS_Line *>(en);
-                    previewMirror(line->getStartpoint(), line->getEndpoint());
+                if (isShift(e)){ // flip vertically
+                    RS_Vector start = RS_Vector();
+                    RS_Vector end = RS_Vector();
+                    obtainFlipLineCoordinates(&start, &end, true);
+                    previewMirror(start, end);
+                }
+                else if (isControl(e)) {// flip horizontally
+                    RS_Vector start = RS_Vector();
+                    RS_Vector end = RS_Vector();
+                    obtainFlipLineCoordinates(&start, &end, false);
+                    previewMirror(start, end);
+                }
+                else {
+                    RS_Entity *en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
+                    if (en != nullptr) {
+                        auto line = dynamic_cast<RS_Line *>(en);
+                        previewMirror(line->getStartpoint(), line->getEndpoint());
+                    }
                 }
             }
             else {
@@ -94,11 +109,11 @@ void RS_ActionModifyMirror::mouseMoveEventSelected(QMouseEvent *e) {
 }
 
 void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, const RS_Vector &mirrorLinePoint2){
-
-    RS_Modification m(*preview, graphicView, false);
     RS_MirrorData tmpData;
     tmpData.axisPoint1 = mirrorLinePoint1;
     tmpData.axisPoint2 = mirrorLinePoint2;
+
+    RS_Modification m(*preview, graphicView, false);
     m.mirror(tmpData, selectedEntities, true, false);
     previewLine(mirrorLinePoint1, mirrorLinePoint2);
 
@@ -107,17 +122,54 @@ void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, con
         previewRefPoint(mirrorLinePoint1);
         previewRefSelectablePoint(mirrorLinePoint2);
     }
+
+    if (isInfoCursorForModificationEnabled()){
+        QString msg = tr("Mirror");
+        msg.append("\n");
+        msg.append(tr("Angle:"));
+        msg.append(formatAngle(mirrorLinePoint1.angleTo(mirrorLinePoint2)));
+        msg.append("\n");
+        msg.append(tr("Angle (alt):"));
+        msg.append(formatAngle(mirrorLinePoint2.angleTo(mirrorLinePoint1)));
+        msg.append("\n");
+        msg.append(tr("Line From:"));
+        msg.append(formatVector(mirrorLinePoint1));
+        msg.append("\n");
+        msg.append(tr("Line To:"));
+        msg.append(formatVector(mirrorLinePoint2));
+        appendInfoCursorZoneMessage(msg, 2, false);
+    }
 }
 
 void RS_ActionModifyMirror::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
     if (mirrorToExistingLine && status == SetAxisPoint1){
-        RS_Entity* en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
-        if (en != nullptr){
-            auto line = dynamic_cast<RS_Line *>(en);
-            pPoints->axisPoint1 = line->getStartpoint();
-            pPoints->axisPoint2 = line->getEndpoint();
+        if (isShift(e)){ // flip vertically
+            RS_Vector start = RS_Vector();
+            RS_Vector end = RS_Vector();
+            obtainFlipLineCoordinates(&start, &end, true);
+            pPoints->axisPoint1 = start;
+            pPoints->axisPoint2 = end;
             setStatus(ShowDialog);
             showOptionsAndTrigger();
+        }
+        else if (isControl(e)) {// flip horizontally
+            RS_Vector start = RS_Vector();
+            RS_Vector end = RS_Vector();
+            obtainFlipLineCoordinates(&start, &end, false);
+            pPoints->axisPoint1 = start;
+            pPoints->axisPoint2 = end;
+            setStatus(ShowDialog);
+            showOptionsAndTrigger();
+        }
+        else {
+            RS_Entity *en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
+            if (en != nullptr) {
+                auto line = dynamic_cast<RS_Line *>(en);
+                pPoints->axisPoint1 = line->getStartpoint();
+                pPoints->axisPoint2 = line->getEndpoint();
+                setStatus(ShowDialog);
+                showOptionsAndTrigger();
+            }
         }
         invalidateSnapSpot();
     }
@@ -202,7 +254,7 @@ void RS_ActionModifyMirror::updateMouseButtonHintsForSelected(int status) {
     switch (status) {
         case SetAxisPoint1: {
             if (mirrorToExistingLine){
-                updateMouseWidgetTRCancel(tr("Specify mirror line"));
+                updateMouseWidgetTRCancel(tr("Specify mirror line"), MOD_SHIFT_AND_CTRL(tr("Flip Vertically"), tr("Flip Horizontally")));
             }
             else{
                 updateMouseWidgetTRCancel(tr("Specify first point of mirror line"), MOD_SHIFT_RELATIVE_ZERO);
@@ -235,4 +287,29 @@ LC_ModifyOperationFlags *RS_ActionModifyMirror::getModifyOperationFlags()  {
 
 LC_ActionOptionsWidget* RS_ActionModifyMirror::createOptionsWidget(){
     return new LC_ModifyMirrorOptions();
+}
+
+void RS_ActionModifyMirror::obtainFlipLineCoordinates(RS_Vector *start, RS_Vector *end, bool verticalLine) {
+    RS_Vector selectionMin;
+    RS_Vector selectionMax;
+    LC_Align::collectSelectionBounds(selectedEntities, selectionMin, selectionMax);
+
+    if (verticalLine){
+        double x = (selectionMin.x + selectionMax.x) / 2;
+        start->x = x;
+        end->x = x;
+
+        start->y = selectionMin.y;
+        end->y = selectionMax.y;
+    }
+    else{
+        double y = (selectionMin.y + selectionMax.y) / 2;
+        start->y = y;
+        end->y = y;
+
+        start->x = selectionMin.x;
+        end->x = selectionMax.x;
+    }
+    start->valid = true;
+    end->valid = true;
 }
