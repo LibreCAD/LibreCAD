@@ -173,29 +173,16 @@ void RS_ActionModifyScale::mouseMoveEventSelected(QMouseEvent* e) {
             if (isInfoCursorForModificationEnabled()) {
                 RS_Vector centerPoint =  pPoints->data.referencePoint;
                 RS_Vector offset = pPoints->sourcePoint - mouse;
-                QString msg = tr("Scale");
-                msg.append("\n");
-                msg.append(tr("Center:"));
-                msg.append(formatVector(centerPoint));
-                msg.append("\n");
-                msg.append(tr("Source Point:"));
-                msg.append(formatVector(pPoints->sourcePoint));
-                msg.append("\n");
-                msg.append(tr("Target Point:"));
-                msg.append(formatVector(mouse));
-                msg.append("\n");
-                msg.append(tr("Offset:"));
-                msg.append("\n");
-                msg.append(formatRelative(offset));
-                msg.append("\n");
-                msg.append(formatRelativePolar(offset));
-                msg.append("\n");
-                msg.append(tr("Scale by X:"));
-                msg.append(formatLinear(pPoints->data.factor.x));
-                msg.append("\n");
-                msg.append(tr("Scale by Y:"));
-                msg.append(formatLinear(pPoints->data.factor.y));
-                appendInfoCursorZoneMessage(msg, 2, false);
+                LC_InfoMessageBuilder msg(tr("Scale"));
+                msg.add(tr("Center:"),formatVector(centerPoint));
+                msg.add(tr("Source Point:"), formatVector(pPoints->sourcePoint));
+                msg.add(tr("Target Point:"), formatVector(mouse));
+                msg.add(tr("Offset:"));
+                msg.add(formatRelative(offset));
+                msg.add(formatRelativePolar(offset));
+                msg.add(tr("Scale by X:"),formatLinear(pPoints->data.factor.x));
+                msg.add(tr("Scale by Y:"),formatLinear(pPoints->data.factor.y));
+                appendInfoCursorZoneMessage(msg.toString(), 2, false);
             }
             break;
         }

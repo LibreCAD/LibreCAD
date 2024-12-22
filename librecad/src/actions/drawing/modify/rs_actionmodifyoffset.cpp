@@ -69,12 +69,6 @@ void RS_ActionModifyOffset::mouseMoveEventSelected(QMouseEvent *e) {
 
     RS_Vector mouse = snapPoint(e);
     deletePreview();
-    RS_EntityContainer ec(nullptr, true);
-    for (auto en: *container) {
-        if (en->isSelected()) ec.addEntity(en->clone());
-    }
-    if (ec.isEmpty()) return;
-
     switch (getStatus()){
         case SetReferencePoint:{
             data->coord = getRelZeroAwarePoint(e, mouse);
@@ -84,12 +78,10 @@ void RS_ActionModifyOffset::mouseMoveEventSelected(QMouseEvent *e) {
         }
         case SetPosition:{
             data->coord = referencePoint;
-//            data->coord = mouse;
             RS_Vector offset = mouse - referencePoint;
             if (!distanceIsFixed){
                 data->distance = offset.magnitude();
             }
-//            LC_ERR << "Offset " << offset.x << " - " << offset.y << " Dist:" << data->distance;
             RS_Modification m(*preview, nullptr, false);
             m.offset(*data, selectedEntities, true, false);
 
@@ -97,6 +89,12 @@ void RS_ActionModifyOffset::mouseMoveEventSelected(QMouseEvent *e) {
                 previewRefPoint(referencePoint);
                 previewRefSelectablePoint(mouse);
                 previewRefLine(referencePoint, mouse);
+            }
+
+            if (isInfoCursorForModificationEnabled()){
+                LC_InfoMessageBuilder msg(tr("Offset"));
+                msg.add(tr("Distance:"), formatLinear(data->distance));
+                appendInfoCursorZoneMessage(msg.toString(), 2, false);
             }
             break;
         }

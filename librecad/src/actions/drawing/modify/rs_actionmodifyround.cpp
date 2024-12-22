@@ -236,6 +236,13 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent *e){
                                 preview->removeEntity(roundResult->trimmed1);
                                 preview->removeEntity(roundResult->trimmed2);
                             }
+
+                            if (isInfoCursorForModificationEnabled()){
+                                LC_InfoMessageBuilder msg(tr("Round"));
+                                msg.add(tr("Point 1:"), formatVector(arcStartPoint));
+                                msg.add(tr("Point 2:"), formatVector(arcEndPoint));
+                                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                            }
                         }
                     }
 

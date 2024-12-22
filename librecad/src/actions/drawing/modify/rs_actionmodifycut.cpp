@@ -95,6 +95,12 @@ void RS_ActionModifyCut::mouseMoveEvent(QMouseEvent *e){
             highlightSelected(cutEntity);
             RS_Vector nearest = cutEntity->getNearestPointOnEntity(snap, true);
             previewRefSelectablePoint(nearest);
+            // todo - is description for selected entity necessary there?
+            if (isInfoCursorForModificationEnabled()){
+                LC_InfoMessageBuilder msg(tr("Divide"));
+                msg.add(tr("At:"), formatVector(nearest));
+                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+            }
             break;
         }
         default:

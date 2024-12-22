@@ -124,20 +124,12 @@ void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, con
     }
 
     if (isInfoCursorForModificationEnabled()){
-        QString msg = tr("Mirror");
-        msg.append("\n");
-        msg.append(tr("Angle:"));
-        msg.append(formatAngle(mirrorLinePoint1.angleTo(mirrorLinePoint2)));
-        msg.append("\n");
-        msg.append(tr("Angle (alt):"));
-        msg.append(formatAngle(mirrorLinePoint2.angleTo(mirrorLinePoint1)));
-        msg.append("\n");
-        msg.append(tr("Line From:"));
-        msg.append(formatVector(mirrorLinePoint1));
-        msg.append("\n");
-        msg.append(tr("Line To:"));
-        msg.append(formatVector(mirrorLinePoint2));
-        appendInfoCursorZoneMessage(msg, 2, false);
+        LC_InfoMessageBuilder msg(tr("Mirror"));
+        msg.add(tr("Angle:"),formatAngle(mirrorLinePoint1.angleTo(mirrorLinePoint2)));
+        msg.add(tr("Angle (alt):"),formatAngle(mirrorLinePoint2.angleTo(mirrorLinePoint1)));
+        msg.add(tr("Line From:"), formatVector(mirrorLinePoint1));
+        msg.add(tr("Line To:"),formatVector(mirrorLinePoint2));
+        appendInfoCursorZoneMessage(msg.toString(), 2, false);
     }
 }
 

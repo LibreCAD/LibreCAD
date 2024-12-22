@@ -82,6 +82,15 @@ void RS_ActionModifyMoveRotate::mouseMoveEventSelected(QMouseEvent *e) {
                     previewRefLine(pPoints->data.referencePoint, mouse);
                     previewRefPointsForMultipleCopies();
                 }
+                if (isInfoCursorForModificationEnabled()){
+                    LC_InfoMessageBuilder msg(tr("Moving with rotation"));
+                    msg.add(tr("Source:"), formatVector(pPoints->data.referencePoint));
+                    msg.add(tr("Target:"), formatVector(mouse));
+                    msg.add(tr("Offset:"));
+                    msg.add(formatRelative(pPoints->data.offset));
+                    msg.add(formatRelativePolar(pPoints->data.offset));
+                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                }
             }
             break;
         }
@@ -99,6 +108,16 @@ void RS_ActionModifyMoveRotate::mouseMoveEventSelected(QMouseEvent *e) {
                     previewRefLine(pPoints->targetPoint, mouse);
                     previewRefLine(pPoints->data.referencePoint, pPoints->targetPoint);
                     previewRefPointsForMultipleCopies();
+                }
+                if (isInfoCursorForModificationEnabled()){
+                    LC_InfoMessageBuilder msg(tr("Moving with rotation"));
+                    msg.add(tr("Source:"), formatVector(pPoints->data.referencePoint));
+                    msg.add(tr("Target:"), formatVector(mouse));
+                    msg.add(tr("Offset:"));
+                    msg.add(formatRelative(pPoints->data.offset));
+                    msg.add(formatRelativePolar(pPoints->data.offset));
+                    msg.add(tr("Angle:"), formatAngle(pPoints->data.angle));
+                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
                 }
                 updateOptions();
             }

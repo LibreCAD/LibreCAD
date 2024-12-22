@@ -82,6 +82,15 @@ void RS_ActionModifyRotate2::mouseMoveEventSelected(QMouseEvent *e) {
                     previewRefLine(data->center1, mouse);
                     previewRefPointsForMultipleCopies(mouse);
                 }
+
+                if (isInfoCursorForModificationEnabled()){
+                    LC_InfoMessageBuilder msg(tr("Rotating Twice"));
+                    msg.add(tr("Center 1:"), formatVector(data->center1));
+                    msg.add(tr("Angle 1:"), formatAngle(data->angle1));
+                    msg.add(tr("Center 2:"), formatVector(data->center2));
+                    msg.add(tr("Angle 2:"), formatAngle(data->angle2));
+                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                }
             }
             break;
         }

@@ -99,11 +99,10 @@ void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
                     }
                 }
                 if (isInfoCursorForModificationEnabled()){
-                    QString msg = tr("Moving Offset\n");
-                    msg.append(formatRelative(offset));
-                    msg.append("\n");
-                    msg.append(formatRelativePolar(offset));
-                    appendInfoCursorZoneMessage(msg, 2, false);
+                    LC_InfoMessageBuilder msg(tr("Moving Offset"));
+                    msg.add(formatRelative(offset));
+                    msg.add(formatRelativePolar(offset));
+                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
                 }
                 drawPreview();
             }

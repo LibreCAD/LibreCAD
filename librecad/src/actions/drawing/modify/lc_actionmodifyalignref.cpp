@@ -83,18 +83,11 @@ void LC_ActionModifyAlignRef::mouseMoveEventSelected(QMouseEvent *e) {
             m.alignRef(pPoints.data, selectedEntities, true, true);
 
             if (isInfoCursorForModificationEnabled()) {
-                QString msg = tr("Align References");
-                msg.append("\n");
-                msg.append(tr("Offset:"));
-                msg.append(formatRelative(pPoints.data.offset));
-                msg.append("\n");
-                msg.append(tr("Angle:"));
-                msg.append(formatAngle(pPoints.data.rotationAngle));
-                msg.append("\n");
-                msg.append(tr("Scale:"));
-                msg.append(formatLinear(pPoints.data.scaleFactor));
-
-                appendInfoCursorZoneMessage(msg, 2, false);
+                LC_InfoMessageBuilder msg(tr("Align References"));
+                msg.add(tr("Offset:"),formatRelative(pPoints.data.offset));
+                msg.add(tr("Angle:"),formatAngle(pPoints.data.rotationAngle));
+                msg.add(tr("Scale:"),formatLinear(pPoints.data.scaleFactor));
+                appendInfoCursorZoneMessage(msg.toString(), 2, false);
             }
 
             break;

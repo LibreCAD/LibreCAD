@@ -186,24 +186,14 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
 
             if (isInfoCursorForModificationEnabled()) {
                 RS_Vector offset = newRefPoint - data->refPoint;
-                QString msg = tr("Rotation");
-                msg.append("\n");
-                msg.append(tr("Angle:"));
-                msg.append(formatAngle(rotationAngle));
-                msg.append("\n");
-                msg.append(tr("Source Point:"));
-                msg.append(formatVector(data->refPoint));
-                msg.append("\n");
-                msg.append(tr("Target Point:"));
-                msg.append(formatVector(newRefPoint));
-                msg.append("\n");
-                msg.append(tr("Offset:"));
-                msg.append("\n");
-                msg.append(formatRelative(offset));
-                msg.append("\n");
-                msg.append(formatRelativePolar(offset));
-                msg.append("\n");
-                appendInfoCursorZoneMessage(msg, 2, false);
+                LC_InfoMessageBuilder msg(tr("Rotation"));
+                msg.add(tr("Angle:"),formatAngle(rotationAngle));
+                msg.add(tr("Source Point:"),formatVector(data->refPoint));
+                msg.add(tr("Target Point:"),formatVector(newRefPoint));
+                msg.add(tr("Offset:"));
+                msg.add(formatRelative(offset));
+                msg.add(formatRelativePolar(offset));
+                appendInfoCursorZoneMessage(msg.toString(), 2, false);
             }
             break;
         }
@@ -233,26 +223,16 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
                 RS_Vector originalRefPoint = data->refPoint;
                 RS_Vector newRefPoint =  originalRefPoint.rotate(data->center, data->angle);
                 RS_Vector offset = newRefPoint - data->refPoint;
-                QString msg = tr("Rotation");
-                msg.append("\n");
-                msg.append(tr("Angle:"));
-                msg.append(formatAngle(data->angle));
-                msg.append("\n");
-                msg.append(tr("Source Point:"));
-                msg.append(formatVector(data->refPoint));
-                msg.append("\n");
-                msg.append(tr("Target Point:"));
-                msg.append(formatVector(newRefPoint));
-                msg.append("\n");
-                msg.append(tr("Offset:"));
-                msg.append("\n");
-                msg.append(formatRelative(offset));
-                msg.append("\n");
-                msg.append(formatRelativePolar(offset));
-                msg.append("\n");
-                msg.append(tr("Second Angle:"));
-                msg.append(formatAngle(secondRotationAngle));
-                appendInfoCursorZoneMessage(msg, 2, false);
+
+                LC_InfoMessageBuilder msg(tr("Rotation"));
+                msg.add(tr("Angle:"), formatAngle(data->angle));
+                msg.add("Source Point:", formatVector(data->refPoint));
+                msg.add("Target Point:", formatVector(newRefPoint));
+                msg.add(tr("Offset:"));
+                msg.add(formatRelative(offset));
+                msg.add(formatRelativePolar(offset));
+                msg.add(tr("Second Angle:"),formatAngle(secondRotationAngle));
+                appendInfoCursorZoneMessage(msg.toString(), 2, false);
             }
             break;
         }

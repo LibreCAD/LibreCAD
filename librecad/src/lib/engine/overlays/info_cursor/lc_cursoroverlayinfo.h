@@ -52,6 +52,32 @@ struct  LC_InfoCursorOptions{
     ZoneSetup zone4Settings  = ZoneSetup(Qt::gray, 10);
 };
 
+class LC_InfoMessageBuilder{
+    QString msg;
+
+public:
+    LC_InfoMessageBuilder() {}
+
+    explicit LC_InfoMessageBuilder(const QString &m):msg(m) {
+        msg.append("\n");
+    }
+
+    QString toString(){
+        return msg;
+    }
+
+    void add(QString label, QString value = ""){
+        msg.append(label);
+        if (!value.isEmpty()) {
+            msg.append(" ");
+            msg.append(value);
+        }
+        msg.append("\n");
+    }
+};
+
+
+
 struct LC_InfoCursorData{
 public:
     void clear(){

@@ -496,14 +496,11 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                 preview->addEntity(clone);
 
                 if (isInfoCursorForModificationEnabled()) {
-                    QString msg = tr("Offset\n");
-                    msg.append(formatRelative(offset));
-                    msg.append("\n");
-                    msg.append(formatRelativePolar(offset));
-                    msg.append("\n");
-                    msg.append(tr("New Position\n"));
-                    msg.append(formatVector(offset));
-                    appendInfoCursorZoneMessage(msg, 2, false);
+                    LC_InfoMessageBuilder msg(tr("Offset"));
+                    msg.add(formatRelative(offset));
+                    msg.add(formatRelativePolar(offset));
+                    msg.add(tr("New Position"), formatVector(offset));
+                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
                 }
             }
 
@@ -535,16 +532,16 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
             }
             line->setSelected(true);
             if (isInfoCursorForModificationEnabled()){
-                QString msg;
+                QString type;
                 if (isControl(e)) {
-                    msg = tr("Copy Offset\n");
+                   type = tr("Copy Offset");
                 } else {
-                    msg = tr("Move Offset\n");
+                    type = tr("Move Offset");
                 }
-                msg.append(formatRelative(offset));
-                msg.append("\n");
-                msg.append(formatRelativePolar(offset));
-                appendInfoCursorZoneMessage(msg, 2, false);
+                LC_InfoMessageBuilder msg(type);
+                msg.add(formatRelative(offset));
+                msg.add(formatRelativePolar(offset));
+                appendInfoCursorZoneMessage(msg.toString(), 2, false);
             }
             drawPreview();
             break;
@@ -587,46 +584,32 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
 }
 
 void RS_ActionDefault::createEditedLineDescription([[maybe_unused]]RS_Line* clone, [[maybe_unused]]bool ctrlPressed,  [[maybe_unused]]bool shiftPressed) {
-    QString msg = tr("Line").append("\n");
-    msg.append(tr("Length: "));
-    msg.append(formatLinear(pPoints->v1.distanceTo(pPoints->v2)));
-    msg.append("\n");
-    msg.append(tr("Angle: "));
-    msg.append(formatAngle(pPoints->v1.angleTo(pPoints->v2)));
-    appendInfoCursorZoneMessage(msg, 2, true);
+    LC_InfoMessageBuilder msg(tr("Line"));
+    msg.add(tr("Length: "), formatLinear(pPoints->v1.distanceTo(pPoints->v2)));
+    msg.add(tr("Angle: "), formatAngle(pPoints->v1.angleTo(pPoints->v2)));
+    appendInfoCursorZoneMessage(msg.toString(), 2, true);
 }
 
 void RS_ActionDefault::createEditedArcDescription(RS_Arc* clone,  [[maybe_unused]]bool ctrlPressed, [[maybe_unused]] bool shiftPressed) {
-    QString msg = tr("Arc").append("\n");
-    msg.append(tr("Radius: "));
-    msg.append(formatLinear(clone->getRadius()));
-    msg.append("\n");
-    msg.append(tr("Center: "));
     RS_Vector center = clone->getCenter();
-    msg.append(formatVector(center));
-    msg.append("\n");
-    msg.append(tr("Angle Length: "));
-    msg.append(formatAngle(clone->getAngleLength()));
-    msg.append("\n");
-    msg.append(tr("Chord Length: "));
-    msg.append(formatLinear(clone->getStartpoint().distanceTo(clone->getEndpoint())));
-    msg.append("\n");
-    msg.append(tr("Height: "));
     RS_Line tmpLine = RS_Line(clone->getStartpoint(), clone->getEndpoint());
     double height = tmpLine.getDistanceToPoint(clone->getMiddlePoint());
-    msg.append(formatLinear(height));
-    appendInfoCursorZoneMessage(msg, 2, true);
+
+    LC_InfoMessageBuilder msg(tr("Arc"));
+    msg.add(tr("Radius:"),formatLinear(clone->getRadius()));
+    msg.add(tr("Center:"),formatVector(center));
+    msg.add(tr("Angle Length:"), formatAngle(clone->getAngleLength()));
+    msg.add(tr("Chord Length:"), formatLinear(clone->getStartpoint().distanceTo(clone->getEndpoint())));
+    msg.add(tr("Height:"), formatLinear(height));
+    appendInfoCursorZoneMessage(msg.toString(), 2, true);
 }
 
 void RS_ActionDefault::createEditedCircleDescription(RS_Circle* clone,  [[maybe_unused]]bool ctrlPressed,  [[maybe_unused]]bool shiftPressed) {
-    QString msg = tr("Circle").append("\n");
-    msg.append(tr("Radius: "));
-    msg.append(formatLinear(clone->getRadius()));
-    msg.append("\n");
-    msg.append(tr("Center: "));
     RS_Vector center = clone->getCenter();
-    msg.append(formatVector(center));
-    appendInfoCursorZoneMessage(msg, 2, true);
+    LC_InfoMessageBuilder msg(tr("Circle"));
+    msg.add(tr("Radius:"),formatLinear(clone->getRadius()));
+    msg.add(tr("Center:"),formatVector(center));
+    appendInfoCursorZoneMessage(msg.toString(), 2, true);
 }
 
 void RS_ActionDefault::mousePressEvent(QMouseEvent *e){

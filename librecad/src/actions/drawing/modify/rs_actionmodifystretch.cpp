@@ -42,11 +42,8 @@ struct RS_ActionModifyStretch::Points {
     RS_Vector targetPoint;
 };
 
-RS_ActionModifyStretch::RS_ActionModifyStretch(RS_EntityContainer& container,
-											   RS_GraphicView& graphicView)
-	:RS_PreviewActionInterface("Stretch Entities",
-							   container, graphicView)
-	, pPoints(std::make_unique<Points>()){
+RS_ActionModifyStretch::RS_ActionModifyStretch(RS_EntityContainer& container,RS_GraphicView& graphicView)
+	 :RS_PreviewActionInterface("Stretch Entities",container, graphicView), pPoints(std::make_unique<Points>()){
     actionType=RS2::ActionModifyStretch;
 }
 
@@ -79,6 +76,7 @@ void RS_ActionModifyStretch::trigger(){
 void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyStretch::mouseMoveEvent begin");
 
+    deletePreview();
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
         case SetFirstCorner:{
@@ -86,42 +84,56 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
         }
         case SetSecondCorner: {
             if (pPoints->firstCorner.valid) {
-                pPoints->secondCorner = snapPoint(e);
-                deletePreview();
-                previewStretchRect(false);
-                drawPreview();
+                pPoints->secondCorner = snapPoint(e);                
+                previewStretchRect(false);                
+                if (isInfoCursorForModificationEnabled()){
+                    LC_InfoMessageBuilder msg(tr("Stretch"));
+                    msg.add(tr("Start Corner:"), formatVector(pPoints->firstCorner));
+                    msg.add(tr("End Corner:"), formatVector(pPoints->secondCorner));
+                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                }
             }
             break;
         }
-        case SetReferencePoint: {
-            deletePreview();
+        case SetReferencePoint: {            
             previewStretchRect(true);
-            trySnapToRelZeroCoordinateEvent(e);
-            drawPreview();
+            trySnapToRelZeroCoordinateEvent(e);            
+            if (isInfoCursorForModificationEnabled()) {
+                LC_InfoMessageBuilder msg(tr("Stretch"));
+                msg.add(tr("Reference Point:"), formatVector(mouse));
+                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+            }    
             break;
         }
         case SetTargetPoint: {
-            if (pPoints->referencePoint.valid) {
-                deletePreview();
+            if (pPoints->referencePoint.valid) {                
                 mouse= getSnapAngleAwarePoint(e, pPoints->referencePoint, mouse, true);
                 pPoints->targetPoint = mouse;
                 // fixme - isn't it more reliable to rely on RS_Modification::stretch there?
                 preview->addStretchablesFrom(*container, graphicView, pPoints->firstCorner, pPoints->secondCorner);
-                //preview->move(targetPoint-referencePoint);
-                preview->stretch(pPoints->firstCorner, pPoints->secondCorner,
-                                 pPoints->targetPoint - pPoints->referencePoint);
+                const RS_Vector &offset = pPoints->targetPoint - pPoints->referencePoint;
+                preview->stretch(pPoints->firstCorner, pPoints->secondCorner,offset);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->referencePoint);
                     previewRefSelectablePoint(pPoints->targetPoint);
                     previewRefLine(pPoints->referencePoint, pPoints->targetPoint);
                 }
-                drawPreview();
+                if (isInfoCursorForModificationEnabled()) {
+                    LC_InfoMessageBuilder msg(tr("Stretch"));
+                    msg.add(tr("Reference Point:"), formatVector(pPoints->referencePoint));
+                    msg.add(tr("Target Point:"), formatVector(mouse));
+                    msg.add(tr("Offset:"));
+                    msg.add(formatRelative(mouse));
+                    msg.add(formatRelativePolar(mouse));
+                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                }                
             }
             break;
         }
         default:
             break;
     }
+    drawPreview();
 
     RS_DEBUG->print("RS_ActionModifyStretch::mouseMoveEvent end");
 }
@@ -185,7 +197,6 @@ void RS_ActionModifyStretch::onCoordinateEvent(int status,  [[maybe_unused]]bool
             pPoints->targetPoint = mouse;
             moveRelativeZero(pPoints->targetPoint);
             trigger();
-            //finish();
             break;
         }
         default:

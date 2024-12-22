@@ -95,8 +95,9 @@ void RS_ActionModifyEntity::trigger() {
 }
 
 void RS_ActionModifyEntity::mouseMoveEvent(QMouseEvent *e) {
-    RS_Entity* entity = catchEntityOnPreview(e);
     deleteHighlights();
+    snapPoint(e);
+    RS_Entity* entity = catchEntityOnPreview(e);
     if (entity != nullptr){
         highlightHoverWithRefPoints(entity, true);
     }

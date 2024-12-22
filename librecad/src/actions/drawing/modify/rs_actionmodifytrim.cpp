@@ -88,10 +88,11 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent begin");
 
     RS_Vector mouse = toGraph(e);
-    
+
     deleteHighlights();
     deletePreview();
     int status = getStatus();
+    snapPoint(e);
     switch (status) {
         case ChooseLimitEntity: {
             RS_Entity *se = catchEntityOnPreview(e, RS2::ResolveAllButTextImage);
@@ -124,6 +125,14 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
                             }
                             if (both) {
                                 previewRefTrimmedEntity(trimResult.trimmed2, limitEntity);
+                            }
+                            if (isInfoCursorForModificationEnabled()){
+                                LC_InfoMessageBuilder msg(tr("Trim"));
+                                msg.add(tr("Intersection:"), formatVector(trimResult.intersection1));
+                                if (trimResult.intersection2.valid) {
+                                    msg.add(tr("Intersection 2:"), formatVector(trimResult.intersection2));
+                                }
+                                appendInfoCursorZoneMessage(msg.toString(), 2, false);
                             }
                         }
                     }

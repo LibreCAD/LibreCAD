@@ -149,15 +149,13 @@ void LC_ActionModifyAlignSingle::mouseMoveEvent(QMouseEvent *e) {
 
             if (isInfoCursorForModificationEnabled()){
                 QString msg = prepareInfoCursorMessage(verticalRef, drawVertical, horizontalRef, drawHorizontal);
+                LC_InfoMessageBuilder builder = LC_InfoMessageBuilder(msg);
                 if (entity != nullptr){
-                    msg.append("\n");
-                    msg.append(tr("Offset:"));
-                    msg.append("\n");
-                    msg.append(formatRelative(offset));
-                    msg.append("\n");
-                    msg.append(formatRelativePolar(offset));
+                    builder.add(tr("Offset:"));
+                    builder.add(formatRelative(offset));
+                    builder.add(formatRelativePolar(offset));
                 }
-                appendInfoCursorZoneMessage(msg, 2, false);
+                appendInfoCursorZoneMessage(builder.toString(), 2, false);
             }
             break;
         }
