@@ -508,10 +508,13 @@ void RS_Painter::drawPolyline(const RS_Polyline& polyline, const RS_GraphicView&
 
     for(RS_Entity* entity: polyline) {
         switch(entity->rtti()) {
-            case RS2::EntityLine: {
-                path.lineTo(view.toGuiX(entity->getEndpoint().x), view.toGuiY(entity->getEndpoint().y));
-                break;
-            }
+        case RS2::EntityLine: {
+            path.moveTo(view.toGuiX(entity->getStartpoint().x),
+                        view.toGuiY(entity->getStartpoint().y));
+            path.lineTo(view.toGuiX(entity->getEndpoint().x),
+                        view.toGuiY(entity->getEndpoint().y));
+            break;
+        }
             case RS2::EntityArc: {
                 auto arc = *static_cast<RS_Arc *>(entity);
                 RS_ArcData data = arc.getData();
@@ -530,8 +533,22 @@ void RS_Painter::drawPolyline(const RS_Polyline& polyline, const RS_GraphicView&
                         angularLength = data.angularLength;
                     }
                     double size = radius + radius;
+                    RS_Vector startoPint = view.toGui(arc.getStartpoint());
+                    path.moveTo(startoPint.x, startoPint.y);
                     path.arcTo(centerX - radius, centerY - radius, size, size, startAngleDegrees, angularLength);
                 }
+                break;
+            }
+            case RS2::EntityEllipse: {
+                auto arc = *static_cast<RS_Ellipse *>(entity);
+                const RS_EllipseData& data = arc.getData();
+                const RS_Vector center=view.toGui(data.center);
+                const double ra = data.majorP.magnitude()*view.getFactor().x;
+                const double rb = data.ratio*ra;
+                if (data.isArc)
+                    drawEllipseArc(center.x, center.y, ra, rb, data.angleDegrees, data.startAngleDegrees, data.otherAngleDegrees, data.angularLength, data.reversed);
+                else
+                    drawEllipse(center.x, center.y, ra, rb, data.angleDegrees);
                 break;
             }
             default:
