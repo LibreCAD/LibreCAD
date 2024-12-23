@@ -811,7 +811,7 @@ void RS_ActionDrawPolyline::undo(){
         pPoints->point = pPoints->history.last();
 
         if (pPoints->history.size() == 1){
-            graphicView->moveRelativeZero(pPoints->history.front());
+            moveRelativeZero(pPoints->history.front());
             //remove polyline from container,
             //container calls delete over polyline
             container->removeEntity(pPoints->polyline);

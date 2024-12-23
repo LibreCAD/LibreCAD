@@ -100,7 +100,7 @@ void QC_ActionGetPoint::mouseReleaseEvent(QMouseEvent* e) {
 
 void QC_ActionGetPoint::onCoordinateEvent( [[maybe_unused]]int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     pPoints->targetPoint = pos;
-    graphicView->moveRelativeZero(pPoints->targetPoint);
+    moveRelativeZero(pPoints->targetPoint);
     trigger();
 }
 

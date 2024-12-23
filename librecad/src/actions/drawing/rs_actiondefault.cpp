@@ -281,7 +281,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                         if (vp.valid) {
                             pPoints->v1 = vp;
                         }
-                        graphicView->moveRelativeZero(pPoints->v1);
+                        moveRelativeZero(pPoints->v1);
                         setStatus(Moving);
                     }
                     // no entity found. start area selection:

@@ -226,7 +226,7 @@ void LC_AbstractActionWithPreview::performTrigger(){
     performTriggerDeletions();
     RS_Vector newRelativeZeroPosition = doGetRelativeZeroAfterTrigger();
     if (newRelativeZeroPosition.valid){
-        graphicView->setRelativeZero(newRelativeZeroPosition);
+        moveRelativeZero(newRelativeZeroPosition);
     }
     doAfterTrigger(); // inherited actions may do additional processing there
 }

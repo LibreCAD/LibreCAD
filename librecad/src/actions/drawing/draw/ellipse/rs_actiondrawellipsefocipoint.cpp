@@ -179,7 +179,7 @@ void RS_ActionDrawEllipseFociPoint::onCoordinateEvent(int status, [[maybe_unused
             pPoints->point = mouse;
             pPoints->d = 0.5 * (pPoints->focus1.distanceTo(pPoints->point) + pPoints->focus2.distanceTo(pPoints->point));
             if (pPoints->d > pPoints->c + RS_TOLERANCE){
-                graphicView->moveRelativeZero(mouse);
+                moveRelativeZero(mouse);
                 trigger();
             }
             break;

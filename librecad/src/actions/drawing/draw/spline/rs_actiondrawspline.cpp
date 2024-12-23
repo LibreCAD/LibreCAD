@@ -319,7 +319,7 @@ void RS_ActionDrawSpline::undo(){
             pPoints->spline->removeLastControlPoint();
             if (!pPoints->history.isEmpty()){
                 RS_Vector v = pPoints->history.last();
-                graphicView->moveRelativeZero(v);
+                moveRelativeZero(v);
             }
             graphicView->redraw(RS2::RedrawDrawing);
 

@@ -288,7 +288,7 @@ void LC_ActionDrawSplinePoints::undo(){
         }
         else {
             v = splinePts.back();
-            graphicView->moveRelativeZero(v);
+            moveRelativeZero(v);
         }
         graphicView->redraw(RS2::RedrawDrawing);
         drawPreview();

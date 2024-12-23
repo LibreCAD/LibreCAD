@@ -144,7 +144,7 @@ void LC_ActionSnapMiddleManual::onCoordinateEvent(int status, [[maybe_unused]]bo
         case SetStartPoint: {
             m_pPoints->startPoint = mouse;
             setStatus(SetEndPoint);
-            graphicView->moveRelativeZero(mouse);
+            moveRelativeZero(mouse);
             updateMouseButtonHints();
             break;
         }
