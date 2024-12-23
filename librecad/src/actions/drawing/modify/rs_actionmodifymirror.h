@@ -66,7 +66,7 @@ protected:
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
-    void doTrigger();
+    void doPerformTrigger();
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doTrigger(bool keepSelected) override;

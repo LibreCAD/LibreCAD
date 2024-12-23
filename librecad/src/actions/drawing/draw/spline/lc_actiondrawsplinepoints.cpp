@@ -81,9 +81,6 @@ void LC_ActionDrawSplinePoints::doTrigger() {
         RS_Entity *s = pPoints->spline->clone();
         undoCycleAdd(s);
 
-// upd view
-        RS_Vector r = graphicView->getRelativeZero(); // fixme - remove
-        moveRelativeZero(r);
         RS_DEBUG->print("RS_ActionDrawSplinePoints::trigger(): spline added: %lu", s->getId());
         reset();
     }

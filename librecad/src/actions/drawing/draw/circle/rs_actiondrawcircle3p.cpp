@@ -68,12 +68,13 @@ void RS_ActionDrawCircle3P::doTrigger() {
         auto *circle = new RS_Circle{container, pPoints->data};
 
         setPenAndLayerToActive(circle);
-        undoCycleAdd(circle);
-        RS_Vector rz = graphicView->getRelativeZero();
+
         if (moveRelPointAtCenterAfterTrigger){
-            rz = pPoints->data.center;
+            moveRelativeZero(pPoints->data.center);
         }
-        moveRelativeZero(rz);
+
+        undoCycleAdd(circle);
+
         setStatus(SetPoint1);
         reset();
     } else

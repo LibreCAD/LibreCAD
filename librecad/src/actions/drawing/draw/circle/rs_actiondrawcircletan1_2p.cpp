@@ -91,13 +91,12 @@ void RS_ActionDrawCircleTan1_2P::doTrigger() {
     //    std::cout<<"begin"<<std::endl;
     auto *c = new RS_Circle(container, pPoints->cData);
 
-    undoCycleAdd(c);
-//    circle->setHighlighted(false);
-    RS_Vector rz = graphicView->getRelativeZero();
     if (moveRelPointAtCenterAfterTrigger){
-        rz = c->getCenter();
+        moveRelativeZero(c->getCenter());
     }
-    moveRelativeZero(rz);
+
+    undoCycleAdd(c);
+
     setStatus(SetCircle1);
     RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::trigger(): entity added: %lu", c->getId());
 }

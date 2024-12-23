@@ -88,13 +88,14 @@ void RS_ActionDrawCircleTan2::finish(bool updateTB){
 void RS_ActionDrawCircleTan2::doTrigger() {
     auto *circle = new RS_Circle(container, pPoints->cData);
 
-    undoCycleAdd(circle);
-    for (auto p: pPoints->circles) {
-        p->setHighlighted(false);
-    }
-
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
+    }
+
+    undoCycleAdd(circle);
+
+    for (auto p: pPoints->circles) {
+        p->setHighlighted(false);
     }
     pPoints->circles.clear();
     setStatus(SetCircle1);

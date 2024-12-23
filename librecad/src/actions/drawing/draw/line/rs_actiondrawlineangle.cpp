@@ -96,8 +96,6 @@ void RS_ActionDrawLineAngle::doTrigger() {
     auto *line = new RS_Line{container, pPoints->data};
 
     setPenAndLayerToActive(line);
-    undoCycleAdd(line);
-
     if (!persistRelativeZero){
         RS_Vector &newRelZero = pPoints->data.startpoint;
         if (pPoints->snpPoint == SNAP_MIDDLE){ // snap to middle
@@ -105,7 +103,11 @@ void RS_ActionDrawLineAngle::doTrigger() {
         }
         moveRelativeZero(newRelZero);
     }
+
+    undoCycleAdd(line);
+
     persistRelativeZero = false;
+
     RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %lu",line->getId());
 }
 

@@ -2266,7 +2266,7 @@ public:
  * Gets the specified overlay container.
  */
 RS_EntityContainer *RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics position) {
-    if (overlayEntities[position]) {
+    if (overlayEntities.contains(position)) {
         return overlayEntities[position];
     }
     if (position == RS2::OverlayGraphics::OverlayEffects) {
@@ -2647,7 +2647,10 @@ bool RS_GraphicView::isDrawTextsAsDraftForPreview() const {
 }
 
 RS_Undoable *RS_GraphicView::getRelativeZeroUndoable() {
-    auto* result = new LC_UndoableRelZero(this, markedRelativeZero, relativeZero);
-    markRelativeZero();
+    RS_Undoable* result = nullptr;
+    if (LC_LineMath::isMeaningfulDistance(markedRelativeZero, relativeZero)){
+        result = new LC_UndoableRelZero(this, markedRelativeZero, relativeZero);
+        markRelativeZero();
+    }
     return result;
 }

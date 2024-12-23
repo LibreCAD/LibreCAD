@@ -77,6 +77,6 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
-    void doTrigger();
+    void doTrigger() override;
 };
 #endif

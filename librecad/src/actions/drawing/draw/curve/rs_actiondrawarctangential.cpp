@@ -76,9 +76,9 @@ void RS_ActionDrawArcTangential::doTrigger() {
     auto* arc = new RS_Arc(container, *data);
 
     setPenAndLayerToActive(arc);
-    undoCycleAdd(arc);
-
     moveRelativeZero(arc->getCenter());
+
+    undoCycleAdd(arc);
 
     setStatus(SetBaseEntity);
     reset();

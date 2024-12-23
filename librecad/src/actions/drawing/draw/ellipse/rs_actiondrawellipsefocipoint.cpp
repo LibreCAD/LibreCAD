@@ -81,8 +81,8 @@ void RS_ActionDrawEllipseFociPoint::doTrigger() {
     };
     setPenAndLayerToActive(ellipse);
 
-    undoCycleAdd(ellipse);
     moveRelativeZero(ellipse->getCenter());
+    undoCycleAdd(ellipse);
     setStatus(SetFocus1);
 
     RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::trigger():entity added: %lu", ellipse->getId());

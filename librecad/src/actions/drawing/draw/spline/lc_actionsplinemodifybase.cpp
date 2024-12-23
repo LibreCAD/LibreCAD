@@ -39,9 +39,8 @@ void LC_ActionSplineModifyBase::doTrigger() {
             createdEntity->setPen(entityToModify->getPen(false));
             createdEntity->setParent(entityToModify->getParent());
             container->addEntity(createdEntity);
-
-            undoCycleReplace(entityToModify, createdEntity);
             doCompleteTrigger();
+            undoCycleReplace(entityToModify, createdEntity);
         }
         entityToModify = createdEntity;
         vertexPoint = RS_Vector(false);

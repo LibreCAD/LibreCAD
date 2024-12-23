@@ -140,7 +140,7 @@ void RS_ActionModifyRotate2::onCoordinateEvent(int status, [[maybe_unused]]bool 
         case SetReferencePoint2: {
             data->center2 = pos;
 //            setStatus(ShowDialog);
-            doTrigger();
+            doPerformTrigger();
             break;
         }
         default:
@@ -148,7 +148,7 @@ void RS_ActionModifyRotate2::onCoordinateEvent(int status, [[maybe_unused]]bool 
     }
 }
 
-void RS_ActionModifyRotate2::doTrigger() {
+void RS_ActionModifyRotate2::doPerformTrigger() {
     if (isShowModifyActionDialog()) {
         if (RS_DIALOGFACTORY->requestRotate2Dialog(*data)) {
             updateOptions();

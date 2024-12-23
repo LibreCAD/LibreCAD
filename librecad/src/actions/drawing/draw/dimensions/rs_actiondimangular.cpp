@@ -66,9 +66,8 @@ void RS_ActionDimAngular::doTrigger() {
 
         undoCycleAdd(newEntity);
 
-        RS_Vector rz {graphicView->getRelativeZero()};
         setStatus( SetLine1);
-        moveRelativeZero( rz);
+
         RS_Snapper::finish();
     }
     else {

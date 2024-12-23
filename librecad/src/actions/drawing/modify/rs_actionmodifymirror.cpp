@@ -216,7 +216,7 @@ void RS_ActionModifyMirror::showOptionsAndTrigger(){
     if (isShowModifyActionDialog()) {
         if (RS_DIALOGFACTORY->requestMirrorDialog(pPoints->data)) {
             updateOptions();
-            doTrigger();
+            doPerformTrigger();
         } else {
             if (mirrorToExistingLine) {
                 setStatus(SetAxisPoint1);
@@ -226,11 +226,11 @@ void RS_ActionModifyMirror::showOptionsAndTrigger(){
         }
     }
     else{
-        doTrigger();
+        doPerformTrigger();
     }
 }
 
-void RS_ActionModifyMirror::doTrigger() {
+void RS_ActionModifyMirror::doPerformTrigger() {
     pPoints->data.axisPoint1 = pPoints->axisPoint1;
     pPoints->data.axisPoint2 = pPoints->axisPoint2;
     deletePreview();

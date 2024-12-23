@@ -77,9 +77,6 @@ void RS_ActionDimLeader::doTrigger() {
 
         undoCycleAdd(leaderEntity);
 
-        RS_Vector rz = graphicView->getRelativeZero();
-        moveRelativeZero(rz);
-
         RS_DEBUG->print("RS_ActionDimLeader::trigger(): leaderEntity added: %lu",
                         leaderEntity->getId());
     }

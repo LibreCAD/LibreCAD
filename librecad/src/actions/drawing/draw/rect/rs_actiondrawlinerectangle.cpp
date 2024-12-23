@@ -68,9 +68,10 @@ void RS_ActionDrawLineRectangle::doTrigger() {
     polyline->endPolyline();
 
     setPenAndLayerToActive(polyline);
-    undoCycleAdd(polyline);
 
     moveRelativeZero(pPoints->corner2);
+
+    undoCycleAdd(polyline);
 }
 
 void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {

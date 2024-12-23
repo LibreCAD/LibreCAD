@@ -54,14 +54,13 @@ void RS_ActionDrawCircle::reset() {
 
 void RS_ActionDrawCircle::doTrigger() {
     auto* circle = new RS_Circle(container,*data);
-
     setPenAndLayerToActive(circle);
-    undoCycleAdd(circle);
 
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
     }
 
+    undoCycleAdd(circle);
     setStatus(SetCenter);
     reset();
 

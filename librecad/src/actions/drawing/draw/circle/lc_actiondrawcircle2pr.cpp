@@ -29,18 +29,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphicview.h"
 #include "rs_preview.h"
 
-struct LC_ActionDrawCircle2PR::Points
-{
+struct LC_ActionDrawCircle2PR::Points{
 	RS_Vector point1;
 	RS_Vector point2;
 };
 
 LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(RS_EntityContainer& container,
-											   RS_GraphicView& graphicView)
-	:RS_ActionDrawCircleCR(container, graphicView)
-	, pPoints(std::make_unique<Points>()){
-	actionType=RS2::ActionDrawCircle2PR;
-	reset();
+                                               RS_GraphicView& graphicView)
+    :RS_ActionDrawCircleCR(container, graphicView)
+    , pPoints(std::make_unique<Points>()){
+    actionType=RS2::ActionDrawCircle2PR;
+    reset();
 }
 
 LC_ActionDrawCircle2PR::~LC_ActionDrawCircle2PR() = default;
@@ -64,14 +63,11 @@ void LC_ActionDrawCircle2PR::init(int status){
 void LC_ActionDrawCircle2PR::doTrigger() {
     auto *circle = new RS_Circle(container, *data);
     setPenAndLayerToActive(circle);
-    undoCycleAdd(circle);
 
-    // todo - review - setting the same rel zero - what for?
-    RS_Vector rz = graphicView->getRelativeZero();
     if (moveRelPointAtCenterAfterTrigger){
-        rz = circle->getCenter();
+        moveRelativeZero(circle->getCenter());
     }
-    moveRelativeZero(rz);
+    undoCycleAdd(circle);
     setStatus(SetPoint1);
     reset();
 }
@@ -107,10 +103,9 @@ bool LC_ActionDrawCircle2PR::preparePreview(const RS_Vector &mouse, RS_Vector& a
     return false;
 }
 
-
 void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
-    RS_Vector mouse = snapPoint(e);
     deletePreview();
+    RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
         case SetPoint1:
             pPoints->point1 = mouse;

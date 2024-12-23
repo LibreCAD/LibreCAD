@@ -63,8 +63,6 @@ void LC_ActionDrawParabola4Points::doTrigger() {
         auto* en = new LC_Parabola{container, pPoints->data};
         undoCycleAdd(en);
     }
-    RS_Vector rz = graphicView->getRelativeZero(); // fixme - sand - what for?
-    moveRelativeZero(rz);
     setStatus(SetPoint1);
 }
 

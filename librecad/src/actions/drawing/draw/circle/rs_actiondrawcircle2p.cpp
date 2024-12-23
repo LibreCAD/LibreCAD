@@ -70,15 +70,12 @@ void RS_ActionDrawCircle2P::doTrigger() {
         auto *circle = new RS_Circle(container,*data);
 
         setPenAndLayerToActive(circle);
-        undoCycleAdd(circle);
 
         if (moveRelPointAtCenterAfterTrigger){
             moveRelativeZero(data->center);
-
-        } else {
-            RS_Vector rz = graphicView->getRelativeZero();
-            moveRelativeZero(rz);
         }
+
+        undoCycleAdd(circle);
         setStatus(SetPoint1);
         reset();
     } else

@@ -54,10 +54,18 @@ void LC_ActionDrawDimBaseline::doTrigger() {
     setPenAndLayerToActive(dim);
     dim->update();
 
+    bool baseline = isBaseline();
+
+    if (baseline){
+        moveRelativeZero(edata->extensionPoint1);
+    }
+    else{
+        moveRelativeZero(edata->extensionPoint2);
+    }
+
     undoCycleAdd(dim);
 
-    if (isBaseline()) {
-        moveRelativeZero(edata->extensionPoint1);
+    if (baseline) {
         prevExtensionPointEnd = edata->extensionPoint2;
         // test is just in case
         auto* dimLinear = dynamic_cast<RS_DimLinear*>(dim);
@@ -66,7 +74,6 @@ void LC_ActionDrawDimBaseline::doTrigger() {
         }
     }
     else{
-        moveRelativeZero(edata->extensionPoint2);
         edata->extensionPoint1 = edata->extensionPoint2;
         prevExtensionPointEnd = edata->extensionPoint1; // todo - check whether this is necessary. Potentially - for ordnance continued
     }

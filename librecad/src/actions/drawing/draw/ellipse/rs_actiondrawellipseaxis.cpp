@@ -105,13 +105,12 @@ void RS_ActionDrawEllipseAxis::doTrigger() {
         ellipse->switchMajorMinor();
     }
     setPenAndLayerToActive(ellipse);
-    undoCycleAdd(ellipse);
 
-    RS_Vector rz = graphicView->getRelativeZero();
     if (moveRelPointAtCenterAfterTrigger){
-        rz = ellipse->getCenter();
+        moveRelativeZero(ellipse->getCenter());
     }
-    moveRelativeZero(rz);
+
+    undoCycleAdd(ellipse);
 
     setStatus(SetCenter);
 

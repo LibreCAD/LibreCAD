@@ -78,16 +78,15 @@ void RS_ActionDrawEllipseInscribe::finish(bool updateTB){
 void RS_ActionDrawEllipseInscribe::doTrigger() {
     auto *ellipse = new RS_Ellipse(container, pPoints->eData);
 
+    if (moveRelPointAtCenterAfterTrigger){
+        moveRelativeZero(ellipse->getCenter());
+    }
+
     undoCycleAdd(ellipse);
 
     for (RS_Line *const p: pPoints->lines) {
         if (!p) continue;
         p->setHighlighted(false);
-    }
-    drawSnapper();
-
-    if (moveRelPointAtCenterAfterTrigger){
-        moveRelativeZero(ellipse->getCenter());
     }
 
     clearLines(false);

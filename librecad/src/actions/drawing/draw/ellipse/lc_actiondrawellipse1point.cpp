@@ -77,13 +77,13 @@ void LC_ActionDrawEllipse1Point::doTrigger() {
         ellipse->switchMajorMinor();
     }
     setPenAndLayerToActive(ellipse);
+
+    if (moveRelPointAtCenterAfterTrigger){
+        moveRelativeZero(ellipse->getCenter());
+    }
+
     undoCycleAdd(ellipse);
 
-    RS_Vector rz = graphicView->getRelativeZero();
-    if (moveRelPointAtCenterAfterTrigger){
-        rz = ellipse->getCenter();
-    }
-    moveRelativeZero(rz);
     setStatus(SetPoint);
 }
 

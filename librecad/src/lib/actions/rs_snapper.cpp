@@ -68,14 +68,12 @@ namespace {
     }
 
     // The valid size magnitude
-    double getValidSize(const RS_Vector& sizeVector)
-    {
+    double getValidSize(const RS_Vector& sizeVector){
         return std::hypot(std::max(sizeVector.x, RS_TOLERANCE), std::max(sizeVector.y, RS_TOLERANCE));
     }
 
     // get catching entity distance in graph distance
-    double getCatchDistance(double catchDistance, int catchEntityGuiRange, RS_GraphicView* view)
-    {
+    double getCatchDistance(double catchDistance, int catchEntityGuiRange, RS_GraphicView* view){
         return (view != nullptr) ? std::min(catchDistance, view->toGraphDX(catchEntityGuiRange)) : catchDistance;
     }
 }
@@ -87,8 +85,7 @@ namespace {
   *
   * @returns A reference to itself.
   */
-RS_SnapMode const & RS_SnapMode::clear()
-{
+RS_SnapMode const & RS_SnapMode::clear(){
     snapIntersection    = false;
     snapOnEntity        = false;
     snapCenter          = false;
@@ -104,8 +101,7 @@ RS_SnapMode const & RS_SnapMode::clear()
     return *this;
 }
 
-bool RS_SnapMode::operator ==(RS_SnapMode const& rhs) const
-{
+bool RS_SnapMode::operator ==(RS_SnapMode const& rhs) const{
     return snapIntersection == rhs.snapIntersection
            && snapOnEntity == rhs.snapOnEntity
            && snapCenter   == rhs.snapCenter
@@ -118,16 +114,14 @@ bool RS_SnapMode::operator ==(RS_SnapMode const& rhs) const
            && snapAngle    == rhs.snapAngle;
 }
 
-bool RS_SnapMode::operator !=(RS_SnapMode const& rhs) const
-{
+bool RS_SnapMode::operator !=(RS_SnapMode const& rhs) const{
     return ! this->operator ==(rhs);
 }
 
 /**
   * snap mode to a flag integer
   */
-uint RS_SnapMode::toInt(const RS_SnapMode& s)
-{
+uint RS_SnapMode::toInt(const RS_SnapMode& s){
     uint ret {0};
 
     if (s.snapIntersection) ret |= RS_SnapMode::SnapIntersection;
@@ -160,8 +154,7 @@ uint RS_SnapMode::toInt(const RS_SnapMode& s)
 /**
   * integer flag to snapMode
   */
-RS_SnapMode RS_SnapMode::fromInt(unsigned int ret)
-{
+RS_SnapMode RS_SnapMode::fromInt(unsigned int ret){
     RS_SnapMode s;
 
     if (RS_SnapMode::SnapIntersection   & ret) s.snapIntersection = true;
@@ -195,8 +188,7 @@ RS_SnapMode RS_SnapMode::fromInt(unsigned int ret)
 /**
   * Methods and structs for class RS_Snapper
   */
-struct RS_Snapper::Indicator
-{
+struct RS_Snapper::Indicator{
     bool drawLines = false;
     int lines_type;
     RS_Pen lines_pen;
@@ -248,12 +240,10 @@ RS_Entity *catchEntity(const RS_Vector &coord, const EntityTypeList &enTypeList,
 QString getSnapName(int snapType);
 
 
-
 /**
  * Initialize (called by all constructors)
  */
-void RS_Snapper::init()
-{
+void RS_Snapper::init(){
     snapMode = graphicView->getDefaultSnapMode();
     keyEntity = nullptr;
     pImpData->snapSpot = RS_Vector{false};
@@ -346,8 +336,7 @@ RS_Vector RS_Snapper::snapFree(QMouseEvent* e) {
  * @param e A mouse event.
  * @return The coordinates of the point or an invalid vector.
  */
-RS_Vector RS_Snapper::snapPoint(QMouseEvent* e)
-{
+RS_Vector RS_Snapper::snapPoint(QMouseEvent* e){
     pImpData->snapSpot = RS_Vector(false);
     RS_Vector t(false);
 
@@ -897,14 +886,18 @@ void RS_Snapper::hideSnapOptions() {
  */
 void RS_Snapper::deleteSnapper(){
 //    LC_ERR<<"Delete Snapper";
-    graphicView->getOverlayContainer(RS2::Snapper)->clear();
-    graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
+    if (!graphicView->isCleanUp()) {
+        graphicView->getOverlayContainer(RS2::Snapper)->clear();
+        graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
+    }
 }
 
 void RS_Snapper::deleteInfoCursor(){
-//    LC_ERR<<"Delete Snapper";
-    graphicView->getOverlayContainer(RS2::InfoCursor)->clear();
-    graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
+//    LC_ERR<<"Delete Info Cursor";
+    if (!graphicView->isCleanUp()) {
+        graphicView->getOverlayContainer(RS2::InfoCursor)->clear();
+        graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
+    }
 }
 
 /**

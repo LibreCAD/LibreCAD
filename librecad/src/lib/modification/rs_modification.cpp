@@ -261,7 +261,7 @@ void RS_Modification::remove() {
 }
 
 void RS_Modification::remove(const std::vector<RS_Entity*> &entitiesList){
-    LC_UndoSection undo( document);
+    LC_UndoSection undo(document,graphicView);
 
     for(auto e: entitiesList) {
         e->setSelected(false);
@@ -327,7 +327,7 @@ bool RS_Modification::changeAttributes(
 }
 
 bool RS_Modification::changeAttributes(RS_AttributesData& data, const std::vector<RS_Entity*> &entitiesList, RS_EntityContainer *cont, bool keepSelected){
-    LC_UndoSection  undo(document);
+    LC_UndoSection  undo(document, graphicView);
     QList<RS_Entity*> clones;
     QSet<RS_Block*> blocks;
 
@@ -420,7 +420,7 @@ void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
     }
 
     // start undo cycle for the container if we're cutting
-    LC_UndoSection undo( document, cut && handleUndo);
+    LC_UndoSection undo( document, graphicView, cut && handleUndo);
 
     bool selectedEntityFound{false};
     std::vector<RS_Entity *> selected;
@@ -522,7 +522,7 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
     c->setLayer(e->getLayer()->getName());
 
     if (cut) {
-        LC_UndoSection undo( document);
+        LC_UndoSection undo(document, graphicView);
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: cut ID/flag: %s", getIdFlagString(e).c_str());
         e->changeUndoState();
         undo.addUndoable(e);
@@ -732,7 +732,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     i->setSelected(false);
 
     // unblock all entities if not pasting as a new block by demand
-    LC_UndoSection undo(document, handleUndo);
+    LC_UndoSection undo(document,graphicView, handleUndo);
     if (!data.asInsert) {
         // no inserts should be selected except from paste block and insert
         container->setSelected(false);
@@ -1118,7 +1118,7 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
     container->addEntity(newPolyline);
 
     if (handleUndo) {
-        LC_UndoSection undo( document);
+        LC_UndoSection undo( document,graphicView);
 
         polyline.setUndoState(true);
         undo.addUndoable(&polyline);
@@ -1221,9 +1221,8 @@ void RS_Modification::deleteLineNode(RS_Line* line, const RS_Vector& node)
 
             RS_DEBUG->print("RS_Modification::deleteLineNode: handling new and another line's undo");
 
-            if (handleUndo)
-            {
-                LC_UndoSection undo(document);
+            if (handleUndo) {
+                LC_UndoSection undo(document, graphicView);
 
                 newLine->setUndoState(false);
                 anotherLine->setUndoState(true);
@@ -1240,7 +1239,7 @@ void RS_Modification::deleteLineNode(RS_Line* line, const RS_Vector& node)
 
     if (handleUndo)
     {
-        LC_UndoSection undo(document);
+        LC_UndoSection undo(document, graphicView);
         line->setUndoState(true);
         undo.addUndoable(line);
     }
@@ -1289,7 +1288,7 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
                 node.distanceTo(ae->getEndpoint()) < 1.0e-6){
 
                 if (handleUndo){
-                    LC_UndoSection undo(document);
+                    LC_UndoSection undo(document,graphicView);
                     polyline.setUndoState(true);
                     undo.addUndoable(&polyline);
                 }
@@ -1374,7 +1373,7 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
 
         RS_DEBUG->print("RS_Modification::deletePolylineNode: handling undo");
         if (handleUndo){
-            LC_UndoSection undo(document);
+            LC_UndoSection undo(document, graphicView);
 
             polyline.setUndoState(true);
             undo.addUndoable(&polyline);
@@ -1591,7 +1590,7 @@ RS_Polyline *RS_Modification::deletePolylineNodesBetween(
 
         RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: handling undo");
         if (handleUndo){
-            LC_UndoSection undo(document);
+            LC_UndoSection undo(document, graphicView);
 
             polyline.setUndoState(true);
             undo.addUndoable(&polyline);
@@ -1825,7 +1824,7 @@ RS_Polyline *RS_Modification::polylineTrim(
     if (!createOnly){
         RS_DEBUG->print("RS_Modification::polylineTrim: handling undo");
         if (handleUndo){
-            LC_UndoSection undo(document);
+            LC_UndoSection undo(document, graphicView);
 
             polyline.setUndoState(true);
             undo.addUndoable(&polyline);
@@ -2192,7 +2191,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data, const std::vector<RS_Entity*
 }
 
 void RS_Modification::deleteOriginalAndAddNewEntities(const std::vector<RS_Entity*> &addList, const std::vector<RS_Entity*> &originalEntities, bool addOnly, bool deleteOriginals, bool forceUndoable){
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
+    LC_UndoSection undo(document, graphicView, handleUndo); // bundle remove/add entities in one undoCycle
     if (addOnly) {
         for (RS_Entity *e: addList) {
             if (e != nullptr) {
@@ -2253,7 +2252,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData &data, const std::vector<RS_E
  * @param remove true: Remove entities.
  */
 void RS_Modification::deselectOriginals(bool remove) {
-    LC_UndoSection undo(document, handleUndo);
+    LC_UndoSection undo(document, graphicView,handleUndo);
 
     for (auto e: *container) {
         if (e != nullptr) {
@@ -2269,7 +2268,7 @@ void RS_Modification::deselectOriginals(bool remove) {
 }
 
 void RS_Modification::deselectOriginals(const std::vector<RS_Entity*> &entitiesList, bool remove) {
-    LC_UndoSection undo(document, handleUndo);
+    LC_UndoSection undo(document,graphicView,handleUndo);
 
     for (auto e: entitiesList) {
         e->setSelected(false);
@@ -2286,9 +2285,8 @@ void RS_Modification::deselectOriginals(const std::vector<RS_Entity*> &entitiesL
  *
  * @param addList Entities to add.
  */
-void RS_Modification::addNewEntities(const std::vector<RS_Entity*>& addList, bool forceUndoable)
-{
-    LC_UndoSection undo( document, handleUndo || forceUndoable);
+void RS_Modification::addNewEntities(const std::vector<RS_Entity*>& addList, bool forceUndoable) {
+    LC_UndoSection undo( document, graphicView, handleUndo || forceUndoable);
 
     for (RS_Entity* e: addList) {
         if (e) {
@@ -2427,7 +2425,7 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
     }
     if (!forPreview) {
         if (handleUndo) {
-            LC_UndoSection undo(document);
+            LC_UndoSection undo(document,graphicView);
 
             undo.addUndoable(trimmed1);
             trimEntity->setUndoState(true);
@@ -2535,7 +2533,7 @@ RS_Entity* RS_Modification::trimAmount(const RS_Vector& trimCoord,
         }
 
         if (handleUndo){
-            LC_UndoSection undo(document);
+            LC_UndoSection undo(document,graphicView);
             undo.addUndoable(trimmed);
             trimEntity->setUndoState(true);
             undo.addUndoable(trimEntity);
@@ -2657,7 +2655,7 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
     }
 
     if (handleUndo) {
-        LC_UndoSection undo( document);
+        LC_UndoSection undo(document, graphicView);
 
         undo.addUndoable(cut1);
         if (cut2 != nullptr) {
@@ -2710,7 +2708,7 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
         }
     }
 
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
+    LC_UndoSection undo( document,graphicView, handleUndo); // bundle remove/add entities in one undoCycle
     if (removeOriginals) { // todo - so far, it seems better to stay with
         deselectOriginals(true); // fixme - entities are not selected, so this is error - fix it
     }
@@ -2748,7 +2746,7 @@ LC_BevelResult* RS_Modification::bevel(
     bool isPolyline = false;
 //    bool isClosedPolyline = false;
 
-    LC_UndoSection undo(document, handleUndo);
+    LC_UndoSection undo(document, graphicView,handleUndo);
 
     // find out whether we're bevelling within a polyline:
 
@@ -3034,7 +3032,7 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
     bool isPolyline = false;
 //    bool isClosedPolyline = false;
 
-    LC_UndoSection undo(document, handleUndo);
+    LC_UndoSection undo(document, graphicView,handleUndo);
     // find out whether we're rounding within a polyline:
     if (entity1->getParent() &&
         entity1->getParent()->rtti() == RS2::EntityPolyline){
@@ -3568,7 +3566,7 @@ bool RS_Modification::moveRef(RS_MoveRefData& data) {
         }
     }
 
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
+    LC_UndoSection undo( document,graphicView, handleUndo); // bundle remove/add entities in one undoCycle
     deselectOriginals(true);
     addNewEntities(addList);
 

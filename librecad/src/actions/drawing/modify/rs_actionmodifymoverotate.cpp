@@ -53,6 +53,7 @@ RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate() = default;
 
 void RS_ActionModifyMoveRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMoveRotate::trigger()");
+    // fixme - relzero - undoable
     RS_Modification m(*container, graphicView);
 	   m.moveRotate(pPoints->data, selectedEntities, false, keepSelected);
     pPoints->targetPoint = RS_Vector(false);
@@ -206,7 +207,7 @@ void RS_ActionModifyMoveRotate::onCoordinateEvent(int status, [[maybe_unused]]bo
             setStatus(ShowDialog);
             pPoints->data.offset = pos - pPoints->data.referencePoint;
             if (angleIsFixed) {
-                doTrigger();
+                doPerformTrigger();
             }
             else{
                 moveRelativeZero(pos);
@@ -219,7 +220,7 @@ void RS_ActionModifyMoveRotate::onCoordinateEvent(int status, [[maybe_unused]]bo
             if (pPoints->targetPoint.valid){
                 double angle = pPoints->targetPoint.angleTo(pos);
                 pPoints->data.angle = angle;
-                doTrigger();
+                doPerformTrigger();
             }
             break;
         }
@@ -228,7 +229,7 @@ void RS_ActionModifyMoveRotate::onCoordinateEvent(int status, [[maybe_unused]]bo
     }
 }
 
-void RS_ActionModifyMoveRotate::doTrigger() {
+void RS_ActionModifyMoveRotate::doPerformTrigger() {
     if (isShowModifyActionDialog()) {
         if (RS_DIALOGFACTORY->requestMoveRotateDialog(pPoints->data)) {
             updateOptions();
@@ -269,7 +270,7 @@ bool RS_ActionModifyMoveRotate::doProcessCommand(int status, const QString &c) {
                 }
                 else if (pPoints->targetPoint.valid){
                     updateOptions();
-                    doTrigger();
+                    doPerformTrigger();
                 } else {
                     angleIsFixed = true;
                     updateOptions();

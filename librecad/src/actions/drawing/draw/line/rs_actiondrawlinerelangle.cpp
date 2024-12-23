@@ -76,11 +76,13 @@ void RS_ActionDrawLineRelAngle::finish(bool updateTB) {
 void RS_ActionDrawLineRelAngle::doTrigger() {
     RS_Creation creation(container, graphicView);
     double angleRad = RS_Math::deg2rad(angle);
+
+    moveRelativeZero(*pos); // fixme - relzero - to undoable!!
+
     RS_Line* line = creation.createLineRelAngle(*pos,
                                                 entity,
                                                 angleRad,
                                                 length);
-    moveRelativeZero(*pos);
 
     if (line == nullptr)
         LC_LOG(RS_Debug::D_ERROR)<<"RS_ActionDrawLineRelAngle::"<<__func__<<"(): cannot create line";

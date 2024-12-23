@@ -71,9 +71,11 @@ void RS_ActionDrawLineHorVert::doTrigger() {
     auto *line = new RS_Line(container, pPoints->data);
 
     setPenAndLayerToActive(line);
-    undoCycleAdd(line);
 
     moveRelativeZero(line->getMiddlePoint());
+
+    undoCycleAdd(line);
+
     RS_DEBUG->print("RS_ActionDrawLineHorVert::trigger(): line added: %lu", line->getId());
 }
 

@@ -60,12 +60,15 @@ void RS_ActionDrawArc3P::doTrigger() {
         auto *arc = new RS_Arc{container, pPoints.data};
 
         setPenAndLayerToActive(arc);
-        undoCycleAdd(arc);
+
         RS_Vector rz = arc->getEndpoint();
         if (moveRelPointAtCenterAfterTrigger){
             rz = arc->getCenter();
         }
         moveRelativeZero(rz);
+
+        undoCycleAdd(arc);
+
         alternatedPoints = false;
         setStatus(SetPoint1);
         reset();

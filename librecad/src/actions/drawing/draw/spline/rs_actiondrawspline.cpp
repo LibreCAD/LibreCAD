@@ -91,10 +91,6 @@ void RS_ActionDrawSpline::doTrigger() {
     pPoints->spline->update();
     undoCycleAdd(pPoints->spline);
 
-    // upd view
-    RS_Vector r = graphicView->getRelativeZero(); // fixme - remove!
-    moveRelativeZero(r);
-
     RS_DEBUG->print("RS_ActionDrawSpline::trigger(): spline added: %lu",
                     pPoints->spline->getId());
 

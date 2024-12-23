@@ -79,8 +79,8 @@ void RS_ActionDrawArc::doTrigger() {
     }
     auto arc = new RS_Arc(container,*data);
     setPenAndLayerToActive(arc);
-    undoCycleAdd(arc);
     moveRelativeZero(arc->getCenter());
+    undoCycleAdd(arc);
     setStatus(SetCenter);
     reset();
     RS_DEBUG->print("RS_ActionDrawArc::trigger(): arc added: %lu", arc->getId());

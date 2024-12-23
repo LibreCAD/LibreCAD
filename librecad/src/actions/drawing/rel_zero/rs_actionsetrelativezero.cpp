@@ -48,7 +48,10 @@ void RS_ActionSetRelativeZero::trigger(){
         graphicView->lockRelativeZero(false);
         moveRelativeZero(*pt);
         undoCycleStart();
-        document->addUndoable(graphicView->getRelativeZeroUndoable());
+        RS_Undoable *relativeZeroUndoable = graphicView->getRelativeZeroUndoable();
+        if (relativeZeroUndoable != nullptr) {
+            document->addUndoable(relativeZeroUndoable);
+        }
         undoCycleEnd();
         graphicView->lockRelativeZero(wasLocked);
     }

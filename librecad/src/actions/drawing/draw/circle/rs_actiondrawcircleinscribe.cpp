@@ -81,11 +81,12 @@ void RS_ActionDrawCircleInscribe::finish(bool updateTB){
 void RS_ActionDrawCircleInscribe::doTrigger() {
     auto *circle = new RS_Circle(container, pPoints->cData);
 
-    undoCycleAdd(circle);
-    clearLines(false);
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
     }
+    undoCycleAdd(circle);
+
+    clearLines(false);
     setStatus(SetLine1);
     RS_DEBUG->print("RS_ActionDrawCircle4Line::trigger(): entity added: %lu", circle->getId());
 }

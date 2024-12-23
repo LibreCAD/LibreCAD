@@ -67,13 +67,12 @@ void RS_ActionDrawEllipse4Points::doTrigger() {
         en = new RS_Circle(container, pPoints->cData);
     }
 
+    if (moveRelPointAtCenterAfterTrigger){
+        moveRelativeZero(en->getCenter());
+    }
+
     undoCycleAdd(en);
 
-    RS_Vector rz = graphicView->getRelativeZero();
-    if (moveRelPointAtCenterAfterTrigger){
-        rz = en->getCenter();
-    }
-    moveRelativeZero(rz);
     setStatus(SetPoint1);
     //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::trigger():" " entity added: %lu", ellipse->getId());
 }

@@ -66,9 +66,10 @@ void RS_ActionModifyRotate::selectionCompleted(bool singleEntity, bool fromInit)
 
 void RS_ActionModifyRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyRotate::trigger()");
+    moveRelativeZero(data->center);
+    // fixme - relzero - undoable
     RS_Modification m(*container, graphicView);
     m.rotate(*data, selectedEntities, false, keepSelected);
-    moveRelativeZero(data->center);
 }
 
 void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {

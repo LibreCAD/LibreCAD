@@ -90,8 +90,6 @@ RS_ActionDefault::RS_ActionDefault(
 
 RS_ActionDefault::~RS_ActionDefault() = default;
 
-void forceUpdateInfoCursor(const RS_Vector &pos);
-
 void RS_ActionDefault::init(int status){
     clearMouseWidgetIcon();
     RS_DEBUG->print("RS_ActionDefault::init");
