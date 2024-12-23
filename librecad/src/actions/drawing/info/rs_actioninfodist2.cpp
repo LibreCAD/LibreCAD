@@ -68,8 +68,7 @@ void RS_ActionInfoDist2::restoreRelZero(){
 }
 
 // fixme - consider displaying information in EntityInfo widget
-void RS_ActionInfoDist2::trigger(){
-
+void RS_ActionInfoDist2::doTrigger() {
     RS_DEBUG->print("RS_ActionInfoDist2::trigger()");
     if (point.valid && entity != nullptr){
         RS_Vector dV;

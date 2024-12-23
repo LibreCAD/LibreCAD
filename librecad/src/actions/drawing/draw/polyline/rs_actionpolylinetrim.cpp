@@ -49,12 +49,10 @@ void RS_ActionPolylineTrim::init(int status) {
     Segment1 = Segment2 = nullptr;
 }
 
-void RS_ActionPolylineTrim::trigger(){
-
+void RS_ActionPolylineTrim::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineTrim::trigger()");
 
     polylineToModify->setSelected(false);
-    graphicView->drawEntity(polylineToModify);
 
     RS_Modification m(*container, graphicView);
     auto newPolyline = m.polylineTrim((RS_Polyline &) *polylineToModify, *Segment1, *Segment2, false);
@@ -63,10 +61,6 @@ void RS_ActionPolylineTrim::trigger(){
         Segment1 = Segment2 = nullptr;
         setStatus(SetSegment1);
     }
-
-    updateSelectionWidget();
-
-    graphicView->redraw();
 }
 
 void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
@@ -140,7 +134,7 @@ void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e)
             } else {
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
-                graphicView->drawEntity(polylineToModify);
+                graphicView->redraw();
                 setStatus(SetSegment1);
                 graphicView->redraw();
             }

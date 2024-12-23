@@ -187,5 +187,14 @@ protected:
     virtual void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos);
     void initPrevious(int status);
     void preparePromptForInfoCursorOverlay(const QString &msg, const LC_ModifiersInfo &modifiers);
+
+    void undoableDeleteEntity(RS_Entity *entity);
+    void undoableAdd(RS_Undoable *e) const;
+    bool undoCycleAdd(RS_Entity *entity, bool addToContainer = true) const;
+    void undoCycleReplace(RS_Entity *entityToReplace, RS_Entity* entityReplacing);
+    void undoCycleEnd() const;
+    void undoCycleStart() const;
+
+    void setPenAndLayerToActive(RS_Entity* e);
 };
 #endif

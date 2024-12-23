@@ -252,40 +252,30 @@ void RS_ActionPolylineEquidistant::makeContour(RS_Polyline*  originalPolyline, b
         if (!newPolyline->isEmpty()){
             createdPolylines<<newPolyline;
         }
-
     }
 }
 
-void RS_ActionPolylineEquidistant::trigger(){
-    RS_PreviewActionInterface::trigger();
+void RS_ActionPolylineEquidistant::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineEquidistant::trigger()");
-
-    if (originalEntity){
-        if (document){
-            document->startUndoCycle();
+    if (originalEntity != nullptr) {
+        if (document != nullptr){
+            undoCycleStart();
 
             QList<RS_Polyline *> polylines;
             makeContour(originalEntity, bRightSide, polylines);
 
             for (RS_Polyline *newPolyline: polylines) {
-                newPolyline->setLayerToActive();
+                newPolyline->setLayerToActive(); // fixme - cache layer to set
                 container->addEntity(newPolyline);
-                document->addUndoable(newPolyline);
+                undoableAdd(newPolyline);
             }
-            document->endUndoCycle();
-
-            if (graphicView){
-                graphicView->redraw();
-            }
+            undoCycleEnd();
         }
 
         originalEntity = nullptr;
         bRightSide = false;
         setStatus(ChooseEntity);
-
-        updateSelectionWidget();
     }
-    graphicView->redraw();
 }
 
 void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent *event){

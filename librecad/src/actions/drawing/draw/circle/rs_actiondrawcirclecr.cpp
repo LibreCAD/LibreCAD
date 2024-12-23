@@ -61,16 +61,12 @@ void RS_ActionDrawCircleCR::init(int status){
     LC_ActionDrawCircleBase::init(status);
 }
 
-void RS_ActionDrawCircleCR::trigger(){
-    LC_ActionDrawCircleBase::trigger();
-
-    auto *circle = new RS_Circle(container,
-                                      *data);
-    circle->setLayerToActive();
-    circle->setPenToActive();
+void RS_ActionDrawCircleCR::doTrigger() {
+    auto *circle = new RS_Circle(container, *data);
+    setPenAndLayerToActive(circle);
 
     switch (getStatus()) {
-        case SetCenter:
+        case SetCenter: // FIXME _ SAND _ _ REVIEW!!!!!
             container->addEntity(circle);
             moveRelativeZero(circle->getCenter());
             break;
@@ -78,14 +74,10 @@ void RS_ActionDrawCircleCR::trigger(){
             break;
     }
 
-    addToDocumentUndoable(circle);
-
-    graphicView->redraw(RS2::RedrawDrawing);
-
+    undoCycleAdd(circle);
     setStatus(SetCenter);
 
-    RS_DEBUG->print("RS_ActionDrawCircleCR::trigger(): circle added: %lu",
-                    circle->getId());
+    RS_DEBUG->print("RS_ActionDrawCircleCR::trigger(): circle added: %lu",circle->getId());
 }
 
 

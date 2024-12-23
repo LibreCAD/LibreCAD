@@ -266,7 +266,7 @@ void LC_ActionModifyLineGap::performTriggerDeletions(){
         // just deleting original entity as it is replaced by created segments
         RS_Line* line = gapData->originalLine;
         if (line != nullptr){
-            deleteEntityUndoable(line);
+            undoableDeleteEntity(line);
         }
     }
 }

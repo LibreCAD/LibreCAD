@@ -67,21 +67,14 @@ void RS_ActionDrawLineHorVert::init(int status){
     RS_DEBUG->print("RS_ActionDrawLineHorVert::init");
 }
 
-void RS_ActionDrawLineHorVert::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawLineHorVert::doTrigger() {
     auto *line = new RS_Line(container, pPoints->data);
-    line->setLayerToActive();
-    line->setPenToActive();
-    container->addEntity(line);
 
-    addToDocumentUndoable(line);
+    setPenAndLayerToActive(line);
+    undoCycleAdd(line);
 
-    graphicView->redraw(RS2::RedrawDrawing);
     moveRelativeZero(line->getMiddlePoint());
-    RS_DEBUG->print("RS_ActionDrawLineHorVert::trigger():"
-                    " line added: %lu", line->getId());
-
+    RS_DEBUG->print("RS_ActionDrawLineHorVert::trigger(): line added: %lu", line->getId());
 }
 
 void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent *e){

@@ -47,7 +47,7 @@ void LC_ActionModifyAlign::doTrigger([[maybe_unused]]bool keepSelected) {
     createAlignedEntities(entitiesToCreate, alignMin, alignMax, false);
     if (!entitiesToCreate.isEmpty()) {
         if (document) {
-            document->startUndoCycle();
+            undoCycleStart();
 
             for (auto e: entitiesToCreate) {
                 // fixme - review!!
@@ -55,17 +55,17 @@ void LC_ActionModifyAlign::doTrigger([[maybe_unused]]bool keepSelected) {
                 // todo - however, from the usability point of view - if the user would like to continue aligning operation, not cleared selection is not convenient.
                 e->setSelected(false);
                 container->addEntity(e);
-                document->addUndoable(e);
+                undoableAdd(e);
             }
 
             for (auto e: selectedEntities) {
-                deleteEntityUndoable(e);
+                undoableDeleteEntity(e);
             }
+
+            undoCycleEnd();
 
             selectedEntities.clear();
             selectionComplete = false;
-
-            document->endUndoCycle();
         }
     }
 }

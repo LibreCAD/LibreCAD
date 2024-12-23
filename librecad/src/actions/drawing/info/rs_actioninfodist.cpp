@@ -54,7 +54,7 @@ void RS_ActionInfoDist::init(int status) {
 }
 
 // fixme - consider displaying information in EntityInfo widget
-void RS_ActionInfoDist::trigger(){
+void RS_ActionInfoDist::doTrigger() {
     RS_DEBUG->print("RS_ActionInfoDist::trigger()");
     if (pPoints->point1.valid && pPoints->point2.valid){
         RS_Vector dV = pPoints->point2 - pPoints->point1;

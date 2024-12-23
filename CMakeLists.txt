@@ -1366,6 +1366,8 @@ set(SOURCES
 		librecad/src/ui/action_options/misc/lc_drawboundingboxoptions.cpp
 		librecad/src/lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.h
 		librecad/src/lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.cpp
+		librecad/src/lib/engine/undo/lc_undoablerelzero.h
+		librecad/src/lib/engine/undo/lc_undoablerelzero.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

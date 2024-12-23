@@ -53,11 +53,10 @@ void RS_ActionSelectLayer::mouseMoveEvent(QMouseEvent *event){
     drawPreview();
 }
 
-void RS_ActionSelectLayer::trigger(){
+void RS_ActionSelectLayer::doTrigger() {
     if (en){
         RS_Selection s(*container, graphicView);
         s.selectLayer(en);
-        updateSelectionWidget();
     } else {
         RS_DEBUG->print("RS_ActionSelectLayer::trigger: Entity is NULL\n");
     }

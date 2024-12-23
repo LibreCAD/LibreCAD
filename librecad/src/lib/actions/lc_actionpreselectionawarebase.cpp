@@ -34,20 +34,15 @@ LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
     :RS_ActionSelectBase(name, container, graphicView, entityTypeList),
     countDeep(countSelectionDeep){}
 
-void LC_ActionPreSelectionAwareBase::trigger() {
-    RS_PreviewActionInterface::trigger();
+void LC_ActionPreSelectionAwareBase::doTrigger() {
     bool keepSelected = LC_GET_ONE_BOOL("Modify", "KeepModifiedSelected", true);
     doTrigger(keepSelected);
-
-    updateSelectionWidget();
-    updateMouseButtonHints();
-    graphicView->redraw();
+    updateMouseButtonHints(); // todo - is it really necessary??   
 }
 
 LC_ActionPreSelectionAwareBase::~LC_ActionPreSelectionAwareBase() {
     selectedEntities.clear();
 }
-
 
 void LC_ActionPreSelectionAwareBase::init(int status) {
     RS_PreviewActionInterface::init(status);

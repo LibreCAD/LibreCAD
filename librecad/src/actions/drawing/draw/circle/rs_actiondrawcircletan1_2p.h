@@ -41,7 +41,6 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawCircleTan1_2P() override;
     void init(int status) override;
-    void trigger() override;
     bool getCenters();
     bool preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
@@ -70,5 +69,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     RS_Vector getTangentPoint(RS_Vector &creatingCircleCenter, bool fromOriginalCircle) const;
     void updateMouseButtonHints() override;
+    void doTrigger() override;
 };
 #endif

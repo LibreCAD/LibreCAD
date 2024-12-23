@@ -87,20 +87,14 @@ void RS_ActionDrawLineTangent2::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawLineTangent2::trigger(){
-    RS_PreviewActionInterface::trigger();
+void RS_ActionDrawLineTangent2::doTrigger() {
     if (m_pPoints->tangents.empty() || m_pPoints->tangents.front() == nullptr)
         return;
 
     auto *newEntity = new RS_Line{container, m_pPoints->tangents.front()->getData()};
 
-    newEntity->setLayerToActive();
-    newEntity->setPenToActive();
-    container->addEntity(newEntity);
-
-    addToDocumentUndoable(newEntity);
-
-    graphicView->redraw(RS2::RedrawAll);
+    setPenAndLayerToActive(newEntity);
+    undoCycleAdd(newEntity);
     init(SetCircle1);
     cleanup();
 }

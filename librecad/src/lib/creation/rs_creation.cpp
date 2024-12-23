@@ -251,11 +251,11 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
             if (!ret){
                 ret = newLine;
             }
-            setEntity(newLine);
+            setupAndAddEntity(newLine);
 
             if (symmetric){
                 auto *symmetricLine = new RS_Line{container, dataToSkip};
-                setEntity(symmetricLine);
+                setupAndAddEntity(symmetricLine);
             }
         }
     }
@@ -328,7 +328,7 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
             if (!ret) {
                 ret = newArc;
             }
-            setEntity(newArc);
+            setupAndAddEntity(newArc);
         }
     }
 
@@ -400,7 +400,7 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
             if (!ret) {
                 ret = newCircle;
             }
-            setEntity(newCircle);
+            setupAndAddEntity(newCircle);
         }
     }
     return ret;
@@ -435,7 +435,7 @@ LC_SplinePoints* RS_Creation::createParallelSplinePoints(const RS_Vector& coord,
 
         psp->setParent(container);
         if(!ret) ret = psp;
-        setEntity(psp);
+        setupAndAddEntity(psp);
     }
 
     return ret;
@@ -496,7 +496,7 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
 
         auto* newLine = new RS_Line{container, inters, inters + v};
         if (!ret) ret = newLine;
-        setEntity(newLine);
+        setupAndAddEntity(newLine);
     }
 
     return ret;
@@ -690,7 +690,7 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
     // create the closest tangent:
     LC_UndoSection undo( document, handleUndo);
     ret = new RS_Line{container, d};
-    setEntity(ret);
+    setupAndAddEntity(ret);
 
     return ret;
 }
@@ -787,7 +787,7 @@ RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
     RS_Vector const v1 = RS_Vector::polar(length, a1);
 
     auto* ret = new RS_Line{container, coord, coord+v1};
-    setEntity(ret);
+    setupAndAddEntity(ret);
 
     return ret;
 }
@@ -830,9 +830,6 @@ RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
             container->addEntity(line);
         }
         undo.addUndoable(line);
-        if (graphicView) {
-            graphicView->drawEntity(line);
-        }
     }
 
     return ret;
@@ -886,10 +883,6 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
             container->addEntity(line);
         }
         undo.addUndoable(line);
-        if (graphicView) {
-            graphicView->drawEntity(line);
-        }
-
     }
 
     return ret;
@@ -938,9 +931,6 @@ RS_Line* RS_Creation::createPolygon3(const RS_Vector& center,    //added by txmy
             container->addEntity(line);
         }
         undo.addUndoable(line);
-        if (graphicView) {
-            graphicView->drawEntity(line);
-        }
     }
 
     return ret;
@@ -958,13 +948,12 @@ RS_Insert* RS_Creation::createInsert(const RS_InsertData* pdata) {
     LC_UndoSection undo( document, handleUndo);
     auto ins = new RS_Insert(container, *pdata);
     // inserts are also on layers
-    setEntity(ins);
+    setupAndAddEntity(ins);
 
     RS_DEBUG->print("RS_Creation::createInsert: OK");
 
     return ins;
 }
-
 
 
 /**
@@ -975,7 +964,7 @@ RS_Image* RS_Creation::createImage(const RS_ImageData* data) {
     LC_UndoSection undo( document, handleUndo);
     auto* img = new RS_Image(container, *data);
     img->update();
-    setEntity(img);
+    setupAndAddEntity(img);
 
     return img;
 }
@@ -1007,19 +996,10 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
         if (e && e->isSelected()) {
 
             // delete / redraw entity in graphic view:
-            if (remove) {
-                if (graphicView) {
-                    graphicView->deleteEntity(e);
-                }
+            if (remove) { // fixme - what's this? same logic there?
                 e->setSelected(false);
             } else {
-                if (graphicView) {
-                    graphicView->deleteEntity(e);
-                }
                 e->setSelected(false);
-                if (graphicView) {
-                    graphicView->drawEntity(e);
-                }
             }
 
             // add entity to block:
@@ -1038,6 +1018,10 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
 
     if (graphic) {
         graphic->addBlock(block);
+    }
+
+    if (graphicView) {
+        graphicView->redraw();
     }
 
     return block;
@@ -1073,20 +1057,14 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
     s = QFileInfo(data.file).completeBaseName();
 
     RS_Modification m(*container, graphicView);
-    m.paste(
-                RS_PasteData(
-                    data.insertionPoint,
-                    data.factor, data.angle, true,
-                    s),
-                &g);
+    m.paste( RS_PasteData(data.insertionPoint,data.factor, data.angle, true,s),&g);
 
     RS_DEBUG->print("RS_Creation::createLibraryInsert: OK");
 
     return nullptr;
 }
 
-void RS_Creation::setEntity(RS_Entity* en) const
-{
+void RS_Creation::setupAndAddEntity(RS_Entity* en) const{
     en->setLayerToActive();
     en->setPenToActive();
 
@@ -1096,6 +1074,6 @@ void RS_Creation::setEntity(RS_Entity* en) const
     LC_UndoSection undo( document, handleUndo);
     undo.addUndoable(en);
     if (graphicView) {
-        graphicView->drawEntity(en);
+        graphicView->redraw();
     }
 }

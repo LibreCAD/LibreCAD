@@ -355,10 +355,6 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data, const std::vecto
         }
         cl->setPen(pen);
 
-        if (graphicView) {
-            graphicView->deleteEntity(en);
-        }
-
         en->setSelected(false);
         cl->setSelected(keepSelected);
 
@@ -380,11 +376,6 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data, const std::vecto
 
     for (auto cl: clones) {
         cont->addEntity(cl);
-
-        if (graphicView != nullptr) {;
-            graphicView->drawEntity(cl);
-        }
-
         if (graphic != nullptr) {
             graphic->addUndoable(cl);
         }
@@ -395,6 +386,10 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data, const std::vecto
     }
 
     cont->calculateBorders();
+
+    if (graphicView){
+        graphicView->redraw();
+    }
 
     return true;
 }
@@ -532,21 +527,15 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
         e->changeUndoState();
         undo.addUndoable(e);
 
-        // delete entity in graphic view:
-        if (graphicView) {
-            graphicView->deleteEntity(e);
-        }
         e->setSelected(false);
     } else {
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: delete in view ID/flag: %s", getIdFlagString(e).c_str());
         // delete entity in graphic view:
-        if (graphicView) {
-            graphicView->deleteEntity(e);
-        }
         e->setSelected(false);
-        if (graphicView) {
-            graphicView->drawEntity(e);
-        }
+    }
+
+    if (graphicView){
+        graphicView->redraw();
     }
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: OK");
@@ -1127,10 +1116,6 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
 
     // add new polyline:
     container->addEntity(newPolyline);
-    if (graphicView) {
-        graphicView->deleteEntity(&polyline);
-        graphicView->drawEntity(newPolyline);
-    }
 
     if (handleUndo) {
         LC_UndoSection undo( document);
@@ -1138,6 +1123,10 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
         polyline.setUndoState(true);
         undo.addUndoable(&polyline);
         undo.addUndoable(newPolyline);
+    }
+
+    if (graphicView){
+        graphicView->redraw();
     }
 
     return newPolyline;
@@ -1230,12 +1219,6 @@ void RS_Modification::deleteLineNode(RS_Line* line, const RS_Vector& node)
 
             container->addEntity(newLine);
 
-            if (graphicView)
-            {
-                graphicView->drawEntity(newLine);
-                graphicView->deleteEntity(anotherLine);
-            }
-
             RS_DEBUG->print("RS_Modification::deleteLineNode: handling new and another line's undo");
 
             if (handleUndo)
@@ -1253,11 +1236,6 @@ void RS_Modification::deleteLineNode(RS_Line* line, const RS_Vector& node)
         }
     }
 
-
-    RS_DEBUG->print("RS_Modification::deleteLineNode: deleting original line");
-
-    if (graphicView) graphicView->deleteEntity(line);
-
     RS_DEBUG->print("RS_Modification::deleteLineNode: handling original line's undo");
 
     if (handleUndo)
@@ -1265,6 +1243,10 @@ void RS_Modification::deleteLineNode(RS_Line* line, const RS_Vector& node)
         LC_UndoSection undo(document);
         line->setUndoState(true);
         undo.addUndoable(line);
+    }
+
+    if (graphicView){
+        graphicView->redraw();
     }
 
     RS_DEBUG->print("RS_Modification::deleteLineNode: OK");
@@ -1305,10 +1287,6 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
             auto ae = dynamic_cast<RS_AtomicEntity *>(e);
             if (node.distanceTo(ae->getStartpoint()) < 1.0e-6 ||
                 node.distanceTo(ae->getEndpoint()) < 1.0e-6){
-
-                if (graphicView){
-                    graphicView->deleteEntity(&polyline);
-                }
 
                 if (handleUndo){
                     LC_UndoSection undo(document);
@@ -1393,10 +1371,6 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
 
     container->addEntity(newPolyline);
     if (!createOnly){
-        if (graphicView){
-            graphicView->deleteEntity(&polyline);
-            graphicView->drawEntity(newPolyline);
-        }
 
         RS_DEBUG->print("RS_Modification::deletePolylineNode: handling undo");
         if (handleUndo){
@@ -1406,6 +1380,9 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
             undo.addUndoable(&polyline);
             undo.addUndoable(newPolyline);
         }
+    }
+    if (graphicView){
+        graphicView->redraw();
     }
     return newPolyline;
 }
@@ -1611,10 +1588,6 @@ RS_Polyline *RS_Modification::deletePolylineNodesBetween(
     RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: adding new polyline");
     container->addEntity(newPolyline);
     if (!createOnly){
-        if (graphicView){
-            graphicView->deleteEntity(&polyline);
-            graphicView->drawEntity(newPolyline);
-        }
 
         RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: handling undo");
         if (handleUndo){
@@ -1625,7 +1598,9 @@ RS_Polyline *RS_Modification::deletePolylineNodesBetween(
             undo.addUndoable(newPolyline);
         }
     }
-
+    if (graphicView){
+        graphicView->redraw();
+    }
     return newPolyline;
 }
 
@@ -1848,11 +1823,6 @@ RS_Polyline *RS_Modification::polylineTrim(
     RS_DEBUG->print("RS_Modification::polylineTrim: adding new polyline");
     container->addEntity(newPolyline);
     if (!createOnly){
-        if (graphicView){
-            graphicView->deleteEntity(&polyline);
-            graphicView->drawEntity(newPolyline);
-        }
-
         RS_DEBUG->print("RS_Modification::polylineTrim: handling undo");
         if (handleUndo){
             LC_UndoSection undo(document);
@@ -1863,6 +1833,9 @@ RS_Polyline *RS_Modification::polylineTrim(
         }
     }
 
+    if (graphicView){
+        graphicView->redraw();
+    }
     return newPolyline;
 }
 
@@ -2415,9 +2388,9 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
     }
     if (!forPreview) {
         // remove trim entity from view:
-        if (graphicView) {
+        /*if (graphicView) {
             graphicView->deleteEntity(trimEntity);
-        }
+        }*/
     }
 
     // remove limit entity from view:
@@ -2426,15 +2399,10 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
         trimmed2 = (RS_AtomicEntity*)limitEntity->clone();
         if (!forPreview) {
             trimmed2->setHighlighted(false);
-            if (graphicView) {
-                graphicView->deleteEntity(limitEntity);
-            }
         }
     }
 
     trimEnding(trimCoord, trimmed1, is);
-
-
 
     // trim limit entity:
     if (trimBoth) {
@@ -2451,16 +2419,10 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
     if (!forPreview) {
         // add new trimmed trim entity:
         container->addEntity(trimmed1);
-        if (graphicView) {
-            graphicView->drawEntity(trimmed1);
-        }
 
         // add new trimmed limit entity:
         if (trimBoth) {
             container->addEntity(trimmed2);
-            if (graphicView) {
-                graphicView->drawEntity(trimmed2);
-            }
         }
     }
     if (!forPreview) {
@@ -2488,6 +2450,9 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
         result.intersection2 = trimmed1->getEndpoint();
     }
 
+    if (graphicView != nullptr){
+        graphicView->redraw();
+    }
     return result;
 }
 
@@ -2537,10 +2502,6 @@ RS_Entity* RS_Modification::trimAmount(const RS_Vector& trimCoord,
     // remove trim entity:
     trimmed = (RS_AtomicEntity *) trimEntity->clone();
 
-    if (graphicView != nullptr){
-        graphicView->deleteEntity(trimEntity);
-    }
-
     // trim trim entity
 
     trimStart = false;
@@ -2573,17 +2534,15 @@ RS_Entity* RS_Modification::trimAmount(const RS_Vector& trimCoord,
             container->addEntity(trimmed);
         }
 
-        if (graphicView != nullptr){
-            graphicView->drawEntity(trimmed);
-        }
-
         if (handleUndo){
             LC_UndoSection undo(document);
-
             undo.addUndoable(trimmed);
             trimEntity->setUndoState(true);
             undo.addUndoable(trimEntity);
         }
+    }
+    if (graphicView != nullptr){
+        graphicView->redraw();
     }
     return trimmed;
 }
@@ -2619,11 +2578,6 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::cut: Cutting point on endpoint");
         return false;
-    }
-
-    // delete cut entity on the screen:
-    if (graphicView) {
-        graphicView->deleteEntity(cutEntity);
     }
 
     RS_AtomicEntity* cut1 = nullptr;
@@ -2702,13 +2656,6 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
         container->addEntity(cut2);
     }
 
-    if (graphicView != nullptr) {
-        graphicView->drawEntity(cut1);
-        if (cut2 != nullptr) {
-            graphicView->drawEntity(cut2);
-        }
-    }
-
     if (handleUndo) {
         LC_UndoSection undo( document);
 
@@ -2718,6 +2665,10 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
         }
         cutEntity->setUndoState(true);
         undo.addUndoable(cutEntity);
+    }
+
+    if (graphicView){
+        graphicView->redraw();
     }
 
     return true;
@@ -2865,17 +2816,17 @@ LC_BevelResult* RS_Modification::bevel(
         trimmed2 = (RS_AtomicEntity *) entity2->clone();
     }
 
-    // remove trim entity (on screen):
-    if (data.trim || isPolyline){
-        if (graphicView){
-            if (isPolyline){
-                graphicView->deleteEntity(baseContainer);
-            } else {
-                graphicView->deleteEntity(entity1);
-                graphicView->deleteEntity(entity2);
-            }
-        }
-    }
+//    // remove trim entity (on screen):
+//    if (data.trim || isPolyline){
+//        if (graphicView){
+//            if (isPolyline){
+//                graphicView->deleteEntity(baseContainer);
+//            } else {
+//                graphicView->deleteEntity(entity1);
+//                graphicView->deleteEntity(entity2);
+//            }
+//        }
+//    }
 
     // trim entities to intersection
     RS_DEBUG->print("RS_Modification::bevel: trim entities to intersection 01");
@@ -2953,12 +2904,6 @@ LC_BevelResult* RS_Modification::bevel(
             container->addEntity(trimmed1);
             container->addEntity(trimmed2);
         }
-        if (graphicView){
-            if (!isPolyline){
-                graphicView->drawEntity(trimmed1);
-                graphicView->drawEntity(trimmed2);
-            }
-        }
     }
 
 
@@ -3025,14 +2970,6 @@ LC_BevelResult* RS_Modification::bevel(
         result->polyline = polyline;
     }
 
-    if (graphicView){
-        if (isPolyline){
-            graphicView->drawEntity(baseContainer);
-        } else {
-            graphicView->drawEntity(bevel);
-        }
-    }
-
     RS_DEBUG->print("RS_Modification::bevel: handling undo");
 
     if (handleUndo && !previewOnly){
@@ -3056,6 +2993,10 @@ LC_BevelResult* RS_Modification::bevel(
         delete trimmed1;
         delete trimmed2;
         RS_DEBUG->print("RS_Modification::bevel: delete trimmed elements: ok");
+    }
+
+    if (graphicView){
+        graphicView->redraw();
     }
 
     return result;
@@ -3173,7 +3114,7 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
             trimmed2 = (RS_AtomicEntity *) entity2->clone();
         }
 
-        // remove trim entity:
+     /*   // remove trim entity:
         if (graphicView){
             if (isPolyline){
                 graphicView->deleteEntity(baseContainer);
@@ -3181,7 +3122,7 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
                 graphicView->deleteEntity(entity1);
                 graphicView->deleteEntity(entity2);
             }
-        }
+        }*/
 
         // trim entities to intersection
         RS_Vector is2 = sol2.getClosest(coord2);
@@ -3222,12 +3163,6 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
         if (!isPolyline){
             container->addEntity(trimmed1);
             container->addEntity(trimmed2);
-        }
-        if (graphicView){
-            if (!isPolyline){
-                graphicView->drawEntity(trimmed1);
-                graphicView->drawEntity(trimmed2);
-            }
         }
     }
 
@@ -3276,14 +3211,6 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
         ((RS_Polyline *) baseContainer)->updateEndpoints();
     }
 
-    if (graphicView){
-        if (isPolyline){
-            graphicView->drawEntity(baseContainer);
-        } else {
-            graphicView->drawEntity(arc);
-        }
-    }
-
     if (handleUndo){
         if (!isPolyline && data.trim){
             undo.addUndoable(trimmed1);
@@ -3302,6 +3229,10 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
 
     delete par1;
     delete par2;
+
+    if (graphicView){
+        graphicView->redraw();
+    }
 
     return result;
 }

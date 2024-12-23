@@ -82,8 +82,8 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
     RS_DEBUG->print("RS_ActionDrawHatch::trigger()");
 
     RS_Hatch tmp(container, *data);
-    tmp.setLayerToActive();
-    tmp.setPenToActive();
+    setPenAndLayerToActive(&tmp);
+
     if (RS_DIALOGFACTORY->requestHatchDialog(&tmp)) {
         *data = tmp.getData();
 
@@ -145,9 +145,8 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
 
         hatch->addEntity(loop);
         if (hatch->validate()){
-            container->addEntity(hatch.get());
 
-            addToDocumentUndoable(hatch.get());
+            undoCycleAdd(hatch.get());
 
             hatch->update();
 

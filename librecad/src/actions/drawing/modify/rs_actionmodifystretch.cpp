@@ -53,11 +53,8 @@ void RS_ActionModifyStretch::init(int status) {
 
 RS_ActionModifyStretch::~RS_ActionModifyStretch() = default;
 
-void RS_ActionModifyStretch::trigger(){
-
+void RS_ActionModifyStretch::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyStretch::trigger()");
-
-    deletePreview();
 
     RS_Modification m(*container, graphicView);
     m.stretch(pPoints->firstCorner,
@@ -69,8 +66,6 @@ void RS_ActionModifyStretch::trigger(){
     else{
         setStatus(SetTargetPoint);
     }
-
-    updateSelectionWidget();
 }
 
 void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){

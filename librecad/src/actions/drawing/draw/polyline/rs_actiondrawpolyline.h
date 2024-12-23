@@ -64,14 +64,10 @@ public:
     ~RS_ActionDrawPolyline() override;
 
     void reset();
-
     void init(int status) override;
-    void trigger() override;
-
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
     void close();
-
     virtual void undo();
     void setMode(SegmentMode m);
     int getMode() const;
@@ -154,6 +150,7 @@ protected:
     void drawEquation(int numberOfPolylines);
     void setParserExpression(const QString& expression);
     bool getPlottingX(QString command, double& x);
+    void doTrigger() override;
     std::unique_ptr<mu::Parser> m_muParserObject;
 
     double startPointX = 0.;
@@ -166,7 +163,5 @@ protected:
     bool endPointSettingOn = false;
     bool stepSizeSettingOn = false;
     bool shiftY = false;
-
-
 };
 #endif

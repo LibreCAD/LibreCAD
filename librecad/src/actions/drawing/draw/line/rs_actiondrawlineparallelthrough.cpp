@@ -53,15 +53,12 @@ RS_ActionDrawLineParallelThrough::~RS_ActionDrawLineParallelThrough() = default;
 void RS_ActionDrawLineParallelThrough::finish(bool updateTB){
     if(entity){
         entity->setHighlighted(false);
-        graphicView->drawEntity(entity);
         entity=nullptr;
     }
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawLineParallelThrough::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawLineParallelThrough::doTrigger() {
     if (entity){
         RS_Creation creation(container, graphicView);
         RS_Entity *e = creation.createParallelThrough(*coord,number,entity, symmetric);

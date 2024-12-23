@@ -56,26 +56,20 @@ RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
 
 RS_ActionDrawLineRectangle::~RS_ActionDrawLineRectangle() = default;
 
-void RS_ActionDrawLineRectangle::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawLineRectangle::doTrigger() {
     auto *polyline = new RS_Polyline(container);
 
 // create and add rectangle:
     polyline->addVertex(pPoints->corner1);
-    polyline->setLayerToActive();
-    polyline->setPenToActive();
     polyline->addVertex({pPoints->corner2.x, pPoints->corner1.y});
     polyline->addVertex(pPoints->corner2);
     polyline->addVertex({pPoints->corner1.x, pPoints->corner2.y});
     polyline->setClosed(true);
     polyline->endPolyline();
-    container->addEntity(polyline);
 
-    addToDocumentUndoable(polyline);
+    setPenAndLayerToActive(polyline);
+    undoCycleAdd(polyline);
 
-    // upd. view
-    graphicView->redraw(RS2::RedrawDrawing);
     moveRelativeZero(pPoints->corner2);
 }
 

@@ -91,21 +91,12 @@ void RS_ActionDrawMText::reset() {
                                           RS2::Update);
 }
 
-void RS_ActionDrawMText::trigger(){
-
+void RS_ActionDrawMText::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawText::trigger()");
-
     if (pos->valid){
-        deletePreview();
-
         auto *text = new RS_MText(container, *data);
         text->update();
-        container->addEntity(text);
-
-        addToDocumentUndoable(text);
-
-        graphicView->redraw(RS2::RedrawDrawing);
-
+        undoCycleAdd(text);
         textChanged = true;
         setStatus(SetPos);
     }

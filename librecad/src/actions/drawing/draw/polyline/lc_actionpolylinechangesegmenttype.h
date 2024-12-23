@@ -33,9 +33,6 @@ public:
     LC_ActionPolylineChangeSegmentType(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionPolylineChangeSegmentType() override;
     void mouseMoveEvent(QMouseEvent *event) override;
-
-    void trigger() override;
-
 protected:
     enum State{
         SetEntity,
@@ -51,10 +48,9 @@ protected:
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-
     RS_Polyline* createModifiedPolyline();
-
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void doTrigger() override;
 };
 
 #endif // LC_ACTIONPOLYLINECHANGESEGMENTTYPE_H

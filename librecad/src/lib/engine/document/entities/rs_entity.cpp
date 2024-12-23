@@ -93,11 +93,8 @@ RS_Entity::RS_Entity(RS_EntityContainer *parent)
  */
 void RS_Entity::init() {
     resetBorders();
-
     setFlag(RS2::FlagVisible);
-	//layer = nullptr;
-    //pen = RS_Pen();
-        updateEnabled = true;
+    updateEnabled = true;
     setLayerToActive();
     setPenToActive();
     initId();

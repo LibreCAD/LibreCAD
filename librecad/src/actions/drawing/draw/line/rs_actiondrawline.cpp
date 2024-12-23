@@ -118,20 +118,12 @@ void RS_ActionDrawLine::init(int status){
     drawSnapper();
 }
 
-void RS_ActionDrawLine::trigger(){
-    RS_PreviewActionInterface::trigger();
-
-    RS_Line* line = new RS_Line(container, pPoints->data);
-    line->setLayerToActive();
-    line->setPenToActive();
-    container->addEntity(line);
-
-    addToDocumentUndoable(line);
-
-    graphicView->redraw(RS2::RedrawDrawing);
+void RS_ActionDrawLine::doTrigger() {
+    auto* line = new RS_Line(container, pPoints->data);
+    setPenAndLayerToActive(line);
     moveRelativeZero(pPoints->history.at(pPoints->index()).currPt);
-    RS_DEBUG->print("RS_ActionDrawLine::trigger(): line added: %lu",
-                    line->getId());
+    undoCycleAdd(line);
+    RS_DEBUG->print("RS_ActionDrawLine::trigger(): line added: %lu",line->getId());
 }
 
 void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e){

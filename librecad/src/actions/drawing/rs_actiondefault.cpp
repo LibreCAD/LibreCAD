@@ -771,19 +771,14 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                 }
 
                 if (document) {
-                    document->startUndoCycle();
 
                     clone->setSelected(true);
-
                     clone->setLayer(refMovingEntity->getLayer());
                     clone->setPen(refMovingEntity->getPen(false));
                     container->addEntity(clone);
-                    document->addUndoable(clone);
 
                     // delete and add this into undo
-                    deleteEntityUndoable(refMovingEntity);
-
-                    document->endUndoCycle();
+                    undoCycleReplace(refMovingEntity, clone);
                 }
                 goToNeutralStatus();
                 updateSelectionWidget();

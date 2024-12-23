@@ -74,19 +74,15 @@ void LC_ActionDrawSplinePoints::init(int status){
     reset(); // fixme - review reset, try to make it common with base action
 }
 
-void LC_ActionDrawSplinePoints::trigger(){
+void LC_ActionDrawSplinePoints::doTrigger() {
     if (pPoints->spline.get() != nullptr) {
-        pPoints->spline->setLayerToActive();
-        pPoints->spline->setPenToActive();
+        setPenAndLayerToActive(pPoints->spline.get());
         pPoints->spline->update();
         RS_Entity *s = pPoints->spline->clone();
-        container->addEntity(s);
-
-        addToDocumentUndoable(s);
+        undoCycleAdd(s);
 
 // upd view
-        RS_Vector r = graphicView->getRelativeZero();
-        graphicView->redraw(RS2::RedrawDrawing);
+        RS_Vector r = graphicView->getRelativeZero(); // fixme - remove
         moveRelativeZero(r);
         RS_DEBUG->print("RS_ActionDrawSplinePoints::trigger(): spline added: %lu", s->getId());
         reset();

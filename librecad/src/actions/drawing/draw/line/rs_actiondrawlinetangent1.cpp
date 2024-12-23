@@ -46,26 +46,16 @@ RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 
 RS_ActionDrawLineTangent1::~RS_ActionDrawLineTangent1() = default;
 
-void RS_ActionDrawLineTangent1::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawLineTangent1::doTrigger() {
     if (tangent){
         auto *newEntity = new RS_Line(container, tangent->getData());
 
-        newEntity->setLayerToActive();
-        newEntity->setPenToActive();
-        container->addEntity(newEntity);
-
-        addToDocumentUndoable(newEntity);
-
-        graphicView->redraw(RS2::RedrawDrawing);
-
+        setPenAndLayerToActive(newEntity);
+        undoCycleAdd(newEntity);
         setStatus(SetPoint);
-
         tangent.reset();
     } else {
-        RS_DEBUG->print("RS_ActionDrawLineTangent1::trigger:"
-                        " Entity is nullptr\n");
+        RS_DEBUG->print("RS_ActionDrawLineTangent1::trigger: Entity is nullptr\n");
     }
 }
 

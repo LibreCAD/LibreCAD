@@ -68,17 +68,14 @@ void RS_ActionDrawLineParallel::setNumber(int n){
     number = n;
 }
 
-void RS_ActionDrawLineParallel::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawLineParallel::doTrigger() {
     RS_Creation creation(container, graphicView);
     RS_Entity *e = creation.createParallel(*coord,
                                            distance, number,
                                            entity);
 
     if (!e){
-        RS_DEBUG->print("RS_ActionDrawLineParallel::trigger:"
-                        " No parallels added\n");
+        RS_DEBUG->print("RS_ActionDrawLineParallel::trigger:No parallels added\n");
     }
 }
 

@@ -47,7 +47,6 @@ public:
     ~RS_ActionDrawArcTangential() override;
     void reset();
     void init(int status) override;
-    void trigger() override;
     void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
     void setRadius(double r);
@@ -97,5 +96,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateMouseButtonHints() override;
+    void doTrigger() override;
 };
 #endif

@@ -23,9 +23,6 @@ public:
     double getRoundingRadius(){return roundingRadius;}
     void setRoundingRadius(double val){roundingRadius = val;}
     void updateMouseButtonHints() override;
-
-    void trigger() override;
-
 protected:
     /** Number of edges. */
     int number = 0;
@@ -73,6 +70,7 @@ protected:
     virtual void previewAdditionalReferences([[maybe_unused]]const RS_Vector &mouse) {};
     virtual void preparePolygonInfo([[maybe_unused]]PolygonInfo &polygonInfo, [[maybe_unused]]const RS_Vector &snap){};
     RS_Polyline *createShapePolyline(PolygonInfo &polygonInfo, bool preview);
+    void doTrigger() override;
 };
 
 #endif // LC_ACTIONDRAWLINEPOLYGONBASE_H

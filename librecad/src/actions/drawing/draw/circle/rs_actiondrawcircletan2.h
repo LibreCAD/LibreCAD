@@ -42,7 +42,6 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawCircleTan2() override;
     void init(int status) override;
-    void trigger() override;
     bool getCenters(RS_Entity* secondEntityCandidate = nullptr);
     bool preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
@@ -75,5 +74,7 @@ protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
+
+    void doTrigger() override;
 };
 #endif

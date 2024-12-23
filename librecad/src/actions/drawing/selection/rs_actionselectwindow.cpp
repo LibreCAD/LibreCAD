@@ -85,8 +85,7 @@ void RS_ActionSelectWindow::init(int status) {
     //snapMode.restriction = RS2::RestrictNothing;
 }
 
-void RS_ActionSelectWindow::trigger(){
-    RS_PreviewActionInterface::trigger();
+void RS_ActionSelectWindow::doTrigger() {
     if (pPoints->v1.valid && pPoints->v2.valid){
         if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
             bool cross = (pPoints->v1.x > pPoints->v2.x) || selectIntersecting;
@@ -101,7 +100,6 @@ void RS_ActionSelectWindow::trigger(){
             else{
                 s.selectWindow(entityTypesToSelect, pPoints->v1, pPoints->v2, doSelect, cross);
             }
-            updateSelectionWidget();
             init(SetCorner1);
         }
     }

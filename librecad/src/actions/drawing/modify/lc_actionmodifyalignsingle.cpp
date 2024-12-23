@@ -35,24 +35,20 @@ void LC_ActionModifyAlignSingle::init(int status) {
 //    showOptions();
 }
 
-void LC_ActionModifyAlignSingle::trigger() {
-    RS_PreviewActionInterface::trigger();
+void LC_ActionModifyAlignSingle::doTrigger() {
     if (entityToAlign != nullptr) {
         if (document != nullptr) {
             RS_Vector target = LC_Align::getReferencePoint(alignMin, alignMax, hAlign, vAlign);
             RS_Entity *clone = LC_Align::createCloneMovedToTarget(entityToAlign, target, true, hAlign, vAlign);
             if (clone != nullptr) {
-                document->startUndoCycle();
                 clone->setSelected(false);
                 container->addEntity(clone);
-                document->addUndoable(clone);
-                deleteEntityUndoable(entityToAlign);
-                document->endUndoCycle();
+
+                undoCycleReplace(entityToAlign, clone);
             }
         }
     }
     entityToAlign = nullptr;
-    deletePreview();
     if (finishActionAfterTrigger){
         setStatus(-1);
     }
@@ -62,7 +58,6 @@ void LC_ActionModifyAlignSingle::trigger() {
         }
     }
     drawPreview();
-    graphicView->redraw();
 }
 
 void LC_ActionModifyAlignSingle::mouseMoveEvent(QMouseEvent *e) {

@@ -53,14 +53,8 @@ void RS_ActionModifyDeleteQuick::trigger() {
         RS_EntityContainer* parent = en->getParent();
         if (parent) {
             en->setSelected(false);
-            graphicView->deleteEntity(en);
             en->changeUndoState();
-
-            if (document) {
-                document->startUndoCycle();
-                document->addUndoable(en);
-                document->endUndoCycle();
-            }
+            undoCycleAdd(en);
         }
 
         updateSelectionWidget();

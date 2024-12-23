@@ -33,7 +33,6 @@ public:
 
     ~LC_ActionInfo3PointsAngle() override;
     void mouseMoveEvent(QMouseEvent *event) override;
-    void trigger() override;
 protected:
     enum Status{
         SetPoint1,
@@ -52,5 +51,6 @@ protected:
     void updateMouseButtonHints() override;
     void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint);
     void updateInfoCursor(const RS_Vector &mouse,  const RS_Vector &point2, const RS_Vector &startPoint);
+    void doTrigger() override;
 };
 #endif // LC_ACTIONINFO3POINTSANGLE_H

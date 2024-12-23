@@ -57,9 +57,9 @@ void RS_ActionDrawEllipseInscribe::clearLines(bool checkStatus){
         if (checkStatus && (int) pPoints->lines.size() <= getStatus())
             break;
         pPoints->lines.back()->setHighlighted(false);
-        graphicView->drawEntity(pPoints->lines.back());
         pPoints->lines.pop_back();
     }
+    graphicView->redraw();
 }
 
 void RS_ActionDrawEllipseInscribe::init(int status){
@@ -75,21 +75,14 @@ void RS_ActionDrawEllipseInscribe::finish(bool updateTB){
     LC_ActionDrawCircleBase::finish(updateTB);
 }
 
-void RS_ActionDrawEllipseInscribe::trigger(){
-    LC_ActionDrawCircleBase::trigger();
-
+void RS_ActionDrawEllipseInscribe::doTrigger() {
     auto *ellipse = new RS_Ellipse(container, pPoints->eData);
 
-    deletePreview();
-    container->addEntity(ellipse);
-
-    addToDocumentUndoable(ellipse);
+    undoCycleAdd(ellipse);
 
     for (RS_Line *const p: pPoints->lines) {
         if (!p) continue;
         p->setHighlighted(false);
-        graphicView->drawEntity(p);
-
     }
     drawSnapper();
 
@@ -100,8 +93,7 @@ void RS_ActionDrawEllipseInscribe::trigger(){
     clearLines(false);
     setStatus(SetLine1);
 
-    RS_DEBUG->print("RS_ActionDrawEllipse4Line::trigger():"
-                    " entity added: %lu", ellipse->getId());
+    RS_DEBUG->print("RS_ActionDrawEllipse4Line::trigger():entity added: %lu", ellipse->getId());
 }
 
 void RS_ActionDrawEllipseInscribe::drawSnapper() {

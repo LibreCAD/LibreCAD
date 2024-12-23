@@ -38,7 +38,6 @@ class LC_ActionDimArc : public RS_ActionDimension{
 public:
     LC_ActionDimArc(RS_EntityContainer& container, RS_GraphicView& graphicView);
     ~LC_ActionDimArc() override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
 protected:
@@ -55,5 +54,6 @@ protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void doTrigger() override;
 };
 #endif //LC_ACTIONDIMARC_H

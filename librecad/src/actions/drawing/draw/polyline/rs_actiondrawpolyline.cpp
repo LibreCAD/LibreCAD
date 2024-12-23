@@ -74,27 +74,13 @@ void RS_ActionDrawPolyline::init(int status){
     RS_PreviewActionInterface::init(status);
 }
 
-void RS_ActionDrawPolyline::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawPolyline::doTrigger() {
     if (!pPoints->polyline) return;
 
-    // add the entity
-    //RS_Polyline* polyline = new RS_Polyline(container, data);
-    //polyline->setLayerToActive();
-    //polyline->setPenToActive();
-    //container->addEntity(polyline);
-
-    addToDocumentUndoable(pPoints->polyline);
-
-    // upd view
-    deleteSnapper();
-    moveRelativeZero({0., 0.});
-    graphicView->drawEntity(pPoints->polyline);
     moveRelativeZero(pPoints->polyline->getEndpoint());
-    drawSnapper();
-    RS_DEBUG->print("RS_ActionDrawLinePolyline::trigger(): polyline added: %lu",
-                    pPoints->polyline->getId());
+    undoCycleAdd(pPoints->polyline, false); // todo - check whether we actially should not add to container
+
+    RS_DEBUG->print("RS_ActionDrawLinePolyline::trigger(): polyline added: %lu",pPoints->polyline->getId());
 
     pPoints->polyline = nullptr;
 }
@@ -419,13 +405,12 @@ void RS_ActionDrawPolyline::onCoordinateEvent(int status, [[maybe_unused]]bool i
                     pPoints->polyline->addVertex(mouse, 0.0);
                     pPoints->polyline->setEndpoint(mouse);
                     if (pPoints->polyline->count() == 1){
-                        pPoints->polyline->setLayerToActive();
-                        pPoints->polyline->setPenToActive();
+                        setPenAndLayerToActive(pPoints->polyline);
                         container->addEntity(pPoints->polyline);
                     }
                     deletePreview();
                     deleteSnapper();
-                    graphicView->drawEntity(pPoints->polyline);
+                    graphicView->redraw();
                 }
                 updateMouseButtonHints();
             } else {
@@ -690,8 +675,7 @@ void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines) {
         pPoints->polyline->setEndpoint(pPoints->point);
 
         if (pPoints->polyline->count() == 1) {
-            pPoints->polyline->setLayerToActive();
-            pPoints->polyline->setPenToActive();
+            setPenAndLayerToActive(pPoints->polyline);
             container->addEntity(pPoints->polyline);
         }
 
@@ -699,8 +683,7 @@ void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines) {
         equationX += stepSize;
     }
     deletePreview();
-    graphicView->drawEntity(pPoints->polyline);
-
+    graphicView->redraw();
 
     plottingX -= stepSize;
     equationX -= stepSize;
@@ -816,16 +799,15 @@ void RS_ActionDrawPolyline::undo(){
             //container calls delete over polyline
             container->removeEntity(pPoints->polyline);
             pPoints->polyline = nullptr;
-            graphicView->drawEntity(pPoints->polyline);
         }
         if (pPoints->polyline){
             pPoints->polyline->removeLastVertex();
             moveRelativeZero(pPoints->polyline->getEndpoint());
-            graphicView->drawEntity(pPoints->polyline);
         }
     } else {
         commandMessage(tr("Cannot undo: Not enough entities defined yet."));
     }
+    graphicView->redraw();
 }
 
 void RS_ActionDrawPolyline::setParserExpression(const QString& expression){

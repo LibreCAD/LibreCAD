@@ -48,10 +48,8 @@ void RS_ActionEditUndo::init(int status) {
     trigger();
 }
 
-void RS_ActionEditUndo::trigger()
-{
-    if (!graphic)
-    {
+void RS_ActionEditUndo::trigger(){
+    if (!graphic){
         qWarning("undo: graphic is null");
         return;
     }

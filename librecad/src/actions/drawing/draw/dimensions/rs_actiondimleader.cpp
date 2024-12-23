@@ -62,32 +62,23 @@ void RS_ActionDimLeader::reset() {
 
 void RS_ActionDimLeader::init(int status) {
     RS_PreviewActionInterface::init(status);
-
     reset();
 }
 
-void RS_ActionDimLeader::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDimLeader::doTrigger() {
     if (!pPoints->points.empty()){
 
         auto *leaderEntity = new RS_Leader(container, RS_LeaderData(true));
-        leaderEntity->setLayerToActive();
-        leaderEntity->setPenToActive();
+        setPenAndLayerToActive(leaderEntity);
 
         for (const auto &vp: pPoints->points) {
             leaderEntity->addVertex(vp);
         }
 
-        container->addEntity(leaderEntity);
+        undoCycleAdd(leaderEntity);
 
-        addToDocumentUndoable(leaderEntity);
-
-        deletePreview();
         RS_Vector rz = graphicView->getRelativeZero();
-        graphicView->redraw(RS2::RedrawDrawing);
         moveRelativeZero(rz);
-        //drawSnapper();
 
         RS_DEBUG->print("RS_ActionDimLeader::trigger(): leaderEntity added: %lu",
                         leaderEntity->getId());

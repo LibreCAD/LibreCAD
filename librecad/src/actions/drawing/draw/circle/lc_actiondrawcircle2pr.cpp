@@ -61,26 +61,17 @@ void LC_ActionDrawCircle2PR::init(int status){
     }
 }
 
-void LC_ActionDrawCircle2PR::trigger(){
-    RS_ActionDrawCircleCR::trigger();
-
+void LC_ActionDrawCircle2PR::doTrigger() {
     auto *circle = new RS_Circle(container, *data);
-    circle->setLayerToActive();
-    circle->setPenToActive();
-    container->addEntity(circle);
-
-    addToDocumentUndoable(circle);
+    setPenAndLayerToActive(circle);
+    undoCycleAdd(circle);
 
     // todo - review - setting the same rel zero - what for?
     RS_Vector rz = graphicView->getRelativeZero();
-    graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
         rz = circle->getCenter();
     }
     moveRelativeZero(rz);
-
-    drawSnapper();
-
     setStatus(SetPoint1);
     reset();
 }

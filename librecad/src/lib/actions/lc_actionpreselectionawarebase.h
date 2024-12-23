@@ -37,7 +37,6 @@ public:
     void mousePressEvent(QMouseEvent*) override;
     void init(int status) override;
     void drawSnapper() override;
-    void trigger() override;
 protected:
     bool selectionComplete = false;
     bool countDeep = false;
@@ -67,6 +66,8 @@ protected:
     virtual void finishMouseMoveOnSelection(QMouseEvent *event);
 
     void doSelectEntity(RS_Entity *entityToSelect, bool selectContour) const override;
+
+    void doTrigger() override;
 };
 
 #endif // LC_ACTIONPRESELECTIONAWAREBASE_H

@@ -91,11 +91,7 @@ void RS_ActionDrawLineBisector::setStatus(int status) {
     invalidateSnapSpot();
 }
 
-void RS_ActionDrawLineBisector::trigger(){
-    RS_PreviewActionInterface::trigger();
-
-    graphicView->redraw(RS2::RedrawDrawing);
-
+void RS_ActionDrawLineBisector::doTrigger() {
     RS_Creation creation(container, graphicView);
     creation.createBisector(pPoints->coord1,
                             pPoints->coord2,

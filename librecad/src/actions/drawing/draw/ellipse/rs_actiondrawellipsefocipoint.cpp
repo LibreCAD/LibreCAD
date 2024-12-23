@@ -72,31 +72,20 @@ double RS_ActionDrawEllipseFociPoint::findRatio() const{
     return std::sqrt(pPoints->d*pPoints->d-pPoints->c*pPoints->c)/pPoints->d;
 }
 
-void RS_ActionDrawEllipseFociPoint::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawEllipseFociPoint::doTrigger() {
     auto* ellipse = new RS_Ellipse{container,
                                    {pPoints->center,
                                     pPoints->major*pPoints->d,
                                     findRatio(),
                                     0., 0.,false}
     };
-    ellipse->setLayerToActive();
-    ellipse->setPenToActive();
+    setPenAndLayerToActive(ellipse);
 
-    container->addEntity(ellipse);
-
-    addToDocumentUndoable(ellipse);
-
-//    RS_Vector rz = graphicView->getRelativeZero();
+    undoCycleAdd(ellipse);
     moveRelativeZero(ellipse->getCenter());
-    graphicView->redraw(RS2::RedrawDrawing);
-    drawSnapper();
-
     setStatus(SetFocus1);
 
-    RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::trigger():"
-                    " entity added: %lu", ellipse->getId());
+    RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::trigger():entity added: %lu", ellipse->getId());
 }
 
 void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){

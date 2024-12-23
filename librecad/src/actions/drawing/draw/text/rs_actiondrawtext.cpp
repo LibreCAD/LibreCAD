@@ -100,15 +100,13 @@ void RS_ActionDrawText::reset(){
                                RS2::Update));
 }
 
-void RS_ActionDrawText::trigger(){
+void RS_ActionDrawText::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawText::trigger()");
-    RS_PreviewActionInterface::trigger();
     if (pPoints->pos.valid){
         auto *text = new RS_Text(container, *data);
         text->update();
-        container->addEntity(text);
 
-        addToDocumentUndoable(text);
+        undoCycleAdd(text);
 
         textChanged = true;
         pPoints->secPos = {};
@@ -118,10 +116,8 @@ void RS_ActionDrawText::trigger(){
         }
         else {
             setStatus(SetPos);
-            deletePreview();
         }
     }
-    graphicView->redraw(RS2::RedrawAll);
 }
 
 void RS_ActionDrawText::preparePreview(){

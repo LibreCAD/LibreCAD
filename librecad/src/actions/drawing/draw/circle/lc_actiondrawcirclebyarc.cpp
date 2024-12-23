@@ -127,7 +127,7 @@ void LC_ActionDrawCircleByArc::performTriggerDeletions(){
 
 void LC_ActionDrawCircleByArc::deleteOriginalArcOrEllipse(RS_Entity *en){
     if (checkMayExpandEntity(en,  en->is(RS2::EntityArc) ? "Arc":"Ellipse")){
-        deleteEntityUndoable(en);
+        undoableDeleteEntity(en);
     }
 }
 

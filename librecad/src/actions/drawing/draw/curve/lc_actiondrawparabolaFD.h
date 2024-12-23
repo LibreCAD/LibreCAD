@@ -41,7 +41,6 @@ public:
     ~LC_ActionDrawParabolaFD() override;
 
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
 protected:
@@ -61,9 +60,8 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     LC_Parabola* preparePreview();
-
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void doTrigger() override;
 };
 #endif

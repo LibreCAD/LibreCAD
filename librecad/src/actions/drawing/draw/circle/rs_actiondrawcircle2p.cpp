@@ -64,17 +64,13 @@ void RS_ActionDrawCircle2P::reset() {
     pPoints->point2 = {};
 }
 
-void RS_ActionDrawCircle2P::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawCircle2P::doTrigger() {
     preparePreview();
     if (data->isValid()){
         auto *circle = new RS_Circle(container,*data);
-        circle->setLayerToActive();
-        circle->setPenToActive();
-        container->addEntity(circle);
 
-        addToDocumentUndoable(circle);
+        setPenAndLayerToActive(circle);
+        undoCycleAdd(circle);
 
         if (moveRelPointAtCenterAfterTrigger){
             moveRelativeZero(data->center);
@@ -83,8 +79,6 @@ void RS_ActionDrawCircle2P::trigger() {
             RS_Vector rz = graphicView->getRelativeZero();
             moveRelativeZero(rz);
         }
-        graphicView->redraw(RS2::RedrawDrawing);
-
         setStatus(SetPoint1);
         reset();
     } else

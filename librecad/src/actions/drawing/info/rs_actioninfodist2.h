@@ -46,7 +46,6 @@ public:
         bool fromPointToEntity = false);
     ~RS_ActionInfoDist2() override;
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     bool isUseNearestPointOnEntity() const {return nearestPointShouldBeOnEntity;};
     void setUseNearestPointOnEntity(bool value){nearestPointShouldBeOnEntity = value;}
@@ -81,6 +80,7 @@ protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateMouseButtonHints() override;
     void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint);
+    void doTrigger() override;
 };
 
 #endif

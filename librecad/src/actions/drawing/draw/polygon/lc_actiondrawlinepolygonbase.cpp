@@ -22,14 +22,13 @@ LC_ActionDrawLinePolygonBase::LC_ActionDrawLinePolygonBase( const char *name, RS
 
 LC_ActionDrawLinePolygonBase::~LC_ActionDrawLinePolygonBase() = default;
 
-void LC_ActionDrawLinePolygonBase::trigger() {
-    RS_PreviewActionInterface::trigger();
+void LC_ActionDrawLinePolygonBase::doTrigger() {
     if (document != nullptr) {
         PolygonInfo polygonInfo;
         preparePolygonInfo(polygonInfo, pPoints->point2);
         RS_Polyline *polyline = createShapePolyline(polygonInfo, false);
         if (polyline != nullptr) {
-            document->startUndoCycle();
+            undoCycleStart();
             RS_Graphic* graphic = graphicView->getGraphic();
             RS_Layer* layer;
             RS_Pen pen = document->getActivePen();
@@ -40,7 +39,7 @@ void LC_ActionDrawLinePolygonBase::trigger() {
                 polyline->setPen(pen);
                 polyline->reparent(container);
                 container->addEntity(polyline);
-                document->addUndoable(polyline);
+                undoableAdd(polyline);
             }
             else{
                 for (RS_Entity *entity = polyline->firstEntity(RS2::ResolveAll); entity;
@@ -51,18 +50,17 @@ void LC_ActionDrawLinePolygonBase::trigger() {
                         clone->setLayer(layer);
                         clone->reparent(container);
                         container->addEntity(clone);
-                        document->addUndoable(clone);
+                        undoableAdd(clone);
                     }
                 }
                 delete polyline; //don't need it anymore
             }
-            document->endUndoCycle();
+            undoCycleEnd();
         }
-        deletePreview();
+
         if (completeActionOnTrigger) {
             setStatus(-1);
         }
-        graphicView->redraw();
     }
 }
 

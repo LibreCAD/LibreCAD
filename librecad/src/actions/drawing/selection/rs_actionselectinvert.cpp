@@ -45,6 +45,5 @@ void RS_ActionSelectInvert::init(int status) {
 void RS_ActionSelectInvert::trigger() {
     RS_Selection s(*container, graphicView);
     s.invertSelection();
-
     updateSelectionWidget();
 }

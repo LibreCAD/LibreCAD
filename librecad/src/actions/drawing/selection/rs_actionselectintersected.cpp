@@ -62,14 +62,11 @@ void RS_ActionSelectIntersected::init(int status) {
     snapMode.restriction = RS2::RestrictNothing;
 }
 
-void RS_ActionSelectIntersected::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionSelectIntersected::doTrigger() {
     if (pPoints->v1.valid && pPoints->v2.valid){
         if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
             RS_Selection s(*container, graphicView);
             s.selectIntersected(pPoints->v1, pPoints->v2, select);
-            updateSelectionWidget();
             init(SetPoint1);
         }
     }

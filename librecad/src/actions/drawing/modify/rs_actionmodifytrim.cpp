@@ -59,7 +59,7 @@ void RS_ActionModifyTrim::finish(bool updateTB) {
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionModifyTrim::trigger() {
+void RS_ActionModifyTrim::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyTrim::trigger()");
 
     if (trimEntity && trimEntity->isAtomic() &&
@@ -71,15 +71,12 @@ void RS_ActionModifyTrim::trigger() {
                both);
 
         trimEntity = nullptr;
-        deletePreview();
-        deleteHighlights();
         if (both) {
             limitEntity = nullptr;
             setStatus(ChooseLimitEntity);
         } else {
             setStatus(ChooseTrimEntity);
         }
-        updateSelectionWidget();
     }
 }
 

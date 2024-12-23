@@ -44,11 +44,10 @@ RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
 void RS_ActionModifyEntity::setDisplaySelected(bool highlighted){
     if (en != nullptr) {
         en->setSelected(highlighted);
-        graphicView->drawEntity(en);
     }
 }
 
-void RS_ActionModifyEntity::trigger() {
+void RS_ActionModifyEntity::doTrigger() {
     if (en != nullptr) {
         std::unique_ptr<RS_Entity> clone{en->clone()};
         bool selected = en->isSelected();
@@ -67,15 +66,10 @@ void RS_ActionModifyEntity::trigger() {
             container->addEntity(clone.get());
 
             en->setSelected(false);
-
             clone->setSelected(false);
-            graphicView->drawEntity(clone.get());
 
             if (document) {
-                document->startUndoCycle();
-                document->addUndoable(clone.get());
-                deleteEntityUndoable(en);
-                document->endUndoCycle();
+                undoCycleReplace(en, clone.get());
             }
 
             unsigned long cloneEntityId = clone->getId();
@@ -87,7 +81,6 @@ void RS_ActionModifyEntity::trigger() {
             }
 
             clone.release();
-            updateSelectionWidget();
         }
         graphicView->setForcedActionKillAllowed(true);
     } else {

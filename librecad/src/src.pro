@@ -348,6 +348,7 @@ HEADERS += \
     lib/engine/document/entities/lc_splinepoints.h \
     lib/engine/rs_system.h \
     lib/engine/document/entities/rs_text.h \
+    lib/engine/undo/lc_undoablerelzero.h \
     lib/engine/undo/rs_undo.h \
     lib/engine/undo/rs_undoable.h \
     lib/engine/undo/rs_undocycle.h \
@@ -448,6 +449,7 @@ SOURCES += \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
     lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.cpp \
     lib/engine/overlays/references/lc_refconstructionline.cpp \
+    lib/engine/undo/lc_undoablerelzero.cpp \
     lib/modification/lc_align.cpp \
     ui/action_options/curve/lc_actiondrawarc2poptions.cpp \
     ui/action_options/misc/lc_midlineoptions.cpp \

@@ -91,16 +91,12 @@ void RS_ActionDrawLineAngle::init(int status) {
     reset();
 }
 
-void RS_ActionDrawLineAngle::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawLineAngle::doTrigger() {
     preparePreview();
     auto *line = new RS_Line{container, pPoints->data};
-    line->setLayerToActive();
-    line->setPenToActive();
-    container->addEntity(line);
 
-    addToDocumentUndoable(line);
+    setPenAndLayerToActive(line);
+    undoCycleAdd(line);
 
     if (!persistRelativeZero){
         RS_Vector &newRelZero = pPoints->data.startpoint;
@@ -110,9 +106,7 @@ void RS_ActionDrawLineAngle::trigger() {
         moveRelativeZero(newRelZero);
     }
     persistRelativeZero = false;
-    graphicView->redraw(RS2::RedrawDrawing);
-    RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %lu",
-                    line->getId());
+    RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %lu",line->getId());
 }
 
 void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {

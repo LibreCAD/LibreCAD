@@ -33,7 +33,7 @@ LC_ActionPolylineChangeSegmentType::~LC_ActionPolylineChangeSegmentType() {
 
 }
 
-void LC_ActionPolylineChangeSegmentType::trigger() {
+void LC_ActionPolylineChangeSegmentType::doTrigger() {
     // todo - move to RS_Modification?
     auto* createdPolyline =  createModifiedPolyline();
     if (createdPolyline != nullptr) {
@@ -42,21 +42,10 @@ void LC_ActionPolylineChangeSegmentType::trigger() {
 
         container->addEntity(createdPolyline);
 
-        document->startUndoCycle();
-
-        document->addUndoable(createdPolyline);
-
-        graphicView->deleteEntity(polyline);
-        polyline->changeUndoState();
-        document->addUndoable(polyline);
-
-        document->endUndoCycle();
-
+        undoCycleReplace(polyline, createdPolyline);
         polyline = createdPolyline;
         polylineSegment = nullptr;
-
         setStatus(SetSegment);
-        graphicView->redraw();
     }
     else {
         commandMessage(tr("Invalid arc point to create arc, select another one"));

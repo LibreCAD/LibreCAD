@@ -41,7 +41,6 @@ public:
         bool resolve);
 
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void finish(bool updateTB) override;
 private:

@@ -73,26 +73,16 @@ void RS_ActionDrawArc::init(int status){
     reset();
 }
 
-void RS_ActionDrawArc::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawArc::doTrigger() {
     if (alternateArcDirection){
         data->reversed = !data->reversed;
     }
     auto arc = new RS_Arc(container,*data);
-
-    arc->setLayerToActive();
-    arc->setPenToActive();
-    container->addEntity(arc);
-
-    addToDocumentUndoable(arc);
-
-    graphicView->redraw(RS2::RedrawDrawing);
+    setPenAndLayerToActive(arc);
+    undoCycleAdd(arc);
     moveRelativeZero(arc->getCenter());
-
     setStatus(SetCenter);
     reset();
-
     RS_DEBUG->print("RS_ActionDrawArc::trigger(): arc added: %lu", arc->getId());
 }
 

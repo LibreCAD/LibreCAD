@@ -37,23 +37,16 @@ LC_ActionCircleDimBase::LC_ActionCircleDimBase(const char* name, RS_EntityContai
 
 LC_ActionCircleDimBase::~LC_ActionCircleDimBase() = default;
 
-void LC_ActionCircleDimBase::trigger() {
-    RS_ActionDimension::trigger();
-
+void LC_ActionCircleDimBase::doTrigger() {
     if (entity != nullptr) {
         preparePreview(entity, *pos, alternateAngle);
         auto *newEntity = createDim(container);
-        newEntity->setLayerToActive();
-        newEntity->setPenToActive();
+
+        setPenAndLayerToActive(newEntity);
         newEntity->update();
-        container->addEntity(newEntity);
-
-        addToDocumentUndoable(newEntity);
-
-        graphicView->redraw(RS2::RedrawDrawing);
+        undoCycleAdd(newEntity);
         alternateAngle = false;
         RS_Snapper::finish();
-
     } else {
         RS_DEBUG->print("RS_ActionDimDiametric::trigger: Entity is nullptr\n");
     }

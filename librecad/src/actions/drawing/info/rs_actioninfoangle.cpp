@@ -70,7 +70,7 @@ void RS_ActionInfoAngle::drawSnapper() {
     // disable snapper
 }
 
-void RS_ActionInfoAngle::trigger(){
+void RS_ActionInfoAngle::doTrigger() {
     RS_DEBUG->print("RS_ActionInfoAngle::trigger()");
 
     int status = getStatus();

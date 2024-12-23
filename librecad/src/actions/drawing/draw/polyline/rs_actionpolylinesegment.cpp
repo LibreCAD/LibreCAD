@@ -228,7 +228,7 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
     RS_Polyline *newPolyline = nullptr;
     if (document != nullptr){
         if (!createOnly){
-            document->startUndoCycle();
+            undoCycleStart();
         }
 
         bool revert = false;
@@ -238,8 +238,7 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
 
         newPolyline = new RS_Polyline(cnt, RS_PolylineData(RS_Vector(false), RS_Vector(false), closed));
         if (!createOnly){
-            newPolyline->setLayerToActive();
-            newPolyline->setPenToActive();
+            setPenAndLayerToActive(newPolyline);
         }
 
 //complete polyline
@@ -248,7 +247,7 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
             RS_Entity *e2 = completed.takeFirst();
             if (!createOnly){
                 e2->setUndoState(true);
-                document->addUndoable(e2);
+                undoableAdd(e2);
             }
             if (e2->getStartpoint().distanceTo(end) < 1.0e-4){
                 revert = false;
@@ -282,23 +281,18 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
         cnt->addEntity(newPolyline);
 
         if (!createOnly){
-            if (graphicView){
-                graphicView->drawEntity(newPolyline);
-            }
-
-            document->addUndoable(newPolyline);
-            document->endUndoCycle();
+            undoableAdd(newPolyline);
+            undoCycleEnd();
         }
     }
     RS_DEBUG->print("RS_ActionPolylineSegment::convertPolyline: OK");
     return newPolyline;
 }
 
-void RS_ActionPolylineSegment::trigger(){
-
+void RS_ActionPolylineSegment::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineSegment::trigger()");
 
-    if (targetEntity /*&& selectedSegment && targetPoint.valid */){
+    if (targetEntity != nullptr /*&& selectedSegment && targetPoint.valid */){
 //        targetEntity->setHighlighted(false);
 //        graphicView->drawEntity(targetEntity);
 //RLZ: do not use container->optimizeContours(); because it invalidate targetEntity
@@ -307,10 +301,7 @@ void RS_ActionPolylineSegment::trigger(){
 
         targetEntity = nullptr;
         setStatus(ChooseEntity);
-
-        updateSelectionWidget();
     }
-    graphicView->redraw();
 }
 
 void RS_ActionPolylineSegment::mouseMoveEvent(QMouseEvent *event){

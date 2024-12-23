@@ -264,11 +264,11 @@ void LC_ActionModifyLineJoin::performTriggerDeletions(){
     if (removeOriginalLines){
         // proceed line 1
         if (line1EdgeMode == EDGE_EXTEND_TRIM){
-            deleteEntityUndoable(line1);
+            undoableDeleteEntity(line1);
         }
         // proceed line 2
         if (line2EdgeMode == EDGE_EXTEND_TRIM){
-            deleteEntityUndoable(line2);
+            undoableDeleteEntity(line2);
         }
     }
 }
@@ -356,8 +356,7 @@ void LC_ActionModifyLineJoin::applyAttributes(RS_Entity *e, bool forLine1){
             e->setLayer(layer);
             break;
         case ATTRIBUTES_ACTIVE_PEN_LAYER: // just set for active pen and layer
-            e->setPenToActive();
-            e->setLayerToActive();
+            setPenAndLayerToActive(e);
             break;
     }
 }

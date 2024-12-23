@@ -80,26 +80,21 @@ void RS_ActionDrawSpline::init(int status){
     reset();
 }
 
-void RS_ActionDrawSpline::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawSpline::doTrigger() {
     if (!pPoints->spline){
         return;
     }
 
     // add the entity
     //RS_Spline* spline = new RS_Spline(container, data);
-    pPoints->spline->setLayerToActive();
-    pPoints->spline->setPenToActive();
+    setPenAndLayerToActive(pPoints->spline);
     pPoints->spline->update();
-    container->addEntity(pPoints->spline);
-
-    addToDocumentUndoable(pPoints->spline);
+    undoCycleAdd(pPoints->spline);
 
     // upd view
-    RS_Vector r = graphicView->getRelativeZero();
-    graphicView->redraw(RS2::RedrawDrawing);
+    RS_Vector r = graphicView->getRelativeZero(); // fixme - remove!
     moveRelativeZero(r);
+
     RS_DEBUG->print("RS_ActionDrawSpline::trigger(): spline added: %lu",
                     pPoints->spline->getId());
 

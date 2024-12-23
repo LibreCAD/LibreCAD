@@ -55,25 +55,15 @@ void RS_ActionDrawLineOrthTan::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawLineOrthTan::trigger(){
+void RS_ActionDrawLineOrthTan::doTrigger() {
     if (!tangent) return;
-    RS_PreviewActionInterface::trigger();
+    RS_Entity *newEntity = new RS_Line(container, tangent->getData());
 
-
-    circle = nullptr;
-    RS_Entity *newEntity = new RS_Line(container,
-                                       tangent->getData());
-
-    deletePreview();
-    newEntity->setLayerToActive();
-    newEntity->setPenToActive();
-    container->addEntity(newEntity);
-
-    addToDocumentUndoable(newEntity);
-
-    graphicView->redraw(RS2::RedrawDrawing);
+    setPenAndLayerToActive(newEntity);
+    undoCycleAdd(newEntity);
 
     setStatus(SetCircle);
+    circle = nullptr;
 }
 
 void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent *e){

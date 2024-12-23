@@ -58,13 +58,9 @@ RS_Selection::RS_Selection(
 void RS_Selection::selectSingle(RS_Entity *e){
     if (e && (!(e->getLayer() && e->getLayer()->isLocked()))){
 
-        if (graphicView) graphicView->deleteEntity(e);
-
         e->toggleSelected();
 
         if (graphicView){
-            graphicView->drawEntity(e);
-
             if (e->isSelected() && (e->rtti() == RS2::EntityInsert)){
                 const RS_Block *selectedBlock = dynamic_cast<RS_Insert *>(e)->getBlockForInsert();
 
@@ -77,6 +73,7 @@ void RS_Selection::selectSingle(RS_Entity *e){
             } else {
                 QG_DIALOGFACTORY->displayBlockName("", false);
             }
+            graphicView->redraw();
         }
     }
 }
@@ -203,17 +200,12 @@ void RS_Selection::selectIntersected(
             }
 
             if (inters){
-                if (graphicView){
-                    graphicView->deleteEntity(e);
-                }
-
                 e->setSelected(select);
-
-                if (graphicView){
-                    graphicView->drawEntity(e);
-                }
             }
         }
+    }
+    if (graphicView){
+        graphicView->redraw();
     }
 }
 
@@ -239,13 +231,7 @@ void RS_Selection::selectContour(RS_Entity *e){
     bool found = false;
 
     // (de)select 1st entity:
-    if (graphicView){
-        graphicView->deleteEntity(e);
-    }
     e->setSelected(select);
-    if (graphicView){
-        graphicView->drawEntity(e);
-    }
 
     do {// fixme - hm...iterating over all entities of drawing in cycle???? too nice for me...
         found = false;
@@ -284,18 +270,15 @@ void RS_Selection::selectContour(RS_Entity *e){
                 }
 
                 if (doit){
-                    if (graphicView){
-                        graphicView->deleteEntity(ae);
-                    }
                     ae->setSelected(select);
-                    if (graphicView){
-                        graphicView->drawEntity(ae);
-                    }
                     found = true;
                 }
             }
         }
     } while (found);
+    if (graphicView){
+        graphicView->redraw();
+    }
 }
 
 /**
@@ -329,14 +312,11 @@ void RS_Selection::selectLayer(const QString &layerName, bool select){
             RS_Layer *l = en->getLayer(true);
 
             if (l != nullptr && l->getName() == layerName){
-                if (graphicView){
-                    graphicView->deleteEntity(en);
-                }
                 en->setSelected(select);
-                if (graphicView){
-                    graphicView->drawEntity(en);
-                }
             }
         }
+    }
+    if (graphicView){
+        graphicView->redraw();
     }
 }

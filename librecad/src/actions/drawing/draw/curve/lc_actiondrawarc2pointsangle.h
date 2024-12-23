@@ -25,24 +25,17 @@
 
 #include "lc_actiondrawarc2pointsbase.h"
 
-class LC_ActionDrawArc2PointsAngle:public LC_ActionDrawArc2PointsBase
-{
+class LC_ActionDrawArc2PointsAngle:public LC_ActionDrawArc2PointsBase{
     Q_OBJECT
-
 public:
     LC_ActionDrawArc2PointsAngle(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionDrawArc2PointsAngle() override = default;
-
 protected:
     bool createArcData(RS_ArcData &data, int status, RS_Vector vector, bool alternate, bool reportErrors) override;
     void doPreviewOnPoint2Custom(RS_Arc *pArc) override;
-
     void setParameterValue(double r) override;
-
     QString getParameterCommand() override;
-
     QString getParameterPromptValue() const override;
-
     QString getAlternativePoint2Prompt() const override;
 };
 

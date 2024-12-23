@@ -32,7 +32,6 @@ public:
     ~LC_ActionPolylineArcsToLines() override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void init(int status) override;
-    void trigger() override;
 protected:
     enum Status{
         SetEntity
@@ -45,5 +44,6 @@ protected:
 protected:
     RS_Polyline *createPolyline(RS_Polyline *pPolyline);
     bool hasArcsSegments(RS_Polyline *p);
+    void doTrigger() override;
 };
 #endif // LC_ACTIONPOLYLINEARCSTOLINES_H

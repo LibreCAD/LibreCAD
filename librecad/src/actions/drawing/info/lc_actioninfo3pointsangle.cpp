@@ -31,7 +31,7 @@ LC_ActionInfo3PointsAngle::LC_ActionInfo3PointsAngle(RS_EntityContainer &contain
 
 LC_ActionInfo3PointsAngle::~LC_ActionInfo3PointsAngle() = default;
 
-void LC_ActionInfo3PointsAngle::trigger() {
+void LC_ActionInfo3PointsAngle::doTrigger() {
     double angle1 = point2.angleTo(point1);
     double angle2 = point2.angleTo(point3);
 

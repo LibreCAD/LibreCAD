@@ -217,7 +217,7 @@ void LC_ActionDrawSliceDivide::doPrepareTriggerEntities(QList<RS_Entity *> &list
 
     // delete original entity, if necessary
     if (entityToDelete != nullptr){
-        deleteEntityUndoable(entityToDelete);
+        undoableDeleteEntity(entityToDelete);
     }
 
     bool hasTickLength = LC_LineMath::isMeaningful(tickLength);
@@ -229,8 +229,7 @@ void LC_ActionDrawSliceDivide::doPrepareTriggerEntities(QList<RS_Entity *> &list
             if (tick.isVisible){
                 auto *line = new RS_Line(container, tick.tickLine);
                 // for ticks, we'll always use current pen and layer
-                line->setPenToActive();
-                line->setLayerToActive();
+                setPenAndLayerToActive(line);
                 list<<line;
             }
         }

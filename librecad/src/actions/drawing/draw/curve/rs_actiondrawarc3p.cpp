@@ -54,19 +54,13 @@ void RS_ActionDrawArc3P::init(int status) {
     //reset();
 }
 
-void RS_ActionDrawArc3P::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawArc3P::doTrigger() {
     preparePreview(alternatedPoints);
     if (pPoints.data.isValid()){
         auto *arc = new RS_Arc{container, pPoints.data};
-        arc->setLayerToActive();
-        arc->setPenToActive();
-        container->addEntity(arc);
 
-        addToDocumentUndoable(arc);
-
-        graphicView->redraw(RS2::RedrawDrawing);
+        setPenAndLayerToActive(arc);
+        undoCycleAdd(arc);
         RS_Vector rz = arc->getEndpoint();
         if (moveRelPointAtCenterAfterTrigger){
             rz = arc->getCenter();

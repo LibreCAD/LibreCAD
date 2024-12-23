@@ -59,8 +59,7 @@ void RS_ActionDrawEllipse4Points::init(int status) {
     }
 }
 
-void RS_ActionDrawEllipse4Points::trigger(){
-    LC_ActionDrawCircleBase::trigger();
+void RS_ActionDrawEllipse4Points::doTrigger() {
     RS_Entity *en;
     if (getStatus() == SetPoint4 && pPoints->evalid){
         en = new RS_Ellipse(container, pPoints->eData);
@@ -68,18 +67,13 @@ void RS_ActionDrawEllipse4Points::trigger(){
         en = new RS_Circle(container, pPoints->cData);
     }
 
-    deletePreview();
-    container->addEntity(en);
-
-    addToDocumentUndoable(en);
+    undoCycleAdd(en);
 
     RS_Vector rz = graphicView->getRelativeZero();
-    graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
         rz = en->getCenter();
     }
     moveRelativeZero(rz);
-    drawSnapper();
     setStatus(SetPoint1);
     //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::trigger():" " entity added: %lu", ellipse->getId());
 }

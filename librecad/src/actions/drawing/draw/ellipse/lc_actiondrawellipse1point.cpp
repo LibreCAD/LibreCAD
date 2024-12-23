@@ -66,8 +66,7 @@ void LC_ActionDrawEllipse1Point::init(int status) {
 
 LC_ActionDrawEllipse1Point::~LC_ActionDrawEllipse1Point() = default;
 
-void LC_ActionDrawEllipse1Point::trigger() {
-
+void LC_ActionDrawEllipse1Point::doTrigger() {
     double ratio = pPoints->getRatio();
     auto *ellipse = new RS_Ellipse{container,
                                    {pPoints->center, pPoints->getMajorP(), ratio,
@@ -77,21 +76,14 @@ void LC_ActionDrawEllipse1Point::trigger() {
     if   (ratio > 1.){
         ellipse->switchMajorMinor();
     }
-    ellipse->setLayerToActive();
-    ellipse->setPenToActive();
-
-    container->addEntity(ellipse);
-
-    addToDocumentUndoable(ellipse);
+    setPenAndLayerToActive(ellipse);
+    undoCycleAdd(ellipse);
 
     RS_Vector rz = graphicView->getRelativeZero();
-    graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
         rz = ellipse->getCenter();
     }
     moveRelativeZero(rz);
-    drawSnapper();
-
     setStatus(SetPoint);
 }
 

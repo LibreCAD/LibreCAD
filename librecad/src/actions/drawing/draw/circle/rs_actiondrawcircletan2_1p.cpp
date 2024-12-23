@@ -87,14 +87,9 @@ void RS_ActionDrawCircleTan2_1P::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawCircleTan2_1P::trigger(){
-    RS_PreviewActionInterface::trigger();
+void RS_ActionDrawCircleTan2_1P::doTrigger() {
     auto *circle = new RS_Circle(container, pPoints->cData);
-
-    container->addEntity(circle);
-    addToDocumentUndoable(circle);
-
-    graphicView->redraw(RS2::RedrawDrawing);
+    undoCycleAdd(circle);
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
     }

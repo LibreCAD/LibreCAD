@@ -25,6 +25,7 @@
 **********************************************************************/
 
 
+#include "rs_actionsetrelativezero.h"
 #include <QApplication>
 #include <QMouseEvent>
 #include "rs_creation.h"
@@ -51,6 +52,7 @@
 #include "rs_constructionline.h"
 #include "lc_refconstructionline.h"
 #include "lc_quickinfowidget.h"
+#include "lc_undoablerelzero.h"
 
 // fixme - sand - consider more generic support of overlays and containers,
 // with them working with preview etc might be more generic.. currently, preview handles both preview and reference points..
@@ -122,6 +124,12 @@ void RS_PreviewActionInterface::trigger() {
     deleteInfoCursor();
     deleteHighlights();
     deleteSnapper();
+
+    doTrigger();
+
+    drawSnapper();
+    updateSelectionWidget();
+    graphicView->redraw();
 }
 
 /**
@@ -471,19 +479,12 @@ void RS_PreviewActionInterface::moveRelativeZero(const RS_Vector& zero){
     graphicView->moveRelativeZero(zero);
 }
 
-bool RS_PreviewActionInterface::is(RS_Entity *e, RS2::EntityType type) const{
-    return  e != nullptr && e->is(type);
+void RS_PreviewActionInterface::markRelativeZero() {
+    graphicView->markRelativeZero();
 }
 
-bool RS_PreviewActionInterface::addToDocumentUndoable(RS_Undoable *e) const{
-    // upd. undo list:
-    if (document){
-        document->startUndoCycle();
-        document->addUndoable(e);
-        document->endUndoCycle();
-        return true;
-    }
-    return false;
+bool RS_PreviewActionInterface::is(RS_Entity *e, RS2::EntityType type) const{
+    return  e != nullptr && e->is(type);
 }
 
 RS_Entity* RS_PreviewActionInterface::catchModifiableEntity(QMouseEvent *e, const EntityTypeList &enTypeList){
@@ -530,17 +531,6 @@ RS_Entity* RS_PreviewActionInterface::catchModifiableEntityOnPreview(QMouseEvent
         prepareEntityDescription(en, RS2::EntityDescriptionLevel::DescriptionCatched);
     }
     return en;
-}
-
-/**
- * Just utility method for deleting given entity from drawing - should be called within undo cycle
- * @param entity entity to delete
- */
-void RS_PreviewActionInterface::deleteEntityUndoable(RS_Entity *entity){
-    // delete and add this into undo
-    graphicView->deleteEntity(entity);
-    entity->changeUndoState();
-    document->addUndoable(entity);
 }
 
 RS_Entity* RS_PreviewActionInterface::catchEntityOnPreview( const RS_Vector &pos,

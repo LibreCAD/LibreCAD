@@ -157,7 +157,7 @@ void LC_ActionModifyBreakDivide::doPrepareTriggerEntities(QList<RS_Entity *> &li
 
 void LC_ActionModifyBreakDivide::performTriggerDeletions(){
     // delete original entity as we'll expand it and create segment entities
-    deleteEntityUndoable(triggerData->entity);
+    undoableDeleteEntity(triggerData->entity);
 }
 
 void LC_ActionModifyBreakDivide::doAfterTrigger(){

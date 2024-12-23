@@ -75,8 +75,7 @@ bool LC_ActionDrawLineAngleRel::isSetActivePenAndLayerOnTrigger(){
  */
 void LC_ActionDrawLineAngleRel::doPrepareTriggerEntities(QList<RS_Entity *> &list){
     auto* en = new RS_Line{container, tickData->tickLineData};
-    en->setPenToActive();
-    en->setLayerToActive();
+    setPenAndLayerToActive(en);
     list<<en;
 
     // optionally, try to divide original line if needed
@@ -139,7 +138,7 @@ RS_Vector LC_ActionDrawLineAngleRel::doGetRelativeZeroAfterTrigger(){
 void LC_ActionDrawLineAngleRel::performTriggerDeletions(){
     if (tickData->deleteOriginalLine){
         // removing original line from drawing
-        deleteEntityUndoable(tickData->line);
+        undoableDeleteEntity(tickData->line);
     }
 }
 

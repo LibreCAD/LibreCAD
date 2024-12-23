@@ -61,9 +61,7 @@ void LC_ActionDimArc::reset(){
     updateOptions(); // fixme - check whether it's necessary there
 }
 
-void LC_ActionDimArc::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void LC_ActionDimArc::doTrigger() {
     if (selectedArcEntity == nullptr){
         RS_DEBUG->print(RS_Debug::D_ERROR, "LC_ActionDimArc::trigger: selectedArcEntity is nullptr.\n");
         return;
@@ -75,16 +73,10 @@ void LC_ActionDimArc::trigger(){
     }
 
     auto newEntity= new LC_DimArc(container, *data, dimArcData);
-
-    newEntity->setLayerToActive();
-    newEntity->setPenToActive();
+    setPenAndLayerToActive(newEntity);
     newEntity->update();
-    container->addEntity(newEntity);
-
-    addToDocumentUndoable(newEntity);
-
+    undoCycleAdd(newEntity);
     setStatus(SetEntity);
-    graphicView->redraw(RS2::RedrawDrawing);
 
     RS_Snapper::finish();
 }

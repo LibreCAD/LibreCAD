@@ -55,9 +55,8 @@ void RS_ActionInfoArea::init(int status) {
     //RS_DEBUG->print( "RS_ActionInfoArea::init: %d" ,status );
 }
 
-void RS_ActionInfoArea::trigger() {
+void RS_ActionInfoArea::doTrigger() {
     RS_DEBUG->print("RS_ActionInfoArea::trigger()");
-    RS_PreviewActionInterface::trigger();
     display(false);
     lastPointRequested = false;
     init(SetFirstPoint);

@@ -20,23 +20,22 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#ifndef LC_ACTIONDRAWARC2POINTSRADIUS_H
-#define LC_ACTIONDRAWARC2POINTSRADIUS_H
+#ifndef LC_UNDOABLERELZERO_H
+#define LC_UNDOABLERELZERO_H
 
-#include "lc_actiondrawarc2pointsbase.h"
+#include "rs_undoable.h"
+#include "rs_vector.h"
+#include "rs_graphicview.h"
 
-class LC_ActionDrawArc2PointsRadius:public LC_ActionDrawArc2PointsBase{
-    Q_OBJECT
+class LC_UndoableRelZero:public RS_Undoable
+{
 public:
-    LC_ActionDrawArc2PointsRadius(RS_EntityContainer &container, RS_GraphicView &graphicView);
-    ~LC_ActionDrawArc2PointsRadius() override = default;
-    void onMouseMoveForNonPointsStatuses(int status, RS_Vector mouse, QMouseEvent *e);
+    LC_UndoableRelZero(RS_GraphicView* view, const RS_Vector &mFrom, const RS_Vector &mTo);
+    void undoStateChanged(bool undone) override;
 protected:
-    bool createArcData(RS_ArcData &data, int status, RS_Vector pos, bool reverse, bool reportErrors) override;
-    void doPreviewOnPoint2Custom(RS_Arc *pArc) override;
-    QString getParameterCommand() override;
-    QString getParameterPromptValue() const override;
-    QString getAlternativePoint2Prompt() const override;
+    RS_GraphicView* graphicView = nullptr;
+    RS_Vector m_From = RS_Vector(0,0,0);
+    RS_Vector m_To = RS_Vector(0,0,0);
 };
 
-#endif // LC_ACTIONDRAWARC2POINTSRADIUS_H
+#endif // LC_UNDOABLERELZERO_H

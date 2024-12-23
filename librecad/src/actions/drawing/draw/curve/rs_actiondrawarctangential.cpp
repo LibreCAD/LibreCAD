@@ -63,12 +63,9 @@ void RS_ActionDrawArcTangential::init(int status) {
     //reset();
 }
 
-void RS_ActionDrawArcTangential::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawArcTangential::doTrigger() {
     if (!(point.valid && baseEntity)) {
-        RS_DEBUG->print("RS_ActionDrawArcTangential::trigger: "
-                        "conditions not met");
+        RS_DEBUG->print("RS_ActionDrawArcTangential::trigger: conditions not met");
         return;
     }
 
@@ -77,13 +74,10 @@ void RS_ActionDrawArcTangential::trigger() {
         data->reversed = !data->reversed;
     }
     auto* arc = new RS_Arc(container, *data);
-    container->addEntity(arc);
-    arc->setLayerToActive();
-    arc->setPenToActive();
 
-    addToDocumentUndoable(arc);
+    setPenAndLayerToActive(arc);
+    undoCycleAdd(arc);
 
-    graphicView->redraw(RS2::RedrawDrawing);
     moveRelativeZero(arc->getCenter());
 
     setStatus(SetBaseEntity);

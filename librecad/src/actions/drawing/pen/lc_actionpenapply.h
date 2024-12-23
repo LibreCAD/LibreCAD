@@ -38,15 +38,12 @@ public:
         ApplyToEntity
     };
     LC_ActionPenApply(RS_EntityContainer& container,RS_GraphicView& graphicView, bool copy);
-
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void finish(bool updateTB) override;
 private:
     // entity that might be used as source for pen applying
     RS_Entity* srcEntity;
-
     // controls whether pen should be copied from source entity or applied from pen toolbar
     bool copyMode;
 protected:

@@ -627,7 +627,7 @@ void LC_QuickInfoWidget::onSelectEntity(){
         if (e != nullptr){
             // entity found, do selection
             e->setSelected(true);
-            graphicView->drawEntity(e);
+            graphicView->redraw();
         }
         else{
             // if we're there - entity may be selected, or its id may be changed due to modification.
@@ -667,7 +667,6 @@ void LC_QuickInfoWidget::onEditEntityProperties(){
             // entity found, do editing
             std::unique_ptr<RS_Entity> clone{en->clone()};
             en->setSelected(true);
-            graphicView->drawEntity(en);
 
             RS_Entity* newEntity = clone.get();
             if (RS_DIALOGFACTORY->requestModifyEntityDialog(newEntity)){
@@ -677,11 +676,9 @@ void LC_QuickInfoWidget::onEditEntityProperties(){
                 // update widget view
                 processEntity(newEntity);
 
-                graphicView->deleteEntity(en);
                 en->setSelected(false);
 
                 clone->setSelected(false);
-                graphicView->drawEntity(newEntity);
 
                 document->startUndoCycle();
 
@@ -698,6 +695,7 @@ void LC_QuickInfoWidget::onEditEntityProperties(){
         else{ // entity not found, cleanup
             clearEntityInfo();
         }
+        graphicView->redraw();
     }
 }
 

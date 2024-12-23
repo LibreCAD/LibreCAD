@@ -57,22 +57,17 @@ void RS_ActionDimAngular::reset(){
     updateOptions();
 }
 
-void RS_ActionDimAngular::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDimAngular::doTrigger() {
     if (line1->getStartpoint().valid && line2->getStartpoint().valid) {
         auto* newEntity = new RS_DimAngular( container,*data,*edata);
 
-        newEntity->setLayerToActive();
-        newEntity->setPenToActive();
+        setPenAndLayerToActive(newEntity);
         newEntity->update();
-        container->addEntity(newEntity);
 
-        addToDocumentUndoable(newEntity);
+        undoCycleAdd(newEntity);
 
         RS_Vector rz {graphicView->getRelativeZero()};
         setStatus( SetLine1);
-        graphicView->redraw( RS2::RedrawDrawing);
         moveRelativeZero( rz);
         RS_Snapper::finish();
     }

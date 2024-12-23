@@ -58,17 +58,12 @@ void LC_ActionDrawParabola4Points::init(int status) {
         pPoints->points.clear();
 }
 
-void LC_ActionDrawParabola4Points::trigger() {
-    RS_PreviewActionInterface::trigger();
-
-    deletePreview();
+void LC_ActionDrawParabola4Points::doTrigger() {
     if(pPoints->valid){
         auto* en = new LC_Parabola{container, pPoints->data};
-        container->addEntity(en);
-        addToDocumentUndoable(en);
+        undoCycleAdd(en);
     }
-    RS_Vector rz = graphicView->getRelativeZero();
-    graphicView->redraw(RS2::RedrawDrawing);
+    RS_Vector rz = graphicView->getRelativeZero(); // fixme - sand - what for?
     moveRelativeZero(rz);
     setStatus(SetPoint1);
 }

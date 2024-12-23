@@ -93,15 +93,12 @@ void RS_ActionDrawImage::reset() {
 			   };
 }
 
-void RS_ActionDrawImage::trigger(){
-    deletePreview();
-
+void RS_ActionDrawImage::doTrigger() {
     if (!pImg->data.file.isEmpty()){
         RS_Creation creation(container, graphicView);
         creation.createImage(&pImg->data);
     }
 
-    graphicView->redraw(RS2::RedrawDrawing);
     graphicView->zoomAuto();
     finish(false);
 }

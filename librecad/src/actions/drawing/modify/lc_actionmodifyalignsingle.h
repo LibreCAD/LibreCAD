@@ -33,11 +33,8 @@ public:
                                 RS_GraphicView &graphicView);
 
     void mouseMoveEvent(QMouseEvent *event) override;
-    void trigger() override;
     void setAlignType(int a) override;
-
     void init(int status) override;
-
 protected:
     enum State{
         SetRefPoint,
@@ -56,10 +53,9 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void previewAlignRefPoint(const RS_Vector &min, const RS_Vector &max);
-
     void previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef);
-
     QString prepareInfoCursorMessage(double verticalRef, bool drawVertical, double horizontalRef, bool drawHorizontal);
+    void doTrigger() override;
 };
 
 #endif // LC_ACTIONMODIFYALIGNSINGLE_H

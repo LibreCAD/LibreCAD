@@ -87,24 +87,16 @@ void RS_ActionDrawCircleTan3::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawCircleTan3::trigger(){
-
-    RS_PreviewActionInterface::trigger();
+void RS_ActionDrawCircleTan3::doTrigger() {
     auto circle = new RS_Circle(container, *pPoints->cData);
-    container->addEntity(circle);
-    addToDocumentUndoable(circle);
-    graphicView->redraw(RS2::RedrawDrawing);
+    undoCycleAdd(circle);
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
     }
-
-//    drawSnapper();
-
     pPoints->circles.clear();
     setStatus(SetCircle1);
 
-    RS_DEBUG->print("RS_ActionDrawCircleTan3::trigger():"
-                    " entity added: %lu", circle->getId());
+    RS_DEBUG->print("RS_ActionDrawCircleTan3::trigger(): entity added: %lu", circle->getId());
 }
 
 void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent *e){

@@ -52,17 +52,12 @@ void RS_ActionDrawCircle::reset() {
     data = std::make_unique<RS_CircleData>();
 }
 
-void RS_ActionDrawCircle::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawCircle::doTrigger() {
     auto* circle = new RS_Circle(container,*data);
-    circle->setLayerToActive();
-    circle->setPenToActive();
-    container->addEntity(circle);
 
-    addToDocumentUndoable(circle);
+    setPenAndLayerToActive(circle);
+    undoCycleAdd(circle);
 
-    graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
     }

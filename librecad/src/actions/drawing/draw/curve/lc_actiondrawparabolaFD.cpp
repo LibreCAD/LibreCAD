@@ -127,19 +127,13 @@ void LC_ActionDrawParabolaFD::init(int status) {
     }
 }
 
-void LC_ActionDrawParabolaFD::trigger() {
-    RS_PreviewActionInterface::trigger();
-
-    deletePreview();
+void LC_ActionDrawParabolaFD::doTrigger() {
     if(pPoints->data.valid){
         auto* en = new LC_Parabola{container, pPoints->data};
-        container->addEntity(en);
-        addToDocumentUndoable(en);
+        undoCycleAdd(en);
     }
-    RS_Vector rz = graphicView->getRelativeZero();
-    graphicView->redraw(RS2::RedrawDrawing);
+    RS_Vector rz = graphicView->getRelativeZero();  // fixme - sand - what for?
     moveRelativeZero(rz);
-    drawSnapper();
     init(SetFocus);
 }
 

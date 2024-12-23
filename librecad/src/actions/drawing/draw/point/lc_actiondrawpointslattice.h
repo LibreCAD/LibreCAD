@@ -32,7 +32,6 @@ public:
                                RS_GraphicView &graphicView);
 
     void mouseMoveEvent(QMouseEvent *event) override;
-    void trigger() override;
     int getColumnPointsCount() const;
     void setColumnPointsCount(int pointsByX);
     int getRowPointsCount() const;
@@ -69,8 +68,8 @@ protected:
     int majorStatus;
     void createPointsLine(RS_Vector start, RS_Vector end, int count, QVector<RS_Vector> &points);
     void createPointsLattice(RS_Vector vector, QVector<RS_Vector> &points);
-
     RS_Vector getLastPointPosition(RS_Vector &pos, bool alternate) const;
+    void doTrigger() override;
 };
 
 #endif // LC_ACTIONDRAWPOINTSLATTICE_H

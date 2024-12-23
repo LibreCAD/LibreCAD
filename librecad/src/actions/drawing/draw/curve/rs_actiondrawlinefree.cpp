@@ -44,19 +44,13 @@ RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
 
 RS_ActionDrawLineFree::~RS_ActionDrawLineFree() = default;
 
-void RS_ActionDrawLineFree::trigger(){
-    deleteSnapper();
+void RS_ActionDrawLineFree::doTrigger() {
     if (polyline.get() != nullptr){
-        deletePreview();
-
         polyline->endPolyline();
         RS_VectorSolutions sol = polyline->getRefPoints();
         if (sol.getNumber() > 2){
             RS_Entity *ent = polyline->clone();
-            container->addEntity(ent);
-            addToDocumentUndoable(ent);
-
-            graphicView->redraw(RS2::RedrawDrawing);
+            undoCycleAdd(ent);
             RS_DEBUG->print("RS_ActionDrawLineFree::trigger(): polyline added: %lu", ent->getId());
         }
         polyline.reset();
@@ -98,8 +92,7 @@ void RS_ActionDrawLineFree::mousePressEvent(QMouseEvent* e) {
             case Dragging:
                 *vertex = snapPoint(e);
                 polyline.reset(new RS_Polyline(container, RS_PolylineData(*vertex, *vertex, false)));
-                polyline->setLayerToActive();
-                polyline->setPenToActive();
+                setPenAndLayerToActive(polyline.get());
                 break;
             default:
                 break;

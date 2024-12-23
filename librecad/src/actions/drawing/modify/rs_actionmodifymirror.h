@@ -70,7 +70,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doTrigger(bool keepSelected) override;
-
     void obtainFlipLineCoordinates(RS_Vector *start, RS_Vector *end, bool verticalLine);
 };
 #endif

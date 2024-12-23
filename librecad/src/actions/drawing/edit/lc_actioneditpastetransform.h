@@ -32,7 +32,6 @@ public:
                                 RS_GraphicView& graphicView);
     void mouseMoveEvent(QMouseEvent *event) override;
     void init(int status) override;
-    void trigger() override;
     void setAngle(double value);
     double getFactor() const;
     void setFactor(double factor);
@@ -79,5 +78,6 @@ protected:
     void previewMultipleReferencePoints();
     void updateMouseButtonHints() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void doTrigger() override;
 };
 #endif // LC_ACTIONEDITPASTETRANSFORM_H

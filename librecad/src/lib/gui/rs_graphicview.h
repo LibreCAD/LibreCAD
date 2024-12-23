@@ -405,8 +405,15 @@ public:
     }
 
     bool isDrawTextsAsDraftForPreview() const;
-protected:
 
+    void markRelativeZero(){
+        markedRelativeZero = relativeZero;
+    }
+
+    RS_Vector getMarkedRelativeZero(){return markedRelativeZero;}
+
+    RS_Undoable* getRelativeZeroUndoable();
+protected:
 
     RS_EntityContainer *container = nullptr; // Holds a pointer to all the enties
     RS_EventHandler *eventHandler = nullptr;
@@ -431,7 +438,6 @@ protected:
     bool lastPaintedHighlighted = false;
     bool lastPaintedSelected = false;
     bool lastPaintOverlay = false;
-
 
     LC_InfoCursorOverlayPrefs infoCursorOverlayPreferences = LC_InfoCursorOverlayPrefs();
 
@@ -520,6 +526,7 @@ private:
     int borderRight = 0;
     int borderBottom = 0;
     RS_Vector relativeZero = RS_Vector(0, 0, 0);
+    RS_Vector markedRelativeZero = RS_Vector(0,0,0);
     bool relativeZeroLocked = false;
     //! Print preview flag
     bool printPreview = false;

@@ -41,11 +41,6 @@ void LC_ActionPenPick::init(int status){
     RS_PreviewActionInterface::init(status);
 }
 
-void LC_ActionPenPick::trigger(){
-    RS_PreviewActionInterface::trigger();
-    // do nothing, processing is performed on mouse click
-}
-
 /**
  * Cleanup that is needed if action was finished by escape
  * @param updateTB

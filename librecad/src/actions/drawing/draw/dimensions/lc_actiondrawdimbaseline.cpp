@@ -48,19 +48,13 @@ void LC_ActionDrawDimBaseline::reset(){
     *edata = {{}, {}, oldAngle, 0.0};
 }
 
-void LC_ActionDrawDimBaseline::trigger() {
-    RS_ActionDimension::trigger();
-
+void LC_ActionDrawDimBaseline::doTrigger() {
     preparePreview();
     auto *dim = createDim(container);
-    dim->setLayerToActive();
-    dim->setPenToActive();
+    setPenAndLayerToActive(dim);
     dim->update();
-    container->addEntity(dim);
 
-    addToDocumentUndoable(dim);
-
-    graphicView->redraw(RS2::RedrawDrawing);
+    undoCycleAdd(dim);
 
     if (isBaseline()) {
         moveRelativeZero(edata->extensionPoint1);
@@ -77,7 +71,6 @@ void LC_ActionDrawDimBaseline::trigger() {
         prevExtensionPointEnd = edata->extensionPoint1; // todo - check whether this is necessary. Potentially - for ordnance continued
     }
     baseDefPoint = data->definitionPoint;
-
 }
 
 RS_Entity *LC_ActionDrawDimBaseline::createDim(RS_EntityContainer* parent){

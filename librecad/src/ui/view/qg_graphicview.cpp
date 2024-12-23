@@ -1135,51 +1135,44 @@ void QG_GraphicView::getPixmapForView(std::unique_ptr<QPixmap>& pm){
 }
 
 void QG_GraphicView::layerActivated(RS_Layer *layer) {
-	bool toActivated= LC_GET_ONE_BOOL("Modify","ModifyEntitiesToActiveLayer");
+    bool toActivated = LC_GET_ONE_BOOL("Modify", "ModifyEntitiesToActiveLayer");
 
-	if(!toActivated) return;
-    RS_EntityContainer *container = this->getContainer();
-    RS_Graphic* graphic = this->getGraphic();
-    QList<RS_Entity*> clones;
+    if (toActivated) {
+        RS_EntityContainer *container = getContainer();
+        RS_Graphic *graphic = getGraphic();
+        if (graphic != nullptr) {
+            QList<RS_Entity *> clones;
 
-    if (graphic) {
-        graphic->startUndoCycle();
+            graphic->startUndoCycle();
+
+            for (auto en: *container) { // fixme - sand - iterating all elements in container
+                if (en != nullptr) {
+                    if (en->isSelected()) {
+                        RS_Entity *cl = en->clone();
+                        cl->setLayer(layer);
+                        en->setSelected(false);
+                        cl->setSelected(false);
+                        clones << cl;
+
+                        en->setUndoState(true);
+                        graphic->addUndoable(en);
+                    }
+                }
+            }
+
+            for (auto cl: clones) {
+                container->addEntity(cl);
+                graphic->addUndoable(cl);
+            }
+
+            graphic->endUndoCycle();
+            graphic->updateInserts();
+
+            container->calculateBorders();
+            container->setSelected(false);
+            redraw(RS2::RedrawDrawing);
+        }
     }
-
-    for (auto en: *container) { // fixme - sand - iterating all elements in container
-        if (!en) continue;
-        if (!en->isSelected()) continue;
-
-        RS_Entity* cl = en->clone();
-        cl->setLayer(layer);
-        this->deleteEntity(en);
-        en->setSelected(false);
-        cl->setSelected(false);
-        clones << cl;
-
-        if (!graphic) continue;
-
-        en->setUndoState(true);
-        graphic->addUndoable(en);
-    }
-
-    for (auto cl: clones) {
-        container->addEntity(cl);
-        this->drawEntity(cl);
-
-        if (!graphic) continue;
-
-        graphic->addUndoable(cl);
-    }
-
-    if (graphic) {
-        graphic->endUndoCycle();
-        graphic->updateInserts();
-    }
-
-    container->calculateBorders();
-    container->setSelected(false);
-    redraw(RS2::RedrawDrawing);
 }
 
 void QG_GraphicView::updateGridPoints(){

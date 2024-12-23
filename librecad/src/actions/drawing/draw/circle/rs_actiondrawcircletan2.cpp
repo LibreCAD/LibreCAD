@@ -85,26 +85,17 @@ void RS_ActionDrawCircleTan2::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawCircleTan2::trigger(){
-
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawCircleTan2::doTrigger() {
     auto *circle = new RS_Circle(container, pPoints->cData);
 
-    container->addEntity(circle);
-
-    addToDocumentUndoable(circle);
-
+    undoCycleAdd(circle);
     for (auto p: pPoints->circles) {
         p->setHighlighted(false);
     }
 
-    graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
     }
-    //    drawSnapper();
-
     pPoints->circles.clear();
     setStatus(SetCircle1);
 

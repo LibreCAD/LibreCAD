@@ -31,14 +31,12 @@ class LC_ActionDrawArc2PointsLength: public LC_ActionDrawArc2PointsBase{
 public:
     LC_ActionDrawArc2PointsLength(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionDrawArc2PointsLength() override = default;
-
 protected:
     bool createArcData(RS_ArcData &data, int status, RS_Vector pos, bool reverse, bool reportErrors) override;
     void doPreviewOnPoint2Custom(RS_Arc *pArc) override;
     QString getParameterCommand() override;
     QString getParameterPromptValue() const override;
     QString getAlternativePoint2Prompt() const override;
-
     double determineArcAngleByLenAndChord(double arcLen, double chordLen);
 };
 

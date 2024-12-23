@@ -96,9 +96,7 @@ void RS_ActionDrawEllipseAxis::init(int status){
     }
 }
 
-void RS_ActionDrawEllipseAxis::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawEllipseAxis::doTrigger() {
     auto *ellipse = new RS_Ellipse{container,
                                    {pPoints->center, pPoints->m_vMajorP, pPoints->ratio,
                                     pPoints->angle1, pPoints->angle2, pPoints->reversed}
@@ -106,25 +104,18 @@ void RS_ActionDrawEllipseAxis::trigger(){
     if (pPoints->ratio > 1.){
         ellipse->switchMajorMinor();
     }
-    ellipse->setLayerToActive();
-    ellipse->setPenToActive();
-
-    container->addEntity(ellipse);
-
-    addToDocumentUndoable(ellipse);
+    setPenAndLayerToActive(ellipse);
+    undoCycleAdd(ellipse);
 
     RS_Vector rz = graphicView->getRelativeZero();
-    graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
         rz = ellipse->getCenter();
     }
     moveRelativeZero(rz);
-    drawSnapper();
 
     setStatus(SetCenter);
 
-    RS_DEBUG->print("RS_ActionDrawEllipseAxis::trigger():"
-                    " entity added: %lu", ellipse->getId());
+    RS_DEBUG->print("RS_ActionDrawEllipseAxis::trigger():entity added: %lu", ellipse->getId());
 }
 
 void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {

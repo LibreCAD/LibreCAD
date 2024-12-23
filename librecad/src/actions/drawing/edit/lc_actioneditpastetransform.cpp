@@ -47,14 +47,11 @@ void LC_ActionEditPasteTransform::init(int status) {
     }
 }
 
-void LC_ActionEditPasteTransform::trigger() {
-    deletePreview();
-
+void LC_ActionEditPasteTransform::doTrigger() {
     RS_Modification m(*container, graphicView, false);
 
     int numX = data->arrayXCount;
     int numY = data->arrayYCount;
-
 
     RS_Vector xArrayVector;
     RS_Vector yArrayVector;
@@ -68,7 +65,7 @@ void LC_ActionEditPasteTransform::trigger() {
         numY = 1;
     }
 
-    document->startUndoCycle();
+    undoCycleStart();
 
     for (int x = 0; x < numX; x++){
         for (int y = 0; y < numY; y++){
@@ -81,10 +78,8 @@ void LC_ActionEditPasteTransform::trigger() {
         }
     }
 
-    document->endUndoCycle();
+    undoCycleEnd();
 
-
-    graphicView->redraw(RS2::RedrawDrawing);
     if (!invokedWithControl) {
         finish(false);
     }

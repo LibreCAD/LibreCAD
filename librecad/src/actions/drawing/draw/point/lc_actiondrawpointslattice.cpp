@@ -37,9 +37,7 @@ LC_ActionDrawPointsLattice::LC_ActionDrawPointsLattice(RS_EntityContainer &conta
     actionType = RS2::ActionDrawPointsLattice;
 }
 
-void LC_ActionDrawPointsLattice::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+void LC_ActionDrawPointsLattice::doTrigger() {
     QVector<RS_Vector> pointsToCreate;
     createPointsLattice(point4, pointsToCreate);
 
@@ -47,21 +45,19 @@ void LC_ActionDrawPointsLattice::trigger() {
     if (pointsCount > 0) {
         RS_Layer *layerToSet  = graphicView->getGraphic()->getActiveLayer();
         RS_Pen penToUse = graphicView->getGraphic()->getActivePen();
-        document->startUndoCycle();
+        undoCycleStart();
         for (unsigned i = 0; i < pointsCount; i++) {
             auto *point = new RS_Point(container, pointsToCreate.at(i));
             point->setLayer(layerToSet);
             point->setPen(penToUse);
             point->setParent(container);
             container->addEntity(point);
-            document->addUndoable(point);
+            undoableAdd(point);
         }
-        document->endUndoCycle();
+        undoCycleEnd();
     }
 
     setStatus(SetPoint1);
-
-    graphicView->redraw();
 }
 
 

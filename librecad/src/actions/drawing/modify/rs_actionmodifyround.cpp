@@ -116,14 +116,11 @@ void RS_ActionModifyRound::drawSnapper() {
     // disable snapper for action   
 }
 
-void RS_ActionModifyRound::trigger(){
-
+void RS_ActionModifyRound::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyRound::trigger()");
 
     if (entity1 && entity1->isAtomic() &&
         entity2 && entity2->isAtomic()){
-
-        deletePreview();
 
         bool foundPolyline = false;
 
@@ -168,8 +165,6 @@ void RS_ActionModifyRound::trigger(){
         entity2 = nullptr;
         // fixme - decide to which state go after trigger - probably it's more convenient to say in SetEntity2?
         setStatus(SetEntity1);
-        graphicView->redraw();
-        updateSelectionWidget();
     }
 }
 

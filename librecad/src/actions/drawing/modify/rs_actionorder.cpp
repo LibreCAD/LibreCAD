@@ -57,6 +57,8 @@ void RS_ActionOrder::selectionCompleted([[maybe_unused]]bool singleEntity, bool 
 }
 
 void RS_ActionOrder::doTrigger(bool keepSelected) {
+    RS_PreviewActionInterface::trigger();
+
     // fixme - sand - review SELECTION STATE
     RS_DEBUG->print("RS_ActionOrder::trigger()");
 
@@ -68,7 +70,6 @@ void RS_ActionOrder::doTrigger(bool keepSelected) {
     if (targetEntity != nullptr) {
         int index = -1;
         targetEntity->setHighlighted(false);
-        graphicView->drawEntity(targetEntity);
 
         switch (actionType) {
             case RS2::ActionOrderLower:

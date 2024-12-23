@@ -30,32 +30,26 @@ LC_ActionSplineModifyBase::LC_ActionSplineModifyBase(const char* name, RS_Entity
 :RS_PreviewActionInterface(name, container, graphicView) {
 }
 
-void LC_ActionSplineModifyBase::trigger() {
-    RS_PreviewActionInterface::trigger();
+void LC_ActionSplineModifyBase::doTrigger() {
     RS_Entity* createdEntity = createModifiedSplineEntity(entityToModify, vertexPoint, directionFromStart);
     if (createdEntity != nullptr){
         if (document) {
-            document->startUndoCycle();
             createdEntity->setSelected(true);
             createdEntity->setLayer(entityToModify->getLayer());
             createdEntity->setPen(entityToModify->getPen(false));
             createdEntity->setParent(entityToModify->getParent());
             container->addEntity(createdEntity);
-            document->addUndoable(createdEntity);
-            deleteEntityUndoable(entityToModify);
-            document->endUndoCycle();
+
+            undoCycleReplace(entityToModify, createdEntity);
             doCompleteTrigger();
         }
         entityToModify = createdEntity;
         vertexPoint = RS_Vector(false);
-        deleteHighlights();
         doAfterTrigger();
     }
     else{
         doOnEntityNotCreated();
     }
-    updateSelectionWidget();
-    graphicView->redraw();
 }
 
 void LC_ActionSplineModifyBase::doCompleteTrigger() {}

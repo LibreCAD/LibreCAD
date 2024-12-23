@@ -63,24 +63,14 @@ void RS_ActionDrawEllipseCenter3Points::init(int status){
     drawSnapper();
 }
 
-void RS_ActionDrawEllipseCenter3Points::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawEllipseCenter3Points::doTrigger() {
     auto *ellipse = new RS_Ellipse(container, pPoints->eData);
 
-    deletePreview();
-    container->addEntity(ellipse);
-
-    addToDocumentUndoable(ellipse);
-
+    undoCycleAdd(ellipse);
     moveRelativeZero(ellipse->getCenter());
-    graphicView->redraw(RS2::RedrawDrawing);
-    drawSnapper();
-
     setStatus(SetCenter);
 
-    RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::trigger():"
-                    " entity added: %lu", ellipse->getId());
+    RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::trigger():entity added: %lu", ellipse->getId());
 }
 
 void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){

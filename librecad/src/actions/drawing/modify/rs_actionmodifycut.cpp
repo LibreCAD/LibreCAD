@@ -48,25 +48,20 @@ void RS_ActionModifyCut::init(int status){
     RS_PreviewActionInterface::init(status);
 }
 
-void RS_ActionModifyCut::trigger(){
-
+void RS_ActionModifyCut::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyCut::trigger()");
 
     if (cutEntity && cutEntity->isAtomic() && cutCoord->valid &&
         cutEntity->isPointOnEntity(*cutCoord)){
 
         cutEntity->setHighlighted(false);
-        graphicView->drawEntity(cutEntity);
 
         RS_Modification m(*container, graphicView);
         m.cut(*cutCoord, (RS_AtomicEntity *) cutEntity);
 
-        deleteSnapper();
         cutEntity = nullptr;
         *cutCoord = RS_Vector(false);
         setStatus(ChooseCutEntity);
-        graphicView->redraw();
-        updateSelectionWidget();
     }
 }
 

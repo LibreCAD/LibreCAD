@@ -46,22 +46,13 @@ namespace {
     const auto dimEntityTypes = EntityTypeList{RS2::EntityDimLinear, RS2::EntityDimAligned};
 }
 
-void LC_ActionDimLinearBase::trigger(){
-    RS_ActionDimension::trigger();
-
+void LC_ActionDimLinearBase::doTrigger() {
     preparePreview();
     auto *dim = createDim(container);
-    dim->setLayerToActive();
-    dim->setPenToActive();
+    setPenAndLayerToActive(dim);
     dim->update();
-    container->addEntity(dim);
-
-    addToDocumentUndoable(dim);
-
-    graphicView->redraw(RS2::RedrawDrawing);
-
-    RS_DEBUG->print("LC_ActionDimLinearBase::trigger():"
-                    " dim added: %lu", dim->getId());
+    undoCycleAdd(dim);
+    RS_DEBUG->print("LC_ActionDimLinearBase::trigger(): dim added: %lu", dim->getId());
 }
 
 void LC_ActionDimLinearBase::mouseMoveEvent(QMouseEvent *e){

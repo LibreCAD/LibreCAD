@@ -479,7 +479,6 @@ int RS_ActionInterface::getGraphicVariableInt(const QString& key, int def) const
 void RS_ActionInterface::updateSelectionWidget() const{
     const RS_EntityContainer::LC_SelectionInfo &info = container->getSelectionInfo();
     updateSelectionWidget(info.count, info.length);
-//    updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
 }
 
 void RS_ActionInterface::updateSelectionWidget(int countSelected, double selectedLength) const{
@@ -626,4 +625,50 @@ void RS_ActionInterface::fireCoordinateEventForSnap(QMouseEvent *e){
 
 void RS_ActionInterface::initPrevious(int stat) {
     init(stat - 1);
+}
+
+bool RS_ActionInterface::undoCycleAdd(RS_Entity *e, bool addToContainer) const{
+    // upd. undo list:
+    if (addToContainer){
+        container->addEntity(e);
+    }
+    if (document){
+        undoCycleStart();
+        undoableAdd(e);
+        undoCycleEnd();
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Just utility method for deleting given entity from drawing - should be called within undo cycle
+ * @param entity entity to delete
+ */
+void RS_ActionInterface::undoableDeleteEntity(RS_Entity *entity){
+    entity->changeUndoState();
+    undoableAdd(entity);
+}
+
+void RS_ActionInterface::undoCycleReplace(RS_Entity *entityToReplace, RS_Entity *entityReplacing) {
+    if (document != nullptr) {
+        undoCycleStart();
+        undoableDeleteEntity(entityToReplace);
+        undoableAdd(entityReplacing);
+        undoCycleEnd();
+    }
+}
+
+void RS_ActionInterface::undoCycleEnd() const {
+    RS_Undoable* relZeroUndoable = graphicView->getRelativeZeroUndoable();
+    document->addUndoable(relZeroUndoable);
+    document->endUndoCycle();
+}
+
+void RS_ActionInterface::undoCycleStart() const { document->startUndoCycle(); }
+void RS_ActionInterface::undoableAdd(RS_Undoable *e) const { document->addUndoable(e); }
+
+void RS_ActionInterface::setPenAndLayerToActive(RS_Entity *e) {
+    e->setLayerToActive();
+    e->setPenToActive();
 }

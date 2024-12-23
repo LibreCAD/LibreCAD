@@ -44,22 +44,18 @@ void LC_ActionDrawMidLine::init(int status) {
     mainStatus = SetEntity1;
 }
 
-void LC_ActionDrawMidLine::trigger() {
-    RS_PreviewActionInterface::trigger();
+void LC_ActionDrawMidLine::doTrigger() {
     if (document != nullptr) {
         LineInfo lineInfo;
         prepareLine(lineInfo, secondEntity, alternateEndpoints);
         RS_Line *lineToCreate = lineInfo.line;
         if (lineToCreate != nullptr) {
             lineToCreate->reparent(container);
-            lineToCreate->setPenToActive();
-            lineToCreate->setLayerToActive();
-            container->addEntity(lineToCreate);
-            addToDocumentUndoable(lineToCreate);
+            setPenAndLayerToActive(lineToCreate);
+            undoCycleAdd(lineToCreate);
         }
     }
     setStatus(SetEntity1);
-    graphicView->redraw();
 }
 
 void LC_ActionDrawMidLine::mouseMoveEvent(QMouseEvent *e) {

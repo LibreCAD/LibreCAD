@@ -66,8 +66,7 @@ void RS_ActionModifyBevel::init(int status) {
     snapMode.restriction = RS2::RestrictNothing;
 }
 
-void RS_ActionModifyBevel::trigger(){
-
+void RS_ActionModifyBevel::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyBevel::trigger()");
 
     if (entity1 && entity1->isAtomic() &&
@@ -95,13 +94,7 @@ void RS_ActionModifyBevel::trigger(){
         pPoints->coord1 = {};
         pPoints->coord2 = {};
         entity1 = nullptr;
-
         setStatus(SetEntity1);
-
-        updateSelectionWidget();
-        deletePreview();
-        deleteHighlights();
-        graphicView->redraw();
     }
 }
 

@@ -48,6 +48,7 @@
 #include "rs_units.h"
 #include "lc_linemath.h"
 #include "dxf_format.h"
+#include "lc_undoablerelzero.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -420,6 +421,7 @@ QIcon RS_GraphicView::getCurrentActionIcon() {
  */
 void RS_GraphicView::setCurrentAction(RS_ActionInterface *action) {
     if (eventHandler) {
+        markRelativeZero();
         eventHandler->setCurrentAction(action);
     }
 }
@@ -2642,4 +2644,10 @@ bool RS_GraphicView::getSkipFirstZoom() const{
 
 bool RS_GraphicView::isDrawTextsAsDraftForPreview() const {
     return drawTextsAsDraftForPreview;
+}
+
+RS_Undoable *RS_GraphicView::getRelativeZeroUndoable() {
+    auto* result = new LC_UndoableRelZero(this, markedRelativeZero, relativeZero);
+    markRelativeZero();
+    return result;
 }

@@ -78,27 +78,16 @@ void RS_ActionDrawCircleInscribe::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawCircleInscribe::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawCircleInscribe::doTrigger() {
     auto *circle = new RS_Circle(container, pPoints->cData);
 
-    deletePreview();
-    deleteHighlights();
-    container->addEntity(circle);
-
-    addToDocumentUndoable(circle);
-
+    undoCycleAdd(circle);
     clearLines(false);
-
-    graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
     }
     setStatus(SetLine1);
-
-    RS_DEBUG->print("RS_ActionDrawCircle4Line::trigger():"
-                    " entity added: %lu", circle->getId());
+    RS_DEBUG->print("RS_ActionDrawCircle4Line::trigger(): entity added: %lu", circle->getId());
 }
 
 void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){

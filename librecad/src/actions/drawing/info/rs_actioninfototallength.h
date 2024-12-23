@@ -45,7 +45,6 @@ public:
                              RS_GraphicView& graphicView);
 
     void drawSnapper() override;
-
 protected:
     /**
      * Action States.

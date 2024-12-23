@@ -49,11 +49,6 @@ void LC_ActionPenApply::init(int status){
     }
 }
 
-void LC_ActionPenApply::trigger(){
-    RS_PreviewActionInterface::trigger();
-    // do nothing, processing is performed on mouse click
-}
-
 void LC_ActionPenApply::mouseMoveEvent(QMouseEvent *e){
     deletePreview();
     snapPoint(e);
@@ -123,7 +118,6 @@ void LC_ActionPenApply::onMouseLeftButtonRelease([[maybe_unused]]int status, QMo
 
                     RS_Modification m(*container, graphicView);
                     m.changeAttributes(data, false);
-                    graphicView->drawEntity(en);
                 }
                 break;
             }

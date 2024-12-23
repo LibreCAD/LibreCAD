@@ -47,7 +47,6 @@ public:
     ~RS_ActionDrawLineAngle() override;
     void reset();
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void preparePreview();
     QStringList getAvailableCommands() override;
@@ -80,5 +79,6 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     void updateMouseButtonHints() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void doTrigger() override;
 };
 #endif

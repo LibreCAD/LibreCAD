@@ -86,32 +86,20 @@ void RS_ActionDrawCircleTan1_2P::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawCircleTan1_2P::trigger() {
+void RS_ActionDrawCircleTan1_2P::doTrigger() {
     //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
     //    std::cout<<"begin"<<std::endl;
-
-    RS_PreviewActionInterface::trigger();
-
     auto *c = new RS_Circle(container, pPoints->cData);
 
-    container->addEntity(c);
-
-    addToDocumentUndoable(c);
-
+    undoCycleAdd(c);
 //    circle->setHighlighted(false);
-
     RS_Vector rz = graphicView->getRelativeZero();
-    graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
         rz = c->getCenter();
     }
     moveRelativeZero(rz);
-    //    drawSnapper();
-
     setStatus(SetCircle1);
-
-    RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::trigger():"
-                    " entity added: %lu", c->getId());
+    RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::trigger(): entity added: %lu", c->getId());
 }
 
 void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){

@@ -32,30 +32,24 @@ LC_ActionDrawArc2PointsBase::LC_ActionDrawArc2PointsBase(const char* name, RS_En
     :RS_PreviewActionInterface(name, container, graphicView)  {
 }
 
-void LC_ActionDrawArc2PointsBase::trigger() {
-    RS_PreviewActionInterface::trigger();
+void LC_ActionDrawArc2PointsBase::doTrigger() {
     RS_Entity* createdEntity = createArc(getStatus(), endPoint, alternated, true);
     if (createdEntity != nullptr){
-        if (document) {
-            document->startUndoCycle();
-            createdEntity->setSelected(true);
-            createdEntity->setLayerToActive();
-            createdEntity->setPenToActive();
-            createdEntity->setParent(container);
-            container->addEntity(createdEntity);
-            document->addUndoable(createdEntity);
-            document->endUndoCycle();
-        }
+
+        createdEntity->setSelected(true);
+        createdEntity->setParent(container);
+
+        setPenAndLayerToActive(createdEntity);
+
+        undoCycleAdd(createdEntity);
+
         setStatus(SetPoint1);
         alternated = false;
-        deleteHighlights();
         doAfterTrigger();
     }
     else{
         doOnEntityNotCreated();
     }
-    updateSelectionWidget();
-    graphicView->redraw();
 }
 
 void LC_ActionDrawArc2PointsBase::mouseMoveEvent(QMouseEvent *e) {

@@ -57,7 +57,7 @@ void RS_ActionPolylineDel::drawSnapper() {
     // completely disable snapper for action
 }
 
-void RS_ActionPolylineDel::trigger(){
+void RS_ActionPolylineDel::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineDel::trigger()");
     RS_Modification m(*container, graphicView);
     auto createdPolyline = m.deletePolylineNode(*polylineToModify, vertexToDelete, false);
@@ -66,8 +66,6 @@ void RS_ActionPolylineDel::trigger(){
         vertexToDelete = RS_Vector(false);
         deleteHighlights();
     }
-    updateSelectionWidget();
-    graphicView->redraw();
 }
 
 void RS_ActionPolylineDel::mouseMoveEvent(QMouseEvent *e){
@@ -119,7 +117,6 @@ void RS_ActionPolylineDel::onMouseLeftButtonRelease(int status, QMouseEvent *e){
                 snapPoint(e);
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
-                graphicView->drawEntity(polylineToModify);
                 setStatus(SetVertex1);
                 graphicView->redraw();
             }

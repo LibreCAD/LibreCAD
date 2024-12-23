@@ -47,7 +47,6 @@ public:
     ~RS_ActionModifyBevel() override;
 
     void init(int status) override;
-    void trigger() override;
     void finish(bool updateTB) override;
     void mouseMoveEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
@@ -57,9 +56,7 @@ public:
     double getLength2() const;
     void setTrim(bool t);
     bool isTrimOn() const;
-
     void drawSnapper() override;
-
 protected:
     /**
      * Action States.
@@ -86,5 +83,6 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+    void doTrigger() override;
 };
 #endif

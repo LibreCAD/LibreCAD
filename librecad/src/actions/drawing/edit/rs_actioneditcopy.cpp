@@ -59,7 +59,7 @@ void RS_ActionEditCopyPaste::init(int status) {
     }
 }
 
-void RS_ActionEditCopyPaste::trigger() {
+void RS_ActionEditCopyPaste::doTrigger() {
     switch (mode){
         case CUT:
         case CUT_QUICK:
@@ -68,7 +68,6 @@ void RS_ActionEditCopyPaste::trigger() {
             RS_Modification m(*container, graphicView);
             m.copy(*referencePoint, mode == CUT || mode == CUT_QUICK);
 
-            updateSelectionWidget();
             if (invokedWithControl){
                 mode = PASTE;
                 invokedWithControl = false;
@@ -81,12 +80,9 @@ void RS_ActionEditCopyPaste::trigger() {
             break;
         }
         case PASTE: {
-            deletePreview();
-
             RS_Modification m(*container, graphicView);
             m.paste(RS_PasteData(*referencePoint, 1.0, 0.0, false, ""));
 
-            graphicView->redraw(RS2::RedrawDrawing);
             if (!invokedWithControl) {
                 finish(false);
             }

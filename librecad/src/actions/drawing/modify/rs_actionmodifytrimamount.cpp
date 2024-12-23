@@ -66,9 +66,7 @@ void RS_ActionModifyTrimAmount::init(int status) {
 }
 
 // fixme - check if negative total length is larger than the overall length of the entity
-
-void RS_ActionModifyTrimAmount::trigger(){
-
+void RS_ActionModifyTrimAmount::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyTrimAmount::trigger()");
 
     if (trimEntity && trimEntity->isAtomic()){
@@ -79,17 +77,12 @@ void RS_ActionModifyTrimAmount::trigger(){
 
         bool trimStart;
         bool trimEnd;
-
         bool trimBoth = symmetricDistance && !distanceIsTotalLength;
 
         m.trimAmount(*trimCoord, e, dist, trimBoth, trimStart, trimEnd);
 
         trimEntity = nullptr;
         setStatus(ChooseTrimEntity);
-
-        updateSelectionWidget();
-
-        graphicView->redraw();
     }
 }
 

@@ -50,14 +50,11 @@ void RS_ActionPolylineAdd::init(int status) {
     *addCoord = {};
 }
 
-void RS_ActionPolylineAdd::trigger() {
-    RS_PreviewActionInterface::trigger();
+void RS_ActionPolylineAdd::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineAdd::trigger()");
 
     if (polylineToModify && addSegment->isAtomic() && addCoord->valid &&
         addSegment->isPointOnEntity(*addCoord)) {
-        graphicView->drawEntity(polylineToModify);
-
         RS_Modification m(*container, graphicView);
         RS_Polyline *createdPolyline = m.addPolylineNode(
             *polylineToModify,
@@ -67,10 +64,7 @@ void RS_ActionPolylineAdd::trigger() {
             polylineToModify = createdPolyline;
         }
         *addCoord = {};
-
-        updateSelectionWidget();
     }
-    graphicView->redraw(RS2::RedrawDrawing);
 }
 
 void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent *e){
@@ -121,7 +115,7 @@ void RS_ActionPolylineAdd::onMouseLeftButtonRelease(int status, QMouseEvent *e) 
             } else {
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
-                graphicView->drawEntity(polylineToModify);
+                graphicView->redraw();
                 setStatus(SetAddCoord);
             }
             break;
@@ -163,8 +157,7 @@ void RS_ActionPolylineAdd::onMouseRightButtonRelease([[maybe_unused]] int status
 void RS_ActionPolylineAdd::finish(bool updateTB){
     if (polylineToModify){
         polylineToModify->setSelected(false);
-        graphicView->drawEntity(polylineToModify);
-        graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw();
         polylineToModify = nullptr;
         addSegment = nullptr;
         *addCoord = {};

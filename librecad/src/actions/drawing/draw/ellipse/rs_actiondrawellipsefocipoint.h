@@ -38,7 +38,6 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawEllipseFociPoint() override;
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
 protected:
@@ -59,5 +58,6 @@ protected:
     QString getAdditionalHelpMessage() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
+    void doTrigger() override;
 };
 #endif

@@ -73,11 +73,7 @@ void RS_ActionDrawLineRelAngle::finish(bool updateTB) {
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawLineRelAngle::trigger() {
-    RS_PreviewActionInterface::trigger();
-
-    deletePreview();
-
+void RS_ActionDrawLineRelAngle::doTrigger() {
     RS_Creation creation(container, graphicView);
     double angleRad = RS_Math::deg2rad(angle);
     RS_Line* line = creation.createLineRelAngle(*pos,
