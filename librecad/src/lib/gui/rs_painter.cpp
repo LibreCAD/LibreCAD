@@ -545,7 +545,10 @@ void RS_Painter::drawPolyline(const RS_Polyline& polyline, const RS_GraphicView&
                 const RS_Vector center=view.toGui(data.center);
                 const double ra = data.majorP.magnitude()*view.getFactor().x;
                 const double rb = data.ratio*ra;
-                drawEllipseArc(center.x, center.y, ra, rb, data.angleDegrees, data.startAngleDegrees, data.otherAngleDegrees, data.angularLength, data.reversed);
+                if (data.isArc)
+                    drawEllipseArc(center.x, center.y, ra, rb, data.angleDegrees, data.startAngleDegrees, data.otherAngleDegrees, data.angularLength, data.reversed);
+                else
+                    drawEllipse(center.x, center.y, ra, rb, data.angleDegrees);
                 break;
             }
             default:

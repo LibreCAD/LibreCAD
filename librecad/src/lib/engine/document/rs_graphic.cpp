@@ -829,9 +829,6 @@ void RS_Graphic::setPaperFormat(RS2::PaperFormat f, bool landscape) {
  */
 double RS_Graphic::getPaperScale() const {
     double paperScale = getVariableDouble("$PSVPSCALE", 1.0);
-    if (paperScale < 1.0e-6) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Graphic:: %s(), invalid paper scale %lg\n", __func__, paperScale);
-    }
     return paperScale;
 }
 

@@ -235,30 +235,28 @@ void RS_Ellipse::calculateBorders() {
 #ifndef EMU_C99
     using std::isnormal;
 #endif
-    if (fabs(data.angle1) < RS_TOLERANCE_ANGLE && (fabs(data.angle1) < RS_TOLERANCE_ANGLE)){
+    if (std::abs(data.angle1) < RS_TOLERANCE_ANGLE && (std::abs(data.angle2) < RS_TOLERANCE_ANGLE)){
         data.angle1 = 0;
         data.angle2 = 0;
     }
     data.isArc = isnormal(data.angle1) || /*std::*/isnormal(data.angle2);
 
-    RS_Vector startpoint = getStartpoint();
-    RS_Vector endpoint = getEndpoint();
+    const RS_Vector startpoint = getStartpoint();
+    const RS_Vector endpoint = getEndpoint();
 
     double minX = std::min(startpoint.x, endpoint.x);
     double minY = std::min(startpoint.y, endpoint.y);
     double maxX = std::max(startpoint.x, endpoint.x);
     double maxY = std::max(startpoint.y, endpoint.y);
 
-    RS_Vector vp;
 
-    double amin,amax,a;
 //      x range
 //    vp.set(radius1*cos(angle),radius2*sin(angle));
-    vp.set(getMajorP().x,getRatio()*getMajorP().y);
-    a=vp.angle();
+    RS_Vector vp{ getMajorP().x,getRatio()*getMajorP().y };
+    double a=vp.angle();
 
-    amin=RS_Math::correctAngle(getAngle1()+a); // to the range of 0 to 2*M_PI
-    amax=RS_Math::correctAngle(getAngle2()+a); // to the range of 0 to 2*M_PI
+    double amin=RS_Math::correctAngle(getAngle1()+a); // to the range of 0 to 2*M_PI
+    double amax=RS_Math::correctAngle(getAngle2()+a); // to the range of 0 to 2*M_PI
     if( RS_Math::isAngleBetween(M_PI,amin,amax,isReversed()) ) {
         minX= data.center.x-vp.magnitude();
     }
@@ -277,7 +275,6 @@ void RS_Ellipse::calculateBorders() {
     if( RS_Math::isAngleBetween(2.*M_PI,amin,amax,isReversed()) ) {
         maxY= data.center.y+vp.magnitude();
     }
-
 
     minV.set(minX, minY);
     maxV.set(maxX, maxY);
