@@ -140,16 +140,6 @@ unsigned RS_Math::findGCD(unsigned a, unsigned b) {
     return std::gcd(a, b);
 }
 
-
-
-/**
- * Tests if angle a is between a1 and a2. a, a1 and a2 must be in the
- * range between 0 and 2*PI.
- * All angles in rad.
- *
- * @param reversed true for clockwise testing. false for ccw testing.
- * @return true if the angle a is between a1 and a2.
- */
 bool RS_Math::isAngleBetween(double a,
                              double a1, double a2,
                              bool reversed) {
