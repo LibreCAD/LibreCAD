@@ -305,9 +305,9 @@ void RS_ActionPolylineSegment::doTrigger() {
 }
 
 void RS_ActionPolylineSegment::mouseMoveEvent(QMouseEvent *event){
-    snapPoint(event);
     deletePreview();
     deleteHighlights();
+    snapPoint(event);
     RS_Entity* en = catchEntityOnPreview(event, entityType);
     if (en != nullptr){
         highlightHover(en);

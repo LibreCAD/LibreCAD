@@ -83,10 +83,10 @@ void LC_ActionSplineFromPolyline::setupAndAddCreatedEntity(RS_Entity *createdEnt
 }
 
 void LC_ActionSplineFromPolyline::mouseMoveEvent(QMouseEvent *e) {
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
     deleteHighlights();
     deletePreview();
+    RS_Vector mouse = snapPoint(e);
+    int status = getStatus();
     switch (status) {
         case SetEntity: {
             auto polyline = catchEntityOnPreview(e, RS2::EntityPolyline);

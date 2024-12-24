@@ -99,6 +99,7 @@ void RS_ActionDrawArc3P::preparePreview(bool alternatePoints){
 }
 
 void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_Vector mouse = snapPoint(e);
 
     switch (getStatus()) {
@@ -107,22 +108,19 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent *e){
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
-        case SetPoint2:
-            deletePreview();
+        case SetPoint2: {
             mouse = getSnapAngleAwarePoint(e, pPoints.point1, mouse, true);
             pPoints.point2 = mouse;
-            if (pPoints.point1.valid){ // todo - redundant check
+            if (pPoints.point1.valid) { // todo - redundant check
                 previewLine(pPoints.point1, pPoints.point2);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints.point1);
                     previewRefSelectablePoint(pPoints.point2);
                 }
             }
-            drawPreview();
             break;
-
+        }
         case SetPoint3: {
-            deletePreview();
             // todo - which point (1 or 2) is more suitable there for snap?
             mouse = getSnapAngleAwarePoint(e,pPoints.point1, mouse, true);
             pPoints.point3 = mouse;
@@ -142,12 +140,12 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent *e){
                     }
                 }
             }
-            drawPreview();
             break;
         }
         default:
             break;
     }
+    drawPreview();
 }
 
 void RS_ActionDrawArc3P::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

@@ -86,9 +86,9 @@ void RS_ActionDrawPolyline::doTrigger() {
 }
 
 void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent begin");
     deleteHighlights();
     deletePreview();
+    RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent begin");
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
     switch (status) {
@@ -150,9 +150,9 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
+    RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent end");
     drawHighlights();
     drawPreview();
-    RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent end");
 }
 
 void RS_ActionDrawPolyline::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {

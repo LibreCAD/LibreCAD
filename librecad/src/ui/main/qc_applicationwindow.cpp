@@ -3264,19 +3264,6 @@ QAction *QC_ApplicationWindow::getAction(const QString &actionName) const {
     return ag_manager->getActionByName(actionName);
 }
 
-// fixme - remove this methods
-RS_Vector QC_ApplicationWindow::getMouseAbsolutePosition() {
-    if (coordinateWidget != nullptr)
-        return coordinateWidget->getAbsoluteCoordinates();
-    return RS_Vector(false);
-}
-// fixme - remove this methods
-RS_Vector QC_ApplicationWindow::getMouseRelativePosition() {
-    if (coordinateWidget != nullptr)
-        return coordinateWidget->getRelativeCoordinates();
-    return RS_Vector(false);
-}
-
 // todo - think later about staying with signal-slot approach... current one is too explicit
 void QC_ApplicationWindow::updateActionsAndWidgetsForPrintPreview(bool printPreviewOn) {
     bool enable = !printPreviewOn;

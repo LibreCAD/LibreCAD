@@ -51,20 +51,21 @@ void LC_ActionPenApply::init(int status){
 
 void LC_ActionPenApply::mouseMoveEvent(QMouseEvent *e){
     deletePreview();
+    deleteHighlights();
+
     snapPoint(e);
 
     switch (getStatus()){
         case SelectEntity:
         case ApplyToEntity:
             RS_Entity* en = catchEntityOnPreview(e, RS2::ResolveNone);
-            deleteHighlights();
             if (en != nullptr && en != srcEntity){ // exclude entity we use as source, if any
                 highlightHover(en);
             }
-            drawHighlights();
             break;
     }
     drawPreview();
+    drawHighlights();
 }
 
 /**

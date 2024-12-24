@@ -71,10 +71,10 @@ void RS_ActionModifyCut::finish(bool updateTB){
 }
 
 void RS_ActionModifyCut::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionModifyCut::mouseMoveEvent begin");
     deleteHighlights();
     deletePreview();
     RS_Vector snap = snapPoint(e);
+    RS_DEBUG->print("RS_ActionModifyCut::mouseMoveEvent begin");
     switch (getStatus()) {
         case ChooseCutEntity: {
             deleteSnapper();
@@ -101,9 +101,9 @@ void RS_ActionModifyCut::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
+    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
     drawPreview();
     drawHighlights();
-    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
 }
 
 void RS_ActionModifyCut::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

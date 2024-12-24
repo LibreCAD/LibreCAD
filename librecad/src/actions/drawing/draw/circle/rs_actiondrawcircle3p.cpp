@@ -95,6 +95,7 @@ void RS_ActionDrawCircle3P::preparePreview(){
 }
 // todo - think about preview improving to give it more geometric meaning
 void RS_ActionDrawCircle3P::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_Vector mouse = snapPoint(e);
 
     switch (getStatus()) {
@@ -104,9 +105,7 @@ void RS_ActionDrawCircle3P::mouseMoveEvent(QMouseEvent *e){
             break;
 
         case SetPoint2: {
-            deletePreview();
             mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
-
             pPoints->point2 = mouse;
             RS_Vector center = (mouse + pPoints->point1) / 2;
             double radius = pPoints->point1.distanceTo(center);
@@ -117,15 +116,11 @@ void RS_ActionDrawCircle3P::mouseMoveEvent(QMouseEvent *e){
                 previewRefLine(pPoints->point1, mouse);
                 previewRefSelectablePoint(mouse);
             }
-
-            drawPreview();
-
             break;
         }
         case SetPoint3: {
             pPoints->point3 = mouse;
             preparePreview();
-            deletePreview();
             if (pPoints->data.isValid()) {
                 previewToCreateCircle(pPoints->data);
                 if (showRefEntitiesOnPreview) {
@@ -138,11 +133,10 @@ void RS_ActionDrawCircle3P::mouseMoveEvent(QMouseEvent *e){
                     previewRefLine(mouse, pPoints->data.center);
                 }
             }
-
-            drawPreview();
             break;
         }
     }
+    drawPreview();
 }
 
 void RS_ActionDrawCircle3P::onMouseLeftButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {

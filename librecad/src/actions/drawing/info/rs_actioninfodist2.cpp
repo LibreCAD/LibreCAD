@@ -170,10 +170,9 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
+    RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent end");
     drawHighlights();
     drawPreview();
-
-    RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent end");
 }
 
 void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

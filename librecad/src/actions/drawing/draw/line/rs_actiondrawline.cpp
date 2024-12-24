@@ -127,6 +127,7 @@ void RS_ActionDrawLine::doTrigger() {
 }
 
 void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e){
+    deletePreview();
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
 
@@ -136,7 +137,6 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e){
             break;
         }
         case SetEndpoint: {
-            deletePreview();
             RS_Vector &startPoint = pPoints->data.startpoint;
             if (startPoint.valid){
                 mouse = getSnapAngleAwarePoint(e, startPoint, mouse, true);
@@ -146,12 +146,12 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e){
                     previewRefSelectablePoint(mouse);
                 }
             }
-            drawPreview();
             break;
         }
         default:
             break;
     }
+    drawPreview();
 }
 
 void RS_ActionDrawLine::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

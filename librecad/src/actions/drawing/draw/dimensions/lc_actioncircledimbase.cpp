@@ -53,10 +53,10 @@ void LC_ActionCircleDimBase::doTrigger() {
 }
 
 void LC_ActionCircleDimBase::mouseMoveEvent(QMouseEvent *e) {
-    RS_DEBUG->print("LC_ActionCircleDimBase::mouseMoveEvent begin");
-    RS_Vector snap = snapPoint(e);
     deleteHighlights();
     deletePreview();
+    RS_DEBUG->print("LC_ActionCircleDimBase::mouseMoveEvent begin");
+    RS_Vector snap = snapPoint(e);
     switch (getStatus()) {
         case SetEntity: {
             RS_Entity *en = catchEntity(e, RS2::ResolveAll);

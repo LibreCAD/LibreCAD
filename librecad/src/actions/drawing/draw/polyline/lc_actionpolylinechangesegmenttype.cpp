@@ -53,11 +53,10 @@ void LC_ActionPolylineChangeSegmentType::doTrigger() {
 }
 
 void LC_ActionPolylineChangeSegmentType::mouseMoveEvent(QMouseEvent *e) {
-    RS_Vector mouse = snapPoint(e);
-
     deletePreview();
     deleteHighlights();
 
+    RS_Vector mouse = snapPoint(e);
     int status = getStatus();
     switch (status){
         case SetEntity: {

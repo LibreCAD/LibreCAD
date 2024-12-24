@@ -206,30 +206,21 @@ public:
   virtual void mirror(const RS_Vector &axisPoint1,
                       const RS_Vector &axisPoint2) override;
   virtual bool hasEndpointsWithinWindow(const RS_Vector &v1,
-                                        const RS_Vector &v2) override;
-  virtual void stretch(const RS_Vector &firstCorner,
+                                         const RS_Vector &v2) override;
+   virtual void stretch(const RS_Vector &firstCorner,
                        const RS_Vector &secondCorner,
                        const RS_Vector &offset) override;
 
-  friend std::ostream &operator<<(std::ostream &os, const RS_Text &p);
+    friend std::ostream &operator<<(std::ostream &os, const RS_Text &p);
 
-  void draw(RS_Painter *painter, RS_GraphicView *view,
+    void draw(RS_Painter *painter, RS_GraphicView *view,
             double &patternOffset) override;
-
     void drawDraft(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
-
     void moveRef(const RS_Vector &ref, const RS_Vector &offset) override;
-
     RS_Vector getNearestRef(const RS_Vector &coord, double *dist) const override;
-
     RS_Vector getNearestSelectedRef(const RS_Vector &coord, double *dist) const override;
-
     void moveSelectedRef(const RS_Vector &ref, const RS_Vector &offset) override;
-
-
 protected:
-    // fixme - this is prof of the concept for better drawing mtext on small zooms - instead of drawing just rectangles, draw the set of baselines for text.
-    // fixme - however, the same approach should be also used for text, so review later
     class LC_TextLine:public RS_EntityContainer{
     public:
         LC_TextLine(RS_EntityContainer* parent=nullptr, bool owner=true):RS_EntityContainer(parent, owner){};
@@ -240,17 +231,11 @@ protected:
         void setTextSize(const RS_Vector &textSize);
         const RS_Vector &getLeftBottomCorner() const;
         void setLeftBottomCorner(const RS_Vector leftBottomCorner);
-
         const RS_Vector &getBaselineStart() const;
-
         void setBaselineStart(const RS_Vector &baselineStart);
-
         const RS_Vector &getBaselineEnd() const;
-
         void setBaselineEnd(const RS_Vector &baselineEnd);
-
         void moveBaseline(const RS_Vector &offset);
-
     protected:
         RS_Vector textSize;
         RS_Vector leftBottomCorner;
@@ -259,32 +244,26 @@ protected:
     };
 
     double updateAddLine(LC_TextLine *textLine, int lineCounter);
-
     void addLetter(LC_TextLine &oneLine, QChar letter, RS_Font &font,
                    const RS_Vector &letterSpace, RS_Vector &letterPosition);
-
     void alignVertically();
-
-
    static RS_MText *createUpperLower(QString text, const RS_MTextData &data,
                                     const RS_Vector &position);
-  RS_MTextData data;
+    RS_MTextData data;
 
-  /**
-   * Text width used by the current contents of this text entity.
-   * This property is updated by the update method.
-   * @see update
-   */
-  double usedTextWidth = 0.;
-  /**
-   * Text height used by the current contents of this text entity.
-   * This property is updated by the update method.
-   * @see update
-   */
-  double usedTextHeight = 0.;
-
+    /**
+     * Text width used by the current contents of this text entity.
+     * This property is updated by the update method.
+     * @see update
+     */
+    double usedTextWidth = 0.;
+    /**
+     * Text height used by the current contents of this text entity.
+     * This property is updated by the update method.
+     * @see update
+     */
+    double usedTextHeight = 0.;
     void rotateLinesRefs() const;
-
     RS_Entity *cloneProxy(RS_GraphicView* view) const override;
 };
 

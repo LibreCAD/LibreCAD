@@ -133,10 +133,10 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
+    RS_DEBUG->print("RS_ActionDrawLineRelAngle::mouseMoveEvent end");
     drawPreview();
     drawHighlights();
 
-    RS_DEBUG->print("RS_ActionDrawLineRelAngle::mouseMoveEvent end");
 }
 
 void RS_ActionDrawLineRelAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

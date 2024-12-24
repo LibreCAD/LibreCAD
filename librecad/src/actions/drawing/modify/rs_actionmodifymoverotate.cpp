@@ -53,7 +53,6 @@ RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate() = default;
 
 void RS_ActionModifyMoveRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMoveRotate::trigger()");
-    // fixme - relzero - undoable
     RS_Modification m(*container, graphicView);
 	   m.moveRotate(pPoints->data, selectedEntities, false, keepSelected);
     pPoints->targetPoint = RS_Vector(false);
@@ -61,10 +60,9 @@ void RS_ActionModifyMoveRotate::doTrigger(bool keepSelected) {
 }
 
 void RS_ActionModifyMoveRotate::mouseMoveEventSelected(QMouseEvent *e) {
-    RS_DEBUG->print("RS_ActionModifyMoveRotate::mouseMoveEvent begin");
-
-    RS_Vector mouse = snapPoint(e);
     deletePreview();
+    RS_Vector mouse = snapPoint(e);
+    RS_DEBUG->print("RS_ActionModifyMoveRotate::mouseMoveEvent begin");
     switch (getStatus()) {
         case SetReferencePoint: {
             pPoints->data.referencePoint = mouse;
@@ -127,8 +125,8 @@ void RS_ActionModifyMoveRotate::mouseMoveEventSelected(QMouseEvent *e) {
         default:
             break;
     }
-    drawPreview();
     RS_DEBUG->print("RS_ActionModifyMoveRotate::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionModifyMoveRotate::previewRefPointsForMultipleCopies() {

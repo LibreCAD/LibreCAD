@@ -59,7 +59,6 @@ RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer &container,RS_Gr
 RS_ActionModifyOffset::~RS_ActionModifyOffset() = default;
 
 void RS_ActionModifyOffset::doTrigger(bool keepSelected) {
-    // fixme - relzero - undoable
     RS_Modification m(*container, graphicView);
     m.offset(*data, selectedEntities, false, keepSelected);
     finish(false);

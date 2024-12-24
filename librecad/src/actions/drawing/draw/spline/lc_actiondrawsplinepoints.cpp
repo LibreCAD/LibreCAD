@@ -87,6 +87,7 @@ void LC_ActionDrawSplinePoints::doTrigger() {
 }
 
 void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawSplinePoints::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -97,7 +98,6 @@ void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent *e){
             break;
         case SetNextPoint: {
             auto *sp = dynamic_cast<LC_SplinePoints *>(pPoints->spline->clone());
-            deletePreview();
 
             if (showRefEntitiesOnPreview) {
                 for (auto const &v: sp->getPoints()) {
@@ -109,7 +109,6 @@ void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent *e){
             sp->addPoint(mouse);
             sp->update();
             previewEntity(sp);
-            drawPreview();
             break;
         }
         default:
@@ -117,6 +116,7 @@ void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent *e){
     }
 
     RS_DEBUG->print("RS_ActionDrawSplinePoints::mouseMoveEvent end");
+    drawPreview();
 }
 
 void LC_ActionDrawSplinePoints::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {

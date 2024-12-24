@@ -52,14 +52,14 @@ void RS_ActionDrawPoint::doTrigger() {
 }
 
 void RS_ActionDrawPoint::mouseMoveEvent(QMouseEvent *e){
-    RS_Vector pos = snapPoint(e);
     deletePreview();
+    RS_Vector pos = snapPoint(e);
     if (!trySnapToRelZeroCoordinateEvent(e)){
         pos = getFreeSnapAwarePointAlt(e, pos);
         previewToCreatePoint(pos); // is it really necessary??
         previewRefSelectablePoint(pos);
-        drawPreview();
     };
+    drawPreview();
 }
 
 void RS_ActionDrawPoint::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {

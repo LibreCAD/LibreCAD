@@ -98,11 +98,11 @@ double RS_ActionModifyTrimAmount::determineDistance(const RS_AtomicEntity *e) co
 }
 
 void RS_ActionModifyTrimAmount::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
     snapPoint(e);
     RS_Vector coord =  toGraph(e);
     auto en = catchEntityOnPreview(e, enTypeList, RS2::ResolveNone);
-    deletePreview();
-    deleteHighlights();
     deleteSnapper();
     if (en != nullptr){
         if (en->isAtomic()){
@@ -130,7 +130,6 @@ void RS_ActionModifyTrimAmount::mouseMoveEvent(QMouseEvent *e){
                         atomicArc = dynamic_cast<RS_Arc *>(atomic);
                         trimmedArc = dynamic_cast<RS_Arc *>(trimmed);
                     }
-
 
                     if (trimStart) {
                         const RS_Vector &originalStart = atomic->getStartpoint();

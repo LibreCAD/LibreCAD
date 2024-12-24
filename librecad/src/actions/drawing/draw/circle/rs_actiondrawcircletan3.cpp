@@ -154,9 +154,9 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
+    RS_DEBUG->print("RS_ActionDrawCircleTan3::mouseMoveEvent end");
     drawPreview();
     drawHighlights();
-    RS_DEBUG->print("RS_ActionDrawCircleTan3::mouseMoveEvent end");
 }
 
 bool RS_ActionDrawCircleTan3::getData(RS_Entity *testThirdEntity){

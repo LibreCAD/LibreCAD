@@ -61,9 +61,9 @@ void LC_ActionModifyAlignSingle::doTrigger() {
 }
 
 void LC_ActionModifyAlignSingle::mouseMoveEvent(QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
     deletePreview();
     deleteHighlights();
+    RS_Vector snap = snapPoint(e);
     switch (getStatus()){
         case SetRefPoint:{
             RS_Vector min;

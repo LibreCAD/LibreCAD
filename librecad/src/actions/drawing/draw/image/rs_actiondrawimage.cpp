@@ -104,12 +104,12 @@ void RS_ActionDrawImage::doTrigger() {
 }
 
 void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     if (getStatus() == SetTargetPoint){
         bool snappedToRelZero = trySnapToRelZeroCoordinateEvent(e);
         if (!snappedToRelZero){
             pImg->data.insertionPoint = snapPoint(e);
 
-            deletePreview();
 //RS_Creation creation(preview, nullptr, false);
             //creation.createInsert(data);
             double const w = pImg->img.width();
@@ -123,9 +123,9 @@ void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent *e){
                            {pImg->data.uVector.magnitude(), pImg->data.uVector.magnitude()});
             preview->rotate({0., 0.}, pImg->data.uVector.angle());
             preview->move(pImg->data.insertionPoint);
-            drawPreview();
         }
     }
+    drawPreview();
 }
 
 void RS_ActionDrawImage::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {

@@ -62,6 +62,7 @@ void RS_ActionDrawLineFree::doTrigger() {
  * 11 Aug 2011, Dongxu Li
  */
 // todo - relative point snap?
+// fixme - sand - review drawing line free
 void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector v = snapPoint(e);
     drawSnapper();

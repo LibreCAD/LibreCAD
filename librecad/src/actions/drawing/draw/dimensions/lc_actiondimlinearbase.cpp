@@ -56,6 +56,7 @@ void LC_ActionDimLinearBase::doTrigger() {
 }
 
 void LC_ActionDimLinearBase::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_DEBUG->print("RS_ActionDimLinear::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -68,7 +69,6 @@ void LC_ActionDimLinearBase::mouseMoveEvent(QMouseEvent *e){
         case SetExtPoint2: {
             const RS_Vector &extPoint1 = getExtensionPoint1();
             if (extPoint1.valid){
-                deletePreview();
                 mouse = getSnapAngleAwarePoint(e, extPoint1, mouse, true);
 
                 data->definitionPoint = mouse;
@@ -90,8 +90,6 @@ void LC_ActionDimLinearBase::mouseMoveEvent(QMouseEvent *e){
                 else{
                     previewLine(extPoint1, mouse);
                 }
-
-                drawPreview();
             }
             break;
         }
@@ -99,7 +97,6 @@ void LC_ActionDimLinearBase::mouseMoveEvent(QMouseEvent *e){
             const RS_Vector &extPoint1 = getExtensionPoint1();
             const RS_Vector &extPoint2 = getExtensionPoint2();
             if (extPoint1.valid && extPoint2.valid){
-                deletePreview();
                 // less restrictive snap
                 mouse = getFreeSnapAwarePoint(e, mouse);
                 mouse = adjustByAdjacentDim(mouse, true);
@@ -116,7 +113,6 @@ void LC_ActionDimLinearBase::mouseMoveEvent(QMouseEvent *e){
                 addReferencePointToPreview(p1);
                 addReferencePointToPreview(p2);
 #endif
-                drawPreview();
                 break;
             }
         }
@@ -125,6 +121,7 @@ void LC_ActionDimLinearBase::mouseMoveEvent(QMouseEvent *e){
     }
 
     RS_DEBUG->print("RS_ActionDimLinear::mouseMoveEvent end");
+    drawPreview();
 }
 
 void LC_ActionDimLinearBase::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

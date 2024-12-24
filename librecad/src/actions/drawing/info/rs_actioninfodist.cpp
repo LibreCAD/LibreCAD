@@ -76,10 +76,10 @@ void RS_ActionInfoDist::doTrigger() {
 }
 
 void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionInfoDist::mouseMoveEvent begin");
     deletePreview();
     int status = getStatus();
     RS_Vector mouse = snapPoint(e);
+    RS_DEBUG->print("RS_ActionInfoDist::mouseMoveEvent begin");
     switch (status) {
         case SetPoint1: {
             trySnapToRelZeroCoordinateEvent(e);

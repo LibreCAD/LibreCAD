@@ -70,10 +70,10 @@ void RS_ActionDrawLineParallelThrough::doTrigger() {
 }
 
 void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent begin");
-    const RS_Vector &snap = snapPoint(e);
     deletePreview();
     deleteHighlights();
+    RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent begin");
+    const RS_Vector &snap = snapPoint(e);
     switch (getStatus()) {
         case SetEntity: {
             entity = catchEntityOnPreview(e, RS2::ResolveAll);
@@ -117,10 +117,10 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
+    RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent end");
     drawPreview();
     drawHighlights();
 
-    RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent end");
 }
 
 void RS_ActionDrawLineParallelThrough::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

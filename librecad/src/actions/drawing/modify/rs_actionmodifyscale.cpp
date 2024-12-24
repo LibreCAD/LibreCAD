@@ -85,10 +85,10 @@ void RS_ActionModifyScale::doTrigger(bool keepSelected) {
 #define DRAW_TRIANGLES_ON_PREVIEW_NO
 
 void RS_ActionModifyScale::mouseMoveEventSelected(QMouseEvent* e) {
-    RS_DEBUG->print("RS_ActionModifyScale::mouseMoveEvent begin");
+    deletePreview();
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
-    deletePreview();
+    RS_DEBUG->print("RS_ActionModifyScale::mouseMoveEvent begin");
     switch (status) {
         case SetReferencePoint: {
             pPoints->data.referencePoint = mouse;
@@ -189,8 +189,8 @@ void RS_ActionModifyScale::mouseMoveEventSelected(QMouseEvent* e) {
         default:
             break;
     }
-    drawPreview();
     RS_DEBUG->print("RS_ActionModifyScale::mouseMoveEvent end");
+    drawPreview();
 }
 
 RS_Vector RS_ActionModifyScale::getTargetPoint(QMouseEvent* e){

@@ -82,17 +82,15 @@ void RS_ActionDrawCircleCR::doTrigger() {
 
 
 void RS_ActionDrawCircleCR::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawCircleCR::mouseMoveEvent begin");
-
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
         case SetCenter: {
             if (!trySnapToRelZeroCoordinateEvent(e)){
                 data->center = mouse;
-                deletePreview();
                 previewToCreateCircle(*data);
                 previewRefSelectablePoint(data->center);
-                drawPreview();
             } else {
                 setStatus(-1);
             }
@@ -101,6 +99,7 @@ void RS_ActionDrawCircleCR::mouseMoveEvent(QMouseEvent *e){
     }
 
     RS_DEBUG->print("RS_ActionDrawCircleCR::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionDrawCircleCR::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {

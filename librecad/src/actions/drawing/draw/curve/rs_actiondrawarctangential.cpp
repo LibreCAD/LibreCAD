@@ -116,9 +116,10 @@ void RS_ActionDrawArcTangential::preparePreview() {
 }
 
 void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
+    deletePreview();
+    deleteHighlights();
     int status = getStatus();
     point = snapPoint(e);
-    deleteHighlights();
     switch (status){
         case SetBaseEntity: {
             deleteSnapper();
@@ -132,7 +133,6 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
         }
         case SetEndAngle: {
             highlightSelected(baseEntity);
-            deletePreview();
             RS_Vector center;
             if (byRadius){
                 if (isShift(e)){ // double check for efficiency, eliminate center forecasting calculations if not needed
@@ -171,12 +171,12 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
                     }
                 }
             }
-            drawPreview();
             break;
         }
         default:
             break;
     }
+    drawPreview();
     drawHighlights();
 }
 

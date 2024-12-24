@@ -100,9 +100,9 @@ void RS_ActionDrawEllipseInscribe::drawSnapper() {
 }
 
 void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionDrawEllipse4Line::mouseMoveEvent begin");
     deleteHighlights();
     deletePreview();
+    RS_DEBUG->print("RS_ActionDrawEllipse4Line::mouseMoveEvent begin");
     snapPoint(e);
     int status = getStatus();
 
@@ -160,7 +160,6 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent *e){
                             // nothing, can't build the ellipse
                         }
                     }
-                    drawPreview();
                     break;
                 }
                 default:
@@ -169,6 +168,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent *e){
         }
 
     }
+    drawPreview();
     drawHighlights();
     RS_DEBUG->print("RS_ActionDrawEllipse4Line::mouseMoveEvent end");
 }

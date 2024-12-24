@@ -82,12 +82,11 @@ void RS_ActionModifyTrim::doTrigger() {
 
 // todo - check trim both mode - it seems that limiting entity should be atomic too...
 void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
-    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent begin");
-
-    RS_Vector mouse = toGraph(e);
-
     deleteHighlights();
     deletePreview();
+    RS_Vector mouse = toGraph(e);
+    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent begin");
+
     int status = getStatus();
     snapPoint(e);
     switch (status) {
@@ -144,10 +143,9 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
             break;
     }
 
+    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
     drawHighlights();
     drawPreview();
-
-    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
 }
 
 void RS_ActionModifyTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

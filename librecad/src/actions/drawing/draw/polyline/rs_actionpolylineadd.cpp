@@ -68,9 +68,10 @@ void RS_ActionPolylineAdd::doTrigger() {
 }
 
 void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
     RS_DEBUG->print("RS_ActionPolylineAdd::mouseMoveEvent begin");
     snapPoint(e);
-    deleteHighlights();
     int status = getStatus();
     switch (status) {
         case ChooseSegment: {
@@ -86,7 +87,6 @@ void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent *e){
             snapMode.snapOnEntity = true;
             RS_Vector snap = snapPoint(e);
             snapMode.snapOnEntity = oldSnapOnEntity;
-            deletePreview();
             auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e, RS2::EntityPolyline));
             if (polyline == polylineToModify){
                 RS_Vector coordinate = polyline->getNearestPointOnEntity(snap, true);
@@ -94,13 +94,13 @@ void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent *e){
                 RS_Entity * segment = catchEntityOnPreview(coordinate, RS2::ResolveAll);
                 highlightHover(segment);
             }
-            drawPreview();
             break;
         }
         default:
             break;
     }
     drawHighlights();
+    drawPreview();
     RS_DEBUG->print("RS_ActionPolylineAdd::mouseMoveEvent end");
 }
 

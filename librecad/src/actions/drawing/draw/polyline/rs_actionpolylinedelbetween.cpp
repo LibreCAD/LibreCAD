@@ -70,11 +70,11 @@ void RS_ActionPolylineDelBetween::doTrigger() {
 }
 
 void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
+    deleteHighlights();
+    deletePreview();
     RS_DEBUG->print("RS_ActionPolylineDelBetween::mouseMoveEvent begin");
 
     snapPoint(e);
-    deleteHighlights();
-    deletePreview();
     int status = getStatus();
     switch (status) {
         case SetPolyline: {
@@ -121,10 +121,10 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
+    RS_DEBUG->print("RS_ActionPolylineDelBetween::mouseMoveEvent end");
     drawHighlights();
     drawPreview();
 
-    RS_DEBUG->print("RS_ActionPolylineDelBetween::mouseMoveEvent end");
 }
 
 void RS_ActionPolylineDelBetween::onMouseLeftButtonRelease(int status, QMouseEvent *e){

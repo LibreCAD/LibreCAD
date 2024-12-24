@@ -135,12 +135,11 @@ bool RS_ActionDrawCircleTan2_1P::getCenters(){
 }
 
 void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionDrawCircleTan2_1P::mouseMoveEvent begin");
-
     deletePreview();
     deleteHighlights();
     RS_Vector coord = snapPoint(e);
     int status = getStatus();
+    RS_DEBUG->print("RS_ActionDrawCircleTan2_1P::mouseMoveEvent begin");
     switch (status) {
         case SetCircle1:
         case SetCircle2: {
@@ -182,9 +181,9 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent *e){
         }
         previewToCreateCircle(pPoints->cData);
     }
+    RS_DEBUG->print("RS_ActionDrawCircleTan2_1P::mouseMoveEvent end");
     drawHighlights();
     drawPreview();
-    RS_DEBUG->print("RS_ActionDrawCircleTan2_1P::mouseMoveEvent end");
 }
 
 bool RS_ActionDrawCircleTan2_1P::preparePreview(){

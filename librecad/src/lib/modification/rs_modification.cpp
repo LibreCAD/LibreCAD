@@ -3439,20 +3439,16 @@ bool RS_Modification::explodeTextIntoLetters(const std::vector<RS_Entity*> &enti
 }
 
 bool RS_Modification::explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList) {
-
     if (text == nullptr) {
         return false;
     }
-
     if(text->isLocked() || ! text->isVisible()) return false;
 
     // iterate though lines:
     for(auto e2: *text){
-
         if (e2 == nullptr) {
             break;
         }
-
 
         // text lines:
         if (e2->rtti()==RS2::EntityContainer) {
@@ -3461,7 +3457,6 @@ bool RS_Modification::explodeTextIntoLetters(RS_MText* text, std::vector<RS_Enti
 
             // iterate though letters:
             for(auto e3: *line){
-
                 if (e3 == nullptr) {
                     break;
                 }

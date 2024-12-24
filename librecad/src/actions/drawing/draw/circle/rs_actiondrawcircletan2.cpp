@@ -108,9 +108,9 @@ void RS_ActionDrawCircleTan2::drawSnapper() {
 }
 
 void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent begin");
     deletePreview();
     deleteHighlights();
+    RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent begin");
     snapPoint(e);
     for (RS_AtomicEntity *const pc: pPoints->circles) { // highlight already selected
         highlightSelected(pc);
@@ -156,9 +156,9 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    drawPreview();
-    drawHighlights();
     RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent end");
+    drawHighlights();
+    drawPreview();
 }
 
 void RS_ActionDrawCircleTan2::setRadius(double r){

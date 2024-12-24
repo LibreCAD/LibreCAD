@@ -195,8 +195,6 @@ void RS_ActionDrawLineTangent2::preparePreview(QMouseEvent *e){
         case SetCircle2:
         case SelectLine: {
             RS_Vector mouse = snapFree(e);
-            deleteSnapper();
-            deletePreview();
             std::sort(m_pPoints->tangents.begin(), m_pPoints->tangents.end(), [&mouse](
                 const std::unique_ptr<RS_Line> &lhs,
                 const std::unique_ptr<RS_Line> &rhs){
@@ -210,7 +208,6 @@ void RS_ActionDrawLineTangent2::preparePreview(QMouseEvent *e){
             }
             const RS_LineData &lineData = m_pPoints->tangents.front()->getData();
             previewToCreateLine(lineData.startpoint, lineData.endpoint);
-            drawPreview();
             break;
         }
         default:

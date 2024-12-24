@@ -103,12 +103,13 @@ void RS_ActionDrawLineBisector::doTrigger() {
 
 
 void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
     RS_DEBUG->print("RS_ActionDrawLineBisector::mouseMoveEvent begin");
 
     snapPoint(e); // update coordinates widget
     RS_Vector mouse = toGraph(e);
     deleteSnapper();
-    deleteHighlights();
     switch (getStatus()) {
         case SetLine1: {
             RS_Entity *en = catchEntityOnPreview(e, enTypeList, RS2::ResolveAll);
@@ -121,7 +122,6 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
             highlightSelected(line1);
             pPoints->coord2 = mouse;
             RS_Entity *en = catchEntityOnPreview(e, enTypeList, RS2::ResolveAll);
-            deletePreview();
             if (en == line1){
                 line2 = nullptr;
             } else if (en != nullptr){
@@ -144,7 +144,6 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
                         previewRefSelectablePoint(nearest);
                     }
                 }
-                drawPreview();
             }
             break;
         }
@@ -159,6 +158,7 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
             break;
     }
     drawHighlights();
+    drawPreview();
 
     RS_DEBUG->print("RS_ActionDrawLineBisector::mouseMoveEvent end");
 }

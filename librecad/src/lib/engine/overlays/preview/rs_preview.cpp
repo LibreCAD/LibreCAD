@@ -163,7 +163,7 @@ void RS_Preview::addAllFrom(RS_EntityContainer& container, RS_GraphicView* view)
         }
     }
 }
-// fixme - sand - use cloneProxy()
+
 /**
  * Adds all selected entities from 'container' to the preview (unselected).
  */

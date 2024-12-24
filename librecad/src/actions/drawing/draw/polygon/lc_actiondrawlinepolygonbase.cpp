@@ -65,8 +65,8 @@ void LC_ActionDrawLinePolygonBase::doTrigger() {
 }
 
 void LC_ActionDrawLinePolygonBase::mouseMoveEvent(QMouseEvent* e) {
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawLinePolygon2::mouseMoveEvent begin");
-
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
         case SetPoint1: {
@@ -74,7 +74,6 @@ void LC_ActionDrawLinePolygonBase::mouseMoveEvent(QMouseEvent* e) {
             break;
         }
         case SetPoint2: {
-            deletePreview();
             if (pPoints->point1.valid){
                 mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
                 createPolygonPreview(mouse);
@@ -85,12 +84,13 @@ void LC_ActionDrawLinePolygonBase::mouseMoveEvent(QMouseEvent* e) {
                     previewAdditionalReferences(mouse);
                 }
             }
-            drawPreview();
+
             break;
         }
         default:
             break;
     }
+    drawPreview();
 }
 
 void LC_ActionDrawLinePolygonBase::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
@@ -253,17 +253,15 @@ void LC_ActionDrawLinePolygonBase::createPolygonPreview(const RS_Vector &mouse) 
     RS_Polyline* polyline = createShapePolyline(polygonInfo, true);
     if (polyline != nullptr){
         previewEntity(polyline);
-        QString msg = tr("To be created: ").append(tr("Polygon"));
-        msg.append("\n");
-        msg.append(tr("Start angle: "));
-        msg.append(formatAngle(polygonInfo.startingAngle));
-        msg.append("\n");
-        msg.append(tr("Radius: "));
-        msg.append(formatLinear(polygonInfo.vertexRadius));
-        msg.append("\n");
-        msg.append(tr("Center: "));
-        msg.append(formatVector(polygonInfo.centerPoint));
-        appendInfoCursorEntityCreationMessage(msg);
+        if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnCreation) {
+            LC_InfoMessageBuilder msg{};
+            msg.add(tr("To be created:"), tr("Polygon"));
+            msg.add(tr("Center:"), formatVector(polygonInfo.centerPoint));
+            msg.add(tr("Start angle:"), formatAngle(polygonInfo.startingAngle));
+            msg.add(tr("Radius:"), formatLinear(polygonInfo.vertexRadius));
+            msg.add(tr("Radius Inner:"), formatLinear(polygonInfo.innerRadius));
+            appendInfoCursorZoneMessage(msg.toString(), 2, false);
+        }
     }
 }
 

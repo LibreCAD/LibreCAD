@@ -146,14 +146,11 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawArcChord",
         "DrawArcAngleLen",
         "DrawArc3P",
-        // fixme - sand - restore as actions are ready
         "DrawArc2PAngle",
         "DrawArc2PRadius",
         "DrawArc2PLength",
         "DrawArc2PHeight",
-
         "DrawArcTangential",
-
         "DrawEllipseArcAxis",
         "DrawEllipseArc1Point"
     });

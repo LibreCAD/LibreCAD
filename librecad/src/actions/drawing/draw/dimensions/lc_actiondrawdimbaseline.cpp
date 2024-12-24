@@ -90,12 +90,12 @@ bool LC_ActionDrawDimBaseline::isBaseline(){
 }
 
 void LC_ActionDrawDimBaseline::mouseMoveEvent(QMouseEvent *e) {
+    deletePreview();
+    deleteHighlights();
     int status = getStatus();
     RS_Vector mouse = snapPoint(e); // snap on entity?
-    deletePreview();
     switch (status){
         case SetExtPoint1: {
-            deleteHighlights();
             auto dimCandidate = RS_Snapper::catchEntity(mouse, dimEntityTypes, RS2::ResolveNone);
             if (dimCandidate != nullptr) {
                 highlightHover(dimCandidate);
@@ -139,7 +139,6 @@ void LC_ActionDrawDimBaseline::mouseMoveEvent(QMouseEvent *e) {
                     previewRefSelectablePoint(extPoint2);
                 }
             }
-            drawHighlights();
             break;
         }
         case SetExtPoint2:{
@@ -239,6 +238,7 @@ void LC_ActionDrawDimBaseline::mouseMoveEvent(QMouseEvent *e) {
 
     }
     drawPreview();
+    drawHighlights();
 }
 
 void LC_ActionDrawDimBaseline::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

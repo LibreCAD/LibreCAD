@@ -169,12 +169,11 @@ void RS_ActionModifyRound::doTrigger() {
 }
 
 void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionModifyRound::mouseMoveEvent begin");
-
-    RS_Vector mouse = toGraph(e);
-    RS_Entity *se = catchEntityOnPreview(e, eType, RS2::ResolveAllButTextImage);
     deleteHighlights();
     deletePreview();
+    RS_Vector mouse = toGraph(e);
+    RS_DEBUG->print("RS_ActionModifyRound::mouseMoveEvent begin");
+    RS_Entity *se = catchEntityOnPreview(e, eType, RS2::ResolveAllButTextImage);
 
     switch (getStatus()) {
         case SetEntity1: {
@@ -253,10 +252,10 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
+    RS_DEBUG->print("RS_ActionModifyRound::mouseMoveEvent end");
     drawPreview();
     drawHighlights();
 
-    RS_DEBUG->print("RS_ActionModifyRound::mouseMoveEvent end");
 }
 
 void RS_ActionModifyRound::previewEntityModifications(const RS_Entity *original, RS_Entity *modified, RS_Vector& roundPoint, int mode){

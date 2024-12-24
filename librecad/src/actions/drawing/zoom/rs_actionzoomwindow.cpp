@@ -75,14 +75,14 @@ void RS_ActionZoomWindow::doTrigger() {
 }
 
 void RS_ActionZoomWindow::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     snapFree(e);
     drawSnapper();
     if (getStatus() == SetSecondCorner && pPoints->v1.valid){
         pPoints->v2 = snapFree(e);
-        deletePreview();
         preview->addRectangle(pPoints->v1, pPoints->v2);
-        drawPreview();
     }
+    drawPreview();
 }
 
 void RS_ActionZoomWindow::mousePressEvent(QMouseEvent *e){

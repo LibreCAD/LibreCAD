@@ -112,20 +112,20 @@ void RS_ActionDrawLineAngle::doTrigger() {
 }
 
 void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent begin");
 
     if (getStatus()==SetPos) {
         RS_Vector position = snapPoint(e);
         position = getRelZeroAwarePoint(e, position);
         pPoints->pos = position;
-        deletePreview();
         preparePreview();
         previewToCreateLine(pPoints->data.startpoint, pPoints->data.endpoint);
         previewRefSelectablePoint(position);
-        drawPreview();
     }
 
     RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionDrawLineAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

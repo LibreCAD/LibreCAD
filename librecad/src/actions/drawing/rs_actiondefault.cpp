@@ -235,6 +235,8 @@ bool RS_ActionDefault::isShowEntityDescriptionOnHighlight(){
 }
 
 void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
 
     RS_Vector mouse = toGraph(e);
 
@@ -253,7 +255,6 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                 }
                 RS_Snapper::forceUpdateInfoCursor(mouse);
             }
-            drawHighlights();
             break;
         }
         case Dragging:{
@@ -291,8 +292,6 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
             break;
         }
         case MovingRef: {
-            deletePreview();
-            deleteHighlights();
 
             mouse = snapPoint(e);
 
@@ -512,7 +511,6 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
             break;
         }
         case Moving: {
-            deletePreview();
             mouse = snapPoint(e);
             pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
             updateCoordinateWidgetByRelZero(pPoints->v2);
@@ -541,18 +539,14 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                 msg.add(formatRelativePolar(offset));
                 appendInfoCursorZoneMessage(msg.toString(), 2, false);
             }
-            drawPreview();
             break;
         }
         case SetCorner2: {
             if (pPoints->v1.valid){
                 pPoints->v2 = mouse;
-
-                deletePreview();
-
                 auto ob = new RS_OverlayBox(preview.get(),
                                             RS_OverlayBoxData(pPoints->v1, pPoints->v2));
-                preview->addEntity(ob);
+                previewEntity(ob);
 
                 if (isInfoCursorForModificationEnabled()) {
                     bool cross = (pPoints->v1.x > pPoints->v2.x);
@@ -563,7 +557,6 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                     infoCursorOverlayData.setZone2(msg);
                     forceUpdateInfoCursor(e);
                 }
-                drawPreview();
             }
             break;
         }
@@ -579,6 +572,8 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
+    drawPreview();
+    drawHighlights();
 }
 
 void RS_ActionDefault::createEditedLineDescription([[maybe_unused]]RS_Line* clone, [[maybe_unused]]bool ctrlPressed,  [[maybe_unused]]bool shiftPressed) {

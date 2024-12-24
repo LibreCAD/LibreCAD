@@ -80,6 +80,8 @@ void RS_ActionDrawLineParallel::doTrigger() {
 }
 
 void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
     RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent begin");
     snapPoint(e);
     *coord = {toGraph(e)};
@@ -88,8 +90,6 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
 
     switch (getStatus()) {
         case SetEntity: {
-            deletePreview();
-            deleteHighlights();
             if (entity != nullptr){
                 RS_Creation creation(preview.get(), nullptr, false);
                 RS_Entity* createdParallel = creation.createParallel(*coord,
@@ -108,9 +108,7 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
                         previewRefPoint(nearest);
                     }
                 }
-                drawHighlights();
             }
-            drawPreview();
             break;
         }
         default:
@@ -118,6 +116,8 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
     }
 
     RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent end");
+    drawPreview();
+    drawHighlights();
 }
 
 void RS_ActionDrawLineParallel::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {

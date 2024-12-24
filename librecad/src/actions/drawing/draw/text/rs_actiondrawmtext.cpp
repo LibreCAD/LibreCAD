@@ -111,6 +111,7 @@ void RS_ActionDrawMText::preparePreview() {
 }
 
 void RS_ActionDrawMText::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent begin");
 
     if (getStatus() == SetPos){
@@ -125,16 +126,15 @@ void RS_ActionDrawMText::mouseMoveEvent(QMouseEvent *e){
         RS_Vector mov = mouse - *pos;
         *pos = mouse;
         if (textChanged || pos->valid == false || preview->isEmpty()){
-            deletePreview();
             preparePreview();
         } else {
             preview->move(mov);
             preview->setVisible(true);
         }
-        drawPreview();
     }
 
     RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionDrawMText::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {

@@ -60,11 +60,10 @@ void RS_ActionModifyRotate2::doTrigger(bool keepSelected) {
 }
 
 void RS_ActionModifyRotate2::mouseMoveEventSelected(QMouseEvent *e) {
-    RS_DEBUG->print("RS_ActionModifyRotate2::mouseMoveEvent begin");
-
+    deletePreview();
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
-    deletePreview();
+    RS_DEBUG->print("RS_ActionModifyRotate2::mouseMoveEvent begin");
     switch (status) {
         case SetReferencePoint1: {
             trySnapToRelZeroCoordinateEvent(e);
@@ -97,9 +96,9 @@ void RS_ActionModifyRotate2::mouseMoveEventSelected(QMouseEvent *e) {
         default:
             break;
     }
-    drawPreview();
 
     RS_DEBUG->print("RS_ActionModifyRotate2::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionModifyRotate2::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {

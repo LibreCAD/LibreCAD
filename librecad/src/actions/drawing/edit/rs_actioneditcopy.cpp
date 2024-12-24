@@ -92,6 +92,7 @@ void RS_ActionEditCopyPaste::doTrigger() {
 }
 
 void RS_ActionEditCopyPaste::mouseMoveEvent(QMouseEvent* e) {
+    deletePreview();
     if (getStatus()==SetReferencePoint) {
         switch (mode) {
             case CUT:
@@ -101,7 +102,6 @@ void RS_ActionEditCopyPaste::mouseMoveEvent(QMouseEvent* e) {
             }
             case PASTE:{
                 *referencePoint = snapPoint(e);
-                deletePreview();
                 preview->addAllFrom(*RS_CLIPBOARD->getGraphic(), graphicView);
                 preview->move(*referencePoint);
 
@@ -111,15 +111,16 @@ void RS_ActionEditCopyPaste::mouseMoveEvent(QMouseEvent* e) {
                     double const f = RS_Units::convert(1.0, sourceUnit, targetUnit);
                     preview->scale(*referencePoint, {f, f});
                 }
-                drawPreview();
                 break;
             }
             default:
                 break;
         }
     }
-    else
+    else {
         deleteSnapper();
+    }
+    drawPreview();
 }
 
 void RS_ActionEditCopyPaste::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {

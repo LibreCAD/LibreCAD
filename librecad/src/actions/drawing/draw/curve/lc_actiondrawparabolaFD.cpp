@@ -136,9 +136,9 @@ void LC_ActionDrawParabolaFD::doTrigger() {
 }
 
 void LC_ActionDrawParabolaFD::mouseMoveEvent(QMouseEvent* e) {
-    RS_Vector mouse = snapPoint(e);
     deletePreview();
     deleteHighlights();
+    RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
         case SetFocus:
             trySnapToRelZeroCoordinateEvent(e);

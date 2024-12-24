@@ -279,9 +279,9 @@ void RS_ActionPolylineEquidistant::doTrigger() {
 }
 
 void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent *event){
-    snapPoint(event);
     deleteHighlights();
     deletePreview();
+    snapPoint(event);
     deleteSnapper();
     if (getStatus() == ChooseEntity){
         auto en = catchEntityOnPreview(event, RS2::EntityPolyline);
@@ -302,10 +302,10 @@ void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent *event){
                newPolyline->reparent(preview.get());
                previewEntity(newPolyline);
             }
-            drawPreview();
         }
     }
     drawHighlights();
+    drawPreview();
 }
 
 void RS_ActionPolylineEquidistant::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

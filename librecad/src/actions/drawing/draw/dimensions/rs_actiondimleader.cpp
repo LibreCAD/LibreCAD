@@ -83,6 +83,8 @@ void RS_ActionDimLeader::doTrigger() {
 }
 
 void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+
     RS_DEBUG->print("RS_ActionDimLeader::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -92,7 +94,7 @@ void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent *e){
             trySnapToRelZeroCoordinateEvent(e);
             break;
         case SetEndpoint: {
-            deletePreview();
+
             if (!pPoints->points.empty()){
                 mouse = getSnapAngleAwarePoint(e, pPoints->points.back(), mouse, true);
 
@@ -111,8 +113,6 @@ void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent *e){
                     previewRefSelectablePoint(mouse);
                 }
                 previewLine(p, mouse);
-
-                drawPreview();
             }
             break;
         }
@@ -121,6 +121,7 @@ void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent *e){
     }
 
     RS_DEBUG->print("RS_ActionDimLeader::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionDimLeader::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

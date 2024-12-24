@@ -57,13 +57,14 @@ void RS_ActionPolylineAppend::doTrigger() {
 }
 
 void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
-    int status = getStatus();
     deleteHighlights();
+    deletePreview();
+    int status = getStatus();
     switch (status) {
         case SetStartpoint: {
             snapPoint(e);
             deleteSnapper();
-            deletePreview();
+
             auto polyline = dynamic_cast<RS_Polyline *>(catchEntityOnPreview(e));
             if (polyline != nullptr){
                 highlightHover(polyline);
@@ -96,11 +97,8 @@ void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
                         }
                     }
                     previewRefSelectablePoint(endpointToUse);
-
                 }
-
             }
-            drawPreview();
             break;
         }
         case SetNextPoint: {
@@ -113,6 +111,7 @@ void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
     }
 
     drawHighlights();
+    drawPreview();
 }
 
 void RS_ActionPolylineAppend::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

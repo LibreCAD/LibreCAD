@@ -37,7 +37,7 @@ LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
 void LC_ActionPreSelectionAwareBase::doTrigger() {
     bool keepSelected = LC_GET_ONE_BOOL("Modify", "KeepModifiedSelected", true);
     doTrigger(keepSelected);
-    updateMouseButtonHints(); // todo - is it really necessary??   
+    updateMouseButtonHints(); // todo - is it really necessary??
 }
 
 LC_ActionPreSelectionAwareBase::~LC_ActionPreSelectionAwareBase() {
@@ -132,12 +132,12 @@ void LC_ActionPreSelectionAwareBase::onMouseRightButtonRelease(int status, QMous
 }
 
 void LC_ActionPreSelectionAwareBase::mouseMoveEvent(QMouseEvent *event) {
+    deletePreview();
+    deleteHighlights();
     if (selectionComplete){
         mouseMoveEventSelected(event);
     }
     else{
-        deletePreview();
-        deleteHighlights();
         snapPoint(event);
         RS_Vector mouse = toGraph(event);
         if (selectionCorner1.valid && (graphicView->toGuiDX(selectionCorner1.distanceTo(mouse)) > 10.0)){
@@ -160,9 +160,9 @@ void LC_ActionPreSelectionAwareBase::mouseMoveEvent(QMouseEvent *event) {
             selectionMouseMove(event);
             finishMouseMoveOnSelection(event);
         }
-        drawHighlights();
-        drawPreview();
     }
+    drawHighlights();
+    drawPreview();
 }
 
 void LC_ActionPreSelectionAwareBase::drawSnapper() {

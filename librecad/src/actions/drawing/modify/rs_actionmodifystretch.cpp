@@ -69,10 +69,9 @@ void RS_ActionModifyStretch::doTrigger() {
 }
 
 void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionModifyStretch::mouseMoveEvent begin");
-
     deletePreview();
     RS_Vector mouse = snapPoint(e);
+    RS_DEBUG->print("RS_ActionModifyStretch::mouseMoveEvent begin");
     switch (getStatus()) {
         case SetFirstCorner:{
             break;
@@ -128,9 +127,9 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    drawPreview();
 
     RS_DEBUG->print("RS_ActionModifyStretch::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionModifyStretch::previewStretchRect(bool selected) {

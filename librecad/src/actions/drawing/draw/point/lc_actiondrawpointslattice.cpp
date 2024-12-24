@@ -62,8 +62,8 @@ void LC_ActionDrawPointsLattice::doTrigger() {
 
 
 void LC_ActionDrawPointsLattice::mouseMoveEvent(QMouseEvent *e) {
-    RS_Vector mouse = snapPoint(e);
     deletePreview();
+    RS_Vector mouse = snapPoint(e);
     QVector<RS_Vector> pointsToCreate;
     switch (getStatus()){
         case SetPoint1:{

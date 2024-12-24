@@ -59,9 +59,9 @@ void LC_ActionDrawMidLine::doTrigger() {
 }
 
 void LC_ActionDrawMidLine::mouseMoveEvent(QMouseEvent *e) {
-    snapPoint(e);
     deletePreview();
     deleteHighlights();
+    snapPoint(e);
     switch (getStatus()){
         case SetEntity1: {
             RS_Entity* ent = catchEntityOnPreview(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);

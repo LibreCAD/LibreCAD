@@ -1272,12 +1272,14 @@ void LC_QuickInfoEntityData::collectSplinePointsProperties(LC_SplinePoints *spli
     addProperty(tr("Closed"), data.closed? tr("Yes"): tr("No"), OTHER);
 
     size_t size = data.controlPoints.size();
+    const QString &name = tr("Control Point ");
     for (size_t i = 0; i < size; i++){
-        addVectorProperty(tr("Control Point "), i+1, data.controlPoints.at(i)); // fixme - translation in cycle
+        addVectorProperty(name, i + 1, data.controlPoints.at(i));
     }
     size = data.splinePoints.size();
+    const QString &name1 = tr("Spline Point ");
     for (size_t i = 0; i < size; i++){
-        addVectorProperty(tr("Spline Point "), i+1, data.splinePoints.at(i)); // fixme - translation in cycle
+        addVectorProperty(name1, i + 1, data.splinePoints.at(i));
     }
 }
 
@@ -1305,9 +1307,10 @@ void LC_QuickInfoEntityData::collectParabolaProperties(LC_Parabola *parabola){
     addAngleProperty(tr("Axis Angle"), data.axis.angle());
     addLinearProperty(tr("Length"),  parabola->getLength());
 
+    const QString &name = tr("Control Point");
     for (size_t i = 0; i < data.controlPoints.size(); i++){
         RS_Vector cp = data.controlPoints.at(i);
-        addVectorProperty(tr("Control Point"), i+1, cp); // fixme - translation in cycle
+        addVectorProperty(name, i + 1, cp); 
     }
 }
 

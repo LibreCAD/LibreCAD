@@ -30,8 +30,7 @@
  *
  * @author Andrew Mustun
  */
- // fixme - check whether this action is actually used
-class RS_ActionSelectContour:public RS_PreviewActionInterface {
+ class RS_ActionSelectContour:public RS_PreviewActionInterface {
 Q_OBJECT
 public:
     RS_ActionSelectContour(

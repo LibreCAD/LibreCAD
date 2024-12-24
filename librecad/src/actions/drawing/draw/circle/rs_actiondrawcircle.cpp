@@ -70,7 +70,7 @@ void RS_ActionDrawCircle::doTrigger() {
 
 void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawCircle::mouseMoveEvent begin");
-
+    deletePreview();
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
         case SetCenter: {
@@ -83,19 +83,17 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
 //                fixme - complete support
                 //mouse = getFreeSnapAwarePoint(e, mouse);
                 data->radius = data->center.distanceTo(mouse);
-                deletePreview();
                 previewToCreateCircle(*data);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(data->center);
                     previewRefSelectablePoint(mouse);
                     previewRefLine(data->center, mouse);
                 }
-                drawPreview();
             }
             break;
         }
     }
-
+    drawPreview();
     RS_DEBUG->print("RS_ActionDrawCircle::mouseMoveEvent end");
 }
 

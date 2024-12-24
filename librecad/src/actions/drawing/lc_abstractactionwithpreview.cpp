@@ -467,14 +467,16 @@ void LC_AbstractActionWithPreview::highlightEntityExplicit(RS_Entity* en, bool h
  * @param e original mouse event
  */
 void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
+
     int status = getStatus();
     bool shiftPressed = isShift(e);
     checkAlternativeActionMode(e, status, shiftPressed);
     doMouseMoveStart(status, e);
     checkPreSnapToRelativeZero(status, e);
     status = getStatus();
-    deletePreview();
-    deleteHighlights();
+
     if (doCheckMayDrawPreview(e, status)){ // check whether preview may be drawn according to state etc.
         RS_Vector snap = doGetMouseSnapPoint(e);
         bool shouldDrawPreview = onMouseMove(e, snap, status); // delegate processing to inherited actions

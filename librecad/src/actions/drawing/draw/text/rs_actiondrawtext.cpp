@@ -136,8 +136,8 @@ void RS_ActionDrawText::preparePreview(){
 }
 
 void RS_ActionDrawText::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent begin");
     deletePreview();
+    RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent begin");
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
     switch (status){
@@ -169,8 +169,8 @@ void RS_ActionDrawText::mouseMoveEvent(QMouseEvent *e){
             break;
     }
     appendInfoCursorZoneMessage(tr("Text: ")/*.append("\n")*/.append(data->text), 2, false);
-    drawPreview();
     RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionDrawText::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {

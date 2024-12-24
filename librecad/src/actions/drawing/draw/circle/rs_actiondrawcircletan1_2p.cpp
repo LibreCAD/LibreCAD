@@ -102,10 +102,10 @@ void RS_ActionDrawCircleTan1_2P::doTrigger() {
 }
 
 void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::mouseMoveEvent begin");
-    RS_Vector const &mouse = snapPoint(e);
     deletePreview();
     deleteHighlights();
+    RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::mouseMoveEvent begin");
+    RS_Vector const &mouse = snapPoint(e);
     switch (getStatus()) {
         case SetCircle1:{
             deleteSnapper();
@@ -211,9 +211,9 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
+    RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::mouseMoveEvent end");
     drawPreview();
     drawHighlights();
-    RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::mouseMoveEvent end");
 }
 
 RS_Vector RS_ActionDrawCircleTan1_2P::getTangentPoint(RS_Vector& creatingCircleCenter, bool fromOriginalCircle) const{

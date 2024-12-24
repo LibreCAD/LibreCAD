@@ -67,15 +67,14 @@ void RS_ActionModifyRotate::selectionCompleted(bool singleEntity, bool fromInit)
 void RS_ActionModifyRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyRotate::trigger()");
     moveRelativeZero(data->center);
-    // fixme - relzero - undoable
     RS_Modification m(*container, graphicView);
     m.rotate(*data, selectedEntities, false, keepSelected);
 }
 
 void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
-    RS_DEBUG->print("RS_ActionModifyRotate::mouseMoveEvent begin");
-    RS_Vector mouse = snapPoint(e);
     deletePreview();
+    RS_Vector mouse = snapPoint(e);
+    RS_DEBUG->print("RS_ActionModifyRotate::mouseMoveEvent begin");
     switch (getStatus()) {
         case SetReferencePoint: {
             if (selectRefPointFirst){
@@ -241,8 +240,8 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
         default:
             break;
     }
-    drawPreview();
     RS_DEBUG->print("RS_ActionModifyRotate::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionModifyRotate::previewRotationCircleAndPoints(const RS_Vector &center, const RS_Vector &refPoint, double angle) {

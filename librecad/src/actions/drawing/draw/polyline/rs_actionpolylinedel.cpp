@@ -69,11 +69,13 @@ void RS_ActionPolylineDel::doTrigger() {
 }
 
 void RS_ActionPolylineDel::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
     RS_DEBUG->print("RS_ActionPolylineDel::mouseMoveEvent begin");
 
     snapPoint(e);
     int status = getStatus();
-    deleteHighlights();
+
     switch (status) {
         case SetPolyline: {
             auto polyline = dynamic_cast<RS_Polyline *>(catchEntityOnPreview(e));
@@ -83,7 +85,7 @@ void RS_ActionPolylineDel::mouseMoveEvent(QMouseEvent *e){
             break;
         }
         case SetVertex1:{
-            deletePreview();
+
             RS_Vector vertex;
             RS_Entity * segment;
             getSelectedPolylineVertex(e, vertex, segment);
@@ -94,15 +96,14 @@ void RS_ActionPolylineDel::mouseMoveEvent(QMouseEvent *e){
                 RS_Modification m(*preview, graphicView);
                 m.deletePolylineNode(*polylineToModify, vertex, true);
             }
-            drawPreview();
             break;
          }
         default:
             break;
     }
-    drawHighlights();
-
     RS_DEBUG->print("RS_ActionPolylineDel::mouseMoveEvent end");
+    drawHighlights();
+    drawPreview();
 }
 
 void RS_ActionPolylineDel::onMouseLeftButtonRelease(int status, QMouseEvent *e){

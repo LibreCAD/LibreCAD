@@ -41,9 +41,9 @@ void LC_ActionModifyAlignRef::doTrigger(bool keepSelected) {
 }
 
 void LC_ActionModifyAlignRef::mouseMoveEventSelected(QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
     deletePreview();
     deleteHighlights();
+    RS_Vector snap = snapPoint(e);
     switch (getStatus()){
         case SetRefPoint1:{
             snap = getRelZeroAwarePoint(e, snap);

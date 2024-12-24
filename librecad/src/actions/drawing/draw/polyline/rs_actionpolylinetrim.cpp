@@ -64,9 +64,10 @@ void RS_ActionPolylineTrim::doTrigger() {
 }
 
 void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
     RS_DEBUG->print("RS_ActionPolylineTrim::mouseMoveEvent begin");
     snapPoint(e);
-    deleteHighlights();
     switch (getStatus()) {
         case ChooseEntity: {
             deleteSnapper();
@@ -81,17 +82,14 @@ void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
             if (en != nullptr){
                 if (en->getParent() == polylineToModify){
                     highlightHover(en);
-                    deletePreview();
                     previewRefSelectablePoint(en->getStartpoint());
                     previewRefSelectablePoint(en->getEndpoint());
-                    drawPreview();
                 }
             }
             break;
         }
         case SetSegment2:{
             highlightSelected(Segment1);
-            deletePreview();
             RS_Entity* en = catchEntity(e, RS2::ResolveAll);
             if (en != nullptr){
                 if (en->getParent() == polylineToModify){
@@ -113,14 +111,14 @@ void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
                     }
                 }
             }
-            drawPreview();
             break;
         }
         default:
             break;
     }
-    drawHighlights();
     RS_DEBUG->print("RS_ActionPolylineTrim::mouseMoveEvent end");
+    drawHighlights();
+    drawPreview();
 }
 
 void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

@@ -103,12 +103,12 @@ void RS_ActionModifyBevel::drawSnapper() {
 }
 
 void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent begin");
     deleteHighlights();
     deletePreview();
 
     snapPoint(e);
     RS_Vector mouse = toGraph(e);
+    RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent begin");
     // it seems that bevel works properly with lines only... it relies on trimEndpoint/moveEndpoint methods, which
     // have some support for arc and ellipse, yet still...
     RS_Entity *se = catchEntityOnPreview(e, RS2::EntityLine, RS2::ResolveAllButTextImage);
@@ -166,16 +166,16 @@ void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent *e){
                     delete bevelResult;
                 }
             }
-            drawPreview();
             break;
         }
         default:
             break;
     }
 
+    RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent end");
+    drawPreview();
     drawHighlights();
 
-    RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent end");
 }
 
 void RS_ActionModifyBevel::previewLineModifications(const RS_Entity *original, const RS_Entity *trimmed, bool trimOnStart){

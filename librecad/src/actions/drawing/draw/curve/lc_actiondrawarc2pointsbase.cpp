@@ -53,9 +53,9 @@ void LC_ActionDrawArc2PointsBase::doTrigger() {
 }
 
 void LC_ActionDrawArc2PointsBase::mouseMoveEvent(QMouseEvent *e) {
-    RS_Vector mouse = snapPoint(e);
     deletePreview();
     deleteHighlights();
+    RS_Vector mouse = snapPoint(e);
 
     int status = getStatus();
     switch (status){

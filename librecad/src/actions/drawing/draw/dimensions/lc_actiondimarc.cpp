@@ -82,9 +82,11 @@ void LC_ActionDimArc::doTrigger() {
 }
 
 void LC_ActionDimArc::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
+
     RS_DEBUG->print("LC_ActionDimArc::mouseMoveEvent begin");
     RS_Vector snap = snapPoint(e);
-    deleteHighlights();
     switch (getStatus()) {
         case SetEntity:{
             auto en = catchEntity(e, RS2::EntityArc, RS2::ResolveAll);
@@ -101,17 +103,15 @@ void LC_ActionDimArc::mouseMoveEvent(QMouseEvent *e){
             // fixme - determine why DimArc is drawn on preview by preview pen, while other dimension entities - using normal pen...
 
             LC_DimArc *temp_dimArc_entity{new LC_DimArc(preview.get(), *data, dimArcData)};
-
-            deletePreview();
             previewEntity(temp_dimArc_entity);
-            drawPreview();
             break;
         }
         default:
             break;
     }
-    drawHighlights();
     RS_DEBUG->print("LC_ActionDimArc::mouseMoveEvent end");
+    drawPreview();
+    drawHighlights();
 }
 
 void LC_ActionDimArc::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

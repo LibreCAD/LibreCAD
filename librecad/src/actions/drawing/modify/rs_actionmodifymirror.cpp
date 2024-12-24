@@ -103,9 +103,9 @@ void RS_ActionModifyMirror::mouseMoveEventSelected(QMouseEvent *e) {
         default:
             break;
     }
+    RS_DEBUG->print("RS_ActionModifyMirror::mouseMoveEvent end");
     drawHighlights();
     drawPreview();
-    RS_DEBUG->print("RS_ActionModifyMirror::mouseMoveEvent end");
 }
 
 void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, const RS_Vector &mirrorLinePoint2){

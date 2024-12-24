@@ -300,9 +300,6 @@ public:
 
     LC_QuickInfoWidget* getEntityInfoWidget(void) const {return quickInfoWidget;};
 
-    RS_Vector getMouseAbsolutePosition();
-    RS_Vector getMouseRelativePosition();
-    
     // Highlight the active block in the block widget
     void showBlockActivated(const RS_Block* block);
 

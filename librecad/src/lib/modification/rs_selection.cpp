@@ -162,17 +162,12 @@ void RS_Selection::selectWindow(const QList<RS2::EntityType> &typesToSelect, con
  * @param v2 Endpoint of line.
  * @param select true: select, false: invertSelectionOperation
  */
-void RS_Selection::selectIntersected(
-    const RS_Vector &v1, const RS_Vector &v2,
-    bool select){
-
+void RS_Selection::selectIntersected(const RS_Vector &v1, const RS_Vector &v2, bool select){
     RS_Line line{v1, v2};
     bool inters;
 
     for (auto e: *container) { // fixme - iteration over ALL entities, limit area
-
         if (e && e->isVisible()){
-
             inters = false;
 
             // select containers / groups:
@@ -285,7 +280,6 @@ void RS_Selection::selectContour(RS_Entity *e){
  * Selects all entities on the given layer.
  */
 void RS_Selection::selectLayer(RS_Entity *e){
-
     if (e == nullptr)
         return;
 
@@ -302,7 +296,6 @@ void RS_Selection::selectLayer(RS_Entity *e){
  * Selects all entities on the given layer.
  */
 void RS_Selection::selectLayer(const QString &layerName, bool select){
-
     for (auto en: *container) {
         // fixme - review and make more efficient... why check for locking upfront? Why just not use layer pointers but names?
         if (en && en->isVisible() &&

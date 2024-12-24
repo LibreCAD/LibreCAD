@@ -118,10 +118,9 @@ void RS_ActionDrawEllipseAxis::doTrigger() {
 }
 
 void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
-    RS_DEBUG->print("RS_ActionDrawEllipseAxis::mouseMoveEvent begin");
-
-    RS_Vector mouse = snapPoint(e);
     deletePreview();
+    RS_DEBUG->print("RS_ActionDrawEllipseAxis::mouseMoveEvent begin");
+    RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
         case SetCenter: {
             trySnapToRelZeroCoordinateEvent(e);
@@ -211,8 +210,8 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
-    drawPreview();
     RS_DEBUG->print("RS_ActionDrawEllipseAxis::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionDrawEllipseAxis::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

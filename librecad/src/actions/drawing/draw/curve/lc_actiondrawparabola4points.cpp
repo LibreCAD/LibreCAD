@@ -67,8 +67,8 @@ void LC_ActionDrawParabola4Points::doTrigger() {
 }
 
 void LC_ActionDrawParabola4Points::mouseMoveEvent(QMouseEvent* e) {
-    RS_Vector mouse = snapPoint(e);
     deletePreview();
+    RS_Vector mouse = snapPoint(e);
     int status = getStatus();
     pPoints->points.set(status, mouse);
     if (showRefEntitiesOnPreview) {

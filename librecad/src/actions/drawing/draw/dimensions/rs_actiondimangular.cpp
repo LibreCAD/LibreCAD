@@ -76,8 +76,9 @@ void RS_ActionDimAngular::doTrigger() {
 }
 
 void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e){
-    RS_DEBUG->print( "RS_ActionDimAngular::mouseMoveEvent begin");
+    deletePreview();
     deleteHighlights();
+    RS_DEBUG->print( "RS_ActionDimAngular::mouseMoveEvent begin");
     RS_Vector snap = snapPoint(e);
     switch (getStatus()) {
         case SetLine1: {
@@ -98,7 +99,6 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e){
         case SetPos: {
             snap = getFreeSnapAwarePoint(e, snap);
             if (setData(snap)){
-                deletePreview();
                 auto *d = new RS_DimAngular(preview.get(), *data, *edata);
                 highlightSelected(line1);
                 highlightSelected(line2);
@@ -116,15 +116,16 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e){
 
                 d->update();
                 previewEntity(d);
-                drawPreview();
+
             }
             break;
         }
         default:
             break;
     }
-    drawHighlights();
     RS_DEBUG->print("RS_ActionDimAngular::mouseMoveEvent end");
+    drawPreview();
+    drawHighlights();
 }
 
 void RS_ActionDimAngular::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

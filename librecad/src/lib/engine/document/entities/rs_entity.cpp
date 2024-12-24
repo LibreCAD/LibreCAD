@@ -54,13 +54,11 @@
 namespace {
 // fixme - renderperf - that should be cached as it is set once
 // Whether the entity is a member of cross hatch filling curves
-bool isHatchMember(const RS_Entity* entity) {
-    if (entity == nullptr || entity->getParent() == nullptr)
-        return false;
-
-    return entity->rtti() == RS2::EntityHatch || isHatchMember(entity->getParent());
-}
-
+    bool isHatchMember(const RS_Entity* entity) {
+        if (entity == nullptr || entity->getParent() == nullptr)
+            return false;
+        return entity->rtti() == RS2::EntityHatch || isHatchMember(entity->getParent());
+    }
 }
 
 /**
@@ -165,8 +163,6 @@ bool RS_Entity::toggleSelected() {
     //toggleFlag(RS2::FlagSelected);
 }
 
-
-
 /**
  * @return True if the entity is selected. Note that an entity might
  * not be selected but one of its parents is selected. In that case
@@ -177,26 +173,21 @@ bool RS_Entity::isSelected() const {
 	return getFlag(RS2::FlagSelected) && isVisible(); // fixme - renderperf - isVisible is costly
 }
 
-
-
 /**
  * @return true if a parent entity of this entity is selected.
  */
-bool RS_Entity::isParentSelected() const
-{
-	RS_Entity const* p = this;
+bool RS_Entity::isParentSelected() const{
+    RS_Entity const* p = this;
 
-	while(p) {
-		p = p->getParent();
-		if (p && p->isSelected()==true) {
-			return true;
-		}
-	}
+    while(p) {
+        p = p->getParent();
+        if (p && p->isSelected()==true) {
+            return true;
+        }
+    }
 
     return false;
 }
-
-
 
 /**
  * Sets or resets the processed flag of this entity.
@@ -211,16 +202,12 @@ void RS_Entity::setProcessed(bool on) {
     }
 }
 
-
-
 /**
  * @return True if the processed flag is set.
  */
 bool RS_Entity::isProcessed() const {
     return getFlag(RS2::FlagProcessed);
 }
-
-
 
 /**
  * Called when the undo state changed.
@@ -234,7 +221,6 @@ void RS_Entity::undoStateChanged([[maybe_unused]] bool undone)
     update();
 }
 
-
 /**
  * @return true if this entity or any parent entities are undone.
  */
@@ -247,12 +233,10 @@ bool RS_Entity::isUndone() const {
         }
 }
 
-
 /**
  * @return True if the entity is in the given range.
  */
-bool RS_Entity::isInWindow(RS_Vector v1, RS_Vector v2) const
-{
+bool RS_Entity::isInWindow(RS_Vector v1, RS_Vector v2) const{
     double right, left, top, bottom;
 
     right = std::max(v1.x, v2.x);
@@ -266,53 +250,49 @@ bool RS_Entity::isInWindow(RS_Vector v1, RS_Vector v2) const
             getMax().y<=top);
 }
 
-double RS_Entity::areaLineIntegral() const
-{
+double RS_Entity::areaLineIntegral() const{
 	return 0.;
 }
 
-bool RS_Entity::isArc() const
-{
-	switch (rtti()) {
-	case RS2::EntityArc:
-	case RS2::EntityCircle:
-		//ellipse implements its own test
-	case RS2::EntityEllipse:
-		return true;
-	default:
-		return false;
-	}
+bool RS_Entity::isArc() const{
+    switch (rtti()) {
+        case RS2::EntityArc:
+        case RS2::EntityCircle:
+//ellipse implements its own test
+        case RS2::EntityEllipse:
+            return true;
+        default:
+            return false;
+    }
 }
 
- bool RS_Entity::isArcCircleLine() const
- {
-	 switch (rtti()) {
-	 case RS2::EntityArc:
-	 case RS2::EntityCircle:
-	 case RS2::EntityLine:
-     case RS2::EntityPoint:
-         return true;
-	 default:
-		 return false;
-	 }
- }
+bool RS_Entity::isArcCircleLine() const{
+    switch (rtti()) {
+        case RS2::EntityArc:
+        case RS2::EntityCircle:
+        case RS2::EntityLine:
+        case RS2::EntityPoint:
+            return true;
+        default:
+            return false;
+    }
+}
 
 /** whether the entity's bounding box intersects with visible portion of graphic view */
-bool RS_Entity::    isVisibleInWindow(RS_GraphicView* view) const
-{
+bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const{
     RS_Vector vpMin(view->toGraph(0,view->getHeight()));
     RS_Vector vpMax(view->toGraph(view->getWidth(),0));
     if( getStartpoint().isInWindowOrdered(vpMin, vpMax) ) return true;
     if( getEndpoint().isInWindowOrdered(vpMin, vpMax) ) return true;
     QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
-	std::vector<RS_Vector> vps;
+    std::vector<RS_Vector> vps;
     for(unsigned short i=0;i<4;i++){
         const QPointF& vp(visualBox.at(i));
-		vps.emplace_back(vp.x(),vp.y());
+        vps.emplace_back(vp.x(),vp.y());
     }
     for(unsigned short i=0;i<4;i++){
-		RS_Line const line{vps.at(i),vps.at((i+1)%4)};
-		if( RS_Information::getIntersection(this, &line, true).size()>0) return true;
+        RS_Line const line{vps.at(i),vps.at((i+1)%4)};
+        if( RS_Information::getIntersection(this, &line, true).size()>0) return true;
     }
     if( minV.isInWindowOrdered(vpMin,vpMax)||maxV.isInWindowOrdered(vpMin,vpMax)) return true;
     return false;
@@ -331,11 +311,10 @@ bool RS_Entity::isPointOnEntity(const RS_Vector& coord,
 }
 
 double RS_Entity::getDistanceToPoint(const RS_Vector& coord,
-                                  RS_Entity** entity,
-                                  RS2::ResolveLevel /*level*/,
-                                  double /*solidDist*/) const
-{
-	if (entity) {
+                                     RS_Entity** entity,
+                                     RS2::ResolveLevel /*level*/,
+                                     double /*solidDist*/) const{
+    if (entity) {
         *entity=const_cast<RS_Entity*>(this);
     }
     double dToEntity = RS_MAXDOUBLE;
@@ -357,7 +336,6 @@ double RS_Entity::getDistanceToPoint(const RS_Vector& coord,
 * is ignored.
  */
 bool RS_Entity::isVisible() const {
-
     if (!getFlag(RS2::FlagVisible)) {
         return false;
     }
@@ -393,13 +371,12 @@ if (parent && parent->isUndone()) {
     }
 }
 
-
 void RS_Entity::setVisible(bool v) {
-	if (v) {
-		setFlag(RS2::FlagVisible);
-	} else {
-		delFlag(RS2::FlagVisible);
-	}
+    if (v) {
+        setFlag(RS2::FlagVisible);
+    } else {
+        delFlag(RS2::FlagVisible);
+    }
 }
 
 /**
@@ -455,9 +432,8 @@ RS_Vector RS_Entity::getSize() const {
 /**
  * @return true if the layer this entity is on is locked.
  */
-bool RS_Entity::isLocked() const
-{
-	return getLayer(true) && getLayer()->isLocked();
+bool RS_Entity::isLocked() const{
+    return getLayer(true) && getLayer()->isLocked();
 }
 
 RS_Vector RS_Entity::getCenter() const {
@@ -468,9 +444,7 @@ double RS_Entity::getRadius() const {
 	return RS_MAXDOUBLE;
 }
 
-void RS_Entity::setRadius([[maybe_unused]] double r)
-{
-}
+void RS_Entity::setRadius([[maybe_unused]] double r){}
 
 /**
  * @return The parent graphic in which this entity is stored
@@ -479,15 +453,13 @@ void RS_Entity::setRadius([[maybe_unused]] double r)
  */
 RS_Graphic* RS_Entity::getGraphic() const{
     if (rtti()==RS2::EntityGraphic) {
-		RS_Graphic const* ret=static_cast<RS_Graphic const*>(this);
-		return const_cast<RS_Graphic*>(ret);
-	} else if (!parent) {
-		return nullptr;
-	}
-	return parent->getGraphic();
+        RS_Graphic const* ret=static_cast<RS_Graphic const*>(this);
+        return const_cast<RS_Graphic*>(ret);
+    } else if (!parent) {
+        return nullptr;
+    }
+    return parent->getGraphic();
 }
-
-
 
 /**
  * @return The parent block in which this entity is stored
@@ -496,14 +468,13 @@ RS_Graphic* RS_Entity::getGraphic() const{
  */
 RS_Block* RS_Entity::getBlock() const{
     if (rtti()==RS2::EntityBlock) {
-		RS_Block const* ret=static_cast<RS_Block const*>(this);
-		return const_cast<RS_Block*>(ret);
-	} else if (!parent) {
-		return nullptr;
-	}
-	return parent->getBlock();
+        RS_Block const* ret=static_cast<RS_Block const*>(this);
+        return const_cast<RS_Block*>(ret);
+    } else if (!parent) {
+        return nullptr;
+    }
+    return parent->getBlock();
 }
-
 
 /** return the equation of the entity
 for quadratic,
@@ -514,8 +485,7 @@ m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
 for linear:
 m0 x + m1 y + m2 =0
 **/
-LC_Quadratic RS_Entity::getQuadratic() const
-{
+LC_Quadratic RS_Entity::getQuadratic() const{
 		return LC_Quadratic{};
 }
 
@@ -524,13 +494,12 @@ LC_Quadratic RS_Entity::getQuadratic() const
  * or the parent's parent block or nullptr if none of the parents
  * are stored in a block.
  */
-RS_Insert* RS_Entity::getInsert() const
-{
+RS_Insert* RS_Entity::getInsert() const{
     if (rtti()==RS2::EntityInsert) {
-		RS_Insert const* ret=static_cast<RS_Insert const*>(this);
-		return const_cast<RS_Insert*>(ret);
-	} else if (!parent) {
-		return nullptr;
+        RS_Insert const* ret=static_cast<RS_Insert const*>(this);
+        return const_cast<RS_Insert*>(ret);
+    } else if (!parent) {
+        return nullptr;
     } else {
         return parent->getInsert();
     }
@@ -541,20 +510,19 @@ RS_Insert* RS_Entity::getInsert() const
  * or the parent's parent block or insert or nullptr if none of the parents
  * are stored in a block or insert.
  */
-RS_Entity* RS_Entity::getBlockOrInsert() const
-{
-	RS_Entity* ret{nullptr};
-	switch(rtti()){
-	case RS2::EntityBlock:
-	case RS2::EntityInsert:
-		ret=const_cast<RS_Entity*>(this);
-		break;
-	default:
-		if(parent) {
-			return parent->getBlockOrInsert();
-		}
-	}
-	return ret;
+RS_Entity* RS_Entity::getBlockOrInsert() const{
+    RS_Entity* ret{nullptr};
+    switch(rtti()){
+        case RS2::EntityBlock:
+        case RS2::EntityInsert:
+            ret=const_cast<RS_Entity*>(this);
+            break;
+        default:
+            if(parent) {
+                return parent->getBlockOrInsert();
+            }
+    }
+    return ret;
 }
 
 /**
@@ -564,16 +532,14 @@ RS_Entity* RS_Entity::getBlockOrInsert() const
  * either a Graphic or a Block.
  */
 RS_Document* RS_Entity::getDocument() const{
-	if (isDocument()) {
-		RS_Document const* ret=static_cast<RS_Document const*>(this);
-		return const_cast<RS_Document*>(ret);
-	} else if (!parent) {
-		return nullptr;
-	}
-	return parent->getDocument();
+    if (isDocument()) {
+        RS_Document const* ret=static_cast<RS_Document const*>(this);
+        return const_cast<RS_Document*>(ret);
+    } else if (!parent) {
+        return nullptr;
+    }
+    return parent->getDocument();
 }
-
-
 
 /**
  * Sets a variable value for the parent graphic object.
@@ -588,8 +554,6 @@ void RS_Entity::addGraphicVariable(const QString& key, double val, int code) {
     }
 }
 
-
-
 /**
  * Sets a variable value for the parent graphic object.
  *
@@ -602,8 +566,6 @@ void RS_Entity::addGraphicVariable(const QString& key, int val, int code) {
         graphic->addVariable(key, val, code);
     }
 }
-
-
 
 /**
  * Sets a variable value for the parent graphic object.
@@ -618,8 +580,6 @@ void RS_Entity::addGraphicVariable(const QString& key,
         graphic->addVariable(key, val, code);
     }
 }
-
-
 
 /**
  * A safe member function to return the given variable.
@@ -639,8 +599,6 @@ double RS_Entity::getGraphicVariableDouble(const QString& key, double def) {
     return ret;
 }
 
-
-
 /**
  * A safe member function to return the given variable.
  *
@@ -653,12 +611,11 @@ double RS_Entity::getGraphicVariableDouble(const QString& key, double def) {
 int RS_Entity::getGraphicVariableInt(const QString& key, int def) const{
     RS_Graphic* graphic = getGraphic();
     int ret=def;
-	if (graphic) {
+    if (graphic) {
         ret = graphic->getVariableInt(key, def);
     }
     return ret;
 }
-
 
 
 /**
@@ -671,17 +628,15 @@ int RS_Entity::getGraphicVariableInt(const QString& key, int def) const{
  *    doesn't exist.
  */
 QString RS_Entity::getGraphicVariableString(const QString& key,
-		const QString&  def) const
+                                            const QString&  def) const
 {
     RS_Graphic* graphic = getGraphic();
     QString ret=def;
-	if (graphic) {
+    if (graphic) {
         ret = graphic->getVariableString(key, def);
     }
     return ret;
 }
-
-
 
 /**
  * @return The unit the parent graphic works on or None if there's no
@@ -696,8 +651,6 @@ RS2::Unit RS_Entity::getGraphicUnit() const
     }
     return ret;
 }
-
-
 
 RS_Layer* RS_Entity::getLayerResolved() const {
     // we have no layer but a parent that might have one.
@@ -948,9 +901,9 @@ double RS_Entity::getStyleFactor(RS_GraphicView* view) {
  * @return User defined variable connected to this entity or nullptr if not found.
  */
 QString RS_Entity::getUserDefVar(const QString& key) const {
-	auto it=varList.find(key);
-	if(it==varList.end()) return nullptr;
-	return varList.at(key);
+    auto it=varList.find(key);
+    if(it==varList.end()) return nullptr;
+    return varList.at(key);
 }
 /*
  * @coord
@@ -969,25 +922,25 @@ RS_Vector RS_Entity::getNearestOrthTan(const RS_Vector& /*coord*/,
  * Add a user defined variable to this entity.
  */
 void RS_Entity::setUserDefVar(QString key, QString val) {
-	varList.insert(std::make_pair(key, val));
+    varList.insert(std::make_pair(key, val));
 }
 
 /**
  * Deletes the given user defined variable.
  */
 void RS_Entity::delUserDefVar(QString key) {
-	varList.erase(key);
+    varList.erase(key);
 }
 
 /**
  * @return A list of all keys connected to this entity.
  */
 std::vector<QString> RS_Entity::getAllKeys() const{
-	std::vector<QString> ret(0);
-	for(auto const& v: varList){
-		ret.push_back(v.first);
-	}
-	return ret;
+    std::vector<QString> ret(0);
+    for(auto const& v: varList){
+        ret.push_back(v.first);
+    }
+    return ret;
 }
 
 //! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print
@@ -1012,8 +965,7 @@ bool RS_Entity::isPrint(void) const{
     return nullptr == layer || layer->isPrint();
 }
 
-bool RS_Entity::trimmable() const
-{
+bool RS_Entity::trimmable() const{
     switch(rtti()){
     case RS2::EntityArc:
     case RS2::EntityCircle: // fixme - check whether prepareTrim() is supported there?
@@ -1027,26 +979,23 @@ bool RS_Entity::trimmable() const
     }
 }
 
-RS_VectorSolutions RS_Entity::getRefPoints() const
-{
+RS_VectorSolutions RS_Entity::getRefPoints() const{
 	return RS_VectorSolutions();
 }
 
-RS_Vector RS_Entity::getNearestRef(const RS_Vector& coord,
-								   double* dist) const{
+RS_Vector RS_Entity::getNearestRef(const RS_Vector& coord,double* dist) const{
 	RS_VectorSolutions const&& s = getRefPoints();
-
 	return s.getClosest(coord, dist);
 }
 
 RS_Vector RS_Entity::getNearestSelectedRef(const RS_Vector& coord,
 										   double* dist) const{
-	if (isSelected()) {
-		return getNearestRef(coord, dist);
-	}
-	else {
-		return RS_Vector(false);
-	}
+    if (isSelected()) {
+        return getNearestRef(coord, dist);
+    }
+    else {
+        return RS_Vector(false);
+    }
 }
 
 /**
@@ -1057,7 +1006,7 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
     //return os;
 
     os << " {Entity id: " << e.id;
-	if (e.parent) {
+    if (e.parent) {
         os << " | parent id: " << e.parent->getId() << "\n";
     } else {
         os << " | no parent\n";
@@ -1068,8 +1017,8 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
     os << (e.getFlag(RS2::FlagSelected) ? " RS2::FlagSelected" : "");
     os << "\n";
 
-	if (!e.layer) {
-		os << " layer: nullptr ";
+    if (!e.layer) {
+        os << " layer: nullptr ";
     } else {
         os << " layer: " << e.layer->getName().toLatin1().data() << " ";
         os << " layer address: " << e.layer << " ";
@@ -1077,54 +1026,54 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
 
     os << e.pen << "\n";
 
-        os << "variable list:\n";
-	for(auto const& v: e.varList){
-		os << v.first.toLatin1().data()<< ": "
-		   << v.second.toLatin1().data()
-			   << ", ";
-	}
+    os << "variable list:\n";
+    for(auto const& v: e.varList){
+        os << v.first.toLatin1().data()<< ": "
+           << v.second.toLatin1().data()
+           << ", ";
+    }
 
     // There should be a better way then this...
     switch(e.rtti()) {
-    case RS2::EntityPoint:
-        os << (RS_Point&)e;
-        break;
+        case RS2::EntityPoint:
+            os << (RS_Point&)e;
+            break;
 
-    case RS2::EntityLine:
-        os << (RS_Line&)e;
-        break;
+        case RS2::EntityLine:
+            os << (RS_Line&)e;
+            break;
 
-    case RS2::EntityPolyline:
-        os << (RS_Polyline&)e;
-        break;
+        case RS2::EntityPolyline:
+            os << (RS_Polyline&)e;
+            break;
 
-    case RS2::EntityArc:
-        os << (RS_Arc&)e;
-        break;
+        case RS2::EntityArc:
+            os << (RS_Arc&)e;
+            break;
 
-    case RS2::EntityCircle:
-        os << (RS_Circle&)e;
-        break;
+        case RS2::EntityCircle:
+            os << (RS_Circle&)e;
+            break;
 
-    case RS2::EntityEllipse:
-        os << (RS_Ellipse&)e;
-        break;
+        case RS2::EntityEllipse:
+            os << (RS_Ellipse&)e;
+            break;
 
-    case RS2::EntityInsert:
-        os << (RS_Insert&)e;
-        break;
+        case RS2::EntityInsert:
+            os << (RS_Insert&)e;
+            break;
 
-    case RS2::EntityMText:
-        os << (RS_MText&)e;
-        break;
+        case RS2::EntityMText:
+            os << (RS_MText&)e;
+            break;
 
-    case RS2::EntityText:
-        os << (RS_Text&)e;
-        break;
+        case RS2::EntityText:
+            os << (RS_Text&)e;
+            break;
 
-    default:
-        os << "Unknown Entity";
-        break;
+        default:
+            os << "Unknown Entity";
+            break;
     }
     os << "}\n\n";
 

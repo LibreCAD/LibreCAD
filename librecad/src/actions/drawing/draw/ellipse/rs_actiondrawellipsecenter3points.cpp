@@ -74,8 +74,8 @@ void RS_ActionDrawEllipseCenter3Points::doTrigger() {
 }
 
 void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){
-    //    RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::mouseMoveEvent begin");
     deletePreview();
+    //    RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::mouseMoveEvent begin");
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
     if (status == SetCenter){
@@ -113,8 +113,8 @@ void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){
                 break;
         }
     }
-    drawPreview();
     RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::mouseMoveEvent end");
+    drawPreview();
 }
 
 bool RS_ActionDrawEllipseCenter3Points::preparePreview(){

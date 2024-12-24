@@ -92,11 +92,14 @@ void RS_ActionDrawCircleInscribe::doTrigger() {
 }
 
 void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
+    deleteHighlights();
+    deletePreview();
+
+
     RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent begin");
     snapPoint(e);
     int status = getStatus();
-    deleteHighlights();
-    deletePreview();
+
     for(RS_AtomicEntity* const pc: pPoints->lines) { // highlight already selected
         highlightSelected(pc);
     }
@@ -135,9 +138,9 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
                 break;
         }
     }
+    RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent end");
     drawPreview();
     drawHighlights();
-    RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent end");
 }
 
 void RS_ActionDrawCircleInscribe::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

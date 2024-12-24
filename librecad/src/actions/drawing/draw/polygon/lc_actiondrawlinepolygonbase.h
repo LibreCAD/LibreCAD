@@ -43,6 +43,7 @@ protected:
         RS_Vector centerPoint{false};
         double startingAngle = 0.0;
         double vertexRadius = 0.0;
+        double innerRadius = 0.0;
     };
 
     std::unique_ptr<Points> pPoints;

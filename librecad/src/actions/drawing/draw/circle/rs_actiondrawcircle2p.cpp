@@ -94,6 +94,7 @@ void RS_ActionDrawCircle2P::preparePreview() {
 }
 
 void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
+    deletePreview();
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
         case SetPoint1: {
@@ -102,7 +103,6 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
             break;
         }
         case SetPoint2: {
-            deletePreview();
             mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
             pPoints->point2 = mouse;
             preparePreview();
@@ -116,12 +116,13 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
                     //                    previewRefLine(pPoints->point1, pPoints->point2);
                 }
             }
-            drawPreview();
+
             break;
         }
         default:
             break;
     }
+    drawPreview();
 }
 
 void RS_ActionDrawCircle2P::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

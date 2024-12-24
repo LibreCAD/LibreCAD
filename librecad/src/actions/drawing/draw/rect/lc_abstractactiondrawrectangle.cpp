@@ -168,17 +168,15 @@ void LC_AbstractActionDrawRectangle::doPreparePreviewEntities([[maybe_unused]]QM
     if (showRefEntitiesOnPreview) {
         createRefPoint(data.centerPoint, list);
     }
-    QString msg = tr("To be created: ").append(tr("RECT"));
-    msg.append("\n");
-    msg.append(tr("Width: "));
-    msg.append(formatLinear(data.width));
-    msg.append("\n");
-    msg.append(tr("Height: "));
-    msg.append(formatLinear(data.height));
-    msg.append("\n");
-    msg.append(tr("Center: "));
-    msg.append(formatVector(data.centerPoint));
-    appendInfoCursorEntityCreationMessage(msg);
+
+    if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnCreation) {
+        LC_InfoMessageBuilder msg{};
+        msg.add(tr("To be created:"), tr("Rectangle"));
+        msg.add(tr("Width:"), formatLinear(data.width));
+        msg.add(tr("Height:"), formatLinear(data.height));
+        msg.add(tr("Center:"), formatVector(data.centerPoint));
+        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+    }
 }
 
 /**

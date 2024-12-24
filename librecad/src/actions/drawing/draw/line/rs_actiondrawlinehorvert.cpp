@@ -80,23 +80,25 @@ void RS_ActionDrawLineHorVert::doTrigger() {
 }
 
 void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
     if (getStatus() == SetEndpoint && pPoints->p1.valid){
         RS_Vector p2x = RS_Vector(mouse.x, pPoints->p1.y);
         RS_Vector p2y = RS_Vector(pPoints->p1.x, mouse.y);
-        if (mouse.distanceTo(p2y) > mouse.distanceTo(p2x))
+        if (mouse.distanceTo(p2y) > mouse.distanceTo(p2x)) {
             pPoints->p2 = p2x;
-        else
+        }
+        else {
             pPoints->p2 = p2y;
-        deletePreview();
+        }
         pPoints->data = {pPoints->p1, pPoints->p2};
         previewToCreateLine(pPoints->p1, pPoints->p2);
-        drawPreview();
     }
 
     RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionDrawLineHorVert::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

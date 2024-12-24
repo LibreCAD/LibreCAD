@@ -59,6 +59,7 @@ void RS_ActionModifyMove::doTrigger(bool keepSelected) {
 }
 
 void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
+    deletePreview();
     RS_DEBUG->print("RS_ActionModifyMove::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -70,7 +71,6 @@ void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
         }
         case SetTargetPoint: {
             if (pPoints->referencePoint.valid){
-                deletePreview();
 
                 mouse = getSnapAngleAwarePoint(e, pPoints->referencePoint, mouse, true);
                 pPoints->targetPoint = mouse;
@@ -104,7 +104,6 @@ void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
                     msg.add(formatRelativePolar(offset));
                     appendInfoCursorZoneMessage(msg.toString(), 2, false);
                 }
-                drawPreview();
             }
             break;
         }
@@ -115,6 +114,7 @@ void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
     }    
 
     RS_DEBUG->print("RS_ActionModifyMove::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionModifyMove::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {

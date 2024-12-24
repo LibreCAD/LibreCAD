@@ -89,8 +89,8 @@ void RS_ActionDrawEllipseFociPoint::doTrigger() {
 }
 
 void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::mouseMoveEvent begin");
     deletePreview();
+    RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::mouseMoveEvent begin");
     RS_Vector mouse = snapPoint(e);
 
     switch (getStatus()) {
@@ -126,9 +126,9 @@ void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    drawPreview();
 
     RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionDrawEllipseFociPoint::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
