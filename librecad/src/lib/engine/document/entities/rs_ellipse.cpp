@@ -326,12 +326,14 @@ RS_VectorSolutions RS_Ellipse::getRefPoints() const
 
 
 RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
-    double dist1, dist2;
+    if (!isEllipticArc())
+        return RS_Vector{false};
+
     RS_Vector startpoint = getStartpoint();
     RS_Vector endpoint = getEndpoint();
 
-    dist1 = (startpoint-coord).squared();
-    dist2 = (endpoint-coord).squared();
+    double dist1 = (startpoint-coord).squared();
+    double dist2 = (endpoint-coord).squared();
 
     if (dist2<dist1) {
 		if (dist) {

@@ -321,7 +321,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e)
         t = snapEndpoint(mouseCoord);
         double ds2=mouseCoord.squaredTo(t);
 
-        if (ds2 < ds2Min){
+        if (t.valid && ds2 < ds2Min){
             ds2Min=ds2;
             pImpData->snapSpot = t;
         }

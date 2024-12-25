@@ -84,8 +84,8 @@ double getRandomAngle() {
 double getEndPointDistance(const RS_Vector& point, const RS_Entity& entity)
 {
     double distance = RS_MAXDOUBLE;
-    entity.getNearestEndpoint(point, &distance);
-    return distance;
+    RS_Vector endPoint = entity.getNearestEndpoint(point, &distance);
+    return endPoint.valid ? distance : RS_MAXDOUBLE;
 }
 
 // Whether two entities are connected by an end point
