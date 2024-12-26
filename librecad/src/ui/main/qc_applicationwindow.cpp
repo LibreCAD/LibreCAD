@@ -1034,6 +1034,13 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
 
         coordinateWidget->setGraphic(activatedGraphic);
         relativeZeroCoordinatesWidget->setGraphicView(activatedGraphicView);
+
+        QAction *lockRelZeroAction = ag_manager->getActionByName("LockRelativeZero");
+        if (lockRelZeroAction != nullptr){
+            bool locked = activatedGraphicView->isRelativeZeroLocked();
+            lockRelZeroAction->setChecked(locked);
+        }
+        
         blockWidget->setBlockList(activatedDocument->getBlockList());
 
         // Update all inserts in this graphic (blocks might have changed):

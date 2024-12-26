@@ -69,7 +69,7 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createInfoCursorActions(a_map, agm->infoCursor);
     createSnapExtraActions(a_map, agm->snap_extras);
     createRestrictActions(a_map, agm->restriction);
-    createOtherActions(a_map, agm->other);
+    createRelZeroActionsActions(a_map, agm->other);
 
     for (QAction* value: std::as_const(a_map)){
         if (value != nullptr) {
@@ -359,13 +359,13 @@ void LC_ActionFactory::createRestrictActions(QMap<QString, QAction *> &map, QAct
         {"RestrictVertical",   tr("Restrict Vertical"),   ":/icons/restr_ver.svg"},
         {"RestrictOrthogonal", tr("Restrict Orthogonal"), ":/icons/restr_ortho.svg"},
         {"RestrictNothing",    tr("Restrict Nothing"),    ":/extui/restrictnothing.png"},
+        {"LockRelativeZero",   tr("Lock relative zero position"), ":/icons/lock_rel_zero.svg"}
     });
 }
 
-void LC_ActionFactory::createOtherActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+void LC_ActionFactory::createRelZeroActionsActions(QMap<QString, QAction *> &map, QActionGroup *group) {
     createActions(map, group, {
-        {"SetRelativeZero",    tr("Set relative zero position"),  ":/icons/set_rel_zero.svg"},
-        {"LockRelativeZero",   tr("Lock relative zero position"), ":/icons/lock_rel_zero.svg"}
+        {"SetRelativeZero",    tr("Set relative zero position"),  ":/icons/set_rel_zero.svg"}
         // todo - add action for hiding/showing related zero
        //{"RestrictOrthogonal", tr("Restrict Orthogonal"),         ":/icons/restr_ortho.svg"}
     });

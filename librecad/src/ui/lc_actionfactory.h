@@ -78,7 +78,7 @@ private:
     void setupCreatedActions(QMap<QString, QAction *> &map);
     void markNotEditableActionsShortcuts(QMap<QString, QAction *> &map);
     void createRestrictActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createOtherActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createRelZeroActionsActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createNamedViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
 };
 

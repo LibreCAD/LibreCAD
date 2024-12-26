@@ -33,6 +33,7 @@ public:
     LC_ActionGroup* modify;
     LC_ActionGroup* options;
     LC_ActionGroup* other;
+    LC_ActionGroup* relZero;
     LC_ActionGroup* polyline;
     LC_ActionGroup* restriction;
     LC_ActionGroup* select;
