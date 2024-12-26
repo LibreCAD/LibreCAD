@@ -63,23 +63,12 @@ void RS_ActionInfoTotalLength::doTrigger([[maybe_unused]]bool selected) {
 void RS_ActionInfoTotalLength::finishMouseMoveOnSelection([[maybe_unused]] QMouseEvent *event) {
     const RS_EntityContainer::LC_SelectionInfo &selectionInfo = container->getSelectionInfo();
     unsigned int selectedCount = selectionInfo.count;
-    QString msg = tr("Selected:");
-    msg.append(QString::number(selectedCount));
+    LC_InfoMessageBuilder msg;
+    msg.add(tr("Selected:"), QString::number(selectedCount));
     if (selectedCount > 0) {
-        msg.append("\n");
-        msg.append(tr("Total Length:"));
-        msg.append(formatLinear(selectionInfo.length));
-        /*double totalLen = 0.0;
-        for (auto e: selectedEntities){
-            double entityLength = e->getLength();
-            if (entityLength >= 0.) {
-                totalLen += entityLength;
-            }
-        }
-        msg.append(formatLinear(totalLen));
-         */
+        msg.add(tr("Total Length:"),formatLinear(selectionInfo.length));
     }
-    appendInfoCursorZoneMessage(msg, 2, true);
+    appendInfoCursorZoneMessage(msg.toString(), 2, true);
 }
 
 

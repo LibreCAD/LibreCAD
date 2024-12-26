@@ -258,25 +258,14 @@ void RS_ActionInfoAngle::updateInfoCursor(const RS_Vector &point2, const RS_Vect
         double angle = remainder(angle2 - angle1, 2. * M_PI);
         QString str = formatAngle(angle);
 
-        QString msg = tr("Info");
-        msg.append("\n");
-        msg.append(tr("Angle: "));
-        msg.append(formatAngle(angle));
+        LC_InfoMessageBuilder msg(tr("Info"));
+        msg.add(tr("Angle:"),formatAngle(angle));
         if (angle < 0) {
-            msg.append("\n");
-            msg.append(tr("Angle (alt): "));
-            msg.append(formatAngle(angle + 2. * M_PI));
+            msg.add(tr("Angle (alt): "), formatAngle(angle + 2. * M_PI));
         }
-        msg.append("\n");
-        msg.append(tr("Intersection: "));
-        msg.append(formatVector(intersection));
-        msg.append("\n");
-        msg.append(tr("Line 1 Angle: "));
-        msg.append(formatAngle(angle1));
-        msg.append("\n");
-        msg.append(tr("Line 2 Angle: "));
-        msg.append(formatAngle(angle2));
-
-        appendInfoCursorZoneMessage(msg, 2, true);
+        msg.add(tr("Intersection:"), formatVector(intersection));
+        msg.add(tr("Line 1 Angle:"), formatAngle(angle1));
+        msg.add(tr("Line 2 Angle:"), formatAngle(angle2));
+        appendInfoCursorZoneMessage(msg.toString(), 2, true);
     }
 }

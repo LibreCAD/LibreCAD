@@ -430,5 +430,15 @@ RS_Polyline *LC_ActionDrawLinePolygonBase::createShapePolyline(PolygonInfo &poly
             result->addVertex(vertex, bulge, false);
         }
     }
+
+    // update inner radius
+    RS_Vector const vertex0 = centerPoint.relative(vertexDistance, vertexStartAngle);
+    RS_Vector const vertex1 = centerPoint.relative(vertexDistance, vertexStartAngle + segmentAngle);
+
+    RS_Vector midPoint = (vertex0+vertex1)*0.5;
+    double innerRadius = centerPoint.distanceTo(midPoint);
+
+    polygonInfo.innerRadius = innerRadius;
+
     return result;
 }

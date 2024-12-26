@@ -188,78 +188,78 @@
 <context>
     <name>LC_AbstractActionDrawRectangle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="171"/>
-        <source>To be created: </source>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="174"/>
+        <source>To be created:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="171"/>
-        <source>RECT</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="174"/>
+        <source>Rectangle</source>
+        <translation type="unfinished">Obdélník</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="173"/>
-        <source>Width: </source>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="175"/>
+        <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="176"/>
-        <source>Height: </source>
+        <source>Height:</source>
+        <translation type="unfinished">Výška:</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="177"/>
+        <source>Center:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="179"/>
-        <source>Center: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="208"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="206"/>
         <source>Invalid Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="219"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="217"/>
         <source>Invalid radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="359"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="357"/>
         <source>Invalid value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="415"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="413"/>
         <source>Specify insertion point</source>
         <translation type="unfinished">Zadejte bod pro vložení</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="418"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="416"/>
         <source>Specify angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="421"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="419"/>
         <source>Specify size (width, height)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="424"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="422"/>
         <source>Specify corners type
 [str|round|bevels]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="427"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="425"/>
         <source>Specify corner bevel length (x,y)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="430"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="428"/>
         <source>Specify corner radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="433"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="431"/>
         <source>Specify edges mode
 [both|hor|vert]</source>
         <translation type="unfinished"></translation>
@@ -268,12 +268,12 @@
 <context>
     <name>LC_AbstractActionWithPreview</name>
     <message>
-        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="748"/>
+        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="747"/>
         <source> is not divided as it is locked.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="756"/>
+        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="755"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -281,32 +281,32 @@
 <context>
     <name>LC_ActionCircleDimBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="129"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="122"/>
         <source>Not a circle or arc entity</source>
         <translation type="unfinished">Prvek není kružnice ani oblouk</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="192"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="185"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="208"/>
         <source>Select arc or circle entity</source>
         <translation type="unfinished">Vyberte oblouk nebo kružnici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="208"/>
         <source>Free angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="218"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="211"/>
         <source>Specify dimension line position or enter angle:</source>
         <translation type="unfinished">Zadejte umístění kótovací čáry nebo zadejte úhel:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="221"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="214"/>
         <source>Enter dimension text:</source>
         <translation type="unfinished">Zadejte text kóty:</translation>
     </message>
@@ -314,7 +314,7 @@
 <context>
     <name>LC_ActionDimArc</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="208"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="200"/>
         <source>Select arc entity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -323,7 +323,7 @@
         <translation type="obsolete">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="211"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="203"/>
         <source>Specify dimension arc location</source>
         <translation type="unfinished"></translation>
     </message>
@@ -331,32 +331,32 @@
 <context>
     <name>LC_ActionDimLinearBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="273"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="261"/>
         <source>Specify first extension line origin</source>
         <translation type="unfinished">Zadejte počátek první vynášecí čáry</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="276"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="264"/>
         <source>Specify second extension line origin</source>
         <translation type="unfinished">Zadejte počátek druhé vynášecí čáry</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="279"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="267"/>
         <source>Specify dimension line location</source>
         <translation type="unfinished">Zadejte umístění kótovací čáry</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="279"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="267"/>
         <source>Snap to Adjacent Dim</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="282"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="270"/>
         <source>Enter dimension text:</source>
         <translation type="unfinished">Zadejte text kóty:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="285"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="273"/>
         <source>Enter dimension line angle:</source>
         <translation type="unfinished">Zadejte úhel kótovací čáry:</translation>
     </message>
@@ -435,32 +435,32 @@
 <context>
     <name>LC_ActionDrawArc2PointsBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="111"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="105"/>
         <source>The end point is too close to the start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="152"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="146"/>
         <source>Positive value is expected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="155"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="149"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="192"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="186"/>
         <source>Specify first point of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="196"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="190"/>
         <source>Specify second point of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="209"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="203"/>
         <source>Opposite Arc direction</source>
         <translation type="unfinished"></translation>
     </message>
@@ -530,19 +530,19 @@
 <context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="214"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="200"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
         <translation>Pro vybrané body je poloměr=%1 příliš malý
 Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="225"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="211"/>
         <source>Select from two possible circle centers</source>
         <translation>Vyberte mezi dvěma možnými umístěními středu kružnice</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="246"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="232"/>
         <source>Specify first point</source>
         <translation>Zadejte první bod</translation>
     </message>
@@ -551,7 +551,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="249"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="235"/>
         <source>Specify second point</source>
         <translation>Zadejte druhý bod</translation>
     </message>
@@ -560,7 +560,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="252"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="238"/>
         <source>Select circle center</source>
         <translation>Zadejte střed kružnice</translation>
     </message>
@@ -622,29 +622,29 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
 <context>
     <name>LC_ActionDrawEllipse1Point</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="263"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="255"/>
         <source>Specify ellipse center</source>
         <translation type="unfinished">Zadejte střed elipsy</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="267"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="259"/>
         <source>Specify angle for major axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="271"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="263"/>
         <source>Set start angle of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="275"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="267"/>
         <source>Set end angle of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="299"/>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="310"/>
-        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="321"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="291"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="302"/>
+        <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="313"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Neplatný výraz</translation>
     </message>
@@ -652,12 +652,12 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
 <context>
     <name>LC_ActionDrawLineAngleRel</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="449"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="448"/>
         <source>Select base line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="452"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="451"/>
         <source>Specify length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -780,58 +780,63 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonBase</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="175"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="173"/>
         <source>Not a valid number. Try 1..9999</source>
         <translation type="unfinished">Neplatný počet. Zkuste 1..9999</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="187"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="185"/>
         <source>Invalid value of rounding radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="197"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="195"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="229"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="227"/>
         <source>Enter number:</source>
         <translation type="unfinished">Zadejte počet:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="232"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="230"/>
         <source>Enter rounding radius:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="240"/>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="238"/>
         <source>Specify center</source>
         <translation type="unfinished">Zadejte střed</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="258"/>
-        <source>To be created: </source>
+        <source>To be created:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="259"/>
+        <source>Center:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="260"/>
+        <source>Start angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="261"/>
+        <source>Radius:</source>
+        <translation type="unfinished">Poloměr:</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="262"/>
+        <source>Radius Inner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="258"/>
         <source>Polygon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="260"/>
-        <source>Start angle: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="263"/>
-        <source>Radius: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="266"/>
-        <source>Center: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -929,27 +934,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawMidLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="243"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="239"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="263"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="259"/>
         <source>Select first entity</source>
         <translation type="unfinished">Vyberte první prvek</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="267"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="263"/>
         <source>Select second entity</source>
         <translation type="unfinished">Vyberte druhý prvek</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="267"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="263"/>
         <source>Alternate endpoints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="271"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="267"/>
         <source>Enter offset value</source>
         <translation type="unfinished"></translation>
     </message>
@@ -957,27 +962,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="200"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="193"/>
         <source>Specify the first point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="196"/>
         <source>Specify the second point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="199"/>
         <source>Specify the third point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="209"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="202"/>
         <source>Specify the fourth point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="212"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="205"/>
         <source>Specify the Axis on parabola</source>
         <translation type="unfinished"></translation>
     </message>
@@ -985,22 +990,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawParabolaFD</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="301"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="293"/>
         <source>Specify the focus of parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="304"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="296"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="308"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="300"/>
         <source>Specify the start point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="312"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="304"/>
         <source>Specify the end point on parabola</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1008,58 +1013,58 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawPointsLattice</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="183"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="179"/>
         <source>Second point is too close to the first one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="194"/>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="205"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="190"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="201"/>
         <source>Third point is too close to the second one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="251"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="247"/>
         <source>Invalid value provided</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="269"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="265"/>
         <source>Specify first point</source>
         <translation type="unfinished">Zadejte první bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="273"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="269"/>
         <source>Specify second point</source>
         <translation type="unfinished">Zadejte druhý bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="277"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="273"/>
         <source>Specify third point</source>
         <translation type="unfinished">Zadejte třetí bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="277"/>
         <source>Specify fourth point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="277"/>
         <source>Last point position is un-adjusted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="282"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="278"/>
         <source>Last point position is adjusted to first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="286"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="282"/>
         <source>Enter number of points by X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="290"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="286"/>
         <source>Enter number of points by Y</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1192,12 +1197,12 @@ or [%2]</source>
         <translation type="unfinished">Kružnice</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="570"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="569"/>
         <source>Select line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="573"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="572"/>
         <source>Select circle or arc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1205,7 +1210,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="224"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="217"/>
         <source>Specify first control point</source>
         <translation>Zadejte první řídicí bod</translation>
     </message>
@@ -1214,28 +1219,28 @@ or [%2]</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="241"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="234"/>
         <source>Specify next control point or [%1]</source>
         <translation>Zadejte další řídicí bod nebo [%1]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="241"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="234"/>
         <source>Back</source>
         <translation>Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="243"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="236"/>
         <source>Specify next control point</source>
         <translation>Zadejte další řídicí bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="275"/>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="296"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="268"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="289"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Nelze vrátit zpět: Ještě není definován dostatečný počet prvků.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="312"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="305"/>
         <source>Cannot undo: Nothing could be redone.</source>
         <translation>Nelze vrátit zpět: Nic by se nedalo provést znovu.</translation>
     </message>
@@ -1286,12 +1291,12 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="138"/>
+        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="134"/>
         <source>Set paste reference point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="138"/>
+        <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="134"/>
         <source>Paste Multiple</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2207,12 +2212,12 @@ or [%2]</source>
         <translation type="unfinished">Bez omezení</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="367"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="368"/>
         <source>Set relative zero position</source>
         <translation type="unfinished">Nastavit pozici relativního počátku</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="368"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="362"/>
         <source>Lock relative zero position</source>
         <translation type="unfinished">Zamknout pozici relativního počátku</translation>
     </message>
@@ -2879,101 +2884,106 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="56"/>
+        <source>Relative Zero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="57"/>
         <source>Polyline</source>
         <translation type="unfinished">Křivka</translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="56"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="57"/>
         <source>Polyline drawing commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="57"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="58"/>
         <source>Restriction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="57"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="58"/>
         <source>Snap restrictions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="58"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="59"/>
         <source>Select</source>
         <translation type="unfinished">Vybrat</translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="58"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="59"/>
         <source>Entity selection operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="59"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="60"/>
         <source>Snap</source>
         <translation type="unfinished">Uchopení</translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="59"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="60"/>
         <source>Snapping operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="60"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="61"/>
         <source>Snap Extras</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="60"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="61"/>
         <source>Additional Snaps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="61"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="62"/>
         <source>View</source>
         <translation type="unfinished">Zobrazit</translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="61"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="62"/>
         <source>View related operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="62"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="63"/>
         <source>Named Views</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="62"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="63"/>
         <source>Persistent Views operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="63"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="64"/>
         <source>Widgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="63"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="64"/>
         <source>Widgets management</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="64"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="65"/>
         <source>PenTB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="64"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="65"/>
         <source>Pen related operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="65"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="66"/>
         <source>InfoCursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="65"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="66"/>
         <source>Informational Cursor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3004,62 +3014,62 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="182"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="181"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="200"/>
         <source>Info</source>
         <translation type="unfinished">Informace</translation>
     </message>
     <message>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="182"/>
+        <source>Distance:</source>
+        <translation type="unfinished">Vzdálenost:</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="183"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="201"/>
+        <source>Angle:</source>
+        <translation type="unfinished">Úhel:</translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="184"/>
-        <source>Distance: </source>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="203"/>
+        <source>From:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="187"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="215"/>
-        <source>Angle: </source>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="185"/>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="205"/>
+        <source>To:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="190"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="221"/>
-        <source>From: </source>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="202"/>
+        <source>Angle (Alt):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="193"/>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="227"/>
-        <source>To: </source>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="204"/>
+        <source>Intersection:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="218"/>
-        <source>Angle (Alt): </source>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="206"/>
+        <source>Distance1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="224"/>
-        <source>Intersection: </source>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="207"/>
+        <source>Distance2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="230"/>
-        <source>Distance1: </source>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="208"/>
+        <source>Angle 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="233"/>
-        <source>Distance2: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="236"/>
-        <source>Angle 1: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="239"/>
-        <source>Angle 2: </source>
+        <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="209"/>
+        <source>Angle 2:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3127,12 +3137,12 @@ or [%2]</source>
         <translation type="unfinished">Výkres</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="146"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="147"/>
         <source>Reference: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="159"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="161"/>
         <source>Offset:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3185,52 +3195,52 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="88"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="87"/>
         <source>Offset:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="91"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="88"/>
         <source>Angle:</source>
         <translation type="unfinished">Úhel:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="94"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="89"/>
         <source>Scale:</source>
         <translation type="unfinished">Měřítko:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="219"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="212"/>
         <source>Select to align (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="219"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="212"/>
         <source>Align immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="219"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="212"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="225"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="218"/>
         <source>Select first reference point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="229"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="222"/>
         <source>Select first target point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="233"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="226"/>
         <source>Select second reference point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="237"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignref.cpp" line="230"/>
         <source>Select second target point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3238,57 +3248,57 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyAlignSingle</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="154"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="149"/>
         <source>Offset:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="170"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="163"/>
         <source>Align to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="173"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="166"/>
         <source>Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="177"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="170"/>
         <source>Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="181"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="174"/>
         <source>Drawing</source>
         <translation type="unfinished">Výkres</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="186"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="179"/>
         <source>Reference: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="240"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="233"/>
         <source>Select base alignment entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="243"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="236"/>
         <source>Specify base alignment point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="255"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="248"/>
         <source>Select entity to align</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="255"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="248"/>
         <source>Finish alignment after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="336"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="329"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3301,12 +3311,53 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="980"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="238"/>
+        <source>Break/Divide Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="239"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="359"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="456"/>
+        <source>Point 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="240"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="361"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="458"/>
+        <source>Point 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="357"/>
+        <source>Break/Divide Circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="358"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="455"/>
+        <source>Angle 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="360"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="457"/>
+        <source>Angle 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="454"/>
+        <source>Break/Divide Arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="1004"/>
         <source>Select line, arc or circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="980"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="1004"/>
         <source>Proceed even if no intersections</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3315,22 +3366,22 @@ or [%2]</source>
     <name>LC_ActionModifyDuplicate</name>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="202"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="240"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="238"/>
         <source>Duplicate Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="267"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="263"/>
         <source>Select entity to duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="267"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="263"/>
         <source>Interactive Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="270"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="266"/>
         <source>Select direction of offset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3338,17 +3389,35 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyLineGap</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="418"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="66"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="91"/>
+        <source>Line Gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="67"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="92"/>
+        <source>Start:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="68"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="93"/>
+        <source>End:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="432"/>
         <source>Select line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="418"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="432"/>
         <source>Use Alternative Line Endpoint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="422"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="436"/>
         <source>Select endpoint of gap</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3356,33 +3425,48 @@ or [%2]</source>
 <context>
     <name>LC_ActionModifyLineJoin</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="151"/>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="200"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="103"/>
+        <source>Lines Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="105"/>
+        <source>Lines are parallel</source>
+        <translation type="unfinished">Úsečky jsou rovnoběžné</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="108"/>
+        <source>Intersection:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="161"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="210"/>
         <source>No line selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="171"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="181"/>
         <source>Lines are parallel, can&apos;t merge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="176"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="186"/>
         <source>Lines already intersects, can&apos;t merge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="785"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="794"/>
         <source>Select first line</source>
         <translation type="unfinished">Vyberte první úsečku</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="788"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="797"/>
         <source>Select second line</source>
         <translation type="unfinished">Vyberte druhou úsečku</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="791"/>
+        <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="800"/>
         <source>Select part of first line that should remain after trim</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3403,7 +3487,7 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="114"/>
+        <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="106"/>
         <source>Select and paste</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3411,17 +3495,17 @@ or [%2]</source>
 <context>
     <name>LC_ActionPenApply</name>
     <message>
-        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="160"/>
+        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="155"/>
         <source>Specify entity to pick the pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="163"/>
+        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="158"/>
         <source>Specify entity to apply pen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="163"/>
+        <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="158"/>
         <source>Apply Resolved Pen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3429,7 +3513,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionPenPick</name>
     <message>
-        <location filename="../src/actions/drawing/pen/lc_actionpenpick.cpp" line="94"/>
+        <location filename="../src/actions/drawing/pen/lc_actionpenpick.cpp" line="89"/>
         <source>Specify entity to pick the pen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3437,7 +3521,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionPolylineArcsToLines</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinearcstolines.cpp" line="121"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinearcstolines.cpp" line="109"/>
         <source>Specify polyline with arc segments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3445,22 +3529,22 @@ or [%2]</source>
 <context>
     <name>LC_ActionPolylineChangeSegmentType</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="62"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="51"/>
         <source>Invalid arc point to create arc, select another one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="242"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="230"/>
         <source>Select polyline to modify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="246"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="234"/>
         <source>Select segment of polyline to modify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="250"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="238"/>
         <source>Specify position on arc to create</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3468,42 +3552,42 @@ or [%2]</source>
 <context>
     <name>LC_ActionPreSelectionAwareBase</name>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="157"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="152"/>
         <source>Selecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="157"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="152"/>
         <source>De-Selecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="158"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="153"/>
         <source> entities </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="159"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="154"/>
         <source>that intersect with box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="159"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="154"/>
         <source>that are within box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="185"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="180"/>
         <source>Choose second edge</source>
         <translation type="unfinished">Zvolte druhou stranu</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="185"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="180"/>
         <source>Deselect entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
+        <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="217"/>
         <source>No valid entities selected, select them first</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3583,7 +3667,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionSplineExplode</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineexplode.cpp" line="192"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineexplode.cpp" line="191"/>
         <source>Select spline or spline points entity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3599,27 +3683,27 @@ or [%2]</source>
 <context>
     <name>LC_ActionSplineRemoveBetween</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="46"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="42"/>
         <source>Not enough points remains for the spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="224"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="220"/>
         <source>Select spline or spline points entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="228"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="224"/>
         <source>Select first point for deletion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="232"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="228"/>
         <source>Select second point for deletion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="232"/>
+        <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="228"/>
         <source>Delete from endpoints TO selected points</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7478,10 +7562,10 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1255"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1271"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1272"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1316"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1334"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1350"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1361"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1319"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1337"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1353"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1364"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7496,10 +7580,10 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1255"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1271"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1272"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1316"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1334"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1350"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1361"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1319"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1337"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1353"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1364"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7627,10 +7711,10 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1116"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1181"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1203"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1319"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1342"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1447"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1460"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1322"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1345"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1450"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1463"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
@@ -7642,8 +7726,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1233"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1257"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1270"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1291"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1306"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1293"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1308"/>
         <source>Length</source>
         <translation type="unfinished">Délka</translation>
     </message>
@@ -7655,8 +7739,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="732"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="772"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="864"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1370"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1387"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1373"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1390"/>
         <source>Center</source>
         <translation type="unfinished">Středová</translation>
     </message>
@@ -7666,8 +7750,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="674"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="696"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="865"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1368"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1385"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1371"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1388"/>
         <source>Radius</source>
         <translation type="unfinished">Poloměr</translation>
     </message>
@@ -7695,7 +7779,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="650"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="756"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="799"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1321"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1324"/>
         <source>Area</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7729,8 +7813,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="750"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="793"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="869"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1371"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1389"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1374"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1392"/>
         <source>Start Angle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7749,8 +7833,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="752"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="795"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="870"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1372"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1390"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1375"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1393"/>
         <source>End Angle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8117,7 +8201,7 @@ Layer: </source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1240"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1276"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1275"/>
         <source>Control Point </source>
         <translation type="unfinished"></translation>
     </message>
@@ -8127,26 +8211,26 @@ Layer: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1285"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1301"/>
-        <source>PARABOLA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1287"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1303"/>
-        <source>Focus</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1288"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1304"/>
-        <source>Vertex</source>
+        <source>PARABOLA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1289"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1305"/>
+        <source>Focus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1290"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1306"/>
+        <source>Vertex</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1291"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1307"/>
         <source>Axis Angle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8156,28 +8240,28 @@ Layer: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1315"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1331"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1318"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1334"/>
         <source>HATCH</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1316"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1334"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1319"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1337"/>
         <source>Solid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1317"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1340"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1320"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1343"/>
         <source>Pattern</source>
         <translation type="unfinished">Vzorek</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1179"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1205"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1318"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1341"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1321"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1344"/>
         <source>Scale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8187,91 +8271,91 @@ Layer: </source>
         <translation type="unfinished">Body splajny</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1343"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1346"/>
         <source>Total Area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1348"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1359"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1351"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1362"/>
         <source>DIMLEADER</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1350"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1361"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1353"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1364"/>
         <source>Arrow Head</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1365"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1382"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1368"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1385"/>
         <source>DIMARC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1369"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1386"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1372"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1389"/>
         <source>Arc Length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1398"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1409"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1401"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1412"/>
         <source>DIMANGULAR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1415"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1421"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1418"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1424"/>
         <source>DIMDIAMETRIC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1416"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1422"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1428"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1438"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1419"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1425"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1431"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1441"/>
         <source>Definition Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1427"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1437"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1430"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1440"/>
         <source>DIMRADIAL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1444"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1457"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1447"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1460"/>
         <source>DIMLINEAR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1445"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1458"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1466"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1478"/>
-        <source>Extension Point 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1446"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1459"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1467"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1479"/>
-        <source>Extension Point 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1448"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1461"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1469"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1481"/>
+        <source>Extension Point 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1449"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1462"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1470"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1482"/>
+        <source>Extension Point 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1451"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1464"/>
         <source>Oblique</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1465"/>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1476"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1468"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1479"/>
         <source>DIMALIGNED</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8462,7 +8546,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="750"/>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="748"/>
         <source>No data - select entity of coordinates first...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9686,27 +9770,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_WidgetFactory</name>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="469"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="466"/>
         <source>Library Browser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="481"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="478"/>
         <source>Command line</source>
         <translation type="unfinished">Příkazový řádek</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="507"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="504"/>
         <source>Dock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="507"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="504"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="667"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="664"/>
         <source>Lines</source>
         <translation type="unfinished">Úsečky</translation>
     </message>
@@ -9715,459 +9799,459 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Kružnice</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="673"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="670"/>
         <source>Ellipses</source>
         <translation type="unfinished">Elipsy</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="674"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="671"/>
         <source>PolyLines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="370"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="639"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="672"/>
+        <source>Select</source>
+        <translation type="unfinished">Vybrat</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="362"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="631"/>
+        <source>Line</source>
+        <translation type="unfinished">Úsečka</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="364"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="633"/>
+        <source>Polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="365"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="634"/>
+        <source>Circle</source>
+        <translation type="unfinished">Kružnice</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="368"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="637"/>
+        <source>Ellipse</source>
+        <translation type="unfinished">Elipsa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="369"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="638"/>
+        <source>Polyline</source>
+        <translation type="unfinished">Křivka</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="371"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="640"/>
+        <source>Dimension</source>
+        <translation type="unfinished">Kóta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="372"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="641"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="674"/>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="374"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="643"/>
+        <source>Info</source>
+        <translation type="unfinished">Informace</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="375"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="519"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="677"/>
+        <source>Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="400"/>
+        <source>Pen Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="410"/>
+        <source>Layer List</source>
+        <translation type="unfinished">Seznam hladin</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="430"/>
+        <source>Layer Tree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="443"/>
+        <source>Entity Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="456"/>
+        <source>Block List</source>
+        <translation type="unfinished">Seznam bloků</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="510"/>
+        <source>File</source>
+        <translation type="unfinished">Soubor</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="515"/>
+        <source>Edit</source>
+        <translation type="unfinished">Úpravy</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="524"/>
+        <source>View</source>
+        <translation type="unfinished">Zobrazit</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="420"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="532"/>
+        <source>Named Views</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="363"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="632"/>
+        <source>Point</source>
+        <translation type="unfinished">Bod</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="366"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="635"/>
+        <source>Arc</source>
+        <translation type="unfinished">Oblouk</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="367"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="636"/>
+        <source>Spline</source>
+        <translation type="unfinished">Splajna</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="537"/>
+        <source>Snap Selection</source>
+        <translation type="unfinished">Výběr uchopení</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="550"/>
+        <source>Pen</source>
+        <translation type="unfinished">Pero</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="556"/>
+        <source>Tool Options</source>
+        <translation type="unfinished">Vlastnosti nástroje</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
+        <source>Info Cursor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="840"/>
+        <source>Dock Areas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="567"/>
+        <source>Creators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="571"/>
+        <source>Preferences</source>
+        <translation type="unfinished">Nastavení</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="661"/>
+        <source>Categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="665"/>
+        <source>Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="666"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="669"/>
+        <source>Polygons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="667"/>
+        <source>Arcs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="668"/>
+        <source>Splines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="673"/>
+        <source>Dimensions</source>
+        <translation type="unfinished">Kóty</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="686"/>
+        <source>&amp;File</source>
+        <translation type="unfinished">&amp;Soubor</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="697"/>
+        <source>Import</source>
+        <translation type="unfinished">Importovat</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="702"/>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="719"/>
+        <source>&amp;Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="729"/>
+        <source>&amp;Edit</source>
+        <translation type="unfinished">Úp&amp;ravy</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="746"/>
+        <source>Pl&amp;ugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="748"/>
+        <source>&amp;View</source>
+        <translation type="unfinished">&amp;Zobrazit</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="778"/>
+        <source>&amp;Views Restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="786"/>
+        <source>&amp;Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="787"/>
+        <source>&amp;Line</source>
+        <translation type="unfinished">&amp;Úsečka</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="788"/>
+        <source>Poin&amp;t</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="789"/>
+        <source>&amp;Circle</source>
+        <translation type="unfinished">&amp;Kružnice</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="790"/>
+        <source>&amp;Arc</source>
+        <translation type="unfinished">&amp;Oblouk</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="791"/>
+        <source>Poly&amp;gon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
+        <source>Splin&amp;e</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="793"/>
+        <source>&amp;Ellipse</source>
+        <translation type="unfinished">&amp;Elipsa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="794"/>
+        <source>&amp;Polyline</source>
+        <translation type="unfinished">Kři&amp;vka</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="795"/>
+        <source>&amp;Select</source>
+        <translation type="unfinished">&amp;Výběr</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="796"/>
+        <source>Dime&amp;nsion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="797"/>
+        <source>Ot&amp;her</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="798"/>
+        <source>&amp;Modify</source>
+        <translation type="unfinished">&amp;Modifikace</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="799"/>
+        <source>&amp;Info</source>
+        <translation type="unfinished">&amp;Informace</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="800"/>
+        <source>&amp;Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="802"/>
+        <source>&amp;Drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="809"/>
+        <source>&amp;Help</source>
+        <translation type="unfinished">&amp;Nápověda</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="811"/>
+        <source>On&amp;line Docs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="812"/>
+        <source>&amp;Wiki</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="813"/>
+        <source>User&apos;s &amp;Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="814"/>
+        <source>&amp;Commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="815"/>
+        <source>&amp;Style Sheets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="816"/>
+        <source>Wid&amp;gets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="820"/>
+        <source>About</source>
+        <translation type="unfinished">O programu</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="827"/>
+        <source>&amp;Forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="828"/>
+        <source>Zulip &amp;Chat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="830"/>
+        <source>&amp;Submit Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="831"/>
+        <source>&amp;Request Feature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="832"/>
+        <source>&amp;Releases Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="836"/>
+        <source>&amp;Donate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="838"/>
+        <source>Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="848"/>
+        <source>Dock Wid&amp;gets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="876"/>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished">&amp;Nástrojové lišty</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1092"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1161"/>
+        <source>Grid Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1126"/>
+        <source>Coordinates</source>
+        <translation type="unfinished">Souřadnice</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1133"/>
+        <source>Relative Zero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1140"/>
+        <source>Mouse</source>
+        <translation type="unfinished">Myš</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1147"/>
+        <source>Selection Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1154"/>
+        <source>Active Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="1169"/>
+        <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="373"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="642"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="675"/>
-        <source>Select</source>
-        <translation type="unfinished">Vybrat</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="365"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="634"/>
-        <source>Line</source>
-        <translation type="unfinished">Úsečka</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="367"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="636"/>
-        <source>Polygon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="368"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="637"/>
-        <source>Circle</source>
-        <translation type="unfinished">Kružnice</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="371"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="640"/>
-        <source>Ellipse</source>
-        <translation type="unfinished">Elipsa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="372"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="641"/>
-        <source>Polyline</source>
-        <translation type="unfinished">Křivka</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="374"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="643"/>
-        <source>Dimension</source>
-        <translation type="unfinished">Kóta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="375"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="644"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="677"/>
-        <source>Other</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="377"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="646"/>
-        <source>Info</source>
-        <translation type="unfinished">Informace</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="378"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="522"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="680"/>
-        <source>Order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="403"/>
-        <source>Pen Palette</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="413"/>
-        <source>Layer List</source>
-        <translation type="unfinished">Seznam hladin</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="433"/>
-        <source>Layer Tree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="446"/>
-        <source>Entity Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="459"/>
-        <source>Block List</source>
-        <translation type="unfinished">Seznam bloků</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="513"/>
-        <source>File</source>
-        <translation type="unfinished">Soubor</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="518"/>
-        <source>Edit</source>
-        <translation type="unfinished">Úpravy</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="527"/>
-        <source>View</source>
-        <translation type="unfinished">Zobrazit</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="423"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="535"/>
-        <source>Named Views</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="366"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="635"/>
-        <source>Point</source>
-        <translation type="unfinished">Bod</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="369"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="638"/>
-        <source>Arc</source>
-        <translation type="unfinished">Oblouk</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="370"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="639"/>
-        <source>Spline</source>
-        <translation type="unfinished">Splajna</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="540"/>
-        <source>Snap Selection</source>
-        <translation type="unfinished">Výběr uchopení</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="553"/>
-        <source>Pen</source>
-        <translation type="unfinished">Pero</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
-        <source>Tool Options</source>
-        <translation type="unfinished">Vlastnosti nástroje</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="595"/>
-        <source>Info Cursor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="843"/>
-        <source>Dock Areas</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="570"/>
-        <source>Creators</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="574"/>
-        <source>Preferences</source>
-        <translation type="unfinished">Nastavení</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="664"/>
-        <source>Categories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="668"/>
-        <source>Points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="669"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="672"/>
-        <source>Polygons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="670"/>
-        <source>Arcs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="671"/>
-        <source>Splines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="676"/>
-        <source>Dimensions</source>
-        <translation type="unfinished">Kóty</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="689"/>
-        <source>&amp;File</source>
-        <translation type="unfinished">&amp;Soubor</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="700"/>
-        <source>Import</source>
-        <translation type="unfinished">Importovat</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="705"/>
-        <source>Export</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="722"/>
-        <source>&amp;Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="732"/>
-        <source>&amp;Edit</source>
-        <translation type="unfinished">Úp&amp;ravy</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="749"/>
-        <source>Pl&amp;ugins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="751"/>
-        <source>&amp;View</source>
-        <translation type="unfinished">&amp;Zobrazit</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="781"/>
-        <source>&amp;Views Restore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="789"/>
-        <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="790"/>
-        <source>&amp;Line</source>
-        <translation type="unfinished">&amp;Úsečka</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="791"/>
-        <source>Poin&amp;t</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
-        <source>&amp;Circle</source>
-        <translation type="unfinished">&amp;Kružnice</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="793"/>
-        <source>&amp;Arc</source>
-        <translation type="unfinished">&amp;Oblouk</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="794"/>
-        <source>Poly&amp;gon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="795"/>
-        <source>Splin&amp;e</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="796"/>
-        <source>&amp;Ellipse</source>
-        <translation type="unfinished">&amp;Elipsa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="797"/>
-        <source>&amp;Polyline</source>
-        <translation type="unfinished">Kři&amp;vka</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="798"/>
-        <source>&amp;Select</source>
-        <translation type="unfinished">&amp;Výběr</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="799"/>
-        <source>Dime&amp;nsion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="800"/>
-        <source>Ot&amp;her</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="801"/>
-        <source>&amp;Modify</source>
-        <translation type="unfinished">&amp;Modifikace</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="802"/>
-        <source>&amp;Info</source>
-        <translation type="unfinished">&amp;Informace</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="803"/>
-        <source>&amp;Order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="805"/>
-        <source>&amp;Drawings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="812"/>
-        <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Nápověda</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="814"/>
-        <source>On&amp;line Docs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="815"/>
-        <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="816"/>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="817"/>
-        <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="818"/>
-        <source>&amp;Style Sheets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="819"/>
-        <source>Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="823"/>
-        <source>About</source>
-        <translation type="unfinished">O programu</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="830"/>
-        <source>&amp;Forum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="831"/>
-        <source>Zulip &amp;Chat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="833"/>
-        <source>&amp;Submit Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="834"/>
-        <source>&amp;Request Feature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="835"/>
-        <source>&amp;Releases Page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="839"/>
-        <source>&amp;Donate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="841"/>
-        <source>Widgets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="851"/>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="879"/>
-        <source>&amp;Toolbars</source>
-        <translation type="unfinished">&amp;Nástrojové lišty</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1095"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1164"/>
-        <source>Grid Status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1129"/>
-        <source>Coordinates</source>
-        <translation type="unfinished">Souřadnice</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1136"/>
-        <source>Relative Zero</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1143"/>
-        <source>Mouse</source>
-        <translation type="unfinished">Myš</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1150"/>
-        <source>Selection Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1157"/>
-        <source>Active Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="1172"/>
-        <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="376"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="645"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="678"/>
         <source>Modify</source>
         <translation type="unfinished">Modifikace</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="679"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="676"/>
         <source>Measure</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10340,13 +10424,13 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QC_ActionGetSelect</name>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="40"/>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="48"/>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="39"/>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="47"/>
         <source>Select objects:</source>
         <translation>Vyberte objekty:</translation>
     </message>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="58"/>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="57"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
@@ -10398,52 +10482,52 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">&amp;Nápověda</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1172"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1180"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Na sebe</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1173"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1181"/>
         <source>&amp;Tile</source>
         <translation>&amp;Dlaždice</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1175"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1183"/>
         <source>Tile &amp;Horizontally</source>
         <translation>Dlaždice &amp;vodorovně</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1260"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1268"/>
         <source>Creating new file...</source>
         <translation>Vytváří se nový soubor...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1306"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1314"/>
         <source>unnamed document %1</source>
         <translation>nepojmenovaný dokument %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2830"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2838"/>
         <source>Opening recent file...</source>
         <translation>Otevírá se nedávno použitý soubor...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1751"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1759"/>
         <source>Loaded document: </source>
         <translation>Načtený dokument: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1757"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1765"/>
         <source>Opening aborted</source>
         <translation>Otevírání přerušeno</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2140"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2148"/>
         <source>Printing...</source>
         <translation>Probíhá tisk...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2295"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2303"/>
         <source>Exiting application...</source>
         <translation>Ukončuji program...</translation>
     </message>
@@ -10476,12 +10560,12 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Seznam bloků</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2216"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2224"/>
         <source>Print preview for %1</source>
         <translation>Náhled před tiskem pro %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1388"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1396"/>
         <source>New Drawing created.</source>
         <translation>Nový výkres vytvořen.</translation>
     </message>
@@ -10496,47 +10580,47 @@ p, li { white-space: pre-wrap; }
         <translation>Uložený výkres: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1849"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1857"/>
         <source>Exporting drawing...</source>
         <translation>Exportuje se výkres...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1945"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1953"/>
         <source>Exported: %1</source>
         <translation>Exportovaný: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1985"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1993"/>
         <source>Exporting...</source>
         <translation>Exportuje se...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2037"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2045"/>
         <source>Export complete</source>
         <translation>Exportování dokončeno</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2037"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2045"/>
         <source>Export failed!</source>
         <translation>Export neúspěšný!</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2144"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2152"/>
         <source>Printing complete</source>
         <translation>Tisk dokončen</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2860"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2868"/>
         <source>Command line</source>
         <translation>Příkazový řádek</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1304"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1312"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Blok &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1526"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1534"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -10549,17 +10633,17 @@ Zkontrolujte prosím přístupová práva.</translation>
         <translation type="vanished">Kři&amp;vka</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1819"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1827"/>
         <source>Auto-saving drawing...</source>
         <translation>Automaticky se ukládá výkres...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1827"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1835"/>
         <source>Auto-saved drawing</source>
         <translation>Výkres automaticky uložen</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1832"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1840"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -10586,7 +10670,7 @@ Automatické ukládání bylo vypnuto.</translation>
         <translation type="vanished">Verze: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1622"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1630"/>
         <source>Warning: File already opened : </source>
         <translation>Upozornění: Soubor je již otevřen: </translation>
     </message>
@@ -10601,27 +10685,27 @@ Automatické ukládání bylo vypnuto.</translation>
         <translation> , zkontrolujte jméno souboru a přístupová práva.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1174"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1182"/>
         <source>Tile &amp;Vertically</source>
         <translation>Dlaždice &amp;svisle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1122"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1130"/>
         <source>Ta&amp;b mode</source>
         <translation>Režim &amp;karet</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1464"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1472"/>
         <source>New document from template: </source>
         <translation>Nový dokument ze šablony: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1510"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1518"/>
         <source>Select Template aborted</source>
         <translation>Výběr šablony přerušen</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1837"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1845"/>
         <source>Auto-saving failed</source>
         <translation>Automatické ukládání neúspěšné</translation>
     </message>
@@ -10630,7 +10714,7 @@ Automatické ukládání bylo vypnuto.</translation>
         <translation type="vanished">Výběr uchopení</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1886"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1894"/>
         <source>Export as</source>
         <translation>Exportovat jako</translation>
     </message>
@@ -10648,10 +10732,10 @@ Automatické ukládání bylo vypnuto.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="441"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1312"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1735"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2336"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2762"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1320"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1743"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2344"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2770"/>
         <source>Draft Mode</source>
         <translation>Režim náčrtu</translation>
     </message>
@@ -10660,14 +10744,14 @@ Automatické ukládání bylo vypnuto.</translation>
         <translation type="vanished">Exportovat jako PDF</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1670"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1678"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1756"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1764"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10700,22 +10784,22 @@ Please check its existence and permissions.</source>
         <translation type="obsolete">Informace</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2800"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2808"/>
         <source>Toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2805"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2813"/>
         <source>Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2912"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2920"/>
         <source>Device Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2915"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2923"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10729,17 +10813,17 @@ Please check its existence and permissions.</source>
         <translation type="obsolete">Kopírovat</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2991"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2999"/>
         <source>Toolbar Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3051"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3059"/>
         <source>Menu Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3075"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3083"/>
         <source>Menu Assigner</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10785,77 +10869,77 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1126"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1134"/>
         <source>&amp;Window mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1132"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
         <source>&amp;Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1135"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1143"/>
         <source>Rounded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1141"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1149"/>
         <source>Triangular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1148"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1156"/>
         <source>North</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1152"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1160"/>
         <source>South</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1156"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1164"/>
         <source>East</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1160"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1168"/>
         <source>West</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1165"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1173"/>
         <source>&amp;Arrange</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1168"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1176"/>
         <source>&amp;Maximized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1796"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1804"/>
         <source>Save All cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2101"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2109"/>
         <source>Close All cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2860"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2868"/>
         <source>Cmd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2861"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2869"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2861"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="2869"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation type="unfinished"></translation>
@@ -17126,12 +17210,12 @@ so default step value required for baking</source>
         <translation>Výkres</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="164"/>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="163"/>
         <source>Open %1</source>
         <translation>Otevřít %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="245"/>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="244"/>
         <source>Save %1 As</source>
         <translation>Uložit %1 jako</translation>
     </message>
@@ -17141,7 +17225,7 @@ so default step value required for baking</source>
         <translation>Výkres DWG %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="234"/>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="233"/>
         <source>Untitled</source>
         <translation>Bez názvu</translation>
     </message>
@@ -17149,17 +17233,17 @@ so default step value required for baking</source>
 <context>
     <name>QG_GraphicView</name>
     <message>
-        <location filename="../src/ui/view/qg_graphicview.cpp" line="540"/>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="532"/>
         <source>Edit Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/view/qg_graphicview.cpp" line="543"/>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="535"/>
         <source>Edit Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/view/qg_graphicview.cpp" line="553"/>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="545"/>
         <source>Activate Layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17887,154 +17971,126 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_WidthBox</name>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="78"/>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="286"/>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="247"/>
         <source>By Layer</source>
         <translation>Dle hladiny</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="79"/>
         <source>By Block</source>
-        <translation>Dle bloku</translation>
+        <translation type="vanished">Dle bloku</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="81"/>
         <source>Default</source>
-        <translation>Výchozí</translation>
+        <translation type="vanished">Výchozí</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="82"/>
         <source>0.00mm</source>
-        <translation>0,00 mm</translation>
+        <translation type="vanished">0,00 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="83"/>
         <source>0.05mm</source>
-        <translation>0,05 mm</translation>
+        <translation type="vanished">0,05 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="84"/>
         <source>0.09mm</source>
-        <translation>0,09 mm</translation>
+        <translation type="vanished">0,09 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="85"/>
         <source>0.13mm (ISO)</source>
-        <translation>0,13 mm (ISO)</translation>
+        <translation type="vanished">0,13 mm (ISO)</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="86"/>
         <source>0.15mm</source>
-        <translation>0,15 mm</translation>
+        <translation type="vanished">0,15 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="87"/>
         <source>0.18mm (ISO)</source>
-        <translation>0,18 mm (ISO)</translation>
+        <translation type="vanished">0,18 mm (ISO)</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="88"/>
         <source>0.20mm</source>
-        <translation>0,20 mm</translation>
+        <translation type="vanished">0,20 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="89"/>
         <source>0.25mm (ISO)</source>
-        <translation>0,25 mm (ISO)</translation>
+        <translation type="vanished">0,25 mm (ISO)</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="90"/>
         <source>0.30mm</source>
-        <translation>0,30 mm</translation>
+        <translation type="vanished">0,30 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="91"/>
         <source>0.35mm (ISO)</source>
-        <translation>0,35 mm (ISO)</translation>
+        <translation type="vanished">0,35 mm (ISO)</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="92"/>
         <source>0.40mm</source>
-        <translation>0,40 mm</translation>
+        <translation type="vanished">0,40 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="93"/>
         <source>0.50mm (ISO)</source>
-        <translation>0,50 mm (ISO)</translation>
+        <translation type="vanished">0,50 mm (ISO)</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="94"/>
         <source>0.53mm</source>
-        <translation>0,53 mm</translation>
+        <translation type="vanished">0,53 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="95"/>
         <source>0.60mm</source>
-        <translation>0,60 mm</translation>
+        <translation type="vanished">0,60 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="96"/>
         <source>0.70mm (ISO)</source>
-        <translation>0,70 mm (ISO)</translation>
+        <translation type="vanished">0,70 mm (ISO)</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="97"/>
         <source>0.80mm</source>
-        <translation>0,80 mm</translation>
+        <translation type="vanished">0,80 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="98"/>
         <source>0.90mm</source>
-        <translation>0,90 mm</translation>
+        <translation type="vanished">0,90 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="99"/>
         <source>1.00mm (ISO)</source>
-        <translation>1,00 mm (ISO)</translation>
+        <translation type="vanished">1,00 mm (ISO)</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="100"/>
         <source>1.06mm</source>
-        <translation>1,06 mm</translation>
+        <translation type="vanished">1,06 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="101"/>
         <source>1.20mm</source>
-        <translation>1,20 mm</translation>
+        <translation type="vanished">1,20 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="102"/>
         <source>1.40mm (ISO)</source>
-        <translation>1,40 mm (ISO)</translation>
+        <translation type="vanished">1,40 mm (ISO)</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="103"/>
         <source>1.58mm</source>
-        <translation>1,58 mm</translation>
+        <translation type="vanished">1,58 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="104"/>
         <source>2.00mm (ISO)</source>
-        <translation>2,00 mm (ISO)</translation>
+        <translation type="vanished">2,00 mm (ISO)</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="105"/>
         <source>2.11mm</source>
-        <translation>2,11 mm</translation>
+        <translation type="vanished">2,11 mm</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="75"/>
         <source>- Unchanged -</source>
-        <translation>- Beze změny -</translation>
+        <translation type="vanished">- Beze změny -</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="177"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1529"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1673"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1831"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1537"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1681"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1839"/>
         <source>Warning</source>
         <translation>Upozornění</translation>
     </message>
@@ -18042,7 +18098,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="272"/>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="284"/>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="346"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1760"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1743"/>
         <source>Remove Layer</source>
         <translation>Odstranit hladinu</translation>
     </message>
@@ -18086,13 +18142,13 @@ This action can NOT be undone.</source>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="347"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1760"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1743"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="357"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1808"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1791"/>
         <source>Remove %n layer(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -18102,13 +18158,13 @@ This action can NOT be undone.</source>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="361"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1809"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1792"/>
         <source>Listed layers and all entities on them will be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="363"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1810"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1793"/>
         <source>Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18119,7 +18175,7 @@ This action can NOT be undone.</source>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="372"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1811"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1794"/>
         <source>Layers for removal:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18232,8 +18288,8 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1826"/>
-        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1877"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1809"/>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1860"/>
         <source>Layer DialogEx</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18337,20 +18393,20 @@ Please specify a different value.</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="325"/>
-        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="378"/>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="324"/>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="377"/>
         <source>Save Drawing As</source>
         <translation>Uložit výkres jako</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="379"/>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="378"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 již existuje.
 Přejete si ho přepsat?</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="472"/>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="471"/>
         <source>Open Drawing</source>
         <translation>Otevřít výkres</translation>
     </message>
@@ -18415,17 +18471,17 @@ Přejete si ho přepsat?</translation>
         <translation>Graphics Interchange Format</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="440"/>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="439"/>
         <source>Drawing Exchange %1</source>
         <translation>Výměnný formát výkresu %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="445"/>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="444"/>
         <source>QCad 1.x file %1</source>
         <translation>Soubor QCadu 1.x %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="447"/>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="446"/>
         <source>Font %1</source>
         <translation>Písmo %1</translation>
     </message>
@@ -18765,34 +18821,34 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1355"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1354"/>
         <source>enter an integer number</source>
         <translation>zadejte celé číslo</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1359"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1377"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1394"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1358"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1376"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1393"/>
         <source>LibreCAD query</source>
         <translation>Dotaz LibreCADu</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1373"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1372"/>
         <source>enter a number</source>
         <translation>zadejte číslo</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1390"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1389"/>
         <source>enter text</source>
         <translation>zadejte text</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="446"/>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="445"/>
         <source>LFF Font %1</source>
         <translation>Písmo LFF %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="448"/>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="447"/>
         <source>Jww %1</source>
         <translation>Jww %1</translation>
     </message>
@@ -18857,7 +18913,7 @@ Přejete si ho přepsat?</translation>
         <translation>Tagged Image File Format</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="439"/>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="438"/>
         <source>Old Drawing Exchange %1</source>
         <translation>Starý výměnný formát výkresu %1</translation>
     </message>
@@ -19011,7 +19067,7 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="443"/>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="442"/>
         <source>dwg Drawing %1</source>
         <translation>Výkres DWG %1</translation>
     </message>
@@ -20265,7 +20321,7 @@ Přejete si ho přepsat?</translation>
         <translation type="obsolete">Elipsa</translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="69"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="70"/>
         <source>File</source>
         <translation type="unfinished">Soubor</translation>
     </message>
@@ -20286,7 +20342,7 @@ Přejete si ho přepsat?</translation>
         <translation type="obsolete">Modifikace</translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="70"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="71"/>
         <source>Options</source>
         <translation type="unfinished">Vlastnosti</translation>
     </message>
@@ -20306,7 +20362,7 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1704"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1712"/>
         <source>Invalid objects removed:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -20368,8 +20424,8 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="826"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3241"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="823"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="3249"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22213,7 +22269,7 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/entities/rs_polyline.cpp" line="623"/>
+        <location filename="../src/lib/engine/document/entities/rs_polyline.cpp" line="625"/>
         <source>Polyline contains arc segments, and scaling by different xy-factors will generate incorrect results</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22226,6 +22282,146 @@ Přejete si ho přepsat?</translation>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="90"/>
         <source>Hatch:: loading pattern failed: %1</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="35"/>
+        <source>-Unchanged-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="37"/>
+        <source>ByLayer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="39"/>
+        <source>ByBlock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="41"/>
+        <source>Default</source>
+        <translation type="unfinished">Výchozí</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="43"/>
+        <source>0.00mm</source>
+        <translation type="unfinished">0,00 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="45"/>
+        <source>0.05mm</source>
+        <translation type="unfinished">0,05 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="47"/>
+        <source>0.09mm</source>
+        <translation type="unfinished">0,09 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="49"/>
+        <source>0.13mmISO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="51"/>
+        <source>0.15mm</source>
+        <translation type="unfinished">0,15 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="53"/>
+        <source>0.18mmISO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="55"/>
+        <source>0.20mm</source>
+        <translation type="unfinished">0,20 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="57"/>
+        <source>0.25mmISO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="59"/>
+        <source>0.30mm</source>
+        <translation type="unfinished">0,30 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="61"/>
+        <source>0.35mmISO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="63"/>
+        <source>0.40mm</source>
+        <translation type="unfinished">0,40 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="65"/>
+        <source>0.50mmISO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="67"/>
+        <source>0.53mm</source>
+        <translation type="unfinished">0,53 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="69"/>
+        <source>0.60mm</source>
+        <translation type="unfinished">0,60 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="71"/>
+        <source>0.70mmISO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="73"/>
+        <source>0.80mm</source>
+        <translation type="unfinished">0,80 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="75"/>
+        <source>0.90mm</source>
+        <translation type="unfinished">0,90 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="77"/>
+        <source>1.00mmISO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="79"/>
+        <source>1.06mm</source>
+        <translation type="unfinished">1,06 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="81"/>
+        <source>1.20mm</source>
+        <translation type="unfinished">1,20 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="83"/>
+        <source>1.40mmISO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="85"/>
+        <source>1.58mm</source>
+        <translation type="unfinished">1,58 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="87"/>
+        <source>2.00mmISO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="89"/>
+        <source>2.11mm</source>
+        <translation type="unfinished">2,11 mm</translation>
     </message>
 </context>
 <context>
@@ -22337,168 +22533,164 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDefault</name>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="499"/>
-        <source>Offset
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="504"/>
-        <source>New Position
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="540"/>
-        <source>Copy Offset
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="542"/>
-        <source>Move Offset
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="554"/>
         <source>Selecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="554"/>
         <source>De-Selecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="566"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="555"/>
         <source> entities </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="567"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="556"/>
         <source>that intersect with box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="567"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="556"/>
         <source>that are within box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="590"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="580"/>
         <source>Line</source>
         <translation type="unfinished">Úsečka</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="591"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="581"/>
         <source>Length: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="594"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="582"/>
         <source>Angle: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="600"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="591"/>
         <source>Arc</source>
         <translation type="unfinished">Oblouk</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="601"/>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="623"/>
-        <source>Radius: </source>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="496"/>
+        <source>Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="499"/>
+        <source>New Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="533"/>
+        <source>Copy Offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="535"/>
+        <source>Move Offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="592"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="603"/>
+        <source>Radius:</source>
+        <translation type="unfinished">Poloměr:</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="593"/>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="604"/>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="626"/>
-        <source>Center: </source>
+        <source>Center:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="608"/>
-        <source>Angle Length: </source>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="594"/>
+        <source>Angle Length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="611"/>
-        <source>Chord Length: </source>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="595"/>
+        <source>Chord Length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="614"/>
-        <source>Height: </source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="596"/>
+        <source>Height:</source>
+        <translation type="unfinished">Výška:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="602"/>
         <source>Circle</source>
         <translation type="unfinished">Kružnice</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="912"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="883"/>
         <source>Set new position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="912"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="883"/>
         <source>Create a copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="920"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="891"/>
         <source>Lengthen Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="923"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="894"/>
         <source>Lengthen/Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="923"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="894"/>
         <source>Lengthen Chord</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="926"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="897"/>
         <source>Move in Previous segment direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="926"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="897"/>
         <source>Move in Next segment direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="931"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="902"/>
         <source>Set new ref position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="935"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="906"/>
         <source>Zoom, pan or select entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="935"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="906"/>
         <source>Scroll Horizontally / Select Contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="935"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="906"/>
         <source>Scroll Vertically / Select Child entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="939"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="910"/>
         <source>De-Select entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="939"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="910"/>
         <source>Choose second edge</source>
         <translation>Zvolte druhou stranu</translation>
     </message>
@@ -22537,7 +22729,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDimAngular</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="231"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="226"/>
         <source>Select first line</source>
         <translation>Vyberte první úsečku</translation>
     </message>
@@ -22546,17 +22738,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="234"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="229"/>
         <source>Select second line</source>
         <translation>Vyberte druhou úsečku</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="237"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="232"/>
         <source>Specify dimension arc line location</source>
         <translation>Zadejte umístění kótovací čáry oblouku</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="240"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="235"/>
         <source>Enter dimension text:</source>
         <translation>Zadejte text kóty:</translation>
     </message>
@@ -22591,7 +22783,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDimLeader</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="211"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="200"/>
         <source>Specify target point</source>
         <translation>Zadejte cílový bod</translation>
     </message>
@@ -22600,12 +22792,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="214"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="203"/>
         <source>Specify next point</source>
         <translation>Zadejte další bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="214"/>
+        <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="203"/>
         <source>Finish</source>
         <translation>Dokončit</translation>
     </message>
@@ -22676,47 +22868,47 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawArc</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="302"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="283"/>
         <source>Length of chord should be non-zero</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="422"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="433"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="453"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="466"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="488"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="403"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="414"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="434"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="447"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="469"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="486"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="467"/>
         <source>Not a valid chord length</source>
         <translation>Neplatná délka tětivy</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="510"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="491"/>
         <source>Specify center</source>
         <translation>Zadejte střed</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="517"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="498"/>
         <source>Specify start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="524"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="527"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="505"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="508"/>
         <source>Alternative Arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="530"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="511"/>
         <source>Specify chord length (negative for alt point):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="530"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="511"/>
         <source>Use alternative arc point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22725,7 +22917,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="514"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="495"/>
         <source>Specify radius</source>
         <translation>Zadejte poloměr</translation>
     </message>
@@ -22734,17 +22926,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="521"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="502"/>
         <source>Specify start angle:</source>
         <translation>Zadejte počáteční úhel:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="524"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="505"/>
         <source>Specify end angle or [angle/chordlen]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="527"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="508"/>
         <source>Specify included angle:</source>
         <translation>Zadejte sevřený úhel:</translation>
     </message>
@@ -22760,12 +22952,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawArc3P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="80"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="77"/>
         <source>Invalid arc data.</source>
         <translation>Neplatné zadání oblouku.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="238"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify third point</source>
         <translation type="unfinished">Zadejte třetí bod</translation>
     </message>
@@ -22774,7 +22966,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="235"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
         <source>Specify second point</source>
         <translation>Zadejte druhý bod</translation>
     </message>
@@ -22787,7 +22979,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zadejte koncový bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="232"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="227"/>
         <source>Specify startpoint or [center]</source>
         <translation>Zadejte počáteční bod nebo [střed]</translation>
     </message>
@@ -22795,17 +22987,17 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="275"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="269"/>
         <source>Specify base entity</source>
         <translation>Zadejte základní prvek</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="273"/>
         <source>Alternate arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="275"/>
         <source>Alternate Arc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22814,7 +23006,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="273"/>
         <source>Specify end angle</source>
         <translation>Zadejte koncový úhel</translation>
     </message>
@@ -22823,7 +23015,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="275"/>
         <source>Specify end point</source>
         <translation>Zadejte koncový bod</translation>
     </message>
@@ -22831,12 +23023,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="139"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="131"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="150"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="142"/>
         <source>Specify center</source>
         <translation>Zadejte střed</translation>
     </message>
@@ -22849,7 +23041,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="153"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="145"/>
         <source>Specify point on circle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22857,12 +23049,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircle2P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="91"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="82"/>
         <source>Invalid Circle data.</source>
         <translation>Neplatné zadání kružnice.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="171"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="163"/>
         <source>Specify first point</source>
         <translation>Zadejte první bod</translation>
     </message>
@@ -22871,7 +23063,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="174"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="166"/>
         <source>Specify second point</source>
         <translation>Zadejte druhý bod</translation>
     </message>
@@ -22883,12 +23075,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircle3P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="88"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="81"/>
         <source>Invalid circle data.</source>
         <translation>Neplatné zadání kružnice.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="195"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="182"/>
         <source>Specify first point</source>
         <translation>Zadejte první bod</translation>
     </message>
@@ -22897,7 +23089,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="198"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="185"/>
         <source>Specify second point</source>
         <translation>Zadejte druhý bod</translation>
     </message>
@@ -22906,7 +23098,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="201"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="188"/>
         <source>Specify third point</source>
         <translation>Zadejte třetí bod</translation>
     </message>
@@ -22914,12 +23106,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleCR</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="137"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="189"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="180"/>
         <source>Specify circle center</source>
         <translation>Zadejte střed kružnice</translation>
     </message>
@@ -22928,7 +23120,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="192"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="183"/>
         <source>Specify circle radius</source>
         <translation>Zadejte poloměr kružnice</translation>
     </message>
@@ -22937,17 +23129,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="161"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="152"/>
         <source>radius=%1 is invalid (expression)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="163"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="154"/>
         <source>radius=%1 is invalid (negative)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="166"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="157"/>
         <source>radius=%1 is invalid (zero)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22955,7 +23147,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleInscribe</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="214"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="207"/>
         <source>Specify the first line</source>
         <translation>Zadejte první úsečku</translation>
     </message>
@@ -22964,7 +23156,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="217"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="210"/>
         <source>Specify the second line</source>
         <translation>Zadejte druhou úsečku</translation>
     </message>
@@ -22973,7 +23165,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="220"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="213"/>
         <source>Specify the third line</source>
         <translation>Zadejte třetí úsečku</translation>
     </message>
@@ -22985,7 +23177,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="476"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="463"/>
         <source>Specify the first point on the tangent circle</source>
         <translation>Zadejte první bod na tečné kružnici</translation>
     </message>
@@ -22994,17 +23186,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="479"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="466"/>
         <source>Specify the second point on the tangent circle</source>
         <translation>Zadejte druhý bod na tečné kružnici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="482"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="469"/>
         <source>Select the center of the tangent circle</source>
         <translation>Zadejte střed tečné kružnice</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="473"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="460"/>
         <source>Specify a line/arc/circle</source>
         <translation>Zadejte úsečku/oblouk/kružnici</translation>
     </message>
@@ -23012,7 +23204,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan2</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="278"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="270"/>
         <source>Specify the first line/arc/circle</source>
         <translation>Zadejte první úsečku/oblouk/kružnici</translation>
     </message>
@@ -23021,7 +23213,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="273"/>
         <source>Specify the second line/arc/circle</source>
         <translation>Zadejte druhou úsečku/oblouk/kružnici</translation>
     </message>
@@ -23030,12 +23222,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="284"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="276"/>
         <source>Select the center of the tangent circle</source>
         <translation>Zadejte střed tečné kružnice</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="247"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="239"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23043,7 +23235,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan2_1P</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="334"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="331"/>
         <source>Specify a line/arc/circle</source>
         <translation>Zadejte úsečku/oblouk/kružnici</translation>
     </message>
@@ -23052,7 +23244,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="337"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="334"/>
         <source>Specify the another arc/circle</source>
         <translation>Zadejte další oblouk/kružnici</translation>
     </message>
@@ -23061,12 +23253,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="340"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="337"/>
         <source>Specify a point on the tangent circle</source>
         <translation>Zadejte bod na tečné kružnici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="343"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="340"/>
         <source>Select the center of the tangent circle</source>
         <translation>Vyberte střed tečné kružnice</translation>
     </message>
@@ -23082,27 +23274,27 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="512"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="507"/>
         <source>Select the center of the tangent circle</source>
         <translation>Vyberte střed tečné kružnice</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="503"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="498"/>
         <source>Specify the first line/arc/circle</source>
         <translation>Zadejte první úsečku/oblouk/kružnici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="419"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="414"/>
         <source>No common tangential circle for selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="506"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="501"/>
         <source>Specify the second line/arc/circle</source>
         <translation>Zadejte druhou úsečku/oblouk/kružnici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="509"/>
+        <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="504"/>
         <source>Specify the third line/arc/circle</source>
         <translation>Zadejte třetí úsečku/oblouk/kružnici</translation>
     </message>
@@ -23110,7 +23302,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="292"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="285"/>
         <source>Specify the first point on ellipse</source>
         <translation>Zadejte první bod na elipse</translation>
     </message>
@@ -23119,7 +23311,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="295"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="288"/>
         <source>Specify the second point on ellipse</source>
         <translation>Zadejte druhý bod na elipse</translation>
     </message>
@@ -23128,17 +23320,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="298"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="291"/>
         <source>Specify the third point on ellipse</source>
         <translation>Zadejte třetí bod na elipse</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="301"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="294"/>
         <source>Specify the fourth point on ellipse</source>
         <translation>Zadejte čtvrtý bod na elipse</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="184"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="177"/>
         <source>Can not determine uniquely an ellipse</source>
         <translation>Elipsu nelze jednoznačně určit</translation>
     </message>
@@ -23146,14 +23338,14 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="310"/>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="321"/>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="332"/>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="343"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="355"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="344"/>
         <source>Specify ellipse center</source>
         <translation>Zadejte střed elipsy</translation>
     </message>
@@ -23162,7 +23354,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="358"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="347"/>
         <source>Specify endpoint of major axis</source>
         <translation>Zadejte koncový bod hlavní osy</translation>
     </message>
@@ -23171,17 +23363,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="361"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="350"/>
         <source>Specify endpoint or length of minor axis:</source>
         <translation>Zadejte koncový bod nebo délku vedlejší osy:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="364"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="353"/>
         <source>Specify start angle</source>
         <translation>Zadejte počáteční úhel</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="367"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="356"/>
         <source>Specify end angle</source>
         <translation>Zadejte koncový úhel</translation>
     </message>
@@ -23189,7 +23381,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipseCenter3Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="267"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="257"/>
         <source>Specify the center of ellipse</source>
         <translation>Zadejte střed elipsy</translation>
     </message>
@@ -23198,12 +23390,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="270"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="260"/>
         <source>Specify the first point on ellipse</source>
         <translation>Zadejte první bod na elipse</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="273"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="263"/>
         <source>Specify the second point on ellipse</source>
         <translation>Zadejte druhý bod na elipse</translation>
     </message>
@@ -23212,7 +23404,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="276"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="266"/>
         <source>Specify the third point on ellipse</source>
         <translation>Zadejte třetí bod na elipse</translation>
     </message>
@@ -23220,12 +23412,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipseFociPoint</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="210"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="199"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="222"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="211"/>
         <source>Specify first focus of ellipse</source>
         <translation>Zadejte první ohnisko elipsy</translation>
     </message>
@@ -23234,7 +23426,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="225"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="214"/>
         <source>Specify second focus of ellipse</source>
         <translation>Zadejte druhé ohnisko elipsy</translation>
     </message>
@@ -23243,17 +23435,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="228"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="217"/>
         <source>Specify a point on ellipse or total distance to foci</source>
         <translation>Zadejte bod na elipse nebo celkovou vzdálenost k ohniskům</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="193"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="182"/>
         <source>specify a point on ellipse, or total distance to foci</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="208"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="197"/>
         <source>Total distance %1 is smaller than distance between foci</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23261,7 +23453,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipseInscribe</name>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="310"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="301"/>
         <source>Specify the first line</source>
         <translation>Zadejte první úsečku</translation>
     </message>
@@ -23270,7 +23462,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="313"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="304"/>
         <source>Specify the second line</source>
         <translation>Zadejte druhou úsečku</translation>
     </message>
@@ -23279,17 +23471,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="316"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="307"/>
         <source>Specify the third line</source>
         <translation>Zadejte třetí úsečku</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="319"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="310"/>
         <source>Specify the fourth line</source>
         <translation>Zadejte čtvrtou úsečku</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="227"/>
+        <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="218"/>
         <source>Can not determine uniquely an ellipse</source>
         <translation>Elipsu nelze jednoznačně určit</translation>
     </message>
@@ -23297,52 +23489,52 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawHatch</name>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="187"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
         <translation>Neplatné určení šrafované plochy. Zkontrolujte prosím, zda vybrané prvky tvoří uzavřený obrys.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="159"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="158"/>
         <source>Hatch created successfully.</source>
         <translation>Šrafy vytvořeny.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="162"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="161"/>
         <source>Hatch Error: Invalid contour found!</source>
         <translation>Chyba šraf: Neplatný obrys!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="166"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="165"/>
         <source>Hatch Error: Pattern not found!</source>
         <translation>Chyba šraf: Vzorek nenalezen!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="169"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="168"/>
         <source>Hatch Error: Contour or pattern too small!</source>
         <translation>Chyba šraf: Obrys nebo vzorek jsou příliš malé!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="172"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="171"/>
         <source>Hatch Error: Contour too big!</source>
         <translation>Chyba šraf: Obrys je příliš velký!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="175"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="174"/>
         <source>Hatch Error: Undefined Error!</source>
         <translation>Chyba šraf: Neznámá chyba!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="180"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="179"/>
         <source>Total hatch area = %1</source>
         <translation>Obsah vyšrafované plochy = %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="205"/>
         <source>Select to hatch (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="205"/>
         <source>Hatch immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23350,14 +23542,14 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawImage</name>
     <message>
-        <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="176"/>
-        <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="189"/>
-        <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="173"/>
+        <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="186"/>
+        <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="200"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="265"/>
+        <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="262"/>
         <source>Specify reference point</source>
         <translation>Zadejte referenční bod</translation>
     </message>
@@ -23366,12 +23558,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="268"/>
+        <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="265"/>
         <source>Enter angle:</source>
         <translation>Zadejte úhel:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="271"/>
+        <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="268"/>
         <source>Enter factor:</source>
         <translation>Zadejte měřítko:</translation>
     </message>
@@ -23380,7 +23572,7 @@ This block cannot be inserted.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="274"/>
+        <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="271"/>
         <source>Enter dpi:</source>
         <translation>Zadejte DPI:</translation>
     </message>
@@ -23388,7 +23580,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLine</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="287"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="279"/>
         <source>Specify first point</source>
         <translation>Zadejte první bod</translation>
     </message>
@@ -23397,7 +23589,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="309"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="301"/>
         <source>Specify next point or [%1]</source>
         <translation>Zadejte další bod nebo [%1]</translation>
     </message>
@@ -23406,22 +23598,22 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="311"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="303"/>
         <source>Specify next point</source>
         <translation>Zadejte další bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="339"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="331"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
         <translation>Nelze uzavřít posloupnost čar: Ještě není definován dostatečný počet prvků nebo již byla posloupnost uzavřena.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="391"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="383"/>
         <source>Cannot undo: Begin of history reached</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="425"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="417"/>
         <source>Cannot redo: End of history reached</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23429,13 +23621,13 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="215"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="228"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="211"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="224"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="293"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="289"/>
         <source>Specify position</source>
         <translation>Zadejte pozici</translation>
     </message>
@@ -23444,7 +23636,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="296"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="292"/>
         <source>Enter angle:</source>
         <translation>Zadejte úhel:</translation>
     </message>
@@ -23453,7 +23645,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="299"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="295"/>
         <source>Enter length:</source>
         <translation>Zadejte délku:</translation>
     </message>
@@ -23461,13 +23653,13 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineBisector</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="223"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="240"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="219"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="236"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="270"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="266"/>
         <source>Select first line</source>
         <translation>Vyberte první úsečku</translation>
     </message>
@@ -23476,7 +23668,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="273"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="269"/>
         <source>Select second line</source>
         <translation>Vyberte druhou úsečku</translation>
     </message>
@@ -23485,17 +23677,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="276"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="272"/>
         <source>Enter bisector length:</source>
         <translation>Zadejte délku úsečky v ose úhlu:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="279"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="275"/>
         <source>Enter number of bisectors:</source>
         <translation>Zadejte počet os úhlu:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="238"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="234"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
         <translation>Počet os není v rozsahu: </translation>
@@ -23504,7 +23696,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineFree</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawlinefree.cpp" line="131"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawlinefree.cpp" line="125"/>
         <source>Click and drag to draw a line</source>
         <translation>Úsečku nakreslíte klepnutím a táhnutím</translation>
     </message>
@@ -23516,7 +23708,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="135"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="132"/>
         <source>Specify first point</source>
         <translation>Zadejte první bod</translation>
     </message>
@@ -23525,7 +23717,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="138"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="135"/>
         <source>Specify second point</source>
         <translation>Zadejte druhý bod</translation>
     </message>
@@ -23537,7 +23729,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineOrthTan</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="170"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="159"/>
         <source>Select a line</source>
         <translation>Vyberte úsečku</translation>
     </message>
@@ -23546,7 +23738,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="173"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="162"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Vyberte kružnici, oblouk nebo elipsu</translation>
     </message>
@@ -23562,28 +23754,28 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="107"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="104"/>
         <source> entities will be created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="140"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="137"/>
         <source>Enter number:</source>
         <translation>Zadejte počet:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="170"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="167"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="185"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="186"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="183"/>
         <source>Not a valid number. Try 1..99</source>
         <translation>Neplatný počet. Zkuste 1..99</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="137"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="134"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation>Zadejte vzdálenost &lt;%1&gt; nebo vyberte prvek nebo [%2]</translation>
     </message>
@@ -23591,7 +23783,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="170"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="167"/>
         <source>Select entity</source>
         <translation>Vyberte prvek</translation>
     </message>
@@ -23600,7 +23792,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="173"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="170"/>
         <source>Specify through point</source>
         <translation>Zadejte bod na rovnoběžce</translation>
     </message>
@@ -23609,22 +23801,22 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="105"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="102"/>
         <source> entities will be created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="176"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="173"/>
         <source>Number:</source>
         <translation>Počet:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="203"/>
         <source>Not a valid number. Try 1..99</source>
         <translation>Neplatný počet. Zkuste 1..99</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="209"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="206"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
@@ -23696,41 +23888,41 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineRectangle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="146"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="100"/>
+        <source>To be created:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="100"/>
+        <source>Rectangle</source>
+        <translation type="unfinished">Obdélník</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="101"/>
+        <source>Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="102"/>
+        <source>Height:</source>
+        <translation type="unfinished">Výška:</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="103"/>
+        <source>Center:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="148"/>
         <source>Specify first corner</source>
         <translation>Zadejte první vrchol</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="162"/>
-        <source>To be created: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="162"/>
-        <source>RECT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="164"/>
-        <source>Width: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="167"/>
-        <source>Height: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="170"/>
-        <source>Center: </source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="149"/>
+        <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="151"/>
         <source>Specify second corner</source>
         <translation>Zadejte druhý vrchol</translation>
     </message>
@@ -23742,13 +23934,13 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="206"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="219"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="204"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="217"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="253"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="251"/>
         <source>Select base entity</source>
         <translation>Vyberte základní prvek</translation>
     </message>
@@ -23757,7 +23949,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="256"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="254"/>
         <source>Specify position</source>
         <translation>Zadejte pozici</translation>
     </message>
@@ -23769,7 +23961,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="160"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="152"/>
         <source>Specify point</source>
         <translation>Zadejte bod</translation>
     </message>
@@ -23782,7 +23974,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="163"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="155"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Vyberte kružnici, oblouk nebo elipsu</translation>
     </message>
@@ -23806,17 +23998,17 @@ This block cannot be inserted.</source>
         <translation type="vanished">Vyberte druhou kružnici nebo elipsu</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="231"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="222"/>
         <source>Select first circle/ellipse/parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="234"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="225"/>
         <source>Select second circle/ellipse/parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="237"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="228"/>
         <source>Select the tangent line closest to cursor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23824,7 +24016,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawMText</name>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="210"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="201"/>
         <source>Specify insertion point</source>
         <translation>Zadejte bod pro vložení</translation>
     </message>
@@ -23833,7 +24025,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="214"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="205"/>
         <source>Enter text:</source>
         <translation>Zadejte text:</translation>
     </message>
@@ -23845,7 +24037,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawPoint</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="87"/>
+        <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="83"/>
         <source>Specify location</source>
         <translation>Zadejte umístění</translation>
     </message>
@@ -23857,7 +24049,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawPolyline</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="748"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="731"/>
         <source>Specify first point</source>
         <translation>Zadejte první bod</translation>
     </message>
@@ -23866,7 +24058,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="779"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="762"/>
         <source>Specify next point or [%1]</source>
         <translation>Zadejte další bod nebo [%1]</translation>
     </message>
@@ -23875,64 +24067,64 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="781"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="764"/>
         <source>Specify next point</source>
         <translation>Zadejte další bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="802"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="785"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
         <translation>Nelze uzavřít posloupnost čar: Ještě není definován dostatečný počet prvků.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="827"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="808"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Nelze vrátit zpět: Ještě není definován dostatečný počet prvků.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="383"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="585"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="369"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="570"/>
         <source>Enter the end point x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="436"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="594"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="421"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="579"/>
         <source>Enter number of polylines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="545"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="530"/>
         <source>Enter an equation, f(x)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="559"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="544"/>
         <source>x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="567"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="552"/>
         <source>Enter the start point x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="574"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="559"/>
         <source>The entered x is invalid.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="611"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="596"/>
         <source>The step size entered is invalid.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="644"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="629"/>
         <source>The value x entered is invalid.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="768"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="751"/>
         <source>Alternative Arc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23940,7 +24132,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawSpline</name>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="260"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="251"/>
         <source>Specify first control point</source>
         <translation>Zadejte první řídicí bod</translation>
     </message>
@@ -23949,7 +24141,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="272"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="263"/>
         <source>Specify next control point or [%1]</source>
         <translation>Zadejte další řídicí bod nebo [%1]</translation>
     </message>
@@ -23958,12 +24150,12 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="274"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="265"/>
         <source>Specify next control point</source>
         <translation>Zadejte další řídicí bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="328"/>
+        <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="319"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Nelze vrátit zpět: Ještě není definován dostatečný počet prvků.</translation>
     </message>
@@ -23971,12 +24163,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawText</name>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="175"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="171"/>
         <source>Text: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="260"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="256"/>
         <source>Specify insertion point</source>
         <translation>Zadejte bod pro vložení</translation>
     </message>
@@ -23985,7 +24177,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="267"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="263"/>
         <source>Enter text:</source>
         <translation>Zadejte text:</translation>
     </message>
@@ -23994,7 +24186,7 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="263"/>
+        <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="259"/>
         <source>Specify second point</source>
         <translation>Zadejte druhý bod</translation>
     </message>
@@ -24013,22 +24205,22 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionEditCopyPaste</name>
     <message>
-        <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="149"/>
+        <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="146"/>
         <source>Specify reference point</source>
         <translation type="unfinished">Zadejte referenční bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="149"/>
+        <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="146"/>
         <source>Paste Immediately</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="153"/>
+        <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="150"/>
         <source>Set paste reference point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="153"/>
+        <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="150"/>
         <source>Paste Multiple</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24047,12 +24239,12 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionEditUndo</name>
     <message>
-        <location filename="../src/actions/drawing/edit/rs_actioneditundo.cpp" line="61"/>
+        <location filename="../src/actions/drawing/edit/rs_actioneditundo.cpp" line="59"/>
         <source>Nothing to undo!</source>
         <translation>Nic nelze vrátit zpět!</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/rs_actioneditundo.cpp" line="64"/>
+        <location filename="../src/actions/drawing/edit/rs_actioneditundo.cpp" line="62"/>
         <source>Nothing to redo!</source>
         <translation>Nic nelze provést znovu!</translation>
     </message>
@@ -24094,28 +24286,28 @@ Intersection :@(%4, %5)</source>
         <translation type="unfinished">Informace</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="263"/>
-        <source>Angle: </source>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="262"/>
+        <source>Angle:</source>
+        <translation type="unfinished">Úhel:</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="266"/>
+        <source>Intersection:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="267"/>
+        <source>Line 1 Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="268"/>
+        <source>Line 2 Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="264"/>
         <source>Angle (alt): </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="271"/>
-        <source>Intersection: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
-        <source>Line 1 Angle: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="277"/>
-        <source>Line 2 Angle: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24139,23 +24331,23 @@ Intersection :@(%4, %5)</source>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="109"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="117"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="116"/>
         <source>Circumference: %1</source>
         <translation>Obvod: %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="168"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="167"/>
         <source>Closing Point: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="175"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="174"/>
         <source>Point: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="197"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="196"/>
         <source>Specify point and complete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24164,7 +24356,7 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">Bod: %1/%2</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="193"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="192"/>
         <source>Specify first point of polygon</source>
         <translation>Zadejte první bod mnohoúhelníku</translation>
     </message>
@@ -24173,7 +24365,7 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="197"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="196"/>
         <source>Specify next point of polygon</source>
         <translation>Zadejte další bod mnohoúhelníku</translation>
     </message>
@@ -24182,8 +24374,8 @@ Intersection :@(%4, %5)</source>
         <translation type="vanished">Uzavírající bod: %1/%2</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="111"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="118"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="110"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="117"/>
         <source>Area: %1 %2^2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24205,32 +24397,32 @@ End: (%8 , %9)</source>
         <translation type="unfinished">Informace</translation>
     </message>
     <message>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="114"/>
+        <source>Distance:</source>
+        <translation type="unfinished">Vzdálenost:</translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="115"/>
-        <source>Distance: </source>
+        <source>Angle:</source>
+        <translation type="unfinished">Úhel:</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="116"/>
+        <source>From:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="118"/>
-        <source>Angle: </source>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="117"/>
+        <source>To:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="121"/>
-        <source>From: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="124"/>
-        <source>To: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="181"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="172"/>
         <source>Specify first point of distance</source>
         <translation>Zadejte první bod vzdálenosti</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="184"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="175"/>
         <source>Don&apos;t move relative zero</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24239,7 +24431,7 @@ End: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="184"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="175"/>
         <source>Specify second point of distance</source>
         <translation>Zadejte druhý bod vzdálenosti</translation>
     </message>
@@ -24259,7 +24451,7 @@ End: (%8 , %9)</source>
         <translation type="vanished">Vzdálenost: %1</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="91"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="90"/>
         <source>Distance: %1
 Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
@@ -24268,43 +24460,43 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="281"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <source>Specify entity</source>
         <translation>Zadejte prvek</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="281"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <source>Do not snap to child entities in container</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="285"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="283"/>
         <source>Relative point is on entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="313"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="311"/>
         <source>Info</source>
         <translation type="unfinished">Informace</translation>
     </message>
     <message>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="312"/>
+        <source>Distance:</source>
+        <translation type="unfinished">Vzdálenost:</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="313"/>
+        <source>Angle:</source>
+        <translation type="unfinished">Úhel:</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="314"/>
+        <source>From:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="315"/>
-        <source>Distance: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="318"/>
-        <source>Angle: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="321"/>
-        <source>From: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="324"/>
-        <source>To: </source>
+        <source>To:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24312,8 +24504,8 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="285"/>
-        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="288"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="283"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="286"/>
         <source>Specify point</source>
         <translation>Zadejte bod</translation>
     </message>
@@ -24357,27 +24549,27 @@ Point: (%8 , %9)</source>
         <translation>Nejméně jeden z vybraných prvků nemohl být změřen.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="66"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="67"/>
         <source>Selected:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="70"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="69"/>
         <source>Total Length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="87"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="76"/>
         <source>Select to measure total length (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="87"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="76"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="87"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="76"/>
         <source>Select and finish</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24385,22 +24577,22 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionInterface</name>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="504"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="503"/>
         <source>Back</source>
         <translation type="unfinished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="526"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="525"/>
         <source>SHIFT:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="533"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="532"/>
         <source>CTRL:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="552"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="551"/>
         <source>Cancel</source>
         <translation type="unfinished">Zrušit</translation>
     </message>
@@ -24408,13 +24600,13 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="152"/>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="165"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="154"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="167"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="194"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="196"/>
         <source>Specify reference point</source>
         <translation>Zadejte referenční bod</translation>
     </message>
@@ -24423,12 +24615,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="199"/>
         <source>Enter angle:</source>
         <translation>Zadejte úhel:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="200"/>
+        <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="202"/>
         <source>Enter factor:</source>
         <translation>Zadejte měřítko:</translation>
     </message>
@@ -24474,13 +24666,33 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyBevel</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="83"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="82"/>
         <source>Selected lines are parallel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="86"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="85"/>
         <source>Selected lines are not children of the same polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="159"/>
+        <source>Trim</source>
+        <translation type="unfinished">Zkrátit</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="160"/>
+        <source>Intersection:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="161"/>
+        <source>Point 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="162"/>
+        <source>Point 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24537,17 +24749,27 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyCut</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="113"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="95"/>
+        <source>Divide</source>
+        <translation type="unfinished">Čerchovaná, dvě tečky</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="96"/>
+        <source>At:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="114"/>
         <source>No Entity found.</source>
         <translation>Nenalezen žádný prvek.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="125"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="126"/>
         <source>Cutting point may not be entity&apos;s endpoint.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="144"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="145"/>
         <source>Specify entity to cut</source>
         <translation>Zadejte rozdělovaný prvek</translation>
     </message>
@@ -24556,7 +24778,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="147"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="148"/>
         <source>Specify cutting point</source>
         <translation>Zadejte bod rozdělení</translation>
     </message>
@@ -24573,7 +24795,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Bod rozdělení neleží na prvku.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="117"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="118"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
         <translation>Prvkem musí být úsečka, oblouk, kružnice nebo interpolační splajna.</translation>
     </message>
@@ -24599,7 +24821,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="153"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify first break point on a polyline</source>
         <translation>Zadejte první bod pro přerušení na křivce</translation>
     </message>
@@ -24608,7 +24830,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="156"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="154"/>
         <source>Specify second break point on the same polyline</source>
         <translation>Zadejte druhý bod pro přerušení na téže křivce</translation>
     </message>
@@ -24617,42 +24839,42 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="94"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="92"/>
         <source>Entities not in the same polyline.</source>
         <translation>Prvky nejsou na téže křivce.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="97"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="95"/>
         <source>Parent of second entity is not a polyline</source>
         <translation>Nadřazený prvek druhého prvku není křivka</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="120"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="118"/>
         <source>Parent of first entity is not a polyline</source>
         <translation>Nadřazený prvek prvního prvku není křivka</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="100"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="98"/>
         <source>Parent of second entity is nullptr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="103"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="101"/>
         <source>One of the chosen entities is nullptr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="123"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="121"/>
         <source>Parent of first entity is nullptr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="126"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="124"/>
         <source>First entity is nullptr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="137"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="135"/>
         <source>Second entity is nullptr</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24701,52 +24923,52 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="129"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="128"/>
         <source>Angle:</source>
         <translation type="unfinished">Úhel:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="132"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="129"/>
         <source>Angle (alt):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="135"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="130"/>
         <source>Line From:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="138"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="131"/>
         <source>Line To:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="250"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="242"/>
         <source>Select to mirror (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="250"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="242"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="257"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify mirror line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="257"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Flip Vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="257"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Flip Horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="260"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="252"/>
         <source>Specify first point of mirror line</source>
         <translation>Zadejte první bod pro osu zrcadlení</translation>
     </message>
@@ -24755,7 +24977,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="265"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="257"/>
         <source>Specify second point of mirror line</source>
         <translation>Zadejte druhý bod pro osu zrcadlení</translation>
     </message>
@@ -24768,27 +24990,26 @@ Point: (%8 , %9)</source>
     <name>RS_ActionModifyMove</name>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="102"/>
-        <source>Moving Offset
-</source>
+        <source>Moving Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="184"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="183"/>
         <source>Specify reference point</source>
         <translation>Zadejte referenční bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="196"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="195"/>
         <source>Select to move (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="196"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="195"/>
         <source>Move immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="196"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="195"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24797,7 +25018,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="186"/>
         <source>Specify target point</source>
         <translation>Zadejte cílový bod</translation>
     </message>
@@ -24813,27 +25034,56 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="260"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="85"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="112"/>
+        <source>Moving with rotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="86"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="113"/>
+        <source>Source:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="87"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="114"/>
+        <source>Target:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="88"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="115"/>
+        <source>Offset:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="118"/>
+        <source>Angle:</source>
+        <translation type="unfinished">Úhel:</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="278"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="296"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="314"/>
         <source>Specify reference point</source>
         <translation>Zadejte referenční bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="315"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="333"/>
         <source>Select to move and rotate  (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="315"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="333"/>
         <source>Move and rotate immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="315"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="333"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24842,7 +25092,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="299"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="317"/>
         <source>Specify target point</source>
         <translation>Zadejte cílový bod</translation>
     </message>
@@ -24851,7 +25101,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="302"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="320"/>
         <source>Enter rotation angle:</source>
         <translation>Zadejte úhel otočení:</translation>
     </message>
@@ -24859,28 +25109,38 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyOffset</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="178"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="185"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="95"/>
+        <source>Offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="96"/>
+        <source>Distance:</source>
+        <translation type="unfinished">Vzdálenost:</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="176"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="183"/>
         <source>Specify direction of offset</source>
         <translation>Zadejte směr posunu</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="181"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="179"/>
         <source>Specify reference point for direction of offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="194"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="192"/>
         <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="194"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="192"/>
         <source>Offset immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="194"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="192"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24910,7 +25170,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="573"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="553"/>
         <source>Specify reference point</source>
         <translation>Zadejte referenční bod</translation>
     </message>
@@ -24920,72 +25180,70 @@ Point: (%8 , %9)</source>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="189"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="236"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="227"/>
         <source>Rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="191"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="238"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="190"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="228"/>
         <source>Angle:</source>
         <translation type="unfinished">Úhel:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="194"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="241"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="191"/>
         <source>Source Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="197"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="244"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="192"/>
         <source>Target Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="200"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="247"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="193"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="231"/>
         <source>Offset:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="253"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="234"/>
         <source>Second Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="567"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="547"/>
         <source>Select to rotate (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="567"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="547"/>
         <source>Rotate immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="567"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="547"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="573"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="576"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="553"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="556"/>
         <source>Snap to center of selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="576"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="556"/>
         <source>Specify rotation center</source>
         <translation>Zadejte střed otočení</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="579"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="559"/>
         <source>Specify target point to rotate to</source>
         <translation>Zadejte cílový bod pro otočení</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="562"/>
         <source>Specify target point for rotation around reference point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24993,22 +25251,47 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRotate2</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="158"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="86"/>
+        <source>Rotating Twice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="87"/>
+        <source>Center 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="88"/>
+        <source>Angle 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="89"/>
+        <source>Center 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="90"/>
+        <source>Angle 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="166"/>
         <source>Select for two axis rotation  (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="158"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="166"/>
         <source>Rotate 2 Axis immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="158"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="166"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="164"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="172"/>
         <source>Specify absolute reference point</source>
         <translation>Zadejte absolutní referenční bod</translation>
     </message>
@@ -25017,7 +25300,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="167"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="175"/>
         <source>Specify relative reference point</source>
         <translation>Zadejte relativní referenční bod</translation>
     </message>
@@ -25029,8 +25312,8 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRound</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="351"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="366"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="352"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="367"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
@@ -25039,12 +25322,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="428"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="235"/>
+        <source>Round</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="236"/>
+        <source>Point 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="237"/>
+        <source>Point 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="429"/>
         <source>Specify second entity</source>
         <translation>Zadejte druhý prvek</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="431"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="432"/>
         <source>Enter radius:</source>
         <translation>Zadejte poloměr:</translation>
     </message>
@@ -25053,7 +25351,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="425"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="426"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25074,72 +25372,72 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="178"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="177"/>
         <source>Center:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="181"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="178"/>
         <source>Source Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="184"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="179"/>
         <source>Target Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="187"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="180"/>
         <source>Offset:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="193"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="183"/>
         <source>Scale by X:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="196"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="184"/>
         <source>Scale by Y:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="384"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="371"/>
         <source>Specify scale center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="384"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="371"/>
         <source>Snap to center of selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="388"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="375"/>
         <source>Specify source point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="391"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378"/>
         <source>Specify target point</source>
         <translation type="unfinished">Zadejte cílový bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="391"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378"/>
         <source>Free snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="400"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="387"/>
         <source>Select to scale  (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="400"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="387"/>
         <source>Scale immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="400"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="387"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25147,7 +25445,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyStretch</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="199"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="204"/>
         <source>Specify first corner</source>
         <translation>Zadejte první vrchol</translation>
     </message>
@@ -25156,7 +25454,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="202"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="207"/>
         <source>Specify second corner</source>
         <translation>Zadejte druhý vrchol</translation>
     </message>
@@ -25165,12 +25463,45 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="205"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="84"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="96"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="116"/>
+        <source>Stretch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="85"/>
+        <source>Start Corner:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="86"/>
+        <source>End Corner:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="97"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="117"/>
+        <source>Reference Point:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="118"/>
+        <source>Target Point:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="119"/>
+        <source>Offset:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="210"/>
         <source>Specify reference point</source>
         <translation>Zadejte referenční bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="208"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="213"/>
         <source>Specify target point</source>
         <translation>Zadejte cílový bod</translation>
     </message>
@@ -25178,7 +25509,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrim</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="194"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="198"/>
         <source>Select first trim entity</source>
         <translation>Vyberte první prvek pro zkrácení</translation>
     </message>
@@ -25187,7 +25518,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="196"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="200"/>
         <source>Select limiting entity</source>
         <translation>Vyberte omezující prvek</translation>
     </message>
@@ -25196,12 +25527,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="201"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="126"/>
+        <source>Trim</source>
+        <translation type="unfinished">Zkrátit</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="127"/>
+        <source>Intersection:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="129"/>
+        <source>Intersection 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="205"/>
         <source>Select second trim entity</source>
         <translation>Vyberte druhý prvek pro zkrácení</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="203"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="207"/>
         <source>Select entity to trim</source>
         <translation>Vyberte prvek pro zkrácení</translation>
     </message>
@@ -25217,22 +25563,22 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Vybraný prvek je v bloku. Upravte prosím blok.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="191"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="183"/>
         <source>No entity found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="198"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="190"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
         <translation>Vybraný prvek není samostatný nebo nemůže být zkrácen.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="223"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="215"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="255"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="247"/>
         <source>Select line, arc, ellipse or parabola to trim or enter distance:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25248,27 +25594,27 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionOrder</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="122"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="123"/>
         <source>No Entity found.</source>
         <translation>Nenalezen žádný prvek.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="139"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="140"/>
         <source>Choose entities (Enter to Complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="139"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="140"/>
         <source>Order immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="139"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="140"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="143"/>
+        <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="144"/>
         <source>Choose entity for order</source>
         <translation>Zvolte prvek pro řazení</translation>
     </message>
@@ -25288,33 +25634,33 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="118"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="138"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="112"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="132"/>
         <source>No Entity found.</source>
         <translation>Nenalezen žádný prvek.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="120"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="114"/>
         <source>Entity must be a polyline.</source>
         <translation>Prvkem musí být křivka.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="140"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="134"/>
         <source>Adding point is invalid.</source>
         <translation>Vkládaný bod je neplatný.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="145"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="139"/>
         <source>Adding point is not on entity.</source>
         <translation>Vkládaný bod neleží na křivce.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="178"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="171"/>
         <source>Specify polyline to add nodes</source>
         <translation>Zadejte křivku pro vkládané uzly</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="181"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="174"/>
         <source>Specify adding node&apos;s point</source>
         <translation>Zadejte vkládané uzly</translation>
     </message>
@@ -25326,27 +25672,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="136"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="121"/>
         <source>No Entity found.</source>
         <translation>Nenalezen žádný prvek.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="139"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="124"/>
         <source>Entity must be a polyline.</source>
         <translation>Prvkem musí být křivka.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="180"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="165"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
         <translation>Klepněte někam poblíž počátku nebo konce stávající křivky.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="296"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="279"/>
         <source>Enter number of polylines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="333"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="314"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
         <translation>Zadejte křivku poblíž počátečního nebo koncového bodu</translation>
     </message>
@@ -25363,12 +25709,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zadejte další bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="142"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="127"/>
         <source>Can not append nodes in a closed polyline.</source>
         <translation>K uzavřené křivce body nelze přidat.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="353"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="334"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>Nelze vrátit zpět: Ještě není definován dostatečný počet prvků.</translation>
     </message>
@@ -25384,33 +25730,33 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="115"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="130"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="114"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="128"/>
         <source>No Entity found.</source>
         <translation>Nenalezen žádný prvek.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="117"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="116"/>
         <source>Entity must be a polyline.</source>
         <translation>Prvkem musí být křivka.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="160"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="158"/>
         <source>Specify polyline to delete node</source>
         <translation>Zadejte křivku s uzlem ke smazání</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="163"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="161"/>
         <source>Specify deleting node&apos;s point</source>
         <translation>Zadejte uzel ke smazání</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="146"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="144"/>
         <source>Deleting point is invalid.</source>
         <translation>Uzel ke smazání je neplatný.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="137"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="135"/>
         <source>Deleting point is not on entity.</source>
         <translation>Uzel ke smazání neleží na prvku.</translation>
     </message>
@@ -25426,50 +25772,50 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="143"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="157"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="135"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="148"/>
         <source>No Entity found.</source>
         <translation>Nenalezen žádný prvek.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="145"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="137"/>
         <source>Entity must be a polyline.</source>
         <translation>Prvkem musí být křivka.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="164"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="155"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="179"/>
         <source>Deleting point is not on entity.</source>
         <translation>Bod pro smazání neleží na prvku.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="180"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="171"/>
         <source>No polyline found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="199"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="190"/>
         <source>At least two segments of polyline should be between selected points.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="217"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="208"/>
         <source>Specify polyline to delete between two nodes</source>
         <translation>Zadejte křivku pro smazání mezi dvěma uzly</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="220"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="211"/>
         <source>Specify first node</source>
         <translation>Zadejte první uzel</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="223"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="214"/>
         <source>Specify second node</source>
         <translation>Zadejte druhý uzel</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="172"/>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="204"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="163"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="195"/>
         <source>Deleting point is invalid.</source>
         <translation>Uzel pro smazání je neplatný.</translation>
     </message>
@@ -25477,17 +25823,17 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="326"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="316"/>
         <source>No Entity found.</source>
         <translation>Nenalezen žádný prvek.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="328"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="318"/>
         <source>Entity must be a polyline.</source>
         <translation>Prvkem musí být křivka.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="377"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="367"/>
         <source>Choose the original polyline</source>
         <translation>Zvolte původní křivku</translation>
     </message>
@@ -25499,12 +25845,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineSegment</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="336"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="327"/>
         <source>No Entity found.</source>
         <translation>Nenalezen žádný prvek.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="365"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="356"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation>Zvolte jeden ze segmentů původní křivky</translation>
     </message>
@@ -25513,7 +25859,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="338"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="329"/>
         <source>Entity can not be a closed polyline.</source>
         <translation>Prvek nemůže být uzavřená křivka.</translation>
     </message>
@@ -25535,12 +25881,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="137"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="129"/>
         <source>No Entity found.</source>
         <translation>Nenalezen žádný prvek.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="139"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="131"/>
         <source>Entity must be a polyline.</source>
         <translation>Prvkem musí být křivka.</translation>
     </message>
@@ -25553,27 +25899,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Prvek neobsahuje žádný segment.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="157"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="149"/>
         <source>First segment should be on selected polyline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="169"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="161"/>
         <source>Second segment should be on selected polyline and not equal to first one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="203"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="195"/>
         <source>Specify polyline to trim</source>
         <translation>Zadejte zkracovanou křivku</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="206"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="198"/>
         <source>Specify first segment</source>
         <translation>Zadejte první segment</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="209"/>
+        <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="201"/>
         <source>Specify second segment</source>
         <translation>Zadejte druhý segment</translation>
     </message>
@@ -25581,72 +25927,72 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="274"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="270"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <translation>RS_ActionPrintPreview::fit(): Neplatná velikost papíru</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="156"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="152"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
         <translation>Posun výstupu v souřadnicích papíru o (%1, %2)</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="159"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="155"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
         <translation>Posun výstupu v souřadnicích výkresu o (%1, %2)</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="181"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="177"/>
         <source>Printout offset in graph coordinates</source>
         <translation>Posun výstupu v souřadnicích výkresu</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="185"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="181"/>
         <source>Printout offset in paper coordinates</source>
         <translation>Posun výstupu v souřadnicích papíru</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="218"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="214"/>
         <source>: select printout offset coordinates</source>
         <translation>: vyberte souřadnice posunu výstupu</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="219"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="215"/>
         <source>type in offset from command line to offset printout</source>
         <translation>zadejte z příkazového řádku posun výstupu</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="382"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="380"/>
         <source>Limit of pages has been exceeded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="442"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="440"/>
         <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="442"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="440"/>
         <source>Move Horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="442"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="440"/>
         <source>Move Vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="193"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="189"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <translation>Posun výstupu ignoruje relativní počátek. Ignoruje se &apos;@&apos;</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="173"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="169"/>
         <source>Printout in Black/White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="177"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="173"/>
         <source>Printout in color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25738,12 +26084,12 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSelectContour</name>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="63"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="62"/>
         <source>Entity must be an Atomic Entity.</source>
         <translation>Prvkem musí být samostatný prvek.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="82"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="81"/>
         <source>Specify entity to select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25759,12 +26105,12 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="128"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="125"/>
         <source>Choose first point of intersection line</source>
         <translation>Vyberte první bod protínající čáry</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="131"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="128"/>
         <source>Choose second point of intersection line</source>
         <translation>Vyberte druhý bod protínající čáry</translation>
     </message>
@@ -25772,7 +26118,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSelectLayer</name>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectlayer.cpp" line="81"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectlayer.cpp" line="80"/>
         <source>Specify entity with desired layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25797,27 +26143,27 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="185"/>
         <source>Choose second edge</source>
         <translation>Zvolte druhou stranu</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="185"/>
         <source>Select Intersecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="185"/>
         <source>De-select entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="185"/>
         <source>Select entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="187"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="185"/>
         <source>De-select intersecting</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25826,7 +26172,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="184"/>
+        <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="182"/>
         <source>Click and drag for the selection window</source>
         <translation>Klepnutím a táhnutím vytvoříte okno výběru</translation>
     </message>
@@ -25834,7 +26180,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSetRelativeZero</name>
     <message>
-        <location filename="../src/actions/drawing/rel_zero/rs_actionsetrelativezero.cpp" line="75"/>
+        <location filename="../src/actions/drawing/rel_zero/rs_actionsetrelativezero.cpp" line="82"/>
         <source>Set relative Zero</source>
         <translation>Nastavit relativní počátek</translation>
     </message>
@@ -25901,7 +26247,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionZoomWindow</name>
     <message>
-        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="137"/>
+        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="132"/>
         <source>Specify first edge</source>
         <translation>Zadejte první stranu</translation>
     </message>
@@ -25910,7 +26256,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="140"/>
+        <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="135"/>
         <source>Specify second edge</source>
         <translation>Zadejte druhou stranu</translation>
     </message>
@@ -25922,7 +26268,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_GraphicView</name>
     <message>
-        <location filename="../src/lib/gui/rs_graphicview.cpp" line="2064"/>
+        <location filename="../src/lib/gui/rs_graphicview.cpp" line="2066"/>
         <source>Draft</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25930,82 +26276,82 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_Snapper</name>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="989"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="982"/>
         <source>Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="991"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="984"/>
         <source>Horizontal</source>
         <translation type="unfinished">Vodorovné</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="993"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="986"/>
         <source>Orthogonal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1002"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="995"/>
         <source>Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1004"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="997"/>
         <source>Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1006"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="999"/>
         <source>Endpoint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1008"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1001"/>
         <source>Intersection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1010"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1003"/>
         <source>Middle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1012"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1005"/>
         <source>Distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1014"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1007"/>
         <source>Center</source>
         <translation type="unfinished">Středová</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1016"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1009"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1018"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1011"/>
         <source>Angle (on Entity)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1141"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1134"/>
         <source>Dist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1142"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1135"/>
         <source>Angle: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1147"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1140"/>
         <source>dX: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1148"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1141"/>
         <source>dY: </source>
         <translation type="unfinished"></translation>
     </message>

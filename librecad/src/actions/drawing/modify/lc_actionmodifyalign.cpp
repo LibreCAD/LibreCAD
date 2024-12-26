@@ -142,27 +142,27 @@ void LC_ActionModifyAlign::mouseMoveEventSelected(QMouseEvent *e) {
                     break;
                 }
             }
-            msg.append("\n");
-            msg.append(tr("Reference: "));
+            LC_InfoMessageBuilder builder(msg);
+
+            QString ref = tr("Reference: ");
             if (drawVertical){
-                msg.append("X: ");
-                msg.append(formatLinear(verticalRef));
-                msg.append(" ");
+                ref.append("X: ");
+                ref.append(formatLinear(verticalRef));
+                ref.append(" ");
             }
 
             if (drawHorizontal){
-                msg.append("Y: ");
-                msg.append(formatLinear(horizontalRef));
+                ref.append("Y: ");
+                ref.append(formatLinear(horizontalRef));
             }
+
+            builder.add(ref);
             if (groupOffset.valid) {
-                msg.append("\n");
-                msg.append(tr("Offset:"));
-                msg.append("\n");
-                msg.append(formatRelative(groupOffset));
-                msg.append("\n");
-                msg.append(formatRelativePolar(groupOffset));
+                builder.add(tr("Offset:"));
+                builder.add(formatRelative(groupOffset));
+                builder.add(formatRelativePolar(groupOffset));
             }
-            appendInfoCursorZoneMessage(msg, 2, false);
+            appendInfoCursorZoneMessage(builder.toString(), 2, false);
         }
     }
 

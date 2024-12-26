@@ -110,21 +110,12 @@ void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent *e){
 void RS_ActionInfoDist::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) {
     if (infoCursorOverlayPrefs->enabled) {
         double distance = startPoint.distanceTo(mouse);
-        QString msg = tr("Info");
-        msg.append("\n");
-        msg.append(tr("Distance: "));
-        msg.append(formatLinear(distance));
-        msg.append("\n");
-        msg.append(tr("Angle: "));
-        msg.append(this->formatAngle(startPoint.angleTo(mouse)));
-        msg.append("\n");
-        msg.append(tr("From: "));
-        msg.append(this->formatVector(startPoint));
-        msg.append("\n");
-        msg.append(tr("To: "));
-        msg.append(this->formatVector(mouse));
-        msg.append("\n");
-        appendInfoCursorZoneMessage(msg, 2, false);
+        LC_InfoMessageBuilder msg(tr("Info"));
+        msg.add(tr("Distance:"), formatLinear(distance));
+        msg.add(tr("Angle:"), formatAngle(startPoint.angleTo(mouse)));
+        msg.add(tr("From:"), formatVector(startPoint));
+        msg.add(tr("To:"), formatVector(mouse));
+        appendInfoCursorZoneMessage(msg.toString(), 2, false);
     }
 }
 
