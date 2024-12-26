@@ -20,9 +20,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include<iostream>
-#include <QDebug>
 #include <cassert>
+#include<iostream>
+#include<limits>
+
+#include <QDebug>
 #include "lc_rect.h"
 
 #define INTERT_TEST(s) qDebug()<<"\ntesting " #s; \
@@ -48,7 +50,10 @@ _maxP{std::max(coordA.x, coordB.x), std::max(coordA.y, coordB.y)}
 {
 }
 
-LC_Rect::Area() : _minP{0., 0.}, _maxP{0., 0.} {}
+LC_Rect::Area() :
+    _minP{std::numeric_limits<double>::max(), std::numeric_limits<double>::max()},
+    _maxP{std::numeric_limits<double>::min(), std::numeric_limits<double>::min()}
+{}
 
 	/**
 	 * @brief Area
@@ -62,7 +67,7 @@ Area(coord, {coord.x + width, coord.y + height})
 {}
 
 	/**
-	  * Return the smallest corner (closest to (0,0,0) )
+      * Return the smallest corner (smallest xy-coordinates)
 	  */
 	const Coordinate& LC_Rect::minP() const {
 		return _minP;

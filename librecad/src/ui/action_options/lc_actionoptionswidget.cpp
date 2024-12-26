@@ -21,11 +21,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "lc_actionoptionswidget.h"
+#include "lc_linemath.h"
 #include "rs_actioninterface.h"
 #include "rs_debug.h"
-#include "rs_settings.h"
 #include "rs_math.h"
-#include "lc_linemath.h"
+#include "rs_settings.h"
 
 LC_ActionOptionsWidget::LC_ActionOptionsWidget(QWidget *parent, Qt::WindowFlags fl) :
     QWidget(parent, fl)
@@ -156,7 +156,7 @@ int LC_ActionOptionsWidget::loadInt(QString name, int defaultValue){
 
 bool LC_ActionOptionsWidget::loadBool(QString name, bool defaultValue){
     QString key = getSettingsOptionNamePrefix() + name;
-    return LC_GET_INT(key, defaultValue ? 1 : 0) == 1 ? true : false;
+    return LC_GET_INT(key, defaultValue ? 1 : 0) == 1;
 }
 
 void LC_ActionOptionsWidget::save(QString name, QString value){

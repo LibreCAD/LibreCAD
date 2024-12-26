@@ -58,7 +58,19 @@ double deg2rad(double a);
 double rad2gra(double a);
 double gra2rad(double a);
 unsigned findGCD(unsigned a, unsigned b);
-bool isAngleBetween(double a, double a1, double a2, bool reversed = false);
+
+/**
+ * Tests if angle a is between a1 and a2.
+ * All angles in radians.
+ *
+ * @param a - an angle
+ * @param amin - the start angle
+ * @param amax - the end angle
+ * @param reversed - whether the range is reversed, default to false
+ *        reversed=true for clockwise testing. false for ccw testing.
+ * @return true if the angle a is between amin and amax.
+ */
+bool isAngleBetween(double a, double amin, double amax, bool reversed = false);
 //! \brief correct angle to be within [0, +PI*2.0)
 double correctAngle(double a);
 //! \brief correct angle to be within [-PI, +PI)
