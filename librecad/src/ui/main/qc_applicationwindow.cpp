@@ -2024,6 +2024,7 @@ bool QC_ApplicationWindow::slotFileExport(
     gv.setBackground(black ? Qt::black : Qt::white);
     gv.setContainer(graphic);
     gv.zoomAuto(false);
+    gv.updateSettings(graphic);
     gv.drawEntity(&painter, gv.getContainer());
 
     // end the picture output

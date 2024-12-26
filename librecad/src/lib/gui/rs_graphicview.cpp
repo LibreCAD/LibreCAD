@@ -49,6 +49,7 @@
 #include "lc_linemath.h"
 #include "dxf_format.h"
 #include "lc_undoablerelzero.h"
+#include "lc_defaults.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -234,8 +235,70 @@ void RS_GraphicView::loadSettings() {
         }
     }
     LC_GROUP_END();
-
 }
+
+void RS_GraphicView::updateEndCapsStyle(const RS_Graphic *graphic) {//        Lineweight endcaps setting for new objects:
+//        0 = none; 1 = round; 2 = angle; 3 = square
+    int endCaps = graphic->getGraphicVariableInt("$ENDCAPS", 1);
+    switch (endCaps){
+        case 0:
+            penCapStyle = Qt::FlatCap;
+            break;
+        case 1:
+            penCapStyle = Qt::RoundCap;
+            break;
+        case 2:
+            penCapStyle = Qt::MPenCapStyle;
+            break;
+        case 3:
+            penCapStyle = Qt::SquareCap;
+            break;
+        default:
+            penCapStyle = Qt::FlatCap; // fixme - or round?
+    }
+}
+
+void RS_GraphicView::updatePointsStyle(RS_Graphic *graphic) {
+    pdmode = graphic->getGraphicVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
+    pdsize = graphic->getGraphicVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
+}
+
+void RS_GraphicView::updateJoinStyle(const RS_Graphic *graphic) {//0=none; 1= round; 2 = angle; 3 = flat
+    int joinStyle = graphic->getGraphicVariableInt("$JOINSTYLE", 1);
+
+    switch (joinStyle){
+        case 0:
+            penJoinStyle = Qt::BevelJoin;
+            break;
+        case 1:
+            penJoinStyle = Qt::RoundJoin;
+            break;
+        case 2:
+            penJoinStyle = Qt::MiterJoin;
+            break;
+        case 3:
+            penJoinStyle = Qt::BevelJoin;
+            break;
+        default:
+            penJoinStyle = Qt::RoundJoin;
+    }
+}
+
+void RS_GraphicView::updateUnitAndDefaultWidthFactors(const RS_Graphic *graphic) {
+    unitFactor = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
+    unitFactor100 =  this->unitFactor / 100.0;
+    defaultWidthFactor = graphic->getVariableDouble("$DIMSCALE", 1.0);
+}
+
+void RS_GraphicView::updateGraphicRelatedSettings(RS_Graphic *graphic) {
+    if (graphic != nullptr) {
+        updateUnitAndDefaultWidthFactors(graphic);
+        updatePointsStyle(graphic);
+        updateEndCapsStyle(graphic);
+        updateJoinStyle(graphic);
+    }
+}
+
 
 RS_GraphicView::~RS_GraphicView(){
     qDeleteAll(overlayEntities);

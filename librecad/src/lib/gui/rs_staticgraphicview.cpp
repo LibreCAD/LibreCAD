@@ -29,6 +29,8 @@
 
 #include "rs_color.h"
 #include "rs_debug.h"
+#include "rs_units.h"
+#include "lc_defaults.h"
 
 
 /**
@@ -38,10 +40,7 @@
  * @param h Height
  */
 RS_StaticGraphicView::RS_StaticGraphicView(int w, int h, RS_Painter* /*p*/,
-										   QSize const* pb):
-	width(w)
-  ,height(h)
-{
+										   QSize const* pb): width(w),height(h){
 	setBackground({255,255,255});
 	QSize b{5, 5};
 	if (pb) b = *pb;
@@ -55,6 +54,12 @@ int RS_StaticGraphicView::getWidth() const{
     return width;
 }
 
+// fixme - sand - review in general implementation and inheritance of StaticGraphicView, why it's not inherited from QG_GraphicView?
+
+// hm... actually, this is "Band-aid" approach to fix #1972
+void RS_StaticGraphicView::updateSettings(RS_Graphic* graphic) {
+    updateGraphicRelatedSettings(graphic);
+}
 
 /**
  * @return height of widget.
@@ -63,8 +68,7 @@ int RS_StaticGraphicView::getHeight() const{
     return height;
 }
 
-RS_Vector RS_StaticGraphicView::getMousePosition() const
-{
+RS_Vector RS_StaticGraphicView::getMousePosition() const{
     return RS_Vector(false);
 }
 
@@ -77,4 +81,3 @@ void RS_StaticGraphicView::paint() {
     redraw(RS2::RedrawAll);
     RS_DEBUG->print("RS_StaticGraphicView::paint end");
 }
-

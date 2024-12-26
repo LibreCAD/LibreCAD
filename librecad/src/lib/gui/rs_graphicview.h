@@ -509,6 +509,12 @@ protected:
     bool drawTextsAsDraftForPreview = true;
     Qt::PenJoinStyle penJoinStyle = Qt::RoundJoin;
     Qt::PenCapStyle penCapStyle = Qt::RoundCap;
+
+    void updateEndCapsStyle(const RS_Graphic *graphic);
+    void updateJoinStyle(const RS_Graphic *graphic);
+    void updatePointsStyle(RS_Graphic *graphic);
+    void updateUnitAndDefaultWidthFactors(const RS_Graphic *graphic);
+    void updateGraphicRelatedSettings(RS_Graphic *graphic);
 private:
     bool zoomFrozen = false;
     bool draftMode = false;

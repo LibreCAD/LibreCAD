@@ -239,9 +239,6 @@ struct QG_GraphicView::AutoPanData{
     const RS_Vector probedAreaOffset = {50 /* pixels */, 50 /* pixels */};
 };
 
-
-
-
 /**
  * Constructor.
  */
@@ -1375,53 +1372,7 @@ void QG_GraphicView::loadSettings() {
     LC_GROUP_END();
 
     RS_Graphic* graphic = getGraphic();
-    if (graphic != nullptr) {
-        unitFactor = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
-        unitFactor100 =  unitFactor / 100.0;
-        defaultWidthFactor = graphic->getVariableDouble("$DIMSCALE", 1.0);
-
-        pdmode = graphic->getGraphicVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
-        pdsize = graphic->getGraphicVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
-
-//        Lineweight endcaps setting for new objects:
-//        0 = none; 1 = round; 2 = angle; 3 = square
-        int endCaps = graphic->getGraphicVariableInt("$ENDCAPS", 1);
-        switch (endCaps){
-            case 0:
-                penCapStyle = Qt::FlatCap;
-                break;
-            case 1:
-                penCapStyle = Qt::RoundCap;
-                break;
-            case 2:
-                penCapStyle = Qt::MPenCapStyle;
-                break;
-            case 3:
-                penCapStyle = Qt::SquareCap;
-                break;
-            default:
-                penCapStyle = Qt::FlatCap; // fixme - or round?
-        }
-        //0=none; 1= round; 2 = angle; 3 = flat
-        int joinStyle = graphic->getGraphicVariableInt("$JOINSTYLE", 1);
-
-        switch (joinStyle){
-            case 0:
-                penJoinStyle = Qt::BevelJoin;
-                break;
-            case 1:
-                penJoinStyle = Qt::RoundJoin;
-                break;
-            case 2:
-                penJoinStyle = Qt::MiterJoin;
-                break;
-            case 3:
-                penJoinStyle = Qt::BevelJoin;
-                break;
-            default:
-                penJoinStyle = Qt::RoundJoin;
-        }
-    }
+    updateGraphicRelatedSettings(graphic);
 
     if (HIDE_SELECT_CURSOR) {
         // potentially, select cursor may be also hidden and so snapper will be used instead of cursor.
