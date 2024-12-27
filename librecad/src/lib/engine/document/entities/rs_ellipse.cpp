@@ -28,6 +28,7 @@
 #include "rs_ellipse.h"
 
 #include  "lc_quadratic.h"
+#include  "lc_rect.h"
 
 #include "rs_circle.h"
 #include "rs_debug.h"
@@ -197,6 +198,21 @@ private:
     double by2=0.;
 };
 
+/**
+ * @brief The EllipseBorderHelper class a helper class to avoid infinite loop due to calculateBorders()
+ *        The only difference from RS_Ellipse is a no-op calculateBorders() method
+ */
+class EllipseBorderHelper: public RS_Ellipse {
+public:
+    EllipseBorderHelper(const RS_Ellipse& ellipse):
+        RS_Ellipse(ellipse)
+    {}
+
+    // No-op to avoid infinite loop in RS_Ellipse::calculateBorders()
+    void calculateBorders() override
+    {}
+};
+
 }
 
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
@@ -239,45 +255,20 @@ void RS_Ellipse::calculateBorders() {
         data.angle1 = 0;
         data.angle2 = 0;
     }
-    data.isArc = isnormal(data.angle1) || /*std::*/isnormal(data.angle2);
+    data.isArc = isnormal(data.angle1) || isnormal(data.angle2);
 
-    const RS_Vector startpoint = getStartpoint();
-    const RS_Vector endpoint = getEndpoint();
+    LC_Rect boundingBox = isEllipticArc() ? LC_Rect{ getStartpoint(), getEndpoint() } : LC_Rect{};
 
-    double minX = std::min(startpoint.x, endpoint.x);
-    double minY = std::min(startpoint.y, endpoint.y);
-    double maxX = std::max(startpoint.x, endpoint.x);
-    double maxY = std::max(startpoint.y, endpoint.y);
+    // x-range extremes are at this direction and its opposite, relative to the ellipse center
+    const RS_Vector vpx{ getMajorP().x, -getRatio()*getMajorP().y };
+    mergeBoundingBox(boundingBox, vpx);
 
+    // y-range extremes are at this direction and its opposite, relative to the ellipse center
+    const RS_Vector vpy{ getMajorP().y, getRatio()*getMajorP().x };
+    mergeBoundingBox(boundingBox, vpy);
 
-//      x range
-//    vp.set(radius1*cos(angle),radius2*sin(angle));
-    RS_Vector vp{ getMajorP().x,getRatio()*getMajorP().y };
-    double a=vp.angle();
-
-    double amin=RS_Math::correctAngle(getAngle1()+a); // to the range of 0 to 2*M_PI
-    double amax=RS_Math::correctAngle(getAngle2()+a); // to the range of 0 to 2*M_PI
-    if( RS_Math::isAngleBetween(M_PI,amin,amax,isReversed()) ) {
-        minX= data.center.x-vp.magnitude();
-    }
-
-    if( RS_Math::isAngleBetween(2.*M_PI,amin,amax,isReversed()) ) {
-        maxX= data.center.x+vp.magnitude();
-    }
-    //y range
-    vp.set(getMajorP().y, -getRatio()*getMajorP().x);
-    a=vp.angle();
-    amin=RS_Math::correctAngle(getAngle1()+a); // to the range of 0 to 2*M_PI
-    amax=RS_Math::correctAngle(getAngle2()+a); // to the range of 0 to 2*M_PI
-    if( RS_Math::isAngleBetween(M_PI,amin,amax,isReversed()) ) {
-        minY= data.center.y-vp.magnitude();
-    }
-    if( RS_Math::isAngleBetween(2.*M_PI,amin,amax,isReversed()) ) {
-        maxY= data.center.y+vp.magnitude();
-    }
-
-    minV.set(minX, minY);
-    maxV.set(maxX, maxY);
+    minV = boundingBox.minP();
+    maxV = boundingBox.maxP();
 
     data.angleDegrees = RS_Math::rad2deg(getAngle());
     data.startAngleDegrees = RS_Math::rad2deg(data.reversed ? data.angle2 : data.angle1);
@@ -289,10 +280,17 @@ void RS_Ellipse::calculateBorders() {
             data.angularLength = 360; // in degrees
         }
     }
-    // fixme - think about better implementation
-    if (parent != nullptr) { // that's ugly, yet prevents infinite recursion from constructor
-        updateLength();
-    }
+
+    updateLength();
+}
+
+void RS_Ellipse::mergeBoundingBox(LC_Rect& boundingBox, const RS_Vector& direction)
+{
+    const double angle = direction.angle();
+    // Test the given direction and its opposite
+    for(double a: {angle, angle + M_PI})
+        if(RS_Math::isAngleBetween(a, getAngle1(), getAngle2(), isReversed()))
+            boundingBox = boundingBox.merge(getEllipsePoint(a));
 }
 
 
@@ -328,12 +326,14 @@ RS_VectorSolutions RS_Ellipse::getRefPoints() const
 
 
 RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
-    double dist1, dist2;
+    if (!isEllipticArc())
+        return RS_Vector{false};
+
     RS_Vector startpoint = getStartpoint();
     RS_Vector endpoint = getEndpoint();
 
-    dist1 = (startpoint-coord).squared();
-    dist2 = (endpoint-coord).squared();
+    double dist1 = (startpoint-coord).squared();
+    double dist2 = (endpoint-coord).squared();
 
     if (dist2<dist1) {
 		if (dist) {
@@ -394,12 +394,17 @@ RS_Vector RS_Ellipse::getTangentDirection(const RS_Vector &point) const {
   * \author: Dongxu Li
   */
 void RS_Ellipse::updateLength() {
-    RS_Ellipse e(nullptr, data);
-    //switch major/minor axis, because we need the ratio smaller than one
-    if(e.getRatio()>1.)  e.switchMajorMinor();
+    // EllipseBorderHelper class has a no-op calculateBorders() method
+    EllipseBorderHelper e{*this};
+
+    //switch major/minor axis, because we need the ratio smaller than one in getEllipseLength()
+    if(e.getRatio()>1.)
+        e.switchMajorMinor();
+
+    // required to be not reversed in getEllipseLength()
     if(e.isReversed()) {
+        std::swap(e.data.angle1, e.data.angle2);
         e.setReversed(false);
-        std::swap(e.data.angle1,e.data.angle2);
     }
     cachedLength = e.getEllipseLength(e.data.angle1,e.data.angle2);
 }
@@ -517,23 +522,21 @@ bool RS_Ellipse::switchMajorMinor(void)
  * @return Start point of the entity.
  */
 RS_Vector  RS_Ellipse::getStartpoint() const {
-    if(isEllipticArc()) return getEllipsePoint(data.angle1);
-    return RS_Vector(false);
+    return isEllipticArc() ? getEllipsePoint(data.angle1) :  RS_Vector{false};
 }
 
 /**
  * @return End point of the entity.
  */
 RS_Vector  RS_Ellipse::getEndpoint() const {
-    if(isEllipticArc()) return getEllipsePoint(data.angle2);
-    return RS_Vector(false);
+    return isEllipticArc() ? getEllipsePoint(data.angle2) :  RS_Vector{false};
 }
 
 /**
  * @return Ellipse point by ellipse angle
  */
-RS_Vector  RS_Ellipse::getEllipsePoint(const double& a) const {
-    RS_Vector p(a);
+RS_Vector  RS_Ellipse::getEllipsePoint(double a) const {
+    RS_Vector p{a};
     double ra=getMajorRadius();
     p.scale(RS_Vector(ra,ra*getRatio()));
     p.rotate(getAngle());

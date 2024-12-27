@@ -73,10 +73,9 @@ void RS_ConstructionLine::calculateBorders() {
 
 RS_Vector RS_ConstructionLine::getNearestEndpoint(const RS_Vector& coord,
         double* dist) const{
-    double dist1, dist2;
 
-    dist1 = (data.point1-coord).squared();
-    dist2 = (data.point2-coord).squared();
+    const double dist1 = (data.point1-coord).squared();
+    const double dist2 = (data.point2-coord).squared();
 
     if (dist2<dist1) {
 		if (dist) {

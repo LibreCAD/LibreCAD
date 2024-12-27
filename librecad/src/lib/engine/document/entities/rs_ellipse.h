@@ -33,6 +33,13 @@
 
 class LC_Quadratic;
 
+namespace lc {
+    namespace geo {
+    class Area;
+    }
+}
+using LC_Rect = lc::geo::Area;
+
 /**
  * Holds the data that defines an ellipse.
  * angle1=angle2=0.0 is reserved for whole ellipses
@@ -83,15 +90,17 @@ public:
 
     /**
      * @return Start point of the entity.
+     *         if the ellipse is a complete ellipse, an invalid point is returned
      */
     RS_Vector getStartpoint() const override;
     RS_VectorSolutions getFoci() const;
 
     /**
      * @return End point of the entity.
+     *         if the ellipse is a complete ellipse, an invalid point is returned
      */
     RS_Vector getEndpoint() const override;
-    RS_Vector getEllipsePoint(const double& a) const; //find the point according to ellipse angle
+    RS_Vector getEllipsePoint(double a) const; //find the point according to ellipse angle
 
     void moveStartpoint(const RS_Vector& pos) override;
     void moveEndpoint(const RS_Vector& pos) override;
@@ -256,6 +265,16 @@ a quadratic contains coefficients for quadratic:
 protected:
     RS_EllipseData data;
     void updateLength() override;
+private:
+    /**
+     * @brief mergeBoundingBox, given a line passing the ellipse center, if the line intersects with
+     *        the ellipse, merge the intersection point to the bounding box
+     * @param[in/out] boundingBox - a bounding box
+     * @param[in] direction - a direction vector to specify a line passing the ellipse center at this
+     *        direction
+     * @author Dongxu Li
+     */
+    void mergeBoundingBox(LC_Rect& boundingBox, const RS_Vector& direction);
 };
 
 #endif
