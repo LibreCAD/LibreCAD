@@ -190,7 +190,9 @@ PyTypeObject StdoutType = {
     0,                    /* tp_version_tag */
     0,                    /* tp_finalize */
     0,                    /* tp_vectorcall */
+#if PY_MINOR_VERSION > 11
     0,                    /* tp_watched */
+#endif
 };
 
 PyTypeObject StderrType = {
@@ -243,7 +245,9 @@ PyTypeObject StderrType = {
     0,                    /* tp_version_tag */
     0,                    /* tp_finalize */
     0,                    /* tp_vectorcall */
+#if PY_MINOR_VERSION > 11
     0,                    /* tp_watched */
+#endif
 };
 
 PyModuleDef embmodule = {

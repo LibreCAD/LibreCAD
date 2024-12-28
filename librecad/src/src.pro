@@ -75,9 +75,10 @@ unix {
             QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
         }
         DEFINES -=  QT_NO_SHORTCUT
-        INCLUDEPATH += /usr/include/python3.12
-        LIBS += -lpython3.12
     }
+    QT_CONFIG -= no-pkg-config
+    CONFIG += link_pkgconfig
+    PKGCONFIG += python3-embed
 }
 win32 {
     TARGET = LibreCAD
