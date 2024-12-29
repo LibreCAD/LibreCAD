@@ -448,6 +448,7 @@ void RS_Text::move(const RS_Vector& offset) {
     data.insertionPoint.move(offset);
     data.secondPoint.move(offset);
     updateBaselinePoints();
+    forcedCalculateBorders();
 //    update();
 }
 

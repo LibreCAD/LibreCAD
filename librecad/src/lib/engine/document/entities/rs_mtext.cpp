@@ -689,6 +689,7 @@ void RS_MText::move(const RS_Vector &offset) {
             line->moveBaseline(offset);
         }
     }
+    forcedCalculateBorders();
 }
 
 void RS_MText::rotate(const RS_Vector &center, const double &angle) {

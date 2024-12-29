@@ -764,7 +764,6 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                 }
 
                 if (document) {
-
                     clone->setSelected(true);
                     clone->setLayer(refMovingEntity->getLayer());
                     clone->setPen(refMovingEntity->getPen(false));
