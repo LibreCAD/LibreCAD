@@ -54,10 +54,8 @@ void RS_ActionInfoDist::init(int status) {
 }
 
 // fixme - consider displaying information in EntityInfo widget
-void RS_ActionInfoDist::trigger(){
-
+void RS_ActionInfoDist::doTrigger() {
     RS_DEBUG->print("RS_ActionInfoDist::trigger()");
-
     if (pPoints->point1.valid && pPoints->point2.valid){
         RS_Vector dV = pPoints->point2 - pPoints->point1;
         QStringList dists;
@@ -78,36 +76,47 @@ void RS_ActionInfoDist::trigger(){
 }
 
 void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionInfoDist::mouseMoveEvent begin");
-
+    deletePreview();
     int status = getStatus();
     RS_Vector mouse = snapPoint(e);
+    RS_DEBUG->print("RS_ActionInfoDist::mouseMoveEvent begin");
     switch (status) {
         case SetPoint1: {
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
         case SetPoint2: {
-            deletePreview();
             if (pPoints->point1.valid){
                 mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
                 pPoints->point2 = mouse;
-
                 previewLine(pPoints->point1, pPoints->point2);
                 if (showRefEntitiesOnPreview) {
                     previewRefLine(pPoints->point1, pPoints->point2);
                     previewRefPoint(pPoints->point1);
                     previewRefSelectablePoint(pPoints->point2);
                 }
+                RS_Vector &startPoint = pPoints->point1;
+                updateInfoCursor(mouse, startPoint);
             }
-            drawPreview();
             break;
         }
         default:
             break;
     }
-
+    drawPreview();
     RS_DEBUG->print("RS_ActionInfoDist::mouseMoveEvent end");
+}
+
+void RS_ActionInfoDist::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) {
+    if (infoCursorOverlayPrefs->enabled) {
+        double distance = startPoint.distanceTo(mouse);
+        LC_InfoMessageBuilder msg(tr("Info"));
+        msg.add(tr("Distance:"), formatLinear(distance));
+        msg.add(tr("Angle:"), formatAngle(startPoint.angleTo(mouse)));
+        msg.add(tr("From:"), formatVector(startPoint));
+        msg.add(tr("To:"), formatVector(mouse));
+        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+    }
 }
 
 void RS_ActionInfoDist::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

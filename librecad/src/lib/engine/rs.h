@@ -250,6 +250,8 @@ namespace RS2 {
         ActionSelectDouble,
         ActionGetSelect,
 
+        ActionEntityInfoSelectSingle,
+
         ActionDrawArc,
         ActionDrawArcChord,
         ActionDrawArcAngleLen,
@@ -286,7 +288,6 @@ namespace RS2 {
         ActionDrawParabolaFD,
 
         ActionDrawHatch,
-        ActionDrawHatchNoSelect,
         ActionDrawImage,
         ActionDrawLine,
         ActionDrawLineAngle,
@@ -418,7 +419,6 @@ namespace RS2 {
         ActionInfoDistPoint2Entity,
         ActionInfoAngle,
         ActionInfoTotalLength,
-        ActionInfoTotalLengthNoSelect,
         ActionInfoArea,
         ActionInfoProperties,
         ActionInfoPickCoordinates,
@@ -1007,7 +1007,8 @@ namespace RS2 {
         enum OverlayGraphics: short {
                 ActionPreviewEntity = 1, // Action Entities
                 Snapper = 2, // Snapper
-                OverlayEffects =0 // special effects, like glowing on hover
+                InfoCursor = 3, // Info Cursor
+                OverlayEffects = 0 // special effects, like glowing on hover
         };
 
         //Different re-draw methods to speed up rendering of the screen
@@ -1027,6 +1028,13 @@ namespace RS2 {
             locRightToLeft      /** Right to Left **/
         };
 
+
+        enum EntityDescriptionLevel{
+            DescriptionCatched,
+            DescriptionLong,
+            DescriptionCreating,
+            DescriptionModifying
+        };
 };
 
 #endif

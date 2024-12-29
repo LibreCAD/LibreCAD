@@ -73,30 +73,21 @@ void RS_ActionDrawArc::init(int status){
     reset();
 }
 
-void RS_ActionDrawArc::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawArc::doTrigger() {
     if (alternateArcDirection){
         data->reversed = !data->reversed;
     }
     auto arc = new RS_Arc(container,*data);
-
-    arc->setLayerToActive();
-    arc->setPenToActive();
-    container->addEntity(arc);
-
-    addToDocumentUndoable(arc);
-
-    graphicView->redraw(RS2::RedrawDrawing);
+    setPenAndLayerToActive(arc);
     moveRelativeZero(arc->getCenter());
-
+    undoCycleAdd(arc);
     setStatus(SetCenter);
     reset();
-
     RS_DEBUG->print("RS_ActionDrawArc::trigger(): arc added: %lu", arc->getId());
 }
 
 void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawArc::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -108,7 +99,6 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
         }
         case SetRadius: {
             if (data->center.valid){
-                deletePreview();
                 if (actionType == RS2::ActionDrawArc) {
                     mouse = getFreeSnapAwarePoint(e, mouse);
                 }
@@ -122,12 +112,11 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
                     previewRefLine(data->center, mouse);
                 }
                 previewCircle({data->center, data->radius});
-                drawPreview();
+
             }
             break;
         }
         case SetAngle1: {
-            deletePreview();
             mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
 
             data->angle1 = data->center.angleTo(mouse);
@@ -144,12 +133,9 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
                 previewRefSelectablePoint(startArcPoint);
                 previewRefLine(data->center, mouse);
             }
-
-            drawPreview();
             break;
         }
         case SetAngle2: {
-            deletePreview();
             mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
             data->angle2 = data->center.angleTo(mouse);
             bool alternateDirection = isControl(e);
@@ -157,18 +143,16 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
             if (alternateDirection) {
                 tmpData.reversed = !tmpData.reversed;
             }
-            auto arc = previewArc(tmpData);
+            auto arc = previewToCreateArc(tmpData);
 
             if (showRefEntitiesOnPreview) {
                 previewRefPoints({data->center, arc->getStartpoint()});
                 previewRefSelectablePoint(arc->getEndpoint());
                 previewRefLine(data->center, mouse);
             }
-            drawPreview();
             break;
         }
         case SetIncAngle: {
-            deletePreview();
             mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
             double angleToMouse = data->center.angleTo(mouse);
             data->angle2 = data->angle1 + angleToMouse;
@@ -178,7 +162,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
             if (alternateDirection) {
                 tmpData.reversed = !tmpData.reversed;
             }
-            auto arc = previewArc(tmpData);
+            auto arc = previewToCreateArc(tmpData);
 
             if (showRefEntitiesOnPreview) {
                 previewRefPoint(data->center);
@@ -197,8 +181,6 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
                 previewRefArc(
                     RS_ArcData(data->center, halfRadius * 1.1, arc->getAngle1(), arc->getAngle2(), data->reversed));
             }
-
-            drawPreview();
             break;
         }
         case SetChordLength: {
@@ -210,7 +192,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
             snapMouseToDiameter(mouse, arcStart, halfCircleArcEnd);
             double distanceFromStartToMouse = arcStart.distanceTo(mouse);
 
-            deletePreview();
+
             double diameter = data->radius * 2;
             data->angle2 = data->angle1 + asin(distanceFromStartToMouse / diameter) * 2;
 
@@ -224,7 +206,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
                 dataCopy.reversed = !data->reversed ;
             }
             if (LC_LineMath::isMeaningfulDistance(mouse, arcStart)) {
-                auto arc = previewArc(dataCopy);
+                auto arc = previewToCreateArc(dataCopy);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(arc->getEndpoint());
                     previewRefLine(arcStart, mouse);
@@ -251,13 +233,12 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
                 previewRefPoint(halfCircleArcEnd);
             }
 
-            drawPreview();
             break;
         }
         default:
             break;
     }
-
+    drawPreview();
     RS_DEBUG->print("RS_ActionDrawArc::mouseMoveEvent end");
 }
 

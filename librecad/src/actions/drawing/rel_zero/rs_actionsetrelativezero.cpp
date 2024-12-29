@@ -29,6 +29,7 @@
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_previewactioninterface.h"
 
 RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(
     RS_EntityContainer &container,
@@ -46,6 +47,12 @@ void RS_ActionSetRelativeZero::trigger(){
     if (pt->valid) {
         graphicView->lockRelativeZero(false);
         moveRelativeZero(*pt);
+        undoCycleStart();
+        RS_Undoable *relativeZeroUndoable = graphicView->getRelativeZeroUndoable();
+        if (relativeZeroUndoable != nullptr) {
+            document->addUndoable(relativeZeroUndoable);
+        }
+        undoCycleEnd();
         graphicView->lockRelativeZero(wasLocked);
     }
     finish(false);

@@ -273,6 +273,8 @@ public slots:
     void slotLibreLisp();
     void slotLibrePython();
 #endif
+    void slotShowEntityDescriptionOnHover(bool toggle);
+    void slotInfoCursorSetting(bool toggle);
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);
@@ -281,6 +283,8 @@ signals:
     void printPreviewChanged(bool on);
     void windowsChanged(bool windowsLeft);
     void signalEnableRelativeZeroSnaps(const bool);
+    void showEntityDescriptionOnHoverChanged(bool show);
+    void showInfoCursorSettingChanged(bool enabled);
 public:
     /**
      * @return Pointer to application window.
@@ -314,9 +318,6 @@ public:
 
     LC_QuickInfoWidget* getEntityInfoWidget(void) const {return quickInfoWidget;};
 
-    RS_Vector getMouseAbsolutePosition();
-    RS_Vector getMouseRelativePosition();
-    
     // Highlight the active block in the block widget
     void showBlockActivated(const RS_Block* block);
 
@@ -477,6 +478,8 @@ private:
     void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType);
 
     void doRestoreNamedView(int i) const;
+
+
 };
 
 #ifdef _WINDOWS

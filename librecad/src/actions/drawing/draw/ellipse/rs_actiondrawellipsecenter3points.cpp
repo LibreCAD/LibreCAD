@@ -63,27 +63,18 @@ void RS_ActionDrawEllipseCenter3Points::init(int status){
     drawSnapper();
 }
 
-void RS_ActionDrawEllipseCenter3Points::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawEllipseCenter3Points::doTrigger() {
     auto *ellipse = new RS_Ellipse(container, pPoints->eData);
 
-    deletePreview();
-    container->addEntity(ellipse);
-
-    addToDocumentUndoable(ellipse);
-
+    undoCycleAdd(ellipse);
     moveRelativeZero(ellipse->getCenter());
-    graphicView->redraw(RS2::RedrawDrawing);
-    drawSnapper();
-
     setStatus(SetCenter);
 
-    RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::trigger():"
-                    " entity added: %lu", ellipse->getId());
+    RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::trigger():entity added: %lu", ellipse->getId());
 }
 
 void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     //    RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::mouseMoveEvent begin");
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
@@ -93,8 +84,6 @@ void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){
     }
     pPoints->points.resize(status);
     pPoints->points.push_back(mouse);
-
-    deletePreview();
 
     if (showRefEntitiesOnPreview) {
         for (int i = SetPoint1; i <= status; i++) {
@@ -107,12 +96,16 @@ void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){
     if (preparePreview()){
         switch (status) {
             case SetPoint1: {
-                previewCircle(pPoints->cData);
+                previewToCreateCircle(pPoints->cData);
                 break;
             }
-            case SetPoint2:
+            case SetPoint2:{
+                auto ellipse = previewToCreateEllipse(pPoints->eData);
+                previewEllipseReferencePoints(ellipse, true, false);
+                break;
+            }
             case SetPoint3: {
-                auto ellipse = previewEllipse(pPoints->eData);
+                auto ellipse = previewToCreateEllipse(pPoints->eData);
                     previewEllipseReferencePoints(ellipse, true, false);
                 break;
             }
@@ -120,8 +113,8 @@ void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){
                 break;
         }
     }
-    drawPreview();
     RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::mouseMoveEvent end");
+    drawPreview();
 }
 
 bool RS_ActionDrawEllipseCenter3Points::preparePreview(){

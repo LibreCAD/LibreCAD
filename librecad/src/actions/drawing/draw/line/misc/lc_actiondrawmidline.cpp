@@ -44,31 +44,27 @@ void LC_ActionDrawMidLine::init(int status) {
     mainStatus = SetEntity1;
 }
 
-void LC_ActionDrawMidLine::trigger() {
-    RS_PreviewActionInterface::trigger();
+void LC_ActionDrawMidLine::doTrigger() {
     if (document != nullptr) {
         LineInfo lineInfo;
         prepareLine(lineInfo, secondEntity, alternateEndpoints);
         RS_Line *lineToCreate = lineInfo.line;
         if (lineToCreate != nullptr) {
             lineToCreate->reparent(container);
-            lineToCreate->setPenToActive();
-            lineToCreate->setLayerToActive();
-            container->addEntity(lineToCreate);
-            addToDocumentUndoable(lineToCreate);
+            setPenAndLayerToActive(lineToCreate);
+            undoCycleAdd(lineToCreate);
         }
     }
     setStatus(SetEntity1);
-    graphicView->redraw();
 }
 
 void LC_ActionDrawMidLine::mouseMoveEvent(QMouseEvent *e) {
-    snapPoint(e);
     deletePreview();
     deleteHighlights();
+    snapPoint(e);
     switch (getStatus()){
         case SetEntity1: {
-            RS_Entity* ent = catchEntity(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
+            RS_Entity* ent = catchEntityOnPreview(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
                 highlightHover(ent);
             }
@@ -76,7 +72,7 @@ void LC_ActionDrawMidLine::mouseMoveEvent(QMouseEvent *e) {
         }
         case SetEntity2:{
             highlightSelected(firstEntity);
-            RS_Entity* ent = catchEntity(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
+            RS_Entity* ent = catchEntityOnPreview(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
                 highlightHover(ent);
                 bool alternate = isShift(e);
@@ -93,7 +89,7 @@ void LC_ActionDrawMidLine::mouseMoveEvent(QMouseEvent *e) {
                         previewRefPoint(lineInfo.middlePoint1);
                         previewRefPoint(lineInfo.middlePoint2);
                     }
-                    previewEntity(lineInfo.line);
+                    previewEntityToCreate(lineInfo.line);
                 }
             }
             break;

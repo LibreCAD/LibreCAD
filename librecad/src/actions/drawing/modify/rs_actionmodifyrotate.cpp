@@ -66,15 +66,15 @@ void RS_ActionModifyRotate::selectionCompleted(bool singleEntity, bool fromInit)
 
 void RS_ActionModifyRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyRotate::trigger()");
+    moveRelativeZero(data->center);
     RS_Modification m(*container, graphicView);
     m.rotate(*data, selectedEntities, false, keepSelected);
-    moveRelativeZero(data->center);
 }
 
 void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
-    RS_DEBUG->print("RS_ActionModifyRotate::mouseMoveEvent begin");
-    RS_Vector mouse = snapPoint(e);
     deletePreview();
+    RS_Vector mouse = snapPoint(e);
+    RS_DEBUG->print("RS_ActionModifyRotate::mouseMoveEvent begin");
     switch (getStatus()) {
         case SetReferencePoint: {
             if (selectRefPointFirst){
@@ -154,11 +154,13 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
 
             double rotationAngle = data->center.angleTo(mouse);
 
+            RS_Vector newRefPoint = data->center.relative(radius, rotationAngle);
+
             if (showRefEntitiesOnPreview) {
                 RS_Vector originalReferencePoint = data->refPoint;
                 RS_Vector xAxisPoint = data->center.relative(radius, 0);
-                RS_Vector circlePoint = data->center.relative(radius, rotationAngle);
-                previewRefSelectablePoint(circlePoint);
+
+                previewRefSelectablePoint(newRefPoint);
 
                 previewRefPoint(xAxisPoint);
                 previewRefLine(data->center, xAxisPoint);
@@ -181,6 +183,18 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
 
             // todo - sand - we can temporarily add a copy of circle to the document, so intersection snap for target reference point will work.
             previewRotationCircleAndPoints(data->center, data->refPoint, rotationAngle);
+
+            if (isInfoCursorForModificationEnabled()) {
+                RS_Vector offset = newRefPoint - data->refPoint;
+                LC_InfoMessageBuilder msg(tr("Rotation"));
+                msg.add(tr("Angle:"),formatAngle(rotationAngle));
+                msg.add(tr("Source Point:"),formatVector(data->refPoint));
+                msg.add(tr("Target Point:"),formatVector(newRefPoint));
+                msg.add(tr("Offset:"));
+                msg.add(formatRelative(offset));
+                msg.add(formatRelativePolar(offset));
+                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+            }
             break;
         }
         case SetTargetPoint2ndRotation:{
@@ -205,14 +219,29 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
             currentAngle2 = secondRotationAngle;
             updateOptionsUI(LC_ModifyRotateOptions::UpdateMode::UPDATE_ANGLE2);
 
+            if (isInfoCursorForModificationEnabled()) {
+                RS_Vector originalRefPoint = data->refPoint;
+                RS_Vector newRefPoint =  originalRefPoint.rotate(data->center, data->angle);
+                RS_Vector offset = newRefPoint - data->refPoint;
+
+                LC_InfoMessageBuilder msg(tr("Rotation"));
+                msg.add(tr("Angle:"), formatAngle(data->angle));
+                msg.add("Source Point:", formatVector(data->refPoint));
+                msg.add("Target Point:", formatVector(newRefPoint));
+                msg.add(tr("Offset:"));
+                msg.add(formatRelative(offset));
+                msg.add(formatRelativePolar(offset));
+                msg.add(tr("Second Angle:"),formatAngle(secondRotationAngle));
+                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+            }
             break;
         }
 
         default:
             break;
     }
-    drawPreview();
     RS_DEBUG->print("RS_ActionModifyRotate::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionModifyRotate::previewRotationCircleAndPoints(const RS_Vector &center, const RS_Vector &refPoint, double angle) {
@@ -515,7 +544,7 @@ void RS_ActionModifyRotate::setRefPointAngleAbsolute(bool val) {
 }
 
 void RS_ActionModifyRotate::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select to rotate (Enter to complete)"), MOD_CTRL(tr("Rotate immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Select to rotate (Enter to complete)"),  MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Rotate immediately after selection")));
 }
 
 void RS_ActionModifyRotate::updateMouseButtonHintsForSelected(int status){

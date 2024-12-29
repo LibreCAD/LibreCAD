@@ -54,6 +54,7 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
     , modify(new LC_ActionGroup(this,tr("Modify"), tr("Modification operations"), ":/icons/move_rotate.svg"))
     , options(new LC_ActionGroup(this,tr("Options"),tr("Options management"), ":/icons/settings.svg"))
     , other(new LC_ActionGroup(this,tr("Other"),tr("Other operations"), ":/icons/text.svg"))
+    , relZero(new LC_ActionGroup(this,tr("Relative Zero"),tr("Relative Zero"), ":/icons/set_rel_zero.svg"))
     , polyline(new LC_ActionGroup(this,tr("Polyline"),tr("Polyline drawing commands"),":/icons/polylines_polyline.svg"))
     , restriction(new LC_ActionGroup(this,tr("Restriction"), tr("Snap restrictions"), ":/icons/restr_ortho.svg"))
     , select(new LC_ActionGroup(this,tr("Select"),tr("Entity selection operations"),":/icons/select.svg"))
@@ -62,7 +63,8 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
     , view(new LC_ActionGroup(this,tr("View"),tr("View related operations"), ":/icons/zoom_in.svg"))
     , namedViews(new LC_ActionGroup(this,tr("Named Views"),tr("Persistent Views operations"), ":/icons/visible.svg"))
     , widgets(new LC_ActionGroup(this,tr("Widgets"), tr("Widgets management"),":/icons/dockwidgets_bottom.svg"))
-    , pen(new LC_ActionGroup(this,tr("PenTB"),tr("Pen related operations"), ":/icons/pen_apply.svg")){
+    , pen(new LC_ActionGroup(this,tr("PenTB"),tr("Pen related operations"), ":/icons/pen_apply.svg"))
+    , infoCursor(new LC_ActionGroup(this,tr("InfoCursor"),tr("Informational Cursor"), ":/icons/info_cursor_enable.svg")){
 
     for (auto const& ag : findChildren<QActionGroup*>()) {
         ag->setExclusive(false);
@@ -72,7 +74,6 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
         }
     }
 
-    // fixme - review and probably remove relay (it seems that intention was to use it for #570, yet unsuccessfully
     for (auto ag: toolGroups()) {
         connect( ag, &QActionGroup::triggered, parent, &QC_ApplicationWindow::relayAction);
     }

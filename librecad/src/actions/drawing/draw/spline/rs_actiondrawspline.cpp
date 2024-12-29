@@ -80,26 +80,17 @@ void RS_ActionDrawSpline::init(int status){
     reset();
 }
 
-void RS_ActionDrawSpline::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawSpline::doTrigger() {
     if (!pPoints->spline){
         return;
     }
 
     // add the entity
     //RS_Spline* spline = new RS_Spline(container, data);
-    pPoints->spline->setLayerToActive();
-    pPoints->spline->setPenToActive();
+    setPenAndLayerToActive(pPoints->spline);
     pPoints->spline->update();
-    container->addEntity(pPoints->spline);
+    undoCycleAdd(pPoints->spline);
 
-    addToDocumentUndoable(pPoints->spline);
-
-    // upd view
-    RS_Vector r = graphicView->getRelativeZero();
-    graphicView->redraw(RS2::RedrawDrawing);
-    moveRelativeZero(r);
     RS_DEBUG->print("RS_ActionDrawSpline::trigger(): spline added: %lu",
                     pPoints->spline->getId());
 
@@ -319,7 +310,7 @@ void RS_ActionDrawSpline::undo(){
             pPoints->spline->removeLastControlPoint();
             if (!pPoints->history.isEmpty()){
                 RS_Vector v = pPoints->history.last();
-                graphicView->moveRelativeZero(v);
+                moveRelativeZero(v);
             }
             graphicView->redraw(RS2::RedrawDrawing);
 

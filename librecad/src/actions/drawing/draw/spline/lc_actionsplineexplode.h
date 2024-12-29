@@ -46,8 +46,6 @@ public:
     void setSegmentsCountValue(int i) {customSegmentsCount = i;};
     bool isUseCustomSegmentsCount() {return useCustomSegmentsCount;};
     void setUseCustomSegmentsCount(bool b) {useCustomSegmentsCount = b;}
-
-    void trigger() override;;
 protected:
     bool createPolyline {false};
     bool keepOriginals {false};
@@ -65,6 +63,7 @@ protected:
     RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool startDirection) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) override;
+    void doTrigger() override;
 };
 
 #endif // LC_ACTIONSPLINEEXPLODE_H

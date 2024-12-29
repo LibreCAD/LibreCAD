@@ -47,8 +47,7 @@ void LC_ActionPasteToPoints::init(int status) {
 }
 
 void LC_ActionPasteToPoints::doTrigger(bool keepSelected) {
-    document->startUndoCycle();
-
+    undoCycleStart();
     RS_Modification m(*container, graphicView, false);
     for (auto p: selectedEntities){
         RS_Vector currentPoint = p->getCenter();
@@ -58,21 +57,14 @@ void LC_ActionPasteToPoints::doTrigger(bool keepSelected) {
         LC_ERR << "Paste: " << currentPoint;
 
         if (removePointAfterPaste){
-            deleteEntityUndoable(p);
+            undoableDeleteEntity(p);
         }
         else{
             p->setSelected(keepSelected);
         }
     }
-    document->endUndoCycle();
+    undoCycleEnd();
 }
-
-/*void LC_ActionPasteToPoints::selectionCompleted([[maybe_unused]] bool singleEntity, bool fromInit) {
-        setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
-        updateMouseButtonHints();
-        updateSelectionWidget();
-        trigger();
-}*/
 
 bool LC_ActionPasteToPoints::isAllowTriggerOnEmptySelection() {
     return false;

@@ -238,7 +238,7 @@ bool LC_ActionDrawCross::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *even
  */
 void LC_ActionDrawCross::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list,[[maybe_unused]] int status){
     deleteSnapper();
-    RS_Entity *en = catchEntity(e, circleType, RS2::ResolveAll);
+    RS_Entity *en = catchEntityOnPreview(e, circleType, RS2::ResolveAll);
     // check whether entity is ok for drawing cross
     if (en != nullptr){
         bool isArc = en->isArc();

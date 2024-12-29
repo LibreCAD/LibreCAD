@@ -32,21 +32,20 @@
 #include "rs_graphicview.h"
 #include "rs_snapper.h"
 
-
 QC_ActionGetSelect::QC_ActionGetSelect(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView)
-		:RS_ActionInterface("Get Select", container, graphicView)
-        , completed(false)
-        , message(std::make_unique<QString>(tr("Select objects:"))){
+    :RS_ActionInterface("Get Select", container, graphicView)
+    , completed(false)
+    , message(std::make_unique<QString>(tr("Select objects:"))){
     actionType = RS2::ActionGetSelect;
 }
 
 QC_ActionGetSelect::QC_ActionGetSelect(RS2::EntityType typeToSelect, RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView)
-        :RS_ActionInterface("Get Select", container, graphicView)
-        , completed(false)
-        , message(std::make_unique<QString>(tr("Select objects:"))),
-        typeToSelect(typeToSelect){
+                                       RS_GraphicView& graphicView)
+    :RS_ActionInterface("Get Select", container, graphicView)
+    , completed(false)
+    , message(std::make_unique<QString>(tr("Select objects:"))),
+     typeToSelect(typeToSelect){
     actionType = RS2::ActionGetSelect;
 }
 
@@ -54,12 +53,12 @@ QC_ActionGetSelect::~QC_ActionGetSelect() = default;
 
 void QC_ActionGetSelect::updateMouseButtonHints() {
     switch (getStatus()) {
-    case Select:
-        updateMouseWidget(*message, tr("Cancel"));
-        break;
-    default:
-		updateMouseWidget();
-        break;
+        case Select:
+            updateMouseWidget(*message, tr("Cancel"));
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
 
@@ -80,14 +79,14 @@ void QC_ActionGetSelect::init(int status) {
 void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         completed = true;
-		updateMouseWidget();
+        updateMouseWidget();
         finish();
     }
 }
 
 void QC_ActionGetSelect::keyPressEvent(QKeyEvent* e){
     if (e->key()==Qt::Key_Escape || e->key()==Qt::Key_Enter){
-		updateMouseWidget();
+        updateMouseWidget();
         finish();
         completed = true;
     }
@@ -107,7 +106,6 @@ void QC_ActionGetSelect::getSelected(QList<Plug_Entity *> *se, Doc_plugin_interf
 
 void QC_ActionGetSelect::unselectEntities(){
     for(auto e: *container){ // fixme - iterating all entities for selection
-
         if (e->isSelected()) {
             e->setSelected(false);
         }

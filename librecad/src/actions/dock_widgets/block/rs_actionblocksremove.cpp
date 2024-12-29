@@ -61,7 +61,7 @@ void RS_ActionBlocksRemove::trigger() {
         containerList.push_back(bl->at(bi));
     }
 
-    document->startUndoCycle();
+    undoCycleStart();
 
     for (auto block: blocks) {
         if (nullptr == block) {
@@ -99,7 +99,7 @@ void RS_ActionBlocksRemove::trigger() {
         block->setUndoState(true);
         document->addUndoable(block);
     }
-    document->endUndoCycle();
+    undoCycleEnd();
 
     graphic->addBlockNotification();
     graphic->updateInserts();

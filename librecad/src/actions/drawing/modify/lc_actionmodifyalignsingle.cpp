@@ -35,24 +35,20 @@ void LC_ActionModifyAlignSingle::init(int status) {
 //    showOptions();
 }
 
-void LC_ActionModifyAlignSingle::trigger() {
-    RS_PreviewActionInterface::trigger();
+void LC_ActionModifyAlignSingle::doTrigger() {
     if (entityToAlign != nullptr) {
         if (document != nullptr) {
             RS_Vector target = LC_Align::getReferencePoint(alignMin, alignMax, hAlign, vAlign);
             RS_Entity *clone = LC_Align::createCloneMovedToTarget(entityToAlign, target, true, hAlign, vAlign);
             if (clone != nullptr) {
-                document->startUndoCycle();
                 clone->setSelected(false);
                 container->addEntity(clone);
-                document->addUndoable(clone);
-                deleteEntityUndoable(entityToAlign);
-                document->endUndoCycle();
+
+                undoCycleReplace(entityToAlign, clone);
             }
         }
     }
     entityToAlign = nullptr;
-    deletePreview();
     if (finishActionAfterTrigger){
         setStatus(-1);
     }
@@ -62,13 +58,12 @@ void LC_ActionModifyAlignSingle::trigger() {
         }
     }
     drawPreview();
-    graphicView->redraw();
 }
 
 void LC_ActionModifyAlignSingle::mouseMoveEvent(QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
     deletePreview();
     deleteHighlights();
+    RS_Vector snap = snapPoint(e);
     switch (getStatus()){
         case SetRefPoint:{
             RS_Vector min;
@@ -76,7 +71,7 @@ void LC_ActionModifyAlignSingle::mouseMoveEvent(QMouseEvent *e) {
             bool showPreview = true;
             switch (alignType) {
                 case LC_Align::ENTITY: {
-                    RS_Entity *entity = catchEntity(snap);
+                    RS_Entity *entity = catchEntityOnPreview(snap);
                     if (entity != nullptr) {
                         min = entity->getMin();
                         max = entity->getMax();
@@ -101,31 +96,112 @@ void LC_ActionModifyAlignSingle::mouseMoveEvent(QMouseEvent *e) {
                     break;
             }
             if (showPreview) {
-                previewAlignRefPoint(min, max);
+                double verticalRef;
+                bool drawVertical  = LC_Align::getVerticalRefCoordinate(min, max, hAlign, verticalRef);
+
+                double horizontalRef;
+                bool drawHorizontal = LC_Align::getHorizontalRefCoordinate(min, max, vAlign, horizontalRef);
+
+                previewRefLines(drawVertical, verticalRef, drawHorizontal, horizontalRef);
+
+                // info cursor
+                if (infoCursorOverlayPrefs->enabled){
+                    QString msg = prepareInfoCursorMessage(verticalRef, drawVertical, horizontalRef, drawHorizontal);
+                    appendInfoCursorZoneMessage(msg, 2, false);
+                }
             }
             break;
         }
         case SelectEntity:{
-            RS_Entity* entity = catchEntity(e);
+
+            double verticalRef;
+            bool drawVertical  = LC_Align::getVerticalRefCoordinate(alignMin, alignMax, hAlign, verticalRef);
+
+            double horizontalRef;
+            bool drawHorizontal = LC_Align::getHorizontalRefCoordinate(alignMin, alignMax, vAlign, horizontalRef);
+
             if (showRefEntitiesOnPreview){
-                previewAlignRefPoint(alignMin, alignMax);
+                previewRefLines(drawVertical, verticalRef, drawHorizontal, horizontalRef);
             }
             if (baseAlignEntity != nullptr) {
                 highlightSelected(baseAlignEntity);
             }
+
+            RS_Entity* entity = catchEntityOnPreview(e);
+            RS_Vector offset;
             if (entity != nullptr){
                 highlightHover(entity);
                 RS_Vector target = LC_Align::getReferencePoint(alignMin, alignMax, hAlign, vAlign);
-                RS_Entity* clone = LC_Align::createCloneMovedToTarget(entity, target, false, hAlign, vAlign);
+
+                RS_Vector entityRefPoint = LC_Align::getReferencePoint(entity->getMin(), entity->getMax(), hAlign, vAlign);
+                offset = target - entityRefPoint;
+
+                RS_Entity* clone =  LC_Align::createCloneMovedToOffset(entity, offset, false);
                 if (clone != nullptr){
                     previewEntity(clone);
                 }
+            }
+
+            if (isInfoCursorForModificationEnabled()){
+                QString msg = prepareInfoCursorMessage(verticalRef, drawVertical, horizontalRef, drawHorizontal);
+                LC_InfoMessageBuilder builder = LC_InfoMessageBuilder(msg);
+                if (entity != nullptr){
+                    builder.add(tr("Offset:"));
+                    builder.add(formatRelative(offset));
+                    builder.add(formatRelativePolar(offset));
+                }
+                appendInfoCursorZoneMessage(builder.toString(), 2, false);
             }
             break;
         }
     }
     drawPreview();
     drawHighlights();
+}
+
+QString LC_ActionModifyAlignSingle::prepareInfoCursorMessage(double verticalRef, bool drawVertical, double horizontalRef, bool drawHorizontal) {
+    QString msg = tr("Align to ");
+    switch (alignType) {
+        case LC_Align::ENTITY:{
+            msg.append(tr("Entity"));
+            break;
+        }
+        case LC_Align::POSITION:{
+            msg.append(tr("Position"));
+            break;
+        }
+        case LC_Align::DRAWING:{
+            msg.append(tr("Drawing"));
+            break;
+        }
+    }
+    msg.append("\n");
+    msg.append(tr("Reference: "));
+    if (drawVertical){
+        msg.append("X: ");
+        msg.append(formatLinear(verticalRef));
+        msg.append(" ");
+    }
+
+    if (drawHorizontal){
+        msg.append("Y: ");
+        msg.append(formatLinear(horizontalRef));
+    }
+    return msg;
+}
+
+void LC_ActionModifyAlignSingle::previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef) {
+    if (drawVertical) {
+        double g0 = graphicView->toGraphY(0);
+        double gHeight = graphicView->toGraphY(graphicView->getHeight());
+        previewRefConstructionLine({verticalRef, g0}, {verticalRef, gHeight});
+    }
+
+    if (drawHorizontal) {
+        double g0 = graphicView->toGraphX(0);
+        double gWidth = graphicView->toGraphX(graphicView->getWidth());
+        previewRefConstructionLine({g0, horizontalRef}, {gWidth, horizontalRef});
+    }
 }
 
 void LC_ActionModifyAlignSingle::previewAlignRefPoint(const RS_Vector &min, const RS_Vector &max) {

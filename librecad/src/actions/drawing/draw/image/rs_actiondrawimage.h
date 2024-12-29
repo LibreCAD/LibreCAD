@@ -47,7 +47,6 @@ public:
 
     void init(int status) override;
     void reset();
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
 //    void updateToolBar() override;
@@ -86,5 +85,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateMouseButtonHints() override;
+    void doTrigger() override;
 };
 #endif

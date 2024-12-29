@@ -34,6 +34,7 @@ public:
     LC_ActionGroup* modify;
     LC_ActionGroup* options;
     LC_ActionGroup* other;
+    LC_ActionGroup* relZero;
     LC_ActionGroup* polyline;
     LC_ActionGroup* restriction;
     LC_ActionGroup* select;
@@ -43,6 +44,7 @@ public:
     LC_ActionGroup* namedViews;
     LC_ActionGroup* widgets;
     LC_ActionGroup* pen;
+    LC_ActionGroup* infoCursor;
 
     QList<LC_ActionGroup*> toolGroups();
     QMap<QString, LC_ActionGroup*> allGroups();

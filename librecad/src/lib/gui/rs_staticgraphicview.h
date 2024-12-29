@@ -28,6 +28,7 @@
 #define RS_STATICGRAPHICVIEW_H
 
 #include "rs_graphicview.h"
+#include "rs_graphic.h"
 
 /**
  * This is an implementation of a graphic viewer with a fixed size
@@ -35,24 +36,22 @@
  */
 class RS_StaticGraphicView: public RS_GraphicView {
 public:
-	RS_StaticGraphicView(int w, int h, RS_Painter* p, QSize const* pb = nullptr);
+    RS_StaticGraphicView(int w, int h, RS_Painter* p, QSize const* pb = nullptr);
 
-	int getWidth() const override;
-	int getHeight() const override;
-	void redraw(RS2::RedrawMethod) override{}
-	void adjustOffsetControls() override{}
-	void adjustZoomControls() override{}
-	void setMouseCursor(RS2::CursorType ) override{}
-
+    int getWidth() const override;
+    int getHeight() const override;
+    void redraw(RS2::RedrawMethod) override{}
+    void adjustOffsetControls() override{}
+    void adjustZoomControls() override{}
+    void setMouseCursor(RS2::CursorType ) override{}
     void updateGridStatusWidget(QString) override{}
-	RS_Vector getMousePosition() const override;
-
+    RS_Vector getMousePosition() const override;
     void paint();
 
+    void updateSettings(RS_Graphic* graphic);
 private:
     //! Width
     int width = 0;
-
     //! Height
     int height = 0;
 };

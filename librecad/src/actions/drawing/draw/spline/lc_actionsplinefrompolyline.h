@@ -30,17 +30,6 @@
 class LC_ActionSplineFromPolyline :public RS_PreviewActionInterface{
     Q_OBJECT
 
-protected:
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-
-    RS2::CursorType doGetMouseCursor(int status) override;
-
-    void updateMouseButtonHints() override;
-
-    LC_ActionOptionsWidget *createOptionsWidget() override;
-
 public:
     LC_ActionSplineFromPolyline(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionSplineFromPolyline() override = default;
@@ -56,10 +45,7 @@ public:
     void setSegmentPoints(int val){segmentMiddlePoints = val;}
     void setUseFitPoints(bool val){vertexesAreFitPoints = val;}
     bool isUseFitPoints(){return vertexesAreFitPoints;}
-    void trigger() override;
-
     void finish(bool updateTB) override;
-
     void mouseMoveEvent(QMouseEvent *event) override;;
 protected:
     enum State {
@@ -76,10 +62,14 @@ protected:
     int segmentMiddlePoints = 1;
 
     RS_Entity* createSplineForPolyline(RS_Entity *p);
-
     void fillControlPointsListFromPolyline(const RS_Polyline *polyline, std::vector<RS_Vector> &controlPoints) const;
-
     void setupAndAddCreatedEntity(RS_Entity *createdEntity, RS_Layer *layerToSet, const RS_Pen &penToUse);
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void updateMouseButtonHints() override;
+    LC_ActionOptionsWidget *createOptionsWidget() override;
+    void doTrigger() override;
 };
 
 #endif // LC_ACTIONSPLINEFROMPOLYLINE_H

@@ -114,6 +114,9 @@ include_directories(librecad/src/lib/engine/overlays)
 include_directories(librecad/src/lib/engine/overlays/preview)
 include_directories(librecad/src/lib/engine/overlays/highlight)
 include_directories(librecad/src/lib/engine/overlays/references)
+include_directories(librecad/src/lib/engine/overlays/info_cursor)
+include_directories(librecad/src/lib/engine/overlays/overlay_box)
+include_directories(librecad/src/lib/engine/overlays/crosshair)
 include_directories(librecad/src/lib/engine/document)
 include_directories(librecad/src/lib/engine/document/blocks)
 include_directories(librecad/src/lib/engine/document/layers)
@@ -545,8 +548,8 @@ set(SOURCES
 		librecad/src/actions/drawing/selection/rs_actionselect.h
 		librecad/src/actions/drawing/selection/rs_actionselectall.cpp
 		librecad/src/actions/drawing/selection/rs_actionselectall.h
-		librecad/src/actions/drawing/selection/rs_actionselectbase.cpp
-		librecad/src/actions/drawing/selection/rs_actionselectbase.h
+        librecad/src/lib/actions/rs_actionselectbase.cpp
+        librecad/src/lib/actions/rs_actionselectbase.h
 		librecad/src/actions/drawing/selection/rs_actionselectcontour.cpp
 		librecad/src/actions/drawing/selection/rs_actionselectcontour.h
 		librecad/src/actions/drawing/selection/rs_actionselectintersected.cpp
@@ -681,8 +684,8 @@ set(SOURCES
 		librecad/src/lib/engine/document/entities/rs_line.h
 		librecad/src/lib/engine/document/entities/rs_mtext.cpp
 		librecad/src/lib/engine/document/entities/rs_mtext.h
-		librecad/src/lib/engine/overlays/rs_overlaybox.cpp
-		librecad/src/lib/engine/overlays/rs_overlaybox.h
+		librecad/src/lib/engine/overlays/overlay_box/rs_overlaybox.cpp
+		librecad/src/lib/engine/overlays/overlay_box/rs_overlaybox.h
 		librecad/src/lib/engine/overlays/rs_overlayline.cpp
 		librecad/src/lib/engine/overlays/rs_overlayline.h
 		librecad/src/lib/engine/document/patterns/rs_pattern.cpp
@@ -1252,8 +1255,8 @@ set(SOURCES
         librecad/src/lib/actions/lc_modifiersinfo.cpp
         librecad/src/lib/actions/lc_modifiersinfo.h
         librecad/src/lib/actions/lc_modifiersinfo.h
-		librecad/src/actions/drawing/modify/lc_actionpreselectionawarebase.h
-		librecad/src/actions/drawing/modify/lc_actionpreselectionawarebase.cpp
+		librecad/src/lib/actions/lc_actionpreselectionawarebase.h
+		librecad/src/lib/actions/lc_actionpreselectionawarebase.cpp
 		librecad/src/ui/action_options/modify/lc_modifystretchoptions.cpp
 		librecad/src/ui/action_options/modify/lc_modifystretchoptions.h
 		librecad/src/ui/action_options/modify/lc_moveoptions.cpp
@@ -1323,7 +1326,7 @@ set(SOURCES
 		librecad/src/lib/gui/grid/lc_gridsystem.h
 		librecad/src/lib/gui/grid/lc_gridsystem.cpp
 		librecad/src/lib/gui/grid/lc_isometricgrid.cpp
-		librecad/src/lib/engine/overlays/lc_crosshair.cpp
+		librecad/src/lib/engine/overlays/crosshair/lc_crosshair.cpp
 		librecad/src/ui/main/lc_releasechecker.h
 		librecad/src/ui/main/lc_releasechecker.cpp
 		librecad/src/ui/dialogs/main/lc_dlgnewversionavailable.h
@@ -1420,6 +1423,10 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp
 		librecad/src/ui/action_options/misc/lc_drawboundingboxoptions.h
 		librecad/src/ui/action_options/misc/lc_drawboundingboxoptions.cpp
+		librecad/src/lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.h
+		librecad/src/lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.cpp
+		librecad/src/lib/engine/undo/lc_undoablerelzero.h
+		librecad/src/lib/engine/undo/lc_undoablerelzero.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

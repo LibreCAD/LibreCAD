@@ -42,7 +42,6 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawCircleTan3() override;
     void init(int status) override;
-    void trigger() override;
     bool preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
 //    void coordinateEvent(RS_CoordinateEvent* e) override;
@@ -62,7 +61,7 @@ protected:
         SetCenter   //  select the closest tangential Circle.  */
     };
     struct Points;
-    RS_Entity *catchCircle(QMouseEvent *e);
+    RS_Entity *catchCircle(QMouseEvent *e, bool forPreview);
     std::unique_ptr<Points> pPoints;
     bool getData(RS_Entity *en = nullptr);
     RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *pEntity);
@@ -71,5 +70,7 @@ protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
+
+    void doTrigger() override;
 };
 #endif

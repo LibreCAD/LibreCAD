@@ -64,8 +64,6 @@ void RS_ActionModifyDeleteFree::trigger(){
         if (parent) {
             if (parent->rtti() == RS2::EntityPolyline) {
                 if (parent->getId() == polyline->getId()) {
-                    // deletes whole polyline on screen:
-                    graphicView->deleteEntity((RS_Entity *) polyline);
 
                     // splits up the polyline in the container:
                     RS_Polyline *pl1 = nullptr;

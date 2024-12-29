@@ -28,6 +28,7 @@
 #define RS_ACTIONDRAWHATCH_H
 
 #include "rs_previewactioninterface.h"
+#include "lc_actionpreselectionawarebase.h"
 
 struct RS_HatchData;
 
@@ -36,16 +37,13 @@ struct RS_HatchData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawHatch : public RS_PreviewActionInterface {
+class RS_ActionDrawHatch : public LC_ActionPreSelectionAwareBase {
 Q_OBJECT
 public:
     RS_ActionDrawHatch(RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
     ~RS_ActionDrawHatch() override;
-
     void init(int status) override;
-    void trigger() override;
-    void mouseMoveEvent(QMouseEvent* e) override;
     void setShowArea(bool s);
 protected:
     /**
@@ -56,10 +54,11 @@ protected:
     };
     std::unique_ptr<RS_HatchData> data;
     bool m_bShowArea{true};
-
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-    void updateMouseButtonHints() override;
+    void updateMouseButtonHintsForSelection() override;
+    void doTrigger(bool keepSelected) override;
+    bool isAllowTriggerOnEmptySelection() override;
+    RS2::CursorType doGetMouseCursorSelected(int status) override;
+    void doSelectEntity(RS_Entity* entityToSelect, bool selectContour) const override;
+    bool isEntityAllowedToSelect(RS_Entity *ent) const override;
 };
 #endif

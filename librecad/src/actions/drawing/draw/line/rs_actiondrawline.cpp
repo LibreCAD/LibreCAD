@@ -118,23 +118,16 @@ void RS_ActionDrawLine::init(int status){
     drawSnapper();
 }
 
-void RS_ActionDrawLine::trigger(){
-    RS_PreviewActionInterface::trigger();
-
-    RS_Line* line = new RS_Line(container, pPoints->data);
-    line->setLayerToActive();
-    line->setPenToActive();
-    container->addEntity(line);
-
-    addToDocumentUndoable(line);
-
-    graphicView->redraw(RS2::RedrawDrawing);
+void RS_ActionDrawLine::doTrigger() {
+    auto* line = new RS_Line(container, pPoints->data);
+    setPenAndLayerToActive(line);
     moveRelativeZero(pPoints->history.at(pPoints->index()).currPt);
-    RS_DEBUG->print("RS_ActionDrawLine::trigger(): line added: %lu",
-                    line->getId());
+    undoCycleAdd(line);
+    RS_DEBUG->print("RS_ActionDrawLine::trigger(): line added: %lu",line->getId());
 }
 
 void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e){
+    deletePreview();
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
 
@@ -144,23 +137,21 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e){
             break;
         }
         case SetEndpoint: {
-            deletePreview();
             RS_Vector &startPoint = pPoints->data.startpoint;
             if (startPoint.valid){
-                // Snapping to angle(15*) if shift key is pressed
                 mouse = getSnapAngleAwarePoint(e, startPoint, mouse, true);
-                previewLine(startPoint, mouse);
+                previewToCreateLine(startPoint, mouse);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(startPoint);
                     previewRefSelectablePoint(mouse);
                 }
             }
-            drawPreview();
             break;
         }
         default:
             break;
     }
+    drawPreview();
 }
 
 void RS_ActionDrawLine::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

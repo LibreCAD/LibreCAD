@@ -57,8 +57,7 @@ class LC_ActionOptionsWidget; // todo - think about depencency - options in in u
  */
 //fixme - actually, inheritance from snapper is rather bad design... not all actions (say, file open or print-preview) should be
 // inherited from snapper - only ones that really work with drawing should be snap-aware
-class RS_ActionInterface : public QObject, public RS_Snapper {
-    Q_OBJECT
+class RS_ActionInterface : public RS_Snapper {
 public:
     RS_ActionInterface(const char* name,
                        RS_EntityContainer& container,
@@ -187,5 +186,15 @@ protected:
 
     virtual void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos);
     void initPrevious(int status);
+    void preparePromptForInfoCursorOverlay(const QString &msg, const LC_ModifiersInfo &modifiers);
+
+    void undoableDeleteEntity(RS_Entity *entity);
+    void undoableAdd(RS_Undoable *e) const;
+    bool undoCycleAdd(RS_Entity *entity, bool addToContainer = true) const;
+    void undoCycleReplace(RS_Entity *entityToReplace, RS_Entity* entityReplacing);
+    void undoCycleEnd() const;
+    void undoCycleStart() const;
+
+    void setPenAndLayerToActive(RS_Entity* e);
 };
 #endif

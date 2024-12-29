@@ -157,7 +157,7 @@ protected:
     RS_GraphicView* graphicView = nullptr;
     bool handleUndo = false;
 private:
-    void setEntity(RS_Entity* en) const;
+    void setupAndAddEntity(RS_Entity* en) const;
 };
 
 #endif

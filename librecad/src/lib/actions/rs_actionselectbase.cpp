@@ -1,28 +1,24 @@
-/****************************************************************************
-**
-** This file is part of the LibreCAD project, a 2D CAD program
-**
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
-**
-** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
-** Foundation and appearing in the file gpl-2.0.txt included in the
-** packaging of this file.
-**
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU General Public License for more details.
-** 
-** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-**
-** This copyright notice MUST APPEAR in all copies of the script!  
-**
-**********************************************************************/
+/*******************************************************************************
+ *
+ This file is part of the LibreCAD project, a 2D CAD program
+
+ Copyright (C) 2024 LibreCAD.org
+ Copyright (C) 2024 sand1024
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ ******************************************************************************/
 
 
 #include <QMouseEvent>
@@ -72,28 +68,32 @@ RS2::CursorType RS_ActionSelectBase::doGetMouseCursor([[maybe_unused]] int statu
     return RS2::SelectCursor;
 }
 
-void RS_ActionSelectBase::selectEntity() {
+bool RS_ActionSelectBase::selectEntity(RS_Entity* entityToSelect, bool selectContour) {
+    bool result = false;
     if (entityToSelect != nullptr){
         bool selectionAllowed = isEntityAllowedToSelect(entityToSelect);
         if (selectionAllowed){
-            RS_Selection s(*container, graphicView);
-            s.selectSingle(entityToSelect);
-        } else {
-            return;
+            doSelectEntity(entityToSelect, selectContour);
+            updateSelectionWidget();
+            result = true;
         }
-        updateSelectionWidget();
     }
     else {
         RS_DEBUG->print("RS_ActionSelectSingle::trigger: Entity is NULL\n");
     }
-    entityToSelect = nullptr;
+    return result;
+//    entityToSelect = nullptr;
+}
+
+void RS_ActionSelectBase::doSelectEntity(RS_Entity* entityToSelect,  [[maybe_unused]]bool selectContour) const {
+    RS_Selection s(*container, graphicView);
+    s.selectSingle(entityToSelect);
 }
 
 RS_Entity* RS_ActionSelectBase::selectionMouseMove(QMouseEvent *event) {
     RS_Entity* result = nullptr;
     snapPoint(event);
-    deleteHighlights();
-    auto ent = catchEntity(event, catchForSelectionEntityTypes);
+    auto ent = catchEntityOnPreview(event, catchForSelectionEntityTypes);
     if (ent != nullptr){
         bool selectionAllowed = isEntityAllowedToSelect(ent);
         if (selectionAllowed){
@@ -102,7 +102,6 @@ RS_Entity* RS_ActionSelectBase::selectionMouseMove(QMouseEvent *event) {
             result = ent;
         }
     }
-    drawHighlights();
     return result;
 }
 

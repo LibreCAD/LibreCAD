@@ -33,7 +33,6 @@ public:
     LC_ActionDrawMidLine(RS_EntityContainer &container, RS_GraphicView &graphicView);
     void mouseMoveEvent(QMouseEvent *event) override;
     QStringList getAvailableCommands() override;
-    void trigger() override;
     double getOffset() const;
     void setOffset(double offset);
     void init(int status) override;
@@ -72,6 +71,7 @@ protected:
     int mainStatus = 0;
     void restoreMainStatus(){setStatus(mainStatus);}
     void prepareLine(LineInfo &info, RS_Entity* ent, bool alternate);
+    void doTrigger() override;
 };
 
 #endif // LC_ACTIONDRAWMIDLINE_H

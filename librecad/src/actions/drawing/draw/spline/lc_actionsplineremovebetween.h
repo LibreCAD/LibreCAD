@@ -31,9 +31,6 @@ class LC_ActionSplineRemoveBetween:public LC_ActionSplineModifyBase{
 public:
     LC_ActionSplineRemoveBetween(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionSplineRemoveBetween() override = default;
-
-    void trigger() override;
-
 protected:
     bool splineIsClosed = false;
     RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool startDirection) override;
@@ -46,9 +43,7 @@ protected:
 
     bool isValidSplinePointsData(unsigned long long int size, bool closed);
     bool isValidSplineData(unsigned long long int size, bool closed, int degree);
-
     void doOnEntityNotCreated() override;
-
     void doCompleteTrigger() override;
 };
 

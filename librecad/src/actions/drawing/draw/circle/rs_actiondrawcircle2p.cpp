@@ -64,27 +64,18 @@ void RS_ActionDrawCircle2P::reset() {
     pPoints->point2 = {};
 }
 
-void RS_ActionDrawCircle2P::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawCircle2P::doTrigger() {
     preparePreview();
     if (data->isValid()){
         auto *circle = new RS_Circle(container,*data);
-        circle->setLayerToActive();
-        circle->setPenToActive();
-        container->addEntity(circle);
 
-        addToDocumentUndoable(circle);
+        setPenAndLayerToActive(circle);
 
         if (moveRelPointAtCenterAfterTrigger){
             moveRelativeZero(data->center);
-
-        } else {
-            RS_Vector rz = graphicView->getRelativeZero();
-            moveRelativeZero(rz);
         }
-        graphicView->redraw(RS2::RedrawDrawing);
 
+        undoCycleAdd(circle);
         setStatus(SetPoint1);
         reset();
     } else
@@ -103,6 +94,7 @@ void RS_ActionDrawCircle2P::preparePreview() {
 }
 
 void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
+    deletePreview();
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
         case SetPoint1: {
@@ -111,12 +103,11 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
             break;
         }
         case SetPoint2: {
-            deletePreview();
             mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
             pPoints->point2 = mouse;
             preparePreview();
             if (data->isValid()){
-                previewCircle(*data);
+                previewToCreateCircle(*data);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(data->center);
                     previewRefPoint(pPoints->point1);
@@ -125,12 +116,13 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
                     //                    previewRefLine(pPoints->point1, pPoints->point2);
                 }
             }
-            drawPreview();
+
             break;
         }
         default:
             break;
     }
+    drawPreview();
 }
 
 void RS_ActionDrawCircle2P::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

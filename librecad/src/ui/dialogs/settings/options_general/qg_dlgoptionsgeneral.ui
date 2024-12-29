@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>730</width>
+    <width>759</width>
     <height>636</height>
    </rect>
   </property>
@@ -29,17 +29,10 @@
    <property name="bottomMargin">
     <number>11</number>
    </property>
-   <item row="5" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -1964,284 +1957,173 @@
        <string>&amp;Preview</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4">
-       <item row="0" column="0">
-        <widget class="QGroupBox" name="gbPreview">
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="groupBox_14">
          <property name="title">
-          <string>Preview</string>
+          <string>Rendering Minimums</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_5">
-          <item row="1" column="0" colspan="4">
-           <widget class="QCheckBox" name="cbDisplayRefPoints">
+         <layout class="QGridLayout" name="gridLayout_27">
+          <item row="0" column="4">
+           <widget class="QDoubleSpinBox" name="sbRenderMinArcRadius">
             <property name="toolTip">
-             <string>If checked, more informative and explaining preview will be drawn for operations</string>
+             <string>If screen radius of arc is less than value, arc is drawn as point</string>
             </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="maximum">
+             <double>5.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_14">
             <property name="text">
-             <string>Show operation's preview explanatory entities </string>
+             <string>Arc Radius:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Height of text line:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Line length:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QDoubleSpinBox" name="sbRenderMinCircleRadius">
+            <property name="toolTip">
+             <string>If screen radius of circle is less than value, circle is drawn as point</string>
+            </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="maximum">
+             <double>5.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>Circle Radius:</string>
             </property>
            </widget>
           </item>
           <item row="2" column="3">
-           <widget class="QPushButton" name="pb_previewRefColor">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Click to select color</string>
-            </property>
+           <widget class="QLabel" name="label_17">
             <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+             <string>Ellipse Major Axis:</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="lMaxPreview">
-            <property name="text">
-             <string>N&amp;umber of preview entities:</string>
+          <item row="2" column="4">
+           <widget class="QDoubleSpinBox" name="sbRenderMinEllipseMinor">
+            <property name="toolTip">
+             <string>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</string>
             </property>
-            <property name="wordWrap">
-             <bool>false</bool>
+            <property name="suffix">
+             <string> px</string>
             </property>
-            <property name="buddy">
-             <cstring>cbMaxPreview</cstring>
+            <property name="maximum">
+             <double>5.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QDoubleSpinBox" name="sbRenderMinEllipseMajor">
+            <property name="toolTip">
+             <string>If screen size for major ellipse axis is less than value, ellipse is drawn as point</string>
+            </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="maximum">
+             <double>5.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
             </property>
            </widget>
           </item>
           <item row="0" column="2">
-           <widget class="QComboBox" name="cbMaxPreview">
+           <widget class="QSpinBox" name="sbTextMinHeight">
             <property name="toolTip">
-             <string>If more entities in preview than specified, rect will be drawn instead of entities.</string>
+             <string>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</string>
             </property>
-            <property name="editable">
-             <bool>true</bool>
+            <property name="suffix">
+             <string> px</string>
             </property>
-            <item>
-             <property name="text">
-              <string notr="true">0</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">50</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">100</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">200</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">400</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">800</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QComboBox" name="cbPreviewRefHighlightColor">
-            <property name="toolTip">
-             <string>Color for selected preview reference entiites</string>
-            </property>
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#1E90FF</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">#FFC200</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="lbPreviewRefHighlightColor">
-            <property name="text">
-             <string>Active preview's explanatory entity's Color:</string>
-            </property>
-            <property name="buddy">
-             <cstring>cbPreviewRefHighlightColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3">
-           <widget class="QPushButton" name="pb_previewRefHighlightColor">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Click to select color</string>
-            </property>
-            <property name="text">
+            <property name="prefix">
              <string/>
             </property>
-            <property name="icon">
-             <iconset resource="../../../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>15</number>
+            </property>
+            <property name="singleStep">
+             <number>1</number>
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
-           <widget class="QComboBox" name="cbPreviewRefColor">
+          <item row="1" column="2">
+           <widget class="QDoubleSpinBox" name="sbRenderMinLineLen">
             <property name="toolTip">
-             <string>Color for preview reference entities</string>
+             <string>If screen length of line is less than value, the line is drawn as point</string>
             </property>
-            <property name="accessibleDescription">
-             <string notr="true"/>
+            <property name="suffix">
+             <string> px</string>
             </property>
-            <property name="editable">
-             <bool>true</bool>
+            <property name="maximum">
+             <double>5.000000000000000</double>
             </property>
-            <item>
-             <property name="text">
-              <string notr="true">#1E90FF</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">#FFC200</string>
-             </property>
-            </item>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="5">
+           <widget class="QCheckBox" name="cbTextDraftOnPanning">
+            <property name="statusTip">
+             <string>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </string>
+            </property>
+            <property name="text">
+             <string>Draw text as draft within paning operations</string>
+            </property>
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="lbPreviewRefColor">
+           <widget class="QLabel" name="label_16">
             <property name="text">
-             <string>Preview's explanatory entity's Color:</string>
-            </property>
-            <property name="buddy">
-             <cstring>cbPreviewRefColor</cstring>
+             <string>Ellipse Minor Axis:</string>
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="6" column="1">
-        <spacer name="verticalSpacer_9">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="0">
-        <widget class="QGroupBox" name="gbGVHighlight">
-         <property name="title">
-          <string>Highlight</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_16">
-          <item row="2" column="0">
-           <widget class="QLabel" name="lHighlightedColor">
-            <property name="text">
-             <string>&amp;Highlighted entity Color:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbHighlightedColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QPushButton" name="pb_highlighted">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+          <item row="4" column="0" colspan="5">
+           <widget class="QCheckBox" name="cbTextDraftInPreview">
             <property name="toolTip">
-             <string>Click to select color</string>
+             <string>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </string>
             </property>
             <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QComboBox" name="cbHighlightedColor">
-            <property name="toolTip">
-             <string>Color for highlighted entities</string>
-            </property>
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#739373</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbHighlightWIthLinewidthInDraft">
-            <property name="toolTip">
-             <string>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity's linewidth instead of 1px</string>
-            </property>
-            <property name="text">
-             <string>Highlight with screen linewidth in &quot;Draft&quot; mode</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="cbVisualizeHovering">
-            <property name="toolTip">
-             <string>Visualize the entity under the mouse cursor</string>
-            </property>
-            <property name="text">
-             <string>Highlight entities on mouse hover</string>
+             <string>Draw text as draft in preview</string>
             </property>
            </widget>
           </item>
@@ -3166,158 +3048,706 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QGroupBox" name="groupBox_14">
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="gbGVHighlight">
          <property name="title">
-          <string>Rendering Minimums</string>
+          <string>Highlight</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_27">
-          <item row="0" column="2">
-           <widget class="QSpinBox" name="sbTextMinHeight">
-            <property name="toolTip">
-             <string>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="prefix">
-             <string/>
-            </property>
-            <property name="minimum">
-             <number>3</number>
-            </property>
-            <property name="maximum">
-             <number>15</number>
-            </property>
-            <property name="singleStep">
-             <number>1</number>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_13">
-            <property name="text">
-             <string>Line length:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Height of text line:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QLabel" name="label_17">
-            <property name="text">
-             <string>Ellipse Major Axis:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="4">
-           <widget class="QDoubleSpinBox" name="sbRenderMinEllipseMinor">
-            <property name="toolTip">
-             <string>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="maximum">
-             <double>5.000000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QDoubleSpinBox" name="sbRenderMinLineLen">
-            <property name="toolTip">
-             <string>If screen length of line is less than value, the line is drawn as point</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="maximum">
-             <double>5.000000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="4">
-           <widget class="QDoubleSpinBox" name="sbRenderMinCircleRadius">
-            <property name="toolTip">
-             <string>If screen radius of circle is less than value, circle is drawn as point</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="maximum">
-             <double>5.000000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QLabel" name="label_15">
-            <property name="text">
-             <string>Circle Radius:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QLabel" name="label_14">
-            <property name="text">
-             <string>Arc Radius:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="4">
-           <widget class="QDoubleSpinBox" name="sbRenderMinArcRadius">
-            <property name="toolTip">
-             <string>If screen radius of arc is less than value, arc is drawn as point</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="maximum">
-             <double>5.000000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
-            </property>
-           </widget>
-          </item>
+         <layout class="QGridLayout" name="gridLayout_16">
           <item row="2" column="0">
-           <widget class="QLabel" name="label_16">
+           <widget class="QLabel" name="lHighlightedColor">
             <property name="text">
-             <string>Ellipse Minor Axis:</string>
+             <string>&amp;Highlighted entity Color:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbHighlightedColor</cstring>
             </property>
            </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QDoubleSpinBox" name="sbRenderMinEllipseMajor">
+           <widget class="QPushButton" name="pb_highlighted">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="toolTip">
-             <string>If screen size for major ellipse axis is less than value, ellipse is drawn as point</string>
+             <string>Click to select color</string>
             </property>
-            <property name="suffix">
-             <string> px</string>
+            <property name="text">
+             <string/>
             </property>
-            <property name="maximum">
-             <double>5.000000000000000</double>
+            <property name="icon">
+             <iconset resource="../../../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="cbHighlightedColor">
+            <property name="toolTip">
+             <string>Color for highlighted entities</string>
+            </property>
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#739373</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbHighlightWIthLinewidthInDraft">
+            <property name="toolTip">
+             <string>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity's linewidth instead of 1px</string>
+            </property>
+            <property name="text">
+             <string>Highlight with screen linewidth in &quot;Draft&quot; mode</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cbVisualizeHovering">
+            <property name="toolTip">
+             <string>Visualize the entity under the mouse cursor</string>
+            </property>
+            <property name="text">
+             <string>Highlight entities on mouse hover</string>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
+       </item>
+       <item row="4" column="0">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="gbPreview">
+         <property name="title">
+          <string>Preview</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="1" column="0" colspan="4">
+           <widget class="QCheckBox" name="cbDisplayRefPoints">
+            <property name="toolTip">
+             <string>If checked, more informative and explaining preview will be drawn for operations</string>
+            </property>
+            <property name="text">
+             <string>Show operation's preview explanatory entities </string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QPushButton" name="pb_previewRefColor">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Click to select color</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="lMaxPreview">
+            <property name="text">
+             <string>N&amp;umber of preview entities:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbMaxPreview</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QComboBox" name="cbMaxPreview">
+            <property name="toolTip">
+             <string>If more entities in preview than specified, rect will be drawn instead of entities.</string>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">50</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">100</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">200</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">400</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">800</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QComboBox" name="cbPreviewRefHighlightColor">
+            <property name="toolTip">
+             <string>Color for selected preview reference entiites</string>
+            </property>
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#1E90FF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">#FFC200</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="lbPreviewRefHighlightColor">
+            <property name="text">
+             <string>Active preview's explanatory entity's Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbPreviewRefHighlightColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QPushButton" name="pb_previewRefHighlightColor">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Click to select color</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QComboBox" name="cbPreviewRefColor">
+            <property name="toolTip">
+             <string>Color for preview reference entities</string>
+            </property>
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#1E90FF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">#FFC200</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lbPreviewRefColor">
+            <property name="text">
+             <string>Preview's explanatory entity's Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbPreviewRefColor</cstring>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <spacer name="verticalSpacer_9">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Info Cursor</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_33">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox_15">
+         <property name="title">
+          <string>Informational Cursor Overlay </string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_30">
+          <item row="1" column="1">
+           <widget class="QGroupBox" name="groupBox_16">
+            <property name="title">
+             <string>Appearance</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_31">
+             <item row="2" column="1">
+              <widget class="QFontComboBox" name="fcbInfoOverlayFont">
+               <property name="toolTip">
+                <string>Font that should be used for drawing elements of informational cursor.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0" colspan="2">
+              <widget class="QCheckBox" name="cbInfoOverlayInOneLine">
+               <property name="toolTip">
+                <string>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </string>
+               </property>
+               <property name="text">
+                <string>Draw coordinates in one line</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_21">
+               <property name="text">
+                <string>Font:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0" colspan="2">
+              <widget class="QCheckBox" name="cbInfoOverlayShowLabels">
+               <property name="toolTip">
+                <string>If checked, labels for coordinate components will be shown. Otherwise, standard form of coordinates will be displayed.</string>
+               </property>
+               <property name="text">
+                <string>Show labels for coordinates</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QSpinBox" name="sbInfoOverlayFontSize">
+               <property name="toolTip">
+                <string>Font size, in points</string>
+               </property>
+               <property name="suffix">
+                <string> pt</string>
+               </property>
+               <property name="minimum">
+                <number>5</number>
+               </property>
+               <property name="maximum">
+                <number>30</number>
+               </property>
+               <property name="value">
+                <number>10</number>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_19">
+               <property name="text">
+                <string>Font size:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QSpinBox" name="sbInfoOverlayOffset">
+               <property name="toolTip">
+                <string>Offset of labels from the cursor point.</string>
+               </property>
+               <property name="suffix">
+                <string> px</string>
+               </property>
+               <property name="minimum">
+                <number>2</number>
+               </property>
+               <property name="maximum">
+                <number>30</number>
+               </property>
+               <property name="value">
+                <number>15</number>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_20">
+               <property name="text">
+                <string>Cursor position offset:</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbInfoOverlayEnable">
+            <property name="toolTip">
+             <string>If checked, informational cursor will be enabled and shown where applicable.</string>
+            </property>
+            <property name="text">
+             <string>Enable Informational Cursor</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QGroupBox" name="groupBox_18">
+            <property name="title">
+             <string>Operations Preview</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_34">
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="cbInfoOverlayPreviewCreatingEntity">
+               <property name="text">
+                <string>Show properties for entity that will be created</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="cbInfoOverlayPreviewEditingEntity">
+               <property name="text">
+                <string>Show properties for entity that is edited by handles</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0" rowspan="2">
+           <widget class="QGroupBox" name="groupBox_17">
+            <property name="title">
+             <string>Content</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_32">
+             <item row="4" column="1">
+              <widget class="QComboBox" name="cbInfoOverlayAbsolutePositionColor">
+               <property name="toolTip">
+                <string>Color for absolute snap coordinates.</string>
+               </property>
+               <property name="accessibleDescription">
+                <string notr="true"/>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+               <item>
+                <property name="text">
+                 <string notr="true">#FFC200</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>#1E90FF</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="pbInfoOverlayRelativeColor">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string>Click to select color</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../../../res/ui/ui.qrc">
+                 <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="cbInfoOverlayRelative">
+               <property name="toolTip">
+                <string>If checked, relative distance and angle from relative zero point to snap point will be shown.</string>
+               </property>
+               <property name="text">
+                <string>Show relative distance and angle</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QPushButton" name="pbInfoOverlayCommandPromptColor">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string>Click to select color</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../../../res/ui/ui.qrc">
+                 <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QComboBox" name="cbInfoOverlaySnapColor">
+               <property name="toolTip">
+                <string>Color for snap type/restriction</string>
+               </property>
+               <property name="accessibleDescription">
+                <string notr="true"/>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+               <item>
+                <property name="text">
+                 <string notr="true">#FFC200</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>#1E90FF</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="cbInfoOverlayCommandPrompt">
+               <property name="toolTip">
+                <string>If checked, the prompt of the active command will be shown.</string>
+               </property>
+               <property name="text">
+                <string>Show active command prompt</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="3">
+              <widget class="QCheckBox" name="cbInfoOverlayRelativeDeltas">
+               <property name="toolTip">
+                <string>If checked, show relative coordinate</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">margin-left:15px</string>
+               </property>
+               <property name="text">
+                <string>Show relative coordinate</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QCheckBox" name="cbInfoOverlaySnap">
+               <property name="toolTip">
+                <string>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</string>
+               </property>
+               <property name="text">
+                <string>Show snap info /restriction</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="2">
+              <widget class="QPushButton" name="pbInfoOverlaySnapColor">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string>Click to select color</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../../../res/ui/ui.qrc">
+                 <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QPushButton" name="pbcbInfoOverlayAbsolutePositionColor">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string>Click to select color</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../../../res/ui/ui.qrc">
+                 <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QComboBox" name="cbInfoOverlayCommandPromptColor">
+               <property name="toolTip">
+                <string>Color for the command prompt</string>
+               </property>
+               <property name="accessibleDescription">
+                <string notr="true"/>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+               <item>
+                <property name="text">
+                 <string notr="true">#FFC200</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>#1E90FF</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="cbInfoOverlayRelativeColor">
+               <property name="toolTip">
+                <string>Color for relative distance and angle</string>
+               </property>
+               <property name="accessibleDescription">
+                <string notr="true"/>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+               <item>
+                <property name="text">
+                 <string notr="true">#FFC200</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>#1E90FF</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="cbInfoOverlayAbsolutePosition">
+               <property name="toolTip">
+                <string>If checked, absolute position of snap point will be shown.</string>
+               </property>
+               <property name="text">
+                <string>Show absolute coordinate</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="cbInfoOverlayCommandName">
+               <property name="toolTip">
+                <string>If checked, name of active command will be shown before command prompt</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">margin-left:15px</string>
+               </property>
+               <property name="text">
+                <string>Show active command name</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0" colspan="2">
+              <widget class="QCheckBox" name="cbInfoOverlaySnapEntityInfo">
+               <property name="toolTip">
+                <string>If checked, short overview properties of the entity's that is catched for selection will be shown. </string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">margin-left:15px</string>
+               </property>
+               <property name="text">
+                <string>Show properties of catched entity</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <spacer name="verticalSpacer_8">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -4094,6 +4524,13 @@
      </widget>
     </widget>
    </item>
+   <item row="5" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -4115,9 +4552,9 @@
   <tabstop>lePathHatch</tabstop>
  </tabstops>
  <resources>
+  <include location="../../../../../res/icons/icons.qrc"/>
+  <include location="../../../../../res/icons/icons.qrc"/>
   <include location="../../../../../res/ui/ui.qrc"/>
-  <include location="../../../../../res/icons/icons.qrc"/>
-  <include location="../../../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>

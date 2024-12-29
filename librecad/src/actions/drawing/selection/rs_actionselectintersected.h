@@ -44,7 +44,6 @@ public:
         bool select);
     ~RS_ActionSelectIntersected() override;
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void mousePressEvent(QMouseEvent *e) override;
 protected:
@@ -63,5 +62,6 @@ protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
+    void doTrigger() override;
 };
 #endif

@@ -96,9 +96,7 @@ void RS_ActionDrawEllipseAxis::init(int status){
     }
 }
 
-void RS_ActionDrawEllipseAxis::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawEllipseAxis::doTrigger() {
     auto *ellipse = new RS_Ellipse{container,
                                    {pPoints->center, pPoints->m_vMajorP, pPoints->ratio,
                                     pPoints->angle1, pPoints->angle2, pPoints->reversed}
@@ -106,43 +104,33 @@ void RS_ActionDrawEllipseAxis::trigger(){
     if (pPoints->ratio > 1.){
         ellipse->switchMajorMinor();
     }
-    ellipse->setLayerToActive();
-    ellipse->setPenToActive();
+    setPenAndLayerToActive(ellipse);
 
-    container->addEntity(ellipse);
-
-    addToDocumentUndoable(ellipse);
-
-    RS_Vector rz = graphicView->getRelativeZero();
-    graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
-        rz = ellipse->getCenter();
+        moveRelativeZero(ellipse->getCenter());
     }
-    moveRelativeZero(rz);
-    drawSnapper();
+
+    undoCycleAdd(ellipse);
 
     setStatus(SetCenter);
 
-    RS_DEBUG->print("RS_ActionDrawEllipseAxis::trigger():"
-                    " entity added: %lu", ellipse->getId());
+    RS_DEBUG->print("RS_ActionDrawEllipseAxis::trigger():entity added: %lu", ellipse->getId());
 }
 
 void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawEllipseAxis::mouseMoveEvent begin");
-
     RS_Vector mouse = snapPoint(e);
-
     switch (getStatus()) {
         case SetCenter: {
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
         case SetMajor: {
-            deletePreview();
             if (pPoints->center.valid){
                 mouse = getSnapAngleAwarePoint(e, pPoints->center, mouse, true);
 
-                previewEllipse({pPoints->center, mouse - pPoints->center, 0.5, 0.0,
+                previewToCreateEllipse({pPoints->center, mouse - pPoints->center, 0.5, 0.0,
                                 pPoints->isArc ? 2. * M_PI : 0., false});
 
                 if (showRefEntitiesOnPreview) {
@@ -151,35 +139,29 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                     previewRefSelectablePoint(mouse);
                 }
             }
-            drawPreview();
             break;
         }
         case SetMinor: {
             if (pPoints->center.valid && pPoints->m_vMajorP.valid){
-                deletePreview();
                 RS_Vector &center = pPoints->center;
                 const RS_Vector &major1Point = center - pPoints->m_vMajorP;
                 const RS_Vector &major2Point = center + pPoints->m_vMajorP;
                 RS_Line line{major1Point, major2Point};
                 double d = line.getDistanceToPoint(mouse);
                 pPoints->ratio = d / (line.getLength() / 2);
-                auto ellipse = previewEllipse({center, pPoints->m_vMajorP, pPoints->ratio,
+                auto ellipse = previewToCreateEllipse({center, pPoints->m_vMajorP, pPoints->ratio,
                                                0., pPoints->isArc ? 2. * M_PI : 0., false});
 
                 if (showRefEntitiesOnPreview) {
                     previewEllipseReferencePoints(ellipse, true, false, mouse);
                 }
-                drawPreview();
             }
             break;
         }
         case SetAngle1: {
-            deletePreview();
             mouse = getSnapAngleAwarePoint(e, pPoints->center, mouse, true);
             if (pPoints->center.valid && pPoints->m_vMajorP.valid){
-
                 //angle1 = center.angleTo(mouse);
-
                 RS_Vector m = mouse;
                 m.rotate(pPoints->center, -pPoints->m_vMajorP.angle());
                 RS_Vector v = m - pPoints->center;
@@ -188,7 +170,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
 
                 previewRefLine(pPoints->center, mouse);
 
-                auto ellipse = previewEllipse({pPoints->center, pPoints->m_vMajorP, pPoints->ratio,
+                auto ellipse = previewToCreateEllipse({pPoints->center, pPoints->m_vMajorP, pPoints->ratio,
                                                pPoints->angle1, pPoints->angle1 + 1.0, pPoints->reversed});
 
                 if (showRefEntitiesOnPreview) {
@@ -197,11 +179,9 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                     previewEllipseReferencePoints(ellipse, false, true, mouse);
                 }
             }
-            drawPreview();
             break;
         }
         case SetAngle2: {
-            deletePreview();
             if (pPoints->center.valid && pPoints->m_vMajorP.valid){ // todo - redundant check
                 //angle2 = center.angleTo(mouse);
                 mouse = getSnapAngleAwarePoint(e, pPoints->center, mouse, true);
@@ -212,7 +192,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                 v.y /= pPoints->ratio;
                 pPoints->angle2 = v.angle(); // + m_vMajorP.angle();
 
-                auto ellipse = previewEllipse({pPoints->center, pPoints->m_vMajorP, pPoints->ratio, pPoints->angle1, pPoints->angle2, pPoints->reversed});
+                auto ellipse = previewToCreateEllipse({pPoints->center, pPoints->m_vMajorP, pPoints->ratio, pPoints->angle1, pPoints->angle2, pPoints->reversed});
 
                 if (showRefEntitiesOnPreview) {
                     previewRefLine(pPoints->center, mouse);
@@ -225,14 +205,13 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                     previewEllipseReferencePoints(ellipse, false, true, mouse);
                 }
             }
-            drawPreview();
             break;
         }
         default:
             break;
     }
-
     RS_DEBUG->print("RS_ActionDrawEllipseAxis::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionDrawEllipseAxis::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

@@ -41,7 +41,6 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionPolylineEquidistant() override;
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void setDist(const double &d){dist = d;}
     double getDist() const{return dist;}
@@ -69,5 +68,6 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+    void doTrigger() override;
 };
 #endif

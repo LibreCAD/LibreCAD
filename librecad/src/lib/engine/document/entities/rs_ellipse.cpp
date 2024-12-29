@@ -1592,22 +1592,25 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 //instead of
         if ((ref-startpoint).squared()<RS_TOLERANCE_ANGLE) {
             moveStartpoint(startpoint+offset);
-            correctAngles();//avoid extra 2.*M_PI in angles
+            correctAngles();//avoid extra 2.*M_PI in angles // todo - is this call really necessary? It is called in moveStartpoint() already
             return;
         }
         if ((ref-endpoint).squared()<RS_TOLERANCE_ANGLE) {
             moveEndpoint(endpoint+offset);
-            correctAngles();//avoid extra 2.*M_PI in angles
+//            correctAngles();//avoid extra 2.*M_PI in angles // todo - is this call really necessary? It is called in moveStartpoint() already
             return;
         }
     }
     if ((ref-getCenter()).squared()<RS_TOLERANCE_ANGLE) {
         //move center
         setCenter(getCenter()+offset);
+        calculateBorders();
         return;
     }
 
-    if(data.ratio>1.) switchMajorMinor();
+    if(data.ratio>1.) {
+        switchMajorMinor();
+    }
     auto foci=getFoci();
     for(size_t i=0; i< 2 ; i++){
         if ((ref-foci.at(i)).squared()<RS_TOLERANCE_ANGLE) {
@@ -1632,7 +1635,12 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
             setMajorP(majorP);
             setRatio(sqrt(d*d-c*c)/d);
             correctAngles();//avoid extra 2.*M_PI in angles
-            if(data.ratio>1.) switchMajorMinor();
+            if(data.ratio>1.) {
+                switchMajorMinor();
+            }
+            else{
+                calculateBorders();
+            }
             return;
         }
     }
@@ -1645,7 +1653,12 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
         double ratio = getRatio()*getMajorRadius()/r;
         setMajorP(majorP);
         setRatio(ratio);
-        if(data.ratio>1.) switchMajorMinor();
+        if(data.ratio>1.) {
+            switchMajorMinor();
+        }
+        else{
+            calculateBorders();
+        }
         return;
     }
     if ((ref-getMinorPoint()).squared()<RS_TOLERANCE_ANGLE) {
@@ -1658,7 +1671,12 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
         if(r<RS_TOLERANCE) return;
         double ratio = getRatio()*r/getMinorRadius();
         setRatio(ratio);
-        if(data.ratio>1.) switchMajorMinor();
+        if(data.ratio>1.) {
+            switchMajorMinor();
+        }
+        else{
+            calculateBorders();
+        }
         return;
     }
 }

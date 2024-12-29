@@ -48,25 +48,20 @@ void RS_ActionModifyCut::init(int status){
     RS_PreviewActionInterface::init(status);
 }
 
-void RS_ActionModifyCut::trigger(){
-
+void RS_ActionModifyCut::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyCut::trigger()");
 
     if (cutEntity && cutEntity->isAtomic() && cutCoord->valid &&
         cutEntity->isPointOnEntity(*cutCoord)){
 
         cutEntity->setHighlighted(false);
-        graphicView->drawEntity(cutEntity);
 
         RS_Modification m(*container, graphicView);
         m.cut(*cutCoord, (RS_AtomicEntity *) cutEntity);
 
-        deleteSnapper();
         cutEntity = nullptr;
         *cutCoord = RS_Vector(false);
         setStatus(ChooseCutEntity);
-        graphicView->redraw();
-        updateSelectionWidget();
     }
 }
 
@@ -76,14 +71,14 @@ void RS_ActionModifyCut::finish(bool updateTB){
 }
 
 void RS_ActionModifyCut::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionModifyCut::mouseMoveEvent begin");
     deleteHighlights();
     deletePreview();
     RS_Vector snap = snapPoint(e);
+    RS_DEBUG->print("RS_ActionModifyCut::mouseMoveEvent begin");
     switch (getStatus()) {
         case ChooseCutEntity: {
             deleteSnapper();
-            auto en = catchEntity(e);
+            auto en = catchEntityOnPreview(e);
             if (en != nullptr &&  en->trimmable()){
                 highlightHover(en);
                 RS_Vector nearest = en->getNearestPointOnEntity(snap, true);
@@ -95,14 +90,20 @@ void RS_ActionModifyCut::mouseMoveEvent(QMouseEvent *e){
             highlightSelected(cutEntity);
             RS_Vector nearest = cutEntity->getNearestPointOnEntity(snap, true);
             previewRefSelectablePoint(nearest);
+            // todo - is description for selected entity necessary there?
+            if (isInfoCursorForModificationEnabled()){
+                LC_InfoMessageBuilder msg(tr("Divide"));
+                msg.add(tr("At:"), formatVector(nearest));
+                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+            }
             break;
         }
         default:
             break;
     }
+    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
     drawPreview();
     drawHighlights();
-    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
 }
 
 void RS_ActionModifyCut::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

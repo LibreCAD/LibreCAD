@@ -38,8 +38,6 @@ class RS_ActionDrawLineOrthTan : public RS_PreviewActionInterface {
 public:
     RS_ActionDrawLineOrthTan(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
-
-    void trigger() override;
     void finish(bool updateTB) override;
     void mouseMoveEvent(QMouseEvent* e) override;
 protected:
@@ -59,5 +57,6 @@ protected:
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void doTrigger() override;
 };
 #endif

@@ -146,9 +146,8 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
 //    bool fileAccepted = false;
     setAcceptMode ( QFileDialog::AcceptOpen );
     // read default settings:
-    LC_GROUP("Paths"); // fixme - settings
-    QString defDir = LC_GET_STR("Open",
-                                          RS_SYSTEM->getHomeDir());
+    LC_GROUP("Paths");
+    QString defDir = LC_GET_STR("Open", RS_SYSTEM->getHomeDir());
     QString open_filter = LC_GET_STR("OpenFilter", fDxfrw);
     LC_GROUP_END();
 

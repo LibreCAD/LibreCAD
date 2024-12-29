@@ -55,9 +55,7 @@ void RS_ActionPolylineDelBetween::drawSnapper() {
     // disable snapper for action
 }
 
-
-void RS_ActionPolylineDelBetween::trigger(){
-
+void RS_ActionPolylineDelBetween::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineDelBetween::trigger()");
 
     RS_Modification m(*container, graphicView);
@@ -69,25 +67,19 @@ void RS_ActionPolylineDelBetween::trigger(){
     else{
         setStatus(SetVertex2);
     }
-
-    deleteHighlights();
-
-    updateSelectionWidget();
-
-    graphicView->redraw();
 }
 
 void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
+    deleteHighlights();
+    deletePreview();
     RS_DEBUG->print("RS_ActionPolylineDelBetween::mouseMoveEvent begin");
 
     snapPoint(e);
-    deleteHighlights();
-    deletePreview();
     int status = getStatus();
     switch (status) {
         case SetPolyline: {
 
-            auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
+            auto polyline = dynamic_cast<RS_Polyline *>(catchEntityOnPreview(e));
             if (polyline != nullptr){
                 highlightHover(polyline);
             }
@@ -129,10 +121,10 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
+    RS_DEBUG->print("RS_ActionPolylineDelBetween::mouseMoveEvent end");
     drawHighlights();
     drawPreview();
 
-    RS_DEBUG->print("RS_ActionPolylineDelBetween::mouseMoveEvent end");
 }
 
 void RS_ActionPolylineDelBetween::onMouseLeftButtonRelease(int status, QMouseEvent *e){
@@ -146,7 +138,6 @@ void RS_ActionPolylineDelBetween::onMouseLeftButtonRelease(int status, QMouseEve
             } else {
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
-                graphicView->drawEntity(polylineToModify);
                 setStatus(SetVertex1);
                 graphicView->redraw();
             }

@@ -61,16 +61,12 @@ void RS_ActionDrawCircleCR::init(int status){
     LC_ActionDrawCircleBase::init(status);
 }
 
-void RS_ActionDrawCircleCR::trigger(){
-    LC_ActionDrawCircleBase::trigger();
-
-    auto *circle = new RS_Circle(container,
-                                      *data);
-    circle->setLayerToActive();
-    circle->setPenToActive();
+void RS_ActionDrawCircleCR::doTrigger() {
+    auto *circle = new RS_Circle(container, *data);
+    setPenAndLayerToActive(circle);
 
     switch (getStatus()) {
-        case SetCenter:
+        case SetCenter: // FIXME _ SAND _ _ REVIEW!!!!!
             container->addEntity(circle);
             moveRelativeZero(circle->getCenter());
             break;
@@ -78,29 +74,23 @@ void RS_ActionDrawCircleCR::trigger(){
             break;
     }
 
-    addToDocumentUndoable(circle);
-
-    graphicView->redraw(RS2::RedrawDrawing);
-
+    undoCycleAdd(circle);
     setStatus(SetCenter);
 
-    RS_DEBUG->print("RS_ActionDrawCircleCR::trigger(): circle added: %lu",
-                    circle->getId());
+    RS_DEBUG->print("RS_ActionDrawCircleCR::trigger(): circle added: %lu",circle->getId());
 }
 
 
 void RS_ActionDrawCircleCR::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawCircleCR::mouseMoveEvent begin");
-
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
         case SetCenter: {
             if (!trySnapToRelZeroCoordinateEvent(e)){
                 data->center = mouse;
-                deletePreview();
-                previewCircle(*data);
+                previewToCreateCircle(*data);
                 previewRefSelectablePoint(data->center);
-                drawPreview();
             } else {
                 setStatus(-1);
             }
@@ -109,6 +99,7 @@ void RS_ActionDrawCircleCR::mouseMoveEvent(QMouseEvent *e){
     }
 
     RS_DEBUG->print("RS_ActionDrawCircleCR::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionDrawCircleCR::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {

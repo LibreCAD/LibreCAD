@@ -95,10 +95,10 @@ void LC_AbstractActionWithPreview::init(int status){
             if (document){
                 // take care of undo cycle
                 if (isUndoableTrigger()){
-                    document->startUndoCycle();
+                    undoCycleStart();
                     // invoke trigger
                     performTriggerOnInit(entitiesForTrigger);
-                    document->endUndoCycle();
+                    undoCycleEnd();
                 } else {
                     performTriggerOnInit(entitiesForTrigger);
                 }
@@ -188,7 +188,6 @@ void LC_AbstractActionWithPreview::doCreateEntitiesOnTrigger([[maybe_unused]]RS_
 bool LC_AbstractActionWithPreview::isUnselectEntitiesOnInitTrigger(){
     return true;
 }
-
 /**
  * Default implementation of trigger method. First checks whether all conditions are fine for the trigger via doCheckMayTrigger().
  *
@@ -196,24 +195,23 @@ bool LC_AbstractActionWithPreview::isUnselectEntitiesOnInitTrigger(){
  * if not - just delegate trigger processing to performTrigger method.
  *
  */
-void LC_AbstractActionWithPreview::trigger(){
-    RS_PreviewActionInterface::trigger();
+void LC_AbstractActionWithPreview::doTrigger() {
     if (doCheckMayTrigger()){
         if (document){
             if (isUndoableTrigger()){
-                document->startUndoCycle();
+                undoCycleStart();
                 performTrigger();
-                document->endUndoCycle();
+                undoCycleEnd();
             } else {
                 performTrigger();
             }
-            graphicView->redraw(RS2::RedrawAll);
         }
     }
 
     // cleanup alternative mode after trigger
     clearAlternativeActionMode();
 }
+
 
 /**
  * Template method for performing trigger operation. Actual processing is delegated to corresponding methods.
@@ -226,7 +224,7 @@ void LC_AbstractActionWithPreview::performTrigger(){
     performTriggerDeletions();
     RS_Vector newRelativeZeroPosition = doGetRelativeZeroAfterTrigger();
     if (newRelativeZeroPosition.valid){
-        graphicView->setRelativeZero(newRelativeZeroPosition);
+        moveRelativeZero(newRelativeZeroPosition);
     }
     doAfterTrigger(); // inherited actions may do additional processing there
 }
@@ -255,8 +253,7 @@ void LC_AbstractActionWithPreview::setupAndAddTriggerEntities(const QList<RS_Ent
     for (auto ent: entities) {
         if (setActiveLayerAndPen){
             // do setup
-            ent->setLayerToActive();
-            ent->setPenToActive();
+            setPenAndLayerToActive(ent);
         }
         container->addEntity(ent);
         if (undoableTrigger){
@@ -470,14 +467,16 @@ void LC_AbstractActionWithPreview::highlightEntityExplicit(RS_Entity* en, bool h
  * @param e original mouse event
  */
 void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
+
     int status = getStatus();
     bool shiftPressed = isShift(e);
     checkAlternativeActionMode(e, status, shiftPressed);
     doMouseMoveStart(status, e);
     checkPreSnapToRelativeZero(status, e);
     status = getStatus();
-    deletePreview();
-    deleteHighlights();
+
     if (doCheckMayDrawPreview(e, status)){ // check whether preview may be drawn according to state etc.
         RS_Vector snap = doGetMouseSnapPoint(e);
         bool shouldDrawPreview = onMouseMove(e, snap, status); // delegate processing to inherited actions

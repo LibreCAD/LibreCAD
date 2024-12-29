@@ -147,11 +147,3 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
         relativeCoordinates = RS_Vector(rx, ry, 0.0);
     }
 }
-// fixme - sand - check whether these methods are really needed
-RS_Vector QG_CoordinateWidget::getAbsoluteCoordinates(){
-    return absoluteCoordinates;
-}
-
-RS_Vector QG_CoordinateWidget::getRelativeCoordinates(){
-    return relativeCoordinates;
-}

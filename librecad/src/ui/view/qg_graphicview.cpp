@@ -166,16 +166,12 @@ namespace {
                         blockList->activate(*pointer);
                 }};
                 auto* action = new RS_ActionBlocksEdit(*container, view);
-                if (action == nullptr)
-                    return;
                 view.setCurrentAction(action);
                 break;
             }
             default:
             {
-                auto* action = new RS_ActionModifyEntity(*container, view);
-                if (action == nullptr)
-                    return;
+                auto* action = new RS_ActionModifyEntity(*container, view, false);
                 action->setEntity(&entity);
                 view.setCurrentAction(action);
                 action->trigger();
@@ -242,9 +238,6 @@ struct QG_GraphicView::AutoPanData{
     // the sensitive border of the view
     const RS_Vector probedAreaOffset = {50 /* pixels */, 50 /* pixels */};
 };
-
-
-
 
 /**
  * Constructor.
@@ -440,18 +433,15 @@ void QG_GraphicView::mousePressEvent(QMouseEvent* event){
     }
 }
 
-void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e)
-{
-    switch(e->button())
-    {
+void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e){
+    switch(e->button()){
         default:
             break;
         case Qt::MiddleButton:
             setCurrentAction(new RS_ActionZoomAuto(*container, *this));
             break;
         case Qt::LeftButton:
-            if (menus.contains("Double-Click"))
-            {
+            if (menus.contains("Double-Click")){
                 killAllActions();
                 menus["Double-Click"]->popup(mapToGlobal(e->pos()));
             } else {
@@ -463,8 +453,7 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e)
     e->accept();
 }
 
-void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
-{
+void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent");
 
     event->accept();
@@ -1143,51 +1132,44 @@ void QG_GraphicView::getPixmapForView(std::unique_ptr<QPixmap>& pm){
 }
 
 void QG_GraphicView::layerActivated(RS_Layer *layer) {
-	bool toActivated= LC_GET_ONE_BOOL("Modify","ModifyEntitiesToActiveLayer");
+    bool toActivated = LC_GET_ONE_BOOL("Modify", "ModifyEntitiesToActiveLayer");
 
-	if(!toActivated) return;
-    RS_EntityContainer *container = this->getContainer();
-    RS_Graphic* graphic = this->getGraphic();
-    QList<RS_Entity*> clones;
+    if (toActivated) {
+        RS_EntityContainer *container = getContainer();
+        RS_Graphic *graphic = getGraphic();
+        if (graphic != nullptr) {
+            QList<RS_Entity *> clones;
 
-    if (graphic) {
-        graphic->startUndoCycle();
+            graphic->startUndoCycle();
+
+            for (auto en: *container) { // fixme - sand - iterating all elements in container
+                if (en != nullptr) {
+                    if (en->isSelected()) {
+                        RS_Entity *cl = en->clone();
+                        cl->setLayer(layer);
+                        en->setSelected(false);
+                        cl->setSelected(false);
+                        clones << cl;
+
+                        en->setUndoState(true);
+                        graphic->addUndoable(en);
+                    }
+                }
+            }
+
+            for (auto cl: clones) {
+                container->addEntity(cl);
+                graphic->addUndoable(cl);
+            }
+
+            graphic->endUndoCycle();
+            graphic->updateInserts();
+
+            container->calculateBorders();
+            container->setSelected(false);
+            redraw(RS2::RedrawDrawing);
+        }
     }
-
-    for (auto en: *container) { // fixme - sand - iterating all elements in container
-        if (!en) continue;
-        if (!en->isSelected()) continue;
-
-        RS_Entity* cl = en->clone();
-        cl->setLayer(layer);
-        this->deleteEntity(en);
-        en->setSelected(false);
-        cl->setSelected(false);
-        clones << cl;
-
-        if (!graphic) continue;
-
-        en->setUndoState(true);
-        graphic->addUndoable(en);
-    }
-
-    for (auto cl: clones) {
-        container->addEntity(cl);
-        this->drawEntity(cl);
-
-        if (!graphic) continue;
-
-        graphic->addUndoable(cl);
-    }
-
-    if (graphic) {
-        graphic->endUndoCycle();
-        graphic->updateInserts();
-    }
-
-    container->calculateBorders();
-    container->setSelected(false);
-    redraw(RS2::RedrawDrawing);
 }
 
 void QG_GraphicView::updateGridPoints(){
@@ -1390,53 +1372,7 @@ void QG_GraphicView::loadSettings() {
     LC_GROUP_END();
 
     RS_Graphic* graphic = getGraphic();
-    if (graphic != nullptr) {
-        unitFactor = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
-        unitFactor100 =  unitFactor / 100.0;
-        defaultWidthFactor = graphic->getVariableDouble("$DIMSCALE", 1.0);
-
-        pdmode = graphic->getGraphicVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
-        pdsize = graphic->getGraphicVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
-
-//        Lineweight endcaps setting for new objects:
-//        0 = none; 1 = round; 2 = angle; 3 = square
-        int endCaps = graphic->getGraphicVariableInt("$ENDCAPS", 1);
-        switch (endCaps){
-            case 0:
-                penCapStyle = Qt::FlatCap;
-                break;
-            case 1:
-                penCapStyle = Qt::RoundCap;
-                break;
-            case 2:
-                penCapStyle = Qt::MPenCapStyle;
-                break;
-            case 3:
-                penCapStyle = Qt::SquareCap;
-                break;
-            default:
-                penCapStyle = Qt::FlatCap; // fixme - or round?
-        }
-        //0=none; 1= round; 2 = angle; 3 = flat
-        int joinStyle = graphic->getGraphicVariableInt("$JOINSTYLE", 1);
-
-        switch (joinStyle){
-            case 0:
-                penJoinStyle = Qt::BevelJoin;
-                break;
-            case 1:
-                penJoinStyle = Qt::RoundJoin;
-                break;
-            case 2:
-                penJoinStyle = Qt::MiterJoin;
-                break;
-            case 3:
-                penJoinStyle = Qt::BevelJoin;
-                break;
-            default:
-                penJoinStyle = Qt::RoundJoin;
-        }
-    }
+    updateGraphicRelatedSettings(graphic);
 
     if (HIDE_SELECT_CURSOR) {
         // potentially, select cursor may be also hidden and so snapper will be used instead of cursor.
@@ -1639,4 +1575,13 @@ void QG_GraphicView::autoPanStep(){
     RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "%s(): Timer is ticking!", __func__);
 
     zoomPan(m_panData->panOffset.x(), m_panData->panOffset.y());
+}
+
+QString QG_GraphicView::obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription) {
+    LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
+    if (entityInfoWidget != nullptr){
+        QString result = entityInfoWidget->getEntityDescription(entity, shortDescription);
+        return result;
+    }
+    return "";
 }

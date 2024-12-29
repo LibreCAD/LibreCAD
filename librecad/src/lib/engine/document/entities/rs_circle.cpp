@@ -794,6 +794,7 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patter
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     if(ref.distanceTo(data.center)<1.0e-4){
         data.center += offset;
+        calculateBorders();
         return;
     }
     RS_Vector v1(data.radius, 0.0);
@@ -805,8 +806,14 @@ void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     sol.push_back(data.center - v1);
     double dist;
     v1=sol.getClosest(ref,&dist);
-    if(dist>1.0e-4) return;
-    data.radius = data.center.distanceTo(v1 + offset);
+    if(dist>1.0e-4) {
+        calculateBorders();
+        return;
+    }
+    else {
+        data.radius = data.center.distanceTo(v1 + offset);
+        calculateBorders();
+    }
 }
 
 

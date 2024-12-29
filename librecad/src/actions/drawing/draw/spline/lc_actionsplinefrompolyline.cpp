@@ -35,7 +35,7 @@ LC_ActionSplineFromPolyline::LC_ActionSplineFromPolyline(RS_EntityContainer &con
     actionType = RS2::ActionDrawSplineFromPolyline;
 }
 
-void LC_ActionSplineFromPolyline::trigger() {
+void LC_ActionSplineFromPolyline::doTrigger() {
     if (document) {
         RS_Entity* createdEntity = createSplineForPolyline(entityToModify);
 
@@ -54,18 +54,18 @@ void LC_ActionSplineFromPolyline::trigger() {
                 penToUse = entityToModify->getPen(false);
             }
 
-            document->startUndoCycle();
+            undoCycleStart();
             setupAndAddCreatedEntity(createdEntity, layerToSet, penToUse);
 
             if (!keepOriginals){
-                deleteEntityUndoable(entityToModify);
+                undoableDeleteEntity(entityToModify);
             }
 
+            undoCycleEnd();
+
             entityToModify = nullptr;
-            document->endUndoCycle();
         }
     }
-    graphicView->redraw();
 }
 
 void LC_ActionSplineFromPolyline::finish(bool updateTB) {
@@ -79,17 +79,17 @@ void LC_ActionSplineFromPolyline::setupAndAddCreatedEntity(RS_Entity *createdEnt
     createdEntity->setLayer(layerToSet);
     createdEntity->setSelected(true); // fixme - sand - check whether it should be selected??
     container->addEntity(createdEntity);
-    document->addUndoable(createdEntity);
+    undoableAdd(createdEntity);
 }
 
 void LC_ActionSplineFromPolyline::mouseMoveEvent(QMouseEvent *e) {
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
     deleteHighlights();
     deletePreview();
+    RS_Vector mouse = snapPoint(e);
+    int status = getStatus();
     switch (status) {
         case SetEntity: {
-            auto polyline = catchEntity(e, RS2::EntityPolyline);
+            auto polyline = catchEntityOnPreview(e, RS2::EntityPolyline);
             if (polyline != nullptr) {
                 highlightHoverWithRefPoints(polyline, true);
                 auto splinePreview = createSplineForPolyline(polyline);

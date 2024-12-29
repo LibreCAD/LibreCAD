@@ -271,6 +271,8 @@ static void drawPage(RS_Graphic* graphic, QPrinter& printer,
     gv.setPrinting(true);
     gv.setBorders(0,0,0,0);
 
+    gv.updateSettings(graphic);
+
     double fx = printerFx * RS_Units::getFactorToMM(graphic->getUnit());
     double fy = printerFy * RS_Units::getFactorToMM(graphic->getUnit());
 

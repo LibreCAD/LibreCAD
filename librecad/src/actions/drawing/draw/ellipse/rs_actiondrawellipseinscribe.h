@@ -38,7 +38,6 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawEllipseInscribe() override;
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
     void finish(bool updateTB) override;
@@ -65,5 +64,6 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void clearLines(bool checkStatus = false);
     void updateMouseButtonHints() override;
+    void doTrigger() override;
 };
 #endif

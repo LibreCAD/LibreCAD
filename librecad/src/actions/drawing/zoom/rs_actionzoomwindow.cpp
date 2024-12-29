@@ -64,14 +64,9 @@ void RS_ActionZoomWindow::init(int status){
     // snapMode.restriction = RS2::RestrictNothing;
 }
 
-void RS_ActionZoomWindow::trigger(){
+void RS_ActionZoomWindow::doTrigger() {
     RS_DEBUG->print("RS_ActionZoomWindow::trigger()");
-
-    RS_PreviewActionInterface::trigger();
-
     if (pPoints->v1.valid && pPoints->v2.valid){
-        deletePreview();
-        //deleteSnapper();
         if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 5){
             graphicView->zoomWindow(pPoints->v1, pPoints->v2, keepAspectRatio);
             init(SetFirstCorner);
@@ -80,14 +75,14 @@ void RS_ActionZoomWindow::trigger(){
 }
 
 void RS_ActionZoomWindow::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     snapFree(e);
     drawSnapper();
     if (getStatus() == SetSecondCorner && pPoints->v1.valid){
         pPoints->v2 = snapFree(e);
-        deletePreview();
         preview->addRectangle(pPoints->v1, pPoints->v2);
-        drawPreview();
     }
+    drawPreview();
 }
 
 void RS_ActionZoomWindow::mousePressEvent(QMouseEvent *e){

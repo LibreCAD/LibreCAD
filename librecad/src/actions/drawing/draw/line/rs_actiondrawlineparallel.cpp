@@ -68,31 +68,28 @@ void RS_ActionDrawLineParallel::setNumber(int n){
     number = n;
 }
 
-void RS_ActionDrawLineParallel::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawLineParallel::doTrigger() {
     RS_Creation creation(container, graphicView);
     RS_Entity *e = creation.createParallel(*coord,
                                            distance, number,
                                            entity);
 
     if (!e){
-        RS_DEBUG->print("RS_ActionDrawLineParallel::trigger:"
-                        " No parallels added\n");
+        RS_DEBUG->print("RS_ActionDrawLineParallel::trigger:No parallels added\n");
     }
 }
 
 void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
     RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent begin");
-
+    snapPoint(e);
     *coord = {toGraph(e)};
 
-    entity = catchEntity(e, RS2::ResolveAll);
+    entity = catchEntityOnPreview(e, RS2::ResolveAll);
 
     switch (getStatus()) {
         case SetEntity: {
-            deletePreview();
-            deleteHighlights();
             if (entity != nullptr){
                 RS_Creation creation(preview.get(), nullptr, false);
                 RS_Entity* createdParallel = creation.createParallel(*coord,
@@ -100,14 +97,18 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
                                         entity);
                 if (createdParallel != nullptr){
                     highlightHover(entity);
+                    if (number == 1){
+                        prepareEntityDescription(createdParallel, RS2::EntityDescriptionLevel::DescriptionCreating);
+                    }
+                    else{
+                       appendInfoCursorZoneMessage(QString::number(number) + tr(" entities will be created"), 2, false);
+                    }
                     if (showRefEntitiesOnPreview) {
                         RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
                         previewRefPoint(nearest);
                     }
                 }
-                drawHighlights();
             }
-            drawPreview();
             break;
         }
         default:
@@ -115,6 +116,8 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
     }
 
     RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent end");
+    drawPreview();
+    drawHighlights();
 }
 
 void RS_ActionDrawLineParallel::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {

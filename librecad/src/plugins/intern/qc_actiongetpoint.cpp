@@ -63,26 +63,26 @@ void QC_ActionGetPoint::trigger() {
 }
 
 void QC_ActionGetPoint::mouseMoveEvent(QMouseEvent* e) {
+    deletePreview();
     RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
     if(setTargetPoint){
         if (pPoints->referencePoint.valid) {
             pPoints->targetPoint = mouse;
-            deletePreview();
             RS_Line *line =new RS_Line{preview.get(),
                                        pPoints->referencePoint, mouse};
             line->setPen(RS_Pen(RS_Color(0,0,0), RS2::Width00, RS2::DotLine ));
             preview->addEntity(line);
             RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent: draw preview");
-            drawPreview();
-            preview->addSelectionFrom(*container);
+            preview->addSelectionFrom(*container,graphicView);
         }
     } else {
         pPoints->targetPoint = mouse;
     }
 
     RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent end");
+    drawPreview();
 }
 
 
@@ -100,7 +100,7 @@ void QC_ActionGetPoint::mouseReleaseEvent(QMouseEvent* e) {
 
 void QC_ActionGetPoint::onCoordinateEvent( [[maybe_unused]]int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     pPoints->targetPoint = pos;
-    graphicView->moveRelativeZero(pPoints->targetPoint);
+    moveRelativeZero(pPoints->targetPoint);
     trigger();
 }
 

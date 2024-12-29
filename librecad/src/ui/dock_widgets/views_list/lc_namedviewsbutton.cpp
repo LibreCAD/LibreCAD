@@ -27,7 +27,7 @@
 
 LC_NamedViewsButton::LC_NamedViewsButton(LC_NamedViewsListWidget *w):QToolButton(nullptr), widget{w} {
     setPopupMode(QToolButton::MenuButtonPopup);
-    menu = new QMenu();
+        menu = new QMenu();
     connect(menu, &QMenu::aboutToShow, this, &LC_NamedViewsButton::fillMenu);
     setMenu(menu);
 

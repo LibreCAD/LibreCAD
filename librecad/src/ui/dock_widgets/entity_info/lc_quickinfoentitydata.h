@@ -100,6 +100,7 @@ public:
     unsigned long getEntityId() const{return entityId;};
     bool updateForCoordinateViewMode(int mode) override;
     bool processEntity(RS_Entity *en);
+    QString getEntityDescription(RS_Entity *en, RS2::EntityDescriptionLevel shortDescription);
     void clear() override;
     bool hasData() const override;
     void setOptions(LC_QuickInfoOptions *opt);
@@ -108,6 +109,9 @@ protected:
      * ID of entity for which properties are shown, 0 if no entity
      */
     unsigned long entityId = 0;
+    unsigned long entityIdForDescription = 0;
+    QString cachedEntityDescription = "";
+
     /**
      * Name of entity
      */
@@ -168,6 +172,40 @@ protected:
     void addVectorProperty(const QString name, const QString &valueStr, const RS_Vector& coord, PropertyType type=VECTOR);
     void addVectorProperty(const QString name, int count, const RS_Vector &value, PropertyType type=VECTOR);
     void addVectorProperty(QString name, int count, const QString &valueStr, const RS_Vector &coord, PropertyType type=VECTOR);
+
+
+    QString prepareGenericEntityDescription(RS_Entity* en, const QString &entityName, RS2::EntityDescriptionLevel level);
+    QString prepareLineDescription(RS_Line *line, RS2::EntityDescriptionLevel level);
+    QString prepareCircleDescription(RS_Circle *line, RS2::EntityDescriptionLevel level);
+    QString prepareArcDescription(RS_Arc *line, RS2::EntityDescriptionLevel level);
+    QString prepareEllipseDescription(RS_Ellipse *line, RS2::EntityDescriptionLevel level);
+    QString preparePointDescription(RS_Point *point, RS2::EntityDescriptionLevel level);
+    QString preparePolylineDescription(RS_Polyline *polyline, RS2::EntityDescriptionLevel level);
+    QString prepareInsertDescription(RS_Insert *insert, RS2::EntityDescriptionLevel level);
+    QString prepareMTextDescription(RS_MText *pText, RS2::EntityDescriptionLevel level);
+    QString prepareTextDescription(RS_Text *text, RS2::EntityDescriptionLevel level);
+    QString prepareImageDescription(RS_Image *image, RS2::EntityDescriptionLevel level);
+    QString prepareSplineDescription(RS_Spline *spline, RS2::EntityDescriptionLevel level);
+    QString prepareSplinePointsDescription(LC_SplinePoints *spline, RS2::EntityDescriptionLevel level);
+    QString prepareParabolaDescription(LC_Parabola *parabola, RS2::EntityDescriptionLevel level);
+    QString prepareHatchDescription(RS_Hatch *hatch, RS2::EntityDescriptionLevel level);
+    QString prepareDimLeaderDescription(RS_Leader *leader, RS2::EntityDescriptionLevel level);
+    QString prepareDimArcDescription(LC_DimArc *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimAngularDescription(RS_DimAngular *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimDiametricDescription(RS_DimDiametric *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimRadialDescription(RS_DimRadial *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimLinearDescription(RS_DimLinear *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimAlignedDescription(RS_DimAligned *dim, RS2::EntityDescriptionLevel level);
+
+
+    void appendLinear(QString &result, const QString &label, double value);
+    void appendDouble(QString &result, const QString &label, double value);
+    void appendAngle(QString &result, const QString &label, double value);
+    void appendArea(QString &result, const QString &label, double value);
+    void appendAbsolute(QString &result, const QString &label, const RS_Vector& value);
+    void appendRelativePolar(QString &result, const QString &label, const RS_Vector& value);
+    void appendInt(QString &result, const QString &label, const int& value);
+    void appendValue(QString &result, const QString &label, const QString& value);
 };
 
 #endif // LC_QUICKINFOENTITYDATA_H

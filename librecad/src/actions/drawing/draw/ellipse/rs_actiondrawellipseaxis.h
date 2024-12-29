@@ -40,13 +40,9 @@ public:
                              bool isArc);
     ~RS_ActionDrawEllipseAxis() override;
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
-
     bool isReversed() const override;
-
     void setReversed(bool b) const override;
-
 protected:
     /**
      * Action States.
@@ -66,7 +62,7 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
-
     LC_ActionOptionsWidget *createOptionsWidget() override;
+    void doTrigger() override;
 };
 #endif

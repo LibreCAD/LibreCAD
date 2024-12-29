@@ -34,20 +34,15 @@ LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
     :RS_ActionSelectBase(name, container, graphicView, entityTypeList),
     countDeep(countSelectionDeep){}
 
-void LC_ActionPreSelectionAwareBase::trigger() {
-    RS_PreviewActionInterface::trigger();
+void LC_ActionPreSelectionAwareBase::doTrigger() {
     bool keepSelected = LC_GET_ONE_BOOL("Modify", "KeepModifiedSelected", true);
     doTrigger(keepSelected);
-
-    updateSelectionWidget();
-    updateMouseButtonHints();
-    graphicView->redraw();
+    updateMouseButtonHints(); // todo - is it really necessary??
 }
 
 LC_ActionPreSelectionAwareBase::~LC_ActionPreSelectionAwareBase() {
     selectedEntities.clear();
 }
-
 
 void LC_ActionPreSelectionAwareBase::init(int status) {
     RS_PreviewActionInterface::init(status);
@@ -112,10 +107,10 @@ void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, QMouse
             updateSelectionWidget();
         }
         else{
-            entityToSelect = catchEntity(e, catchForSelectionEntityTypes);
-            if (entityToSelect != nullptr){
-                selectEntity();
-                if (isControl(e)){
+            RS_Entity* entityToSelect = catchEntity(e, catchForSelectionEntityTypes);
+            bool selectContour = isShift(e);
+            if (selectEntity(entityToSelect, selectContour)) {
+                if (isControl(e)) {
                     selectionCompleted(true, false);
                 }
             }
@@ -137,24 +132,37 @@ void LC_ActionPreSelectionAwareBase::onMouseRightButtonRelease(int status, QMous
 }
 
 void LC_ActionPreSelectionAwareBase::mouseMoveEvent(QMouseEvent *event) {
+    deletePreview();
+    deleteHighlights();
     if (selectionComplete){
         mouseMoveEventSelected(event);
     }
     else{
+        snapPoint(event);
         RS_Vector mouse = toGraph(event);
         if (selectionCorner1.valid && (graphicView->toGuiDX(selectionCorner1.distanceTo(mouse)) > 10.0)){
             inBoxSelectionMode = true;
         }
         if (inBoxSelectionMode){
-            deletePreview();
             auto ob = new RS_OverlayBox(nullptr,RS_OverlayBoxData(selectionCorner1, mouse));
             previewEntity(ob);
-            drawPreview();
+            if (infoCursorOverlayPrefs->enabled) {
+                bool cross = (selectionCorner1.x > mouse.x);
+                bool deselect = isShift(event);
+                QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
+                msg.append(tr(" entities "));
+                msg.append(cross? tr("that intersect with box") : tr("that are within box"));
+                infoCursorOverlayData.setZone2(msg);
+                RS_Snapper::forceUpdateInfoCursor(mouse);
+            }
         }
         else {
             selectionMouseMove(event);
+            finishMouseMoveOnSelection(event);
         }
     }
+    drawHighlights();
+    drawPreview();
 }
 
 void LC_ActionPreSelectionAwareBase::drawSnapper() {
@@ -168,7 +176,12 @@ void LC_ActionPreSelectionAwareBase::updateMouseButtonHints() {
         updateMouseButtonHintsForSelected(getStatus());
     }
     else{
-        updateMouseButtonHintsForSelection();
+        if (inBoxSelectionMode){
+            updateMouseWidgetTRBack(tr("Choose second edge"), MOD_SHIFT_LC(tr("Deselect entities")));
+        }
+        else {
+            updateMouseButtonHintsForSelection();
+        }
     }
 }
 
@@ -226,4 +239,21 @@ RS2::CursorType LC_ActionPreSelectionAwareBase::doGetMouseCursor(int status) {
 
 RS2::CursorType LC_ActionPreSelectionAwareBase::doGetMouseCursorSelected([[maybe_unused]]int status) {
     return RS2::CadCursor;
+}
+
+void LC_ActionPreSelectionAwareBase::finishMouseMoveOnSelection([[maybe_unused]]QMouseEvent *event) {
+
+}
+
+void LC_ActionPreSelectionAwareBase::doSelectEntity(RS_Entity *entityToSelect, bool selectContour) const {
+    if (entityToSelect != nullptr){
+        RS_Selection s(*container, graphicView);
+        // try to minimize selection clicks - and select contour based on selected entity. May be optional, but what for?
+        if (entityToSelect->isAtomic() && selectContour) {
+            s.selectContour(entityToSelect);
+        }
+        else{
+            s.selectSingle(entityToSelect);
+        }
+    }
 }

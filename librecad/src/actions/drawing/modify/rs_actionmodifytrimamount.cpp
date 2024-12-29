@@ -66,9 +66,7 @@ void RS_ActionModifyTrimAmount::init(int status) {
 }
 
 // fixme - check if negative total length is larger than the overall length of the entity
-
-void RS_ActionModifyTrimAmount::trigger(){
-
+void RS_ActionModifyTrimAmount::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyTrimAmount::trigger()");
 
     if (trimEntity && trimEntity->isAtomic()){
@@ -79,17 +77,12 @@ void RS_ActionModifyTrimAmount::trigger(){
 
         bool trimStart;
         bool trimEnd;
-
         bool trimBoth = symmetricDistance && !distanceIsTotalLength;
 
         m.trimAmount(*trimCoord, e, dist, trimBoth, trimStart, trimEnd);
 
         trimEntity = nullptr;
         setStatus(ChooseTrimEntity);
-
-        updateSelectionWidget();
-
-        graphicView->redraw();
     }
 }
 
@@ -105,11 +98,11 @@ double RS_ActionModifyTrimAmount::determineDistance(const RS_AtomicEntity *e) co
 }
 
 void RS_ActionModifyTrimAmount::mouseMoveEvent(QMouseEvent *e){
-    snapPoint(e);
-    RS_Vector coord =  toGraph(e);
-    auto en = catchEntity(e, enTypeList, RS2::ResolveNone);
     deletePreview();
     deleteHighlights();
+    snapPoint(e);
+    RS_Vector coord =  toGraph(e);
+    auto en = catchEntityOnPreview(e, enTypeList, RS2::ResolveNone);
     deleteSnapper();
     if (en != nullptr){
         if (en->isAtomic()){
@@ -137,7 +130,6 @@ void RS_ActionModifyTrimAmount::mouseMoveEvent(QMouseEvent *e){
                         atomicArc = dynamic_cast<RS_Arc *>(atomic);
                         trimmedArc = dynamic_cast<RS_Arc *>(trimmed);
                     }
-
 
                     if (trimStart) {
                         const RS_Vector &originalStart = atomic->getStartpoint();

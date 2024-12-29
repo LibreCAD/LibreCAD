@@ -688,12 +688,13 @@ void QC_ApplicationWindow::execPlug() {
     QC_MDIWindow *w = getMDIWindow();
     RS_Document *currdoc = w->getDocument();
 //create document interface instance
-    Doc_plugin_interface pligundoc(currdoc, w->getGraphicView(), this);
+    QG_GraphicView* graphicView = w->getGraphicView();
+    Doc_plugin_interface pligundoc(currdoc, graphicView, this);
 //execute plugin
-    LC_UndoSection undo(currdoc);
+    LC_UndoSection undo(currdoc,graphicView);
     plugin->execComm(&pligundoc, this, action->data().toString());
 //TODO call update view
-    w->getGraphicView()->redraw();
+    graphicView->redraw();
 }
 
 
@@ -1069,6 +1070,13 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
 
         coordinateWidget->setGraphic(activatedGraphic);
         relativeZeroCoordinatesWidget->setGraphicView(activatedGraphicView);
+
+        QAction *lockRelZeroAction = ag_manager->getActionByName("LockRelativeZero");
+        if (lockRelZeroAction != nullptr){
+            bool locked = activatedGraphicView->isRelativeZeroLocked();
+            lockRelZeroAction->setChecked(locked);
+        }
+        
         blockWidget->setBlockList(activatedDocument->getBlockList());
 
         // Update all inserts in this graphic (blocks might have changed):
@@ -2054,6 +2062,7 @@ bool QC_ApplicationWindow::slotFileExport(
     gv.setBackground(black ? Qt::black : Qt::white);
     gv.setContainer(graphic);
     gv.zoomAuto(false);
+    gv.updateSettings(graphic);
     gv.drawEntity(&painter, gv.getContainer());
 
     // end the picture output
@@ -2395,6 +2404,73 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
     redrawAll();
 }
 
+void QC_ApplicationWindow::slotShowEntityDescriptionOnHover(bool toggle) {
+    RS_DEBUG->print("QC_ApplicationWindow::slotViewEntityInfo()");
+
+//    LC_SET_ONE("InfoOverlayCursor","ShowEntityDescription", toggle);
+
+    for (QC_MDIWindow *win: window_list) {
+        QG_GraphicView *graphicView = win->getGraphicView();
+        graphicView->setShowEntityDescriptionOnHover(toggle);
+    }
+    emit showEntityDescriptionOnHoverChanged(toggle);
+    redrawAll();
+}
+
+void QC_ApplicationWindow::slotInfoCursorSetting(bool toggle) {
+    RS_DEBUG->print("QC_ApplicationWindow::slotInfoCursorSetting()");
+
+    auto *action = qobject_cast<QAction*>(sender());
+    if (action != nullptr) {
+        QVariant tag = action->property("InfoCursorActionTag");
+        if (tag.isValid()){
+            bool ok;
+            int tagValue = tag.toInt(&ok);
+            if (ok){
+                bool doUpdate = true;
+                switch (tagValue){
+                    case 0:{
+                        LC_SET_ONE("InfoOverlayCursor","Enabled", toggle);
+                        emit showInfoCursorSettingChanged(toggle);
+                        break;
+                    }
+                    case 1:{
+                        LC_SET_ONE("InfoOverlayCursor","ShowAbsolute", toggle);
+                        break;
+                    }
+                    case 2:{
+                        LC_SET_ONE("InfoOverlayCursor","ShowSnapInfo", toggle);
+                        break;
+                    }
+                    case 3:{
+                        LC_SET_ONE("InfoOverlayCursor","ShowRelativeDA", toggle);
+                        break;
+                    }
+                    case 4:{
+                        LC_SET_ONE("InfoOverlayCursor","ShowPrompt", toggle);
+                        break;
+                    }
+                    case 5:{
+                        LC_SET_ONE("InfoOverlayCursor","ShowPropertiesCatched", toggle);
+                        break;
+                    }
+                    default:
+                        doUpdate = false;
+                        break;
+                }
+
+                if (doUpdate){
+                    for (QC_MDIWindow *win: window_list) {
+                        QG_GraphicView *graphicView = win->getGraphicView();
+                        graphicView->loadSettings();
+                    }
+                    redrawAll();
+                }
+            }
+        }
+    }
+}
+
 void QC_ApplicationWindow::slotViewDraftLines(bool toggle) {
     RS_DEBUG->print("QC_ApplicationWindow::slotViewLinesDraft()");
 
@@ -2550,6 +2626,29 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
                 }
             }
         }
+
+        // fixme - sand - consider emitting signal on properties change instead of processing changes there
+
+        LC_GROUP("InfoOverlayCursor");
+        {
+            bool infoCursorEnabled = LC_GET_BOOL("Enabled", true);
+            QAction *action = getAction("EntityDescriptionInfo");
+            if (action != nullptr) {
+                action->setVisible(infoCursorEnabled);
+            }
+
+            action = getAction("InfoCursorEnable");
+            if (action != nullptr) {
+                action->setChecked(infoCursorEnabled);
+            }
+            // todo - is necessary to check for null there?
+            getAction("InfoCursorAbs")->setChecked(LC_GET_BOOL("ShowAbsolute", true));
+            getAction("InfoCursorSnap")->setChecked(LC_GET_BOOL("ShowSnapInfo", true));
+            getAction("InfoCursorRel")->setChecked(LC_GET_BOOL("ShowRelativeDA", true));
+            getAction("InfoCursorPrompt")->setChecked(LC_GET_BOOL("ShowPrompt", true));
+            getAction("InfoCursorCatchedEntity")->setChecked(LC_GET_BOOL("ShowPropertiesCatched", true));
+        }
+        LC_GROUP_END();
     }
 }
 
@@ -2578,7 +2677,7 @@ void QC_ApplicationWindow::slotImportBlock() {
             RS_ActionInterface *a =
                 actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
             if (a) {
-                RS_ActionLibraryInsert *action = (RS_ActionLibraryInsert *) a;
+                auto *action = (RS_ActionLibraryInsert *) a;
                 action->setFile(dxfPath);
             } else {
                 RS_DEBUG->print(RS_Debug::D_ERROR,
@@ -3245,19 +3344,6 @@ void QC_ApplicationWindow::showBlockActivated(const RS_Block *block) {
 
 QAction *QC_ApplicationWindow::getAction(const QString &actionName) const {
     return ag_manager->getActionByName(actionName);
-}
-
-// fixme - remove this methods
-RS_Vector QC_ApplicationWindow::getMouseAbsolutePosition() {
-    if (coordinateWidget != nullptr)
-        return coordinateWidget->getAbsoluteCoordinates();
-    return RS_Vector(false);
-}
-// fixme - remove this methods
-RS_Vector QC_ApplicationWindow::getMouseRelativePosition() {
-    if (coordinateWidget != nullptr)
-        return coordinateWidget->getRelativeCoordinates();
-    return RS_Vector(false);
 }
 
 // todo - think later about staying with signal-slot approach... current one is too explicit

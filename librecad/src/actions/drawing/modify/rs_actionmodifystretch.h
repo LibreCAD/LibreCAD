@@ -42,7 +42,6 @@ public:
     ~RS_ActionModifyStretch() override;
 
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     bool isRemoveOriginals() const {return removeOriginals;};
     void setRemoveOriginals(bool val){removeOriginals = val;};
@@ -66,5 +65,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+    void doTrigger() override;
 };
 #endif

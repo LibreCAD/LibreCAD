@@ -64,7 +64,7 @@ protected:
 
     std::unique_ptr<RS_Rotate2Data> data;
     void previewRefPointsForMultipleCopies(const RS_Vector& mouse);
-    void doTrigger();
+    void doPerformTrigger();
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
     void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
     void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;

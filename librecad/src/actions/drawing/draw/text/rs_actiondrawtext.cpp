@@ -53,10 +53,9 @@ RS_ActionDrawText::RS_ActionDrawText(RS_EntityContainer& container,
 
 RS_ActionDrawText::~RS_ActionDrawText() = default;
 
-// FIXME - INSERTION INTO RELATIVE POINT SUPOPRT
-void RS_ActionDrawText::init(int status){
-    RS_ActionInterface::init(status);
 
+void RS_ActionDrawText::init(int status){
+    RS_PreviewActionInterface::init(status);
     switch (status) {
         case ShowDialog: {
             reset();
@@ -67,7 +66,8 @@ void RS_ActionDrawText::init(int status){
                 updateOptions();
             } else {
                 hideOptions();
-                setFinished();
+                setStatus(-1);
+                finish(false);
             }
             break;
         }
@@ -77,8 +77,12 @@ void RS_ActionDrawText::init(int status){
             preview->setVisible(true);
             preparePreview();
             break;
-}
+        }
         default:
+            if (status < 0) {
+                pPoints.release();
+                data.release();
+            }
             break;
     }
 }
@@ -96,30 +100,30 @@ void RS_ActionDrawText::reset(){
                                RS2::Update));
 }
 
-void RS_ActionDrawText::trigger(){
+void RS_ActionDrawText::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawText::trigger()");
-
     if (pPoints->pos.valid){
-        deletePreview();
-
         auto *text = new RS_Text(container, *data);
         text->update();
-        container->addEntity(text);
 
-        addToDocumentUndoable(text);
-
-        graphicView->redraw(RS2::RedrawDrawing);
+        undoCycleAdd(text);
 
         textChanged = true;
         pPoints->secPos = {};
-        setStatus(SetPos);
+        if (snappedToRelZero){
+            snappedToRelZero = false;
+            setStatus(-1);
+        }
+        else {
+            setStatus(SetPos);
+        }
     }
 }
 
 void RS_ActionDrawText::preparePreview(){
     if (data->halign == RS_TextData::HAFit || data->halign == RS_TextData::HAAligned){
         if (pPoints->secPos.valid){
-            auto *text = new RS_Line(pPoints->pos, pPoints->secPos);
+            auto *text = new RS_Line(data->insertionPoint, pPoints->secPos);
             previewEntity(text);
         }
     } else {
@@ -132,43 +136,62 @@ void RS_ActionDrawText::preparePreview(){
 }
 
 void RS_ActionDrawText::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent begin");
-
     RS_Vector mouse = snapPoint(e);
-    if (getStatus() == SetPos){
-        if (isShift(e)){
-            RS_Vector relZero = graphicView->getRelativeZero();
-            if (relZero.valid){
-                mouse = relZero;
+    int status = getStatus();
+    switch (status){
+        case SetPos:{
+            bool shift = isShift(e);
+            if (shift){
+                RS_Vector relZero = graphicView->getRelativeZero();
+                if (relZero.valid){
+                    snappedToRelZero = true;
+                    fireCoordinateEvent(relZero);
+                }
+                else{
+                    shift = false;
+                }
             }
+            if (!shift) {
+                pPoints->pos = mouse;
+                preparePreview();
+            }
+            break;
         }
-        RS_Vector mov = mouse - pPoints->pos;
-        pPoints->pos = mouse;
-        if (textChanged || pPoints->pos.valid == false || preview->isEmpty()){
-            deletePreview();
+        case SetSecPos:{
+            mouse = getSnapAngleAwarePoint(e, data->insertionPoint, mouse, true);
+            pPoints->secPos = mouse;
             preparePreview();
-        } else {
-            preview->move(mov);
-            preview->setVisible(true);
+            break;
         }
-        drawPreview();
-    } else if (getStatus() == SetSecPos){
-        pPoints->secPos = mouse;
-        deletePreview();
-        preparePreview();
-        drawPreview();
+        default:
+            break;
     }
-
+    appendInfoCursorZoneMessage(tr("Text: ")/*.append("\n")*/.append(data->text), 2, false);
     RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionDrawText::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    fireCoordinateEventForSnap(e);
+    RS_Vector pos = snapPoint(e);
+    switch (status){
+        case SetPos:{
+            pos = getRelZeroAwarePoint(e, pos);
+            break;
+        }
+        case SetSecPos:{
+            pos = getSnapAngleAwarePoint(e, data->insertionPoint, pos, false);
+            break;
+        }
+        default:
+            break;
+    }
+    fireCoordinateEvent(pos);
 }
 
 void RS_ActionDrawText::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
-    deletePreview();
-    finish(false);
+    setStatus(-1);
 }
 
 void RS_ActionDrawText::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
@@ -230,10 +253,10 @@ QStringList RS_ActionDrawText::getAvailableCommands(){
 void RS_ActionDrawText::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPos:
-            updateMouseWidgetTRCancel(tr("Specify insertion point"));
+            updateMouseWidgetTRCancel(tr("Specify insertion point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetSecPos:
-            updateMouseWidgetTRCancel(tr("Specify second point"));
+            updateMouseWidgetTRCancel(tr("Specify second point"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case ShowDialog:
         case SetText:

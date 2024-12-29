@@ -78,39 +78,32 @@ void RS_ActionDrawCircleInscribe::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawCircleInscribe::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawCircleInscribe::doTrigger() {
     auto *circle = new RS_Circle(container, pPoints->cData);
 
-    deletePreview();
-    deleteHighlights();
-    container->addEntity(circle);
-
-    addToDocumentUndoable(circle);
-
-    clearLines(false);
-
-    graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
     }
-    setStatus(SetLine1);
+    undoCycleAdd(circle);
 
-    RS_DEBUG->print("RS_ActionDrawCircle4Line::trigger():"
-                    " entity added: %lu", circle->getId());
+    clearLines(false);
+    setStatus(SetLine1);
+    RS_DEBUG->print("RS_ActionDrawCircle4Line::trigger(): entity added: %lu", circle->getId());
 }
 
 void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
+    deleteHighlights();
+    deletePreview();
+
+
     RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent begin");
     snapPoint(e);
     int status = getStatus();
-    deleteHighlights();
-    deletePreview();
+
     for(RS_AtomicEntity* const pc: pPoints->lines) { // highlight already selected
         highlightSelected(pc);
     }
-    auto en = catchModifiableEntity(e, RS2::EntityLine);  // fixme - check whether snap is used for entity selection?  Ensure free snap?
+    auto en = catchModifiableEntityOnPreview(e, RS2::EntityLine);  // fixme - check whether snap is used for entity selection?  Ensure free snap?
 
     if (en != nullptr){
         auto *line = dynamic_cast<RS_Line *>(en);
@@ -130,14 +123,13 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
                     pPoints->coord = toGraph(e);
                     if (preparePreview(line)){
                         highlightHover(en);
-                        previewCircle(pPoints->cData);
+                        previewToCreateCircle(pPoints->cData);
                         if (showRefEntitiesOnPreview) {
                             RS_Vector &center = pPoints->cData.center;
                             previewRefPoint(pPoints->lines[SetLine1]->getNearestPointOnEntity(center, false));
                             previewRefPoint(pPoints->lines[SetLine2]->getNearestPointOnEntity(center, false));
                             previewRefPoint(pPoints->lines[SetLine3]->getNearestPointOnEntity(center, false));
                         }
-                        drawPreview();
                     }
                 }
                 break;
@@ -146,8 +138,9 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
                 break;
         }
     }
-    drawHighlights();
     RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent end");
+    drawPreview();
+    drawHighlights();
 }
 
 void RS_ActionDrawCircleInscribe::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

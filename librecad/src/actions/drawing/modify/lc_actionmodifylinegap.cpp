@@ -44,7 +44,7 @@ void LC_ActionModifyLineGap::doPreparePreviewEntities(QMouseEvent *e, RS_Vector 
         case (SetEntity):{ // selecting the line
             // finding line entity
             deleteSnapper();
-            RS_Entity* en = catchModifiableEntity(e, enTypeList);
+            RS_Entity* en = catchModifiableEntityOnPreview(e, enTypeList);
             if (en != nullptr){
                 auto *line = dynamic_cast<RS_Line *>(en);
                 // check that line may be expanded
@@ -61,6 +61,13 @@ void LC_ActionModifyLineGap::doPreparePreviewEntities(QMouseEvent *e, RS_Vector 
                     // calculate gap temporary data
                     GapData *data = prepareGapData(line, snap, gapStartPosition);
                     createPreviewEntities(data, list, false);
+
+                    if (isInfoCursorForModificationEnabled()){
+                        LC_InfoMessageBuilder msg(tr("Line Gap"));
+                        msg.add(tr("Start:"), formatVector(data->startPoint));
+                        msg.add(tr("End:"), formatVector(data->endPoint));
+                        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                    }
 
                     // don't need temporary data, so delete it
                     delete data;
@@ -79,6 +86,13 @@ void LC_ActionModifyLineGap::doPreparePreviewEntities(QMouseEvent *e, RS_Vector 
             gapData->endPoint = nearestPoint;
 
             createPreviewEntities(gapData, list, true);
+
+            if (isInfoCursorForModificationEnabled()){
+                LC_InfoMessageBuilder msg(tr("Line Gap"));
+                msg.add(tr("Start:"), formatVector(gapData->startPoint));
+                msg.add(tr("End:"), formatVector(gapData->endPoint));
+                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+            }
 
             break;
         }
@@ -252,7 +266,7 @@ void LC_ActionModifyLineGap::performTriggerDeletions(){
         // just deleting original entity as it is replaced by created segments
         RS_Line* line = gapData->originalLine;
         if (line != nullptr){
-            deleteEntityUndoable(line);
+            undoableDeleteEntity(line);
         }
     }
 }

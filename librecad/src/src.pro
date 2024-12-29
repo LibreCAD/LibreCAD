@@ -128,6 +128,9 @@ INCLUDEPATH += \
     lib/engine/overlays/highlight \
     lib/engine/overlays/preview \
     lib/engine/overlays/references \
+    lib/engine/overlays/crosshair \
+    lib/engine/overlays/info_cursor \
+    lib/engine/overlays/overlay_box \
     lib/engine/undo \
     lib/engine/utils \
     lib/engine/settings \
@@ -288,6 +291,7 @@ HEADERS += \
     lib/engine/overlays/highlight/lc_highlight.h \
     lib/actions/lc_modifiersinfo.h \
     lib/actions/rs_actioninterface.h \
+    lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.h \
     lib/engine/overlays/preview/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
     lib/actions/rs_snapper.h \
@@ -297,7 +301,7 @@ HEADERS += \
     lib/engine/document/views/lc_view.h \
     lib/engine/document/views/lc_viewslist.h \
     lib/engine/document/entities/lc_cachedlengthentity.h \
-    lib/engine/overlays/lc_crosshair.h \
+    lib/engine/overlays/crosshair/lc_crosshair.h \
     lib/engine/document/container/lc_looputils.h \
     lib/engine/document/entities/lc_parabola.h \
     lib/engine/overlays/references/lc_refarc.h \
@@ -343,7 +347,7 @@ HEADERS += \
     lib/engine/document/entities/rs_line.h \
     lib/engine/document/entities/rs_mtext.h \
     lib/engine/overlays/rs_overlayline.h \
-    lib/engine/overlays/rs_overlaybox.h \
+    lib/engine/overlays/overlay_box/rs_overlaybox.h \
     lib/engine/document/patterns/rs_pattern.h \
     lib/engine/document/patterns/rs_patternlist.h \
     lib/engine/rs_pen.h \
@@ -355,6 +359,7 @@ HEADERS += \
     lib/engine/document/entities/lc_splinepoints.h \
     lib/engine/rs_system.h \
     lib/engine/document/entities/rs_text.h \
+    lib/engine/undo/lc_undoablerelzero.h \
     lib/engine/undo/rs_undo.h \
     lib/engine/undo/rs_undoable.h \
     lib/engine/undo/rs_undocycle.h \
@@ -474,7 +479,9 @@ SOURCES += \
     actions/drawing/modify/lc_actionmodifyalign.cpp \
     actions/drawing/modify/lc_actionmodifyalignref.cpp \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
+    lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.cpp \
     lib/engine/overlays/references/lc_refconstructionline.cpp \
+    lib/engine/undo/lc_undoablerelzero.cpp \
     lib/modification/lc_align.cpp \
     ui/action_options/curve/lc_actiondrawarc2poptions.cpp \
     ui/action_options/misc/lc_midlineoptions.cpp \
@@ -502,7 +509,7 @@ SOURCES += \
     lib/engine/document/views/lc_view.cpp \
     lib/engine/document/views/lc_viewslist.cpp \
     lib/engine/document/entities/lc_cachedlengthentity.cpp \
-    lib/engine/overlays/lc_crosshair.cpp \
+    lib/engine/overlays/crosshair/lc_crosshair.cpp \
     lib/engine/document/container/lc_looputils.cpp \
     lib/engine/document/entities/lc_parabola.cpp \
     lib/engine/overlays/references/lc_refarc.cpp \
@@ -540,7 +547,7 @@ SOURCES += \
     lib/engine/document/entities/rs_line.cpp \
     lib/engine/document/entities/rs_mtext.cpp \
     lib/engine/overlays/rs_overlayline.cpp \
-    lib/engine/overlays/rs_overlaybox.cpp \
+    lib/engine/overlays/overlay_box/rs_overlaybox.cpp \
     lib/engine/document/patterns/rs_pattern.cpp \
     lib/engine/document/patterns/rs_patternlist.cpp \
     lib/engine/document/entities/rs_point.cpp \
@@ -761,7 +768,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/modify/lc_actionmodifylinegap.h \
     actions/drawing/modify/lc_actionmodifylinejoin.h \
     actions/drawing/modify/lc_actionmodifyselectionbase.h \
-    actions/drawing/modify/lc_actionpreselectionawarebase.h \
+    lib/actions/lc_actionpreselectionawarebase.h \
     actions/drawing/modify/rs_actionblocksexplode.h \
     actions/drawing/modify/rs_actionmodifyattributes.h \
     actions/drawing/modify/rs_actionmodifybevel.h \
@@ -791,7 +798,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/rs_actiondefault.h \
     actions/drawing/selection/rs_actionselect.h \
     actions/drawing/selection/rs_actionselectall.h \
-    actions/drawing/selection/rs_actionselectbase.h \
+    lib/actions/rs_actionselectbase.h \
     actions/drawing/selection/rs_actionselectcontour.h \
     actions/drawing/selection/rs_actionselectintersected.h \
     actions/drawing/selection/rs_actionselectinvert.h \
@@ -936,7 +943,7 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/modify/lc_actionmodifylinegap.cpp \
     actions/drawing/modify/lc_actionmodifylinejoin.cpp \
     actions/drawing/modify/lc_actionmodifyselectionbase.cpp \
-    actions/drawing/modify/lc_actionpreselectionawarebase.cpp \
+    lib/actions/lc_actionpreselectionawarebase.cpp \
     actions/drawing/modify/rs_actionblocksexplode.cpp \
     actions/drawing/modify/rs_actionmodifyattributes.cpp \
     actions/drawing/modify/rs_actionmodifybevel.cpp \
@@ -966,7 +973,7 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/rs_actiondefault.cpp \
     actions/drawing/selection/rs_actionselect.cpp \
     actions/drawing/selection/rs_actionselectall.cpp \
-    actions/drawing/selection/rs_actionselectbase.cpp \
+    lib/actions/rs_actionselectbase.cpp \
     actions/drawing/selection/rs_actionselectcontour.cpp \
     actions/drawing/selection/rs_actionselectintersected.cpp \
     actions/drawing/selection/rs_actionselectinvert.cpp \

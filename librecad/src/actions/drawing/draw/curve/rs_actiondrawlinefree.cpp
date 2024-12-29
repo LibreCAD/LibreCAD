@@ -44,19 +44,13 @@ RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
 
 RS_ActionDrawLineFree::~RS_ActionDrawLineFree() = default;
 
-void RS_ActionDrawLineFree::trigger(){
-    deleteSnapper();
+void RS_ActionDrawLineFree::doTrigger() {
     if (polyline.get() != nullptr){
-        deletePreview();
-
         polyline->endPolyline();
         RS_VectorSolutions sol = polyline->getRefPoints();
         if (sol.getNumber() > 2){
             RS_Entity *ent = polyline->clone();
-            container->addEntity(ent);
-            addToDocumentUndoable(ent);
-
-            graphicView->redraw(RS2::RedrawDrawing);
+            undoCycleAdd(ent);
             RS_DEBUG->print("RS_ActionDrawLineFree::trigger(): polyline added: %lu", ent->getId());
         }
         polyline.reset();
@@ -68,6 +62,7 @@ void RS_ActionDrawLineFree::trigger(){
  * 11 Aug 2011, Dongxu Li
  */
 // todo - relative point snap?
+// fixme - sand - review drawing line free
 void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector v = snapPoint(e);
     drawSnapper();
@@ -78,7 +73,7 @@ void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
         }
         auto ent = static_cast<RS_Polyline*>(polyline->addVertex(v));
         if (ent->count()){
-            preview->addCloneOf(ent);
+            preview->addCloneOf(ent, graphicView);
             drawPreview();
         }
 
@@ -98,8 +93,7 @@ void RS_ActionDrawLineFree::mousePressEvent(QMouseEvent* e) {
             case Dragging:
                 *vertex = snapPoint(e);
                 polyline.reset(new RS_Polyline(container, RS_PolylineData(*vertex, *vertex, false)));
-                polyline->setLayerToActive();
-                polyline->setPenToActive();
+                setPenAndLayerToActive(polyline.get());
                 break;
             default:
                 break;

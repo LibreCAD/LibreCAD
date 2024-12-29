@@ -44,10 +44,7 @@ LC_AbstractActionDrawRectangle::~LC_AbstractActionDrawRectangle() = default;
  * @param snapPoint point of snap
  */
 void LC_AbstractActionDrawRectangle::createShapeData(const RS_Vector &snapPoint){
-    shapeData = new ShapeData();
-    RS_Polyline* polyline = createPolyline(snapPoint);
-    shapeData->resultingPolyline = polyline;
-    shapeData->snapPoint = snapPoint;
+    shapeData = createPolyline(snapPoint);
 }
 
 /**
@@ -55,7 +52,7 @@ void LC_AbstractActionDrawRectangle::createShapeData(const RS_Vector &snapPoint)
  * @param list created entities list for trigger
  */
 void LC_AbstractActionDrawRectangle::doPrepareTriggerEntities(QList<RS_Entity *> &list){
-    RS_Polyline *polyline = shapeData->resultingPolyline;
+    RS_Polyline *polyline = shapeData.resultingPolyline;
     // extract entities from polyline and insert them as result of action
     doAddPolylineToListOfEntities(polyline, list, false);
 }
@@ -137,10 +134,7 @@ bool LC_AbstractActionDrawRectangle::doCheckPolylineEntityAllowedInTrigger(int i
  */
 void LC_AbstractActionDrawRectangle::doAfterTrigger(){
     LC_AbstractActionWithPreview::doAfterTrigger();
-    if (shapeData != nullptr){
-        delete shapeData;
-        shapeData = nullptr;
-    }
+    shapeData.resultingPolyline = nullptr;
     graphicView->redraw();
 }
 
@@ -149,7 +143,7 @@ void LC_AbstractActionDrawRectangle::doAfterTrigger(){
  * @return
  */
 RS_Vector LC_AbstractActionDrawRectangle::doGetRelativeZeroAfterTrigger(){
-    return shapeData -> snapPoint;
+    return shapeData.snapPoint;
 }
 
 /**
@@ -157,7 +151,7 @@ RS_Vector LC_AbstractActionDrawRectangle::doGetRelativeZeroAfterTrigger(){
  * @return
  */
 bool LC_AbstractActionDrawRectangle::doCheckMayTrigger(){
-    return shapeData != nullptr;
+    return shapeData.resultingPolyline != nullptr;
 }
 
 /**
@@ -168,11 +162,21 @@ bool LC_AbstractActionDrawRectangle::doCheckMayTrigger(){
  * @param status current status of action
  */
 void LC_AbstractActionDrawRectangle::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
-    RS_Polyline *polyline = createPolyline(snap);
-    // todo - is it really necessary to set attributes there?
-    polyline->setLayerToActive();
-    polyline->setPenToActive();
+    ShapeData data = createPolyline(snap);
+    auto polyline = data.resultingPolyline;
     doAddPolylineToListOfEntities(polyline, list, true);
+    if (showRefEntitiesOnPreview) {
+        createRefPoint(data.centerPoint, list);
+    }
+
+    if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnCreation) {
+        LC_InfoMessageBuilder msg{};
+        msg.add(tr("To be created:"), tr("Rectangle"));
+        msg.add(tr("Width:"), formatLinear(data.width));
+        msg.add(tr("Height:"), formatLinear(data.height));
+        msg.add(tr("Center:"), formatVector(data.centerPoint));
+        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+    }
 }
 
 /**

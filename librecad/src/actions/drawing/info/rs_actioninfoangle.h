@@ -43,11 +43,8 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionInfoAngle() override;
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent *event) override;
-
     void drawSnapper() override;
-
 protected:
     /**
   * Action States.
@@ -65,5 +62,7 @@ protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
+    void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &intersection);
+    void doTrigger() override;
 };
 #endif

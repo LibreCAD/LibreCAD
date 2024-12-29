@@ -445,6 +445,8 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     gv.setContainer(&graphic);
     gv.zoomAuto(false);
 
+    gv.updateSettings(&graphic);
+
     for (RS_Entity *e = graphic.firstEntity(RS2::ResolveAll); e;
          e = graphic.nextEntity(RS2::ResolveAll)) {
         if (e != nullptr && e->rtti() != RS2::EntityHatch) {

@@ -44,14 +44,12 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawLineBisector() override;
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
     void setLength(double l);
     double getLength() const;
     void setNumber(int n);
     int getNumber() const;
-
     void setStatus(int status) override;
 
 protected:
@@ -83,5 +81,6 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+    void doTrigger() override;
 };
 #endif

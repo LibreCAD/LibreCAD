@@ -61,6 +61,7 @@ void RS_ActionLayersTogglePrint::trigger() {
             deselectEntities(a_layer);
         }
     }
+    graphicView->redraw();
     finish(false);
 }
 
@@ -75,14 +76,7 @@ void RS_ActionLayersTogglePrint::deselectEntities(RS_Layer* layer)
 
     for(auto e: *container){ // // fixme - sand -  iteration over all entities in container
         if (e && e->isVisible() && e->getLayer() == layer) {
-
-            if (graphicView) {
-                graphicView->deleteEntity(e);
-            }
-
-            if (graphicView) {
-                graphicView->drawEntity(e);
-            }
+            e->setSelected(false);
         }
     }
 }

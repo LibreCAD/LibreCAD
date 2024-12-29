@@ -49,14 +49,12 @@ public:
         bool select);
     ~RS_ActionSelectWindow() override;
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void mousePressEvent(QMouseEvent *e) override;
     bool isSelectAllEntityTypes();
     void setSelectAllEntityTypes(bool val);
     QList<RS2::EntityType> getEntityTypesToSelect();
     void setEntityTypesToSelect(QList<RS2::EntityType> type);
-
 protected:
     /**
  * Action States.
@@ -78,7 +76,7 @@ protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
-
     LC_ActionOptionsWidget *createOptionsWidget() override;
+    void doTrigger() override;
 };
 #endif

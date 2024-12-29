@@ -29,18 +29,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphicview.h"
 #include "rs_preview.h"
 
-struct LC_ActionDrawCircle2PR::Points
-{
+struct LC_ActionDrawCircle2PR::Points{
 	RS_Vector point1;
 	RS_Vector point2;
 };
 
 LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(RS_EntityContainer& container,
-											   RS_GraphicView& graphicView)
-	:RS_ActionDrawCircleCR(container, graphicView)
-	, pPoints(std::make_unique<Points>()){
-	actionType=RS2::ActionDrawCircle2PR;
-	reset();
+                                               RS_GraphicView& graphicView)
+    :RS_ActionDrawCircleCR(container, graphicView)
+    , pPoints(std::make_unique<Points>()){
+    actionType=RS2::ActionDrawCircle2PR;
+    reset();
 }
 
 LC_ActionDrawCircle2PR::~LC_ActionDrawCircle2PR() = default;
@@ -61,26 +60,14 @@ void LC_ActionDrawCircle2PR::init(int status){
     }
 }
 
-void LC_ActionDrawCircle2PR::trigger(){
-    RS_ActionDrawCircleCR::trigger();
-
+void LC_ActionDrawCircle2PR::doTrigger() {
     auto *circle = new RS_Circle(container, *data);
-    circle->setLayerToActive();
-    circle->setPenToActive();
-    container->addEntity(circle);
+    setPenAndLayerToActive(circle);
 
-    addToDocumentUndoable(circle);
-
-    // todo - review - setting the same rel zero - what for?
-    RS_Vector rz = graphicView->getRelativeZero();
-    graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
-        rz = circle->getCenter();
+        moveRelativeZero(circle->getCenter());
     }
-    moveRelativeZero(rz);
-
-    drawSnapper();
-
+    undoCycleAdd(circle);
     setStatus(SetPoint1);
     reset();
 }
@@ -116,10 +103,9 @@ bool LC_ActionDrawCircle2PR::preparePreview(const RS_Vector &mouse, RS_Vector& a
     return false;
 }
 
-
 void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_Vector mouse = snapPoint(e);
-
     switch (getStatus()) {
         case SetPoint1:
             pPoints->point1 = mouse;
@@ -127,8 +113,6 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
             break;
 
         case SetPoint2: {
-            deletePreview();
-
             mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
             if (mouse.distanceTo(pPoints->point1) <= 2. * data->radius) {
                 pPoints->point2 = mouse;
@@ -148,8 +132,6 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
                     previewRefSelectablePoint(altCenter);
                 }
             }
-
-            drawPreview();
             break;
         }
         case SelectCenter: {
@@ -165,17 +147,14 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
                     }
                 }
                 if (!existing){
-                    deletePreview();
-                    previewCircle(*data);
+                    previewToCreateCircle(*data);
                     previewRefSelectablePoint(data->center);
                     previewRefSelectablePoint(altCenter);
-
                     if (showRefEntitiesOnPreview) {
                         previewRefPoint(pPoints->point1);
                         previewRefPoint(pPoints->point2);
                         previewRefLine(pPoints->point1, pPoints->point2);
                     }
-                    drawPreview();
                 }
             } else {
                 if (data->isValid()){
@@ -184,6 +163,7 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
             }
         }
     }
+    drawPreview();
 }
 
 void LC_ActionDrawCircle2PR::onMouseLeftButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {

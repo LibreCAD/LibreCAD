@@ -91,21 +91,12 @@ void RS_ActionDrawMText::reset() {
                                           RS2::Update);
 }
 
-void RS_ActionDrawMText::trigger(){
-
+void RS_ActionDrawMText::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawText::trigger()");
-
     if (pos->valid){
-        deletePreview();
-
         auto *text = new RS_MText(container, *data);
         text->update();
-        container->addEntity(text);
-
-        addToDocumentUndoable(text);
-
-        graphicView->redraw(RS2::RedrawDrawing);
-
+        undoCycleAdd(text);
         textChanged = true;
         setStatus(SetPos);
     }
@@ -120,6 +111,7 @@ void RS_ActionDrawMText::preparePreview() {
 }
 
 void RS_ActionDrawMText::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent begin");
 
     if (getStatus() == SetPos){
@@ -134,16 +126,15 @@ void RS_ActionDrawMText::mouseMoveEvent(QMouseEvent *e){
         RS_Vector mov = mouse - *pos;
         *pos = mouse;
         if (textChanged || pos->valid == false || preview->isEmpty()){
-            deletePreview();
             preparePreview();
         } else {
             preview->move(mov);
             preview->setVisible(true);
         }
-        drawPreview();
     }
 
     RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionDrawMText::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {

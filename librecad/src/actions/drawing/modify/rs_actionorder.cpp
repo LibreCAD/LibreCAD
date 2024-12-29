@@ -57,6 +57,8 @@ void RS_ActionOrder::selectionCompleted([[maybe_unused]]bool singleEntity, bool 
 }
 
 void RS_ActionOrder::doTrigger(bool keepSelected) {
+    RS_PreviewActionInterface::trigger();
+
     // fixme - sand - review SELECTION STATE
     RS_DEBUG->print("RS_ActionOrder::trigger()");
 
@@ -68,7 +70,6 @@ void RS_ActionOrder::doTrigger(bool keepSelected) {
     if (targetEntity != nullptr) {
         int index = -1;
         targetEntity->setHighlighted(false);
-        graphicView->drawEntity(targetEntity);
 
         switch (actionType) {
             case RS2::ActionOrderLower:
@@ -136,7 +137,7 @@ void RS_ActionOrder::mouseRightButtonReleaseEventSelected(int status, [[maybe_un
 }
 
 void RS_ActionOrder::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Choose entities (Enter to Complete)"),  MOD_CTRL(tr("Order immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Choose entities (Enter to Complete)"), MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Order immediately after selection")));
 }
 
 void RS_ActionOrder::updateMouseButtonHintsForSelected([[maybe_unused]]int status) {

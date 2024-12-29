@@ -57,9 +57,9 @@ void RS_ActionDrawEllipseInscribe::clearLines(bool checkStatus){
         if (checkStatus && (int) pPoints->lines.size() <= getStatus())
             break;
         pPoints->lines.back()->setHighlighted(false);
-        graphicView->drawEntity(pPoints->lines.back());
         pPoints->lines.pop_back();
     }
+    graphicView->redraw();
 }
 
 void RS_ActionDrawEllipseInscribe::init(int status){
@@ -75,33 +75,24 @@ void RS_ActionDrawEllipseInscribe::finish(bool updateTB){
     LC_ActionDrawCircleBase::finish(updateTB);
 }
 
-void RS_ActionDrawEllipseInscribe::trigger(){
-    LC_ActionDrawCircleBase::trigger();
-
+void RS_ActionDrawEllipseInscribe::doTrigger() {
     auto *ellipse = new RS_Ellipse(container, pPoints->eData);
-
-    deletePreview();
-    container->addEntity(ellipse);
-
-    addToDocumentUndoable(ellipse);
-
-    for (RS_Line *const p: pPoints->lines) {
-        if (!p) continue;
-        p->setHighlighted(false);
-        graphicView->drawEntity(p);
-
-    }
-    drawSnapper();
 
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(ellipse->getCenter());
     }
 
+    undoCycleAdd(ellipse);
+
+    for (RS_Line *const p: pPoints->lines) {
+        if (!p) continue;
+        p->setHighlighted(false);
+    }
+
     clearLines(false);
     setStatus(SetLine1);
 
-    RS_DEBUG->print("RS_ActionDrawEllipse4Line::trigger():"
-                    " entity added: %lu", ellipse->getId());
+    RS_DEBUG->print("RS_ActionDrawEllipse4Line::trigger():entity added: %lu", ellipse->getId());
 }
 
 void RS_ActionDrawEllipseInscribe::drawSnapper() {
@@ -109,18 +100,17 @@ void RS_ActionDrawEllipseInscribe::drawSnapper() {
 }
 
 void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionDrawEllipse4Line::mouseMoveEvent begin");
-
-    snapPoint(e);
     deleteHighlights();
     deletePreview();
+    RS_DEBUG->print("RS_ActionDrawEllipse4Line::mouseMoveEvent begin");
+    snapPoint(e);
     int status = getStatus();
 
     for(RS_AtomicEntity* const pc: pPoints->lines) { // highlight already selected
         highlightSelected(pc);
     }
 
-    RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
+    RS_Entity *en = catchModifiableEntityOnPreview(e, RS2::EntityLine);
    // bool shouldIgnore = false;
     if (en != nullptr){
         auto *line = dynamic_cast<RS_Line *>(en);
@@ -156,7 +146,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent *e){
                         tangent.reserve(4);
                         if (preparePreview(line, tangent)){
                             highlightHover(line);
-                            auto ellipse = previewEllipse(pPoints->eData);
+                            auto ellipse = previewToCreateEllipse(pPoints->eData);
                             if (showRefEntitiesOnPreview) {
                                 RS_Vector ellipseCenter = ellipse->getCenter();
 
@@ -170,7 +160,6 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent *e){
                             // nothing, can't build the ellipse
                         }
                     }
-                    drawPreview();
                     break;
                 }
                 default:
@@ -179,6 +168,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent *e){
         }
 
     }
+    drawPreview();
     drawHighlights();
     RS_DEBUG->print("RS_ActionDrawEllipse4Line::mouseMoveEvent end");
 }

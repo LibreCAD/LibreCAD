@@ -74,26 +74,20 @@ void LC_ActionDrawSplinePoints::init(int status){
     reset(); // fixme - review reset, try to make it common with base action
 }
 
-void LC_ActionDrawSplinePoints::trigger(){
+void LC_ActionDrawSplinePoints::doTrigger() {
     if (pPoints->spline.get() != nullptr) {
-        pPoints->spline->setLayerToActive();
-        pPoints->spline->setPenToActive();
+        setPenAndLayerToActive(pPoints->spline.get());
         pPoints->spline->update();
         RS_Entity *s = pPoints->spline->clone();
-        container->addEntity(s);
+        undoCycleAdd(s);
 
-        addToDocumentUndoable(s);
-
-// upd view
-        RS_Vector r = graphicView->getRelativeZero();
-        graphicView->redraw(RS2::RedrawDrawing);
-        moveRelativeZero(r);
         RS_DEBUG->print("RS_ActionDrawSplinePoints::trigger(): spline added: %lu", s->getId());
         reset();
     }
 }
 
 void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawSplinePoints::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -104,7 +98,6 @@ void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent *e){
             break;
         case SetNextPoint: {
             auto *sp = dynamic_cast<LC_SplinePoints *>(pPoints->spline->clone());
-            deletePreview();
 
             if (showRefEntitiesOnPreview) {
                 for (auto const &v: sp->getPoints()) {
@@ -116,7 +109,6 @@ void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent *e){
             sp->addPoint(mouse);
             sp->update();
             previewEntity(sp);
-            drawPreview();
             break;
         }
         default:
@@ -124,6 +116,7 @@ void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent *e){
     }
 
     RS_DEBUG->print("RS_ActionDrawSplinePoints::mouseMoveEvent end");
+    drawPreview();
 }
 
 void LC_ActionDrawSplinePoints::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
@@ -288,7 +281,7 @@ void LC_ActionDrawSplinePoints::undo(){
         }
         else {
             v = splinePts.back();
-            graphicView->moveRelativeZero(v);
+            moveRelativeZero(v);
         }
         graphicView->redraw(RS2::RedrawDrawing);
         drawPreview();

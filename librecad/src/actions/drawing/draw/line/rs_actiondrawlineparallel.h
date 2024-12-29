@@ -43,7 +43,6 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView, RS2::ActionType actionType);
     ~RS_ActionDrawLineParallel() override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
     double getDistance() const;
@@ -75,5 +74,6 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+    void doTrigger() override;
 };
 #endif

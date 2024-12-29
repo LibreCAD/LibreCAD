@@ -448,6 +448,7 @@ void RS_Text::move(const RS_Vector& offset) {
     data.insertionPoint.move(offset);
     data.secondPoint.move(offset);
     updateBaselinePoints();
+    forcedCalculateBorders();
 //    update();
 }
 
@@ -533,8 +534,13 @@ std::ostream& operator << (std::ostream& os, const RS_Text& p) {
     return os;
 }
 
-RS_Entity *RS_Text::cloneProxy() const {
-    return new RS_Line(nullptr, baselineStartPoint, baselineEndPoint);
+RS_Entity *RS_Text::cloneProxy(RS_GraphicView* view) const {
+    if (view->isDrawTextsAsDraftForPreview()) {
+        return new RS_Line(nullptr, baselineStartPoint, baselineEndPoint);
+    }
+    else{
+        return clone();
+    }
 }
 
 void RS_Text::drawDraft(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset) {
@@ -546,12 +552,12 @@ void RS_Text::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 //    if (!(painter && view)) {
 //        return;
 //    }
-    if (!view->isPrintPreview() && !view->isPrinting()){
-        if (view->isPanning() || view->toGuiDY(getHeight()) < view->getMinRenderableTextHeightInPx()){
+//    if (!view->isPrintPreview() && !view->isPrinting()){
+        if (/*view->isPanning() || */view->toGuiDY(getHeight()) < view->getMinRenderableTextHeightInPx()){
             drawDraft(painter, view, patternOffset);
             return;
         }
-    }
+//    }
 
     foreach (auto e, entities){
        view->drawAsChild(painter, e, patternOffset);

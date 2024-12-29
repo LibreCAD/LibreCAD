@@ -91,11 +91,7 @@ void RS_ActionDrawLineBisector::setStatus(int status) {
     invalidateSnapSpot();
 }
 
-void RS_ActionDrawLineBisector::trigger(){
-    RS_PreviewActionInterface::trigger();
-
-    graphicView->redraw(RS2::RedrawDrawing);
-
+void RS_ActionDrawLineBisector::doTrigger() {
     RS_Creation creation(container, graphicView);
     creation.createBisector(pPoints->coord1,
                             pPoints->coord2,
@@ -107,15 +103,16 @@ void RS_ActionDrawLineBisector::trigger(){
 
 
 void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
     RS_DEBUG->print("RS_ActionDrawLineBisector::mouseMoveEvent begin");
 
     snapPoint(e); // update coordinates widget
     RS_Vector mouse = toGraph(e);
     deleteSnapper();
-    deleteHighlights();
     switch (getStatus()) {
         case SetLine1: {
-            RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
+            RS_Entity *en = catchEntityOnPreview(e, enTypeList, RS2::ResolveAll);
             if (en != nullptr){
                 highlightHover(en);
             }
@@ -124,8 +121,7 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
         case SetLine2: {
             highlightSelected(line1);
             pPoints->coord2 = mouse;
-            RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
-            deletePreview();
+            RS_Entity *en = catchEntityOnPreview(e, enTypeList, RS2::ResolveAll);
             if (en == line1){
                 line2 = nullptr;
             } else if (en != nullptr){
@@ -139,6 +135,7 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
                                                    line1,
                                                    line2);
                 if (ent != nullptr){
+                    // fixme sand - more than one mya be created, but if only one - it's good to show description
                     highlightHover(line2);
                     if (showRefEntitiesOnPreview) {
                         previewRefPoint(line1->getNearestPointOnEntity(pPoints->coord1));
@@ -147,7 +144,6 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
                         previewRefSelectablePoint(nearest);
                     }
                 }
-                drawPreview();
             }
             break;
         }
@@ -162,6 +158,7 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
             break;
     }
     drawHighlights();
+    drawPreview();
 
     RS_DEBUG->print("RS_ActionDrawLineBisector::mouseMoveEvent end");
 }

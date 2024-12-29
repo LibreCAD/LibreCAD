@@ -39,11 +39,6 @@ class QG_CoordinateWidget : public QWidget, public Ui::QG_CoordinateWidget
 public:
     QG_CoordinateWidget(QWidget *parent = 0, const char *name = 0, Qt::WindowFlags fl = {});
     ~QG_CoordinateWidget();
-
-    // fixme - sand - check whether these methods are really needed
-    RS_Vector getAbsoluteCoordinates();
-    RS_Vector getRelativeCoordinates();
-
     void clearContent();
 
 public slots:

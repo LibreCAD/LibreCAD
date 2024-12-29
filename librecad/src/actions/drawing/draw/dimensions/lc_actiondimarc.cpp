@@ -61,9 +61,7 @@ void LC_ActionDimArc::reset(){
     updateOptions(); // fixme - check whether it's necessary there
 }
 
-void LC_ActionDimArc::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void LC_ActionDimArc::doTrigger() {
     if (selectedArcEntity == nullptr){
         RS_DEBUG->print(RS_Debug::D_ERROR, "LC_ActionDimArc::trigger: selectedArcEntity is nullptr.\n");
         return;
@@ -75,24 +73,20 @@ void LC_ActionDimArc::trigger(){
     }
 
     auto newEntity= new LC_DimArc(container, *data, dimArcData);
-
-    newEntity->setLayerToActive();
-    newEntity->setPenToActive();
+    setPenAndLayerToActive(newEntity);
     newEntity->update();
-    container->addEntity(newEntity);
-
-    addToDocumentUndoable(newEntity);
-
+    undoCycleAdd(newEntity);
     setStatus(SetEntity);
-    graphicView->redraw(RS2::RedrawDrawing);
 
     RS_Snapper::finish();
 }
 
 void LC_ActionDimArc::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
+
     RS_DEBUG->print("LC_ActionDimArc::mouseMoveEvent begin");
     RS_Vector snap = snapPoint(e);
-    deleteHighlights();
     switch (getStatus()) {
         case SetEntity:{
             auto en = catchEntity(e, RS2::EntityArc, RS2::ResolveAll);
@@ -109,17 +103,15 @@ void LC_ActionDimArc::mouseMoveEvent(QMouseEvent *e){
             // fixme - determine why DimArc is drawn on preview by preview pen, while other dimension entities - using normal pen...
 
             LC_DimArc *temp_dimArc_entity{new LC_DimArc(preview.get(), *data, dimArcData)};
-
-            deletePreview();
             previewEntity(temp_dimArc_entity);
-            drawPreview();
             break;
         }
         default:
             break;
     }
-    drawHighlights();
     RS_DEBUG->print("LC_ActionDimArc::mouseMoveEvent end");
+    drawPreview();
+    drawHighlights();
 }
 
 void LC_ActionDimArc::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

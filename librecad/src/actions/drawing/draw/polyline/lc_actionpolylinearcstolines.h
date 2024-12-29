@@ -30,31 +30,20 @@ class LC_ActionPolylineArcsToLines:public RS_PreviewActionInterface {
 public:
     LC_ActionPolylineArcsToLines(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionPolylineArcsToLines() override;
-
     void mouseMoveEvent(QMouseEvent *event) override;
-
     void init(int status) override;
-
-    void trigger() override;
-
 protected:
     enum Status{
         SetEntity
     };
-
     RS_Polyline* polyline;
-
     RS2::CursorType doGetMouseCursor(int status) override;
-
     void updateMouseButtonHints() override;
-
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-
 protected:
     RS_Polyline *createPolyline(RS_Polyline *pPolyline);
-
     bool hasArcsSegments(RS_Polyline *p);
+    void doTrigger() override;
 };
 #endif // LC_ACTIONPOLYLINEARCSTOLINES_H

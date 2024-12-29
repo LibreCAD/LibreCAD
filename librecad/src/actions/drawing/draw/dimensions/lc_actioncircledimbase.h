@@ -34,22 +34,14 @@ public:
         RS2::ActionType type);
 
     ~LC_ActionCircleDimBase() override;
-    void trigger() override;
     void updateMouseButtonHints() override;
     QStringList getAvailableCommands() override;
-
     void mouseMoveEvent(QMouseEvent *event) override;
-
     double getAngle() const;
-
     void setAngle(double angle);
-
     bool isAngleIsFree() const;
-
     void setAngleIsFree(bool angleIsFree);
-
     double getCurrentAngle(){return currentAngle;}
-
 protected:
 
     enum Status {
@@ -77,6 +69,7 @@ protected:
     virtual RS_Vector preparePreview(RS_Entity *en, RS_Vector &position, bool forcePosition) = 0;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     virtual RS_Dimension* createDim(RS_EntityContainer *parent) const = 0;
+    void doTrigger() override;
 };
 
 #endif // LC_ACTIONCIRCLEDIMBASE_H

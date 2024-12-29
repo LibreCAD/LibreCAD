@@ -34,10 +34,6 @@ LC_ActionSplineRemoveBetween::LC_ActionSplineRemoveBetween(RS_EntityContainer &c
     actionType = RS2::ActionDrawSplinePointDelTwo;
 }
 
-void LC_ActionSplineRemoveBetween::trigger() {
-    LC_ActionSplineModifyBase::trigger();
-}
-
 void LC_ActionSplineRemoveBetween::doCompleteTrigger() {
     directionFromStart = false;
 }

@@ -117,6 +117,7 @@ public:
     void drawTextV(int x1, int y1, int x2, int y2,
                            const QString& text);
     void drawText(const QRect& rect, const QString& text, QRect* boundingBox);
+    void drawText(const QRect& rect, int flags, const QString& text, QRect* boundingBox);
 
     void fillRect(int x1, int y1, int w, int h, const RS_Color& col);
     void fillRect ( const QRectF & rectangle, const RS_Color & color );

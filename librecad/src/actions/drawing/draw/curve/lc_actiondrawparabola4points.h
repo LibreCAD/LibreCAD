@@ -39,7 +39,6 @@ public:
                                  RS_GraphicView& graphicView);
     ~LC_ActionDrawParabola4Points() override;
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
 protected:
@@ -62,5 +61,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     bool preparePreview(const RS_Vector& mouse, bool rebuild);
+    void doTrigger() override;
 };
 #endif

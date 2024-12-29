@@ -112,7 +112,9 @@ void LC_ActionDrawRectangle3Points::doPreparePreviewEntities(QMouseEvent *e, RS_
  * @param snapPoint snap point
  * @return
  */
-RS_Polyline *LC_ActionDrawRectangle3Points::createPolyline(const RS_Vector &snapPoint) {
+LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle3Points::createPolyline(const RS_Vector &snapPoint) {
+    ShapeData result;
+    result.snapPoint = snapPoint;
     RS_Polyline* polyline = nullptr;
 
     if (snapPoint.valid){
@@ -174,7 +176,6 @@ RS_Polyline *LC_ActionDrawRectangle3Points::createPolyline(const RS_Vector &snap
             drawPrimitiveShape = shouldInspectForNonCompleteShape;
         }
 
-
         if (drawPrimitiveShape){
             // simple mode - just create a polyline that connects calculated corner vertexes
             polyline = new RS_Polyline(container);
@@ -184,6 +185,10 @@ RS_Polyline *LC_ActionDrawRectangle3Points::createPolyline(const RS_Vector &snap
             polyline->addVertex(pPoints->corner4);
             polyline->setClosed(true);
             polyline->endPolyline();
+
+            result.height = pPoints->corner1.distanceTo(pPoints->corner4);
+            result.width = pPoints->corner1.distanceTo(pPoints->corner2);
+            result.centerPoint = (pPoints->corner1 + pPoints->corner3) / 2;
         }
         else{
             // more complex case, draw corners or bevels
@@ -241,14 +246,20 @@ RS_Polyline *LC_ActionDrawRectangle3Points::createPolyline(const RS_Vector &snap
 
             polyline = createPolylineByVertexes(bottomLeftCorner, bottomRightCorner, topRightCorner, topLeftCorner, drawBulge, drawComplex, radiusX, radiusY);
 
+            result.height = bottomLeftCorner.distanceTo(topLeftCorner);
+            result.width = bottomLeftCorner.distanceTo(bottomRightCorner);
+            result.centerPoint = (bottomLeftCorner + topRightCorner) / 2;
+
             if (rotate) {
                 // rotate corners:
                 // now we'll rotate shape on specific angle
                 polyline->rotate(pPoints->corner1, baseAngle);
+                result.centerPoint = result.centerPoint.rotate(pPoints->corner1, baseAngle);
             }
         }
     }
-    return polyline;
+    result.resultingPolyline = polyline;
+    return result;
 }
 
 /**
@@ -477,7 +488,6 @@ void LC_ActionDrawRectangle3Points::doProcessCoordinateEvent(const RS_Vector &mo
     }
 }
 
-
 void LC_ActionDrawRectangle3Points::processCommandValue(double value, bool &toMainStatus){
     switch (getStatus()){
         case SetInnerAngle:
@@ -494,8 +504,8 @@ void LC_ActionDrawRectangle3Points::processCommandValue(double value, bool &toMa
             pPoints->corner4 - pPoints->corner2;
             moveRelativeZero(pPoints->corner2);
             deletePreview();
-            RS_Polyline *polyline = createPolyline(RS_Vector(false));
-            previewEntity(polyline);
+            LC_AbstractActionDrawRectangle::ShapeData data = createPolyline(RS_Vector(false));
+            previewEntity(data.resultingPolyline);
             drawPreview();
             setStatus(SetHeight);
             toMainStatus = false;

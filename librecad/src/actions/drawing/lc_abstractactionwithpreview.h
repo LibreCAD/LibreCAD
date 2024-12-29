@@ -47,7 +47,6 @@ public:
     void mouseMoveEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
     void finish(bool updateTB) override;
-    void trigger() override;
     void updateMouseButtonHints() override;
     /**
    * Mode that controls where from apply pen
@@ -214,5 +213,7 @@ protected:
     void createRefSelectablePoint(const RS_Vector &coord, QList<RS_Entity *> &list) const;
     static bool isMouseMove(QMouseEvent* e);
     void createRefArc(const RS_ArcData &data, QList<RS_Entity *> &list) const;
+
+    void doTrigger() override;
 };
 #endif // LC_ABSTRACTACTIONWITHPREVIEW_H

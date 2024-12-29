@@ -57,23 +57,17 @@ void RS_ActionDimAngular::reset(){
     updateOptions();
 }
 
-void RS_ActionDimAngular::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDimAngular::doTrigger() {
     if (line1->getStartpoint().valid && line2->getStartpoint().valid) {
         auto* newEntity = new RS_DimAngular( container,*data,*edata);
 
-        newEntity->setLayerToActive();
-        newEntity->setPenToActive();
+        setPenAndLayerToActive(newEntity);
         newEntity->update();
-        container->addEntity(newEntity);
 
-        addToDocumentUndoable(newEntity);
+        undoCycleAdd(newEntity);
 
-        RS_Vector rz {graphicView->getRelativeZero()};
         setStatus( SetLine1);
-        graphicView->redraw( RS2::RedrawDrawing);
-        moveRelativeZero( rz);
+
         RS_Snapper::finish();
     }
     else {
@@ -82,8 +76,9 @@ void RS_ActionDimAngular::trigger(){
 }
 
 void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e){
-    RS_DEBUG->print( "RS_ActionDimAngular::mouseMoveEvent begin");
+    deletePreview();
     deleteHighlights();
+    RS_DEBUG->print( "RS_ActionDimAngular::mouseMoveEvent begin");
     RS_Vector snap = snapPoint(e);
     switch (getStatus()) {
         case SetLine1: {
@@ -104,7 +99,6 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e){
         case SetPos: {
             snap = getFreeSnapAwarePoint(e, snap);
             if (setData(snap)){
-                deletePreview();
                 auto *d = new RS_DimAngular(preview.get(), *data, *edata);
                 highlightSelected(line1);
                 highlightSelected(line2);
@@ -122,15 +116,16 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e){
 
                 d->update();
                 previewEntity(d);
-                drawPreview();
+
             }
             break;
         }
         default:
             break;
     }
-    drawHighlights();
     RS_DEBUG->print("RS_ActionDimAngular::mouseMoveEvent end");
+    drawPreview();
+    drawHighlights();
 }
 
 void RS_ActionDimAngular::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
