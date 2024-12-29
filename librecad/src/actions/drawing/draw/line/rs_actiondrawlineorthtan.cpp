@@ -55,37 +55,28 @@ void RS_ActionDrawLineOrthTan::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawLineOrthTan::trigger(){
+void RS_ActionDrawLineOrthTan::doTrigger() {
     if (!tangent) return;
-    RS_PreviewActionInterface::trigger();
+    RS_Entity *newEntity = new RS_Line(container, tangent->getData());
 
-
-    circle = nullptr;
-    RS_Entity *newEntity = new RS_Line(container,
-                                       tangent->getData());
-
-    deletePreview();
-    newEntity->setLayerToActive();
-    newEntity->setPenToActive();
-    container->addEntity(newEntity);
-
-    addToDocumentUndoable(newEntity);
-
-    graphicView->redraw(RS2::RedrawDrawing);
+    setPenAndLayerToActive(newEntity);
+    undoCycleAdd(newEntity);
 
     setStatus(SetCircle);
+    circle = nullptr;
 }
 
 void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
     RS_DEBUG->print("RS_ActionDrawLineOrthTan::mouseMoveEvent begin");
     e->accept();
 
     snapPoint(e);
 
-    deleteHighlights();
     switch (getStatus()) {
         case SetLine: {
-            RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
+            RS_Entity *en = catchModifiableEntityOnPreview(e, RS2::EntityLine);
             if (en != nullptr){
                 highlightHover(en);
             }
@@ -95,19 +86,17 @@ void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent *e){
             RS_Vector mouse{toGraph(e)};
             highlightSelected(normal);
             deleteSnapper();
-            deletePreview();
-            RS_Entity *en = catchEntity(e, circleList, RS2::ResolveAll);
+            RS_Entity *en = catchEntityOnPreview(e, circleList, RS2::ResolveAll);
             if (en != nullptr){
                 circle = en;
                 highlightHover(en);
-                deletePreview();
                 RS_Vector alternativeTangentPoint;
                 RS_Creation creation(preview.get(), graphicView, false);
                 tangent = creation.createLineOrthTan(mouse,
                                                      normal,
                                                      circle, alternativeTangentPoint);
                 if (tangent != nullptr){
-                    previewEntity(tangent);
+                    previewEntityToCreate(tangent, false);
                     previewRefSelectablePoint(alternativeTangentPoint);
                     previewRefSelectablePoint(tangent->getEndpoint());
                     if (showRefEntitiesOnPreview) {
@@ -115,13 +104,13 @@ void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent *e){
                     }
                 }
             }
-            drawPreview();
         }
         default:
             break;
     }
-    drawHighlights();
     RS_DEBUG->print("RS_ActionDrawLineOrthTan::mouseMoveEvent end");
+    drawHighlights();
+    drawPreview();
 }
 
 void RS_ActionDrawLineOrthTan::clearLines(){

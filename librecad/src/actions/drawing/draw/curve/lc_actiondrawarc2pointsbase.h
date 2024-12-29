@@ -27,9 +27,6 @@
 
 class LC_ActionDrawArc2PointsBase:public RS_PreviewActionInterface{
     Q_OBJECT
-
-
-
 public:
     LC_ActionDrawArc2PointsBase(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView);
     void mouseMoveEvent(QMouseEvent *event) override;
@@ -38,9 +35,6 @@ public:
 
     double getParameter() const;
     void setParameter(double parameter);
-
-    void trigger() override;
-
     QStringList getAvailableCommands() override;
 
 protected:
@@ -74,6 +68,8 @@ protected:
     virtual void setParameterValue(double r);
     virtual QString getParameterPromptValue() const = 0;
     virtual QString getAlternativePoint2Prompt() const;
+
+    void doTrigger() override;
 };
 
 #endif // LC_ACTIONDRAWARC2POINTSBASE_H

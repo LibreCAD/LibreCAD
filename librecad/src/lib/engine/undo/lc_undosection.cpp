@@ -25,25 +25,28 @@
 
 #include "lc_undosection.h"
 #include "rs_document.h"
+#include "rs_graphicview.h"
 
-LC_UndoSection::LC_UndoSection(RS_Document *doc, const bool handleUndo /*= true*/) :
+LC_UndoSection::LC_UndoSection(RS_Document *doc, RS_GraphicView* view, const bool handleUndo /*= true*/) :
     document( doc),
-    valid( handleUndo && nullptr != doc)
-{
+    graphicView(view),
+    valid( handleUndo && nullptr != doc && nullptr != view){
     if (valid) {
         document->startUndoCycle();
     }
 }
 
-LC_UndoSection::~LC_UndoSection()
-{
+LC_UndoSection::~LC_UndoSection(){
     if (valid) {
+        RS_Undoable *relativeZeroUndoable = graphicView->getRelativeZeroUndoable();
+        if (relativeZeroUndoable != nullptr) {
+            document->addUndoable(relativeZeroUndoable);
+        }
         document->endUndoCycle();
     }
 }
 
-void LC_UndoSection::addUndoable(RS_Undoable *undoable)
-{
+void LC_UndoSection::addUndoable(RS_Undoable *undoable){
     if (valid) {
         document->addUndoable( undoable);
     }

@@ -102,13 +102,11 @@ public:
     void setCursorHiding(bool state);
     void addScrollbars();
     bool hasScrollbars();
-
     void setCurrentQAction(QAction* q_action);
-
     QString device;
-
     void destroyMenu(const QString& activator);
     void setMenu(const QString& activator, QMenu* menu);
+    QString obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription) override;
 
 protected:
     void mousePressEvent(QMouseEvent* e) override;
@@ -123,20 +121,12 @@ protected:
     void wheelEvent(QWheelEvent* e) override;
     void keyPressEvent(QKeyEvent* e) override;
     void keyReleaseEvent(QKeyEvent* e) override;
-
     bool event(QEvent * e) override;
-
     void paintEvent(QPaintEvent *)override;
     void resizeEvent(QResizeEvent* e) override;
-
     QList<QAction*> recent_actions;
     void autoPanStep();
 
-private slots:
-    void slotHScrolled(int value);
-    void slotVScrolled(int value);
-
-protected:
     //! Horizontal scrollbar.
     QG_ScrollBar* hScrollBar = nullptr;
     //! Vertical scrollbar.
@@ -163,19 +153,16 @@ protected:
     QPixmap pixmapLayer1;
     QPixmap pixmapLayer2;
     QPixmap pixmapLayer3;
-
-
     RS2::RedrawMethod redrawMethod;
-
     //! Keep tracks of if we are currently doing a high-resolution scrolling
     bool isSmoothScrolling;
-
     bool classicRenderer = true;
-
     QMap<QString, QMenu*> menus;
-
     void paintClassicalBuffered();
     void paintSequental();
+private slots:
+    void slotHScrolled(int value);
+    void slotVScrolled(int value);
 private:
     void addEditEntityEntry(QMouseEvent* event, QMenu& menu);
     bool antialiasing{false};
@@ -183,14 +170,11 @@ private:
     bool cursor_hiding{false};
     bool selectCursor_hiding{false};
     void setupPainter(RS_Painter &painter2) const;
-
     // For auto panning by the cursor close to the view border
     void startAutoPanTimer(QMouseEvent *e);
     bool isAutoPan(QMouseEvent* e) const;
     struct AutoPanData;
     std::unique_ptr<AutoPanData> m_panData;
-
-
 
 signals:
     void xbutton1_released();

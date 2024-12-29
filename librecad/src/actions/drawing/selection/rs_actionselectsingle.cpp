@@ -29,6 +29,7 @@
 #include "rs_actionselectsingle.h"
 
 #include "rs_graphicview.h"
+#include "rs_selection.h"
 
 RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
 											 RS_GraphicView& graphicView,
@@ -46,17 +47,21 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(enum RS2::EntityType typeToSelect,
                                              const QList<RS2::EntityType> &entityTypeList)
     :RS_ActionSelectBase("Select Entities", container, graphicView, entityTypeList)
     ,actionSelect(action_select)
-    ,typeToSelect(typeToSelect)
-{
+    ,typeToSelect(typeToSelect){
     actionType = RS2::ActionSelectSingle;
 }
 
 void RS_ActionSelectSingle::trigger(){
-    selectEntity();
+    selectEntity(entityToSelect,selectContour);
+    selectContour = false;
 }
 
 void RS_ActionSelectSingle::mouseMoveEvent(QMouseEvent *event){
+    deletePreview();
+    deleteHighlights();
     selectionMouseMove(event);
+    drawPreview();
+    drawHighlights();
 }
 
 void RS_ActionSelectSingle::selectionFinishedByKey(QKeyEvent *e, [[maybe_unused]]bool escape) {
@@ -67,7 +72,21 @@ void RS_ActionSelectSingle::selectionFinishedByKey(QKeyEvent *e, [[maybe_unused]
 void RS_ActionSelectSingle::onMouseLeftButtonRelease([[maybe_unused]] int status, QMouseEvent *e) {
     entityToSelect = catchEntity(e, catchForSelectionEntityTypes);
     if (entityToSelect != nullptr){
+       selectContour = isShift(e);
        trigger();
+    }
+}
+
+void RS_ActionSelectSingle::doSelectEntity(RS_Entity *entityToSelect, bool selectContour) const {
+    if (entityToSelect != nullptr){
+        RS_Selection s(*container, graphicView);
+        // try to minimize selection clicks - and select contour based on selected entity. May be optional, but what for?
+        if (entityToSelect->isAtomic() && selectContour) {
+            s.selectContour(entityToSelect);
+        }
+        else{
+            s.selectSingle(entityToSelect);
+        }
     }
 }
 
@@ -92,4 +111,8 @@ bool RS_ActionSelectSingle::isEntityAllowedToSelect(RS_Entity *ent) const {
         return true;
     else
         return ent ->rtti() == typeToSelect;
+}
+
+void RS_ActionSelectSingle::updateMouseButtonHints() {
+    updateMouseWidgetTRCancel(tr("Specify entity to select"), MOD_SHIFT_LC(tr("Select contour")));
 }

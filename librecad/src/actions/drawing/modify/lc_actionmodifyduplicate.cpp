@@ -186,18 +186,24 @@ bool LC_ActionModifyDuplicate::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent
 void LC_ActionModifyDuplicate::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     switch (status){
         case SelectEntity:{
-            RS_Entity *en = catchEntity(e, RS2::ResolveNone);
+            auto en = catchEntity(e, RS2::ResolveNone);
             if (en != nullptr){
                 // highlight original
                 highlightHover(en);
 
                 // handle offset - if it is present, create a clone of snapped entity and display it for preview
                 auto snapForOffset = RS_Vector(false);
-                RS_Vector offset = determineOffset(snapForOffset, getEntityCenterPoint(en));
+                auto offset = determineOffset(snapForOffset, getEntityCenterPoint(en));
                 if (offset.valid){
-                    RS_Entity *clone = en->clone();
+                    auto clone = en->clone();
                     clone->move(offset);
                     list << clone;
+                    if (isInfoCursorForModificationEnabled()){
+                        LC_InfoMessageBuilder msg(tr("Duplicate Offset"));
+                        msg.add(formatRelative(offset));
+                        msg.add(formatRelativePolar(offset));
+                        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                    }
                 }
             }
             break;
@@ -216,17 +222,23 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(QMouseEvent *e, [[maybe_
                 }
                 RS_Vector offset = determineOffset(snapOffset, center);
                 if (offset.valid){
-                    RS_Entity *clone = selectedEntity->clone();
+                    auto clone = selectedEntity->clone();
                     clone->move(offset);
                     list << clone;
                     if (showRefEntitiesOnPreview) {
                         const RS_Vector newCenter = getEntityCenterPoint(clone);
                         previewRefSelectablePoint(newCenter);
-                        RS_EllipseData data = RS_EllipseData();
+                        auto data = RS_EllipseData();
                         data.center = center;
                         data.majorP = RS_Vector(std::abs(offsetX), 0, 0);
                         data.ratio = std::abs(offsetY / offsetX);
                         previewRefEllipse(data);
+                    }
+                    if (isInfoCursorForModificationEnabled()){
+                        LC_InfoMessageBuilder msg(tr("Duplicate Offset"));
+                        msg.add(formatRelative(offset));
+                        msg.add(formatRelativePolar(offset));
+                        appendInfoCursorZoneMessage(msg.toString(), 2, false);
                     }
                 }
             }

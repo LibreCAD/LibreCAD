@@ -128,6 +128,13 @@ void LC_ActionDrawLinePoints::doPreparePreviewEntities([[maybe_unused]]QMouseEve
     // draw preview if this is non-zero line
     if (isNonZeroLine(possibleEndPoint)){
         createPoints(possibleEndPoint, list);
+        if (actionType == RS2::ActionDrawPointsMiddle && list.size() == 1){
+            RS_Entity* ep = list.at(0);
+            auto* point = dynamic_cast<RS_Point *>(ep);
+            if (point != nullptr){
+                previewEntityToCreate(point, false);
+            }
+        }
         if (showRefEntitiesOnPreview) {
             createRefSelectablePoint(possibleEndPoint, list);
             createRefPoint(startpoint, list);
@@ -493,6 +500,8 @@ QStringList LC_ActionDrawLinePoints::getAvailableCommands(){
     }
     return cmd;
 }
+
+// FIXME - SAND - REVIEW command PROMPTS!!!
 
 void LC_ActionDrawLinePoints::updateMouseButtonHints(){
     QString msg;

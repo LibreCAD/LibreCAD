@@ -28,7 +28,6 @@
 
 class LC_ActionSplineAddPoint:public LC_ActionSplineModifyBase{
     Q_OBJECT
-
 public:
     LC_ActionSplineAddPoint(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionSplineAddPoint() override = default;
@@ -39,9 +38,7 @@ protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void doCompleteTrigger() override;
     void doAfterTrigger() override;
-
     void onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) override;
-
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 

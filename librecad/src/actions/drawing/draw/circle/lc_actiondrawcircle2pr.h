@@ -37,7 +37,6 @@ public:
         RS_GraphicView &graphicView);
     ~LC_ActionDrawCircle2PR() override;
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
 protected:
@@ -59,5 +58,7 @@ protected:
     bool doProcessCommand(int status, const QString &command)  override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
+
+    void doTrigger() override;
 };
 #endif

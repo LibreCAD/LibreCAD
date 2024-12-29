@@ -40,45 +40,32 @@ RS_ActionPolylineAppend::RS_ActionPolylineAppend(
     :RS_ActionDrawPolyline(container, graphicView){
     actionType = RS2::ActionPolylineAppend;
 }
-void RS_ActionPolylineAppend::trigger(){
 
+void RS_ActionPolylineAppend::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineAppend::trigger()");
-
-    RS_PreviewActionInterface::trigger();
 
     auto newPolyline = pPoints->polyline;
     if (newPolyline == nullptr){
         return;
     }
-// upd. undo list:
-    if (document){
-        document->startUndoCycle();
-        document->addUndoable(newPolyline);
-        deleteEntityUndoable(originalPolyline);
-        document->endUndoCycle();
-    }
+    moveRelativeZero(newPolyline->getEndpoint()); // fixme - relative zero check!
+    undoCycleReplace(originalPolyline, newPolyline);
 
-// upd view
-    deleteSnapper();
-    moveRelativeZero(RS_Vector(0.0, 0.0));
-    graphicView->drawEntity(newPolyline);
-    moveRelativeZero(newPolyline->getEndpoint());
-    drawSnapper();
-    RS_DEBUG->print("RS_ActionDrawPolyline::trigger(): polyline added: %lu",
-                    newPolyline->getId());
+    RS_DEBUG->print("RS_ActionDrawPolyline::trigger(): polyline added: %lu",newPolyline->getId());
     originalPolyline = nullptr;
     pPoints->polyline = nullptr;
 }
 
 void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
-    int status = getStatus();
     deleteHighlights();
+    deletePreview();
+    int status = getStatus();
     switch (status) {
         case SetStartpoint: {
             snapPoint(e);
             deleteSnapper();
-            deletePreview();
-            auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
+
+            auto polyline = dynamic_cast<RS_Polyline *>(catchEntityOnPreview(e));
             if (polyline != nullptr){
                 highlightHover(polyline);
 
@@ -110,11 +97,8 @@ void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
                         }
                     }
                     previewRefSelectablePoint(endpointToUse);
-
                 }
-
             }
-            drawPreview();
             break;
         }
         case SetNextPoint: {
@@ -127,6 +111,7 @@ void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
     }
 
     drawHighlights();
+    drawPreview();
 }
 
 void RS_ActionPolylineAppend::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
@@ -283,10 +268,8 @@ void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] boo
                 pPoints->bHistory.append(bulge);
                 pPoints->polyline->setNextBulge(bulge);
                 pPoints->polyline->addVertex(mouse, 0.0, prepend);
-                deletePreview();
+                deletePreview(); // fixme - sand - clean this up
                 deleteSnapper();
-                graphicView->drawEntity(pPoints->polyline);
-
                 updateMouseButtonHints();
             } else {
                 endPointSettingOn = false;
@@ -298,8 +281,6 @@ void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] boo
             drawSnapper();
             moveRelativeZero(mouse);
             break;
-
-
 
 /*
 

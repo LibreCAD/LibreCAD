@@ -41,7 +41,6 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawEllipse4Points() override;
     void init(int status) override;
-    void trigger() override;
     bool preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
@@ -63,5 +62,6 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
+    void doTrigger() override;
 };
 #endif

@@ -76,6 +76,10 @@ protected slots:
     void on_rbRelSize_toggled(bool checked);
     void on_pb_axis_X_clicked();
     void on_pb_axis_Y_clicked();
+    void on_pbcbInfoOverlayAbsolutePositionColor_clicked();
+    void on_pbInfoOverlaySnapColor_clicked();
+    void on_pbInfoOverlayRelativeColor_clicked();
+    void on_pbInfoOverlayCommandPromptColor_clicked();
     void setVariableFile();
     void setFontsFolder();
     void setTranslationsFolder();
@@ -86,6 +90,11 @@ protected slots:
     void on_pbOverlayBoxFill_clicked();
     void on_pbOverlayBoxLineInverted_clicked();
     void on_pbOverlayBoxFillInverted_clicked();
+
+    void onInfoCursorPromptChanged();
+    void onInfoCursorAbsolutePositionChanged();
+    void onInfoCursorRelativeChanged();
+    void onInfoCursorSnapChanged();
 
     void set_color(QComboBox* combo, QColor custom);
 private:

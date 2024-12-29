@@ -41,11 +41,6 @@ void LC_ActionPenPick::init(int status){
     RS_PreviewActionInterface::init(status);
 }
 
-void LC_ActionPenPick::trigger(){
-    RS_PreviewActionInterface::trigger();
-    // do nothing, processing is performed on mouse click
-}
-
 /**
  * Cleanup that is needed if action was finished by escape
  * @param updateTB
@@ -55,14 +50,17 @@ void LC_ActionPenPick::finish(bool updateTB){
 }
 
 void LC_ActionPenPick::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
+    deleteHighlights();
     if (getStatus() == SelectEntity){
-        RS_Entity *en = catchEntity(e, RS2::ResolveNone);
+        RS_Entity *en = catchEntityOnPreview(e, RS2::ResolveNone);
         deleteHighlights();
         if (en != nullptr){
             highlightHover(en);
         }
-        drawHighlights();
     }
+    drawHighlights();
+    drawPreview();
 }
 
 void LC_ActionPenPick::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

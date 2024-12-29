@@ -22,14 +22,13 @@ LC_ActionDrawLinePolygonBase::LC_ActionDrawLinePolygonBase( const char *name, RS
 
 LC_ActionDrawLinePolygonBase::~LC_ActionDrawLinePolygonBase() = default;
 
-void LC_ActionDrawLinePolygonBase::trigger() {
-    RS_PreviewActionInterface::trigger();
+void LC_ActionDrawLinePolygonBase::doTrigger() {
     if (document != nullptr) {
         PolygonInfo polygonInfo;
         preparePolygonInfo(polygonInfo, pPoints->point2);
         RS_Polyline *polyline = createShapePolyline(polygonInfo, false);
         if (polyline != nullptr) {
-            document->startUndoCycle();
+            undoCycleStart();
             RS_Graphic* graphic = graphicView->getGraphic();
             RS_Layer* layer;
             RS_Pen pen = document->getActivePen();
@@ -40,7 +39,7 @@ void LC_ActionDrawLinePolygonBase::trigger() {
                 polyline->setPen(pen);
                 polyline->reparent(container);
                 container->addEntity(polyline);
-                document->addUndoable(polyline);
+                undoableAdd(polyline);
             }
             else{
                 for (RS_Entity *entity = polyline->firstEntity(RS2::ResolveAll); entity;
@@ -51,24 +50,23 @@ void LC_ActionDrawLinePolygonBase::trigger() {
                         clone->setLayer(layer);
                         clone->reparent(container);
                         container->addEntity(clone);
-                        document->addUndoable(clone);
+                        undoableAdd(clone);
                     }
                 }
                 delete polyline; //don't need it anymore
             }
-            document->endUndoCycle();
+            undoCycleEnd();
         }
-        deletePreview();
+
         if (completeActionOnTrigger) {
             setStatus(-1);
         }
-        graphicView->redraw();
     }
 }
 
 void LC_ActionDrawLinePolygonBase::mouseMoveEvent(QMouseEvent* e) {
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawLinePolygon2::mouseMoveEvent begin");
-
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
         case SetPoint1: {
@@ -76,7 +74,6 @@ void LC_ActionDrawLinePolygonBase::mouseMoveEvent(QMouseEvent* e) {
             break;
         }
         case SetPoint2: {
-            deletePreview();
             if (pPoints->point1.valid){
                 mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
                 createPolygonPreview(mouse);
@@ -87,12 +84,13 @@ void LC_ActionDrawLinePolygonBase::mouseMoveEvent(QMouseEvent* e) {
                     previewAdditionalReferences(mouse);
                 }
             }
-            drawPreview();
+
             break;
         }
         default:
             break;
     }
+    drawPreview();
 }
 
 void LC_ActionDrawLinePolygonBase::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
@@ -255,6 +253,15 @@ void LC_ActionDrawLinePolygonBase::createPolygonPreview(const RS_Vector &mouse) 
     RS_Polyline* polyline = createShapePolyline(polygonInfo, true);
     if (polyline != nullptr){
         previewEntity(polyline);
+        if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnCreation) {
+            LC_InfoMessageBuilder msg{};
+            msg.add(tr("To be created:"), tr("Polygon"));
+            msg.add(tr("Center:"), formatVector(polygonInfo.centerPoint));
+            msg.add(tr("Start angle:"), formatAngle(polygonInfo.startingAngle));
+            msg.add(tr("Radius:"), formatLinear(polygonInfo.vertexRadius));
+            msg.add(tr("Radius Inner:"), formatLinear(polygonInfo.innerRadius));
+            appendInfoCursorZoneMessage(msg.toString(), 2, false);
+        }
     }
 }
 
@@ -423,5 +430,15 @@ RS_Polyline *LC_ActionDrawLinePolygonBase::createShapePolyline(PolygonInfo &poly
             result->addVertex(vertex, bulge, false);
         }
     }
+
+    // update inner radius
+    RS_Vector const vertex0 = centerPoint.relative(vertexDistance, vertexStartAngle);
+    RS_Vector const vertex1 = centerPoint.relative(vertexDistance, vertexStartAngle + segmentAngle);
+
+    RS_Vector midPoint = (vertex0+vertex1)*0.5;
+    double innerRadius = centerPoint.distanceTo(midPoint);
+
+    polygonInfo.innerRadius = innerRadius;
+
     return result;
 }

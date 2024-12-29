@@ -143,10 +143,14 @@ void LC_QuickInfoWidget::processEntity(RS_Entity *en){
     }
  }
 
- /**
-  * Central method for processing collected coordinates
-  * @param point coordinate
-  */
+QString LC_QuickInfoWidget::getEntityDescription(RS_Entity *en, RS2::EntityDescriptionLevel shortDescription) {
+    return entityData.getEntityDescription(en, shortDescription);
+}
+
+/**
+ * Central method for processing collected coordinates
+ * @param point coordinate
+ */
 void LC_QuickInfoWidget::processCoordinate(const RS_Vector &point){
     setWidgetMode(MODE_COORDINATE_COLLECTING);
     pointsData.processCoordinate(point); // delegate processing
@@ -623,7 +627,7 @@ void LC_QuickInfoWidget::onSelectEntity(){
         if (e != nullptr){
             // entity found, do selection
             e->setSelected(true);
-            graphicView->drawEntity(e);
+            graphicView->redraw();
         }
         else{
             // if we're there - entity may be selected, or its id may be changed due to modification.
@@ -663,7 +667,6 @@ void LC_QuickInfoWidget::onEditEntityProperties(){
             // entity found, do editing
             std::unique_ptr<RS_Entity> clone{en->clone()};
             en->setSelected(true);
-            graphicView->drawEntity(en);
 
             RS_Entity* newEntity = clone.get();
             if (RS_DIALOGFACTORY->requestModifyEntityDialog(newEntity)){
@@ -673,11 +676,9 @@ void LC_QuickInfoWidget::onEditEntityProperties(){
                 // update widget view
                 processEntity(newEntity);
 
-                graphicView->deleteEntity(en);
                 en->setSelected(false);
 
                 clone->setSelected(false);
-                graphicView->drawEntity(newEntity);
 
                 document->startUndoCycle();
 
@@ -694,6 +695,7 @@ void LC_QuickInfoWidget::onEditEntityProperties(){
         else{ // entity not found, cleanup
             clearEntityInfo();
         }
+        graphicView->redraw();
     }
 }
 

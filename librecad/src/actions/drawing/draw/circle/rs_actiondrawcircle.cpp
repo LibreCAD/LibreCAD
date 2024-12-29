@@ -52,21 +52,15 @@ void RS_ActionDrawCircle::reset() {
     data = std::make_unique<RS_CircleData>();
 }
 
-void RS_ActionDrawCircle::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawCircle::doTrigger() {
     auto* circle = new RS_Circle(container,*data);
-    circle->setLayerToActive();
-    circle->setPenToActive();
-    container->addEntity(circle);
+    setPenAndLayerToActive(circle);
 
-    addToDocumentUndoable(circle);
-
-    graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
         moveRelativeZero(circle->getCenter());
     }
 
+    undoCycleAdd(circle);
     setStatus(SetCenter);
     reset();
 
@@ -76,7 +70,7 @@ void RS_ActionDrawCircle::trigger() {
 
 void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawCircle::mouseMoveEvent begin");
-
+    deletePreview();
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
         case SetCenter: {
@@ -89,19 +83,17 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
 //                fixme - complete support
                 //mouse = getFreeSnapAwarePoint(e, mouse);
                 data->radius = data->center.distanceTo(mouse);
-                deletePreview();
-                previewCircle(*data);
+                previewToCreateCircle(*data);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(data->center);
                     previewRefSelectablePoint(mouse);
                     previewRefLine(data->center, mouse);
                 }
-                drawPreview();
             }
             break;
         }
     }
-
+    drawPreview();
     RS_DEBUG->print("RS_ActionDrawCircle::mouseMoveEvent end");
 }
 

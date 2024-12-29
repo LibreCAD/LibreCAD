@@ -38,6 +38,7 @@
 #include "lc_rect.h"
 #include "rs.h"
 #include "rs_pen.h"
+#include "lc_cursoroverlayinfo.h"
 
 #define DEBUG_RENDERING_
 
@@ -228,6 +229,8 @@ public:
     RS_ActionInterface *getDefaultAction();
     void setCurrentAction(RS_ActionInterface *action);
     RS_ActionInterface *getCurrentAction();
+    QString getCurrentActionName();
+    QIcon getCurrentActionIcon();
     void killSelectActions();
     void killAllActions();
     void back();
@@ -386,10 +389,30 @@ public:
     bool isDraftLinesMode() const;
     void setDraftLinesMode(bool draftLinesMode);
     void setForcedActionKillAllowed(bool forcedActionKillAllowed);
+    virtual QString obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription);
+
+    LC_InfoCursorOverlayPrefs*getInfoCursorOverlayPreferences(){
+        return &infoCursorOverlayPreferences;
+    }
 
     bool getPanOnZoom() const;
     bool getSkipFirstZoom() const;
 
+
+    void setShowEntityDescriptionOnHover(bool show);
+    bool isShowEntityDescriptionOnHover(){
+        return showEntityDescriptionOnHover;
+    }
+
+    bool isDrawTextsAsDraftForPreview() const;
+
+    void markRelativeZero(){
+        markedRelativeZero = relativeZero;
+    }
+
+    RS_Vector getMarkedRelativeZero(){return markedRelativeZero;}
+
+    RS_Undoable* getRelativeZeroUndoable();
 protected:
 
     RS_EntityContainer *container = nullptr; // Holds a pointer to all the enties
@@ -415,6 +438,8 @@ protected:
     bool lastPaintedHighlighted = false;
     bool lastPaintedSelected = false;
     bool lastPaintOverlay = false;
+
+    LC_InfoCursorOverlayPrefs infoCursorOverlayPreferences = LC_InfoCursorOverlayPrefs();
 
     enum ExtendAxisArea{
         Both,
@@ -480,8 +505,16 @@ protected:
     double minEllipseMajorRadius = 2.;
     double minEllipseMinorRadius = 1.;
     double minLineDrawingLen = 2;
+    bool drawTextsAsDraftForPanning = true;
+    bool drawTextsAsDraftForPreview = true;
     Qt::PenJoinStyle penJoinStyle = Qt::RoundJoin;
     Qt::PenCapStyle penCapStyle = Qt::RoundCap;
+
+    void updateEndCapsStyle(const RS_Graphic *graphic);
+    void updateJoinStyle(const RS_Graphic *graphic);
+    void updatePointsStyle(RS_Graphic *graphic);
+    void updateUnitAndDefaultWidthFactors(const RS_Graphic *graphic);
+    void updateGraphicRelatedSettings(RS_Graphic *graphic);
 private:
     bool zoomFrozen = false;
     bool draftMode = false;
@@ -499,6 +532,7 @@ private:
     int borderRight = 0;
     int borderBottom = 0;
     RS_Vector relativeZero = RS_Vector(0, 0, 0);
+    RS_Vector markedRelativeZero = RS_Vector(0,0,0);
     bool relativeZeroLocked = false;
     //! Print preview flag
     bool printPreview = false;
@@ -515,13 +549,12 @@ private:
     RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
     bool hasNoGrid = false;
     bool forcedActionKillAllowed = true;
+    bool showEntityDescriptionOnHover = false;
+    bool m_panOnZoom = false;
+    bool m_skipFirstZoom = false;
 signals:
     void relative_zero_changed(const RS_Vector &);
     void previous_zoom_state(bool);
-private:
-
-    bool m_panOnZoom = false;
-    bool m_skipFirstZoom = false;
 };
 
 #endif

@@ -66,9 +66,10 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createFileActions(a_map, agm->file);
 
     createSnapActions(a_map, agm->snap);
+    createInfoCursorActions(a_map, agm->infoCursor);
     createSnapExtraActions(a_map, agm->snap_extras);
     createRestrictActions(a_map, agm->restriction);
-    createOtherActions(a_map, agm->other);
+    createRelZeroActionsActions(a_map, agm->other);
 
     for (QAction* value: std::as_const(a_map)){
         if (value != nullptr) {
@@ -325,6 +326,20 @@ void LC_ActionFactory::createPenActions(QMap<QString, QAction *> &map, QActionGr
     });
 }
 
+void LC_ActionFactory::createInfoCursorActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createMainWindowActions(map, group, {
+        {"EntityDescriptionInfo", SLOT(slotShowEntityDescriptionOnHover(bool)), tr("Show Entity Description"), ":/icons/entity_description_info.svg"}
+    });
+    createActions(map, group, {
+        {"InfoCursorEnable", tr("Enable Info Cursor"), ":/icons/info_cursor_enable.svg"},
+        {"InfoCursorAbs", tr("Absolute Pos"), ":/icons/info_cursor_zone1.svg"},
+        {"InfoCursorSnap", tr("Snap"), ":/icons/info_cursor_zone2.svg"},
+        {"InfoCursorRel", tr("Relative"), ":/icons/info_cursor_zone3.svg"},
+        {"InfoCursorPrompt", tr("Prompt"), ":/icons/info_cursor_zone4.svg"},
+        {"InfoCursorCatchedEntity", tr("Caught Entity"), ":/icons/info_cursor_zone2_entity.svg"},
+    });
+}
+
 void LC_ActionFactory::createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group) {
     createActions(map, group, {
         {"SnapGrid",         tr("Snap on grid"),       ":/icons/snap_grid.svg"},
@@ -344,18 +359,17 @@ void LC_ActionFactory::createRestrictActions(QMap<QString, QAction *> &map, QAct
         {"RestrictVertical",   tr("Restrict Vertical"),   ":/icons/restr_ver.svg"},
         {"RestrictOrthogonal", tr("Restrict Orthogonal"), ":/icons/restr_ortho.svg"},
         {"RestrictNothing",    tr("Restrict Nothing"),    ":/extui/restrictnothing.png"},
+        {"LockRelativeZero",   tr("Lock relative zero position"), ":/icons/lock_rel_zero.svg"}
     });
 }
 
-void LC_ActionFactory::createOtherActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+void LC_ActionFactory::createRelZeroActionsActions(QMap<QString, QAction *> &map, QActionGroup *group) {
     createActions(map, group, {
-        {"SetRelativeZero",    tr("Set relative zero position"),  ":/icons/set_rel_zero.svg"},
-        {"LockRelativeZero",   tr("Lock relative zero position"), ":/icons/lock_rel_zero.svg"}
+        {"SetRelativeZero",    tr("Set relative zero position"),  ":/icons/set_rel_zero.svg"}
         // todo - add action for hiding/showing related zero
        //{"RestrictOrthogonal", tr("Restrict Orthogonal"),         ":/icons/restr_ortho.svg"}
     });
 }
-
 
 void LC_ActionFactory::createSnapExtraActions(QMap<QString, QAction *> &map, QActionGroup *group) {
     createActions(map, group, {
@@ -365,12 +379,11 @@ void LC_ActionFactory::createSnapExtraActions(QMap<QString, QAction *> &map, QAc
 }
 
 void LC_ActionFactory::createOrderActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
-
     createActionHandlerActions(map, group, {
-        {"OrderBottom", RS2::ActionOrderBottom, tr("move to bottom"), ":/icons/downmost.svg"},
-        {"OrderLower",  RS2::ActionOrderLower, tr("lower after entity"), ":/icons/down.svg"},
-        {"OrderRaise",  RS2::ActionOrderRaise, tr("raise over entity"), ":/icons/up.svg"},
-        {"OrderTop",    RS2::ActionOrderTop, tr("move to top"), ":/icons/upmost.svg"}
+        {"OrderBottom", RS2::ActionOrderBottom, tr("Move to Bottom"), ":/icons/downmost.svg"},
+        {"OrderLower",  RS2::ActionOrderLower, tr("Lower After Entity"), ":/icons/down.svg"},
+        {"OrderRaise",  RS2::ActionOrderRaise, tr("Raise Over Entity"), ":/icons/up.svg"},
+        {"OrderTop",    RS2::ActionOrderTop, tr("Move to Top"), ":/icons/upmost.svg"}
     });
 }
 
@@ -561,8 +574,33 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     connect(main_window, &QC_ApplicationWindow::draftChanged, map["ViewDraft"], &QAction::setChecked);
     connect(main_window, &QC_ApplicationWindow::draftChanged, map["ViewLinesDraft"], &QAction::setDisabled);
     connect(main_window, &QC_ApplicationWindow::antialiasingChanged, map["ViewAntialiasing"], &QAction::setChecked);
-
     connect(main_window, &QC_ApplicationWindow::windowsChanged, map["OptionsDrawing"], &QAction::setEnabled);
+
+    QAction *&entityInfoAction = map["EntityDescriptionInfo"];
+    connect(main_window, &QC_ApplicationWindow::showEntityDescriptionOnHoverChanged, entityInfoAction, &QAction::setChecked);
+    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, entityInfoAction, &QAction::setVisible);
+
+    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorAbs"], &QAction::setEnabled);
+    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorSnap"], &QAction::setEnabled);
+    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorRel"], &QAction::setEnabled);
+    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorPrompt"], &QAction::setEnabled);
+    connect(main_window, &QC_ApplicationWindow::showInfoCursorSettingChanged, map["InfoCursorCatchedEntity"], &QAction::setEnabled);
+
+    LC_GROUP("InfoOverlayCursor");
+    {
+        bool cursorEnabled = LC_GET_BOOL("Enabled", true);
+        map["InfoCursorEnable"]->setChecked(cursorEnabled);
+        map["InfoCursorAbs"]->setChecked(LC_GET_BOOL("ShowAbsolute", true));
+        map["InfoCursorSnap"]->setChecked(LC_GET_BOOL("ShowSnapInfo", true));
+        map["InfoCursorRel"]->setChecked(LC_GET_BOOL("ShowRelativeDA", true));
+        map["InfoCursorPrompt"]->setChecked(LC_GET_BOOL("ShowPrompt", true));
+        map["InfoCursorCatchedEntity"]->setChecked(LC_GET_BOOL("ShowPropertiesCatched", true));
+
+        map["EntityDescriptionInfo"]->setChecked(false);
+
+        entityInfoAction->setVisible(cursorEnabled);
+
+    }
 }
 
 void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_ActionGroupManager* agm) {

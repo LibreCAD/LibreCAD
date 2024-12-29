@@ -64,13 +64,14 @@ protected:
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     bool isAllowTriggerOnEmptySelection() override;
     void mouseMoveEventSelected(QMouseEvent *e) override;
-    void createAlignedEntities(QList<RS_Entity *> &list, RS_Vector min, RS_Vector max, bool previewOnly);
+    RS_Vector createAlignedEntities(QList<RS_Entity *> &list, RS_Vector min, RS_Vector max, bool previewOnly);
     RS_Vector getReferencePoint(const RS_Vector &min, const RS_Vector &max);
     void selectionCompleted(bool singleEntity, bool fromInit) override;
-    void previewAlignGuideLines(const RS_Vector &min, const RS_Vector &max);
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 
     void doTrigger(bool selected) override;
+
+    void previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef);
 };
 
 #endif // LC_ACTIONMODIFYALIGN_H

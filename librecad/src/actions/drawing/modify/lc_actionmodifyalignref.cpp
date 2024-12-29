@@ -41,9 +41,9 @@ void LC_ActionModifyAlignRef::doTrigger(bool keepSelected) {
 }
 
 void LC_ActionModifyAlignRef::mouseMoveEventSelected(QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
     deletePreview();
     deleteHighlights();
+    RS_Vector snap = snapPoint(e);
     switch (getStatus()){
         case SetRefPoint1:{
             snap = getRelZeroAwarePoint(e, snap);
@@ -81,6 +81,14 @@ void LC_ActionModifyAlignRef::mouseMoveEventSelected(QMouseEvent *e) {
 
             RS_Modification m(*preview, graphicView, false);
             m.alignRef(pPoints.data, selectedEntities, true, true);
+
+            if (isInfoCursorForModificationEnabled()) {
+                LC_InfoMessageBuilder msg(tr("Align References"));
+                msg.add(tr("Offset:"),formatRelative(pPoints.data.offset));
+                msg.add(tr("Angle:"),formatAngle(pPoints.data.rotationAngle));
+                msg.add(tr("Scale:"),formatLinear(pPoints.data.scaleFactor));
+                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+            }
 
             break;
         }
@@ -201,7 +209,7 @@ bool LC_ActionModifyAlignRef::doProcessCommand(int status, const QString &comman
 }
 
 void LC_ActionModifyAlignRef::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select to align (Enter to complete)"), MOD_CTRL(tr("Align immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Select to align (Enter to complete)"),  MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Align immediately after selection")));
 }
 
 void LC_ActionModifyAlignRef::updateMouseButtonHintsForSelected(int status) {

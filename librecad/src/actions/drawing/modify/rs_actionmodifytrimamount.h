@@ -43,7 +43,6 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionModifyTrimAmount() override;
     void init(int status) override;
-    void trigger() override;
     QStringList getAvailableCommands() override;
     double getDistance() const{return distance;}
     void setDistance(double d){distance = d;}
@@ -52,7 +51,6 @@ public:
     void setSymmetricDistance(bool val){symmetricDistance = val;};
     bool isSymmetricDistance() const {return symmetricDistance;};
     void mouseMoveEvent(QMouseEvent *event) override;
-
 protected:
     /**
  * Action States.
@@ -81,5 +79,6 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+    void doTrigger() override;
 };
 #endif

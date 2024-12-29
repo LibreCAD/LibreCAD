@@ -140,22 +140,26 @@ public:
 
     }
 
-
 };
 
-RS_Entity *RS_MText::cloneProxy() const {
-    RS_EntityContainer* proxy = new RS_EntityContainer();
-    proxy->setOwner(true);
-    for (RS_Entity *entity: std::as_const(entities)) {
-        auto line = dynamic_cast<LC_TextLine*>(entity);
-        if (line != nullptr && line->count() > 0) {
-            const RS_Vector &start = line->getBaselineStart();
-            const RS_Vector &end = line->getBaselineEnd();
-            auto line = new RS_Line(proxy, start, end);
-            proxy->addEntity(line);
+RS_Entity *RS_MText::cloneProxy(RS_GraphicView* view) const {
+    if (view->isDrawTextsAsDraftForPreview()) {
+        auto* proxy = new RS_EntityContainer();
+        proxy->setOwner(true);
+        for (RS_Entity *entity: std::as_const(entities)) {
+            auto line = dynamic_cast<LC_TextLine*>(entity);
+            if (line != nullptr && line->count() > 0) {
+                const RS_Vector &start = line->getBaselineStart();
+                const RS_Vector &end = line->getBaselineEnd();
+                auto line = new RS_Line(proxy, start, end);
+                proxy->addEntity(line);
+            }
         }
+        return proxy;
     }
-  return proxy;
+    else{
+        return clone();
+    }
 }
 
 /**
@@ -685,6 +689,7 @@ void RS_MText::move(const RS_Vector &offset) {
             line->moveBaseline(offset);
         }
     }
+    forcedCalculateBorders();
 }
 
 void RS_MText::rotate(const RS_Vector &center, const double &angle) {
@@ -801,12 +806,12 @@ void RS_MText::draw(RS_Painter *painter, RS_GraphicView *view,
 #ifdef DEBUG_LINE_POINTS
     painter->drawRect(view->toGui(getMin()), view->toGui(getMax()));
 #endif
-    if (!view->isPrintPreview() && !view->isPrinting()) {
-        if (view->isPanning() || view->toGuiDY(getHeight()) < view->getMinRenderableTextHeightInPx()) {
+//    if (!view->isPrintPreview() && !view->isPrinting()) {
+        if (/*view->isPanning() || */view->toGuiDY(getHeight()) < view->getMinRenderableTextHeightInPx()) {
             drawDraft(painter, view, patternOffset);
             return;
         }
-    }
+//    }
 
     for (RS_Entity *entity: std::as_const(entities)) {
         entity->drawAsChild(painter, view, patternOffset);

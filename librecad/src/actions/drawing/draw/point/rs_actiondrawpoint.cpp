@@ -43,27 +43,23 @@ RS_ActionDrawPoint::RS_ActionDrawPoint(
 
 RS_ActionDrawPoint::~RS_ActionDrawPoint() = default;
 
-void RS_ActionDrawPoint::trigger(){
+void RS_ActionDrawPoint::doTrigger() {
     if (pt->valid){
         auto *point = new RS_Point(container, RS_PointData(*pt));
-        container->addEntity(point);
-
-        addToDocumentUndoable(point);
-
         moveRelativeZero(*pt);
-        graphicView->redraw((RS2::RedrawMethod) (RS2::RedrawDrawing | RS2::RedrawOverlay));
+        undoCycleAdd(point);
     }
 }
 
 void RS_ActionDrawPoint::mouseMoveEvent(QMouseEvent *e){
-    RS_Vector pos = snapPoint(e);
     deletePreview();
+    RS_Vector pos = snapPoint(e);
     if (!trySnapToRelZeroCoordinateEvent(e)){
         pos = getFreeSnapAwarePointAlt(e, pos);
-        previewPoint(pos);
+        previewToCreatePoint(pos); // is it really necessary??
         previewRefSelectablePoint(pos);
-        drawPreview();
     };
+    drawPreview();
 }
 
 void RS_ActionDrawPoint::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {

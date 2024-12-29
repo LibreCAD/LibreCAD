@@ -41,7 +41,6 @@ public:
     ~LC_ActionDrawSplinePoints() override;
     void reset();
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
     void setClosed(bool c) override;
@@ -49,7 +48,6 @@ public:
     void undo() override;
     //using degree=2 only
     void setDegree(int /*deg*/) override{}
-
 protected:
     struct Points;
     std::unique_ptr<Points> pPoints;
@@ -60,5 +58,6 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
+    void doTrigger() override;
 };
 #endif

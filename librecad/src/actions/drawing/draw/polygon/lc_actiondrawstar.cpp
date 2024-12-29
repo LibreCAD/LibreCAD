@@ -67,6 +67,7 @@ RS_Vector LC_ActionDrawStar::doGetMouseSnapPoint(QMouseEvent *e){
  */
 void LC_ActionDrawStar::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     RS_Polyline* polyline = createShapePolyline(snap, list, status, true);
+    // fixme - info about start to be created (center, inner/outer radiuses)
     addPolylineToEntitiesList(polyline,  list, true);
 }
 /**
@@ -97,16 +98,16 @@ void LC_ActionDrawStar::onCoordinateEvent(int status, bool isZero, const RS_Vect
         case SetCenter: // setting center of star
            centerPoint = coord;
            moveRelativeZero(coord);
-            setMainStatus(SetOuterPoint);
+           setMainStatus(SetOuterPoint);
            break;
         case SetOuterPoint: // setting outer point
            outerPoint = coord;
-            setMainStatus(SetInnerPoint);
+           setMainStatus(SetInnerPoint);
            break;
         case SetInnerPoint: // setting inner point
            innerPoint = coord;
            trigger();
-            setMainStatus(SetCenter);
+           setMainStatus(SetCenter);
            break;
         case SetRadiuses: // setting rounding radius's
             if (isZero){

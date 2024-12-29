@@ -59,7 +59,7 @@ void RS_ActionModifyTrim::finish(bool updateTB) {
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionModifyTrim::trigger() {
+void RS_ActionModifyTrim::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyTrim::trigger()");
 
     if (trimEntity && trimEntity->isAtomic() &&
@@ -71,37 +71,34 @@ void RS_ActionModifyTrim::trigger() {
                both);
 
         trimEntity = nullptr;
-        deletePreview();
-        deleteHighlights();
         if (both) {
             limitEntity = nullptr;
             setStatus(ChooseLimitEntity);
         } else {
             setStatus(ChooseTrimEntity);
         }
-        updateSelectionWidget();
     }
 }
 
 // todo - check trim both mode - it seems that limiting entity should be atomic too...
 void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
-    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent begin");
-
-    RS_Vector mouse = toGraph(e);
-    
     deleteHighlights();
     deletePreview();
+    RS_Vector mouse = toGraph(e);
+    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent begin");
+
     int status = getStatus();
+    snapPoint(e);
     switch (status) {
         case ChooseLimitEntity: {
-            RS_Entity *se = catchEntity(e, RS2::ResolveAllButTextImage);
+            RS_Entity *se = catchEntityOnPreview(e, RS2::ResolveAllButTextImage);
             if (se != nullptr) {
                 highlightHover(se);
             }
             break;
         }
         case ChooseTrimEntity: {
-            RS_Entity *se = catchEntity(e, RS2::ResolveNone);
+            RS_Entity *se = catchEntityOnPreview(e, RS2::ResolveNone);
             bool trimInvalid = true;
 
             if (se != nullptr && se != limitEntity) {
@@ -125,6 +122,14 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
                             if (both) {
                                 previewRefTrimmedEntity(trimResult.trimmed2, limitEntity);
                             }
+                            if (isInfoCursorForModificationEnabled()){
+                                LC_InfoMessageBuilder msg(tr("Trim"));
+                                msg.add(tr("Intersection:"), formatVector(trimResult.intersection1));
+                                if (trimResult.intersection2.valid) {
+                                    msg.add(tr("Intersection 2:"), formatVector(trimResult.intersection2));
+                                }
+                                appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                            }
                         }
                     }
                 }
@@ -138,10 +143,9 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
             break;
     }
 
+    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
     drawHighlights();
     drawPreview();
-
-    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
 }
 
 void RS_ActionModifyTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

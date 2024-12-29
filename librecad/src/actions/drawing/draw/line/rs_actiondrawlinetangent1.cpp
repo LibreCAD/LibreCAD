@@ -46,49 +46,41 @@ RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 
 RS_ActionDrawLineTangent1::~RS_ActionDrawLineTangent1() = default;
 
-void RS_ActionDrawLineTangent1::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawLineTangent1::doTrigger() {
     if (tangent){
         auto *newEntity = new RS_Line(container, tangent->getData());
 
-        newEntity->setLayerToActive();
-        newEntity->setPenToActive();
-        container->addEntity(newEntity);
-
-        addToDocumentUndoable(newEntity);
-
-        graphicView->redraw(RS2::RedrawDrawing);
-
+        setPenAndLayerToActive(newEntity);
+        undoCycleAdd(newEntity);
         setStatus(SetPoint);
-
         tangent.reset();
     } else {
-        RS_DEBUG->print("RS_ActionDrawLineTangent1::trigger:"
-                        " Entity is nullptr\n");
+        RS_DEBUG->print("RS_ActionDrawLineTangent1::trigger: Entity is nullptr\n");
     }
 }
 
 void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
+    deletePreview();
+    deleteHighlights();
+
     RS_DEBUG->print("RS_ActionDrawLineTangent1::mouseMoveEvent begin");
 
     RS_Vector mouse{toGraph(e)};
+    const RS_Vector &snap = snapPoint(e);
 
     switch (getStatus()) {
         case SetPoint: {
-            *point = snapPoint(e);
+            *point = snap;
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
         case SetCircle: {
             deleteSnapper();
-            deletePreview();
-            deleteHighlights();
-            RS_Entity *en = catchEntity(e, circleType, RS2::ResolveAll);
+
+            RS_Entity *en = catchEntityOnPreview(e, circleType, RS2::ResolveAll);
             if (en && (en->isArc() ||
                        en->rtti() == RS2::EntityParabola ||
                        en->rtti() == RS2::EntitySplinePoints)){
-
 
                 RS_Vector tangentPoint;
                 RS_Vector altTangentPoint;
@@ -99,7 +91,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
 
                 if (tangentLine != nullptr){
                     highlightHover(en);
-                    previewEntity(tangent->clone());
+                    previewEntityToCreate(tangent->clone(), false);
                     previewRefSelectablePoint(tangentPoint);
                     previewRefSelectablePoint(altTangentPoint);
                     if (showRefEntitiesOnPreview) {
@@ -107,8 +99,6 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
                     }
                 }
             }
-            drawHighlights();
-            drawPreview();
             break;
         }
         default:
@@ -116,6 +106,8 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
     }
 
     RS_DEBUG->print("RS_ActionDrawLineTangent1::mouseMoveEvent end");
+    drawHighlights();
+    drawPreview();
 }
 
 void RS_ActionDrawLineTangent1::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

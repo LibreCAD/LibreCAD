@@ -86,43 +86,30 @@ void RS_ActionDrawCircleTan1_2P::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawCircleTan1_2P::trigger() {
+void RS_ActionDrawCircleTan1_2P::doTrigger() {
     //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
     //    std::cout<<"begin"<<std::endl;
-
-    RS_PreviewActionInterface::trigger();
-
     auto *c = new RS_Circle(container, pPoints->cData);
 
-    container->addEntity(c);
-
-    addToDocumentUndoable(c);
-
-//    circle->setHighlighted(false);
-
-    RS_Vector rz = graphicView->getRelativeZero();
-    graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
-        rz = c->getCenter();
+        moveRelativeZero(c->getCenter());
     }
-    moveRelativeZero(rz);
-    //    drawSnapper();
+
+    undoCycleAdd(c);
 
     setStatus(SetCircle1);
-
-    RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::trigger():"
-                    " entity added: %lu", c->getId());
+    RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::trigger(): entity added: %lu", c->getId());
 }
 
 void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::mouseMoveEvent begin");
-    RS_Vector const &mouse = snapPoint(e);
     deletePreview();
     deleteHighlights();
+    RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::mouseMoveEvent begin");
+    RS_Vector const &mouse = snapPoint(e);
     switch (getStatus()) {
         case SetCircle1:{
             deleteSnapper();
-            RS_Entity *en = catchCircle(e);
+            RS_Entity *en = catchCircle(e, true);
             if (en != nullptr){
                 highlightHover(en);
             }
@@ -167,7 +154,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
                     return;
             }
 
-            previewCircle(pPoints->cData);
+            previewToCreateCircle(pPoints->cData);
             break;
         }
         case SetPoint2: {
@@ -177,7 +164,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
             pPoints->coord = mouse;
             if (getCenters()){
                 if (preparePreview()){
-                    previewCircle((pPoints->cData));
+                    previewToCreateCircle((pPoints->cData));
                     if (showRefEntitiesOnPreview) {
                         previewRefPoint(pPoints->points.at(0));
                         previewRefPoint(pPoints->cData.center);
@@ -200,7 +187,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
             highlightSelected(baseEntity);
             pPoints->coord = toGraph(e);
             if (preparePreview()){
-                previewCircle(pPoints->cData);
+                previewToCreateCircle(pPoints->cData);
                 for (const auto &center: pPoints->centers) {
                     previewRefSelectablePoint(center);
                 }
@@ -224,9 +211,9 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
+    RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::mouseMoveEvent end");
     drawPreview();
     drawHighlights();
-    RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::mouseMoveEvent end");
 }
 
 RS_Vector RS_ActionDrawCircleTan1_2P::getTangentPoint(RS_Vector& creatingCircleCenter, bool fromOriginalCircle) const{
@@ -309,9 +296,16 @@ bool RS_ActionDrawCircleTan1_2P::preparePreview(){
     return true;
 }
 
-RS_Entity *RS_ActionDrawCircleTan1_2P::catchCircle(QMouseEvent *e){
+RS_Entity *RS_ActionDrawCircleTan1_2P::catchCircle(QMouseEvent *e, bool forPreview){
     RS_Entity *ret = nullptr;
-    RS_Entity *en = catchModifiableEntity(e, enTypeList);
+    RS_Entity *en;
+    if (forPreview){
+        en = catchModifiableEntityOnPreview(e, enTypeList);
+    }
+    else{
+        en = catchModifiableEntity(e, enTypeList);
+    }
+
     if (en == nullptr) {
         return ret;
     }
@@ -324,7 +318,7 @@ RS_Entity *RS_ActionDrawCircleTan1_2P::catchCircle(QMouseEvent *e){
 void RS_ActionDrawCircleTan1_2P::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case SetCircle1: {
-            RS_Entity *en = catchCircle(e);
+            RS_Entity *en = catchCircle(e, false);
             if (en == nullptr){
                 return;
             }

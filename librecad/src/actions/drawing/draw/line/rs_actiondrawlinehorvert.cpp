@@ -67,41 +67,38 @@ void RS_ActionDrawLineHorVert::init(int status){
     RS_DEBUG->print("RS_ActionDrawLineHorVert::init");
 }
 
-void RS_ActionDrawLineHorVert::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawLineHorVert::doTrigger() {
     auto *line = new RS_Line(container, pPoints->data);
-    line->setLayerToActive();
-    line->setPenToActive();
-    container->addEntity(line);
 
-    addToDocumentUndoable(line);
+    setPenAndLayerToActive(line);
 
-    graphicView->redraw(RS2::RedrawDrawing);
     moveRelativeZero(line->getMiddlePoint());
-    RS_DEBUG->print("RS_ActionDrawLineHorVert::trigger():"
-                    " line added: %lu", line->getId());
 
+    undoCycleAdd(line);
+
+    RS_DEBUG->print("RS_ActionDrawLineHorVert::trigger(): line added: %lu", line->getId());
 }
 
 void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent *e){
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
     if (getStatus() == SetEndpoint && pPoints->p1.valid){
         RS_Vector p2x = RS_Vector(mouse.x, pPoints->p1.y);
         RS_Vector p2y = RS_Vector(pPoints->p1.x, mouse.y);
-        if (mouse.distanceTo(p2y) > mouse.distanceTo(p2x))
+        if (mouse.distanceTo(p2y) > mouse.distanceTo(p2x)) {
             pPoints->p2 = p2x;
-        else
+        }
+        else {
             pPoints->p2 = p2y;
-        deletePreview();
+        }
         pPoints->data = {pPoints->p1, pPoints->p2};
-        previewLine(pPoints->p1, pPoints->p2);
-        drawPreview();
+        previewToCreateLine(pPoints->p1, pPoints->p2);
     }
 
     RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionDrawLineHorVert::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

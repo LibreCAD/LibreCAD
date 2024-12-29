@@ -56,14 +56,14 @@ void LC_RelZeroCoordinatesWidget::setGraphicView(RS_GraphicView *gv) {
         if (graphicView != nullptr){
             disconnect(graphicView, &RS_GraphicView::relative_zero_changed, this,&LC_RelZeroCoordinatesWidget::relativeZeroChanged);
         }
+        setRelativeZero(RS_Vector(0.0,0.0), true);
     }
     else{
         graphicView = gv;
         graphic = graphicView->getGraphic();
         connect(graphicView, &RS_GraphicView::relative_zero_changed, this,&LC_RelZeroCoordinatesWidget::relativeZeroChanged);
+        setRelativeZero(graphicView->getRelativeZero(), true);
     }
-
-    setRelativeZero(RS_Vector(0.0,0.0), true);
 }
 
 void LC_RelZeroCoordinatesWidget::relativeZeroChanged(const RS_Vector &pos) {

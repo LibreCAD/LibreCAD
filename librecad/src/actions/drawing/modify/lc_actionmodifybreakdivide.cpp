@@ -60,7 +60,7 @@ bool LC_ActionModifyBreakDivide::doCheckMayDrawPreview([[maybe_unused]]QMouseEve
 void LC_ActionModifyBreakDivide::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     if (status == SetLine){
         deleteSnapper();
-        RS_Entity *en = catchModifiableEntity(e, enTypeList);
+        RS_Entity *en = catchModifiableEntityOnPreview(e, enTypeList);
         if (en != nullptr){
             int rtti = en->rtti();
             switch (rtti) {
@@ -157,7 +157,7 @@ void LC_ActionModifyBreakDivide::doPrepareTriggerEntities(QList<RS_Entity *> &li
 
 void LC_ActionModifyBreakDivide::performTriggerDeletions(){
     // delete original entity as we'll expand it and create segment entities
-    deleteEntityUndoable(triggerData->entity);
+    undoableDeleteEntity(triggerData->entity);
 }
 
 void LC_ActionModifyBreakDivide::doAfterTrigger(){
@@ -233,9 +233,16 @@ void LC_ActionModifyBreakDivide::createEntitiesForLine(RS_Line *line, RS_Vector 
                     if (segmentDisposition != SEGMENT_TO_END){
                         createRefSelectablePoint(data->snapSegmentEnd, list);
                     }
+
+                    if (isInfoCursorForModificationEnabled()){
+                        LC_InfoMessageBuilder msg(tr("Break/Divide Line"));
+                        msg.add(tr("Point 1:"), formatVector(data->snapSegmentStart));
+                        msg.add(tr("Point 2:"), formatVector(data->snapSegmentEnd));
+                        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                    }
                 }
 
-                // create segments of line that are outsider of segment selected by the user
+                // create segments of line that are outside of segment selected by the user
                 if (createNonSnapSegments){
                     if (segmentDisposition != SEGMENT_TO_START){
                         // we don't need this segment if snap is between line start point and intersection point
@@ -346,6 +353,14 @@ void LC_ActionModifyBreakDivide::createEntitiesForCircle(RS_Circle *circle, RS_V
                  RS_Vector dividePoint2 = center.relative(radius, data->snapSegmentEndAngle);
                  createRefSelectablePoint(dividePoint2, list);
 
+                if (isInfoCursorForModificationEnabled()){
+                    LC_InfoMessageBuilder msg(tr("Break/Divide Circle"));
+                    msg.add(tr("Angle 1:"), formatAngle(data->snapSegmentStartAngle));
+                    msg.add(tr("Point 1:"), formatVector(dividePoint1));
+                    msg.add(tr("Angle 2:"), formatAngle(data->snapSegmentEndAngle));
+                    msg.add(tr("Point 2:"), formatVector(dividePoint2));
+                    appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                }
             }
         }
         // don't need temporary data, so delete it
@@ -425,14 +440,23 @@ void LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &sn
                 if (preview){
                     double radius = arc->getRadius();
                     RS_Vector center = arc->getCenter();
+                    RS_Vector segmentStart = center.relative(radius, data->snapSegmentStartAngle);
                     if (segmentDisposition != SEGMENT_TO_START){
-                        RS_Vector segmentStart = center.relative(radius, data->snapSegmentStartAngle);
                         createRefSelectablePoint(segmentStart, list);
                     }
 
+                    RS_Vector segmentEnd = center.relative(radius, data->snapSegmentEndAngle);
                     if (segmentDisposition != SEGMENT_TO_END){
-                        RS_Vector segmentEnd = center.relative(radius, data->snapSegmentEndAngle);
                         createRefSelectablePoint(segmentEnd, list);
+                    }
+
+                    if (isInfoCursorForModificationEnabled()){
+                        LC_InfoMessageBuilder msg(tr("Break/Divide Arc"));
+                        msg.add(tr("Angle 1:"), formatAngle(data->snapSegmentStartAngle));
+                        msg.add(tr("Point 1:"), formatVector(segmentStart));
+                        msg.add(tr("Angle 2:"), formatAngle(data->snapSegmentEndAngle));
+                        msg.add(tr("Point 2:"), formatVector(segmentEnd));
+                        appendInfoCursorZoneMessage(msg.toString(), 2, false);
                     }
                 }
             }

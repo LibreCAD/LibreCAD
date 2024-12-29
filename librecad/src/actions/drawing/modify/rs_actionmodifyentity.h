@@ -39,10 +39,7 @@ class RS_Entity;
 class RS_ActionModifyEntity : public RS_PreviewActionInterface {
 Q_OBJECT
 public:
-    RS_ActionModifyEntity(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
-
-    void trigger() override;
+    RS_ActionModifyEntity(RS_EntityContainer& container,RS_GraphicView& graphicView,bool modifyCursor);
     void setEntity(RS_Entity* entity) {
         en=entity;
     }
@@ -54,8 +51,10 @@ protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
+    void doTrigger() override;
 private:
     RS_Entity* en = nullptr;
+    bool modifyCursor = true;
 };
 
 #endif

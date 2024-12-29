@@ -301,5 +301,13 @@
         <file>align_one.svg</file>
         <file>line_polygon_size_size.svg</file>
         <file>align_ref.svg</file>
+        <file>info_cursor_enable.svg</file>
+        <file>info_cursor_entity.svg</file>
+        <file>info_cursor_zone1.svg</file>
+        <file>info_cursor_zone2.svg</file>
+        <file>info_cursor_zone3.svg</file>
+        <file>info_cursor_zone4.svg</file>
+        <file>info_cursor_zone2_entity.svg</file>
+        <file>entity_description_info.svg</file>
     </qresource>
 </RCC>

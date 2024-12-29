@@ -25,6 +25,7 @@
 **********************************************************************/
 
 
+#include "rs_actionsetrelativezero.h"
 #include <QApplication>
 #include <QMouseEvent>
 #include "rs_creation.h"
@@ -50,6 +51,8 @@
 #include "lc_refellipse.h"
 #include "rs_constructionline.h"
 #include "lc_refconstructionline.h"
+#include "lc_quickinfowidget.h"
+#include "lc_undoablerelzero.h"
 
 // fixme - sand - consider more generic support of overlays and containers,
 // with them working with preview etc might be more generic.. currently, preview handles both preview and reference points..
@@ -83,17 +86,20 @@ RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name,
 /** Destructor */
 RS_PreviewActionInterface::~RS_PreviewActionInterface() {
     deletePreview();
+    deleteInfoCursor();
     deleteHighlights();
 }
 
 void RS_PreviewActionInterface::init(int status) {
     deletePreview();
+    deleteInfoCursor();
     deleteHighlights();
     RS_ActionInterface::init(status);
 }
 
 void RS_PreviewActionInterface::finish(bool updateTB) {
     deletePreview();
+    deleteInfoCursor();
     deleteHighlights();
     RS_ActionInterface::finish(updateTB);
 }
@@ -101,6 +107,7 @@ void RS_PreviewActionInterface::finish(bool updateTB) {
 void RS_PreviewActionInterface::suspend() {
     RS_ActionInterface::suspend();
     deletePreview();
+    deleteInfoCursor();
     deleteHighlights();
 }
 
@@ -114,8 +121,15 @@ void RS_PreviewActionInterface::resume() {
 void RS_PreviewActionInterface::trigger() {
     RS_ActionInterface::trigger();
     deletePreview();
+    deleteInfoCursor();
     deleteHighlights();
     deleteSnapper();
+
+    doTrigger();
+
+    drawSnapper();
+    updateSelectionWidget();
+    graphicView->redraw();
 }
 
 /**
@@ -147,7 +161,6 @@ void RS_PreviewActionInterface::drawPreview(){
 
    graphicView->redraw(RS2::RedrawOverlay);
    hasPreview = true;
-
 }
 
 void RS_PreviewActionInterface::deleteHighlights(){
@@ -156,7 +169,6 @@ void RS_PreviewActionInterface::deleteHighlights(){
     if (!graphicView->isCleanUp()){
         RS_EntityContainer *overlayContainer = graphicView->getOverlayContainer(RS2::OverlayEffects);
         overlayContainer->clear();
-//        graphicView->setToolTip(""); // fixme - sand - remove test code
     }
 }
 
@@ -174,11 +186,6 @@ void RS_PreviewActionInterface::highlightHoverWithRefPoints(RS_Entity* e, bool v
 
 void RS_PreviewActionInterface::highlightHover(RS_Entity* e){
     highlight->addEntity(e, highlightEntitiesRefPointsOnHover);
-// fixme - sand - remove test code
-//    QString toolTip = QString("Name: <b>").append(QString::number(e->getId())).append("</b><br>")
-//        .append("Min: <b>").append(QString::number(e->getMin().x)).append(",").append(QString::number(e->getMin().y)).append("</b><br>")
-//        .append("Min: <b>").append(QString::number(e->getMin().x)).append(",").append(QString::number(e->getMin().y)).append("</b><br>");
-//    graphicView->setToolTip(toolTip);
 }
 
 
@@ -254,6 +261,49 @@ RS_Circle* RS_PreviewActionInterface::previewCircle(const RS_CircleData &circleD
     return circle;
 }
 
+RS_Circle* RS_PreviewActionInterface::previewToCreateCircle(const RS_CircleData &circleData){
+    auto *result = previewCircle(circleData);
+    prepareEntityDescription(result, RS2::EntityDescriptionLevel::DescriptionCreating);
+    return result;
+}
+
+RS_Arc* RS_PreviewActionInterface::previewToCreateArc(const RS_ArcData &arcData){
+    auto *result = previewArc(arcData);
+    prepareEntityDescription(result, RS2::EntityDescriptionLevel::DescriptionCreating);
+    return result;
+}
+
+RS_Line* RS_PreviewActionInterface::previewToCreateLine(const RS_LineData &lineData){
+    auto *result = previewLine(lineData);
+    prepareEntityDescription(result, RS2::EntityDescriptionLevel::DescriptionCreating);
+    return result;
+}
+
+RS_Line* RS_PreviewActionInterface::previewToCreateLine(const RS_Vector &start, const RS_Vector &end){
+    auto *result = previewLine(start, end);
+    prepareEntityDescription(result, RS2::EntityDescriptionLevel::DescriptionCreating);
+    return result;
+}
+
+RS_Ellipse* RS_PreviewActionInterface::previewToCreateEllipse(const RS_EllipseData &ellipseData){
+    auto *result = previewEllipse(ellipseData);
+    prepareEntityDescription(result, RS2::EntityDescriptionLevel::DescriptionCreating);
+    return result;
+}
+
+RS_Point* RS_PreviewActionInterface::previewToCreatePoint(const RS_Vector &coord){
+    auto *result = previewPoint(coord);
+    prepareEntityDescription(result, RS2::EntityDescriptionLevel::DescriptionCreating);
+    return result;
+}
+
+void RS_PreviewActionInterface::previewEntityToCreate(RS_Entity* en, bool addToPreview){
+    if (addToPreview) {
+        previewEntity(en);
+    }
+    prepareEntityDescription(en, RS2::EntityDescriptionLevel::DescriptionCreating);
+}
+
 RS_Arc* RS_PreviewActionInterface::previewArc(const RS_ArcData &arcData){
     auto *arc = new RS_Arc(preview.get(), arcData);
     preview->addEntity(arc);
@@ -305,9 +355,10 @@ void RS_PreviewActionInterface::previewRefSelectableLine(const RS_Vector &start,
     preview->addEntity(line);
 }
 
-void RS_PreviewActionInterface::previewPoint(const RS_Vector &coord){
+RS_Point* RS_PreviewActionInterface::previewPoint(const RS_Vector &coord){
     auto *point = new RS_Point(this->preview.get(), coord);
     preview->addEntity(point);
+    return point;
 }
 
 void RS_PreviewActionInterface::previewRefPoints(const std::vector<RS_Vector>& points){
@@ -422,19 +473,12 @@ void RS_PreviewActionInterface::moveRelativeZero(const RS_Vector& zero){
     graphicView->moveRelativeZero(zero);
 }
 
-bool RS_PreviewActionInterface::is(RS_Entity *e, RS2::EntityType type) const{
-    return  e != nullptr && e->is(type);
+void RS_PreviewActionInterface::markRelativeZero() {
+    graphicView->markRelativeZero();
 }
 
-bool RS_PreviewActionInterface::addToDocumentUndoable(RS_Undoable *e) const{
-    // upd. undo list:
-    if (document){
-        document->startUndoCycle();
-        document->addUndoable(e);
-        document->endUndoCycle();
-        return true;
-    }
-    return false;
+bool RS_PreviewActionInterface::is(RS_Entity *e, RS2::EntityType type) const{
+    return  e != nullptr && e->is(type);
 }
 
 RS_Entity* RS_PreviewActionInterface::catchModifiableEntity(QMouseEvent *e, const EntityTypeList &enTypeList){
@@ -467,13 +511,158 @@ RS_Entity* RS_PreviewActionInterface::catchModifiableEntity(RS_Vector& coord, co
     }
 }
 
-/**
- * Just utility method for deleting given entity from drawing - should be called within undo cycle
- * @param entity entity to delete
- */
-void RS_PreviewActionInterface::deleteEntityUndoable(RS_Entity *entity){
-    // delete and add this into undo
-    graphicView->deleteEntity(entity);
-    entity->changeUndoState();
-    document->addUndoable(entity);
+RS_Entity* RS_PreviewActionInterface::catchModifiableEntityOnPreview(QMouseEvent *e, const RS2::EntityType &enType){
+    RS_Entity *en = catchModifiableEntity(e, enType);
+    if (en != nullptr) {
+        prepareEntityDescription(en, RS2::EntityDescriptionLevel::DescriptionCatched);
+    }
+    return en;
+}
+
+RS_Entity* RS_PreviewActionInterface::catchModifiableEntityOnPreview(QMouseEvent *e, const EntityTypeList &enTypeList){
+    RS_Entity *en = catchModifiableEntity(e, enTypeList);
+    if (en != nullptr) {
+        prepareEntityDescription(en, RS2::EntityDescriptionLevel::DescriptionCatched);
+    }
+    return en;
+}
+
+RS_Entity* RS_PreviewActionInterface::catchEntityOnPreview( const RS_Vector &pos,
+                                                            RS2::ResolveLevel level){
+    auto entity = catchEntity(pos, level);
+    if (entity != nullptr) {
+        prepareEntityDescription(entity, RS2::EntityDescriptionLevel::DescriptionCatched);
+    }
+    return entity;
+}
+
+RS_Entity* RS_PreviewActionInterface::catchEntityOnPreview(QMouseEvent *e, RS2::EntityType enType, RS2::ResolveLevel level) {
+    auto entity = catchEntity(e, enType, level);
+    if (entity != nullptr) {
+        prepareEntityDescription(entity,RS2::EntityDescriptionLevel::DescriptionCatched);
+    }
+    return entity;
+}
+
+RS_Entity* RS_PreviewActionInterface::catchEntityOnPreview(QMouseEvent *e, const EntityTypeList &enTypeList, RS2::ResolveLevel level) {
+    auto entity = catchEntity(e, enTypeList, level);
+    if (entity != nullptr) {
+        prepareEntityDescription(entity,RS2::EntityDescriptionLevel::DescriptionCatched);
+    }
+    return entity;
+}
+
+RS_Entity* RS_PreviewActionInterface::catchEntityOnPreview(QMouseEvent* e, RS2::ResolveLevel level) {
+    auto entity = catchEntity(e, level);
+    if (entity != nullptr) {
+        prepareEntityDescription(entity,RS2::EntityDescriptionLevel::DescriptionCatched);
+    }
+    return entity;
+}
+
+void RS_PreviewActionInterface::prepareEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel level) {
+    if (infoCursorOverlayPrefs->enabled){
+        if ((infoCursorOverlayPrefs->showEntityInfoOnCatch && level == RS2::EntityDescriptionLevel::DescriptionCatched)
+           || (infoCursorOverlayPrefs->showEntityInfoOnCreation && level == RS2::EntityDescriptionLevel::DescriptionCreating)
+           || (infoCursorOverlayPrefs->showEntityInfoOnModification && level == RS2::EntityDescriptionLevel::DescriptionModifying)){
+            QString entityInfoStr = obtainEntityDescriptionForInfoCursor(entity,level);
+            if (!entityInfoStr.isEmpty()) {
+                QString snapString = infoCursorOverlayData.getZone2();
+                QString updatedZone2;
+                if (!snapString.isEmpty()){
+                    updatedZone2 = snapString + "\n"  + entityInfoStr;
+                }
+                else{
+                    updatedZone2 = entityInfoStr;
+                }
+                infoCursorOverlayData.setZone2(updatedZone2);
+            }
+        }
+    }
+}
+
+void RS_PreviewActionInterface::appendInfoCursorEntityCreationMessage(QString message){
+    if (infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnCreation) {
+        appendInfoCursorZoneMessage(message, 2, false);
+    }
+}
+
+void RS_PreviewActionInterface::appendInfoCursorZoneMessage(QString message, int zoneNumber, bool replaceContent){
+    if (!message.isEmpty()) {
+        bool enable = infoCursorOverlayPrefs->enabled;
+        if (enable) {
+            switch (zoneNumber) {
+                case 1: {
+                    QString msgToSet;
+                    if (replaceContent){
+                        msgToSet = message;
+                    }
+                    else{
+                        QString existingInfo = infoCursorOverlayData.getZone1();
+                        if (!existingInfo.isEmpty()) {
+                            msgToSet = existingInfo + "\n" + message;
+                        } else {
+                            msgToSet = message;
+                        }
+                    }
+                    infoCursorOverlayData.setZone1(msgToSet);
+                    break;
+                }
+                case 2: {
+                    QString msgToSet;
+                    if (replaceContent){
+                        msgToSet = message;
+                    }
+                    else{
+                        QString existingInfo = infoCursorOverlayData.getZone2();
+                        if (!existingInfo.isEmpty()) {
+                            msgToSet = existingInfo + "\n" + message;
+                        } else {
+                            msgToSet = message;
+                        }
+                    }
+                    infoCursorOverlayData.setZone2(msgToSet);
+                    break;
+                }
+                case 3: {
+                    QString msgToSet;
+                    if (replaceContent){
+                        msgToSet = message;
+                    }
+                    else{
+                        QString existingInfo = infoCursorOverlayData.getZone3();
+                        if (!existingInfo.isEmpty()) {
+                            msgToSet = existingInfo + "\n" + message;
+                        } else {
+                            msgToSet = message;
+                        }
+                    }
+                    infoCursorOverlayData.setZone3(msgToSet);
+                    break;
+                }
+                case 4: {
+                    QString msgToSet;
+                    if (replaceContent){
+                        msgToSet = message;
+                    }
+                    else{
+                        QString existingInfo = infoCursorOverlayData.getZone4();
+                        if (!existingInfo.isEmpty()) {
+                            msgToSet = existingInfo + "\n" + message;
+                        } else {
+                            msgToSet = message;
+                        }
+                    }
+                    infoCursorOverlayData.setZone4(msgToSet);
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    }
+}
+
+QString RS_PreviewActionInterface::obtainEntityDescriptionForInfoCursor(RS_Entity *e, RS2::EntityDescriptionLevel level) {
+   return graphicView->obtainEntityDescription(e, level);
 }

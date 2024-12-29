@@ -81,7 +81,6 @@ protected:
     void setExtensionPoint1(RS_Vector p) override;
     void setExtensionPoint2(RS_Vector p) override;
     RS_Entity *createDim(RS_EntityContainer* parent) override;
-
     bool doProcessCommand(int status, const QString &command) override;
 };
 

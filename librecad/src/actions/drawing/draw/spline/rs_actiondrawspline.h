@@ -46,7 +46,6 @@ public:
     ~RS_ActionDrawSpline() override;
     void reset();
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
 //    void updateToolBar() override;
@@ -74,5 +73,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+    void doTrigger() override;
 };
 #endif

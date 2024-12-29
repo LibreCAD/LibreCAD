@@ -66,8 +66,7 @@ void RS_ActionModifyBevel::init(int status) {
     snapMode.restriction = RS2::RestrictNothing;
 }
 
-void RS_ActionModifyBevel::trigger(){
-
+void RS_ActionModifyBevel::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyBevel::trigger()");
 
     if (entity1 && entity1->isAtomic() &&
@@ -95,13 +94,7 @@ void RS_ActionModifyBevel::trigger(){
         pPoints->coord1 = {};
         pPoints->coord2 = {};
         entity1 = nullptr;
-
         setStatus(SetEntity1);
-
-        updateSelectionWidget();
-        deletePreview();
-        deleteHighlights();
-        graphicView->redraw();
     }
 }
 
@@ -110,14 +103,15 @@ void RS_ActionModifyBevel::drawSnapper() {
 }
 
 void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent begin");
+    deleteHighlights();
+    deletePreview();
+
     snapPoint(e);
     RS_Vector mouse = toGraph(e);
+    RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent begin");
     // it seems that bevel works properly with lines only... it relies on trimEndpoint/moveEndpoint methods, which
     // have some support for arc and ellipse, yet still...
-    RS_Entity *se = catchEntity(e, RS2::EntityLine, RS2::ResolveAllButTextImage);
-
-    deleteHighlights();
+    RS_Entity *se = catchEntityOnPreview(e, RS2::EntityLine, RS2::ResolveAllButTextImage);
 
     switch (getStatus()) {
         case SetEntity1: {
@@ -127,10 +121,8 @@ void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent *e){
             break;
         }
         case SetEntity2: {
-            deletePreview();
             highlightSelected(entity1);
             if (se != entity1 && areBothEntityAccepted(entity1, se)){
-
                 auto atomicCandidate2 = dynamic_cast<RS_AtomicEntity *>(se);
 
                 RS_Modification m(*container, nullptr);
@@ -162,20 +154,28 @@ void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent *e){
                             previewRefSelectablePoint(pPoints->coord1);
                             previewRefSelectablePoint(se->getNearestPointOnEntity(mouse));
                         }
+
+                        if (isInfoCursorForModificationEnabled()){
+                            LC_InfoMessageBuilder msg(tr("Trim"));
+                            msg.add(tr("Intersection:"), formatVector(bevelResult->intersectionPoint));
+                            msg.add(tr("Point 1:"), formatVector(bevelResult->bevel->getStartpoint()));
+                            msg.add(tr("Point 2:"), formatVector(bevelResult->bevel->getEndpoint()));
+                            appendInfoCursorZoneMessage(msg.toString(), 2, false);
+                        }
                     }
                     delete bevelResult;
                 }
             }
-            drawPreview();
             break;
         }
         default:
             break;
     }
 
+    RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent end");
+    drawPreview();
     drawHighlights();
 
-    RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent end");
 }
 
 void RS_ActionModifyBevel::previewLineModifications(const RS_Entity *original, const RS_Entity *trimmed, bool trimOnStart){

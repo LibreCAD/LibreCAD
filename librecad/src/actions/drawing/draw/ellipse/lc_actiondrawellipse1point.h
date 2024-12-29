@@ -34,9 +34,7 @@ public:
     ~LC_ActionDrawEllipse1Point() override;
 
     void mouseMoveEvent(QMouseEvent *event) override;
-    void trigger() override;
     void init(int status) override;
-
     double getMajorRadius();
     double getMinorRadius();
     double getAngle();
@@ -67,6 +65,7 @@ protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void doTrigger() override;
 };
 
 #endif // LC_ACTIONDRAWELLIPSE1POINT_H

@@ -91,17 +91,11 @@ void RS_ActionDrawLineAngle::init(int status) {
     reset();
 }
 
-void RS_ActionDrawLineAngle::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawLineAngle::doTrigger() {
     preparePreview();
     auto *line = new RS_Line{container, pPoints->data};
-    line->setLayerToActive();
-    line->setPenToActive();
-    container->addEntity(line);
 
-    addToDocumentUndoable(line);
-
+    setPenAndLayerToActive(line);
     if (!persistRelativeZero){
         RS_Vector &newRelZero = pPoints->data.startpoint;
         if (pPoints->snpPoint == SNAP_MIDDLE){ // snap to middle
@@ -109,27 +103,29 @@ void RS_ActionDrawLineAngle::trigger() {
         }
         moveRelativeZero(newRelZero);
     }
+
+    undoCycleAdd(line);
+
     persistRelativeZero = false;
-    graphicView->redraw(RS2::RedrawDrawing);
-    RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %lu",
-                    line->getId());
+
+    RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %lu",line->getId());
 }
 
 void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
+    deletePreview();
     RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent begin");
 
     if (getStatus()==SetPos) {
         RS_Vector position = snapPoint(e);
         position = getRelZeroAwarePoint(e, position);
         pPoints->pos = position;
-        deletePreview();
         preparePreview();
-        previewLine(pPoints->data.startpoint, pPoints->data.endpoint);
+        previewToCreateLine(pPoints->data.startpoint, pPoints->data.endpoint);
         previewRefSelectablePoint(position);
-        drawPreview();
     }
 
     RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent end");
+    drawPreview();
 }
 
 void RS_ActionDrawLineAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

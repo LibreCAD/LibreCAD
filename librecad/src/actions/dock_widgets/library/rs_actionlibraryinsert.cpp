@@ -82,13 +82,14 @@ void RS_ActionLibraryInsert::trigger() {
 }
 
 void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
+    deletePreview();
     switch (getStatus()) {
         case SetTargetPoint:
             pPoints->data.insertionPoint = snapPoint(e);
 
             //if (block) {
-            deletePreview();
-            preview->addAllFrom(pPoints->prev);
+
+            preview->addAllFrom(pPoints->prev, graphicView);
             preview->move(pPoints->data.insertionPoint);
             preview->scale(pPoints->data.insertionPoint,
                            RS_Vector(pPoints->data.factor, pPoints->data.factor));
@@ -103,13 +104,14 @@ void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
             // too slow:
             //RS_Creation creation(preview, NULL, false);
             //creation.createInsert(data);
-            drawPreview();
+
             //}
             break;
 
         default:
             break;
     }
+    drawPreview();
 }
 
 void RS_ActionLibraryInsert::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {

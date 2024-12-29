@@ -146,14 +146,11 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "DrawArcChord",
         "DrawArcAngleLen",
         "DrawArc3P",
-        // fixme - sand - restore as actions are ready
         "DrawArc2PAngle",
         "DrawArc2PRadius",
         "DrawArc2PLength",
         "DrawArc2PHeight",
-
         "DrawArcTangential",
-
         "DrawEllipseArcAxis",
         "DrawEllipseArc1Point"
     });
@@ -516,7 +513,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     file->addAction(ag_manager->getActionByName("FilePrintPreview"));
 
     auto *edit = createGenericToolbar(tr("Edit"), "Edit", tbPolicy, {
-        "EditKillAllActions", "", "EditUndo", "EditRedo", "", "EditCut", "EditCopy", "EditPaste", "EditPasteTransform"
+        "EditKillAllActions", "EntityDescriptionInfo", "", "EditUndo", "EditRedo", "", "EditCut", "EditCopy", "EditPaste", "EditPasteTransform"
     });
 
     auto *order = createGenericToolbar(tr("Order"), "Order", tbPolicy, {
@@ -528,6 +525,9 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
         "ViewGrid", "ViewDraft", "ViewLinesDraft", "ViewAntialiasing", "", "ZoomRedraw", "ZoomIn",
         "ZoomOut", "ZoomAuto", "ZoomPrevious", "ZoomWindow", "ZoomPan"
     });
+
+
+
 
     auto *viewsList = createNamedViewsToolbar(tr("Named Views"), "Views", tbPolicy);
 
@@ -541,8 +541,11 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
 
     action_handler->set_snap_toolbar(snap_toolbar);
 
-    connect( main_window,  &QC_ApplicationWindow::signalEnableRelativeZeroSnaps, 
+    connect( main_window,  &QC_ApplicationWindow::signalEnableRelativeZeroSnaps,
              snap_toolbar, &QG_SnapToolBar::slotEnableRelativeZeroSnaps);
+
+
+//    snap_toolbar = new QG_SnapToolBar(main_window, action_handler, ag_manager,ag_manager->getActionsMap());
 
     pen_toolbar = new QG_PenToolBar(tr("Pen"), main_window);
     pen_toolbar->setSizePolicy(tbPolicy);
@@ -551,12 +554,16 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     pen_toolbar->setProperty("_group", 0);
 
     options_toolbar = createGenericToolbar(tr("Tool Options"), "Tool Options", tbPolicy, {});
-    
+
+//    edit->addAction("InfoCursorEnable")
+
+    createInfoCursorToolbar(tbPolicy);
+
     auto *dockareas = createGenericToolbar(tr("Dock Areas"), "Dock Areas", tbPolicy, {
         "LeftDockAreaToggle", "RightDockAreaToggle", "TopDockAreaToggle",
         "BottomDockAreaToggle", "FloatingDockwidgetsToggle"
     });
-    
+
     auto *creators = createGenericToolbar(tr("Creators"), "Creators", tbPolicy, {
         "InvokeMenuCreator", "InvokeToolbarCreator"
     });
@@ -579,6 +586,43 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     addToBottom(snap_toolbar);
     addToBottom(dockareas);
     addToBottom(creators);
+}
+
+void LC_WidgetFactory::createInfoCursorToolbar(QSizePolicy &tbPolicy) {
+    auto infoCursorTB = createGenericToolbar(tr("Info Cursor"), "Info Cursor", tbPolicy, {
+        "InfoCursorEnable"
+    });
+
+    QAction* action = ag_manager->getActionByName("InfoCursorEnable");
+    action->setProperty("InfoCursorActionTag", 0);
+    connect(action, &QAction::triggered, main_window, &QC_ApplicationWindow::slotInfoCursorSetting);
+    if (action != nullptr){
+        QWidget* w = infoCursorTB->widgetForAction(action);
+        if (w != nullptr){
+            auto* btn = dynamic_cast<QToolButton *>(w);
+
+            if (btn != nullptr){
+                btn->setPopupMode(QToolButton::MenuButtonPopup);
+                auto* menu = new QMenu();
+
+                addInfoCursorOptionAction(menu, "InfoCursorAbs", 1);
+                addInfoCursorOptionAction(menu, "InfoCursorSnap", 2);
+                addInfoCursorOptionAction(menu, "InfoCursorRel", 3);
+                addInfoCursorOptionAction(menu, "InfoCursorPrompt", 4);
+                addInfoCursorOptionAction(menu, "InfoCursorCatchedEntity", 5);
+
+                btn->setMenu(menu);
+            }
+        }
+    }
+    addToTop(infoCursorTB);
+}
+
+void LC_WidgetFactory::addInfoCursorOptionAction(QMenu *menu, const char *name, int tag) {
+    QAction* action = ag_manager->getActionByName(name);
+    action->setProperty("InfoCursorActionTag", tag);
+    menu->addAction(action);
+    connect(action, &QAction::triggered, main_window, &QC_ApplicationWindow::slotInfoCursorSetting);
 }
 
 void LC_WidgetFactory::createCADToolbars(){
@@ -961,14 +1005,8 @@ QMenu *LC_WidgetFactory::doCreateSubMenu(QMenu *parent, const QString& title, co
     return sub_menu;
 }
 
-QToolBar* LC_WidgetFactory::createNamedViewsToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy)
-{
-    auto* result = new QToolBar(title, main_window);
-    result->setSizePolicy(toolBarPolicy);
-    QString nameCleared(name);
-    nameCleared.remove(' ');
-    const QString &objectName = nameCleared.toLower() + "_toolbar";
-    result->setObjectName(objectName);
+QToolBar* LC_WidgetFactory::createNamedViewsToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy){
+    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy);
 
     QAction *saveViewAction = ag_manager->getActionByName("ZoomViewSave");
     result->addAction(saveViewAction);
@@ -983,12 +1021,9 @@ QToolBar* LC_WidgetFactory::createNamedViewsToolbar(const QString& title, const 
 }
 
 QToolBar* LC_WidgetFactory::createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames){
-    auto* result = new QToolBar(title, main_window);
-    result->setSizePolicy(toolBarPolicy);
-    QString nameCleared(name);
-    nameCleared.remove(' ');
-    const QString &objectName = nameCleared.toLower() + "_toolbar";
-    result->setObjectName(objectName);
+
+    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy);
+
     for (const QString& actionName: actionNames){
         if (actionName.isEmpty()){
             result->addSeparator();
@@ -1001,12 +1036,19 @@ QToolBar* LC_WidgetFactory::createGenericToolbar(const QString& title, const QSt
     return result;
 }
 
-QToolBar* LC_WidgetFactory::toolbarWithActions(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction*> &actions){
+QToolBar *LC_WidgetFactory::doCreateToolBar(const QString title, const QString &name, const QSizePolicy &toolBarPolicy) const {
     auto* result = new QToolBar(title, main_window);
     result->setSizePolicy(toolBarPolicy);
-    QString nameCleaned = name;
-    nameCleaned.remove(' ');
-    result->setObjectName(nameCleaned.toLower() + "_toolbar");
+    QString nameCleared(name);
+    nameCleared.remove(' ');
+    const QString &objectName = nameCleared.toLower() + "_toolbar";
+    result->setObjectName(objectName);
+    return result;
+}
+
+QToolBar* LC_WidgetFactory::toolbarWithActions(const QString& title, const QString& name, QSizePolicy toolBarPolicy, const QList<QAction*> &actions){
+    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy);
+
     result->addActions(actions);
     result->hide();
     result->setProperty("_group", 1);

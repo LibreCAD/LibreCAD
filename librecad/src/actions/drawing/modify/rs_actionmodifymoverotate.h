@@ -82,7 +82,7 @@ protected:
     void updateMouseButtonHintsForSelected(int status) override;
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
     void previewRefPointsForMultipleCopies();
-    void doTrigger();
+    void doPerformTrigger();
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;

@@ -41,9 +41,7 @@ public:
     RS_ActionModifyCut(RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
     ~RS_ActionModifyCut() override;
-
     void init(int status) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void finish(bool updateTB) override;
 protected:
@@ -61,6 +59,7 @@ protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
+    void doTrigger() override;
 };
 
 #endif

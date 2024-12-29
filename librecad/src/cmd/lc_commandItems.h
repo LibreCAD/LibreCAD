@@ -852,7 +852,7 @@ const LC_CommandItem g_commandList[] = {
         {
             {{"hatch", QObject::tr("hatch", "draw hatch")}},
             {{"ha", QObject::tr("ha", "draw hatch")}},
-            RS2::ActionDrawHatchNoSelect
+            RS2::ActionDrawHatch
         },
         // draw point
         {

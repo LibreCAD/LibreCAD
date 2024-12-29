@@ -36,7 +36,6 @@ public:
     void setFreeBaselineDistance(bool freeDistance);
     double getBaselineDistance() const;
     void setBaselineDistance(double distance);
-    void trigger() override;
     void reset() override;
     double getCurrentBaselineDistance() const;
     QStringList getAvailableCommands() override;
@@ -63,6 +62,7 @@ protected:
     void preparePreview() override;
     double getDimAngle() override;
     bool doProcessCommand(int status, const QString &command) override;
+    void doTrigger() override;
 };
 
 #endif // LC_ACTIONDRAWDIMBASELINE_H

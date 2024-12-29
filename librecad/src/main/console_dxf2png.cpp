@@ -310,6 +310,8 @@ bool slotFileExport(RS_Graphic* graphic, const QString& name,
     painter.eraseRect(0,0, size.width(), size.height());
 
     RS_StaticGraphicView gv(size.width(), size.height(), &painter, &borders);
+    gv.updateSettings(graphic);
+
     if (black) {
         gv.setBackground(Qt::black);
     } else {

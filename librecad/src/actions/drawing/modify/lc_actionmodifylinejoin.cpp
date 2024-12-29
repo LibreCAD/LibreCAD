@@ -44,8 +44,8 @@ void LC_ActionModifyLineJoin::init(int status){
 /*
  * utility method that catches line based on mouse event
  */
-RS_Line *LC_ActionModifyLineJoin::catchLine(QMouseEvent *e){
-    RS_Entity *en = catchModifiableEntity(e, lineType);
+RS_Line *LC_ActionModifyLineJoin::catchLine(QMouseEvent *e, bool forPreview){
+    RS_Entity *en = forPreview ? catchModifiableEntityOnPreview(e, lineType) :catchModifiableEntity(e, lineType);
     RS_Line *snappedLine = nullptr;
     if (isLine(en)){
         snappedLine = dynamic_cast<RS_Line *>(en);
@@ -58,8 +58,7 @@ void LC_ActionModifyLineJoin::drawSnapper() {
 }
 
 void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, int status){
-
-    RS_Line *snappedLine = catchLine(e);
+    RS_Line *snappedLine = catchLine(e, true);
     switch (status) {
         case SetLine1: {
             if (snappedLine != nullptr){ // can snap to line
@@ -98,6 +97,17 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_u
                         if (major2.valid) {
                             createRefPoint(major2, list);
                         }
+                    }
+
+                    if (isInfoCursorForModificationEnabled()){
+                        LC_InfoMessageBuilder msg(tr("Lines Join"));
+                        if (lineJoinData->parallelLines) {
+                            msg.add(tr("Lines are parallel"));
+                        }
+                        else{
+                          msg.add(tr("Intersection:"), formatVector(lineJoinData->intersectPoint));
+                        }
+                        appendInfoCursorZoneMessage(msg.toString(), 2, false);
                     }
 
                     // we don't need line joint data so far
@@ -140,7 +150,7 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_u
 }
 
 void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
-    RS_Line *snappedLine = catchLine(e);
+    RS_Line *snappedLine = catchLine(e, false);
     switch (status) {
         case SetLine1:
             if (snappedLine != nullptr){ // just store first line and proceed to selection of second line
@@ -254,11 +264,11 @@ void LC_ActionModifyLineJoin::performTriggerDeletions(){
     if (removeOriginalLines){
         // proceed line 1
         if (line1EdgeMode == EDGE_EXTEND_TRIM){
-            deleteEntityUndoable(line1);
+            undoableDeleteEntity(line1);
         }
         // proceed line 2
         if (line2EdgeMode == EDGE_EXTEND_TRIM){
-            deleteEntityUndoable(line2);
+            undoableDeleteEntity(line2);
         }
     }
 }
@@ -346,8 +356,7 @@ void LC_ActionModifyLineJoin::applyAttributes(RS_Entity *e, bool forLine1){
             e->setLayer(layer);
             break;
         case ATTRIBUTES_ACTIVE_PEN_LAYER: // just set for active pen and layer
-            e->setPenToActive();
-            e->setLayerToActive();
+            setPenAndLayerToActive(e);
             break;
     }
 }

@@ -52,14 +52,19 @@ public:
     enum RS2::EntityType getTypeToSelect();
     void mouseMoveEvent(QMouseEvent *event) override;
 protected:
+    bool selectContour = false;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-private:
+    RS_Entity *entityToSelect = nullptr;
     RS_ActionInterface *actionSelect = nullptr;
     enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
     bool isEntityAllowedToSelect(RS_Entity* ent) const override;
     void selectionFinishedByKey(QKeyEvent *e, bool escape) override;
+
+    void doSelectEntity(RS_Entity *entityToSelect, bool selectContour) const override;
+
+    void updateMouseButtonHints() override;
 };
 
 #endif

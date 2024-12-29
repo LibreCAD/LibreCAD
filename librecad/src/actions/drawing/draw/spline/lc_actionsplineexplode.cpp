@@ -42,8 +42,7 @@ LC_ActionSplineExplode::LC_ActionSplineExplode(RS_EntityContainer &container, RS
     actionType = RS2::ActionDrawSplineExplode;
 }
 
-void LC_ActionSplineExplode::trigger() {
-    RS_PreviewActionInterface::trigger();
+void LC_ActionSplineExplode::doTrigger() {
     if (document) {
         int segmentsCount = obtainSegmentsCount();
         std::vector<RS_Vector> strokePoints;
@@ -64,7 +63,8 @@ void LC_ActionSplineExplode::trigger() {
                 penToUse = entityToModify->getPen(false);
             }
 
-            document->startUndoCycle();
+            undoCycleStart();
+
             if (createPolyline) {
                 RS_Entity *createdEntity = createPolylineByVertexes(strokePoints, closed);
                 setupAndAddCreatedEntity(createdEntity, layerToSet, penToUse);
@@ -84,14 +84,13 @@ void LC_ActionSplineExplode::trigger() {
 
             }
             if (!keepOriginals){
-                deleteEntityUndoable(entityToModify);
+                undoableDeleteEntity(entityToModify);
             }
 
+            undoCycleEnd();
             entityToModify = nullptr;
-            document->endUndoCycle();
         }
     }
-    graphicView->redraw();
 }
 
 void LC_ActionSplineExplode::setupAndAddCreatedEntity(RS_Entity *createdEntity, RS_Layer *layerToSet, const RS_Pen &penToUse) {
@@ -100,7 +99,7 @@ void LC_ActionSplineExplode::setupAndAddCreatedEntity(RS_Entity *createdEntity, 
     createdEntity->setLayer(layerToSet);
     createdEntity->setSelected(true); // fixme - sand - check whether it should be selected??
     container->addEntity(createdEntity);
-    document->addUndoable(createdEntity);
+    undoableAdd(createdEntity);
 }
 
 void LC_ActionSplineExplode::onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) {

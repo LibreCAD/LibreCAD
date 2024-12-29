@@ -66,8 +66,7 @@ void LC_ActionDrawEllipse1Point::init(int status) {
 
 LC_ActionDrawEllipse1Point::~LC_ActionDrawEllipse1Point() = default;
 
-void LC_ActionDrawEllipse1Point::trigger() {
-
+void LC_ActionDrawEllipse1Point::doTrigger() {
     double ratio = pPoints->getRatio();
     auto *ellipse = new RS_Ellipse{container,
                                    {pPoints->center, pPoints->getMajorP(), ratio,
@@ -77,32 +76,26 @@ void LC_ActionDrawEllipse1Point::trigger() {
     if   (ratio > 1.){
         ellipse->switchMajorMinor();
     }
-    ellipse->setLayerToActive();
-    ellipse->setPenToActive();
+    setPenAndLayerToActive(ellipse);
 
-    container->addEntity(ellipse);
-
-    addToDocumentUndoable(ellipse);
-
-    RS_Vector rz = graphicView->getRelativeZero();
-    graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
-        rz = ellipse->getCenter();
+        moveRelativeZero(ellipse->getCenter());
     }
-    moveRelativeZero(rz);
-    drawSnapper();
+
+    undoCycleAdd(ellipse);
 
     setStatus(SetPoint);
 }
 
 void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {
+    deletePreview();
     int status = getStatus();
     RS_Vector mouse = snapPoint(e);
-    deletePreview();
+
     switch (status){
         case SetPoint:{
             if (!trySnapToRelZeroCoordinateEvent(e)){
-                auto *ellipse = previewEllipse({mouse, pPoints->getMajorP(), pPoints->getRatio(), 0.0,
+                auto *ellipse = previewToCreateEllipse({mouse, pPoints->getMajorP(), pPoints->getRatio(), 0.0,
                                                       pPoints->isArc ? 2. * M_PI : 0., false});
                 if (showRefEntitiesOnPreview) {
                     previewRefSelectablePoint(mouse);
@@ -114,7 +107,7 @@ void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {
         case SetMajorAngle: {
             mouse = getSnapAngleAwarePoint(e, pPoints->center, mouse, true);
             pPoints->majorRadiusAngle = pPoints->center.angleTo(mouse);
-            auto ellipse = previewEllipse({pPoints->center, pPoints->getMajorP(), pPoints->getRatio(), 0.0,
+            auto ellipse = previewToCreateEllipse({pPoints->center, pPoints->getMajorP(), pPoints->getRatio(), 0.0,
                             pPoints->isArc ? 2. * M_PI : 0., false});
             if (showRefEntitiesOnPreview){
                 previewRefSelectablePoint(mouse);
@@ -137,7 +130,7 @@ void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {
 
             previewRefLine(pPoints->center, mouse);
 
-            auto ellipse = previewEllipse({pPoints->center, pPoints->getMajorP(), pPoints->getRatio(),
+            auto ellipse = previewToCreateEllipse({pPoints->center, pPoints->getMajorP(), pPoints->getRatio(),
                                            pPoints->angle1, pPoints->angle1 + 1.0, pPoints->reversed});
 
             if (showRefEntitiesOnPreview) {
@@ -160,7 +153,7 @@ void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {
             v.y /= pPoints->getRatio();
             pPoints->angle2 = v.angle(); // + m_vMajorP.angle();
 
-            auto ellipse = previewEllipse({pPoints->center, pPoints->getMajorP(), pPoints->getRatio(),
+            auto ellipse = previewToCreateEllipse({pPoints->center, pPoints->getMajorP(), pPoints->getRatio(),
                                            pPoints->angle1, pPoints->angle2, pPoints->reversed});
 
             if (showRefEntitiesOnPreview) {

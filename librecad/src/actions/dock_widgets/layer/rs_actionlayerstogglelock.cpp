@@ -60,6 +60,7 @@ void RS_ActionLayersToggleLock::trigger() {
             deselectEntitiesOnLockedLayer(a_layer);
         }
     }
+    graphicView->redraw();
     finish(false);
 }
 
@@ -75,16 +76,7 @@ void RS_ActionLayersToggleLock::deselectEntitiesOnLockedLayer(RS_Layer* layer)
 
     for(auto e: *container){ // fixme - sand -  interation over all entities in container
         if (e && e->isVisible() && e->getLayer() == layer) {
-
-            if (graphicView) {
-                graphicView->deleteEntity(e);
-            }
-
             e->setSelected(false);
-
-            if (graphicView) {
-                graphicView->drawEntity(e);
-            }
         }
     }
 }

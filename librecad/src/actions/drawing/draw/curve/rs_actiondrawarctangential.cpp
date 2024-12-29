@@ -63,12 +63,9 @@ void RS_ActionDrawArcTangential::init(int status) {
     //reset();
 }
 
-void RS_ActionDrawArcTangential::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+void RS_ActionDrawArcTangential::doTrigger() {
     if (!(point.valid && baseEntity)) {
-        RS_DEBUG->print("RS_ActionDrawArcTangential::trigger: "
-                        "conditions not met");
+        RS_DEBUG->print("RS_ActionDrawArcTangential::trigger: conditions not met");
         return;
     }
 
@@ -77,14 +74,11 @@ void RS_ActionDrawArcTangential::trigger() {
         data->reversed = !data->reversed;
     }
     auto* arc = new RS_Arc(container, *data);
-    container->addEntity(arc);
-    arc->setLayerToActive();
-    arc->setPenToActive();
 
-    addToDocumentUndoable(arc);
-
-    graphicView->redraw(RS2::RedrawDrawing);
+    setPenAndLayerToActive(arc);
     moveRelativeZero(arc->getCenter());
+
+    undoCycleAdd(arc);
 
     setStatus(SetBaseEntity);
     reset();
@@ -122,13 +116,14 @@ void RS_ActionDrawArcTangential::preparePreview() {
 }
 
 void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
+    deletePreview();
+    deleteHighlights();
     int status = getStatus();
     point = snapPoint(e);
-    deleteHighlights();
     switch (status){
         case SetBaseEntity: {
             deleteSnapper();
-            RS_Entity *entity = catchEntity(e, RS2::ResolveAll);
+            RS_Entity *entity = catchEntityOnPreview(e, RS2::ResolveAll);
             if (entity != nullptr){
                 if (entity->isAtomic()){
                     highlightHover(entity);
@@ -138,7 +133,6 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
         }
         case SetEndAngle: {
             highlightSelected(baseEntity);
-            deletePreview();
             RS_Vector center;
             if (byRadius){
                 if (isShift(e)){ // double check for efficiency, eliminate center forecasting calculations if not needed
@@ -153,10 +147,10 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
                 if (alternateArcMode) {
                     RS_ArcData tmpArcData = *data;
                     tmpArcData.reversed = !data->reversed;
-                    arc = previewArc(tmpArcData);
+                    arc = previewToCreateArc(tmpArcData);
                 }
                 else{
-                    arc = previewArc(*data);
+                    arc = previewToCreateArc(*data);
                 }
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(data->center);
@@ -177,12 +171,12 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
                     }
                 }
             }
-            drawPreview();
             break;
         }
         default:
             break;
     }
+    drawPreview();
     drawHighlights();
 }
 

@@ -136,12 +136,12 @@ void RS_Preview::clear() {
 /**
  * Clones the given entity and adds the clone to the preview.
  */
-void RS_Preview::addCloneOf(RS_Entity* entity) {
+void RS_Preview::addCloneOf(RS_Entity* entity, RS_GraphicView* view) {
     if (!entity) {
         return;
     }
 
-    RS_Entity* clone = entity->cloneProxy();
+    RS_Entity* clone = entity->cloneProxy(view);
     clone->reparent(this);
     addEntity(clone);
 }
@@ -149,11 +149,11 @@ void RS_Preview::addCloneOf(RS_Entity* entity) {
 /**
  * Adds all entities from 'container' to the preview (unselected).
  */
-void RS_Preview::addAllFrom(RS_EntityContainer& container) {
+void RS_Preview::addAllFrom(RS_EntityContainer& container, RS_GraphicView* view) {
     unsigned int c=0;
     for(auto e: container){
         if (c < maxEntities) {
-            RS_Entity* clone = e->cloneProxy();
+            RS_Entity* clone = e->cloneProxy(view);
             clone->setSelected(false);
             clone->reparent(this);
 
@@ -163,15 +163,15 @@ void RS_Preview::addAllFrom(RS_EntityContainer& container) {
         }
     }
 }
-// fixme - sand - use cloneProxy()
+
 /**
  * Adds all selected entities from 'container' to the preview (unselected).
  */
-void RS_Preview::addSelectionFrom(RS_EntityContainer& container) {
+void RS_Preview::addSelectionFrom(RS_EntityContainer& container, RS_GraphicView* view) {
     unsigned int c=0;
     for(auto e: container){ // fixme - sand - wow - iterating over all entities!!! Rework selection
         if (e->isSelected() && c<maxEntities) {
-            RS_Entity* clone = e->cloneProxy();
+            RS_Entity* clone = e->cloneProxy(view);
             clone->setSelected(false);
             clone->reparent(this);
 
@@ -186,7 +186,7 @@ void RS_Preview::addSelectionFrom(RS_EntityContainer& container) {
  * Adds all entities in the given range and those which have endpoints
  * in the given range to the preview.
  */
-void RS_Preview::addStretchablesFrom(RS_EntityContainer& container,
+void RS_Preview::addStretchablesFrom(RS_EntityContainer& container, RS_GraphicView* view,
                                      const RS_Vector& v1, const RS_Vector& v2) {
     unsigned int c=0;
 
@@ -195,7 +195,7 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container,
             ((e->isInWindow(v1, v2)) || e->hasEndpointsWithinWindow(v1, v2)) &&
             c < maxEntities) {
 
-            RS_Entity *clone = e->cloneProxy();
+            RS_Entity *clone = e->cloneProxy(view);
             //clone->setSelected(false);
             clone->reparent(this);
 
@@ -208,8 +208,23 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container,
 
 void RS_Preview::draw(RS_Painter* painter, RS_GraphicView* view,
                               double& patternOffset) {
-    for (auto e: std::as_const(entities)){
-        e->drawDraft(painter, view, patternOffset);
+    if (view->isDrawTextsAsDraftForPreview()) {
+        for (auto e: std::as_const(entities)) {
+            e->drawDraft(painter, view, patternOffset);
+        }
+    } else {
+        for (auto e: std::as_const(entities)) {
+            int type = e->rtti();
+            switch (type) {
+                case RS2::EntityMText:
+                case RS2::EntityText: {
+                    e->draw(painter, view, patternOffset);
+                    break;
+                }
+                default:
+                    e->drawDraft(painter, view, patternOffset);
+            }
+        }
     }
 }
 

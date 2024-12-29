@@ -43,8 +43,6 @@ public:
     RS_ActionDrawLineFree(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
     ~RS_ActionDrawLineFree() override;
-
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void mousePressEvent(QMouseEvent* e) override;
 protected:
@@ -61,5 +59,6 @@ protected:
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void doTrigger() override;
 };
 #endif

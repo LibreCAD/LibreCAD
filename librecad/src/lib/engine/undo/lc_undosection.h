@@ -26,8 +26,10 @@
 #ifndef LC_UNDOSECTION_H
 #define LC_UNDOSECTION_H
 
+
 class RS_Document;
 class RS_Undoable;
+class RS_GraphicView;
 
 /** \brief This class is a wrapper for RS_Undo methods
  *
@@ -43,13 +45,14 @@ class RS_Undoable;
 class LC_UndoSection
 {
 public:
-    LC_UndoSection(RS_Document * doc, const bool handleUndo = true);
+    LC_UndoSection(RS_Document * doc, RS_GraphicView *view,const bool handleUndo = true);
     ~LC_UndoSection();
 
     void addUndoable(RS_Undoable * undoable);
 
 private:
     RS_Document *document {nullptr};
+    RS_GraphicView* graphicView = nullptr;
     bool valid {true};
 };
 

@@ -39,14 +39,12 @@ struct RS_MTextData;
 class RS_ActionDrawMText:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-
     RS_ActionDrawMText(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     ~RS_ActionDrawMText() override;
     void init(int status) override;
     void reset();
-    void trigger() override;
     void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
@@ -75,5 +73,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+    void doTrigger() override;
 };
 #endif

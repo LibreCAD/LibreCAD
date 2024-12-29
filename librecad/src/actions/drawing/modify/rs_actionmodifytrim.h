@@ -45,7 +45,6 @@ public:
     ~RS_ActionModifyTrim() override;
     void init(int status) override;
     void finish(bool updateTB) override;
-    void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
 protected:
     /**
@@ -67,5 +66,6 @@ protected:
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void doTrigger() override;
 };
 #endif

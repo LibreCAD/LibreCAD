@@ -20,7 +20,7 @@ void LC_ActionDrawBoundingBox::init(int status) {
 }
 
 void LC_ActionDrawBoundingBox::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select entities for bounding box (Enter to complete)"), MOD_CTRL(tr("Select and draw")));
+    updateMouseWidgetTRCancel(tr("Select entities for bounding box (Enter to complete)"), MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Select and draw")));
 }
 
 void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {
@@ -28,7 +28,7 @@ void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {
         RS_Graphic* graphic = graphicView->getGraphic();
         RS_Layer* activeLayer = graphic->getActiveLayer();
         RS_Pen pen = document->getActivePen();
-        document->startUndoCycle();
+        undoCycleStart();
         if (selectionAsGroup) {
             RS_Vector selectionMin;
             RS_Vector selectionMax;
@@ -60,7 +60,7 @@ void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {
                 }
             }
         }
-        document->endUndoCycle();
+        undoCycleEnd();
     }
     selectedEntities.clear();
     finish(false);
@@ -108,7 +108,7 @@ void LC_ActionDrawBoundingBox::createLine(RS_Layer *activeLayer, const RS_Pen &p
     e->setLayer(activeLayer);
     e->setPen(pen);
     container->addEntity(e);
-    document->addUndoable(e);
+    undoableAdd(e);
 }
 
 bool LC_ActionDrawBoundingBox::isAllowTriggerOnEmptySelection() {

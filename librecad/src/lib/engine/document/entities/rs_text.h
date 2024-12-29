@@ -244,7 +244,7 @@ public:
 
     void drawDraft(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
 
-    RS_Entity *cloneProxy() const override;
+    RS_Entity *cloneProxy(RS_GraphicView* view) const override;
 
     RS_Vector getNearestSelectedRef(const RS_Vector &coord, double *dist) const override;
 

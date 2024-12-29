@@ -62,7 +62,6 @@ protected:
     RS_Vector getExtensionPoint1() override;
     RS_Vector getExtensionPoint2() override;
     double getDimAngle() override;
-
     bool doProcessCommand(int status, const QString &command) override;
 };
 

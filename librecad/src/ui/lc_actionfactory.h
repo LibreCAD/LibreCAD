@@ -43,7 +43,6 @@ public:
     LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler);
     void fillActionContainer(LC_ActionGroupManager* agm, bool useTheme);
 private:
-
     void createDrawLineActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createDrawPointsActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createDrawShapeActions(QMap<QString, QAction *> &map, QActionGroup *group);
@@ -72,12 +71,14 @@ private:
     void createSelectActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createInfoCursorActions(QMap<QString, QAction *> &map, QActionGroup *group);
+
     void createSnapExtraActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void setDefaultShortcuts(QMap<QString, QAction *> &map, LC_ActionGroupManager* agm);
     void setupCreatedActions(QMap<QString, QAction *> &map);
     void markNotEditableActionsShortcuts(QMap<QString, QAction *> &map);
     void createRestrictActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void createOtherActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createRelZeroActionsActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createNamedViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
 };
 

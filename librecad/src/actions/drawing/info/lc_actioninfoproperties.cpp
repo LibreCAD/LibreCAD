@@ -35,12 +35,10 @@ namespace {
     constexpr double hoverToleranceFactor2 = 10.0;
 
     // whether the entity supports glowing effects on mouse hovering
-    bool allowMouseOverGlowing(const RS_Entity* entity)
-    {
+    bool allowMouseOverGlowing(const RS_Entity *entity) {
         if (entity == nullptr)
             return false;
-        switch (entity->rtti())
-        {
+        switch (entity->rtti()) {
             case RS2::EntityHatch:
             case RS2::EntityImage:
             case RS2::EntitySolid:
@@ -71,7 +69,7 @@ void LC_ActionInfoProperties::init(int status){
 
 void LC_ActionInfoProperties::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     // notify widget
-    highlightAndShowEntityInfo(e);
+    highlightAndShowEntityInfo(e, isControl(e));
     setStatus(-1);
     finish();
 }
@@ -82,28 +80,31 @@ void LC_ActionInfoProperties::onMouseRightButtonRelease([[maybe_unused]]int stat
 }
 
 void LC_ActionInfoProperties::mouseMoveEvent(QMouseEvent* e) {
-    highlightAndShowEntityInfo(e);
+    deletePreview();
+    deleteHighlights();
+    snapPoint(e);
+    highlightAndShowEntityInfo(e, isControl(e));
+    drawPreview();
+    drawHighlights();
 }
 
-void LC_ActionInfoProperties::highlightAndShowEntityInfo(QMouseEvent *e){
+void LC_ActionInfoProperties::highlightAndShowEntityInfo(QMouseEvent *e, bool resolveChildren){
     RS_Vector mouse = toGraph(e);
     updateCoordinateWidgetByRelZero(mouse);
-
-    // clear any existing hovering
-    clearHighLighting();
     deleteSnapper();
-    highlightHoveredEntity(e);
+    highlightHoveredEntity(e, resolveChildren);
 }
 
-
-void LC_ActionInfoProperties::highlightHoveredEntity(QMouseEvent* event)
-{
+void LC_ActionInfoProperties::highlightHoveredEntity(QMouseEvent* event, bool resolveChildren){
     bool shouldShowQuickInfoWidget = true; // todo - read from options as there will be support
 
-    RS_Entity* entity = catchEntity(event);
-    if (entity == nullptr)
+    RS_Entity* entity = catchEntity(event, resolveChildren ? RS2::ResolveAllButTextImage : RS2::ResolveNone);
+    if (entity == nullptr) {
+        clearQuickInfoWidget();
         return;
+    }
     if (!entity->isVisible() || (entity->isLocked() && !shouldShowQuickInfoWidget)){
+        clearQuickInfoWidget();
         return;
     }
 
@@ -119,60 +120,31 @@ void LC_ActionInfoProperties::highlightHoveredEntity(QMouseEvent* event)
 
     double screenTolerance = graphicView->toGraphDX( (int)(0.01*std::min(graphicView->getWidth(), graphicView->getHeight())));
     hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
+
     bool isPointOnEntity = false;
 
     RS_Vector currentMousePosition = toGraph(event);
     if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader))
-        ||   (entity->rtti() == RS2::EntityText)       || (entity->rtti() == RS2::EntityMText))
-    {
+        || (entity->rtti() == RS2::EntityText) || (entity->rtti() == RS2::EntityMText)) {
         double nearestDistanceTo_pointOnEntity = 0.;
-
         entity->getNearestPointOnEntity(currentMousePosition, true, &nearestDistanceTo_pointOnEntity);
-
-        if (nearestDistanceTo_pointOnEntity <= hoverTolerance_adjusted) isPointOnEntity = true;
-    }
-    else
-    {
+        if (nearestDistanceTo_pointOnEntity <= hoverTolerance_adjusted) {
+            isPointOnEntity = true;
+        }
+    } else {
         isPointOnEntity = entity->isPointOnEntity(currentMousePosition, hoverTolerance_adjusted);
     }
 
     // Glowing effect on mouse hovering
     if (isPointOnEntity){
-        highlightEntity(entity);
+        if (allowMouseOverGlowing(entity)) {
+            highlightHover(entity);
+            prepareEntityDescription(entity, RS2::EntityDescriptionLevel::DescriptionCatched);
+        }
         if (shouldShowQuickInfoWidget){
             updateQuickInfoWidget(entity);
         }
     }
-}
-
-void LC_ActionInfoProperties::clearHighLighting()
-{
-    auto* hContainer = graphicView->getOverlayContainer(RS2::OverlayEffects);
-    if (hContainer->count()==0)
-        return;
-    hContainer->clear();
-    highlightedEntity=nullptr;
-    graphicView->redraw(RS2::RedrawOverlay);
-    clearQuickInfoWidget();
-}
-
-void LC_ActionInfoProperties::highlightEntity(RS_Entity* entity) {
-    if (!allowMouseOverGlowing(entity))
-        return;
-
-    // The container for highlighting effects
-    auto hContainer = graphicView->getOverlayContainer(RS2::OverlayEffects);
-    hContainer->clear();
-
-    highlightedEntity = entity;
-
-    RS_Entity* duplicatedEntity = highlightedEntity->clone();
-
-    duplicatedEntity->reparent(hContainer);
-    duplicatedEntity->setHighlighted(true);
-    hContainer->addEntity(duplicatedEntity);
-
-    graphicView->redraw(RS2::RedrawOverlay);
 }
 
 void LC_ActionInfoProperties::updateQuickInfoWidget(RS_Entity *pEntity){
@@ -183,14 +155,11 @@ void LC_ActionInfoProperties::updateQuickInfoWidget(RS_Entity *pEntity){
 }
 
 void LC_ActionInfoProperties::clearQuickInfoWidget(){
-    LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
-    if (entityInfoWidget != nullptr){
-        entityInfoWidget->processEntity(nullptr);
-    }
+    updateQuickInfoWidget(nullptr);
 }
 
 void LC_ActionInfoProperties::updateMouseButtonHints(){
-    updateMouseWidgetTRCancel(tr("Select entity"));
+    updateMouseWidgetTRCancel(tr("Select entity"), MOD_CTRL(tr("Select child entities")));
 }
 
 RS2::CursorType LC_ActionInfoProperties::doGetMouseCursor([[maybe_unused]]int status) {

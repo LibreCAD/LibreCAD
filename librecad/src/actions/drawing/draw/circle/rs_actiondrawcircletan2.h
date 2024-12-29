@@ -42,7 +42,6 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawCircleTan2() override;
     void init(int status) override;
-    void trigger() override;
     bool getCenters(RS_Entity* secondEntityCandidate = nullptr);
     bool preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
@@ -68,12 +67,14 @@ protected:
     struct Points;
     std::unique_ptr<Points> pPoints;
 
-    RS_Entity *catchCircle(QMouseEvent *e);
+    RS_Entity *catchCircle(QMouseEvent *e, bool forPreview);
     RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, const RS_AtomicEntity * circle);
     LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void updateMouseButtonHints() override;
+
+    void doTrigger() override;
 };
 #endif

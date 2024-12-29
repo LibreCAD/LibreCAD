@@ -30,33 +30,34 @@
 #include "rs_information.h"
 #include "rs_hatch.h"
 #include "rs_debug.h"
+#include "rs_selection.h"
 
 namespace {
-bool hatchAble(RS_Entity* entity) {
-    if (entity == nullptr)
-        return false;
-    switch (entity->rtti()) {
-    case RS2::EntityHatch:
-    case RS2::EntityPoint:
-    case RS2::EntityImage:
-    case RS2::EntityMText:
-    case RS2::EntityText:
-        return false;
-    default:
-        break;
+    bool hatchAble(RS_Entity *entity) {
+        if (entity == nullptr) {
+            return false;
+        }
+        switch (entity->rtti()) {
+            case RS2::EntityHatch:
+            case RS2::EntityPoint:
+            case RS2::EntityImage:
+            case RS2::EntityMText:
+            case RS2::EntityText:
+                return false;
+            default: {
+                if (RS_Information::isDimension(entity->rtti())) {
+                    return false;
+                }
+                return entity->getLength() > RS_TOLERANCE;
+            }
+        }
     }
-    if (RS_Information::isDimension(entity->rtti()))
-        return false;
-
-    return  entity->getLength() > RS_TOLERANCE;
 }
-}
-
 
 // fixme - review hatching and check the possibility to add preview mode!!
 
 RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container, RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Draw Hatch", container, graphicView)
+    :LC_ActionPreSelectionAwareBase("Draw Hatch", container, graphicView)
     , data{std::make_unique<RS_HatchData>()}
 {
     actionType = RS2::ActionDrawHatch;
@@ -69,156 +70,141 @@ void RS_ActionDrawHatch::setShowArea(bool s){
 }
 
 void RS_ActionDrawHatch::init(int status){
-    RS_PreviewActionInterface::init(status);
-
-    RS_Hatch tmp(container, *data);
-    tmp.setLayerToActive();
-    tmp.setPenToActive();
-    if (RS_DIALOGFACTORY->requestHatchDialog(&tmp)) {
-        *data = tmp.getData();
-        trigger();
-        graphicView->redraw(RS2::RedrawDrawing);
-    }
-    finish(false);
+    LC_ActionPreSelectionAwareBase::init(status);
 }
 
-void RS_ActionDrawHatch::trigger() {
+bool RS_ActionDrawHatch::isAllowTriggerOnEmptySelection() {
+    return false;
+}
+
+void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
 
     RS_DEBUG->print("RS_ActionDrawHatch::trigger()");
 
-    // deselect unhatchable entities:
-    for(auto e: *container) { // fixme - sand -  iteration over all entities in container
-        if (e->isSelected() && !hatchAble(e))
-            e->setSelected(false);
-    }
+    RS_Hatch tmp(container, *data);
+    setPenAndLayerToActive(&tmp);
 
-    for (auto e=container->firstEntity(RS2::ResolveAll); e != nullptr;
-         e=container->nextEntity(RS2::ResolveAll)) {
-        if (e->isSelected() && !hatchAble(e))
-            e->setSelected(false);
-    }
+    if (RS_DIALOGFACTORY->requestHatchDialog(&tmp)) {
+        *data = tmp.getData();
 
-    // look for selected contours:
-    bool haveContour = false;
-    for (auto e=container->firstEntity(RS2::ResolveAll); e != nullptr;
-         e=container->nextEntity(RS2::ResolveAll)) {
-        if (e->isSelected()) {
-            haveContour = true;
+        // fixme - sand - optimize that mess with cycles!!!
+        // deselect unhatchable entities:
+        // fixme - sand -  iteration over all entities in container
+        for(auto e: *container) {
+            if (e->isSelected() && !hatchAble(e))
+                e->setSelected(false);
         }
-    }
+        // fixme - sand -  iteration over all entities in container
+        for (auto e=container->firstEntity(RS2::ResolveAll); e != nullptr;
+             e=container->nextEntity(RS2::ResolveAll)) {
+            if (e->isSelected() && !hatchAble(e))
+                e->setSelected(false);
+        }
 
-    if (!haveContour){
-        LC_ERR << "RS_ActionDrawHatch:: "<<__func__<<"(): line "<<__LINE__<<", no contour selected\n";
-        return;
-    }
+        // fixme - sand -  iteration over all entities in container
+        // look for selected contours:
+        bool haveContour = false;
+        for (auto e=container->firstEntity(RS2::ResolveAll); e != nullptr;
+             e=container->nextEntity(RS2::ResolveAll)) {
+            if (e->isSelected()) {
+                haveContour = true;
+            }
+        }
 
-    std::unique_ptr<RS_Hatch> hatch = std::make_unique<RS_Hatch>(container, *data);
-    hatch->setLayerToActive();
-    hatch->setPenToActive();
-    auto *loop = new RS_EntityContainer(hatch.get());
-    loop->setPen(RS_Pen(RS2::FlagInvalid));
+        if (!haveContour){
+            LC_ERR << "RS_ActionDrawHatch:: "<<__func__<<"(): line "<<__LINE__<<", no contour selected\n";
+            return;
+        }
 
-    // add selected contour:
-    for (auto e=container->firstEntity(RS2::ResolveAll); e;
-         e=container->nextEntity(RS2::ResolveAll)) {
+        std::unique_ptr<RS_Hatch> hatch = std::make_unique<RS_Hatch>(container, *data);
+        hatch->setLayerToActive();
+        hatch->setPenToActive();
+        auto *loop = new RS_EntityContainer(hatch.get());
+        loop->setPen(RS_Pen(RS2::FlagInvalid));
 
-        if (e->isSelected()){
-            e->setSelected(false);
-            // entity is part of a complex entity (spline, polyline, ..):
-            if (e->getParent() &&
+        // add selected contour:
+        for (auto e=container->firstEntity(RS2::ResolveAll); e;
+             e=container->nextEntity(RS2::ResolveAll)) {
+
+            if (e->isSelected()){
+                e->setSelected(false);
+                // entity is part of a complex entity (spline, polyline, ..):
+                if (e->getParent() &&
                     // RVT - Don't de-delect the parent EntityPolyline, this is messing up the getFirst and getNext iterators
                     //			    (e->getParent()->rtti()==RS2::EntitySpline ||
                     //				 e->getParent()->rtti()==RS2::EntityPolyline)) {
                     (e->getParent()->rtti()==RS2::EntitySpline)) {
-                e->getParent()->setSelected(false);
+                    e->getParent()->setSelected(false);
+                }
+                RS_Entity *cp = e->clone();
+                cp->setPen(RS_Pen(RS2::FlagInvalid));
+                cp->reparent(loop);
+                loop->addEntity(cp);
             }
-            RS_Entity *cp = e->clone();
-            cp->setPen(RS_Pen(RS2::FlagInvalid));
-            cp->reparent(loop);
-            loop->addEntity(cp);
+        }
+
+        hatch->addEntity(loop);
+        if (hatch->validate()){
+
+            undoCycleAdd(hatch.get());
+
+            hatch->update();
+
+            graphicView->redraw(RS2::RedrawDrawing);
+
+            bool printArea = true;
+            switch( hatch->getUpdateError()) {
+                case RS_Hatch::HATCH_OK :
+                    commandMessage(tr("Hatch created successfully."));
+                    break;
+                case RS_Hatch::HATCH_INVALID_CONTOUR :
+                    commandMessage(tr("Hatch Error: Invalid contour found!"));
+                    printArea = false;
+                    break;
+                case RS_Hatch::HATCH_PATTERN_NOT_FOUND :
+                    commandMessage(tr("Hatch Error: Pattern not found!"));
+                    break;
+                case RS_Hatch::HATCH_TOO_SMALL :
+                    commandMessage(tr("Hatch Error: Contour or pattern too small!"));
+                    break;
+                case RS_Hatch::HATCH_AREA_TOO_BIG :
+                    commandMessage(tr("Hatch Error: Contour too big!"));
+                    break;
+                default :
+                    commandMessage(tr("Hatch Error: Undefined Error!"));
+                    printArea = false;
+                    break;
+            }
+            if (m_bShowArea && printArea){
+                commandMessage(tr("Total hatch area = %1").
+                    arg(hatch->getTotalArea(), 12, 'g', 10));
+            }
+
+            hatch.release();
+
+        } else {
+            hatch.reset();
+            commandMessage(tr("Invalid hatch area. Please check that the entities chosen form one or more closed contours."));
         }
     }
-
-    hatch->addEntity(loop);
-    if (hatch->validate()){
-        container->addEntity(hatch.get());
-
-        addToDocumentUndoable(hatch.get());
-
-        hatch->update();
-
-        graphicView->redraw(RS2::RedrawDrawing);
-
-        bool printArea = true;
-        switch( hatch->getUpdateError()) {
-        case RS_Hatch::HATCH_OK :
-                commandMessage(tr("Hatch created successfully."));
-                break;
-            case RS_Hatch::HATCH_INVALID_CONTOUR :
-                commandMessage(tr("Hatch Error: Invalid contour found!"));
-                printArea = false;
-                break;
-            case RS_Hatch::HATCH_PATTERN_NOT_FOUND :
-                commandMessage(tr("Hatch Error: Pattern not found!"));
-                break;
-            case RS_Hatch::HATCH_TOO_SMALL :
-                commandMessage(tr("Hatch Error: Contour or pattern too small!"));
-                break;
-            case RS_Hatch::HATCH_AREA_TOO_BIG :
-                commandMessage(tr("Hatch Error: Contour too big!"));
-                break;
-            default :
-                commandMessage(tr("Hatch Error: Undefined Error!"));
-                printArea = false;
-                break;
-        }
-        if (m_bShowArea && printArea){
-            commandMessage(tr("Total hatch area = %1").
-                arg(hatch->getTotalArea(), 12, 'g', 10));
-        }
-
-        hatch.release();
-
-    } else {
-        hatch.reset();
-        commandMessage(tr("Invalid hatch area. Please check that the entities chosen form one or more closed contours."));
-	}
-    //}
-}
-
-void RS_ActionDrawHatch::mouseMoveEvent(QMouseEvent*) {
-    RS_DEBUG->print("RS_ActionDrawHatch::mouseMoveEvent begin");
-
-    /*if (getStatus()==SetPos) {
-        RS_Vector mouse = snapPoint(e);
-        pos = mouse;
-
-
-        deletePreview();
-        if (hatch && !hatch->isVisible()) {
-            hatch->setVisible(true);
-        }
-        offset = RS_Vector(graphicView->toGuiDX(pos.x),
-                           -graphicView->toGuiDY(pos.y));
-        drawPreview();
-}*/
-
-    RS_DEBUG->print("RS_ActionDrawHatch::mouseMoveEvent end");
-}
-
-void RS_ActionDrawHatch::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    snapPoint(e);
-}
-
-void RS_ActionDrawHatch::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
-    //deletePreview();
-    initPrevious(status);
+    finish(false);
 }
 
 
-void RS_ActionDrawHatch::updateMouseButtonHints() {
-	 updateMouseWidget();
+
+void RS_ActionDrawHatch::doSelectEntity(RS_Entity* entityToSelect, [[maybe_unused]] bool selectContour) const {
+    // try to minimize selection clicks - and select contour based on selected entity. May be optional, but what for?
+    RS_ActionSelectBase::doSelectEntity(entityToSelect, true);
 }
-RS2::CursorType RS_ActionDrawHatch::doGetMouseCursor([[maybe_unused]] int status){
+
+bool RS_ActionDrawHatch::isEntityAllowedToSelect(RS_Entity *ent) const {
+    return hatchAble(ent);
+}
+
+void RS_ActionDrawHatch::updateMouseButtonHintsForSelection() {
+    updateMouseWidgetTRCancel(tr("Select to hatch (Enter to complete)"), MOD_CTRL(tr("Hatch immediately after selection")));
+}
+
+RS2::CursorType RS_ActionDrawHatch::doGetMouseCursorSelected([[maybe_unused]]int status) {
     return RS2::SelectCursor;
 }

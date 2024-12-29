@@ -869,6 +869,10 @@ RS_Pen& RS_Painter::getRsPen(){
     return lpen;
 }
 
+void RS_Painter::drawText(const QRect& rect, int flags, const QString& text, QRect* boundingBox){
+    QPainter::drawText(rect, flags, text, boundingBox);
+}
+
 void RS_Painter::drawText(const QRect& rect, const QString& text, QRect* boundingBox){
     QPainter::drawText(rect, Qt::AlignTop | Qt::AlignLeft | Qt::TextDontClip, text, boundingBox);
 }

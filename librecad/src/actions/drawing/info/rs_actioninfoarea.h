@@ -46,8 +46,6 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionInfoArea() override;
     void init(int status) override;
-    void trigger() override;
-    void display();//display results from current polygon
     void mouseMoveEvent(QMouseEvent *e) override;
 protected:
     /**
@@ -57,13 +55,16 @@ protected:
         SetFirstPoint,    /**< Setting the 1st point of the polygon. */
         SetNextPoint      /**< Setting a next point. */
     };
-
     std::unique_ptr<RS_InfoArea> ia;
 
+    bool lastPointRequested = false;
+
+    void display(bool forPreview);//display results from current polygon
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
+    void doTrigger() override;
 };
 #endif

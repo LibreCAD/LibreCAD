@@ -75,6 +75,8 @@ protected:
     bool highlightEntitiesOnHover = false;
     bool highlightEntitiesRefPointsOnHover = false;
 
+    virtual void doTrigger(){};
+
     void drawPreview();
     void deletePreview();
 
@@ -93,7 +95,7 @@ protected:
     RS_Circle* previewCircle(const RS_CircleData& circleData);
     RS_Arc *previewArc(const RS_ArcData &arcData);
     RS_Ellipse *previewEllipse(const RS_EllipseData &ellipseData);
-    void previewPoint(const RS_Vector &coord);
+    RS_Point* previewPoint(const RS_Vector &coord);
     RS_Line* previewLine(const RS_Vector &start, const RS_Vector &end);
     RS_Line* previewLine(const RS_LineData &data);
     RS_Line* previewRefLine(const RS_Vector &start, const RS_Vector &end);
@@ -112,18 +114,34 @@ protected:
     void highlightHoverWithRefPoints(RS_Entity* e, bool value);
     void highlightSelected(RS_Entity *e, bool enable=true);
     virtual void moveRelativeZero(const RS_Vector &zero);
+    void markRelativeZero();
     bool is(RS_Entity* e, RS2::EntityType type) const;
     bool isLine(RS_Entity*  e) const{return is(e, RS2::EntityLine);};
     bool isPolyline(RS_Entity*  e) const{return is(e, RS2::EntityPolyline);};
     bool isCircle(RS_Entity*  e){return is(e, RS2::EntityCircle);};
     bool isArc(RS_Entity*  e){return is(e, RS2::EntityArc);};
     bool isEllipse(RS_Entity*  e){return is(e, RS2::EntityEllipse);};
-    bool addToDocumentUndoable(RS_Undoable* e) const;
     void previewSnapAngleMark(const RS_Vector &center, const RS_Vector &refPoint);
     RS_Entity *catchModifiableEntity(QMouseEvent *e, const EntityTypeList &enTypeList);
     RS_Entity *catchModifiableEntity(QMouseEvent *e, const RS2::EntityType &enType);
     RS_Entity *catchModifiableEntity(RS_Vector &coord, const RS2::EntityType &enType);
-    void deleteEntityUndoable(RS_Entity *entity);
     void previewSnapAngleMark(const RS_Vector &center, double angle);
+    RS_Entity* catchEntityOnPreview(QMouseEvent* e, const EntityTypeList& enTypeList,RS2::ResolveLevel level = RS2::ResolveNone);
+    RS_Entity* catchEntityOnPreview(QMouseEvent* e, RS2::ResolveLevel level = RS2::ResolveNone);
+    RS_Entity* catchEntityOnPreview( const RS_Vector &pos, RS2::ResolveLevel level = RS2::ResolveNone);
+    RS_Entity* catchEntityOnPreview(QMouseEvent *e, RS2::EntityType enType, RS2::ResolveLevel level = RS2::ResolveNone);
+    RS_Entity* catchModifiableEntityOnPreview(QMouseEvent *e, const RS2::EntityType &enType);
+    RS_Entity* catchModifiableEntityOnPreview(QMouseEvent *e, const EntityTypeList &enTypeList);
+    QString obtainEntityDescriptionForInfoCursor(RS_Entity *e, RS2::EntityDescriptionLevel level);
+    void prepareEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel level);
+    void appendInfoCursorZoneMessage(QString message, int zoneNumber, bool replaceContent);
+    RS_Circle *previewToCreateCircle(const RS_CircleData &circleData);
+    RS_Arc *previewToCreateArc(const RS_ArcData &arcData);
+    RS_Line *previewToCreateLine(const RS_LineData &lineData);
+    RS_Line *previewToCreateLine(const RS_Vector &start, const RS_Vector &end);
+    RS_Ellipse *previewToCreateEllipse(const RS_EllipseData &ellipseData);
+    RS_Point *previewToCreatePoint(const RS_Vector &coord);
+    void previewEntityToCreate(RS_Entity *en, bool addToPreview = true);
+    void appendInfoCursorEntityCreationMessage(QString message);
 };
 #endif

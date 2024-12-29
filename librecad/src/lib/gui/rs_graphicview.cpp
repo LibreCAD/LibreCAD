@@ -48,6 +48,8 @@
 #include "rs_units.h"
 #include "lc_linemath.h"
 #include "dxf_format.h"
+#include "lc_undoablerelzero.h"
+#include "lc_defaults.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -136,6 +138,7 @@ void RS_GraphicView::loadSettings() {
         ignoreDraftForHighlight = LC_GET_BOOL("IgnoreDraftForHighlight", false);
         draftLinesMode = LC_GET_BOOL("DraftLinesMode", false);
 
+
         m_panOnZoom = LC_GET_BOOL("PanOnZoom", false);
         m_skipFirstZoom = LC_GET_BOOL("FirstTimeNoZoom", false);
     } // Appearance group
@@ -158,6 +161,9 @@ void RS_GraphicView::loadSettings() {
 
         int minEllipseMinor100 = LC_GET_INT("MinEllipseMinor", 200);
         minEllipseMinorRadius = minEllipseMinor100 / 100.0;
+
+        drawTextsAsDraftForPanning = LC_GET_BOOL("DrawTextsAsDraftInPanning", true);
+        drawTextsAsDraftForPreview = LC_GET_BOOL("DrawTextsAsDraftInPreview", true);
     } // Render group
     LC_GROUP_END();
 
@@ -192,7 +198,107 @@ void RS_GraphicView::loadSettings() {
     if (grid != nullptr){
         grid->loadSettings();
     }
+
+
+    LC_GROUP("InfoOverlayCursor");
+    {
+        infoCursorOverlayPreferences.enabled = LC_GET_BOOL("Enabled", true);
+        if (infoCursorOverlayPreferences.enabled) {
+            infoCursorOverlayPreferences.showAbsolutePosition = LC_GET_BOOL("ShowAbsolute", true);
+            infoCursorOverlayPreferences.showRelativePositionDistAngle = LC_GET_BOOL("ShowRelativeDA", true);
+            infoCursorOverlayPreferences.showRelativePositionDeltas = LC_GET_BOOL("ShowRelativeDD", true);
+            infoCursorOverlayPreferences.showSnapType = LC_GET_BOOL("ShowSnapInfo", true);
+            infoCursorOverlayPreferences.showCurrentActionName = LC_GET_BOOL("ShowActionName", true);
+            infoCursorOverlayPreferences.showCommandPrompt = LC_GET_BOOL("ShowPrompt", true);
+            infoCursorOverlayPreferences.showLabels = LC_GET_BOOL("ShowLabels", false);
+            infoCursorOverlayPreferences.multiLine = !LC_GET_BOOL("SingleLine", true);
+
+            infoCursorOverlayPreferences.showEntityInfoOnCatch = LC_GET_BOOL("ShowPropertiesCatched", true);
+            infoCursorOverlayPreferences.showEntityInfoOnCreation = LC_GET_BOOL("ShowPropertiesCreating", true);
+            infoCursorOverlayPreferences.showEntityInfoOnModification = LC_GET_BOOL("ShowPropertiesEdit", true);
+
+            int infoCursorFontSize = LC_GET_INT("FontSize", 10);
+            // todo - potentially, we may use different font sizes for different zones later
+            infoCursorOverlayPreferences.options.setFontSize(infoCursorFontSize);
+            infoCursorOverlayPreferences.options.fontName = LC_GET_STR("FontName", "Helvetica");
+            infoCursorOverlayPreferences.options.offset = LC_GET_INT("OffsetFromCursor", 10);
+        }
+    }
+
+    LC_GROUP("Colors");
+    {
+        if (infoCursorOverlayPreferences.enabled) {
+            infoCursorOverlayPreferences.options.zone1Settings.color = QColor(LC_GET_STR("info_overlay_absolute", RS_Settings::overlayInfoCursorAbsolutePos));
+            infoCursorOverlayPreferences.options.zone2Settings.color = QColor(LC_GET_STR("info_overlay_snap", RS_Settings::overlayInfoCursorSnap));
+            infoCursorOverlayPreferences.options.zone3Settings.color = QColor(LC_GET_STR("info_overlay_relative", RS_Settings::overlayInfoCursorRelativePos));
+            infoCursorOverlayPreferences.options.zone4Settings.color = QColor(LC_GET_STR("info_overlay_prompt", RS_Settings::overlayInfoCursorCommandPrompt));
+        }
+    }
+    LC_GROUP_END();
 }
+
+void RS_GraphicView::updateEndCapsStyle(const RS_Graphic *graphic) {//        Lineweight endcaps setting for new objects:
+//        0 = none; 1 = round; 2 = angle; 3 = square
+    int endCaps = graphic->getGraphicVariableInt("$ENDCAPS", 1);
+    switch (endCaps){
+        case 0:
+            penCapStyle = Qt::FlatCap;
+            break;
+        case 1:
+            penCapStyle = Qt::RoundCap;
+            break;
+        case 2:
+            penCapStyle = Qt::MPenCapStyle;
+            break;
+        case 3:
+            penCapStyle = Qt::SquareCap;
+            break;
+        default:
+            penCapStyle = Qt::FlatCap; // fixme - or round?
+    }
+}
+
+void RS_GraphicView::updatePointsStyle(RS_Graphic *graphic) {
+    pdmode = graphic->getGraphicVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
+    pdsize = graphic->getGraphicVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
+}
+
+void RS_GraphicView::updateJoinStyle(const RS_Graphic *graphic) {//0=none; 1= round; 2 = angle; 3 = flat
+    int joinStyle = graphic->getGraphicVariableInt("$JOINSTYLE", 1);
+
+    switch (joinStyle){
+        case 0:
+            penJoinStyle = Qt::BevelJoin;
+            break;
+        case 1:
+            penJoinStyle = Qt::RoundJoin;
+            break;
+        case 2:
+            penJoinStyle = Qt::MiterJoin;
+            break;
+        case 3:
+            penJoinStyle = Qt::BevelJoin;
+            break;
+        default:
+            penJoinStyle = Qt::RoundJoin;
+    }
+}
+
+void RS_GraphicView::updateUnitAndDefaultWidthFactors(const RS_Graphic *graphic) {
+    unitFactor = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
+    unitFactor100 =  this->unitFactor / 100.0;
+    defaultWidthFactor = graphic->getVariableDouble("$DIMSCALE", 1.0);
+}
+
+void RS_GraphicView::updateGraphicRelatedSettings(RS_Graphic *graphic) {
+    if (graphic != nullptr) {
+        updateUnitAndDefaultWidthFactors(graphic);
+        updatePointsStyle(graphic);
+        updateEndCapsStyle(graphic);
+        updateJoinStyle(graphic);
+    }
+}
+
 
 RS_GraphicView::~RS_GraphicView(){
     qDeleteAll(overlayEntities);
@@ -349,11 +455,36 @@ RS_ActionInterface *RS_GraphicView::getCurrentAction() {
     }
 }
 
+QString  RS_GraphicView::getCurrentActionName() {
+    if (eventHandler) {
+        QAction* qaction = eventHandler->getQAction();
+        if (qaction != nullptr){
+//            return qaction->text();
+          // todo - sand - actually, this is bad dependency, should be refactored
+          return LC_ShortcutsManager::getPlainActionToolTip(qaction);
+        }
+    }
+    return "";
+}
+
+QIcon RS_GraphicView::getCurrentActionIcon() {
+    if (eventHandler) {
+        QAction* qaction = eventHandler->getQAction();
+        if (qaction != nullptr){
+            return qaction->icon();
+        }
+    }
+    return QIcon();
+}
+
+
+
 /**
  * Sets the current action of the event handler.
  */
 void RS_GraphicView::setCurrentAction(RS_ActionInterface *action) {
     if (eventHandler) {
+        markRelativeZero();
         eventHandler->setCurrentAction(action);
     }
 }
@@ -1562,8 +1693,9 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
             drawEntityPlain(painter, e, patternOffset);
         }
         else {
+            RS2::EntityType entityType = e->rtti();
             if (isDraftMode()) {
-                switch (e->rtti()) {
+                switch (entityType) {
                     case RS2::EntityMText:
                     case RS2::EntityText:
                     case RS2::EntityImage:
@@ -1579,14 +1711,49 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
                         drawEntityPlain(painter, e, patternOffset);
                 }
             } else {
-                // set pen (color):
-                if (draftLinesMode) {
-                    setPenForDraftEntity(painter, e, patternOffset, false);
+                // the code below is ugly as code for normal painting is duplicated.
+                // however, it's intentional and made for perfromance reasons - to avoid additional checks or method calls during painting
+                if (isPanning()){
+                    switch (entityType){
+                        case RS2::EntityMText:
+                        case RS2::EntityText:{
+                            if (drawTextsAsDraftForPanning){
+                                setPenForDraftEntity(painter, e, patternOffset, false);
+                                e->drawDraft(painter, this, patternOffset);
+                            }
+                            else{
+                                // normal painting
+                                if (draftLinesMode) {
+                                    setPenForDraftEntity(painter, e, patternOffset, false);
+                                } else {
+                                    setPenForEntity(painter, e, patternOffset, false);
+                                }
+                                drawEntityPlain(painter, e, patternOffset);
+                            }
+                            break;
+                        }
+                        default:
+                            // normal painting
+                            // set pen (color):
+                            if (draftLinesMode) {
+                                setPenForDraftEntity(painter, e, patternOffset, false);
+                            } else {
+                                setPenForEntity(painter, e, patternOffset, false);
+                            }
+                            drawEntityPlain(painter, e, patternOffset);
+                            break;
+                    }
                 }
-                else{
-                    setPenForEntity(painter, e, patternOffset, false);
+                else {
+                    // normal painting
+                    // set pen (color):
+                    if (draftLinesMode) {
+                        setPenForDraftEntity(painter, e, patternOffset, false);
+                    } else {
+                        setPenForEntity(painter, e, patternOffset, false);
+                    }
+                    drawEntityPlain(painter, e, patternOffset);
                 }
-                drawEntityPlain(painter, e, patternOffset);
             }
 
             // draw reference points:
@@ -2162,7 +2329,7 @@ public:
  * Gets the specified overlay container.
  */
 RS_EntityContainer *RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics position) {
-    if (overlayEntities[position]) {
+    if (overlayEntities.contains(position)) {
         return overlayEntities[position];
     }
     if (position == RS2::OverlayGraphics::OverlayEffects) {
@@ -2520,12 +2687,33 @@ void RS_GraphicView::setForcedActionKillAllowed(bool enabled) {
     forcedActionKillAllowed = enabled;
 }
 
+QString RS_GraphicView::obtainEntityDescription([[maybe_unused]]RS_Entity *entity, [[maybe_unused]]RS2::EntityDescriptionLevel descriptionLevel) {
+    return "";
+}
 
-bool RS_GraphicView::getPanOnZoom() const
-{
+void RS_GraphicView::setShowEntityDescriptionOnHover(bool show) {
+    showEntityDescriptionOnHover = show;
+}
+
+
+bool RS_GraphicView::getPanOnZoom() const{
     return m_panOnZoom;
 }
-bool RS_GraphicView::getSkipFirstZoom() const
-{
+
+bool RS_GraphicView::getSkipFirstZoom() const{
     return m_skipFirstZoom;
+}
+
+
+bool RS_GraphicView::isDrawTextsAsDraftForPreview() const {
+    return drawTextsAsDraftForPreview;
+}
+
+RS_Undoable *RS_GraphicView::getRelativeZeroUndoable() {
+    RS_Undoable* result = nullptr;
+    if (LC_LineMath::isMeaningfulDistance(markedRelativeZero, relativeZero)){
+        result = new LC_UndoableRelZero(this, markedRelativeZero, relativeZero);
+        markRelativeZero();
+    }
+    return result;
 }

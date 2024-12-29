@@ -117,25 +117,27 @@ void RS_ActionBlocksInsert::trigger() {
 }
 
 void RS_ActionBlocksInsert::mouseMoveEvent(QMouseEvent* e) {
+    deletePreview();
     switch (getStatus()) {
         case SetTargetPoint: {
             data->insertionPoint = snapPoint(e);
 
             if (block) {
-                deletePreview();
+
                 //preview->addAllFrom(*block);
 //preview->move(data->insertionPoint);
                 RS_Creation creation(preview.get(), nullptr, false);
 // Create insert as preview only
                 data->updateMode = RS2::PreviewUpdate;
                 creation.createInsert(data.get());
-                drawPreview();
+
             }
             break;
         }
         default:
             break;
     }
+    drawPreview();
 }
 
 void RS_ActionBlocksInsert::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {

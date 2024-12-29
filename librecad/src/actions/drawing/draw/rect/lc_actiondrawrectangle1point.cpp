@@ -56,7 +56,10 @@ const std::vector<RS_Vector> LC_ActionDrawRectangle1Point::snapPoints {
  * @param snapPoint primary point used for positioning of shape
  * @return positioned polyline
  */
-RS_Polyline *LC_ActionDrawRectangle1Point::createPolyline(const RS_Vector &snapPoint){
+LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle1Point::createPolyline(const RS_Vector &snapPoint){
+
+    ShapeData result;
+    result.snapPoint = snapPoint;
 
     bool inFreeAngleMode = getStatus() == SetAngleFree;
 
@@ -94,6 +97,11 @@ RS_Polyline *LC_ActionDrawRectangle1Point::createPolyline(const RS_Vector &snapP
     RS_Vector bottomRightCorner = RS_Vector(x + halfWidth, y - halfHeight);
     RS_Vector topLeftCorner = RS_Vector(x - halfWidth, y + halfHeight);
 
+    result.height = bottomLeftCorner.distanceTo(topLeftCorner);
+    result.width = bottomLeftCorner.distanceTo(bottomRightCorner);
+
+    RS_Vector center = RS_Vector((bottomLeftCorner + topRightCorner)*0.5);
+
     RS_Polyline *polyline = createPolylineByVertexes(bottomLeftCorner, bottomRightCorner, topRightCorner, topLeftCorner, drawBulge, drawComplex, radiusX, radiusY);
 
     // shape is built, so now we'll position it
@@ -116,6 +124,8 @@ RS_Polyline *LC_ActionDrawRectangle1Point::createPolyline(const RS_Vector &snapP
     // move shape so it's reference point will correspond to provided snap point
     polyline->move(moveVector);
 
+    center.move(moveVector);
+
     double actualBaseAngle = 0.0;
     if (baseAngleIsFixed){
         actualBaseAngle = RS_Math::deg2rad(angle);
@@ -132,12 +142,16 @@ RS_Polyline *LC_ActionDrawRectangle1Point::createPolyline(const RS_Vector &snapP
         // now we'll rotate shape on specific angle
         if (inFreeAngleMode){
             polyline->rotate(insertionPoint, actualBaseAngle);
+            center.rotate(insertionPoint, actualBaseAngle);
         }
         else {
             polyline->rotate(snapPoint, actualBaseAngle);
+            center.rotate(snapPoint, actualBaseAngle);
         }
     }
-    return polyline;
+    result.centerPoint = center;
+    result.resultingPolyline = polyline;
+    return result;
 }
 
 int LC_ActionDrawRectangle1Point::doGetStatusForInitialSnapToRelativeZero(){

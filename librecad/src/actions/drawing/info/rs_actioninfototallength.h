@@ -28,6 +28,7 @@
 #define RS_ACTIONINFOTOTALLENGTH_H
 
 #include "rs_actioninterface.h"
+#include "lc_actionpreselectionawarebase.h"
 
 
 /**
@@ -35,21 +36,15 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionInfoTotalLength : public RS_ActionInterface {
+class RS_ActionInfoTotalLength : public LC_ActionPreSelectionAwareBase {
 Q_OBJECT
 
-protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
 
 public:
     RS_ActionInfoTotalLength(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
 
-    void init(int status) override;
-    void trigger() override;
-
     void drawSnapper() override;
-
 protected:
     /**
      * Action States.
@@ -57,6 +52,11 @@ protected:
     enum Status {
         Acknowledge    /**< Acknowledge or cancel. */
     };
+
+    void updateMouseButtonHintsForSelection() override;
+    void doTrigger(bool selected) override;
+    bool isAllowTriggerOnEmptySelection() override;
+    void finishMouseMoveOnSelection(QMouseEvent *event) override;
 };
 
 #endif
