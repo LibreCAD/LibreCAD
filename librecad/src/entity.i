@@ -205,8 +205,8 @@
 %include "lib/engine/overlays/references/lc_refellipse.h"
 %include "lib/engine/overlays/references/lc_refline.h"
 %include "lib/engine/overlays/references/lc_refpoint.h"
-%include "lib/engine/overlays/lc_crosshair.h"
-%include "lib/engine/overlays/rs_overlaybox.h"
+%include "lib/engine/overlays/crosshair/lc_crosshair.h"
+%include "lib/engine/overlays/overlay_box/rs_overlaybox.h"
 %include "lib/engine/overlays/rs_overlayline.h"
 //%include "lib/engine/utils/lc_rtree.h"                                    // problem child X-(
 //%include "lib/engine/utils/rs_utility.h"                                  // problem child X-(
