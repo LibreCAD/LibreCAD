@@ -9,6 +9,8 @@ DISABLE_POSTSCRIPT = false
 
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
+DEFINES += DEVELOPER
+DEFINES += RS_OPT_PYTHON
 
 LC_VERSION="2.2.2.6-alpha"
 LC_PRERELEASE = "true";
@@ -21,6 +23,7 @@ GENERATED_DIR = ../../generated/librecad
 include(../../common.pri)
 include(./boost.pri)
 include(./muparser.pri)
+include(./entity.pri)
 
 CONFIG += qt \
     warn_on \
@@ -73,6 +76,9 @@ unix {
         }
         DEFINES -=  QT_NO_SHORTCUT
     }
+    QT_CONFIG -= no-pkg-config
+    CONFIG += link_pkgconfig
+    PKGCONFIG += python3-embed
 }
 win32 {
     TARGET = LibreCAD
@@ -137,6 +143,8 @@ INCLUDEPATH += \
     lib/math \
     lib/modification \
     lib/printing \
+    lib/scripting \
+    lib/scripting/lisp \
     actions \
     actions/dock_widgets \
     actions/dock_widgets/block \
@@ -224,6 +232,8 @@ INCLUDEPATH += \
     ui/dock_widgets \
     ui/dock_widgets/block_widget \
     ui/dock_widgets/command_line \
+    ui/dock_widgets/lsp_command_line \
+    ui/dock_widgets/py_command_line \
     ui/dock_widgets/entity_info \
     ui/dock_widgets/layer_widget \
     ui/dock_widgets/layers_tree \
@@ -231,6 +241,7 @@ INCLUDEPATH += \
     ui/dock_widgets/pen_palette \
     ui/dock_widgets/pen_wizard \
     ui/dock_widgets/views_list \
+    ui/editor \
     ui/main \
     ui/view \
     # ui/not_used \
@@ -400,7 +411,7 @@ HEADERS += \
     lib/gui/rs_grid.h \
     lib/gui/rs_linetypepattern.h \
     lib/gui/rs_mainwindowinterface.h \
-    lib/gui/rs_painter.h \    
+    lib/gui/rs_painter.h \
     lib/gui/rs_staticgraphicview.h \
     lib/information/rs_locale.h \
     lib/information/rs_information.h \
@@ -420,13 +431,34 @@ HEADERS += \
     lib/engine/utils/lc_rtree.h \
     lib/engine/undo/lc_undosection.h \
     lib/printing/lc_printing.h \
+    lib/scripting/lisp/Debug.h \
+    lib/scripting/lisp/Environment.h \
+    lib/scripting/lisp/LCL.h \
+    lib/scripting/lisp/lisp.h \
+    lib/scripting/lisp/lisp_version.h \
+    lib/scripting/lisp/RefCountedPtr.h \
+    lib/scripting/lisp/StaticList.h \
+    lib/scripting/lisp/String.h \
+    lib/scripting/lisp/Types.h \
+    lib/scripting/rs_dialogs.h \
+    lib/scripting/rs_lisp.h \
+    lib/scripting/rs_lsp_inputhandle.h \
+    lib/scripting/rs_py_inputhandle.h \
+    lib/scripting/rs_python.h \
+    lib/scripting/rs_pythondcl.h \
+    lib/scripting/rs_pythongui.h \
+    lib/scripting/rs_pythonlisp.h \
+    lib/scripting/rs_python_wrappers.h \
+    lib/scripting/rs_script.h \
+    lib/scripting/rs_scriptlist.h \
+    lib/scripting/rs_simplepython.h \
     main/lc_application.h \
     ui/action_options/curve/lc_ellipsearcoptions.h \
     ui/action_options/ellipse/lc_ellipse1pointoptions.h \
     ui/components/status_bar/lc_relzerocoordinateswidget.h \
     ui/dialogs/lc_dialog.h \
     ui/main/lc_mdiapplicationwindow.h
-    
+
 SOURCES += \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp \
@@ -561,7 +593,7 @@ SOURCES += \
     lib/gui/rs_graphicview.cpp \
     lib/gui/rs_grid.cpp \
     lib/gui/rs_linetypepattern.cpp \
-    lib/gui/rs_painter.cpp \    
+    lib/gui/rs_painter.cpp \
     lib/gui/rs_staticgraphicview.cpp \
     lib/information/rs_locale.cpp \
     lib/information/rs_information.cpp \
@@ -586,6 +618,26 @@ SOURCES += \
     lib/engine/undo/lc_undosection.cpp \
     lib/engine/rs.cpp \
     lib/printing/lc_printing.cpp \
+    lib/scripting/lisp/Core.cpp \
+    lib/scripting/lisp/Environment.cpp \
+    lib/scripting/lisp/Environment.h \
+    lib/scripting/lisp/lisp.cpp \
+    lib/scripting/lisp/Reader.cpp \
+    lib/scripting/lisp/String.cpp \
+    lib/scripting/lisp/Types.cpp \
+    lib/scripting/lisp/Validation.cpp \
+    lib/scripting/rs_dialogs.cpp \
+    lib/scripting/rs_lisp.cpp \
+    lib/scripting/rs_lsp_inputhandle.cpp \
+    lib/scripting/rs_py_inputhandle.cpp \
+    lib/scripting/rs_python.cpp \
+    lib/scripting/rs_pythondcl.cpp \
+    lib/scripting/rs_pythongui.cpp \
+    lib/scripting/rs_pythonlisp.cpp \
+    lib/scripting/rs_python_wrappers.cpp \
+    lib/scripting/rs_script.cpp \
+    lib/scripting/rs_scriptlist.cpp \
+    lib/scripting/rs_simplepython.cpp \
     main/lc_application.cpp \
     ui/action_options/curve/lc_ellipsearcoptions.cpp \
     ui/action_options/ellipse/lc_ellipse1pointoptions.cpp \
@@ -707,7 +759,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/info/rs_actioninfoarea.h \
     actions/drawing/info/rs_actioninfodist.h \
     actions/drawing/info/rs_actioninfodist2.h \
-    actions/drawing/info/rs_actioninfototallength.h \    
+    actions/drawing/info/rs_actioninfototallength.h \
     actions/drawing/info/rs_actioninfoinside.h \
     actions/drawing/lc_abstractactionwithpreview.h \
     actions/drawing/modify/lc_actionmodifybase.h \
@@ -1083,6 +1135,12 @@ HEADERS += ui/action_options/circle/lc_circlebyarcoptions.h \
     ui/dock_widgets/command_line/qg_commandedit.h \
     ui/dock_widgets/command_line/qg_commandhistory.h \
     ui/dock_widgets/command_line/qg_commandwidget.h \
+    ui/dock_widgets/lsp_command_line/qg_lsp_commandedit.h \
+    ui/dock_widgets/lsp_command_line/qg_lsp_commandhistory.h \
+    ui/dock_widgets/lsp_command_line/qg_lsp_commandwidget.h \
+    ui/dock_widgets/py_command_line/qg_py_commandedit.h \
+    ui/dock_widgets/py_command_line/qg_py_commandhistory.h \
+    ui/dock_widgets/py_command_line/qg_py_commandwidget.h \
     ui/dock_widgets/entity_info/lc_quickinfobasedata.h \
     ui/dock_widgets/entity_info/lc_quickinfoentitydata.h \
     ui/dock_widgets/entity_info/lc_quickinfopointsdata.h \
@@ -1109,6 +1167,16 @@ HEADERS += ui/action_options/circle/lc_circlebyarcoptions.h \
     ui/dock_widgets/pen_wizard/colorcombobox.h \
     ui/dock_widgets/pen_wizard/colorwizard.h \
     ui/dock_widgets/pen_wizard/lc_penwizard.h \
+    ui/editor/librelisp.h \
+    ui/editor/librepad.h \
+    ui/editor/librepython.h \
+    ui/editor/dclhighlighter.h \
+    ui/editor/lisphighlighter.h \
+    ui/editor/lp_version.h \
+    ui/editor/lpmessage.h \
+    ui/editor/lpsearchbar.h \
+    ui/editor/pythonhighlighter.h \
+    ui/editor/texteditor.h \
     ui/lc_actionfactory.h \
     ui/lc_widgetfactory.h \
     ui/main/mainwindowx.h \
@@ -1269,6 +1337,12 @@ SOURCES += ui/action_options/circle/lc_circlebyarcoptions.cpp \
     ui/dock_widgets/command_line/qg_commandedit.cpp \
     ui/dock_widgets/command_line/qg_commandhistory.cpp \
     ui/dock_widgets/command_line/qg_commandwidget.cpp \
+    ui/dock_widgets/lsp_command_line/qg_lsp_commandedit.cpp \
+    ui/dock_widgets/lsp_command_line/qg_lsp_commandhistory.cpp \
+    ui/dock_widgets/lsp_command_line/qg_lsp_commandwidget.cpp \
+    ui/dock_widgets/py_command_line/qg_py_commandedit.cpp \
+    ui/dock_widgets/py_command_line/qg_py_commandhistory.cpp \
+    ui/dock_widgets/py_command_line/qg_py_commandwidget.cpp \
     ui/dock_widgets/entity_info/lc_quickinfobasedata.cpp \
     ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp \
     ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp \
@@ -1295,6 +1369,15 @@ SOURCES += ui/action_options/circle/lc_circlebyarcoptions.cpp \
     ui/dock_widgets/pen_wizard/colorcombobox.cpp \
     ui/dock_widgets/pen_wizard/colorwizard.cpp \
     ui/dock_widgets/pen_wizard/lc_penwizard.cpp \
+    ui/editor/librelisp.cpp \
+    ui/editor/librepad.cpp \
+    ui/editor/librepython.cpp \
+    ui/editor/dclhighlighter.cpp \
+    ui/editor/lisphighlighter.cpp \
+    ui/editor/lpmessage.cpp \
+    ui/editor/lpsearchbar.cpp \
+    ui/editor/pythonhighlighter.cpp \
+    ui/editor/texteditor.cpp \
     ui/lc_actionfactory.cpp \
     ui/lc_widgetfactory.cpp \
     ui/main/mainwindowx.cpp \
@@ -1440,6 +1523,8 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui \
        ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui \
        ui/dock_widgets/command_line/qg_commandwidget.ui \
+       ui/dock_widgets/lsp_command_line/qg_lsp_commandwidget.ui \
+       ui/dock_widgets/py_command_line/qg_py_commandwidget.ui \
        ui/dock_widgets/entity_info/lc_quickinfowidget.ui \
        ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui \
        ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui \
@@ -1449,6 +1534,9 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dock_widgets/pen_wizard/colorwizard.ui \
        ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui \
        ui/dock_widgets/views_list/lc_namedviewslistwidget.ui \
+       ui/editor/librepad.ui \
+       ui/editor/searchbarincremental.ui \
+       ui/editor/searchbarpower.ui \
        ui/not_used/customtoolbarcreator.ui \
        ui/not_used/customwidgetcreator.ui \
        ui/not_used/qg_dimlinearoptions.ui \
@@ -1459,14 +1547,14 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
 # ################################################################################
 # Main
 HEADERS += \
-    main/qc_dialogfactory.h \    
+    main/qc_dialogfactory.h \
     main/doc_plugin_interface.h \
     plugins/document_interface.h \
     plugins/qc_plugininterface.h \
     plugins/intern/qc_actiongetpoint.h \
     plugins/intern/qc_actiongetselect.h \
     plugins/intern/qc_actiongetent.h \
-    main/main.h \    
+    main/main.h \
     main/console_dxf2pdf/console_dxf2pdf.h \
     main/console_dxf2pdf/pdf_print_loop.h
 
@@ -1476,7 +1564,7 @@ SOURCES += \
     plugins/intern/qc_actiongetpoint.cpp \
     plugins/intern/qc_actiongetselect.cpp \
     plugins/intern/qc_actiongetent.cpp \
-    main/main.cpp \    
+    main/main.cpp \
     main/console_dxf2pdf/console_dxf2pdf.cpp \
     main/console_dxf2pdf/pdf_print_loop.cpp
 

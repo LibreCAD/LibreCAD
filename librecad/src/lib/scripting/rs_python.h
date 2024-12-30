@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,55 +15,83 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#define PYBIND11_NO_KEYWORDS
+#define PY_SSIZE_T_CLEAN
+#include <Python.h>
 #ifndef RS_PYTHON_H
 #define RS_PYTHON_H
 
+#include "qg_py_commandedit.h"
+
 #ifdef RS_OPT_PYTHON
 
-#include "Python.h"
+#include <QString>
 
-#include "rs_graphic.h"
+#define COPYRIGHT \
+"\nType \"help\", \"copyright\", \"credits\" or \"license\" " \
+    "for more information."
 
 #define RS_PYTHON RS_Python::instance()
 
-/**
- * Python scripting support.
- *
- * OBSOLETE
- *
- * @author Andrew Mustun
- */
-class RS_Python {
-private:
-    RS_Python();
+extern class QG_Py_CommandEdit *Py_CommandEdit;
 
+typedef struct v3 {
+    double x = 0.0;
+    double y = 0.0;
+    double z = 0.0;
+} v3_t;
+
+/*
+ * LibreCAD Python scripting support.
+ *
+ * rewritten by
+ *
+ * @author Emanuel Strobel
+ *
+ * 2024
+ *
+ */
+
+class RS_Python
+{
 public:
     static RS_Python* instance();
+    ~RS_Python();
 
-    void setGraphic(RS_Graphic* g) {
-        graphic = g;
-    }
+    QString Py_GetVersionString() const { return QString("Python ") + QString(Py_GetVersion()) + QString(" on ") + QString(Py_GetPlatform()) + QString(COPYRIGHT); }
 
-    RS_Graphic* getGraphic() {
-        return graphic;
-    }
-
-    int launch(const QString& script);
+    int addSysPath(const QString& path);
+    int runCommand(const QString& command, QString& buf_out, QString& buf_err);
+    int runFileCmd(const QString& name, QString& buf_out, QString& buf_err);
+    int runFile(const QString& name);
+    int evalString(const QString& command, QString& result);
+    int evalInteger(const QString& command, int& result);
+    int evalFloat(const QString& command, double& result);
+    int evalVector(const QString& command, v3_t& vec);
+    int runString(const QString& str);
+    int fflush(const QString& stream);
+    int runModulFunc(const QString& module, const QString& func);
+    int execFileFunc(const QString& file, const QString& func);
+    int execModuleFunc(const QString& module, const QString& func);
 
 private:
-    static RS_Python* uniqueInstance;
-    RS_Graphic* graphic;
+    RS_Python();
+    static RS_Python* unique;
+    PyObject* m_pGlobalMain;
+    PyObject* m_pGlobalDict;
+    PyObject* globalMain() { return m_pGlobalMain; }
+    PyObject* Py_GlobalDict() { return m_pGlobalDict; }
 };
 
-#endif
+#endif // RS_OPT_PYTHON
 
-#endif
+#endif // RS_PYTHON_H
+

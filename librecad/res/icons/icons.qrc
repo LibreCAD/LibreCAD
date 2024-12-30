@@ -301,6 +301,12 @@
         <file>align_one.svg</file>
         <file>line_polygon_size_size.svg</file>
         <file>align_ref.svg</file>
+        <file>run.svg</file>
+        <file>open_script.svg</file>
+        <file>debug.svg</file>
+        <file>trace.svg</file>
+        <file>recent.svg</file>
+        <file>untrace.svg</file>
         <file>info_cursor_enable.svg</file>
         <file>info_cursor_entity.svg</file>
         <file>info_cursor_zone1.svg</file>
@@ -310,4 +316,5 @@
         <file>info_cursor_zone2_entity.svg</file>
         <file>entity_description_info.svg</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

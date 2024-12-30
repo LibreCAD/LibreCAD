@@ -1,0 +1,202 @@
+#include "rs_python.h"
+#include "rs_pythongui.h"
+#include "rs_dialogs.h"
+#include "rs_py_inputhandle.h"
+
+#include "qc_applicationwindow.h"
+#include "qg_actionhandler.h"
+#include "rs_eventhandler.h"
+#include "intern/qc_actiongetpoint.h"
+
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QInputDialog>
+
+RS_PythonGui::RS_PythonGui()
+{
+}
+
+RS_PythonGui::~RS_PythonGui()
+{
+}
+
+RS_Document* RS_PythonGui::getDocument() const
+{
+    return QC_ApplicationWindow::getAppWindow()->getDocument();
+}
+
+RS_EntityContainer* RS_PythonGui::getContainer() const
+{
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+    return graphicView->getContainer();
+}
+
+RS_Graphic* RS_PythonGui::getGraphic() const
+{
+    auto& appWin=QC_ApplicationWindow::getAppWindow();
+    RS_Document* d = appWin->getDocument();
+
+    if (d && d->rtti()==RS2::EntityGraphic)
+    {
+        RS_Graphic* graphic = (RS_Graphic*)d;
+        if (graphic==NULL) {
+            return NULL;
+        }
+        return graphic;
+    }
+    return NULL;
+}
+
+void RS_PythonGui::MessageBox(const char *msg)
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("LibreCAD");
+    msgBox.setText(QObject::tr(msg));
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.exec();
+}
+
+const char *RS_PythonGui::OpenFileDialog(const char *title, const char *fileName, const char *fileExt)
+{
+    static std::string result = qUtf8Printable(QFileDialog::getOpenFileName(nullptr, QObject::tr(title), fileName, QObject::tr(fileExt)));
+    return result.c_str();
+}
+
+int RS_PythonGui::GetIntDialog(const char *prompt)
+{
+    return QInputDialog::getInt(nullptr,
+            "LibreCAD",
+            QObject::tr(prompt),
+            // , int value = 0, int min = -2147483647, int max = 2147483647, int step = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags())
+            0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags());
+}
+
+double RS_PythonGui::GetDoubleDialog(const char *prompt)
+{
+    return QInputDialog::getDouble(nullptr,
+            "LibreCAD",
+            QObject::tr(prompt),
+            // double value = 0, double min = -2147483647, double max = 2147483647, int decimals = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), double step = 1)
+            0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags(), 1);
+}
+
+const char *RS_PythonGui::GetStringDialog(const char *prompt)
+{
+    static std::string result = qUtf8Printable(
+        QInputDialog::getText(nullptr,
+            "LibreCAD",
+            QObject::tr(prompt),
+            //QLineEdit::EchoMode mode = QLineEdit::Normal, const QString &text = QString(), bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), Qt::InputMethodHints inputMethodHints = Qt::ImhNone)
+            QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone));
+    return result.c_str();
+}
+
+RS_Vector RS_PythonGui::getPoint(const char *msg) const
+{
+    double x;
+    double y;
+
+    QString prompt = msg;
+    if (prompt.compare("") != -1)
+    {
+        prompt = "Enter a point: ";
+    }
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_Document* doc = appWin->getDocument();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+
+    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
+    {
+        return RS_Vector(-16777215.0, -16777215.0);
+    }
+
+    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
+    if (a)
+    {
+        QPointF *point = new QPointF;
+        bool status = false;
+
+        if (!(prompt.isEmpty()))
+        {
+            a->setMessage(prompt);
+        }
+
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+#if 0
+        if (base) a->setBasepoint(base);
+#endif
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!graphicView->getEventHandler()->hasAction())
+                break;
+        }
+        if (a->isCompleted() && !a->wasCanceled())
+        {
+            a->getPoint(point);
+            status = true;
+        }
+        //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
+        graphicView->killAllActions();
+
+        if(status)
+        {
+            x = point->x();
+            y = point->y();
+            delete point;
+            RS_Vector(x, y);
+        }
+        else
+        {
+            delete point;
+        }
+    }
+
+    return RS_Vector(-16777215.0, -16777215.0);
+}
+
+char RS_PythonGui::ReadCharDialog()
+{
+    return RS_InputDialog::readChar();
+}
+
+void RS_PythonGui::prompt(const char *prompt)
+{
+    if (Py_CommandEdit != nullptr)
+    {
+        Py_CommandEdit->setPrompt(prompt);
+        Py_CommandEdit->setFocus();
+        Py_CommandEdit->doProcess(false);
+
+        RS_Py_InputHandle::readLine(Py_CommandEdit);
+        Py_CommandEdit->setPrompt(">>> ");
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("LibreCAD");
+        msgBox.setText(prompt);
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.exec();
+    }
+}
+
+void RS_PythonGui::command(const char *cmd)
+{
+    QString scmd = cmd;
+    scmd = scmd.simplified();
+    QStringList coms = scmd.split(" ");
+
+    QG_ActionHandler* actionHandler = nullptr;
+    actionHandler = QC_ApplicationWindow::getAppWindow()->getActionHandler();
+    if (actionHandler) {
+        for(auto & s : coms)
+        {
+            actionHandler->command(s);
+        }
+    }
+}

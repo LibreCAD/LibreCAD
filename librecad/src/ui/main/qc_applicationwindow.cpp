@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
-** 
+**
 ** Copyright (C) 2019 Shawn Curry (noneyabiz@mail.wasent.cz)
 ** Copyright (C) 2018 Simon Wells (simonrwells@gmail.com)
 ** Copyright (C) 2015-2016 ravas (github.com/r-a-v-a-s)
@@ -28,7 +28,10 @@
 **********************************************************************/
 
 // Changes: https://github.com/LibreCAD/LibreCAD/commits/master/librecad/src/main/qc_applicationwindow.cpp
-
+#ifdef DEVELOPER
+#include "rs_python.h"
+#include "rs_lisp.h"
+#endif
 #include "qc_applicationwindow.h"
 
 #include <QByteArray>
@@ -41,6 +44,7 @@
 #include <QPagedPaintDevice>
 #include <QPluginLoader>
 #include <QRegularExpression>
+#include <QSplashScreen>
 #include <QStatusBar>
 #include <QStyleFactory>
 #include <QSysInfo>
@@ -88,6 +92,10 @@
 #include "qg_activelayername.h"
 #include "qg_blockwidget.h"
 #include "qg_commandwidget.h"
+#ifdef DEVELOPER
+#include "qg_lsp_commandwidget.h"
+#include "qg_py_commandwidget.h"
+#endif // DEVELOPER
 #include "qg_coordinatewidget.h"
 #include "qg_dlgimageoptions.h"
 #include "qg_exitdialog.h"
@@ -104,6 +112,10 @@
 #include "lc_releasechecker.h"
 #include "lc_dlgnewversionavailable.h"
 #include "lc_dlgabout.h"
+#ifdef DEVELOPER
+#include "librelisp.h"
+#include "librepython.h"
+#endif
 
 #ifndef QC_APP_ICON
 # define QC_APP_ICON ":/main/librecad.png"
@@ -274,7 +286,10 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     /**/
     blockWidget = widget_factory.block_widget;
     commandWidget = widget_factory.command_widget;
-
+#ifdef DEVELOPER
+    lsp_commandWidget = widget_factory.lsp_command_widget;
+    py_commandWidget = widget_factory.py_command_widget;
+#endif
     penPaletteWidget = widget_factory.pen_palette;
     namedViewsWidget = widget_factory.named_views_widget;
 
@@ -304,7 +319,13 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     auto ctrl_m = new QShortcut(QKeySequence("Ctrl+M"), this);
     connect(ctrl_m, SIGNAL(activated()), this, SLOT(slotFocusCommandLine()));
+#ifdef DEVELOPER
+    auto ctrl_i = new QShortcut(QKeySequence("Ctrl+I"), this);
+    connect(ctrl_i, SIGNAL(activated()), this, SLOT(slotFocusLspCommandLine()));
 
+        auto ctrl_p = new QShortcut(QKeySequence("Ctrl+P"), this);
+    connect(ctrl_p, SIGNAL(activated()), this, SLOT(slotFocusPyCommandLine()));
+#endif
     // This event filter allows sending key events to the command widget, therefore, no
     // need to activate the command widget before typing commands.
     // Since this nice feature causes a bug of lost key events when the command widget is on
@@ -338,7 +359,15 @@ QC_ApplicationWindow::QC_ApplicationWindow():
     auto command_file = settings.value("Paths/VariableFile", "").toString();
     if (!command_file.isEmpty())
         commandWidget->leCommand->readCommandFile(command_file);
+#ifdef DEVELOPER
+    auto lsp_command_file = settings.value("Paths/VariableFile", "").toString();
+    if (!lsp_command_file.isEmpty())
+        lsp_commandWidget->leCommand->runFile(lsp_command_file);
 
+    auto py_command_file = settings.value("Paths/VariableFile", "").toString();
+    if (!py_command_file.isEmpty())
+        py_commandWidget->leCommand->runFile(py_command_file);
+#endif
     // Activate autosave timer
     bool allowAutoSave = settings.value("Defaults/AutoBackupDocument", 1).toBool();
     startAutoSave(allowAutoSave);
@@ -893,7 +922,17 @@ void QC_ApplicationWindow::slotFocusCommandLine() {
     commandWidget->setFocus();
 //    }
 }
+#ifdef DEVELOPER
+void QC_ApplicationWindow::slotFocusLspCommandLine() {
+    lsp_commandWidget->show();
+    lsp_commandWidget->setFocus();
+}
 
+void QC_ApplicationWindow::slotFocusPyCommandLine() {
+    py_commandWidget->show();
+    py_commandWidget->setFocus();
+}
+#endif
 void QC_ApplicationWindow::slotFocusOptionsWidget(){
     if (optionWidget != nullptr){
         optionWidget->setFocus();
@@ -1040,7 +1079,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
             bool locked = activatedGraphicView->isRelativeZeroLocked();
             lockRelZeroAction->setChecked(locked);
         }
-        
+
         blockWidget->setBlockList(activatedDocument->getBlockList());
 
         // Update all inserts in this graphic (blocks might have changed):
@@ -1386,6 +1425,10 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
 //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
 // Link the dialog factory to the command widget:
     QG_DIALOGFACTORY->setCommandWidget(commandWidget);
+#ifdef DEVELOPER
+    QG_DIALOGFACTORY->setLspCommandWidget(lsp_commandWidget);
+    QG_DIALOGFACTORY->setPyCommandWidget(py_commandWidget);
+#endif
     QG_DIALOGFACTORY->setStatusBarManager(statusbarManager);
 
     mdiAreaCAD->addSubWindow(w);
@@ -2050,7 +2093,7 @@ bool QC_ApplicationWindow::slotFileExport(
 
 
 /**
- * Called when a sub window is about to close. 
+ * Called when a sub window is about to close.
  * If modified, show the Save/Close/Cancel dialog, then do the request.
  * If a save is needed but the user cancels, the window is not closed.
  */
@@ -2876,7 +2919,43 @@ void QC_ApplicationWindow::modifyCommandTitleBar(Qt::DockWidgetArea area) {
     if (docked) features |= QDockWidget::DockWidgetVerticalTitleBar;
     cmdDockWidget->setFeatures(features);
 }
+#ifdef DEVELOPER
+void QC_ApplicationWindow::modifyLspCommandTitleBar(Qt::DockWidgetArea area) {
 
+    auto *lsp_cmdDockWidget = findChild<QDockWidget *>("lsp_command_dockwidget");
+
+    auto *lsp_commandWidget = static_cast<QG_Lsp_CommandWidget *>(lsp_cmdDockWidget->widget());
+    QAction *dockingAction = lsp_commandWidget->getDockingAction();
+    bool docked = area & Qt::AllDockWidgetAreas;
+    lsp_cmdDockWidget->setWindowTitle(docked ? tr("Lisp Cmd") : tr("Lisp Command line"));
+    dockingAction->setText(docked ? tr("Float") : tr("Dock", "Dock the lisp command widget to the main window"));
+    QDockWidget::DockWidgetFeatures features =
+        QDockWidget::DockWidgetClosable
+        | QDockWidget::DockWidgetMovable
+        | QDockWidget::DockWidgetFloatable;
+
+    if (docked) features |= QDockWidget::DockWidgetVerticalTitleBar;
+    lsp_cmdDockWidget->setFeatures(features);
+}
+
+void QC_ApplicationWindow::modifyPyCommandTitleBar(Qt::DockWidgetArea area) {
+
+    auto *py_cmdDockWidget = findChild<QDockWidget *>("py_command_dockwidget");
+
+    auto *py_commandWidget = static_cast<QG_Py_CommandWidget *>(py_cmdDockWidget->widget());
+    QAction *dockingAction = py_commandWidget->getDockingAction();
+    bool docked = area & Qt::AllDockWidgetAreas;
+    py_cmdDockWidget->setWindowTitle(docked ? tr("Python Cmd") : tr("Python Command line"));
+    dockingAction->setText(docked ? tr("Float") : tr("Dock", "Dock the python command widget to the main window"));
+    QDockWidget::DockWidgetFeatures features =
+        QDockWidget::DockWidgetClosable
+        | QDockWidget::DockWidgetMovable
+        | QDockWidget::DockWidgetFloatable;
+
+    if (docked) features |= QDockWidget::DockWidgetVerticalTitleBar;
+    py_cmdDockWidget->setFeatures(features);
+}
+#endif // DEVELOPER
 bool QC_ApplicationWindow::loadStyleSheet(QString path) {
     // author: ravas
 
@@ -3314,6 +3393,10 @@ void QC_ApplicationWindow::enableWidgets(bool enable) {
         // command widget should be enabled for print preview as it supports commands...
         // fixme - command widget should be aware of print preview mode and do not support other commands...
         enableWidget(commandWidget, enable);
+#ifdef DEVELOPER
+        enableWidget(lsp_commandWidget, enable);
+        enableWidget(py_commandWidget, enable);
+#endif
     }
 
     // fixme - disable widgets from status bar
@@ -3324,3 +3407,78 @@ void QC_ApplicationWindow::slotRedockWidgets() {
     for (auto *dockwidget: dockwidgets)
         dockwidget->setFloating(false);
 }
+#ifdef DEVELOPER
+/**
+ * Menu Developer -> load LISP script.
+ */
+void QC_ApplicationWindow::slotLoadLisp() {
+    RS_DEBUG->print(__func__);
+
+    QString selfilter = tr("AutoLisp (*.lsp)");
+    QString path = QFileDialog::getOpenFileName(
+        this,
+        tr("Run file"),
+        QApplication::applicationDirPath(),
+        tr("Lisp files (*.lsp *.lisp *.mal);;AutoLisp (*.lsp);;Mal (*.mal)" ),
+        &selfilter
+    );
+
+    if (!path.isEmpty()) {
+        RS_LISP->runFile(path);
+    }
+}
+
+/**
+ * Menu Developer -> LibreLisp Editor.
+ */
+void QC_ApplicationWindow::slotLibreLisp() {
+    RS_DEBUG->print(__func__);
+    QSplashScreen *splash = new QSplashScreen;
+    splash->setPixmap(QPixmap(":/main/librelisp.png"));
+    splash->show();
+    qApp->processEvents();
+    splash->showMessage(QObject::tr("Loading LibreLisp IDE..."),
+                        Qt::AlignRight|Qt::AlignBottom, Qt::black);
+
+    LibreLisp *l = new LibreLisp(this);
+    QTimer::singleShot(1000, l, SLOT(show()));
+    QTimer::singleShot(2000, splash, SLOT(close()));
+}
+
+/**
+ * Menu Developer -> load Python script.
+ */
+void QC_ApplicationWindow::slotLoadPython() {
+    RS_DEBUG->print(__func__);
+
+    QString selfilter = tr("Python Script (*.py)");
+    QString path = QFileDialog::getOpenFileName(
+        this,
+        tr("Run file"),
+        QApplication::applicationDirPath(),
+        tr("Python files (*.py *.pyc);;Python Script (*.py);;Python compiled Script (*.pyc)" ),
+        &selfilter
+    );
+
+    if (!path.isEmpty()) {
+        RS_PYTHON->runFile(path);
+    }
+}
+
+/**
+ * Menu Developer -> LibrePython Editor.
+ */
+void QC_ApplicationWindow::slotLibrePython() {
+    RS_DEBUG->print(__func__);
+    QSplashScreen *splash = new QSplashScreen;
+    splash->setPixmap(QPixmap(":/main/librepython.png"));
+    splash->show();
+    qApp->processEvents();
+    splash->showMessage(QObject::tr("Loading LibrePython IDE..."),
+                        Qt::AlignRight|Qt::AlignBottom, Qt::black);
+
+    LibrePython *p = new LibrePython(this);
+    QTimer::singleShot(1000, p, SLOT(show()));
+    QTimer::singleShot(2000, splash, SLOT(close()));
+}
+#endif // DEVELOPER

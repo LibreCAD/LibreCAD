@@ -58,6 +58,10 @@ class QG_ActiveLayerName;
 class QG_BlockWidget;
 class QG_CadToolBar;
 class QG_CommandWidget;
+#ifdef DEVELOPER // DEVELOPER
+class QG_Lsp_CommandWidget;
+class QG_Py_CommandWidget;
+#endif // DEVELOPER
 class QG_CoordinateWidget;
 class QG_LayerWidget;
 class LC_LayerTreeWidget;
@@ -129,6 +133,10 @@ public slots:
     void slotKillAllActions();
     void slotEnter();
     void slotFocusCommandLine();
+#ifdef DEVELOPER
+    void slotFocusLspCommandLine();
+    void slotFocusPyCommandLine();
+#endif // DEVELOPER
     void slotFocusOptionsWidget();
     void slotError(const QString& msg);
     void slotShowDrawingOptions();
@@ -224,6 +232,10 @@ public slots:
     void widgetOptionsDialog();
 
     void modifyCommandTitleBar(Qt::DockWidgetArea area);
+#ifdef DEVELOPER
+    void modifyLspCommandTitleBar(Qt::DockWidgetArea area);
+    void modifyPyCommandTitleBar(Qt::DockWidgetArea area);
+#endif
     void reloadStyleSheet();
 
     void updateGridStatus(const QString&);
@@ -255,6 +267,12 @@ public slots:
     void checkForNewVersion();
     void forceCheckForNewVersion();
     void slotRedockWidgets();
+#ifdef DEVELOPER
+    void slotLoadLisp();
+    void slotLoadPython();
+    void slotLibreLisp();
+    void slotLibrePython();
+#endif
     void slotShowEntityDescriptionOnHover(bool toggle);
     void slotInfoCursorSetting(bool toggle);
 signals:
@@ -313,6 +331,10 @@ public:
     void doClose(QC_MDIWindow* w, bool activateNext = true);
 
     void updateActionsAndWidgetsForPrintPreview(bool printPreviewOn);
+
+#ifdef DEVELOPER
+    QG_ActionHandler* getActionHandler() { return actionHandler; }
+#endif
 
 protected:
     void closeEvent(QCloseEvent*) override;
@@ -383,7 +405,12 @@ private:
     QG_LibraryWidget* libraryWidget {nullptr};
     /** Command line */
     QG_CommandWidget* commandWidget {nullptr};
-
+    /** Lips Command line */
+#ifdef DEVELOPER
+    QG_Lsp_CommandWidget* lsp_commandWidget {nullptr};
+    /** Python Command line */
+    QG_Py_CommandWidget* py_commandWidget {nullptr};
+#endif // DEVELOPER
     LC_PenWizard* pen_wiz {nullptr};
     LC_PenPaletteWidget* penPaletteWidget {nullptr};
     LC_NamedViewsListWidget* namedViewsWidget {nullptr};

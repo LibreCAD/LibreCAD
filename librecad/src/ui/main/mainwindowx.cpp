@@ -78,7 +78,21 @@ MainWindowX::MainWindowX(QWidget* parent)
 void MainWindowX::sortWidgetsByTitle(QList<QDockWidget*>& list){
     std::sort(list.begin(), list.end(), Sorting::byWindowTitle);
 }
-
+#ifdef DEVELOPER
+void MainWindowX::sortCommandLines(QList<QDockWidget*>& list){
+    for (int i = 0; i < list.size(); i++) {
+        if (list.at(i)->objectName() == "command_dockwidget") {
+            list.move(i, list.size()-4);
+        }
+        if (list.at(i)->objectName() == "lsp_command_dockwidget") {
+            list.move(i, list.size()-3);
+        }
+        if (list.at(i)->objectName() == "py_command_dockwidget") {
+            list.move(i, list.size()-2);
+        }
+    }
+}
+#endif
 void MainWindowX::sortWidgetsByTitle(QList<QToolBar*>& list){
     std::sort(list.begin(), list.end(), Sorting::byWindowTitle);
 }
