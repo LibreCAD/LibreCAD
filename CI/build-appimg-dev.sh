@@ -212,53 +212,39 @@ cat << EOF >> README.md
 # LibreCAD ${LC_VERSION} AppImage ($ID)
 ${ZIPPED}
 
-## To run AppImage, simply:
+### To run AppImage, simply:
 Extract
-\`\`\`bash
-$ unzip ${ZIPPED}
-\`\`\`
+$ unzip ${ZIPPED} -d ${APPIMAGE}
 Make it executable
-\`\`\`bash
 $ chmod a+x ${APPIMAGE}
-\`\`\`
 click on librecad.desktop, ${APPIMAGE} or exec in Terminal:
-\`\`\`bash
 $ ./${APPIMAGE}
-\`\`\`
 
-## To Install to /usr/local/bin, ~/home/.local and
+### To Install to /usr/local/bin, ~/home/.local and
 extracted ${ZIPPED} e.g. to ~/home and open terminal in root folder of the AppImage
-\`\`\`bash
 $ chmod a+x install.sh
 $ sudo install.sh
-\`\`\`
 
-## To Install to custom locations
+### To Install to custom locations
 extracted ${ZIPPED} e.g. to ~/home and open terminal in root folder of the AppImage
-\`\`\`bash
 $ sudo export INSTALL_SHARE=/path-to-config
 $ sudo export INSTALL_APP=/path-to-bin
 $ chmod a+x install.sh
 $ sudo install.sh
-\`\`\`
 
-## To Uninstall from /usr/local/bin, ~/home/.local and
+### To Uninstall from /usr/local/bin, ~/home/.local and
 extracted ${ZIPPED} e.g. to ~/home and open terminal in root folder of the AppImage
-\`\`\`bash
 $ chmod a+x uninstall.sh
 $ sudo uninstall.sh
-\`\`\`
 
-## To Uninstall from custom locations
+### To Uninstall from custom locations
 extracted ${ZIPPED} e.g. to ~/home and open terminal in root folder of the AppImage
-\`\`\`bash
 $ sudo export INSTALL_SHARE=/path-to-config
 $ sudo export INSTALL_APP=/path-to-bin
 $ chmod a+x uninstall.sh
 $ sudo uninstall.sh
-\`\`\`
 
-## Custom icons:
+### Custom icons:
 to use for librecad.desktop,
 dwg, dxf, lisp, dcl mimetypes.
 Mimetypes can be easily added via most file browsers.
@@ -274,7 +260,7 @@ if [ -f "unix/librecad.py" ]; then
     rm -Rf test/.*
     ZIP_FILES="${ZIP_FILES} test librecad.py README.md"
     echo "" >> README.md
-    echo "## Developer build:" >> README.md
+    echo "### Developer build:" >> README.md
     echo "Examples folder test has to be in ${APPIMAGE}'s root directory" >> README.md
     echo "see test/README.md for testing LibreLisp, LibrePython, LibreDcl+" >> README.md
 fi
