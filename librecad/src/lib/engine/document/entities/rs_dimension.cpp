@@ -54,7 +54,7 @@ QString evaluateFunction(const QString& expression, double dimValue)
     try {
         mu::Parser p;
         p.DefineVar("a", &dimValue);
-        p.SetExpr(expr.toStdString().c_str());
+        p.SetExpr(expr.toStdString());
         double functionValue = p.Eval();
         return QString::number(functionValue);
     } catch(...)
