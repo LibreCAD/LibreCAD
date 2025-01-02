@@ -1431,7 +1431,7 @@ bool DRW_View::parseCode(int code, dxfReader *reader) {
     return true;
 }
 
-bool DRW_View::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs) {
+bool DRW_View::parseDwg(DRW::Version /*version*/, dwgBuffer* buf, duint32 /*bs*/) {
     // fixme - sand - complete reading VIEW from DWG
     DRW_DBG("\n********************** parsing VIEW Settings from DWG is not yet implemented **************************\n");
     return buf->isGood();
