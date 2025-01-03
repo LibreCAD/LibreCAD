@@ -439,7 +439,7 @@ double RS_Ellipse::getEllipseLength(double x1, double x2) const{
     }
     x1=std::fmod(x1,M_PI);
     x2=std::fmod(x2,M_PI);
-    if( fabs(x2-x1)>RS_TOLERANCE_ANGLE)  {
+    if( std::abs(x2-x1)>RS_TOLERANCE_ANGLE)  {
         ret += RS_Math::ellipticIntegral_2(k,x2)-RS_Math::ellipticIntegral_2(k,x1);
     }
     return a*ret;
@@ -488,9 +488,12 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
     double x2=e.getAngle2();
     if(x2 < x1+RS_TOLERANCE_ANGLE) x2 += 2 * M_PI;
     double const l0=e.getEllipseLength(x1,x2); // the getEllipseLength() function only defined for proper e
-//    distance=fabs(distance);
-    if(distance > l0+RS_TOLERANCE) return {}; // can not trim more than the current length
-    if(distance > l0-RS_TOLERANCE) return(getNearestEndpoint(coord,dist)); // trim to zero length
+//    distance=std::abs(distance);
+    if(distance > l0+RS_TOLERANCE)
+        return {}; // can not trim more than the current length
+    if(distance > l0-RS_TOLERANCE)
+        return getNearestEndpoint(coord,dist); // trim to zero length
+
     return getNearestDistHelper(e, distance, coord, dist);
 }
 
@@ -503,7 +506,8 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
 bool RS_Ellipse::switchMajorMinor(void)
 //switch naming of major/minor, return true if success
 {
-    if (fabs(data.ratio) < RS_TOLERANCE) return false;
+    if (std::abs(data.ratio) < RS_TOLERANCE)
+        return false;
     RS_Vector vp_start=getStartpoint();
     RS_Vector vp_end=getEndpoint();
     RS_Vector vp=getMajorP();
@@ -536,12 +540,12 @@ RS_Vector  RS_Ellipse::getEndpoint() const {
  * @return Ellipse point by ellipse angle
  */
 RS_Vector  RS_Ellipse::getEllipsePoint(double a) const {
-    RS_Vector p{a};
+    RS_Vector point{a};
     double ra=getMajorRadius();
-    p.scale(RS_Vector(ra,ra*getRatio()));
-    p.rotate(getAngle());
-    p.move(getCenter());
-    return p;
+    point.scale(RS_Vector(ra,ra*getRatio()));
+    point.rotate(getAngle());
+    point.move(getCenter());
+    return point;
 }
 
 /** \brief implemented using an analytical algorithm
@@ -555,13 +559,14 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     RS_DEBUG->print("RS_Ellipse::getNearestPointOnEntity");
     RS_Vector ret(false);
 
-    if( ! coord.valid ) {
-        if ( dist ) *dist=RS_MAXDOUBLE;
+    if( !coord.valid ) {
+        if (dist != nullptr)
+            *dist=RS_MAXDOUBLE;
         return ret;
 
     }
 
-    if (entity) {
+    if (entity != nullptr) {
         *entity = const_cast<RS_Ellipse*>(this);
     }
     ret=coord;
@@ -579,7 +584,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     double twoby=2*b*y;
     double a0=twoa2b2*twoa2b2;
     std::vector<double> ce(4,0.);
-    std::vector<double> roots(0,0.);
+    std::vector<double> roots;
 
     //need to handle: a=b (i.e. a0=0); point close to the ellipse origin.
     if (a0 > RS_TOLERANCE && std::abs(getRatio() - 1.0) > RS_TOLERANCE && ret.squared() > RS_TOLERANCE2 ) {
@@ -608,20 +613,21 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     }
 
 //    RS_Vector vp2(false);
-    double d,dDistance(RS_MAXDOUBLE*RS_MAXDOUBLE);
+    double dDistance = RS_MAXDOUBLE*RS_MAXDOUBLE;
     //double ea;
-    for(size_t i=0; i<roots.size(); i++) {
+    for(double cosTheta: roots) {
         //I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
-        //if ( fabs(roots[i])>1.) continue;
-        double const s=twoby*roots[i]/(twoax-twoa2b2*roots[i]); //sine
-        //if (fabs(s) > 1. ) continue;
-        double const d2=twoa2b2+(twoax-2.*roots[i]*twoa2b2)*roots[i]+twoby*s;
-        if (d2<0) continue; // fartherest
-        RS_Vector vp3;
-        vp3.set(a*roots[i],b*s);
-        d=(vp3-ret).squared();
+        //if ( std::abs(roots[i])>1.) continue;
+        double const sinTheta=twoby*cosTheta/(twoax-twoa2b2*cosTheta); //sine
+        //if (std::abs(s) > 1. ) continue;
+        double const d2=twoa2b2+(twoax-2.*cosTheta*twoa2b2)*cosTheta+twoby*sinTheta;
+        if (d2<0)
+            continue; // fartherest
+        RS_Vector vp3{a*cosTheta, b*sinTheta};
+        double d=(vp3-ret).squared();
 //        std::cout<<i<<" Checking: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" ds2= "<<d<<" d="<<d2<<std::endl;
-        if( ret.valid && d>dDistance) continue;
+        if( ret.valid && d>dDistance)
+            continue;
         ret=vp3;
         dDistance=d;
 //			ea=atan2(roots[i],s);
@@ -633,7 +639,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
 //        std::cout<<"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
         RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n");
     }
-    if (dist) {
+    if (dist != nullptr) {
         *dist = std::sqrt(dDistance);
     }
     ret.rotate(getAngle());
@@ -660,23 +666,23 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
  */
 bool RS_Ellipse::isPointOnEntity(const RS_Vector& coord,
                                  double tolerance) const {
-    double t=fabs(tolerance);
+    double t=std::abs(tolerance);
     double a=getMajorRadius();
     double b=a*getRatio();
     RS_Vector vp((coord - getCenter()).rotate(-getAngle()));
     if ( a<RS_TOLERANCE ) {
         //radius treated as zero
-        if(fabs(vp.x)<RS_TOLERANCE && fabs(vp.y) < b) return true;
+        if(std::abs(vp.x)<RS_TOLERANCE && std::abs(vp.y) < b) return true;
         return false;
     }
     if ( b<RS_TOLERANCE ) {
         //radius treated as zero
-        if (fabs(vp.y)<RS_TOLERANCE && fabs(vp.x) < a) return true;
+        if (std::abs(vp.y)<RS_TOLERANCE && std::abs(vp.x) < a) return true;
         return false;
     }
     vp.scale(RS_Vector(1./a,1./b));
 
-    if (fabs(vp.squared()-1.) > t) return false;
+    if (std::abs(vp.squared()-1.) > t) return false;
 	return RS_Math::isAngleBetween(vp.angle(),getAngle1(),getAngle2(),isReversed());
 }
 
@@ -707,7 +713,7 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
         }
     }
 
-    if (dist) {
+    if (dist != nullptr) {
         *dist = distCenter;
     }
     return vCenter;
@@ -735,8 +741,8 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol){
     }
     if ( ! RS_Math::linearSolver(mt,dn)) return false;
     double d(1.+0.25*(dn[1]*dn[1]/dn[0]+dn[3]*dn[3]/dn[2]));
-    if(fabs(dn[0])<RS_TOLERANCE15
-       ||fabs(dn[2])<RS_TOLERANCE15
+    if(std::abs(dn[0])<RS_TOLERANCE15
+       ||std::abs(dn[2])<RS_TOLERANCE15
        ||d/dn[0]<RS_TOLERANCE15
        ||d/dn[2]<RS_TOLERANCE15
         ) {
@@ -820,7 +826,7 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
 bool RS_Ellipse::createFromQuadratic(const std::vector<double>& dn){
     RS_DEBUG->print("RS_Ellipse::createFromQuadratic() begin\n");
     if(dn.size()!=3) return false;
-//	if(fabs(dn[0]) <RS_TOLERANCE2 || fabs(dn[2])<RS_TOLERANCE2) return false; //invalid quadratic form
+//	if(std::abs(dn[0]) <RS_TOLERANCE2 || std::abs(dn[2])<RS_TOLERANCE2) return false; //invalid quadratic form
 
 //eigenvalues and eigenvectors of quadratic form
     // (dn[0] 0.5*dn[1])
@@ -842,7 +848,8 @@ bool RS_Ellipse::createFromQuadratic(const std::vector<double>& dn){
 // }
 
 // eigenvalues are required to be positive for ellipses
-    if(s >= a+b ) return false;
+    if(s >= a+b )
+        return false;
     if(a>=b) {
         setMajorP(RS_Vector(atan2(d+s, -c))/sqrt(0.5*(a+b-s)));
     }else{
@@ -868,7 +875,8 @@ bool RS_Ellipse::createFromQuadratic(const LC_Quadratic& q){
     double const& d=mL(0);
     double const& e=mL(1);
     double determinant=c*c-4.*a*b;
-    if(determinant>= -DBL_EPSILON) return false;
+    if (determinant>= -DBL_EPSILON)
+        return false;
 // find center of quadratic
 // 2 A x + C y = D
 // C x   + 2 B y = E
@@ -897,8 +905,10 @@ bool RS_Ellipse::createFromQuadratic(const LC_Quadratic& q){
 *
 *@author Dongxu Li
 */
-bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines, std::vector<RS_Vector> &tangent){
-    if(lines.size() != 4) return false; //only do 4 lines
+bool RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines, std::vector<RS_Vector> &tangent){
+    if (lines.size() != 4)
+        return false; //only do 4 lines
+
     std::vector<std::unique_ptr<RS_Line> > quad(4);
     { //form quadrilateral from intersections
         RS_EntityContainer c0(nullptr, false);
@@ -906,7 +916,8 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines,
             c0.addEntity(p);
         }
         RS_VectorSolutions const& s0=RS_Information::createQuadrilateral(c0);
-        if(s0.size()!=4) return false;
+        if(s0.size()!=4)
+            return false;
         for(size_t i=0; i<4; ++i){
             quad[i].reset(new RS_Line{s0[i], s0[(i+1)%4]});
         }
@@ -973,13 +984,13 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines,
         RS_Line* l1=quad[(parallel_index+2)%4].get();
         RS_Vector centerPoint=(l0->getMiddlePoint()+l1->getMiddlePoint())*0.5;
 //not symmetric, no inscribed ellipse
-        if( fabs(centerPoint.distanceTo(l0->getStartpoint()) - centerPoint.distanceTo(l0->getEndpoint()))>RS_TOLERANCE)
+        if( std::abs(centerPoint.distanceTo(l0->getStartpoint()) - centerPoint.distanceTo(l0->getEndpoint()))>RS_TOLERANCE)
             return false;
 //symmetric
         RS_DEBUG->print("RS_Ellipse::createInscribeQuadrilateral(): symmetric trapezoid detected\n");
         double d=l0->getDistanceToPoint(centerPoint);
         double l=((l0->getLength()+l1->getLength()))*0.25;
-        double k= 4.*d/fabs(l0->getLength()-l1->getLength());
+        double k= 4.*d/std::abs(l0->getLength()-l1->getLength());
         double theta=d/(l*k);
         if(theta>=1. || d<RS_TOLERANCE) {
             RS_DEBUG->print("RS_Ellipse::createInscribeQuadrilateral(): this should not happen\n");
@@ -1047,7 +1058,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines,
 
             RS_Vector minorP(tangent[2]);
             double dy2(minorP.squared());
-            if(fabs(minorP.y)<RS_TOLERANCE || dy2<RS_TOLERANCE2) return false; //refuse to return zero size ellipse
+            if(std::abs(minorP.y)<RS_TOLERANCE || dy2<RS_TOLERANCE2) return false; //refuse to return zero size ellipse
 // y'= y
 // x'= x-y/tan
 // reverse scale
@@ -1131,9 +1142,10 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     RS_Vector vp(getNearestPointOnEntity(coord,true,dist));
     double a=getCenter().angleTo(vp);
     int counts(middlePoints + 1);
-    int i( static_cast<int>(std::fmod(a-amin+2.*M_PI,2.*M_PI)/da*counts+0.5));
-    if(!i) i++; // remove end points
-    if(i==counts) i--;
+    int i = static_cast<int>(std::fmod(a-amin+2.*M_PI,2.*M_PI)/da*counts+0.5);
+    // remove end points
+    i = std::max(i, 1);
+    i = std::min(i, counts - 1);
     a=amin + da*(double(i)/double(counts))-getAngle();
     vp.set(a);
     RS_Vector vp2(vp);
@@ -1142,7 +1154,7 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     vp.rotate(getAngle());
     vp.move(getCenter());
 
-    if (dist) {
+    if (dist != nullptr) {
         *dist = vp.distanceTo(coord);
     }
     //RS_DEBUG->print("RS_Ellipse::getNearestMiddle: angle1=%g, angle2=%g, middle=%g\n",amin,amax,a);
@@ -1181,20 +1193,17 @@ RS_Vector RS_Ellipse::getNearestOrthTan(
     for (int i = 0; i < 2; i++) {
         if (!onEntity ||
             RS_Math::isAngleBetween(angle, getAngle1(), getAngle2(), isReversed())){
-            if (i){
-                sol.push_back(-direction);
-            } else {
-                sol.push_back(direction);
-            }
+            sol.push_back(i == 0 ? direction : - direction);
         }
         angle = RS_Math::correctAngle(angle + M_PI);
     }
-    if (sol.size() < 1) return RS_Vector(false);
+    if (sol.size() < 1)
+        return RS_Vector(false);
     aV.y *= -1.;
     for (auto &v: sol) {
         v.rotate(aV);
     }
-    RS_Vector vp;
+    RS_Vector vp{};
     switch (sol.size()) {
         case 0:
             return RS_Vector(false);
@@ -1289,7 +1298,7 @@ void RS_Ellipse::correctAngles() {
     double *pa2= & data.angle2;
     if (isReversed()) std::swap(pa1,pa2);
     *pa2 = *pa1 + std::fmod(*pa2 - *pa1, 2.*M_PI);
-    if ( fabs(data.angle1 - data.angle2) < RS_TOLERANCE_ANGLE && (fabs(data.angle1) > RS_TOLERANCE_ANGLE)) {
+    if ( std::abs(data.angle1 - data.angle2) < RS_TOLERANCE_ANGLE && (std::abs(data.angle1) > RS_TOLERANCE_ANGLE)) {
         // we need this only if there are actual angles (arc). otherwise, adding 2pi will transform ellipse to
         // elliptic arc
         *pa2 += 2.*M_PI;
@@ -1337,7 +1346,7 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
     RS_Vector is,is2;
 	for(size_t ii=0; ii<trimSol.getNumber(); ++ii) { //find closest according ellipse angle
 		ias.push_back(getEllipseAngle(trimSol.get(ii)));
-        if( !ii ||  fabs( remainder( ias[ii] - am, 2*M_PI)) < fabs( remainder( ia -am, 2*M_PI)) ) {
+        if( !ii ||  std::abs( remainder( ias[ii] - am, 2*M_PI)) < std::abs( remainder( ia -am, 2*M_PI)) ) {
             ia = ias[ii];
             is = trimSol.get(ii);
         }
@@ -1366,18 +1375,18 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
         }
         setAngle1(ia);
         setAngle2(ia2);
-        double da1=fabs(remainder(getAngle1()-am,2*M_PI));
-        double da2=fabs(remainder(getAngle2()-am,2*M_PI));
+        double da1=std::abs(remainder(getAngle1()-am,2*M_PI));
+        double da2=std::abs(remainder(getAngle2()-am,2*M_PI));
         if(da2<da1) {
             std::swap(is,is2);
         }
 
     } else {
-        double dia=fabs(remainder(ia-am,2*M_PI));
-        double dia2=fabs(remainder(ia2-am,2*M_PI));
+        double dia=std::abs(remainder(ia-am,2*M_PI));
+        double dia2=std::abs(remainder(ia2-am,2*M_PI));
         double ai_min=std::min(dia,dia2);
-        double da1=fabs(remainder(getAngle1()-am,2*M_PI));
-        double da2=fabs(remainder(getAngle2()-am,2*M_PI));
+        double da1=std::abs(remainder(getAngle1()-am,2*M_PI));
+        double da2=std::abs(remainder(getAngle2()-am,2*M_PI));
         double da_min=std::min(da1,da2);
         if( da_min < ai_min ) {
             //trimming one end of arc
@@ -1391,8 +1400,8 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
                     setAngle1(ia);
                     setAngle2(ia2);
                 }
-                da1=fabs(remainder(getAngle1()-am,2*M_PI));
-                da2=fabs(remainder(getAngle2()-am,2*M_PI));
+                da1=std::abs(remainder(getAngle1()-am,2*M_PI));
+                da2=std::abs(remainder(getAngle2()-am,2*M_PI));
             }
             if( ((da1 < da2) && (RS_Math::isAngleBetween(ia2,ia,getAngle1(),isReversed()))) ||
                     ((da1 > da2) && (RS_Math::isAngleBetween(ia2,getAngle2(),ia,isReversed())))

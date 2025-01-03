@@ -25,6 +25,10 @@
 **********************************************************************/
 #include<iostream>
 
+#include <QRegularExpression>
+
+#include "muParser.h"
+
 #include "rs_debug.h"
 #include "rs_dimension.h"
 #include "rs_filterdxfrw.h" //for int <-> rs_color conversion
@@ -33,6 +37,59 @@
 #include "rs_math.h"
 #include "rs_solid.h"
 #include "rs_units.h"
+
+namespace {
+
+// Issue #1953: Use calculations in custom Dimension text #1953
+// Evaluate a single expression
+// If the expression is not valid, the input expression is returned
+QString evaluateFunction(const QString& expression, double dimValue)
+{
+    // the minimum expression must contain "{<>}", minimum size = 4
+    if (expression.size() < 4)
+        return expression;
+    // Assuming front/end "{}"
+    QString expr = expression.mid(1, expression.size() - 2);
+    expr.replace("<>", "a");
+    try {
+        mu::Parser p;
+        p.DefineVar("a", &dimValue);
+        p.SetExpr(expr.toStdString());
+        double functionValue = p.Eval();
+        return QString::number(functionValue);
+    } catch(...)
+    {
+        return expression;
+    }
+}
+
+/**
+ * @brief functionalText evaluate expressions of dimension value
+ * @param dimText   functional expressions of dimension value:
+ *                  must be specified within curly brackets {};
+ *                  must be valid expressions:
+ *                  {<>*<>} will be replaced by the value squared x^2
+ *                  {exp(<>) * <>} will be replaced by the function value of x*exp(x)
+ *                  {sin(<>) + 1} will be replaced by the value sin(x) + 1
+ * @param dimValue the dimension value used to evaluate the expression
+ * @return the text with functional expressions evaluated
+ */
+QString functionalText(const QString& dimText, double dimValue) {
+    // matching "{*<>*<>*}"
+    static const QRegularExpression re{R"({([^{}<>]*(<>)[^{}<>]*)*})"};
+    QRegularExpressionMatch match = re.match(dimText);
+    if (!match.hasMatch())
+        return dimText;
+
+    QString ret = dimText;
+    for (int i = 0; i <= match.lastCapturedIndex(); ++i) {
+        QString captured = match.captured(i);
+        QString functionValue = evaluateFunction(captured, dimValue);
+        ret.replace(captured, functionValue);
+    }
+    return ret;
+}
+}
 
 RS_DimensionData::RS_DimensionData():
     definitionPoint(false),
@@ -150,7 +207,15 @@ QString RS_Dimension::getLabel(bool resolve) {
 
         // Others print the text (<> is replaced by the measurement)
     else {
-        ret = data.text;
+        QString measuredStr = getMeasuredLabel();
+        bool okay=false;
+        double measured = measuredStr.toDouble(&okay);
+
+        // Issue #1953: support expressions of measured
+        // {<>*<>} for the squared value
+        // {sqrt(<>)} for the square root
+        if (okay)
+            ret = functionalText(data.text, measured);
         ret = ret.replace(QString("<>"), getMeasuredLabel());
     }
 
