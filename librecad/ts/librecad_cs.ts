@@ -66,7 +66,7 @@
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber prosím oblouk</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation type="unfinished"></translation>
+        <translation>Určete umístění kótovacího oblouku</translation>
     </message>
 </context>
 <context>
@@ -118,7 +118,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Urči tečnu</translation>
     </message>
     <message>
         <source>Enter number:</source>
@@ -126,7 +126,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatné číslo. Použij 1..9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -168,7 +168,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     <name>LC_ActionFactory</name>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Přiblížení okna</translation>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
@@ -184,15 +184,15 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušte výběr okna</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished"></translation>
+        <translation>(Od)Znač &amp;Obrys</translation>
     </message>
     <message>
         <source>Select Intersected Entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat protínající se entity</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
@@ -200,7 +200,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>(De-)Select Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>(Vy)brat vrstvu</translation>
     </message>
     <message>
         <source>&amp;Points</source>
@@ -208,15 +208,15 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;2 Points</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;2 Body</translation>
     </message>
     <message>
         <source>&amp;Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Úhel</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Horizontální</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -224,15 +224,15 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Freehand Line</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Volná čára</translation>
     </message>
     <message>
         <source>&amp;Parallel</source>
-        <translation type="unfinished">Rov&amp;noběžná</translation>
+        <translation>&amp;Paralelní</translation>
     </message>
     <message>
         <source>Parallel through point</source>
-        <translation type="unfinished"></translation>
+        <translation>Paralelní skrz bod</translation>
     </message>
     <message>
         <source>Rectangle</source>
@@ -240,7 +240,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>Bisector</source>
-        <translation type="unfinished"></translation>
+        <translation>Osovačka</translation>
     </message>
     <message>
         <source>Tangent (P,C)</source>
@@ -256,7 +256,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolmý</translation>
     </message>
     <message>
         <source>Relative angle</source>
@@ -272,15 +272,15 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>Center, &amp;Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Střed, &amp;Bod</translation>
     </message>
     <message>
         <source>Center, &amp;Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Střed, &amp;Poloměr</translation>
     </message>
     <message>
         <source>2 Points</source>
-        <translation type="unfinished">2 body</translation>
+        <translation>2 body</translation>
     </message>
     <message>
         <source>2 Points, Radius</source>
@@ -292,7 +292,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Soustředný</translation>
     </message>
     <message>
         <source>Circle &amp;Inscribed</source>
@@ -317,7 +317,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Center, Point, Angles</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Střed, Bod, Úhly</translation>
     </message>
     <message>
         <source>&amp;3 Points</source>
@@ -329,7 +329,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Elipsa (Osa)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
@@ -337,7 +337,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>Ellipse &amp;Foci Point</source>
-        <translation type="unfinished">Elipsa o&amp;hnisky</translation>
+        <translation>Elipsa &amp;ohniskový bod</translation>
     </message>
     <message>
         <source>Ellipse &amp;4 Point</source>
@@ -361,7 +361,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Křivka</translation>
     </message>
     <message>
         <source>&amp;Add node</source>
@@ -401,11 +401,11 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Hatch</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Šrafování</translation>
     </message>
     <message>
         <source>Insert &amp;Image</source>
-        <translation type="unfinished">Vložit ob&amp;rázek</translation>
+        <translation>Vložit &amp;obrázek</translation>
     </message>
     <message>
         <source>&amp;Aligned</source>
@@ -417,19 +417,19 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vertikální</translation>
     </message>
     <message>
         <source>&amp;Radial</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Radiální</translation>
     </message>
     <message>
         <source>&amp;Diametric</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Diametrický</translation>
     </message>
     <message>
         <source>&amp;Angular</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Úhlový</translation>
     </message>
     <message>
         <source>&amp;Leader</source>
@@ -441,11 +441,11 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Smazat</translation>
     </message>
     <message>
         <source>Delete Freehand</source>
-        <translation type="unfinished"></translation>
+        <translation>Smazat volnou čáru</translation>
     </message>
     <message>
         <source>&amp;Move / Copy</source>
@@ -453,7 +453,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>Re&amp;vert direction</source>
-        <translation type="unfinished">O&amp;brátit směr</translation>
+        <translation>&amp;Obrátit směr</translation>
     </message>
     <message>
         <source>Ctrl+R</source>
@@ -461,7 +461,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Otočit</translation>
     </message>
     <message>
         <source>&amp;Scale</source>
@@ -469,11 +469,11 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zrcadlit</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation type="unfinished"></translation>
+        <translation>Otočit d&amp;vě</translation>
     </message>
     <message>
         <source>&amp;Properties</source>
@@ -481,7 +481,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Oříznout</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
@@ -489,7 +489,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation type="unfinished">Roz&amp;dělit</translation>
+        <translation>&amp;Rozdělit</translation>
     </message>
     <message>
         <source>&amp;Stretch</source>
@@ -497,11 +497,11 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zkosení</translation>
     </message>
     <message>
         <source>&amp;Fillet</source>
-        <translation type="unfinished">Z&amp;aoblit</translation>
+        <translation>&amp;Zaoblit</translation>
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>
@@ -525,7 +525,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Total length of selected entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Celková délka vybraných entit</translation>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
@@ -541,11 +541,11 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Znovu</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyj&amp;mout</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -553,7 +553,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vložit</translation>
     </message>
     <message>
         <source>move to bottom</source>
@@ -573,11 +573,11 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat vrstvu</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Odstranit vrstvu</translation>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
