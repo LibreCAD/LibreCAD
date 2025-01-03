@@ -212,9 +212,9 @@ jobs:
       - name: Install boost
         shell: bash
         run: |
-          curl -# -L -o boost.7z https://boostorg.jfrog.io/artifactory/main/release/1.83.0/source/boost_1_83_0.7z
+          curl -# -L -o boost.7z https://archives.boost.io/release/1.87.0/source/boost_1_87_0.7z
           7z x -o. -y boost.7z
-          mv boost_1_83_0 ../boost
+          mv boost_1_87_0 ../boost
           rm boost.7z
 
       - name: Debugging
