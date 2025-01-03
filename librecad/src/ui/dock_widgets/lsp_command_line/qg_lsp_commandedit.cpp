@@ -225,6 +225,13 @@ void QG_Lsp_CommandEdit::processInput(QString input)
         return;
     }
 
+    if (input == "(clear)")
+    {
+        emit clearCommandsHistory();
+        prompt();
+        return;
+    }
+
     static QRegularExpression lispRegex(QStringLiteral("[ \t]*[!(]"));
     QRegularExpressionMatch lispCom = lispRegex.match(input);
 
@@ -252,28 +259,46 @@ void QG_Lsp_CommandEdit::processInput(QString input)
         QRegularExpression regex(R"~(([-\w\.\\]+)\.\.)~");
         input.replace(regex, "@\\1,");
 
-        if (input.contains(";"))
+        if (isForeignCommand(input))
         {
-            foreach (auto str, input.split(";"))
+            if (input.contains(";"))
             {
-                if (str.contains("\\"))
-                    processVariable(str);
-                else
-                    emit command(str);
+                foreach (auto str, input.split(";"))
+                {
+                    if (str.contains("\\"))
+                        processVariable(str);
+                    else
+                        emit command(str);
+                }
             }
-        }
-        else
-        {
-            if (input.contains("\\"))
-                processVariable(input);
             else
-                emit command(input);
-        }
+            {
+                if (input.contains("\\"))
+                    processVariable(input);
+                else
+                    emit command(input);
+            }
 
-        historyList.append(input);
-        it = historyList.end();
-        prompt();
+            historyList.append(input);
+            it = historyList.end();
+            prompt();
+        }
     }
+}
+
+bool QG_Lsp_CommandEdit::isForeignCommand(QString input)
+{
+    // author: ravas
+
+    bool r_value = true;
+
+    if (input.contains("="))
+    {
+        auto var_value = input.split("=");
+        variables[var_value[0]] = var_value[1];
+        r_value = false;
+    }
+    return r_value;
 }
 
 void QG_Lsp_CommandEdit::setCurrent()

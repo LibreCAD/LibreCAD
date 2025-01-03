@@ -1551,6 +1551,7 @@ HEADERS += \
     main/doc_plugin_interface.h \
     plugins/document_interface.h \
     plugins/qc_plugininterface.h \
+    plugins/intern/qc_actiongetcorner.h \
     plugins/intern/qc_actiongetpoint.h \
     plugins/intern/qc_actiongetselect.h \
     plugins/intern/qc_actiongetent.h \
@@ -1561,6 +1562,7 @@ HEADERS += \
 SOURCES += \
     main/qc_dialogfactory.cpp \
     main/doc_plugin_interface.cpp \
+    plugins/intern/qc_actiongetcorner.cpp \
     plugins/intern/qc_actiongetpoint.cpp \
     plugins/intern/qc_actiongetselect.cpp \
     plugins/intern/qc_actiongetent.cpp \

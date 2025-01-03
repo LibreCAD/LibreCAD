@@ -61,6 +61,7 @@ protected:
     void keyPressEvent(QKeyEvent* e) override;
     void focusInEvent(QFocusEvent *e) override;
     void focusOutEvent(QFocusEvent *e) override;
+    bool isForeignCommand(QString input);
     void processVariable(QString input);
 
     QString relative_ray;

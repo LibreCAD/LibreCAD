@@ -638,6 +638,7 @@ static const char* lclFunctionTable[] = {
     "(def! load load-file)",
     "(def! strcat str)",
     "(def! type type?)",
+    "(def! getangle getorient)",
     "(def! EOF -1)"
 };
 

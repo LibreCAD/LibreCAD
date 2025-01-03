@@ -12,7 +12,7 @@
 #include "rs_graphicview.h"
 #include "qc_applicationwindow.h"
 #include "intern/qc_actiongetpoint.h"
-
+#include "intern/qc_actiongetcorner.h"
 
 #ifdef DEVELOPER
 
@@ -27,6 +27,7 @@
 #include <climits>
 #include <chrono>
 #include <ctime>
+#include <cmath>
 #include <fstream>
 #include <iostream>
 #include <filesystem>
@@ -1572,6 +1573,555 @@ BUILTIN("get_tile")
         }
     }
     return lcl::string("");
+}
+
+BUILTIN("getorient")
+{
+    /*
+     * independent of the variables ANGDIR
+     *
+     * getangle to getorient
+     * is only set as alias
+     * nomaly depends of the variables ANGDIR
+     * but is not implemented yet
+     *
+     */
+
+    int args = CHECK_ARGS_BETWEEN(0, 2);
+    QString prompt = QObject::tr("Enter second point: ");
+    double x=0, y=0, z=0;
+    Q_UNUSED(z)
+
+    if (args >= 1)
+    {
+        if (NIL_PTR)
+        {
+            return lcl::nilValue();
+        }
+
+        if (argsBegin->ptr()->type() == LCLTYPE::STR)
+        {
+            ARG(lclString, msg);
+            prompt = QObject::tr(msg->value().c_str());
+        }
+
+        if (argsBegin->ptr()->type() == LCLTYPE::LIST)
+        {
+            ARG(lclSequence, ptn);
+            if (ptn->count() == 2)
+            {
+                if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
+                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
+                    (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
+                {
+                    if (ptn->item(0)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
+                        x = X->value();
+                    }
+                    if (ptn->item(0)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *X = VALUE_CAST(lclInteger, ptn->item(0));
+                        x = double(X->value());
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
+                        y = Y->value();
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Y = VALUE_CAST(lclInteger, ptn->item(1));
+                        y = double(Y->value());
+                    }
+                }
+            }
+
+            if (ptn->count() == 3)
+            {
+                if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
+                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
+                    (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
+                {
+                    if (ptn->item(0)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
+                        x = X->value();
+                    }
+                    if (ptn->item(0)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *X = VALUE_CAST(lclInteger, ptn->item(0));
+                        x = double(X->value());
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
+                        y = Y->value();
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Y = VALUE_CAST(lclInteger, ptn->item(1));
+                        y = double(Y->value());
+                    }
+
+                    if (ptn->item(2)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Z = VALUE_CAST(lclDouble, ptn->item(2));
+                        z = Z->value();
+                    }
+                    if (ptn->item(2)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Z = VALUE_CAST(lclInteger, ptn->item(2));
+                        z = double(Z->value());
+                    }
+                }
+            }
+        }
+    }
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_Document* doc = appWin->getDocument();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+
+    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
+    {
+        return lcl::nilValue();
+    }
+
+    if (Lisp_CommandEdit != nullptr)
+    {
+        Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+        Lisp_CommandEdit->setFocus();
+    }
+
+    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
+    if (a)
+    {
+        QPointF *point = new QPointF;
+        QPointF *base = new QPointF(x, y);
+        bool status = false;
+
+        if (!(prompt.isEmpty()))
+        {
+            a->setMessage(prompt);
+        }
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+
+        if (base)
+        {
+            a->setBasepoint(base);
+        }
+
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!graphicView->getEventHandler()->hasAction())
+                break;
+        }
+
+        if (a->isCompleted() && !a->wasCanceled())
+        {
+            a->getPoint(point);
+            status = true;
+        }
+        //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
+        graphicView->killAllActions();
+
+        if (Lisp_CommandEdit != nullptr)
+        {
+            if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+            {
+                Lisp_CommandEdit->setPrompt("_$ ");
+            }
+            else
+            {
+                Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
+            }
+        }
+
+        if(status)
+        {
+            double rad = std::atan2(point->y() - y, point->x() - x);
+            delete point;
+            delete base;
+            return lcl::ldouble(rad);
+        }
+        else
+        {
+            delete point;
+            delete base;
+        }
+    }
+
+    return lcl::nilValue();
+}
+
+
+BUILTIN("getcorner")
+{
+    int args = CHECK_ARGS_BETWEEN(0, 2);
+    bool second = false;
+    QString prompt = QObject::tr("Enter a point: ");
+    double x, y, z=0;
+
+    if (args >= 1)
+    {
+        if (NIL_PTR)
+        {
+            argsBegin++;
+        }
+
+        if (argsBegin->ptr()->type() == LCLTYPE::STR)
+        {
+            ARG(lclString, msg);
+            prompt = QObject::tr(msg->value().c_str());
+        }
+
+        if (argsBegin->ptr()->type() == LCLTYPE::LIST)
+        {
+            ARG(lclSequence, ptn);
+            if (ptn->count() == 2)
+            {
+                if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
+                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
+                    (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
+                {
+                    second = true;
+                    if (ptn->item(0)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
+                        x = X->value();
+                    }
+                    if (ptn->item(0)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *X = VALUE_CAST(lclInteger, ptn->item(0));
+                        x = double(X->value());
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
+                        y = Y->value();
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Y = VALUE_CAST(lclInteger, ptn->item(1));
+                        y = double(Y->value());
+                    }
+                }
+            }
+
+            if (ptn->count() == 3)
+            {
+                if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
+                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
+                    (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
+                {
+                    second = true;
+                    if (ptn->item(0)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
+                        x = X->value();
+                    }
+                    if (ptn->item(0)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *X = VALUE_CAST(lclInteger, ptn->item(0));
+                        x = double(X->value());
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
+                        y = Y->value();
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Y = VALUE_CAST(lclInteger, ptn->item(1));
+                        y = double(Y->value());
+                    }
+
+                    if (ptn->item(2)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Z = VALUE_CAST(lclDouble, ptn->item(2));
+                        z = Z->value();
+                    }
+                    if (ptn->item(2)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Z = VALUE_CAST(lclInteger, ptn->item(2));
+                        z = double(Z->value());
+                    }
+                }
+            }
+        }
+    }
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_Document* doc = appWin->getDocument();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+
+    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
+    {
+        return lcl::nilValue();
+    }
+
+    if (Lisp_CommandEdit != nullptr)
+    {
+        Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+        Lisp_CommandEdit->setFocus();
+    }
+
+    QC_ActionGetCorner* a = new QC_ActionGetCorner(*doc, *graphicView);
+    if (a)
+    {
+        QPointF *point = new QPointF;
+        QPointF *base = nullptr;
+        bool status = false;
+
+        if(second)
+        {
+            base = new QPointF(x, y);
+        }
+
+        if (!(prompt.isEmpty()))
+        {
+            a->setMessage(prompt);
+        }
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+
+        if (base)
+        {
+            a->setBasepoint(base);
+        }
+
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!graphicView->getEventHandler()->hasAction())
+                break;
+        }
+
+        if (a->isCompleted() && !a->wasCanceled())
+        {
+            a->getPoint(point);
+            status = true;
+        }
+        //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
+        graphicView->killAllActions();
+
+        if (Lisp_CommandEdit != nullptr)
+        {
+            if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+            {
+                Lisp_CommandEdit->setPrompt("_$ ");
+            }
+            else
+            {
+                Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
+            }
+        }
+
+        if(status)
+        {
+            lclValueVec *ptn = new lclValueVec(3);
+            ptn->at(0) = lcl::ldouble(point->x());
+            ptn->at(1) = lcl::ldouble(point->y());
+            ptn->at(2) = lcl::ldouble(z);
+            delete point;
+            if (base)
+            {
+                delete base;
+            }
+            return lcl::list(ptn);
+        }
+        else
+        {
+            delete point;
+            if (base)
+            {
+                delete base;
+            }
+        }
+    }
+
+    return lcl::nilValue();
+}
+
+
+BUILTIN("getdist")
+{
+    int args = CHECK_ARGS_BETWEEN(0, 2);
+    QString prompt = QObject::tr("Enter second point: ");
+    double x=0, y=0, z=0;
+    Q_UNUSED(z)
+
+    if (args >= 1)
+    {
+        if (NIL_PTR)
+        {
+            return lcl::nilValue();
+        }
+
+        if (argsBegin->ptr()->type() == LCLTYPE::STR)
+        {
+            ARG(lclString, msg);
+            prompt = QObject::tr(msg->value().c_str());
+        }
+
+        if (argsBegin->ptr()->type() == LCLTYPE::LIST)
+        {
+            ARG(lclSequence, ptn);
+            if (ptn->count() == 2)
+            {
+                if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
+                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
+                    (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
+                {
+                    if (ptn->item(0)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
+                        x = X->value();
+                    }
+                    if (ptn->item(0)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *X = VALUE_CAST(lclInteger, ptn->item(0));
+                        x = double(X->value());
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
+                        y = Y->value();
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Y = VALUE_CAST(lclInteger, ptn->item(1));
+                        y = double(Y->value());
+                    }
+                }
+            }
+
+            if (ptn->count() == 3)
+            {
+                if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
+                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
+                    (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
+                {
+                    if (ptn->item(0)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
+                        x = X->value();
+                    }
+                    if (ptn->item(0)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *X = VALUE_CAST(lclInteger, ptn->item(0));
+                        x = double(X->value());
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
+                        y = Y->value();
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Y = VALUE_CAST(lclInteger, ptn->item(1));
+                        y = double(Y->value());
+                    }
+
+                    if (ptn->item(2)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Z = VALUE_CAST(lclDouble, ptn->item(2));
+                        z = Z->value();
+                    }
+                    if (ptn->item(2)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Z = VALUE_CAST(lclInteger, ptn->item(2));
+                        z = double(Z->value());
+                    }
+                }
+            }
+        }
+    }
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_Document* doc = appWin->getDocument();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+
+    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
+    {
+        return lcl::nilValue();
+    }
+
+    if (Lisp_CommandEdit != nullptr)
+    {
+        Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+        Lisp_CommandEdit->setFocus();
+    }
+
+    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
+    if (a)
+    {
+        QPointF *point = new QPointF;
+        QPointF *base = new QPointF(x, y);
+        bool status = false;
+
+        if (!(prompt.isEmpty()))
+        {
+            a->setMessage(prompt);
+        }
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+
+        if (base)
+        {
+            a->setBasepoint(base);
+        }
+
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!graphicView->getEventHandler()->hasAction())
+                break;
+        }
+
+        if (a->isCompleted() && !a->wasCanceled())
+        {
+            a->getPoint(point);
+            status = true;
+        }
+        //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
+        graphicView->killAllActions();
+
+        if (Lisp_CommandEdit != nullptr)
+        {
+            if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+            {
+                Lisp_CommandEdit->setPrompt("_$ ");
+            }
+            else
+            {
+                Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
+            }
+        }
+
+        if(status)
+        {
+            double dist = std::sqrt(std::pow(x - point->x(), 2)
+                                  + std::pow(y - point->y(), 2));
+
+            delete point;
+            delete base;
+            return lcl::ldouble(dist);
+        }
+        else
+        {
+            delete point;
+            delete base;
+        }
+    }
+
+    return lcl::nilValue();
 }
 
 BUILTIN("getenv")
