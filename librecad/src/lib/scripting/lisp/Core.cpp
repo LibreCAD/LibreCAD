@@ -1837,7 +1837,7 @@ BUILTIN("getpoint")
     int args = CHECK_ARGS_BETWEEN(0, 2);
     bool second = false;
     QString prompt = QObject::tr("Enter a point: ");
-    double x,y; //,z=0;
+    double x, y, z=0;
 
     if (args >= 1)
     {
@@ -1858,13 +1858,30 @@ BUILTIN("getpoint")
             if (ptn->count() == 2)
             {
                 if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
-                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT))
+                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
+                    (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
                 {
-                    const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
-                    const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
-                    x = X->value();
-                    y = Y->value();
                     second = true;
+                    if (ptn->item(0)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
+                        x = X->value();
+                    }
+                    if (ptn->item(0)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *X = VALUE_CAST(lclInteger, ptn->item(0));
+                        x = double(X->value());
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
+                        y = Y->value();
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Y = VALUE_CAST(lclInteger, ptn->item(1));
+                        y = double(Y->value());
+                    }
                 }
             }
 
@@ -1874,13 +1891,38 @@ BUILTIN("getpoint")
                     (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
                     (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
                 {
-                    const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
-                    const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
-                    const lclDouble *Z = VALUE_CAST(lclDouble, ptn->item(2));
-                    x = X->value();
-                    y = Y->value();
-                    //z = Z->value();
                     second = true;
+                    if (ptn->item(0)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
+                        x = X->value();
+                    }
+                    if (ptn->item(0)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *X = VALUE_CAST(lclInteger, ptn->item(0));
+                        x = double(X->value());
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
+                        y = Y->value();
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Y = VALUE_CAST(lclInteger, ptn->item(1));
+                        y = double(Y->value());
+                    }
+
+                    if (ptn->item(2)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Z = VALUE_CAST(lclDouble, ptn->item(2));
+                        z = Z->value();
+                    }
+                    if (ptn->item(2)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Z = VALUE_CAST(lclInteger, ptn->item(2));
+                        z = double(Z->value());
+                    }
                 }
             }
         }
@@ -1958,7 +2000,7 @@ BUILTIN("getpoint")
             lclValueVec *ptn = new lclValueVec(3);
             ptn->at(0) = lcl::ldouble(point->x());
             ptn->at(1) = lcl::ldouble(point->y());
-            ptn->at(2) = lcl::ldouble(0);
+            ptn->at(2) = lcl::ldouble(z);
             delete point;
             if (base)
             {
