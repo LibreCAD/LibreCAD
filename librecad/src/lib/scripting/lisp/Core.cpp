@@ -1699,10 +1699,10 @@ BUILTIN("getint")
     else
     {
         x = QInputDialog::getInt(nullptr,
-                                "LibreCAD",
-                                QObject::tr(qUtf8Printable(prompt)),
-                                // , int value = 0, int min = -2147483647, int max = 2147483647, int step = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags())
-                                0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags());
+                "LibreCAD",
+                QObject::tr(qUtf8Printable(prompt)),
+                // , int value = 0, int min = -2147483647, int max = 2147483647, int step = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags())
+                0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags());
         return lcl::integer(x);
     }
 }
@@ -1835,38 +1835,56 @@ BUILTIN("getkword") {
 BUILTIN("getpoint")
 {
     int args = CHECK_ARGS_BETWEEN(0, 2);
+    bool second = false;
+    QString prompt = QObject::tr("Enter a point: ");
+    double x,y; //,z=0;
 
-    QString prompt = "Enter a point: ";
-
-    if (args == 0)
+    if (args >= 1)
     {
+        if (NIL_PTR)
+        {
+            argsBegin++;
+        }
 
-    }
-    else if (args == 1)
-    {
-        //FIXME T or nil or not exists imput with " " space
         if (argsBegin->ptr()->type() == LCLTYPE::STR)
         {
             ARG(lclString, msg);
-            prompt = msg->value().c_str();
+            prompt = QObject::tr(msg->value().c_str());
         }
-        else
+
+        if (argsBegin->ptr()->type() == LCLTYPE::LIST)
         {
             ARG(lclSequence, ptn);
-            Q_UNUSED(ptn)
+            if (ptn->count() == 2)
+            {
+                if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
+                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT))
+                {
+                    const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
+                    const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
+                    x = X->value();
+                    y = Y->value();
+                    second = true;
+                }
+            }
+
+            if (ptn->count() == 3)
+            {
+                if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
+                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
+                    (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
+                {
+                    const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
+                    const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
+                    const lclDouble *Z = VALUE_CAST(lclDouble, ptn->item(2));
+                    x = X->value();
+                    y = Y->value();
+                    //z = Z->value();
+                    second = true;
+                }
+            }
         }
     }
-    else
-    {
-        //FIXME T or nil or not exists imput with " " space
-        ARG(lclSequence, ptn);
-        ARG(lclString, msg);
-        prompt = msg->value().c_str();
-        Q_UNUSED(ptn)
-    }
-#if 0
-    RS_EntityContainer container = graphicView->getContainer();
-#endif
 
     auto& appWin = QC_ApplicationWindow::getAppWindow();
     RS_Document* doc = appWin->getDocument();
@@ -1877,22 +1895,36 @@ BUILTIN("getpoint")
         return lcl::nilValue();
     }
 
+    if (Lisp_CommandEdit != nullptr)
+    {
+        Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+        Lisp_CommandEdit->setFocus();
+    }
+
     QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
     if (a)
     {
         QPointF *point = new QPointF;
+        QPointF *base = nullptr;
         bool status = false;
+
+        if(second)
+        {
+            base = new QPointF(x, y);
+        }
 
         if (!(prompt.isEmpty()))
         {
             a->setMessage(prompt);
         }
-
         graphicView->killAllActions();
         graphicView->setCurrentAction(a);
-#if 0
-        if (base) a->setBasepoint(base);
-#endif
+
+        if (base)
+        {
+            a->setBasepoint(base);
+        }
+
         QEventLoop ev;
         while (!a->isCompleted())
         {
@@ -1900,6 +1932,7 @@ BUILTIN("getpoint")
             if (!graphicView->getEventHandler()->hasAction())
                 break;
         }
+
         if (a->isCompleted() && !a->wasCanceled())
         {
             a->getPoint(point);
@@ -1908,6 +1941,18 @@ BUILTIN("getpoint")
         //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
         graphicView->killAllActions();
 
+        if (Lisp_CommandEdit != nullptr)
+        {
+            if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+            {
+                Lisp_CommandEdit->setPrompt("_$ ");
+            }
+            else
+            {
+                Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
+            }
+        }
+
         if(status)
         {
             lclValueVec *ptn = new lclValueVec(3);
@@ -1915,11 +1960,19 @@ BUILTIN("getpoint")
             ptn->at(1) = lcl::ldouble(point->y());
             ptn->at(2) = lcl::ldouble(0);
             delete point;
+            if (base)
+            {
+                delete base;
+            }
             return lcl::list(ptn);
         }
         else
         {
             delete point;
+            if (base)
+            {
+                delete base;
+            }
         }
     }
 

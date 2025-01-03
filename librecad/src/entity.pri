@@ -4,28 +4,37 @@ GENERATED_SOURCES += \
     $${TARGET}_wrap.cxx
 
 SWIG_INPUT += \
-    entity.i
-
-SWIG_USE_FILE += \
-    -I$$[QT_INSTALL_LIBS]/qt6
-
-SWIG_FLAGS += \
-    -v -c++ -python -w314
+   $${TARGET}.i
 
 SWIG_INCLUDE += \
-    -I${QMAKE_INCDIR}
+    -I$$[QT_INSTALL_HEADERS]
 
-SWIG += \
-    /usr/bin/swig
+SWIG_OUT_DIR += \
+    $${INSTALLDIR}
 
-swig.target = $${TARGET}_wrap.cxx
+SWIG_OUT_PYTHON += \
+    $${INSTALLDIR}/librecad.py
+
+SWIG_FLAGS += \
+    -v -c++ -python -cpperraswarn -std=c++17 -w314
+
+SWIG = swig
+
+win32 {
+    SWIG = swig.exe
+    SWIG_INCLUDE ~= s,/,\\,g
+    SWIG_OUT_DIR ~= s,/,\\,g
+    SWIG_OUT_PYTHON ~= s,/,\\,g
+}
+
+swig.target = $$GENERATED_SOURCES
 swig.input = SWIG_INPUT
 swig.variable_out = $$GENERATED_SOURCES
-swig.commands = $$SWIG $$SWIG_FLAGS $$SWIG_USE_FILE -outdir $${INSTALLDIR} -o ${QMAKE_FILE_OUT} ${QMAKE_FILE_NAME}
-swig.output = $${TARGET}_wrap.cxx
+swig.commands = $$SWIG $$SWIG_FLAGS $$SWIG_INCLUDE -outdir $$SWIG_OUT_DIR -o $$GENERATED_SOURCES ${QMAKE_FILE_NAME}
+swig.output = $$GENERATED_SOURCES
 
 QMAKE_EXTRA_COMPILERS += swig
 QMAKE_EXTRA_TARGETS += swig
 QMAKE_CLEAN += $$swig.target
-QMAKE_CLEAN += librecad.py
-QMAKE_CLEAN += $$GENERATED_SOURCES
+QMAKE_CLEAN += $$SWIG_OUT_PYTHON
+

@@ -51,6 +51,7 @@ public:
     void processInput(QString input);
     void setPrompt(const QString& p) { prom = p; prompt(); }
     void doProcess(bool proc) { m_doProcess = proc; }
+    void setCurrent();
     QString dockName() const { return parentWidget()->objectName(); }
 
     bool keycode_mode = false;
@@ -60,6 +61,7 @@ protected:
     void keyPressEvent(QKeyEvent* e) override;
     void focusInEvent(QFocusEvent *e) override;
     void focusOutEvent(QFocusEvent *e) override;
+    void processVariable(QString input);
 
     QString relative_ray;
     QMap<QString, QString> variables;

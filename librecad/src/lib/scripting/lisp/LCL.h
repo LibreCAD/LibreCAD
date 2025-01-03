@@ -37,6 +37,7 @@ typedef struct LclAlias {
 } LclAlias_t;
 
 extern std::vector<LclAlias_t> LclCom;
+extern bool isAlias(const String& alias);
 extern lclValuePtr readStr(const String& input);
 extern lclValuePtr loadDcl(const String& path);
 

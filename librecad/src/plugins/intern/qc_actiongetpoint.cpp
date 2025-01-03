@@ -118,6 +118,7 @@ RS2::CursorType QC_ActionGetPoint::doGetMouseCursor([[maybe_unused]] int status)
 void QC_ActionGetPoint::setBasepoint(QPointF* basepoint){
     pPoints->referencePoint.x = basepoint->x();
     pPoints->referencePoint.y = basepoint->y();
+    pPoints->referencePoint.valid = true;
     setTargetPoint = true;
 }
 

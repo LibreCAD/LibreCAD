@@ -2462,4 +2462,17 @@ static void checkForAlias(const String& com)
     LclCom.push_back({ { alias }, { com } });
 }
 
+bool isAlias(const String& alias)
+{
+    for (std::vector<LclAlias_t>::iterator it = LclCom.begin(); it != LclCom.end();)
+    {
+        if (it->alias == alias)
+        {
+            return true;
+        }
+        ++it;
+    }
+    return false;
+}
+
 #endif // DEVELOPER

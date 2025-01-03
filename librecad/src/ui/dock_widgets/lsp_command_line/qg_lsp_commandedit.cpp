@@ -197,6 +197,7 @@ void QG_Lsp_CommandEdit::keyPressEvent(QKeyEvent* e)
 
 void QG_Lsp_CommandEdit::focusInEvent(QFocusEvent *e) {
     emit focusIn();
+    setCurrent();
     QLineEdit::focusInEvent(e);
 }
 
@@ -207,6 +208,8 @@ void QG_Lsp_CommandEdit::focusOutEvent(QFocusEvent *e) {
 
 void QG_Lsp_CommandEdit::processInput(QString input)
 {
+    setCurrent();
+
     if (!m_doProcess)
     {
         emit message(prom);
@@ -214,22 +217,24 @@ void QG_Lsp_CommandEdit::processInput(QString input)
         return;
     }
 
-    Lisp_CommandEdit = this;
-
     if (input.size() == 0)
     {
         it = historyList.end();
         emit message(prom);
         prompt();
+        return;
     }
-    else {
+
+    static QRegularExpression lispRegex(QStringLiteral("[ \t]*[!(]"));
+    QRegularExpressionMatch lispCom = lispRegex.match(input);
+
+    if (isAlias(qUtf8Printable(input)) || lispCom.hasMatch())
+    {
         QString buffer_out = "";
         //QString buffer_err = "";
 
         buffer_out += RS_LISP->runCommand(input).c_str();
-
         historyList.append(input);
-
         it = historyList.end();
         prompt();
 
@@ -239,12 +244,98 @@ void QG_Lsp_CommandEdit::processInput(QString input)
             emit message(out);
         }
     }
+    else
+    {
+        // author: ravas
+
+        // convert 10..0 to @10,0
+        QRegularExpression regex(R"~(([-\w\.\\]+)\.\.)~");
+        input.replace(regex, "@\\1,");
+
+        if (input.contains(";"))
+        {
+            foreach (auto str, input.split(";"))
+            {
+                if (str.contains("\\"))
+                    processVariable(str);
+                else
+                    emit command(str);
+            }
+        }
+        else
+        {
+            if (input.contains("\\"))
+                processVariable(input);
+            else
+                emit command(input);
+        }
+
+        historyList.append(input);
+        it = historyList.end();
+        prompt();
+    }
+}
+
+void QG_Lsp_CommandEdit::setCurrent()
+{
+    Lisp_CommandEdit = this;
 }
 
 void QG_Lsp_CommandEdit::runFile(const QString& path)
 {
+    setCurrent();
     emit message(RS_LISP->runFileCmd(path).c_str());
 }
+
+void QG_Lsp_CommandEdit::processVariable(QString input)
+{
+    // author: ravas
+
+    if (input.contains(","))
+    {
+        QString rel = "";
+
+        if (input.contains("@"))
+        {
+            rel = "@";
+            input.remove("@");
+        }
+
+        auto x_y = input.split(",");
+        if (x_y[0].contains("\\"))
+        {
+            x_y[0].remove("\\");
+            if (variables.contains(x_y[0]))
+                x_y[0] = variables[x_y[0]];
+        }
+        if (x_y[1].contains("\\"))
+        {
+            x_y[1].remove("\\");
+            if (variables.contains(x_y[1]))
+                x_y[1] = variables[x_y[1]];
+        }
+        emit command(rel + x_y[0] + "," + x_y[1]);
+        return;
+    }
+
+    input.remove("\\");
+    if (variables.contains(input))
+    {
+        input = variables[input];
+        if (input.contains(";"))
+        {
+            foreach (auto str, input.split(";"))
+            {
+                if (str.contains("\\"))
+                    processVariable(str);
+                else
+                    emit command(str);
+            }
+        }
+        else emit command(input);
+    }
+}
+
 
 void QG_Lsp_CommandEdit::modifiedPaste()
 {
