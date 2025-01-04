@@ -53,7 +53,7 @@ QString evaluateFunction(const QString& expression, double dimValue)
     expr.replace("<>", "a");
     try {
         mu::Parser p;
-        p.DefineVar("a", &dimValue);
+        p.DefineVar({"a"}, &dimValue);
         p.SetExpr(expr.toStdString());
         double functionValue = p.Eval();
         return QString::number(functionValue);

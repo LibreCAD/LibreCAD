@@ -30,15 +30,16 @@
 #include <QWidget>
 
 #include "rs_blocklistlistener.h"
+#include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_layerlistlistener.h"
-#include "rs_dialogfactory.h"
 
+class QEnterEvent;
+class QG_ScrollBar;
 class QGridLayout;
 class QLabel;
 class QMenu;
-class QEnterEvent;
-class QG_ScrollBar;
+class QMouseEvent;
 
 /**
  * This is the Qt implementation of a widget which can view a 

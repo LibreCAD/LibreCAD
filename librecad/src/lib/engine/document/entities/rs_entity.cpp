@@ -106,7 +106,7 @@ void RS_Entity::initId() {
     id = idCounter++;
 }
 
-RS_Entity *RS_Entity::cloneProxy(RS_GraphicView *view) const {
+RS_Entity *RS_Entity::cloneProxy(RS_GraphicView* /*view*/) const {
     return clone();
 }
 
