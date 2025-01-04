@@ -14,7 +14,7 @@
 */
 
 #include <array>
-#include "rs_pythongui.h"
+//#include "rs_pythongui.h"
 #include "rs_pythondcl.h"
 #include "rs_pythonlisp.h"
 
@@ -111,13 +111,10 @@
 //#include "rs_graphicview.h"
 #include "lc_undoablerelzero.h"
 
+#include "rs_pythongui.h"
 %}
 
 %include "std_array.i"
-
-%include "lib/scripting/rs_pythondcl.h"
-%include "lib/scripting/rs_pythongui.h"
-%include "lib/scripting/rs_pythonlisp.h"
 
 /*
 %include "QtCore/qglobal.h"
@@ -229,3 +226,7 @@
 //%include "lib/actions/rs_snapper.h"                                       // Qt problem child X-(
 //%include "lib/gui/rs_graphicview.h"                                       // Qt problem child X-(
 %include "lib/engine/undo/lc_undoablerelzero.h"
+
+%include "lib/scripting/rs_pythondcl.h"
+%include "lib/scripting/rs_pythongui.h"
+%include "lib/scripting/rs_pythonlisp.h"

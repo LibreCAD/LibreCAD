@@ -31,6 +31,7 @@
 #include <fstream>
 #include <iostream>
 #include <filesystem>
+#include <random>
 
 #include <QEventLoop>
 #include <QMessageBox>
@@ -1527,42 +1528,36 @@ BUILTIN("get_tile")
             {
             case EDIT_BOX:
             {
-                qDebug() << "get_tile EDIT_BOX";
                 const lclEdit* e = static_cast<const lclEdit*>(tile);
                 return lcl::string(e->edit()->text().toStdString());
             }
             break;
             case LIST_BOX:
             {
-                qDebug() << "get_tile LIST_BOX";
                 const lclListBox* lb = static_cast<const lclListBox*>(tile);
                 return lcl::string(std::to_string(lb->list()->currentRow()));
             }
             break;
             case BUTTON:
             {
-                qDebug() << "get_tile BUTTON";
                 const lclButton* b = static_cast<const lclButton*>(tile);
                 return lcl::string(b->button()->text().toStdString());
             }
             break;
             case RADIO_BUTTON:
             {
-                qDebug() << "get_tile RADIO_BUTTON";
                 const lclButton* rb = static_cast<const lclButton*>(tile);
                 return lcl::string(rb->button()->text().toStdString());
             }
             break;
             case TEXT:
             {
-                qDebug() << "get_tile TEXT";
                 const lclLabel* l = static_cast<const lclLabel*>(tile);
                 return lcl::string(l->label()->text().toStdString());
             }
             break;
             case POPUP_LIST:
             {
-                qDebug() << "get_tile POPUP_LIST";
                 const lclPopupList* pl = static_cast<const lclPopupList*>(tile);
                 return lcl::string(std::to_string(pl->list()->currentIndex()));
             }
@@ -1596,7 +1591,7 @@ BUILTIN("getorient")
     {
         if (NIL_PTR)
         {
-            return lcl::nilValue();
+            argsBegin++;
         }
 
         if (argsBegin->ptr()->type() == LCLTYPE::STR)
@@ -1708,10 +1703,7 @@ BUILTIN("getorient")
         graphicView->killAllActions();
         graphicView->setCurrentAction(a);
 
-        if (base)
-        {
-            a->setBasepoint(base);
-        }
+        a->setBasepoint(base);
 
         QEventLoop ev;
         while (!a->isCompleted())
@@ -1758,13 +1750,12 @@ BUILTIN("getorient")
     return lcl::nilValue();
 }
 
-
 BUILTIN("getcorner")
 {
     int args = CHECK_ARGS_BETWEEN(0, 2);
     bool second = false;
     QString prompt = QObject::tr("Enter a point: ");
-    double x, y, z=0;
+    double x=0, y=0, z=0;
 
     if (args >= 1)
     {
@@ -1889,10 +1880,7 @@ BUILTIN("getcorner")
         graphicView->killAllActions();
         graphicView->setCurrentAction(a);
 
-        if (base)
-        {
-            a->setBasepoint(base);
-        }
+        a->setBasepoint(base);
 
         QEventLoop ev;
         while (!a->isCompleted())
@@ -1948,7 +1936,6 @@ BUILTIN("getcorner")
     return lcl::nilValue();
 }
 
-
 BUILTIN("getdist")
 {
     int args = CHECK_ARGS_BETWEEN(0, 2);
@@ -1960,7 +1947,7 @@ BUILTIN("getdist")
     {
         if (NIL_PTR)
         {
-            return lcl::nilValue();
+            argsBegin++;
         }
 
         if (argsBegin->ptr()->type() == LCLTYPE::STR)
@@ -2072,10 +2059,7 @@ BUILTIN("getdist")
         graphicView->killAllActions();
         graphicView->setCurrentAction(a);
 
-        if (base)
-        {
-            a->setBasepoint(base);
-        }
+        a->setBasepoint(base);
 
         QEventLoop ev;
         while (!a->isCompleted())
@@ -2500,11 +2484,6 @@ BUILTIN("getpoint")
         QPointF *base = nullptr;
         bool status = false;
 
-        if(second)
-        {
-            base = new QPointF(x, y);
-        }
-
         if (!(prompt.isEmpty()))
         {
             a->setMessage(prompt);
@@ -2512,8 +2491,9 @@ BUILTIN("getpoint")
         graphicView->killAllActions();
         graphicView->setCurrentAction(a);
 
-        if (base)
+        if (second)
         {
+            base = new QPointF(x, y);
             a->setBasepoint(base);
         }
 
@@ -4127,6 +4107,16 @@ BUILTIN("py-simple-file")
 }
 
 BUILTIN("rand")
+{
+    CHECK_ARGS_IS(0);
+    std::random_device rd;  // Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
+    std::uniform_real_distribution<> dis(0.0, 1.0);
+
+    return lcl::ldouble(dis(gen));
+}
+
+BUILTIN("rand-int")
 {
     CHECK_ARGS_IS(1);
     AG_INT(max);

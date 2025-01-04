@@ -196,6 +196,7 @@ void QG_Py_CommandEdit::keyPressEvent(QKeyEvent* e)
 
 void QG_Py_CommandEdit::focusInEvent(QFocusEvent *e) {
     emit focusIn();
+    setCurrent();
     QLineEdit::focusInEvent(e);
 }
 
@@ -206,47 +207,120 @@ void QG_Py_CommandEdit::focusOutEvent(QFocusEvent *e) {
 
 void QG_Py_CommandEdit::processInput(QString input)
 {
+    setCurrent();
+
     if (!m_doProcess)
     {
+        qDebug() << "[QG_Py_CommandEdit::processInput] !m_doProcess";
         emit message(prom);
         m_doProcess = true;
         return;
     }
 
-    Py_CommandEdit = this;
-
     if (input.size() == 0)
     {
+        qDebug() << "[QG_Py_CommandEdit::processInput] input.size() == 0";
         it = historyList.end();
         emit message(prom);
         prompt();
+        return;
     }
-    else {
-        QString buffer_out = "";
-        QString buffer_err = "";
 
-        RS_PYTHON->runCommand(input, buffer_out, buffer_err);
-        historyList.append(input);
+    if (m_doProcessLc ||
+        input.startsWith('_'))
+    {
+        if (input.startsWith('_'))
+        {
+            input.remove(0, 1);
+        }
 
-        it = historyList.end();
-        emit message(prom + input);
-        qInfo() << qUtf8Printable(prom + input);
-        if (buffer_out.compare("") != 0) {
-            const QString out = buffer_out.remove(buffer_out.size()-1,1);
-            emit message(out);
-            qInfo() << qUtf8Printable(out);
+        qDebug() << "[QG_Py_CommandEdit::processInput] doProcessLc" << input;
+
+        // author: ravas
+
+        // convert 10..0 to @10,0
+        static QRegularExpression regex(R"~(([-\w\.\\]+)\.\.)~");
+        input.replace(regex, "@\\1,");
+
+        if (isForeignCommand(input))
+        {
+            qDebug() << "[QG_Py_CommandEdit::processInput] isForeignCommand";
+            if (input.contains(";"))
+            {
+                foreach (auto str, input.split(";"))
+                {
+                    if (str.contains("\\"))
+                        processVariable(str);
+                    else
+                        emit command(str);
+                }
+            }
+            else
+            {
+                if (input.contains("\\"))
+                    processVariable(input);
+                else
+                {
+                    qDebug() << "[QG_Py_CommandEdit::processInput] emit command";
+                    emit command(input);
+                }
+            }
+
+            historyList.append(input);
+            it = historyList.end();
+            prompt();
+            return;
         }
-        if (buffer_err.compare("") != 0) {
-            const QString err = buffer_err.remove(buffer_err.size()-1,1);
-            emit message(err);
-            qInfo() << qUtf8Printable(err);
-        }
-        prompt();
     }
+
+    qDebug() << "[QG_Py_CommandEdit::processInput] python:" << input;
+
+    QString buffer_out = "";
+    QString buffer_err = "";
+
+    RS_PYTHON->runCommand(input, buffer_out, buffer_err);
+    historyList.append(input);
+
+    it = historyList.end();
+    emit message(prom + input);
+    qInfo() << qUtf8Printable(prom + input);
+    if (buffer_out.compare("") != 0) {
+        const QString out = buffer_out.remove(buffer_out.size()-1,1);
+        emit message(out);
+        qInfo() << qUtf8Printable(out);
+    }
+    if (buffer_err.compare("") != 0) {
+        const QString err = buffer_err.remove(buffer_err.size()-1,1);
+        emit message(err);
+        qInfo() << qUtf8Printable(err);
+    }
+    prompt();
+}
+
+bool QG_Py_CommandEdit::isForeignCommand(QString input)
+{
+    // author: ravas
+
+    bool r_value = true;
+
+    if (input.contains("="))
+    {
+        auto var_value = input.split("=");
+        variables[var_value[0]] = var_value[1];
+        r_value = false;
+    }
+    return r_value;
+}
+
+
+void QG_Py_CommandEdit::setCurrent()
+{
+    Py_CommandEdit = this;
 }
 
 void QG_Py_CommandEdit::runFile(const QString& path)
 {
+    setCurrent();
     QString buffer_out = "";
     QString buffer_err = "";
 
@@ -260,6 +334,55 @@ void QG_Py_CommandEdit::runFile(const QString& path)
         const QString err = buffer_err.remove(buffer_err.size()-1,1);
         emit message(err);
         qInfo() << qUtf8Printable(err);
+    }
+}
+
+void QG_Py_CommandEdit::processVariable(QString input)
+{
+    // author: ravas
+
+    if (input.contains(","))
+    {
+        QString rel = "";
+
+        if (input.contains("@"))
+        {
+            rel = "@";
+            input.remove("@");
+        }
+
+        auto x_y = input.split(",");
+        if (x_y[0].contains("\\"))
+        {
+            x_y[0].remove("\\");
+            if (variables.contains(x_y[0]))
+                x_y[0] = variables[x_y[0]];
+        }
+        if (x_y[1].contains("\\"))
+        {
+            x_y[1].remove("\\");
+            if (variables.contains(x_y[1]))
+                x_y[1] = variables[x_y[1]];
+        }
+        emit command(rel + x_y[0] + "," + x_y[1]);
+        return;
+    }
+
+    input.remove("\\");
+    if (variables.contains(input))
+    {
+        input = variables[input];
+        if (input.contains(";"))
+        {
+            foreach (auto str, input.split(";"))
+            {
+                if (str.contains("\\"))
+                    processVariable(str);
+                else
+                    emit command(str);
+            }
+        }
+        else emit command(input);
     }
 }
 

@@ -51,6 +51,8 @@ public:
     void processInput(QString input);
     void setPrompt(const QString& p) { prom = p; prompt(); }
     void doProcess(bool proc) { m_doProcess = proc; }
+    void doProcessLc(bool proc) { m_doProcessLc = proc; }
+    void setCurrent();
     QString dockName() const { return parentWidget()->objectName(); }
 
     bool keycode_mode = false;
@@ -60,6 +62,8 @@ protected:
     void keyPressEvent(QKeyEvent* e) override;
     void focusInEvent(QFocusEvent *e) override;
     void focusOutEvent(QFocusEvent *e) override;
+    bool isForeignCommand(QString input);
+    void processVariable(QString input);
 
     QString relative_ray;
     QMap<QString, QString> variables;
@@ -93,6 +97,7 @@ private:
     QTextStream  m_histFileStream;
     /* for input mode */
     bool m_doProcess = true;
+    bool m_doProcessLc = false;
 
     int promptSize() const { return (int) prom.size(); }
     void prompt() { QLineEdit::setText(prom); }

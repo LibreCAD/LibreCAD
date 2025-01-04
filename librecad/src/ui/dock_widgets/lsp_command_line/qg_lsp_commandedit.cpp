@@ -225,7 +225,8 @@ void QG_Lsp_CommandEdit::processInput(QString input)
         return;
     }
 
-    if (input == "(clear)")
+    if (input == "(clear)" ||
+        input == QObject::tr("clear"))
     {
         emit clearCommandsHistory();
         prompt();
@@ -360,7 +361,6 @@ void QG_Lsp_CommandEdit::processVariable(QString input)
         else emit command(input);
     }
 }
-
 
 void QG_Lsp_CommandEdit::modifiedPaste()
 {
