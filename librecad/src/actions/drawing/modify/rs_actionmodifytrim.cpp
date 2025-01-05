@@ -120,7 +120,9 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
                                 previewRefPoint(trimResult.intersection2);
                             }
                             if (both) {
-                                previewRefTrimmedEntity(trimResult.trimmed2, limitEntity);
+                                if (trimResult.trimmed2 != nullptr) {
+                                    previewRefTrimmedEntity(trimResult.trimmed2, limitEntity);
+                                }
                             }
                             if (isInfoCursorForModificationEnabled()){
                                 LC_InfoMessageBuilder msg(tr("Trim"));
