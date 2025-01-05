@@ -50,11 +50,19 @@ QString evaluateFunction(const QString& expression, double dimValue)
         return expression;
     // Assuming front/end "{}"
     QString expr = expression.mid(1, expression.size() - 2);
-    expr.replace("<>", "a");
+    const QString variable("a");
+    expr.replace("<>", variable);
     try {
         mu::Parser p;
-        p.DefineVar("a", &dimValue);
+
+#ifdef _UNICODE
+        p.DefineVar(variable.toStdWString(), &dimValue);
+        p.SetExpr(expr.toStdWString());
+#else
+        p.DefineVar(variable.toStdString(), &dimValue);
         p.SetExpr(expr.toStdString());
+#endif
+
         double functionValue = p.Eval();
         return QString::number(functionValue);
     } catch(...)

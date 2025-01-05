@@ -35,10 +35,10 @@
 #include <QMap>
 #include <QWidget>
 
+#include "lc_cursoroverlayinfo.h"
 #include "lc_rect.h"
 #include "rs.h"
 #include "rs_pen.h"
-#include "lc_cursoroverlayinfo.h"
 
 #define DEBUG_RENDERING_
 
@@ -47,19 +47,21 @@
 #endif
 
 class QDateTime;
-class QMouseEvent;
 class QKeyEvent;
+
 class RS_ActionInterface;
+class RS_Color;
+class RS_CommandEvent;
 class RS_Entity;
 class RS_EntityContainer;
 class RS_EventHandler;
-class RS_Color;
-class RS_CommandEvent;
 class RS_Graphic;
 class RS_Grid;
 class RS_Painter;
+
 struct RS_LineTypePattern;
 struct RS_SnapMode;
+
 /**
  * This class is a common GUI interface for the graphic viewer
  * widget which has to be implemented by real GUI classes such
