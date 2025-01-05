@@ -23,7 +23,7 @@ set(CMAKE_AUTORCC ON)
 add_compile_definitions(DWGSUPPORT)
 add_compile_definitions(MUPARSER_STATIC)
 
-find_package(Qt5 COMPONENTS Gui Core Widgets PrintSupport SVG REQUIRED)
+find_package(Qt5 COMPONENTS Qt5::Gui Qt5::Core Qt5::Widgets Qt5::PrintSupport Qt5::Svg REQUIRED)
 find_package(Boost REQUIRED COMPONENTS)
 
 #qt5_wrap_cpp(plugins/asciifile.cpp)
