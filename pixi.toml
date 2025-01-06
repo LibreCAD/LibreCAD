@@ -17,3 +17,7 @@ install = {cmd = ["make", "install"], depends-on=["configure"]}
 qt6-main = ">=6.8.1,<7"
 libboost-devel = ">=1.87.0,<2"
 freetype = ">=2.12.1,<3"
+compilers = ">=1.8.0,<2"
+
+[target.linux-64.dependencies]
+libgl-devel = "*"
