@@ -1,0 +1,19 @@
+[project]
+authors = [""]
+channels = ["conda-forge"]
+description = "LibreCAD is a 2D CAD drawing tool."
+name = "LibreCAD"
+platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64", "win-64"]
+version = "0.1.0"
+
+[tasks]
+configure = {cmd = ["qmake6", 
+                    "OUTDIR=./build",
+                    "INSTALL_PREFIX=$CONDA_PREFIX"]}
+build = {cmd = ["make", "-j4"], depends-on=["configure"]}
+install = {cmd = ["make", "install"], depends-on=["configure"]}
+
+[dependencies]
+qt6-main = ">=6.8.1,<7"
+libboost-devel = ">=1.87.0,<2"
+freetype = ">=2.12.1,<3"
