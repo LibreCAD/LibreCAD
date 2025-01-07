@@ -498,63 +498,63 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="852"/>
         <source>&amp;Lock all</source>
-        <translation type="unfinished"></translation>
+        <translation>鎖定全部(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="908"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>導出選定圖層(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="913"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>導出可見圖層(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="920"/>
         <source>&amp;Show all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示所有圖塊(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="927"/>
         <source>&amp;Hide all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>隱藏所有圖塊(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1059"/>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>導出為CAM/plain SVG(&amp;M)...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1088"/>
         <source>Close All</source>
-        <translation type="unfinished"></translation>
+        <translation>全部關閉</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1134"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1209"/>
         <source>Re-dock Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>重新停靠部件</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1215"/>
         <source>Menu Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>選單創建器</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1222"/>
         <source>Toolbar Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>工具列建立器</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="430"/>
         <source>&amp;Add node</source>
-        <translation type="unfinished">新增節點(&amp;A)</translation>
+        <translation>新增節點(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="438"/>
