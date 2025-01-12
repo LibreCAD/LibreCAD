@@ -2058,8 +2058,8 @@ in a separate window</source>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation type="unfinished">தேர்ந்தெடுக்கப்பட்ட செருகலின் அனைத்து துணை நிறுவனங்களுக்கும் பண்புகளைப் பயன்படுத்துங்கள்.
- இது தொகுதியின் அனைத்து நிறுவனங்களையும் மீண்டும் மீண்டும் மாற்றியமைக்கிறது.</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட செருகலின் அனைத்து துணை நிறுவனங்களுக்கும் பண்புகளைப் பயன்படுத்துங்கள்.
+ இது தொகுதியின் அனைத்து நிறுவனங்களையும் மீண்டும் மாற்றியமைக்கிறது.</translation>
     </message>
     <message>
         <source>Apply attributes Block-deep</source>
@@ -11224,7 +11224,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">உள்ளீட்டு நீளம் நீளம் அதிகரிப்புக்கு பதிலாக, ஒழுங்கமைக்கும் பிறகு மொத்த நீளமாக பயன்படுத்தப்படுகிறது</translation>
+        <translation>உள்ளீட்டு நீளம் அதிகரிப்புக்கு பதிலாக, ஒழுங்கமைக்கும் பிறகு மொத்த நீளமாகப் பயன்படுத்தப்படுகிறது</translation>
     </message>
 </context>
 <context>
