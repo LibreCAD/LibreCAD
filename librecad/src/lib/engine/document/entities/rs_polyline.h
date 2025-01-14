@@ -55,9 +55,7 @@ std::ostream& operator << (std::ostream& os, const RS_PolylineData& pd);
 class RS_Polyline:public RS_EntityContainer {
 public:
     RS_Polyline(RS_EntityContainer *parent = nullptr);
-    RS_Polyline(
-        RS_EntityContainer *parent,
-        const RS_PolylineData &d);
+    RS_Polyline(RS_EntityContainer *parent, const RS_PolylineData &d);
     RS_Entity *clone() const override;
 
     /**	@return RS2::EntityPolyline */
@@ -149,5 +147,5 @@ protected:
     RS_PolylineData data;
     RS_Entity *closingEntity = nullptr;
     double nextBulge = 0.;
-
+    bool createEllipticArcs = false;
 };

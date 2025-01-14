@@ -95,13 +95,13 @@ RS_Vector LC_LineMath::getNearestPointOnInfiniteLine(const RS_Vector &coord, con
     RS_Vector ea = lineStartPoint-lineEndPoint;
     RS_Vector ap = coord-lineStartPoint;
 
-    if (ae.magnitude()<RS_TOLERANCE|| ea.magnitude()<RS_TOLERANCE) {
+    double magnitude = ae.magnitude();
+    if (magnitude < RS_TOLERANCE || ea.magnitude() < RS_TOLERANCE) {
         return RS_Vector(false);
     }
 
     // Orthogonal projection from both sides:
-    RS_Vector ba = ae * RS_Vector::dotP(ae, ap)
-                   / (ae.magnitude()*ae.magnitude());
+    RS_Vector ba = ae * RS_Vector::dotP(ae, ap)/ (magnitude * magnitude);
 
     return lineStartPoint+ba;
 }

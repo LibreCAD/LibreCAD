@@ -39,6 +39,8 @@
 #include "rs.h"
 #include "rs_pen.h"
 #include "lc_cursoroverlayinfo.h"
+#include "lc_ucs.h"
+#include "lc_view.h"
 
 #define DEBUG_RENDERING_
 
@@ -209,8 +211,8 @@ public:
     void setOffsetY(int oy);
     int getOffsetX() const;
     int getOffsetY() const;
-    void centerOffsetX();
-    void centerOffsetY();
+    void centerOffsetX(const RS_Vector& containerMin, const RS_Vector& constinerSize);
+    void centerOffsetY(const RS_Vector& containerMin, const RS_Vector& containerSize);
     void centerX(double x);
     void centerY(double y);
 /**
@@ -247,9 +249,11 @@ public:
     virtual void zoomOutY(double f = 1.5);
     virtual void zoomAuto(bool axis = true, bool keepAspectRatio = true);
     virtual void zoomAutoY(bool axis = true);
+    void zoomAutoEnsurePointsIncluded(const RS_Vector &pos1, const RS_Vector &pos2, const RS_Vector &pos3);
     virtual void zoomPrevious();
     virtual void saveView();
     virtual void restoreView();
+    void restoreView(LC_View* view);
     virtual void zoomWindow(
         RS_Vector v1, RS_Vector v2,
         bool keepAspectRatio = true);
@@ -275,9 +279,10 @@ public:
     void setPenForDraftEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset, bool inOverlay);
     void setPenForOverlayEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset);
     void drawEntityHighlighted(RS_Entity *e, bool highlighted = true);
-    virtual RS_Vector getMousePosition() const = 0;
+//    virtual RS_Vector getMousePosition() const = 0;
     virtual const RS_LineTypePattern *getPattern(RS2::LineType t);
     void drawAbsoluteZero(RS_Painter *painter);
+    void drawCoordinateSystemMarker(RS_Painter *painter, const RS_Vector &origin, double xAxisAngle, bool forWCS);
     void drawRelativeZero(RS_Painter *painter);
     void drawPaper(RS_Painter *painter);
     void drawOverlay(RS_Painter *painter);
@@ -297,12 +302,21 @@ public:
     void setIsoViewType(RS2::IsoGridViewType chType);
     RS2::IsoGridViewType getIsoViewType() const;
     RS_Vector toGui(RS_Vector v) const;
+    void toGui(const RS_Vector &v, double& x, double& y) const;
     RS_Vector toGui(double x, double y) const;
+    RS_Vector toGuiFromUCS(const RS_Vector &ucs) const;
+    RS_Vector toGuiFromUCS(double x, double y) const;
     RS_Vector toGuiD(RS_Vector v) const;
     double toGuiX(double x) const;
     double toGuiY(double y) const;
     double toGuiDX(double d) const;
     double toGuiDY(double d) const;
+    double toUCSAngle(double a) const;
+    double toUCSAngleDegrees(double a) const;
+    void toUCSDelta(const RS_Vector& worldDelta, double& ucsDX, double &ucsDY) const;
+    RS_Vector toUCSDelta(const RS_Vector& worldDelta) const;
+    RS_Vector toUCSFromGui(const QPointF& pos) const;
+    RS_Vector toUCSFromGui(double x, double y) const;
     RS_Vector toGraph(const RS_Vector &v) const;
     RS_Vector toGraph(const QPointF &v) const;
     RS_Vector toGraph(int x, int y) const;
@@ -311,6 +325,12 @@ public:
     double toGraphDX(int d) const;
     double toGraphDY(int d) const;
     RS_Vector toGraphD(int d, int y) const;
+    double toWorldAngle(double angle) const;
+    double toWorldAngleDegrees(double angle) const;
+    RS_Vector toUCS(const RS_Vector& v) const;
+    RS_Vector toUCS(const QPointF &position) const;
+    void toUCS(const RS_Vector& v, double& ucsX, double &ucsY) const;
+    RS_Vector toWorld(const RS_Vector& v) const;
     /**
   * (Un-)Locks the position of the relative zero.
   *
@@ -411,10 +431,26 @@ public:
     }
 
     RS_Vector getMarkedRelativeZero(){return markedRelativeZero;}
-
     RS_Undoable* getRelativeZeroUndoable();
+    void createUCS(const RS_Vector& origin, double angle);
+    void extractUCS();
+    RS_Vector snapGrid(const RS_Vector& coord) const;
+    RS_Vector restrictHorizontal(const RS_Vector baseWCSPoint, const RS_Vector& wcsCoord) const;
+    RS_Vector restrictVertical(const RS_Vector baseWCSPoint, const RS_Vector& wcsCoord) const;
+    void ucsBoundingBox(const RS_Vector& min, const RS_Vector&max, RS_Vector& ucsMin, RS_Vector& ucsMax) const;
+    void worldBoundingBox(const RS_Vector& ucsMin, const RS_Vector &ucsMax, RS_Vector& worlMin, RS_Vector& worldMax) const;
+    RS_Vector getUCSViewLeftBottom() const;
+    RS_Vector getUCSViewRightTop() const;
+    bool hasUCS() const;
+    void applyUCS(LC_UCS* ucsToSet);
+    LC_UCS* getCurrentUCS() const;
+    virtual void highlightUCSLocation(LC_UCS *ucs) {};
+    void initAfterDocumentOpen();
+    LC_View* createNamedView(QString name) const;
+    void updateNamedView(LC_View* view) const;
+signals:
+    void ucsChanged(LC_UCS* ucs);
 protected:
-
     RS_EntityContainer *container = nullptr; // Holds a pointer to all the enties
     RS_EventHandler *eventHandler = nullptr;
     /** colors for different usages*/
@@ -448,15 +484,32 @@ protected:
         None
     };
 
-    bool extendAxisLines = false;
-    int extendAxisModeX = 0;
-    int extendAxisModeY = 0;
-    int entityHandleHalfSize = 2;
-    int relativeZeroRadius = 5;
-    int zeroShortAxisMarkSize = 20;
+
+    bool m_extendAxisLines = false;
+    int m_extendAxisModeX = 0;
+    int m_extendAxisModeY = 0;
+    int m_entityHandleHalfSize = 2;
+    int m_relativeZeroRadius = 5;
+    int m_zeroShortAxisMarkSize = 20;
     int minRenderableTextHeightInPx = 4;
-    bool ignoreDraftForHighlight = false;
-/**
+    bool m_ignoreDraftForHighlight = false;
+
+    bool m_showUCSZeroMarker = false;
+    bool m_showWCSZeroMarker = true;
+    int m_csZeroMarkerSize = 30;
+    int m_csZeroMarkerFontSize = 10;
+    QString m_csZeroMarkerfontName = "Verdana";
+    QFont m_csZeroMarkerFont = QFont("Arial", 10);
+
+    enum UCSApplyingPolicy{
+        ZoomAuto,
+        PanOriginCenter,
+        PanOriginLowerLeft
+    };
+
+    int m_ucsApplyingPolicy = UCSApplyingPolicy::ZoomAuto;
+
+    /**
   * Delete mode. If true, all drawing actions will delete in background color
   * instead.
   */
@@ -509,16 +562,22 @@ protected:
     bool drawTextsAsDraftForPreview = true;
     Qt::PenJoinStyle penJoinStyle = Qt::RoundJoin;
     Qt::PenCapStyle penCapStyle = Qt::RoundCap;
-
+    bool m_hasUcs = false;
     void updateEndCapsStyle(const RS_Graphic *graphic);
     void updateJoinStyle(const RS_Graphic *graphic);
     void updatePointsStyle(RS_Graphic *graphic);
     void updateUnitAndDefaultWidthFactors(const RS_Graphic *graphic);
     void updateGraphicRelatedSettings(RS_Graphic *graphic);
+    void setUCS(const RS_Vector& origin, double angle, bool isometric, RS2::IsoGridViewType type);
+    LC_UCS *createUCSEntity(const RS_Vector &vector, double angle, bool isometric, RS2::IsoGridViewType type) const;
+    void doZoomAuto(const RS_Vector& min, const RS_Vector& max, bool axis, bool keepAspectRatio);
+    RS_Vector doSetUCS(const RS_Vector &origin, double angle, bool isometric, RS2::IsoGridViewType &isoType);
+    void applyUCSAfterLoad();
+    void doUpdateViewByGraphicView(LC_View *view) const;
 private:
     bool zoomFrozen = false;
     bool draftMode = false;
-    bool draftLinesMode = false;
+    bool m_draftLinesMode = false;
     RS_Vector factor{1., 1.};
     int offsetX = 0;
     int offsetY = 0;
@@ -552,6 +611,41 @@ private:
     bool showEntityDescriptionOnHover = false;
     bool m_panOnZoom = false;
     bool m_skipFirstZoom = false;
+
+    // ucs support
+
+    // tmp - fixme - x,y factor???? one may be useful later, say for viewports...
+    class UserCoordinateSystem{
+    public:
+        UserCoordinateSystem(){ ucsOrigin = RS_Vector(0, 0, 0); setXAxisAngle(0.0);}
+        double toWorldAngle(double angle) const;
+        double toWorldAngleDegrees(double angle) const;
+        double toUCSAngle(double angle) const;
+        double toUCSAngleDegree(double angle) const;
+        void toUCS(double worldX, double worldY, double &ucsX, double &ucsY) const;
+        void toUCS(const RS_Vector &worldCoordinate, RS_Vector& ucsCoordinate) const;
+        void toUCSDelta(const RS_Vector &worldDelta, double &ucsDX, double &ucsDY) const;
+        void toWorld(const RS_Vector &ucsCoordinate, RS_Vector& worldCoordinate) const;
+        void toWorld(double ucsX, double ucsY, double &worldX, double &worldY) const;
+        void update(const RS_Vector& origin, double angle);
+        void rotate(double &x, double &y) const;
+        void rotateBack(double &x, double &y) const;
+        const RS_Vector &getUcsOrigin() const;
+        double getXAxisAngle() const;
+    protected:
+        RS_Vector ucsOrigin = RS_Vector(0, 0, 0);
+        double xAxisAngle = 0.0;
+        double xAxisAngleDegrees = 0.0;
+        double sinXAngle;
+        double cosXAngle;
+        double sinNegativeXAngle;
+        double cosNegativeXAngle;
+        void setXAxisAngle(double angle);
+    };
+
+
+    UserCoordinateSystem ucs = UserCoordinateSystem();
+
 signals:
     void relative_zero_changed(const RS_Vector &);
     void previous_zoom_state(bool);

@@ -79,7 +79,7 @@ void QG_DlgArc::setArc(RS_Arc& a) {
     }
 }
 
-void QG_DlgArc::updateArc() {
+void QG_DlgArc:: updateArc() {
     arc->setCenter(RS_Vector(RS_Math::eval(leCenterX->text()),
                              RS_Math::eval(leCenterY->text())));
     arc->setRadius(RS_Math::eval(leRadius->text()));

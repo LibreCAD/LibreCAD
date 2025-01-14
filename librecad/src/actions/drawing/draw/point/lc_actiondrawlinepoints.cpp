@@ -104,14 +104,16 @@ void LC_ActionDrawLinePoints::doPreparePreviewEntities([[maybe_unused]]QMouseEve
         case SetDistance:
             switch (direction) {
                 case DIRECTION_X: // use only x coordinate from snap
-                    possibleEndPoint = RS_Vector(snap);
-                    possibleEndPoint.y = startpoint.y;
-                    possibleEndPoint.x = snap.x;
+                    possibleEndPoint = restrictHorizontal(startpoint, snap);
+//                    possibleEndPoint = RS_Vector(snap);
+//                    possibleEndPoint.y = startpoint.y;
+//                    possibleEndPoint.x = snap.x;
                     break;
                 case DIRECTION_Y: // use only y coordinate from snap
-                    possibleEndPoint = RS_Vector(snap);
-                    possibleEndPoint.x = startpoint.x;
-                    possibleEndPoint.y = snap.y;
+                    possibleEndPoint = restrictVertical(startpoint, snap);
+//                    possibleEndPoint = RS_Vector(snap);
+//                    possibleEndPoint.x = startpoint.x;
+//                    possibleEndPoint.y = snap.y;
                     break;
                 case DIRECTION_POINT:
                     possibleEndPoint = snap;
@@ -151,7 +153,8 @@ RS_Vector LC_ActionDrawLinePoints::getPossibleEndPointForAngle(const RS_Vector &
     if (alternativeActionMode){
         angleToUse = 180-angle;
     }
-    return LC_LineMath::calculateEndpointForAngleDirection(angleToUse,startpoint, snap);
+    double worldAngle = toWorldAngleDegrees(angleToUse);
+    return LC_LineMath::calculateEndpointForAngleDirection(worldAngle,startpoint, snap);
 }
 
 /**
@@ -247,7 +250,8 @@ void LC_ActionDrawLinePoints::onCoordinateEvent(int status, [[maybe_unused]]bool
         case SetDistance:
             switch (direction) {
                 case DIRECTION_X: { // calculate  point on X axis
-                    RS_Vector possiblePoint(mouse.x,startpoint.y);
+                    RS_Vector possiblePoint = restrictHorizontal(startpoint, mouse);
+//                    RS_Vector possiblePoint(mouse.x,startpoint.y);
                     if (isNonZeroLine(possiblePoint)){
                         endpoint = possiblePoint;
                         trigger();
@@ -255,7 +259,8 @@ void LC_ActionDrawLinePoints::onCoordinateEvent(int status, [[maybe_unused]]bool
                     break;
                 }
                 case DIRECTION_Y: {// calculate  point on y axis
-                    RS_Vector possiblePoint(startpoint.x, mouse.y);
+                    RS_Vector possiblePoint = restrictVertical(startpoint, mouse);
+//                    RS_Vector possiblePoint(startpoint.x, mouse.y);
                     if (isNonZeroLine(possiblePoint)){
                         endpoint = possiblePoint;
                         trigger();

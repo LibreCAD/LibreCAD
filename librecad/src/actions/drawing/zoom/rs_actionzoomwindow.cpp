@@ -34,6 +34,7 @@
 #include "rs_preview.h"
 
 struct RS_ActionZoomWindow::Points {
+ RS_Vector ucsV1;
 	RS_Vector v1;
 	RS_Vector v2;
 };
@@ -68,7 +69,9 @@ void RS_ActionZoomWindow::doTrigger() {
     RS_DEBUG->print("RS_ActionZoomWindow::trigger()");
     if (pPoints->v1.valid && pPoints->v2.valid){
         if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 5){
-            graphicView->zoomWindow(pPoints->v1, pPoints->v2, keepAspectRatio);
+            RS_Vector point1 = toUCS(pPoints->v1);
+            RS_Vector point2 = toUCS(pPoints->v2);
+            graphicView->zoomWindow(point1, point2, keepAspectRatio);
             init(SetFirstCorner);
         }
     }
@@ -80,7 +83,14 @@ void RS_ActionZoomWindow::mouseMoveEvent(QMouseEvent *e){
     drawSnapper();
     if (getStatus() == SetSecondCorner && pPoints->v1.valid){
         pPoints->v2 = snapFree(e);
-        preview->addRectangle(pPoints->v1, pPoints->v2);
+
+        RS_Vector worldCorner1 = pPoints->v1;
+        RS_Vector worldCorner3 = pPoints->v2;
+
+        RS_Vector worldCorner2,worldCorner4;
+        calcRectCorners(worldCorner1, worldCorner3, worldCorner2, worldCorner4);
+
+        preview->addRectangle(worldCorner1, worldCorner2, worldCorner3, worldCorner4);
     }
     drawPreview();
 }

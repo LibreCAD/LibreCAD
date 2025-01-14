@@ -447,13 +447,15 @@ bool LC_QuickInfoEntityData::updateForCoordinateViewMode(int mode){
                 auto *vectorProperty = static_cast<VectorPropertyInfo *>(propertyInfo);
                 RS_Vector data = vectorProperty->data;
                 RS_Vector viewVector;
+                QString vectorStr;
                 if (mode == COORD_RELATIVE && relativeZero.valid){
                     viewVector = data - relativeZero;
+                    vectorStr = formatDeltaVector(viewVector);
                 } else {
                     viewVector = data;
+                    vectorStr = formatVector(viewVector);
                 }
-                QString newValue = formatVector(viewVector);
-                propertyInfo->value = newValue;
+                propertyInfo->value = vectorStr;
             }
         }
         return true;
@@ -524,14 +526,16 @@ void LC_QuickInfoEntityData::collectLineProperties(RS_Line *line){
     const RS_Vector &start = line->getStartpoint();
     const RS_Vector &end = line->getEndpoint();
     double angle = line->getAngle1();
+    double angle2 = line->getAngle2();
     double length = line->getLength();
     RS_Vector delta = end - start;
 
     addVectorProperty(tr("From"), start);
     addVectorProperty(tr("To"), end);
     addVectorProperty(tr("Middle"), line->getMiddlePoint());
-    addVectorProperty(tr("Delta"), delta, OTHER);
+    addDeltaVectorProperty(tr("Delta"), delta, OTHER);
     addAngleProperty(tr("Angle"), angle);
+    addAngleProperty(tr("Angle 2"), angle2);
     addLinearProperty(tr("Length"), length);
 }
 
@@ -552,66 +556,11 @@ QString LC_QuickInfoEntityData::prepareLineDescription(RS_Line *line, RS2::Entit
     if (level != RS2::EntityDescriptionLevel::DescriptionCatched){
         appendAbsolute(result, tr("Middle"), line->getMiddlePoint());
         RS_Vector delta = end - start;
-        appendAbsolute(result, tr("Delta"), delta);
+        appendAbsoluteDelta(result, tr("Delta"), delta);
     }
     return result;
 }
 
-
-void LC_QuickInfoEntityData::appendLinear(QString &result, const QString &label, double value){
-    result.append("\n");
-    result.append(label);
-    result.append(": ");
-    result.append(formatLinear(value));
-}
-
-void LC_QuickInfoEntityData::appendDouble(QString &result, const QString &label, double value){
-    result.append("\n");
-    result.append(label);
-    result.append(": ");
-    result.append(formatDouble(value));
-}
-
-void LC_QuickInfoEntityData::appendArea(QString &result, const QString &label, double value){
-    result.append("\n");
-    result.append(label);
-    result.append(": ");
-    result.append(formatLinear(value));
-}
-
-void LC_QuickInfoEntityData::appendAngle(QString &result, const QString &label, double value){
-    result.append("\n");
-    result.append(label);
-    result.append(": ");
-    result.append(formatAngle(value));
-}
-
-void LC_QuickInfoEntityData::appendValue(QString &result, const QString &label, const QString& value){
-    result.append("\n");
-    result.append(label);
-    result.append(": ");
-    result.append(value);
-}
-void LC_QuickInfoEntityData::appendAbsolute(QString &result, const QString &label, const RS_Vector &value) {
-    result.append("\n");
-    result.append(label);
-    result.append(": ");
-    result.append(formatLinear(value.x)).append(",").append(formatLinear(value.y));
-}
-
-void LC_QuickInfoEntityData::appendRelativePolar(QString &result, const QString &label, const RS_Vector &value) {
-    result.append("\n");
-    result.append(label);
-    result.append(": @");
-    result.append(formatLinear(value.x)).append(" < ").append(formatAngle(value.y));
-}
-
-void LC_QuickInfoEntityData::appendInt(QString &result, const QString &label, const int &value) {
-    result.append("\n");
-    result.append(label);
-    result.append(": ");
-    result.append(formatInt(value));
-}
 
 /**
  * Properties for circle
@@ -675,7 +624,7 @@ void LC_QuickInfoEntityData::collectArcProperties(RS_Arc *arc){
     addLinearProperty(tr("Diameter"), diameter);
     addLinearProperty(tr("Circumference"), circumference, OTHER);
     addLinearProperty(tr("Chord Length"), chordLength, OTHER);
-    addAngleProperty(tr("Angle Length"), angleLength);
+    addRawAngleProperty(tr("Angle Length"), angleLength);
     addVectorProperty(tr("Start"), startPoint);
     addAngleProperty(tr("Start Angle"), startAngle);
     addVectorProperty(tr("End"), endPoint);
@@ -696,7 +645,7 @@ QString LC_QuickInfoEntityData::prepareArcDescription(RS_Arc *arc, RS2::EntityDe
     appendLinear(result, tr("Radius"), radius);
     appendAbsolute(result, tr("Start"), startPoint);
     appendAbsolute(result, tr("End"), endPoint);
-    appendAngle(result, tr("Angle Length"), angleLength);
+    appendRawAngle(result, tr("Angle Length"), angleLength);
     appendValue(result, tr("Reversed"), arc->isReversed() ?  tr("Yes") : tr("No"));
 
     if (level != RS2::EntityDescriptionLevel::DescriptionCatched){
@@ -709,8 +658,8 @@ QString LC_QuickInfoEntityData::prepareArcDescription(RS_Arc *arc, RS2::EntityDe
         appendLinear(result, tr("Diameter"), diameter);
         appendLinear(result, tr("Circumference"), circumference);
         appendLinear(result, tr("Chord Length"), chordLength);
-        appendLinear(result, tr("Start Angle"), startAngle);
-        appendLinear(result, tr("End Angle"), endAngle);
+        appendAngle(result, tr("Start Angle"), startAngle);
+        appendAngle(result, tr("End Angle"), endAngle);
         appendLinear(result, tr("Bulge"), arc->getBulge());
     };
 
@@ -745,7 +694,7 @@ void LC_QuickInfoEntityData::collectEllipseProperties(RS_Ellipse *ellipse){
         RS_Vector startPoint = ellipse->getStartpoint();
         RS_Vector endPoint = ellipse->getEndpoint();
 
-        addAngleProperty(tr("Angle Length"), angleLength);
+        addRawAngleProperty(tr("Angle Length"), angleLength);
         addVectorProperty(tr("Start"), startPoint);
         addAngleProperty(tr("Start Angle"), startAngle);
         addVectorProperty(tr("End"), endPoint);
@@ -775,7 +724,7 @@ QString LC_QuickInfoEntityData::prepareEllipseDescription(RS_Ellipse *ellipse, R
     appendAngle(result, tr("Angle"), angle);
     if (ellipticArc) {
         double angleLength = ellipse->getAngleLength();
-        appendAngle(result, tr("Angle Length"), angleLength);
+        appendRawAngle(result, tr("Angle Length"), angleLength);
     }
 
     if (level != RS2::EntityDescriptionLevel::DescriptionCatched) {
@@ -865,7 +814,7 @@ void LC_QuickInfoEntityData::collectPolylineProperties(RS_Polyline *l){
                     addLinearProperty(tr("Radius"), arc->getRadius());
                     totalLengh += len;
                     addLinearProperty(tr("Circumference"), len, OTHER);
-                    addAngleProperty(tr("Angle Length"), arc->getAngleLength());
+                    addRawAngleProperty(tr("Angle Length"), arc->getAngleLength());
                     addAngleProperty(tr("Start Angle"), arc->getAngle1());
                     addAngleProperty(tr("End Angle"), arc->getAngle1());
                 }
@@ -880,6 +829,7 @@ void LC_QuickInfoEntityData::collectPolylineProperties(RS_Polyline *l){
                     addVectorProperty(tr("Middle"), line->getMiddlePoint());
                     addAngleProperty(tr("Angle"), line->getAngle1());
                     addLinearProperty(tr("Length"), length);
+                    // todo - add delta for line?
                 }
                 addVectorProperty(tr("Vertex - "), index, line->getEndpoint());
                 break;
@@ -1081,7 +1031,7 @@ QString LC_QuickInfoEntityData::prepareMTextDescription(RS_MText *pText, RS2::En
     appendAbsolute(result, tr("Insertion Point"), data.insertionPoint);
     appendAngle(result, tr("Angle"), data.angle);
     appendValue(result, tr("Style"), data.style);
-    appendDouble(result, tr("Height"), data.height);
+    appendDouble(result, tr("Height"), data.height); // todo - is linear format more suitable there?
 
     if (level != RS2::EntityDescriptionLevel::DescriptionCatched){
         appendDouble(result, tr("Width"), data.width);
@@ -1490,14 +1440,19 @@ void LC_QuickInfoEntityData::collectDimAlignedProperties(RS_DimAligned *dim){
  */
 
 void LC_QuickInfoEntityData::addVectorProperty(QString name, const RS_Vector &value, PropertyType type){
-    RS_Vector viewValue;
     RS_Vector relZero = graphicView->getRelativeZero();
-    if (coordinatesMode == COORD_RELATIVE && relZero.valid){
-        viewValue = value - relZero;
+    QString vectorStr;
+    if (coordinatesMode == COORD_RELATIVE && relZero.valid){ // fixme - check!
+        RS_Vector viewValue = value - relZero;
+        vectorStr = formatDeltaVector(viewValue);
     } else {
-        viewValue = value;
+        vectorStr = formatVector(value);
     }
-    addVectorProperty(name, formatVector(viewValue), value, type);
+    addVectorProperty(name, vectorStr, value, type);
+}
+
+void LC_QuickInfoEntityData::addDeltaVectorProperty(QString name, const RS_Vector &value, PropertyType type){
+    addVectorProperty(name, formatDeltaVector(value), value, type);
 }
 
 /**
@@ -1508,14 +1463,15 @@ void LC_QuickInfoEntityData::addVectorProperty(QString name, const RS_Vector &va
  * @param type
  */
 void LC_QuickInfoEntityData::addVectorProperty(QString name, int count, const RS_Vector &value, PropertyType type){
-    RS_Vector viewValue;
     RS_Vector relZero = graphicView->getRelativeZero();
+    QString vectorStr;
     if (coordinatesMode == COORD_RELATIVE && relZero.valid){
-        viewValue = value - relZero;
+        RS_Vector viewValue = value - relZero;
+        vectorStr = formatDeltaVector(viewValue);
     } else {
-        viewValue = value;
+        vectorStr = formatVector(value);
     }
-    addVectorProperty(name, count,formatVector(viewValue), value, type);
+    addVectorProperty(name, count,vectorStr, value, type);
 }
 
 /**
@@ -1525,6 +1481,10 @@ void LC_QuickInfoEntityData::addVectorProperty(QString name, int count, const RS
  */
 void LC_QuickInfoEntityData::addAngleProperty(QString name, double value){
     addDoubleProperty(name, formatAngle(value), value, ANGLE);
+}
+
+void LC_QuickInfoEntityData::addRawAngleProperty(QString name, double value){
+    addDoubleProperty(name, formatRawAngle(value), value, ANGLE);
 }
 
 /**
@@ -1604,27 +1564,6 @@ void LC_QuickInfoEntityData::clear(){
     entityName = "";
 }
 
-/**
- * Formatting double value
- * @param x
- * @return
- */
-QString LC_QuickInfoEntityData::formatDouble(const double &x) const{
-    RS_Graphic* graphic = document->getGraphic();
-    QString result =  RS_Units::formatDecimal(x, RS2::Unit::None, graphic->getLinearPrecision(), false);
-    return result;
-}
-
-/**
- * formatting int value
- * @param x
- * @return
- */
-QString LC_QuickInfoEntityData::formatInt(const int &x) const{
-    QString result;
-    result.setNum(x);
-    return result;
-}
 
 void LC_QuickInfoEntityData::setOptions(LC_QuickInfoOptions *opt){
     options = opt;

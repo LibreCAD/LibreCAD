@@ -442,9 +442,20 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e){
     // handle snap restrictions that can be activated in addition
     //   to the ones above:
     //apply restriction
-    RS_Vector rz = graphicView->getRelativeZero();
-    RS_Vector vpv(rz.x, pImpData->snapSpot.y);
-    RS_Vector vph(pImpData->snapSpot.x,rz.y);
+    RS_Vector vpv, vph;
+    if (snapMode.restriction != RS2::RestrictNothing) {
+        RS_Vector rz = graphicView->getRelativeZero();
+        if (graphicView->hasUCS()) {
+            RS_Vector ucsRZ = graphicView->toUCS(rz);
+            RS_Vector ucsSnap = graphicView->toUCS(pImpData->snapSpot);
+            vpv = graphicView->toWorld(RS_Vector(ucsRZ.x, ucsSnap.y));
+            vph = graphicView->toWorld(RS_Vector(ucsSnap.x, ucsRZ.y));
+        } else {
+            vpv = RS_Vector(rz.x, pImpData->snapSpot.y);
+            vph = RS_Vector(pImpData->snapSpot.x, rz.y);
+        }
+    }
+
     switch (snapMode.restriction) {
         case RS2::RestrictOrthogonal: {
             pImpData->snapCoord = (mouseCoord.distanceTo(vpv) < mouseCoord.distanceTo(vph)) ?
@@ -560,7 +571,7 @@ RS_Vector RS_Snapper::snapGrid(const RS_Vector& coord) {
 //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<" mouse: = "<<coord<<std::endl;
 //    std::cout<<" snapGrid: = "<<graphicView->getGrid()->snapGrid(coord)<<std::endl;
-    return  graphicView->getGrid()->snapGrid(coord);
+    return  graphicView->snapGrid(coord);
 }
 
 /**
@@ -665,10 +676,15 @@ RS_Vector RS_Snapper::restrictOrthogonal(const RS_Vector& coord) {
  * @param coord The uncorrected coordinates.
  * @return The corrected coordinates.
  */
+
 RS_Vector RS_Snapper::restrictHorizontal(const RS_Vector& coord) {
-    RS_Vector rz = graphicView->getRelativeZero();
-    RS_Vector ret = RS_Vector(coord.x, rz.y);
-    return ret;
+//    RS_Vector rz = graphicView->getRelativeZero();
+////    RS_Vector ret = RS_Vector(coord.x, rz.y);
+//    RS_Vector ucsRZ = graphicView->toUCS(rz);
+//    RS_Vector ret = RS_Vector(coord.x, ucsRZ.y);
+//    return ret;
+
+    return graphicView->restrictHorizontal(graphicView->getRelativeZero(), coord);
 }
 
 
@@ -680,9 +696,28 @@ RS_Vector RS_Snapper::restrictHorizontal(const RS_Vector& coord) {
  * @return The corrected coordinates.
  */
 RS_Vector RS_Snapper::restrictVertical(const RS_Vector& coord) {
-    RS_Vector rz = graphicView->getRelativeZero();
-    RS_Vector ret = RS_Vector(rz.x, coord.y);
-    return ret;
+//    RS_Vector rz = graphicView->getRelativeZero();
+//    RS_Vector ret = RS_Vector(rz.x, coord.y);
+//    return ret;
+    return graphicView->restrictVertical(graphicView->getRelativeZero(), coord);
+}
+
+RS_Vector RS_Snapper::restrictVertical(const RS_Vector &base, const RS_Vector &coord) const{
+    return graphicView->restrictVertical(base, coord);
+}
+
+RS_Vector RS_Snapper::restrictHorizontal(const RS_Vector &base, const RS_Vector &coord) const{
+    return graphicView->restrictHorizontal(base, coord);
+}
+
+RS_Vector RS_Snapper::restrictAngle(const RS_Vector &basePoint, const RS_Vector& snap, double angle){
+    RS_Vector possibleEndPoint;
+    double realAngle = toWorldAngle(angle);
+    RS_Vector infiniteTickEndPoint = basePoint.relative(10.0, realAngle);
+    RS_Vector pointOnInfiniteTick =  LC_LineMath::getNearestPointOnInfiniteLine(snap, basePoint, infiniteTickEndPoint);
+
+    possibleEndPoint = pointOnInfiniteTick;
+    return possibleEndPoint;
 }
 
 
@@ -1044,7 +1079,7 @@ RS_Vector RS_Snapper::snapToRelativeAngle(double baseAngle, const RS_Vector &cur
         return res;
     }
 }
-
+// fixme - sand - change angular resolution to radians (currently one is in degrees)
 RS_Vector RS_Snapper::snapToAngle(
     const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution) {
 
@@ -1052,9 +1087,15 @@ RS_Vector RS_Snapper::snapToAngle(
         return currentCoord;
     }
 
-    double angle = referenceCoord.angleTo(currentCoord) * 180.0 / M_PI;
-    angle -= std::remainder(angle, angularResolution);
-    angle *= M_PI / 180.;
+    double angleRaw = referenceCoord.angleTo(currentCoord) * 180.0 / M_PI;
+    // angle in wcs
+    angleRaw -= std::remainder(angleRaw, angularResolution);
+
+    double angleRad = angleRaw * M_PI / 180.;
+
+    // angle in ucs, and we'll use ucs angle for snapping point
+    double angle = toWorldAngle(angleRad);
+
     RS_Vector res = RS_Vector::polar(referenceCoord.distanceTo(currentCoord), angle);
     res += referenceCoord;
 
@@ -1065,12 +1106,12 @@ RS_Vector RS_Snapper::snapToAngle(
 
         pImpData->snapSpot = t;
         pImpData->snapType = (t == res) ? SnapType::ANGLE : SnapType::ANGLE_ON_ENTITY;
-        pImpData->angle = angle;
+        pImpData->angle = angleRaw * M_PI / 180.; // fixme - temporary
         snapPoint(pImpData->snapSpot, true);
         return t;
     } else {
         pImpData->snapType = SnapType::ANGLE;
-        pImpData->angle = angle;
+        pImpData->angle = angleRaw * M_PI / 180.;
         snapPoint(res, true);
         return res;
     }
@@ -1082,7 +1123,7 @@ RS_Vector RS_Snapper::snapToAngle(
 }
 
 void RS_Snapper::updateCoordinateWidgetFormat(){
-    updateCoordinateWidget(RS_Vector(0.0,0.0),RS_Vector(0.0,0.0), true);
+    RS_DIALOGFACTORY->updateCoordinateWidget(toWorld(RS_Vector(0.0,0.0)),toWorld(RS_Vector(0.0,0.0)), true);
 }
 
 void RS_Snapper::updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat){
@@ -1126,19 +1167,45 @@ void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_V
 
             bool showLabels = prefs->showLabels;
             if (prefs->showAbsolutePosition) {
-                QString absX = (showLabels ? "X: " : "") + formatLinear(abs.x);
-                QString absY = (showLabels ? "Y: " : "") + formatLinear(abs.y);
+                RS_Vector ucs = toUCS(abs);
+                QString absX = (showLabels ? "X: " : "") + formatLinear(ucs.x);
+                QString absY = (showLabels ? "Y: " : "") + formatLinear(ucs.y);
                 coordAbs = absX + (prefs->multiLine ? "\n" : showLabels ? " " : " , ") + absY;
             }
+
+            bool hasUCS = graphicView->hasUCS();
+            if (prefs->showAbsolutePositionWCS && hasUCS){
+                QString absX = (showLabels ? "WX: " : "W") + formatLinear(abs.x);
+                QString absY = (showLabels ? "WY: " : "") + formatLinear(abs.y);
+
+                QString coordAbsWCS = absX + (prefs->multiLine ? "\n" : showLabels ? " " : " , ") + absY;
+
+                if (coordAbs.isEmpty()){
+                    coordAbs = coordAbsWCS;
+                }
+                else{
+                    coordAbs = coordAbs + "\n" +  coordAbsWCS;
+                }
+            }
+
+            RS_Vector relativeToUse;
+            if (hasUCS){
+                relativeToUse = graphicView->toUCSDelta(relative);
+            }
+            else{
+                relativeToUse = relative;
+            }
+                        
             if (prefs->showRelativePositionDistAngle) {
-                QString lenStr = (showLabels ? tr("Dist: ") : "@ ") + formatLinear(relative.magnitude());
-                QString angleStr = (showLabels ? tr("Angle: ") : "< ") + formatAngle(relative.angle());
+                QString lenStr = (showLabels ? tr("Dist: ") : "@ ") + formatLinear(relativeToUse.magnitude());
+                // as we're in ucs coordinates there, use raw formatAngle instead of method
+                QString angleStr = (showLabels ? tr("Angle: ") : "< ") + RS_Units::formatAngle(relativeToUse.angle(), angleFormat, anglePrecision);
 
                 coordPolar = lenStr + (prefs->multiLine ? "\n" : showLabels ? " " : " ") + angleStr;
             }
             if (prefs->showRelativePositionDeltas) {
-                QString lenStr = (showLabels ? tr("dX: ") : "@ ") + formatLinear(relative.x);
-                QString angleStr = (showLabels ? tr("dY: ") : "") + formatAngle(relative.y);
+                QString lenStr = (showLabels ? tr("dX: ") : "@ ") + formatLinear(relativeToUse.x);
+                QString angleStr = (showLabels ? tr("dY: ") : "") + formatLinear(relativeToUse.y);
 
                 QString coordDeltas = lenStr + (prefs->multiLine ? "\n" : showLabels ? " " : " , ") + angleStr;
                 if (coordPolar.isEmpty()){
@@ -1159,32 +1226,98 @@ void RS_Snapper::invalidateSnapSpot() {
     pImpData->snapSpot.valid = false;
 }
 
-QString RS_Snapper::formatLinear(double value){
+QString RS_Snapper::formatLinear(double value) const{
     return RS_Units::formatLinear(value, unit, linearFormat, linearPrecision);
 }
 
-QString RS_Snapper::formatAngle(double value){
-    return RS_Units::formatAngle(value, angleFormat, anglePrecision);
+QString RS_Snapper::formatAngle(double value) const{
+    double angleToUse;
+    if (graphicView->hasUCS()){
+        angleToUse = toUCSAngle(value);
+    }
+    else{
+        angleToUse = value;
+    }
+    return RS_Units::formatAngle(angleToUse, angleFormat, anglePrecision);
 }
 
-QString RS_Snapper::formatVector(const RS_Vector &value) {
-    return formatLinear(value.x).append(" , ").append(formatLinear(value.y));
+QString RS_Snapper::formatVector(const RS_Vector &value) const{
+    double x, y;
+    if (graphicView->hasUCS()){
+        RS_Vector ucsValue = graphicView->toUCS(value);
+        x = ucsValue.x;
+        y = ucsValue.y;
+    }
+    else {
+        x = value.x;
+        y = value.y;
+    }
+    return formatLinear(x).append(" , ").append(formatLinear(y));
 }
 
-QString RS_Snapper::formatRelative(const RS_Vector &value) {
-    return QString("@ ").append(formatLinear(value.x)).append(" , ").append(formatLinear(value.y));
+QString RS_Snapper::formatVectorWCS(const RS_Vector &value) const {
+    return QString("W ").append(formatLinear(value.x)).append(" , ").append(formatLinear(value.y));
 }
 
-QString RS_Snapper::formatPolar(const RS_Vector &value) {
-    return formatLinear(value.magnitude()).append(" < ").append(formatAngle(value.angle()));
+QString RS_Snapper::formatRelative(const RS_Vector &value) const {
+    double x, y;
+    graphicView->toUCSDelta(value, x, y);
+    return QString("@ ").append(formatLinear(x)).append(" , ").append(formatLinear(y));
 }
 
-QString RS_Snapper::formatRelativePolar(const RS_Vector &value) {
-    return QString("@ ").append(formatLinear(value.magnitude())).append(" < ").append(formatAngle(value.angle()));
+QString RS_Snapper::formatPolar(const RS_Vector &value) const {
+    double angleValue;
+    if (graphicView->hasUCS()){
+        angleValue = graphicView->toUCSAngle(value.angle());
+    }
+    else{
+        angleValue = value.angle();
+    }
+    return formatLinear(value.magnitude()).append(" < ").append(formatAngle(angleValue));
+}
+
+QString RS_Snapper::formatRelativePolar(const RS_Vector &value) const {
+    double angleValue;
+    if (graphicView->hasUCS()){
+        angleValue = graphicView->toUCSAngle(value.angle());
+    }
+    else{
+        angleValue = value.angle();
+    }
+    return QString("@ ").append(formatLinear(value.magnitude())).append(" < ").append(formatAngle(angleValue));
 }
 
 void RS_Snapper::forceUpdateInfoCursor(const RS_Vector &pos) {
     LC_InfoCursor* infoCursor = obtainInfoCursor();
     infoCursor->setPos(pos);
     infoCursor->setZonesData(&infoCursorOverlayData);
+}
+
+double RS_Snapper::toWorldAngle(double angle) const{
+    return graphicView->toWorldAngle(angle);
+}
+
+double RS_Snapper::toWorldAngleDegrees(double angle) const{
+    return graphicView->toWorldAngleDegrees(angle);
+}
+
+double RS_Snapper::toUCSAngle(double angle) const{
+    return graphicView->toUCSAngle(angle);
+}
+
+RS_Vector RS_Snapper::toWorld(const RS_Vector &ucsPos) const {
+    return graphicView->toWorld(ucsPos);
+}
+
+RS_Vector RS_Snapper::toUCS(const RS_Vector &worldPos) const {
+    return graphicView->toUCS(worldPos);
+}
+
+void RS_Snapper::calcRectCorners(const RS_Vector &worldCorner1, const RS_Vector &worldCorner3, RS_Vector &worldCorner2, RS_Vector &worldCorner4) const {
+    RS_Vector ucsCorner1 = toUCS(worldCorner1);
+    RS_Vector ucsCorner3 = toUCS(worldCorner3);
+    RS_Vector ucsCorner2 = RS_Vector(ucsCorner1.x, ucsCorner3.y);
+    RS_Vector ucsCorner4 = RS_Vector(ucsCorner3.x, ucsCorner1.y);
+    worldCorner2 = toWorld(ucsCorner2);
+    worldCorner4 = toWorld(ucsCorner4);
 }

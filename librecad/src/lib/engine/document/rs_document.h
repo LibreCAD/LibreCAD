@@ -32,6 +32,7 @@
 #include "rs_entitycontainer.h"
 #include "rs_undo.h"
 #include "lc_viewslist.h"
+#include "lc_ucslist.h"
 
 class RS_BlockList;
 class RS_LayerList;
@@ -52,6 +53,7 @@ public:
     virtual RS_LayerList* getLayerList()= 0;
     virtual RS_BlockList* getBlockList() = 0;
     virtual LC_ViewList* getViewList() { return nullptr;};
+    virtual LC_UCSList* getUCSList() {return nullptr;}
 
     virtual void newDoc() = 0;
     virtual bool save(bool isAutoSave = false) = 0;

@@ -102,16 +102,17 @@ void LC_NamedViewsListWidget::createModel() {
     tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     tableView->setMinimumHeight(60);
 
-    QHeaderView *pHeader {tableView->horizontalHeader()};
-    pHeader->setMinimumSectionSize( ICON_WIDTH + 4);
-    pHeader->setStretchLastSection(true);
-    pHeader->hide();
+    QHeaderView *horizontalHeader {tableView->horizontalHeader()};
+    horizontalHeader->setMinimumSectionSize(ICON_WIDTH + 4);
+    horizontalHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
+    horizontalHeader->setStretchLastSection(true);
+    horizontalHeader->hide();
 
     QHeaderView *verticalHeader = tableView->verticalHeader();
     verticalHeader->setOffset(2);
     verticalHeader->hide();
 
-    tableView->setColumnWidth(viewsModel->translateColumn(LC_NamedViewsModel::ICON), ICON_WIDTH);
+    tableView->setColumnWidth(viewsModel->translateColumn(LC_NamedViewsModel::ICON_TYPE), ICON_WIDTH);
 
     tableView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
 
@@ -132,14 +133,20 @@ void LC_NamedViewsListWidget::setGraphicView(RS_GraphicView *gv,
     LC_ViewList *viewsList = nullptr;
     if (gv != nullptr && gv->getGraphic() != nullptr) {
         RS_Graphic *graphic = gv->getGraphic();
-        linearFormat = graphic->getLinearFormat();
-        precision = graphic->getLinearPrecision();
-        drawingUnit = graphic->getUnit();
+        loadFormats(graphic);
         viewsList = graphic->getViewList();
     }
     graphicView = gv;
     window = w;
     setViewsList(viewsList);
+}
+
+void LC_NamedViewsListWidget::loadFormats(RS_Graphic *graphic) {
+    linearFormat = graphic->getLinearFormat();
+    angleFormat = graphic->getAngleFormat();
+    precision = graphic->getLinearPrecision();
+    anglePrecision = graphic->getAnglePrecision();
+    drawingUnit = graphic->getUnit();
 }
 
 void LC_NamedViewsListWidget::setViewsList(LC_ViewList *viewsList) {
@@ -150,17 +157,25 @@ void LC_NamedViewsListWidget::setViewsList(LC_ViewList *viewsList) {
     }
 }
 
+void LC_NamedViewsListWidget::reload() {
+    if (graphicView != nullptr) {
+        RS_Graphic *graphic = graphicView->getGraphic();
+        loadFormats(graphic);
+    }
+    updateData(true);
+}
+
 void LC_NamedViewsListWidget::refresh() {
     updateData(true);
 }
 
 void LC_NamedViewsListWidget::updateData(bool restoreSelectionIfPossible) {
     int selectedRow = getSingleSelectedRow();
-    viewsModel->setViewsList(currentViewList, linearFormat, precision, drawingUnit);
+    viewsModel->setViewsList(currentViewList, linearFormat, angleFormat, precision, anglePrecision, drawingUnit);
     restoreSingleSelectedRow(restoreSelectionIfPossible, selectedRow);
     updateButtonsState();
-    if (options->showTypeIcon){
-        ui->tvTable->setColumnWidth(viewsModel->translateColumn(LC_NamedViewsModel::ICON),ICON_WIDTH);
+    if (options->showColumnIconType){
+        ui->tvTable->setColumnWidth(viewsModel->translateColumn(LC_NamedViewsModel::ICON_TYPE), ICON_WIDTH);
     }
     emit viewListChanged(viewsModel->count());
 }
@@ -369,34 +384,27 @@ void LC_NamedViewsListWidget::loadOptions() {
 }
 
 void LC_NamedViewsListWidget::doCreateNewView(QString name) {
-    auto* viewToCreate = new LC_View(name);
-    doUpdateViewByGraphicView(viewToCreate);
+    auto viewToCreate = graphicView->createNamedView(name);
     currentViewList->addNew(viewToCreate);
     refresh();
 }
 
 void LC_NamedViewsListWidget::doUpdateView(LC_View *view) {
-    doUpdateViewByGraphicView(view);
+    graphicView->updateNamedView(view);
     currentViewList->edited(view);
     refresh();
 }
 
-void LC_NamedViewsListWidget::doUpdateViewByGraphicView(LC_View *view) const {
-    view->setForPaperView(graphicView->isPrintPreview());
+void LC_NamedViewsListWidget::onUcsListChanged() {
+    updateViewsUCSNames();
+}
 
-    int width = graphicView->getWidth();
-    int height = graphicView->getHeight();
-
-    double x = graphicView->toGraphX(width);
-    double y = graphicView->toGraphY(height);
-
-    double x0 = graphicView->toGraphX(0);
-    double y0 = graphicView->toGraphY(0);
-
-    view->setCenter({(x + x0) / 2.0, (y + y0) / 2.0, 0});
-    view->setSize({(x - x0), (y - y0), 0});
-
-    view->setTargetPoint({0, 0, 0});
+void LC_NamedViewsListWidget::updateViewsUCSNames(){
+    if (graphicView != nullptr) {
+        RS_Graphic *graphic = graphicView->getGraphic();
+        LC_UCSList *ucsList = graphic->getUCSList();
+        viewsModel->updateViewsUCSNames(ucsList);
+    }
 }
 
 void LC_NamedViewsListWidget::onTableSelectionChanged([[maybe_unused]] const QItemSelection &selected,
@@ -567,8 +575,6 @@ void LC_NamedViewsListWidget::selectView(LC_View *view) {
 }
 
 void LC_NamedViewsListWidget::restoreView(LC_View *view) {
-   RS_Vector center = view->getCenter();
-   RS_Vector size = view->getSize();
    if (view->isForPaperView()){
        // fixme - sand - support of navigation to view in paperspace!!!
        QMessageBox::warning(this, tr("Restore View"), tr("Paper space view is not fully supported yet."), QMessageBox::Close,
@@ -588,21 +594,12 @@ void LC_NamedViewsListWidget::restoreView(LC_View *view) {
            QC_MDIWindow *parentWindow = mdiWindow->getParentWindow();
            if (parentWindow != nullptr) {
                QC_ApplicationWindow::getAppWindow()->activateWindow(parentWindow);
-               panZoomGraphicView(center, size);
            }
        }
-       else {
-           panZoomGraphicView(center, size);
-       }
+       graphicView->restoreView(view);
    }
 }
 
-void LC_NamedViewsListWidget::panZoomGraphicView(const RS_Vector &center, const RS_Vector &size) {
-    const RS_Vector halfSize = size / 2;
-    RS_Vector v1 = center - halfSize;
-    RS_Vector v2 = center + halfSize;
-    graphicView->zoomWindow(v1, v2, true);
-}
 
 void LC_NamedViewsListWidget::fillViewsList(QList<LC_View *> &list) {
     if (currentViewList != nullptr){

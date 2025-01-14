@@ -37,6 +37,7 @@
 #include "rs_preview.h"
 #include "qg_lineparallelthroughoptions.h"
 #include "rs_actioninterface.h"
+// fixme - sand - relax existing restrictions, if any - and use no-restrictions mode for this action.
 
 RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
     RS_EntityContainer& container,

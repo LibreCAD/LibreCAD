@@ -46,7 +46,7 @@ public:
     virtual ~LC_NamedViewsListWidget();
     void setViewsList(LC_ViewList* viewsList);
     void setGraphicView(RS_GraphicView* gv, QMdiSubWindow* window);
-    void refresh();
+    void reload();
     void restoreView(int index);
     void restoreView(const QString &name);
     void restoreSelectedView();
@@ -57,6 +57,7 @@ signals:
     void viewListChanged(int itemsCount);
 public slots:
     void addNewView();
+    void onUcsListChanged();
 protected slots:
     void invokeOptionsDialog();
     void updateView();
@@ -70,6 +71,8 @@ protected slots:
     void onTableDoubleClicked();
 protected:
     void doCreateNewView(QString name);
+    void updateViewsUCSNames();
+    void refresh();
 private:
     Ui::LC_NamedViewsListWidget *ui;
     LC_ViewList* currentViewList{nullptr};
@@ -80,7 +83,9 @@ private:
     QMdiSubWindow* window;
 
     RS2::LinearFormat linearFormat;
+    RS2::AngleFormat angleFormat;
     int precision;
+    int anglePrecision;
     RS2::Unit drawingUnit;
 
     void initToolbar() const;
@@ -97,15 +102,10 @@ private:
     void doUpdateView(LC_View *view);
     void renameExistingView(LC_View *selectedView);
     void updateButtonsState() const;
-    void doUpdateViewByGraphicView(LC_View *view) const;
-
     void selectView(LC_View *view);
-
-    void panZoomGraphicView(const RS_Vector &center, const RS_Vector &size);
-
     int getSingleSelectedRow() const;
-
     void restoreSingleSelectedRow(bool restoreSelectionIfPossible, int selectedRow);
+    void loadFormats(RS_Graphic *graphic);
 };
 
 #endif // LC_NAMEDVIEWSLISTWIDGET_H

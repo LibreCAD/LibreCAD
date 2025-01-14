@@ -44,7 +44,7 @@ QG_CoordinateWidget::QG_CoordinateWidget(QWidget* parent, const char* name, Qt::
     lCoord1b->setText("");
     lCoord2b->setText("");
 
-    graphic = NULL;
+    graphic = nullptr;
     prec = 4;
     format = RS2::Decimal;
     aprec = 2;
@@ -54,8 +54,7 @@ QG_CoordinateWidget::QG_CoordinateWidget(QWidget* parent, const char* name, Qt::
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_CoordinateWidget::~QG_CoordinateWidget()
-{
+QG_CoordinateWidget::~QG_CoordinateWidget(){
     // no need to delete child widgets, Qt does it all for us
 }
 
@@ -67,16 +66,27 @@ void QG_CoordinateWidget::languageChange(){
     retranslateUi(this);
 }
 
-void QG_CoordinateWidget::setGraphic(RS_Graphic* graphic) {
+void QG_CoordinateWidget::setGraphic(RS_Graphic* graphic, RS_GraphicView *graphicView) {
     this->graphic = graphic;
+    this->graphicView = graphicView;
     if (graphic != nullptr) {
-        setCoordinates(RS_Vector(0.0, 0.0), RS_Vector(0.0, 0.0), true);
+        setCoordinates(graphicView->toWorld(RS_Vector(0.0, 0.0)), graphicView->toWorld(RS_Vector(0.0, 0.0)), true);
     }
 }
 
-void QG_CoordinateWidget::setCoordinates(const RS_Vector& abs,
-                                         const RS_Vector& rel, bool updateFormat) {
-    setCoordinates(abs.x, abs.y, rel.x, rel.y, updateFormat);
+void QG_CoordinateWidget::setCoordinates(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat) {
+    double x, y, rx, ry;
+    if (graphicView != nullptr){
+        graphicView->toUCS(abs, x,y);
+        graphicView->toUCSDelta(rel, rx, ry);
+    }
+    else{
+        x = abs.x;
+        y = abs.y;
+        rx = rel.x;
+        ry = rel.y;
+    }
+    setCoordinates(x, y, rx, ry, updateFormat);
 }
 
 void QG_CoordinateWidget::clearContent(){
@@ -105,18 +115,11 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
         }
 
         // abs / rel coordinates:
-        QString absX = RS_Units::formatLinear(x,
-                                               graphic->getUnit(),
-                                               format, prec);
-        QString absY = RS_Units::formatLinear(y,
-                                               graphic->getUnit(),
-                                               format, prec);
-        QString relX = RS_Units::formatLinear(rx,
-                                               graphic->getUnit(),
-                                               format, prec);
-        QString relY = RS_Units::formatLinear(ry,
-                                               graphic->getUnit(),
-                                               format, prec);
+        RS2::Unit unit = graphic->getUnit();
+        QString absX = RS_Units::formatLinear(x, unit, format, prec);
+        QString absY = RS_Units::formatLinear(y, unit, format, prec);
+        QString relX = RS_Units::formatLinear(rx, unit, format, prec);
+        QString relY = RS_Units::formatLinear(ry, unit, format, prec);
 
         lCoord1->setText(absX + " , " + absY);
         lCoord2->setText("@  " + relX + " , " + relY);
@@ -125,21 +128,15 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
         RS_Vector v;
         v = RS_Vector(x, y);
         QString str;
-        QString rStr = RS_Units::formatLinear(v.magnitude(),
-                                               graphic->getUnit(),
-                                               format, prec);
-        QString aStr = RS_Units::formatAngle(v.angle(),
-                                               aformat, aprec);
+        QString rStr = RS_Units::formatLinear(v.magnitude(),unit,format, prec);
+        QString aStr = RS_Units::formatAngle(v.angle(),aformat, aprec);
 
         str = rStr + " < " + aStr;
         lCoord1b->setText(str);
 
         v = RS_Vector(rx, ry);
-        rStr = RS_Units::formatLinear(v.magnitude(),
-                                               graphic->getUnit(),
-                                               format, prec);
-        aStr = RS_Units::formatAngle(v.angle(),
-                                               aformat, aprec);
+        rStr = RS_Units::formatLinear(v.magnitude(),unit,format, prec);
+        aStr = RS_Units::formatAngle(v.angle(),aformat, aprec);
 
         lCoord2b->setText("@  " + rStr + " < " + aStr);
 

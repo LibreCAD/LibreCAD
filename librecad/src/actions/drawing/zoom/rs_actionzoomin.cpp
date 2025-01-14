@@ -76,8 +76,13 @@ void RS_ActionZoomIn::trigger() {
 
         case RS2::Both:
             if (!center->valid) {
-                *center = graphicView->toGraph(graphicView->getWidth() / 2,
-                                               graphicView->getHeight() / 2);
+                RS_Vector centerUCS = (graphicView->getUCSViewLeftBottom() + graphicView->getUCSViewRightTop())*0.5;
+//                *center = graphicView->toWorld(centerUCS);
+                *center = centerUCS;
+
+                LC_ERR << " ++Center " << formatVector(*center);
+                /**center = graphicView->toGraph(graphicView->getWidth() / 2,
+                                               graphicView->getHeight() / 2);*/
             }
             if (direction==RS2::In) {
                 graphicView->zoomIn(zoom_factor, *center);

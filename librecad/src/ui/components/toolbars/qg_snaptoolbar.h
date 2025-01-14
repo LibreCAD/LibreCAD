@@ -50,6 +50,7 @@ public:
     void saveSnapMode();
     bool lockedRelativeZero() const;
     void setLockedRelativeZero(bool on);
+    void setUCSActive(bool on);
     LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
 
 public slots:
@@ -85,6 +86,8 @@ private:
     QAction *restrictNothing;
     QAction *bRelZero;
     QAction *bLockRelZero;
+
+    QAction *ucsMode;
     RS_SnapMode snapMode;
 
 };

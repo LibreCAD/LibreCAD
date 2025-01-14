@@ -49,7 +49,8 @@ class QG_ScrollBar;
  */
 class QG_GraphicView:   public RS_GraphicView,
                         public RS_LayerListListener,
-                        public RS_BlockListListener
+                        public RS_BlockListListener,
+                        public LC_UCSListListener
 {
 Q_OBJECT
 
@@ -85,18 +86,20 @@ public:
     }
 
     void layerActivated(RS_Layer *) override;
+
+
     /**
      * @brief setOffset
      * @param ox, offset X
      * @param oy, offset Y
      */
     void setOffset(int ox, int oy) override;
-    /**
+/*    *//**
      * @brief getMousePosition() mouse position in widget coordinates
      * @return the cursor position in widget coordinates
      * returns the widget center, if cursor is not on the widget
-     */
-    RS_Vector getMousePosition() const override;
+     *//*
+    RS_Vector getMousePosition() const override;*/
 
     void setAntialiasing(bool state);
     void setCursorHiding(bool state);
@@ -160,6 +163,8 @@ protected:
     QMap<QString, QMenu*> menus;
     void paintClassicalBuffered();
     void paintSequental();
+    virtual void highlightUCSLocation(LC_UCS *ucs) override;
+    void ucsHighlightStep();
 private slots:
     void slotHScrolled(int value);
     void slotVScrolled(int value);
@@ -169,13 +174,17 @@ private:
     bool scrollbars{false};
     bool cursor_hiding{false};
     bool selectCursor_hiding{false};
+    bool invertZoomDirection{false};
+    bool invertHorizontalScroll;
+    bool invertVerticallScroll;
     void setupPainter(RS_Painter &painter2) const;
     // For auto panning by the cursor close to the view border
     void startAutoPanTimer(QMouseEvent *e);
     bool isAutoPan(QMouseEvent* e) const;
     struct AutoPanData;
     std::unique_ptr<AutoPanData> m_panData;
-
+    struct UCSHighlightData;
+    std::unique_ptr<UCSHighlightData> m_ucsHighlightData;
 signals:
     void xbutton1_released();
     void gridStatusChanged(QString);

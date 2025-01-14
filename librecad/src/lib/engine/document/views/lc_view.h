@@ -62,7 +62,6 @@ public:
     int getViewMode() const;
     void setUCS(LC_UCS *pUcs);
     LC_UCS* getUCS() const;
-
     bool isForPaperView() {return  flags & 1;}
     void setForPaperView(bool forPaper) {
         if (forPaper) {
@@ -72,6 +71,8 @@ public:
             flags &= ~1;
         }
     }
+
+    static bool isValidName(QString &nameCandidate);
 
 protected:
     QString name;

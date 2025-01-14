@@ -242,6 +242,7 @@ double LC_AbstractActionDrawRectangle::getActualBaseAngle() const{
     if (baseAngleIsFixed){
         result = RS_Math::deg2rad(angle);
     }
+    result = toWorldAngle(result);
     return result;
 }
 
@@ -589,9 +590,17 @@ void LC_AbstractActionDrawRectangle::setCornersMode(int value){
  * @param value
  */
 void LC_AbstractActionDrawRectangle::setAngle(double value){
-    angle = value;
+    doSetAngle(value);
     setBaseAngleFixed(true);
     drawPreviewForLastPoint();
+}
+
+void LC_AbstractActionDrawRectangle::doSetAngle(double value) {
+    angle = value;
+}
+
+double LC_AbstractActionDrawRectangle::getAngle() const {
+    return angle;
 }
 
 /**

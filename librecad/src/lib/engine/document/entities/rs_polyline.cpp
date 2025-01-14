@@ -243,14 +243,24 @@ std::unique_ptr<RS_Entity> RS_Polyline::createVertex(const RS_Vector& v, double 
         double a1 = center.angleTo(prepend ? v : data.endpoint);
         double a2 = center.angleTo(prepend ? data.startpoint : v);
 
-        RS_EllipseData const d{
-            center,
-            RS_Vector{radius, 0.},
-            1.,
-            a1, a2,
-            reversed};
+        // fixme - SAND - Should we ALWAYS create ellipse arc in polyline? How such polyline will be saved then?
+        if (createEllipticArcs) {
+            RS_EllipseData const d{
+                center,
+                RS_Vector{radius, 0.},
+                1.,
+                a1, a2,
+                reversed};
 
-        entity = std::make_unique<RS_Ellipse>(this, d);
+            entity = std::make_unique<RS_Ellipse>(this, d);
+        }
+        else{
+            RS_ArcData const d(center, radius,
+                               a1, a2,
+                               reversed);
+
+            entity = std::make_unique<RS_Arc>(this, d);
+        }
         entity->setSelected(isSelected());
         entity->setPen(RS_Pen(RS2::FlagInvalid));
         entity->setLayer(nullptr);

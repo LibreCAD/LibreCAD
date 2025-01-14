@@ -323,6 +323,7 @@ void RS_Painter::createSolidFillPath(QPainterPath &path, const RS_GraphicView *v
                                 startAngleDegrees = arcData.startAngleDegrees;
                                 angularLength = arcData.angularLength;
                             }
+                            startAngleDegrees = view->toUCSAngleDegrees(startAngleDegrees);
                             if (loopPath.isEmpty()) {
                                 loopPath.arcMoveTo(rx, ry, size, size, startAngleDegrees);
                             }
@@ -342,7 +343,7 @@ void RS_Painter::createSolidFillPath(QPainterPath &path, const RS_GraphicView *v
                             const RS_EllipseData &ellipseData = ellipse->getData();
                             double centerX = view->toGuiX(ellipseData.center.x);
                             double centerY = view->toGuiY(ellipseData.center.y);
-                            double angle = ellipseData.angleDegrees;
+                            double angle = view->toUCSAngleDegrees(ellipseData.angleDegrees);
                             double radius1 = ellipse->getMajorRadius()*view->getFactor().x;
                             double radius2 = ellipseData.ratio*radius1;
 
@@ -365,6 +366,7 @@ void RS_Painter::createSolidFillPath(QPainterPath &path, const RS_GraphicView *v
                                 }
 
                                 QPainterPath arcPath;
+                                angle1 = view->toUCSAngleDegrees(angle1);
                                 arcPath.arcMoveTo(rx, ry, size1, size2, angle1);
                                 arcPath.arcTo(rx, ry, size1, size2, angle1, angularLength);
                                 arcPath = t1.map(arcPath);
@@ -504,24 +506,27 @@ void RS_Painter::drawPolyline(const RS_Polyline& polyline, const RS_GraphicView&
         return;
     }
     QPainterPath path;
-    path.moveTo(view.toGuiX(polyline.getStartpoint().x), view.toGuiY(polyline.getStartpoint().y));
+    RS_Vector startPoint = view.toGui(polyline.getStartpoint());
+    path.moveTo(startPoint.x, startPoint.y);
 
     for(RS_Entity* entity: polyline) {
         switch(entity->rtti()) {
-        case RS2::EntityLine: {
-            path.moveTo(view.toGuiX(entity->getStartpoint().x),
-                        view.toGuiY(entity->getStartpoint().y));
-            path.lineTo(view.toGuiX(entity->getEndpoint().x),
-                        view.toGuiY(entity->getEndpoint().y));
-            break;
-        }
+            case RS2::EntityLine: {
+                RS_Vector start = view.toGui(entity->getStartpoint());
+                RS_Vector end =  view.toGui(entity->getEndpoint());
+                path.moveTo(start.x, start.y);
+                path.lineTo(end.x, end.y);
+                break;
+            }
             case RS2::EntityArc: {
                 auto arc = *static_cast<RS_Arc *>(entity);
                 RS_ArcData data = arc.getData();
                 double radius = data.radius * view.getFactor().x;
                 if (radius > minArcDrawingRadius) {
-                    double centerX = view.toGuiX(data.center.x);
-                    double centerY = view.toGuiY(data.center.y);
+                    RS_Vector center = view.toGui(data.center);
+//                    double centerX = view.toGuiX(data.center.x);
+//                    double centerY = view.toGuiY(data.center.y);
+
                     double startAngleDegrees, angularLength;
 
                     if (arc.isReversed()) {
@@ -535,20 +540,26 @@ void RS_Painter::drawPolyline(const RS_Polyline& polyline, const RS_GraphicView&
                     double size = radius + radius;
                     RS_Vector startoPint = view.toGui(arc.getStartpoint());
                     path.moveTo(startoPint.x, startoPint.y);
-                    path.arcTo(centerX - radius, centerY - radius, size, size, startAngleDegrees, angularLength);
+                    double startAngle = view.toUCSAngleDegrees(startAngleDegrees); // fixme - cache?
+                    path.arcTo(center.x - radius, center.y - radius, size, size, startAngle, angularLength);
                 }
                 break;
             }
-            case RS2::EntityEllipse: {
+            case RS2::EntityEllipse: { // fixme - coordinates translation
                 auto arc = *static_cast<RS_Ellipse *>(entity);
                 const RS_EllipseData& data = arc.getData();
                 const RS_Vector center=view.toGui(data.center);
                 const double ra = data.majorP.magnitude()*view.getFactor().x;
                 const double rb = data.ratio*ra;
-                if (data.isArc)
-                    drawEllipseArc(center.x, center.y, ra, rb, data.angleDegrees, data.startAngleDegrees, data.otherAngleDegrees, data.angularLength, data.reversed);
-                else
-                    drawEllipse(center.x, center.y, ra, rb, data.angleDegrees);
+                if (data.isArc) {
+                    // fixme - cache angles in entity?
+                    drawEllipseArc(center.x, center.y, ra, rb, view.toWorldAngleDegrees(data.angleDegrees), /*view.toWorldAngleDegrees(*/data.startAngleDegrees/*)*/,
+                                   /*view.toWorldAngleDegrees(*/data.otherAngleDegrees/*)*/, data.angularLength, data.reversed);
+                }
+                else {
+                    // fixme - cache angles in entity?
+                    drawEllipse(center.x, center.y, ra, rb, view.toWorldAngleDegrees(data.angleDegrees));
+                }
                 break;
             }
             default:
@@ -563,10 +574,13 @@ void RS_Painter::drawSpline(const RS_Spline& spline, const RS_GraphicView& view)
     unsigned int count = spline.count();
     if (count > 0) {
         RS_Entity *child = spline.unsafeEntityAt(0);
-        path.moveTo(view.toGuiX(child->getStartpoint().x), view.toGuiY(child->getStartpoint().y));
+        double uiX, uiY;
+        view.toGui(child->getStartpoint(), uiX, uiY);
+        path.moveTo(uiX, uiY);
         for (unsigned int i = 0; i < count;i++) {
             child = spline.unsafeEntityAt(i);
-            path.lineTo(view.toGuiX(child->getEndpoint().x), view.toGuiY(child->getEndpoint().y));
+            view.toGui(child->getEndpoint(), uiX, uiY);
+            path.lineTo(uiX, uiY);
         }
     }
 

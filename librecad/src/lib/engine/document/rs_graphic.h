@@ -31,6 +31,7 @@
 #include "rs_document.h"
 #include "lc_view.h"
 #include "lc_viewslist.h"
+#include "lc_ucslist.h"
 
 class QG_LayerWidget;
 
@@ -52,6 +53,7 @@ public:
     RS_LayerList* getLayerList() override {return &layerList;}
     RS_BlockList* getBlockList() override {return &blockList;}
     LC_ViewList* getViewList() override {return &namedViewsList;}
+    LC_UCSList* getUCSList() override {return &ucsList;}
 
     void newDoc() override;
     bool save(bool isAutoSave = false) override;
@@ -109,6 +111,7 @@ public:
     void addVariable(const QString& key, const RS_Vector& value, int code);
     void addVariable(const QString& key, const QString& value, int code);
     void addVariable(const QString& key, int value, int code);
+    void addVariable(const QString& key, bool value, int code);
     void addVariable(const QString& key, double value, int code);
     void removeVariable(const QString& key);
 
@@ -116,6 +119,7 @@ public:
     RS_Vector getVariableVector(const QString& key, const RS_Vector& def) const;
     QString getVariableString(const QString& key, const QString& def) const;
     int getVariableInt(const QString& key, int def) const;
+    bool getVariableBool(const QString& key, bool def) const;
     double getVariableDouble(const QString& key, double def) const;
 
     RS_VariableDict getVariableDictObject() {return variableDict;}
@@ -148,6 +152,8 @@ public:
     void setGridOn(bool on);
     bool isIsometricGrid() const;
     void setIsometricGrid(bool on);
+    void setCurrentUCS(LC_UCS* ucs);
+    LC_UCS* getCurrentUCS();
     RS2::IsoGridViewType getIsoView() const;
     void setIsoView(RS2::IsoGridViewType viewType);
     void centerToPage();
@@ -157,7 +163,13 @@ public:
      * @retval true The document has been modified since it was last saved.
      * @retval false The document has not been modified since it was last saved.
      */
-    bool isModified() const override {return modified || layerList.isModified() || blockList.isModified() || namedViewsList.isModified();}
+    bool isModified() const override {
+        return modified
+               || layerList.isModified()
+               || blockList.isModified()
+               || namedViewsList.isModified()
+               || ucsList.isModified()
+    ;}
 
     /**
      * Sets the documents modified status to 'm'.
@@ -168,6 +180,7 @@ public:
             layerList.setModified(m);
             blockList.setModified(m);
             namedViewsList.setModified(m);
+            ucsList.setModified(m);
         }
     }
 
@@ -210,13 +223,11 @@ public:
     int getPagesNumVert() const {return pagesNumV;}
     friend std::ostream& operator << (std::ostream& os, RS_Graphic& g);
     int clean();
-
     LC_View *findNamedView(QString viewName) {return namedViewsList.find(viewName);};
-
+    LC_UCS *findNamedUCS(QString ucsName) {return ucsList.find(ucsName);};
     void addNamedView(LC_View *view) {namedViewsList.add(view);};
-
+    void addUCS(LC_UCS *ucs) {ucsList.add(ucs);};
 private:
-
     bool BackupDrawingFile(const QString &filename);
     QDateTime modifiedTime;
     QString currentFileName; //keep a copy of filename for the modifiedTime
@@ -225,6 +236,7 @@ private:
     RS_BlockList blockList;
     RS_VariableDict variableDict;
     LC_ViewList namedViewsList;
+    LC_UCSList ucsList;
     //if set to true, will refuse to modify paper scale
     bool paperScaleFixed = false;
 
@@ -239,5 +251,6 @@ private:
     int pagesNumV = 1;
 
 
+    void loadVariables();
 };
 #endif

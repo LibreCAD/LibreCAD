@@ -169,6 +169,9 @@ public:
     RS_Vector restrictOrthogonal(const RS_Vector &coord);
     RS_Vector restrictHorizontal(const RS_Vector &coord);
     RS_Vector restrictVertical(const RS_Vector &coord);
+    RS_Vector restrictHorizontal(const RS_Vector &base, const RS_Vector &coord) const;
+    RS_Vector restrictVertical(const RS_Vector &base, const RS_Vector &coord) const;
+    RS_Vector restrictAngle(const RS_Vector &basePoint, const RS_Vector& snap, double angle);
     //RS_Entity* catchLeafEntity(const RS_Vector& pos);
     //RS_Entity* catchLeafEntity(QMouseEvent* e);
     RS_Entity *catchEntity(
@@ -248,15 +251,21 @@ protected:
     void clearInfoCursor();
     LC_InfoCursorOverlayPrefs* getInfoCursorOverlayPrefs() const;
 
-    QString formatLinear(double value);
-    QString formatAngle(double value);
-    QString formatVector(const RS_Vector& value);
-    QString formatRelative(const RS_Vector& value);
-    QString formatPolar(const RS_Vector& value);
-    QString formatRelativePolar(const RS_Vector& value);
+    QString formatLinear(double value) const;
+    QString formatAngle(double value) const;
+    QString formatVector(const RS_Vector& value) const;
+    QString formatVectorWCS(const RS_Vector &value) const;
+    QString formatRelative(const RS_Vector& value) const;
+    QString formatPolar(const RS_Vector& value) const;
+    QString formatRelativePolar(const RS_Vector& value) const;
     void forceUpdateInfoCursor(const RS_Vector &pos);
     bool isInfoCursorForModificationEnabled() const;
-
+    double toWorldAngle(double tickAngleRad) const;
+    double toWorldAngleDegrees(double angle) const;
+    double toUCSAngle(double tickAngleRad) const;
+    RS_Vector toWorld(const RS_Vector& ucsPos) const;
+    RS_Vector toUCS(const RS_Vector& worldPos) const;
+    void calcRectCorners(const RS_Vector &worldCorner1, const RS_Vector &worldCorner3, RS_Vector &worldCorner2, RS_Vector &worldCorner4) const;
 private:
     struct ImpData;
     std::unique_ptr<ImpData> pImpData;

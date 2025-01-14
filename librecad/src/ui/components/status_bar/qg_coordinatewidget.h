@@ -29,6 +29,7 @@
 #include "ui_qg_coordinatewidget.h"
 #include "rs_vector.h"
 #include "rs.h"
+#include "rs_graphicview.h"
 
 class RS_Graphic;
 
@@ -40,16 +41,15 @@ public:
     QG_CoordinateWidget(QWidget *parent = 0, const char *name = 0, Qt::WindowFlags fl = {});
     ~QG_CoordinateWidget();
     void clearContent();
-
+    void setGraphic( RS_Graphic * graphic, RS_GraphicView* graphicView);
 public slots:
-    virtual void setGraphic( RS_Graphic * graphic );
     virtual void setCoordinates( const RS_Vector & abs, const RS_Vector & rel, bool updateFormat ); // fixme - check why updateFormat is always true
-
 protected slots:
     virtual void languageChange();
     virtual void setCoordinates( double x, double y, double rx, double ry, bool updateFormat );
 private:
     RS_Graphic* graphic = nullptr;
+    RS_GraphicView *graphicView = nullptr;
     int prec = 0;
     RS2::LinearFormat format = RS2::Decimal;
     int aprec = 0;

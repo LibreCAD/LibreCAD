@@ -38,6 +38,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_fileio.h"
 #include "rs_layer.h"
+#include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
@@ -504,9 +505,22 @@ bool RS_Graphic::open(const QString &filename, RS2::FormatType type) {
     ret = RS_FileIO::instance()->fileImport(*this, filename, type);
 
     if (ret) {
+        RS_GraphicView *gv = getGraphicView();
+        if (gv != nullptr) {
+            // fixme - sand - review and probably move initialization of UCS - as normal support of VIEWPORT will be available
+            // todo - not sure whether this is right place for setting up current wcs.
+            // Actually, it seems that it's better to rely on reading viewport (were setting for the offset and zoom are set.
+            // however, must probably with proper support of VIEW, they will be reworked too..
+            // So let it have here for now so far
+            gv->initAfterDocumentOpen();
+        }
+
         setModified(false);
         layerList.setModified(false);
         blockList.setModified(false);
+        namedViewsList.setModified(false);
+        ucsList.setModified(false);
+
         modifiedTime = finfo.lastModified();
         currentFileName = QString(filename);
 
@@ -538,6 +552,10 @@ void RS_Graphic::addVariable(const QString& key, int value, int code) {
     variableDict.add(key, value, code);
 }
 
+void RS_Graphic::addVariable(const QString& key, bool value, int code) {
+    variableDict.add(key, value, code);
+}
+
 void RS_Graphic::addVariable(const QString& key, double value, int code) {
     variableDict.add(key, value, code);
 }
@@ -558,6 +576,10 @@ int RS_Graphic::getVariableInt(const QString& key, int def) const {
     return variableDict.getInt(key, def);
 }
 
+bool RS_Graphic::getVariableBool(const QString& key, bool def) const {
+    return variableDict.getInt(key, def ? 1 : 0) != 0;
+}
+
 double RS_Graphic::getVariableDouble(const QString& key, double def) const {
     return variableDict.getDouble(key, def);
 }
@@ -566,18 +588,25 @@ QHash<QString, RS_Variable>& RS_Graphic::getVariableDict() {
     return variableDict.getVariableDict();
 }
 
+void RS_Graphic::loadVariables(){
+    bool gridOn = getVariableInt("$GRIDMODE", 1) != 0;
+}
+
+
 /**
  * @return true if the grid is switched on (visible).
  */
 bool RS_Graphic::isGridOn() const {
     int on = getVariableInt("$GRIDMODE", 1);
     return on != 0;
+//    return gridOn;
 }
 
 /**
  * Enables / disables the grid.
  */
 void RS_Graphic::setGridOn(bool on) {
+//    gridOn = on;
     addVariable("$GRIDMODE", (int)on, 70);
 }
 
@@ -596,6 +625,58 @@ bool RS_Graphic::isIsometricGrid() const{
 void RS_Graphic::setIsometricGrid(bool on) {
     //$ISOMETRICGRID == $SNAPSTYLE
     addVariable("$SNAPSTYLE", (int)on, 70);
+}
+
+void RS_Graphic::setCurrentUCS(LC_UCS* ucs){
+    QString name = ucs->getName();
+    if (!ucs->isUCS()){
+        name = "";
+    }
+    addVariable("$UCSNAME", name, 2);
+    addVariable("$UCSORG", ucs->getOrigin(), 10);
+
+    // so far we don't support the following variables
+    // http://entercad.ru/acad_dxf.en/ws1a9193826455f5ff18cb41610ec0a2e719-7a6f.htm
+    /*
+    $UCSORGBACK
+    $UCSORGBOTTOM
+    $UCSORGFRONT
+    $UCSORGLEFT
+    $UCSORGRIGHT
+    $UCSORGTOP
+    */
+
+    // as for these variables... well, so far it' snot clear who they are related to $SNAPSTYLE.... should we rely on them for isometric mode?
+    /*
+      $UCSORTHOREF
+    */
+
+    addVariable("$UCSORTHOVIEW", ucs->getOrthoType(), 70);
+    addVariable("$UCSXDIR", ucs->getXAxis(), 10);
+    addVariable("$UCSYDIR", ucs->getYAxis(), 10);
+}
+
+LC_UCS* RS_Graphic::getCurrentUCS(){
+    QString name = getVariableString("$UCSNAME", "");
+    RS_Vector origin = getVariableVector("$UCSORG", RS_Vector(0.0, 0.0));
+    int orthoType = getVariableInt("$UCSORTHOVIEW", 0);
+    RS_Vector xAxis = getVariableVector("$UCSXDIR", RS_Vector(1.0, 0.0));
+    RS_Vector yAxis = xAxis;
+    yAxis = getVariableVector("$UCSYDIR", yAxis.rotate(M_PI_2));
+
+    LC_UCS* wcs = ucsList.getWCS();
+
+    auto result = new LC_UCS(name);
+    result->setOrigin(origin);
+    result->setOrthoType(orthoType);
+    result->setXAxis(xAxis);
+    result->setYAxis(yAxis);
+
+    if (wcs->isSameTo(result)){
+        delete result;
+        result = new LC_WCS();
+    }
+    return result;
 }
 
 RS2::IsoGridViewType RS_Graphic::getIsoView() const{

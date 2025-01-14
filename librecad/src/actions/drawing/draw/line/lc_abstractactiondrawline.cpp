@@ -218,11 +218,15 @@ void LC_AbstractActionDrawLine::setSetYDirectionState(){
  * Sets angle value and switch to SetDistance state
  */
 void LC_AbstractActionDrawLine::setAngleValue(double value){
-    angle = value;
+    doSetAngle(value);
     if (getStatus() == SetAngle){
         setStatusForValidStartPoint(SetDistance);
     }
     updateOptions();
+}
+
+void LC_AbstractActionDrawLine::doSetAngle(double value) {
+   angle = value;
 }
 
 void LC_AbstractActionDrawLine::setStatusForValidStartPoint(int newStatus){

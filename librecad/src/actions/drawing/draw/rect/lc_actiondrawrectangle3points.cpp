@@ -118,14 +118,13 @@ LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle3Points::createP
     RS_Polyline* polyline = nullptr;
 
     if (snapPoint.valid){
-
-        double angleRad = getActualBaseAngle();
         int status = getStatus();
 
         // first, perform corners pre-calculation based on the current status
         switch (status) {
             case SetWidth:
             case SetPoint2: {
+                double angleRad = getActualBaseAngle();
                 calculateCorner2(snapPoint, angleRad, false);
                 break;
             }
@@ -435,9 +434,7 @@ void LC_ActionDrawRectangle3Points::calculateCornersBySize(RS_Vector size){
 }
 
 void LC_ActionDrawRectangle3Points::doProcessCoordinateEvent(const RS_Vector &mouse, bool zero, [[maybe_unused]]int status){
-
-    double angleRad = getActualBaseAngle();
-    switch (getStatus()) {
+switch (getStatus()) {
         case SetPoint1: {
             doResetPoints(mouse);
             pPoints->corner1Set = true;
@@ -446,12 +443,14 @@ void LC_ActionDrawRectangle3Points::doProcessCoordinateEvent(const RS_Vector &mo
             break;
         }
         case SetPoint2: {
+            double angleRad = getActualBaseAngle();
             calculateCorner2(mouse, angleRad, true);
             moveRelativeZero(mouse);
             setMainStatus(SetPoint3);
             break;
         }
         case SetWidth: {
+            double angleRad = getActualBaseAngle();
             calculateCorner2(mouse, angleRad, true);
             moveRelativeZero(mouse);
             setMainStatus(SetHeight);

@@ -19,12 +19,12 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-
-#include "lc_relzerocoordinateswidget.h"
-#include "ui_lc_relzerocoordinateswidget.h"
 #include "rs_settings.h"
 #include "rs_units.h"
 #include "rs_graphicview.h"
+#include "lc_relzerocoordinateswidget.h"
+#include "ui_lc_relzerocoordinateswidget.h"
+#include "lc_linemath.h"
 
 LC_RelZeroCoordinatesWidget::LC_RelZeroCoordinatesWidget(QWidget *parent, const char* name)
     : QWidget(parent)
@@ -80,12 +80,23 @@ void LC_RelZeroCoordinatesWidget::setRelativeZero(const RS_Vector &rel, bool upd
             aprec = graphic->getAnglePrecision();
         }
 
-        double x = rel.x;
-        double y = rel.y;
+        RS_Vector ucsRelZero = graphicView->toUCS(rel);
+
+        double x = ucsRelZero.x;
+        double y = ucsRelZero.y;
+
+        double magnitude = ucsRelZero.magnitude();
+        double len = magnitude;
+        double angle = ucsRelZero.angle();
+        if (LC_LineMath::isNotMeaningful(magnitude)){
+            len = 0;
+            angle = 0;
+        }
 
         if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true)){
             x  = RS_Units::convert(x);
             y  = RS_Units::convert(y);
+            len = RS_Units::convert(magnitude);
         }
 
         // cartesian coordinates
@@ -97,12 +108,10 @@ void LC_RelZeroCoordinatesWidget::setRelativeZero(const RS_Vector &rel, bool upd
         ui->lCartesianCoordinates->setText(relX + " , " + relY);
 
         // polar coordinates:
-        RS_Vector v;
-        v = RS_Vector(x, y);
         QString str;
-        QString rStr = RS_Units::formatLinear(v.magnitude(),unit,format, prec);
-        QString aStr = RS_Units::formatAngle(v.angle(),aformat, aprec);
 
+        QString rStr = RS_Units::formatLinear(len, unit, format, prec);
+        QString aStr = RS_Units::formatAngle(angle, aformat, aprec);
         str = rStr + " < " + aStr;
         ui->lPolarCoordinates->setText(str);
     }

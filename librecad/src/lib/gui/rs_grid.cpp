@@ -232,8 +232,11 @@ void RS_Grid::prepareGridCalculations(RS_Vector& viewZero,RS_Vector& viewSize,RS
         }
     }
 
-    viewZero = graphicView->toGraph(0, 0);
-    viewSize = graphicView->toGraph(graphicView->getWidth(), graphicView->getHeight());
+//    RS_Vector ucsZero = RS_Vector(0,0);
+//    RS_Vector ucsSize = RS_Vector(graphicView->getWidth(), graphicView->getHeight());
+
+    viewZero = graphicView->toUCSFromGui(0, 0);
+    viewSize = graphicView->toUCSFromGui(graphicView->getWidth(), graphicView->getHeight());
 
     // populate grid points and metaGrid line positions: pts, metaX, metaY
     gridInfoString = "";

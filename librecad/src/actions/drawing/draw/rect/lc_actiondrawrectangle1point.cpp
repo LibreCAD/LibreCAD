@@ -132,21 +132,23 @@ LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle1Point::createPo
         if (angleIsFree){
             if (inFreeAngleMode){
                 actualBaseAngle = insertionPoint.angleTo(snapPoint);
-                angle = RS_Math::rad2deg(actualBaseAngle);
+                doSetAngle(RS_Math::rad2deg(actualBaseAngle));
                 updateOptionsUI(LC_Rectangle1PointOptions::UPDATE_ANGLE);
             }
         }
     }
 
-    if (LC_LineMath::isMeaningfulAngle(actualBaseAngle)){
+    double baseAngle = toWorldAngle(actualBaseAngle);
+
+    if (LC_LineMath::isMeaningfulAngle(baseAngle)){
         // now we'll rotate shape on specific angle
         if (inFreeAngleMode){
-            polyline->rotate(insertionPoint, actualBaseAngle);
-            center.rotate(insertionPoint, actualBaseAngle);
+            polyline->rotate(insertionPoint, baseAngle);
+            center.rotate(insertionPoint, baseAngle);
         }
         else {
-            polyline->rotate(snapPoint, actualBaseAngle);
-            center.rotate(snapPoint, actualBaseAngle);
+            polyline->rotate(snapPoint, baseAngle);
+            center.rotate(snapPoint, baseAngle);
         }
     }
     result.centerPoint = center;

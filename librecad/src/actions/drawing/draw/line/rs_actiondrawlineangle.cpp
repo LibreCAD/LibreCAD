@@ -157,6 +157,7 @@ void RS_ActionDrawLineAngle::preparePreview(){
     RS_Vector p1, p2;
     // End:
     double angleRad = RS_Math::deg2rad(pPoints->angle);
+    angleRad = toWorldAngle(angleRad);
     if (pPoints->snpPoint == SNAP_END){
         p2.setPolar(-pPoints->length, angleRad);
     } else {

@@ -915,6 +915,13 @@ void RS_EntityContainer::addRectangle(RS_Vector const &v0, RS_Vector const &v1) 
     addEntity(new RS_Line{this, {v0.x, v1.y}, v0});
 }
 
+void RS_EntityContainer::addRectangle(RS_Vector const& v0, RS_Vector const& v1,RS_Vector const& v2, RS_Vector const& v3){
+    addEntity(new RS_Line(this, v0, v1));
+    addEntity(new RS_Line(this, v1, v2));
+    addEntity(new RS_Line(this, v2, v3));
+    addEntity(new RS_Line(this, v3, v0));
+}
+
 /**
  * Returns the first entity or nullptr if this graphic is empty.
  * @param level

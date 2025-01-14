@@ -48,7 +48,7 @@ public:
     void setSetXDirectionState();
     void setSetYDirectionState();
     void setAngleValue(double value);
-    void setAngle(double value){angle = value;};
+    void setAngle(double value){doSetAngle(angle = value);};
     double getAngle() const;
     bool isAngleRelative() const;
     void setAngleIsRelative(bool value);
@@ -86,5 +86,7 @@ protected:
     void setStatusForValidStartPoint(int newStatus);
 
     virtual bool isAllowDirectionCommands();
+
+    void doSetAngle(double value);
 };
 #endif //LIBRECAD_LC_ABSTRACTACTIONDRAWLINE_H

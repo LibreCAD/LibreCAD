@@ -113,6 +113,7 @@ public:
 //! \param v0,v1 diagonal vertices of the rectangle
 //!
     void addRectangle(RS_Vector const& v0, RS_Vector const& v1);
+    void addRectangle(RS_Vector const& v0, RS_Vector const& v1,RS_Vector const& v2, RS_Vector const& v3);
 
     virtual RS_Entity* firstEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
     virtual RS_Entity* lastEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;

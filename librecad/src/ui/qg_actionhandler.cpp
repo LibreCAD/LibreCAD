@@ -222,6 +222,7 @@
 #include "lc_actiondrawlinepolygon4.h"
 #include "lc_actionmodifyalignref.h"
 #include "lc_actiondrawboundingbox.h"
+#include "lc_actionucscreate.h"
 
 /**
  * Constructor
@@ -992,8 +993,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionInfoPickCoordinates:
             a = new LC_ActionInfoPickCoordinates(*document, *view);
             break;
-
-
             // Layer actions:
             //
         case RS2::ActionLayersDefreezeAll:
@@ -1098,6 +1097,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionOptionsDrawingGrid:
             a = new RS_ActionOptionsDrawing(*document, *view, 2);
+            break;
+        case RS2::ActionUCSCreate:
+            a = new LC_ActionUCSCreate(*document, *view);
             break;
         default:
             RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -2014,12 +2016,13 @@ void QG_ActionHandler::slotSetRelativeZero() {
     setCurrentAction(RS2::ActionSetRelativeZero);
 }
 
+
 void QG_ActionHandler::slotLockRelativeZero(bool on){
 	   if (snap_toolbar) {
         snap_toolbar->setLockedRelativeZero(on);
     }
 //    if (on) {
-    // calling view directly instead of action to ensure that button for action will not be unchecked after anction init/finish
+    // calling view directly instead of action to ensure that button for action will not be unchecked after action init/finish
     view->lockRelativeZero(on);
 //        setCurrentAction(RS2::ActionLockRelativeZero);
 //    } else {

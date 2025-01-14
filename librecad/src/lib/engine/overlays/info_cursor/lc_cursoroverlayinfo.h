@@ -134,6 +134,7 @@ protected:
 struct LC_InfoCursorOverlayPrefs{
     bool enabled = true;
     bool showAbsolutePosition = false;
+    bool showAbsolutePositionWCS = false;
     bool showRelativePositionDistAngle = false;
     bool showRelativePositionDeltas = true;
     bool showCommandPrompt = false;
@@ -155,13 +156,9 @@ public:
     void draw(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
     void clear();
     LC_InfoCursorData* getData(){return zonesData;}
-
     LC_InfoCursorData *getZonesData() const;
-
     LC_InfoCursorOptions *getOptions() const;
-
     void setOptions(LC_InfoCursorOptions *options);
-
 protected:
     LC_InfoCursorData* zonesData = nullptr;
     LC_InfoCursorOptions* options = nullptr;

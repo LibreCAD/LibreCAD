@@ -23,6 +23,31 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+/****************************************************************************
+**
+** This file is part of the LibreCAD project, a 2D CAD program
+**
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+**
+**
+** This file may be distributed and/or modified under the terms of the
+** GNU General Public License version 2 as published by the Free Software
+** Foundation and appearing in the file gpl-2.0.txt included in the
+** packaging of this file.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+**
+** This copyright notice MUST APPEAR in all copies of the script!
+**
+**********************************************************************/
 
 #include<iostream>
 #include<cmath>
@@ -251,7 +276,7 @@ void RS_Text::update() {
 
     RS_Font* font = RS_FONTLIST->requestFont(data.style);
 
-    if (font==NULL) {
+    if (font==nullptr) {
         return;
     }
 
@@ -391,7 +416,7 @@ void RS_Text::update() {
     // Rotate:
     if (data.halign==RS_TextData::HAAligned || data.halign==RS_TextData::HAFit){
         double angle = data.insertionPoint.angleTo(data.secondPoint);
-        data.angle = angle;
+        data.angle =  angle;
     } else {
         data.secondPoint.rotate(RS_Vector(0.0,0.0), data.angle);
         data.secondPoint.move(data.insertionPoint);
@@ -544,21 +569,14 @@ RS_Entity *RS_Text::cloneProxy(RS_GraphicView* view) const {
 }
 
 void RS_Text::drawDraft(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset) {
-//    painter->drawRect(view->toGui(getMin()), view->toGui(getMax()));
     painter->drawLine(view->toGui(baselineStartPoint), view->toGui(baselineEndPoint));
 }
 
 void RS_Text::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset){
-//    if (!(painter && view)) {
-//        return;
-//    }
-//    if (!view->isPrintPreview() && !view->isPrinting()){
-        if (/*view->isPanning() || */view->toGuiDY(getHeight()) < view->getMinRenderableTextHeightInPx()){
-            drawDraft(painter, view, patternOffset);
-            return;
-        }
-//    }
-
+    if (view->toGuiDY(getHeight()) < view->getMinRenderableTextHeightInPx()){
+        drawDraft(painter, view, patternOffset);
+        return;
+    }
     foreach (auto e, entities){
        view->drawAsChild(painter, e, patternOffset);
     }

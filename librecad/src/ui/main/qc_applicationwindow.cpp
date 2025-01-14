@@ -277,6 +277,8 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     penPaletteWidget = widget_factory.pen_palette;
     namedViewsWidget = widget_factory.named_views_widget;
+    ucsListWidget = widget_factory.ucs_widget;
+
 
     connect(namedViewsWidget, &LC_NamedViewsListWidget::viewListChanged, [this](int itemsCount){
         getAction("ZoomViewRestore1")->setEnabled(itemsCount > 0);
@@ -488,13 +490,17 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
             namedViewsWidget->setGraphicView(nullptr, nullptr);
         }
 
+        if (ucsListWidget != nullptr){
+            ucsListWidget->setGraphicView(nullptr, nullptr);
+        }
+
         if (quickInfoWidget != nullptr) {
             quickInfoWidget->setDocumentAndView(nullptr, nullptr);
         }
 
 
         blockWidget->setBlockList(nullptr);
-        coordinateWidget->setGraphic(nullptr);
+        coordinateWidget->setGraphic(nullptr, nullptr);
         relativeZeroCoordinatesWidget->setGraphicView(nullptr);
     }
 
@@ -1032,7 +1038,11 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
             namedViewsWidget->setGraphicView(activatedGraphicView,w);
         }
 
-        coordinateWidget->setGraphic(activatedGraphic);
+        if (ucsListWidget != nullptr){
+            ucsListWidget->setGraphicView(activatedGraphicView, w);
+        }
+
+        coordinateWidget->setGraphic(activatedGraphic,activatedGraphicView);
         relativeZeroCoordinatesWidget->setGraphicView(activatedGraphicView);
 
         QAction *lockRelZeroAction = ag_manager->getActionByName("LockRelativeZero");
@@ -1365,14 +1375,18 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
         graphic->addBlockListListener(blockWidget);
 
         if (namedViewsWidget != nullptr){
-            namedViewsWidget->setGraphicView(w->getGraphicView(), w);
+            namedViewsWidget->setGraphicView(view, w);
+        }
+
+        if (ucsListWidget != nullptr){
+            ucsListWidget->setGraphicView(view, w);
         }
     }
 
 
 // Link the dialog factory to the coordinate widget:
     if (coordinateWidget != nullptr) {
-        coordinateWidget->setGraphic(graphic);
+        coordinateWidget->setGraphic(graphic, view);
     }
     if (relativeZeroCoordinatesWidget != nullptr){
         relativeZeroCoordinatesWidget->setGraphicView(view);
@@ -1427,16 +1441,21 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
         penPaletteWidget->setLayerList(layerList);
     }
 
+    QG_GraphicView *graphicView = w->getGraphicView();
     if (namedViewsWidget != nullptr){
-        namedViewsWidget->setGraphicView(w->getGraphicView(),w);
+        namedViewsWidget->setGraphicView(graphicView, w);
+    }
+
+    if (ucsListWidget != nullptr){
+        ucsListWidget->setGraphicView(graphicView, w);
     }
 
     // link the block widget to the new document:
     blockWidget->setBlockList(document->getBlockList());
     auto graphic = w->getGraphic();
     // link coordinate widget to graphic
-    coordinateWidget->setGraphic(graphic);
-    relativeZeroCoordinatesWidget->setGraphicView(w->getGraphicView());
+    coordinateWidget->setGraphic(graphic,graphicView);
+    relativeZeroCoordinatesWidget->setGraphicView(graphicView);
 
     qApp->processEvents(QEventLoop::AllEvents, 1000);
 
@@ -1460,7 +1479,10 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow *w) 
         layerTreeWidget->slotFilteringMaskChanged();
     }
     if (namedViewsWidget != nullptr){
-        namedViewsWidget->refresh();
+        namedViewsWidget->reload();
+    }
+    if (ucsListWidget != nullptr){
+        ucsListWidget->reload();
     }
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper: update coordinate widget");
@@ -1658,7 +1680,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
         // link coordinate widget to graphic
         auto graphic = w->getGraphic();
         auto graphicView = w->getGraphicView();
-        coordinateWidget->setGraphic(graphic);
+        coordinateWidget->setGraphic(graphic,graphicView);
         relativeZeroCoordinatesWidget->setGraphicView(graphicView);
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: open file");
@@ -1704,7 +1726,10 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
             layerTreeWidget->slotFilteringMaskChanged();
         }
         if (namedViewsWidget != nullptr){
-            namedViewsWidget->refresh();
+            namedViewsWidget->reload();
+        }
+        if (ucsListWidget != nullptr){
+            ucsListWidget->reload();
         }
 
         if (graphic) {

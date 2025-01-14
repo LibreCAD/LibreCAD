@@ -31,9 +31,13 @@ LC_InfoCursor::LC_InfoCursor(RS_EntityContainer *parent, const RS_Vector &coord,
 
 void LC_InfoCursor::draw(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset) {
     RS_Vector offset = RS_Vector(options->offset,options->offset);
-    QString zone1String = zonesData->getZone1();
     painter->save();
 
+    RS_Vector guiPosition = view->toGui(data.pos);
+    double x = guiPosition.x;
+    double y = guiPosition.y;
+
+    QString zone1String = zonesData->getZone1();
     if (!zone1String.isEmpty()){
         RS_Color color = options->zone1Settings.color;
         painter->setPen(color);
@@ -42,13 +46,11 @@ void LC_InfoCursor::draw(RS_Painter *painter, RS_GraphicView *view, [[maybe_unus
         painter->setFont(fontToUse);
 
         const QSize &size = QFontMetrics(painter->font()).size(Qt::TextSingleLine, zone1String);
-        double x = view->toGuiX(data.pos.x);
-        double y = view->toGuiY(data.pos.y);
 
-        y = y + offset.y /*+ size.height()*/;
-        x = x - offset.x - size.width();
+        double x0 = x - offset.x - size.width();
+        double y0 = y + offset.y /*+ size.height()*/;
 
-        QRect rect = QRect(QPoint(x, y), size);
+        QRect rect = QRect(QPoint(x0, y0), size);
         QRect boundingRect;
         painter->drawText(rect,  Qt::AlignTop | Qt::AlignRight | Qt::TextDontClip, zone1String, &boundingRect);
     }
@@ -63,13 +65,10 @@ void LC_InfoCursor::draw(RS_Painter *painter, RS_GraphicView *view, [[maybe_unus
 
         const QSize &size = QFontMetrics(painter->font()).size(Qt::TextSingleLine, zone2String);
 
-        double x = view->toGuiX(data.pos.x);
-        double y = view->toGuiY(data.pos.y);
+        double x0 = x + offset.x;
+        double y0 = y + offset.y /*+ size.height()*/;
 
-        y = y + offset.y /*+ size.height()*/;
-        x = x + offset.x;
-
-        QRect rect = QRect(QPoint(x, y), size);
+        QRect rect = QRect(QPoint(x0, y0), size);
         QRect boundingRect;
         painter->drawText(rect,   Qt::AlignTop | Qt::AlignLeft | Qt::TextDontClip, zone2String, &boundingRect);
     }
@@ -85,13 +84,10 @@ void LC_InfoCursor::draw(RS_Painter *painter, RS_GraphicView *view, [[maybe_unus
 
         const QSize &size = QFontMetrics(painter->font()).size(Qt::TextSingleLine, zone3String);
 
-        double x = view->toGuiX(data.pos.x);
-        double y = view->toGuiY(data.pos.y);
+        double x0 = x - offset.x - size.width();
+        double  y0 = y - offset.y - size.height();
 
-        y = y - offset.y - size.height();
-        x = x - offset.x - size.width();
-
-        QRect rect = QRect(QPoint(x, y), size);
+        QRect rect = QRect(QPoint(x0, y0), size);
         QRect boundingRect;
         painter->drawText(rect, Qt::AlignBottom | Qt::AlignRight | Qt::TextDontClip, zone3String, &boundingRect);
     }
@@ -106,13 +102,10 @@ void LC_InfoCursor::draw(RS_Painter *painter, RS_GraphicView *view, [[maybe_unus
 
         const QSize &size = QFontMetrics(painter->font()).size(Qt::TextSingleLine, zone4String);
 
-        double x = view->toGuiX(data.pos.x);
-        double y = view->toGuiY(data.pos.y);
+        double x0 = x + offset.x;
+        double y0 = y - offset.y - size.height();
 
-        y = y - offset.y - size.height();
-        x = x + offset.x;
-
-        QRect rect = QRect(QPoint(x, y), size);
+        QRect rect = QRect(QPoint(x0, y0), size);
         QRect boundingRect;
         painter->drawText(rect, Qt::AlignBottom | Qt::AlignLeft | Qt::TextDontClip, zone4String, &boundingRect);
     }

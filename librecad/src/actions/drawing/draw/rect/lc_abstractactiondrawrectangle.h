@@ -49,7 +49,7 @@ public:
     void setLengthY(double value);
     double getLengthY() const{return bevelY;};
     void setAngle(double angle);
-    double getAngle() const{return angle;}
+    double getAngle() const;
     void setCornersMode(int value);
     int getCornersMode() const{return cornersDrawMode;};
     void setInsertionPointSnapMode(int value);
@@ -180,6 +180,7 @@ protected:
     bool doCheckPolylineEntityAllowedInTrigger(int index) const;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
+    void doSetAngle(double value);
 };
 
 #endif // LC_ABSTRACTACTIONDRAWRECTANGLE_H

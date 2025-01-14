@@ -34,11 +34,8 @@ public:
 
 class LC_ViewList {
 public:
-
     LC_ViewList();
-
     virtual ~LC_ViewList() = default;
-
     void clear();
 
 /**
@@ -56,30 +53,18 @@ public:
     }
 
     QList<LC_View *>::iterator begin();
-
     QList<LC_View *>::iterator end();
-
     QList<LC_View *>::const_iterator begin() const;
-
     QList<LC_View *>::const_iterator end() const;
-
-    void add(LC_View *layer);
-    void addNew(LC_View *layer);
-
-    void remove(LC_View *layer);
-
+    void add(LC_View *view);
+    void addNew(LC_View *view);
+    void remove(LC_View *view);
     void remove(const QString &name);
-
     void edited(LC_View *view);
-
     void rename(LC_View* view, const QString& newName);
-
     LC_View *find(const QString &name);
-
     int getIndex(const QString &name);
-
-    int getIndex(LC_View *layer);
-
+    int getIndex(LC_View *view);
     /**
     * Sets the views lists modified status to 'm'.
     */
@@ -95,25 +80,25 @@ public:
 
     void addListener(LC_ViewListListener *listener) {
         if (listener != nullptr) {
-            layerListListeners.push_back(listener);
+            viewListListeners.push_back(listener);
         }
     }
 
     void removeListener(LC_ViewListListener *listener) {
         if (listener != nullptr) {
-            layerListListeners.removeOne(listener);
+            viewListListeners.removeOne(listener);
         }
     }
 
     void fireModified(bool value) {
-        for (auto l: layerListListeners) {
+        for (auto l: viewListListeners) {
             l->viewsListModified(value);
         }
     }
 
 protected:
     QList<LC_View *> namedViews;
-    QList<LC_ViewListListener *> layerListListeners;
+    QList<LC_ViewListListener *> viewListListeners;
     bool modified = false;
 };
 

@@ -391,6 +391,8 @@ void LC_ActionDrawSliceDivide::prepareCircleTicks(RS_Circle *circle){
     RS_Vector center = circle->getCenter();
     double startPointAngle = RS_Math::deg2rad(getCircleStartAngle());
 
+    startPointAngle = toWorldAngle(startPointAngle);
+
     RS_Vector startPoint = LC_LineMath::findPointOnCircle(radius, startPointAngle, center);
 
     // for circle, we always have a start tick
@@ -526,11 +528,11 @@ void LC_ActionDrawSliceDivide::prepareTickData(RS_Vector &tickSnapPosition, RS_E
         tickAngleToUse = 180 - tickAngle;
     }
     double tickAngleRad = RS_Math::deg2rad(tickAngleToUse);
-    double actualTickAngle = tickAngleRad;
+    double actualTickAngle = toWorldAngle(tickAngleRad);
 
     // if angle should be related, take into consideration own angle of entity
     if (tickAngleIsRelative){
-        actualTickAngle = actualTickAngle + ent->getTangentDirection(vp).angle();
+        actualTickAngle = actualTickAngle + toUCSAngle(ent->getTangentDirection(vp).angle());
     }
 
     // proceed offset of tick specified by options

@@ -129,3 +129,8 @@ void LC_View::setUCS(LC_UCS *pUcs) {
 LC_UCS *LC_View::getUCS() const{
     return ucs;
 }
+
+bool LC_View::isValidName(QString &nameCandidate) {
+    // fixme - implement Named View name validation rules there
+    return true;
+}

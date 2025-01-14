@@ -1845,15 +1845,22 @@ double RS_Ellipse::getMinorRadius() const {
 void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
     double ra = getMajorRadius()*view->getFactor().x;
     double rb = data.ratio*ra;
-    double centerX = view->toGuiX(data.center.x);
-    double centerY = view->toGuiY(data.center.y);
+
+    double centerX;
+    double centerY;
+
+    view->toGui(data.center, centerX, centerY);
+
     // Adjust dash offset
     updateDashOffset(*painter, *view, patternOffset);
     if (data.isArc){
-        painter->drawEllipseArc(centerX, centerY, ra, rb, data.angleDegrees, data.startAngleDegrees, data.otherAngleDegrees, data.angularLength, data.reversed);
+        painter->drawEllipseArc(centerX, centerY, ra, rb, view->toUCSAngleDegrees(data.angleDegrees),
+                                data.startAngleDegrees, data.otherAngleDegrees,
+//                                view->toUCSAngleDegrees(data.startAngleDegrees) , view->toUCSAngleDegrees(data.otherAngleDegrees),
+                                data.angularLength, data.reversed);
     }
     else {
-        painter->drawEllipse(centerX, centerY,ra, rb, data.angleDegrees);
+        painter->drawEllipse(centerX, centerY,ra, rb,  view->toUCSAngleDegrees(data.angleDegrees));
     }
 }
 

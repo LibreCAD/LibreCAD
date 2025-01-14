@@ -40,6 +40,7 @@ public:
     virtual void clear() = 0;
     virtual bool hasData() const = 0;
     void setDocumentAndView(RS_Document *document, QG_GraphicView* view);
+    void updateFormats(); // fixme - sand - this method should be called as soon as settings will be updated..
 
     int getCoordinatesMode() const{return coordinatesMode;};
     void setCoordinatesMode(int value){coordinatesMode = value;};
@@ -59,10 +60,32 @@ protected:
     RS_GraphicView* graphicView = nullptr;
     int coordinatesMode = COORD_ABSOLUTE;
 
+    RS2::Unit m_unit;
+    RS2::LinearFormat m_linearFormat;
+    int m_linearPrecision;
+    RS2::AngleFormat m_angleFormat;
+    int m_anglePrecision;
+
+    // fixme - sand - think about these formatting methods.. they are present there, and similar ones are in snapper...
+    // fixme - what about moving them to RS_GraphicView which is shared anyway may be? And this will simplify updating cached formats...
     QString formatVector(const RS_Vector &vector) const;
+    QString formatDeltaVector(const RS_Vector &vector) const;
     QString formatAngle(double angle);
     QString formatLinear(double length);
+    QString formatDouble(const double &x) const;
+    QString formatInt(const int &x) const;
     QString createLink(QString &data, const QString &path, int index, QString title, QString &value);
+    void appendLinear(QString &result, const QString &label, double value);
+    void appendDouble(QString &result, const QString &label, double value);
+    void appendAngle(QString &result, const QString &label, double value);
+    void appendRawAngle(QString &result, const QString &label, double value);
+    void appendArea(QString &result, const QString &label, double value);
+    void appendAbsolute(QString &result, const QString &label, const RS_Vector& value);
+    void appendAbsoluteDelta(QString &result, const QString &label, const RS_Vector& value);
+    void appendRelativePolar(QString &result, const QString &label, const RS_Vector& value);
+    void appendInt(QString &result, const QString &label, const int& value);
+    void appendValue(QString &result, const QString &label, const QString& value);
+    QString formatRawAngle(double angle) const;
 };
 
 #endif // LC_QUICKINFOBASEDATA_H

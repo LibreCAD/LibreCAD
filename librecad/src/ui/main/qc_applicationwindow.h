@@ -44,6 +44,8 @@
 #include "lc_releasechecker.h"
 #include "lc_qtstatusbarmanager.h"
 #include "lc_namedviewslistwidget.h"
+#include "lc_ucslistwidget.h"
+#include "lc_ucsstatewidget.h"
 
 class LC_ActionGroupManager;
 class LC_CustomToolbar;
@@ -309,11 +311,9 @@ public:
 
     int showCloseDialog(QC_MDIWindow* w, bool showSaveAll = false);
     bool doSave(QC_MDIWindow* w, bool forceSaveAs = false);
-
     void doClose(QC_MDIWindow* w, bool activateNext = true);
-
     void updateActionsAndWidgetsForPrintPreview(bool printPreviewOn);
-
+    void updateGridViewActions(bool isometric, RS2::IsoGridViewType type);
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
@@ -387,6 +387,7 @@ private:
     LC_PenWizard* pen_wiz {nullptr};
     LC_PenPaletteWidget* penPaletteWidget {nullptr};
     LC_NamedViewsListWidget* namedViewsWidget {nullptr};
+    LC_UCSListWidget* ucsListWidget {nullptr};
 
     // --- Statusbar ---
     /** Coordinate widget */
@@ -398,6 +399,7 @@ private:
     QG_SelectionWidget* selectionWidget {nullptr};
     QG_ActiveLayerName* m_pActiveLayerName {nullptr};
     TwoStackedLabels* grid_status {nullptr};
+    LC_UCSStateWidget* ucsStateWidget {nullptr};
 
     LC_QTStatusbarManager* statusbarManager {nullptr};
 
@@ -445,8 +447,6 @@ private:
     void enableWidgets(bool enable);
 
     friend class LC_WidgetFactory;
-
-    void updateGridViewActions(bool isometric, RS2::IsoGridViewType type);
 
     void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType);
 

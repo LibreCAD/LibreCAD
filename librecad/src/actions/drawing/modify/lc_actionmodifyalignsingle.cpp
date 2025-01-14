@@ -208,15 +208,15 @@ void LC_ActionModifyAlignSingle::previewAlignRefPoint(const RS_Vector &min, cons
     double verticalRef;
     bool drawVertical  = LC_Align::getVerticalRefCoordinate(min, max, hAlign, verticalRef);
     if (drawVertical) {
-        double g0 = this->graphicView->toGraphY(0);
-        double gHeight = this->graphicView->toGraphY(this->graphicView->getHeight());
+        double g0 = graphicView->toGraphY(0);
+        double gHeight = graphicView->toGraphY(graphicView->getHeight());
         this->previewRefConstructionLine({verticalRef, g0}, {verticalRef, gHeight});
     }
     double horizontalRef;
     bool drawHorizontal = LC_Align::getHorizontalRefCoordinate(min, max, vAlign, horizontalRef);
     if (drawHorizontal) {
-        double g0 = this->graphicView->toGraphX(0);
-        double gWidth = this->graphicView->toGraphX(this->graphicView->getWidth());
+        double g0 = graphicView->toGraphX(0);
+        double gWidth = graphicView->toGraphX(graphicView->getWidth());
         this->previewRefConstructionLine({g0, horizontalRef}, {gWidth, horizontalRef});
     }
 }

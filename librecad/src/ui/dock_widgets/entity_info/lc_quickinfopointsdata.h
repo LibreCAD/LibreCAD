@@ -70,6 +70,8 @@ private:
     // list of collected coordinates
     QVector<PointInfo*> collectedPoints;
     void doUpdatePointsAttributes();
+
+    PointInfo *createPointInfo(const RS_Vector &point, const RS_Vector &viewCoordinate, const QString &idxValue, bool relative);
 };
 
 #endif // LC_QUICKINFOPOINTSDATA_H

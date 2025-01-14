@@ -125,6 +125,7 @@ INCLUDEPATH += \
     lib/engine/overlays/crosshair \
     lib/engine/overlays/info_cursor \
     lib/engine/overlays/overlay_box \
+    lib/engine/overlays/ucs_mark \
     lib/engine/undo \
     lib/engine/utils \
     lib/engine/settings \
@@ -231,6 +232,7 @@ INCLUDEPATH += \
     ui/dock_widgets/pen_palette \
     ui/dock_widgets/pen_wizard \
     ui/dock_widgets/views_list \
+    ui/dock_widgets/ucs_list \
     ui/main \
     ui/view \
     # ui/not_used \
@@ -251,6 +253,7 @@ RESOURCES += ../../licenses/licenses.qrc
 # ################################################################################
 # Library
 HEADERS += \
+    actions/dock_widgets/ucs_list/lc_actionucscreate.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.h \
@@ -277,6 +280,7 @@ HEADERS += \
     actions/drawing/modify/lc_actionmodifyalign.h \
     actions/drawing/modify/lc_actionmodifyalignref.h \
     actions/drawing/modify/lc_actionmodifyalignsingle.h \
+    lib/engine/document/ucs/lc_ucslist.h \
     lib/engine/overlays/highlight/lc_highlight.h \
     lib/actions/lc_modifiersinfo.h \
     lib/actions/rs_actioninterface.h \
@@ -299,6 +303,7 @@ HEADERS += \
     lib/engine/overlays/references/lc_refellipse.h \
     lib/engine/overlays/references/lc_refline.h \
     lib/engine/overlays/references/lc_refpoint.h \
+    lib/engine/overlays/ucs_mark/lc_ucs_mark.h \
     lib/engine/rs.h \
     lib/engine/document/entities/rs_arc.h \
     lib/engine/document/entities/rs_atomicentity.h \
@@ -366,20 +371,29 @@ HEADERS += \
     lib/filters/rs_filterinterface.h \
     #lib/gui/no_used/rs_painterold.h \
     #lib/gui/no_used/rs_painterqtold.h \
+    lib/gui/render/lc_viewrenderer.h \
     lib/modification/lc_align.h \
     ui/action_options/curve/lc_actiondrawarc2poptions.h \
     ui/action_options/misc/lc_midlineoptions.h \
     ui/action_options/misc/lc_drawboundingboxoptions.h \
     ui/action_options/modify/lc_modifyalignoptions.h \
     ui/action_options/modify/lc_modifyalignrefoptions.h \
+    ui/action_options/other/lc_ucssetoptions.h \
     ui/action_options/spline/lc_splineexplodeoptions.h \
     ui/action_options/spline/lc_splinefrompolylineoptions.h \
     ui/action_options/point/lc_pastetopointsoptions.h \
     ui/action_options/point/lc_pointslatticeoptions.h \
     ui/action_options/selection/lc_selectwindowoptions.h \
     ui/components/status_bar/lc_qtstatusbarmanager.h \
+    ui/components/status_bar/lc_ucsstatewidget.h \
     ui/dialogs/main/lc_dlgabout.h \
     ui/dialogs/main/lc_dlgnewversionavailable.h \
+    ui/dock_widgets/ucs_list/lc_dlgucslistoptions.h \
+    ui/dock_widgets/ucs_list/lc_dlgucsproperties.h \
+    ui/dock_widgets/ucs_list/lc_ucslistbutton.h \
+    ui/dock_widgets/ucs_list/lc_ucslistmodel.h \
+    ui/dock_widgets/ucs_list/lc_ucslistoptions.h \
+    ui/dock_widgets/ucs_list/lc_ucslistwidget.h \
     ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.h \
     ui/dock_widgets/views_list/lc_namedviewsbutton.h \
     ui/dock_widgets/views_list/lc_namedviewslistoptions.h \
@@ -428,6 +442,7 @@ HEADERS += \
     ui/main/lc_mdiapplicationwindow.h
     
 SOURCES += \
+    actions/dock_widgets/ucs_list/lc_actionucscreate.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp \
@@ -447,15 +462,19 @@ SOURCES += \
     actions/drawing/modify/lc_actionmodifyalign.cpp \
     actions/drawing/modify/lc_actionmodifyalignref.cpp \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
+    lib/engine/document/ucs/lc_ucslist.cpp \
     lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.cpp \
     lib/engine/overlays/references/lc_refconstructionline.cpp \
+    lib/engine/overlays/ucs_mark/lc_ucs_mark.cpp \
     lib/engine/undo/lc_undoablerelzero.cpp \
+    lib/gui/render/lc_viewrenderer.cpp \
     lib/modification/lc_align.cpp \
     ui/action_options/curve/lc_actiondrawarc2poptions.cpp \
     ui/action_options/misc/lc_midlineoptions.cpp \
     ui/action_options/misc/lc_drawboundingboxoptions.cpp \
     ui/action_options/modify/lc_modifyalignoptions.cpp \
     ui/action_options/modify/lc_modifyalignrefoptions.cpp \
+    ui/action_options/other/lc_ucssetoptions.cpp \
     ui/action_options/spline/lc_splineexplodeoptions.cpp \
     ui/action_options/spline/lc_splinefrompolylineoptions.cpp \
     actions/drawing/draw/spline/lc_actionsplineappendpoint.cpp \
@@ -544,8 +563,15 @@ SOURCES += \
     ui/action_options/point/lc_pointslatticeoptions.cpp \
     ui/action_options/selection/lc_selectwindowoptions.cpp \
     ui/components/status_bar/lc_qtstatusbarmanager.cpp \
+    ui/components/status_bar/lc_ucsstatewidget.cpp \
     ui/dialogs/main/lc_dlgabout.cpp \
     ui/dialogs/main/lc_dlgnewversionavailable.cpp \
+    ui/dock_widgets/ucs_list/lc_dlgucslistoptions.cpp \
+    ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp \
+    ui/dock_widgets/ucs_list/lc_ucslistbutton.cpp \
+    ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp \
+    ui/dock_widgets/ucs_list/lc_ucslistoptions.cpp \
+    ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp \
     ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.cpp \
     ui/dock_widgets/views_list/lc_namedviewsbutton.cpp \
     ui/dock_widgets/views_list/lc_namedviewslistoptions.cpp \
@@ -1336,6 +1362,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/action_options/misc/lc_drawboundingboxoptions.ui \
        ui/action_options/modify/lc_modifyalignoptions.ui \
        ui/action_options/modify/lc_modifyalignrefoptions.ui \
+       ui/action_options/other/lc_ucssetoptions.ui \
        ui/action_options/spline/lc_splineexplodeoptions.ui \
        ui/action_options/spline/lc_splinefrompolylineoptions.ui \
        ui/action_options/curve/qg_arcoptions.ui \
@@ -1396,6 +1423,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/components/creators/widgetcreator.ui \
        ui/components/pen/qg_widgetpen.ui \
        ui/components/status_bar/lc_relzerocoordinateswidget.ui \
+       ui/components/status_bar/lc_ucsstatewidget.ui \
        ui/components/status_bar/qg_activelayername.ui \
        ui/components/status_bar/qg_coordinatewidget.ui \
        ui/components/status_bar/qg_mousewidget.ui \
@@ -1447,6 +1475,9 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui \
        ui/dock_widgets/pen_palette/lc_penpalettewidget.ui \
        ui/dock_widgets/pen_wizard/colorwizard.ui \
+       ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui \
+       ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui
+       ui/dock_widgets/ucs_list/lc_ucslistwidget.ui \
        ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui \
        ui/dock_widgets/views_list/lc_namedviewslistwidget.ui \
        ui/not_used/customtoolbarcreator.ui \

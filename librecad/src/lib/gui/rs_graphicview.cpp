@@ -125,22 +125,28 @@ RS_GraphicView::RS_GraphicView(QWidget *parent, Qt::WindowFlags f)
 }
 
 void RS_GraphicView::loadSettings() {
-
     LC_GROUP("Appearance");
     {
-        this->m_colorData->hideRelativeZero = LC_GET_BOOL("hideRelativeZero");
-        extendAxisLines = LC_GET_BOOL("ExtendAxisLines", false);
-        entityHandleHalfSize = LC_GET_INT("EntityHandleSize", 4) / 2;
-        relativeZeroRadius = LC_GET_INT("RelZeroMarkerRadius", 5);
-        zeroShortAxisMarkSize = LC_GET_INT("ZeroShortAxisMarkSize", 20);
-        extendAxisModeX = LC_GET_INT("ExtendModeXAxis",0);
-        extendAxisModeY = LC_GET_INT("ExtendModeYAxis",0);
-        ignoreDraftForHighlight = LC_GET_BOOL("IgnoreDraftForHighlight", false);
-        draftLinesMode = LC_GET_BOOL("DraftLinesMode", false);
-
-
+        m_colorData->hideRelativeZero = LC_GET_BOOL("hideRelativeZero");
+        m_extendAxisLines = LC_GET_BOOL("ExtendAxisLines", false);
+        m_entityHandleHalfSize = LC_GET_INT("EntityHandleSize", 4) / 2;
+        m_relativeZeroRadius = LC_GET_INT("RelZeroMarkerRadius", 5);
+        m_zeroShortAxisMarkSize = LC_GET_INT("ZeroShortAxisMarkSize", 20);
+        m_extendAxisModeX = LC_GET_INT("ExtendModeXAxis", 0);
+        m_extendAxisModeY = LC_GET_INT("ExtendModeYAxis", 0);
+        m_ignoreDraftForHighlight = LC_GET_BOOL("IgnoreDraftForHighlight", false);
+        m_draftLinesMode = LC_GET_BOOL("DraftLinesMode", false);
         m_panOnZoom = LC_GET_BOOL("PanOnZoom", false);
         m_skipFirstZoom = LC_GET_BOOL("FirstTimeNoZoom", false);
+
+        m_showUCSZeroMarker = LC_GET_BOOL("ShowUCSZeroMarker", false);
+        m_showWCSZeroMarker = LC_GET_BOOL("ShowWCSZeroMarker", true);
+        m_csZeroMarkerSize = LC_GET_INT("ZeroMarkerSize", 30);
+        m_csZeroMarkerFontSize = LC_GET_INT("ZeroMarkerFontSize", 10);
+        m_csZeroMarkerfontName = LC_GET_STR("ZeroMarkerFontName", "Verdana");
+        m_csZeroMarkerFont = QFont(m_csZeroMarkerfontName, m_csZeroMarkerFontSize);
+        m_ucsApplyingPolicy = LC_GET_INT("UCSApplyPolicy",0);
+
     } // Appearance group
     LC_GROUP_END();
 
@@ -181,7 +187,6 @@ void RS_GraphicView::loadSettings() {
         setXAxisExtensionColor(QColor(LC_GET_STR("grid_x_axisColor", "red")));
         setYAxisExtensionColor(QColor(LC_GET_STR("grid_y_axisColor", "green")));
 
-
         int overlayTransparency = LC_GET_INT("overlay_box_transparency",90);
 
         setOverlayBoxLineColor(QColor(LC_GET_STR("overlay_box_line", RS_Settings::overlayBoxLine)));
@@ -205,6 +210,8 @@ void RS_GraphicView::loadSettings() {
         infoCursorOverlayPreferences.enabled = LC_GET_BOOL("Enabled", true);
         if (infoCursorOverlayPreferences.enabled) {
             infoCursorOverlayPreferences.showAbsolutePosition = LC_GET_BOOL("ShowAbsolute", true);
+            infoCursorOverlayPreferences.showAbsolutePositionWCS = LC_GET_BOOL("ShowAbsoluteWCS", false);
+
             infoCursorOverlayPreferences.showRelativePositionDistAngle = LC_GET_BOOL("ShowRelativeDA", true);
             infoCursorOverlayPreferences.showRelativePositionDeltas = LC_GET_BOOL("ShowRelativeDD", true);
             infoCursorOverlayPreferences.showSnapType = LC_GET_BOOL("ShowSnapInfo", true);
@@ -381,11 +388,11 @@ RS2::IsoGridViewType RS_GraphicView::getIsoViewType() const {
 /**
  * Centers the drawing in x-direction.
  */
-void RS_GraphicView::centerOffsetX() {
+void RS_GraphicView::centerOffsetX(const RS_Vector& containerMin, const RS_Vector& containerSize) {
     if (container && !zoomFrozen) {
         offsetX = (int) (((getWidth() - borderLeft - borderRight)
-                          - (container->getSize().x * factor.x)) / 2.0
-                         - (container->getMin().x * factor.x)) + borderLeft;
+                          - (containerSize.x * factor.x)) / 2.0
+                         - (containerMin.x * factor.x)) + borderLeft;
         invalidate();
     }
 }
@@ -393,11 +400,11 @@ void RS_GraphicView::centerOffsetX() {
 /**
  * Centers the drawing in y-direction.
  */
-void RS_GraphicView::centerOffsetY() {
+void RS_GraphicView::centerOffsetY(const RS_Vector& containerMin, const RS_Vector& containerSize) {
     if (container && !zoomFrozen) {
         offsetY = (int) ((getHeight() - borderTop - borderBottom
-                          - (container->getSize().y * factor.y)) / 2.0
-                         - (container->getMin().y * factor.y)) + borderBottom;
+                          - (containerSize.y * factor.y)) / 2.0
+                         - (containerMin.y * factor.y)) + borderBottom;
         invalidate();
     }
 }
@@ -575,22 +582,19 @@ void RS_GraphicView::zoomIn(double f, const RS_Vector &center) {
         return;
     }
 
+    RS_Vector zeroCorner = getUCSViewLeftBottom();
+    RS_Vector rightTopCorner = getUCSViewRightTop();
+
     RS_Vector c = center;
     if (!c.valid) {
         //find mouse position
-        c = getMousePosition();
+//        c = getMousePosition();
+      c = (zeroCorner + rightTopCorner) * 0.5;
+      return;
     }
 
-    zoomWindow(
-        toGraph(0, 0)
-            .scale(c, RS_Vector(1.0 / f, 1.0 / f)),
-        toGraph(getWidth(), getHeight())
-            .scale(c, RS_Vector(1.0 / f, 1.0 / f)));
-
-//adjustOffsetControls();
-//adjustZoomControls();
-// updateGrid();
-    redraw(); // fixme - is it needed there? already called in zoom window
+    const RS_Vector scaleVector = RS_Vector(1.0 / f, 1.0 / f);
+    zoomWindow(zeroCorner.scale(c, scaleVector), rightTopCorner.scale(c, scaleVector));
 }
 
 /**
@@ -663,6 +667,99 @@ void RS_GraphicView::zoomOutY(double f) {
     redraw();
 }
 
+void RS_GraphicView::ucsBoundingBox(const RS_Vector& min, const RS_Vector&max, RS_Vector& ucsMin, RS_Vector& ucsMax) const{
+    if (m_hasUcs) {
+        RS_Vector ucsCorner1 = toUCS(min);
+        RS_Vector ucsCorner3 = toUCS(max);
+        RS_Vector ucsCorner2 = RS_Vector(ucsCorner1.x, ucsCorner3.y);
+        RS_Vector ucsCorner4 = RS_Vector(ucsCorner3.x, ucsCorner1.y);
+
+        double minX, maxX;
+        double minY, maxY;
+
+        maxX = std::max(ucsCorner1.x, ucsCorner3.x);
+        maxX = std::max(ucsCorner2.x, maxX);
+        maxX = std::max(ucsCorner4.x, maxX);
+
+        minX = std::min(ucsCorner1.x, ucsCorner3.x);
+        minX = std::min(ucsCorner2.x, minX);
+        minX = std::min(ucsCorner4.x, minX);
+
+        maxY = std::max(ucsCorner1.y, ucsCorner3.y);
+        maxY = std::max(ucsCorner2.y, maxY);
+        maxY = std::max(ucsCorner4.y, maxY);
+
+        minY = std::min(ucsCorner1.y, ucsCorner3.y);
+        minY = std::min(ucsCorner2.y, minY);
+        minY = std::min(ucsCorner4.y, minY);
+
+        ucsMin = RS_Vector(minX, minY);
+        ucsMax = RS_Vector(maxX, maxY);
+    }
+    else{
+        ucsMin = min;
+        ucsMax = max;
+    }
+}
+
+
+void RS_GraphicView::worldBoundingBox(const RS_Vector& ucsMin, const RS_Vector&ucsMax, RS_Vector& worldMin, RS_Vector& worldMax) const{
+    if (m_hasUcs) {
+        RS_Vector ucsCorner1 = ucsMin;
+        RS_Vector ucsCorner3 = ucsMax;
+        RS_Vector ucsCorner2 = RS_Vector(ucsCorner1.x, ucsCorner3.y);
+        RS_Vector ucsCorner4 = RS_Vector(ucsCorner3.x, ucsCorner1.y);
+        
+        RS_Vector worldCorner1 = toWorld(ucsCorner1);
+        RS_Vector worldCorner2 = toWorld(ucsCorner2);
+        RS_Vector worldCorner3 = toWorld(ucsCorner3);
+        RS_Vector worldCorner4 = toWorld(ucsCorner4);
+
+        double minX, maxX;
+        double minY, maxY;
+
+        maxX = std::max(worldCorner1.x, worldCorner3.x);
+        maxX = std::max(worldCorner2.x, maxX);
+        maxX = std::max(worldCorner4.x, maxX);
+
+        minX = std::min(worldCorner1.x, worldCorner3.x);
+        minX = std::min(worldCorner2.x, minX);
+        minX = std::min(worldCorner4.x, minX);
+
+        maxY = std::max(worldCorner1.y, worldCorner3.y);
+        maxY = std::max(worldCorner2.y, maxY);
+        maxY = std::max(worldCorner4.y, maxY);
+
+        minY = std::min(worldCorner1.y, worldCorner3.y);
+        minY = std::min(worldCorner2.y, minY);
+        minY = std::min(worldCorner4.y, minY);
+
+        worldMin = RS_Vector(minX, minY);
+        worldMax = RS_Vector(maxX, maxY);
+    }
+    else{
+        worldMin = ucsMin;
+        worldMax = ucsMax;
+    }
+}
+
+void RS_GraphicView::zoomAutoEnsurePointsIncluded(const RS_Vector &pos1, const RS_Vector &pos2, const RS_Vector &pos3) {
+    if (container) {
+        container->calculateBorders();
+        RS_Vector min = container->getMin();
+        RS_Vector max = container->getMax();
+
+        min = RS_Vector::minimum(min, pos1);
+        min = RS_Vector::minimum(min, pos2);
+        min = RS_Vector::minimum(min, pos3);
+
+        max = RS_Vector::maximum(max, pos1);
+        max = RS_Vector::maximum(max, pos2);
+        max = RS_Vector::maximum(max, pos3);
+        doZoomAuto(min,max, true, true);
+    }
+}
+
 /**
  * performs autozoom
  *
@@ -670,95 +767,112 @@ void RS_GraphicView::zoomOutY(double f) {
  * @param keepAspectRatio true: keep aspect ratio 1:1
  *                        false: factors in x and y are stretched to the max
  */
-
 void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
-
     RS_DEBUG->print("RS_GraphicView::zoomAuto");
-
     if (container) {
         container->calculateBorders();
+        RS_Vector min = container->getMin();
+        RS_Vector max = container->getMax();
+        doZoomAuto(min,max, axis, keepAspectRatio);
+    }
+    RS_DEBUG->print("RS_GraphicView::zoomAuto OK");
+}
 
-        double sx, sy;
+void RS_GraphicView::doZoomAuto(const RS_Vector& min, const RS_Vector& max, bool axis, bool keepAspectRatio) {
+    double sx, sy;
+    RS_Vector containerSize;
+    RS_Vector containerMin;
+
+    if (m_hasUcs){
+        RS_Vector ucsMin;
+        RS_Vector ucsMax;
+
+        ucsBoundingBox(min, max, ucsMin, ucsMax);
+
+        RS_Vector ucsSize = ucsMax - ucsMin;
+
+        sx = ucsSize.x;
+        sy = ucsSize.y;
+
+        containerSize = ucsSize;
+        containerMin = ucsMin;
+    }
+    else {
+        auto const dV = max - min;
         if (axis) {
-            auto const dV = container->getMax() - container->getMin();
             sx = std::max(dV.x, 0.);
             sy = std::max(dV.y, 0.);
         } else {
-            sx = container->getSize().x;
-            sy = container->getSize().y;
+            sx = dV.x;
+            sy = dV.y;
         }
+        containerSize = dV;
+        containerMin = min;
+    }
+
+
 //		    std::cout<<" RS_GraphicView::zoomAuto("<<sx<<","<<sy<<")"<<std::endl;
 //			std::cout<<" RS_GraphicView::zoomAuto("<<axis<<","<<keepAspectRatio<<")"<<std::endl;
 
-        double fx = 1., fy = 1.;
-        unsigned short fFlags = 0;
+    double fx = 1., fy = 1.;
+    unsigned short fFlags = 0;
 
-        if (sx > RS_TOLERANCE) {
-            fx = (getWidth() - borderLeft - borderRight) / sx;
-        } else {
-            fFlags += 1; //invalid x factor
-        }
+    if (sx > RS_TOLERANCE) {
+        fx = (getWidth() - borderLeft - borderRight) / sx;
+    } else {
+        fFlags += 1; //invalid x factor
+    }
 
-        if (sy > RS_TOLERANCE) {
-            fy = (getHeight() - borderTop - borderBottom) / sy;
-        } else {
-            fFlags += 2; //invalid y factor
-        }
+    if (sy > RS_TOLERANCE) {
+        fy = (getHeight() - borderTop - borderBottom) / sy;
+    } else {
+        fFlags += 2; //invalid y factor
+    }
 //    std::cout<<"0: fx= "<<fx<<"\tfy="<<fy<<std::endl;
 
-        RS_DEBUG->print("f: %f/%f", fx, fy);
+    RS_DEBUG->print("f: %f/%f", fx, fy);
 
-        switch (fFlags) {
-            case 1:
-                fx = fy;
-                break;
-            case 2:
-                fy = fx;
-                break;
-            case 3:
-                return; //do not do anything, invalid factors
-            default:
-                if (keepAspectRatio) {
-                    fx = fy = std::min(fx, fy);
-                }
+    switch (fFlags) {
+        case 1:
+            fx = fy;
+            break;
+        case 2:
+            fy = fx;
+            break;
+        case 3:
+            return; //do not do anything, invalid factors
+        default:
+            if (keepAspectRatio) {
+                fx = fy = std::min(fx, fy);
+            }
 //                break;
-        }
+    }
 //    std::cout<<"1: fx= "<<fx<<"\tfy="<<fy<<std::endl;
 
-        RS_DEBUG->print("f: %f/%f", fx, fy);
+    RS_DEBUG->print("f: %f/%f", fx, fy);
 //exclude invalid factors
-        fFlags = 0;
-        if (fx < RS_TOLERANCE || fx > RS_MAXDOUBLE) {
-            fx = 1.0;
-            fFlags += 1;
-        }
-        if (fy < RS_TOLERANCE || fy > RS_MAXDOUBLE) {
-            fy = 1.0;
-            fFlags += 2;
-        }
-        if (fFlags == 3) return;
-        saveView();
-//        std::cout<<"2: fx= "<<fx<<"\tfy="<<fy<<std::endl;
-        setFactorX(fx);
-        setFactorY(fy);
-
-        RS_DEBUG->print("f: %f/%f", fx, fy);
-
-
-//        RS_DEBUG->print("adjustZoomControls");
-        adjustZoomControls();
-//        RS_DEBUG->print("centerOffsetX");
-        centerOffsetX();
-//        RS_DEBUG->print("centerOffsetY");
-        centerOffsetY();
-//        RS_DEBUG->print("adjustOffsetControls");
-        adjustOffsetControls();
-//        RS_DEBUG->print("updateGrid");
-//    updateGrid();
-
-        redraw();
+    fFlags = 0;
+    if (fx < RS_TOLERANCE || fx > RS_MAXDOUBLE) {
+        fx = 1.0;
+        fFlags += 1;
     }
-    RS_DEBUG->print("RS_GraphicView::zoomAuto OK");
+    if (fy < RS_TOLERANCE || fy > RS_MAXDOUBLE) {
+        fy = 1.0;
+        fFlags += 2;
+    }
+    if (fFlags == 3) return;
+    saveView();
+//        std::cout<<"2: fx= "<<fx<<"\tfy="<<fy<<std::endl;
+    setFactorX(fx);
+    setFactorY(fy);
+
+    RS_DEBUG->print("f: %f/%f", fx, fy);
+
+    adjustZoomControls();
+    centerOffsetX(containerMin, containerSize);
+    centerOffsetY(containerMin, containerSize);
+    adjustOffsetControls();
+    redraw();
 }
 
 /**
@@ -775,7 +889,7 @@ void RS_GraphicView::zoomPrevious() {
 
 /**
  * Saves the current view as previous view to which we can
- * switch back later with @see restoreView().
+ * switch back later with @see applyUCS().
  */
 void RS_GraphicView::saveView() {
     if (getGraphic()) getGraphic()->setModified(true);
@@ -887,6 +1001,15 @@ void RS_GraphicView::zoomAutoY(bool axis) {
     }
 }
 
+RS_Vector RS_GraphicView::getUCSViewLeftBottom() const{
+    return toUCSFromGui(0,0);
+}
+
+RS_Vector RS_GraphicView::getUCSViewRightTop() const{
+    return toUCSFromGui(getWidth(),getHeight());
+}
+
+
 /**
  * Zooms the area given by v1 and v2.
  *
@@ -898,6 +1021,27 @@ void RS_GraphicView::zoomWindow(
     RS_Vector v1, RS_Vector v2,
     bool keepAspectRatio) {
 
+    // Switch left/right and top/bottom is necessary:
+  /*  if (v1.x > v2.x) {
+        std::swap(v1.x, v2.x);
+    }
+    if (v1.y > v2.y) {
+        std::swap(v1.y, v2.y);
+    }
+
+    LC_ERR << "Zoom: Original Diagonal " << v1.distanceTo(v2);
+    RS_Vector worldCorner1 = v1;
+    RS_Vector worldCorner3 = v2;
+
+    RS_Vector ucsMin;
+    RS_Vector ucsMax;
+
+    ucsBoundingBox(worldCorner1, worldCorner3, ucsMin, ucsMax);
+
+    v1 = ucsMin;
+    v2 = ucsMax;
+
+    LC_ERR << "Zoom: UCS Diagonal " << v1.distanceTo(v2);*/
 
     double zoomX = 480.0;    // Zoom for X-Axis
     double zoomY = 640.0;    // Zoom for Y-Axis   (Set smaller one)
@@ -1055,8 +1199,11 @@ void RS_GraphicView::zoomPage() {
 
     RS_DEBUG->print("f: %f/%f", fx, fy);
 
-    centerOffsetX();
-    centerOffsetY();
+    RS_Vector containerMin = container->getMin();
+    RS_Vector containerSize = container->getSize();
+
+    centerOffsetX(containerMin, containerSize);
+    centerOffsetY(containerMin, containerSize);
     // fixme - remove debug code
 //    LC_ERR << "Normal Zoom " << offsetX << " , " << offsetY << " Factor: " << fx;;
     adjustOffsetControls();
@@ -1276,7 +1423,7 @@ void RS_GraphicView::setPenForOverlayEntity(RS_Painter *painter, RS_Entity *e, d
         }
         default: {
             if (draftMode){
-                if (ignoreDraftForHighlight) {
+                if (m_ignoreDraftForHighlight) {
                     setPenForEntity(painter, e, patternOffset, true);
                 }
                 else{
@@ -1284,7 +1431,7 @@ void RS_GraphicView::setPenForOverlayEntity(RS_Painter *painter, RS_Entity *e, d
                 }
             }
             else{
-                if (draftLinesMode){
+                if (m_draftLinesMode){
                     setPenForDraftEntity(painter, e, patternOffset, true);
                 }
                 else {
@@ -1723,7 +1870,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
                             }
                             else{
                                 // normal painting
-                                if (draftLinesMode) {
+                                if (m_draftLinesMode) {
                                     setPenForDraftEntity(painter, e, patternOffset, false);
                                 } else {
                                     setPenForEntity(painter, e, patternOffset, false);
@@ -1735,7 +1882,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
                         default:
                             // normal painting
                             // set pen (color):
-                            if (draftLinesMode) {
+                            if (m_draftLinesMode) {
                                 setPenForDraftEntity(painter, e, patternOffset, false);
                             } else {
                                 setPenForEntity(painter, e, patternOffset, false);
@@ -1747,7 +1894,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity *e, double &patte
                 else {
                     // normal painting
                     // set pen (color):
-                    if (draftLinesMode) {
+                    if (m_draftLinesMode) {
                         setPenForDraftEntity(painter, e, patternOffset, false);
                     } else {
                         setPenForEntity(painter, e, patternOffset, false);
@@ -1773,7 +1920,7 @@ void RS_GraphicView::drawAsChild(RS_Painter *painter, RS_Entity *e, double &patt
 
 void RS_GraphicView::drawEntityReferencePoints(RS_Painter *painter, const RS_Entity *e) const {
     RS_VectorSolutions const &s = e->getRefPoints();
-    int sz = entityHandleHalfSize;
+    int sz = m_entityHandleHalfSize;
     for (size_t i = 0; i < s.getNumber(); ++i) {
         RS_Color col = m_colorData->handleColor;
         if (i == 0) {
@@ -1850,6 +1997,84 @@ const RS_LineTypePattern *RS_GraphicView::getPattern(RS2::LineType t) {
     return RS_LineTypePattern::getPattern(t);
 }
 
+void RS_GraphicView::drawCoordinateSystemMarker(RS_Painter *painter, const RS_Vector &uiOrigin, double xAxisAngle, bool forWCS){
+    int const zr = m_csZeroMarkerSize;
+    RS_Vector uiXAxisEnd = uiOrigin.relative(zr, xAxisAngle);
+
+    double yAxisAngle = xAxisAngle-M_PI_2; // as we're in UI coordinate space
+    RS_Vector uiYAxisEnd = uiOrigin.relative(zr,yAxisAngle);
+
+    RS_Pen pen_xAxis (m_colorData->xAxisExtensionColor, RS2::Width00, RS2::SolidLine);
+    pen_xAxis.setScreenWidth(2);
+
+    RS_Pen pen_yAxis (m_colorData->yAxisExtensionColor, RS2::Width00, RS2::SolidLine);
+    pen_yAxis.setScreenWidth(2);
+
+    double anchorFactor = 0.2;
+    double anchorAngle = RS_Math::deg2rad(70);
+    double anchorSize = zr * anchorFactor;
+
+    double resultingAchorAngle = M_PI_2 + anchorAngle;
+
+    painter->setFont(m_csZeroMarkerFont);
+
+
+    painter->setPen(pen_xAxis);
+    // axis
+    painter->drawLine(uiOrigin, uiXAxisEnd);
+    // anchor
+    painter->drawLine(uiXAxisEnd, uiXAxisEnd.relative(anchorSize, xAxisAngle+resultingAchorAngle));
+    painter->drawLine(uiXAxisEnd, uiXAxisEnd.relative(anchorSize, xAxisAngle-resultingAchorAngle));
+
+
+    const char* xString = forWCS ? "wX" : "X";
+    const QSize &xSize = QFontMetrics(painter->font()).size(Qt::TextSingleLine, xString);
+
+    RS_Vector offset = RS_Vector(20,10);
+
+    RS_Vector xTextPosition = uiXAxisEnd.relative(offset.x, yAxisAngle);
+
+    QRect xRect = QRect(QPoint(xTextPosition.x, xTextPosition.y), xSize);
+    QRect xBoundingRect;
+    painter->drawText(xRect,  Qt::AlignTop | Qt::AlignRight | Qt::TextDontClip, xString, &xBoundingRect);
+
+    painter->setPen(pen_yAxis);
+    // axis
+    painter->drawLine(uiOrigin, uiYAxisEnd);
+    // anchor
+    painter->drawLine(uiYAxisEnd, uiYAxisEnd.relative(anchorSize, yAxisAngle+resultingAchorAngle));
+    painter->drawLine(uiYAxisEnd, uiYAxisEnd.relative(anchorSize, yAxisAngle-resultingAchorAngle));
+
+    const char* yString = forWCS ? "wY" : "Y";
+    const QSize &ySize = QFontMetrics(painter->font()).size(Qt::TextSingleLine, yString);
+
+    RS_Vector yTextPosition = uiYAxisEnd.relative(offset.x, xAxisAngle);
+
+    QRect yRect = QRect(QPoint(yTextPosition.x, yTextPosition.y), ySize);
+    QRect yBoundingRect;
+    painter->drawText(yRect,  Qt::AlignTop | Qt::AlignRight | Qt::TextDontClip, yString, &yBoundingRect);
+
+    // square
+    double angleFactor = 0.1;
+    double angleLen = zr*angleFactor;
+
+    RS_Vector angleX0 = uiOrigin.relative(angleLen, xAxisAngle);
+    RS_Vector angleX1 = angleX0.relative(angleLen, yAxisAngle);
+    RS_Vector anchorY0 = uiOrigin.relative(angleLen, yAxisAngle);
+
+    RS_Pen anglePen (m_colorData->previewReferenceEntitiesColor, RS2::Width00, RS2::SolidLine);
+    anglePen.setScreenWidth(2);
+
+    painter->setPen(anglePen);
+
+    painter->drawLine(anchorY0, angleX1);
+    painter->drawLine(angleX0, angleX1);
+
+    painter->drawGridPoint(uiOrigin);
+
+}
+
+
 /**
  * This virtual method can be overwritten to draw the absolute
  * zero. It's called from within drawIt(). The default implementation
@@ -1860,7 +2085,7 @@ const RS_LineTypePattern *RS_GraphicView::getPattern(RS2::LineType t) {
  * @see drawIt()
  */
 void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
-    int const zr = zeroShortAxisMarkSize;
+    int const zr = m_zeroShortAxisMarkSize;
 
     RS_Pen pen_xAxis (m_colorData->xAxisExtensionColor, RS2::Width00, RS2::SolidLine);
     pen_xAxis.setScreenWidth(0);
@@ -1868,17 +2093,17 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
     RS_Pen pen_yAxis (m_colorData->yAxisExtensionColor, RS2::Width00, RS2::SolidLine);
     pen_yAxis.setScreenWidth(0);
 
-    auto originPoint = toGui(RS_Vector(0,0));
+    auto originPoint = toGuiFromUCS(0.0, 0.0);
 
 
     int width = getWidth();
     int height = getHeight();
-    if (extendAxisLines){
+    if (m_extendAxisLines){
 
         int xAxisStartPoint;
         int xAxisEndPoint;
 
-        switch (extendAxisModeX){
+        switch (m_extendAxisModeX){
             case Both:
                 xAxisStartPoint = 0;
                 xAxisEndPoint = width;
@@ -1917,7 +2142,7 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
 
         int yAxisStartPoint;
         int yAxisEndPoint;
-        switch (extendAxisModeY){
+        switch (m_extendAxisModeY){
             case Both:
                 yAxisStartPoint  = 0;
                 yAxisEndPoint  = height;
@@ -1974,6 +2199,14 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
         painter->drawLine(RS_Vector(originPoint.x, yAxisPoints[0]), RS_Vector(originPoint.x, yAxisPoints[1]));
     }
 
+    if (m_showUCSZeroMarker){
+        drawCoordinateSystemMarker(painter, toGuiFromUCS(0,0), 0, false);
+    }
+
+    if (m_hasUcs && m_showWCSZeroMarker){
+        auto uiOrigin = toGui(RS_Vector(0,0));
+        drawCoordinateSystemMarker(painter, uiOrigin, -ucs.getXAxisAngle(), true);
+    }
 }
 
 /**
@@ -1987,31 +2220,27 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
  */
 void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
 
-    if (!relativeZero.valid) {
+    if (!relativeZero.valid || m_colorData->hideRelativeZero) {
         return;
     }
 
     RS2::LineType relativeZeroPenType = RS2::SolidLine;
 
-    if (m_colorData->hideRelativeZero) relativeZeroPenType = RS2::NoPen;
+//    if (m_colorData->hideRelativeZero) relativeZeroPenType = RS2::NoPen;
 
     RS_Pen p(m_colorData->relativeZeroColor, RS2::Width00, relativeZeroPenType);
     p.setScreenWidth(0);
     painter->setPen(p);
 
-    int const zr = relativeZeroRadius*2;
+    int const zr = m_relativeZeroRadius * 2;
     auto vp = toGui(relativeZero);
     if (vp.x + zr < 0 || vp.x - zr > getWidth()) return;
     if (vp.y + zr < 0 || vp.y - zr > getHeight()) return;
 
-    painter->drawLine(RS_Vector(vp.x - zr, vp.y),
-                      RS_Vector(vp.x + zr, vp.y)
-    );
-    painter->drawLine(RS_Vector(vp.x, vp.y - zr),
-                      RS_Vector(vp.x, vp.y + zr)
-    );
+    painter->drawLine(RS_Vector(vp.x - zr, vp.y),RS_Vector(vp.x + zr, vp.y));
+    painter->drawLine(RS_Vector(vp.x, vp.y - zr),RS_Vector(vp.x, vp.y + zr));
 
-    painter->drawCircle(vp, relativeZeroRadius);
+    painter->drawCircle(vp, m_relativeZeroRadius);
 }
 
 #define DEBUG_PRINT_PREVIEW_POINTS_NO
@@ -2187,15 +2416,65 @@ void RS_GraphicView::setSnapRestriction(RS2::SnapRestriction sr) {
     }
 }
 
+
 /**
  * Translates a vector in real coordinates to a vector in screen coordinates.
  */
 RS_Vector RS_GraphicView::toGui(RS_Vector v) const {
-    return RS_Vector(toGuiX(v.x), toGuiY(v.y));
+    double ucsX, ucsY;
+    if(m_hasUcs){
+        ucs.toUCS(v.x, v.y, ucsX, ucsY);
+    }
+    else{
+        ucsX = v.x;
+        ucsY = v.y;
+    }
+    RS_Vector result = RS_Vector(ucsX * factor.x + offsetX, -ucsY * factor.y + getHeight() - offsetY, 0);
+    return result;
 }
 
+void RS_GraphicView::toGui(const RS_Vector &v, double& x, double& y) const {
+    if(m_hasUcs){
+        ucs.toUCS(v.x, v.y, x, y);
+    }
+    else{
+        x = v.x;
+        y = v.y;
+    }
+    x = x * factor.x + offsetX;
+    y = -y * factor.y + getHeight() - offsetY;
+}
+
+RS_Vector RS_GraphicView::toUCSFromGui(const QPointF& pos) const{
+    return RS_Vector(toGraphX(pos.x()), toGraphY(pos.y()));
+}
+
+RS_Vector RS_GraphicView::toUCSFromGui(double x, double y) const{
+    return RS_Vector(toGraphX(x), toGraphY(y));
+}
+
+RS_Vector RS_GraphicView::toGuiFromUCS(const RS_Vector &ucs) const {
+    RS_Vector result = RS_Vector(ucs.x * factor.x + offsetX, -ucs.y * factor.y + getHeight() - offsetY, 0);
+    return result;
+}
+
+RS_Vector RS_GraphicView::toGuiFromUCS(double x, double y) const {
+    RS_Vector result = RS_Vector(x * factor.x + offsetX, -y * factor.y + getHeight() - offsetY, 0);
+    return result;
+}
+
+
 RS_Vector RS_GraphicView::toGui(double x, double y) const{
-    return RS_Vector(toGuiX(x), toGuiY(y));
+    double ucsX, ucsY;
+    if(m_hasUcs){
+        ucs.toUCS(x, y, ucsX, ucsY);
+    }
+    else{
+        ucsX = x;
+        ucsY = y;
+    }
+    RS_Vector result = RS_Vector(ucsX * factor.x + offsetX, -ucsY * factor.y + getHeight() - offsetY, 0);
+    return result;
 }
 
 RS_Vector RS_GraphicView::toGuiD(RS_Vector v) const {
@@ -2207,6 +2486,7 @@ RS_Vector RS_GraphicView::toGuiD(RS_Vector v) const {
  * @param visible Pointer to a boolean which will contain true
  * after the call if the coordinate is within the visible range.
  */
+
 double RS_GraphicView::toGuiX(double x) const {
     return x * factor.x + offsetX;
 }
@@ -2232,12 +2512,111 @@ double RS_GraphicView::toGuiDY(double d) const {
     return d * factor.y;
 }
 
+double RS_GraphicView::toUCSAngle(double angle) const{
+    double result;
+    if (m_hasUcs){
+        result = ucs.toUCSAngle(angle);
+    }
+    else{
+        result = angle;
+    }
+    return result;
+//    return angle + ucs_Angle;
+}
+
+double RS_GraphicView::toUCSAngleDegrees(double angle) const{
+    double result;
+    if (m_hasUcs){
+        result = ucs.toUCSAngleDegree(angle);
+    }
+    else{
+        result = angle;
+    }
+    return result;
+//    return angle + ucs_Angle;
+}
+
+void RS_GraphicView::toUCSDelta(const RS_Vector &worldDelta, double &ucsDX, double &ucsDY) const {
+   if (m_hasUcs){
+       ucs.toUCSDelta(worldDelta, ucsDX, ucsDY);
+   }
+   else{
+       ucsDX = worldDelta.x;
+       ucsDY = worldDelta.y;
+   }
+}
+
+RS_Vector RS_GraphicView::toUCSDelta(const RS_Vector& worldDelta) const {
+    RS_Vector result;
+    if (m_hasUcs){
+        double ucsDX, ucsDY;
+        ucs.toUCSDelta(worldDelta, ucsDX, ucsDY);
+        result = RS_Vector(ucsDX, ucsDY, 0);
+    }
+    else{
+        result = RS_Vector(worldDelta.x, worldDelta.y, 0);
+    }
+    return result;
+}
+
 /**
  * Translates a vector in screen coordinates to a vector in real coordinates.
  */
 RS_Vector RS_GraphicView::toGraph(const RS_Vector &v) const {
-    return RS_Vector(toGraphX(RS_Math::round(v.x)),
-                     toGraphY(RS_Math::round(v.y)));
+//    return RS_Vector(toGraphX(RS_Math::round(v.x)),
+//                     toGraphY(RS_Math::round(v.y)));
+
+    double ucsX = (v.x - offsetX) / factor.x;
+    double ucsY = -(v.y - getHeight() + offsetY) / factor.y;
+
+    double worldX, worldY;
+
+    if (m_hasUcs){
+        ucs.toWorld(ucsX, ucsY, worldX, worldY);
+    }
+    else{
+        worldX = ucsX;
+        worldY = ucsY;
+    }
+
+    RS_Vector result = RS_Vector(worldX, worldY, 0);
+    return result;
+}
+
+RS_Vector RS_GraphicView::toUCS(const RS_Vector& v) const{
+    RS_Vector result;
+    if (m_hasUcs){
+        ucs.toUCS(v, result);
+        result.valid = true;
+        return result;
+    }
+    else{
+        result = v;
+    }
+    return result;
+}
+
+void RS_GraphicView::toUCS(const RS_Vector& v, double& ucsX, double &ucsY) const{
+    if (m_hasUcs){
+        ucs.toUCS(v.x, v.y, ucsX, ucsY);
+    }
+    else{
+        ucsX = v.x;
+        ucsY = v.y;
+    }
+}
+
+RS_Vector RS_GraphicView::toWorld(const RS_Vector& v) const{
+    RS_Vector result;
+    if (m_hasUcs){
+        ucs.toWorld(v, result);
+        result.valid = true;
+        return result;
+    }
+    else{
+        result = v;
+    }
+    return result;
 }
 
 /**
@@ -2247,11 +2626,17 @@ RS_Vector RS_GraphicView::toGraph(const QPointF &position) const {
     return toGraph(position.x(), position.y());
 }
 
+RS_Vector RS_GraphicView::toUCS(const QPointF &position) const {
+    return toUCS(RS_Vector(position.x(), position.y()));
+}
+
 /**
  * Translates two screen coordinates to a vector in real coordinates.
  */
 RS_Vector RS_GraphicView::toGraph(int x, int y) const {
-    return RS_Vector(toGraphX(x), toGraphY(y));
+//    return RS_Vector(toGraphX(x), toGraphY(y));
+     RS_Vector gui = RS_Vector(x, y, 0);
+     return toGraph(gui);
 }
 
 /**
@@ -2285,6 +2670,25 @@ double RS_GraphicView::toGraphDY(int d) const {
 RS_Vector RS_GraphicView::toGraphD(int x, int y) const{
     return RS_Vector(x /factor.x, y / factor.y);
 }
+
+double RS_GraphicView::toWorldAngle(double angle) const{
+    if (m_hasUcs){
+       return ucs.toWorldAngle(angle);
+    }
+    else{
+       return angle;
+    }
+}
+
+double RS_GraphicView::toWorldAngleDegrees(double angle) const{
+    if (m_hasUcs){
+        return ucs.toWorldAngleDegrees(angle);
+    }
+    else{
+        return angle;
+    }
+}
+
 
 /**
  * Sets the relative zero coordinate (if not locked)
@@ -2676,11 +3080,11 @@ void RS_GraphicView::setHasNoGrid(bool noGrid) {
 }
 
 bool RS_GraphicView::isDraftLinesMode() const {
-    return draftLinesMode;
+    return m_draftLinesMode;
 }
 
 void RS_GraphicView::setDraftLinesMode(bool mode) {
-    draftLinesMode = mode;
+    m_draftLinesMode = mode;
 }
 
 void RS_GraphicView::setForcedActionKillAllowed(bool enabled) {
@@ -2716,4 +3120,444 @@ RS_Undoable *RS_GraphicView::getRelativeZeroUndoable() {
         markRelativeZero();
     }
     return result;
+}
+
+
+// fixme - sand - ucs - unwrapp calculations
+void RS_GraphicView::UserCoordinateSystem::toUCS(const RS_Vector &worldCoordinate, RS_Vector &ucsCoordinate) const{
+    // the code below is equivalent to this
+    //  RS_Vector newPos = world - ucsOrigin;
+    //  RS_Vector rotated = newPos.rotate(ucsOrigin, xAxisAngle);
+
+   /* double x = worldCoordinate.x - ucsOrigin.x;
+    double y = worldCoordinate.y - ucsOrigin.y;
+
+    rotate(x,y);
+
+    ucsCoordinate.x = x;
+    ucsCoordinate.y = y;*/
+
+   RS_Vector wcs = worldCoordinate;
+   RS_Vector newPos = wcs-ucsOrigin;
+   ucsCoordinate = newPos.rotate(xAxisAngle);
+}
+// fixme - sand - ucs - unwrapp calculations
+void RS_GraphicView::UserCoordinateSystem::toUCS(double worldX, double worldY, double &ucsX, double &ucsY) const {
+    // the code below is equivalent to this
+    //  RS_Vector newPos = world - ucsOrigin;
+    //  RS_Vector rotated = newPos.rotate(ucsOrigin, xAxisAngle);
+
+    /*ucsX = worldX - ucsOrigin.x;
+    ucsY = worldY - ucsOrigin.y;
+
+    rotate(ucsX,ucsY);*/
+
+
+    RS_Vector wcs = RS_Vector(worldX, worldY);
+    RS_Vector newPos = wcs-ucsOrigin;
+    newPos.rotate(xAxisAngle);
+    ucsX = newPos.x;
+    ucsY = newPos.y;
+}
+// fixme - sand - ucs - unwrapp calculations
+void RS_GraphicView::UserCoordinateSystem::toUCSDelta(const RS_Vector &worldDelta, double &ucsDX, double &ucsDY) const {
+    double magnitude = worldDelta.magnitude();
+    double angle = worldDelta.angle();
+    double ucsAngle = angle + xAxisAngle;
+    ucsDX = magnitude*cos(ucsAngle);
+    ucsDY = magnitude*sin(ucsAngle);
+}
+// fixme - sand - ucs - unwrapp calculations
+void RS_GraphicView::UserCoordinateSystem::toWorld(const RS_Vector &ucsCoordinate, RS_Vector &worldCoordinate) const{
+    // RS_Vector rotated = ucs.rotate(UCS_Origin, -ucs_Angle);
+    // world = rotated + ucsOrigin
+
+/*    double x = ucsCoordinate.x;
+    double y = ucsCoordinate.y;
+
+    rotateBack(x,y);
+
+    x = x + ucsOrigin.x;
+    y = y + ucsOrigin.y;
+
+    worldCoordinate.x = x;
+    worldCoordinate.y = y;*/
+
+//    ******
+    RS_Vector newPos = ucsCoordinate;
+    newPos.rotate(-xAxisAngle);
+    worldCoordinate  = newPos + ucsOrigin;
+}
+// fixme - sand - ucs - unwrapp calculations
+void RS_GraphicView::UserCoordinateSystem::toWorld(double ucsX, double ucsY, double &worldX, double &worldY) const{
+    // RS_Vector rotated = ucs.rotate(UCS_Origin, -ucs_Angle);
+    // world = rotated + ucsOrigin
+
+   /* double x = ucsX;
+    double y = ucsY;
+
+    rotateBack(x,y);
+
+    x = x + ucsOrigin.x;
+    y = y + ucsOrigin.y;
+
+    worldX = x;
+    worldY = y;*/
+
+    RS_Vector ucsCoordinate = RS_Vector(ucsX, ucsY);
+    ucsCoordinate.rotate(-xAxisAngle);
+    RS_Vector world = ucsCoordinate + ucsOrigin;
+    worldX  = world.x;
+    worldY = world.y;
+}
+
+
+void RS_GraphicView::UserCoordinateSystem::rotate(double &x, double &y) const{
+    double deltaX = x - ucsOrigin.x;
+    double deltaY = y - ucsOrigin.y;
+
+    x = ucsOrigin.x + deltaX * cosXAngle - deltaY * sinXAngle;
+    y = ucsOrigin.y + deltaX * sinXAngle + deltaY * cosXAngle;
+}
+
+void RS_GraphicView::UserCoordinateSystem::rotateBack(double &x, double &y) const{
+    double deltaX = x - ucsOrigin.x;
+    double deltaY = y - ucsOrigin.y;
+
+    x = ucsOrigin.x + deltaX * cosNegativeXAngle - deltaY * sinNegativeXAngle;
+    y = ucsOrigin.y + deltaX * sinNegativeXAngle + deltaY * cosNegativeXAngle;
+}
+
+
+void RS_GraphicView::UserCoordinateSystem::setXAxisAngle(double angle){
+    xAxisAngle = angle;
+    xAxisAngleDegrees = RS_Math::rad2deg(angle);
+    sinXAngle = sin(angle);
+    cosXAngle = cos(angle);
+    sinNegativeXAngle = sin(-angle);
+    cosNegativeXAngle = cos(-angle);
+}
+
+void RS_GraphicView::UserCoordinateSystem::update(const RS_Vector &origin, double angle) {
+    ucsOrigin = origin;
+    setXAxisAngle(angle);
+}
+
+void RS_GraphicView::extractUCS(){
+    if (hasUCS()){
+        RS_Graphic* graphic = getGraphic();
+        if (graphic != nullptr) {
+            LC_UCSList *ucsList = graphic->getUCSList();
+            LC_UCS *candidate = createUCSEntity(ucs.getUcsOrigin(), -ucs.getXAxisAngle(), isGridIsometric(), getIsoViewType());
+            LC_UCS *createdUCS = ucsList->tryAddUCS(candidate);
+            if (createdUCS != nullptr) {
+                applyUCS(createdUCS);
+            }
+        }
+    }
+}
+
+void RS_GraphicView::createUCS(const RS_Vector &origin, double angle) {
+    bool customUCS = LC_LineMath::isMeaningfulAngle(angle) || LC_LineMath::isMeaningfulDistance(origin, RS_Vector(0, 0, 0));
+    if (customUCS){
+        RS_Graphic* graphic = getGraphic();
+        if (graphic != nullptr) {
+            LC_UCSList *ucsList = graphic->getUCSList();
+            LC_UCS* candidate = createUCSEntity(origin, angle,isGridIsometric(), getIsoViewType());
+            LC_UCS* createdUCS = ucsList->tryAddUCS(candidate);
+            if (createdUCS != nullptr){
+                setUCS(origin, angle, isGridIsometric(), getIsoViewType());
+                graphic->setCurrentUCS(createdUCS);
+                emit ucsChanged(createdUCS);
+            }
+        }
+    }
+}
+
+LC_UCS *RS_GraphicView::createUCSEntity(const RS_Vector &origin, double angle, bool isometric, RS2::IsoGridViewType isoType) const{
+    auto* result = new LC_UCS("");
+    result->setOrigin(origin);
+
+    RS_Vector xAxis = RS_Vector(1.0, 0, 0);
+    RS_Vector yAxis = RS_Vector(0,1.0, 0);
+
+    xAxis.rotate(angle);
+    yAxis.rotate(angle);
+
+    result->setXAxis(xAxis);
+    result->setYAxis(yAxis);
+
+    result->setElevation(0.0);
+    result->setTemporary(true);
+
+    result->setOrthoOrigin(RS_Vector(0,0,0));
+
+    int orthoType = LC_UCS::NON_ORTHO;
+    if (isometric){
+        switch (isoType){
+            case (RS2::IsoRight):{
+                orthoType = LC_UCS::RIGHT;
+                break;
+            }
+            case (RS2::IsoLeft):{
+                orthoType = LC_UCS::LEFT;
+                break;
+            }
+            case (RS2::IsoTop):{
+                orthoType = LC_UCS::TOP;
+                break;
+            }
+            default:
+                orthoType = LC_UCS::NON_ORTHO;
+        }
+    }
+    result->setName(tr("<No name>"));
+    result->setOrthoType(orthoType);
+    return result;
+}
+
+LC_UCS* RS_GraphicView::getCurrentUCS() const{
+    LC_UCS* result = nullptr;
+    if (hasUCS()){
+        result = createUCSEntity(ucs.getUcsOrigin(), -ucs.getXAxisAngle(),isGridIsometric(), getIsoViewType());
+    }
+    return result;
+}
+
+void RS_GraphicView::applyUCS(LC_UCS *ucsToSet) {
+    if (ucsToSet == nullptr){
+        return;
+    }
+    RS_Vector originToSet = ucsToSet->getOrigin();
+    double angleToSet = ucsToSet->getXAxisDirection();
+    int orthoType = ucsToSet->getOrthoType();
+    bool hasIso = ucsToSet->isIsometric();
+    RS2::IsoGridViewType isoType = ucsToSet->getIsoGridViewType();
+    setUCS(originToSet, angleToSet, hasIso, isoType);
+    RS_Graphic *graphic = getGraphic();
+    if (graphic != nullptr){
+        graphic->setCurrentUCS(ucsToSet);
+    }
+    emit ucsChanged(ucsToSet);
+}
+
+void RS_GraphicView::applyUCSAfterLoad(){
+    LC_UCS* ucsCurrent = getGraphic()->getCurrentUCS();
+    if (ucsCurrent != nullptr) {
+        RS_Vector originToSet = ucsCurrent->getOrigin();
+        double angleToSet = ucsCurrent->getXAxisDirection();
+        int orthoType = ucsCurrent->getOrthoType();
+        bool isometric = ucsCurrent->isIsometric();
+        RS2::IsoGridViewType isoType = ucsCurrent->getIsoGridViewType();
+        doSetUCS(originToSet, angleToSet, isometric, isoType);
+        emit ucsChanged(ucsCurrent);
+        delete ucsCurrent;
+    }
+}
+
+void RS_GraphicView::setUCS(const RS_Vector &origin, double angle, bool isometric, RS2::IsoGridViewType isoType) {
+    RS_Vector ucsOrigin = doSetUCS(origin, angle, isometric, isoType);
+    switch (m_ucsApplyingPolicy){
+        case UCSApplyingPolicy::ZoomAuto: {
+            zoomAuto();
+            break;
+        }
+        case UCSApplyingPolicy::PanOriginCenter: {
+            int offX = (int) ((ucsOrigin.x * factor.x)
+                             + (double) (getWidth() - borderLeft - borderRight) / 2.0);
+            int offY = (int) ((ucsOrigin.y * factor.y)
+                             + (double) (getHeight() - borderTop - borderBottom) / 2.0);
+
+            setOffset(offX, offY);
+            redraw();
+            break;
+        }
+        case UCSApplyingPolicy::PanOriginLowerLeft:{
+            setOffset(ucsOrigin.x* factor.x+(borderLeft + borderRight)/2, ucsOrigin.y* factor.y + (borderBottom + borderRight)/2);
+            redraw();
+            break;
+        }
+        default:{
+            zoomAuto();
+        }
+    }
+    redraw();
+}
+
+RS_Vector RS_GraphicView::doSetUCS(const RS_Vector &origin, double angle, bool isometric, RS2::IsoGridViewType &isoType) {
+    bool customUCS = LC_LineMath::isMeaningfulAngle(angle) || LC_LineMath::isMeaningfulDistance(origin, RS_Vector(0, 0, 0));
+    RS_Vector ucsOrigin;
+    if (customUCS) {
+        ucs.update(origin, -angle);
+        m_hasUcs = true;
+        ucsOrigin = toUCS(origin);
+    } else {
+        m_hasUcs = false;
+        ucsOrigin = RS_Vector(0, 0);
+    }
+    RS_Graphic *graphic = getGraphic();
+    if (graphic != nullptr){
+        bool oldIsometricGrid = graphic->isIsometricGrid();
+        RS2::IsoGridViewType oldIsoViewType = graphic->getIsoView();
+        if (oldIsometricGrid != isometric || oldIsoViewType != isoType) {
+            graphic->setIsometricGrid(isometric);
+            if (isometric) {
+                graphic->setIsoView(isoType);
+            }
+            loadGridSettings();
+            invalidate();
+        }
+    }
+    return ucsOrigin;
+}
+
+double  RS_GraphicView::UserCoordinateSystem::toWorldAngle(double angle) const {return angle - xAxisAngle;};
+double  RS_GraphicView::UserCoordinateSystem::toWorldAngleDegrees(double angle) const {return angle - xAxisAngleDegrees;};
+double  RS_GraphicView::UserCoordinateSystem::toUCSAngle(double angle) const {return angle + xAxisAngle;}
+double RS_GraphicView::UserCoordinateSystem::toUCSAngleDegree(double angle) const {
+    return angle + xAxisAngleDegrees;
+}
+
+const RS_Vector &RS_GraphicView::UserCoordinateSystem::getUcsOrigin() const {
+    return ucsOrigin;
+}
+
+double RS_GraphicView::UserCoordinateSystem::getXAxisAngle() const {
+    return xAxisAngle;
+}
+
+
+RS_Vector RS_GraphicView::snapGrid(const RS_Vector &coord) const {
+    if (m_hasUcs) {
+        // basically, wcs coordinate still should be returned there.
+        // however, it will be rotated according to the grid (which is not rotated in ucs).
+        RS_Vector snap = getGrid()->snapGrid(toUCS(coord));
+        snap = toWorld(snap);
+        return snap;
+    }
+    else{
+        RS_Vector snap = getGrid()->snapGrid(coord);
+        return snap;
+    }
+}
+
+RS_Vector RS_GraphicView::restrictHorizontal(const RS_Vector baseWCSPoint, const RS_Vector &wcsCoord) const {
+    if (m_hasUcs) {
+        RS_Vector ucsBase = toUCS(baseWCSPoint);
+        RS_Vector ucsCoord = toUCS(wcsCoord);
+        double resX, resY;
+        ucs.toWorld(ucsCoord.x, ucsBase.y, resX, resY);
+        return RS_Vector(resX, resY);
+    }
+    else{
+        return RS_Vector(baseWCSPoint.x, wcsCoord.y);
+    }
+}
+
+RS_Vector RS_GraphicView::restrictVertical(const RS_Vector baseWCSPoint, const RS_Vector &wcsCoord) const {
+    if (m_hasUcs) {
+        RS_Vector ucsBase = toUCS(baseWCSPoint);
+        RS_Vector ucsCoord = toUCS(wcsCoord);
+        double resX, resY;
+        ucs.toWorld(ucsBase.x, ucsCoord.y, resX, resY);
+        return RS_Vector(resX, resY);
+    }
+    else{
+        return RS_Vector(wcsCoord.x, baseWCSPoint.y);
+    }
+}
+
+bool RS_GraphicView::hasUCS() const {
+    return m_hasUcs;
+}
+
+void RS_GraphicView::restoreView(LC_View *view) {
+    if (view == nullptr){
+        return;
+    }
+
+    RS_Vector center = view->getCenter();
+    RS_Vector size = view->getSize();
+
+    const RS_Vector halfSize = size / 2;
+    RS_Vector v1 = center - halfSize;
+    RS_Vector v2 = center + halfSize;
+
+    RS_Vector origin = RS_Vector(0,0,0);
+    double angle = 0;
+    bool isometric = false;
+    RS2::IsoGridViewType isoType = RS2::IsoTop;
+    RS_Graphic *graphic = getGraphic();
+    auto* ucs = view->getUCS();
+    if (ucs != nullptr){
+        origin = ucs->getOrigin();
+        angle = ucs->getXAxisDirection();
+        isometric = ucs->isIsometric();
+        isoType = ucs->getIsoGridViewType();
+    }
+    else{
+        ucs = &LC_WCS::instance;
+    };
+
+
+    if (graphic != nullptr){
+        graphic->setCurrentUCS(ucs);
+    }
+    emit ucsChanged(ucs);
+
+    doSetUCS(origin, angle, isometric, isoType);
+    zoomWindow(v1, v2, true);
+}
+
+void RS_GraphicView::initAfterDocumentOpen() {
+    applyUCSAfterLoad();
+}
+
+LC_View* RS_GraphicView::createNamedView(QString name) const{
+    auto* viewToCreate = new LC_View(name);
+    doUpdateViewByGraphicView(viewToCreate);
+    return viewToCreate;
+}
+
+void RS_GraphicView::updateNamedView(LC_View* view) const{
+    doUpdateViewByGraphicView(view);
+}
+
+void RS_GraphicView::doUpdateViewByGraphicView(LC_View *view) const {
+    view->setForPaperView(isPrintPreview());
+
+    int width = getWidth();
+    int height = getHeight();
+
+    double x = toGraphX(width);
+    double y = toGraphY(height);
+
+    double x0 = toGraphX(0);
+    double y0 = toGraphY(0);
+
+    view->setCenter({(x + x0) / 2.0, (y + y0) / 2.0, 0});
+    view->setSize({(x - x0), (y - y0), 0});
+
+    view->setTargetPoint({0, 0, 0});
+
+    LC_UCS* viewUCS = getCurrentUCS();
+    if (viewUCS != nullptr) {
+        view->setUCS(viewUCS);
+        RS_Graphic *graphic = getGraphic();
+        if (graphic != nullptr) {
+            LC_UCSList *ucsList = graphic->getUCSList();
+
+            LC_UCS *existingListUCS = ucsList->findExisting(viewUCS);
+            if (existingListUCS != nullptr) {
+                QString ucsName = existingListUCS->getName();
+                viewUCS->setName(ucsName);
+            } else {
+                viewUCS->setName(tr("<No name>"));
+            }
+        }
+    }
+    else{
+        // this is WCS
+        view->setUCS(new LC_WCS());
+    }
 }

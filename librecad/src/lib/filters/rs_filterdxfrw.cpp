@@ -322,17 +322,47 @@ void RS_FilterDXFRW::addVport(const DRW_Vport &data) {
     }
 }
 
+void RS_FilterDXFRW::addUCS(const DRW_UCS &data) {
+    RS_DEBUG->print("RS_FilterDXF::addUCS");
+    RS_DEBUG->print("  adding ucs: %s", data.name.c_str());
+    RS_DEBUG->print("RS_FilterDXF::addUCS: creating ucs");
+
+    QString name = QString::fromUtf8(data.name.c_str());
+    if (!name.isEmpty() && graphic->findNamedUCS(name) != nullptr) {
+        return;
+    }
+
+    auto* ucs = new LC_UCS(name);
+    RS_Vector origin = RS_Vector(data.origin.x, data.origin.y, data.origin.z);
+    ucs->setOrigin(origin);
+
+    ucs->setElevation(data.elevation);
+    ucs->setOrthoType(data.orthoType);
+
+    RS_Vector orthoOrigin = RS_Vector(data.orthoOrigin.x, data.orthoOrigin.y, data.orthoOrigin.z);
+    ucs->setOrthoOrigin(orthoOrigin);
+
+    RS_Vector xAxis = RS_Vector(data.xAxisDirection.x, data.xAxisDirection.y, data.xAxisDirection.z);
+    ucs->setXAxis(xAxis);
+
+    RS_Vector yAxis = RS_Vector(data.yAxisDirection.x, data.yAxisDirection.y, data.yAxisDirection.z);
+    ucs->setYAxis(yAxis);
+
+    RS_DEBUG->print("RS_FilterDXF::addUCS: add ucs to graphic");
+    graphic->addUCS(ucs);
+    RS_DEBUG->print("RS_FilterDXF::addUCS: OK");
+}
+
 void RS_FilterDXFRW::addView(const DRW_View &data) {
     RS_DEBUG->print("RS_FilterDXF::addView");
     RS_DEBUG->print("  adding view: %s", data.name.c_str());
-
     RS_DEBUG->print("RS_FilterDXF::addView: creating view");
 
     QString name = QString::fromUtf8(data.name.c_str());
     if (!name.isEmpty() && graphic->findNamedView(name) != nullptr) {
         return;
     }
-    LC_View* view = new LC_View(name);
+    auto* view = new LC_View(name);
     RS_Vector center = RS_Vector(data.center.x, data.center.y, data.center.z);
     view->setCenter(center);
 
@@ -356,18 +386,17 @@ void RS_FilterDXFRW::addView(const DRW_View &data) {
     view->setViewMode(data.viewMode); // todo - probably it might be simpler than long?
 
     if (data.hasUCS){
-        LC_UCS* ucs = new LC_UCS();
+        auto ucs = new LC_UCS();
 
         RS_Vector ucsOrigin = RS_Vector(data.ucsOrigin.x, data.ucsOrigin.y, data.ucsOrigin.z);
         RS_Vector ucsXAxis = RS_Vector(data.ucsXAxis.x, data.ucsXAxis.y, data.ucsXAxis.z);
         RS_Vector ucsYAxis = RS_Vector(data.ucsYAxis.x, data.ucsYAxis.y, data.ucsYAxis.z);
-
+        ucs->setOrthoOrigin(RS_Vector(false));
         ucs->setOrigin(ucsOrigin);
         ucs->setXAxis(ucsXAxis);
         ucs->setYAxis(ucsYAxis);
         ucs->setElevation(data.ucsElevation);
         ucs->setOrthoType(data.ucsOrthoType);
-
         view->setUCS(ucs);
     }
 
@@ -376,7 +405,6 @@ void RS_FilterDXFRW::addView(const DRW_View &data) {
     RS_DEBUG->print("RS_FilterDXF::addView: add view to graphic");
     graphic->addNamedView(view);
     RS_DEBUG->print("RS_FilterDXF::addView: OK");
-
 }
 
 
@@ -2041,6 +2069,41 @@ void RS_FilterDXFRW::writeLayers(){
     }
 }
 
+
+void RS_FilterDXFRW::writeUCSs() {
+    LC_UCSList* vl = graphic->getUCSList();
+    DRW_UCS ucs;
+    for (unsigned int i = 1; i < vl->count(); i++) {
+        ucs.reset();
+
+        LC_UCS* u = vl->at(i);
+        if (u->isTemporary()){ // temporary ucs without name are not persistent
+            continue;
+        }
+        ucs.name = u->getName().toUtf8().data();
+        ucs.origin.x = u->getOrigin().x;
+        ucs.origin.y = u->getOrigin().y;
+        ucs.origin.z = u->getOrigin().z;
+
+        ucs.xAxisDirection.x = u->getXAxis().x;
+        ucs.xAxisDirection.y = u->getXAxis().y;
+        ucs.xAxisDirection.z = u->getXAxis().z;
+
+        ucs.yAxisDirection.x = u->getYAxis().x;
+        ucs.yAxisDirection.y = u->getYAxis().y;
+        ucs.yAxisDirection.z = u->getYAxis().z;
+
+        ucs.orthoOrigin.x = u->getOrthoOrigin().x;
+        ucs.orthoOrigin.y = u->getOrthoOrigin().y;
+        ucs.orthoOrigin.z = u->getOrthoOrigin().z;
+
+        ucs.orthoType = u->getOrthoType();
+        ucs.elevation = u->getElevation();
+
+        dxfW->writeUCS(&ucs);
+    }
+}
+
 void RS_FilterDXFRW::writeViews() {
     LC_ViewList* vl = graphic->getViewList();
     DRW_View vie;
@@ -2083,7 +2146,7 @@ void RS_FilterDXFRW::writeViews() {
             vie.ucsOrigin.z = ucs->getOrigin().z;
             
             vie.ucsOrthoType = ucs->getOrthoType();
-            vie.ucsElevation = ucs->getElevataion();
+            vie.ucsElevation = ucs->getElevation();
 
             vie.ucsXAxis.x = ucs->getXAxis().x;
             vie.ucsXAxis.y = ucs->getXAxis().y;
@@ -2239,6 +2302,8 @@ void RS_FilterDXFRW::writeAppId(){
     DRW_AppId ai;
     ai.name ="LibreCad";
     dxfW->writeAppId(&ai);
+
+    // fixme - sand - probably we can add version there, check format
 }
 
 void RS_FilterDXFRW::writeEntities(){

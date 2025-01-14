@@ -590,15 +590,24 @@ void RS_ActionInterface::updateSnapAngleStep() {
             snapToAngleStep = 5.0;
             break;
         case 3:
-            snapToAngleStep = 15.0;
+            snapToAngleStep = 10.0;
             break;
         case 4:
-            snapToAngleStep = 30.0;
+            snapToAngleStep = 15.0;
             break;
         case 5:
-            snapToAngleStep = 45.0;
+            snapToAngleStep = 18.0;
             break;
         case 6:
+            snapToAngleStep = 22.5;
+            break;
+        case 7:
+            snapToAngleStep = 30.0;
+            break;
+        case 8:
+            snapToAngleStep = 45.0;
+            break;
+        case 9:
             snapToAngleStep = 90.0;
             break;
         default:

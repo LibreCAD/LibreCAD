@@ -303,6 +303,22 @@ void QG_DlgOptionsGeneral::init() {
         checked = LC_GET_BOOL("FirstTimeNoZoom", false);
         cbFirstTimeNoZoom->setChecked(checked);
 
+        checked = LC_GET_BOOL("ShowUCSZeroMarker", false);
+        cbShowUCSZeroMarker->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowWCSZeroMarker", true);
+        cbShowWCSZeroMarker->setChecked(checked);
+
+        int zeroMarkerSize = LC_GET_INT("ZeroMarkerSize", 30);
+        sbCoordinateSystemMarkerSize->setValue(zeroMarkerSize);
+
+        int zeroMarkerFntSize = LC_GET_INT("ZeroMarkerFontSize", 10);
+        sbUCSFontSize->setValue(zeroMarkerFntSize);
+
+        QString fontName = LC_GET_STR("ZeroMarkerFontName", "Verdana");
+        QFont font(fontName);
+        fcbUCSFont->setCurrentFont(font);
+
     }
     LC_GROUP_END();
 
@@ -313,6 +329,9 @@ void QG_DlgOptionsGeneral::init() {
 
         checked = LC_GET_BOOL("ShowAbsolute", true);
         cbInfoOverlayAbsolutePosition->setChecked(checked);
+
+        checked = LC_GET_BOOL("ShowAbsoluteWCS", false);
+        cbShowWorldCoordinates->setChecked(checked);
 
         checked = LC_GET_BOOL("ShowRelativeDA", true);
         cbInfoOverlayRelative->setChecked(checked);
@@ -628,6 +647,12 @@ void QG_DlgOptionsGeneral::ok(){
 
             LC_SET("PanOnZoom", cbPanOnWheelZoom->isChecked());
             LC_SET("FirstTimeNoZoom", cbFirstTimeNoZoom->isChecked());
+
+            LC_SET("ShowUCSZeroMarker", cbShowUCSZeroMarker->isChecked());
+            LC_SET("ShowWCSZeroMarker",cbShowWCSZeroMarker->isChecked());
+            LC_SET("ZeroMarkerSize", sbCoordinateSystemMarkerSize->value());
+            LC_SET("ZeroMarkerFontSize",sbUCSFontSize->value());
+            LC_SET("ZeroMarkerFontName", fcbUCSFont->currentText());
         }
         LC_GROUP_END();
 
@@ -635,6 +660,7 @@ void QG_DlgOptionsGeneral::ok(){
         {
             LC_SET("Enabled", cbInfoOverlayEnable->isChecked());
             LC_SET("ShowAbsolute", cbInfoOverlayAbsolutePosition->isChecked());
+            LC_SET("ShowAbsoluteWCS",cbShowWorldCoordinates->isChecked());
             LC_SET("ShowRelativeDA", cbInfoOverlayRelative->isChecked());
             LC_SET("ShowRelativeDD", cbInfoOverlayRelativeDeltas->isChecked());
             LC_SET("ShowSnapInfo", cbInfoOverlaySnap->isChecked());

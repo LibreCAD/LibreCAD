@@ -588,7 +588,8 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     } else {
         // Adjust dash offset
         updateDashOffset(*painter, *view, patternOffset);
-        painter->drawLine(view->toGuiX(data.startpoint.x),view->toGuiY(data.startpoint.y), view->toGuiX(data.endpoint.x), view->toGuiY(data.endpoint.y));
+//        painter->drawLine(view->toGuiX(data.startpoint.x),view->toGuiY(data.startpoint.y), view->toGuiX(data.endpoint.x), view->toGuiY(data.endpoint.y));
+        painter->drawLine(view->toGui(data.startpoint.x,data.startpoint.y), view->toGui(data.endpoint.x, data.endpoint.y));
     }
 }
 

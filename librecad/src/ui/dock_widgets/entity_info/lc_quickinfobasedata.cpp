@@ -32,10 +32,22 @@ LC_QuickInfoBaseData::LC_QuickInfoBaseData()= default;
  * @return  formatted string
  */
 QString LC_QuickInfoBaseData::formatVector(const RS_Vector &vector) const{
+    double ucsX, ucsY;
+    graphicView->toUCS(vector, ucsX, ucsY);
 
-    RS_Graphic* graphic = document->getGraphic();
-    QString x = RS_Units::formatLinear(vector.x,  graphic->getUnit(),  graphic->getLinearFormat(),graphic->getLinearPrecision());
-    QString y = RS_Units::formatLinear(vector.y,  graphic->getUnit(),  graphic->getLinearFormat(),graphic->getLinearPrecision());
+    QString x = RS_Units::formatLinear(ucsX, m_unit, m_linearFormat, m_linearPrecision);
+    QString y = RS_Units::formatLinear(ucsY, m_unit, m_linearFormat, m_linearPrecision);
+
+    QString result = x + ", " + y;
+    return result;
+}
+
+QString LC_QuickInfoBaseData::formatDeltaVector(const RS_Vector &vector) const{
+    double ucsX, ucsY;
+    graphicView->toUCSDelta(vector, ucsX, ucsY);
+
+    QString x = RS_Units::formatLinear(ucsX, m_unit, m_linearFormat, m_linearPrecision);
+    QString y = RS_Units::formatLinear(ucsY, m_unit, m_linearFormat, m_linearPrecision);
 
     QString result = x + ", " + y;
     return result;
@@ -47,8 +59,14 @@ QString LC_QuickInfoBaseData::formatVector(const RS_Vector &vector) const{
  * @return
  */
 QString LC_QuickInfoBaseData::formatAngle(double angle){
-    RS_Graphic* graphic = document->getGraphic();
-    QString result =  RS_Units::formatAngle(angle,  graphic->getAngleFormat(), graphic->getAnglePrecision());
+    if (graphicView->hasUCS()){
+        angle = graphicView->toUCSAngle(angle);
+    }
+    return formatRawAngle(angle);
+}
+
+QString LC_QuickInfoBaseData::formatRawAngle(double angle) const {
+    QString result =  RS_Units::formatAngle(angle, m_angleFormat, m_anglePrecision);
     return result;
 }
 
@@ -58,8 +76,7 @@ QString LC_QuickInfoBaseData::formatAngle(double angle){
  * @return
  */
 QString LC_QuickInfoBaseData::formatLinear(double length){
-    RS_Graphic* graphic = document->getGraphic();
-    QString result = RS_Units::formatLinear(length,  graphic->getUnit(),  graphic->getLinearFormat(),graphic->getLinearPrecision());
+    QString result = RS_Units::formatLinear(length,  m_unit,  m_linearFormat,m_linearPrecision);
     return result;
 }
 
@@ -104,4 +121,111 @@ void LC_QuickInfoBaseData::setDocumentAndView(RS_Document *doc, QG_GraphicView *
     clear();
     document = doc;
     graphicView = view;
+    updateFormats();
+}
+
+void LC_QuickInfoBaseData::updateFormats(){
+    if (document != nullptr) {
+        RS_Graphic *graphic = document->getGraphic();
+        m_unit = graphic->getUnit();
+        m_linearFormat = graphic->getLinearFormat();
+        m_linearPrecision = graphic->getLinearPrecision();
+        m_angleFormat = graphic->getAngleFormat();
+        m_anglePrecision = graphic->getAnglePrecision();
+    }
+}
+
+void LC_QuickInfoBaseData::appendLinear(QString &result, const QString &label, double value){
+    result.append("\n");
+    result.append(label);
+    result.append(": ");
+    result.append(formatLinear(value));
+}
+
+void LC_QuickInfoBaseData::appendDouble(QString &result, const QString &label, double value){
+    result.append("\n");
+    result.append(label);
+    result.append(": ");
+    result.append(formatDouble(value));
+}
+
+void LC_QuickInfoBaseData::appendArea(QString &result, const QString &label, double value){
+    result.append("\n");
+    result.append(label);
+    result.append(": ");
+    result.append(formatLinear(value));
+}
+
+void LC_QuickInfoBaseData::appendAngle(QString &result, const QString &label, double value){
+    result.append("\n");
+    result.append(label);
+    result.append(": ");
+    result.append(formatAngle(value));
+}
+
+void LC_QuickInfoBaseData::appendRawAngle(QString &result, const QString &label, double value){
+    result.append("\n");
+    result.append(label);
+    result.append(": ");
+    result.append(formatRawAngle(value));
+}
+
+void LC_QuickInfoBaseData::appendValue(QString &result, const QString &label, const QString& value){
+    result.append("\n");
+    result.append(label);
+    result.append(": ");
+    result.append(value);
+}
+
+void LC_QuickInfoBaseData::appendAbsolute(QString &result, const QString &label, const RS_Vector &value) {
+    result.append("\n");
+    result.append(label);
+    result.append(": ");
+    double ucsX, ucsY;
+    graphicView->toUCS(value, ucsX, ucsY);
+    result.append(formatLinear(ucsX)).append(",").append(formatLinear(ucsY));
+}
+
+void LC_QuickInfoBaseData::appendAbsoluteDelta(QString &result, const QString &label, const RS_Vector &value) {
+    result.append("\n");
+    result.append(label);
+    result.append(": ");
+    double ucsX, ucsY;
+    graphicView->toUCSDelta(value, ucsX, ucsY);
+    result.append(formatLinear(ucsX)).append(",").append(formatLinear(ucsY));
+}
+
+void LC_QuickInfoBaseData::appendRelativePolar(QString &result, const QString &label, const RS_Vector &value) {
+    result.append("\n");
+    result.append(label);
+    result.append(": @");
+    result.append(formatLinear(value.x)).append(" < ").append(formatAngle(value.y));
+}
+
+void LC_QuickInfoBaseData::appendInt(QString &result, const QString &label, const int &value) {
+    result.append("\n");
+    result.append(label);
+    result.append(": ");
+    result.append(formatInt(value));
+}
+
+/**
+ * Formatting double value
+ * @param x
+ * @return
+ */
+QString LC_QuickInfoBaseData::formatDouble(const double &x) const{
+    QString result =  RS_Units::formatDecimal(x, RS2::Unit::None, m_linearPrecision, false);
+    return result;
+}
+
+/**
+ * formatting int value
+ * @param x
+ * @return
+ */
+QString LC_QuickInfoBaseData::formatInt(const int &x) const{
+    QString result;
+    result.setNum(x);
+    return result;
 }

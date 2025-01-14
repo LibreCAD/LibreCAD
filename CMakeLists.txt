@@ -96,7 +96,7 @@ include_directories(librecad/src/actions/dock_widgets/block)
 include_directories(librecad/src/actions/dock_widgets/library)
 include_directories(librecad/src/actions/dock_widgets/layer)
 include_directories(librecad/src/actions/dock_widgets/entity_info)
-
+include_directories(librecad/src/actions/dock_widgets/ucs_list)
 
 include_directories(librecad/src/actions/file)
 include_directories(librecad/src/actions/options)
@@ -118,6 +118,7 @@ include_directories(librecad/src/lib/engine/overlays/references)
 include_directories(librecad/src/lib/engine/overlays/info_cursor)
 include_directories(librecad/src/lib/engine/overlays/overlay_box)
 include_directories(librecad/src/lib/engine/overlays/crosshair)
+include_directories(librecad/src/lib/engine/overlays/ucs_mark)
 include_directories(librecad/src/lib/engine/document)
 include_directories(librecad/src/lib/engine/document/blocks)
 include_directories(librecad/src/lib/engine/document/layers)
@@ -206,6 +207,7 @@ include_directories(librecad/src/ui/dock_widgets/block_widget)
 include_directories(librecad/src/ui/dock_widgets/library_widget)
 include_directories(librecad/src/ui/dock_widgets/layer_widget)
 include_directories(librecad/src/ui/dock_widgets/views_list)
+include_directories(librecad/src/ui/dock_widgets/ucs_list)
 #Temporary disabled for build
 #include_directories(plugins/align)
 #include_directories(plugins/asciifile)
@@ -1368,6 +1370,30 @@ set(SOURCES
 		librecad/src/lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.cpp
 		librecad/src/lib/engine/undo/lc_undoablerelzero.h
 		librecad/src/lib/engine/undo/lc_undoablerelzero.cpp
+		librecad/src/lib/engine/document/ucs/lc_ucslist.h
+		librecad/src/lib/engine/document/ucs/lc_ucslist.cpp
+		librecad/src/actions/dock_widgets/ucs_list/lc_actionucscreate.h
+		librecad/src/actions/dock_widgets/ucs_list/lc_actionucscreate.cpp
+		librecad/src/lib/engine/overlays/ucs_mark/lc_ucs_mark.h
+		librecad/src/lib/engine/overlays/ucs_mark/lc_ucs_mark.cpp
+		librecad/src/lib/engine/overlays/ucs_mark/lc_ucs_mark.h
+		librecad/src/lib/engine/overlays/ucs_mark/lc_ucs_mark.cpp
+		librecad/src/ui/action_options/other/lc_ucssetoptions.h
+		librecad/src/ui/action_options/other/lc_ucssetoptions.cpp
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistwidget.h
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistoptions.h
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistoptions.cpp
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistmodel.h
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp
+		librecad/src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.h
+		librecad/src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.cpp
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistbutton.h
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistbutton.cpp
+		librecad/src/ui/components/status_bar/lc_ucsstatewidget.h
+		librecad/src/ui/components/status_bar/lc_ucsstatewidget.cpp
+		librecad/src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.h
+		librecad/src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

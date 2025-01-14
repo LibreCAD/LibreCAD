@@ -93,8 +93,18 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     bLockRelZero->setCheckable(true);
     connect(bLockRelZero, &QAction::triggered, actionHandler, &QG_ActionHandler::slotLockRelativeZero);
 
-    //restore snapMode from saved preferences
+    // fixme - sand - remove debug code
+  /*
+   * addSeparator();
 
+
+    QAction *ucsCreateAction = justAddAction("UCSCreate", actionsMap);
+    ucsCreateAction ->setCheckable(true);
+
+    ucsMode = justAddAction("UCSSetWCS", actionsMap);
+    connect(ucsMode, &QAction::triggered, actionHandler, &QG_ActionHandler::slotTMPFlipUCS);*/
+
+    //restore snapMode from saved preferences
     setSnaps( RS_SnapMode::fromInt(LC_GET_ONE_INT("Snap", "SnapMode", 0)));
 }
 
@@ -167,6 +177,11 @@ bool QG_SnapToolBar::lockedRelativeZero() const{
 void QG_SnapToolBar::setLockedRelativeZero(bool on){
     bLockRelZero->setChecked(on);
     bLockRelZero->setToolTip(tr("Relative zero position is %1").arg(on ? tr("locked") : tr("unlocked")));
+}
+
+void QG_SnapToolBar::setUCSActive(bool on){
+    ucsMode->setChecked(on);
+    ucsMode->setToolTip(tr("Coordinate system: %1").arg(on ? tr("User") : tr("World")));
 }
 
 /* Slots */

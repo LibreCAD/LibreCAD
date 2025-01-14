@@ -120,24 +120,26 @@ void LC_ActionDrawLineSnake::doPreparePreviewEntities([[maybe_unused]]QMouseEven
             break;
         case SetDistance: {
             switch (direction) {
-                case DIRECTION_X: // draw horizontal line, y-axis is fixed
-                    possibleEndPoint = RS_Vector(snap);
-                    possibleEndPoint.y = pPoints->data.startpoint.y;
-                    possibleEndPoint.x = snap.x;
+                case DIRECTION_X: {
+                    // draw horizontal line segment, y-axis is fixed
+                    possibleEndPoint = restrictHorizontal(pPoints->data.startpoint, snap);
                     directionName = tr("X");
                     break;
-                case DIRECTION_Y: // draw vertical line segment, x-axis is fixed
-                    possibleEndPoint = RS_Vector(snap);
-                    possibleEndPoint.x = pPoints->data.startpoint.x;
-                    possibleEndPoint.y = snap.y;
+                }
+                case DIRECTION_Y: {
+                    // draw vertical line segment, x-axis is fixed
+                    possibleEndPoint = restrictVertical(pPoints->data.startpoint, snap);
                     directionName = tr("Y");
                     break;
-                case DIRECTION_POINT: // free draw mode
+                }
+                case DIRECTION_POINT: { // free draw mode
                     possibleEndPoint = snap;
                     break;
-                case DIRECTION_ANGLE: // draw segment in direction defined by angle
+                }
+                case DIRECTION_ANGLE: {// draw segment in direction defined by angle
                     possibleEndPoint = calculateAngleEndpoint(snap);
                     break;
+                }
             }
             break;
         }
@@ -202,7 +204,8 @@ void LC_ActionDrawLineSnake::onCoordinateEvent(int status, [[maybe_unused]]bool 
             switch (direction) {
                 case DIRECTION_X: {
                     // draw horizontal segment, fix start point y coordinate
-                    RS_Vector possiblePoint(mouse.x, pPoints->data.startpoint.y);
+                    RS_Vector possiblePoint = restrictHorizontal(pPoints->data.startpoint, mouse);
+//                    RS_Vector possiblePoint(mouse.x, pPoints->data.startpoint.y);
                     if (isNonZeroLine(possiblePoint)){
                         pPoints->data.endpoint = possiblePoint;
                         completeLineSegment(false);
@@ -211,7 +214,8 @@ void LC_ActionDrawLineSnake::onCoordinateEvent(int status, [[maybe_unused]]bool 
                     break;
                 case DIRECTION_Y: {
                     // draw vertical segment, fix start point x coordinate
-                    RS_Vector possiblePoint(pPoints->data.startpoint.x, mouse.y);
+                    RS_Vector possiblePoint = restrictVertical(pPoints->data.startpoint, mouse);
+//                    RS_Vector possiblePoint(pPoints->data.startpoint.x, mouse.y);
                     if (isNonZeroLine(possiblePoint)){
                         pPoints->data.endpoint = possiblePoint;
                         completeLineSegment(false);
@@ -668,9 +672,13 @@ RS_Vector LC_ActionDrawLineSnake::calculateAngleEndpoint(const RS_Vector &snap){
     if (alternativeActionMode){
         angleToUse = 180-angle;
     }
+
+//    fixme - replace by   return LC_LineMath::calculateEndpointForAngleDirection(angleToUse,startpoint, snap);
     double angleRadians = RS_Math::deg2rad(angleToUse);
     RS_Vector infiniteTickStartPoint = pPoints->data.startpoint;
     double realAngle = defineActualSegmentAngle(angleRadians);
+
+    realAngle = toWorldAngle(realAngle);
 
     RS_Vector infiniteTickVector = RS_Vector::polar(10.0, realAngle);
     RS_Vector infiniteTickEndPoint = infiniteTickStartPoint + infiniteTickVector;

@@ -470,6 +470,9 @@ namespace RS2 {
         ActionPenCopy,
         ActionPenSyncFromLayer,
 
+
+        ActionUCSCreate,
+
         /** Needed to loop through all actions */
         ActionLast
     };
@@ -490,7 +493,7 @@ namespace RS2 {
     enum UpdateMode {
         NoUpdate,       /**< No automatic updates. */
         Update,         /**< Always update automatically when modified. */
-                PreviewUpdate   /**< Update automatically but only for previews (quick update) */
+        PreviewUpdate   /**< Update automatically but only for previews (quick update) */
     };
 
     /**
@@ -695,7 +698,8 @@ namespace RS2 {
     enum IsoGridViewType {
         IsoLeft,         /**< Left type isometric view */
         IsoTop,         /**< Top type isometric view */
-        IsoRight         /**< Right type isometric view */
+        IsoRight,       /**< Right type isometric view */
+        Ortho
     };
 
     enum CrossHairType{

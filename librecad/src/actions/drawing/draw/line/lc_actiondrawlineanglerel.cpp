@@ -237,10 +237,6 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vect
                 TickData* data = prepareLineData(line, tickSnapPosition, tickEnd, alternativeActionMode);
 
                 // create line and add it to preview
-                // todo - createLine()
-                /*auto *previewLine = new RS_Line{container, data->tickLineData};
-                list << previewLine;*/
-
                 auto * previewLine = createLine(data->tickLineData.startpoint, data->tickLineData.endpoint, list);
                 previewEntityToCreate(previewLine, false);
 
@@ -267,9 +263,6 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vect
             TickData* data = prepareLineData( tickData->line, tickData->tickSnapPosition, snap, alternativeActionMode);
 
             // create preview line
-            /*auto *previewLine = new RS_Line{container, data->tickLineData};
-            list<< previewLine;*/
-
             auto * previewLine = createLine(data->tickLineData.startpoint, data->tickLineData.endpoint, list);
             previewEntityToCreate(previewLine, false);
 
@@ -314,7 +307,7 @@ LC_ActionDrawLineAngleRel::TickData* LC_ActionDrawLineAngleRel::prepareLineData(
     double tickAngleRad = RS_Math::deg2rad(angle);
 
     // handle relative angle, if needed
-    double actualTickAngle = tickAngleRad;
+    double actualTickAngle = toWorldAngle(tickAngleRad);
     if (relativeAngle){
         actualTickAngle = actualTickAngle + targetLine->getTangentDirection(vp).angle();
     }
