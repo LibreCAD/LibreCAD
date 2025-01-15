@@ -233,7 +233,15 @@ void QG_Lsp_CommandEdit::processInput(QString input)
         return;
     }
 
-    static QRegularExpression lispRegex(QStringLiteral("[ \t]*[!(]"));
+    if (input == "help" ||
+        input == "copyright" ||
+        input == "credits" ||
+        input == "license")
+    {
+        input = "(" + input + ")";
+    }
+
+    static QRegularExpression lispRegex(QStringLiteral("[ \t]*[!(\"'`~:\^]|[ \t]*@[a-zA-Z_-]"));
     QRegularExpressionMatch lispCom = lispRegex.match(input);
 
     if (isAlias(qUtf8Printable(input)) || lispCom.hasMatch())

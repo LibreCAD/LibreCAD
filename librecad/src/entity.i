@@ -4,6 +4,7 @@
 %rename(__lshift__)           *::operator<<;
 %rename(__rshift__)           *::operator>>;
 %{
+
 /*
 #include "qversiontagging.h"
 #include "qglobal.h"
@@ -116,6 +117,14 @@
 
 %include "std_array.i"
 
+/*
+%typemap(out) std::vector<int,2> (PyObject* obj) %{
+    obj = PyList_New($1.size());
+    for(auto i = 0; i < $1.size(); ++i)
+        PyList_SET_ITEM(obj, i, PyLong_FromLong($1[i]));
+    $result = SWIG_Python_AppendOutput($result, obj);
+%}
+*/
 /*
 %include "QtCore/qglobal.h"
 %include "QtCore/qcompilerdetection.h"

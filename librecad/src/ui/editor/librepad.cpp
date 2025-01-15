@@ -180,8 +180,8 @@ void Librepad::enableIDETools()
         QStringList hist = lispTrace();
         if(hist.size())
         {
-            qDebug() << "[Librepad::enableIDETools] history size:" << hist.size();
-            qDebug() << "[Librepad::enableIDETools] history:" << hist;
+            //qDebug() << "[Librepad::enableIDETools] history size:" << hist.size();
+            //qDebug() << "[Librepad::enableIDETools] history:" << hist;
             m_debugCombo->setMaxCount(hist.size());
             m_debugCombo->addItems(hist);
         }
@@ -191,7 +191,6 @@ void Librepad::enableIDETools()
         m_debugCombo->setCurrentIndex(-1);
 
         ui->debugToolBar->insertWidget(ui->actionCleanTraceHistory, m_debugCombo);
-        ui->debugToolBar->hide();
         ui->debugToolBar->show();
 
         connect(m_debugCombo, &QComboBox::currentTextChanged, this, &Librepad::traceFuncChanged);
@@ -199,6 +198,10 @@ void Librepad::enableIDETools()
         connect(ui->actionTrace, &QAction::triggered, this, &Librepad::trace);
         connect(ui->actionUntrace, &QAction::triggered, this, &Librepad::untrace);
         connect(ui->actionCleanTraceHistory, &QAction::triggered, this, &Librepad::freeTraceHistory);
+    }
+    else
+    {
+        ui->debugToolBar->hide();
     }
 
     ui->buildToolBar->show();

@@ -35,6 +35,7 @@
 
 #include <QEventLoop>
 #include <QMessageBox>
+#include <QFile>
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QPainter>
@@ -2617,8 +2618,28 @@ BUILTIN("hash-map")
 
 BUILTIN("help")
 {
-    CHECK_ARGS_IS(0);
-    std::cout << "poor Help call 'SOS' :-b" << std::endl;
+    int args = CHECK_ARGS_BETWEEN(0, 1);
+
+    QDir directory(QDir::currentPath());
+    QString librebrowser = directory.absoluteFilePath("librebrowser");
+
+    if(QFile::exists(librebrowser))
+    {
+        if (args == 1)
+        {
+            ARG(lclString, str);
+            librebrowser += " '";
+            librebrowser += str->value().c_str();
+            librebrowser += "' &";
+        }
+        system(qUtf8Printable(librebrowser));
+    }
+    else
+    {
+        std::cout << "poor Help call 'SOS' :-b" << std::endl;
+        return lcl::nilValue();
+    }
+
     return lcl::nilValue();
 }
 
@@ -4844,7 +4865,7 @@ BUILTIN("vec")
 
 BUILTIN("vector")
 {
-    CHECK_ARGS_IS(0);
+    CHECK_ARGS_AT_LEAST(0);
     return lcl::vector(argsBegin, argsEnd);
 }
 

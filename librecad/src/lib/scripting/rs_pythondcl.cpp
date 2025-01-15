@@ -1,3 +1,29 @@
+/****************************************************************************
+**
+** This file is part of the LibreCAD project, a 2D CAD program
+**
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+**
+**
+** This file may be distributed and/or modified under the terms of the
+** GNU General Public License version 2 as published by the Free Software
+** Foundation and appearing in the file gpl-2.0.txt included in the
+** packaging of this file.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+**
+** This copyright notice MUST APPEAR in all copies of the script!
+**
+**********************************************************************/
+
 #include "rs_python.h"
 #include "rs_pythondcl.h"
 #include "rs_dialogs.h"
@@ -24,9 +50,9 @@ RS_PythonDcl::~RS_PythonDcl()
 {
 }
 
-int RS_PythonDcl::loadDialog(const char *fileName)
+int RS_PythonDcl::loadDialog(const char *filename)
 {
-    std::string path = fileName;
+    std::string path = filename;
     const std::filesystem::path p(path.c_str());
     if (!p.has_extension()) {
         path += ".dcl";
@@ -485,7 +511,7 @@ const char *RS_PythonDcl::getAttr(const char *key, const char *attr)
     return result.c_str();
 }
 
-bool RS_PythonDcl::modeTile(const char *key, int val)
+bool RS_PythonDcl::modeTile(const char *key, int mode)
 {
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
@@ -504,7 +530,7 @@ bool RS_PythonDcl::modeTile(const char *key, int val)
             {
                 qDebug() << "modeTile EDIT_BOX";
                 const lclEdit* e = static_cast<const lclEdit*>(tile);
-                switch (val)
+                switch (mode)
                 {
                     case 0:
                     {
@@ -535,7 +561,7 @@ bool RS_PythonDcl::modeTile(const char *key, int val)
             {
                 qDebug() << "modeTile LIST_BOX";
                 const lclListBox* e = static_cast<const lclListBox*>(tile);
-                switch (val)
+                switch (mode)
                 {
                     case 0:
                     {
@@ -566,7 +592,7 @@ bool RS_PythonDcl::modeTile(const char *key, int val)
             {
                 qDebug() << "modeTile BUTTON";
                 const lclButton* b = static_cast<const lclButton*>(tile);
-                switch (val)
+                switch (mode)
                 {
                     case 0:
                     {
@@ -592,7 +618,7 @@ bool RS_PythonDcl::modeTile(const char *key, int val)
             {
                 qDebug() << "modeTile RADIO_BUTTON";
                 const lclButton* rb = static_cast<const lclButton*>(tile);
-                switch (val)
+                switch (mode)
                 {
                     case 0:
                     {
@@ -618,7 +644,7 @@ bool RS_PythonDcl::modeTile(const char *key, int val)
             {
                 qDebug() << "modeTile TEXT";
                 const lclLabel* l = static_cast<const lclLabel*>(tile);
-                switch (val)
+                switch (mode)
                 {
                     case 0:
                     {
@@ -644,7 +670,7 @@ bool RS_PythonDcl::modeTile(const char *key, int val)
             {
                 qDebug() << "modeTile POPUP_LIST";
                 const lclPopupList* pl = static_cast<const lclPopupList*>(tile);
-                switch (val)
+                switch (mode)
                 {
                     case 0:
                     {
@@ -867,7 +893,7 @@ int RS_PythonDcl::dimyTile(const char *key)
     return 0;
 }
 
-int RS_PythonDcl::fillImage(int x1, int y1, int width, int height, int color)
+int RS_PythonDcl::fillImage(int x, int y, int width, int height, int color)
 {
     const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
@@ -885,14 +911,14 @@ int RS_PythonDcl::fillImage(int x1, int y1, int width, int height, int color)
                 case IMAGE:
                 {
                     const lclImage* img = static_cast<const lclImage*>(tile);
-                    img->image()->addRect(x1, y1, width, height, color);
+                    img->image()->addRect(x, y, width, height, color);
                     return color;
                 }
                     break;
                 case IMAGE_BUTTON:
                 {
                     const lclImageButton* img = static_cast<const lclImageButton*>(tile);
-                    img->button()->addRect(x1, y1, width, height, color);
+                    img->button()->addRect(x, y, width, height, color);
                     return color;
                 }
                     break;

@@ -188,6 +188,7 @@ static lclValuePtr readForm(Tokeniser& tokeniser)
 
     if (token == "(") {
         tokeniser.next();
+
         std::unique_ptr<lclValueVec> items(new lclValueVec);
         readList(tokeniser, items.get(), ")");
         return lcl::list(items.release());
@@ -204,6 +205,14 @@ static lclValuePtr readForm(Tokeniser& tokeniser)
         readList(tokeniser, &items, "}");
         return lcl::hash(items.begin(), items.end(), false);
     }
+
+    if (isLclAlias(token)) {
+        std::string com = lclCom(token);
+        std::unique_ptr<lclValueVec> items(new lclValueVec);
+        items->push_back(lcl::symbol(com.c_str()));
+        return lcl::list(items.release());
+    }
+
     return readAtom(tokeniser);
 }
 
@@ -279,9 +288,7 @@ static lclValuePtr readAtom(Tokeniser& tokeniser)
     if (token[0] == '!') {
         return lcl::symbol(token.erase(0, 1));
     }
-    if (isLclAlias(token)) {
-        return lcl::list(lcl::symbol(lclCom(token)));
-    }
+
     return lcl::symbol(token);
 }
 

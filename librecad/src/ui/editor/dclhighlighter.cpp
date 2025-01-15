@@ -117,7 +117,6 @@ DclHighlighter::DclHighlighter(QTextDocument *parent)
 
     valueFormat.setForeground(QColor(0, 87, 174));
     const QString valuePatterns[] = {
-        QStringLiteral("\\bnopos\\b"),
         QStringLiteral("\\bleft\\b"),
         QStringLiteral("\\bright\\b"),
         QStringLiteral("\\btop\\b"),

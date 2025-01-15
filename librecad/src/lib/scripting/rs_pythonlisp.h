@@ -12,10 +12,10 @@ public:
     ~RS_PythonLisp();
 
     int RunSimpleString(const char *cmd);
-    int RunSimpleFile(const char *fileName);
+    int RunSimpleFile(const char *filename);
 
     const char *EvalSimpleString(const char *cmd);
-    const char *EvalSimpleFile(const char *fileName);
+    const char *EvalSimpleFile(const char *filename);
 };
 
 //#endif // DEVELOPER
