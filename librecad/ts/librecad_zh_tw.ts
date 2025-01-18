@@ -53,12 +53,12 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="95"/>
         <source>Geometry</source>
-        <translation>圖形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="101"/>
         <source>Closed</source>
-        <translation type="unfinished">閉合的</translation>
+        <translation>閉合的</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="110"/>
@@ -113,7 +113,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="238"/>
         <source>Specify first point</source>
-        <translation type="unfinished">指定第一個點</translation>
+        <translation>指定第一個點</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="239"/>
@@ -123,7 +123,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="242"/>
         <source>Specify second point</source>
-        <translation type="unfinished">指定第二個點</translation>
+        <translation>指定第二個點</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="243"/>
@@ -142,7 +142,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="140"/>
         <source>Specify center</source>
-        <translation type="unfinished">指定中心</translation>
+        <translation>指定中心</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="145"/>
@@ -157,7 +157,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="199"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">無效的數值。請輸入 1..9999</translation>
+        <translation>無效的數值。請輸入 1..9999</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="202"/>
@@ -170,7 +170,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="251"/>
         <source>Specify first control point</source>
-        <translation type="unfinished">指定第一個控制點</translation>
+        <translation>指定第一個控制點</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="252"/>
@@ -180,7 +180,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="275"/>
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished">指定下一個控制點或 [%1]</translation>
+        <translation>指定下一個控制點或 [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="276"/>
@@ -191,7 +191,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="281"/>
         <source>Specify next control point</source>
-        <translation type="unfinished">指定下一個控制點</translation>
+        <translation>指定下一個控制點</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="334"/>
@@ -215,17 +215,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="53"/>
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished">平移視圖 (&amp;P)</translation>
+        <translation>縮放和平移(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="62"/>
         <source>Select Entity</source>
-        <translation type="unfinished">選取物件</translation>
+        <translation>選取物件</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="69"/>
         <source>Select Window</source>
-        <translation type="unfinished">框選</translation>
+        <translation>選擇窗口</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="76"/>
@@ -235,27 +235,27 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="83"/>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished">(取消)選擇輪廓(&amp;C)</translation>
+        <translation>(取消)選擇輪廓(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="90"/>
         <source>Select Intersected Entities</source>
-        <translation type="unfinished">選取交叉的物件</translation>
+        <translation>選取交叉的物件</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="97"/>
         <source>Deselect Intersected Entities</source>
-        <translation type="unfinished">取消選取交叉的物件</translation>
+        <translation>取消選取交叉的物件</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="104"/>
         <source>(De-)Select Layer</source>
-        <translation type="unfinished">(取消)選取圖層</translation>
+        <translation>(取消)選取圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="113"/>
         <source>&amp;Points</source>
-        <translation type="unfinished">點(&amp;P)</translation>
+        <translation>點(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="123"/>
@@ -286,47 +286,47 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="164"/>
         <source>&amp;Parallel</source>
-        <translation type="unfinished">平行線 (&amp;P)</translation>
+        <translation>平行線 (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="171"/>
         <source>Parallel through point</source>
-        <translation type="unfinished">通過一點的平行線</translation>
+        <translation>過指定點平行線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="178"/>
         <source>Rectangle</source>
-        <translation type="unfinished">矩形</translation>
+        <translation>矩形</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="185"/>
         <source>Bisector</source>
-        <translation type="unfinished">角平分線</translation>
+        <translation>角平分線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="192"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">切線 (P,C)</translation>
+        <translation>切線(點,圓)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="199"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">切線 (C,C)</translation>
+        <translation>切線(圓,圓)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="206"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished">正交切線 (&amp;O)</translation>
+        <translation>正交切線 (&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="213"/>
         <source>Orthogonal</source>
-        <translation type="unfinished">正交</translation>
+        <translation>正交</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="220"/>
         <source>Relative angle</source>
-        <translation type="unfinished">相對角度</translation>
+        <translation>相對角度</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="227"/>
@@ -336,7 +336,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="234"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation type="unfinished"></translation>
+        <translation>多邊形 (中心,相切)(&amp;Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="241"/>
@@ -351,7 +351,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="256"/>
         <source>Center, &amp;Radius</source>
-        <translation type="unfinished">圓心, 半徑(&amp;R)</translation>
+        <translation>圓心, 半徑(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="263"/>
@@ -372,12 +372,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="284"/>
         <location filename="../src/ui/lc_actionfactory.cpp" line="345"/>
         <source>&amp;Concentric</source>
-        <translation type="unfinished">同心 (&amp;C)</translation>
+        <translation>同心 (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="292"/>
         <source>Circle &amp;Inscribed</source>
-        <translation type="unfinished">內切圓 (&amp;I)</translation>
+        <translation>內切圓 (&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="299"/>
@@ -403,7 +403,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="329"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation type="unfinished">中心, 點, 角度(&amp;C)</translation>
+        <translation>中心, 點, 角度(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="337"/>
@@ -413,42 +413,42 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="353"/>
         <source>Arc &amp;Tangential</source>
-        <translation type="unfinished">相切圓弧(&amp;T)</translation>
+        <translation>相切圓弧(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="363"/>
         <source>&amp;Ellipse (Axis)</source>
-        <translation type="unfinished">橢圓形 (長短軸)(&amp;E)</translation>
+        <translation>橢圓(軸)(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="370"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation type="unfinished">橢圓弧 (長短軸)(&amp;A)</translation>
+        <translation>橢圓弧(軸)(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="377"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation type="unfinished">橢圓焦點及橢圓上一點 (&amp;F)</translation>
+        <translation>橢圓和焦點</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="384"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation type="unfinished">4點橢圓 (&amp;4)</translation>
+        <translation>4點橢圓 (&amp;4)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="391"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation type="unfinished">橢圓的中心和3點 (&amp;3)</translation>
+        <translation>橢圓的中心和3點 (&amp;3)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="398"/>
         <source>Ellipse &amp;Inscribed</source>
-        <translation type="unfinished">內切橢圓 (&amp;I)</translation>
+        <translation>內切橢圓 (&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="407"/>
         <source>&amp;Spline</source>
-        <translation type="unfinished">雲形線(&amp;S)</translation>
+        <translation>樣條線(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="414"/>
@@ -458,7 +458,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="423"/>
         <source>&amp;Polyline</source>
-        <translation type="unfinished">聚合線(&amp;P)</translation>
+        <translation>多段線(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="564"/>
@@ -559,27 +559,27 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="438"/>
         <source>A&amp;ppend node</source>
-        <translation type="unfinished">添加節點</translation>
+        <translation>添加節點</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="446"/>
         <source>&amp;Delete node</source>
-        <translation type="unfinished">刪除節點(&amp;D)</translation>
+        <translation>刪除節點(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="454"/>
         <source>Delete &amp;between two nodes</source>
-        <translation type="unfinished">刪除兩節點之間</translation>
+        <translation>刪除兩節點之間</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="462"/>
         <source>&amp;Trim segments</source>
-        <translation type="unfinished">修剪線段(&amp;T)</translation>
+        <translation>修剪線段(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="470"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="unfinished">創建等距的聚合線</translation>
+        <translation>建立等距多段線(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="477"/>
@@ -1765,7 +1765,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1626"/>
         <source>New document from template: </source>
-        <translation>從模版新建檔案</translation>
+        <translation>從模版新建檔案 </translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1674"/>
@@ -1866,7 +1866,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1790"/>
         <source>Warning: File already opened : </source>
-        <translation>警告：檔案已開啟：</translation>
+        <translation>警告：檔案已開啟： </translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2356"/>
@@ -1890,7 +1890,7 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1906"/>
         <source>Loaded document: </source>
-        <translation>載入的文件：</translation>
+        <translation>載入的文件： </translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1912"/>
@@ -1910,7 +1910,7 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="515"/>
         <source>Cannot save the file </source>
-        <translation>無法儲存檔案</translation>
+        <translation>無法儲存檔案 </translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="517"/>
@@ -4243,7 +4243,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>所有尺寸乘以此值</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;所有尺寸乘以此值&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1099"/>
@@ -4330,7 +4330,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1178"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>所有幾何尺寸乘以此值</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;所有幾何尺寸乘以此值&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1047"/>
@@ -4340,7 +4340,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>尺寸打勾大小。將它設置為0，將禁用的尺寸刻度。尺寸箭頭將不會被繪製, 如果啟用尺寸打勾。</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;尺寸打勾大小。將它設置為0，將禁用的尺寸刻度。尺寸箭頭將不會被繪製, 如果啟用尺寸打勾。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
@@ -5321,7 +5321,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="335"/>
         <source>Font:</source>
-        <translation>字形</translation>
+        <translation>字形:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="565"/>
