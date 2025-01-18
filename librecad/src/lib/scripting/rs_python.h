@@ -72,9 +72,9 @@ public:
     int runCommand(const QString& command, QString& buf_out, QString& buf_err);
     int runFileCmd(const QString& name, QString& buf_out, QString& buf_err);
     int runFile(const QString& name);
-    int evalString(const QString& command, QString& result);
-    int evalInteger(const QString& command, int& result);
-    int evalFloat(const QString& command, double& result);
+    int evalString(const QString& command, QString& buf_out, QString& buf_err);
+    int evalInteger(const QString& command, int& result, QString& buf_err);
+    int evalFloat(const QString& command, double& result, QString& buf_err);
     int evalVector(const QString& command, v3_t& vec);
     int runString(const QString& str);
     int fflush(const QString& stream);

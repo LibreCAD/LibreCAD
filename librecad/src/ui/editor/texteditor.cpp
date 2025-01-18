@@ -56,7 +56,7 @@ void TextEditor::keyPressEvent(QKeyEvent *event)
                 return;
             }
 
-            if(m_fileName.endsWith(".py") && text.at(pos-1) == ':')
+            if(m_fileName.endsWith(".py") && pos && text.at(pos-1) == ':')
             {
                 insertPlainText("    ");
             }
@@ -96,6 +96,7 @@ void TextEditor::keyPressEvent(QKeyEvent *event)
             {
                 for (auto& c : currentLine)
                 {
+                    qDebug() << "[TextEditor::keyPressEvent] char:" << c;
                     if (c == ' ')
                     {
                         insertPlainText(" ");
@@ -273,6 +274,8 @@ void TextEditor::saveFileContent(const QByteArray &fileContent, const QString &f
                 selectedFile.close();
                 setFirstSave(true);
                 m_fileName = fileName;
+                document()->setModified(false);
+                emit documentChanged();
                 reload();
             }
             else {

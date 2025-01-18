@@ -93,6 +93,7 @@ lclValuePtr lclEnv::get(const String& symbol)
     }
 #if 1
     LCL_FAIL("'%s' not found", symbol.c_str());
+    return lcl::nilValue();
 #else
     // std::cout << "'" << symbol << "' not found!" << std::endl;
     return lcl::nilValue();

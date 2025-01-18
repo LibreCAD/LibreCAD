@@ -54,14 +54,14 @@ public:
     int fillImage(int x, int y, int width, int height, int color);
     int vectorImage(int x1, int y1, int x2, int y2, int color);
 
-    const char *pixImage(int x1, int y1, int x2, int y2, const char *path);
-    const char *textImage(int x1, int y1, int x2, int y2, const char *text, int color);
+    const std::string pixImage(int x1, int y1, int x2, int y2, const char *path);
+    const std::string textImage(int x1, int y1, int x2, int y2, const char *text, int color);
 
-    const char *getTile(const char *key);
-    const char *getAttr(const char *key, const char *attr);
-    const char *startList(const char *key, int operation=-1, int index=-1);
-    const char *addList(const char *val);
-    const char *startImage(const char *key);
+    const std::string getTile(const char *key);
+    const std::string getAttr(const char *key, const char *attr);
+    const std::string startList(const char *key, int operation=-1, int index=-1);
+    const std::string addList(const char *val);
+    const std::string startImage(const char *key);
 };
 
 #endif // RS_PYTHONDCL_H

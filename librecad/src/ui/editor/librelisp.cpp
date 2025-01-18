@@ -124,7 +124,7 @@ void LibreLisp::loadScript()
         return;
     }
 
-    RS_LISP->runFile(fileName);
+    commandWidget->runFile(fileName);
 }
 
 void LibreLisp::cmdDock()

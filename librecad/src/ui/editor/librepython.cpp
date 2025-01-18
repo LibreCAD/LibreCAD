@@ -71,7 +71,7 @@ void LibrePython::loadScript()
     if (fileName.isEmpty())
         return;
 
-    RS_PYTHON->runFile(fileName);
+   commandWidget->runFile(fileName);
 }
 
 void LibrePython::cmdDock()

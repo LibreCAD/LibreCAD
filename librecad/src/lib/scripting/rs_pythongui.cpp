@@ -89,10 +89,9 @@ void RS_PythonGui::MessageBox(const char *msg)
     msgBox.exec();
 }
 
-const char *RS_PythonGui::OpenFileDialog(const char *title, const char *fileName, const char *fileExt)
+const std::string RS_PythonGui::OpenFileDialog(const char *title, const char *fileName, const char *fileExt)
 {
-    static std::string result = qUtf8Printable(QFileDialog::getOpenFileName(nullptr, QObject::tr(title), fileName, QObject::tr(fileExt)));
-    return result.c_str();
+    return QFileDialog::getOpenFileName(nullptr, QObject::tr(title), fileName, QObject::tr(fileExt)).toStdString();
 }
 
 int RS_PythonGui::GetIntDialog(const char *prompt)
@@ -113,18 +112,16 @@ double RS_PythonGui::GetDoubleDialog(const char *prompt)
             0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags(), 1);
 }
 
-const char *RS_PythonGui::GetStringDialog(const char *prompt)
+const std::string RS_PythonGui::GetStringDialog(const char *prompt)
 {
-    static std::string result = qUtf8Printable(
-        QInputDialog::getText(nullptr,
+    return QInputDialog::getText(nullptr,
             "LibreCAD",
             QObject::tr(prompt),
             //QLineEdit::EchoMode mode = QLineEdit::Normal, const QString &text = QString(), bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), Qt::InputMethodHints inputMethodHints = Qt::ImhNone)
-            QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone));
-    return result.c_str();
+            QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone).toStdString();
 }
 
-const char *RS_PythonGui::GetString(const char *msg)
+const std::string RS_PythonGui::getString(const char *msg)
 {
     QString result;
     QString prompt = QObject::tr(msg);
@@ -148,7 +145,7 @@ const char *RS_PythonGui::GetString(const char *msg)
                                   QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone);
     }
 
-    return qUtf8Printable(result);
+    return result.toStdString();
 }
 
 RS_Vector RS_PythonGui::getCorner(const char *msg, const RS_Vector &basePoint) const
@@ -597,7 +594,7 @@ char RS_PythonGui::ReadCharDialog()
     return RS_InputDialog::readChar();
 }
 
-const char *RS_PythonGui::getKword(const char *msg)
+const std::string RS_PythonGui::getKword(const char *msg)
 {
     const lclInteger* bit = VALUE_CAST(lclInteger, shadowEnv->get("initget_bit"));
     const lclString* pat = VALUE_CAST(lclString, shadowEnv->get("initget_string"));
@@ -627,7 +624,7 @@ const char *RS_PythonGui::getKword(const char *msg)
             for (auto &it : StringList) {
                 if (it == qUtf8Printable(result)) {
                     Py_CommandEdit->setPrompt(">>> ");
-                    static std::string res = qUtf8Printable(result);
+                    std::string res = qUtf8Printable(result);
                     return res.c_str();
                 }
             }
@@ -646,13 +643,15 @@ const char *RS_PythonGui::getKword(const char *msg)
                                            QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone
                                            );
 
-            for (auto &it : StringList) {
-                if (it == qUtf8Printable(result)) {
-                    static std::string res = qUtf8Printable(result);
-                    return res.c_str();
+            for (auto &it : StringList)
+            {
+                if (it == qUtf8Printable(result))
+                {
+                    return result.toStdString();
                 }
             }
-            if ((bit->value() & 1) != 1) {
+            if ((bit->value() & 1) != 1)
+            {
                 return "";
             }
         }

@@ -1,10 +1,16 @@
 #ifndef INCLUDE_VALIDATION_H
 #define INCLUDE_VALIDATION_H
 
+#include "lisp.h"
 #include "String.h"
+#include <iostream>
+
+//if (!(condition)) { try { throw STRF(__VA_ARGS__); } catch (const char* e) { std::cerr << e << std::endl; } } else { }
+//if (!(condition)) { throw STRF(__VA_ARGS__); } else { }
+
 
 #define LCL_CHECK(condition, ...)  \
-    if (!(condition)) { throw STRF(__VA_ARGS__); } else { }
+if (!(condition)) { try { lisp_error = 1; throw STRF(__VA_ARGS__); } catch (const char* e) { std::cerr << e << std::endl; } } else { }
 
 #define LCL_FAIL(...) LCL_CHECK(false, __VA_ARGS__)
 

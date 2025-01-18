@@ -73,8 +73,42 @@ RS_Lisp::~RS_Lisp()
  */
 int RS_Lisp::runFile(const QString& name)
 {
+#if 0
     //qDebug() << "[RS_Lisp::runFile]" << name;
     return LispRun_SimpleFile(qUtf8Printable(name));
+#endif
+    std::ostringstream lispErr;
+    // save pointer to old std::cout buffer
+    auto cout_buff = std::cout.rdbuf();
+    // substitute internal std::cout buffer with
+    std::cout.rdbuf(lispErr.rdbuf());
+
+    // now std::cout work with 'lispOut' buffer
+    lispErr << std::endl << "Traceback (most recent call last):" << std::endl << " " << QObject::tr("File").toStdString() << ": " << name.toStdString() << std::endl;
+    std::string lispValue = Lisp_EvalFile(qUtf8Printable(name));
+
+    std::cout.flush();
+
+    // go back to old buffer
+    std::cout.rdbuf(cout_buff);
+
+    // check for errors
+    if(Lisp_GetError())
+    {
+        Lisp_FreeError();
+
+        lispErr << lispValue;
+
+        QMessageBox msgBox;
+        msgBox.setWindowTitle(QObject::tr("Lisp Error!"));
+        msgBox.setText(QObject::tr("File: %1").arg(name));
+        msgBox.setDetailedText(lispErr.str().c_str());
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.setStyleSheet("QTextEdit{min-height: 240px;} QLabel{min-width: 240px;}");
+        msgBox.exec();
+        return -1;
+    }
+    return 0;
 }
 
 /**
@@ -100,6 +134,7 @@ std::string RS_Lisp::runCommand(const QString& command)
 
     // now std::cout work with 'lispOut' buffer
     std::string lispValue = Lisp_EvalString(command.toStdString());
+    Lisp_FreeError();
     std::cout.flush();
 
     // go back to old buffer
@@ -125,6 +160,7 @@ std::string RS_Lisp::runFileCmd(const QString& name)
 
     // now std::cout work with 'lispOut' buffer
     std::string lispValue = Lisp_EvalFile(qUtf8Printable(name));
+
     std::cout.flush();
 
     // go back to old buffer
@@ -132,6 +168,15 @@ std::string RS_Lisp::runFileCmd(const QString& name)
     // add Lisp exec value to Lisp prompt
     lispOut << lispValue;
     // print 'lispOut' content
+
+    if(Lisp_GetError())
+    {
+        Lisp_FreeError();
+
+        std::cout << QObject::tr("File").toStdString() << ": " << name.toStdString() << std::endl << lispOut.str() << std::endl;
+        return QObject::tr("File").toStdString() + ": " + name.toStdString() + "\n" + lispOut.str();
+    }
+
     std::cout << lispOut.str() << std::endl;
 
     return lispOut.str();

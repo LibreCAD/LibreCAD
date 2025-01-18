@@ -479,7 +479,6 @@ int RS_Python::runFileCmd(const QString& name, QString& buf_out, QString& buf_er
         emb::stderr_write_type write_err = [&buffer_err] (std::string s) { buffer_err += s; };
         emb::set_stderr(write_err);
 
-        //PyGILState_STATE gil_state = PyGILState_Ensure();
         //PyObject* pRes = PyRun_File(fp, qUtf8Printable(name), Py_file_input, pDict, pDict);
         //PyObject* pRes = PyRun_File(fp, qUtf8Printable(name), Py_file_input, PyDict_New(), PyDict_New());
         PyObject* pRes = PyRun_File(fp, qUtf8Printable(name), Py_file_input, Py_GlobalDict(), Py_GlobalDict());
@@ -493,19 +492,12 @@ int RS_Python::runFileCmd(const QString& name, QString& buf_out, QString& buf_er
             emb::reset_stdout();
             emb::reset_stderr();
 
-            QMessageBox msgBox;
-            msgBox.setWindowTitle(QObject::tr("Python Error!"));
-            msgBox.setText(QObject::tr("File: %1").arg(name));
-            msgBox.setDetailedText(buffer_err.c_str());
-            msgBox.setIcon(QMessageBox::Critical);
-
-            msgBox.exec();
-            qCritical() << buffer_err.c_str();
+            buf_err = buffer_err.c_str();
+            //qCritical() << buffer_err.c_str();
             return -1;
         }
         //Py_XDECREF(pDict);
         Py_XDECREF(pRes);
-        //PyGILState_Release(gil_state);
     }
 
     fclose(fp);
@@ -513,7 +505,7 @@ int RS_Python::runFileCmd(const QString& name, QString& buf_out, QString& buf_er
     buf_out = buffer_out.c_str();
     buf_err = buffer_err.c_str();
 
-    qInfo() << buffer_out.c_str();
+    //qInfo() << buffer_out.c_str();
 
     return 0;
 }
@@ -525,7 +517,6 @@ int RS_Python::runFile(const QString& name)
 {
     FILE *fp = fopen(qUtf8Printable(name), "r");
     if (!fp) {
-
         return -1;
     }
 
@@ -534,16 +525,35 @@ int RS_Python::runFile(const QString& name)
         return -1;
     }
 
-    PyObject* pRes = PyRun_File(fp, qUtf8Printable(name), Py_file_input, Py_GlobalDict(), Py_GlobalDict());
+    std::string buffer_err = QObject::tr("File").toStdString() + ": " + name.toStdString() + "\n";
+    {
+        // sys.stderr to custom handler
+        emb::stderr_write_type write_err = [&buffer_err] (std::string s) { buffer_err += s; };
+        emb::set_stderr(write_err);
 
-    if(!pRes) {
-        PyErr_Print();
-        PyErr_Clear(); //and clear them !
+        PyObject* pRes = PyRun_File(fp, qUtf8Printable(name), Py_file_input, Py_GlobalDict(), Py_GlobalDict());
+
+        if(PyErr_Occurred())
+        {
+            PyErr_Print();
+            PyErr_Clear();
+            emb::reset_stderr();
+
+            QMessageBox msgBox;
+            msgBox.setWindowTitle(QObject::tr("Python Error!"));
+            msgBox.setText(QObject::tr("File: %1").arg(name));
+            msgBox.setDetailedText(buffer_err.c_str());
+            msgBox.setIcon(QMessageBox::Critical);
+            msgBox.setStyleSheet("QTextEdit{min-height: 240px;} QLabel{min-width: 240px;}");
+            msgBox.exec();
+            return -1;
+        }
+
+        emb::reset_stderr();
+
+        Py_XDECREF(pRes);
         fclose(fp);
     }
-    Py_XDECREF(pRes);
-
-    fclose(fp);
 
     return 0;
 }
@@ -608,23 +618,7 @@ int RS_Python::runCommand(const QString& command, QString& buf_out, QString& buf
 
         PyCompilerFlags cf = { 0, PY_MINOR_VERSION };
         cf.cf_flags |= PyCF_IGNORE_COOKIE;
-#if 0
-        int ret = -1;
-        ret = PyRun_SimpleStringFlags(qUtf8Printable(command), &cf);
-        if (PyErr_Occurred())
-        {
-            PyErr_Print();
-            PyErr_Clear(); //and clear them !
-        }
 
-        emb::reset_stdout();
-        emb::reset_stderr();
-
-        buf_out = buffer_out.c_str();
-        buf_err = buffer_err.c_str();
-    }
-    return (ret != 0);
-#else
         // Compile as an expression
         //PyObject* pCode = Py_CompileStringExFlags(qUtf8Printable(command), "<string>", Py_eval_input, nullptr, -1);
         //PyObject* pCode = Py_CompileStringFlags(qUtf8Printable(command), "<string>", Py_eval_input, &cf);
@@ -647,9 +641,11 @@ int RS_Python::runCommand(const QString& command, QString& buf_out, QString& buf
         else
         {
             PyObject* pRes = PyEval_EvalCode(pCode, Py_GlobalDict(), Py_GlobalDict());
+
             //PyObject* pRes = PyEval_EvalCode(pCode, pDict, pDict);
             if (!pRes)
             {
+
                 qDebug() << "[RS_Python::runCommand] PyEval_EvalCode = NULL";
 
                 PyErr_Print();
@@ -664,13 +660,7 @@ int RS_Python::runCommand(const QString& command, QString& buf_out, QString& buf
 
                 return -1;
             }
-            if (PyErr_Occurred()) //-V560 is always false: PyErr_Occurred()
-            {
-                qDebug() << "[RS_Python::runCommand] PyEval_EvalCode PyErr_Occurred()";
 
-                PyErr_Print();
-                PyErr_Clear(); //and clear them !
-            }
             Py_XDECREF(pCode);
 
             if (pRes != Py_None)
@@ -688,8 +678,8 @@ int RS_Python::runCommand(const QString& command, QString& buf_out, QString& buf
             }
             Py_XDECREF(pRes);
         }
+
         //PyGILState_Release(gil_state);
-#endif
     }
     //Py_XDECREF(pDict);
 
@@ -699,47 +689,61 @@ int RS_Python::runCommand(const QString& command, QString& buf_out, QString& buf
     buf_out = buffer_out.c_str();
     buf_err = buffer_err.c_str();
 
-    qDebug() << "[RS_Python::runCommand] result:" << result;
+    //qDebug() << "[RS_Python::runCommand] result:" << result;
     return 0;
 }
 
 /**
  * run a simple py string with return value (string)
  */
-int RS_Python::evalString(const QString& command, QString& result)
+int RS_Python::evalString(const QString& command, QString& buf_out, QString& buf_err)
 {
-    PyObject *pRes = PyRun_String(command.toUtf8().constData(), Py_eval_input, Py_GlobalDict(), PyDict_New());
-    if (!pRes)
+    std::string buffer_err;
+    std::string buffer_out;
     {
-        PyErr_Print();
-        PyErr_Clear();
-        return -1;
-    }
+        // switch sys.stdout / sys.stderr to custom handler
+        emb::stdout_write_type write_out = [&buffer_out] (std::string s) { buffer_out += s; };
+        emb::set_stdout(write_out);
+        emb::stderr_write_type write_err = [&buffer_err] (std::string s) { buffer_err += s; };
+        emb::set_stderr(write_err);
 
-    if (PyErr_Occurred())
-    {
-        PyErr_Print();
-        PyErr_Clear();
-        Py_XDECREF(pRes);
-        return -1;
-    }
+        PyObject *pRes = PyRun_String(qUtf8Printable(command), Py_eval_input, Py_GlobalDict(), PyDict_New());
+        //PyObject *pRes = PyRun_String(command.toUtf8().constData(), Py_eval_input, Py_GlobalDict(), PyDict_New());
 
-    if (pRes == Py_None)
-    {
-        result = QString("None");
-        Py_XDECREF(pRes);
-        return 0;
-    }
+        if(PyErr_Occurred())
+        {
+            PyErr_Print();
+            PyErr_Clear();
+            emb::reset_stdout();
+            emb::reset_stderr();
+            buf_err = buffer_err.c_str();
+            return -1;
+        }
 
-    // check whether the object is already a unicode string
-    if(PyUnicode_Check(pRes))
-    {
-        result = QString::fromUtf8(PyUnicode_AsUTF8(pRes));
+        emb::reset_stdout();
+        emb::reset_stderr();
+
+        // check whether the object is already a unicode string
+        if(PyUnicode_Check(pRes))
+        {
+            buf_out = QString::fromUtf8(PyUnicode_AsUTF8(pRes));
+            Py_XDECREF(pRes);
+            return 0;
+        }
+
+        if (pRes == Py_None)
+        {
+            buf_out = buffer_out.c_str();
+            Py_XDECREF(pRes);
+            return 0;
+        }
+
+
+
+
+        buf_out = QStringLiteral("Traceback (most recent call last):\nFile \"<string>\", line 1, in <module>\nTypeError: value is not a String");
         Py_XDECREF(pRes);
-        return 0;
     }
-    result = QStringLiteral( "< conversion error >" );
-    Py_XDECREF(pRes);
 
     return -1;
 }
@@ -747,38 +751,39 @@ int RS_Python::evalString(const QString& command, QString& result)
 /**
  * run a simple py string with return value (long int)
  */
-int RS_Python::evalInteger(const QString& command, int& result)
+int RS_Python::evalInteger(const QString& command, int& result, QString& buf_err)
 {
-    PyObject *pRes = PyRun_String(command.toUtf8().constData(), Py_eval_input, Py_GlobalDict(), PyDict_New());
-    if (!pRes)
+    std::string buffer_err;
     {
-        PyErr_Print();
-        PyErr_Clear();
-        return -1;
-    }
+        // switch sys.stdout / sys.stderr to custom handler
+        emb::stderr_write_type write_err = [&buffer_err] (std::string s) { buffer_err += s; };
+        emb::set_stderr(write_err);
 
-    if (PyErr_Occurred())
-    {
-        PyErr_Print();
-        PyErr_Clear();
-        Py_XDECREF(pRes);
-        return -1;
-    }
+        PyObject *pRes = PyRun_String(qUtf8Printable(command), Py_eval_input, Py_GlobalDict(), PyDict_New());
+        //PyObject *pRes = PyRun_String(qUtf8Printable(command), Py_eval_input, Py_GlobalDict(), PyDict_New());
 
-    if (pRes == Py_None)
-    {
-        Py_XDECREF(pRes);
-        return -1;
-    }
+        if(PyErr_Occurred())
+        {
+            PyErr_Print();
+            PyErr_Clear();
+            emb::reset_stderr();
+            buf_err = buffer_err.c_str();
+            return -1;
+        }
 
-    // check whether the object is already a long
-    if(PyLong_Check(pRes))
-    {
-        result = PyLong_AsLong(pRes);
+        emb::reset_stderr();
+
+        // check whether the object is a long
+        if(PyLong_Check(pRes))
+        {
+            result = PyLong_AsLong(pRes);
+            Py_XDECREF(pRes);
+            return 0;
+        }
+
+        buf_err = QStringLiteral("Traceback (most recent call last):\nFile \"<string>\", line 1, in <module>\nTypeError: value is not an Integer");
         Py_XDECREF(pRes);
-        return 0;
     }
-    Py_XDECREF(pRes);
 
     return -1;
 }
@@ -786,38 +791,39 @@ int RS_Python::evalInteger(const QString& command, int& result)
 /**
  * run a simple py string with return value (float)
  */
-int RS_Python::evalFloat(const QString& command, double& result)
+int RS_Python::evalFloat(const QString& command, double& result, QString& buf_err)
 {
-    PyObject *pRes = PyRun_String(command.toUtf8().constData(), Py_eval_input, Py_GlobalDict(), PyDict_New());
-    if (!pRes)
+    std::string buffer_err;
     {
-        PyErr_Print();
-        PyErr_Clear();
-        return -1;
-    }
+        // switch sys.stdout / sys.stderr to custom handler
+        emb::stderr_write_type write_err = [&buffer_err] (std::string s) { buffer_err += s; };
+        emb::set_stderr(write_err);
 
-    if (PyErr_Occurred())
-    {
-        PyErr_Print();
-        PyErr_Clear();
-        Py_XDECREF(pRes);
-        return -1;
-    }
+        PyObject *pRes = PyRun_String(qUtf8Printable(command), Py_eval_input, Py_GlobalDict(), PyDict_New());
+        //PyObject *pRes = PyRun_String(qUtf8Printable(command), Py_eval_input, Py_GlobalDict(), PyDict_New());
 
-    if (pRes == Py_None)
-    {
-        Py_XDECREF(pRes);
-        return -1;
-    }
+        if(PyErr_Occurred())
+        {
+            PyErr_Print();
+            PyErr_Clear();
+            emb::reset_stderr();
+            buf_err = buffer_err.c_str();
+            return -1;
+        }
 
-    // check whether the object is already a long
-    if(PyFloat_Check(pRes))
-    {
-        result = PyFloat_AsDouble(pRes);
+        emb::reset_stderr();
+
+        // check whether the object is already a long
+        if(PyFloat_Check(pRes))
+        {
+            result = PyFloat_AsDouble(pRes);
+            Py_XDECREF(pRes);
+            return 0;
+        }
+
+        buf_err = QStringLiteral("Traceback (most recent call last):\nFile \"<string>\", line 1, in <module>\nTypeError: value is not a Float");
         Py_XDECREF(pRes);
-        return 0;
     }
-    Py_XDECREF(pRes);
 
     return -1;
 }
@@ -827,7 +833,7 @@ int RS_Python::evalFloat(const QString& command, double& result)
  */
 int RS_Python::evalVector(const QString& command, v3_t& vec)
 {
-    PyObject *pRes = PyRun_String(command.toUtf8().constData(), Py_eval_input, Py_GlobalDict(), PyDict_New());
+    PyObject *pRes = PyRun_String(qUtf8Printable(command), Py_eval_input, Py_GlobalDict(), PyDict_New());
     if (!pRes)
     {
         PyErr_Print();

@@ -55,10 +55,10 @@ public:
     double getOrient(const char *msg = "Enter a point: ", const RS_Vector &basePoint=RS_Vector(0, 0)) const;
 
     char ReadCharDialog();
-    const char *OpenFileDialog(const char *title, const char *fileName, const char *fileExt);
-    const char *GetStringDialog(const char *prompt);
-    const char *GetString(const char *msg = "Enter a text: ");
-    const char *getKword(const char *msg);
+    const std::string OpenFileDialog(const char *title, const char *fileName, const char *fileExt);
+    const std::string GetStringDialog(const char *prompt);
+    const std::string getString(const char *msg = "Enter a text: ");
+    const std::string getKword(const char *msg);
 
     RS_Vector getPoint(const char *msg = "Enter a point: ", const RS_Vector basePoint=RS_Vector()) const;
     RS_Vector getCorner(const char *msg = "Enter second corner: ", const RS_Vector &basePoint=RS_Vector(0, 0)) const;

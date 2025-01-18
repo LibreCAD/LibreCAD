@@ -241,7 +241,7 @@ void QG_Lsp_CommandEdit::processInput(QString input)
         input = "(" + input + ")";
     }
 
-    static QRegularExpression lispRegex(QStringLiteral("[ \t]*[!(\"'`~:\^]|[ \t]*@[a-zA-Z_-]"));
+    static QRegularExpression lispRegex(QStringLiteral("[ \t]*[!(\"'`~:^]|[ \t]*@[a-zA-Z_-]"));
     QRegularExpressionMatch lispCom = lispRegex.match(input);
 
     if (isAlias(qUtf8Printable(input)) || lispCom.hasMatch())
@@ -262,6 +262,7 @@ void QG_Lsp_CommandEdit::processInput(QString input)
     }
     else
     {
+        input.replace("pline", "polyline");
         // author: ravas
 
         // convert 10..0 to @10,0

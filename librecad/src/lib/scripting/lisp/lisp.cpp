@@ -50,6 +50,7 @@ static const char* lclEvalFunctionTable[MAX_FUNC] = {
 
 bool traceDebug = false;
 
+int lisp_error = 0;
 QG_Lsp_CommandEdit *Lisp_CommandEdit = nullptr;
 
 std::vector<const lclGui*> dclTiles(0);
@@ -76,42 +77,45 @@ const char *Lisp_GetVersion()
 int LispRun_SimpleString(const char *command)
 {
     String out = safeRep(command, replEnv);
-    if (out.length() > 0) {
+    if (out.length() > 0 && !lisp_error) {
         std::cout << out << std::endl;
         fflush(stdout);
         return EXIT_SUCCESS;
     }
+    lisp_error = 0;
     return EXIT_FAILURE;
 }
 
 int LispRun_SimpleFile(const char *filename)
 {
-    String out = safeRep(STRF("(load-file \"%s\")", filename), replEnv);
-    if (out.length() > 0) {
+    const String out = safeRep(STRF("(load-file \"%s\")", filename), replEnv);
+    if (out.length() > 0 && !lisp_error) {
         std::cout << out << std::endl;
         fflush(stdout);
         return EXIT_SUCCESS;
     }
+    lisp_error = 0;
     return EXIT_FAILURE;
 }
 
-std::string Lisp_EvalFile(const char *filename)
+const std::string Lisp_EvalFile(const char *filename)
 {
     return safeRep(STRF("(load-file \"%s\")", filename), replEnv);
 }
 
-std::string Lisp_EvalString(const String& input)
+const std::string Lisp_EvalString(const String& input)
 {
-#if 0
-    String out = lispOut.str();
-    qDebug() << "out: " << out.c_str();
-    out += safeRep(input, replEnv);
-    qDebug() << "out: " << out.c_str();
-    lispOut.str("");
-    return out;
-#else
     return safeRep(input.c_str(), replEnv);
-#endif
+}
+
+int Lisp_GetError()
+{
+    return lisp_error;
+}
+
+void Lisp_FreeError()
+{
+    lisp_error = 0;
 }
 
 int Lisp_Initialize(int argc, char* argv[])
@@ -557,6 +561,13 @@ lclValuePtr EVAL(lclValuePtr ast, lclEnvPtr env)
     catch(int)
     {
         qDebug() << "[EVAL] exit by user";
+        std::cerr << "[EVAL] exit by user" << std::endl;
+        return lcl::nilValue();
+    }
+
+    catch (const char* e)
+    {
+        std::cerr << e << std::endl;
         return lcl::nilValue();
     }
 }
@@ -623,6 +634,7 @@ static const char* lclFunctionTable[] = {
     "(defmacro! 2+ (fn* (zahl)(+ zahl 2)))",
     "(def! load-file (fn* (filename) \
         (eval (read-string (str \"(do \" (slurp filename) \"\nnil)\")))))",
+    "(defun *error* (msg) (princ \"error: \") (princ msg) (princ))",
     "(def! *host-language* \"C++\")",
     "(def! append concat)",
     "(def! length count)",

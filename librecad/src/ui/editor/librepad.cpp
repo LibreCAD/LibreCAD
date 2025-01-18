@@ -153,7 +153,7 @@ void Librepad::closeEvent(QCloseEvent *event)
             {
                 event->ignore();
                 ui->tabWidget->setCurrentWidget(editor);
-                editor->saveAs();
+                editor->save();
             }
             if (btn == QMessageBox::Cancel)
             {
@@ -311,6 +311,13 @@ void Librepad::slotTabClose(int index)
             {
                 ui->tabWidget->setCurrentWidget(editor());
                 editor()->saveAs();
+
+                connect(editor(), &TextEditor::documentChanged, this, [=]() {
+                    qDebug() << "[Librepad::slotTabClose::documentChanged] - start";
+                    m_fileName = editor()->path();
+                    writeRecentSettings(m_fileName);
+                    qDebug() << "[Librepad::slotTabClose::documentChanged] - end";
+                });
             }
         }
         ui->tabWidget->removeTab(index);
@@ -409,12 +416,14 @@ void Librepad::saveAs()
         editor()->saveAs();
 
         connect(editor(), &TextEditor::documentChanged, this, [=]() {
+            qDebug() << "[Librepad::saveAs::documentChanged] - start";
             m_fileName = editor()->path();
             writeRecentSettings(m_fileName);
             setWindowTitle(editorName() + " - [ " + editor()->fileName() + " ]");
             QMimeDatabase db;
             const QMimeType mimeType = db.mimeTypeForFile(editor()->fileName());
             ui->tabWidget->tabBar()->setTabIcon(ui->tabWidget->currentIndex(), QIcon::fromTheme(mimeType.iconName()));
+            qDebug() << "[Librepad::saveAs::documentChanged] - end";
         });
     }
 }
@@ -931,10 +940,29 @@ void Librepad::licence()
 
 void Librepad::help()
 {
-    QMessageBox::about(this,
-        editorName(),
-        QString("<b>Help</b>") + tr("<br>not implemented yet!</br><br>X-(</br>")
-    );
+    QDir directory(QDir::currentPath());
+    QString librebrowser = directory.absoluteFilePath("librebrowser");
+
+    if(QFile::exists(librebrowser))
+    {
+#if 0
+        if (args == 1)
+        {
+            librebrowser += " '";
+            librebrowser += str->value().c_str();
+            librebrowser += "' &";
+        }
+#endif
+        librebrowser += " 'developer' &";
+        system(qUtf8Printable(librebrowser));
+    }
+    else
+    {
+        QMessageBox::about(this,
+                           editorName(),
+                           QString("<b>Help</b>") + tr("<br>not implemented yet!</br><br>X-(</br>")
+                           );
+    }
 }
 
 void Librepad::message(const QString &msg)

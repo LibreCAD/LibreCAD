@@ -14,19 +14,24 @@
 
 #ifdef DEVELOPER
 
+extern int lisp_error;
 extern class QG_Lsp_CommandEdit *Lisp_CommandEdit;
 
 const char *Lisp_GetVersion();
 
 int Lisp_Initialize(int argc=0, char* argv[]=NULL);
 
+int Lisp_GetError();
+
+void Lisp_FreeError();
+
 int LispRun_SimpleFile(const char *filename);
 
 int LispRun_SimpleString(const char *command);
 
-std::string Lisp_EvalString(const String& input);
+const std::string Lisp_EvalString(const String& input);
 
-std::string Lisp_EvalFile(const char *filename);
+const std::string Lisp_EvalFile(const char *filename);
 
 #endif // DEVELOPER
 

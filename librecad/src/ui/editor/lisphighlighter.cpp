@@ -150,6 +150,13 @@ LispHighlighter::LispHighlighter(QTextDocument *parent)
         QStringLiteral("\\bprogn\\b"),
         QStringLiteral("\\bprompt\\b"),
         QStringLiteral("\\bpr-str\\b"),
+        QStringLiteral("\\bpy-eval-float\\b"),
+        QStringLiteral("\\bpy-eval-integer\\b"),
+        QStringLiteral("\\bpy-eval-string\\b"),
+        QStringLiteral("\\bpy-eval-value\\b"),
+        QStringLiteral("\\bpy-eval-vector\\b"),
+        QStringLiteral("\\bpy-simple-file\\b"),
+        QStringLiteral("\\bpy-simple-string\\b"),
         QStringLiteral("\\bquasiquote\\b"),
         QStringLiteral("\\bquote\\b"),
         QStringLiteral("\\brand\\b"),
@@ -250,7 +257,7 @@ LispHighlighter::LispHighlighter(QTextDocument *parent)
 
 //! [5]
     innerQuotationFormat.setForeground(QColor(146,76,157));
-    rule.pattern = QRegularExpression(QStringLiteral("(\\\\\")|(\\\\\')|(\\\\n)"));
+    rule.pattern = QRegularExpression(QStringLiteral("(\\\\\")|(\\\\\')|(\\\\[n|t|r])"));
     rule.format = innerQuotationFormat;
     highlightingRules.append(rule);
 

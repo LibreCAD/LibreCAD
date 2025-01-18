@@ -37,7 +37,7 @@
     if (!(condition)) { \
         printf("Assertion failed at %s(%d): ", file, line); \
         printf(__VA_ARGS__); \
-        exit(1); \
+        try { throw std::runtime_error(STRF(__VA_ARGS__)); } catch (const std::exception& e) { std::cerr << e.what() << std::endl; } \
     } else { }
 
 

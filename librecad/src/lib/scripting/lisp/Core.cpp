@@ -175,7 +175,19 @@ static StaticList<lclBuiltIn*> handlers;
         }
 
 #define BUILTIN_VAL(opr, checkDivByZero) \
-    CHECK_ARGS_AT_LEAST(2); \
+    int args = CHECK_ARGS_AT_LEAST(0); \
+    if (args == 0) { \
+        return lcl::integer(0); \
+    } \
+    if (args == 1) { \
+        if (FLOAT_PTR) { \
+            ADD_FLOAT_VAL(*floatValue) \
+            return lcl::ldouble(floatValue->value()); \
+        } else { \
+            ADD_INT_VAL(*intValue) \
+            return lcl::integer(intValue->value()); \
+        } \
+    } \
     if (ARGS_HAS_FLOAT) { \
         BUILTIN_FLOAT_VAL(opr, checkDivByZero) \
     } else { \
@@ -339,7 +351,14 @@ BUILTIN_IS("nil?",          nilValue);
 
 BUILTIN("-")
 {
-    if (CHECK_ARGS_AT_LEAST(1) == 1)
+    int args = CHECK_ARGS_AT_LEAST(0);
+
+    if (args == 0)
+    {
+        return lcl::integer(0);
+    }
+
+    if (args == 1)
     {
         if (FLOAT_PTR)
         {
@@ -352,10 +371,13 @@ BUILTIN("-")
             return lcl::integer(-lhs->value());
         }
     }
-    CHECK_ARGS_AT_LEAST(2);
-    if (ARGS_HAS_FLOAT) {
+
+    if (ARGS_HAS_FLOAT)
+    {
         BUILTIN_FLOAT_VAL(-, false);
-    } else {
+    }
+    else
+    {
         BUILTIN_INT_VAL(-, false);
     }
 }
@@ -2673,6 +2695,7 @@ BUILTIN("keyword")
     if (const lclString* s = DYNAMIC_CAST(lclString, arg))
       return lcl::keyword(":" + s->value());
     LCL_FAIL("keyword expects a keyword or string");
+    return lcl::nilValue();
 }
 
 BUILTIN("last")
@@ -4061,12 +4084,15 @@ BUILTIN("py-eval-float")
     CHECK_ARGS_IS(1);
     ARG(lclString, com);
     double result;
-    int err = RS_PYTHON->evalFloat(com->value().c_str(), result);
+    QString error;
+    int err = RS_PYTHON->evalFloat(com->value().c_str(), result, error);
     if (err == 0)
     {
         return lcl::ldouble(result);
     }
-    LCL_FAIL("'evalFloat' python failed");
+    std::cout << error.toStdString() << std::endl;
+    LCL_FAIL("'py-eval-float' exec python failed");
+    return lcl::nilValue();
 }
 
 BUILTIN("py-eval-integer")
@@ -4074,12 +4100,75 @@ BUILTIN("py-eval-integer")
     CHECK_ARGS_IS(1);
     ARG(lclString, com);
     int result;
-    int err = RS_PYTHON->evalInteger(com->value().c_str(), result);
+    QString error;
+    int err = RS_PYTHON->evalInteger(com->value().c_str(), result, error);
     if (err == 0)
     {
         return lcl::integer(result);
     }
-    LCL_FAIL("'evalInteger' python failed");
+    std::cout << error.toStdString() << std::endl;
+    LCL_FAIL("'py-eval-integer' exec python failed");
+     return lcl::nilValue();
+}
+
+BUILTIN("py-eval-string")
+{
+    CHECK_ARGS_IS(1);
+    ARG(lclString, com);
+    QString result;
+    QString error;
+    int err = RS_PYTHON->evalString(com->value().c_str(), result, error);
+    if (err == 0)
+    {
+        return lcl::string(result.toStdString());
+    }
+    std::cout << error.toStdString() << std::endl;
+    LCL_FAIL("'py-eval-string' exec python failed");
+    return lcl::nilValue();
+}
+
+BUILTIN("py-eval-value")
+{
+    CHECK_ARGS_IS(1);
+    bool is_map = false;
+    ARG(lclString, com);
+    QString result;
+    QString error;
+    std::string command = "print(";
+    command += com->value();
+    command += ")";
+    int err = RS_PYTHON->evalString(command.c_str(), result, error);
+
+    if (err == 0)
+    {
+        for (auto i = result.size()-1; i > 0; --i)
+        {
+            if (result.at(i) == ':')
+            {
+                is_map = true;
+                result.remove(i-1, 2);
+                continue;
+            }
+
+            if (is_map && result.at(i) == '\'')
+            {
+                is_map = false;
+                result.replace(i, 1, ":");
+            }
+        }
+
+        static QRegularExpression dq = QRegularExpression(QStringLiteral("[\"]"));
+        static QRegularExpression q = QRegularExpression(QStringLiteral("[']"));
+        static QRegularExpression rb = QRegularExpression(QStringLiteral("[(]"));
+        result.remove(',');
+        result.replace(dq, "\\\"");
+        result.replace(q, "\"");
+        result.replace(rb, "'(");
+        return EVAL(readStr(result.toStdString()), NULL);
+    }
+    std::cout << error.toStdString();
+    LCL_FAIL("'py-eval-value' exec python failed");
+    return lcl::nilValue();
 }
 
 BUILTIN("py-eval-vector")
@@ -4097,20 +4186,8 @@ BUILTIN("py-eval-vector")
         items->at(2) = lcl::ldouble(result.z);
         return lcl::list(items);
     }
-    LCL_FAIL("'evalVector' python failed");
-}
-
-BUILTIN("py-eval-string")
-{
-    CHECK_ARGS_IS(1);
-    ARG(lclString, com);
-    QString result;
-    int err = RS_PYTHON->evalString(com->value().c_str(), result);
-    if (err == 0)
-    {
-        return lcl::string(result.toStdString());
-    }
-    LCL_FAIL("'evalString' python failed");
+    LCL_FAIL("'py-eval-vector' exec python failed");
+    return lcl::nilValue();
 }
 
 BUILTIN("py-simple-string")
@@ -4293,6 +4370,7 @@ BUILTIN("seq")
         return lcl::list(items);
     }
     LCL_FAIL("'%s' is not a string or sequence", arg->print(true).c_str());
+    return lcl::nilValue();
 }
 
 BUILTIN("set_tile")

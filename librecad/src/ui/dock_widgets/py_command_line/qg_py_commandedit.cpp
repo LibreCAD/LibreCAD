@@ -324,13 +324,14 @@ void QG_Py_CommandEdit::runFile(const QString& path)
     QString buffer_out = "";
     QString buffer_err = "";
 
-    RS_PYTHON->runFileCmd(path, buffer_out, buffer_err);
-    if (buffer_out.compare("") != 0) {
+    if (!RS_PYTHON->runFileCmd(path, buffer_out, buffer_err))
+    {
         const QString out = buffer_out.remove(buffer_out.size()-1,1);
         emit message(out);
         qInfo() << qUtf8Printable(out);
     }
-    if (buffer_err.compare("") != 0) {
+    else
+    {
         const QString err = buffer_err.remove(buffer_err.size()-1,1);
         emit message(err);
         qInfo() << qUtf8Printable(err);

@@ -293,7 +293,7 @@ bool RS_PythonDcl::actionTile(const char *id, const char *action)
     return false;
 }
 
-const char *RS_PythonDcl::getTile(const char *key)
+const std::string RS_PythonDcl::getTile(const char *key)
 {
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
     static std::string result = "";
@@ -354,10 +354,10 @@ const char *RS_PythonDcl::getTile(const char *key)
             }
         }
     }
-    return result.c_str();
+    return result;
 }
 
-const char *RS_PythonDcl::getAttr(const char *key, const char *attr)
+const std::string RS_PythonDcl::getAttr(const char *key, const char *attr)
 {
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
     static std::string result = "";
@@ -508,7 +508,7 @@ const char *RS_PythonDcl::getAttr(const char *key, const char *attr)
             }
         }
     }
-    return result.c_str();
+    return result;
 }
 
 bool RS_PythonDcl::modeTile(const char *key, int mode)
@@ -701,7 +701,7 @@ bool RS_PythonDcl::modeTile(const char *key, int mode)
     return false;
 }
 
-const char *RS_PythonDcl::startList(const char *key, int operation, int index)
+const std::string RS_PythonDcl::startList(const char *key, int operation, int index)
 {
     //FIXME !env->find => ""
 
@@ -725,10 +725,10 @@ const char *RS_PythonDcl::startList(const char *key, int operation, int index)
 
     dclEnv->set("start_list_key", lcl::string(key));
 
-    return key;
+    return std::string(key);
 }
 
-const char *RS_PythonDcl::addList(const char *val)
+const std::string RS_PythonDcl::addList(const char *val)
 {
     const lclString  *key       = VALUE_CAST(lclString, dclEnv->get("start_list_key"));
     const lclInteger *operation = VALUE_CAST(lclInteger, dclEnv->get("start_list_operation"));
@@ -758,7 +758,7 @@ const char *RS_PythonDcl::addList(const char *val)
                         const lclInteger *index = VALUE_CAST(lclInteger, dclEnv->get("start_list_index"));
                         QListWidgetItem *item = lb->list()->item(index->value());
                         item->setText(val);
-                        return val;
+                        return std::string(val);
                     }
                     if(operation->value() == 3)
                     {
@@ -778,7 +778,7 @@ const char *RS_PythonDcl::addList(const char *val)
                                 lb->list()->setCurrentRow(i-1);
                             }
                         }
-                        return val;
+                        return std::string(val);
                     }
                 }
                 if (tile->value().id == POPUP_LIST)
@@ -793,7 +793,7 @@ const char *RS_PythonDcl::addList(const char *val)
                         }
                         const lclInteger *index = VALUE_CAST(lclInteger, dclEnv->get("start_list_index"));
                         pl->list()->setItemText(index->value(), val);
-                        return val;
+                        return std::string(val);
                     }
                     if(operation->value() == 3)
                     {
@@ -813,7 +813,7 @@ const char *RS_PythonDcl::addList(const char *val)
                                 pl->list()->setCurrentIndex(i-1);
                             }
                         }
-                        return val;
+                        return std::string(val);
                     }
                 }
             }
@@ -967,7 +967,7 @@ int RS_PythonDcl::vectorImage(int x1, int y1, int x2, int y2, int color)
     return -1;
 }
 
-const char *RS_PythonDcl::pixImage(int x1, int y1, int x2, int y2, const char *path)
+const std::string RS_PythonDcl::pixImage(int x1, int y1, int x2, int y2, const char *path)
 {
     const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
@@ -986,14 +986,14 @@ const char *RS_PythonDcl::pixImage(int x1, int y1, int x2, int y2, const char *p
                 {
                     const lclImage* img = static_cast<const lclImage*>(tile);
                     img->image()->addPicture(x1, y1, x2, y2, tile->value().aspect_ratio, path);
-                    return path;
+                    return std::string(path);
                 }
                     break;
                 case IMAGE_BUTTON:
                 {
                     const lclImageButton* img = static_cast<const lclImageButton*>(tile);
                     img->button()->addPicture(x1, y1, x2, y2, tile->value().aspect_ratio, path);
-                    return path;
+                    return std::string(path);
                 }
                     break;
                 default:
@@ -1004,7 +1004,7 @@ const char *RS_PythonDcl::pixImage(int x1, int y1, int x2, int y2, const char *p
     return "";
 }
 
-const char *RS_PythonDcl::textImage(int x1, int y1, int x2, int y2, const char *text, int color)
+const std::string RS_PythonDcl::textImage(int x1, int y1, int x2, int y2, const char *text, int color)
 {
     const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
@@ -1023,14 +1023,14 @@ const char *RS_PythonDcl::textImage(int x1, int y1, int x2, int y2, const char *
                 {
                     const lclImage* img = static_cast<const lclImage*>(tile);
                     img->image()->addText(x1, y1, x2, y2, text, color);
-                    return text;
+                    return std::string(text);
                 }
                 break;
                 case IMAGE_BUTTON:
                 {
                     const lclImageButton* img = static_cast<const lclImageButton*>(tile);
                     img->button()->addText(x1, y1, x2, y2, text, color);
-                    return text;
+                    return std::string(text);
                 }
                 break;
                 default:
@@ -1075,12 +1075,12 @@ void RS_PythonDcl::endImage()
     }
 }
 
-const char *RS_PythonDcl::startImage(const char *key)
+const std::string RS_PythonDcl::startImage(const char *key)
 {
 
     dclEnv->set("start_image_key", lcl::string(key));
 
-    return key;
+    return std::string(key);
 
     // FIXMI check if not in current
     //return lcl::nilValue();

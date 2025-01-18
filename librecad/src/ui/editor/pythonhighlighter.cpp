@@ -186,7 +186,7 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent)
         QStringLiteral("\\b.getOrient\\b"),
         QStringLiteral("\\b.getPoint\\b"),
         QStringLiteral("\\b.getReal\\b"),
-        QStringLiteral("\\b.GetString\\b"),
+        QStringLiteral("\\b.getString\\b"),
         QStringLiteral("\\b.getTile\\b"),
         QStringLiteral("\\b.GetIntDialog\\b"),
         QStringLiteral("\\b.GetDoubleDialog\\b"),

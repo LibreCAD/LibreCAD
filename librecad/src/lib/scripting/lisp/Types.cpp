@@ -365,6 +365,7 @@ static String makeHashKey(lclValuePtr key)
         return kkey->print(true);
     }
     LCL_FAIL("'%s' is not a string or keyword", key->print(true).c_str());
+    return "";
 }
 
 static lclHash::Map addToMap(lclHash::Map& map,

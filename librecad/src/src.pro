@@ -440,6 +440,7 @@ HEADERS += \
     lib/scripting/lisp/StaticList.h \
     lib/scripting/lisp/String.h \
     lib/scripting/lisp/Types.h \
+    lib/scripting/lisp/Validation.h \
     lib/scripting/rs_dialogs.h \
     lib/scripting/rs_lisp.h \
     lib/scripting/rs_lsp_inputhandle.h \
