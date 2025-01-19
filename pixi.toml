@@ -11,7 +11,9 @@ configure = {cmd = ["qmake6",
                     "OUTDIR=./build",
                     "INSTALL_PREFIX=$CONDA_PREFIX"]}
 build = {cmd = ["make", "-j4"], depends-on=["configure"]}
-install = {cmd = ["make", "install"], depends-on=["configure"]}
+
+[target.osx-arm64.tasks]
+install = {cmd = ["cp", "LibreCAD.app/Contents/MacOS/LibreCAD", "$CONDA_PREFIX/bin/librecad"]}
 
 [dependencies]
 qt6-main = ">=6.8.1,<7"
