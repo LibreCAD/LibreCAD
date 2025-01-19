@@ -89,10 +89,8 @@ void writeAliasFile(QFile& file,
         if (actionToMain.count(pairMain.second) == 0)
             actionToMain.emplace(pairMain.second, pairMain.first);
     for(auto const& pairShort: shortCommands)
-        if (actionToMain.count(pairShort.second) == 0)
+        if (actionToMain.count(pairShort.second) == 1)
             ts<<pairShort.first<<'\t'<<actionToMain.at(pairShort.second)<<'\n';
-
-    ts.flush();
 }
 }
 
