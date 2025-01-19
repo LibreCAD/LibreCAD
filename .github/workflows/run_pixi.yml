@@ -18,4 +18,4 @@ jobs:
       with:
         pixi-version: v0.40.2
         cache: true
-    - run: pixi run install
+    - run: pixi run build
