@@ -5,7 +5,7 @@ jobs:
   build_with_pixi:
     runs-on: ${{ matrix.os }}
     strategy:
-      max-parallel: 3
+      max-parallel: 4
       fail-fast: false
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest, macos-13]
