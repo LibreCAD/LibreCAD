@@ -279,8 +279,12 @@ std::map<QString, QString> RS_Commands::readAliasFile(QFile& aliasFile)
         if (actionAlias != action &&  actionAlias != RS2::ActionNone) {
             LC_ERR<<__func__<<"(): "<<QObject::tr("reusing an existing alias: was %1=%2, changed to %1=%3").arg(alias, m_actionToCommand.at(actionAlias), m_actionToCommand[action]);
         }
-
-        aliasList[alias] = m_actionToCommand[action];
+        if (alias != m_actionToCommand[action]) {
+            aliasList.emplace(alias, cmd);
+        } else {
+            // Do not override commands, but reusing aliases is allowed
+            LC_ERR<<__func__<<"(): "<<QObject::tr("cannot change meaning of commands. Refused to reuse command %1 to mean %2").arg(alias, cmd);
+        }
     }
     return aliasList;
 }
