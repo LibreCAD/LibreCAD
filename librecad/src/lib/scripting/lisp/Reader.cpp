@@ -252,7 +252,8 @@ static lclValuePtr readAtom(Tokeniser& tokeniser)
         { "REAL",       lcl::typeReal()    },
         { "STR",        lcl::typeString()  },
         { "VEC",        lcl::typeVector()  },
-        { "KEYW",       lcl::typeKeword()  }
+        { "KEYW",       lcl::typeKeword()  },
+        { "ENAME",      lcl::typeEname()  }
     };
 
     String token = tokeniser.next();

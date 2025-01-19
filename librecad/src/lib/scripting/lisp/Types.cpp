@@ -61,6 +61,8 @@ namespace lcl {
                 return typeVector();
             case LCLTYPE::KEYW:
                 return typeKeword();
+            case LCLTYPE::ENAME:
+                return typeEname();
             default:
                 return typeUndef();
         }
@@ -72,6 +74,10 @@ namespace lcl {
 
     lclValuePtr builtin(bool eval, const String& name) {
         return lclValuePtr(new lclBuiltIn(eval, name));
+    }
+
+    lclValuePtr ename(unsigned long int value) {
+        return lclValuePtr(new lclEname(value));
     }
 
     lclValuePtr falseValue() {
@@ -237,6 +243,11 @@ namespace lcl {
 
     lclValuePtr typeKeword() {
         static lclValuePtr c(new lclConstant("KEYW"));
+        return lclValuePtr(c);
+    }
+
+    lclValuePtr typeEname() {
+        static lclValuePtr c(new lclConstant("ENAME"));
         return lclValuePtr(c);
     }
 

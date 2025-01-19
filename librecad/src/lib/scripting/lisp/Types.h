@@ -36,7 +36,7 @@
 
 class lclEmptyInputException : public std::exception { };
 
-enum class LCLTYPE { ATOM, BUILTIN, BOOLEAN, FILE, GUI, INT, LIST, MAP, REAL, STR, SYM, UNDEF, VEC, KEYW };
+enum class LCLTYPE { ATOM, BUILTIN, BOOLEAN, FILE, GUI, INT, LIST, MAP, REAL, STR, SYM, UNDEF, VEC, KEYW, ENAME };
 
 #define MAX_DCL_TILES 35
 #define MAX_DCL_ATTR 35
@@ -167,6 +167,33 @@ public:
 
 private:
     const double m_value;
+};
+
+class lclEname : public lclValue {
+public:
+    lclEname(unsigned long int value) : m_value(value) { }
+    lclEname(const lclEname& that, lclValuePtr meta)
+        : lclValue(meta), m_value(that.m_value) { }
+
+    virtual String print(bool) const override {
+        String name = "<Entity name: ";
+        name += std::to_string(m_value);
+        name += ">";
+        return name;
+    }
+
+    virtual LCLTYPE type() const override { return LCLTYPE::ENAME; }
+
+    unsigned long int value() const { return m_value; }
+
+    virtual bool doIsEqualTo(const lclValue*) const override {
+        return false;
+    }
+
+    WITH_META(lclEname)
+
+private:
+    const unsigned long int m_value;
 };
 
 class lclFile : public lclValue {
@@ -1698,6 +1725,7 @@ namespace lcl {
     lclValuePtr boolean(bool value);
     lclValuePtr builtin(const String& name, lclBuiltIn::ApplyFunc handler);
     lclValuePtr builtin(bool eval, const String&);
+    lclValuePtr ename(unsigned long int value);
     lclValuePtr falseValue();
     lclValuePtr file(const char *path, const char &mode);
     lclValuePtr gui(const tile_t& tile);
@@ -1734,6 +1762,7 @@ namespace lcl {
     lclValuePtr typeUndef();
     lclValuePtr typeVector();
     lclValuePtr typeKeword();
+    lclValuePtr typeEname();
     lclValuePtr piValue();
     lclValuePtr vector(lclValueVec* items);
     lclValuePtr vector(lclValueIter begin, lclValueIter end);
