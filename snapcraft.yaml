@@ -147,6 +147,7 @@ parts:
       export SRC_DIR=../parts/librecad/build/
       echo $CRAFT_STAGE
       mkdir -p $CRAFT_STAGE/usr/bin
+      mkdir -p $CRAFT_STAGE/usr/share/icons
       mkdir -p $CRAFT_STAGE/usr/share/librecad/resources/qm
       mkdir -p $CRAFT_STAGE/usr/share/applications
       mkdir -p usr/bin
@@ -156,7 +157,9 @@ parts:
       cp -a $SRC_DIR/*.qm $CRAFT_STAGE/usr/share/librecad/resources/qm
       rsync -vaut ../librecad/support/* $CRAFT_STAGE/usr/share/librecad/resources/
       export DESKTOP_DIR=../parts/librecad/src/desktop
+      find ../CI -type f -name librecad.svg -exec cp -av '{}' $CRAFT_STAGE/usr/share/icons/ ';'
       cp -a $DESKTOP_DIR/*.desktop $CRAFT_STAGE/usr/share/applications/org.librecad.librecad.desktop
+      sed -i'' -e 's:^\s*Icon=.*$:Icon=/usr/share/icons/librecad.svg:' $CRAFT_STAGE/usr/share/applications/org.librecad.librecad.desktop
       cp -a $DESKTOP_DIR/org.librecad.*.xml $CRAFT_STAGE/usr/share/applications/org.librecad.librecad.xml
       craftctl default
     override-prime: |
