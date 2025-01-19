@@ -21,23 +21,23 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <QClipboard>
-#include <QUrl>
-#include <QStandardItemModel>
+#include <QDockWidget>
 #include <QListView>
+#include <QMenu>
+#include <QStandardItemModel>
 #if defined(Q_OS_LINUX)
 #include <QThread>
 #endif
-#include <QMenu>
-#include "rs_point.h"
-#include "rs_math.h"
-
-#include "lc_quickinfowidget.h"
-#include "ui_lc_quickinfowidget.h"
+#include <QUrl>
 
 #include "lc_flexlayout.h"
-#include "rs_dialogfactory.h"
+#include "lc_quickinfowidget.h"
 #include "lc_quickinfowidgetoptionsdialog.h"
+#include "rs_dialogfactory.h"
+#include "rs_math.h"
+#include "rs_point.h"
 #include "rs_settings.h"
+#include "ui_lc_quickinfowidget.h"
 
 // todo - discover generic way for reliable refresh of entity info widget if entity editing properties/attributes is performed outside of outside of widget
 // (via normal editing actions, mouse operations or custom actions)
@@ -69,13 +69,13 @@ LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *>
     connect(ui->tbEditProperties, &QToolButton::clicked, this, &LC_QuickInfoWidget::onEditEntityProperties);
     connect(ui->pteInfo, &QTextEdit::textChanged, this, &LC_QuickInfoWidget::onTextChanged);
     connect(ui->pteInfo, &QTextBrowser::anchorClicked, this, &LC_QuickInfoWidget::onAnchorClicked);
-    connect(ui->pteInfo, SIGNAL(highlighted(const QUrl&)), this, SLOT(onAnchorHighlighted(const QUrl&)));
+    connect(ui->pteInfo, &LC_PlainTextEdit::highlighted, this, &LC_QuickInfoWidget::onAnchorHighlighted);
     connect(ui->pteInfo, &LC_PlainTextEdit::unhighlighted, this, &LC_QuickInfoWidget::onAnchorUnHighlighted);
     connect(ui->pteInfo, &LC_PlainTextEdit::customContextMenuRequested, this, &LC_QuickInfoWidget::onViewContextMenu);
 
     // text editor setup
     ui->pteInfo->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->cbPointsCoordinatesMode, SIGNAL(currentIndexChanged(int)), this, SLOT(onCoordinateModeIndexChanged(int)));
+    connect(ui->cbPointsCoordinatesMode, &QComboBox::currentIndexChanged, this, &LC_QuickInfoWidget::onCoordinateModeIndexChanged);
     ui->pteInfo->setOpenLinks(false);
     ui->pteInfo->document()->setDefaultStyleSheet("a {text-decoration: none;} body {background-color: white;}");
 
@@ -470,7 +470,7 @@ void LC_QuickInfoWidget::processURLCommand(const QString &path, int index){
  * @return vector
  */
 RS_Vector LC_QuickInfoWidget::retrievePositionForModelIndex(int index) const{
-    auto data = RS_Vector(false);
+    auto data = RS_Vector{false};
     if (widgetMode == MODE_ENTITY_INFO){ // return entity property
         if (entityData.hasData()){
             data = entityData.getVectorForIndex(index);
@@ -643,17 +643,12 @@ void LC_QuickInfoWidget::onSelectEntity(){
  * @return
  */
 RS_Entity* LC_QuickInfoWidget::findEntityById(unsigned long entityId) const{
-    RS_Entity* foundEntity = nullptr;
     for (RS_Entity *e: *document) {
-        unsigned long eId = e->getId();
-        if (eId == entityId){
-            if (e->isVisible()){
-                foundEntity = e;
-                break;
-            }
+        if (e != nullptr && e->getId() == entityId && e->isVisible()){
+            return e;
         }
     }
-    return foundEntity;
+    return nullptr;
 }
 
 /**
@@ -708,12 +703,11 @@ void LC_QuickInfoWidget::setDocumentAndView(RS_Document *doc, QG_GraphicView* v)
 
     // add tracking of relative point for new view
     if (v != nullptr){
-        connect(v, SIGNAL(relative_zero_changed(const RS_Vector&)),
-                this, SLOT(onRelativeZeroChanged(const RS_Vector&)));
+        connect(v, &QG_GraphicView::relative_zero_changed, this, &LC_QuickInfoWidget::onRelativeZeroChanged);
     }
     // remove tracking of relative point from old view
     if (graphicView != nullptr && graphicView != v){
-        disconnect(graphicView, SIGNAL(relative_zero_changed(const RS_Vector&)), this,SLOT(onRelativeZeroChanged(const RS_Vector&)));
+        disconnect(graphicView, &QG_GraphicView::relative_zero_changed, this, &LC_QuickInfoWidget::onRelativeZeroChanged);
     }
     // do setup
     document = doc;

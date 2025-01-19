@@ -32,8 +32,8 @@ class LC_QuickInfoPointsData : public LC_QuickInfoBaseData
 
 public:
 
-    explicit LC_QuickInfoPointsData();
-    virtual ~LC_QuickInfoPointsData();
+    LC_QuickInfoPointsData();
+    ~LC_QuickInfoPointsData() override;
 
     /**
      * Holds information about collected coordinate
@@ -57,12 +57,18 @@ public:
     void clear() override;
     QString generateView(bool showDistanceAndAngle, bool forceUpdate = false);
     bool removeCoordinate(int index);
-    void setPointInsertionIndex(int index){collectedPointsInsertionIndex = index;};
+    void setPointInsertionIndex(int index)
+    {collectedPointsInsertionIndex = index;
+    }
     RS_Vector getVectorForIndex(int index) const override;
-    RS_Vector getCollectedCoordinate(int index) {return collectedPoints.at(index)->data;};
-    int getCollectedCoordinatesCount(){return collectedPoints.size();}
+    RS_Vector getCollectedCoordinate(int index) const {
+        return collectedPoints.at(index)->data;
+    }
+    int getCollectedCoordinatesCount() const {
+        return collectedPoints.size();
+    }
 
-    bool hasData() const override;;
+    bool hasData() const override;
 
 private:
     // index used for insertion of collected coordinates
