@@ -12252,7 +12252,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="150"/>
         <source>Invalid number of copies, use %1 </source>
-        <translation>无效副本数量， 实际使用 %1 </translation>
+        <translation>无效副本数量，实际使用 %1 </translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="170"/>
