@@ -30,16 +30,12 @@
 class LC_ReleaseChecker;
 
 class LC_TagInfo{
+    friend LC_ReleaseChecker;
+
 public:
     LC_TagInfo() = default;
-
     LC_TagInfo(int major, int minor, int revision, int bugfix, const QString &label, const QString &tagName);
 
-    LC_TagInfo(const LC_TagInfo &) = default;
-    LC_TagInfo(LC_TagInfo &&) noexcept = default;
-    LC_TagInfo& operator=(const LC_TagInfo &) = default;
-    LC_TagInfo& operator=(LC_TagInfo &&) noexcept = default;
-    ~LC_TagInfo() noexcept = default;
     bool isBefore(const LC_TagInfo& other) const;
     bool isSameVersion(const LC_TagInfo& other) const;
 
@@ -52,37 +48,43 @@ protected:
     int bugfix = 0;
     QString label = "";
     QString tagName = "";
-    friend LC_ReleaseChecker;
 };
 
 class LC_ReleaseInfo{
+    friend  LC_ReleaseChecker;
+
  public:
-    LC_ReleaseInfo() {valid = false;};
+    LC_ReleaseInfo() = default;
 
-    LC_ReleaseInfo(const LC_ReleaseInfo &) = default;
-    LC_ReleaseInfo(LC_ReleaseInfo &&) noexcept = default;
-    LC_ReleaseInfo& operator=(const LC_ReleaseInfo &) = default;
-    LC_ReleaseInfo& operator=(LC_ReleaseInfo &&) noexcept = default;
-    ~LC_ReleaseInfo() noexcept = default;
-
-    LC_ReleaseInfo(const QString &published, bool isDraft, bool isPreRelease, const QString &url, const QString &body){
-        draft = isDraft;
-        prerelease = isPreRelease;
-        htmlURL = url;
-        releaseNotes = body;
-        if (!published.isEmpty()) {
-            const QDateTime &dateTime = QDateTime::fromString(published, Qt::ISODate).toUTC();
-            publishedDate = dateTime;
-        }
-        valid = true;
+    LC_ReleaseInfo(const QString &published, bool isDraft, bool isPreRelease, const QString &url, const QString &body):
+        draft{isDraft}
+      , prerelease{isPreRelease}
+      , publishedDate{!published.isEmpty() ? QDateTime::fromString(published, Qt::ISODate).toUTC() : QDateTime{}}
+      , htmlURL{url}
+      , releaseNotes{body}
+      , valid{true}
+    {
     }
 
-    bool isAfter(LC_ReleaseInfo other){return publishedDate > other.publishedDate;}
-    const LC_TagInfo &getTagInfo() const {return tagInfo;}
-    void setTagInfo(const LC_TagInfo &tag) {tagInfo = tag;}
-    const QDateTime &getPublishedDate() const {return publishedDate;}
-    const QString &getHtmlUrl() const {return htmlURL;}
-    bool isValid() const {return valid;}
+   bool isAfter(LC_ReleaseInfo other) const {
+        return publishedDate > other.publishedDate;
+    }
+    const LC_TagInfo &getTagInfo() const {
+        return tagInfo;
+    }
+    void setTagInfo(const LC_TagInfo &tag) {
+        tagInfo = tag;
+    }
+    const QDateTime &getPublishedDate() const {
+        return publishedDate;
+    }
+    const QString &getHtmlUrl() const {
+        return htmlURL;
+    }
+    bool isValid() const {
+        return valid;
+    }
+
 protected:
     LC_TagInfo tagInfo;
     bool draft = true;
@@ -91,7 +93,6 @@ protected:
     QString htmlURL = "";
     QString releaseNotes = "";
     bool valid = false;
-    friend  LC_ReleaseChecker;
 };
 
 
@@ -118,9 +119,7 @@ protected slots:
     void infoReceived(QNetworkReply* pReply);
     void processReleasesJSON(const QByteArray &responseContent);
 
-    void sortReleasesInfo(QVector<LC_ReleaseInfo> &list) const ;
-
-
+    void sortReleasesInfo(QVector<LC_ReleaseInfo> &list) const;
 };
 
 #endif // LC_RELEASECHECKER_H

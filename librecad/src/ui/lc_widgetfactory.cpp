@@ -450,7 +450,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     quick_info_widget = new LC_QuickInfoWidget(dock_quick_info, ag_manager->getActionsMap());
     quick_info_widget->setFocusPolicy(Qt::NoFocus);
 //    quick_info_widget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    connect(quick_info_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
+    //connect(quick_info_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
 //    connect(main_window, SIGNAL(windowsChanged(bool)), quick_info_widget, SLOT(setEnabled(bool)));
     quick_info_widget->setVisible(false);
     dock_quick_info->setWidget(quick_info_widget);

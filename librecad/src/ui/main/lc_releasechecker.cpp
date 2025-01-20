@@ -20,13 +20,13 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
+#include <QFile>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QJsonArray>
-#include <QFile>
 #include "lc_releasechecker.h"
-#include "rs_debug.h"
 #include "main.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_settings.h"
 
