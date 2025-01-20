@@ -1504,6 +1504,13 @@ qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES ar ca cs da de el en_au en e
 qt_add_executable(librecad
 	${SOURCES})
 
+# add constants like M_PI to cmath
+if(WIN32)
+    target_compile_definitions(librecad PRIVATE _USE_MATH_DEFINES)
+endif(WIN32)
+
+
+
 #add_executable(LibreCAD ${SOURCES})
 target_link_libraries(librecad PRIVATE Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt::Network)
 
