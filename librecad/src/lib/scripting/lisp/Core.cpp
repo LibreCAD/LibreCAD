@@ -1294,81 +1294,83 @@ BUILTIN("entget")
         for (auto e: *entityContainer) {
             if (e->getId() == en->value())
             {
+                lclValueVec *entity = new lclValueVec;
+
+                lclValueVec *ename = new lclValueVec(3);
+                ename->at(0) = lcl::integer(-1);
+                ename->at(1) = lcl::symbol(".");
+                ename->at(2) = lcl::ename(en->value());
+
+                lclValueVec *ebname = new lclValueVec(3);
+                ebname->at(0) = lcl::integer(330);
+                ebname->at(1) = lcl::symbol(".");
+                ebname->at(2) = lcl::ename(en->value());
+
+                lclValueVec *handle = new lclValueVec(3);
+                handle->at(0) = lcl::integer(5);
+                handle->at(1) = lcl::symbol(".");
+                handle->at(2) = lcl::string("6A");
+
+                lclValueVec *acdb = new lclValueVec(3);
+                acdb->at(0) = lcl::integer(100);
+                acdb->at(1) = lcl::symbol(".");
+                acdb->at(2) = lcl::string("AcDbEntity");
+
+                lclValueVec *mspace = new lclValueVec(3);
+                mspace->at(0) = lcl::integer(67);
+                mspace->at(1) = lcl::symbol(".");
+                mspace->at(2) = lcl::integer(0);
+
+                lclValueVec *layoutTabName = new lclValueVec(3);
+                layoutTabName->at(0) = lcl::integer(100);
+                layoutTabName->at(1) = lcl::symbol(".");
+                layoutTabName->at(2) = lcl::string("Model");
+
+                lclValueVec *layer = new lclValueVec(3);
+                layer->at(0) = lcl::integer(8);
+                layer->at(1) = lcl::symbol(".");
+                layer->at(2) = lcl::string(e->getLayer()->getName().toStdString());
+
+                lclValueVec *extrDir = new lclValueVec(4);
+                extrDir->at(0) = lcl::integer(210);
+                extrDir->at(1) = lcl::ldouble(0.0);
+                extrDir->at(2) = lcl::ldouble(0.0);
+                extrDir->at(3) = lcl::ldouble(1.0);
+
                 switch (e->rtti())
                 {
                     case RS2::EntityPoint:
                     {
                         RS_Point* p = (RS_Point*)e;
-
-                        lclValueVec *ename = new lclValueVec(3);
-                        ename->at(0) = lcl::integer(-1);
-                        ename->at(1) = lcl::symbol(".");
-                        ename->at(2) = lcl::ename(en->value());
+                        entity->push_back(lcl::list(ename));
 
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
                         name->at(2) = lcl::string("POINT");
+                        entity->push_back(lcl::list(name));
 
-                        lclValueVec *ebname = new lclValueVec(3);
-                        ebname->at(0) = lcl::integer(330);
-                        ebname->at(1) = lcl::symbol(".");
-                        ebname->at(2) = lcl::ename(en->value());
-
-                        lclValueVec *handle = new lclValueVec(3);
-                        handle->at(0) = lcl::integer(5);
-                        handle->at(1) = lcl::symbol(".");
-                        handle->at(2) = lcl::string("6A");
-
-                        lclValueVec *acdb = new lclValueVec(3);
-                        acdb->at(0) = lcl::integer(100);
-                        acdb->at(1) = lcl::symbol(".");
-                        acdb->at(2) = lcl::string("AcDbEntity");
-
-                        lclValueVec *mspace = new lclValueVec(3);
-                        mspace->at(0) = lcl::integer(67);
-                        mspace->at(1) = lcl::symbol(".");
-                        mspace->at(2) = lcl::integer(0);
-
-                        lclValueVec *layoutTabName = new lclValueVec(3);
-                        layoutTabName->at(0) = lcl::integer(100);
-                        layoutTabName->at(1) = lcl::symbol(".");
-                        layoutTabName->at(2) = lcl::string("Model");
-
-                        lclValueVec *layer = new lclValueVec(3);
-                        layer->at(0) = lcl::integer(8);
-                        layer->at(1) = lcl::symbol(".");
-                        layer->at(2) = lcl::string(e->getLayer()->getName().toStdString());
+                        entity->push_back(lcl::list(ebname));
+                        entity->push_back(lcl::list(handle));
+                        entity->push_back(lcl::list(acdb));
+                        entity->push_back(lcl::list(mspace));
+                        entity->push_back(lcl::list(layoutTabName));
+                        entity->push_back(lcl::list(layer));
 
                         lclValueVec *acdbL = new lclValueVec(3);
                         acdbL->at(0) = lcl::integer(100);
                         acdbL->at(1) = lcl::symbol(".");
                         acdbL->at(2) = lcl::string("AcDbPoint");
+                        entity->push_back(lcl::list(acdbL));
 
                         lclValueVec *pnt = new lclValueVec(4);
                         pnt->at(0) = lcl::integer(10);
                         pnt->at(1) = lcl::ldouble(p->getPos().x);
                         pnt->at(2) = lcl::ldouble(p->getPos().y);
                         pnt->at(3) = lcl::ldouble(p->getPos().z);
+                        entity->push_back(lcl::list(pnt));
 
-                        lclValueVec *extrDir = new lclValueVec(4);
-                        extrDir->at(0) = lcl::integer(210);
-                        extrDir->at(1) = lcl::ldouble(0.0);
-                        extrDir->at(2) = lcl::ldouble(0.0);
-                        extrDir->at(3) = lcl::ldouble(1.0);
-
-                        lclValueVec *entity = new lclValueVec(11);
-                        entity->at(0) = lcl::list(ename);
-                        entity->at(1) = lcl::list(name);
-                        entity->at(2) = lcl::list(ebname);
-                        entity->at(3) = lcl::list(handle);
-                        entity->at(4) = lcl::list(acdb);
-                        entity->at(5) = lcl::list(mspace);
-                        entity->at(6) = lcl::list(layoutTabName);
-                        entity->at(7) = lcl::list(layer);
-                        entity->at(8) = lcl::list(acdbL);
-                        entity->at(9) = lcl::list(pnt);
-                        entity->at(10) = lcl::list(extrDir);
+                        entity->push_back(lcl::list(extrDir));
 
                         return lcl::list(entity);
                     }
@@ -1377,84 +1379,43 @@ BUILTIN("entget")
                     case RS2::EntityLine:
                     {
                         RS_Line* l = (RS_Line*)e;
-
-                        lclValueVec *ename = new lclValueVec(3);
-                        ename->at(0) = lcl::integer(-1);
-                        ename->at(1) = lcl::symbol(".");
-                        ename->at(2) = lcl::ename(en->value());
+                        entity->push_back(lcl::list(ename));
 
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
                         name->at(2) = lcl::string("LINE");
+                        entity->push_back(lcl::list(name));
 
-                        lclValueVec *ebname = new lclValueVec(3);
-                        ebname->at(0) = lcl::integer(330);
-                        ebname->at(1) = lcl::symbol(".");
-                        ebname->at(2) = lcl::ename(en->value());
-
-                        lclValueVec *handle = new lclValueVec(3);
-                        handle->at(0) = lcl::integer(5);
-                        handle->at(1) = lcl::symbol(".");
-                        handle->at(2) = lcl::string("6A");
-
-                        lclValueVec *acdb = new lclValueVec(3);
-                        acdb->at(0) = lcl::integer(100);
-                        acdb->at(1) = lcl::symbol(".");
-                        acdb->at(2) = lcl::string("AcDbEntity");
-
-                        lclValueVec *mspace = new lclValueVec(3);
-                        mspace->at(0) = lcl::integer(67);
-                        mspace->at(1) = lcl::symbol(".");
-                        mspace->at(2) = lcl::integer(0);
-
-                        lclValueVec *layoutTabName = new lclValueVec(3);
-                        layoutTabName->at(0) = lcl::integer(100);
-                        layoutTabName->at(1) = lcl::symbol(".");
-                        layoutTabName->at(2) = lcl::string("Model");
-
-                        lclValueVec *layer = new lclValueVec(3);
-                        layer->at(0) = lcl::integer(8);
-                        layer->at(1) = lcl::symbol(".");
-                        layer->at(2) = lcl::string(e->getLayer()->getName().toStdString());
-
+                        entity->push_back(lcl::list(ename));
+                        entity->push_back(lcl::list(ebname));
+                        entity->push_back(lcl::list(handle));
+                        entity->push_back(lcl::list(acdb));
+                        entity->push_back(lcl::list(mspace));
+                        entity->push_back(lcl::list(layoutTabName));
+                        entity->push_back(lcl::list(layer));
 
                         lclValueVec *acdbL = new lclValueVec(3);
                         acdbL->at(0) = lcl::integer(100);
                         acdbL->at(1) = lcl::symbol(".");
                         acdbL->at(2) = lcl::string("AcDbLine");
+                        entity->push_back(lcl::list(acdbL));
 
                         lclValueVec *startpnt = new lclValueVec(4);
                         startpnt->at(0) = lcl::integer(10);
                         startpnt->at(1) = lcl::ldouble(l->getStartpoint().x);
                         startpnt->at(2) = lcl::ldouble(l->getStartpoint().y);
                         startpnt->at(3) = lcl::ldouble(l->getStartpoint().z);
+                        entity->push_back(lcl::list(startpnt));
 
                         lclValueVec *endpnt = new lclValueVec(4);
                         endpnt->at(0) = lcl::integer(11);
                         endpnt->at(1) = lcl::ldouble(l->getEndpoint().x);
                         endpnt->at(2) = lcl::ldouble(l->getEndpoint().y);
                         endpnt->at(3) = lcl::ldouble(l->getEndpoint().z);
+                        entity->push_back(lcl::list(endpnt));
 
-                        lclValueVec *extrDir = new lclValueVec(4);
-                        extrDir->at(0) = lcl::integer(210);
-                        extrDir->at(1) = lcl::ldouble(0.0);
-                        extrDir->at(2) = lcl::ldouble(0.0);
-                        extrDir->at(3) = lcl::ldouble(1.0);
-
-                        lclValueVec *entity = new lclValueVec(12);
-                        entity->at(0) = lcl::list(ename);
-                        entity->at(1) = lcl::list(name);
-                        entity->at(2) = lcl::list(ebname);
-                        entity->at(3) = lcl::list(handle);
-                        entity->at(4) = lcl::list(acdb);
-                        entity->at(5) = lcl::list(mspace);
-                        entity->at(6) = lcl::list(layoutTabName);
-                        entity->at(7) = lcl::list(layer);
-                        entity->at(8) = lcl::list(acdbL);
-                        entity->at(9) = lcl::list(startpnt);
-                        entity->at(10) = lcl::list(endpnt);
-                        entity->at(11) = lcl::list(extrDir);
+                        entity->push_back(lcl::list(extrDir));
 
                         return lcl::list(entity);
                     }
@@ -1464,103 +1425,59 @@ BUILTIN("entget")
                     {
 
                         RS_Arc* a = (RS_Arc*)e;
+                        entity->push_back(lcl::list(ename));
 #if 0
-                        a->getCenter();
-                        a->getRadius();
-                        a->getAngle1();
-                        a->getAngle2();
                         a->getStartpoint();
                         a->getEndpoint();
                         (int)a->isReversed();
 #endif
 
-                        lclValueVec *ename = new lclValueVec(3);
-                        ename->at(0) = lcl::integer(-1);
-                        ename->at(1) = lcl::symbol(".");
-                        ename->at(2) = lcl::ename(en->value());
-
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
                         name->at(2) = lcl::string("ARC");
+                        entity->push_back(lcl::list(name));
 
-                        lclValueVec *ebname = new lclValueVec(3);
-                        ebname->at(0) = lcl::integer(330);
-                        ebname->at(1) = lcl::symbol(".");
-                        ebname->at(2) = lcl::ename(en->value());
-
-                        lclValueVec *handle = new lclValueVec(3);
-                        handle->at(0) = lcl::integer(5);
-                        handle->at(1) = lcl::symbol(".");
-                        handle->at(2) = lcl::string("6A");
-
-                        lclValueVec *acdb = new lclValueVec(3);
-                        acdb->at(0) = lcl::integer(100);
-                        acdb->at(1) = lcl::symbol(".");
-                        acdb->at(2) = lcl::string("AcDbEntity");
-
-                        lclValueVec *mspace = new lclValueVec(3);
-                        mspace->at(0) = lcl::integer(67);
-                        mspace->at(1) = lcl::symbol(".");
-                        mspace->at(2) = lcl::integer(0);
-
-                        lclValueVec *layoutTabName = new lclValueVec(3);
-                        layoutTabName->at(0) = lcl::integer(100);
-                        layoutTabName->at(1) = lcl::symbol(".");
-                        layoutTabName->at(2) = lcl::string("Model");
-
-                        lclValueVec *layer = new lclValueVec(3);
-                        layer->at(0) = lcl::integer(8);
-                        layer->at(1) = lcl::symbol(".");
-                        layer->at(2) = lcl::string(e->getLayer()->getName().toStdString());
+                        entity->push_back(lcl::list(ename));
+                        entity->push_back(lcl::list(ebname));
+                        entity->push_back(lcl::list(handle));
+                        entity->push_back(lcl::list(acdb));
+                        entity->push_back(lcl::list(mspace));
+                        entity->push_back(lcl::list(layoutTabName));
+                        entity->push_back(lcl::list(layer));
 
                         lclValueVec *acdbL = new lclValueVec(3);
                         acdbL->at(0) = lcl::integer(100);
                         acdbL->at(1) = lcl::symbol(".");
                         acdbL->at(2) = lcl::string("AcDbArc");
+                        entity->push_back(lcl::list(acdbL));
 
                         lclValueVec *center = new lclValueVec(4);
                         center->at(0) = lcl::integer(10);
                         center->at(1) = lcl::ldouble(a->getCenter().x);
                         center->at(2) = lcl::ldouble(a->getCenter().y);
                         center->at(3) = lcl::ldouble(a->getCenter().z);
+                        entity->push_back(lcl::list(center));
 
                         lclValueVec *radius = new lclValueVec(3);
                         radius->at(0) = lcl::integer(40);
                         radius->at(1) = lcl::symbol(".");
                         radius->at(2) = lcl::ldouble(a->getRadius());
+                        entity->push_back(lcl::list(radius));
 
                         lclValueVec *startAngle = new lclValueVec(3);
                         startAngle->at(0) = lcl::integer(50);
                         startAngle->at(1) = lcl::symbol(".");
                         startAngle->at(2) = lcl::ldouble(a->getAngle1());
+                        entity->push_back(lcl::list(startAngle));
 
                         lclValueVec *endAngle = new lclValueVec(3);
                         endAngle->at(0) = lcl::integer(51);
                         endAngle->at(1) = lcl::symbol(".");
                         endAngle->at(2) = lcl::ldouble(a->getAngle2());
+                        entity->push_back(lcl::list(endAngle));
 
-                        lclValueVec *extrDir = new lclValueVec(4);
-                        extrDir->at(0) = lcl::integer(210);
-                        extrDir->at(1) = lcl::ldouble(0.0);
-                        extrDir->at(2) = lcl::ldouble(0.0);
-                        extrDir->at(3) = lcl::ldouble(1.0);
-
-                        lclValueVec *entity = new lclValueVec(14);
-                        entity->at(0) = lcl::list(ename);
-                        entity->at(1) = lcl::list(name);
-                        entity->at(2) = lcl::list(ebname);
-                        entity->at(3) = lcl::list(handle);
-                        entity->at(4) = lcl::list(acdb);
-                        entity->at(5) = lcl::list(mspace);
-                        entity->at(6) = lcl::list(layoutTabName);
-                        entity->at(7) = lcl::list(layer);
-                        entity->at(8) = lcl::list(acdbL);
-                        entity->at(9) = lcl::list(center);
-                        entity->at(10) = lcl::list(radius);
-                        entity->at(11) = lcl::list(startAngle);
-                        entity->at(12) = lcl::list(endAngle);
-                        entity->at(13) = lcl::list(extrDir);
+                        entity->push_back(lcl::list(extrDir));
 
                         return lcl::list(entity);
                     }
@@ -1569,82 +1486,42 @@ BUILTIN("entget")
                     case RS2::EntityCircle:
                     {
                         RS_Circle* c = (RS_Circle*)e;
-
-                        lclValueVec *ename = new lclValueVec(3);
-                        ename->at(0) = lcl::integer(-1);
-                        ename->at(1) = lcl::symbol(".");
-                        ename->at(2) = lcl::ename(en->value());
+                        entity->push_back(lcl::list(ename));
 
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
                         name->at(2) = lcl::string("CIRCLE");
+                        entity->push_back(lcl::list(name));
 
-                        lclValueVec *ebname = new lclValueVec(3);
-                        ebname->at(0) = lcl::integer(330);
-                        ebname->at(1) = lcl::symbol(".");
-                        ebname->at(2) = lcl::ename(en->value());
-
-                        lclValueVec *handle = new lclValueVec(3);
-                        handle->at(0) = lcl::integer(5);
-                        handle->at(1) = lcl::symbol(".");
-                        handle->at(2) = lcl::string("6A");
-
-                        lclValueVec *acdb = new lclValueVec(3);
-                        acdb->at(0) = lcl::integer(100);
-                        acdb->at(1) = lcl::symbol(".");
-                        acdb->at(2) = lcl::string("AcDbEntity");
-
-                        lclValueVec *mspace = new lclValueVec(3);
-                        mspace->at(0) = lcl::integer(67);
-                        mspace->at(1) = lcl::symbol(".");
-                        mspace->at(2) = lcl::integer(0);
-
-                        lclValueVec *layoutTabName = new lclValueVec(3);
-                        layoutTabName->at(0) = lcl::integer(100);
-                        layoutTabName->at(1) = lcl::symbol(".");
-                        layoutTabName->at(2) = lcl::string("Model");
-
-                        lclValueVec *layer = new lclValueVec(3);
-                        layer->at(0) = lcl::integer(8);
-                        layer->at(1) = lcl::symbol(".");
-                        layer->at(2) = lcl::string(e->getLayer()->getName().toStdString());
+                        entity->push_back(lcl::list(ename));
+                        entity->push_back(lcl::list(ebname));
+                        entity->push_back(lcl::list(handle));
+                        entity->push_back(lcl::list(acdb));
+                        entity->push_back(lcl::list(mspace));
+                        entity->push_back(lcl::list(layoutTabName));
+                        entity->push_back(lcl::list(layer));
 
                         lclValueVec *acdbL = new lclValueVec(3);
                         acdbL->at(0) = lcl::integer(100);
                         acdbL->at(1) = lcl::symbol(".");
                         acdbL->at(2) = lcl::string("AcDbCircle");
+                        entity->push_back(lcl::list(acdbL));
 
                         lclValueVec *center = new lclValueVec(4);
                         center->at(0) = lcl::integer(10);
                         center->at(1) = lcl::ldouble(c->getCenter().x);
                         center->at(2) = lcl::ldouble(c->getCenter().y);
                         center->at(3) = lcl::ldouble(c->getCenter().z);
+                        entity->push_back(lcl::list(center));
 
                         lclValueVec *radius = new lclValueVec(3);
                         radius->at(0) = lcl::integer(40);
                         radius->at(1) = lcl::symbol(".");
                         radius->at(2) = lcl::ldouble(c->getRadius());
+                        entity->push_back(lcl::list(radius));
 
-                        lclValueVec *extrDir = new lclValueVec(4);
-                        extrDir->at(0) = lcl::integer(210);
-                        extrDir->at(1) = lcl::ldouble(0.0);
-                        extrDir->at(2) = lcl::ldouble(0.0);
-                        extrDir->at(3) = lcl::ldouble(1.0);
-
-                        lclValueVec *entity = new lclValueVec(12);
-                        entity->at(0) = lcl::list(ename);
-                        entity->at(1) = lcl::list(name);
-                        entity->at(2) = lcl::list(ebname);
-                        entity->at(3) = lcl::list(handle);
-                        entity->at(4) = lcl::list(acdb);
-                        entity->at(5) = lcl::list(mspace);
-                        entity->at(6) = lcl::list(layoutTabName);
-                        entity->at(7) = lcl::list(layer);
-                        entity->at(8) = lcl::list(acdbL);
-                        entity->at(9) = lcl::list(center);
-                        entity->at(10) = lcl::list(radius);
-                        entity->at(11) = lcl::list(extrDir);
+                        entity->push_back(lcl::list(extrDir));
 
                         return lcl::list(entity);
                     }
@@ -1697,11 +1574,69 @@ BUILTIN("entget")
 
                     case RS2::EntityText:
                     {
-#if 0
                         RS_Text* t = (RS_Text*)e;
-                        t->getText().toLatin1().data();
-                        t->getHeight();
-#endif
+                        entity->push_back(lcl::list(ename));
+
+                        lclValueVec *name = new lclValueVec(3);
+                        name->at(0) = lcl::integer(0);
+                        name->at(1) = lcl::symbol(".");
+                        name->at(2) = lcl::string("TEXT");
+                        entity->push_back(lcl::list(name));
+
+                        entity->push_back(lcl::list(ename));
+                        entity->push_back(lcl::list(ebname));
+                        entity->push_back(lcl::list(handle));
+                        entity->push_back(lcl::list(acdb));
+                        entity->push_back(lcl::list(mspace));
+                        entity->push_back(lcl::list(layoutTabName));
+                        entity->push_back(lcl::list(layer));
+
+                        lclValueVec *acdbL = new lclValueVec(3);
+                        acdbL->at(0) = lcl::integer(100);
+                        acdbL->at(1) = lcl::symbol(".");
+                        acdbL->at(2) = lcl::string("AcDbText");
+                        entity->push_back(lcl::list(acdbL));
+
+                        lclValueVec *pnt = new lclValueVec(4);
+                        pnt->at(0) = lcl::integer(10);
+                        pnt->at(1) = lcl::ldouble(t->getInsertionPoint().x);
+                        pnt->at(2) = lcl::ldouble(t->getInsertionPoint().y);
+                        pnt->at(3) = lcl::ldouble(t->getInsertionPoint().z);
+                        entity->push_back(lcl::list(pnt));
+
+                        lclValueVec *height = new lclValueVec(3);
+                        height->at(0) = lcl::integer(40);
+                        height->at(1) = lcl::symbol(".");
+                        height->at(2) = lcl::ldouble(t->getHeight());
+                        entity->push_back(lcl::list(height));
+
+                        lclValueVec *text = new lclValueVec(3);
+                        text->at(0) = lcl::integer(1);
+                        text->at(1) = lcl::symbol(".");
+                        text->at(2) = lcl::string(qUtf8Printable(t->getText()));
+                        entity->push_back(lcl::list(text));
+
+                        if (t->getAngle() != 0.0)
+                        {
+                            lclValueVec *angle = new lclValueVec(3);
+                            angle->at(0) = lcl::integer(50);
+                            angle->at(1) = lcl::symbol(".");
+                            angle->at(2) = lcl::ldouble(t->getAngle());
+                            entity->push_back(lcl::list(angle));
+                        }
+
+                        if (t->getStyle() != "STANDARD")
+                        {
+                            lclValueVec *style = new lclValueVec(3);
+                            style->at(0) = lcl::integer(50);
+                            style->at(1) = lcl::symbol(".");
+                            style->at(2) = lcl::string(qUtf8Printable(t->getText()));
+                            entity->push_back(lcl::list(style));
+                        }
+
+                        entity->push_back(lcl::list(extrDir));
+
+                        return lcl::list(entity);
                     }
                     break;
 
@@ -1717,6 +1652,16 @@ BUILTIN("entget")
                     break;
 
                     default:
+                        delete entity;
+                        delete ename;
+                        delete handle;
+                        delete acdb;
+                        delete mspace;
+                        delete layoutTabName;
+                        delete layer;
+                        delete layer;
+                        delete extrDir;
+
                         return lcl::nilValue();
                         break;
                 }
@@ -1766,7 +1711,7 @@ BUILTIN("entnext")
         {
             ARG(lclEname, en);
 
-            for (auto i = 0; i < entityContainer->count(); i++)
+            for (unsigned int i = 0; i < entityContainer->count(); i++)
             {
                 if (entityContainer->entityAt(i)->getId() == en->value() &&
                     i+1 < entityContainer->count())
