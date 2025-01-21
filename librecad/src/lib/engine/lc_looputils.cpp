@@ -188,10 +188,13 @@ bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity)
 
 struct LoopExtractor::LoopData {
     LoopData(RS_EntityContainer &edges):
-        size{edges.getSize().magnitude()}
-    , edges{edges}
-    {}
-    const double size = 0.;
+    edges{edges}
+    {
+        edges.forcedCalculateBorders();
+        size = edges.getSize().magnitude();
+    }
+
+    double size = 0.;
     RS_Vector vertex;
     RS_Vector vertexTarget;
     RS_Entity* current = nullptr;
