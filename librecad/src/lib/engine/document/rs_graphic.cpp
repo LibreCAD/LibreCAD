@@ -42,6 +42,7 @@
 #include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
+#include "lc_graphicviewport.h"
 
 /**
  * Default constructor.
@@ -505,14 +506,15 @@ bool RS_Graphic::open(const QString &filename, RS2::FormatType type) {
     ret = RS_FileIO::instance()->fileImport(*this, filename, type);
 
     if (ret) {
-        RS_GraphicView *gv = getGraphicView();
+        RS_GraphicView *gv = getGraphicView(); // fixme - eliminate this dependency!
         if (gv != nullptr) {
             // fixme - sand - review and probably move initialization of UCS - as normal support of VIEWPORT will be available
             // todo - not sure whether this is right place for setting up current wcs.
             // Actually, it seems that it's better to rely on reading viewport (were setting for the offset and zoom are set.
             // however, must probably with proper support of VIEW, they will be reworked too..
             // So let it have here for now so far
-            gv->initAfterDocumentOpen();
+            LC_GraphicViewport* viewport = gv->getViewPort();
+            viewport->initAfterDocumentOpen();
         }
 
         setModified(false);
@@ -713,31 +715,6 @@ RS2::LinearFormat RS_Graphic::getLinearFormat() {
     // fixme - sand - add caching
     int lunits = getVariableInt("$LUNITS", 2);
     return getLinearFormat(lunits);
-/* changed by RS2::LinearFormat getLinearFormat(int f)
-    switch (lunits) {
-    default:
-    case 2:
-        return RS2::Decimal;
-        break;
-
-    case 1:
-        return RS2::Scientific;
-        break;
-
-    case 3:
-        return RS2::Engineering;
-        break;
-
-    case 4:
-        return RS2::Architectural;
-        break;
-
-    case 5:
-        return RS2::Fractional;
-        break;
-    }
-
-    return RS2::Decimal;*/
 }
 
 /**

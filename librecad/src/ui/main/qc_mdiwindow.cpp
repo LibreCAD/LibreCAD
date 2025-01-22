@@ -48,6 +48,7 @@
 #include "rs_insert.h"
 #include "rs_mtext.h"
 #include "rs_pen.h"
+#include "lc_printpreviewview.h"
 
 /**
  * Constructor.
@@ -56,10 +57,9 @@
  *   document shall be created for this window.
  * @param parent An instance of QMdiArea.
  */
-QC_MDIWindow::QC_MDIWindow(RS_Document *doc, QWidget *parent, Qt::WindowFlags wflags)
-    : QMdiSubWindow(parent, wflags)
-    , m_owner{doc == nullptr}
-{
+QC_MDIWindow::QC_MDIWindow(RS_Document *doc, QWidget *parent, bool printPreview)
+    : QMdiSubWindow(parent, {})
+    , m_owner{doc == nullptr}{
     setAttribute(Qt::WA_DeleteOnClose);
     cadMdiArea=qobject_cast<QMdiArea*>(parent);
 
@@ -69,8 +69,17 @@ QC_MDIWindow::QC_MDIWindow(RS_Document *doc, QWidget *parent, Qt::WindowFlags wf
     } else {
         document = doc;
     }
+    if (printPreview){
+        graphicView = new LC_PrintPreviewView(this, document);
+        graphicView->initView();
+        graphicView->setPrintPreview(true);
+    }
+    else{
+        graphicView = new QG_GraphicView(this, document);
+        graphicView->initView();
+        graphicView->setPrintPreview(false);
+    }
 
-    graphicView = new QG_GraphicView(this, {}, document);
     graphicView->setObjectName("graphicview");
 
     connect(graphicView, SIGNAL(previous_zoom_state(bool)),
@@ -162,12 +171,12 @@ unsigned QC_MDIWindow::getId() const{
 }
 
 RS_EventHandler* QC_MDIWindow::getEventHandler() const{
-	if (graphicView) {
-		return graphicView->getEventHandler();
-	}
-	else {
-		return nullptr;
-	}
+    if (graphicView) {
+        return graphicView->getEventHandler();
+    }
+    else {
+        return nullptr;
+    }
 }
 
 void QC_MDIWindow::setParentWindow(QC_MDIWindow* p) {
@@ -372,7 +381,7 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
 void QC_MDIWindow::slotZoomAuto() {
 	if(graphicView){
         if(graphicView->isPrintPreview()){
-            graphicView->zoomPage();
+            graphicView->getViewPort()->zoomPage();
         }else{
             graphicView->zoomAuto();
         }
@@ -388,7 +397,7 @@ void QC_MDIWindow::drawChars() {
     for (int i=0; i<bl->count(); ++i) {
         RS_Block* ch = bl->at(i);
         RS_InsertData data(ch->getName(), RS_Vector(i*sep,0), RS_Vector(1,1), 0, 1, 1, RS_Vector(0,0));
-        RS_Insert* in = new RS_Insert(document, data);
+        auto in = new RS_Insert(document, data);
         document->addEntity(in);
         QString uCode = (ch->getName()).mid(1,4);
         RS_MTextData datatx(RS_Vector(i*sep,-h), h, 4*h, RS_MTextData::VATop,
@@ -397,7 +406,7 @@ void QC_MDIWindow::drawChars() {
 /*        RS_MTextData datatx(RS_Vector(i*sep,-h), h, 4*h, RS2::VAlignTop,
                            RS2::HAlignLeft, RS2::ByStyle, RS2::AtLeast,
                            1, uCode, info.baseName(), 0);*/
-        RS_MText *tx = new RS_MText(document, datatx);
+        auto tx = new RS_MText(document, datatx);
         document->addEntity(tx);
     }
 

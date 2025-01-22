@@ -137,13 +137,14 @@ RS_Entity *RS_MText::clone() const {
 class RS_MTextProxy:public RS_EntityContainer{
 public:
     RS_MTextProxy(const RS_MText &parent):RS_EntityContainer(parent) {
-
     }
-
 };
 
 RS_Entity *RS_MText::cloneProxy(RS_GraphicView* view) const {
-    if (view->isDrawTextsAsDraftForPreview()) {
+    // fixme - sand - ucs - restore!!
+//    bool drawTextsAsDraftForPreview = view->isDrawTextsAsDraftForPreview();
+    bool drawTextsAsDraftForPreview = false;
+    if (drawTextsAsDraftForPreview) {
         auto* proxy = new RS_EntityContainer();
         proxy->setOwner(true);
         for (RS_Entity *entity: std::as_const(entities)) {
@@ -799,22 +800,19 @@ std::ostream &operator<<(std::ostream &os, const RS_MText &p) {
 
 #define DEBUG_LINE_POINTS_
 
-void RS_MText::draw(RS_Painter *painter, RS_GraphicView *view,
-                    double & patternOffset) {
-    /*if (!(painter && view))
-        return;*/
+void RS_MText::draw(RS_Painter *painter) {
 #ifdef DEBUG_LINE_POINTS
     painter->drawRect(view->toGui(getMin()), view->toGui(getMax()));
 #endif
-//    if (!view->isPrintPreview() && !view->isPrinting()) {
-        if (/*view->isPanning() || */view->toGuiDY(getHeight()) < view->getMinRenderableTextHeightInPx()) {
-            drawDraft(painter, view, patternOffset);
-            return;
-        }
-//    }
+
+    bool drawAsDraft = painter->isTextLineNotRenderable(getHeight());
+    if (drawAsDraft){
+        drawDraft(painter);
+        return;
+    }
 
     for (RS_Entity *entity: std::as_const(entities)) {
-        entity->drawAsChild(painter, view, patternOffset);
+        painter->drawAsChild(entity);
 
 #ifdef DEBUG_LINE_POINTS
         auto line = dynamic_cast<LC_TextLine*>(entity);
@@ -826,16 +824,14 @@ void RS_MText::draw(RS_Painter *painter, RS_GraphicView *view,
     }
 }
 
-void RS_MText::drawDraft(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]] double &patternOffset) {
+void RS_MText::drawDraft(RS_Painter *painter) {
 #ifdef DEBUG_LINE_POINTS
-    painter->drawRect(view->toGui(getMin()), view->toGui(getMax()));
+    painter->drawRect(painter->toGui(getMin()), painter->toGui(getMax()));
 #endif
     for (RS_Entity *entity: std::as_const(entities)) {
         auto line = dynamic_cast<LC_TextLine*>(entity);
         if (line != nullptr && line->count() > 0) {
-            const RS_Vector &start = view->toGui(line->getBaselineStart());
-            const RS_Vector &end = view->toGui(line->getBaselineEnd());
-            painter->drawLine(start, end);
+            painter->drawLineWCS(line->getBaselineStart(), line->getBaselineEnd());
+        }
     }
-  }
 }

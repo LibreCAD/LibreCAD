@@ -97,8 +97,9 @@ private:
     LC_View *getSelectedView();
     void removeExistingView(LC_View *view);
     QModelIndex getSelectedItemIndex();
-    void renameExistingView(QString newName, LC_View *view);
+    void renameExistingView(const QString &newName, LC_View *view);
     RS_GraphicView *graphicView {nullptr};
+    LC_GraphicViewport *viewport {nullptr};
     void doUpdateView(LC_View *view);
     void renameExistingView(LC_View *selectedView);
     void updateButtonsState() const;

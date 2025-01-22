@@ -64,6 +64,7 @@
 #include "rs_debug.h"
 #include "lc_view.h"
 #include "lc_ucs.h"
+#include "lc_graphicviewport.h"
 
 #endif
 
@@ -298,6 +299,8 @@ void RS_FilterDXFRW::addDimStyle(const DRW_Dimstyle& data){
     }
 }
 
+
+// fixme - sand - ucs - rework to direct setup of LC_GraphicViewport
 /**
  * Implementation of the method which handles vports.
  */
@@ -307,17 +310,18 @@ void RS_FilterDXFRW::addVport(const DRW_Vport &data) {
         data.grid == 1? graphic->setGridOn(true):graphic->setGridOn(false);
         graphic->setIsometricGrid(data.snapStyle);
         graphic->setIsoView( (RS2::IsoGridViewType)data.snapIsopair);
-        RS_GraphicView *gv = graphic->getGraphicView();
+        RS_GraphicView *gv = graphic->getGraphicView();  // fixme - sand - review this dependency
         if (gv ) {
             double width = data.height * data.ratio;
+            // fixme - sand - ucs - investigate different x and y factors
             double factorX= gv->getWidth() / width;
             double factorY= gv->getHeight() / data.height;
             if (factorX > factorY)
                 factorX = factorY;
-            int ox = gv->getWidth() -data.center.x*2*factorX;
-            int oy = gv->getHeight() -data.center.y*2*factorX;
-            gv->setOffset(ox, oy);
-            gv->setFactor(factorX);
+            int ox = gv->getWidth() - data.center.x*2*factorX;
+            int oy = gv->getHeight() - data.center.y*2*factorX;
+            gv->getViewPort()->justSetOffsetAndFactor(ox, oy, factorX);
+
         }
     }
 }
@@ -2245,11 +2249,12 @@ void RS_FilterDXFRW::writeVports(){
     }
     RS_GraphicView *gv = graphic->getGraphicView();
 	if (gv ) {
-        RS_Vector fac =gv->getFactor();
+     LC_GraphicViewport *viewport = gv->getViewPort();
+     RS_Vector fac = viewport->getFactor();
         vp.height = gv->getHeight()/fac.y;
         vp.ratio = (double)gv->getWidth() / (double)gv->getHeight();
-        vp.center.x = ( gv->getWidth() - gv->getOffsetX() )/ (fac.x * 2.0);
-        vp.center.y = ( gv->getHeight() - gv->getOffsetY() )/ (fac.y * 2.0);
+        vp.center.x = ( gv->getWidth() - viewport->getOffsetX() )/ (fac.x * 2.0);
+        vp.center.y = ( gv->getHeight() - viewport->getOffsetY() )/ (fac.y * 2.0);
     }
     dxfW->writeVport(&vp);
 }

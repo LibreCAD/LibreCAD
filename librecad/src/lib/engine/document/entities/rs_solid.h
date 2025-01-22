@@ -133,7 +133,7 @@ public:
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
-    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+    void draw(RS_Painter* painter) override;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Solid& p);
 

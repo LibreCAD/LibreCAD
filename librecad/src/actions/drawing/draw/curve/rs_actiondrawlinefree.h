@@ -53,7 +53,8 @@ protected:
         SetStartpoint,   /**< Setting the startpoint.  */
         Dragging      /**< Setting the endpoint. */
     };
-    std::unique_ptr<RS_Vector> vertex;
+    QPointF oldMousePosition = QPointF(-100,-100);
+    std::unique_ptr<RS_Vector> vertex; // fixme - why poiner there?
     std::unique_ptr<RS_Polyline> polyline;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;

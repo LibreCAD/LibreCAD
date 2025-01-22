@@ -692,13 +692,15 @@ void RS_Polyline::stretch(const RS_Vector& firstCorner,
 /**
  * Slightly optimized drawing for polylines.
  */
-void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternOffset*/) {
-//    if (painter == nullptr || view == nullptr) return;
-    painter->drawPolyline(*this, *view);
+void RS_Polyline::draw(RS_Painter* painter) {
+    if (count() == 0){
+        return;
+    }
+    painter->drawPolylineWCS(this);
 }
 
-void RS_Polyline::drawAsChild(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset) {
-    painter->drawPolyline(*this, *view);
+void RS_Polyline::drawAsChild(RS_Painter *painter) {
+    painter->drawPolylineWCS(this);
 }
 
 /**

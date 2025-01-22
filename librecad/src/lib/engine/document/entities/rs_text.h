@@ -240,9 +240,9 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const RS_Text& p);
 
-    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+    void draw(RS_Painter* painter) override;
 
-    void drawDraft(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
+    void drawDraft(RS_Painter *painter) override;
 
     RS_Entity *cloneProxy(RS_GraphicView* view) const override;
 

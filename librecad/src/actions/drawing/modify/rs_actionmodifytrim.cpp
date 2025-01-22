@@ -185,14 +185,6 @@ void RS_ActionModifyTrim::onMouseRightButtonRelease(int status, [[maybe_unused]]
     initPrevious(status);
 }
 
-//void RS_ActionModifyTrim::finish(bool updateTB) {
-//    if (limitEntity->isHighlighted()){
-//        limitEntity->setHighlighted(false);
-//        graphicView->drawEntity(limitEntity);
-//    }
-//    RS_PreviewActionInterface::finish(updateTB);
-//}
-
 void RS_ActionModifyTrim::updateMouseButtonHints() {
     switch (getStatus()) {
         case ChooseLimitEntity:

@@ -67,7 +67,7 @@ protected:
     bool drawLeftLine;
     bool drawTopLines;
 
-    void drawMetaGridLines(RS_Painter *painter, RS_GraphicView *view) override;
+    void drawMetaGridLines(RS_Painter *painter, LC_GraphicViewport *view) override;
     void createGridLines(const RS_Vector &min, const RS_Vector &max, const RS_Vector &gridWidth, bool drawGridWithoutGaps, const RS_Vector& lineInTileOffset) override;
     void createGridPoints(const RS_Vector &min, const RS_Vector &max,const RS_Vector &gridWidth, bool drawGridWithoutGaps, int total) override;
 

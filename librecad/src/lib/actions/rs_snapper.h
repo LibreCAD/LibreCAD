@@ -33,6 +33,7 @@
 #include <QList>
 #include "rs.h"
 #include "lc_cursoroverlayinfo.h"
+#include "lc_graphicviewport.h"
 
 class RS_Entity;
 class RS_GraphicView;
@@ -40,6 +41,8 @@ class RS_Vector;
 class RS_Preview;
 class QMouseEvent;
 class RS_EntityContainer;
+class LC_GraphicViewport;
+
 
 /**
   * This class holds information on how to snap the mouse.
@@ -205,12 +208,15 @@ public:
     void hideSnapOptions();
     virtual void drawSnapper();
     void drawInfoCursor();
+
+    LC_GraphicViewport* getViewPort() {return viewport;}
 protected:
     void deleteSnapper();
     void deleteInfoCursor();
     double getSnapRange() const;
     RS_EntityContainer *container = nullptr;
     RS_GraphicView *graphicView = nullptr;
+    LC_GraphicViewport* viewport = nullptr;
     RS_Entity *keyEntity = nullptr;
     RS_SnapMode snapMode{};
     //RS2::SnapRestriction snapRes;
@@ -247,8 +253,7 @@ protected:
     QString getSnapName(int snapType);
     QString getRestrictionName(int restriction);
     void preparePositionsInfoCursorOverlay(bool updateFormat, const RS_Vector &abs, const RS_Vector &relative);
-    LC_InfoCursor* obtainInfoCursor();
-    void clearInfoCursor();
+    LC_OverlayInfoCursor* obtainInfoCursor();
     LC_InfoCursorOverlayPrefs* getInfoCursorOverlayPrefs() const;
 
     QString formatLinear(double value) const;
@@ -266,6 +271,18 @@ protected:
     RS_Vector toWorld(const RS_Vector& ucsPos) const;
     RS_Vector toUCS(const RS_Vector& worldPos) const;
     void calcRectCorners(const RS_Vector &worldCorner1, const RS_Vector &worldCorner3, RS_Vector &worldCorner2, RS_Vector &worldCorner4) const;
+    double getCatchDistance(double catchDistance, int catchEntityGuiRange);
+    double toGuiDX(double wcsDX) const;
+    double toGraphDX(int wcsDX) const;
+    void redraw(RS2::RedrawMethod method = RS2::RedrawMethod::RedrawAll)/* {graphicView->redraw(method);}*/;
+    void redrawDrawing();
+    void redrawAll();
+    void enableCoordinateInput();
+    void disableCoordinateInput();
+    RS_Vector const &getRelativeZero() const;
+    void initSettings();
+    virtual void initFromSettings();
+    virtual void initFromGraphic(RS_Graphic* graphic);
 private:
     struct ImpData;
     std::unique_ptr<ImpData> pImpData;

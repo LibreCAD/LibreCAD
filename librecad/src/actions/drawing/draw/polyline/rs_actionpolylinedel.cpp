@@ -119,7 +119,7 @@ void RS_ActionPolylineDel::onMouseLeftButtonRelease(int status, QMouseEvent *e){
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
                 setStatus(SetVertex1);
-                graphicView->redraw();
+                redraw();
             }
             break;
         }

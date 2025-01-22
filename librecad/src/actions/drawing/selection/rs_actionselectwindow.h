@@ -27,7 +27,7 @@
 #ifndef RS_ACTIONSELECTWINDOW_H
 #define RS_ACTIONSELECTWINDOW_H
 
-#include "rs_previewactioninterface.h"
+#include "lc_overlayboxaction.h"
 
 
 /**
@@ -35,7 +35,7 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionSelectWindow:public RS_PreviewActionInterface {
+class RS_ActionSelectWindow:public LC_OverlayBoxAction {
     Q_OBJECT
 
 public:

@@ -279,7 +279,7 @@ bool RS_Entity::isArcCircleLine() const{
 }
 
 /** whether the entity's bounding box intersects with visible portion of graphic view */
-bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const{
+/*bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const{
     RS_Vector vpMin(view->toGraph(0,view->getHeight()));
     RS_Vector vpMax(view->toGraph(view->getWidth(),0));
     if( getStartpoint().isInWindowOrdered(vpMin, vpMax) ) return true;
@@ -296,7 +296,7 @@ bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const{
     }
     if( minV.isInWindowOrdered(vpMin,vpMax)||maxV.isInWindowOrdered(vpMin,vpMax)) return true;
     return false;
-}
+}*/
 
 /**
  * @param tolerance Tolerance.
@@ -453,7 +453,7 @@ void RS_Entity::setRadius([[maybe_unused]] double r){}
  */
 RS_Graphic* RS_Entity::getGraphic() const{
     if (rtti()==RS2::EntityGraphic) {
-        RS_Graphic const* ret=static_cast<RS_Graphic const*>(this);
+        auto const* ret=static_cast<RS_Graphic const*>(this);
         return const_cast<RS_Graphic*>(ret);
     } else if (!parent) {
         return nullptr;
@@ -852,7 +852,7 @@ void RS_Entity::stretch(const RS_Vector& firstCorner,
  * @return Factor for scaling the line styles considering the current
  * paper scaling and the fact that styles are stored in Millimeter.
  */
-double RS_Entity::getStyleFactor(RS_GraphicView* view) {
+/*double RS_Entity::getStyleFactor(RS_GraphicView* view) {
     double styleFactor = 1.0;
     if (!view) return styleFactor;
 
@@ -895,7 +895,7 @@ double RS_Entity::getStyleFactor(RS_GraphicView* view) {
 
     return styleFactor;
 }
-
+*/
 
 /**
  * @return User defined variable connected to this entity or nullptr if not found.

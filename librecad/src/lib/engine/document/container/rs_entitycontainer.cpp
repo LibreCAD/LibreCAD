@@ -45,6 +45,7 @@
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_solid.h"
+#include "rs_painter.h"
 
 namespace {
 
@@ -1960,19 +1961,19 @@ void RS_EntityContainer::revertDirection() {
 }
 
 /**
- * @brief RS_EntityContainer::draw() draw entities in order
+ * @brief draw entities in order
  * @param painter
  * @param view
  */
-void RS_EntityContainer::draw(RS_Painter *painter, RS_GraphicView *view, double & /*patternOffset*/) {
+void RS_EntityContainer::draw(RS_Painter *painter) {
     foreach (auto *e, entities){
-        view->drawEntity(painter, e);
+        painter->drawEntity(e);
     }
 }
 
-void RS_EntityContainer::drawAsChild(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) {
+void RS_EntityContainer::drawAsChild(RS_Painter *painter) {
     foreach (auto *e, entities){
-            view->drawAsChild(painter, e, patternOffset);
+        painter->drawAsChild(e);
     }
 }
 

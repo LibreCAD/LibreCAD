@@ -49,7 +49,7 @@ public:
     void addAllFrom(RS_EntityContainer& container, RS_GraphicView* view);
     void addStretchablesFrom(RS_EntityContainer& container, RS_GraphicView* view,
                                      const RS_Vector& v1, const RS_Vector& v2);
-    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+    void draw(RS_Painter* painter) override;
     void addReferenceEntitiesToContainer(RS_EntityContainer* container);
     void clear() override;
     int getMaxAllowedEntities();

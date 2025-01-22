@@ -914,15 +914,9 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
     calculateBorders();
 }
 
-void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
-                  double& patternOffset) {
-    // Adjust dash offset
-    updateDashOffset(*painter, *view, patternOffset);
-    RS_Vector cp = view->toGui(getCenter());
-    double rx = getRadius() * view->getFactor().x;
-    double ry = getRadius() * view->getFactor().y;
-    // fixme - sand - temporary
-    painter->drawArcEntity(cp, rx, ry, view->toUCSAngleDegrees(data.startAngleDegrees), data.angularLength);
+void RS_Arc::draw(RS_Painter* painter) {
+    painter->updateDashOffset(this);
+    painter->drawArcWCS(data.center, data.radius, data.startAngleDegrees, data.angularLength);
 }
 
 /**

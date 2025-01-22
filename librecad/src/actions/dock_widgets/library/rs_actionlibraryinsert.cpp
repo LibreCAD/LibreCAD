@@ -78,7 +78,7 @@ void RS_ActionLibraryInsert::trigger() {
     deletePreview();
     RS_Creation creation(container, graphicView);
     creation.createLibraryInsert(pPoints->data);
-    graphicView->redraw(RS2::RedrawDrawing);
+    redrawDrawing();
 }
 
 void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {

@@ -47,8 +47,6 @@ public:
         APPLY_UCS,
         SHOW_MARKER
     };
-
-
 };
 
 #endif // LC_UCSLISTOPTIONS_H

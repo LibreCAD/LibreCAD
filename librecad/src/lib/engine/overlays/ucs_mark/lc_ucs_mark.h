@@ -25,13 +25,34 @@
 
 #include <QFont>
 #include "rs_point.h"
+#include "lc_overlayentity.h"
 
-class LC_UCS_Mark:public RS_Point{
+struct LC_UCSMarkOptions{
+    /** coordinate origin marker */
+    bool m_showUCSZeroMarker = false;
+    bool m_showWCSZeroMarker = true;
+    int m_csZeroMarkerSize = 30;
+    int m_csZeroMarkerFontSize = 10;
+    QString m_csZeroMarkerfontName = "Verdana";
+    QFont m_csZeroMarkerFont = QFont("Arial", 10);
+    RS_Color m_colorXAxisExtension = Qt::red;
+    RS_Color m_colorYAxisExtension = Qt::green;
+    RS_Color m_colorAngleMark = Qt::yellow;
+    void loadSettings();
+};
+
+
+class LC_OverlayUCSMark:public LC_OverlayDrawable{
 public:
-    LC_UCS_Mark(RS_EntityContainer *parent, const RS_Vector &pos, double angle);
-    void draw(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
+    LC_OverlayUCSMark(RS_Vector uiOrigin, double xAxisAngle, bool forWcs, LC_UCSMarkOptions *options);
+    LC_OverlayUCSMark(LC_UCSMarkOptions *options);
+    void draw(RS_Painter *painter) override;
+    void update(RS_Vector uiPos, double xAngle, bool wcs);
 protected:
-    double m_angle;
+    RS_Vector uiOrigin;
+    double xAxisAngle;
+    bool forWCS = false;
+    LC_UCSMarkOptions* options;
 };
 
 #endif // LC_UCS_MARK_H

@@ -111,7 +111,7 @@ void RS_ActionBlocksInsert::trigger() {
         creation.createInsert(data.get());
     }
 
-    graphicView->redraw(RS2::RedrawDrawing);
+    redrawDrawing();
 
     //finish();
 }

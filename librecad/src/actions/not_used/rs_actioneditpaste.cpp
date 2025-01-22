@@ -61,7 +61,7 @@ void RS_ActionEditPaste::trigger() {
     RS_Modification m(*container, graphicView);
     m.paste(RS_PasteData(*targetPoint, 1.0, 0.0, false, ""));
 
-    graphicView->redraw(RS2::RedrawDrawing);
+    redrawDrawing();
     if (finishOnTrigger) {
        finish(false);
     }

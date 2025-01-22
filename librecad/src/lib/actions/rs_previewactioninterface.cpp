@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-
-#include "rs_actionsetrelativezero.h"
 #include <QApplication>
 #include <QMouseEvent>
 #include "rs_creation.h"
@@ -52,7 +50,7 @@
 #include "rs_constructionline.h"
 #include "lc_refconstructionline.h"
 #include "lc_quickinfowidget.h"
-#include "lc_undoablerelzero.h"
+#include "lc_overlayentitiescontainer.h"
 
 // fixme - sand - consider more generic support of overlays and containers,
 // with them working with preview etc might be more generic.. currently, preview handles both preview and reference points..
@@ -142,7 +140,11 @@ void RS_PreviewActionInterface::deletePreview(){
         hasPreview = false;
     }
     if (!graphicView->isCleanUp()){
-        graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
+        RS_EntityContainer *container = viewport->getOverlayEntitiesContainer(RS2::ActionPreviewEntity);
+        container->clear();
+
+        LC_OverlayDrawablesContainer *drawablesContainer = viewport->getOverlaysDrawablesContainer(RS2::ActionPreviewEntity);
+        drawablesContainer->clear();
     }
 }
 
@@ -150,7 +152,7 @@ void RS_PreviewActionInterface::deletePreview(){
  * Draws / deletes the current preview.
  */
 void RS_PreviewActionInterface::drawPreview(){
-    RS_EntityContainer *container = graphicView->getOverlayContainer(RS2::ActionPreviewEntity);
+    RS_EntityContainer *container = viewport->getOverlayEntitiesContainer(RS2::ActionPreviewEntity);
     container->clear();
     container->setOwner(false); // Little hack for now so we don't delete the preview twice
    // remove reference entities from preview container and put them into overlay container directly.
@@ -167,13 +169,16 @@ void RS_PreviewActionInterface::deleteHighlights(){
     // fixme - optimize if empty
     highlight->clear();
     if (!graphicView->isCleanUp()){
-        RS_EntityContainer *overlayContainer = graphicView->getOverlayContainer(RS2::OverlayEffects);
+        RS_EntityContainer *overlayContainer = viewport->getOverlayEntitiesContainer(RS2::OverlayEffects);
         overlayContainer->clear();
+
+        LC_OverlayDrawablesContainer *drawablesContainer = viewport->getOverlaysDrawablesContainer(RS2::OverlayEffects);
+        drawablesContainer->clear();
     }
 }
 
 void RS_PreviewActionInterface::drawHighlights(){
-    RS_EntityContainer *overlayContainer=graphicView->getOverlayContainer(RS2::OverlayEffects);
+    RS_EntityContainer *overlayContainer=viewport->getOverlayEntitiesContainer(RS2::OverlayEffects);
     overlayContainer->clear();
     overlayContainer->setOwner(false);
     highlight->addEntitiesToContainer(overlayContainer);
@@ -210,7 +215,7 @@ void RS_PreviewActionInterface::addToHighlights(RS_Entity *e, bool enable){
 bool RS_PreviewActionInterface::trySnapToRelZeroCoordinateEvent(const QMouseEvent *e){
     bool result = false;
     if (isShift(e)){
-        RS_Vector relZero = graphicView->getRelativeZero();
+        RS_Vector relZero = getRelativeZero();
         if (relZero.valid){
             fireCoordinateEvent(relZero);
             result = true;
@@ -241,7 +246,7 @@ RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const QMouseEvent *e
 RS_Vector RS_PreviewActionInterface::getRelZeroAwarePoint(const QMouseEvent *e, const RS_Vector& pos){
     RS_Vector result = pos;
     if (isShift(e)){
-        RS_Vector relZero = graphicView->getRelativeZero();
+        RS_Vector relZero = getRelativeZero();
         if (relZero.valid){
            result = relZero;
         }
@@ -338,6 +343,11 @@ void RS_PreviewActionInterface::previewEntity(RS_Entity* en){
     preview->addEntity(en);
 }
 
+void RS_PreviewActionInterface::addOverlay(LC_OverlayDrawable* drawable, RS2::OverlayGraphics position){
+    LC_OverlayDrawablesContainer *drawablesContainer = viewport->getOverlaysDrawablesContainer(position);
+    drawablesContainer->add(drawable);
+}
+
 void RS_PreviewActionInterface::previewRefPoint(const RS_Vector &coord){
     auto *point = new LC_RefPoint(this->preview.get(), coord, refPointSize, refPointMode);
     preview->addEntity(point);
@@ -401,12 +411,13 @@ void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector &center, co
 }
 
 // fixme - sand - snap to relative angle support!!!
+// fixme - rework to natural paint via overlay
 void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector &center, double angle) {
 // todo - add separate option that will control visibility of mark?
     int radiusInPixels = 20; // todo - move to settings
     int lineInPixels = radiusInPixels * 2; // todo - move to settings
-    double radius = graphicView->toGraphDX(radiusInPixels);
-    double lineLength = graphicView->toGraphDX(lineInPixels);
+    double radius = toGraphDX(radiusInPixels);
+    double lineLength = toGraphDX(lineInPixels);
 
     angle = RS_Math::correctAnglePlusMinusPi(angle);
     double angleZero = toWorldAngle(0);
@@ -471,11 +482,11 @@ void RS_PreviewActionInterface::initRefEntitiesMetrics(){
  */
 
 void RS_PreviewActionInterface::moveRelativeZero(const RS_Vector& zero){
-    graphicView->moveRelativeZero(zero);
+    viewport->moveRelativeZero(zero);
 }
 
 void RS_PreviewActionInterface::markRelativeZero() {
-    graphicView->markRelativeZero();
+    viewport->markRelativeZero();
 }
 
 bool RS_PreviewActionInterface::is(RS_Entity *e, RS2::EntityType type) const{
@@ -666,4 +677,31 @@ void RS_PreviewActionInterface::appendInfoCursorZoneMessage(QString message, int
 
 QString RS_PreviewActionInterface::obtainEntityDescriptionForInfoCursor(RS_Entity *e, RS2::EntityDescriptionLevel level) {
    return graphicView->obtainEntityDescription(e, level);
+}
+
+void RS_PreviewActionInterface::deletePreviewAndHighlights() {
+    deletePreview();
+    deleteHighlights();
+}
+
+void RS_PreviewActionInterface::drawPreviewAndHighlights() {
+    drawHighlights();
+    drawPreview();
+}
+
+void RS_PreviewActionInterface::mouseMoveEvent(QMouseEvent *event) {
+    int status = getStatus();
+    LC_MouseMoveEvent* lcEvent = toLCMouseMoveEvent(event);
+    deletePreviewAndHighlights();
+    doMouseMoveEvent(status, lcEvent);
+    delete lcEvent;
+    drawPreviewAndHighlights();
+}
+
+void RS_PreviewActionInterface::doMouseMoveEvent(int status, LC_MouseMoveEvent* event) {
+
+}
+
+RS_PreviewActionInterface::LC_MouseMoveEvent *RS_PreviewActionInterface::toLCMouseMoveEvent(QMouseEvent *e) {
+    return nullptr;
 }

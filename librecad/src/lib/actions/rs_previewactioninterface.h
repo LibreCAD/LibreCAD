@@ -39,6 +39,7 @@
 #include "lc_defaults.h"
 #include "lc_refellipse.h"
 #include "rs_constructionline.h"
+#include "lc_overlayentity.h"
 
 struct RS_CircleData;
 /**
@@ -60,6 +61,7 @@ public:
     void suspend() override;
     void resume() override;
     void trigger() override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 protected:
     /**
      * Preview that holds the entities to be previewed.
@@ -90,7 +92,7 @@ protected:
     RS_Vector getSnapAngleAwarePoint(const QMouseEvent *e, const RS_Vector &basepoint, const RS_Vector &pos, bool drawMark, bool force);
     RS_Vector getFreeSnapAwarePoint(const QMouseEvent *e, const RS_Vector &pos) const;
     RS_Vector getFreeSnapAwarePointAlt(const QMouseEvent *e, const RS_Vector &pos) const;
-
+    void addOverlay(LC_OverlayDrawable* en, RS2::OverlayGraphics position);
     void previewEntity(RS_Entity *en);
     RS_Circle* previewCircle(const RS_CircleData& circleData);
     RS_Arc *previewArc(const RS_ArcData &arcData);
@@ -143,5 +145,19 @@ protected:
     RS_Point *previewToCreatePoint(const RS_Vector &coord);
     void previewEntityToCreate(RS_Entity *en, bool addToPreview = true);
     void appendInfoCursorEntityCreationMessage(QString message);
+    void deletePreviewAndHighlights();
+    void drawPreviewAndHighlights();
+
+// fixme - sand - expand and complete custom mouse move event concept!
+    class LC_MouseMoveEvent{
+        RS_Vector snapPoint;
+        RS_Vector graphPoint;
+        QPoint uiPosition;
+        bool isControl;
+        bool isShift;
+    };
+
+    virtual void doMouseMoveEvent(int status, LC_MouseMoveEvent* event);
+    LC_MouseMoveEvent *toLCMouseMoveEvent(QMouseEvent *e);
 };
 #endif

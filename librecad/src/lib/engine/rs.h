@@ -1009,10 +1009,11 @@ namespace RS2 {
          * it always shows up
          */
         enum OverlayGraphics: short {
+                OverlayEffects = 0,      // special effects, like glowing on hover
                 ActionPreviewEntity = 1, // Action Entities
-                Snapper = 2, // Snapper
-                InfoCursor = 3, // Info Cursor
-                OverlayEffects = 0 // special effects, like glowing on hover
+                Snapper = 2,             // Snapper
+                InfoCursor = 3,          // Info Cursor
+                LAST
         };
 
         //Different re-draw methods to speed up rendering of the screen

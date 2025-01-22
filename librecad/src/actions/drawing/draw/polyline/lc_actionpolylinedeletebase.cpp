@@ -63,7 +63,7 @@ void LC_ActionPolylineDeleteBase::clean(){
         polylineToModify->setSelected(false);
     }
     deletePreview();
-    graphicView->redraw();
+    redraw();
 }
 
 void LC_ActionPolylineDeleteBase::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {

@@ -191,13 +191,13 @@ bool RS_ActionDimAngular::doProcessCommand(int status, const QString &c) {
     if (SetText == getStatus()) {
         setText( c);
         updateOptions();
-        graphicView->enableCoordinateInput();
+        enableCoordinateInput();
         setStatus( lastStatus);
         accept = true;
     }
     else if (checkCommand( "text", c)) { // command: text
         lastStatus = static_cast<Status>(status);
-        graphicView->disableCoordinateInput();
+        disableCoordinateInput();
         setStatus( SetText);
         accept = true;
     }

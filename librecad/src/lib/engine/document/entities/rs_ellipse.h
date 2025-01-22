@@ -230,12 +230,7 @@ public:
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void revertDirection() override;
 
-    /** whether the entity's bounding box intersects with visible portion of graphic view
-    */
-    bool isVisibleInWindow(RS_GraphicView* view) const override;
-//! \{ \brief find visible segments of entity and draw only those visible portion
-    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
-//! \}
+    void draw(RS_Painter* painter) override;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Ellipse& a);
 
@@ -263,7 +258,7 @@ a quadratic contains coefficients for quadratic:
     double areaLineIntegral() const override;
 
 protected:
-    RS_EllipseData data;
+    RS_EllipseData data; // fixme - renderperf - cache major and minor radiuses!
     void updateLength() override;
 private:
     /**

@@ -30,6 +30,7 @@
 #include "qc_applicationwindow.h"
 #include "lc_dlgucslistoptions.h"
 #include "lc_ucslistbutton.h"
+#include "lc_graphicviewport.h"
 
 LC_UCSListWidget::LC_UCSListWidget(const QString& title, QWidget *parent)
     : QWidget(parent)
@@ -138,8 +139,7 @@ void LC_UCSListWidget::createModel() {
     tableView->setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
-void LC_UCSListWidget::setGraphicView(RS_GraphicView *gv,
-                                             QMdiSubWindow *w) {
+void LC_UCSListWidget::setGraphicView(RS_GraphicView *gv,QMdiSubWindow *w) {
     LC_UCSList *ucsList = nullptr;
     if (currentUCSList != nullptr) {
         currentUCSList->removeListener(this);
@@ -152,7 +152,11 @@ void LC_UCSListWidget::setGraphicView(RS_GraphicView *gv,
         loadFormats(graphic);
         ucsList = graphic->getUCSList();
         ucsList->addListener(this);
+        viewport = gv->getViewPort();
         connect(gv, &RS_GraphicView::ucsChanged, this, &LC_UCSListWidget::onViewUCSChanged);
+    }
+    else{
+        viewport = nullptr;
     }
     graphicView = gv;
     window = w;
@@ -191,7 +195,7 @@ void LC_UCSListWidget::onViewUCSChanged(LC_UCS *ucs) {
     }
     bool isometric = ucs->isIsometric();
     RS2::IsoGridViewType isoType = ucs->getIsoGridViewType();
-    if (graphicView->isGridIsometric() != isometric || graphicView->getIsoViewType() != isoType) {
+    if (viewport->isGridIsometric() != isometric || viewport->getIsoViewType() != isoType) {
         QC_ApplicationWindow::getAppWindow()->updateGridViewActions(isometric, isoType);
     }
 }
@@ -258,7 +262,7 @@ void LC_UCSListWidget::invokeOptionsDialog() {
 }
 
 void LC_UCSListWidget::saveCurrentUCS() {
-    graphicView->extractUCS();
+    viewport->extractUCS(); // fixme -sand - ucs - hm... to much logic under the hood of viewport, huh?
 }
 
 void LC_UCSListWidget::activateUCS() {
@@ -371,7 +375,7 @@ void LC_UCSListWidget::editUCS() {
 }
 
 void LC_UCSListWidget::setWCS() {
-    graphicView->applyUCS(currentUCSList->getWCS());
+    viewport->applyUCS(currentUCSList->getWCS());
 }
 
 
@@ -567,9 +571,9 @@ void LC_UCSListWidget::selectUCS(LC_UCS *view) {
         ui->tvTable->selectRow(index.row());
     }
 }
-// fixme - sand - ucs rework
+
 void LC_UCSListWidget::applyUCS(LC_UCS *ucs) {
-    graphicView->applyUCS(ucs);
+    viewport->applyUCS(ucs);
 }
 
 void LC_UCSListWidget::fillUCSList(QList<LC_UCS *> &list) {

@@ -42,6 +42,7 @@ class RS_Polyline;
 class RS_Document;
 class RS_Graphic;
 class RS_GraphicView;
+class LC_GraphicViewport;
 
 struct LC_ModifyOperationFlags{
     bool useCurrentAttributes = false;
@@ -390,6 +391,7 @@ protected:
     RS_Graphic *graphic = nullptr;
     RS_Document *document = nullptr;
     RS_GraphicView *graphicView = nullptr;
+    LC_GraphicViewport* viewport = nullptr;
     bool handleUndo = false;
 
     void trimEnding(const RS_Vector &trimCoord, RS_AtomicEntity *trimmed1, const RS_Vector &is) const;

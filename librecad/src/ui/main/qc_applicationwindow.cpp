@@ -65,7 +65,6 @@
 #include "rs_painter.h"
 #include "rs_pen.h"
 #include "rs_settings.h"
-#include "rs_staticgraphicview.h"
 #include "rs_system.h"
 #include "rs_selection.h"
 #include "rs_units.h"
@@ -104,6 +103,7 @@
 #include "lc_releasechecker.h"
 #include "lc_dlgnewversionavailable.h"
 #include "lc_dlgabout.h"
+#include "lc_printviewportrenderer.h"
 
 #ifndef QC_APP_ICON
 # define QC_APP_ICON ":/main/librecad.png"
@@ -671,7 +671,7 @@ void QC_ApplicationWindow::execPlug() {
     QG_GraphicView* graphicView = w->getGraphicView();
     Doc_plugin_interface pligundoc(currdoc, graphicView, this);
 //execute plugin
-    LC_UndoSection undo(currdoc,graphicView);
+    LC_UndoSection undo(currdoc,graphicView->getViewPort());
     plugin->execComm(&pligundoc, this, action->data().toString());
 //TODO call update view
     graphicView->redraw();
@@ -1047,7 +1047,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
 
         QAction *lockRelZeroAction = ag_manager->getActionByName("LockRelativeZero");
         if (lockRelZeroAction != nullptr){
-            bool locked = activatedGraphicView->isRelativeZeroLocked();
+            bool locked = activatedGraphicView->getViewPort()->isRelativeZeroLocked();
             lockRelZeroAction->setChecked(locked);
         }
         
@@ -1279,7 +1279,7 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
 
     RS_DEBUG->print("  creating MDI window");
 
-    QC_MDIWindow *w = new QC_MDIWindow(doc, mdiAreaCAD, {});
+    auto *w = new QC_MDIWindow(doc, mdiAreaCAD, false);
 
     window_list << w;
 
@@ -1294,7 +1294,9 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
     view->setAntialiasing(aa);
     view->setCursorHiding(cursor_hiding);
     view->device = settings.value("Hardware/Device", "Mouse").toString();
-    if (scrollbars) view->addScrollbars();
+    if (scrollbars) {
+        view->addScrollbars();
+    }
 
     settings.beginGroup("Activators");
     auto activators = settings.childKeys();
@@ -1767,7 +1769,6 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
         if (settings.value("Appearance/DraftMode", 0).toBool()) {
             QString draft_string = " [" + tr("Draft Mode") + "]";
             graphicView->setDraftMode(true);
-            graphicView->redraw();
             QString title = w->windowTitle();
             w->setWindowTitle(title + draft_string);
         }
@@ -2045,12 +2046,19 @@ bool QC_ApplicationWindow::slotFileExport(
 
     painter.eraseRect(0, 0, size.width(), size.height());
 
-    RS_StaticGraphicView gv(size.width(), size.height(), &painter, &borders);
-    gv.setBackground(black ? Qt::black : Qt::white);
-    gv.setContainer(graphic);
-    gv.zoomAuto(false);
-    gv.updateSettings(graphic);
-    gv.drawEntity(&painter, gv.getContainer());
+    // fixme - sand - rework to more generic printing (add progress or confirmation ?)
+
+    LC_GraphicViewport viewport = LC_GraphicViewport();
+    viewport.setSize(size.width(), size.height());
+    viewport.setBorders(borders.width(), borders.height(), borders.width(), borders.height());
+    viewport.setContainer(graphic);
+    viewport.zoomAuto(false);
+    viewport.loadSettings();
+
+    LC_PrintViewportRenderer renderer = LC_PrintViewportRenderer(&viewport, &painter);
+    renderer.setBackground(black ? Qt::black : Qt::white);
+    renderer.loadSettings();
+    renderer.render();
 
     // end the picture output
     if (format.toLower() != "svg") {
@@ -2243,7 +2251,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                 //generate a new print preview
                 RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): create");
 
-                auto *w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, {});
+                auto *w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, true);
                 mdiAreaCAD->addSubWindow(w);
                 parent->addChildWindow(w);
 
@@ -2251,8 +2259,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                 w->setWindowIcon(QIcon(":/main/document.png"));
                 QG_GraphicView *gv = w->getGraphicView();
                 gv->device = settings.value("Hardware/Device", "Mouse").toString();
-                gv->setPrintPreview(true);
-                gv->setBackground(RS_Color(255, 255, 255));
+//                gv->setBackground(RS_Color(255, 255, 255));
                 gv->setDefaultAction(new RS_ActionPrintPreview(*w->getDocument(), *w->getGraphicView()));
 
                 // only graphics offer block lists, blocks don't
@@ -2310,7 +2317,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                         RS_DEBUG->print("%s: don't call zoomPage()", __func__);
                     } else {
                         RS_DEBUG->print("%s: call zoomPage()", __func__);
-                        gv->zoomPage();
+                        gv->getViewPort()->zoomPage();
                     }
                 }
                 updateActionsAndWidgetsForPrintPreview(true);
@@ -2376,7 +2383,6 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
         if (ppv != nullptr){
             QG_GraphicView *printPreviewGraphicView = ppv->getGraphicView();
             printPreviewGraphicView->setDraftMode(toggle);
-            printPreviewGraphicView->redraw();
         }
         QString title = win->windowTitle();
 
@@ -2497,6 +2503,7 @@ void QC_ApplicationWindow::updateGrids() {
                 QG_GraphicView *gv = m->getGraphicView();
                 if (gv) {
                     // gv->updateGrid();
+                    gv->loadSettings();
                     gv->redraw(RS2::RedrawGrid);
                 }
             }
@@ -2542,7 +2549,8 @@ void QC_ApplicationWindow::setGridView(bool toggle, bool isometric, RS2::IsoGrid
                 if (isometric) {
                     graphic->setIsoView(isoGridType);
                 }
-                view->loadGridSettings();
+                LC_GraphicViewport* viewport = view->getViewPort();
+                viewport->loadGridSettings();
                 updateGridViewActions(isometric, isoGridType);
                 view->redraw();
                 view->update();

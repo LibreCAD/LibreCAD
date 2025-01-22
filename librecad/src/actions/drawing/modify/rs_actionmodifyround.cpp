@@ -141,7 +141,7 @@ void RS_ActionModifyRound::doTrigger() {
             }
 
             if (!foundPolyline){
-                for (auto *e: graphicView->getContainer()->getEntityList()) {
+                for (auto *e: container->getEntityList()) {
                     if ((e != entity1) && (e != entity2)){
                         if (removeOldFillet(e, foundPolyline))
                             break;

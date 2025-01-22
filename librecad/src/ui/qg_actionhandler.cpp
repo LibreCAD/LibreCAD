@@ -2021,13 +2021,9 @@ void QG_ActionHandler::slotLockRelativeZero(bool on){
 	   if (snap_toolbar) {
         snap_toolbar->setLockedRelativeZero(on);
     }
-//    if (on) {
     // calling view directly instead of action to ensure that button for action will not be unchecked after action init/finish
-    view->lockRelativeZero(on);
-//        setCurrentAction(RS2::ActionLockRelativeZero);
-//    } else {
-//        setCurrentAction(RS2::ActionUnlockRelativeZero);
-//    }
+    view->getViewPort()->lockRelativeZero(on);
+
 }
 
 void QG_ActionHandler::slotInfoInside() {

@@ -29,6 +29,7 @@
 #include "rs_settings.h"
 #include "rs_vector.h"
 #include "rs_units.h"
+#include "lc_graphicviewport.h"
 
 /*
  *  Constructs a QG_CoordinateWidget as a child of 'parent', with the
@@ -70,15 +71,17 @@ void QG_CoordinateWidget::setGraphic(RS_Graphic* graphic, RS_GraphicView *graphi
     this->graphic = graphic;
     this->graphicView = graphicView;
     if (graphic != nullptr) {
-        setCoordinates(graphicView->toWorld(RS_Vector(0.0, 0.0)), graphicView->toWorld(RS_Vector(0.0, 0.0)), true);
+//        setCoordinates(graphicView->toWorld(RS_Vector(0.0, 0.0)), graphicView->toWorld(RS_Vector(0.0, 0.0)), true);
+        setCoordinates(0.0, 0.0, 0.0, 0.0, true);
     }
 }
 
 void QG_CoordinateWidget::setCoordinates(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat) {
     double x, y, rx, ry;
     if (graphicView != nullptr){
-        graphicView->toUCS(abs, x,y);
-        graphicView->toUCSDelta(rel, rx, ry);
+        LC_GraphicViewport *viewport = graphicView->getViewPort();
+        viewport->toUCS(abs, x, y);
+        viewport->toUCSDelta(rel, rx, ry);
     }
     else{
         x = abs.x;

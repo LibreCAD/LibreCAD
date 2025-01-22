@@ -41,6 +41,7 @@
 #include "rs_actioninterface.h"
 #include "lc_linemath.h"
 #include "rs_snapper.h"
+#include "lc_graphicviewport.h"
 
 struct RS_ActionDefault::Points {
     RS_Vector v1;
@@ -79,7 +80,7 @@ namespace {
 RS_ActionDefault::RS_ActionDefault(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Default",
+    :LC_OverlayBoxAction("Default",
                                container, graphicView), pPoints(std::make_unique<Points>()), snapRestriction(RS2::RestrictNothing){
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
@@ -195,13 +196,13 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent *event){
                                         ? hoverToleranceFactor1
                                         : hoverToleranceFactor2;
 
-    const double hoverTolerance{hoverToleranceFactor / graphicView->getFactor().magnitude()};
+    const double hoverTolerance{hoverToleranceFactor / viewport->getFactor().magnitude()};
 
     double hoverTolerance_adjusted = ((entity->rtti() != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance))
                                      ? minimumHoverTolerance
                                      : hoverTolerance;
 
-    double screenTolerance = graphicView->toGraphDX((int)(0.01 * std::min(graphicView->getWidth(), graphicView->getHeight())));
+    double screenTolerance = toGraphDX((int)(0.01 * std::min(viewport->getWidth(), viewport->getHeight())));
     hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
     bool isPointOnEntity = false;
     RS_Vector currentMousePosition = toGraph(event);
@@ -260,12 +261,12 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
         case Dragging:{
             pPoints->v2 = mouse;
 
-            if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
+            if (toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
                 // look for reference points to drag:
                 double dist;
                 RS_EntityContainer::RefInfo refInfo = container->getNearestSelectedRefInfo(pPoints->v1, &dist);
                 RS_Vector ref = refInfo.ref;
-                if (ref.valid == true && graphicView->toGuiDX(dist) < 8){
+                if (ref.valid == true && toGuiDX(dist) < 8){
                     RS_DEBUG->print("RS_ActionDefault::mouseMoveEvent: moving reference point");
                     pPoints->refMovingEntity = refInfo.entity;
                     pPoints->v1 = ref;
@@ -544,9 +545,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
         case SetCorner2: {
             if (pPoints->v1.valid){
                 pPoints->v2 = mouse;
-                auto ob = new RS_OverlayBox(preview.get(),
-                                            RS_OverlayBoxData(pPoints->v1, pPoints->v2));
-                previewEntity(ob);
+                drawOverlayBox(pPoints->v1, pPoints->v2);
 
                 if (isInfoCursorForModificationEnabled()) {
                     bool cross = (pPoints->v1.x > pPoints->v2.x);
@@ -564,7 +563,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
             RS_Vector const vTarget{e->position()};
             RS_Vector const v01 = vTarget - pPoints->v1;
             if (v01.squared() >= 64.){
-                graphicView->zoomPan((int) v01.x, (int) v01.y);
+                viewport->zoomPan((int) v01.x, (int) v01.y);
                 pPoints->v1 = vTarget;
             }
             break;
@@ -774,7 +773,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                 }
                 goToNeutralStatus();
                 updateSelectionWidget();
-                graphicView->redraw();
+                redraw();
                 break;
             }
             default:

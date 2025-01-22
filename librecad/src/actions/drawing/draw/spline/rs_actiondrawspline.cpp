@@ -155,17 +155,12 @@ void RS_ActionDrawSpline::onMouseRightButtonRelease(int status, [[maybe_unused]]
 void RS_ActionDrawSpline::onCoordinateEvent(int status,  [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetStartPoint: {
-            //data.startpoint = mouse;
-            //point = mouse;
             pPoints->history.clear();
             pPoints->history.append(mouse);
             if (!pPoints->spline){
                 pPoints->spline = new RS_Spline(container, pPoints->data);
                 pPoints->spline->addControlPoint(mouse);
             }
-            //bHistory.clear();
-            //bHistory.append(new double(0.0));
-            //start = mouse;
             setStatus(SetNextPoint);
             moveRelativeZero(mouse);
             updateMouseButtonHints();
@@ -173,26 +168,13 @@ void RS_ActionDrawSpline::onCoordinateEvent(int status,  [[maybe_unused]]bool is
         }
         case SetNextPoint: {
             moveRelativeZero(mouse);
-            //point = mouse;
             pPoints->history.append(mouse);
-            //bHistory.append(new double(0.0));
             if (pPoints->spline){
-                //graphicView->deleteEntity(spline);
                 pPoints->spline->addControlPoint(mouse);
-                //spline->setEndpoint(mouse);
-                //if (spline->count()==1) {
-                //spline->setLayerToActive();
-                //spline->setPenToActive();
-                //container->addEntity(spline);
-                //}
                 deletePreview();
-                //graphicView->drawEntity(spline);
                 drawSnapper();
             }
-            //trigger();
-            //data.startpoint = data.endpoint;
             updateMouseButtonHints();
-            //graphicView->moveRelativeZero(mouse);
             break;
         }
         default:
@@ -312,7 +294,7 @@ void RS_ActionDrawSpline::undo(){
                 RS_Vector v = pPoints->history.last();
                 moveRelativeZero(v);
             }
-            graphicView->redraw(RS2::RedrawDrawing);
+            redrawDrawing();
 
         }
     } else {

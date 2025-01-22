@@ -63,5 +63,8 @@ void LC_UCSListOptions::save() const{
         LC_SET("ConfirmDelete", askForDeletionConfirmation);
         LC_SET("DoubleClickPolicy", doubleClickPolicy);
         // fixme - sand - ucs complete
+
+//        bool restoreViewBySingleClick= false;
+//        bool duplicatedNameReplacesSilently
     }
 }

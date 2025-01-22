@@ -135,7 +135,7 @@ bool LC_AbstractActionDrawRectangle::doCheckPolylineEntityAllowedInTrigger(int i
 void LC_AbstractActionDrawRectangle::doAfterTrigger(){
     LC_AbstractActionWithPreview::doAfterTrigger();
     shapeData.resultingPolyline = nullptr;
-    graphicView->redraw();
+    redraw();
 }
 
 /**

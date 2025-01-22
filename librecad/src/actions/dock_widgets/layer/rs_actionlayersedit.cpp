@@ -61,8 +61,7 @@ void RS_ActionLayersEdit::trigger() {
     finish(false);
 
     graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
-
-    graphicView->redraw(RS2::RedrawDrawing);
+    redrawDrawing();
 }
 
 void RS_ActionLayersEdit::init(int status) {

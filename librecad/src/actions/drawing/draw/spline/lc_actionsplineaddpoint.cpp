@@ -97,7 +97,7 @@ void LC_ActionSplineAddPoint::onMouseLeftButtonRelease(int status, QMouseEvent *
             if (entity != nullptr && mayModifySplineEntity(entity)){
                 entityToModify = entity;
                 entityToModify->setSelected(true);
-                graphicView->redraw(RS2::RedrawDrawing);
+                redrawDrawing();
                 setStatus(SetBeforeControlPoint);
             }
             break;

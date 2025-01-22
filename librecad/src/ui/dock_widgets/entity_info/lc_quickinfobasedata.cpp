@@ -20,9 +20,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include "lc_quickinfobasedata.h"
-#include "rs_graphic.h"
 #include "rs_units.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "lc_graphicviewport.h"
+#include "lc_quickinfobasedata.h"
 
 LC_QuickInfoBaseData::LC_QuickInfoBaseData()= default;
 
@@ -33,7 +35,7 @@ LC_QuickInfoBaseData::LC_QuickInfoBaseData()= default;
  */
 QString LC_QuickInfoBaseData::formatVector(const RS_Vector &vector) const{
     double ucsX, ucsY;
-    graphicView->toUCS(vector, ucsX, ucsY);
+    viewport->toUCS(vector, ucsX, ucsY);
 
     QString x = RS_Units::formatLinear(ucsX, m_unit, m_linearFormat, m_linearPrecision);
     QString y = RS_Units::formatLinear(ucsY, m_unit, m_linearFormat, m_linearPrecision);
@@ -44,7 +46,7 @@ QString LC_QuickInfoBaseData::formatVector(const RS_Vector &vector) const{
 
 QString LC_QuickInfoBaseData::formatDeltaVector(const RS_Vector &vector) const{
     double ucsX, ucsY;
-    graphicView->toUCSDelta(vector, ucsX, ucsY);
+    viewport->toUCSDelta(vector, ucsX, ucsY);
 
     QString x = RS_Units::formatLinear(ucsX, m_unit, m_linearFormat, m_linearPrecision);
     QString y = RS_Units::formatLinear(ucsY, m_unit, m_linearFormat, m_linearPrecision);
@@ -59,8 +61,8 @@ QString LC_QuickInfoBaseData::formatDeltaVector(const RS_Vector &vector) const{
  * @return
  */
 QString LC_QuickInfoBaseData::formatAngle(double angle){
-    if (graphicView->hasUCS()){
-        angle = graphicView->toUCSAngle(angle);
+    if (viewport->hasUCS()){
+        angle = viewport->toUCSAngle(angle);
     }
     return formatRawAngle(angle);
 }
@@ -117,10 +119,10 @@ QString LC_QuickInfoBaseData::getFormattedVectorForIndex(const int index) const{
  * @param doc
  * @param view
  */
-void LC_QuickInfoBaseData::setDocumentAndView(RS_Document *doc, QG_GraphicView *view){
+void LC_QuickInfoBaseData::setDocumentAndView(RS_Document *doc, LC_GraphicViewport *view){
     clear();
     document = doc;
-    graphicView = view;
+    viewport = view;
     updateFormats();
 }
 
@@ -182,7 +184,7 @@ void LC_QuickInfoBaseData::appendAbsolute(QString &result, const QString &label,
     result.append(label);
     result.append(": ");
     double ucsX, ucsY;
-    graphicView->toUCS(value, ucsX, ucsY);
+    viewport->toUCS(value, ucsX, ucsY);
     result.append(formatLinear(ucsX)).append(",").append(formatLinear(ucsY));
 }
 
@@ -191,7 +193,7 @@ void LC_QuickInfoBaseData::appendAbsoluteDelta(QString &result, const QString &l
     result.append(label);
     result.append(": ");
     double ucsX, ucsY;
-    graphicView->toUCSDelta(value, ucsX, ucsY);
+    viewport->toUCSDelta(value, ucsX, ucsY);
     result.append(formatLinear(ucsX)).append(",").append(formatLinear(ucsY));
 }
 
@@ -228,4 +230,8 @@ QString LC_QuickInfoBaseData::formatInt(const int &x) const{
     QString result;
     result.setNum(x);
     return result;
+}
+
+const RS_Vector &LC_QuickInfoBaseData::getRelativeZero() const {
+    return viewport->getRelativeZero();
 }

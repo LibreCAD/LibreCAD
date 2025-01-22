@@ -578,14 +578,3 @@ std::unique_ptr<LC_Parabola> LC_Parabola::approximateOffset(double dist) const
     LC_ParabolaData offsetData{controlPoints};
     return std::make_unique<LC_Parabola>(nullptr, offsetData);
 }
-
-
-// void LC_Parabola::LC_Parabola::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
-// {
-//     for (size_t i=0; i<2; ++i){
-//         RS_Line l0{nullptr, {data.controlPoints.at(i), data.controlPoints.at(i+1)}};
-//         l0.draw(painter, view, patternOffset);
-//     }
-//     LC_SplinePoints::draw(painter, view, patternOffset);
-// }
-

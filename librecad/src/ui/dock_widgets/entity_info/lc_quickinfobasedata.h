@@ -27,8 +27,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QString>
 #include <QCoreApplication>
 #include "rs_vector.h"
-#include "rs_document.h"
-#include "qg_graphicview.h"
+#include "rs.h"
+
+
+class LC_GraphicViewport;
+class RS_Document;
 
 class LC_QuickInfoBaseData{
     Q_DECLARE_TR_FUNCTIONS(LC_QuickInfoBaseData)
@@ -39,7 +42,7 @@ public:
     virtual bool updateForCoordinateViewMode(int mode) = 0;
     virtual void clear() = 0;
     virtual bool hasData() const = 0;
-    void setDocumentAndView(RS_Document *document, QG_GraphicView* view);
+    void setDocumentAndView(RS_Document *document, LC_GraphicViewport* view);
     void updateFormats(); // fixme - sand - this method should be called as soon as settings will be updated..
 
     int getCoordinatesMode() const{return coordinatesMode;};
@@ -57,7 +60,7 @@ public:
 
 protected:
     RS_Document* document = nullptr;
-    RS_GraphicView* graphicView = nullptr;
+    LC_GraphicViewport* viewport = nullptr;
     int coordinatesMode = COORD_ABSOLUTE;
 
     RS2::Unit m_unit;
@@ -86,6 +89,8 @@ protected:
     void appendInt(QString &result, const QString &label, const int& value);
     void appendValue(QString &result, const QString &label, const QString& value);
     QString formatRawAngle(double angle) const;
+
+    const RS_Vector& getRelativeZero() const;
 };
 
 #endif // LC_QUICKINFOBASEDATA_H

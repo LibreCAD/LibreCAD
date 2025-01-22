@@ -83,25 +83,17 @@ void RS_Selection::selectSingle(RS_Entity *e){
  */
 void RS_Selection::selectAll(bool select){
     if (graphicView){
-        //graphicView->deleteEntity(container);
-    }
-
-//container->setSelected(select);
-    for (auto e: *container) {
-        if (e && e->isVisible()){
-            if (graphicView->getTypeToSelect() == RS2::EntityType::EntityUnknown){
-                e->setSelected(select);
-            } else {
-                if (e->rtti() == graphicView->getTypeToSelect()){
+        for (auto e: *container) {
+            if (e && e->isVisible()){
+                if (graphicView->getTypeToSelect() == RS2::EntityType::EntityUnknown){
                     e->setSelected(select);
+                } else {
+                    if (e->rtti() == graphicView->getTypeToSelect()){
+                        e->setSelected(select);
+                    }
                 }
             }
-
         }
-    }
-
-    if (graphicView){
-        //graphicView->drawEntity(container);
         graphicView->redraw();
     }
 }
@@ -110,19 +102,13 @@ void RS_Selection::selectAll(bool select){
  * Selects all entities on visible layers.
  */
 void RS_Selection::invertSelection(){
-    if (graphicView){
-        //graphicView->deleteEntity(container);
-    }
-
     for (auto e: *container) {
-
         if (e && e->isVisible()){
             e->toggleSelected();
         }
     }
 
     if (graphicView){
-        //graphicView->drawEntity(container);
         graphicView->redraw();
     }
 }

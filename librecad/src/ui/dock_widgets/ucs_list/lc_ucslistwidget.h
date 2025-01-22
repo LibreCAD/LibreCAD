@@ -38,6 +38,7 @@ class LC_UCSListWidget;
 }
 
 class LC_UCSListButton;
+class LC_GraphicViewport;
 
 class LC_UCSListWidget : public QWidget, LC_UCSListListener{
     Q_OBJECT
@@ -82,6 +83,7 @@ protected:
     QAction* createUCSAction {nullptr};
     QMdiSubWindow* window {nullptr};
     RS_GraphicView *graphicView {nullptr};
+    LC_GraphicViewport *viewport {nullptr};
 
     RS2::LinearFormat linearFormat;
     RS2::AngleFormat angleFormat;

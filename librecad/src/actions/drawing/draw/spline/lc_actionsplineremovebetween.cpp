@@ -101,7 +101,7 @@ void LC_ActionSplineRemoveBetween::onMouseLeftButtonRelease(int status, QMouseEv
                         break;
                 }
 
-                graphicView->redraw(RS2::RedrawDrawing);
+                redrawDrawing();
                 setStatus(SetBeforeControlPoint);
             }
             break;

@@ -76,13 +76,13 @@ void LC_ActionPenPick::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
             graphicView->back();
         }
     }
-    graphicView->redraw();
+    redraw();
 }
 
 void LC_ActionPenPick::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     finish(true);
     initPrevious(status);
-    graphicView->redraw();
+    redraw();
 }
 
 void LC_ActionPenPick::updateMouseButtonHints(){

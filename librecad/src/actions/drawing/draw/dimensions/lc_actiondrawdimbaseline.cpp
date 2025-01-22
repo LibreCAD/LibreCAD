@@ -365,7 +365,7 @@ bool LC_ActionDrawDimBaseline::doProcessCommand(int status, const QString &c) {
         case SetText: {
             setText(c);
             updateOptions();
-            graphicView->enableCoordinateInput();
+            enableCoordinateInput();
             setStatus(lastStatus);
             accept = true;
             break;
@@ -374,7 +374,7 @@ bool LC_ActionDrawDimBaseline::doProcessCommand(int status, const QString &c) {
             lastStatus = (Status) getStatus();
             deletePreview();
             if (checkCommand("text", c)) {
-                graphicView->disableCoordinateInput();
+                disableCoordinateInput();
                 setStatus(SetText);
                 accept = true;
             }

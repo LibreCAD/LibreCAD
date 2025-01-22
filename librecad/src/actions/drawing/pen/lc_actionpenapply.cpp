@@ -124,7 +124,7 @@ void LC_ActionPenApply::onMouseLeftButtonRelease([[maybe_unused]]int status, QMo
             }
         }
     }
-    graphicView->redraw();
+    redraw();
 }
 
 void LC_ActionPenApply::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
@@ -146,7 +146,7 @@ void LC_ActionPenApply::onMouseRightButtonRelease(int status, [[maybe_unused]]QM
         default:
             break;
     }
-    graphicView->redraw();
+    redraw();
 }
 
 void LC_ActionPenApply::updateMouseButtonHints(){

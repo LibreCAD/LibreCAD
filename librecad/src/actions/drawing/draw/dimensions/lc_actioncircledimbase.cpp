@@ -161,12 +161,12 @@ bool LC_ActionCircleDimBase::doProcessCommand(int status, const QString &c) {
     if (status == SetText) {
         setText(c);
         updateOptions();
-        graphicView->enableCoordinateInput();
+        enableCoordinateInput();
         setStatus(lastStatus);
         accept = true;
     } else if (checkCommand("text", c)) { // command: text
         lastStatus = (Status) status;
-        graphicView->disableCoordinateInput();
+        disableCoordinateInput();
         setStatus(SetText);
         accept = true;
     } else if (status == SetPos) {// setting angle

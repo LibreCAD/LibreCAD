@@ -78,8 +78,7 @@ void RS_ActionBlocksCreate::trigger() {
         }
     }
 
-    graphicView->redraw(RS2::RedrawDrawing);
-
+    redrawDrawing();
     setStatus(getStatus()+1); // clear mouse button hints
     updateMouseButtonHints();
     graphicView->killSelectActions();

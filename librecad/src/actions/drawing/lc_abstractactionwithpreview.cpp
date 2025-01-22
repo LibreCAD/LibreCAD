@@ -110,7 +110,7 @@ void LC_AbstractActionWithPreview::init(int status){
             if (isUnselectEntitiesOnInitTrigger()){
                 unSelectEntities(selectedEntities);
             }
-            graphicView->redraw(RS2::RedrawDrawing);
+            redrawDrawing();
         }
         selectedEntities.clear();
     }
@@ -431,7 +431,7 @@ void LC_AbstractActionWithPreview::highlightEntity(RS_Entity* en){
     unHighlightEntity();
     highlightedEntity = en;
     highlightedEntity->setHighlighted(true);
-    graphicView->drawEntity(highlightedEntity);
+    redraw(RS2::RedrawDrawing);
 }
 
 /**
@@ -440,7 +440,7 @@ void LC_AbstractActionWithPreview::highlightEntity(RS_Entity* en){
 void LC_AbstractActionWithPreview::unHighlightEntity(){
     if(highlightedEntity){
         highlightedEntity->setHighlighted(false);
-        graphicView->drawEntity(highlightedEntity);
+        redraw(RS2::RedrawDrawing);
         highlightedEntity = nullptr;
     }
 }
@@ -452,7 +452,7 @@ void LC_AbstractActionWithPreview::unHighlightEntity(){
  */
 void LC_AbstractActionWithPreview::highlightEntityExplicit(RS_Entity* en, bool highlight){
     en->setHighlighted(highlight);
-    graphicView->drawEntity(highlightedEntity);
+    redraw(RS2::RedrawDrawing);
 }
 
 /**
@@ -488,7 +488,7 @@ void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
         else{
             drawPreview(); // ensure that preview is refreshed if something (like angle snap mark) is there
         }
-        graphicView->redraw();
+        redraw();
     }
     else{
         updateSnapperAndCoordinateWidget(e, status);
@@ -527,7 +527,7 @@ void LC_AbstractActionWithPreview::checkPreSnapToRelativeZero(int status, QMouse
     if (doCheckMouseEventValidForInitialSnap(e)){ // do pre-snap if SHIFT Pressed
         // check whether status is valid for pre-snap
         if (status == doGetStatusForInitialSnapToRelativeZero()){
-            RS_Vector relZero = graphicView->getRelativeZero();
+            RS_Vector relZero = getRelativeZero();
             if (relZero.valid){
                 // do actual pre-snap in delegate
                 doInitialSnapToRelativeZero(relZero);
@@ -606,7 +606,7 @@ void LC_AbstractActionWithPreview::drawPreviewForLastPoint(){
     if (lastSnapPoint.valid){
         if (doCheckMayDrawPreview(nullptr, getStatus())){
             drawPreviewForPoint(nullptr, lastSnapPoint);
-            graphicView->redraw();
+            redraw();
         }
     }
 }

@@ -152,7 +152,7 @@ QVariant LC_NamedViewsModel::data(const QModelIndex &index, int role) const {
         case Qt::DisplayRole: {
             switch (col){
                 case NAME:{
-                    QString displayName = view->view->getName();
+                    QString displayName = view->displayName;
                     return displayName;
                 }
                 case  VIEW_INFO:{
@@ -297,6 +297,10 @@ void LC_NamedViewsModel::updateViewsUCSNames(LC_UCSList *ucsList) {
     }
 }
 
+void LC_NamedViewsModel::clear(){
+    views.clear();
+}
+
 QString LC_NamedViewsModel::getGridViewType(int orthoType){
     switch (orthoType) {
         case LC_UCS::FRONT:
@@ -328,6 +332,14 @@ void LC_NamedViewsModel::setupViewItem(LC_View *view, LC_NamedViewsModel::ViewIt
     result->typeIcon = getTypeIcon(view);
     result->ucsTypeIcon  = getUCSTypeIcon(view);
     result->gridTypeIcon = getGridTypeIcon(view);
+
+
+    QString name = view->getName();
+    if (name.isEmpty()){
+        name = tr("<No name>");
+    }
+
+    result->displayName = name;
 
     QString centerX = RS_Units::formatLinear(view->getCenter().x, unit, linearFormat, prec);
     QString centerY = RS_Units::formatLinear(view->getCenter().y, unit, linearFormat, prec);
@@ -376,7 +388,7 @@ void LC_NamedViewsModel::setupViewItem(LC_View *view, LC_NamedViewsModel::ViewIt
     }
     QString viewGridType = getGridViewType(orthoType);
 
-    QString toolTip = QString(tr("Name: ")).append("<b>").append(view->getName()).append("</b><br>")
+    QString toolTip = QString(tr("Name: ")).append("<b>").append(name).append("</b><br>")
         .append(tr("Center X: ")).append("<b>").append(centerX).append("</b><br>")
         .append(tr("Center Y: ")).append("<b>").append(centerY).append("</b><br>")
         .append(tr("Width: ")).append("<b>").append(sizeX).append("</b><br>")
@@ -389,8 +401,6 @@ void LC_NamedViewsModel::setupViewItem(LC_View *view, LC_NamedViewsModel::ViewIt
         QString ucsOriginX = RS_Units::formatLinear(ucs->getOrigin().x, unit, linearFormat, prec);
         QString ucsOriginY = RS_Units::formatLinear(ucs->getOrigin().y, unit, linearFormat, prec);
         QString ucsAngle = RS_Units::formatAngle(ucs->getXAxis().angle(), angleFormat, anglePrec);
-
-        const QString &name = ucs->getName();
 
         toolTip.append(tr("UCS: ")).append("<b>").append(ucsType).append("</b><br>")
             .append(tr("UCS Name: ")).append("<b>").append(name).append("</b><br>")

@@ -95,7 +95,7 @@ bool RS_ActionDimLinear::doProcessCommand(int status, const QString &c) {
         case SetText: {
             setText(c);
             updateOptions();
-            graphicView->enableCoordinateInput();
+            enableCoordinateInput();
             setStatus(lastStatus);
             accept = true;
             break;
@@ -117,7 +117,7 @@ bool RS_ActionDimLinear::doProcessCommand(int status, const QString &c) {
             lastStatus = (Status) getStatus();
             deletePreview();
             if (checkCommand("text", c)){
-                graphicView->disableCoordinateInput();
+                disableCoordinateInput();
                 setStatus(SetText);
                 accept = true;
             } else if (!fixedAngle && (checkCommand("angle", c))){

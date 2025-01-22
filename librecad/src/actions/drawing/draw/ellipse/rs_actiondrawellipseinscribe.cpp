@@ -59,7 +59,7 @@ void RS_ActionDrawEllipseInscribe::clearLines(bool checkStatus){
         pPoints->lines.back()->setHighlighted(false);
         pPoints->lines.pop_back();
     }
-    graphicView->redraw();
+    redrawDrawing();
 }
 
 void RS_ActionDrawEllipseInscribe::init(int status){
@@ -229,8 +229,6 @@ void RS_ActionDrawEllipseInscribe::onMouseRightButtonRelease(int status, [[maybe
     // Return to last status:
     if (status > 0){
         clearLines(true);
-//            pPoints->lines.back()->setHighlighted(false);
-//            graphicView->drawEntity(pPoints->lines.back());
         pPoints->lines.pop_back();
         deletePreview();
     }

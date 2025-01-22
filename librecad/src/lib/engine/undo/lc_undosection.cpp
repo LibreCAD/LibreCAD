@@ -25,11 +25,10 @@
 
 #include "lc_undosection.h"
 #include "rs_document.h"
-#include "rs_graphicview.h"
-
-LC_UndoSection::LC_UndoSection(RS_Document *doc, RS_GraphicView* view, const bool handleUndo /*= true*/) :
+#include "lc_graphicviewport.h"
+LC_UndoSection::LC_UndoSection(RS_Document *doc, LC_GraphicViewport* view, const bool handleUndo /*= true*/) :
     document( doc),
-    graphicView(view),
+    viewport(view),
     valid( handleUndo && nullptr != doc && nullptr != view){
     if (valid) {
         document->startUndoCycle();
@@ -38,7 +37,7 @@ LC_UndoSection::LC_UndoSection(RS_Document *doc, RS_GraphicView* view, const boo
 
 LC_UndoSection::~LC_UndoSection(){
     if (valid) {
-        RS_Undoable *relativeZeroUndoable = graphicView->getRelativeZeroUndoable();
+        RS_Undoable *relativeZeroUndoable = viewport->getRelativeZeroUndoable();
         if (relativeZeroUndoable != nullptr) {
             document->addUndoable(relativeZeroUndoable);
         }

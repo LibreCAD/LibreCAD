@@ -36,8 +36,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_flexlayout.h"
 #include "rs_dialogfactory.h"
-#include "lc_quickinfowidgetoptionsdialog.h"
 #include "rs_settings.h"
+#include "lc_quickinfowidgetoptionsdialog.h"
+#include "lc_graphicviewport.h"
 
 // todo - discover generic way for reliable refresh of entity info widget if entity editing properties/attributes is performed outside of outside of widget
 // (via normal editing actions, mouse operations or custom actions)
@@ -422,7 +423,7 @@ void LC_QuickInfoWidget::onAnchorHighlighted(const QUrl &link){
  */
 void LC_QuickInfoWidget::onAnchorUnHighlighted(){
     if (hasOwnPreview){
-        RS_EntityContainer *container = graphicView->getOverlayContainer(RS2::ActionPreviewEntity);
+        RS_EntityContainer *container = graphicView->getViewPort()->getOverlayEntitiesContainer(RS2::ActionPreviewEntity);
         container->clear();
         graphicView->redraw(RS2::RedrawOverlay);
         hasOwnPreview = false;
@@ -449,7 +450,7 @@ void LC_QuickInfoWidget::processURLCommand(const QString &path, int index){
     if (path == "zero"){ // move relative zero to needed coordinate
         RS_Vector data = retrievePositionForModelIndex(index);
         if (data.valid){
-            graphicView->moveRelativeZero(data);
+            graphicView->getViewPort()->moveRelativeZero(data);
         }
     }
     else if (path == "val"){ // copy value to Cmd widget
@@ -509,7 +510,7 @@ QString LC_QuickInfoWidget::retrievePositionStringForModelIndex(int index) const
  */
 void LC_QuickInfoWidget::drawPreviewPoint(const RS_Vector& vector) {
 
-    RS_EntityContainer *container =graphicView->getOverlayContainer(RS2::ActionPreviewEntity);
+    RS_EntityContainer *container = graphicView->getViewPort()->getOverlayEntitiesContainer(RS2::ActionPreviewEntity);
     container->clear();
     // Little hack for now so we don't delete the preview twice
     container->setOwner(false);
@@ -708,18 +709,21 @@ void LC_QuickInfoWidget::setDocumentAndView(RS_Document *doc, QG_GraphicView* v)
 
     // add tracking of relative point for new view
     if (v != nullptr){
-        connect(v, SIGNAL(relative_zero_changed(const RS_Vector&)),
-                this, SLOT(onRelativeZeroChanged(const RS_Vector&)));
+        connect(v, &RS_GraphicView::relativeZeroChanged, this, &LC_QuickInfoWidget::onRelativeZeroChanged);
     }
     // remove tracking of relative point from old view
     if (graphicView != nullptr && graphicView != v){
-        disconnect(graphicView, SIGNAL(relative_zero_changed(const RS_Vector&)), this,SLOT(onRelativeZeroChanged(const RS_Vector&)));
+        disconnect(graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_QuickInfoWidget::onRelativeZeroChanged);
     }
     // do setup
     document = doc;
     graphicView = v;
-    entityData.setDocumentAndView(doc, v);
-    pointsData.setDocumentAndView(doc, v);
+    LC_GraphicViewport* viewport = nullptr;   // fixme - ucs - review
+    if (v != nullptr){
+        viewport = v->getViewPort();
+    }
+    entityData.setDocumentAndView(doc, viewport);
+    pointsData.setDocumentAndView(doc, viewport);
     showNoDataMessage();
     hasOwnPreview = false;
 }

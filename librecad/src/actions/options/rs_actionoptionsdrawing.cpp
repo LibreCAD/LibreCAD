@@ -51,7 +51,7 @@ void RS_ActionOptionsDrawing::trigger() {
             updateCoordinateWidgetFormat();
             if (graphicView != nullptr) {
                 graphicView->loadSettings();
-                graphicView->redraw(RS2::RedrawAll);
+                redraw();
                 graphicView->repaint();
             }
             else{

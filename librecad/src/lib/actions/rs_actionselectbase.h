@@ -23,14 +23,14 @@
 #ifndef RS_ACTIONSELECTBASE_H
 #define RS_ACTIONSELECTBASE_H
 
-#include "rs_previewactioninterface.h"
+#include "lc_overlayboxaction.h"
 
 /**
  * This class is the base class to all select actions.
  *
  * @author Andrew Mustun
  */
-class RS_ActionSelectBase:public RS_PreviewActionInterface {
+class RS_ActionSelectBase:public LC_OverlayBoxAction {
 Q_OBJECT
 
 public:

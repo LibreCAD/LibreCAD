@@ -166,6 +166,7 @@ LC_ActionOptionsWidget* RS_ActionDimension::createOptionsWidget(){
     return new QG_DimOptions();
 }
 
+// FIXME - sand - REWORK
 void RS_ActionDimension::readSettings() {
     previewShowsFullDimension = LC_GET_ONE_BOOL("Appearance", "PreviewFullDimOnExt2", true);
 }

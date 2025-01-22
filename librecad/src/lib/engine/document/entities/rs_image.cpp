@@ -41,46 +41,45 @@
 namespace
 {
 // Return the file path name to use relative to the dxf file folder
-QString imageRelativePathName(QString& imageFile)
-{
-    auto* doc = QC_ApplicationWindow::getAppWindow()->getDocument();
-    if (doc == nullptr || imageFile.isEmpty())
-        return imageFile;
-    QFileInfo dxfFileInfo(doc->getFilename());
-    QFileInfo fileInfo(imageFile);
-    // file exists as input file path
-    if (fileInfo.exists()) {
-        QDir dxfDir(dxfFileInfo.canonicalPath());
-        imageFile = dxfDir.relativeFilePath(imageFile);
-        return fileInfo.canonicalFilePath();
+    QString imageRelativePathName(QString& imageFile){
+        auto* doc = QC_ApplicationWindow::getAppWindow()->getDocument();
+        if (doc == nullptr || imageFile.isEmpty())
+            return imageFile;
+        QFileInfo dxfFileInfo(doc->getFilename());
+        QFileInfo fileInfo(imageFile);
+        // file exists as input file path
+        if (fileInfo.exists()) {
+            QDir dxfDir(dxfFileInfo.canonicalPath());
+            imageFile = dxfDir.relativeFilePath(imageFile);
+            return fileInfo.canonicalFilePath();
+        }
+        // test a relative file path from the dxf file folder
+        fileInfo.setFile(dxfFileInfo.canonicalPath() + "/" + imageFile);
+        if (fileInfo.exists())
+            return fileInfo.canonicalFilePath();
+        // search the current folder of the dxf for the dxf file name
+        return dxfFileInfo.canonicalPath() + "/" + fileInfo.fileName();
     }
-    // test a relative file path from the dxf file folder
-    fileInfo.setFile(dxfFileInfo.canonicalPath() + "/" + imageFile);
-    if (fileInfo.exists())
-        return fileInfo.canonicalFilePath();
-    // search the current folder of the dxf for the dxf file name
-    return dxfFileInfo.canonicalPath() + "/" + fileInfo.fileName();
-}
 }
 
 RS_ImageData::RS_ImageData(int _handle,
-						   const RS_Vector& _insertionPoint,
-						   const RS_Vector& _uVector,
-						   const RS_Vector& _vVector,
-						   const RS_Vector& _size,
-						   const QString& _file,
-						   int _brightness,
-						   int _contrast,
-						   int _fade):
-	handle(_handle)
-  , insertionPoint(_insertionPoint)
-  , uVector(_uVector)
-  , vVector(_vVector)
-  , size(_size)
-  , file(_file)
-  , brightness(_brightness)
-  , contrast(_contrast)
-  , fade(_fade){
+                           const RS_Vector& _insertionPoint,
+                           const RS_Vector& _uVector,
+                           const RS_Vector& _vVector,
+                           const RS_Vector& _size,
+                           const QString& _file,
+                           int _brightness,
+                           int _contrast,
+                           int _fade):
+    handle(_handle)
+    , insertionPoint(_insertionPoint)
+    , uVector(_uVector)
+    , vVector(_vVector)
+    , size(_size)
+    , file(_file)
+    , brightness(_brightness)
+    , contrast(_contrast)
+    , fade(_fade){
 }
 
 std::ostream& operator << (std::ostream& os, const RS_ImageData& ld) {
@@ -93,15 +92,14 @@ std::ostream& operator << (std::ostream& os, const RS_ImageData& ld) {
  */
 RS_Image::RS_Image(RS_EntityContainer* parent,
                    const RS_ImageData& d)
-        :RS_AtomicEntity(parent), data(d) {
-
+    :RS_AtomicEntity(parent), data(d) {
     update();
     calculateBorders();
 }
 
 RS_Entity* RS_Image::clone() const {
     RS_Image* i = new RS_Image(*this);
-        i->setHandle(getHandle());
+    i->setHandle(getHandle());
     i->initId();
     i->update();
     return i;
@@ -116,7 +114,6 @@ void RS_Image::updateData(RS_Vector size, RS_Vector Uv, RS_Vector Vv) {
 }
 
 void RS_Image::update() {
-
     RS_DEBUG->print("RS_Image::update");
 
     // the whole image:
@@ -169,7 +166,6 @@ void RS_Image::update() {
 }
 
 void RS_Image::calculateBorders() {
-
     RS_VectorSolutions sol = getCorners();
     minV =  RS_Vector::minimum(
         RS_Vector::minimum(sol.get(0), sol.get(1)),
@@ -183,14 +179,10 @@ void RS_Image::calculateBorders() {
 
 RS_VectorSolutions RS_Image::getCorners() const {
     RS_VectorSolutions sol(4);
-
     sol.set(0, data.insertionPoint);
-    sol.set(1,
-            data.insertionPoint + data.uVector*RS_Math::round(data.size.x));
-    sol.set(3,
-            data.insertionPoint + data.vVector*RS_Math::round(data.size.y));
+    sol.set(1,data.insertionPoint + data.uVector*RS_Math::round(data.size.x));
+    sol.set(3,data.insertionPoint + data.vVector*RS_Math::round(data.size.y));
     sol.set(2, sol.get(3) + data.uVector*RS_Math::round(data.size.x));
-
     return sol;
 }
 
@@ -270,8 +262,6 @@ RS_Vector RS_Image::getNearestMiddle(const RS_Vector& coord,
     return getNearestCenter(coord, dist);
 }
 
-
-
 RS_Vector RS_Image::getNearestDist(double distance,
                                    const RS_Vector& coord,
                                    double* dist) const{
@@ -301,10 +291,9 @@ double RS_Image::getDistanceToPoint(const RS_Vector& coord,
 
     //allow selecting image by clicking within images, bug#3464626
     if(containsPoint(coord)){
-//if coord is on image
-
-        bool draftMode = LC_GET_ONE_BOOL("Appearance", "DraftMode"); // fixme - review why it's picked from settings and not from graphic view
-
+        //if coord is on image
+        // fixme - sand - review why it's picked from settings and not from graphic view
+        bool draftMode = LC_GET_ONE_BOOL("Appearance", "DraftMode");
         if(!draftMode) return double(0.);
     }
     //continue to allow selecting by image edges
@@ -320,14 +309,10 @@ double RS_Image::getDistanceToPoint(const RS_Vector& coord,
     return minDist;
 }
 
-
-
 void RS_Image::move(const RS_Vector& offset) {
     data.insertionPoint.move(offset);
     moveBorders(offset);
 }
-
-
 
 void RS_Image::rotate(const RS_Vector& center, const double& angle) {
     RS_Vector angleVector(angle);
@@ -344,15 +329,12 @@ void RS_Image::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     calculateBorders();
 }
 
-
 void RS_Image::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.insertionPoint.scale(center, factor);
     data.uVector.scale(factor);
     data.vVector.scale(factor);
     scaleBorders(center,factor);
 }
-
-
 
 void RS_Image::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     data.insertionPoint.mirror(axisPoint1, axisPoint2);
@@ -363,41 +345,31 @@ void RS_Image::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
     calculateBorders();
 }
 
+void RS_Image::draw(RS_Painter* painter) {
+    if (!img.get() || img->isNull()) {
+        return;
+    }
+    // fixme - sand - ucs - fix of rotation of image for ucs!!!
+    painter->drawImgWCS(*img, data.insertionPoint, data.uVector, data.vVector);
 
-
-void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-	if (/*!(painter && view) || */!img.get() || img->isNull())
-		return;
-
-    // erase image:
-    //if (painter->getPen().getColor()==view->getBackground()) {
-    //	RS_VectorSolutions sol = getCorners();
-    //
-    //}
-
-	RS_Vector scale{view->toGuiDX(data.uVector.magnitude()),
-								view->toGuiDY(data.vVector.magnitude())};
-
-    painter->drawImg(*img,
-                     view->toGui(data.insertionPoint),
-                     data.uVector, data.vVector, scale);
-
-    if (isSelected() && !(view->isPrinting() || view->isPrintPreview())) {
+    if (isSelected() && !(painter->isPrinting() || painter->isPrintPreview())) {
         RS_VectorSolutions sol = getCorners();
         for (size_t i = 0; i < sol.size(); ++i){
             size_t const j = (i+1)%sol.size();
-            painter->drawLine(view->toGui(sol.get(i)), view->toGui(sol.get(j)));
+            painter->drawLineWCS(sol.get(i), sol.get(j));
         }
     }
 }
 
-void RS_Image::drawDraft(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset) {
-    const RS_Vector &uiMin = view->toGui(getMin());
-    const RS_Vector &uiMax = view->toGui(getMax());
+void RS_Image::drawDraft(RS_Painter *painter) {
+
+    // fixme - sand - ucs - RESTORE and fix image draft drawing!!!
+    /*const RS_Vector &uiMin = painter->toGui(getMin());
+    const RS_Vector &uiMax = painter->toGui(getMax());
     painter->drawRect(uiMin, uiMax);
 
     painter->drawLine(uiMin.x, uiMin.y, uiMax.x, uiMax.y);
-    painter->drawLine(uiMin.x, uiMax.y, uiMax.x, uiMin.y);
+    painter->drawLine(uiMin.x, uiMax.y, uiMax.x, uiMin.y);*/
 }
 
 /**

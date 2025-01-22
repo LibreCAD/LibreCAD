@@ -79,7 +79,7 @@ void RS_ActionDrawCircleTan2::finish(bool updateTB){
                 p->setHighlighted(false);
             }
         }
-        graphicView->redraw(RS2::RedrawDrawing);
+        redrawDrawing();
         pPoints->circles.clear();
     }
     RS_PreviewActionInterface::finish(updateTB);
@@ -258,7 +258,7 @@ void RS_ActionDrawCircleTan2::onMouseRightButtonRelease(int status, [[maybe_unus
     if (getStatus() > 0){
 //            pPoints->circles[getStatus() - 1]->setHighlighted(false);
         pPoints->circles.pop_back();
-        graphicView->redraw(RS2::RedrawDrawing);
+        redrawDrawing();
         deletePreview();
     }
     initPrevious(status);

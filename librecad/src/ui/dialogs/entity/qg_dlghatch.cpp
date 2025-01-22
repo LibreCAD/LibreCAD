@@ -32,6 +32,7 @@
 #include "rs_patternlist.h"
 #include "rs_pattern.h"
 #include "rs_math.h"
+#include "lc_graphicviewport.h"
 
 
 /*
@@ -60,7 +61,8 @@ void QG_DlgHatch::languageChange(){
 void QG_DlgHatch::init() {
     preview = std::make_unique<RS_EntityContainer>();
     gvPreview->setContainer(preview.get());
-    gvPreview->setBorders(15,15,15,15);
+    gvPreview->getViewPort()->setBorders(15,15,15,15);
+    gvPreview->initView();
     gvPreview->addScrollbars();
     gvPreview->loadSettings();
 //    gvPreview->setHasNoGrid(false);
@@ -191,18 +193,6 @@ void QG_DlgHatch::updatePreview() {
 }
 
 void QG_DlgHatch::addRectangle(RS_Pen pen, RS_Vector const &v0, RS_Vector const &v1, RS_EntityContainer* container){
-   /* RS_Polyline* polyline = new RS_Polyline(container);
-    polyline->setPen(pen);
-
-    polyline->addVertex(v0);
-    polyline->addVertex({v1.x, v0.y});
-    polyline->addVertex(v1);
-    polyline->addVertex({v0.x, v1.y});
-    polyline->addVertex(v0);
-//    polyline->setClosed(true);
-    container->addEntity(polyline);*/
-
-
     container->addEntity(new RS_Line{container, v0, {v1.x, v0.y}});
     container->addEntity(new RS_Line{container, {v1.x, v0.y}, v1});
     container->addEntity(new RS_Line{container, v1, {v0.x, v1.y}});

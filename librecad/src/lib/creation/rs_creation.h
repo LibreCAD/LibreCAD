@@ -48,6 +48,7 @@ struct RS_InsertData;
 class RS_Insert;
 class RS_Block;
 class QString;
+class LC_GraphicViewport;
 
 /**
  * Data needed to insert library items.
@@ -155,6 +156,7 @@ protected:
     RS_Graphic* graphic = nullptr;
     RS_Document* document = nullptr;
     RS_GraphicView* graphicView = nullptr;
+    LC_GraphicViewport*  viewport;
     bool handleUndo = false;
 private:
     void setupAndAddEntity(RS_Entity* en) const;

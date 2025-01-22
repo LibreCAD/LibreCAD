@@ -116,13 +116,7 @@ void RS_ActionDrawMText::mouseMoveEvent(QMouseEvent *e){
 
     if (getStatus() == SetPos){
         RS_Vector mouse = snapPoint(e);
-        bool shiftPressed = isShift(e);
-        if (shiftPressed){
-            RS_Vector relZero = graphicView->getRelativeZero();
-            if (relZero.valid){
-               mouse = relZero;
-            }
-        }
+        mouse = getRelZeroAwarePoint(e, mouse);
         RS_Vector mov = mouse - *pos;
         *pos = mouse;
         if (textChanged || pos->valid == false || preview->isEmpty()){
@@ -167,7 +161,7 @@ bool RS_ActionDrawMText::doProcessCommand(int status, const QString &c) {
         case SetPos: {
             if (checkCommand("text", c)){
                 deletePreview();
-                graphicView->disableCoordinateInput();
+                disableCoordinateInput();
                 setStatus(SetText);
                 accept = true;
             }
@@ -176,7 +170,7 @@ bool RS_ActionDrawMText::doProcessCommand(int status, const QString &c) {
         case SetText: {
             setText(c);
             updateOptions();
-            graphicView->enableCoordinateInput();
+            enableCoordinateInput();
             setStatus(SetPos);
             accept = true;
             break;

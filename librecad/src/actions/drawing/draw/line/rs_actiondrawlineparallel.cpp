@@ -150,9 +150,7 @@ bool RS_ActionDrawLineParallel::doProcessCommand(int status, const QString &c) {
             if (checkCommand("through", c)){
                 finish(false);
                 accept = true;
-                graphicView->setCurrentAction(
-                    new RS_ActionDrawLineParallelThrough(*container,
-                                                         *graphicView));
+                graphicView->setCurrentAction(new RS_ActionDrawLineParallelThrough(*container,*graphicView));
             } else if (checkCommand("number", c)){
                 deletePreview();
                 setStatus(SetNumber);

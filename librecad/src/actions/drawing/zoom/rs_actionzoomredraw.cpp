@@ -45,6 +45,6 @@ void RS_ActionZoomRedraw::init(int status) {
 }
 
 void RS_ActionZoomRedraw::trigger() {
-    graphicView->redraw();
+    redraw();
     finish(false);
 }

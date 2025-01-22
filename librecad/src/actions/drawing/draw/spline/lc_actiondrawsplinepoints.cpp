@@ -283,7 +283,7 @@ void LC_ActionDrawSplinePoints::undo(){
             v = splinePts.back();
             moveRelativeZero(v);
         }
-        graphicView->redraw(RS2::RedrawDrawing);
+        redrawDrawing();
         drawPreview();
     } else {
         commandMessage(tr("Cannot undo: Not enough entities defined yet."));
@@ -300,7 +300,7 @@ void LC_ActionDrawSplinePoints::redo(){
         setStatus(SetNextPoint);
         v = pPoints->data.splinePoints.back();
         moveRelativeZero(v);
-        graphicView->redraw(RS2::RedrawDrawing);
+        redrawDrawing();
     } else {
         commandMessage(tr("Cannot undo: Nothing could be redone."));
     }

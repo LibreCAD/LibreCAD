@@ -61,7 +61,7 @@ void RS_ActionLayersTogglePrint::trigger() {
             deselectEntities(a_layer);
         }
     }
-    graphicView->redraw();
+    redrawDrawing();
     finish(false);
 }
 

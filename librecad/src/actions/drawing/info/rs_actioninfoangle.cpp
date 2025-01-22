@@ -115,7 +115,7 @@ void RS_ActionInfoAngle::doTrigger() {
                         str += formatAngle(angle + 2. * M_PI);
                     }
 
-                    RS_Vector relPoint = graphicView->getRelativeZero();
+                    RS_Vector relPoint = getRelativeZero(); // fixme - ucs - review this, why relative zero is invoked there?
                     RS_Vector intersectRel;
                     if (relPoint.valid) {
                         intersectRel = pPoints->intersection - relPoint;

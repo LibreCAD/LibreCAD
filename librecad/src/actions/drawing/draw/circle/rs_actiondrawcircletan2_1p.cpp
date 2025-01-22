@@ -220,7 +220,7 @@ void RS_ActionDrawCircleTan2_1P::onMouseLeftButtonRelease(int status, QMouseEven
                 return;
             }
             pPoints->circles.push_back(en);
-            graphicView->redraw(RS2::RedrawDrawing);
+            redrawDrawing();
             setStatus(getStatus() + 1);
             invalidateSnapSpot();
             break;

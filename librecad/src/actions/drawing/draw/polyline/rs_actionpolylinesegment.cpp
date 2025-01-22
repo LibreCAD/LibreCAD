@@ -68,7 +68,7 @@ void RS_ActionPolylineSegment::init(int status){
         initWithTarget = false;
         convertPolyline(container, targetEntity, false);
         commandMessage(tr("Polyline created"));
-        graphicView->redraw();
+        redraw();
         updateSelectionWidget();
         finish(false);
         return;
@@ -89,7 +89,7 @@ void RS_ActionPolylineSegment::init(int status){
             if (targetEntity){
                 convertPolyline(container, targetEntity, true);
                 commandMessage(tr("Polyline created"));
-                graphicView->redraw();
+                redraw();
                 updateSelectionWidget();
                 finish(false);
                 return;
@@ -293,10 +293,6 @@ void RS_ActionPolylineSegment::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineSegment::trigger()");
 
     if (targetEntity != nullptr /*&& selectedSegment && targetPoint.valid */){
-//        targetEntity->setHighlighted(false);
-//        graphicView->drawEntity(targetEntity);
-//RLZ: do not use container->optimizeContours(); because it invalidate targetEntity
-//        container->optimizeContours();
         convertPolyline(container, targetEntity);
 
         targetEntity = nullptr;
@@ -328,12 +324,7 @@ void RS_ActionPolylineSegment::onMouseLeftButtonRelease(int status, QMouseEvent 
             } else if (targetEntity->rtti() == RS2::EntityPolyline && ((RS_Polyline *) targetEntity)->isClosed()){
                 commandMessage(tr("Entity can not be a closed polyline."));
             } else {
-                //TODO, verify topology of selected
-//                    targetEntity->setHighlighted(true);
-//                    graphicView->drawEntity(targetEntity);
-
-//                setStatus(SetReferencePoint);
-                graphicView->redraw();
+                redraw();
                 trigger();
             }
             break;
@@ -345,7 +336,7 @@ void RS_ActionPolylineSegment::onMouseLeftButtonRelease(int status, QMouseEvent 
 void RS_ActionPolylineSegment::onMouseRightButtonRelease(int status, [[maybe_unused]]  QMouseEvent *e) {
     deleteSnapper();
     if (targetEntity){
-         graphicView->redraw();
+         redraw();
     }
     initPrevious(status);
 }

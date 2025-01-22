@@ -172,14 +172,17 @@ void LC_ActionModifyAlign::mouseMoveEventSelected(QMouseEvent *e) {
 
 void LC_ActionModifyAlign::previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef) {
     if (drawVertical) {
-        double g0 = graphicView->toGraphY(0);
+        // fixme - sand - ucs - restore
+        /*double g0 = graphicView->toGraphY(0);
         double gHeight = graphicView->toGraphY(graphicView->getHeight());
-        previewRefConstructionLine({verticalRef, g0}, {verticalRef, gHeight});
+        previewRefConstructionLine({verticalRef, g0}, {verticalRef, gHeight});*/
     }
     if (drawHorizontal) {
-        double g0 = graphicView->toGraphX(0);
+        // fixme - sand - ucs - restore
+        /*double g0 = graphicView->toGraphX(0);
         double gWidth = graphicView->toGraphX(graphicView->getWidth());
         previewRefConstructionLine({g0, horizontalRef}, {gWidth, horizontalRef});
+         */
     }
 }
 

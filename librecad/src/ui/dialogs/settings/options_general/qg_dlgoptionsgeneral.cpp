@@ -319,6 +319,14 @@ void QG_DlgOptionsGeneral::init() {
         QFont font(fontName);
         fcbUCSFont->setCurrentFont(font);
 
+        checked = LC_GET_BOOL("ShowDraftModeMarker", true);
+        cbShowDraftModeMarker->setChecked(checked);
+
+        fontName =  LC_GET_STR("DraftMarkerFontName", "Verdana");
+        fcbDraftModeFont->setCurrentFont(QFont(fontName));
+
+        int draftMarkerFntSize = LC_GET_INT("DraftMarkerFontSize", 10);
+        sbDraftModeFontSize->setValue(draftMarkerFntSize);
     }
     LC_GROUP_END();
 
@@ -417,7 +425,7 @@ void QG_DlgOptionsGeneral::init() {
         initComboBox(cbMetaGridPointsColor, LC_GET_STR("meta_grid", RS_Settings::color_meta_grid_points));
         initComboBox(cbMetaGridLinesColor, LC_GET_STR("meta_grid_lines", RS_Settings::color_meta_grid_lines));
         initComboBox(cbSelectedColor, LC_GET_STR("select", RS_Settings::select));
-        initComboBox(cbHighlightedColor, LC_GET_STR("highlight", RS_Settings::highlight));
+        initComboBox(cbHighlightedColor, LC_GET_STR("highlight",RS_Settings::select));
         initComboBox(cbStartHandleColor, LC_GET_STR("start_handle", RS_Settings::start_handle));
         initComboBox(cbHandleColor, LC_GET_STR("handle", RS_Settings::handle));
         initComboBox(cbEndHandleColor, LC_GET_STR("end_handle", RS_Settings::end_handle));
@@ -438,6 +446,9 @@ void QG_DlgOptionsGeneral::init() {
         initComboBox(cbInfoOverlaySnapColor, LC_GET_STR("info_overlay_snap", RS_Settings::overlayInfoCursorSnap));
         initComboBox(cbInfoOverlayCommandPromptColor, LC_GET_STR("info_overlay_prompt", RS_Settings::overlayInfoCursorCommandPrompt));
         initComboBox(cbInfoOverlayRelativeColor, LC_GET_STR("info_overlay_relative",RS_Settings::overlayInfoCursorRelativePos));
+
+        initComboBox(cbDraftModeMarkerColor, LC_GET_STR("draft_mode_marker",RS_Settings::select));
+
 
         int overlayTransparency = LC_GET_INT("overlay_box_transparency",90);
         sbOverlayBoxTransparency->setValue(overlayTransparency);
@@ -653,6 +664,11 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("ZeroMarkerSize", sbCoordinateSystemMarkerSize->value());
             LC_SET("ZeroMarkerFontSize",sbUCSFontSize->value());
             LC_SET("ZeroMarkerFontName", fcbUCSFont->currentText());
+
+
+            LC_SET("ShowDraftModeMarker", cbShowDraftModeMarker->isChecked());
+            LC_SET("DraftMarkerFontName", fcbDraftModeFont->currentText());
+            LC_SET("DraftMarkerFontSize", sbDraftModeFontSize->value());
         }
         LC_GROUP_END();
 
@@ -717,8 +733,10 @@ void QG_DlgOptionsGeneral::ok(){
 
             LC_SET("info_overlay_absolute",cbInfoOverlayAbsolutePositionColor->currentText());
             LC_SET("info_overlay_snap", cbInfoOverlaySnapColor->currentText());
-            LC_GET_STR("info_overlay_prompt",cbInfoOverlayCommandPromptColor->currentText());
-            LC_GET_STR("info_overlay_relative",cbInfoOverlayRelativeColor->currentText());
+            LC_SET("info_overlay_prompt",cbInfoOverlayCommandPromptColor->currentText());
+            LC_SET("info_overlay_relative",cbInfoOverlayRelativeColor->currentText());
+
+            LC_SET("draft_mode_marker",cbDraftModeMarkerColor->currentText());
         }
         LC_GROUP_END();
 
@@ -920,6 +938,10 @@ void QG_DlgOptionsGeneral::on_pbOverlayBoxLineInverted_clicked() {
 
 void QG_DlgOptionsGeneral::on_pbOverlayBoxFillInverted_clicked() {
     set_color(cbOverlayBoxFillInverted, QColor(RS_Settings::overlayBoxFillInverted));
+}
+
+void QG_DlgOptionsGeneral::on_pbDraftModeColor_clicked() {
+    set_color(cbDraftModeMarkerColor, QColor(RS_Settings::select));
 }
 
 void QG_DlgOptionsGeneral::on_pbcbInfoOverlayAbsolutePositionColor_clicked() {

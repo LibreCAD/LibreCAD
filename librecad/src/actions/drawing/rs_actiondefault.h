@@ -28,8 +28,9 @@
 #define RS_ACTIONDEFAULT_H
 
 #include <memory>
+#include "lc_overlayboxaction.h"
 
-#include "rs_previewactioninterface.h"
+
 
 
 /**
@@ -39,7 +40,7 @@
  */
 //todo - support of moving by keyboard
 //todo - joint move of endpoint ref? So if moving ref will move refs for adjusent entities
-class RS_ActionDefault : public RS_PreviewActionInterface {
+class RS_ActionDefault : public LC_OverlayBoxAction {
     Q_OBJECT
 
     using BASE_CLASS = RS_PreviewActionInterface;

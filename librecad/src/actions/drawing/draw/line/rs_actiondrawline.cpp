@@ -187,7 +187,7 @@ void RS_ActionDrawLine::onCoordinateEvent(int status, [[maybe_unused]] bool isZe
         case SetStartpoint: {
             pPoints->data.startpoint = mouse;
             pPoints->startOffset = 0;
-            addHistory( HA_SetStartpoint, graphicView->getRelativeZero(), mouse, pPoints->startOffset);
+            addHistory( HA_SetStartpoint, getRelativeZero(), mouse, pPoints->startOffset);
             setStatus(SetEndpoint);
             moveRelativeZero(mouse);
             updateMouseButtonHints();

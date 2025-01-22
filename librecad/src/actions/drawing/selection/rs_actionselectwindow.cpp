@@ -48,7 +48,7 @@ struct RS_ActionSelectWindow::Points {
 RS_ActionSelectWindow::RS_ActionSelectWindow(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView,
                                              bool select)
-    : RS_PreviewActionInterface("Select Window",
+    : LC_OverlayBoxAction("Select Window",
                                 container, graphicView)
     , pPoints(std::make_unique<Points>())
     , select(select){
@@ -60,8 +60,7 @@ RS_ActionSelectWindow::RS_ActionSelectWindow(
         RS_EntityContainer& container,
         RS_GraphicView& graphicView,
         bool select)
-    : RS_PreviewActionInterface("Select Window",
-                                container, graphicView)
+    : LC_OverlayBoxAction("Select Window",container, graphicView)
     , pPoints(std::make_unique<Points>())
     , select(select){
     actionType=RS2::ActionSelectWindow;
@@ -87,7 +86,7 @@ void RS_ActionSelectWindow::init(int status) {
 
 void RS_ActionSelectWindow::doTrigger() {
     if (pPoints->v1.valid && pPoints->v2.valid){
-        if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
+        if (toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
             bool cross = (pPoints->v1.x > pPoints->v2.x) || selectIntersecting;
             RS_Selection s(*container, graphicView);
             bool doSelect = select;
@@ -113,31 +112,7 @@ void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
     updateCoordinateWidgetByRelZero(snapped);
     if (getStatus()==SetCorner2 && pPoints->v1.valid) {
         pPoints->v2 = snapped;
-
-        auto* ob=new RS_OverlayBox(preview.get(), RS_OverlayBoxData(pPoints->v1, pPoints->v2));
-        preview->addEntity(ob);
-
-        //RLZ: not needed overlay have contour
-        /*                RS_Pen pen(RS_Color(218,105,24), RS2::Width00, RS2::SolidLine);
-
-                // TODO change to a rs_box sort of entity
-                RS_Line* e=new RS_Line(preview, RS_LineData(RS_Vector(v1->x, v1->y),  RS_Vector(v2->x, v1->y)));
-                e->setPen(pen);
-        preview->addEntity(e);
-
-                e=new RS_Line(preview, RS_LineData(RS_Vector(v2->x, v1->y),  RS_Vector(v2->x, v2->y)));
-                e->setPen(pen);
-        preview->addEntity(e);
-
-                e=new RS_Line(preview, RS_LineData(RS_Vector(v2->x, v2->y),  RS_Vector(v1->x, v2->y)));
-                e->setPen(pen);
-        preview->addEntity(e);
-
-                e=new RS_Line(preview, RS_LineData(RS_Vector(v1->x, v2->y),  RS_Vector(v1->x, v1->y)));
-                e->setPen(pen);
-        preview->addEntity(e);*/
-
-
+        drawOverlayBox(pPoints->v1, pPoints->v2);
     }
     drawPreview();
 }

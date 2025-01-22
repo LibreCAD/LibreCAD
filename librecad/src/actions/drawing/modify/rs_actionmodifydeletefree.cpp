@@ -83,7 +83,7 @@ void RS_ActionModifyDeleteFree::trigger(){
                     }
 
                     // draws the new polylines on the screen:
-                    graphicView->redraw(RS2::RedrawDrawing);
+                    redraw(RS2::RedrawDrawing);
 
                     init(0);
 

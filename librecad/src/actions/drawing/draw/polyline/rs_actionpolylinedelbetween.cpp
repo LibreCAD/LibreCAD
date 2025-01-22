@@ -139,7 +139,7 @@ void RS_ActionPolylineDelBetween::onMouseLeftButtonRelease(int status, QMouseEve
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
                 setStatus(SetVertex1);
-                graphicView->redraw();
+                redraw();
             }
             break;
         }

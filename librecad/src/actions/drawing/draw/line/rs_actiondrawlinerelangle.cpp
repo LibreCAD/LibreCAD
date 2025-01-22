@@ -104,16 +104,8 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent *e){
         }
         case SetPos: {
             highlightSelected(entity);
-            //length = graphicView->toGraphDX(graphicView->getWidth());
-            //RS_Vector mouse = snapPoint(e);
 
             *pos = getRelZeroAwarePoint(e, snap);
-
-            /*RS_Creation creation(nullptr, nullptr);
-                RS_Line* l = creation.createLineRelAngle(mouse,
-                             entity,
-                             angle,
-                             length);*/
 
             RS_Creation creation(preview.get(), nullptr, false);
             double angleRad = RS_Math::deg2rad(angle);

@@ -130,14 +130,14 @@ void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionDrawLineAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     if (status==SetPos) {
-        bool shiftPressed = isShift(e);
         RS_Vector position = snapPoint(e);
+        bool shiftPressed = isShift(e);
         // potentially, we could eliminate this and set line position on mouse move and complete action there. however,
         // it seems explicit set of position on click is more consistent with default behavior of the action?
         if (shiftPressed){
-            RS_Vector relZero = graphicView->getRelativeZero();
+            RS_Vector relZero = getRelativeZero();
             if (relZero.valid){
-                position = graphicView->getRelativeZero();
+                position = relZero;
                 persistRelativeZero = true;
             }
         }

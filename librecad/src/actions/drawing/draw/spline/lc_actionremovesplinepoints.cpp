@@ -77,7 +77,7 @@ void LC_ActionRemoveSplinePoints::onMouseLeftButtonRelease(int status, QMouseEve
             if (entity != nullptr && mayModifySplineEntity(entity)){
                 entityToModify = entity;
                 entityToModify->setSelected(true);
-                graphicView->redraw(RS2::RedrawDrawing);
+                redrawDrawing();
                 setStatus(SetControlPoint);
             }
             break;

@@ -55,7 +55,7 @@ void RS_ActionBlocksToggleView::trigger() {
             graphic->toggleBlock(graphic->getActiveBlock());
         }
     }
-    graphicView->redraw(RS2::RedrawDrawing);
+    redrawDrawing();
 
     finish(false);
 }

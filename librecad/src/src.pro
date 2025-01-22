@@ -134,6 +134,7 @@ INCLUDEPATH += \
     lib/generators \
     lib/gui \
     lib/gui/grid \
+    lib/gui/render \
     lib/information \
     lib/math \
     lib/modification \
@@ -280,11 +281,15 @@ HEADERS += \
     actions/drawing/modify/lc_actionmodifyalign.h \
     actions/drawing/modify/lc_actionmodifyalignref.h \
     actions/drawing/modify/lc_actionmodifyalignsingle.h \
+    lib/actions/lc_overlayboxaction.h \
     lib/engine/document/ucs/lc_ucslist.h \
     lib/engine/overlays/highlight/lc_highlight.h \
     lib/actions/lc_modifiersinfo.h \
     lib/actions/rs_actioninterface.h \
     lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.h \
+    lib/engine/overlays/lc_overlayentitiescontainer.h \
+    lib/engine/overlays/lc_overlayentity.h \
+    lib/engine/overlays/lc_overlaysmanager.h \
     lib/engine/overlays/preview/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
     lib/actions/rs_snapper.h \
@@ -303,6 +308,8 @@ HEADERS += \
     lib/engine/overlays/references/lc_refellipse.h \
     lib/engine/overlays/references/lc_refline.h \
     lib/engine/overlays/references/lc_refpoint.h \
+    lib/engine/overlays/ucs_mark/lc_overlayrelativezero.h \
+    lib/engine/overlays/ucs_mark/lc_overlayucszero.h \
     lib/engine/overlays/ucs_mark/lc_ucs_mark.h \
     lib/engine/rs.h \
     lib/engine/document/entities/rs_arc.h \
@@ -371,7 +378,16 @@ HEADERS += \
     lib/filters/rs_filterinterface.h \
     #lib/gui/no_used/rs_painterold.h \
     #lib/gui/no_used/rs_painterqtold.h \
+    lib/gui/lc_graphicviewport.h \
+    lib/gui/lc_graphicviewportlistener.h \
+    lib/gui/render/headless/lc_printviewportrenderer.h \
+    lib/gui/render/lc_basegraphicviewrenderer.h \
+    lib/gui/render/lc_graphicviewportrenderer.h \
+    lib/gui/render/lc_graphicviewrenderer.h \
+    lib/gui/render/lc_penmanager.h \
+    lib/gui/render/lc_printpreviewviewrenderer.h \
     lib/gui/render/lc_viewrenderer.h \
+    lib/gui/render/widget/lc_widgetviewportrenderer.h \
     lib/modification/lc_align.h \
     ui/action_options/curve/lc_actiondrawarc2poptions.h \
     ui/action_options/misc/lc_midlineoptions.h \
@@ -414,7 +430,8 @@ HEADERS += \
     lib/gui/rs_grid.h \
     lib/gui/rs_linetypepattern.h \
     lib/gui/rs_mainwindowinterface.h \
-    lib/gui/rs_painter.h \    
+    lib/gui/rs_painter.h \     \
+    ui/view/lc_printpreviewview.h
     lib/gui/rs_staticgraphicview.h \
     lib/information/rs_locale.h \
     lib/information/rs_information.h \
@@ -462,12 +479,27 @@ SOURCES += \
     actions/drawing/modify/lc_actionmodifyalign.cpp \
     actions/drawing/modify/lc_actionmodifyalignref.cpp \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
+    lib/actions/lc_overlayboxaction.cpp \
     lib/engine/document/ucs/lc_ucslist.cpp \
     lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.cpp \
+    lib/engine/overlays/lc_overlayentitiescontainer.cpp \
+    lib/engine/overlays/lc_overlayentity.cpp \
+    lib/engine/overlays/lc_overlaysmanager.cpp \
     lib/engine/overlays/references/lc_refconstructionline.cpp \
+    lib/engine/overlays/ucs_mark/lc_overlayrelativezero.cpp \
+    lib/engine/overlays/ucs_mark/lc_overlayucszero.cpp \
     lib/engine/overlays/ucs_mark/lc_ucs_mark.cpp \
     lib/engine/undo/lc_undoablerelzero.cpp \
+    lib/gui/lc_graphicviewport.cpp \
+    lib/gui/lc_graphicviewportlistener.cpp \
+    lib/gui/render/headless/lc_printviewportrenderer.cpp \
+    lib/gui/render/lc_basegraphicviewrenderer.cpp \
+    lib/gui/render/lc_graphicviewportrenderer.cpp \
+    lib/gui/render/lc_graphicviewrenderer.cpp \
+    lib/gui/render/lc_penmanager.cpp \
+    lib/gui/render/lc_printpreviewviewrenderer.cpp \
     lib/gui/render/lc_viewrenderer.cpp \
+    lib/gui/render/widget/lc_widgetviewportrenderer.cpp \
     lib/modification/lc_align.cpp \
     ui/action_options/curve/lc_actiondrawarc2poptions.cpp \
     ui/action_options/misc/lc_midlineoptions.cpp \
@@ -587,7 +619,8 @@ SOURCES += \
     lib/gui/rs_graphicview.cpp \
     lib/gui/rs_grid.cpp \
     lib/gui/rs_linetypepattern.cpp \
-    lib/gui/rs_painter.cpp \    
+    lib/gui/rs_painter.cpp \     \
+    ui/view/lc_printpreviewview.cpp
     lib/gui/rs_staticgraphicview.cpp \
     lib/information/rs_locale.cpp \
     lib/information/rs_information.cpp \

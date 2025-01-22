@@ -45,8 +45,8 @@
 #include "rs_debug.h"
 #include "rs_painter.h"
 #include "rs_settings.h"
-#include "rs_staticgraphicview.h"
 #include "rs_system.h"
+#include "lc_printviewportrenderer.h"
 
 namespace {
     void writePng(const QString& pngPath, QPixmap pixmap)
@@ -303,7 +303,7 @@ void QG_LibraryWidget::updatePreview(QModelIndex idx) {
 
     // Fill items into icon view:
     for (int i = 0; i < itemPathList.size(); ++i) {
-		QString label = QFileInfo(itemPathList.at(i)).completeBaseName();
+        QString label = QFileInfo(itemPathList.at(i)).completeBaseName();
         QIcon icon = getIcon(directory, QFileInfo(itemPathList.at(i)).fileName(), itemPathList.at(i));
         auto newItem = new QStandardItem(icon, label);
         iconModel->setItem(i, newItem);
@@ -429,12 +429,14 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
 
     QString pngPath = iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
 
-    QPixmap buffer(128,128);
+    QPixmap buffer(128,128); // fixme - sand - add settings for thumbnail size, generate per setting!
     RS_Painter painter(&buffer);
     painter.setBackground(RS_Color(255,255,255));
     painter.eraseRect(0,0, 128,128);
 
-    RS_StaticGraphicView gv(128, 128, &painter);
+    LC_GraphicViewport viewport;
+    viewport.setSize(128,128);
+
     RS_Graphic graphic;
     if (!graphic.open(dxfPath, RS2::FormatUnknown)) {
         RS_DEBUG->print(RS_Debug::D_ERROR,
@@ -442,19 +444,22 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
                         dxfPath.toLatin1().data());
         return {};
     }
-    gv.setContainer(&graphic);
-    gv.zoomAuto(false);
 
-    gv.updateSettings(&graphic);
+    viewport.setContainer(&graphic);
+    viewport.initAfterDocumentOpen();
+    viewport.zoomAuto(false);
 
-    for (RS_Entity *e = graphic.firstEntity(RS2::ResolveAll); e;
-         e = graphic.nextEntity(RS2::ResolveAll)) {
+    LC_PrintViewportRenderer renderer(&viewport, &painter);
+    renderer.loadSettings();
+    renderer.setupPainter(&painter);
+
+    for (RS_Entity *e = graphic.firstEntity(RS2::ResolveAll); e; e = graphic.nextEntity(RS2::ResolveAll)) {
         if (e != nullptr && e->rtti() != RS2::EntityHatch) {
             RS_Pen pen = e->getPen();
             pen.setColor(Qt::black);
             e->setPen(pen);
+            renderer.justDrawEntity(&painter, e);
         }
-        gv.drawEntity(&painter, e);
     }
 
     // GraphicView deletes painter

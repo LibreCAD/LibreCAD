@@ -46,10 +46,6 @@ struct LC_ActionDrawEllipse1Point::Points {
     double getRatio(){
         return minorRadius / majorRadius;
     }
-
-    RS_Vector getMajorP(RS_GraphicView* view){
-        return RS_Vector::polar(majorRadius, view->toWorldAngle(getMajorAngle()));
-    }
 };
 
 LC_ActionDrawEllipse1Point::LC_ActionDrawEllipse1Point(RS_EntityContainer &container, RS_GraphicView &graphicView,   bool isArc)
@@ -69,7 +65,7 @@ LC_ActionDrawEllipse1Point::~LC_ActionDrawEllipse1Point() = default;
 void LC_ActionDrawEllipse1Point::doTrigger() {
     double ratio = pPoints->getRatio();
     auto *ellipse = new RS_Ellipse{container,
-                                   {pPoints->center, pPoints->getMajorP(graphicView), ratio,
+                                   {pPoints->center, getMajorP(), ratio,
                                     pPoints->angle1, pPoints->angle2, pPoints->reversed}
     };
     // todo - code belos is similar to DrawEllipseAxis action.. should we make it common for all ellipse actions?
@@ -87,6 +83,10 @@ void LC_ActionDrawEllipse1Point::doTrigger() {
     setStatus(SetPoint);
 }
 
+RS_Vector LC_ActionDrawEllipse1Point::getMajorP(){
+    return RS_Vector::polar(pPoints->majorRadius, toWorldAngle(pPoints->getMajorAngle()));
+}
+
 void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {
     deletePreview();
     int status = getStatus();
@@ -95,7 +95,7 @@ void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {
     switch (status){
         case SetPoint:{
             if (!trySnapToRelZeroCoordinateEvent(e)){
-                auto *ellipse = previewToCreateEllipse({mouse, pPoints->getMajorP(graphicView), pPoints->getRatio(), 0.0,
+                auto *ellipse = previewToCreateEllipse({mouse, getMajorP(), pPoints->getRatio(), 0.0,
                                                       pPoints->isArc ? 2. * M_PI : 0., false});
                 if (showRefEntitiesOnPreview) {
                     previewRefSelectablePoint(mouse);
@@ -107,7 +107,7 @@ void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {
         case SetMajorAngle: {
             mouse = getSnapAngleAwarePoint(e, pPoints->center, mouse, true);
             pPoints->majorRadiusAngle = toUCSAngle(pPoints->center.angleTo(mouse));
-            auto ellipse = previewToCreateEllipse({pPoints->center, pPoints->getMajorP(graphicView), pPoints->getRatio(), 0.0,
+            auto ellipse = previewToCreateEllipse({pPoints->center, getMajorP(), pPoints->getRatio(), 0.0,
                             pPoints->isArc ? 2. * M_PI : 0., false});
             if (showRefEntitiesOnPreview){
                 previewRefSelectablePoint(mouse);
@@ -131,7 +131,7 @@ void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {
 
             previewRefLine(pPoints->center, mouse);
 
-            auto ellipse = previewToCreateEllipse({pPoints->center, pPoints->getMajorP(graphicView), pPoints->getRatio(),
+            auto ellipse = previewToCreateEllipse({pPoints->center, getMajorP(), pPoints->getRatio(),
                                            pPoints->angle1, pPoints->angle1 + 1.0, pPoints->reversed});
 
             if (showRefEntitiesOnPreview) {
@@ -152,7 +152,7 @@ void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {
             v.y /= pPoints->getRatio();
             pPoints->angle2 = v.angle();
 
-            auto ellipse = previewToCreateEllipse({pPoints->center, pPoints->getMajorP(graphicView), pPoints->getRatio(),
+            auto ellipse = previewToCreateEllipse({pPoints->center, getMajorP(), pPoints->getRatio(),
                                            pPoints->angle1, pPoints->angle2, pPoints->reversed});
 
             if (showRefEntitiesOnPreview) {

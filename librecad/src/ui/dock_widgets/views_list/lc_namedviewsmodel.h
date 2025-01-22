@@ -54,6 +54,8 @@ public:
     QIcon getGridTypeIcon(LC_View *view) const;
     QModelIndex getIndexForView(LC_View* view) const;
     void updateViewsUCSNames(LC_UCSList *ucsList);
+
+    void clear();
     int count(){
         return views.count();
     }
@@ -80,6 +82,7 @@ protected:
         QString viewInfo;
         QString ucsInfo;
         QString tooltip;
+        QString displayName;
     };
 
 

@@ -669,7 +669,7 @@ void RS_ActionInterface::undoCycleReplace(RS_Entity *entityToReplace, RS_Entity 
 }
 
 void RS_ActionInterface::undoCycleEnd() const {
-    RS_Undoable* relZeroUndoable = graphicView->getRelativeZeroUndoable();
+    RS_Undoable* relZeroUndoable = viewport->getRelativeZeroUndoable();
     if (relZeroUndoable != nullptr) {
         document->addUndoable(relZeroUndoable);
     }

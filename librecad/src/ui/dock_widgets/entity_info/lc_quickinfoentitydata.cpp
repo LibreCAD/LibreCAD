@@ -439,7 +439,7 @@ bool LC_QuickInfoEntityData::updateForCoordinateViewMode(int mode){
     if (mode != coordinatesMode){
         coordinatesMode = mode;
         int propertiesCount = properties.size();
-        RS_Vector relativeZero = graphicView->getRelativeZero();
+        RS_Vector relativeZero = getRelativeZero();
 
         for (int i = 0; i < propertiesCount; i++) {
             PropertyInfo *propertyInfo = properties.at(i);
@@ -1440,7 +1440,7 @@ void LC_QuickInfoEntityData::collectDimAlignedProperties(RS_DimAligned *dim){
  */
 
 void LC_QuickInfoEntityData::addVectorProperty(QString name, const RS_Vector &value, PropertyType type){
-    RS_Vector relZero = graphicView->getRelativeZero();
+    RS_Vector relZero = getRelativeZero();
     QString vectorStr;
     if (coordinatesMode == COORD_RELATIVE && relZero.valid){ // fixme - check!
         RS_Vector viewValue = value - relZero;
@@ -1463,7 +1463,7 @@ void LC_QuickInfoEntityData::addDeltaVectorProperty(QString name, const RS_Vecto
  * @param type
  */
 void LC_QuickInfoEntityData::addVectorProperty(QString name, int count, const RS_Vector &value, PropertyType type){
-    RS_Vector relZero = graphicView->getRelativeZero();
+    RS_Vector relZero = getRelativeZero();
     QString vectorStr;
     if (coordinatesMode == COORD_RELATIVE && relZero.valid){
         RS_Vector viewValue = value - relZero;

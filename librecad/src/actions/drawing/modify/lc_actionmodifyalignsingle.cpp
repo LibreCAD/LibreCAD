@@ -191,7 +191,8 @@ QString LC_ActionModifyAlignSingle::prepareInfoCursorMessage(double verticalRef,
 }
 
 void LC_ActionModifyAlignSingle::previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef) {
-    if (drawVertical) {
+    // fixme - sand - ucs - restore
+    /*if (drawVertical) {
         double g0 = graphicView->toGraphY(0);
         double gHeight = graphicView->toGraphY(graphicView->getHeight());
         previewRefConstructionLine({verticalRef, g0}, {verticalRef, gHeight});
@@ -201,23 +202,25 @@ void LC_ActionModifyAlignSingle::previewRefLines(bool drawVertical, double verti
         double g0 = graphicView->toGraphX(0);
         double gWidth = graphicView->toGraphX(graphicView->getWidth());
         previewRefConstructionLine({g0, horizontalRef}, {gWidth, horizontalRef});
-    }
+    }*/
 }
 
 void LC_ActionModifyAlignSingle::previewAlignRefPoint(const RS_Vector &min, const RS_Vector &max) {
     double verticalRef;
     bool drawVertical  = LC_Align::getVerticalRefCoordinate(min, max, hAlign, verticalRef);
     if (drawVertical) {
-        double g0 = graphicView->toGraphY(0);
+        // fixme - sand - ucs - restore
+        /*double g0 = graphicView->toGraphY(0);
         double gHeight = graphicView->toGraphY(graphicView->getHeight());
-        this->previewRefConstructionLine({verticalRef, g0}, {verticalRef, gHeight});
+        previewRefConstructionLine({verticalRef, g0}, {verticalRef, gHeight});*/
     }
     double horizontalRef;
     bool drawHorizontal = LC_Align::getHorizontalRefCoordinate(min, max, vAlign, horizontalRef);
     if (drawHorizontal) {
-        double g0 = graphicView->toGraphX(0);
+        // fixme - sand - ucs - restore
+        /*double g0 = graphicView->toGraphX(0);
         double gWidth = graphicView->toGraphX(graphicView->getWidth());
-        this->previewRefConstructionLine({g0, horizontalRef}, {gWidth, horizontalRef});
+        previewRefConstructionLine({g0, horizontalRef}, {gWidth, horizontalRef});*/
     }
 }
 

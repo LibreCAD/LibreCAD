@@ -67,7 +67,9 @@ void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector v = snapPoint(e);
     drawSnapper();
     if (getStatus()==Dragging && polyline.get()) {
-        if( (graphicView->toGui(v) - graphicView->toGui(*vertex)).squared()< 1. ){
+        const QPointF mousePosition = e->position();
+//     if( (graphicView->toGui(v) - graphicView->toGui(*vertex)).squared()< 1. ){
+        if (QLineF(mousePosition,oldMousePosition).length() < 1) {
             //do not add the same mouse position
             return;
         }
@@ -78,6 +80,7 @@ void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
         }
 
         *vertex = v;
+        oldMousePosition = mousePosition;
 
         RS_DEBUG->print("RS_ActionDrawLineFree::%s:"
                         " line added: %lu", __func__, ent->getId());

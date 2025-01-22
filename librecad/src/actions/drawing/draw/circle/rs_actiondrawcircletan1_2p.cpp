@@ -73,7 +73,7 @@ void RS_ActionDrawCircleTan1_2P::init(int status) {
     }
 
     if (status <= SetCircle1){
-       graphicView->redraw(RS2::RedrawDrawing);
+       redrawDrawing();
        pPoints->points.clear();
     }
 }
@@ -81,7 +81,7 @@ void RS_ActionDrawCircleTan1_2P::init(int status) {
 
 void RS_ActionDrawCircleTan1_2P::finish(bool updateTB){
     if (baseEntity){
-        graphicView->redraw(RS2::RedrawDrawing);
+        redrawDrawing();
     }
     RS_PreviewActionInterface::finish(updateTB);
 }
@@ -323,7 +323,7 @@ void RS_ActionDrawCircleTan1_2P::onMouseLeftButtonRelease(int status, QMouseEven
                 return;
             }
             baseEntity = dynamic_cast<RS_AtomicEntity *>(en);
-            graphicView->redraw(RS2::RedrawDrawing);
+            redrawDrawing();
             setStatus(status + 1);
             invalidateSnapSpot();
             break;

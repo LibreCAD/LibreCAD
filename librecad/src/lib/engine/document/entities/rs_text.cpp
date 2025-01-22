@@ -560,24 +560,28 @@ std::ostream& operator << (std::ostream& os, const RS_Text& p) {
 }
 
 RS_Entity *RS_Text::cloneProxy(RS_GraphicView* view) const {
-    if (view->isDrawTextsAsDraftForPreview()) {
+    // fixme - sand - ucs - restore
+    /*if (view->isDrawTextsAsDraftForPreview()) {
         return new RS_Line(nullptr, baselineStartPoint, baselineEndPoint);
     }
     else{
         return clone();
-    }
+    }*/
+    return clone();
 }
 
-void RS_Text::drawDraft(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset) {
-    painter->drawLine(view->toGui(baselineStartPoint), view->toGui(baselineEndPoint));
+void RS_Text::drawDraft(RS_Painter *painter) {
+    painter->drawLineWCS(baselineStartPoint, baselineEndPoint);
 }
 
-void RS_Text::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset){
-    if (view->toGuiDY(getHeight()) < view->getMinRenderableTextHeightInPx()){
-        drawDraft(painter, view, patternOffset);
+void RS_Text::draw(RS_Painter* painter){
+    bool drawAsDraft = painter->isTextLineNotRenderable(getHeight());
+    if (drawAsDraft){
+        drawDraft(painter);
         return;
     }
+
     foreach (auto e, entities){
-       view->drawAsChild(painter, e, patternOffset);
+       painter->drawAsChild(e);
     }
 }

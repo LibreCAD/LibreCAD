@@ -115,7 +115,7 @@ void RS_ActionPolylineAdd::onMouseLeftButtonRelease(int status, QMouseEvent *e) 
             } else {
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
-                graphicView->redraw();
+                redraw();
                 setStatus(SetAddCoord);
             }
             break;
@@ -157,7 +157,7 @@ void RS_ActionPolylineAdd::onMouseRightButtonRelease([[maybe_unused]] int status
 void RS_ActionPolylineAdd::finish(bool updateTB){
     if (polylineToModify){
         polylineToModify->setSelected(false);
-        graphicView->redraw();
+        redraw();
         polylineToModify = nullptr;
         addSegment = nullptr;
         *addCoord = {};

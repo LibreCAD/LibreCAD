@@ -25,6 +25,7 @@
 #include "lc_relzerocoordinateswidget.h"
 #include "ui_lc_relzerocoordinateswidget.h"
 #include "lc_linemath.h"
+#include "lc_graphicviewport.h"
 
 LC_RelZeroCoordinatesWidget::LC_RelZeroCoordinatesWidget(QWidget *parent, const char* name)
     : QWidget(parent)
@@ -54,15 +55,15 @@ void LC_RelZeroCoordinatesWidget::clearContent() {
 void LC_RelZeroCoordinatesWidget::setGraphicView(RS_GraphicView *gv) {
     if (gv == nullptr){
         if (graphicView != nullptr){
-            disconnect(graphicView, &RS_GraphicView::relative_zero_changed, this,&LC_RelZeroCoordinatesWidget::relativeZeroChanged);
+            disconnect(graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_RelZeroCoordinatesWidget::relativeZeroChanged);
         }
-        setRelativeZero(RS_Vector(0.0,0.0), true);
+        setRelativeZero(RS_Vector(0.0,0.0), true); // in which system? ucs? wcs?
     }
     else{
         graphicView = gv;
         graphic = graphicView->getGraphic();
-        connect(graphicView, &RS_GraphicView::relative_zero_changed, this,&LC_RelZeroCoordinatesWidget::relativeZeroChanged);
-        setRelativeZero(graphicView->getRelativeZero(), true);
+        connect(graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_RelZeroCoordinatesWidget::relativeZeroChanged);
+        setRelativeZero(graphicView->getViewPort()->getRelativeZero(), true);
     }
 }
 
@@ -80,7 +81,7 @@ void LC_RelZeroCoordinatesWidget::setRelativeZero(const RS_Vector &rel, bool upd
             aprec = graphic->getAnglePrecision();
         }
 
-        RS_Vector ucsRelZero = graphicView->toUCS(rel);
+        RS_Vector ucsRelZero = graphicView->getViewPort()->toUCS(rel);
 
         double x = ucsRelZero.x;
         double y = ucsRelZero.y;

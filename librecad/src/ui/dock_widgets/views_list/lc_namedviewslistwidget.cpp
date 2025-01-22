@@ -135,6 +135,7 @@ void LC_NamedViewsListWidget::setGraphicView(RS_GraphicView *gv,
         RS_Graphic *graphic = gv->getGraphic();
         loadFormats(graphic);
         viewsList = graphic->getViewList();
+        viewport = gv->getViewPort();
     }
     graphicView = gv;
     window = w;
@@ -384,13 +385,13 @@ void LC_NamedViewsListWidget::loadOptions() {
 }
 
 void LC_NamedViewsListWidget::doCreateNewView(QString name) {
-    auto viewToCreate = graphicView->createNamedView(name);
+    auto viewToCreate = viewport->createNamedView(name);
     currentViewList->addNew(viewToCreate);
     refresh();
 }
 
 void LC_NamedViewsListWidget::doUpdateView(LC_View *view) {
-    graphicView->updateNamedView(view);
+    viewport->updateNamedView(view);
     currentViewList->edited(view);
     refresh();
 }
@@ -402,8 +403,13 @@ void LC_NamedViewsListWidget::onUcsListChanged() {
 void LC_NamedViewsListWidget::updateViewsUCSNames(){
     if (graphicView != nullptr) {
         RS_Graphic *graphic = graphicView->getGraphic();
-        LC_UCSList *ucsList = graphic->getUCSList();
-        viewsModel->updateViewsUCSNames(ucsList);
+        if (graphic != nullptr) {
+            LC_UCSList *ucsList = graphic->getUCSList();
+            viewsModel->updateViewsUCSNames(ucsList);
+        }
+        else{
+//            viewsModel->clear();
+        }
     }
 }
 
@@ -534,7 +540,7 @@ void LC_NamedViewsListWidget::removeExistingView(LC_View *view) {
     currentViewList->remove(view);
 }
 
-void LC_NamedViewsListWidget::renameExistingView(QString newName, LC_View *view) {
+void LC_NamedViewsListWidget::renameExistingView(const QString &newName, LC_View *view) {
     currentViewList->rename(view, newName);
     refresh();
 }
@@ -590,13 +596,13 @@ void LC_NamedViewsListWidget::restoreView(LC_View *view) {
    }
    else{
        if (graphicView->isPrintPreview()){
-           QC_MDIWindow* mdiWindow = qobject_cast<QC_MDIWindow*>(window);
+           auto* mdiWindow = qobject_cast<QC_MDIWindow*>(window);
            QC_MDIWindow *parentWindow = mdiWindow->getParentWindow();
            if (parentWindow != nullptr) {
                QC_ApplicationWindow::getAppWindow()->activateWindow(parentWindow);
            }
        }
-       graphicView->restoreView(view);
+       viewport->restoreView(view);
    }
 }
 

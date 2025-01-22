@@ -43,17 +43,17 @@ RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(
 RS_ActionSetRelativeZero::~RS_ActionSetRelativeZero() = default;
 
 void RS_ActionSetRelativeZero::trigger(){
-    bool wasLocked = graphicView->isRelativeZeroLocked();
+    bool wasLocked = viewport->isRelativeZeroLocked();
     if (pt->valid) {
-        graphicView->lockRelativeZero(false);
+        viewport->lockRelativeZero(false);
         moveRelativeZero(*pt);
         undoCycleStart();
-        RS_Undoable *relativeZeroUndoable = graphicView->getRelativeZeroUndoable();
+        RS_Undoable *relativeZeroUndoable = viewport->getRelativeZeroUndoable();
         if (relativeZeroUndoable != nullptr) {
             document->addUndoable(relativeZeroUndoable);
         }
         undoCycleEnd();
-        graphicView->lockRelativeZero(wasLocked);
+        viewport->lockRelativeZero(wasLocked);
     }
     finish(false);
 }

@@ -26,6 +26,7 @@
 #include "rs_graphicview.h"
 #include "rs_debug.h"
 #include "lc_ucssetoptions.h"
+#include "lc_overlayentitiescontainer.h"
 
 LC_ActionUCSCreate::LC_ActionUCSCreate(RS_EntityContainer &container, RS_GraphicView &graphicView)
     :RS_PreviewActionInterface("UCSCreate", container, graphicView){
@@ -38,9 +39,22 @@ void LC_ActionUCSCreate::doTrigger() {
    LC_ERR << "SET Origin. UCS: " << formatVector(m_originPoint) << " World: "<< formatVectorWCS(m_originPoint) << " Angle: " << formatAngle(m_angle);
 
    double angle = m_fixedAngle ? toWorldAngle(m_angle) : m_angle;
-   graphicView->createUCS(m_originPoint, angle);
+   viewport->createUCS(m_originPoint, angle);
    setStatus(-1);
    finish(false);
+}
+
+void LC_ActionUCSCreate::initFromSettings() {
+    RS_Snapper::initFromSettings();
+    m_ucsMarkOptions.loadSettings();
+}
+
+void LC_ActionUCSCreate::showUCSMark(RS_Vector &point, double angle){
+    double uiX, uiY;
+    viewport->toUI(point, uiX, uiY);
+    auto *ucsMark = new LC_OverlayUCSMark({uiX, uiY}, angle, false, &m_ucsMarkOptions);
+    auto overlayContainer = viewport->getOverlaysDrawablesContainer(RS2::OverlayGraphics::ActionPreviewEntity);
+    overlayContainer->add(ucsMark);
 }
 
 void LC_ActionUCSCreate::mouseMoveEvent(QMouseEvent *event) {
@@ -49,8 +63,8 @@ void LC_ActionUCSCreate::mouseMoveEvent(QMouseEvent *event) {
     switch (getStatus()){
         case SetOrigin:{
             if (!trySnapToRelZeroCoordinateEvent(event)) {
-                auto *ucsMark = new LC_UCS_Mark(preview.get(), snap,  m_fixedAngle ? -m_angle:0.0);
-                previewEntity(ucsMark);
+                showUCSMark(snap, m_fixedAngle ? -m_angle:0.0);
+
                 if (showRefEntitiesOnPreview){
                     previewRefSelectablePoint(snap);
                 }
@@ -66,8 +80,7 @@ void LC_ActionUCSCreate::mouseMoveEvent(QMouseEvent *event) {
                 previewRefSelectablePoint(pos);
                 previewRefLine(m_originPoint, pos);
             }
-            auto *ucsMark = new LC_UCS_Mark(preview.get(), m_originPoint, -toUCSAngle(m_currentAngle));
-            previewEntity(ucsMark);
+            showUCSMark(m_originPoint, -toUCSAngle(m_currentAngle));
             break;
         }
     }

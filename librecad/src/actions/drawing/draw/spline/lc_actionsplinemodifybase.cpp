@@ -65,7 +65,7 @@ void LC_ActionSplineModifyBase::clean() {
         entityToModify->setSelected(false);
     }
     deletePreview();
-    graphicView->redraw();
+    redraw();
 }
 
 void LC_ActionSplineModifyBase::mouseMoveEvent(QMouseEvent *e) {

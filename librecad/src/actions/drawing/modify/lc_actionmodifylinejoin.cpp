@@ -199,7 +199,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
                                 // we need to addition hint from the user for proper trim, so go to the corresponding state
                                 setStatus(ResolveFirstLineTrim);
                                 highlightEntity(line1);
-                                graphicView->redraw();
+                                redraw();
                             } else {
                                 // we are find for joining/trimming lines, just invoke trigger
                                 trigger();
@@ -254,7 +254,7 @@ void LC_ActionModifyLineJoin::doBack(QMouseEvent *pEvent, int status){
 void LC_ActionModifyLineJoin::doAfterTrigger(){
     LC_AbstractActionWithPreview::doAfterTrigger();
     delete linesJoinData; // cleanup
-    graphicView->redraw();
+    redraw();
     // return to selection first line mode
     init(SetLine1);
 }

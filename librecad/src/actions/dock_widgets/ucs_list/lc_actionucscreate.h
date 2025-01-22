@@ -24,6 +24,7 @@
 #define LC_ACTIONUCSCREATE_H
 
 #include "rs_previewactioninterface.h"
+#include "lc_ucs_mark.h"
 
 class LC_ActionUCSCreate:public RS_PreviewActionInterface{
 Q_OBJECT
@@ -63,8 +64,13 @@ protected:
     bool m_fixedAngle = false;
     bool m_parentIsWCS = true;
 
+    LC_UCSMarkOptions m_ucsMarkOptions;
+
     void doTrigger() override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
+    void showUCSMark(RS_Vector &point, double angle);
+
+    void initFromSettings() override;
 };
 
 #endif // LC_ACTIONUCSCREATE_H

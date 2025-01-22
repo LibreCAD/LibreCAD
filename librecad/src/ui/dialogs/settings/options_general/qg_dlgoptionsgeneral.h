@@ -95,6 +95,7 @@ protected slots:
     void onInfoCursorAbsolutePositionChanged();
     void onInfoCursorRelativeChanged();
     void onInfoCursorSnapChanged();
+    void on_pbDraftModeColor_clicked();
 
     void set_color(QComboBox* combo, QColor custom);
 private:

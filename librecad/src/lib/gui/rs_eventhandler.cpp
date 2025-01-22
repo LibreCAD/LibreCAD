@@ -35,6 +35,7 @@
 #include "rs_math.h"
 #include "rs_snapper.h"
 #include "rs_debug.h"
+#include "rs_graphicview.h"
 
 namespace {
     bool isActive(const std::shared_ptr<RS_ActionInterface>& action) {
@@ -90,9 +91,8 @@ namespace {
 /**
  * Constructor.
  */
-RS_EventHandler::RS_EventHandler(QObject *parent):QObject(parent) {
-    connect(parent, SIGNAL(relative_zero_changed(const RS_Vector&)),
-            this, SLOT(setRelativeZero(const RS_Vector&)));
+RS_EventHandler::RS_EventHandler(RS_GraphicView *parent):QObject(parent) {
+    connect(parent, &RS_GraphicView::relativeZeroChanged,this, &RS_EventHandler::setRelativeZero);
 }
 
 /**

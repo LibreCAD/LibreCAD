@@ -213,9 +213,8 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const RS_Text &p);
 
-    void draw(RS_Painter *painter, RS_GraphicView *view,
-            double &patternOffset) override;
-    void drawDraft(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
+    void draw(RS_Painter *painter) override;
+    void drawDraft(RS_Painter *painter) override;
     void moveRef(const RS_Vector &ref, const RS_Vector &offset) override;
     RS_Vector getNearestRef(const RS_Vector &coord, double *dist) const override;
     RS_Vector getNearestSelectedRef(const RS_Vector &coord, double *dist) const override;

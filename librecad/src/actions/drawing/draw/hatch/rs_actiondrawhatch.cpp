@@ -150,7 +150,7 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
 
             hatch->update();
 
-            graphicView->redraw(RS2::RedrawDrawing);
+            redrawDrawing();
 
             bool printArea = true;
             switch( hatch->getUpdateError()) {

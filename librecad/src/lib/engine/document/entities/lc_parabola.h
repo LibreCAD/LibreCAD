@@ -89,16 +89,10 @@ std::ostream& operator << (std::ostream& os, const LC_ParabolaData& ld);
 class LC_Parabola : public LC_SplinePoints // RS_EntityContainer
 {
 private:
-
-    // bool offsetCut(const RS_Vector& coord, const double& distance);
-    // bool offsetSpline(const RS_Vector& coord, const double& distance);
-    // std::vector<RS_Entity*> offsetTwoSidesSpline(const double& distance) const;
-    // std::vector<RS_Entity*> offsetTwoSidesCut(const double& distance) const;
     LC_ParabolaData data;
 
 public:
     LC_Parabola(RS_EntityContainer* parent, const LC_ParabolaData& d);
-    //RS_Entity* clone() const override;
 
     RS_Entity* clone() const override;
 
@@ -153,17 +147,6 @@ public:
     RS_Vector prepareTrim(const RS_Vector& trimCoord,
                           const RS_VectorSolutions& trimSol) override;
 
-    /** Sets the startpoint */
-    //void setStartpoint(RS_Vector s) {
-    //    data.startpoint = s;
-    //    calculateBorders();
-    //}
-    /** Sets the endpoint */
-    //void setEndpoint(RS_Vector e) {
-    //    data.endpoint = e;
-    //    calculateBorders();
-    //}
-
     double getDirection1() const override;
     double getDirection2() const override;
 
@@ -171,59 +154,6 @@ public:
     void moveEndpoint(const RS_Vector& pos) override;
 
     void update() override;
-
-    //void reverse() override;
-    /** @return the center point of the line. */
-    //RS_Vector getMiddlePoint() {
-    //    return (data.startpoint + data.endpoint)/2.0;
-    //}
-    //bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2) override;
-
-    /**
-    * @return The length of the line.
-    */
-    // double getLength() const override;
-
-    /**
-    * @return The angle of the line (from start to endpoint).
-    */
-    //double getAngle1() {
-    //    return data.startpoint.angleTo(data.endpoint);
-    //}
-
-    /**
-    * @return The angle of the line (from end to startpoint).
-    */
-    //double getAngle2() {
-    //    return data.endpoint.angleTo(data.startpoint);
-    //}
-
-    // RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;
-    // RS_Vector getTangentDirection(const RS_Vector& point) const override;
-
-    // RS_Vector getNearestEndpoint(const RS_Vector& coord,
-    //                              double* dist = nullptr) const override;
-    /**
-     * @brief getNearestPointOnEntity
-     * @param coord
-     * @param onEntity, unused, because current implementation finds the nearest point on the spline
-     * @param dist
-     * @param entity
-     * @return
-     */
-    // RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-    //                                   bool onEntity = true, double* dist = nullptr, RS_Entity** entity = nullptr) const override;
-    // //	RS_Vector getNearestCenter(const RS_Vector& coord,
-    // //		double* dist = nullptr) const;
-    // RS_Vector getNearestMiddle(const RS_Vector& coord,
-    //                            double* dist = nullptr, int middlePoints = 1) const override;
-    // RS_Vector getNearestDist(double distance,
-    //                          const RS_Vector& coord, double* dist = nullptr) const override;
-    // //RS_Vector getNearestRef(const RS_Vector& coord,
-    // //                                 double* dist = nullptr);
-    // double getDistanceToPoint(const RS_Vector& coord,
-    //                           RS_Entity** entity = nullptr, RS2::ResolveLevel level = RS2::ResolveNone,
-    //                           double solidDist = RS_MAXDOUBLE) const override;
 
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, const double& angle) override;
@@ -242,19 +172,6 @@ public:
      * @return an approximate offset
      */
     std::unique_ptr<LC_Parabola> approximateOffset(double dist) const;
-
-    // void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
-    // std::vector<RS_Vector> const& getPoints() const;
-    // std::vector<RS_Vector> const& getControlPoints() const;
-    // std::vector<RS_Vector> fillStrokePoints() const;
-
-    // friend std::ostream& operator << (std::ostream& os, const LC_SplinePoints& l);
-
-    // void calculateBorders() override;
-
-    // bool offset(const RS_Vector& coord, const double& distance) override;
-    // std::vector<RS_Entity*> offsetTwoSides(const double& distance) const override;
-    // void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
 
 private:
     // rotate a point around the parabola vertex so, the parabola is y= ax^2 + bx + c, with a > 0 after the

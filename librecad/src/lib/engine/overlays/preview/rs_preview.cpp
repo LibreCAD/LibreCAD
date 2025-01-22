@@ -206,26 +206,29 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container, RS_GraphicVi
     }
 }
 
-void RS_Preview::draw(RS_Painter* painter, RS_GraphicView* view,
-                              double& patternOffset) {
-    if (view->isDrawTextsAsDraftForPreview()) {
-        for (auto e: std::as_const(entities)) {
-            e->drawDraft(painter, view, patternOffset);
-        }
-    } else {
-        for (auto e: std::as_const(entities)) {
-            int type = e->rtti();
-            switch (type) {
-                case RS2::EntityMText:
-                case RS2::EntityText: {
-                    e->draw(painter, view, patternOffset);
-                    break;
+void RS_Preview::draw(RS_Painter* painter) {
+//    bool drawTextsAsDraftsForPreview = view->isDrawTextsAsDraftForPreview();
+// fixme - ucs - achieve view - store as field? This temporary for compilation...
+    bool drawTextsAsDraftsForPreview = false;
+
+    for (auto e: std::as_const(entities)) {
+        int type = e->rtti();
+        switch (type) {
+            case RS2::EntityMText:
+            case RS2::EntityText: {
+                if (drawTextsAsDraftsForPreview){
+                    e->drawDraft(painter);
                 }
-                default:
-                    e->drawDraft(painter, view, patternOffset);
+                else {
+                    e->draw(painter);
+                }
+                break;
             }
+            default:
+                e->draw(painter);
         }
     }
+
 }
 
 void RS_Preview::addReferenceEntitiesToContainer(RS_EntityContainer *container){

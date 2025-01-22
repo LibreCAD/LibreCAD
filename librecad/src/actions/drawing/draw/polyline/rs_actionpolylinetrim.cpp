@@ -132,9 +132,9 @@ void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e)
             } else {
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
-                graphicView->redraw();
+                redraw();
                 setStatus(SetSegment1);
-                graphicView->redraw();
+                redraw(); // fixme - why redraw twice??
             }
             invalidateSnapSpot();
             break;
@@ -175,7 +175,7 @@ void RS_ActionPolylineTrim::onMouseRightButtonRelease(int status, [[maybe_unused
     if (newStatus == ChooseEntity){
         if (polylineToModify){
             polylineToModify->setSelected(false);
-            graphicView->redraw();
+            redraw();
         }
     }
     setStatus(newStatus);
@@ -184,7 +184,7 @@ void RS_ActionPolylineTrim::onMouseRightButtonRelease(int status, [[maybe_unused
 void RS_ActionPolylineTrim::finish(bool updateTB){
     if (polylineToModify){
         polylineToModify->setSelected(false);
-        graphicView->redraw();
+        redraw();
     }
     RS_PreviewActionInterface::finish(updateTB);
 }

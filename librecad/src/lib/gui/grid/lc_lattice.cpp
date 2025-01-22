@@ -23,6 +23,7 @@
 #include "lc_lattice.h"
 #include "rs_math.h"
 #include "rs_graphicview.h"
+#include "lc_graphicviewport.h"
 
 // fixme - potentially, distortion for axis x and y should be added, as so far distortion factor is 1 (which is fine for cartesian and isometric)
 LC_Lattice::LC_Lattice(double angleX, double angleY, const RS_Vector& gridWidth) {
@@ -425,15 +426,15 @@ void LC_Lattice::fillExceptTLBRDiagonal(int numPointsByX, int numPointsByY, cons
     }
 }
 
-void LC_Lattice::toGui(RS_GraphicView* view){
+void LC_Lattice::toGui(LC_GraphicViewport* viewport){
     int numPoints = pointsX.size();
     for (int i = 0; i< numPoints; i++){
         double x = pointsX[i];
-        double uiX = view->toGuiX(x);
+        double uiX = viewport->toGuiX(x);
         pointsX[i] = uiX;
 
         double y = pointsY[i];
-        double uiY = view->toGuiY(y);
+        double uiY = viewport->toGuiY(y);
         pointsY[i] = uiY;
     }
 }

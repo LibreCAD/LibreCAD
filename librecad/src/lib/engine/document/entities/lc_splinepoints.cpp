@@ -1674,16 +1674,10 @@ double DrawPatternQuad(std::vector<double> const& pdPattern, int iPattern, doubl
 
 
 
-void LC_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset){
-//    update();
+void LC_SplinePoints::draw(RS_Painter* painter){
     // Adjust dash offset
-    updateDashOffset(*painter, *view, patternOffset);
-    int controlPointsCount = data.controlPoints.size();
-    std::vector<RS_Vector> controlPointsUI = std::vector<RS_Vector>(controlPointsCount);
-    for (int i = 0; i < controlPointsCount; i++){
-        controlPointsUI[i] = view->toGui(data.controlPoints[i]);
-    }
-    painter->drawSplinePoints(controlPointsUI, data.closed);
+    painter->updateDashOffset(this);
+    painter->drawSplinePointsWCS(data.controlPoints, data.closed);
 }
 
 void LC_SplinePoints::updateLength() {

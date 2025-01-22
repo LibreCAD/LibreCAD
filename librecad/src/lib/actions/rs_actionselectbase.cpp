@@ -19,8 +19,6 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-
-
 #include <QMouseEvent>
 
 #include "rs_actionselectbase.h"
@@ -28,11 +26,10 @@
 #include "rs_selection.h"
 #include "rs_debug.h"
 
-
 RS_ActionSelectBase::RS_ActionSelectBase(const char* name,
         RS_EntityContainer& container,
         RS_GraphicView& graphicView,QList<RS2::EntityType> entityTypeList)
-        :RS_PreviewActionInterface(name, container, graphicView),
+        :LC_OverlayBoxAction(name, container, graphicView),
         catchForSelectionEntityTypes(std::move(entityTypeList)){
 }
 

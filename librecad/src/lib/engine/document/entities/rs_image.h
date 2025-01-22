@@ -38,7 +38,7 @@ struct RS_ImageData {
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-	RS_ImageData() = default;
+    RS_ImageData() = default;
 
     RS_ImageData(int handle,
                  const RS_Vector& insertionPoint,
@@ -50,27 +50,25 @@ struct RS_ImageData {
                  int contrast,
                  int fade);
 
-	/** Handle of image definition. */
+/** Handle of image definition. */
     int handle = 0;
-	/** Insertion point. */
-	RS_Vector insertionPoint;
-	/** u vector. Points along visual bottom of image. */
-	RS_Vector uVector;
-	/** v vector. Points along visual left of image. */
-	RS_Vector vVector;
-	/** Image size in pixel. */
-	RS_Vector size;
-	/** Path to image file. */
-	QString file;
-	/** Brightness (0..100, default: 50). */
+/** Insertion point. */
+    RS_Vector insertionPoint;
+/** u vector. Points along visual bottom of image. */
+    RS_Vector uVector;
+/** v vector. Points along visual left of image. */
+    RS_Vector vVector;
+/** Image size in pixel. */
+    RS_Vector size;
+/** Path to image file. */
+    QString file;
+/** Brightness (0..100, default: 50). */
     int brightness = 0;
-	/** Contrast (0..100, default: 50). */
+/** Contrast (0..100, default: 50). */
     int contrast = 0;
-	/** Fade (0..100, default: 0). */
+/** Fade (0..100, default: 0). */
     int fade = 0;
 };
-
-
 
 /**
  * Class for a line entity.
@@ -82,14 +80,14 @@ public:
     RS_Image(RS_EntityContainer* parent,
             const RS_ImageData& d);
 
-	RS_Entity* clone() const override;
+    RS_Entity* clone() const override;
 
     /**	@return RS2::EntityImage */
-	RS2::EntityType rtti() const override{
+    RS2::EntityType rtti() const override{
         return RS2::EntityImage;
     }
 
-		void update() override;
+    void update() override;
 
     /** @return Copy of data that defines the image. */
     RS_ImageData getData() const {
@@ -97,7 +95,7 @@ public:
     }
 
     /** @return Insertion point of the entity */
-	RS_Vector getInsertionPoint() const {
+    RS_Vector getInsertionPoint() const {
         return data.insertionPoint;
     }
     /** Sets the insertion point for the image. */
@@ -121,41 +119,40 @@ public:
 
     /** @return u Vector. Points along bottom, 1 pixel long. */
     RS_Vector getUVector() const {
-            return data.uVector;
+        return data.uVector;
     }
     /** @return v Vector. Points along left, 1 pixel long. */
     RS_Vector getVVector() const {
-            return data.vVector;
+        return data.vVector;
     }
     /** @return Width of image in pixels. */
     int getWidth() const {
-            return (int)data.size.x;
+        return (int)data.size.x;
     }
     /** @return Height of image in pixels. */
     int getHeight() const {
-            return (int)data.size.y;
+        return (int)data.size.y;
     }
     /** @return Brightness. */
     int getBrightness() const {
-            return data.brightness;
+        return data.brightness;
     }
     /** @return Contrast. */
     int getContrast() const {
-            return data.contrast;
+        return data.contrast;
     }
     /** @return Fade. */
     int getFade() const {
-            return data.fade;
+        return data.fade;
     }
     /** @return Image definition handle. */
     int getHandle() const {
-            return data.handle;
+        return data.handle;
     }
     /** Sets the image definition handle. */
     void setHandle(int h) {
-            data.handle = h;
+        data.handle = h;
     }
-
 
     /** @return The four corners. **/
     RS_VectorSolutions getCorners() const;
@@ -175,57 +172,40 @@ public:
     }
 
 
-	RS_Vector getNearestEndpoint(const RS_Vector& coord,
-										 double* dist = NULL)const override;
-	RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-			bool onEntity=true, double* dist = NULL, RS_Entity** entity=NULL)const override;
-	RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = NULL)const override;
-	RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL,
-									   int middlePoints=1)const override;
-	RS_Vector getNearestDist(double distance,
-                                     const RS_Vector& coord,
-									 double* dist = NULL)const override;
-	double getDistanceToPoint(const RS_Vector& coord,
-                                      RS_Entity** entity=NULL,
-                                      RS2::ResolveLevel level=RS2::ResolveNone,
-							  double solidDist = RS_MAXDOUBLE) const override;
-
-//        double getLength() const {
-//                return -1.0;
-//        }
-
-	void move(const RS_Vector& offset) override;
-	void rotate(const RS_Vector& center, const double& angle) override;
-	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
-	void scale(const RS_Vector& center, const RS_Vector& factor) override;
-	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    RS_Vector getNearestEndpoint(const RS_Vector& coord,
+                                 double* dist = NULL)const override;
+    RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
+                                      bool onEntity=true, double* dist = NULL, RS_Entity** entity=NULL)const override;
+    RS_Vector getNearestCenter(const RS_Vector& coord,
+                               double* dist = NULL)const override;
+    RS_Vector getNearestMiddle(const RS_Vector& coord,
+                               double* dist = NULL,
+                               int middlePoints=1)const override;
+    RS_Vector getNearestDist(double distance,
+                             const RS_Vector& coord,
+                             double* dist = NULL)const override;
+    double getDistanceToPoint(const RS_Vector& coord,
+                              RS_Entity** entity=NULL,
+                              RS2::ResolveLevel level=RS2::ResolveNone,
+                              double solidDist = RS_MAXDOUBLE) const override;
+    void move(const RS_Vector& offset) override;
+    void rotate(const RS_Vector& center, const double& angle) override;
+    void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+    void scale(const RS_Vector& center, const RS_Vector& factor) override;
+    void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
     RS_Entity& shear([[maybe_unused]] double k) override {
         // TODO
         return *this;
     }
-	/*void stretch(RS_Vector firstCorner,
-                         RS_Vector secondCorner,
-                         RS_Vector offset);*/
-
-	void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
-
+    void draw(RS_Painter* painter) override;
     friend std::ostream& operator << (std::ostream& os, const RS_Image& l);
-
-	void calculateBorders() override;
-
-    void drawDraft(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
-
-
+    void calculateBorders() override;
+    void drawDraft(RS_Painter *painter) override;
 protected:
-	// whether the point is within image
-	bool containsPoint(const RS_Vector& coord) const;
-	RS_ImageData data;
+// whether the point is within image
+    bool containsPoint(const RS_Vector& coord) const;
+    RS_ImageData data;
     std::shared_ptr<QImage> img;
-        //QImage** img;
-        //int nx;
-        //int ny;
 };
 
 #endif

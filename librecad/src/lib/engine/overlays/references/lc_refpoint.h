@@ -30,7 +30,7 @@ public:
     LC_RefPoint(RS_EntityContainer *parent, const RS_Vector &d, double size, int mode);
     RS2::EntityType rtti() const override;
     RS_Entity *clone()  const override;
-    void draw(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
+    void draw(RS_Painter *painter) override;
 private:
     int pdmode;
     double pdsize;

@@ -99,7 +99,7 @@ void RS_ActionDrawImage::doTrigger() {
         creation.createImage(&pImg->data);
     }
 
-    graphicView->zoomAuto();
+    viewport->zoomAuto();
     finish(false);
 }
 
@@ -109,7 +109,7 @@ void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent *e){
         bool snappedToRelZero = trySnapToRelZeroCoordinateEvent(e);
         if (!snappedToRelZero){
             pImg->data.insertionPoint = snapPoint(e);
-
+            // fixme - ucs - review this code
 //RS_Creation creation(preview, nullptr, false);
             //creation.createInsert(data);
             double const w = pImg->img.width();

@@ -81,6 +81,7 @@ public:
         QIcon iconGridType;
         QString ucsInfo;
         QString toolTip;
+        QString displayName;
     };
 
 protected:

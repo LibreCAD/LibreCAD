@@ -218,8 +218,7 @@ public:
     void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void revertDirection() override;
 
-
-    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+    void draw(RS_Painter* painter) override;
 
     friend std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec);
 
@@ -260,7 +259,7 @@ public:
 
     inline RS_Entity* unsafeEntityAt(int index) const {return entities.at(index);}
 
-    void drawAsChild(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
+    void drawAsChild(RS_Painter *painter) override;
 
     RS_Entity *cloneProxy(RS_GraphicView *view) const override;
 

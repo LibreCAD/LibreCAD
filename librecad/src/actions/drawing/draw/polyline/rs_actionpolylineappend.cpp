@@ -75,7 +75,7 @@ void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
 
                     RS_Vector endpointToUse;
 
-                    double dist = graphicView->toGraphDX(catchEntityGuiRange) * 0.9;
+                    double dist = toGraphDX(catchEntityGuiRange) * 0.9;
                     const RS_Vector &mouse = toGraph(e);
                     const RS_Vector &startPoint = polyline->getStartpoint();
                     const RS_Vector &endPoint = polyline->getEndpoint();
@@ -132,7 +132,7 @@ void RS_ActionPolylineAppend::onMouseLeftButtonRelease(int status, QMouseEvent *
             auto entFirst = op->firstEntity();
             auto entLast = op->lastEntity();
 
-            double dist = graphicView->toGraphDX(catchEntityGuiRange) * 0.9;
+            double dist = toGraphDX(catchEntityGuiRange) * 0.9;
             const RS_Vector &mouse = toGraph(e);
             if (entFirst == entLast) { // single segment of polyline
                 double distToStart = originalPolyline->getStartpoint().distanceTo(mouse);
@@ -281,27 +281,6 @@ void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] boo
             drawSnapper();
             moveRelativeZero(mouse);
             break;
-
-/*
-
-
-            RS_Polyline *polyline = pPoints->polyline;
-            if (polyline == nullptr){
-                polyline = new RS_Polyline(container, getData());
-                polyline->addVertex(getStart(), 0.0, prepend);
-            }
-            else{
-                polyline->addVertex(mouse, 0.0, prepend);
-                if (polyline->count() == 1){
-                    polyline->setLayerToActive();
-                    polyline->setPenToActive();
-                }
-                deleteSnapper();
-                graphicView->drawEntity(polyline);
-                drawSnapper();
-            }
-            updateMouseButtonHints();
-            break;*/
         }
         default:
             break;

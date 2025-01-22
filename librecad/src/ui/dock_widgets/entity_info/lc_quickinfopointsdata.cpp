@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "lc_quickinfopointsdata.h"
+#include "lc_graphicviewport.h"
 
 LC_QuickInfoPointsData::LC_QuickInfoPointsData():LC_QuickInfoBaseData(){}
 
@@ -68,19 +69,19 @@ void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &point){
     switch (coordinatesMode){
         case COORD_ABSOLUTE:
             // just use the vector itself
-            viewCoordinate = graphicView->toUCS(point);
+            viewCoordinate = viewport->toUCS(point);
             pointInfo = createPointInfo(point, viewCoordinate, idxValue, false);
             break;
         case COORD_RELATIVE:{
             // check relative zero position
-            RS_Vector relZero = graphicView->getRelativeZero();
+            RS_Vector relZero = getRelativeZero();
             if (relZero.valid){
                 // calculate relative vector
                 viewCoordinate = point - relZero;
                 pointInfo = createPointInfo(point, viewCoordinate, idxValue, true);
             }
             else{
-                viewCoordinate = graphicView->toUCS(point);
+                viewCoordinate = viewport->toUCS(point);
                 pointInfo = createPointInfo(point, viewCoordinate, idxValue, false);
             }
             break;
@@ -145,7 +146,7 @@ void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &point){
                 else{
                     RS_Vector prevPoint = collectedPoints.at(i - 1)->data;
                     viewCoordinate = point - prevPoint;
-                    viewCoordinate = graphicView->toUCSDelta(viewCoordinate);
+                    viewCoordinate = viewport->toUCSDelta(viewCoordinate);
                 }
                 double angleToPrevious = viewCoordinate.angle();
                 double lenToPrevious = viewCoordinate.magnitude();
@@ -164,7 +165,7 @@ void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &point){
 LC_QuickInfoPointsData::PointInfo* LC_QuickInfoPointsData::createPointInfo(const RS_Vector &point, const RS_Vector &viewCoordinate, const QString &idxValue, bool relative) {
     RS_Vector viewCoord;
     if (relative){
-        viewCoord = graphicView->toUCSDelta(viewCoordinate);
+        viewCoord = viewport->toUCSDelta(viewCoordinate);
     }
     else{
         viewCoord = viewCoordinate;
@@ -208,7 +209,7 @@ QString LC_QuickInfoPointsData::generateView(bool showDistanceAndAngle, bool for
                 break;
             }
             case COORD_RELATIVE:{
-                RS_Vector relZero = graphicView->getRelativeZero();
+                RS_Vector relZero = getRelativeZero();
                 if (!relZero.valid){
                     relZero = zero;
                 }
@@ -286,6 +287,8 @@ bool LC_QuickInfoPointsData::updateForCoordinateViewMode(int mode){
 void LC_QuickInfoPointsData::doUpdatePointsAttributes(){
     int pointsCount = collectedPoints.size();
 
+    RS_Vector relZero = getRelativeZero();
+
     for (int i = 0; i < pointsCount; i++) {
 
         PointInfo *pointInfo = collectedPoints.at(i);
@@ -296,7 +299,6 @@ void LC_QuickInfoPointsData::doUpdatePointsAttributes(){
                 viewCoordinate = data;
                 break;
             case COORD_RELATIVE: {
-                RS_Vector relZero = graphicView->getRelativeZero();
                 if (relZero.valid){
                     viewCoordinate = data - relZero;
                 } else {

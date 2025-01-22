@@ -58,36 +58,28 @@ void RS_ActionZoomIn::init(int status) {
 
 void RS_ActionZoomIn::trigger() {
     switch (axis) {
+        // fixme - sand - review and remove this if not needed...
         case RS2::OnlyX:
-            if (direction==RS2::In) {
-                graphicView->zoomInX();
+    /*        if (direction==RS2::In) {
+                viewport->zoomInX();
             } else {
-                graphicView->zoomOutX();
-            }
+                viewport->zoomOutX();
+            }*/
             break;
 
         case RS2::OnlyY:
-            if (direction==RS2::In) {
-                graphicView->zoomInY();
+           /* if (direction==RS2::In) {
+                viewport->zoomInY();
             } else {
-                graphicView->zoomOutY();
-            }
+                viewport->zoomOutY();
+            }*/
             break;
 
         case RS2::Both:
-            if (!center->valid) {
-                RS_Vector centerUCS = (graphicView->getUCSViewLeftBottom() + graphicView->getUCSViewRightTop())*0.5;
-//                *center = graphicView->toWorld(centerUCS);
-                *center = centerUCS;
-
-                LC_ERR << " ++Center " << formatVector(*center);
-                /**center = graphicView->toGraph(graphicView->getWidth() / 2,
-                                               graphicView->getHeight() / 2);*/
-            }
             if (direction==RS2::In) {
-                graphicView->zoomIn(zoom_factor, *center);
+                viewport->zoomIn(zoom_factor, *center);
             } else {
-                graphicView->zoomOut(zoom_factor, *center);
+                viewport->zoomOut(zoom_factor, *center);
             }
             break;
     }

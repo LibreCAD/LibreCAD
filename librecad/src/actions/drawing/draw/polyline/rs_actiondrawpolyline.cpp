@@ -171,7 +171,7 @@ void RS_ActionDrawPolyline::onMouseLeftButtonRelease([[maybe_unused]]int status,
         QString pointNumberString(QString::number(snapPoint(e).x)); // fixme - review and check the logic
 
         if (isControl(e)){
-            pointNumberString = QString::number(snapPoint(e).x - graphicView->getRelativeZero().x).prepend("@@");
+            pointNumberString = QString::number(snapPoint(e).x - getRelativeZero().x).prepend("@@");
         }
 
         RS_CommandEvent equationCommandEventObject(pointNumberString);
@@ -410,7 +410,7 @@ void RS_ActionDrawPolyline::onCoordinateEvent(int status, [[maybe_unused]]bool i
                     }
                     deletePreview();
                     deleteSnapper();
-                    graphicView->redraw();
+                    redraw();
                 }
                 updateMouseButtonHints();
             } else {
@@ -621,7 +621,9 @@ bool RS_ActionDrawPolyline::getPlottingX(QString command, double& x){
 
         x = m_muParserObject->Eval();
 
-        if (isRelative) x += graphicView->getRelativeZero().x;
+        if (isRelative) {
+            x += getRelativeZero().x;
+        }
 
         endPointSettingOn = true;
     }
@@ -683,7 +685,7 @@ void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines) {
         equationX += stepSize;
     }
     deletePreview();
-    graphicView->redraw();
+    redraw();
 
     plottingX -= stepSize;
     equationX -= stepSize;
@@ -807,7 +809,7 @@ void RS_ActionDrawPolyline::undo(){
     } else {
         commandMessage(tr("Cannot undo: Not enough entities defined yet."));
     }
-    graphicView->redraw();
+    redraw();
 }
 
 void RS_ActionDrawPolyline::setParserExpression(const QString& expression){

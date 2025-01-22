@@ -140,12 +140,11 @@ void LC_ActionPreSelectionAwareBase::mouseMoveEvent(QMouseEvent *event) {
     else{
         snapPoint(event);
         RS_Vector mouse = toGraph(event);
-        if (selectionCorner1.valid && (graphicView->toGuiDX(selectionCorner1.distanceTo(mouse)) > 10.0)){
+        if (selectionCorner1.valid && (viewport->toGuiDX(selectionCorner1.distanceTo(mouse)) > 10.0)){
             inBoxSelectionMode = true;
         }
         if (inBoxSelectionMode){
-            auto ob = new RS_OverlayBox(nullptr,RS_OverlayBoxData(selectionCorner1, mouse));
-            previewEntity(ob);
+            drawOverlayBox(selectionCorner1, mouse);
             if (infoCursorOverlayPrefs->enabled) {
                 bool cross = (selectionCorner1.x > mouse.x);
                 bool deselect = isShift(event);

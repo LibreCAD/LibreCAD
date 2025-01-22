@@ -49,7 +49,7 @@ void RS_ActionInfoDist2::init(int status){
         if (selectionMode == FIRST_IS_POINT){
             setStatus(SetPoint);
         } else {
-            savedRelZero = graphicView->getRelativeZero();
+            savedRelZero = getRelativeZero();
         }
     } else if (status < 0){
         restoreRelZero();
@@ -92,7 +92,7 @@ void RS_ActionInfoDist2::doTrigger() {
         commandMessage(message);
         restoreRelZero();
         deletePreview();
-        graphicView->redraw(RS2::RedrawDrawing);
+        redrawDrawing();
     }
 }
 

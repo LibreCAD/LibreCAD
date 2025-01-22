@@ -123,7 +123,7 @@ public:
      void endUndoCycle() override;
 
     void setGraphicView(RS_GraphicView * g) {gv = g;}
-    RS_GraphicView* getGraphicView() {return gv;}
+    RS_GraphicView* getGraphicView() {return gv;} // fixme - sand -- REALLY BAD DEPENDANCE TO UI here, REWORK!
 
 protected:
     /** Flag set if the document was modified and not yet saved. */
@@ -137,7 +137,7 @@ protected:
 	/** Format type */
     RS2::FormatType formatType = RS2::FormatUnknown;
     //used to read/save current view
-    RS_GraphicView * gv = nullptr;
+    RS_GraphicView * gv = nullptr; // fixme - sand -- REALLY BAD DEPENDANCE TO UI here, REWORK!
 
 };
 #endif

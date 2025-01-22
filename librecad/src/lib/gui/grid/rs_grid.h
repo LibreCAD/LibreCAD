@@ -31,9 +31,11 @@
 #include "rs.h"
 #include "rs_vector.h"
 #include "rs_graphic.h"
-#include "lc_gridsystem.h"
 
 class RS_GraphicView;
+class LC_GraphicViewport;
+class LC_GridSystem;
+
 class QString;
 namespace lc {
 	namespace geo {
@@ -51,25 +53,19 @@ using LC_Rect = lc::geo::Area;
  * @author Andrew Mustun
  */
 class RS_Grid{
-
 public:
 
-	RS_Grid(RS_GraphicView* graphicView);
+	RS_Grid(LC_GraphicViewport* graphicView);
 
 	void calculateGrid();
  void calculateSnapSettings();
 
- void invalidate(){
-     if (gridSystem != nullptr) {
-         gridSystem->invalidate();
-     }
- }
+ void invalidate(bool gridOn);
 
-
-	/**
-		 * @return Array of all visible grid points.
-		 */
-	std::vector<RS_Vector> const& getPoints() const;
+//	/**
+//		 * @return Array of all visible grid points.
+//		 */
+//	std::vector<RS_Vector> const& getPoints() const;
 
 	/**
 	* \brief the closest grid point
@@ -78,10 +74,10 @@ public:
 	*/
 	RS_Vector snapGrid(const RS_Vector& coord) const;
 
-	/**
-		 * @return Number of visible grid points.
-		 */
-	int count() const;
+//	/**
+//		 * @return Number of visible grid points.
+//		 */
+//	int count() const;
 	void setIsoViewType(RS2::IsoGridViewType chType);
 	RS2::IsoGridViewType getIsoViewType() const;
 
@@ -90,15 +86,15 @@ public:
 		 */
 	QString getInfo() const;
 
-	/**
-		 * @return a vector of Meta grid positions in X.
-		 */
-	std::vector<double> const& getMetaX() const;
-
-	/**
-		 * @return a vector of Meta grid positions in Y.
-		 */
-	std::vector<double> const& getMetaY() const;
+//	/**
+//		 * @return a vector of Meta grid positions in X.
+//		 */
+//	std::vector<double> const& getMetaX() const;
+//
+//	/**
+//		 * @return a vector of Meta grid positions in Y.
+//		 */
+//	std::vector<double> const& getMetaY() const;
 
 	bool isIsometric() const;
 	void setIsometric(bool b);
@@ -119,7 +115,8 @@ private:
 //! \}
 
     //! Graphic view this grid is connected to.
-    RS_GraphicView *graphicView = nullptr;
+    LC_GraphicViewport* viewport = nullptr;
+
 
     QString gridInfoString = "";
 

@@ -127,7 +127,7 @@ QVariant LC_UCSListModel::data(const QModelIndex &index, int role) const {
         case Qt::DisplayRole: {
             switch (col){
                 case (NAME):{
-                    QString displayName = ucs->ucs->getName();
+                    QString displayName = ucs->displayName;
                     return displayName;
                 }
                 case UCS_DETAILS:{
@@ -296,6 +296,13 @@ LC_UCSListModel::UCSItem *LC_UCSListModel::createUCSItem(LC_UCS *ucs) {
     result->iconType = getTypeIcon(ucs);
     result->iconGridType = getOrthoTypeIcon(ucs);
 
+    QString name = ucs->getName();
+    if (name.isEmpty()){
+        name = tr("<No name>");
+    }
+
+    result->displayName = name;
+
     double angleValue = RS_Math::correctAnglePlusMinusPi(ucs->getXAxis().angle());
     QString originX = RS_Units::formatLinear(ucs->getOrigin().x, unit, linearFormat, prec);
     QString originY = RS_Units::formatLinear(ucs->getOrigin().y, unit, linearFormat, prec);
@@ -308,7 +315,7 @@ LC_UCSListModel::UCSItem *LC_UCSListModel::createUCSItem(LC_UCS *ucs) {
 
     QString orthoType = getGridViewType(ucs->getOrthoType());
 
-    QString toolTip = QString(tr("Name: ")).append("<b>").append(ucs->getName()).append("</b><br>")
+    QString toolTip = QString(tr("Name: ")).append("<b>").append(name).append("</b><br>")
         .append(tr("Origin X: ")).append("<b>").append(originX).append("</b><br>")
         .append(tr("Origin Y: ")).append("<b>").append(originY).append("</b><br>")
         .append(tr("Angle: ")).append("<b>").append(angle).append("</b><br>")

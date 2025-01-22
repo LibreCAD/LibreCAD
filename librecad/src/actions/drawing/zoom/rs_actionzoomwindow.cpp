@@ -68,10 +68,10 @@ void RS_ActionZoomWindow::init(int status){
 void RS_ActionZoomWindow::doTrigger() {
     RS_DEBUG->print("RS_ActionZoomWindow::trigger()");
     if (pPoints->v1.valid && pPoints->v2.valid){
-        if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 5){
+        if (viewport->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 5){
             RS_Vector point1 = toUCS(pPoints->v1);
             RS_Vector point2 = toUCS(pPoints->v2);
-            graphicView->zoomWindow(point1, point2, keepAspectRatio);
+            viewport->zoomWindow(point1, point2, keepAspectRatio);
             init(SetFirstCorner);
         }
     }

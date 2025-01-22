@@ -139,8 +139,7 @@ public:
     }
     void activateContour(bool on);
 
-    void draw(RS_Painter* painter, RS_GraphicView* view,
-                      double& patternOffset) override;
+    void draw(RS_Painter* painter) override;
 
     double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity = NULL,
@@ -170,11 +169,11 @@ private:
     bool needOptimization = false;
     bool m_updated=false;
 
-    void drawSolidFill(RS_Painter *painter, const RS_GraphicView *view);
+    void drawSolidFill(RS_Painter *painter);
 
     void debugOutPath(const QPainterPath &tmpPath) const;
 
-    void createSolidFillPath( RS_Painter *painter, const RS_GraphicView *view, QPainterPath &path);
+    void createSolidFillPath( RS_Painter *painter, QPainterPath &path);
 };
 
 #endif

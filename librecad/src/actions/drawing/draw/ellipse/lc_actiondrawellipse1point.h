@@ -66,6 +66,7 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void doTrigger() override;
+    RS_Vector getMajorP();
 };
 
 #endif // LC_ACTIONDRAWELLIPSE1POINT_H

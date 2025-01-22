@@ -1130,10 +1130,11 @@ void LC_WidgetFactory::initStatusBar() {
     main_window->mouseWidget = new QG_MouseWidget(status_bar, "mouse info");
     main_window->selectionWidget = new QG_SelectionWidget(status_bar, "selections");
     main_window->m_pActiveLayerName = new QG_ActiveLayerName(status_bar);
+
     main_window->grid_status = new TwoStackedLabels(status_bar);
     main_window->grid_status->setTopLabel(tr("Grid Status"));
     
-    LC_UCSStateWidget* ucsStateWidget = new LC_UCSStateWidget(status_bar, "ucs");
+    auto* ucsStateWidget = new LC_UCSStateWidget(status_bar, "ucs");
 
     main_window->ucsStateWidget = ucsStateWidget;
 
@@ -1148,6 +1149,7 @@ void LC_WidgetFactory::initStatusBar() {
         status_bar->addWidget(main_window->m_pActiveLayerName);
         status_bar->addWidget(main_window->grid_status);
         status_bar->addWidget(main_window->relativeZeroCoordinatesWidget);
+        status_bar->addWidget(main_window->ucsStateWidget);
 
         LC_GROUP_GUARD("Widgets");{
             bool allow_statusbar_fontsize = LC_GET_BOOL("AllowStatusbarFontSize", false);
@@ -1209,12 +1211,14 @@ void LC_WidgetFactory::initStatusBar() {
         tb->setObjectName("TBGridStatus");
         tb->addWidget(main_window->grid_status);
         tb->setProperty("_group", 3);
+        addToBottom(tb);
 
         tb = new QToolBar(tr("UCS Status"), main_window);
         tb->setSizePolicy(tbPolicy);
         tb->setObjectName("TBUCSStatus");
         tb->addWidget(main_window->ucsStateWidget);
         tb->setProperty("_group", 3);
+        addToBottom(tb);
 
         main_window->statusbarManager->setup();
 
@@ -1231,7 +1235,6 @@ void LC_WidgetFactory::initStatusBar() {
         addAction(tb,"ViewGridIsoTop");
         addAction(tb,"ViewGridIsoRight");
 */
-        addToBottom(tb);
     }
 }
 
