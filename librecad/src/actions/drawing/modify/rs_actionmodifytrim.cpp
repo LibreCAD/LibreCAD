@@ -28,6 +28,7 @@
 
 #include "rs_actionmodifytrim.h"
 #include "rs_debug.h"
+#include "rs_ellipse.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 

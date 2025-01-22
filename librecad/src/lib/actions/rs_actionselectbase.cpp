@@ -20,13 +20,13 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-
 #include <QMouseEvent>
 
 #include "rs_actionselectbase.h"
+#include "rs_debug.h"
+#include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
 #include "rs_selection.h"
-#include "rs_debug.h"
 
 
 RS_ActionSelectBase::RS_ActionSelectBase(const char* name,

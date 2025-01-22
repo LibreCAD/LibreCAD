@@ -21,9 +21,10 @@
  ******************************************************************************/
 
 #include "lc_actiondrawarc2pointsheight.h"
+#include "lc_linemath.h"
+#include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_information.h"
-#include "lc_linemath.h"
 
 LC_ActionDrawArc2PointsHeight::LC_ActionDrawArc2PointsHeight(RS_EntityContainer &container, RS_GraphicView &graphicView)
     :LC_ActionDrawArc2PointsBase("DrawArc2Angle",container, graphicView) {

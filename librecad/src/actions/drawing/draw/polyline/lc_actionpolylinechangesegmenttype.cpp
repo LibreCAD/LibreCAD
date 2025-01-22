@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_actionpolylinechangesegmenttype.h"
+#include "rs_arc.h"
 #include "rs_document.h"
 #include "rs_graphicview.h"
 

@@ -19,12 +19,16 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
+
 #include <QList>
-#include "rs_math.h"
+
 #include "lc_linemath.h"
 #include "lc_duplicateoptions.h"
 #include "lc_actionmodifyduplicate.h"
 #include "lc_abstractactionwithpreview.h"
+
+#include "rs_ellipse.h"
+#include "rs_math.h"
 #include "rs_previewactioninterface.h"
 
 LC_ActionModifyDuplicate::LC_ActionModifyDuplicate(RS_EntityContainer &container, RS_GraphicView &graphicView):
