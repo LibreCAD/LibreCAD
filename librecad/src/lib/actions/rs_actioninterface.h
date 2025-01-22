@@ -28,15 +28,15 @@
 #ifndef RS_ACTIONINTERFACE_H
 #define RS_ACTIONINTERFACE_H
 
-#include <QObject>
 #include <QtCore/QtContainerFwd>
-#include <QKeyEvent>
-#include <QInputEvent>
-#include <QMouseEvent>
 
 #include "rs.h"
 #include "rs_snapper.h"
 #include "lc_modifiersinfo.h"
+
+class QInputEvent;
+class QKeyEvent;
+class QMouseEvent;
 
 class RS_CommandEvent;
 class RS_CoordinateEvent;

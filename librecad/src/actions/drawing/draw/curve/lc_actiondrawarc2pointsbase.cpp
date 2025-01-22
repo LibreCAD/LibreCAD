@@ -20,6 +20,8 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
+#include <QMouseEvent>
+
 #include "lc_actiondrawarc2pointsbase.h"
 #include "lc_actiondrawarc2poptions.h"
 #include "lc_linemath.h"

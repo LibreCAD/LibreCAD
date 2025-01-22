@@ -20,6 +20,8 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
+#include <QMouseEvent>
+
 #include "lc_actiondrawmidline.h"
 #include "lc_linemath.h"
 #include "lc_midlineoptions.h"

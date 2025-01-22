@@ -19,17 +19,18 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
+#include <QMouseEvent>
 
 #include "lc_actiondrawpointslattice.h"
-#include "lc_pointslatticeoptions.h"
 #include "lc_linemath.h"
+#include "lc_pointslatticeoptions.h"
+#include "rs_document.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
-#include "rs_math.h"
-#include "rs_point.h"
 #include "rs_layer.h"
+#include "rs_math.h"
 #include "rs_pen.h"
-#include "rs_document.h"
+#include "rs_point.h"
 
 
 LC_ActionDrawPointsLattice::LC_ActionDrawPointsLattice(RS_EntityContainer &container,RS_GraphicView &graphicView)
