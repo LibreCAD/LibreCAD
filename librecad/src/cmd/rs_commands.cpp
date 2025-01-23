@@ -92,6 +92,13 @@ void writeAliasFile(QFile& aliasFile,
 
     // the reverse look up from action type to avoid quadratic time complexity
     std::map<RS2::ActionType, QString> actionToMain;
+
+    // full commands should be used first
+    for(const auto& item: g_commandList) {
+        for(const auto& [fullCmd, translation]: item.fullCmdList)
+            actionToMain.emplace(item.actionType, fullCmd);
+    }
+
     for(auto const& [cmd, action]: m_mainCommands)
         if (actionToMain.count(action) == 0)
             actionToMain.emplace(action, cmd);
@@ -143,7 +150,7 @@ RS_Commands* RS_Commands::instance() {
 RS_Commands::RS_Commands() {
 
     for(auto const& c0: g_commandList){
-        auto const act=c0.actionType;
+        const RS2::ActionType act=c0.actionType;
         //add full commands
         for(auto const& p0: c0.fullCmdList){
             if (isCollisionFree(m_cmdTranslation, p0.first, p0.second))
