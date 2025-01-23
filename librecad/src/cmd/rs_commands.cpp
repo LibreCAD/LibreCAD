@@ -54,6 +54,9 @@ struct LC_CommandItem {
 template<typename T1, typename T2>
 bool isCollisionFree(std::map<T1, T2> const& lookUp, T1 const& key, T2 const& value, QString cmd = {})
 {
+    if (key == cmd)
+        return false;
+
     if(!lookUp.count(key) || lookUp.at(key) == value)
         return true;
 
