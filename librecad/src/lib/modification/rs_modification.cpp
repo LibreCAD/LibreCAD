@@ -2355,7 +2355,7 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
     }
 
     RS_AtomicEntity* trimmed1 = nullptr;
-    RS_AtomicEntity* trimmed2 = nullptr;
+    auto* trimmed2 = static_cast<RS_AtomicEntity*>(limitEntity);
 
     if (trimEntity->rtti()==RS2::EntityCircle) {
         // convert a circle into a trimmable arc, need to start from intersections
