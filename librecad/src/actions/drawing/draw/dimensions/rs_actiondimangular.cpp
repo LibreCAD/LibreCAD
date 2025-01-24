@@ -75,21 +75,18 @@ void RS_ActionDimAngular::doTrigger() {
     }
 }
 
-void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e){
-    deletePreview();
-    deleteHighlights();
-    RS_DEBUG->print( "RS_ActionDimAngular::mouseMoveEvent begin");
-    RS_Vector snap = snapPoint(e);
-    switch (getStatus()) {
+void RS_ActionDimAngular::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
+    switch (status) {
         case SetLine1: {
-            RS_Entity *en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
+            RS_Entity *en = catchEntityByEvent(e, RS2::EntityLine, RS2::ResolveAll);
             if (en != nullptr){
                 highlightHover(en);
             }
             break;
         }
         case SetLine2: {
-            RS_Entity *en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
+            RS_Entity *en = catchEntityByEvent(e, RS2::EntityLine, RS2::ResolveAll);
             if (en != nullptr && en != line1){
                 highlightHover(en);
             }
@@ -123,16 +120,13 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionDimAngular::mouseMoveEvent end");
-    drawPreview();
-    drawHighlights();
 }
 
-void RS_ActionDimAngular::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    const RS_Vector &pos = toGraph(e);
+void RS_ActionDimAngular::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    const RS_Vector &pos = e->graphPoint;
     switch (status) {
         case SetLine1: {
-            RS_Entity *en = catchEntity(e, RS2::EntityLine,RS2::ResolveAll);
+            RS_Entity *en = catchEntityByEvent(e, RS2::EntityLine,RS2::ResolveAll);
             if (en != nullptr){
                 line1 = dynamic_cast<RS_Line *>(en);
                 click1 = line1->getNearestPointOnEntity(pos);
@@ -141,7 +135,7 @@ void RS_ActionDimAngular::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
             break;
         }
         case SetLine2: {
-            RS_Entity *en = catchEntity(e, RS2::EntityLine,RS2::ResolveAll);
+            RS_Entity *en = catchEntityByEvent(e, RS2::EntityLine,RS2::ResolveAll);
             if (en != nullptr){
                 if (en != line1){
                     line2 = dynamic_cast<RS_Line *>(en);
@@ -155,7 +149,7 @@ void RS_ActionDimAngular::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
             break;
         }
         case SetPos: {
-            RS_Vector snap = snapPoint(e);
+            RS_Vector snap = e->snapPoint;
             snap = getFreeSnapAwarePoint(e, snap);
             fireCoordinateEvent(snap);
             break;
@@ -165,7 +159,7 @@ void RS_ActionDimAngular::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionDimAngular::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDimAngular::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

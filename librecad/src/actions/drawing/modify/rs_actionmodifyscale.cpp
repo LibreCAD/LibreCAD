@@ -84,11 +84,8 @@ void RS_ActionModifyScale::doTrigger(bool keepSelected) {
 
 #define DRAW_TRIANGLES_ON_PREVIEW_NO
 
-void RS_ActionModifyScale::mouseMoveEventSelected(QMouseEvent* e) {
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
-    RS_DEBUG->print("RS_ActionModifyScale::mouseMoveEvent begin");
+void RS_ActionModifyScale::onMouseMoveEventSelected(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetReferencePoint: {
             pPoints->data.referencePoint = mouse;
@@ -96,7 +93,7 @@ void RS_ActionModifyScale::mouseMoveEventSelected(QMouseEvent* e) {
             RS_Vector selectionCenter = boundingForSelected.getCenter();
             pPoints->sourcePoint = selectionCenter;
             if (!trySnapToRelZeroCoordinateEvent(e)){
-                if (isControl(e)){
+                if (e->isControl){
                     mouse = selectionCenter;
                 }
                 RS_ScaleData previewData = pPoints->data;
@@ -189,15 +186,13 @@ void RS_ActionModifyScale::mouseMoveEventSelected(QMouseEvent* e) {
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionModifyScale::mouseMoveEvent end");
-    drawPreview();
 }
 
-RS_Vector RS_ActionModifyScale::getTargetPoint(QMouseEvent* e){
+RS_Vector RS_ActionModifyScale::getTargetPoint(LC_MouseEvent* e){
     if (pPoints->data.isotropicScaling) {
-        RS_Vector mouse = snapPoint(e);
-        if (isControl(e)){
-            mouse = toGraph(e);
+        RS_Vector mouse = e->snapPoint;
+        if (e->isControl){
+            mouse = e->graphPoint;
         }
         // project mouse to the line (center, source)
         RS_Line centerSourceLine{nullptr, {pPoints->data.referencePoint, pPoints->sourcePoint}};
@@ -205,7 +200,7 @@ RS_Vector RS_ActionModifyScale::getTargetPoint(QMouseEvent* e){
         snapPoint(projected, true);
         return projected;
     } else {
-        return snapPoint(e);
+        return e->snapPoint;
     }
 }
 
@@ -233,11 +228,11 @@ void RS_ActionModifyScale::showPreview(RS_ScaleData &previewData) {
     }
 }
 
-void RS_ActionModifyScale::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
-    RS_Vector snapped = snapPoint(e);
+void RS_ActionModifyScale::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+    RS_Vector snapped = e->snapPoint;
     switch (status){
         case SetReferencePoint: {
-            if (isControl(e)){
+            if (e->isControl){
                 RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(selectedEntities);
                 snapped = boundingForSelected.getCenter();
             }
@@ -262,7 +257,7 @@ void RS_ActionModifyScale::mouseLeftButtonReleaseEventSelected(int status, QMous
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionModifyScale::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionModifyScale::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     switch (status) {
         case SetReferencePoint: {

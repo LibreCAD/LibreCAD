@@ -212,9 +212,9 @@ void RS_PreviewActionInterface::addToHighlights(RS_Entity *e, bool enable){
     }
 }
 
-bool RS_PreviewActionInterface::trySnapToRelZeroCoordinateEvent(const QMouseEvent *e){
+bool RS_PreviewActionInterface::trySnapToRelZeroCoordinateEvent(const LC_MouseEvent *e){
     bool result = false;
-    if (isShift(e)){
+    if (e->isShift){
         RS_Vector relZero = getRelativeZero();
         if (relZero.valid){
             fireCoordinateEvent(relZero);
@@ -224,10 +224,10 @@ bool RS_PreviewActionInterface::trySnapToRelZeroCoordinateEvent(const QMouseEven
     return result;
 }
 
-RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const QMouseEvent *e, const RS_Vector& basepoint, const RS_Vector& pos, bool drawMark, bool force){
+RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const LC_MouseEvent *e, const RS_Vector& basepoint, const RS_Vector& pos, bool drawMark, bool force){
     RS_Vector result = pos;
     if (force){
-        RS_Vector freePosition  = toGraph(e); // fixme = test, review and decide whether free snap is actually needed there. May be use snapMode instead of free?
+        RS_Vector freePosition  = e->graphPoint; // fixme = test, review and decide whether free snap is actually needed there. May be use snapMode instead of free?
         // todo -  if there are restrictions or snap to grid, snap to angle will not work in snapper... yet this is double calc!
         if(!(snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid)){
             result = snapToAngle(freePosition, basepoint, snapToAngleStep);
@@ -239,16 +239,16 @@ RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const QMouseEvent *e
     return result;
 }
 
-RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const QMouseEvent *e, const RS_Vector& basepoint, const RS_Vector& pos, bool drawMark){
-    return getSnapAngleAwarePoint(e, basepoint, pos, drawMark, isShift(e));
+RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const LC_MouseEvent *e, const RS_Vector& basepoint, const RS_Vector& pos, bool drawMark){
+    return getSnapAngleAwarePoint(e, basepoint, pos, drawMark, e->isShift);
 }
 
-RS_Vector RS_PreviewActionInterface::getRelZeroAwarePoint(const QMouseEvent *e, const RS_Vector& pos){
+RS_Vector RS_PreviewActionInterface::getRelZeroAwarePoint(const LC_MouseEvent *e, const RS_Vector& pos){
     RS_Vector result = pos;
-    if (isShift(e)){
+    if (e->isShift){
         RS_Vector relZero = getRelativeZero();
         if (relZero.valid){
-           result = relZero;
+            result = relZero;
         }
     }
     return result;
@@ -434,21 +434,10 @@ RS_Circle* RS_PreviewActionInterface::previewRefCircle(const RS_Vector &center, 
     return circle;
 };
 
-RS_Vector RS_PreviewActionInterface::getFreeSnapAwarePoint(const QMouseEvent *e, const RS_Vector &pos) const{
+RS_Vector RS_PreviewActionInterface::getFreeSnapAwarePoint(const LC_MouseEvent *e, const RS_Vector &pos) const{
     RS_Vector mouse;
-    if (isShift(e)){
-        mouse = toGraph(e);
-    }
-    else{
-        mouse = pos;
-    }
-    return mouse;
-}
-
-RS_Vector RS_PreviewActionInterface::getFreeSnapAwarePointAlt(const QMouseEvent *e, const RS_Vector &pos) const{
-    RS_Vector mouse;
-    if (isControl(e)){
-        mouse = toGraph(e);
+    if (e->isShift){
+        mouse = e->graphPoint;
     }
     else{
         mouse = pos;
@@ -493,8 +482,8 @@ bool RS_PreviewActionInterface::is(RS_Entity *e, RS2::EntityType type) const{
     return  e != nullptr && e->is(type);
 }
 
-RS_Entity* RS_PreviewActionInterface::catchModifiableEntity(QMouseEvent *e, const EntityTypeList &enTypeList){
-    RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
+RS_Entity *RS_PreviewActionInterface::catchModifiableEntity(LC_MouseEvent *e, const RS2::EntityType &enType) {
+    RS_Entity *en = catchEntityByEvent(e, enType, RS2::ResolveAll);
     if (en != nullptr && !en->isParentIgnoredOnModifications()){
         return en;
     }
@@ -503,8 +492,9 @@ RS_Entity* RS_PreviewActionInterface::catchModifiableEntity(QMouseEvent *e, cons
     }
 }
 
-RS_Entity* RS_PreviewActionInterface::catchModifiableEntity(QMouseEvent *e, const RS2::EntityType &enType){
-    RS_Entity *en = catchEntity(e, enType, RS2::ResolveAll);
+
+RS_Entity* RS_PreviewActionInterface::catchModifiableEntity(LC_MouseEvent *e, const EntityTypeList &enTypeList){
+    RS_Entity *en = RS_Snapper::catchEntity(e->graphPoint, enTypeList, RS2::ResolveAll);
     if (en != nullptr && !en->isParentIgnoredOnModifications()){
         return en;
     }
@@ -523,7 +513,7 @@ RS_Entity* RS_PreviewActionInterface::catchModifiableEntity(RS_Vector& coord, co
     }
 }
 
-RS_Entity* RS_PreviewActionInterface::catchModifiableEntityOnPreview(QMouseEvent *e, const RS2::EntityType &enType){
+RS_Entity* RS_PreviewActionInterface::catchModifiableAndDescribe(LC_MouseEvent *e, const RS2::EntityType &enType){
     RS_Entity *en = catchModifiableEntity(e, enType);
     if (en != nullptr) {
         prepareEntityDescription(en, RS2::EntityDescriptionLevel::DescriptionCatched);
@@ -531,7 +521,7 @@ RS_Entity* RS_PreviewActionInterface::catchModifiableEntityOnPreview(QMouseEvent
     return en;
 }
 
-RS_Entity* RS_PreviewActionInterface::catchModifiableEntityOnPreview(QMouseEvent *e, const EntityTypeList &enTypeList){
+RS_Entity* RS_PreviewActionInterface::catchModifiableAndDescribe(LC_MouseEvent *e, const EntityTypeList &enTypeList){
     RS_Entity *en = catchModifiableEntity(e, enTypeList);
     if (en != nullptr) {
         prepareEntityDescription(en, RS2::EntityDescriptionLevel::DescriptionCatched);
@@ -539,8 +529,7 @@ RS_Entity* RS_PreviewActionInterface::catchModifiableEntityOnPreview(QMouseEvent
     return en;
 }
 
-RS_Entity* RS_PreviewActionInterface::catchEntityOnPreview( const RS_Vector &pos,
-                                                            RS2::ResolveLevel level){
+RS_Entity* RS_PreviewActionInterface::catchAndDescribe( const RS_Vector &pos,RS2::ResolveLevel level){
     auto entity = catchEntity(pos, level);
     if (entity != nullptr) {
         prepareEntityDescription(entity, RS2::EntityDescriptionLevel::DescriptionCatched);
@@ -548,24 +537,25 @@ RS_Entity* RS_PreviewActionInterface::catchEntityOnPreview( const RS_Vector &pos
     return entity;
 }
 
-RS_Entity* RS_PreviewActionInterface::catchEntityOnPreview(QMouseEvent *e, RS2::EntityType enType, RS2::ResolveLevel level) {
-    auto entity = catchEntity(e, enType, level);
+RS_Entity* RS_PreviewActionInterface::catchAndDescribe(LC_MouseEvent *e, RS2::EntityType enType, RS2::ResolveLevel level) {
+    auto entity = catchEntityByEvent(e, enType, level);
     if (entity != nullptr) {
         prepareEntityDescription(entity,RS2::EntityDescriptionLevel::DescriptionCatched);
     }
     return entity;
 }
 
-RS_Entity* RS_PreviewActionInterface::catchEntityOnPreview(QMouseEvent *e, const EntityTypeList &enTypeList, RS2::ResolveLevel level) {
-    auto entity = catchEntity(e, enTypeList, level);
+
+RS_Entity* RS_PreviewActionInterface::catchAndDescribe(LC_MouseEvent *e, const EntityTypeList &enTypeList, RS2::ResolveLevel level) {
+    auto entity = catchEntityByEvent(e, enTypeList, level);
     if (entity != nullptr) {
         prepareEntityDescription(entity,RS2::EntityDescriptionLevel::DescriptionCatched);
     }
     return entity;
 }
 
-RS_Entity* RS_PreviewActionInterface::catchEntityOnPreview(QMouseEvent* e, RS2::ResolveLevel level) {
-    auto entity = catchEntity(e, level);
+RS_Entity* RS_PreviewActionInterface::catchAndDescribe(LC_MouseEvent* e, RS2::ResolveLevel level) {
+    auto entity = catchEntityByEvent(e, level);
     if (entity != nullptr) {
         prepareEntityDescription(entity,RS2::EntityDescriptionLevel::DescriptionCatched);
     }
@@ -691,17 +681,63 @@ void RS_PreviewActionInterface::drawPreviewAndHighlights() {
 
 void RS_PreviewActionInterface::mouseMoveEvent(QMouseEvent *event) {
     int status = getStatus();
-    LC_MouseMoveEvent* lcEvent = toLCMouseMoveEvent(event);
+    LC_MouseEvent* lcEvent = toLCMouseMoveEvent(event);
     deletePreviewAndHighlights();
-    doMouseMoveEvent(status, lcEvent);
+    onMouseMoveEvent(status, lcEvent);
     delete lcEvent;
     drawPreviewAndHighlights();
 }
 
-void RS_PreviewActionInterface::doMouseMoveEvent(int status, LC_MouseMoveEvent* event) {
-
+void RS_PreviewActionInterface::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+    LC_MouseEvent* lcEvent = toLCMouseMoveEvent(e);
+    onMouseLeftButtonRelease(status, lcEvent);
 }
 
-RS_PreviewActionInterface::LC_MouseMoveEvent *RS_PreviewActionInterface::toLCMouseMoveEvent(QMouseEvent *e) {
-    return nullptr;
+void RS_PreviewActionInterface::onMouseRightButtonRelease(int status, QMouseEvent *e) {
+    LC_MouseEvent* lcEvent = toLCMouseMoveEvent(e);
+    onMouseRightButtonRelease(status, lcEvent);
+}
+
+void RS_PreviewActionInterface::onMouseLeftButtonPress(int status, QMouseEvent *e) {
+    LC_MouseEvent* lcEvent = toLCMouseMoveEvent(e);
+    onMouseLeftButtonPress(status, lcEvent);
+}
+
+void RS_PreviewActionInterface::onMouseRightButtonPress(int status, QMouseEvent *e) {
+    LC_MouseEvent* lcEvent = toLCMouseMoveEvent(e);
+    onMouseRightButtonPress(status, lcEvent);
+}
+
+void RS_PreviewActionInterface::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {}
+void RS_PreviewActionInterface::onMouseRightButtonRelease(int status, LC_MouseEvent *e) {}
+void RS_PreviewActionInterface::onMouseLeftButtonPress(int status, LC_MouseEvent *e) {}
+void RS_PreviewActionInterface::onMouseRightButtonPress(int status, LC_MouseEvent *e) {}
+
+void RS_PreviewActionInterface::onMouseMoveEvent(int status, LC_MouseEvent* event) {}
+
+LC_MouseEvent *RS_PreviewActionInterface::toLCMouseMoveEvent(QMouseEvent *e) {
+    auto* result = new LC_MouseEvent();
+    result->isShift = isShift(e);
+    result->isControl = isControl(e);
+    result->snapPoint = snapPoint(e);
+    result->graphPoint = toGraph(e);
+    result->uiPosition = e->pos();
+    result->originalEvent = e;
+    return result;
+}
+
+void RS_PreviewActionInterface::fireCoordinateEventForSnap(LC_MouseEvent *e){
+    fireCoordinateEvent(e->snapPoint);
+}
+
+RS_Entity *RS_PreviewActionInterface::catchEntityByEvent(LC_MouseEvent *e, RS2::ResolveLevel level) {
+    return catchEntity(e->graphPoint, level);
+}
+
+RS_Entity *RS_PreviewActionInterface::catchEntityByEvent(LC_MouseEvent *e, RS2::EntityType enType, RS2::ResolveLevel level) {
+    return catchEntity(e->graphPoint, enType, level);
+}
+
+RS_Entity *RS_PreviewActionInterface::catchEntityByEvent(LC_MouseEvent *e, const EntityTypeList &enTypeList, RS2::ResolveLevel level) {
+    return catchEntity(e->graphPoint, enTypeList, level);
 }

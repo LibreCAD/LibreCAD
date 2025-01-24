@@ -46,7 +46,7 @@ LC_ActionModifyBreakDivide::LC_ActionModifyBreakDivide(RS_EntityContainer &conta
     actionType = RS2::ActionModifyBreakDivide;
 }
 
-bool LC_ActionModifyBreakDivide::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
+bool LC_ActionModifyBreakDivide::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, int status){
     return status == SetLine;
 }
 
@@ -57,10 +57,10 @@ bool LC_ActionModifyBreakDivide::doCheckMayDrawPreview([[maybe_unused]]QMouseEve
  * @param list
  * @param status
  */
-void LC_ActionModifyBreakDivide::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+void LC_ActionModifyBreakDivide::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     if (status == SetLine){
         deleteSnapper();
-        RS_Entity *en = catchModifiableEntityOnPreview(e, enTypeList);
+        RS_Entity *en = catchModifiableAndDescribe(e, enTypeList);
         if (en != nullptr){
             int rtti = en->rtti();
             switch (rtti) {
@@ -86,7 +86,7 @@ void LC_ActionModifyBreakDivide::doPreparePreviewEntities(QMouseEvent *e, RS_Vec
     }
 }
 
-void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint){
     if (status == SetLine){
         RS_Entity *en = catchModifiableEntity(e, enTypeList);
         if (en != nullptr){
@@ -494,10 +494,8 @@ void LC_ActionModifyBreakDivide::createArcEntity(const RS_ArcData &arcData, bool
  * @param e
  * @return
  */
-RS_Vector LC_ActionModifyBreakDivide::doGetMouseSnapPoint(QMouseEvent *e){
-    snapPoint(e);
-    RS_Vector result = toGraph(e);
-    return result;
+RS_Vector LC_ActionModifyBreakDivide::doGetMouseSnapPoint(LC_MouseEvent *e){
+    return e->graphPoint;
 }
 
 /**

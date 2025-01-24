@@ -48,7 +48,6 @@ public:
     void reset();
     void init(int status) override;
     void preparePreview();
-    void mouseMoveEvent(QMouseEvent *e) override;
     void setRadius(double r);
     double getRadius() const;
     void setAngle(double r);
@@ -91,11 +90,13 @@ protected:
     void updateOptionsRadius(double radius);
     void updateOptionsAngle(double angle);
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateMouseButtonHints() override;
+
     void doTrigger() override;
 };
 #endif

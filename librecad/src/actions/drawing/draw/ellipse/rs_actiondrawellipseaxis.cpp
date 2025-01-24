@@ -117,10 +117,8 @@ void RS_ActionDrawEllipseAxis::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawEllipseAxis::trigger():entity added: %lu", ellipse->getId());
 }
 
-void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawEllipseAxis::mouseMoveEvent begin");
-    RS_Vector mouse = snapPoint(e);
+void RS_ActionDrawEllipseAxis::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (getStatus()) {
         case SetCenter: {
             trySnapToRelZeroCoordinateEvent(e);
@@ -210,12 +208,10 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionDrawEllipseAxis::mouseMoveEvent end");
-    drawPreview();
 }
 
-void RS_ActionDrawEllipseAxis::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void RS_ActionDrawEllipseAxis::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     switch (status){
         case SetMajor:
         case SetAngle1:
@@ -229,7 +225,7 @@ void RS_ActionDrawEllipseAxis::onMouseLeftButtonRelease(int status, QMouseEvent 
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionDrawEllipseAxis::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawEllipseAxis::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

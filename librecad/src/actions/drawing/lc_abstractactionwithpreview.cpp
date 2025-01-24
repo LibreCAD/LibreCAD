@@ -142,9 +142,9 @@ bool LC_AbstractActionWithPreview::isAcceptSelectedEntityToTriggerOnInit([[maybe
 void LC_AbstractActionWithPreview::doPerformOriginalEntitiesDeletionOnInitTrigger([[maybe_unused]]QList<RS_Entity *> &list){}
 
 
-void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget(QMouseEvent* e, [[maybe_unused]]int status){
+void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget(LC_MouseEvent* e, [[maybe_unused]]int status){
     // todo - actually, this is a bit ugly to call snap point  - yet as side effect, it will draw snapper and update coordinates widget..
-    snapPoint(e);
+//    snapPoint(e);
 }
 
 /**
@@ -152,8 +152,8 @@ void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget(QMouseEvent*
  * Method is useful for actions states that do not call snapPoint() method on mouse move (which, in turn, updates the widget)
  * @param e
  */
-void LC_AbstractActionWithPreview::doUpdateCoordinateWidgetByMouse(QMouseEvent* e){
-    RS_Vector mouse = toGraph(e);
+void LC_AbstractActionWithPreview::doUpdateCoordinateWidgetByMouse(LC_MouseEvent* e){
+    RS_Vector mouse = e->graphPoint;
     updateCoordinateWidgetByRelZero(mouse);
 }
 
@@ -330,26 +330,17 @@ void LC_AbstractActionWithPreview::finish(bool updateTB){
  */
 void LC_AbstractActionWithPreview::doFinish([[maybe_unused]]bool updateTB){}
 
-/**
- * Generic processing of mouse release for simplification of inherited classes
- * Method checks whether shift is pressed, and checks which button is released.
- * Actual processing is delegated to inherited methods.
- * Also, handles preview deletion and unenlightening of entity.
- * @param e mouse event
- */
-void LC_AbstractActionWithPreview::mouseReleaseEvent(QMouseEvent *e){
-    int status = getStatus();
-    bool shiftPressed = isShift(e);
-    checkAlternativeActionMode(e, status, shiftPressed);
-    Qt::MouseButton button = e->button();
-    deletePreview();
-    if (button == Qt::LeftButton){
-        RS_Vector snapped = doGetMouseSnapPoint(e);
-        doOnLeftMouseButtonRelease(e, status, snapped);
-        unHighlightEntity();
-    } else if (button == Qt::RightButton){
-        onRightMouseButtonRelease(e, status);
-    }
+void LC_AbstractActionWithPreview::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    checkAlternativeActionMode(e, status);
+    RS_Vector snapped = doGetMouseSnapPoint(e);
+    doOnLeftMouseButtonRelease(e, status, snapped);
+    unHighlightEntity();
+    clearAlternativeActionMode();
+}
+
+void LC_AbstractActionWithPreview::onMouseRightButtonRelease(int status, LC_MouseEvent *e) {
+    checkAlternativeActionMode(e, status);
+    onRightMouseButtonRelease(e, status);
     clearAlternativeActionMode();
 }
 
@@ -370,8 +361,8 @@ void LC_AbstractActionWithPreview::clearAlternativeActionMode(){
  * support.
  * @param e mouse event
  */
-void LC_AbstractActionWithPreview::checkAlternativeActionMode([[maybe_unused]]const QMouseEvent *e, [[maybe_unused]]int status, bool shiftPressed){
-    alternativeActionMode = shiftPressed;
+void LC_AbstractActionWithPreview::checkAlternativeActionMode([[maybe_unused]]const LC_MouseEvent *e, [[maybe_unused]]int status){
+    alternativeActionMode = e->isShift;
 }
 
 /**
@@ -381,8 +372,8 @@ void LC_AbstractActionWithPreview::checkAlternativeActionMode([[maybe_unused]]co
  * @param e original mouse event
  * @return point that should be used as snap for mouse even
  */
-RS_Vector LC_AbstractActionWithPreview::doGetMouseSnapPoint(QMouseEvent *e){
-    RS_Vector snap = snapPoint(e);
+RS_Vector LC_AbstractActionWithPreview::doGetMouseSnapPoint(LC_MouseEvent *e){
+    RS_Vector snap = e->snapPoint;
     return snap;
 }
 
@@ -392,7 +383,7 @@ RS_Vector LC_AbstractActionWithPreview::doGetMouseSnapPoint(QMouseEvent *e){
  * @param status current status of the action
  * @param snapPoint snap point for mouse event (after  doGetMouseSnapPoint method)
  */
-void LC_AbstractActionWithPreview::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]int status, [[maybe_unused]]const RS_Vector &snapPoint){}
+void LC_AbstractActionWithPreview::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]int status, [[maybe_unused]]const RS_Vector &snapPoint){}
 
 
 /**
@@ -401,7 +392,7 @@ void LC_AbstractActionWithPreview::doOnLeftMouseButtonRelease([[maybe_unused]]QM
  * @param e original mouse event
  * @param status current status of action.
  */
-void LC_AbstractActionWithPreview::onRightMouseButtonRelease(QMouseEvent *e, int status){
+void LC_AbstractActionWithPreview::onRightMouseButtonRelease(LC_MouseEvent *e, int status){
     deletePreview();
     unHighlightEntity();
     doBack(e, status);
@@ -413,11 +404,11 @@ void LC_AbstractActionWithPreview::onRightMouseButtonRelease(QMouseEvent *e, int
  * @param pEvent original mouse event
  * @param status current status of the action
  */
-void LC_AbstractActionWithPreview::doBack([[maybe_unused]]QMouseEvent *pEvent, int status){
+void LC_AbstractActionWithPreview::doBack([[maybe_unused]]LC_MouseEvent *pEvent, int status){
     initPrevious(status);
 }
 
-bool LC_AbstractActionWithPreview::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, [[maybe_unused]]int status){
+bool LC_AbstractActionWithPreview::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, [[maybe_unused]]int status){
     return true;
 }
 
@@ -466,13 +457,9 @@ void LC_AbstractActionWithPreview::highlightEntityExplicit(RS_Entity* en, bool h
  *
  * @param e original mouse event
  */
-void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
 
-    int status = getStatus();
-    bool shiftPressed = isShift(e);
-    checkAlternativeActionMode(e, status, shiftPressed);
+void LC_AbstractActionWithPreview::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    checkAlternativeActionMode(e, status);
     doMouseMoveStart(status, e);
     checkPreSnapToRelativeZero(status, e);
     status = getStatus();
@@ -498,19 +485,20 @@ void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
     clearAlternativeActionMode();
 }
 
+
 /**
  * Extension point for inherited actions. Called on start of mouse move event processing and lets the action to do some preparations.
  * @param status status of the action
  * @param pEvent mouse event
  */
-void LC_AbstractActionWithPreview::doMouseMoveStart([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *pEvent){}
+void LC_AbstractActionWithPreview::doMouseMoveStart([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *pEvent){}
 
 /**
  * Extension point for inherited actions. Called at the of mouse move event processing and lets the action to do some cleanup after mouse move event processing.
  * @param status status of the action
  * @param pEvent mouse event
  */
-void LC_AbstractActionWithPreview::doMouseMoveEnd([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e){}
+void LC_AbstractActionWithPreview::doMouseMoveEnd([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e){}
 
 
 /**
@@ -523,7 +511,7 @@ void LC_AbstractActionWithPreview::doMouseMoveEnd([[maybe_unused]]int status, [[
  * @param status current status of the action
  * @param e original mouse event
  */
-void LC_AbstractActionWithPreview::checkPreSnapToRelativeZero(int status, QMouseEvent *e){
+void LC_AbstractActionWithPreview::checkPreSnapToRelativeZero(int status, LC_MouseEvent *e){
     if (doCheckMouseEventValidForInitialSnap(e)){ // do pre-snap if SHIFT Pressed
         // check whether status is valid for pre-snap
         if (status == doGetStatusForInitialSnapToRelativeZero()){
@@ -544,7 +532,7 @@ void LC_AbstractActionWithPreview::checkPreSnapToRelativeZero(int status, QMouse
  * @param e mouse event
  * @return true if initial pre-snap to relative zero may be triggered by the mouse event
  */
-bool LC_AbstractActionWithPreview::doCheckMouseEventValidForInitialSnap([[maybe_unused]]QMouseEvent *e){
+bool LC_AbstractActionWithPreview::doCheckMouseEventValidForInitialSnap([[maybe_unused]]LC_MouseEvent *e){
     return alternativeActionMode;
 }
 
@@ -574,7 +562,7 @@ void LC_AbstractActionWithPreview::doInitialSnapToRelativeZero([[maybe_unused]]R
  * @param status status of the action
  * @return true if preview should be shown, false otherwise.
  */
-bool LC_AbstractActionWithPreview::onMouseMove([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]RS_Vector snap, [[maybe_unused]]int status){ return true;}
+bool LC_AbstractActionWithPreview::onMouseMove([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]RS_Vector snap, [[maybe_unused]]int status){ return true;}
 
 /**
  * Draws preview for given point.
@@ -584,7 +572,7 @@ bool LC_AbstractActionWithPreview::onMouseMove([[maybe_unused]]QMouseEvent *e, [
  * @param e
  * @param snap base point (snap point) for preview displaying.
  */
-void LC_AbstractActionWithPreview::drawPreviewForPoint(QMouseEvent *e, RS_Vector& snap){
+void LC_AbstractActionWithPreview::drawPreviewForPoint(LC_MouseEvent *e, RS_Vector& snap){
     QList<RS_Entity*> entitiesForPreview; // here we'll collect the list of entities for preview
     // do actual creation of preview entities
     doPreparePreviewEntities(e, snap, entitiesForPreview, getStatus());
@@ -623,7 +611,7 @@ void LC_AbstractActionWithPreview::drawPreviewForLastPoint(){
  * @param list list of entities to which preview entities should be added
  * @param status current status of the action
  */
-void LC_AbstractActionWithPreview::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, [[maybe_unused]]QList<RS_Entity *> &list, [[maybe_unused]]int status){}
+void LC_AbstractActionWithPreview::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]RS_Vector &snap, [[maybe_unused]]QList<RS_Entity *> &list, [[maybe_unused]]int status){}
 
 
 
@@ -822,6 +810,6 @@ void LC_AbstractActionWithPreview::createRefArc(const RS_ArcData &data, QList<RS
         list << result;
 }
 
-bool LC_AbstractActionWithPreview::isMouseMove(QMouseEvent *e){
-    return e->type() == QMouseEvent::MouseMove;
+bool LC_AbstractActionWithPreview::isMouseMove(LC_MouseEvent *e){
+    return e->originalEvent->type() == QMouseEvent::MouseMove;
 }

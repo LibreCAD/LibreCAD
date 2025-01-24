@@ -98,11 +98,8 @@ void RS_ActionDrawSpline::doTrigger() {
     //history.clear();
 }
 
-void RS_ActionDrawSpline::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionDrawSpline::mouseMoveEvent begin");
-
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
+void RS_ActionDrawSpline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetStartPoint: {
             trySnapToRelZeroCoordinateEvent(e);
@@ -110,8 +107,6 @@ void RS_ActionDrawSpline::mouseMoveEvent(QMouseEvent *e){
         }
         case SetNextPoint: {
             if (pPoints->spline /*&& point.valid*/){
-                deletePreview();
-
                 auto *tmpSpline = dynamic_cast<RS_Spline *>(pPoints->spline->clone());
                 tmpSpline->addControlPoint(mouse);
                 tmpSpline->update();
@@ -125,22 +120,19 @@ void RS_ActionDrawSpline::mouseMoveEvent(QMouseEvent *e){
                     }
                     previewRefSelectablePoint(mouse);
                 }
-                drawPreview();
             }
             break;
         }
         default:
             break;
     }
-
-    RS_DEBUG->print("RS_ActionDrawSpline::mouseMoveEvent end");
 }
 
-void RS_ActionDrawSpline::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionDrawSpline::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionDrawSpline::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawSpline::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     if (status == SetNextPoint && pPoints->spline){
         const size_t nPoints = pPoints->spline->getNumberOfControlPoints();
         bool isClosed = pPoints->spline->isClosed();

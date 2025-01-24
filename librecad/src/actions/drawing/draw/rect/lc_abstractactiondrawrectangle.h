@@ -169,14 +169,14 @@ protected:
     virtual void doAddPolylineToListOfEntities(RS_Polyline *polyline, QList<RS_Entity *> &list, bool preview);
     static void normalizeCorners(RS_Vector &bottomLeftCorner, RS_Vector &bottomRightCorner, RS_Vector &topRightCorner, RS_Vector &topLeftCorner);
     bool doProcessCommand(int status, const QString &c) override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void stateUpdated(bool toMainStatus);
     double getActualBaseAngle() const;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     bool doCheckMayTrigger() override;
     void doAfterTrigger() override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
-    void doBack(QMouseEvent *pEvent, int status) override;
+    void doBack(LC_MouseEvent *pEvent, int status) override;
     bool doCheckPolylineEntityAllowedInTrigger(int index) const;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;

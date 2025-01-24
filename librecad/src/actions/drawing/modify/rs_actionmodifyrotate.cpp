@@ -71,14 +71,12 @@ void RS_ActionModifyRotate::doTrigger(bool keepSelected) {
     m.rotate(*data, selectedEntities, false, keepSelected);
 }
 
-void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
-    RS_DEBUG->print("RS_ActionModifyRotate::mouseMoveEvent begin");
-    switch (getStatus()) {
+void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
+    switch (status) {
         case SetReferencePoint: {
             if (selectRefPointFirst){
-                if (isControl(e)) {
+                if (e->isControl) {
                     RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(selectedEntities);
                     mouse = boundingForSelected.getCenter();
                 }
@@ -90,7 +88,7 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
                 }
 
             } else {
-                if (isControl(e)) {
+                if (e->isControl) {
                     RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(selectedEntities);
                     mouse = boundingForSelected.getCenter();
                 }
@@ -114,7 +112,7 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
         }
         case SetCenterPoint: {
             if (selectRefPointFirst){
-                if (isControl(e)) {
+                if (e->isControl) {
                     RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(selectedEntities);
                     mouse = boundingForSelected.getCenter();
                 }
@@ -137,7 +135,7 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
                 if (!trySnapToRelZeroCoordinateEvent(e)) {
                     RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(selectedEntities);
                     RS_Vector center = boundingForSelected.getCenter();
-                    if (isControl(e)) {
+                    if (e->isControl) {
                         mouse = center;
                     }
                     if (showRefEntitiesOnPreview) {
@@ -149,22 +147,16 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
         }
         case SetTargetPoint: {
             mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
-
             double radius = data->center.distanceTo(data->refPoint);
-
             double rotationAngle = data->center.angleTo(mouse);
-
             RS_Vector newRefPoint = data->center.relative(radius, rotationAngle);
-
             if (showRefEntitiesOnPreview) {
                 RS_Vector originalReferencePoint = data->refPoint;
                 RS_Vector xAxisPoint = data->center.relative(radius, 0);
 
                 previewRefSelectablePoint(newRefPoint);
-
                 previewRefPoint(xAxisPoint);
                 previewRefLine(data->center, xAxisPoint);
-
                 previewRefPoint(originalReferencePoint);
                 //            previewRefSelectablePoint(newReferencePoint);
                 previewRefPoint(data->center);
@@ -240,8 +232,6 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionModifyRotate::mouseMoveEvent end");
-    drawPreview();
 }
 
 void RS_ActionModifyRotate::previewRotationCircleAndPoints(const RS_Vector &center, const RS_Vector &refPoint, double angle) {
@@ -406,12 +396,12 @@ void RS_ActionModifyRotate::tryTrigger(){
     }
 }
 
-void RS_ActionModifyRotate::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
-    RS_Vector snapped = snapPoint(e);
+void RS_ActionModifyRotate::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+    RS_Vector snapped = e->snapPoint;
     switch (status){
         case SetReferencePoint:{
             if (selectRefPointFirst){
-                if (isControl(e)) {
+                if (e->isControl) {
                     RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(selectedEntities);
                     snapped = boundingForSelected.getCenter();
                 }
@@ -420,7 +410,7 @@ void RS_ActionModifyRotate::mouseLeftButtonReleaseEventSelected(int status, QMou
                 }
             }
             else{
-                if (isControl(e)) {
+                if (e->isControl) {
                     RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(selectedEntities);
                     snapped = boundingForSelected.getCenter();
                 }
@@ -431,7 +421,7 @@ void RS_ActionModifyRotate::mouseLeftButtonReleaseEventSelected(int status, QMou
             break;
         }
         case SetCenterPoint:{
-            if (isControl(e)) {
+            if (e->isControl) {
                 RS_BoundData boundingForSelected = RS_Modification::getBoundingRect(selectedEntities);
                 snapped = boundingForSelected.getCenter();
             }
@@ -450,7 +440,7 @@ void RS_ActionModifyRotate::mouseLeftButtonReleaseEventSelected(int status, QMou
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionModifyRotate::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionModifyRotate::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     switch (status)    {
         case SetReferencePoint: {

@@ -56,7 +56,7 @@ LC_ActionDrawSliceDivide::LC_ActionDrawSliceDivide(
     }
 }
 
-bool LC_ActionDrawSliceDivide::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
+bool LC_ActionDrawSliceDivide::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, int status){
     return status == SetEntity;
 }
 /**
@@ -78,11 +78,11 @@ EntityTypeList LC_ActionDrawSliceDivide::getCatchEntityTypeList() const{
  * @param list  list to create preview entities
  * @param status current status of the action
  */
-void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
+void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     ticksData.clear();
     deleteSnapper();
     EntityTypeList catchEntityTypes = getCatchEntityTypeList();
-    RS_Entity *en = catchModifiableEntityOnPreview(e, catchEntityTypes);
+    RS_Entity *en = catchModifiableAndDescribe(e, catchEntityTypes);
     int optionsMode = SELECTION_NONE;
     if (en != nullptr){
         int rtti = en->rtti();
@@ -236,7 +236,7 @@ void LC_ActionDrawSliceDivide::doPrepareTriggerEntities(QList<RS_Entity *> &list
     }
 }
 
-void LC_ActionDrawSliceDivide::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
+void LC_ActionDrawSliceDivide::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
     switch (status) {
         case SetEntity: {
             EntityTypeList catchEntityTypes = getCatchEntityTypeList();

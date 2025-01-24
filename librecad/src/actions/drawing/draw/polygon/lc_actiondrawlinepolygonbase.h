@@ -11,9 +11,7 @@ public:
     LC_ActionDrawLinePolygonBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView, RS2::ActionType actionType);
     ~LC_ActionDrawLinePolygonBase() override;
 
-    void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
-
     int getNumber() const{return number;}
     void setNumber(int n) {number = n;}
     bool isPolyline() const {return createPolyline;};
@@ -60,13 +58,12 @@ protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     bool doProcessCommand(int status, const QString &command) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-
     virtual QString getPoint1Hint() const;
     virtual QString getPoint2Hint() const = 0;
-
     void createPolygonPreview(const RS_Vector& mouse);
     virtual void previewAdditionalReferences([[maybe_unused]]const RS_Vector &mouse) {};
     virtual void preparePolygonInfo([[maybe_unused]]PolygonInfo &polygonInfo, [[maybe_unused]]const RS_Vector &snap){};

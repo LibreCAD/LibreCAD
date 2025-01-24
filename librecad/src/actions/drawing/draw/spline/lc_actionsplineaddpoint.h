@@ -35,10 +35,10 @@ protected:
     bool endpointIsSelected = false;
     RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool adjustPosition) override;
     void updateMouseButtonHints() override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) override;
     void doCompleteTrigger() override;
     void doAfterTrigger() override;
-    void onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 

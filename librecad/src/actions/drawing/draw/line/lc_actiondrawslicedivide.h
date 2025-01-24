@@ -198,9 +198,9 @@ protected:
     bool doCheckMayTrigger() override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     void doAfterTrigger() override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
-    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
     bool isSetActivePenAndLayerOnTrigger() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     EntityTypeList getCatchEntityTypeList() const;

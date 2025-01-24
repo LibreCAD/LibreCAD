@@ -96,12 +96,9 @@ void RS_ActionInfoDist2::doTrigger() {
     }
 }
 
-void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent begin");
-    deleteHighlights();
-    deletePreview();
-    RS_Vector snap = snapPoint(e);
-    switch (getStatus()) {
+void RS_ActionInfoDist2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
+    switch (status) {
         case SetEntity: {
             deleteSnapper();
             auto en = doCatchEntity(e, true);
@@ -158,7 +155,7 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
                         }
 
                         // move relative point so we'll have proper distance and angle from entity to point in coordinates widget
-                        if (isControl(e)){
+                        if (e->isControl){
                             moveRelativeZero(nearest);
                         }
                     }
@@ -170,12 +167,9 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent end");
-    drawHighlights();
-    drawPreview();
 }
 
-void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
             entity = doCatchEntity(e, false);
@@ -197,7 +191,7 @@ void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
             break;
         }
         case SetPoint: {
-            RS_Vector snap = snapPoint(e);
+            RS_Vector snap = e->snapPoint;
             snap = getRelZeroAwarePoint(e, snap);
             switch (selectionMode) {
                 case FIRST_IS_POINT: {
@@ -218,7 +212,7 @@ void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionInfoDist2::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionInfoDist2::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     int newStatus = -1;
     bool firstIsPoint = selectionMode == FIRST_IS_POINT;
@@ -242,16 +236,16 @@ RS_Vector RS_ActionInfoDist2::obtainNearestPointOnEntity(const RS_Vector &snap) 
     return entity->getNearestPointOnEntity(snap, nearestPointShouldBeOnEntity);
 }
 
-RS_Entity *RS_ActionInfoDist2::doCatchEntity(QMouseEvent *e, bool preview){
+RS_Entity *RS_ActionInfoDist2::doCatchEntity(LC_MouseEvent *e, bool preview){
     RS2::ResolveLevel level = RS2::ResolveAll;
-    if (isControl(e)){
+    if (e->isControl){
         level = RS2::ResolveNone;
     }
     if (preview) {
-        return catchEntityOnPreview(e, level);
+        return catchAndDescribe(e, level);
     }
     else{
-        return catchEntity(e, level);
+        return catchEntityByEvent(e, level);
     }
 }
 

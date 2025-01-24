@@ -82,13 +82,8 @@ void RS_ActionDimLeader::doTrigger() {
     }
 }
 
-void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-
-    RS_DEBUG->print("RS_ActionDimLeader::mouseMoveEvent begin");
-
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
+void RS_ActionDimLeader::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetStartpoint:
             trySnapToRelZeroCoordinateEvent(e);
@@ -119,13 +114,10 @@ void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-
-    RS_DEBUG->print("RS_ActionDimLeader::mouseMoveEvent end");
-    drawPreview();
 }
 
-void RS_ActionDimLeader::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snapped = snapPoint(e);
+void RS_ActionDimLeader::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snapped = e->snapPoint;
     switch (status){
         case SetStartpoint:{
             break;
@@ -142,7 +134,7 @@ void RS_ActionDimLeader::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionDimLeader::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDimLeader::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     if (status == SetEndpoint) {
         trigger();
         reset();

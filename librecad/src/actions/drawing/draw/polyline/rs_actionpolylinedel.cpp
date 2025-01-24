@@ -68,17 +68,10 @@ void RS_ActionPolylineDel::doTrigger() {
     }
 }
 
-void RS_ActionPolylineDel::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-    RS_DEBUG->print("RS_ActionPolylineDel::mouseMoveEvent begin");
-
-    snapPoint(e);
-    int status = getStatus();
-
+void RS_ActionPolylineDel::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetPolyline: {
-            auto polyline = dynamic_cast<RS_Polyline *>(catchEntityOnPreview(e));
+            auto polyline = dynamic_cast<RS_Polyline *>(catchAndDescribe(e, RS2::ResolveNone));
             if (polyline != nullptr){
                 highlightHover(polyline);
             }
@@ -101,21 +94,17 @@ void RS_ActionPolylineDel::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionPolylineDel::mouseMoveEvent end");
-    drawHighlights();
-    drawPreview();
 }
 
-void RS_ActionPolylineDel::onMouseLeftButtonRelease(int status, QMouseEvent *e){
+void RS_ActionPolylineDel::onMouseLeftButtonRelease(int status, LC_MouseEvent *e){
     switch (status) {
         case SetPolyline: {
-            auto en = catchEntity(e);
+            auto en = catchEntityByEvent(e);
             if (en == nullptr){
                 commandMessage(tr("No Entity found."));
             } else if (!isPolyline(en)){
                 commandMessage(tr("Entity must be a polyline."));
             } else {
-                snapPoint(e);
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
                 setStatus(SetVertex1);

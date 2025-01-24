@@ -142,7 +142,14 @@ void RS_ActionInterface::mouseMoveEvent(QMouseEvent*) {}
  * The default implementation does nothing.
  */
 // todo - add default implementation?
-void RS_ActionInterface::mousePressEvent(QMouseEvent*) {}
+void RS_ActionInterface::mousePressEvent(QMouseEvent* e) {
+    Qt::MouseButton button = e->button();
+    if (button == Qt::LeftButton){
+        onMouseLeftButtonPress(status, e);
+    } else if (button == Qt::RightButton){
+        onMouseRightButtonPress(status, e);
+    }
+}
 
 /**
  * Called when the left mouse button is released and this is
@@ -161,6 +168,8 @@ void RS_ActionInterface::mouseReleaseEvent(QMouseEvent* e){
 
 void RS_ActionInterface::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e){}
 void RS_ActionInterface::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e){}
+void RS_ActionInterface::onMouseLeftButtonPress([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e){}
+void RS_ActionInterface::onMouseRightButtonPress([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e){}
 
 /**
  * Called when a key is pressed and this is the current action.
@@ -568,7 +577,6 @@ void RS_ActionInterface::clearMouseWidgetIcon(){
     RS_DIALOGFACTORY->clearMouseWidgetIcon();
 }
 
-
 /**
  * Shortcut for displaying command message string
  * @param msg string
@@ -631,6 +639,8 @@ void RS_ActionInterface::fireCoordinateEvent(const RS_Vector &coord){
 void RS_ActionInterface::fireCoordinateEventForSnap(QMouseEvent *e){
     fireCoordinateEvent(snapPoint(e));
 }
+
+
 
 void RS_ActionInterface::initPrevious(int stat) {
     init(stat - 1);

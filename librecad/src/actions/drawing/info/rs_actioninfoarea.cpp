@@ -55,107 +55,102 @@ void RS_ActionInfoArea::init(int status) {
     //RS_DEBUG->print( "RS_ActionInfoArea::init: %d" ,status );
 }
 
-void RS_ActionInfoArea::doTrigger() {
-    RS_DEBUG->print("RS_ActionInfoArea::trigger()");
-    display(false);
-    lastPointRequested = false;
-    init(SetFirstPoint);
-}
+    void RS_ActionInfoArea::doTrigger() {
+        RS_DEBUG->print("RS_ActionInfoArea::trigger()");
+        display(false);
+        lastPointRequested = false;
+        init(SetFirstPoint);
+    }
 // fixme - sand - consider displaying information in EntityInfo widget
 // fixme - sand - add area info to entity info widget for coordinates mode
 //todo: we regenerate the whole preview, it's possible to generate needed lines only
 /** display area circumference and preview of polygon **/
-void RS_ActionInfoArea::display(bool forPreview){
-    if (ia->size() < 1){
-        return;
-    }
-    switch (ia->size()) {
-        case 1: {
-            if (showRefEntitiesOnPreview && forPreview) {
-                previewRefSelectablePoint(ia->at(0));
-            }
-            break;
+    void RS_ActionInfoArea::display(bool forPreview){
+        if (ia->size() < 1){
+            return;
         }
-        case 2: {
-            if (forPreview) {
-                previewLine(ia->at(0), ia->at(1));
-                if (showRefEntitiesOnPreview) {
-                    previewRefLine(ia->at(0), ia->at(1));
-                    previewRefPoint(ia->at(0));
-                    previewRefSelectablePoint(ia->at(1));
+        switch (ia->size()) {
+            case 1: {
+                if (showRefEntitiesOnPreview && forPreview) {
+                    previewRefSelectablePoint(ia->at(0));
                 }
+                break;
             }
-            break;
-        }
-        default: {
-            QString const length = formatLinear(ia->getCircumference());
-            double area = ia->getArea();
-            if (forPreview) {
-                for (int i = 0; i < ia->size(); i++) {
-                    previewLine(ia->at(i), ia->at((i + 1) % ia->size()));
+            case 2: {
+                if (forPreview) {
+                    previewLine(ia->at(0), ia->at(1));
                     if (showRefEntitiesOnPreview) {
-                        previewRefLine(ia->at(i), ia->at((i + 1) % ia->size()));
+                        previewRefLine(ia->at(0), ia->at(1));
+                        previewRefPoint(ia->at(0));
+                        previewRefSelectablePoint(ia->at(1));
                     }
                 }
-                if (showRefEntitiesOnPreview) {
-                    for (int i = 0; i < ia->size() - 1; i++) {
-                        previewRefPoint(ia->at(i));
+                break;
+            }
+            default: {
+                QString const length = formatLinear(ia->getCircumference());
+                double area = ia->getArea();
+                if (forPreview) {
+                    for (int i = 0; i < ia->size(); i++) {
+                        previewLine(ia->at(i), ia->at((i + 1) % ia->size()));
+                        if (showRefEntitiesOnPreview) {
+                            previewRefLine(ia->at(i), ia->at((i + 1) % ia->size()));
+                        }
                     }
-                    previewRefSelectablePoint(ia->at(ia->size() - 1));
+                    if (showRefEntitiesOnPreview) {
+                        for (int i = 0; i < ia->size() - 1; i++) {
+                            previewRefPoint(ia->at(i));
+                        }
+                        previewRefSelectablePoint(ia->at(ia->size() - 1));
+                    }
+                    if (infoCursorOverlayPrefs->enabled) {
+                        QString msg = "\n";
+                        msg.append(tr("Circumference: %1").arg(length));
+                        msg.append("\n");
+                        msg.append(tr("Area: %1 %2^2").arg(area).arg(RS_Units::unitToString(unit)));
+                        appendInfoCursorZoneMessage(msg, 2, true);
+                    }
                 }
-                if (infoCursorOverlayPrefs->enabled) {
-                    QString msg = "\n";
-                    msg.append(tr("Circumference: %1").arg(length));
-                    msg.append("\n");
-                    msg.append(tr("Area: %1 %2^2").arg(area).arg(RS_Units::unitToString(unit)));
-                    appendInfoCursorZoneMessage(msg, 2, true);
+                else {
+                    commandMessage("---");
+                    commandMessage(tr("Circumference: %1").arg(length));
+                    commandMessage(tr("Area: %1 %2^2").arg(area).arg(RS_Units::unitToString(unit)));
+                    commandMessage("");
                 }
+                break;
             }
-            else {
-                commandMessage("---");
-                commandMessage(tr("Circumference: %1").arg(length));
-                commandMessage(tr("Area: %1 %2^2").arg(area).arg(RS_Units::unitToString(unit)));
-                commandMessage("");
-            }
-            break;
         }
     }
-}
 
-void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
-    //RS_DEBUG->print("RS_ActionInfoArea::mouseMoveEvent begin");
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
-    switch (status){
-        case SetFirstPoint: {
-            trySnapToRelZeroCoordinateEvent(e);
-            break;
+    void RS_ActionInfoArea::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+        RS_Vector mouse = e->snapPoint;
+        switch (status){
+            case SetFirstPoint: {
+                trySnapToRelZeroCoordinateEvent(e);
+                break;
+            }
+            case SetNextPoint: {
+                mouse = getSnapAngleAwarePoint(e, ia->back(), mouse, true);
+                ia->push_back(mouse);
+                display(true);
+                ia->pop_back();
+                break;
+            }
+            default:
+                break;
         }
-        case SetNextPoint: {
-            mouse = getSnapAngleAwarePoint(e, ia->back(), mouse, true);
-            ia->push_back(mouse);
-            display(true);
-            ia->pop_back();
-            break;
-        }
-        default:
-            break;
     }
-    drawPreview();
-    //RS_DEBUG->print("RS_ActionInfoArea::mouseMoveEvent end");
-}
 
-void RS_ActionInfoArea::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void RS_ActionInfoArea::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     if (status == SetNextPoint){
         snap = getSnapAngleAwarePoint(e, ia->back(), snap);
     }
-    lastPointRequested = isControl(e);
+    lastPointRequested = e->isControl;
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionInfoArea::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionInfoArea::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     trigger();
 //    initPrevious(status);
 }

@@ -83,13 +83,8 @@ void RS_ActionDrawLineRectangle::doTrigger() {
     undoCycleAdd(polyline);
 }
 
-void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawLineRectangle::mouseMoveEvent begin");
-
-    RS_Vector mouse = snapPoint(e);
-
-    int status = getStatus();
+void RS_ActionDrawLineRectangle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status){
         case SetCorner1:{
             trySnapToRelZeroCoordinateEvent(e);
@@ -125,17 +120,14 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
-
-    RS_DEBUG->print("RS_ActionDrawLineRectangle::mouseMoveEvent end");
-    drawPreview();
 }
 
 
-void RS_ActionDrawLineRectangle::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionDrawLineRectangle::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionDrawLineRectangle::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineRectangle::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

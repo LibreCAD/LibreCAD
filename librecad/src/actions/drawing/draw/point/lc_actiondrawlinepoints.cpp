@@ -84,7 +84,7 @@ void LC_ActionDrawLinePoints::doAfterTrigger(){
      init(SetStartPoint);
 }
 
-void LC_ActionDrawLinePoints::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+void LC_ActionDrawLinePoints::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     // determine candidate for possible end point
     RS_Vector possibleEndPoint;
     switch (status) {
@@ -568,7 +568,7 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
  * @param e original event
  * @param status current status
  */
-void LC_ActionDrawLinePoints::doBack([[maybe_unused]]QMouseEvent *e, int status){
+void LC_ActionDrawLinePoints::doBack([[maybe_unused]]LC_MouseEvent *e, int status){
     if (status == SetStartPoint){ // complete action
         finishAction();
     } else { // return to set start point state

@@ -45,7 +45,6 @@ public:
     void init(int status) override;
     void reset();
     void trigger() override;
-    void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
     double getAngle() const;
     void setAngle(double a);
@@ -85,5 +84,7 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateMouseButtonHints() override;
+
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
 };
 #endif

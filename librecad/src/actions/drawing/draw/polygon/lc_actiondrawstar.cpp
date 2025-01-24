@@ -45,11 +45,11 @@ void LC_ActionDrawStar::doInitialSnapToRelativeZero(RS_Vector vector){
     setMainStatus(SetOuterPoint);
 }
 
-bool LC_ActionDrawStar::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
+bool LC_ActionDrawStar::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, int status){
     return status != SetCenter;
 }
 
-RS_Vector LC_ActionDrawStar::doGetMouseSnapPoint(QMouseEvent *e){
+RS_Vector LC_ActionDrawStar::doGetMouseSnapPoint(LC_MouseEvent *e){
     int status = getStatus();
     RS_Vector snap = LC_AbstractActionWithPreview::doGetMouseSnapPoint(e);
     if (status == SetOuterPoint || status == SetInnerPoint){
@@ -65,7 +65,7 @@ RS_Vector LC_ActionDrawStar::doGetMouseSnapPoint(QMouseEvent *e){
  * @param list
  * @param status
  */
-void LC_ActionDrawStar::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+void LC_ActionDrawStar::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     RS_Polyline* polyline = createShapePolyline(snap, list, status, true);
     // fixme - info about start to be created (center, inner/outer radiuses)
     addPolylineToEntitiesList(polyline,  list, true);
@@ -75,7 +75,7 @@ void LC_ActionDrawStar::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e,
  * @param pEvent
  * @param status
  */
-void LC_ActionDrawStar::doBack(QMouseEvent *pEvent, int status){
+void LC_ActionDrawStar::doBack(LC_MouseEvent *pEvent, int status){
     if (status >SetInnerPoint){
         restoreMainStatus();
     }
@@ -89,7 +89,7 @@ void LC_ActionDrawStar::doBack(QMouseEvent *pEvent, int status){
  * @param status
  * @param snapPoint
  */
-void LC_ActionDrawStar::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawStar::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, int status, const RS_Vector &snapPoint){
     onCoordinateEvent(status, false, snapPoint);
 }
 

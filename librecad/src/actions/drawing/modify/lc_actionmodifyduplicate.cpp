@@ -144,10 +144,10 @@ void LC_ActionModifyDuplicate::doAfterTrigger(){
     }
 }
 
-void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
+void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
     switch (status) {
         case SelectEntity: {
-            RS_Entity *en = catchEntity(e, RS2::ResolveNone);
+            RS_Entity *en = catchEntityByEvent(e);
             if (en != nullptr){
                 // just call trigger for duplicate creation
                 selectedEntity = en;
@@ -172,7 +172,7 @@ void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease([[maybe_unused]]QMouse
     }
 }
 
-bool LC_ActionModifyDuplicate::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
+bool LC_ActionModifyDuplicate::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, int status){
     return status ==  SelectEntity || SetOffsetDirection;
 }
 
@@ -183,10 +183,10 @@ bool LC_ActionModifyDuplicate::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent
  * @param list
  * @param status
  */
-void LC_ActionModifyDuplicate::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
+void LC_ActionModifyDuplicate::doPreparePreviewEntities(LC_MouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     switch (status){
         case SelectEntity:{
-            auto en = catchEntity(e, RS2::ResolveNone);
+            auto en = catchEntityByEvent(e);
             if (en != nullptr){
                 // highlight original
                 highlightHover(en);
@@ -278,8 +278,8 @@ RS2::CursorType LC_ActionModifyDuplicate::doGetMouseCursor([[maybe_unused]]int s
     return RS2::SelectCursor;
 }
 
-RS_Vector LC_ActionModifyDuplicate::doGetMouseSnapPoint(QMouseEvent *e){
-    RS_Vector snapped = snapPoint(e);
+RS_Vector LC_ActionModifyDuplicate::doGetMouseSnapPoint(LC_MouseEvent *e){
+    RS_Vector snapped = e->snapPoint;
     if (getStatus() == SetOffsetDirection){
         snapped = getSnapAngleAwarePoint(e, getEntityCenterPoint(selectedEntity), snapped, isMouseMove(e));
     }

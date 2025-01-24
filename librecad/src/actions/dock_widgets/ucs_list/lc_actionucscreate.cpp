@@ -57,14 +57,12 @@ void LC_ActionUCSCreate::showUCSMark(RS_Vector &point, double angle){
     overlayContainer->add(ucsMark);
 }
 
-void LC_ActionUCSCreate::mouseMoveEvent(QMouseEvent *event) {
-    deletePreview();
-    RS_Vector snap = snapPoint(event);
-    switch (getStatus()){
+void LC_ActionUCSCreate::onMouseMoveEvent(int status, LC_MouseEvent *event) {
+    RS_Vector snap = event->snapPoint;
+    switch (status){
         case SetOrigin:{
             if (!trySnapToRelZeroCoordinateEvent(event)) {
                 showUCSMark(snap, m_fixedAngle ? -m_angle:0.0);
-
                 if (showRefEntitiesOnPreview){
                     previewRefSelectablePoint(snap);
                 }
@@ -84,11 +82,10 @@ void LC_ActionUCSCreate::mouseMoveEvent(QMouseEvent *event) {
             break;
         }
     }
-    drawPreview();
 }
 
-void LC_ActionUCSCreate::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void LC_ActionUCSCreate::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     switch (status){
         case SetOrigin:{
             snap = getRelZeroAwarePoint(e, snap);
@@ -126,7 +123,7 @@ void LC_ActionUCSCreate::onCoordinateEvent(int status, [[maybe_unused]]bool isZe
     }
 }
 
-void LC_ActionUCSCreate::onMouseRightButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionUCSCreate::onMouseRightButtonRelease(int status, LC_MouseEvent *e) {
     setStatus(getStatus() - 1); // fixme - temporary
 }
 

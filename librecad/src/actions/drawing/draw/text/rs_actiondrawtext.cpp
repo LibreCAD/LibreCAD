@@ -135,11 +135,8 @@ void RS_ActionDrawText::preparePreview(){
     textChanged = false;
 }
 
-void RS_ActionDrawText::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent begin");
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
+void RS_ActionDrawText::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status){
         case SetPos:{
             bool snapped = trySnapToRelZeroCoordinateEvent(e);
@@ -159,12 +156,10 @@ void RS_ActionDrawText::mouseMoveEvent(QMouseEvent *e){
             break;
     }
     appendInfoCursorZoneMessage(tr("Text: ")/*.append("\n")*/.append(data->text), 2, false);
-    RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent end");
-    drawPreview();
 }
 
-void RS_ActionDrawText::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    RS_Vector pos = snapPoint(e);
+void RS_ActionDrawText::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+    RS_Vector pos = e->snapPoint;
     switch (status){
         case SetPos:{
             pos = getRelZeroAwarePoint(e, pos);
@@ -180,7 +175,7 @@ void RS_ActionDrawText::onMouseLeftButtonRelease([[maybe_unused]]int status, QMo
     fireCoordinateEvent(pos);
 }
 
-void RS_ActionDrawText::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawText::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     setStatus(-1);
 }
 

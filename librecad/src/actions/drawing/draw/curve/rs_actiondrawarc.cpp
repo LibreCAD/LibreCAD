@@ -86,12 +86,9 @@ void RS_ActionDrawArc::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawArc::trigger(): arc added: %lu", arc->getId());
 }
 
-void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawArc::mouseMoveEvent begin");
-
-    RS_Vector mouse = snapPoint(e);
-    switch (getStatus()) {
+void RS_ActionDrawArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
+    switch (status) {
         case SetCenter: {
             data->center = mouse;
             trySnapToRelZeroCoordinateEvent(e);
@@ -138,7 +135,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
         case SetAngle2: {
             mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
             data->angle2 = data->center.angleTo(mouse);
-            bool alternateDirection = isControl(e);
+            bool alternateDirection = e->isControl;
             RS_ArcData tmpData = *data;
             if (alternateDirection) {
                 tmpData.reversed = !tmpData.reversed;
@@ -157,7 +154,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
             double angleToMouse = data->center.angleTo(mouse);
             data->angle2 = data->angle1 + angleToMouse;
 
-            bool alternateDirection = isControl(e);
+            bool alternateDirection = e->isControl;
             RS_ArcData tmpData = *data;
             if (alternateDirection) {
                 tmpData.reversed = !tmpData.reversed;
@@ -200,7 +197,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
             RS_Vector alternativePoint = endpoint.mirror(data->center, startpoint);
 
             RS_ArcData dataCopy = *data;
-            bool useAlternativeSolution = isShift(e);
+            bool useAlternativeSolution = e->isShift;
             if (useAlternativeSolution){
                 dataCopy.angle2 = data->center.angleTo(alternativePoint);
                 dataCopy.reversed = !data->reversed ;
@@ -238,8 +235,6 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    drawPreview();
-    RS_DEBUG->print("RS_ActionDrawArc::mouseMoveEvent end");
 }
 
 void RS_ActionDrawArc::snapMouseToDiameter(RS_Vector &mouse, RS_Vector &arcStart, RS_Vector &halfCircleArcEnd) const{
@@ -251,8 +246,8 @@ void RS_ActionDrawArc::snapMouseToDiameter(RS_Vector &mouse, RS_Vector &arcStart
     mouse = diameter.getNearestPointOnEntity(mouse, true);
 }
 
-void RS_ActionDrawArc::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector mouse = snapPoint(e);
+void RS_ActionDrawArc::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     bool shouldFireCoordinateEvent = true;
     switch (status) {
         case SetRadius: {
@@ -271,7 +266,7 @@ void RS_ActionDrawArc::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
         case SetIncAngle:
         case SetAngle2:{
             mouse = getSnapAngleAwarePoint(e, data->center, mouse);
-            alternateArcDirection = isControl(e);
+            alternateArcDirection = e->isControl;
             break;
         }
         case SetChordLength: {
@@ -292,7 +287,7 @@ void RS_ActionDrawArc::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionDrawArc::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawArc::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     switch (status) {
         case SetChordLength:{

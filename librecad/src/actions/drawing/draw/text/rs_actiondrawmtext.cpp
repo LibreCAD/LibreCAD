@@ -110,12 +110,9 @@ void RS_ActionDrawMText::preparePreview() {
     textChanged = false;
 }
 
-void RS_ActionDrawMText::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent begin");
-
-    if (getStatus() == SetPos){
-        RS_Vector mouse = snapPoint(e);
+void RS_ActionDrawMText::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    if (status == SetPos){
+        RS_Vector mouse = e->snapPoint;
         mouse = getRelZeroAwarePoint(e, mouse);
         RS_Vector mov = mouse - *pos;
         *pos = mouse;
@@ -126,16 +123,13 @@ void RS_ActionDrawMText::mouseMoveEvent(QMouseEvent *e){
             preview->setVisible(true);
         }
     }
-
-    RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent end");
-    drawPreview();
 }
 
-void RS_ActionDrawMText::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionDrawMText::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionDrawMText::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawMText::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     finish(false);
 }

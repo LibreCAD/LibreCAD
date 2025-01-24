@@ -70,10 +70,9 @@ void LC_ActionModifyAlign::doTrigger([[maybe_unused]]bool keepSelected) {
     }
 }
 
-void LC_ActionModifyAlign::mouseMoveEventSelected(QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
-    deletePreview();
-    deleteHighlights();
+void LC_ActionModifyAlign::onMouseMoveEventSelected(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
+
     RS_Vector min;
     RS_Vector max;
     bool showPreview = true;
@@ -81,7 +80,7 @@ void LC_ActionModifyAlign::mouseMoveEventSelected(QMouseEvent *e) {
     // defining boundaries
     switch (alignType) {
         case LC_Align::ENTITY: {
-            RS2::ResolveLevel resolveLevel = isControl(e) ? RS2::ResolveAll : RS2::ResolveNone;
+            RS2::ResolveLevel resolveLevel = e->isControl ? RS2::ResolveAll : RS2::ResolveNone;
             RS_Entity *entity = catchEntity(snap, resolveLevel);
             if (entity != nullptr) {
                 min = entity->getMin();
@@ -165,9 +164,6 @@ void LC_ActionModifyAlign::mouseMoveEventSelected(QMouseEvent *e) {
             appendInfoCursorZoneMessage(builder.toString(), 2, false);
         }
     }
-
-    drawHighlights();
-    drawPreview();
 }
 
 void LC_ActionModifyAlign::previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef) {
@@ -186,12 +182,12 @@ void LC_ActionModifyAlign::previewRefLines(bool drawVertical, double verticalRef
     }
 }
 
-void LC_ActionModifyAlign::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void LC_ActionModifyAlign::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     bool mayTrigger = true;
     switch (alignType) {
         case LC_Align::ENTITY: {
-            RS2::ResolveLevel resolveLevel = isControl(e) ? RS2::ResolveAll : RS2::ResolveNone;
+            RS2::ResolveLevel resolveLevel = e->isControl ? RS2::ResolveAll : RS2::ResolveNone;
             RS_Entity *entity  = catchEntity(snap, resolveLevel);
             if (entity != nullptr) {
                 alignMin = entity->getMin();
@@ -231,7 +227,7 @@ void LC_ActionModifyAlign::onCoordinateEvent([[maybe_unused]]int status, bool is
     }
 }
 
-void LC_ActionModifyAlign::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]QMouseEvent *pEvent) {
+void LC_ActionModifyAlign::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *pEvent) {
     deletePreview();
     if (selectionComplete) {
         selectionComplete = false;

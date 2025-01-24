@@ -91,17 +91,16 @@ void RS_ActionEditCopyPaste::doTrigger() {
     }
 }
 
-void RS_ActionEditCopyPaste::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    if (getStatus()==SetReferencePoint) {
+void RS_ActionEditCopyPaste::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    if (status==SetReferencePoint) {
         switch (mode) {
             case CUT:
             case COPY:{
-                (void) snapPoint(e);
+//                (void) e->snapPoint;
                 break;
             }
             case PASTE:{
-                *referencePoint = snapPoint(e);
+                *referencePoint = e->snapPoint;
                 preview->addAllFrom(*RS_CLIPBOARD->getGraphic(), graphicView);
                 preview->move(*referencePoint);
 
@@ -120,15 +119,14 @@ void RS_ActionEditCopyPaste::mouseMoveEvent(QMouseEvent* e) {
     else {
         deleteSnapper();
     }
-    drawPreview();
 }
 
-void RS_ActionEditCopyPaste::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    invokedWithControl = isControl(e);
+void RS_ActionEditCopyPaste::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+    invokedWithControl = e->isControl;
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionEditCopyPaste::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionEditCopyPaste::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     initPrevious(status);
 }
 

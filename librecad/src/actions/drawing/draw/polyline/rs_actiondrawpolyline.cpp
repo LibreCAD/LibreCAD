@@ -85,12 +85,8 @@ void RS_ActionDrawPolyline::doTrigger() {
     pPoints->polyline = nullptr;
 }
 
-void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
-    deleteHighlights();
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent begin");
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
+void RS_ActionDrawPolyline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetStartpoint: {
             trySnapToRelZeroCoordinateEvent(e);
@@ -101,7 +97,7 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
                 mouse = getSnapAngleAwarePoint(e, pPoints->point, mouse, true);
             }
             if (pPoints->point.valid){
-                bool alternateDirection = isControl(e);
+                bool alternateDirection = e->isControl;
                 double bulge = 0.;
                 if (alternateDirection && m_mode == Ang){
                     int originalReversed = m_reversed;
@@ -150,28 +146,26 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent end");
-    drawHighlights();
-    drawPreview();
 }
 
-void RS_ActionDrawPolyline::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionDrawPolyline::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
 
-    RS_Vector mouse = snapPoint(e);
+    RS_Vector mouse = e->snapPoint;
     if (status == SetNextPoint) {
         if (m_mode == Line) {
             mouse = getSnapAngleAwarePoint(e, pPoints->point, mouse, true);
         } else {
-            alternateArc = isControl(e);
+            alternateArc = e->isControl;
         }
     }
     if (equationSettingOn || stepSizeSettingOn) return;
 
     if (startPointSettingOn || endPointSettingOn){
-        QString pointNumberString(QString::number(snapPoint(e).x)); // fixme - review and check the logic
+        RS_Vector snap = e->snapPoint;
+        QString pointNumberString(QString::number(snap.x)); // fixme - review and check the logic
 
-        if (isControl(e)){
-            pointNumberString = QString::number(snapPoint(e).x - getRelativeZero().x).prepend("@@");
+        if (e->isControl){
+            pointNumberString = QString::number(snap.x - getRelativeZero().x).prepend("@@");
         }
 
         RS_CommandEvent equationCommandEventObject(pointNumberString);
@@ -182,7 +176,7 @@ void RS_ActionDrawPolyline::onMouseLeftButtonRelease([[maybe_unused]]int status,
     fireCoordinateEvent(mouse);
 }
 
-void RS_ActionDrawPolyline::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawPolyline::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn){
         equationSettingOn = false;
         startPointSettingOn = false;

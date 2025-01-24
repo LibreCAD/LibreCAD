@@ -168,14 +168,10 @@ void RS_ActionModifyRound::doTrigger() {
     }
 }
 
-void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent *e){
-    deleteHighlights();
-    deletePreview();
-    RS_Vector mouse = toGraph(e);
-    RS_DEBUG->print("RS_ActionModifyRound::mouseMoveEvent begin");
-    RS_Entity *se = catchEntityOnPreview(e, eType, RS2::ResolveAllButTextImage);
-
-    switch (getStatus()) {
+void RS_ActionModifyRound::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->graphPoint;
+    RS_Entity *se = catchAndDescribe(e, eType, RS2::ResolveAllButTextImage);
+    switch (status) {
         case SetEntity1: {
             if (se != nullptr){
                 if (RS_Information::isTrimmable(se)){
@@ -252,10 +248,6 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionModifyRound::mouseMoveEvent end");
-    drawPreview();
-    drawHighlights();
-
 }
 
 void RS_ActionModifyRound::previewEntityModifications(const RS_Entity *original, RS_Entity *modified, RS_Vector& roundPoint, int mode){
@@ -290,9 +282,9 @@ void RS_ActionModifyRound::previewEntityModifications(const RS_Entity *original,
     }
 }
 
-void RS_ActionModifyRound::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector mouse = toGraph(e);
-    RS_Entity *se = catchEntity(e, eType, RS2::ResolveAll);
+void RS_ActionModifyRound::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->graphPoint;
+    RS_Entity *se = catchEntityByEvent(e, eType, RS2::ResolveAll);
     switch (status) {
         case SetEntity1: {
             if (se && se->isAtomic() &&
@@ -318,7 +310,7 @@ void RS_ActionModifyRound::onMouseLeftButtonRelease(int status, QMouseEvent *e) 
     }
 }
 
-void RS_ActionModifyRound::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionModifyRound::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

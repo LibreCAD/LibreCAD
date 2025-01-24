@@ -79,11 +79,8 @@ void RS_ActionDrawLineHorVert::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawLineHorVert::trigger(): line added: %lu", line->getId());
 }
 
-void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent begin");
-
-    RS_Vector mouse = snapPoint(e);
+void RS_ActionDrawLineHorVert::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     if (getStatus() == SetEndpoint && pPoints->p1.valid){
         RS_Vector p2x = RS_Vector(mouse.x, pPoints->p1.y);
         RS_Vector p2y = RS_Vector(pPoints->p1.x, mouse.y);
@@ -96,13 +93,10 @@ void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent *e){
         pPoints->data = {pPoints->p1, pPoints->p2};
         previewToCreateLine(pPoints->p1, pPoints->p2);
     }
-
-    RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent end");
-    drawPreview();
 }
 
-void RS_ActionDrawLineHorVert::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector mouse = snapPoint(e);
+void RS_ActionDrawLineHorVert::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
 
     switch (status) {
         case SetStartpoint: {
@@ -121,7 +115,7 @@ void RS_ActionDrawLineHorVert::onMouseLeftButtonRelease(int status, QMouseEvent 
     }
 }
 
-void RS_ActionDrawLineHorVert::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineHorVert::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

@@ -44,8 +44,6 @@ public:
         bool select);
     ~RS_ActionSelectIntersected() override;
     void init(int status) override;
-    void mouseMoveEvent(QMouseEvent *e) override;
-    void mousePressEvent(QMouseEvent *e) override;
 protected:
     /**
      * Action States.
@@ -59,8 +57,10 @@ protected:
     std::unique_ptr<Points> pPoints;
     bool select = false;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void onMouseLeftButtonPress(int status, LC_MouseEvent *e) override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
 };

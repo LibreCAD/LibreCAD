@@ -98,11 +98,10 @@ void RS_ActionDrawArc3P::preparePreview(bool alternatePoints){
     }
 }
 
-void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
+void RS_ActionDrawArc3P::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
 
-    switch (getStatus()) {
+    switch (status) {
         case SetPoint1: {
             pPoints.point1 = mouse;
             trySnapToRelZeroCoordinateEvent(e);
@@ -124,7 +123,7 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent *e){
             // todo - which point (1 or 2) is more suitable there for snap?
             mouse = getSnapAngleAwarePoint(e,pPoints.point1, mouse, true);
             pPoints.point3 = mouse;
-            bool alternatePoints = isControl(e) || alternatedPoints;
+            bool alternatePoints = e->isControl || alternatedPoints;
             preparePreview(alternatePoints);
             if (pPoints.data.isValid()){
                 previewToCreateArc(pPoints.data);
@@ -145,11 +144,10 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    drawPreview();
 }
 
-void RS_ActionDrawArc3P::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void RS_ActionDrawArc3P::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     switch (status) {
         case SetPoint2:{
             snap = getSnapAngleAwarePoint(e, pPoints.point1, snap);
@@ -157,7 +155,7 @@ void RS_ActionDrawArc3P::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
         }
         case SetPoint3:{
             snap = getSnapAngleAwarePoint(e, pPoints.point1, snap);
-            if (isControl(e)){
+            if (e->isControl){
                alternatedPoints = true;
             }
             break;
@@ -168,7 +166,7 @@ void RS_ActionDrawArc3P::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionDrawArc3P::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawArc3P::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     setStatus(status-1);
 }

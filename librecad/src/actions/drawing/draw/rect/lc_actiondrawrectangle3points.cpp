@@ -89,7 +89,7 @@ RS_Vector LC_ActionDrawRectangle3Points::doGetRelativeZeroAfterTrigger(){
     return zeroCorner;
 }
 
-void LC_ActionDrawRectangle3Points::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+void LC_ActionDrawRectangle3Points::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     LC_AbstractActionDrawRectangle::doPreparePreviewEntities(e, snap, list, status);
     if (showRefEntitiesOnPreview) {
         if (pPoints->corner1Set) {
@@ -275,7 +275,7 @@ void LC_ActionDrawRectangle3Points::calculateCorner2(const RS_Vector &snapPoint,
     pPoints->corner3 = pPoints->corner2;
 }
 
-bool LC_ActionDrawRectangle3Points::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
+bool LC_ActionDrawRectangle3Points::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, int status){
     return status != SetPoint1 && pPoints->corner1.valid;
 }
 
@@ -288,8 +288,8 @@ bool LC_ActionDrawRectangle3Points::doCheckMayDrawPreview([[maybe_unused]]QMouse
  * @param e
  * @return 
  */
-RS_Vector LC_ActionDrawRectangle3Points::doGetMouseSnapPoint(QMouseEvent *e){
-    RS_Vector snapped = snapPoint(e);
+RS_Vector LC_ActionDrawRectangle3Points::doGetMouseSnapPoint(LC_MouseEvent *e){
+    RS_Vector snapped = e->snapPoint;
     // Snapping to angle(15*) if shift key is pressed
     if (alternativeActionMode){
         int status = getStatus();
@@ -349,7 +349,7 @@ void LC_ActionDrawRectangle3Points::doInitialSnapToRelativeZero(RS_Vector zero){
     setMainStatus(SetPoint2);
 }
 
-void LC_ActionDrawRectangle3Points::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawRectangle3Points::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, int status, const RS_Vector &snapPoint){
     onCoordinateEvent(status, false, snapPoint);
     if (pPoints->corner2Set){ // adjust relative zero for point 2 (for point 3 it will be set on trigger)
         moveRelativeZero(pPoints->corner2);
@@ -360,7 +360,7 @@ void LC_ActionDrawRectangle3Points::doFinish([[maybe_unused]]bool updateTB){
     resetPoints();
 }
 
-void LC_ActionDrawRectangle3Points::doBack([[maybe_unused]]QMouseEvent *pEvent, int status){
+void LC_ActionDrawRectangle3Points::doBack([[maybe_unused]]LC_MouseEvent *pEvent, int status){
     switch (status){
         case (SetPoint1):{
             finishAction();

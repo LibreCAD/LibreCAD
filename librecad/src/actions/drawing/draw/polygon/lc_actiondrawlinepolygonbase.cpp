@@ -64,11 +64,9 @@ void LC_ActionDrawLinePolygonBase::doTrigger() {
     }
 }
 
-void LC_ActionDrawLinePolygonBase::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawLinePolygon2::mouseMoveEvent begin");
-    RS_Vector mouse = snapPoint(e);
-    switch (getStatus()) {
+void LC_ActionDrawLinePolygonBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
+    switch (status) {
         case SetPoint1: {
             trySnapToRelZeroCoordinateEvent(e);
             break;
@@ -90,19 +88,18 @@ void LC_ActionDrawLinePolygonBase::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
-    drawPreview();
 }
 
-void LC_ActionDrawLinePolygonBase::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector coord = snapPoint(e);
+void LC_ActionDrawLinePolygonBase::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector coord = e->snapPoint;
     if (status == SetPoint2){
         coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
-        completeActionOnTrigger = isControl(e);
+        completeActionOnTrigger = e->isControl;
     }
     fireCoordinateEvent(coord);
 }
 
-void LC_ActionDrawLinePolygonBase::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawLinePolygonBase::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

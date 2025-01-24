@@ -126,11 +126,8 @@ void RS_ActionDrawLine::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawLine::trigger(): line added: %lu",line->getId());
 }
 
-void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e){
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
-
+void RS_ActionDrawLine::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status){
         case SetStartpoint: {
             trySnapToRelZeroCoordinateEvent(e);
@@ -151,11 +148,10 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e){
         default:
             break;
     }
-    drawPreview();
 }
 
-void RS_ActionDrawLine::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snapped = snapPoint(e);
+void RS_ActionDrawLine::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snapped = e->snapPoint;
     // Snapping to angle(15*) if shift key is pressed
     if (status == SetEndpoint ) {
         snapped = getSnapAngleAwarePoint(e,  pPoints->data.startpoint, snapped);
@@ -163,7 +159,7 @@ void RS_ActionDrawLine::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionDrawLine::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLine::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     switch (status) {
         default:

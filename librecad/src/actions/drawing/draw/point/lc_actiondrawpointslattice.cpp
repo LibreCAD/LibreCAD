@@ -60,12 +60,10 @@ void LC_ActionDrawPointsLattice::doTrigger() {
     setStatus(SetPoint1);
 }
 
-
-void LC_ActionDrawPointsLattice::mouseMoveEvent(QMouseEvent *e) {
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
+void LC_ActionDrawPointsLattice::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     QVector<RS_Vector> pointsToCreate;
-    switch (getStatus()){
+    switch (status){
         case SetPoint1:{
             trySnapToRelZeroCoordinateEvent(e);
             break;
@@ -92,7 +90,7 @@ void LC_ActionDrawPointsLattice::mouseMoveEvent(QMouseEvent *e) {
         }
         case SetPoint4:{
             RS_Vector pos = getSnapAngleAwarePoint(e, point3, mouse , true);
-            bool alternateLastPointAdjustment = isControl(e);
+            bool alternateLastPointAdjustment = e->isControl;
             pos = getLastPointPosition(pos, alternateLastPointAdjustment);
             createPointsLattice(pos, pointsToCreate);
             if (showRefEntitiesOnPreview){
@@ -108,12 +106,10 @@ void LC_ActionDrawPointsLattice::mouseMoveEvent(QMouseEvent *e) {
     for (unsigned i = 0; i < pointsCount; i++){
         previewPoint(pointsToCreate.at(i));
     }
-
-    drawPreview();
 }
 
-void LC_ActionDrawPointsLattice::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector pos = snapPoint(e);
+void LC_ActionDrawPointsLattice::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector pos = e->snapPoint;
     switch (status){
         case SetPoint1:{
             pos = getRelZeroAwarePoint(e, pos);
@@ -129,7 +125,7 @@ void LC_ActionDrawPointsLattice::onMouseLeftButtonRelease(int status, QMouseEven
         }
         case SetPoint4:{
             pos = getSnapAngleAwarePoint(e, point3, pos, false);
-            bool alternateLastPointAdjustment = isControl(e);
+            bool alternateLastPointAdjustment = e->isControl;
             pos = getLastPointPosition(pos, alternateLastPointAdjustment);
             break;
         }
@@ -149,7 +145,7 @@ RS_Vector LC_ActionDrawPointsLattice::getLastPointPosition(RS_Vector &pos, bool 
     return pos;
 }
 
-void LC_ActionDrawPointsLattice::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawPointsLattice::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     switch (status){
         case SetPoint1:
         case SetPoint2:

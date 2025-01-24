@@ -56,12 +56,8 @@ void RS_ActionSelectSingle::trigger(){
     selectContour = false;
 }
 
-void RS_ActionSelectSingle::mouseMoveEvent(QMouseEvent *event){
-    deletePreview();
-    deleteHighlights();
+void RS_ActionSelectSingle::onMouseMoveEvent(int status, LC_MouseEvent *event) {
     selectionMouseMove(event);
-    drawPreview();
-    drawHighlights();
 }
 
 void RS_ActionSelectSingle::selectionFinishedByKey(QKeyEvent *e, [[maybe_unused]]bool escape) {
@@ -69,10 +65,10 @@ void RS_ActionSelectSingle::selectionFinishedByKey(QKeyEvent *e, [[maybe_unused]
     actionSelect->keyPressEvent(e);
 }
 
-void RS_ActionSelectSingle::onMouseLeftButtonRelease([[maybe_unused]] int status, QMouseEvent *e) {
-    entityToSelect = catchEntity(e, catchForSelectionEntityTypes);
+void RS_ActionSelectSingle::onMouseLeftButtonRelease([[maybe_unused]] int status, LC_MouseEvent *e) {
+    entityToSelect = catchEntityByEvent(e, catchForSelectionEntityTypes);
     if (entityToSelect != nullptr){
-       selectContour = isShift(e);
+       selectContour = e->isShift;
        trigger();
     }
 }
@@ -90,12 +86,12 @@ void RS_ActionSelectSingle::doSelectEntity(RS_Entity *entityToSelect, bool selec
     }
 }
 
-void RS_ActionSelectSingle::onMouseRightButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionSelectSingle::onMouseRightButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     finish();
     if (actionSelect->rtti() == RS2::ActionSelect)
         actionSelect->finish();
     else
-        actionSelect->mouseReleaseEvent(e);
+        actionSelect->mouseReleaseEvent(e->originalEvent); // fixme - sand - review, rework
 }
 
 RS2::CursorType RS_ActionSelectSingle::doGetMouseCursor([[maybe_unused]] int status){

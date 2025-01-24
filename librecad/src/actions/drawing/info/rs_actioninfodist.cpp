@@ -75,11 +75,8 @@ void RS_ActionInfoDist::doTrigger() {
     }
 }
 
-void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    int status = getStatus();
-    RS_Vector mouse = snapPoint(e);
-    RS_DEBUG->print("RS_ActionInfoDist::mouseMoveEvent begin");
+void RS_ActionInfoDist::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetPoint1: {
             trySnapToRelZeroCoordinateEvent(e);
@@ -103,8 +100,6 @@ void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    drawPreview();
-    RS_DEBUG->print("RS_ActionInfoDist::mouseMoveEvent end");
 }
 
 void RS_ActionInfoDist::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) {
@@ -119,8 +114,8 @@ void RS_ActionInfoDist::updateInfoCursor(const RS_Vector &mouse, const RS_Vector
     }
 }
 
-void RS_ActionInfoDist::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void RS_ActionInfoDist::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     switch (status){
         case SetPoint1:{
             fireCoordinateEvent(snap);
@@ -130,7 +125,7 @@ void RS_ActionInfoDist::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
         case (SetPoint2):{
             snap = getSnapAngleAwarePoint(e, pPoints->point1,  snap);
             fireCoordinateEvent(snap);
-            if (!isControl(e)){
+            if (!e->isControl){
                 moveRelativeZero(pPoints->point2);
             }
             break;
@@ -140,7 +135,7 @@ void RS_ActionInfoDist::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionInfoDist::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionInfoDist::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

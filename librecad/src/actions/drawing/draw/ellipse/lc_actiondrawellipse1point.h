@@ -32,8 +32,6 @@ public:
         RS_EntityContainer &container, RS_GraphicView &graphicView, bool isArc);
 
     ~LC_ActionDrawEllipse1Point() override;
-
-    void mouseMoveEvent(QMouseEvent *event) override;
     void init(int status) override;
     double getMajorRadius();
     double getMinorRadius();
@@ -62,10 +60,12 @@ protected:
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void updateMouseButtonHints() override;
     bool doProcessCommand(int status, const QString &command) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void doTrigger() override;
+
     RS_Vector getMajorP();
 };
 

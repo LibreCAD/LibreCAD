@@ -103,12 +103,11 @@ void RS_ActionDrawImage::doTrigger() {
     finish(false);
 }
 
-void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    if (getStatus() == SetTargetPoint){
+void RS_ActionDrawImage::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    if (status == SetTargetPoint){
         bool snappedToRelZero = trySnapToRelZeroCoordinateEvent(e);
         if (!snappedToRelZero){
-            pImg->data.insertionPoint = snapPoint(e);
+            pImg->data.insertionPoint = e->snapPoint;
             // fixme - ucs - review this code
 //RS_Creation creation(preview, nullptr, false);
             //creation.createInsert(data);
@@ -125,14 +124,13 @@ void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent *e){
             preview->move(pImg->data.insertionPoint);
         }
     }
-    drawPreview();
 }
 
-void RS_ActionDrawImage::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionDrawImage::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionDrawImage::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawImage::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     finish(false);
 }
 

@@ -42,10 +42,10 @@ void LC_ActionSplineRemoveBetween::doOnEntityNotCreated() {
     commandMessage(tr("Not enough points remains for the spline"));
 }
 
-void LC_ActionSplineRemoveBetween::onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) {
+void LC_ActionSplineRemoveBetween::onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            auto entity = catchEntity(e, enTypeList);
+            auto entity = catchEntityByEvent(e, enTypeList);
             if (entity != nullptr){
                 if (mayModifySplineEntity(entity)) {
                     highlightHoverWithRefPoints(entity, true);
@@ -67,7 +67,7 @@ void LC_ActionSplineRemoveBetween::onMouseMove(RS_Vector mouse, int status, QMou
             if (nearestPoint.valid) {
                 previewRefPoint(selectedVertexPoint);
                 previewRefSelectablePoint(nearestPoint);
-                RS_Entity *previewUpdatedEntity = createModifiedSplineEntity(entityToModify, nearestPoint, isShift(e));
+                RS_Entity *previewUpdatedEntity = createModifiedSplineEntity(entityToModify, nearestPoint, e->isShift);
                 if (previewUpdatedEntity != nullptr) {
                     previewEntity(previewUpdatedEntity);
                 }
@@ -79,10 +79,10 @@ void LC_ActionSplineRemoveBetween::onMouseMove(RS_Vector mouse, int status, QMou
     }
 }
 
-void LC_ActionSplineRemoveBetween::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionSplineRemoveBetween::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity:{
-            auto entity = catchEntity(e, enTypeList);
+            auto entity = catchEntityByEvent(e, enTypeList);
             if (entity != nullptr && mayModifySplineEntity(entity)){
                 entityToModify = entity;
                 entityToModify->setSelected(true);
@@ -107,7 +107,7 @@ void LC_ActionSplineRemoveBetween::onMouseLeftButtonRelease(int status, QMouseEv
             break;
         }
         case SetBeforeControlPoint:{
-            RS_Vector mouse = snapPoint(e);
+            RS_Vector mouse = e->snapPoint;
             double dist;
             RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
             if (nearestPoint.valid){
@@ -117,13 +117,13 @@ void LC_ActionSplineRemoveBetween::onMouseLeftButtonRelease(int status, QMouseEv
             break;
         }
         case SetControlPoint: {
-            RS_Vector mouse = snapPoint(e);
+            RS_Vector mouse = e->snapPoint;
             double dist;
             RS_Vector nearestPoint = entityToModify->getNearestRef(mouse, &dist);
             if (nearestPoint.valid){
                 if (nearestPoint != vertexPoint) {
                     vertexPoint = nearestPoint;
-                    directionFromStart = isShift(e);
+                    directionFromStart = e->isShift;
                     trigger();
                 }
             }

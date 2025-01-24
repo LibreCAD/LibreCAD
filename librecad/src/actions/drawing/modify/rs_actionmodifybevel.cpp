@@ -102,18 +102,13 @@ void RS_ActionModifyBevel::drawSnapper() {
     // disable snapper
 }
 
-void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent *e){
-    deleteHighlights();
-    deletePreview();
-
-    snapPoint(e);
-    RS_Vector mouse = toGraph(e);
-    RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent begin");
+void RS_ActionModifyBevel::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->graphPoint;
     // it seems that bevel works properly with lines only... it relies on trimEndpoint/moveEndpoint methods, which
     // have some support for arc and ellipse, yet still...
-    RS_Entity *se = catchEntityOnPreview(e, RS2::EntityLine, RS2::ResolveAllButTextImage);
+    RS_Entity *se = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAllButTextImage);
 
-    switch (getStatus()) {
+    switch (status) {
         case SetEntity1: {
             if (isEntityAccepted(se)){
                 highlightHover(se);
@@ -171,11 +166,6 @@ void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-
-    RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent end");
-    drawPreview();
-    drawHighlights();
-
 }
 
 void RS_ActionModifyBevel::previewLineModifications(const RS_Entity *original, const RS_Entity *trimmed, bool trimOnStart){
@@ -200,15 +190,15 @@ void RS_ActionModifyBevel::previewLineModifications(const RS_Entity *original, c
     }
 }
 
-void RS_ActionModifyBevel::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Entity *se = catchEntity(e,RS2::EntityLine, RS2::ResolveAllButTextImage);
+void RS_ActionModifyBevel::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Entity *se = catchEntityByEvent(e,RS2::EntityLine, RS2::ResolveAllButTextImage);
     if (se != nullptr){
         switch (status) {
             case SetEntity1: {
                 if (se->isAtomic()){
                     if (RS_Information::isTrimmable(se)){
                         entity1 = dynamic_cast<RS_AtomicEntity *>(se);
-                        pPoints->coord1 = entity1->getNearestPointOnEntity(toGraph(e), true);
+                        pPoints->coord1 = entity1->getNearestPointOnEntity(e->graphPoint, true);
                         setStatus(SetEntity2);
                     } else {
                         commandMessage(tr("Invalid entity selected (non-trimmable)."));
@@ -222,7 +212,7 @@ void RS_ActionModifyBevel::onMouseLeftButtonRelease(int status, QMouseEvent *e) 
                 if (se->isAtomic()){
                     if (RS_Information::isTrimmable(entity1, se)){
                         entity2 = dynamic_cast<RS_AtomicEntity *>(se);
-                        pPoints->coord2 = toGraph(e);
+                        pPoints->coord2 = e->graphPoint;
                         trigger();
                     }
                     else{
@@ -239,7 +229,7 @@ void RS_ActionModifyBevel::onMouseLeftButtonRelease(int status, QMouseEvent *e) 
     }
 }
 
-void RS_ActionModifyBevel::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionModifyBevel::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deletePreview();
     int newStatus = -1;
     switch (status){

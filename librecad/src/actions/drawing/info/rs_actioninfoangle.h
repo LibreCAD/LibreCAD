@@ -43,7 +43,6 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionInfoAngle() override;
     void init(int status) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
     void drawSnapper() override;
 protected:
     /**
@@ -59,8 +58,9 @@ protected:
     std::unique_ptr<Points> pPoints;
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void updateMouseButtonHints() override;
     void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &intersection);
     void doTrigger() override;

@@ -77,9 +77,9 @@ protected:
     };
 
     LC_ActionOptionsWidget* createOptionsWidget() override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
 
@@ -125,7 +125,7 @@ protected:
     bool doCheckMayTrigger() override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     void doAfterTrigger() override;
-    void doBack(QMouseEvent *pEvent, int status) override;
+    void doBack(LC_MouseEvent *pEvent, int status) override;
     void doFinish(bool updateTB) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };

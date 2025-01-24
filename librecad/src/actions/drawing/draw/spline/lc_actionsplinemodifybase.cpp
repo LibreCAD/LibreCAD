@@ -68,14 +68,9 @@ void LC_ActionSplineModifyBase::clean() {
     redraw();
 }
 
-void LC_ActionSplineModifyBase::mouseMoveEvent(QMouseEvent *e) {
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
-    deleteHighlights();
-    deletePreview();
+void LC_ActionSplineModifyBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     onMouseMove(mouse, status, e);
-    drawHighlights();
-    drawPreview();
 }
 
 RS2::CursorType LC_ActionSplineModifyBase::doGetMouseCursor([[maybe_unused]]int status) {

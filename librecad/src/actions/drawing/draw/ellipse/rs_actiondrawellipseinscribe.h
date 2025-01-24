@@ -38,7 +38,6 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawEllipseInscribe() override;
     void init(int status) override;
-    void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
     void finish(bool updateTB) override;
 
@@ -60,10 +59,12 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     // 4 points on ellipse
     bool preparePreview(RS_Line* fourthLineCandidate, std::vector<RS_Vector> &tangent);
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void clearLines(bool checkStatus = false);
     void updateMouseButtonHints() override;
+
     void doTrigger() override;
 };
 #endif

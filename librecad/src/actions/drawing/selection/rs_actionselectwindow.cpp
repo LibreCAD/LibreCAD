@@ -104,17 +104,13 @@ void RS_ActionSelectWindow::doTrigger() {
     }
 }
 
-void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
-    drawSnapper();
-    deletePreview();
-    snapPoint(e);
-    RS_Vector snapped = toGraph(e);
+void RS_ActionSelectWindow::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector snapped = e->graphPoint;
     updateCoordinateWidgetByRelZero(snapped);
     if (getStatus()==SetCorner2 && pPoints->v1.valid) {
         pPoints->v2 = snapped;
         drawOverlayBox(pPoints->v1, pPoints->v2);
     }
-    drawPreview();
 }
 
 void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
@@ -133,17 +129,17 @@ void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
                     pPoints->v1.x, pPoints->v1.y);
 }
 
-void RS_ActionSelectWindow::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionSelectWindow::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectWindow::mouseReleaseEvent()");
     if (status==SetCorner2) {
-        pPoints->v2 = toGraph(e);
-        selectIntersecting = isControl(e);
-        invertSelectionOperation = isShift(e);
+        pPoints->v2 = e->graphPoint;
+        selectIntersecting = e->isControl;
+        invertSelectionOperation = e->isShift;
         trigger();
     }
 }
 
-void RS_ActionSelectWindow::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionSelectWindow::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectWindow::mouseReleaseEvent()");
     if (status==SetCorner2) {
         deletePreview();

@@ -39,12 +39,12 @@ LC_ActionModifyLineGap::LC_ActionModifyLineGap(RS_EntityContainer &container, RS
 
 
 
-void LC_ActionModifyLineGap::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+void LC_ActionModifyLineGap::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     switch (status){
         case (SetEntity):{ // selecting the line
             // finding line entity
             deleteSnapper();
-            RS_Entity* en = catchModifiableEntityOnPreview(e, enTypeList);
+            RS_Entity* en = catchModifiableAndDescribe(e, enTypeList);
             if (en != nullptr){
                 auto *line = dynamic_cast<RS_Line *>(en);
                 // check that line may be expanded
@@ -125,7 +125,7 @@ void LC_ActionModifyLineGap::createPreviewEntities(LC_ActionModifyLineGap::GapDa
     createRefSelectablePoint(endPoint, list);
 }
 
-void LC_ActionModifyLineGap::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionModifyLineGap::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint){
     switch (status){
         case SetEntity:{ // entity selection
             // catching the line

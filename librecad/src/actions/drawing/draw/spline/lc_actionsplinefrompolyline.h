@@ -46,7 +46,6 @@ public:
     void setUseFitPoints(bool val){vertexesAreFitPoints = val;}
     bool isUseFitPoints(){return vertexesAreFitPoints;}
     void finish(bool updateTB) override;
-    void mouseMoveEvent(QMouseEvent *event) override;;
 protected:
     enum State {
         SetEntity
@@ -64,11 +63,13 @@ protected:
     RS_Entity* createSplineForPolyline(RS_Entity *p);
     void fillControlPointsListFromPolyline(const RS_Polyline *polyline, std::vector<RS_Vector> &controlPoints) const;
     void setupAndAddCreatedEntity(RS_Entity *createdEntity, RS_Layer *layerToSet, const RS_Pen &penToUse);
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
+
     void doTrigger() override;
 };
 

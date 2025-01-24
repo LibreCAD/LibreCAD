@@ -108,7 +108,7 @@ void RS_ActionBlocksCreate::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionBlocksCreate::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        fireCoordinateEventForSnap(e);
+        RS_ActionInterface::fireCoordinateEventForSnap(e);
     } else if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     }

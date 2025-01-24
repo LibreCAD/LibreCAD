@@ -31,7 +31,6 @@ class LC_ActionDrawDimBaseline:public LC_ActionDimLinearBase{
 public:
     LC_ActionDrawDimBaseline(RS_EntityContainer &container,RS_GraphicView &graphicView,RS2::ActionType type);
 
-    void mouseMoveEvent(QMouseEvent *e) override;
     bool isFreeBaselineDistance() const;
     void setFreeBaselineDistance(bool freeDistance);
     double getBaselineDistance() const;
@@ -39,10 +38,6 @@ public:
     void reset() override;
     double getCurrentBaselineDistance() const;
     QStringList getAvailableCommands() override;
-protected:
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void updateMouseButtonHints() override;
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 protected:
     std::unique_ptr<RS_DimLinearData> edata;
     RS_Vector baseDefPoint;
@@ -63,6 +58,10 @@ protected:
     double getDimAngle() override;
     bool doProcessCommand(int status, const QString &command) override;
     void doTrigger() override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 
 #endif // LC_ACTIONDRAWDIMBASELINE_H

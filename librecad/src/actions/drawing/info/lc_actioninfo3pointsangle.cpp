@@ -55,10 +55,8 @@ void LC_ActionInfo3PointsAngle::doTrigger() {
     setStatus(SetPoint3);
 }
 
-void LC_ActionInfo3PointsAngle::mouseMoveEvent(QMouseEvent *e) {
-    int status = getStatus();
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
+void LC_ActionInfo3PointsAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status){
         case SetPoint1:{
             trySnapToRelZeroCoordinateEvent(e);
@@ -66,7 +64,7 @@ void LC_ActionInfo3PointsAngle::mouseMoveEvent(QMouseEvent *e) {
         }
         case SetPoint2:{
             if (!trySnapToRelZeroCoordinateEvent(e)) {
-                mouse = getSnapAngleAwarePoint(e, point1, mouse, true, isControl(e));
+                mouse = getSnapAngleAwarePoint(e, point1, mouse, true, e->isControl);
                 previewRefPoint(point1);
                 updateInfoCursor(mouse, point1);
                 if (showRefEntitiesOnPreview) {
@@ -78,8 +76,7 @@ void LC_ActionInfo3PointsAngle::mouseMoveEvent(QMouseEvent *e) {
         }
         case SetPoint3:{
             if (!trySnapToRelZeroCoordinateEvent(e)) {
-                mouse = getSnapAngleAwarePoint(e, point2, mouse, true, isControl(e));
-
+                mouse = getSnapAngleAwarePoint(e, point2, mouse, true, e->isControl);
                 previewRefPoint(point1);
                 previewRefPoint(point2);
                 previewRefSelectablePoint(mouse);
@@ -102,7 +99,6 @@ void LC_ActionInfo3PointsAngle::mouseMoveEvent(QMouseEvent *e) {
         default:
             break;
     }
-    drawPreview();
 }
 
 void LC_ActionInfo3PointsAngle::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
@@ -147,18 +143,18 @@ void LC_ActionInfo3PointsAngle::updateMouseButtonHints() {
     }
 }
 
-void LC_ActionInfo3PointsAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snapped = snapPoint(e);
+void LC_ActionInfo3PointsAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snapped = e->snapPoint;
     switch (status){
         case SetPoint1:{
             break;
         }
         case SetPoint2: {
-            snapped = getSnapAngleAwarePoint(e, point1, snapped, false,isControl(e));
+            snapped = getSnapAngleAwarePoint(e, point1, snapped, false,e->isControl);
             break;
         }
         case SetPoint3:{
-            snapped = getSnapAngleAwarePoint(e, point2, snapped, false, isControl(e));
+            snapped = getSnapAngleAwarePoint(e, point2, snapped, false, e->isControl);
             break;
         }
         default:
@@ -167,7 +163,7 @@ void LC_ActionInfo3PointsAngle::onMouseLeftButtonRelease(int status, QMouseEvent
     fireCoordinateEvent(snapped);
 }
 
-void LC_ActionInfo3PointsAngle::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionInfo3PointsAngle::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     setStatus(getStatus() - 1);
 }
 
@@ -189,14 +185,12 @@ void LC_ActionInfo3PointsAngle::updateInfoCursor(const RS_Vector &mouse, const R
 
 void LC_ActionInfo3PointsAngle::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &point2, const RS_Vector &startPoint) {
     if (infoCursorOverlayPrefs->enabled) {
-
         double angle1 = point2.angleTo(point1);
         double angle2 = point2.angleTo(mouse);
-
         double angle = RS_Math::correctAngle(angle1 - angle2);
-
         double distance = point2.distanceTo(startPoint);
         double distance2 = point2.distanceTo(mouse);
+
         LC_InfoMessageBuilder msg(tr("Info"));
         msg.add(tr("Angle:"), formatAngle(angle));
         msg.add(tr("Angle (Alt):"), formatAngle(RS_Math::correctAngle(2 * M_PI - angle)));

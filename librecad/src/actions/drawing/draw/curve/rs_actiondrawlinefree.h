@@ -43,8 +43,6 @@ public:
     RS_ActionDrawLineFree(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
     ~RS_ActionDrawLineFree() override;
-    void mouseMoveEvent(QMouseEvent* e) override;
-    void mousePressEvent(QMouseEvent* e) override;
 protected:
     /**
      * Action States.
@@ -58,8 +56,11 @@ protected:
     std::unique_ptr<RS_Polyline> polyline;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void doTrigger() override;
+
+    void onMouseLeftButtonPress(int status, LC_MouseEvent *e) override;
 };
 #endif

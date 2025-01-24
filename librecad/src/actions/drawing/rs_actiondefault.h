@@ -57,8 +57,6 @@ public:
     void suspend() override;
     void keyPressEvent(QKeyEvent* e) override;
     void keyReleaseEvent(QKeyEvent* e) override;
-    void mouseMoveEvent(QMouseEvent* e) override;
-    void mousePressEvent(QMouseEvent* e) override;
     void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
 
@@ -92,18 +90,20 @@ protected:
     void updateQuickInfoWidget(RS_Entity *pEntity);
     void goToNeutralStatus();
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
 
-    void highlightHoveredEntities(QMouseEvent* currentMousePosition);
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void onMouseLeftButtonPress(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonPress(int status, LC_MouseEvent *e) override;
+
+    void highlightHoveredEntities(LC_MouseEvent* currentMousePosition);
     void highlightEntity(RS_Entity* entity);
     void updateMouseButtonHints() override;
-
     void createEditedLineDescription(RS_Line* clone, bool ctrlPressed, bool shiftPressed);
     void createEditedArcDescription(RS_Arc* clone, bool ctrlPressed, bool shiftPressed);
     void createEditedCircleDescription(RS_Circle* clone, bool ctrlPressed, bool shiftPressed);
-
     bool isShowEntityDescriptionOnHighlight();
-    void forceUpdateInfoCursor(const QMouseEvent *event);
+    void forceUpdateInfoCursor(const LC_MouseEvent *event);
 };
 #endif

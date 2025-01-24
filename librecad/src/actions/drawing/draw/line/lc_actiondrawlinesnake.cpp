@@ -99,11 +99,11 @@ void LC_ActionDrawLineSnake::doSetStartPoint(RS_Vector start){
     updateMouseButtonHints();
 }
 
-bool LC_ActionDrawLineSnake::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *pEvent, int status){
+bool LC_ActionDrawLineSnake::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *pEvent, int status){
     return status != SetStartPoint; // can draw preview if at least start point is set
 }
 
-void LC_ActionDrawLineSnake::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+void LC_ActionDrawLineSnake::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     RS_Vector possibleEndPoint;
     QString directionName = "";
     switch (status) {
@@ -173,8 +173,8 @@ const RS_Vector &LC_ActionDrawLineSnake::getStartPointForAngleSnap() const {
     return pPoints->data.startpoint;
 }
 
-void LC_ActionDrawLineSnake::doBack(QMouseEvent *e, int status){
-    e->accept();
+void LC_ActionDrawLineSnake::doBack(LC_MouseEvent *e, int status){
+    e->originalEvent->accept();
     switch (status) {
         case SetStartPoint:
             finishAction();

@@ -300,25 +300,20 @@ void RS_ActionPolylineSegment::doTrigger() {
     }
 }
 
-void RS_ActionPolylineSegment::mouseMoveEvent(QMouseEvent *event){
-    deletePreview();
-    deleteHighlights();
-    snapPoint(event);
-    RS_Entity* en = catchEntityOnPreview(event, entityType);
+void RS_ActionPolylineSegment::onMouseMoveEvent(int status, LC_MouseEvent *event) {
+    RS_Entity* en = catchAndDescribe(event, entityType, RS2::ResolveNone);
     if (en != nullptr){
         highlightHover(en);
         if (!(en->rtti() == RS2::EntityPolyline && ((RS_Polyline *) en)->isClosed())){
             convertPolyline(preview.get(), en, false, true);
         }
     }
-    drawPreview();
-    drawHighlights();
 }
 
-void RS_ActionPolylineSegment::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionPolylineSegment::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case ChooseEntity:
-            targetEntity = catchEntity(e, entityType);
+            targetEntity = catchEntityByEvent(e, entityType);
             if (targetEntity == nullptr){
                 commandMessage(tr("No Entity found."));
             } else if (targetEntity->rtti() == RS2::EntityPolyline && ((RS_Polyline *) targetEntity)->isClosed()){
@@ -333,7 +328,7 @@ void RS_ActionPolylineSegment::onMouseLeftButtonRelease(int status, QMouseEvent 
     }
 }
 
-void RS_ActionPolylineSegment::onMouseRightButtonRelease(int status, [[maybe_unused]]  QMouseEvent *e) {
+void RS_ActionPolylineSegment::onMouseRightButtonRelease(int status, [[maybe_unused]]  LC_MouseEvent *e) {
     deleteSnapper();
     if (targetEntity){
          redraw();

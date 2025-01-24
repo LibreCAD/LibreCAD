@@ -58,15 +58,11 @@ void RS_ActionSetRelativeZero::trigger(){
     finish(false);
 }
 
-void RS_ActionSetRelativeZero::mouseMoveEvent(QMouseEvent *e){
-    snapPoint(e);
-}
-
-void RS_ActionSetRelativeZero::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionSetRelativeZero::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionSetRelativeZero::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionSetRelativeZero::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     initPrevious(status);
 }
 

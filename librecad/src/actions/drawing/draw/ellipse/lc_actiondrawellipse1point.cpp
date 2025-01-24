@@ -87,10 +87,8 @@ RS_Vector LC_ActionDrawEllipse1Point::getMajorP(){
     return RS_Vector::polar(pPoints->majorRadius, toWorldAngle(pPoints->getMajorAngle()));
 }
 
-void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {
-    deletePreview();
-    int status = getStatus();
-    RS_Vector mouse = snapPoint(e);
+void LC_ActionDrawEllipse1Point::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
 
     switch (status){
         case SetPoint:{
@@ -170,11 +168,10 @@ void LC_ActionDrawEllipse1Point::mouseMoveEvent(QMouseEvent *e) {
         default:
             break;
     }
-    drawPreview();
 }
 
-void LC_ActionDrawEllipse1Point::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void LC_ActionDrawEllipse1Point::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     switch (status){
         case SetMajorAngle:
         case SetAngle1:
@@ -188,7 +185,7 @@ void LC_ActionDrawEllipse1Point::onMouseLeftButtonRelease(int status, QMouseEven
     fireCoordinateEvent(snap);
 }
 
-void LC_ActionDrawEllipse1Point::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void LC_ActionDrawEllipse1Point::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

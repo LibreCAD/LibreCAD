@@ -113,10 +113,10 @@ void RS_ActionZoomWindow::mousePressEvent(QMouseEvent *e){
                     pPoints->v1.x, pPoints->v1.y);
 }
 
-void RS_ActionZoomWindow::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionZoomWindow::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionZoomWindow::mouseReleaseEvent()");
     if (status == SetSecondCorner){
-        pPoints->v2 = snapFree(e);
+        pPoints->v2 = e->graphPoint;
         if (fabs(pPoints->v1.x - pPoints->v2.x) < RS_TOLERANCE
             || fabs(pPoints->v1.y - pPoints->v2.y) < RS_TOLERANCE){//invalid zoom window
             deletePreview();
@@ -126,7 +126,7 @@ void RS_ActionZoomWindow::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionZoomWindow::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionZoomWindow::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionZoomWindow::mouseReleaseEvent()");
     if (status == SetSecondCorner){
         deletePreview();

@@ -103,8 +103,8 @@ protected:
 
     TriggerData* triggerData = nullptr;
 
-    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     LineSegmentData *calculateLineSegment(RS_Line *line, RS_Vector &snap);
     QVector<RS_Vector>  collectAllIntersectionsWithEntity(RS_Entity *entity);
     void addPointsFromSolutionToList(RS_VectorSolutions &sol, QVector<RS_Vector> &result) const;
@@ -117,7 +117,7 @@ protected:
     ArcSegmentData *findArcSegmentEdges(RS_Arc *arc, RS_Vector &snap, const QVector<RS_Vector>& intersections);
     CircleSegmentData *calculateCircleSegment(RS_Circle *circle, RS_Vector &snap);
     CircleSegmentData *findCircleSegmentEdges(RS_Circle *circle, RS_Vector &snap, const QVector<RS_Vector> &intersections);
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
     bool doCheckMayTrigger() override;
     void performTriggerDeletions() override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
@@ -127,7 +127,7 @@ protected:
     void createLineEntity(bool preview, const RS_Vector &start, const RS_Vector &end, const RS_Pen &pen, RS_Layer *layer, QList<RS_Entity *> &list) const;
     void doAfterTrigger() override;
     void doFinish(bool updateTB) override;
-    RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
+    RS_Vector doGetMouseSnapPoint(LC_MouseEvent *e) override;
     void updateMouseButtonHints() override;
 };
 

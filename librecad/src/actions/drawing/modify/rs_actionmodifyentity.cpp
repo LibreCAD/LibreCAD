@@ -88,24 +88,21 @@ void RS_ActionModifyEntity::doTrigger() {
     }
 }
 
-void RS_ActionModifyEntity::mouseMoveEvent(QMouseEvent *e) {
-    deleteHighlights();
-    snapPoint(e);
-    RS_Entity* entity = catchEntityOnPreview(e);
+void RS_ActionModifyEntity::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Entity* entity = catchAndDescribe(e);
     if (entity != nullptr){
         highlightHoverWithRefPoints(entity, true);
     }
-    drawHighlights();
 }
 
-void RS_ActionModifyEntity::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    en = catchEntity(e);
+void RS_ActionModifyEntity::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+    en = catchEntityByEvent(e);
     if (en != nullptr) {
         trigger();
     }
 }
 
-void RS_ActionModifyEntity::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionModifyEntity::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     initPrevious(status);
 }
 

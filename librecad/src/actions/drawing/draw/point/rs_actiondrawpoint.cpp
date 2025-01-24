@@ -51,24 +51,28 @@ void RS_ActionDrawPoint::doTrigger() {
     }
 }
 
-void RS_ActionDrawPoint::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    RS_Vector pos = snapPoint(e);
+
+RS_Vector RS_ActionDrawPoint::getFreeSnapAwarePointAlt(const LC_MouseEvent *e, const RS_Vector &pos) const{
+    RS_Vector mouse = (e->isControl) ?  e->graphPoint : pos;
+    return mouse;
+}
+
+void RS_ActionDrawPoint::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector pos = e->snapPoint;
     if (!trySnapToRelZeroCoordinateEvent(e)){
         pos = getFreeSnapAwarePointAlt(e, pos);
         previewToCreatePoint(pos); // is it really necessary??
         previewRefSelectablePoint(pos);
     };
-    drawPreview();
 }
 
-void RS_ActionDrawPoint::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void RS_ActionDrawPoint::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     snap = getFreeSnapAwarePointAlt(e, snap);
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionDrawPoint::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawPoint::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     initPrevious(status);
 }
 

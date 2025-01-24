@@ -134,12 +134,8 @@ bool RS_ActionDrawCircleTan2_1P::getCenters(){
     return !pPoints->centers.empty();
 }
 
-void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-    RS_Vector coord = snapPoint(e);
-    int status = getStatus();
-    RS_DEBUG->print("RS_ActionDrawCircleTan2_1P::mouseMoveEvent begin");
+void RS_ActionDrawCircleTan2_1P::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector coord = e->snapPoint;
     switch (status) {
         case SetCircle1:
         case SetCircle2: {
@@ -157,7 +153,7 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent *e){
         }
         case SetCenter: {
             deleteSnapper();
-            pPoints->coord = toGraph(e);
+            pPoints->coord = e->graphPoint; // fixme -= or snap point?
             break;
         }
         default:
@@ -181,9 +177,6 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent *e){
         }
         previewToCreateCircle(pPoints->cData);
     }
-    RS_DEBUG->print("RS_ActionDrawCircleTan2_1P::mouseMoveEvent end");
-    drawHighlights();
-    drawPreview();
 }
 
 bool RS_ActionDrawCircleTan2_1P::preparePreview(){
@@ -193,11 +186,11 @@ bool RS_ActionDrawCircleTan2_1P::preparePreview(){
     return true;
 }
 
-RS_Entity *RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent *e, bool forPreview){
+RS_Entity *RS_ActionDrawCircleTan2_1P::catchCircle(LC_MouseEvent *e, bool forPreview){
     RS_Entity *ret = nullptr;
     RS_Entity *en;
     if (forPreview) {
-        en = catchModifiableEntityOnPreview(e, enTypeList);
+        en = catchModifiableAndDescribe(e, enTypeList);
     }
     else{
         en = catchModifiableEntity(e, enTypeList);
@@ -210,7 +203,7 @@ RS_Entity *RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent *e, bool forPrevi
     return en;
 }
 
-void RS_ActionDrawCircleTan2_1P::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionDrawCircleTan2_1P::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetCircle1:
         case SetCircle2: {
@@ -226,12 +219,12 @@ void RS_ActionDrawCircleTan2_1P::onMouseLeftButtonRelease(int status, QMouseEven
             break;
         }
         case SetPoint: {
-            RS_Vector snapped = snapPoint(e);
+            RS_Vector snapped = e->snapPoint;
             fireCoordinateEvent(snapped);                ;
             break;
         }
         case SetCenter: {
-            pPoints->coord = toGraph(e);
+            pPoints->coord = e->graphPoint;
             if (preparePreview()) trigger();
             invalidateSnapSpot();
             break;
@@ -241,7 +234,7 @@ void RS_ActionDrawCircleTan2_1P::onMouseLeftButtonRelease(int status, QMouseEven
     }
 }
 
-void RS_ActionDrawCircleTan2_1P::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawCircleTan2_1P::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     // Return to last status:
     if (status > 0){
         deletePreview();

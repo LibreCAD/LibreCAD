@@ -46,7 +46,6 @@ public:
         bool fromPointToEntity = false);
     ~RS_ActionInfoDist2() override;
     void init(int status) override;
-    void mouseMoveEvent(QMouseEvent *e) override;
     bool isUseNearestPointOnEntity() const {return nearestPointShouldBeOnEntity;};
     void setUseNearestPointOnEntity(bool value){nearestPointShouldBeOnEntity = value;}
     void finish(bool updateTB) override;;
@@ -66,7 +65,7 @@ protected:
     RS_Entity *entity = nullptr;
     RS_Vector point = RS_Vector(false);
     int selectionMode = FIRST_IS_ENTITY;
-    RS_Entity *doCatchEntity(QMouseEvent *e, bool preview);
+    RS_Entity *doCatchEntity(LC_MouseEvent *e, bool preview);
     bool nearestPointShouldBeOnEntity = true;
 
     RS_Vector savedRelZero = RS_Vector{false};
@@ -74,8 +73,9 @@ protected:
     void restoreRelZero();
     RS_Vector obtainNearestPointOnEntity(const RS_Vector &snap) const;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateMouseButtonHints() override;

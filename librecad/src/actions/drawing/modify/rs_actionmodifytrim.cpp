@@ -81,24 +81,18 @@ void RS_ActionModifyTrim::doTrigger() {
 }
 
 // todo - check trim both mode - it seems that limiting entity should be atomic too...
-void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
-    deleteHighlights();
-    deletePreview();
-    RS_Vector mouse = toGraph(e);
-    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent begin");
-
-    int status = getStatus();
-    snapPoint(e);
+void RS_ActionModifyTrim::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->graphPoint;
     switch (status) {
         case ChooseLimitEntity: {
-            RS_Entity *se = catchEntityOnPreview(e, RS2::ResolveAllButTextImage);
+            RS_Entity *se = catchAndDescribe(e, RS2::ResolveAllButTextImage);
             if (se != nullptr) {
                 highlightHover(se);
             }
             break;
         }
         case ChooseTrimEntity: {
-            RS_Entity *se = catchEntityOnPreview(e, RS2::ResolveNone);
+            RS_Entity *se = catchAndDescribe(e, RS2::ResolveNone);
             bool trimInvalid = true;
 
             if (se != nullptr && se != limitEntity) {
@@ -144,17 +138,13 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
         default:
             break;
     }
-
-    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
-    drawHighlights();
-    drawPreview();
 }
 
-void RS_ActionModifyTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector mouse = toGraph(e);
+void RS_ActionModifyTrim::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->graphPoint;
     switch (status) {
         case ChooseLimitEntity: {
-            RS_Entity *se = catchEntity(e, RS2::ResolveAllButTextImage);
+            RS_Entity *se = catchEntityByEvent(e, RS2::ResolveAllButTextImage);
             if (se != nullptr) {
                 limitEntity = se;
                 if (limitEntity->rtti() != RS2::EntityPolyline/*&& limitEntity->isAtomic()*/) {
@@ -165,7 +155,7 @@ void RS_ActionModifyTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
             break;
         }
         case ChooseTrimEntity: {
-            RS_Entity *se = catchEntity(e, RS2::ResolveNone);
+            RS_Entity *se = catchEntityByEvent(e, RS2::ResolveNone);
             if (se != nullptr) {
                 if (se->isAtomic() && se != limitEntity) {
                     pPoints->trimCoord = mouse;
@@ -180,7 +170,7 @@ void RS_ActionModifyTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionModifyTrim::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionModifyTrim::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

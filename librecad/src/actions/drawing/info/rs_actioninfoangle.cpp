@@ -142,18 +142,11 @@ void RS_ActionInfoAngle::doTrigger() {
     }
 }
 
-void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent *event){
-    deleteHighlights();
-    deletePreview();
-
-    int status = getStatus();
-    snapPoint(event);
-
-    RS_Vector mouse = toGraph(event);
-
+void RS_ActionInfoAngle::onMouseMoveEvent(int status, LC_MouseEvent *event) {
+    RS_Vector mouse = event->graphPoint;
     switch (status) {
         case SetEntity1: {
-            auto en = catchEntityOnPreview(event, RS2::ResolveAll);
+            auto en = catchAndDescribe(event, RS2::ResolveAll);
             if (isLine(en)){
                 RS_Vector p = en->getNearestPointOnEntity(mouse);
                 highlightHover(en);
@@ -162,7 +155,7 @@ void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent *event){
             break;
         }
         case SetEntity2: {
-            auto en = catchEntityOnPreview(event, RS2::ResolveAll);
+            auto en = catchAndDescribe(event, RS2::ResolveAll);
             highlightSelected(entity1);
             if (showRefEntitiesOnPreview) {
                 previewRefPoint(pPoints->point1);
@@ -193,19 +186,16 @@ void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent *event){
         default:
             break;
     }
-
-    drawPreview();
-    drawHighlights();
 }
 
-void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector mouse = toGraph(e);
+void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->graphPoint;
     switch (status) {
         case SetEntity1:
-            entity1 = catchEntity(e, RS2::ResolveAll);
+            entity1 = catchEntityByEvent(e, RS2::ResolveAll);
             if (isLine(entity1)){
                 pPoints->point1 = entity1->getNearestPointOnEntity(mouse);
-                if (isControl(e)){
+                if (e->isControl){
                     trigger();
                 }
                 else {
@@ -215,7 +205,7 @@ void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
             break;
 
         case SetEntity2:
-            entity2 = catchEntity(e, RS2::ResolveAll);
+            entity2 = catchEntityByEvent(e, RS2::ResolveAll);
             if (isLine(entity2)){
                 pPoints->point2 = entity2->getNearestPointOnEntity(mouse);
                 trigger();
@@ -228,7 +218,7 @@ void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionInfoAngle::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionInfoAngle::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

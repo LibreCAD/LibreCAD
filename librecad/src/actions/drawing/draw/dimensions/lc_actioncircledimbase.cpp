@@ -52,20 +52,17 @@ void LC_ActionCircleDimBase::doTrigger() {
     }
 }
 
-void LC_ActionCircleDimBase::mouseMoveEvent(QMouseEvent *e) {
-    deleteHighlights();
-    deletePreview();
-    RS_DEBUG->print("LC_ActionCircleDimBase::mouseMoveEvent begin");
-    RS_Vector snap = snapPoint(e);
-    switch (getStatus()) {
+void LC_ActionCircleDimBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
+    switch (status) {
         case SetEntity: {
-            RS_Entity *en = catchEntity(e, RS2::ResolveAll);
+            RS_Entity *en = catchEntityByEvent(e, RS2::ResolveAll);
             if (en != nullptr) {
                 if (isArc(en) || isCircle(en)) {
                     highlightHover(en);
                     moveRelativeZero(en->getCenter());
                     if (previewShowsFullDimension) {
-                        RS_Vector pointOnCircle = preparePreview(en, snap, isControl(e));
+                        RS_Vector pointOnCircle = preparePreview(en, snap, e->isControl);
                         auto *d = createDim(preview.get());
                         d->update();
                         previewEntity(d);
@@ -93,24 +90,21 @@ void LC_ActionCircleDimBase::mouseMoveEvent(QMouseEvent *e) {
         default:
             break;
     }
-    drawPreview();
-    drawHighlights();
-    RS_DEBUG->print("RS_ActionDimRadial::mouseMoveEvent end");
 }
 
-void LC_ActionCircleDimBase::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionCircleDimBase::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            RS_Entity *en = catchEntity(e, RS2::ResolveAll);
+            RS_Entity *en = catchEntityByEvent(e, RS2::ResolveAll);
             if (en != nullptr) {
                 if (isArc(en) || isCircle(en)) {
                     entity = en;
                     const RS_Vector &center = en->getCenter();
                     moveRelativeZero(center);
                     if (!isAngleIsFree()){
-                        alternateAngle = isControl(e);
+                        alternateAngle = e->isControl;
                         if (!pos->valid){
-                            *pos = snapPoint(e);
+                            *pos = e->snapPoint;
                         }
                         trigger();
                         reset();
@@ -125,7 +119,7 @@ void LC_ActionCircleDimBase::onMouseLeftButtonRelease(int status, QMouseEvent *e
             break;
         }
         case SetPos: {
-            RS_Vector snap = snapPoint(e);
+            RS_Vector snap = e->snapPoint;
             snap = getSnapAngleAwarePoint(e, entity->getCenter(), snap);
             fireCoordinateEvent(snap);
             break;
@@ -135,7 +129,7 @@ void LC_ActionCircleDimBase::onMouseLeftButtonRelease(int status, QMouseEvent *e
     }
 }
 
-void LC_ActionCircleDimBase::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void LC_ActionCircleDimBase::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

@@ -89,14 +89,11 @@ void RS_ActionDrawLineRelAngle::doTrigger() {
 
 }
 
-void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("RS_ActionDrawLineRelAngle::mouseMoveEvent begin");
-    deleteHighlights();
-    deletePreview();
-    RS_Vector snap = snapPoint(e);
-    switch (getStatus()) {
+void RS_ActionDrawLineRelAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
+    switch (status) {
         case SetEntity: {
-            entity = catchEntityOnPreview(e, enTypeList, RS2::ResolveAll);
+            entity = catchAndDescribe(e, enTypeList, RS2::ResolveAll);
             if (entity != nullptr){
                 highlightHover(entity);
             }
@@ -125,16 +122,12 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionDrawLineRelAngle::mouseMoveEvent end");
-    drawPreview();
-    drawHighlights();
-
 }
 
-void RS_ActionDrawLineRelAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionDrawLineRelAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
+            RS_Entity *en = catchEntityByEvent(e, enTypeList, RS2::ResolveAll);
             if (en != nullptr){
                 entity = en;
                 setStatus(SetPos);
@@ -142,7 +135,7 @@ void RS_ActionDrawLineRelAngle::onMouseLeftButtonRelease(int status, QMouseEvent
             break;
         }
         case SetPos: {
-            const RS_Vector& snap = snapPoint(e);
+            const RS_Vector& snap = e->snapPoint;
             RS_Vector position = getRelZeroAwarePoint(e, snap);
             fireCoordinateEvent(position);
             break;
@@ -152,7 +145,7 @@ void RS_ActionDrawLineRelAngle::onMouseLeftButtonRelease(int status, QMouseEvent
     }
 }
 
-void RS_ActionDrawLineRelAngle::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineRelAngle::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

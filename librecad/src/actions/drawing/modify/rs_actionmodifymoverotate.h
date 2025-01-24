@@ -75,9 +75,8 @@ protected:
     QString cmdAngle3;
 
     RS2::CursorType doGetMouseCursorSelected(int status) override;
-    void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
-    void mouseMoveEventSelected(QMouseEvent *e) override;
+    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
@@ -87,5 +86,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doTrigger(bool keepSelected) override;
+    void onMouseMoveEventSelected(int status, LC_MouseEvent *e) override;
 };
 #endif

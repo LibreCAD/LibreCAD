@@ -58,13 +58,10 @@ void LC_ActionDrawMidLine::doTrigger() {
     setStatus(SetEntity1);
 }
 
-void LC_ActionDrawMidLine::mouseMoveEvent(QMouseEvent *e) {
-    deletePreview();
-    deleteHighlights();
-    snapPoint(e);
-    switch (getStatus()){
+void LC_ActionDrawMidLine::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    switch (status){
         case SetEntity1: {
-            RS_Entity* ent = catchEntityOnPreview(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
+            RS_Entity* ent = catchAndDescribe(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
                 highlightHover(ent);
             }
@@ -72,10 +69,10 @@ void LC_ActionDrawMidLine::mouseMoveEvent(QMouseEvent *e) {
         }
         case SetEntity2:{
             highlightSelected(firstEntity);
-            RS_Entity* ent = catchEntityOnPreview(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
+            RS_Entity* ent = catchAndDescribe(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
                 highlightHover(ent);
-                bool alternate = isShift(e);
+                bool alternate = e->isShift;
                 LineInfo lineInfo;
                 prepareLine(lineInfo, ent, alternate);
                 if (lineInfo.line != nullptr){
@@ -97,10 +94,7 @@ void LC_ActionDrawMidLine::mouseMoveEvent(QMouseEvent *e) {
         default:
             break;
     }
-    drawPreview();
-    drawHighlights();
 }
-
 
 // fixme - more division points?
 void LC_ActionDrawMidLine::prepareLine(LC_ActionDrawMidLine::LineInfo &info, RS_Entity *ent, bool alternate) {
@@ -169,10 +163,10 @@ void LC_ActionDrawMidLine::prepareLine(LC_ActionDrawMidLine::LineInfo &info, RS_
     }
 }
 
-void LC_ActionDrawMidLine::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionDrawMidLine::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity1: {
-            RS_Entity* ent = catchEntity(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
+            RS_Entity* ent = catchEntityByEvent(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
                 firstEntity = ent;
                 setStatus(SetEntity2);
@@ -182,11 +176,11 @@ void LC_ActionDrawMidLine::onMouseLeftButtonRelease(int status, QMouseEvent *e) 
         }
         case SetEntity2:{
             highlightSelected(firstEntity);
-            RS_Entity* ent = catchEntity(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
+            RS_Entity* ent = catchEntityByEvent(e, enTypeList, RS2::ResolveLevel::ResolveAllButTextImage);
             if (ent != nullptr){
                 secondEntity = ent;
             }
-            alternateEndpoints = isShift(e);
+            alternateEndpoints = e->isShift;
             trigger();
             break;
         }
@@ -201,8 +195,8 @@ QStringList LC_ActionDrawMidLine::getAvailableCommands() {
     return cmd;
 }
 
-void LC_ActionDrawMidLine::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
-    switch (getStatus()){
+void LC_ActionDrawMidLine::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
+    switch (status){
         case SetEntity1:{
             setStatus(-1);
             break;

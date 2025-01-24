@@ -87,17 +87,17 @@ void LC_ActionPreSelectionAwareBase::mousePressEvent(QMouseEvent * e) {
     }
 }
 
-void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     if (selectionComplete){
         mouseLeftButtonReleaseEventSelected(status, e);
     }
     else{
         if (inBoxSelectionMode){
-            RS_Vector mouse = toGraph(e);
+            RS_Vector mouse = e->graphPoint;
             deletePreview();
             bool cross = (selectionCorner1.x > mouse.x);
             RS_Selection s(*container, graphicView);
-            bool select = (e->modifiers() & Qt::ShiftModifier) == 0;
+            bool select = !e->isShift;
             if (catchForSelectionEntityTypes.isEmpty()){
                 s.selectWindow(RS2::EntityUnknown, selectionCorner1, mouse, select, cross);
             }
@@ -107,10 +107,10 @@ void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, QMouse
             updateSelectionWidget();
         }
         else{
-            RS_Entity* entityToSelect = catchEntity(e, catchForSelectionEntityTypes);
-            bool selectContour = isShift(e);
+            RS_Entity* entityToSelect = catchEntityByEvent(e, catchForSelectionEntityTypes);
+            bool selectContour = e->isShift;
             if (selectEntity(entityToSelect, selectContour)) {
-                if (isControl(e)) {
+                if (e->isControl) {
                     selectionCompleted(true, false);
                 }
             }
@@ -121,7 +121,7 @@ void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, QMouse
     }
 }
 
-void LC_ActionPreSelectionAwareBase::onMouseRightButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionPreSelectionAwareBase::onMouseRightButtonRelease(int status, LC_MouseEvent *e) {
     if (selectionComplete) {
         mouseRightButtonReleaseEventSelected(status, e);
     }
@@ -131,15 +131,12 @@ void LC_ActionPreSelectionAwareBase::onMouseRightButtonRelease(int status, QMous
     }
 }
 
-void LC_ActionPreSelectionAwareBase::mouseMoveEvent(QMouseEvent *event) {
-    deletePreview();
-    deleteHighlights();
+void LC_ActionPreSelectionAwareBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     if (selectionComplete){
-        mouseMoveEventSelected(event);
+        onMouseMoveEventSelected(status, e);
     }
     else{
-        snapPoint(event);
-        RS_Vector mouse = toGraph(event);
+        RS_Vector mouse = e->graphPoint;
         if (selectionCorner1.valid && (viewport->toGuiDX(selectionCorner1.distanceTo(mouse)) > 10.0)){
             inBoxSelectionMode = true;
         }
@@ -147,7 +144,7 @@ void LC_ActionPreSelectionAwareBase::mouseMoveEvent(QMouseEvent *event) {
             drawOverlayBox(selectionCorner1, mouse);
             if (infoCursorOverlayPrefs->enabled) {
                 bool cross = (selectionCorner1.x > mouse.x);
-                bool deselect = isShift(event);
+                bool deselect = e->isShift;
                 QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
                 msg.append(tr(" entities "));
                 msg.append(cross? tr("that intersect with box") : tr("that are within box"));
@@ -156,12 +153,10 @@ void LC_ActionPreSelectionAwareBase::mouseMoveEvent(QMouseEvent *event) {
             }
         }
         else {
-            selectionMouseMove(event);
-            finishMouseMoveOnSelection(event);
+            selectionMouseMove(e);
+            finishMouseMoveOnSelection(e);
         }
     }
-    drawHighlights();
-    drawPreview();
 }
 
 void LC_ActionPreSelectionAwareBase::drawSnapper() {
@@ -221,11 +216,11 @@ void LC_ActionPreSelectionAwareBase::updateMouseButtonHintsForSelected([[maybe_u
     updateMouseWidget();
 }
 
-void LC_ActionPreSelectionAwareBase::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *pEvent) {}
+void LC_ActionPreSelectionAwareBase::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *pEvent) {}
 
-void LC_ActionPreSelectionAwareBase::mouseRightButtonReleaseEventSelected([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *pEvent) {}
+void LC_ActionPreSelectionAwareBase::mouseRightButtonReleaseEventSelected([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *pEvent) {}
 
-void LC_ActionPreSelectionAwareBase::mouseMoveEventSelected([[maybe_unused]]QMouseEvent *e) {}
+void LC_ActionPreSelectionAwareBase::onMouseMoveEventSelected([[maybe_unused]] int status, [[maybe_unused]]LC_MouseEvent *event) {}
 
 RS2::CursorType LC_ActionPreSelectionAwareBase::doGetMouseCursor(int status) {
     if (selectionComplete){
@@ -240,7 +235,7 @@ RS2::CursorType LC_ActionPreSelectionAwareBase::doGetMouseCursorSelected([[maybe
     return RS2::CadCursor;
 }
 
-void LC_ActionPreSelectionAwareBase::finishMouseMoveOnSelection([[maybe_unused]]QMouseEvent *event) {
+void LC_ActionPreSelectionAwareBase::finishMouseMoveOnSelection([[maybe_unused]]LC_MouseEvent *event) {
 
 }
 

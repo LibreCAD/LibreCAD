@@ -38,8 +38,6 @@ namespace mu {
 class RS_EntityContainer;
 class RS_GraphicView;
 
-
-
 /**
  * This action class can handle user events to draw 
  * simple lines with the start- and endpoint given.
@@ -65,7 +63,6 @@ public:
 
     void reset();
     void init(int status) override;
-    void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
     void close();
     virtual void undo();
@@ -140,8 +137,9 @@ protected:
     std::unique_ptr<Points> pPoints;
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     bool doProcessCommand(int status, const QString &command) override;
     QString prepareCommand(RS_CommandEvent *e) const override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
@@ -151,6 +149,7 @@ protected:
     void setParserExpression(const QString& expression);
     bool getPlottingX(QString command, double& x);
     void doTrigger() override;
+
     std::unique_ptr<mu::Parser> m_muParserObject;
 
     double startPointX = 0.;

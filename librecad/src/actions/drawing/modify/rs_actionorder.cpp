@@ -103,22 +103,15 @@ void RS_ActionOrder::doTrigger(bool keepSelected) {
     setStatus(getStatus()-1);
 }
 
-void RS_ActionOrder::mouseMoveEventSelected(QMouseEvent *e) {
-    RS_DEBUG->print("RS_ActionOrder::mouseMoveEvent begin");
-
-    snapPoint(e);
-    deleteHighlights();
-    targetEntity = catchEntity(e);
+void RS_ActionOrder::onMouseMoveEventSelected(int status, LC_MouseEvent *e) {
+    targetEntity = catchEntityByEvent(e);
     if (targetEntity != nullptr){
         highlightHover(targetEntity);
     }
-    drawHighlights();
-
-    RS_DEBUG->print("RS_ActionOrder::mouseMoveEvent end");
 }
 
-void RS_ActionOrder::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, QMouseEvent *e) {
-    targetEntity = catchEntity(e);
+void RS_ActionOrder::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, LC_MouseEvent *e) {
+    targetEntity = catchEntityByEvent(e);
     if (targetEntity == nullptr) {
         commandMessage(tr("No Entity found."));
     } else {
@@ -126,7 +119,7 @@ void RS_ActionOrder::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int sta
     }
 }
 
-void RS_ActionOrder::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionOrder::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
      deletePreview();
      if (selectionComplete) {
          selectionComplete = false;

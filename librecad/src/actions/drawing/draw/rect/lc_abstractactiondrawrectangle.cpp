@@ -161,7 +161,7 @@ bool LC_AbstractActionDrawRectangle::doCheckMayTrigger(){
  * @param list list of entities for preview
  * @param status current status of action
  */
-void LC_AbstractActionDrawRectangle::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
+void LC_AbstractActionDrawRectangle::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     ShapeData data = createPolyline(snap);
     auto polyline = data.resultingPolyline;
     doAddPolylineToListOfEntities(polyline, list, true);
@@ -638,7 +638,7 @@ void LC_AbstractActionDrawRectangle::stateUpdated(bool toMainStatus){
  * @param pEvent
  * @param status
  */
-void LC_AbstractActionDrawRectangle::doBack([[maybe_unused]]QMouseEvent *pEvent, int status){
+void LC_AbstractActionDrawRectangle::doBack([[maybe_unused]]LC_MouseEvent *pEvent, int status){
     switch (status){
         case (SetPoint1):{
             finishAction();

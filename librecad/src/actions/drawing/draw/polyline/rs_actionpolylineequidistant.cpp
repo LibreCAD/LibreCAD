@@ -278,17 +278,14 @@ void RS_ActionPolylineEquidistant::doTrigger() {
     }
 }
 
-void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent *event){
-    deleteHighlights();
-    deletePreview();
-    snapPoint(event);
+void RS_ActionPolylineEquidistant::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     deleteSnapper();
-    if (getStatus() == ChooseEntity){
-        auto en = catchEntityOnPreview(event, RS2::EntityPolyline);
+    if (status == ChooseEntity){
+        auto en = catchAndDescribe(e, RS2::EntityPolyline);
         if (en != nullptr){
             highlightHover(en);
             auto polyline = dynamic_cast<RS_Polyline *>(en);
-            RS_Vector coord = toGraph(event);
+            RS_Vector coord = e->graphPoint;
             if (showRefEntitiesOnPreview) {
                 RS_Vector nearest = polyline->getNearestPointOnEntity(coord, true);
                 previewRefPoint(nearest);
@@ -304,21 +301,19 @@ void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent *event){
             }
         }
     }
-    drawHighlights();
-    drawPreview();
 }
 
-void RS_ActionPolylineEquidistant::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionPolylineEquidistant::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case ChooseEntity:{
-            RS_Entity *en = catchEntity(e);
+            RS_Entity *en = catchEntityByEvent(e);
             if (!en){
                 commandMessage(tr("No Entity found."));
             } else if (en->rtti() != RS2::EntityPolyline){
                 commandMessage(tr("Entity must be a polyline."));
             } else {
                 auto polyline = dynamic_cast<RS_Polyline *>(en);
-                RS_Vector snapPoint = toGraph(e);
+                RS_Vector snapPoint = e->graphPoint;
                 bool pointOnRightSide = isPointOnRightSideOfPolyline(polyline, snapPoint);
                 bRightSide = pointOnRightSide;
                 originalEntity = polyline;
@@ -332,7 +327,7 @@ void RS_ActionPolylineEquidistant::onMouseLeftButtonRelease(int status, QMouseEv
     invalidateSnapSpot();
 }
 
-void RS_ActionPolylineEquidistant::onMouseRightButtonRelease(int status, [[maybe_unused]]  QMouseEvent *e) {
+void RS_ActionPolylineEquidistant::onMouseRightButtonRelease(int status, [[maybe_unused]]  LC_MouseEvent *e) {
     deleteSnapper();
     if (originalEntity){
         redraw();

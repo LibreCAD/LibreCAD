@@ -39,10 +39,8 @@ RS_ActionSelectContour::RS_ActionSelectContour(RS_EntityContainer& container,
 	actionType=RS2::ActionSelectContour;
 }
 
-void RS_ActionSelectContour::mouseMoveEvent(QMouseEvent *event){
-    snapPoint(event);
-    deleteHighlights();
-    auto ent = catchEntityOnPreview(event);
+void RS_ActionSelectContour::onMouseMoveEvent(int status, LC_MouseEvent *event) {
+    auto ent = catchAndDescribe(event);
     if (ent != nullptr){
         // fixme - proper highlighting of planned selection - yet after fixing underlying logic!
 //        RS_Selection s(*container, graphicView);
@@ -50,7 +48,6 @@ void RS_ActionSelectContour::mouseMoveEvent(QMouseEvent *event){
         // fixme - temporarily highlight only caught entity only
         highlightHover(ent);
     }
-    drawHighlights();
 }
 
 void RS_ActionSelectContour::doTrigger() {
@@ -64,12 +61,12 @@ void RS_ActionSelectContour::doTrigger() {
         RS_DEBUG->print("RS_ActionSelectContour::trigger: Entity is NULL\n");
 }
 
-void RS_ActionSelectContour::onMouseLeftButtonRelease([[maybe_unused]] int status, QMouseEvent *e) {
-    en = catchEntity(e);
+void RS_ActionSelectContour::onMouseLeftButtonRelease([[maybe_unused]] int status, LC_MouseEvent *e) {
+    en = catchEntityByEvent(e);
     trigger();
 }
 
-void RS_ActionSelectContour::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionSelectContour::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     initPrevious(status);
 }
 

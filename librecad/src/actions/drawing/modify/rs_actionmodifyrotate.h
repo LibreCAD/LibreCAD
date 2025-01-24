@@ -79,9 +79,8 @@ protected:
 
     void previewRotationCircleAndPoints(const RS_Vector &center,const RS_Vector &refPoint, double angle);
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
-    void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
-    void mouseMoveEventSelected(QMouseEvent *e) override;
+    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
@@ -90,6 +89,8 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void doTrigger(bool keepSelected) override;
+
+    void onMouseMoveEventSelected(int status, LC_MouseEvent *e) override;
 };
 
 #endif

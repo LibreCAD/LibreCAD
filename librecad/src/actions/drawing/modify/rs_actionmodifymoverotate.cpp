@@ -59,11 +59,9 @@ void RS_ActionModifyMoveRotate::doTrigger(bool keepSelected) {
     finish(false);
 }
 
-void RS_ActionModifyMoveRotate::mouseMoveEventSelected(QMouseEvent *e) {
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
-    RS_DEBUG->print("RS_ActionModifyMoveRotate::mouseMoveEvent begin");
-    switch (getStatus()) {
+void RS_ActionModifyMoveRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *e){
+    RS_Vector mouse = e->snapPoint;
+    switch (status) {
         case SetReferencePoint: {
             pPoints->data.referencePoint = mouse;
             trySnapToRelZeroCoordinateEvent(e);
@@ -125,8 +123,6 @@ void RS_ActionModifyMoveRotate::mouseMoveEventSelected(QMouseEvent *e) {
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionModifyMoveRotate::mouseMoveEvent end");
-    drawPreview();
 }
 
 void RS_ActionModifyMoveRotate::previewRefPointsForMultipleCopies() {
@@ -141,21 +137,21 @@ void RS_ActionModifyMoveRotate::previewRefPointsForMultipleCopies() {
     }
 }
 
-void RS_ActionModifyMoveRotate::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
+void RS_ActionModifyMoveRotate::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
     switch (status){
         case SetReferencePoint:{
             fireCoordinateEventForSnap(e);
             break;
         }
         case SetTargetPoint: {
-            RS_Vector snapped = snapPoint(e);
+            RS_Vector snapped = e->snapPoint;
             snapped = getSnapAngleAwarePoint(e, pPoints->data.referencePoint, snapped);
             fireCoordinateEvent(snapped);
             break;
         }
         case SetAngle: {
             if (pPoints->targetPoint.valid) {
-                RS_Vector snapped = snapPoint(e);
+                RS_Vector snapped = e->snapPoint;
                 snapped = getSnapAngleAwarePoint(e, pPoints->targetPoint, snapped);
                 fireCoordinateEvent(snapped);
             }
@@ -166,7 +162,7 @@ void RS_ActionModifyMoveRotate::mouseLeftButtonReleaseEventSelected(int status, 
     }
 }
 
-void RS_ActionModifyMoveRotate::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionModifyMoveRotate::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deletePreview();
     switch (status) {
         case SetReferencePoint: {

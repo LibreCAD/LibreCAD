@@ -103,10 +103,10 @@ bool LC_ActionDrawCircle2PR::preparePreview(const RS_Vector &mouse, RS_Vector& a
     return false;
 }
 
-void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
-    switch (getStatus()) {
+
+void LC_ActionDrawCircle2PR::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
+    switch (status) {
         case SetPoint1:
             pPoints->point1 = mouse;
             trySnapToRelZeroCoordinateEvent(e);
@@ -163,11 +163,10 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
             }
         }
     }
-    drawPreview();
 }
 
-void LC_ActionDrawCircle2PR::onMouseLeftButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
-    RS_Vector coord = snapPoint(e);
+void LC_ActionDrawCircle2PR::onMouseLeftButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
+    RS_Vector coord = e->snapPoint;
     if (status == SetPoint2){
         coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
     }
@@ -177,7 +176,7 @@ void LC_ActionDrawCircle2PR::onMouseLeftButtonRelease(int status, [[maybe_unused
     fireCoordinateEvent(coord);
 }
 
-void LC_ActionDrawCircle2PR::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawCircle2PR::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

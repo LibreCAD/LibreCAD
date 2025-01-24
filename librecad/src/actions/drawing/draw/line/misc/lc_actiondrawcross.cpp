@@ -226,7 +226,7 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
 }
 
 
-bool LC_ActionDrawCross::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
+bool LC_ActionDrawCross::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, int status){
     return status == SetEntity;
 }
 
@@ -237,9 +237,9 @@ bool LC_ActionDrawCross::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *even
  * @param list
  * @param status
  */
-void LC_ActionDrawCross::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list,[[maybe_unused]] int status){
+void LC_ActionDrawCross::doPreparePreviewEntities(LC_MouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list,[[maybe_unused]] int status){
     deleteSnapper();
-    RS_Entity *en = catchEntityOnPreview(e, circleType, RS2::ResolveAll);
+    RS_Entity *en = catchAndDescribe(e, circleType, RS2::ResolveAll);
     // check whether entity is ok for drawing cross
     if (en != nullptr){
         bool isArc = en->isArc();
@@ -273,7 +273,7 @@ void LC_ActionDrawCross::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused
  * @param status
  * @param snapPoint
  */
-void LC_ActionDrawCross::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
+void LC_ActionDrawCross::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
     if (status == SetEntity){
         trigger(); // just draw cross on click
         invalidateSnapSpot();

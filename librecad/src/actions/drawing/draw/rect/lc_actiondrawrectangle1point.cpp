@@ -191,7 +191,7 @@ void LC_ActionDrawRectangle1Point::doAfterTrigger() {
     setStatus(newStatus);
 }
 
-void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snap){
+void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, int status, const RS_Vector &snap){
     switch (status) {
         case SetPoint1: {
             if (angleIsFree){
@@ -199,14 +199,14 @@ void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease([[maybe_unused]]QM
                 setStatus(SetAngleFree);
             }
             else{
-                controlPressedOnMouseRelease = isControl(e);
+                controlPressedOnMouseRelease = e->isControl;
                 createShapeData(snap);
                 trigger();
             }
             break;
         }
         case SetAngleFree:{
-            controlPressedOnMouseRelease = isControl(e);
+            controlPressedOnMouseRelease = e->isControl;
             createShapeData(snap);
             trigger();
             break;
@@ -216,8 +216,8 @@ void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease([[maybe_unused]]QM
     }
 }
 
-RS_Vector LC_ActionDrawRectangle1Point::doGetMouseSnapPoint(QMouseEvent *e) {
-   RS_Vector result = snapPoint(e);
+RS_Vector LC_ActionDrawRectangle1Point::doGetMouseSnapPoint(LC_MouseEvent *e) {
+   RS_Vector result = e->snapPoint;
    if (getStatus() == SetAngleFree){
        result = getSnapAngleAwarePoint(e, insertionPoint, result, isMouseMove(e));
    }
@@ -231,7 +231,7 @@ void LC_ActionDrawRectangle1Point::setBaseAngleFree(bool val) {
     }
 }
 
-void LC_ActionDrawRectangle1Point::doBack([[maybe_unused]]QMouseEvent *e, int status) {
+void LC_ActionDrawRectangle1Point::doBack([[maybe_unused]]LC_MouseEvent *e, int status) {
     switch (status){
         case SetAngleFree: {
             setStatus(SetPoint1);
@@ -246,7 +246,7 @@ void LC_ActionDrawRectangle1Point::doBack([[maybe_unused]]QMouseEvent *e, int st
     }
 }
 
-void LC_ActionDrawRectangle1Point::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+void LC_ActionDrawRectangle1Point::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     LC_AbstractActionDrawRectangle::doPreparePreviewEntities(e, snap, list, status);
     createRefSelectablePoint(snap, list);
     if (showRefEntitiesOnPreview) {
@@ -497,7 +497,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand([[maybe_unused]]int stat
     return result;
 }
 
-bool LC_ActionDrawRectangle1Point::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, [[maybe_unused]]int status){
+bool LC_ActionDrawRectangle1Point::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, [[maybe_unused]]int status){
     return true;
 }
 

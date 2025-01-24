@@ -37,7 +37,6 @@ public:
         RS_GraphicView &graphicView);
     ~LC_ActionDrawCircle2PR() override;
     void init(int status) override;
-    void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
 protected:
     /**
@@ -53,12 +52,14 @@ protected:
     std::unique_ptr<Points> pPoints;
     bool preparePreview(const RS_Vector &mouse, RS_Vector& altCenter);
     void reset() override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command)  override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
 
     void doTrigger() override;
+
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
 };
 #endif

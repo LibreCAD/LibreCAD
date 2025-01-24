@@ -43,10 +43,7 @@ public:
     void init(int status) override;
     bool getCenters();
     bool preparePreview();
-    void mouseMoveEvent(QMouseEvent *e) override;
-    //        void commandEvent(RS_CommandEvent* e) override;
     void finish(bool updateTB) override;
-    //    void setRadius(const double& r);
     double getRadius() const;
 protected:
     /**
@@ -61,14 +58,15 @@ protected:
     struct Points;
     std::unique_ptr<Points> pPoints;
 
-    RS_Entity *catchCircle(QMouseEvent *e, bool forPreview);
+    RS_Entity *catchCircle(LC_MouseEvent *e, bool forPreview);
     RS_AtomicEntity *baseEntity = nullptr;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     RS_Vector getTangentPoint(RS_Vector &creatingCircleCenter, bool fromOriginalCircle) const;
     void updateMouseButtonHints() override;
     void doTrigger() override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
 };
 #endif

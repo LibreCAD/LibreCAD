@@ -74,8 +74,8 @@ void LC_AbstractActionDrawLine::doInitialSnapToRelativeZero(RS_Vector relZero){
  * @param e event
  * @return point for snap
  */
-RS_Vector LC_AbstractActionDrawLine::doGetMouseSnapPoint(QMouseEvent *e){
-    RS_Vector snapped = snapPoint(e);
+RS_Vector LC_AbstractActionDrawLine::doGetMouseSnapPoint(LC_MouseEvent *e){
+    RS_Vector snapped = e->snapPoint;
     if (direction == DIRECTION_POINT || direction == DIRECTION_NONE){
         // Snapping to angle(15*) if shift key is pressed
         snapped = getSnapAngleAwarePoint(e, getStartPointForAngleSnap(), snapped, isMouseMove(e));
@@ -89,7 +89,7 @@ RS_Vector LC_AbstractActionDrawLine::doGetMouseSnapPoint(QMouseEvent *e){
  * @param status
  * @return
  */
-bool LC_AbstractActionDrawLine::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *pEvent, [[maybe_unused]]int status){
+bool LC_AbstractActionDrawLine::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *pEvent, [[maybe_unused]]int status){
     return isStartPointValid();
 }
 
@@ -254,7 +254,7 @@ bool LC_AbstractActionDrawLine::processAngleValueInput(const QString &c){
     return ok;
 }
 
-void LC_AbstractActionDrawLine::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snapped){
+void LC_AbstractActionDrawLine::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, int status, const RS_Vector &snapped){
     onCoordinateEvent(status,  false, snapped);
 }
 

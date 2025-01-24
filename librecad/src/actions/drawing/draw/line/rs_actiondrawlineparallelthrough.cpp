@@ -70,14 +70,11 @@ void RS_ActionDrawLineParallelThrough::doTrigger() {
     }
 }
 
-void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-    RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent begin");
-    const RS_Vector &snap = snapPoint(e);
+void RS_ActionDrawLineParallelThrough::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    const RS_Vector &snap = e->snapPoint;
     switch (getStatus()) {
         case SetEntity: {
-            entity = catchEntityOnPreview(e, RS2::ResolveAll);
+            entity = catchAndDescribe(e, RS2::ResolveAll);
             if (entity != nullptr){
                 highlightHover(entity);
                 if (showRefEntitiesOnPreview) {
@@ -118,16 +115,12 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent end");
-    drawPreview();
-    drawHighlights();
-
 }
 
-void RS_ActionDrawLineParallelThrough::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionDrawLineParallelThrough::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity:
-            entity = catchEntity(e, RS2::ResolveAll);
+            entity = catchEntityByEvent(e, RS2::ResolveAll);
             if (entity){
                 setStatus(SetPos);
             }
@@ -139,10 +132,9 @@ void RS_ActionDrawLineParallelThrough::onMouseLeftButtonRelease(int status, QMou
         default:
             break;
     }
-
 }
 
-void RS_ActionDrawLineParallelThrough::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineParallelThrough::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     if (entity){
         entity = nullptr;

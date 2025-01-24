@@ -68,17 +68,15 @@ void RS_ActionModifyStretch::doTrigger() {
     }
 }
 
-void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
-    RS_DEBUG->print("RS_ActionModifyStretch::mouseMoveEvent begin");
-    switch (getStatus()) {
+void RS_ActionModifyStretch::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
+    switch (status) {
         case SetFirstCorner:{
             break;
         }
         case SetSecondCorner: {
             if (pPoints->firstCorner.valid) {
-                pPoints->secondCorner = snapPoint(e);                
+                pPoints->secondCorner = e->snapPoint;
                 previewStretchRect(false);                
                 if (isInfoCursorForModificationEnabled()){
                     LC_InfoMessageBuilder msg(tr("Stretch"));
@@ -127,9 +125,6 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-
-    RS_DEBUG->print("RS_ActionModifyStretch::mouseMoveEvent end");
-    drawPreview();
 }
 
 void RS_ActionModifyStretch::previewStretchRect(bool selected) {
@@ -153,9 +148,9 @@ void RS_ActionModifyStretch::previewStretchRect(bool selected) {
     }
 }
 
-void RS_ActionModifyStretch::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionModifyStretch::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     if (status == SetTargetPoint){
-        RS_Vector mouse= getSnapAngleAwarePoint(e, pPoints->referencePoint, snapPoint(e));
+        RS_Vector mouse= getSnapAngleAwarePoint(e, pPoints->referencePoint, e->snapPoint);
         fireCoordinateEvent(mouse);
     }
     else {
@@ -163,7 +158,7 @@ void RS_ActionModifyStretch::onMouseLeftButtonRelease([[maybe_unused]]int status
     }
 }
 // fixme - default back - remove as well as from other actions and rely to parent class
-void RS_ActionModifyStretch::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionModifyStretch::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

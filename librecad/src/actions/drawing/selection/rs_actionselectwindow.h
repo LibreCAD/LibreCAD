@@ -49,7 +49,6 @@ public:
         bool select);
     ~RS_ActionSelectWindow() override;
     void init(int status) override;
-    void mouseMoveEvent(QMouseEvent *e) override;
     void mousePressEvent(QMouseEvent *e) override;
     bool isSelectAllEntityTypes();
     void setSelectAllEntityTypes(bool val);
@@ -73,10 +72,11 @@ protected:
     QList<RS2::EntityType> entityTypesToSelect;
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void updateMouseButtonHints() override;
-    LC_ActionOptionsWidget *createOptionsWidget() override;
     void doTrigger() override;
+    LC_ActionOptionsWidget *createOptionsWidget() override;
 };
 #endif

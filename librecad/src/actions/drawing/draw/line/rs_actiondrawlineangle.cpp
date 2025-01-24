@@ -111,27 +111,21 @@ void RS_ActionDrawLineAngle::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %lu",line->getId());
 }
 
-void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent begin");
-
-    if (getStatus()==SetPos) {
-        RS_Vector position = snapPoint(e);
+void RS_ActionDrawLineAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    if (status==SetPos) {
+        RS_Vector position = e->snapPoint;
         position = getRelZeroAwarePoint(e, position);
         pPoints->pos = position;
         preparePreview();
         previewToCreateLine(pPoints->data.startpoint, pPoints->data.endpoint);
         previewRefSelectablePoint(position);
     }
-
-    RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent end");
-    drawPreview();
 }
 
-void RS_ActionDrawLineAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionDrawLineAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     if (status==SetPos) {
-        RS_Vector position = snapPoint(e);
-        bool shiftPressed = isShift(e);
+        RS_Vector position = e->snapPoint;
+        bool shiftPressed = e->isShift;
         // potentially, we could eliminate this and set line position on mouse move and complete action there. however,
         // it seems explicit set of position on click is more consistent with default behavior of the action?
         if (shiftPressed){
@@ -148,7 +142,7 @@ void RS_ActionDrawLineAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e
     }
 }
 
-void RS_ActionDrawLineAngle::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineAngle::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

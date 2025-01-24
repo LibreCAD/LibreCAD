@@ -46,10 +46,10 @@ void LC_ActionSplineAddPoint::doAfterTrigger() {
     setStatus(SetBeforeControlPoint);
 }
 
-void LC_ActionSplineAddPoint::onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) {
+void LC_ActionSplineAddPoint::onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            auto entity = catchEntity(e, enTypeList);
+            auto entity = catchEntityByEvent(e, enTypeList);
             if (entity != nullptr){
                 if (mayModifySplineEntity(entity)) {
                     highlightHoverWithRefPoints(entity, true);
@@ -74,7 +74,7 @@ void LC_ActionSplineAddPoint::onMouseMove(RS_Vector mouse, int status, QMouseEve
                 previewRefPoint(selectedVertexPoint);
             }
             bool insertAfter = false;
-            if (isShift(e)){
+            if (e->isShift){
                 if (!endpointIsSelected){ // don't let inserting after endpoint
                     insertAfter = true;
                 }
@@ -90,10 +90,10 @@ void LC_ActionSplineAddPoint::onMouseMove(RS_Vector mouse, int status, QMouseEve
     }
 }
 
-void LC_ActionSplineAddPoint::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionSplineAddPoint::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity:{
-            auto entity = catchEntity(e, enTypeList);
+            auto entity = catchEntityByEvent(e, enTypeList);
             if (entity != nullptr && mayModifySplineEntity(entity)){
                 entityToModify = entity;
                 entityToModify->setSelected(true);
@@ -103,7 +103,7 @@ void LC_ActionSplineAddPoint::onMouseLeftButtonRelease(int status, QMouseEvent *
             break;
         }
         case SetBeforeControlPoint:{
-            RS_Vector mouse = snapPoint(e);
+            RS_Vector mouse = e->snapPoint;
             RS_Vector nearestRef = entityToModify->getNearestRef(mouse);
             if (nearestRef != entityToModify->getStartpoint()){
                 selectedVertexPoint = nearestRef;
@@ -114,7 +114,7 @@ void LC_ActionSplineAddPoint::onMouseLeftButtonRelease(int status, QMouseEvent *
             break;
         }
         case SetControlPoint:{
-            if (isShift(e)){
+            if (e->isShift){
                 if (!endpointIsSelected){ // don't let inserting after endpoint
                     directionFromStart = true;
                 }

@@ -63,22 +63,18 @@ void RS_ActionPolylineTrim::doTrigger() {
     }
 }
 
-void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-    RS_DEBUG->print("RS_ActionPolylineTrim::mouseMoveEvent begin");
-    snapPoint(e);
-    switch (getStatus()) {
+void RS_ActionPolylineTrim::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    switch (status) {
         case ChooseEntity: {
             deleteSnapper();
-            RS_Entity *pl = catchEntityOnPreview(e, RS2::EntityPolyline);
+            RS_Entity *pl = catchAndDescribe(e, RS2::EntityPolyline);
             if (pl != nullptr){
                 highlightHover(pl);
             }
             break;
         }
         case SetSegment1:{
-            RS_Entity* en = catchEntity(e, RS2::ResolveAll);
+            RS_Entity* en = catchEntityByEvent(e, RS2::ResolveAll);
             if (en != nullptr){
                 if (en->getParent() == polylineToModify){
                     highlightHover(en);
@@ -90,7 +86,7 @@ void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
         }
         case SetSegment2:{
             highlightSelected(Segment1);
-            RS_Entity* en = catchEntity(e, RS2::ResolveAll);
+            RS_Entity* en = catchEntityByEvent(e, RS2::ResolveAll);
             if (en != nullptr){
                 if (en->getParent() == polylineToModify){
                     if (en != Segment1){
@@ -116,15 +112,12 @@ void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionPolylineTrim::mouseMoveEvent end");
-    drawHighlights();
-    drawPreview();
 }
 
-void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case ChooseEntity: {
-            auto en = catchEntity(e);
+            auto en = catchEntityByEvent(e);
             if (en == nullptr){
                 commandMessage(tr("No Entity found."));
             } else if (en->rtti() != RS2::EntityPolyline){
@@ -140,7 +133,7 @@ void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e)
             break;
         }
         case SetSegment1:{
-            RS_Entity *en = catchEntity(e, RS2::ResolveAll);
+            RS_Entity *en = catchEntityByEvent(e, RS2::ResolveAll);
             if (en != nullptr &&  en->getParent() == polylineToModify && en->isAtomic()){
                 Segment1 = dynamic_cast<RS_AtomicEntity *>(en);
                 setStatus(SetSegment2);
@@ -151,7 +144,7 @@ void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e)
             break;
         }
         case SetSegment2: {
-            RS_Entity *en = catchEntity(e, RS2::ResolveAll);
+            RS_Entity *en = catchEntityByEvent(e, RS2::ResolveAll);
             if (en != nullptr &&  en->getParent() == polylineToModify && en->isAtomic() && en != Segment1){
                 Segment2 = dynamic_cast<RS_AtomicEntity *>(en);
                 deleteSnapper();
@@ -168,7 +161,7 @@ void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e)
 
 }
 
-void RS_ActionPolylineTrim::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionPolylineTrim::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deleteSnapper();
     deletePreview();
     int newStatus = status - 1;

@@ -32,12 +32,12 @@ public:
     LC_ActionSplineAppendPoint(RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionSplineAppendPoint() override = default;
 protected:
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) override;
     void updateMouseButtonHints() override;
     bool mayModifySplineEntity(RS_Entity *e) override;
     RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool fromStart) override;
     void doCompleteTrigger() override;
-    void onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 

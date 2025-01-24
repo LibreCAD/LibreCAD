@@ -40,17 +40,9 @@ public:
     bool isParentIsWcs() const {return m_parentIsWCS;};
     void setParentIsWcs(bool parentIsWcs) {parentIsWcs = m_parentIsWCS;};
     QStringList getAvailableCommands() override;
-    void mouseMoveEvent(QMouseEvent *event) override;
     double getCurrentAngle(){return m_currentAngle;}
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void updateMouseButtonHints() override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-    bool doProcessCommand(int status, const QString &command) override;
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 
-protected:
     enum{
         SetOrigin,
         SetAngle
@@ -69,8 +61,15 @@ protected:
     void doTrigger() override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void showUCSMark(RS_Vector &point, double angle);
-
     void initFromSettings() override;
+
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void updateMouseButtonHints() override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 
 #endif // LC_ACTIONUCSCREATE_H

@@ -39,11 +39,11 @@ Q_OBJECT
 public:
     RS_ActionSelectLayer(RS_EntityContainer& container,
                          RS_GraphicView& graphicView);
-    void mouseMoveEvent(QMouseEvent *event) override;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
 private:

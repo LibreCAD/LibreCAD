@@ -70,15 +70,12 @@ void RS_ActionModifyCut::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionModifyCut::mouseMoveEvent(QMouseEvent *e){
-    deleteHighlights();
-    deletePreview();
-    RS_Vector snap = snapPoint(e);
-    RS_DEBUG->print("RS_ActionModifyCut::mouseMoveEvent begin");
-    switch (getStatus()) {
+void RS_ActionModifyCut::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
+    switch (status) {
         case ChooseCutEntity: {
             deleteSnapper();
-            auto en = catchEntityOnPreview(e);
+            auto en = catchAndDescribe(e);
             if (en != nullptr &&  en->trimmable()){
                 highlightHover(en);
                 RS_Vector nearest = en->getNearestPointOnEntity(snap, true);
@@ -101,15 +98,12 @@ void RS_ActionModifyCut::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
-    drawPreview();
-    drawHighlights();
 }
 
-void RS_ActionModifyCut::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionModifyCut::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case ChooseCutEntity: {
-            cutEntity = catchEntity(e);
+            cutEntity = catchEntityByEvent(e);
             if (cutEntity == nullptr){
                 commandMessage(tr("No Entity found."));
             } else if (cutEntity->trimmable()){
@@ -119,7 +113,7 @@ void RS_ActionModifyCut::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
             break;
         }
         case SetCutCoord: {
-            RS_Vector snap = snapPoint(e);
+            RS_Vector snap = e->snapPoint;
             RS_Vector nearest = cutEntity->getNearestPointOnEntity(snap, true);
             if (LC_LineMath::isNotMeaningfulDistance(cutEntity->getStartpoint(), nearest) ||
                 LC_LineMath::isNotMeaningfulDistance(cutEntity->getEndpoint(), nearest)){
@@ -135,7 +129,7 @@ void RS_ActionModifyCut::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionModifyCut::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionModifyCut::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     initPrevious(status);
 }
 

@@ -60,18 +60,16 @@ void LC_ActionModifyAlignSingle::doTrigger() {
     drawPreview();
 }
 
-void LC_ActionModifyAlignSingle::mouseMoveEvent(QMouseEvent *e) {
-    deletePreview();
-    deleteHighlights();
-    RS_Vector snap = snapPoint(e);
-    switch (getStatus()){
+void LC_ActionModifyAlignSingle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
+    switch (status){
         case SetRefPoint:{
             RS_Vector min;
             RS_Vector max;
             bool showPreview = true;
             switch (alignType) {
                 case LC_Align::ENTITY: {
-                    RS_Entity *entity = catchEntityOnPreview(snap);
+                    RS_Entity *entity = catchAndDescribe(snap);
                     if (entity != nullptr) {
                         min = entity->getMin();
                         max = entity->getMax();
@@ -127,7 +125,7 @@ void LC_ActionModifyAlignSingle::mouseMoveEvent(QMouseEvent *e) {
                 highlightSelected(baseAlignEntity);
             }
 
-            RS_Entity* entity = catchEntityOnPreview(e);
+            RS_Entity* entity = catchAndDescribe(e);
             RS_Vector offset;
             if (entity != nullptr){
                 highlightHover(entity);
@@ -155,8 +153,6 @@ void LC_ActionModifyAlignSingle::mouseMoveEvent(QMouseEvent *e) {
             break;
         }
     }
-    drawPreview();
-    drawHighlights();
 }
 
 QString LC_ActionModifyAlignSingle::prepareInfoCursorMessage(double verticalRef, bool drawVertical, double horizontalRef, bool drawHorizontal) {
@@ -256,13 +252,13 @@ void LC_ActionModifyAlignSingle::updateMouseButtonHints() {
     }
 }
 
-void LC_ActionModifyAlignSingle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void LC_ActionModifyAlignSingle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     switch (status){
         case SetRefPoint:{
             switch (alignType) {
                 case LC_Align::ENTITY:{
-                    RS_Entity *entity = catchEntity(e);
+                    RS_Entity *entity = catchEntityByEvent(e);
                     if (entity != nullptr) {
                         baseAlignEntity = entity;
                         alignMin = entity->getMin();
@@ -289,10 +285,10 @@ void LC_ActionModifyAlignSingle::onMouseLeftButtonRelease(int status, QMouseEven
             break;
         }
         case SelectEntity:{
-            RS_Entity* entity = catchEntity(e);
+            RS_Entity* entity = catchEntityByEvent(e);
             if (entity != nullptr){
                 entityToAlign = entity;
-                finishActionAfterTrigger = isControl(e);
+                finishActionAfterTrigger = e->isControl;
                 trigger();
             }
             break;
@@ -302,7 +298,7 @@ void LC_ActionModifyAlignSingle::onMouseLeftButtonRelease(int status, QMouseEven
     }
 }
 
-void LC_ActionModifyAlignSingle::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionModifyAlignSingle::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     switch (status){
         case SetRefPoint:{
             setStatus(-1);

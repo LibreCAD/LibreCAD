@@ -36,7 +36,6 @@ public:
     ~LC_ActionCircleDimBase() override;
     void updateMouseButtonHints() override;
     QStringList getAvailableCommands() override;
-    void mouseMoveEvent(QMouseEvent *event) override;
     double getAngle() const;
     void setAngle(double angle);
     bool isAngleIsFree() const;
@@ -63,11 +62,12 @@ protected:
 
     double currentAngle = 0.0;
 
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     virtual RS_Vector preparePreview(RS_Entity *en, RS_Vector &position, bool forcePosition) = 0;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     virtual RS_Dimension* createDim(RS_EntityContainer *parent) const = 0;
     void doTrigger() override;
 };

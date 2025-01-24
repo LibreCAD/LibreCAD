@@ -126,12 +126,8 @@ protected:
      * Predecessor of this action or NULL.
      */
     RS_ActionInterface* predecessor = nullptr;
-
-
     RS2::ActionType actionType = RS2::ActionNone;
-
     std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
-
     double snapToAngleStep = 15.0;
 
     QString msgAvailableCommands();
@@ -163,6 +159,8 @@ protected:
 
     virtual void onMouseLeftButtonRelease(int status, QMouseEvent * e);
     virtual void onMouseRightButtonRelease(int status, QMouseEvent * e);
+    virtual void onMouseLeftButtonPress(int status, QMouseEvent * e);
+    virtual void onMouseRightButtonPress(int status, QMouseEvent * e);
 
     void updateSnapAngleStep();
     /**

@@ -115,15 +115,12 @@ void RS_ActionDrawArcTangential::preparePreview() {
     }
 }
 
-void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    deleteHighlights();
-    int status = getStatus();
-    point = snapPoint(e);
+void RS_ActionDrawArcTangential::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    point = e->snapPoint;
     switch (status){
         case SetBaseEntity: {
             deleteSnapper();
-            RS_Entity *entity = catchEntityOnPreview(e, RS2::ResolveAll);
+            RS_Entity *entity = catchAndDescribe(e, RS2::ResolveAll);
             if (entity != nullptr){
                 if (entity->isAtomic()){
                     highlightHover(entity);
@@ -135,7 +132,7 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
             highlightSelected(baseEntity);
             RS_Vector center;
             if (byRadius){
-                if (isShift(e)){ // double check for efficiency, eliminate center forecasting calculations if not needed
+                if (e->isShift){ // double check for efficiency, eliminate center forecasting calculations if not needed
                     center = forecastArcCenter();
                     point = getSnapAngleAwarePoint(e, center, point, true);
                 }
@@ -143,7 +140,7 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
             preparePreview();
             if (data->isValid()){
                 RS_Arc* arc;
-                bool alternateArcMode = isControl(e);
+                bool alternateArcMode = e->isControl;
                 if (alternateArcMode) {
                     RS_ArcData tmpArcData = *data;
                     tmpArcData.reversed = !data->reversed;
@@ -153,17 +150,19 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
                     arc = previewToCreateArc(*data);
                 }
                 if (showRefEntitiesOnPreview) {
-                    previewRefPoint(data->center);
-                    previewRefPoint(arc->getStartpoint());
+                    RS_Vector &center = data->center;
+                    const RS_Vector &startPoint = arc->getStartpoint();
+                    previewRefPoint(center);
+                    previewRefPoint(startPoint);
                     if (byRadius) {
-                        previewRefLine(data->center, point);
+                        previewRefLine(center, point);
                         previewRefSelectablePoint(arc->getEndpoint());
                         previewRefSelectablePoint(center);
                     } else {
-                        previewRefLine(data->center, arc->getEndpoint());
-                        previewRefLine(data->center, arc->getStartpoint());
+                        previewRefLine(center, arc->getEndpoint());
+                        previewRefLine(center, startPoint);
                         RS_Vector nearest = arc->getNearestPointOnEntity(point, false);
-                        previewRefLine(data->center, point);
+                        previewRefLine(center, point);
                         previewRefSelectablePoint(nearest);
                         RS_ArcData circleArcData = arc->getData();
                         std::swap(circleArcData.angle1, circleArcData.angle2);
@@ -176,8 +175,6 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
-    drawPreview();
-    drawHighlights();
 }
 
 RS_Vector RS_ActionDrawArcTangential::forecastArcCenter() const{
@@ -200,12 +197,12 @@ RS_Vector RS_ActionDrawArcTangential::forecastArcCenter() const{
     return center;
 }
 
-void RS_ActionDrawArcTangential::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionDrawArcTangential::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         // set base entity:
         case SetBaseEntity: {
-            RS_Vector coord = toGraph(e);
-            RS_Entity *entity = catchEntity(coord, RS2::ResolveAll);
+            RS_Vector coord = e->graphPoint;
+            RS_Entity *entity = RS_Snapper::catchEntity(coord, RS2::ResolveAll);
             if (entity){
                 if (entity->isAtomic()){
                     baseEntity = dynamic_cast<RS_AtomicEntity *>(entity);
@@ -228,14 +225,14 @@ void RS_ActionDrawArcTangential::onMouseLeftButtonRelease(int status, QMouseEven
         }
         case SetEndAngle: {// set angle (point that defines the angle)
             if (byRadius){
-                if (isShift(e)){ // double check for efficiency, eliminate calculations if not needed
+                if (e->isShift){ // double check for efficiency, eliminate calculations if not needed
                     RS_Vector center = forecastArcCenter();
                     point = getSnapAngleAwarePoint(e, center, point);
                 }
             }else {
                 point = getSnapAngleAwarePoint(e, arcStartPoint, point);
             }
-            alternateArc = isControl(e);
+            alternateArc = e->isControl;
             fireCoordinateEvent(point);
             break;
         }
@@ -244,7 +241,7 @@ void RS_ActionDrawArcTangential::onMouseLeftButtonRelease(int status, QMouseEven
     }
 }
 
-void RS_ActionDrawArcTangential::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawArcTangential::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

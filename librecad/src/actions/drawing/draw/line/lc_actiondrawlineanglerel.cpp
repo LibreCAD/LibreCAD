@@ -162,7 +162,7 @@ void LC_ActionDrawLineAngleRel::doFinish([[maybe_unused]]bool updateTB){
  * @param status
  * @param snapPoint
  */
-void LC_ActionDrawLineAngleRel::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawLineAngleRel::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint){
         switch (status) {
             case SetLine:{ // line selection state
                 RS_Entity* en = catchModifiableEntity(e, enTypeList);
@@ -204,7 +204,7 @@ void LC_ActionDrawLineAngleRel::doOnLeftMouseButtonRelease(QMouseEvent *e, int s
         }
 }
 
-bool LC_ActionDrawLineAngleRel::doCheckMayDrawPreview[[maybe_unused]]([[maybe_unused]]QMouseEvent *event, [[maybe_unused]]int status){
+bool LC_ActionDrawLineAngleRel::doCheckMayDrawPreview[[maybe_unused]]([[maybe_unused]]LC_MouseEvent *event, [[maybe_unused]]int status){
     return true;  // can draw preview in any state
 }
 
@@ -218,11 +218,11 @@ bool LC_ActionDrawLineAngleRel::doCheckMayDrawPreview[[maybe_unused]]([[maybe_un
  */
 
 //fixme - divide & intersection points (as for line from point to entity)
-void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     switch (status) {
         case SetLine:{ // line select state
             deleteSnapper();
-            RS_Entity* en = catchModifiableEntityOnPreview(e, enTypeList);
+            RS_Entity* en = catchModifiableAndDescribe(e, enTypeList);
             if (en != nullptr){
                 auto* line = dynamic_cast<RS_Line *>(en);
 

@@ -85,10 +85,9 @@ void LC_ActionEditPasteTransform::doTrigger() {
     }
 }
 
-void LC_ActionEditPasteTransform::mouseMoveEvent(QMouseEvent *e) {
-    deletePreview();
-    if (getStatus()==SetReferencePoint) {
-        *referencePoint = snapPoint(e);
+void LC_ActionEditPasteTransform::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    if (status==SetReferencePoint) {
+        *referencePoint = e->snapPoint;
         preview->addAllFrom(*RS_CLIPBOARD->getGraphic(),graphicView);
         preview->move(*referencePoint);
 
@@ -107,15 +106,14 @@ void LC_ActionEditPasteTransform::mouseMoveEvent(QMouseEvent *e) {
     else {
         deleteSnapper();
     }
-    drawPreview();
 }
 
-void LC_ActionEditPasteTransform::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    invokedWithControl = isControl(e);
+void LC_ActionEditPasteTransform::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+    invokedWithControl = e->isControl;
     fireCoordinateEventForSnap(e);
 }
 
-void LC_ActionEditPasteTransform::onMouseRightButtonRelease(int status,[[maybe_unused]] QMouseEvent *e) {
+void LC_ActionEditPasteTransform::onMouseRightButtonRelease(int status,[[maybe_unused]] LC_MouseEvent *e) {
     initPrevious(status);
 }
 

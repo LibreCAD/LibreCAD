@@ -87,10 +87,9 @@ void RS_ActionSelectBase::doSelectEntity(RS_Entity* entityToSelect,  [[maybe_unu
     s.selectSingle(entityToSelect);
 }
 
-RS_Entity* RS_ActionSelectBase::selectionMouseMove(QMouseEvent *event) {
+RS_Entity* RS_ActionSelectBase::selectionMouseMove(LC_MouseEvent *event) {
     RS_Entity* result = nullptr;
-    snapPoint(event);
-    auto ent = catchEntityOnPreview(event, catchForSelectionEntityTypes);
+    auto ent = catchAndDescribe(event, catchForSelectionEntityTypes, RS2::ResolveNone);
     if (ent != nullptr){
         bool selectionAllowed = isEntityAllowedToSelect(ent);
         if (selectionAllowed){

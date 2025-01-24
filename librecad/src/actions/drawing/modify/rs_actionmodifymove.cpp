@@ -58,12 +58,9 @@ void RS_ActionModifyMove::doTrigger(bool keepSelected) {
     finish(false);
 }
 
-void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
-    deletePreview();
-    RS_DEBUG->print("RS_ActionModifyMove::mouseMoveEvent begin");
-
-    RS_Vector mouse = snapPoint(e);
-    switch (getStatus()) {
+void RS_ActionModifyMove::onMouseMoveEventSelected(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
+    switch (status) {
         case SetReferencePoint: {
             pPoints->referencePoint = mouse;
             trySnapToRelZeroCoordinateEvent(e);
@@ -81,7 +78,7 @@ void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
                 RS_Modification m(*preview, graphicView, false);
                 m.move(pPoints->data, selectedEntities, true, false);
 
-                if (isShift(e)){
+                if (e->isShift){
                     previewLine(pPoints->referencePoint, mouse);
                 }
                 if (showRefEntitiesOnPreview) {
@@ -111,21 +108,18 @@ void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
             break;
         default:
             break;
-    }    
-
-    RS_DEBUG->print("RS_ActionModifyMove::mouseMoveEvent end");
-    drawPreview();
+    }
 }
 
-void RS_ActionModifyMove::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
-    RS_Vector snapped = snapPoint(e);
+void RS_ActionModifyMove::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+    RS_Vector snapped = e->snapPoint;
     if (status == SetTargetPoint){
         snapped = getSnapAngleAwarePoint(e, pPoints->referencePoint, snapped);
     }
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionModifyMove::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionModifyMove::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     if (status == SetReferencePoint){
         if (selectionComplete) {

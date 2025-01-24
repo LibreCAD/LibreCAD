@@ -52,12 +52,8 @@ void LC_ActionDrawArc2PointsBase::doTrigger() {
     }
 }
 
-void LC_ActionDrawArc2PointsBase::mouseMoveEvent(QMouseEvent *e) {
-    deletePreview();
-    deleteHighlights();
-    RS_Vector mouse = snapPoint(e);
-
-    int status = getStatus();
+void LC_ActionDrawArc2PointsBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status){
         case SetPoint1:{
             mouse = getRelZeroAwarePoint(e, mouse);
@@ -68,7 +64,7 @@ void LC_ActionDrawArc2PointsBase::mouseMoveEvent(QMouseEvent *e) {
         }
         case SetPoint2:{
             mouse = getSnapAngleAwarePoint(e, startPoint, mouse, true);
-            bool alternate = isControl(e);
+            bool alternate = e->isControl;
             RS_Arc* arc = createArc(status, mouse, alternate);
             if (arc != nullptr){
                 previewEntityToCreate(arc);
@@ -86,13 +82,10 @@ void LC_ActionDrawArc2PointsBase::mouseMoveEvent(QMouseEvent *e) {
             break;
         }
     }
-
-    drawPreview();
-    drawHighlights();
 }
 
-void LC_ActionDrawArc2PointsBase::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector mouse = snapPoint(e);
+void LC_ActionDrawArc2PointsBase::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status){
         case SetPoint1:{
             mouse = getRelZeroAwarePoint(e, mouse);
@@ -105,7 +98,7 @@ void LC_ActionDrawArc2PointsBase::onMouseLeftButtonRelease(int status, QMouseEve
                 command(tr("The end point is too close to the start point"));
             }
             else{
-                alternated = isControl(e);
+                alternated = e->isControl;
                 fireCoordinateEvent(mouse);
             }
             break;
@@ -117,7 +110,7 @@ void LC_ActionDrawArc2PointsBase::onMouseLeftButtonRelease(int status, QMouseEve
     }
 }
 
-void LC_ActionDrawArc2PointsBase::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawArc2PointsBase::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     initPrevious(status);
 }
 
