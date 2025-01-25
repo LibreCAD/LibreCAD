@@ -2005,11 +2005,7 @@ void QG_ActionHandler::slotLockRelativeZero(bool on)
 	if (snap_toolbar) {
         snap_toolbar->setLockedRelativeZero(on);
     }
-    if (on) {
-        setCurrentAction(RS2::ActionLockRelativeZero);
-    } else {
-        setCurrentAction(RS2::ActionUnlockRelativeZero);
-    }
+    view->lockRelativeZero(on);
 }
 
 void QG_ActionHandler::slotInfoInside() {

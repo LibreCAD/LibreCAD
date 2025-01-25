@@ -136,7 +136,7 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     bLockRelZero = new QAction(QIcon(":/icons/lock_rel_zero.svg"), tr("Lock relative zero position"), agm->other);
     bLockRelZero->setObjectName("LockRelativeZero");
     bLockRelZero->setCheckable(true);
-    connect(bLockRelZero, SIGNAL(toggled(bool)),actionHandler, SLOT(slotLockRelativeZero(bool)));
+    connect(bLockRelZero, SIGNAL(triggered(bool)),actionHandler, SLOT(slotLockRelativeZero(bool)));
     this->addAction(bLockRelZero);
     //restore snapMode from saved preferences
     RS_SETTINGS->beginGroup("/Snap");

@@ -1263,7 +1263,7 @@ void QG_GraphicView::setCursorHiding(bool state)
 
 void QG_GraphicView::setCurrentQAction(QAction* q_action)
 {
-    eventHandler->setQAction(q_action);
+    //eventHandler->setQAction(q_action);
 
     if (recent_actions.contains(q_action))
     {
