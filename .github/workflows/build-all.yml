@@ -75,6 +75,75 @@ jobs:
           path: ${{github.workspace}}/LibreCAD*.AppImage
           retention-days: 2
 
+  BuildLinuxAarch64:
+    runs-on: ubuntu-22.04-arm
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+          ref: 2.2.1
+
+      - name: Install Qt5
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '5.15.*'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -qq install \
+          libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
+          sudo rm -rf /usr/local/lib/android
+
+      - name: Install Clang
+        run: |
+          sudo apt-get -qq install clang-10 clang-tools-10
+
+      - name: Build and analyze
+        run: |
+          export CC=g++
+          export ANALYZE="scan-build-10 -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
+          ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
+          ${ANALYZE}make release -j$(nproc)
+
+      - name: Create report repository
+        run: |
+          cd out
+          find . -mindepth 2 -type f -print -exec mv {} . \;
+          git config --global user.email "github@librecad.org"
+          git config --global user.name "GHA CI [bot]"
+          git config --global init.defaultBranch gh-pages
+          git init
+          git add .
+          git commit -m "latest analyzer report"
+
+      - name: Push changes
+        if: github.repository_owner == 'LibreCAD'
+        uses: ad-m/github-push-action@master
+        with:
+          repository: ${{github.repository_owner}}/static-analyzer-reports
+          github_token: ${{secrets.LC_PUSH_ANALYZER_REPORT}}
+          branch: gh-pages
+          force: true
+          directory: out
+
+      - name: Create AppImage
+        run: |
+          ./CI/build-appimg-aarch64.sh
+          pwd
+          echo  ${{github.workspace}}
+          ls  ${{github.workspace}}/
+          ls  ${{github.workspace}}/**.AppImage
+          ls 
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: linuxAarch64Assets
+          path: ${{github.workspace}}/LibreCAD*.AppImage
+          retention-days: 2
+
   BuildSnap:
       runs-on: ubuntu-22.04
       steps:
@@ -332,7 +401,7 @@ jobs:
 
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD'
-    needs: [BuildLinux, BuildMacOS, BuildWindows, BuildWindows64, BuildSnap]
+    needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildWindows, BuildWindows64, BuildSnap]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -354,6 +423,7 @@ jobs:
           title: "Release Candidate"
           files: |
             linuxAssets/LibreCAD*.AppImage
+            linuxAssetsAarch64/LibreCAD*.AppImage
             macOSAssets/LibreCAD*.dmg
             win*Assets/LibreCAD*.exe
             snapAssets/LibreCAD*.snap
