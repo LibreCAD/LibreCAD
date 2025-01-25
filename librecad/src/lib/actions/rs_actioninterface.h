@@ -37,6 +37,7 @@
 #include "rs.h"
 #include "rs_snapper.h"
 #include "lc_modifiersinfo.h"
+#include "rs_math.h"
 
 class RS_CommandEvent;
 class RS_CoordinateEvent;
@@ -45,6 +46,10 @@ class RS_Document;
 class QAction;
 class QString;
 class LC_ActionOptionsWidget; // todo - think about depencency - options in in ui, while this action in lib... quite artificial separation, actually
+
+namespace{
+   const double DEFAULT_SNAP_ANGLE_STEP =  RS_Math::deg2rad(15.0);
+}
 
 /**
  * This is the interface that must be implemented for all
@@ -128,7 +133,7 @@ protected:
     RS_ActionInterface* predecessor = nullptr;
     RS2::ActionType actionType = RS2::ActionNone;
     std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
-    double snapToAngleStep = 15.0;
+    double snapToAngleStep = DEFAULT_SNAP_ANGLE_STEP;
 
     QString msgAvailableCommands();
     void setActionType(RS2::ActionType actionType);

@@ -49,6 +49,7 @@
 #include "rs_units.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_overlayentitiescontainer.h"
+#include "rs_math.h"
 
 namespace {
 
@@ -204,6 +205,7 @@ enum SnapType{
     DISTANCE,
     CENTER,
     ANGLE,
+    ANGLE_REL,
     ANGLE_ON_ENTITY
 };
 
@@ -983,7 +985,7 @@ void RS_Snapper::drawInfoCursor(){
         if (prefs->showSnapType) {
             QString snapName = getSnapName(pImpData->snapType);
             QString restrictionName;
-            if (pImpData->snapType == ANGLE || pImpData->snapType == ANGLE_ON_ENTITY) {
+            if (pImpData->snapType == ANGLE || pImpData->snapType == ANGLE_REL || pImpData->snapType == ANGLE_ON_ENTITY) {
                 restrictionName = RS_Units::formatAngle(pImpData->angle, angleFormat, anglePrecision);
             } else {
                 restrictionName = getRestrictionName(pImpData->restriction);
@@ -1031,6 +1033,8 @@ QString RS_Snapper::getSnapName(int snapType){
             return tr("Center");
         case ANGLE:
             return tr("Angle");
+        case ANGLE_REL:
+            return tr("Angle Relative");
         case ANGLE_ON_ENTITY:
             return tr("Angle (on Entity)");
         case FREE:
@@ -1038,37 +1042,39 @@ QString RS_Snapper::getSnapName(int snapType){
             return "";
     }
 }
-
+// fixme - sand - ucs-  review whether it used, correct
 RS_Vector RS_Snapper::snapToRelativeAngle(double baseAngle, const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution){
 
     if(snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid){
         return currentCoord;
     }
 
-    double angle = referenceCoord.angleTo(currentCoord)*180.0/M_PI;
-    angle -= std::remainder(angle,angularResolution);
-    angle *= M_PI/180.;
-    angle = angle + baseAngle; // add base angle, so snap is relative
-    RS_Vector res = RS_Vector::polar(referenceCoord.distanceTo(currentCoord),angle);
+    double wcsAngleRaw = referenceCoord.angleTo(currentCoord);
+    double ucsAngleRaw = toUCSAngle(wcsAngleRaw);
+    double ucsAngleSnapped = ucsAngleRaw - std::remainder(ucsAngleRaw, angularResolution);
+    double wcsAngleSnappedAbsolute = toWorldAngle(ucsAngleSnapped);
+
+    double wcsAngleSnapped = wcsAngleSnappedAbsolute  + baseAngle;  // add base angle, so snap is relative
+
+    RS_Vector res = RS_Vector::polar(referenceCoord.distanceTo(currentCoord), wcsAngleSnapped);
     res += referenceCoord;
 
-    if (snapMode.snapOnEntity)
-    {
-        RS_Vector t(false);
-        //RS_Vector mouseCoord = graphicView->toGraph(currentCoord.x(), currentCoord.y());
-        t = container->getNearestVirtualIntersection(res,angle,nullptr);
-
+    if (snapMode.snapOnEntity) {
+        RS_Vector t = container->getNearestVirtualIntersection(res, wcsAngleSnapped, nullptr);
         pImpData->snapSpot = t;
+        pImpData->snapType = (t == res) ? SnapType::ANGLE_REL : SnapType::ANGLE_ON_ENTITY;
+        pImpData->angle = ucsAngleSnapped;
         snapPoint(pImpData->snapSpot, true);
         return t;
-    }
-    else
-    {
+    } else {
+        pImpData->snapType = SnapType::ANGLE_REL;
+        pImpData->angle = ucsAngleSnapped;
         snapPoint(res, true);
         return res;
     }
+
 }
-// fixme - sand - change angular resolution to radians (currently one is in degrees)
+
 RS_Vector RS_Snapper::snapToAngle(
     const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution) {
 
@@ -1076,31 +1082,24 @@ RS_Vector RS_Snapper::snapToAngle(
         return currentCoord;
     }
 
-    double angleRaw = referenceCoord.angleTo(currentCoord) * 180.0 / M_PI;
-    // angle in wcs
-    angleRaw -= std::remainder(angleRaw, angularResolution);
+    double wcsAngleRaw = referenceCoord.angleTo(currentCoord);
+    double ucsAngleRaw = toUCSAngle(wcsAngleRaw);
+    double ucsAngleSnapped = ucsAngleRaw - std::remainder(ucsAngleRaw, angularResolution);
+    double wcsAngleSnapped = toWorldAngle(ucsAngleSnapped);
 
-    double angleRad = angleRaw * M_PI / 180.;
-
-    // angle in ucs, and we'll use ucs angle for snapping point
-    double angle = toWorldAngle(angleRad);
-
-    RS_Vector res = RS_Vector::polar(referenceCoord.distanceTo(currentCoord), angle);
+    RS_Vector res = RS_Vector::polar(referenceCoord.distanceTo(currentCoord), wcsAngleSnapped);
     res += referenceCoord;
 
     if (snapMode.snapOnEntity) {
-        RS_Vector t(false);
-        //RS_Vector mouseCoord = graphicView->toGraph(currentCoord.x(), currentCoord.y());
-        t = container->getNearestVirtualIntersection(res, angle, nullptr);
-
+        RS_Vector t = container->getNearestVirtualIntersection(res, wcsAngleSnapped, nullptr);
         pImpData->snapSpot = t;
         pImpData->snapType = (t == res) ? SnapType::ANGLE : SnapType::ANGLE_ON_ENTITY;
-        pImpData->angle = angleRaw * M_PI / 180.; // fixme - temporary
+        pImpData->angle = ucsAngleSnapped;
         snapPoint(pImpData->snapSpot, true);
         return t;
     } else {
         pImpData->snapType = SnapType::ANGLE;
-        pImpData->angle = angleRaw * M_PI / 180.;
+        pImpData->angle = ucsAngleSnapped;
         snapPoint(res, true);
         return res;
     }

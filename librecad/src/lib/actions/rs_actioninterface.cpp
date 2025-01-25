@@ -587,40 +587,42 @@ void RS_ActionInterface::commandMessage(const QString &msg) const{
 
 void RS_ActionInterface::updateSnapAngleStep() {
     int stepType = LC_GET_ONE_INT("Defaults", "AngleSnapStep", 3);
+    double snapStepDegrees;
     switch (stepType){
         case 0:
-            snapToAngleStep = 1.0;
+            snapStepDegrees = 1.0;
             break;
         case 1:
-            snapToAngleStep = 3.0;
+            snapStepDegrees = 3.0;
             break;
         case 2:
-            snapToAngleStep = 5.0;
+            snapStepDegrees = 5.0;
             break;
         case 3:
-            snapToAngleStep = 10.0;
+            snapStepDegrees = 10.0;
             break;
         case 4:
-            snapToAngleStep = 15.0;
+            snapStepDegrees = 15.0;
             break;
         case 5:
-            snapToAngleStep = 18.0;
+            snapStepDegrees = 18.0;
             break;
         case 6:
-            snapToAngleStep = 22.5;
+            snapStepDegrees = 22.5;
             break;
         case 7:
-            snapToAngleStep = 30.0;
+            snapStepDegrees = 30.0;
             break;
         case 8:
-            snapToAngleStep = 45.0;
+            snapStepDegrees = 45.0;
             break;
         case 9:
-            snapToAngleStep = 90.0;
+            snapStepDegrees = 90.0;
             break;
         default:
-            snapToAngleStep = 15.0;
+            snapStepDegrees = 15.0;
     }
+    snapToAngleStep = RS_Math::deg2rad(snapStepDegrees);
 }
 
 bool RS_ActionInterface::isControl(const QInputEvent *e){
@@ -639,8 +641,6 @@ void RS_ActionInterface::fireCoordinateEvent(const RS_Vector &coord){
 void RS_ActionInterface::fireCoordinateEventForSnap(QMouseEvent *e){
     fireCoordinateEvent(snapPoint(e));
 }
-
-
 
 void RS_ActionInterface::initPrevious(int stat) {
     init(stat - 1);
