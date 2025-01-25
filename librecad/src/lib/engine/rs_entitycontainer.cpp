@@ -50,7 +50,7 @@
 namespace {
 
 // the tolerance used to check topology of contours in hatching
-constexpr double contourTolerance = 1e-8;
+constexpr double contourTolerance = 5e-7;
 
 // For validate hatch contours, whether an entity in the contour is a closed
 // loop itself
@@ -1188,7 +1188,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
     for (RS_Entity* en: entities){
 
         if (en->isVisible()
-                && !en->getParent()->ignoredOnModification()
+                && (en->getParent()==nullptr || !en->getParent()->ignoredOnModification())
                 ){//no end point for Insert, text, Dim
             point = en->getNearestEndpoint(coord, &curDist);
             if (point.valid && curDist<minDist) {
