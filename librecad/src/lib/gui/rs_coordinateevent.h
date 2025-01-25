@@ -39,17 +39,17 @@ public:
 	 * @param pos coordinate
 	 * @param abs true: absolute coordinate, false: relative coordinate
 	 */
-    RS_CoordinateEvent(const RS_Vector& pos): pos(pos) {}
+    RS_CoordinateEvent(const RS_Vector& pos):wcsPos(pos) {}
  
     /**
 	 * @return the position of the event in real graphic measures.
 	 */
     RS_Vector getCoordinate() const {
-        return pos;
+        return wcsPos;
     }
  
 protected:
-    RS_Vector pos;
+    RS_Vector wcsPos;
 };
 
 #endif

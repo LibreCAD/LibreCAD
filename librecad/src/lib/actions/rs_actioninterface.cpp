@@ -202,16 +202,16 @@ void RS_ActionInterface::coordinateEvent(RS_CoordinateEvent* e) {
     }
 
     // retrieve coordinates
-    RS_Vector pos = e->getCoordinate();
-    if (!pos.valid){
+    RS_Vector wcsPos = e->getCoordinate();
+    if (!wcsPos.valid){
         return;
     }
     // check whether it's zero - so it might be from "0" shortcut
     RS_Vector zero = RS_Vector(0, 0, 0);
-    bool isZero = pos == zero; // use it to handle "0" shortcut (it is passed as 0,0 vector)
+    bool isZero = wcsPos == zero; // use it to handle "0" shortcut (it is passed as 0,0 vector)
 
     // delegate further processing
-    onCoordinateEvent(status, isZero, pos);
+    onCoordinateEvent(status, isZero, wcsPos);
 }
 
 /**

@@ -78,23 +78,28 @@ public:
     void disableCoordinateInput();
 
     void setDefaultAction(RS_ActionInterface* action);
-	RS_ActionInterface* getDefaultAction() const;
+    RS_ActionInterface* getDefaultAction() const;
 
     void setCurrentAction(RS_ActionInterface* action);
-	RS_ActionInterface* getCurrentAction();
-	bool isValid(RS_ActionInterface* action) const;
+    RS_ActionInterface* getCurrentAction();
+    bool isValid(RS_ActionInterface* action) const;
 
     void killSelectActions();
     void killAllActions();
 
     bool hasAction();
     void cleanUp();
-	void debugActions() const;
+    void debugActions() const;
     void setSnapMode(RS_SnapMode sm);
     void setSnapRestriction(RS2::SnapRestriction sr);
     //! return true if the current action is for selecting
     bool inSelectionMode();
+protected:
+    RS_Vector toWCS(const RS_Vector& ucs);
+    RS_Vector toUCS(const RS_Vector& wcs);
+    double toWCSAngle(double ucsAngle);
 private:
+    RS_GraphicView* graphicView;
     QAction* q_action{nullptr};
     std::shared_ptr<RS_ActionInterface> defaultAction{nullptr};
     QList<std::shared_ptr<RS_ActionInterface>> currentActions;
