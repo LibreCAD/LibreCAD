@@ -159,7 +159,7 @@ jobs:
         run: |
           find unix/
           ./CI/build-appimg-aarch64.sh
-          mv LibreCAD*.AppImage LibreCAD-`git describe --always`.AppImage
+          mv LibreCAD*.AppImage LibreCAD-`git describe --always`-aarch64.AppImage
 
       - name: List files
         run: |
