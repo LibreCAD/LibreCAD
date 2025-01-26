@@ -20,11 +20,12 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "rs_graphicview.h"
-#include "rs_math.h"
 #include "lc_actiondrawellipse1point.h"
 #include "lc_ellipse1pointoptions.h"
 #include "lc_linemath.h"
+#include "rs_ellipse.h"
+#include "rs_graphicview.h"
+#include "rs_math.h"
 
 struct LC_ActionDrawEllipse1Point::Points {
 /** Center of ellipse */

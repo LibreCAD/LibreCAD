@@ -28,6 +28,7 @@
 
 #include "rs_actionmodifytrim.h"
 #include "rs_debug.h"
+#include "rs_ellipse.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 
@@ -82,13 +83,12 @@ void RS_ActionModifyTrim::doTrigger() {
 
 // todo - check trim both mode - it seems that limiting entity should be atomic too...
 void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
+    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent begin");
     deleteHighlights();
     deletePreview();
     RS_Vector mouse = toGraph(e);
-    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent begin");
-
+    snapFree(e);
     int status = getStatus();
-    snapPoint(e);
     switch (status) {
         case ChooseLimitEntity: {
             RS_Entity *se = catchEntityOnPreview(e, RS2::ResolveAllButTextImage);
@@ -143,9 +143,9 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
             break;
     }
 
-    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
     drawHighlights();
     drawPreview();
+    RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
 }
 
 void RS_ActionModifyTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e) {

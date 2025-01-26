@@ -28,8 +28,10 @@
 #define RS_ACTIONDRAWPOLYLINE_H
 
 #include <memory>
-#include "rs_previewactioninterface.h"
+
+#include "rs_arc.h"
 #include "rs_polyline.h"
+#include "rs_previewactioninterface.h"
 
 namespace mu {
     class Parser;

@@ -21,6 +21,8 @@
  ******************************************************************************/
 
 #include "lc_actiondrawarc2pointsangle.h"
+
+#include "rs_arc.h"
 #include "rs_debug.h"
 #include "rs_math.h"
 

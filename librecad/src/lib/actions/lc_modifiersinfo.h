@@ -48,7 +48,10 @@ public:
     LC_ModifiersInfo();
     static const QString MSG_EMPTY;
 
-    static LC_ModifiersInfo NONE(){return {};};
+    static LC_ModifiersInfo NONE() {
+        return {};
+    }
+
     static LC_ModifiersInfo SHIFT_ANGLE_SNAP();
     static LC_ModifiersInfo SHIFT_FREE_SNAP();
     static LC_ModifiersInfo SHIFT_MIRROR_ANGLE();

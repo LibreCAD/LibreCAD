@@ -19,10 +19,12 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include "rs_math.h"
-#include "rs_graphic.h"
-#include "rs_units.h"
+#include <QMouseEvent>
+
 #include "lc_actioninfo3pointsangle.h"
+#include "rs_graphic.h"
+#include "rs_math.h"
+#include "rs_units.h"
 
 LC_ActionInfo3PointsAngle::LC_ActionInfo3PointsAngle(RS_EntityContainer &container, RS_GraphicView &graphicView)
     :RS_PreviewActionInterface("InfoAngle3Points", container, graphicView) {
