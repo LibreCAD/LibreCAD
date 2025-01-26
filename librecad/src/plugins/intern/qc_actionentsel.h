@@ -24,8 +24,8 @@
 **
 **********************************************************************/
 
-#ifndef QC_ACTIONEMTGET_H
-#define QC_ACTIONEMTGET_H
+#ifndef QC_ACTIONEMTSEL_H
+#define QC_ACTIONEMTSEL_H
 
 #ifdef DEVELOPER
 
@@ -41,10 +41,10 @@
  * @author  Emanuel
  */
 
-class QC_ActionEntGet : public RS_ActionInterface {
+class QC_ActionEntSel : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    QC_ActionEntGet(RS_EntityContainer& container,
+    QC_ActionEntSel(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
     void trigger() override;
     void keyPressEvent(QKeyEvent* e) override;
@@ -54,14 +54,18 @@ public:
     Plugin_Entity *getSelected(Doc_plugin_interface* d);
 
     int getEntityId();
-    RS_Vector getPoint() { return targetPoint; }
+    RS_Vector getPoint() {return targetPoint;}
+    bool wasCanceled(){return canceled;}
 
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent * e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent * e) override;
     void updateMouseButtonHints() override;
-private:
+    void mouseMoveEvent(QMouseEvent* e) override;
+
+protected:
+    bool canceled;
     bool completed;
     QString message;
     RS_Entity* en;

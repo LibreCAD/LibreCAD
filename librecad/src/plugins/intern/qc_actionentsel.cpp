@@ -28,70 +28,77 @@
 #include <QKeyEvent>
 
 #include "doc_plugin_interface.h"
-#include "qc_actionentget.h"
+#include "qc_actionentsel.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 #include "rs_snapper.h"
 
 
-QC_ActionEntGet::QC_ActionEntGet(RS_EntityContainer& container,
+QC_ActionEntSel::QC_ActionEntSel(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView)
-        :RS_ActionInterface("Get Entity", container, graphicView) {
-    completed = false;
+        :RS_ActionInterface("Get Entity", container, graphicView)
+        , canceled(false)
+        , completed{false}
+{
     message = tr("Select object:");
     en = nullptr;
     targetPoint = RS_Vector(0,0);
 }
 
-void QC_ActionEntGet::updateMouseButtonHints() {
+void QC_ActionEntSel::updateMouseButtonHints() {
     if (!completed)
         updateMouseWidget(message, tr("Cancel"));
     else
         updateMouseWidget();
 }
 
-
-RS2::CursorType QC_ActionEntGet::doGetMouseCursor([[maybe_unused]] int status){
+RS2::CursorType QC_ActionEntSel::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;
 }
 
-void QC_ActionEntGet::setMessage(QString msg){
+void QC_ActionEntSel::setMessage(QString msg){
     message = msg;
 }
 
-void QC_ActionEntGet::trigger() {
+void QC_ActionEntSel::trigger() {
     if (en) {
-        RS_Selection s(*container, graphicView);
-        s.selectSingle(en);
         completed = true;
         updateMouseButtonHints();
     } else {
-        RS_DEBUG->print("QC_ActionEntGet::trigger: Entity is NULL\n");
+        RS_DEBUG->print("QC_ActionEntSel::trigger: Entity is NULL\n");
     }
 }
 
-void QC_ActionEntGet::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent * e) {
+void QC_ActionEntSel::mouseMoveEvent(QMouseEvent* e) {
+    RS_DEBUG->print("QC_ActionEntSel::mouseMoveEvent begin");
+
+    targetPoint = snapFree(e);
+
+    RS_DEBUG->print("QC_ActionEntSel::mouseMoveEvent end");
+}
+
+void QC_ActionEntSel::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent * e) {
     en = catchEntity(e);
-    targetPoint = snapPoint(e);
+    targetPoint = snapFree(e);
     trigger();
 }
-void QC_ActionEntGet::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent * e){
+void QC_ActionEntSel::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent * e){
     completed = true;
+    canceled = true;
     updateMouseButtonHints();
     finish();
 }
 
-void QC_ActionEntGet::keyPressEvent(QKeyEvent *e){
-    // qDebug() << "QC_ActionEntGet::keyPressEvent";
+void QC_ActionEntSel::keyPressEvent(QKeyEvent *e){
     if (e->key() == Qt::Key_Escape) {
         updateMouseWidget();
         completed = true;
-        // qDebug() << "escape QC_ActionEntGet";
+        canceled = true;
     }
 }
 
-int QC_ActionEntGet::getEntityId()
+int QC_ActionEntSel::getEntityId()
 {
     return (en != nullptr ? en->getId() : 0);
 }
@@ -99,7 +106,7 @@ int QC_ActionEntGet::getEntityId()
 /**
  * Add selected entity from 'container' to the selection.
  */
-Plugin_Entity *QC_ActionEntGet::getSelected(Doc_plugin_interface* d) {
+Plugin_Entity *QC_ActionEntSel::getSelected(Doc_plugin_interface* d) {
     Plugin_Entity *pe = en ? new Plugin_Entity(en, d) : nullptr;
     return pe;
 }

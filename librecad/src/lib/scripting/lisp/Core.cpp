@@ -32,9 +32,10 @@
 #include "rs_actionselectsingle.h"
 #include "lc_undosection.h"
 #include "qc_applicationwindow.h"
+#include "qg_actionhandler.h"
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetcorner.h"
-#include "intern/qc_actionentget.h"
+#include "intern/qc_actionentsel.h"
 
 #ifdef DEVELOPER
 
@@ -2245,7 +2246,7 @@ BUILTIN("entsel")
         Lisp_CommandEdit->setFocus();
     }
 
-    QC_ActionEntGet* a = new QC_ActionEntGet(*doc, *graphicView);
+    QC_ActionEntSel* a = new QC_ActionEntSel(*doc, *graphicView);
     if (a)
     {
         if (!(prompt.isEmpty()))
@@ -2277,6 +2278,11 @@ BUILTIN("entsel")
                 {
                     Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
                 }
+            }
+
+            if (a->wasCanceled())
+            {
+                return lcl::nilValue();
             }
 
             lclValueVec *ptn = new lclValueVec(3);
