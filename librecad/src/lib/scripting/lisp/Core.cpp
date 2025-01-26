@@ -29,10 +29,12 @@
 #include "rs_text.h"
 #include "rs_layer.h"
 #include "rs_entitycontainer.h"
+#include "rs_actionselectsingle.h"
 #include "lc_undosection.h"
 #include "qc_applicationwindow.h"
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetcorner.h"
+#include "intern/qc_actionentget.h"
 
 #ifdef DEVELOPER
 
@@ -1387,7 +1389,6 @@ BUILTIN("entget")
                         name->at(2) = lcl::string("LINE");
                         entity->push_back(lcl::list(name));
 
-                        entity->push_back(lcl::list(ename));
                         entity->push_back(lcl::list(ebname));
                         entity->push_back(lcl::list(handle));
                         entity->push_back(lcl::list(acdb));
@@ -1438,7 +1439,6 @@ BUILTIN("entget")
                         name->at(2) = lcl::string("ARC");
                         entity->push_back(lcl::list(name));
 
-                        entity->push_back(lcl::list(ename));
                         entity->push_back(lcl::list(ebname));
                         entity->push_back(lcl::list(handle));
                         entity->push_back(lcl::list(acdb));
@@ -1494,7 +1494,6 @@ BUILTIN("entget")
                         name->at(2) = lcl::string("CIRCLE");
                         entity->push_back(lcl::list(name));
 
-                        entity->push_back(lcl::list(ename));
                         entity->push_back(lcl::list(ebname));
                         entity->push_back(lcl::list(handle));
                         entity->push_back(lcl::list(acdb));
@@ -1527,6 +1526,60 @@ BUILTIN("entget")
                     }
                     break;
 
+                case RS2::EntityEllipse:
+                {
+                    RS_Ellipse* ellipse=static_cast<RS_Ellipse*>(e);
+                    entity->push_back(lcl::list(ename));
+
+                    lclValueVec *name = new lclValueVec(3);
+                    name->at(0) = lcl::integer(0);
+                    name->at(1) = lcl::symbol(".");
+                    name->at(2) = lcl::string("ELLIPSE");
+                    entity->push_back(lcl::list(name));
+
+                    entity->push_back(lcl::list(ebname));
+                    entity->push_back(lcl::list(handle));
+                    entity->push_back(lcl::list(acdb));
+                    entity->push_back(lcl::list(mspace));
+                    entity->push_back(lcl::list(layoutTabName));
+                    entity->push_back(lcl::list(layer));
+
+                    lclValueVec *acdbL = new lclValueVec(3);
+                    acdbL->at(0) = lcl::integer(100);
+                    acdbL->at(1) = lcl::symbol(".");
+                    acdbL->at(2) = lcl::string("AcDbEllipse");
+                    entity->push_back(lcl::list(acdbL));
+
+                    lclValueVec *center = new lclValueVec(4);
+                    center->at(0) = lcl::integer(10);
+                    center->at(1) = lcl::ldouble(ellipse->getCenter().x);
+                    center->at(2) = lcl::ldouble(ellipse->getCenter().y);
+                    center->at(3) = lcl::ldouble(ellipse->getCenter().z);
+                    entity->push_back(lcl::list(center));
+
+                    lclValueVec *majorpnt = new lclValueVec(4);
+                    majorpnt->at(0) = lcl::integer(11);
+                    majorpnt->at(1) = lcl::ldouble(ellipse->getMajorP().x);
+                    majorpnt->at(2) = lcl::ldouble(ellipse->getMajorP().y);
+                    majorpnt->at(3) = lcl::ldouble(ellipse->getMajorP().z);
+                    entity->push_back(lcl::list(majorpnt));
+
+                    entity->push_back(lcl::list(extrDir));
+
+                    lclValueVec *ratio = new lclValueVec(3);
+                    ratio->at(0) = lcl::integer(40);
+                    ratio->at(1) = lcl::symbol(".");
+                    ratio->at(2) = lcl::ldouble(ellipse->getRatio());
+                    entity->push_back(lcl::list(ratio));
+
+                    // 41 42
+
+
+
+                    return lcl::list(entity);
+                }
+                break;
+
                     case RS2::EntityDimAligned:
                     {
 #if 0
@@ -1555,20 +1608,216 @@ BUILTIN("entget")
 
                     case RS2::EntityInsert:
                     {
-#if 0
                         RS_Insert* i = (RS_Insert*)e;
-                        i->getInsertionPoint();
-#endif
+
+                        entity->push_back(lcl::list(ename));
+
+                        lclValueVec *name = new lclValueVec(3);
+                        name->at(0) = lcl::integer(0);
+                        name->at(1) = lcl::symbol(".");
+                        name->at(2) = lcl::string("INSERT");
+                        entity->push_back(lcl::list(name));
+
+                        entity->push_back(lcl::list(ebname));
+                        entity->push_back(lcl::list(handle));
+                        entity->push_back(lcl::list(acdb));
+                        entity->push_back(lcl::list(mspace));
+                        entity->push_back(lcl::list(layoutTabName));
+                        entity->push_back(lcl::list(layer));
+
+                        lclValueVec *acdbL = new lclValueVec(3);
+                        acdbL->at(0) = lcl::integer(100);
+                        acdbL->at(1) = lcl::symbol(".");
+                        acdbL->at(2) = lcl::string("AcDbBlockReference");
+                        entity->push_back(lcl::list(acdbL));
+
+                        lclValueVec *blockName = new lclValueVec(3);
+                        blockName->at(0) = lcl::integer(2);
+                        blockName->at(1) = lcl::symbol(".");
+                        blockName->at(2) = lcl::string(i->getName().toStdString());
+                        entity->push_back(lcl::list(blockName));
+
+                        lclValueVec *center = new lclValueVec(4);
+                        center->at(0) = lcl::integer(10);
+                        center->at(1) = lcl::ldouble(i->getInsertionPoint().x);
+                        center->at(2) = lcl::ldouble(i->getInsertionPoint().y);
+                        center->at(3) = lcl::ldouble(i->getInsertionPoint().z);
+                        entity->push_back(lcl::list(center));
+
+                        lclValueVec *scaleX = new lclValueVec(3);
+                        scaleX->at(0) = lcl::integer(41);
+                        scaleX->at(1) = lcl::symbol(".");
+                        scaleX->at(2) = lcl::ldouble(i->getScale().x);
+                        entity->push_back(lcl::list(scaleX));
+
+                        lclValueVec *scaleY = new lclValueVec(3);
+                        scaleY->at(0) = lcl::integer(42);
+                        scaleY->at(1) = lcl::symbol(".");
+                        scaleY->at(2) = lcl::ldouble(i->getScale().y);
+                        entity->push_back(lcl::list(scaleY));
+
+                        lclValueVec *radius = new lclValueVec(3);
+                        radius->at(0) = lcl::integer(50);
+                        radius->at(1) = lcl::symbol(".");
+                        radius->at(2) = lcl::ldouble(i->getRadius());
+                        entity->push_back(lcl::list(radius));
+
+                        lclValueVec *columnCount = new lclValueVec(3);
+                        columnCount->at(0) = lcl::integer(70);
+                        columnCount->at(1) = lcl::symbol(".");
+                        columnCount->at(2) = lcl::ldouble(i->getCols());
+                        entity->push_back(lcl::list(columnCount));
+
+                        lclValueVec *rowCount = new lclValueVec(3);
+                        rowCount->at(0) = lcl::integer(71);
+                        rowCount->at(1) = lcl::symbol(".");
+                        rowCount->at(2) = lcl::ldouble(i->getCols());
+                        entity->push_back(lcl::list(rowCount));
+
+                        lclValueVec *columnSpacing = new lclValueVec(3);
+                        columnSpacing->at(0) = lcl::integer(44);
+                        columnSpacing->at(1) = lcl::symbol(".");
+                        columnSpacing->at(2) = lcl::ldouble(i->getSpacing().y);
+                        entity->push_back(lcl::list(columnSpacing));
+
+                        lclValueVec *rowSpacing = new lclValueVec(3);
+                        rowSpacing->at(0) = lcl::integer(45);
+                        rowSpacing->at(1) = lcl::symbol(".");
+                        rowSpacing->at(2) = lcl::ldouble(i->getSpacing().x);
+                        entity->push_back(lcl::list(rowSpacing));
+
+                        entity->push_back(lcl::list(extrDir));
+
+                        return lcl::list(entity);
                     }
                     break;
 
                     case RS2::EntityMText:
                     {
-#if 0
                         RS_MText* t = (RS_MText*)e;
-                        t->getText().toLatin1().data();
-                        t->getHeight();
-#endif
+
+                        entity->push_back(lcl::list(ename));
+
+                        lclValueVec *name = new lclValueVec(3);
+                        name->at(0) = lcl::integer(0);
+                        name->at(1) = lcl::symbol(".");
+                        name->at(2) = lcl::string("MTEXT");
+                        entity->push_back(lcl::list(name));
+
+                        entity->push_back(lcl::list(ebname));
+                        entity->push_back(lcl::list(handle));
+                        entity->push_back(lcl::list(acdb));
+                        entity->push_back(lcl::list(mspace));
+                        entity->push_back(lcl::list(layoutTabName));
+                        entity->push_back(lcl::list(layer));
+
+                        lclValueVec *acdbL = new lclValueVec(3);
+                        acdbL->at(0) = lcl::integer(100);
+                        acdbL->at(1) = lcl::symbol(".");
+                        acdbL->at(2) = lcl::string("AcDbMText");
+                        entity->push_back(lcl::list(acdbL));
+
+                        lclValueVec *pnt = new lclValueVec(4);
+                        pnt->at(0) = lcl::integer(10);
+                        pnt->at(1) = lcl::ldouble(t->getInsertionPoint().x);
+                        pnt->at(2) = lcl::ldouble(t->getInsertionPoint().y);
+                        pnt->at(3) = lcl::ldouble(t->getInsertionPoint().z);
+                        entity->push_back(lcl::list(pnt));
+
+                        lclValueVec *textHeight = new lclValueVec(3);
+                        textHeight->at(0) = lcl::integer(40);
+                        textHeight->at(1) = lcl::symbol(".");
+                        textHeight->at(2) = lcl::ldouble(t->getUsedTextHeight());
+                        entity->push_back(lcl::list(textHeight));
+
+                        lclValueVec *width = new lclValueVec(3);
+                        width->at(0) = lcl::integer(41);
+                        width->at(1) = lcl::symbol(".");
+                        width->at(2) = lcl::ldouble(t->getWidth());
+                        entity->push_back(lcl::list(width));
+
+                        lclValueVec *alignment = new lclValueVec(3);
+                        alignment->at(0) = lcl::integer(71);
+                        alignment->at(1) = lcl::symbol(".");
+                        alignment->at(2) = lcl::integer(t->getAlignment());
+                        entity->push_back(lcl::list(alignment));
+
+                        lclValueVec *drawingDirection = new lclValueVec(3);
+                        drawingDirection->at(0) = lcl::integer(72);
+                        drawingDirection->at(1) = lcl::symbol(".");
+
+                        RS_MTextData::MTextDrawingDirection dir = t->getDrawingDirection();
+                        unsigned int dxfDir = 5;
+
+                        switch(dir)
+                        {
+                            case RS_MTextData::MTextDrawingDirection::LeftToRight:
+                                dxfDir = 1;
+                                break;
+                            case RS_MTextData::MTextDrawingDirection::RightToLeft:
+                                dxfDir = 2;
+                                break;
+                            case RS_MTextData::MTextDrawingDirection::TopToBottom:
+                                dxfDir = 3;
+                                break;
+                            default:
+                                dxfDir = 5;
+                        }
+
+                        drawingDirection->at(2) = lcl::integer(dxfDir);
+                        entity->push_back(lcl::list(drawingDirection));
+
+                        lclValueVec *text = new lclValueVec(3);
+                        text->at(0) = lcl::integer(1);
+                        text->at(1) = lcl::symbol(".");
+                        text->at(2) = lcl::string(qUtf8Printable(t->getText()));
+                        entity->push_back(lcl::list(text));
+
+                        if (t->getStyle() != "STANDARD")
+                        {
+                            lclValueVec *style = new lclValueVec(3);
+                            style->at(0) = lcl::integer(7);
+                            style->at(1) = lcl::symbol(".");
+                            style->at(2) = lcl::string(qUtf8Printable(t->getText()));
+                            entity->push_back(lcl::list(style));
+                        }
+
+                        lclValueVec *height = new lclValueVec(3);
+                        height->at(0) = lcl::integer(43);
+                        height->at(1) = lcl::symbol(".");
+                        height->at(2) = lcl::ldouble(t->getHeight());
+                        entity->push_back(lcl::list(height));
+
+                        lclValueVec *angle = new lclValueVec(3);
+                        angle->at(0) = lcl::integer(50);
+                        angle->at(1) = lcl::symbol(".");
+                        angle->at(2) = lcl::ldouble(t->getAngle());
+                        entity->push_back(lcl::list(angle));
+
+                        lclValueVec *lineSpacingStyle = new lclValueVec(3);
+                        lineSpacingStyle->at(0) = lcl::integer(73);
+                        lineSpacingStyle->at(1) = lcl::symbol(".");
+
+                        RS_MTextData::MTextLineSpacingStyle style = t->getLineSpacingStyle();
+                        unsigned int styleDxf = 2;
+
+                        if (style == RS_MTextData::MTextLineSpacingStyle::AtLeast)
+                        {
+                            styleDxf = 1;
+                        }
+
+                        lineSpacingStyle->at(2) = lcl::integer(styleDxf);
+                        entity->push_back(lcl::list(lineSpacingStyle));
+
+                        lclValueVec *textSpace = new lclValueVec(3);
+                        textSpace->at(0) = lcl::integer(44);
+                        textSpace->at(1) = lcl::symbol(".");
+                        textSpace->at(2) = lcl::ldouble(t->getLineSpacingFactor());
+                        entity->push_back(lcl::list(textSpace));
+
+                        entity->push_back(lcl::list(extrDir));
+
+                        return lcl::list(entity);
                     }
                     break;
 
@@ -1583,7 +1832,6 @@ BUILTIN("entget")
                         name->at(2) = lcl::string("TEXT");
                         entity->push_back(lcl::list(name));
 
-                        entity->push_back(lcl::list(ename));
                         entity->push_back(lcl::list(ebname));
                         entity->push_back(lcl::list(handle));
                         entity->push_back(lcl::list(acdb));
@@ -1644,9 +1892,50 @@ BUILTIN("entget")
                     {
 #if 0
                         RS_Hatch* h = (RS_Hatch*)e;
-                        h->getPattern().toLatin1().data();
+
+                        qUtf8Printable(h->getPattern());
                         h->getScale();
                         (int)h->isSolid();
+
+                        entity->push_back(lcl::list(ename));
+
+                        lclValueVec *name = new lclValueVec(3);
+                        name->at(0) = lcl::integer(0);
+                        name->at(1) = lcl::symbol(".");
+                        name->at(2) = lcl::string("HATCH");
+                        entity->push_back(lcl::list(name));
+
+                        entity->push_back(lcl::list(ebname));
+                        entity->push_back(lcl::list(handle));
+                        entity->push_back(lcl::list(acdb));
+                        entity->push_back(lcl::list(mspace));
+                        entity->push_back(lcl::list(layoutTabName));
+                        entity->push_back(lcl::list(layer));
+
+                        lclValueVec *acdbL = new lclValueVec(3);
+                        acdbL->at(0) = lcl::integer(100);
+                        acdbL->at(1) = lcl::symbol(".");
+                        acdbL->at(2) = lcl::string("AcDbHatch");
+                        entity->push_back(lcl::list(acdbL));
+
+                        lclValueVec *startpnt = new lclValueVec(4);
+                        startpnt->at(0) = lcl::integer(10);
+                        startpnt->at(1) = lcl::ldouble(l->getStartpoint().x);
+                        startpnt->at(2) = lcl::ldouble(l->getStartpoint().y);
+                        startpnt->at(3) = lcl::ldouble(l->getStartpoint().z);
+                        entity->push_back(lcl::list(startpnt));
+
+                        lclValueVec *endpnt = new lclValueVec(4);
+                        endpnt->at(0) = lcl::integer(11);
+                        endpnt->at(1) = lcl::ldouble(l->getEndpoint().x);
+                        endpnt->at(2) = lcl::ldouble(l->getEndpoint().y);
+                        endpnt->at(3) = lcl::ldouble(l->getEndpoint().z);
+                        entity->push_back(lcl::list(endpnt));
+
+                        entity->push_back(lcl::list(extrDir));
+
+                        return lcl::list(entity);
+
 #endif
                     }
                     break;
@@ -1691,6 +1980,211 @@ BUILTIN("entlast")
     return lcl::nilValue();
 }
 
+BUILTIN("entmake")
+{
+    CHECK_ARGS_IS(1);
+    ARG(lclSequence, seq);
+
+    const int length = seq->count();
+    lclValueVec* items = new lclValueVec(length);
+    std::copy(seq->begin(), seq->end(), items->begin());
+    double radius1 = 0.0;
+    double radius2 = 0.0;
+    double radius3 = 0.0;
+    double angle1 = 0.0;
+    double angle2 = 0.0;
+    double scale1 = 1.0;
+    double scale2 = 1.0;
+    std::vector<std::vector<double>> gc_ten;
+    std::vector<std::vector<double>> gc_eleven;
+    String ename = "";
+    String text = "";
+    String style = "";
+    String layer = "";
+
+    for (int i = 0; i < length; i++) {
+        if (items->at(i)->type() == LCLTYPE::LIST ||
+                items->at(i)->type() == LCLTYPE::VEC) {
+            lclSequence* list = VALUE_CAST(lclSequence, items->at(i));
+
+            if (list->begin()->ptr()->print(true).compare("0") == 0
+                && (list->item(1)->print(true).compare(".") == 0)
+            ) {
+                const lclString *n = VALUE_CAST(lclString, list->item(2));
+                ename = n->value();
+            }
+            if (list->begin()->ptr()->print(true).compare("1") == 0
+                && (list->item(1)->print(true).compare(".") == 0)
+            ) {
+                const lclString *t = VALUE_CAST(lclString, list->item(2));
+                text = t->value();
+            }
+            if (list->begin()->ptr()->print(true).compare("7") == 0
+                && (list->item(1)->print(true).compare(".") == 0)
+            ) {
+                const lclString *s = VALUE_CAST(lclString, list->item(2));
+                style = s->value();
+            }
+            if (list->begin()->ptr()->print(true).compare("8") == 0
+                && (list->item(1)->print(true).compare(".") == 0)
+            ) {
+                const lclString *l = VALUE_CAST(lclString, list->item(2));
+                layer = l->value();
+            }
+            if (list->begin()->ptr()->print(true).compare("10") == 0
+                && list->count() > 2)
+            {
+                if (list->count() == 3)
+                {
+                    const lclDouble *x = VALUE_CAST(lclDouble, list->item(1));
+                    const lclDouble *y = VALUE_CAST(lclDouble, list->item(2));
+                    gc_ten.push_back({ x->value(), y->value(), 0.0 });
+                }
+                else
+                {
+                    const lclDouble *x = VALUE_CAST(lclDouble, list->item(1));
+                    const lclDouble *y = VALUE_CAST(lclDouble, list->item(2));
+                    const lclDouble *z = VALUE_CAST(lclDouble, list->item(3));
+                    gc_ten.push_back({ x->value(), y->value(), z->value()});
+                }
+            }
+            if (list->begin()->ptr()->print(true).compare("11") == 0
+                && list->count() > 2)
+            {
+                if (list->count() == 3)
+                {
+                    const lclDouble *x = VALUE_CAST(lclDouble, list->item(1));
+                    const lclDouble *y = VALUE_CAST(lclDouble, list->item(2));
+                    gc_eleven.push_back({ x->value(), y->value(), 0.0 });
+                }
+                else
+                {
+                    const lclDouble *x = VALUE_CAST(lclDouble, list->item(1));
+                    const lclDouble *y = VALUE_CAST(lclDouble, list->item(2));
+                    const lclDouble *z = VALUE_CAST(lclDouble, list->item(3));
+                    gc_eleven.push_back({ x->value(), y->value(), z->value()});
+                }
+            }
+            if (list->begin()->ptr()->print(true).compare("40") == 0
+                && (list->item(1)->print(true).compare(".") == 0)
+            ) {
+                const lclDouble *r1 = VALUE_CAST(lclDouble, list->item(2));
+                radius1 = r1->value();
+            }
+            if (list->begin()->ptr()->print(true).compare("41") == 0
+                && (list->item(1)->print(true).compare(".") == 0)
+            ) {
+                const lclDouble *r2 = VALUE_CAST(lclDouble, list->item(2));
+                radius2 = r2->value();
+            }
+            if (list->begin()->ptr()->print(true).compare("42") == 0
+                && (list->item(1)->print(true).compare(".") == 0)
+            ) {
+                const lclDouble *r3 = VALUE_CAST(lclDouble, list->item(2));
+                radius3 = r3->value();
+            }
+            if (list->begin()->ptr()->print(true).compare("44") == 0
+                && (list->item(1)->print(true).compare(".") == 0)
+            ) {
+                const lclDouble *sc1 = VALUE_CAST(lclDouble, list->item(2));
+                scale1 = sc1->value();
+            }
+            if (list->begin()->ptr()->print(true).compare("45") == 0
+                && (list->item(1)->print(true).compare(".") == 0)
+            ) {
+                const lclDouble *sc2 = VALUE_CAST(lclDouble, list->item(2));
+                scale2 = sc2->value();
+            }
+            if (list->begin()->ptr()->print(true).compare("50") == 0
+                && (list->item(1)->print(true).compare(".") == 0)
+            ) {
+                const lclDouble *a1 = VALUE_CAST(lclDouble, list->item(2));
+                angle1 = a1->value();
+            }
+            if (list->begin()->ptr()->print(true).compare("51") == 0
+                && (list->item(1)->print(true).compare(".") == 0)
+            ) {
+                const lclDouble *a2 = VALUE_CAST(lclDouble, list->item(2));
+                angle2 = a2->value();
+            }
+        }
+    }
+
+    if (ename.compare("") == 0)
+    {
+        return lcl::nilValue();
+    }
+
+    auto& appWin=QC_ApplicationWindow::getAppWindow();
+    RS_Document* d = appWin->getDocument();
+
+    if (d) {
+        RS_Graphic* graphic = (RS_Graphic*)d;
+        if (!graphic) {
+            return lcl::nilValue();
+        }
+
+        if (ename.compare("LINE") == 0 &&
+                std::distance(gc_ten.begin(), gc_ten.end()) &&
+                std::distance(gc_eleven.begin(), gc_eleven.end()))
+        {
+            RS_Line *line;
+            line = new RS_Line(graphic, RS_Vector(gc_ten.at(0).at(0),
+                                                  gc_ten.at(0).at(1),
+                                                  gc_ten.at(0).at(2)),
+                                        RS_Vector(gc_eleven.at(0).at(0),
+                                                  gc_eleven.at(0).at(1),
+                                                  gc_eleven.at(0).at(2)));
+            //line->setPen(RS_Pen(RS_Color(128, 128, 128), RS2::Width01, RS2::SolidLine));
+            graphic->addEntity(line);
+
+        }
+
+        if (ename.compare("CIRCLE") == 0 &&
+                std::distance(gc_ten.begin(), gc_ten.end()) &&
+                radius1 != 0.0)
+        {
+            RS_Circle *circle = new RS_Circle(graphic, RS_CircleData(RS_Vector(gc_ten.at(0).at(0),
+                                                                               gc_ten.at(0).at(1),
+                                                                               gc_ten.at(0).at(2)),
+                                                                     radius1));
+            graphic->addEntity(circle);
+
+        }
+
+        if (ename.compare("ARC") == 0 &&
+                std::distance(gc_ten.begin(), gc_ten.end()))
+        {
+            RS_Arc *arc = new RS_Arc(graphic, RS_ArcData(RS_Vector(gc_ten.at(0).at(0),
+                                                                   gc_ten.at(0).at(1),
+                                                                   gc_ten.at(0).at(2)),
+                                                         radius1, angle1, angle2, false));
+            graphic->addEntity(arc);
+        }
+
+        if (ename.compare("ELLIPSE") == 0 &&
+                std::distance(gc_ten.begin(), gc_ten.end()) &&
+                std::distance(gc_eleven.begin(), gc_eleven.end()))
+        {
+
+            RS_EllipseData data;
+            data.center = RS_Vector(gc_ten.at(0).at(0),gc_ten.at(0).at(1),gc_ten.at(0).at(2));
+            data.majorP = RS_Vector(gc_eleven.at(0).at(0),gc_eleven.at(0).at(1),gc_eleven.at(0).at(2));
+            data.ratio = radius1;
+            RS_Ellipse *ellipse = new RS_Ellipse(graphic, data);
+            graphic->addEntity(ellipse);
+
+        }
+
+        RS_GraphicView* v = appWin->getGraphicView();
+        if (v) {
+            v->redraw();
+        }
+
+    }
+    return lcl::nilValue();
+}
+
 BUILTIN("entnext")
 {
     int args = CHECK_ARGS_BETWEEN(0, 1);
@@ -1719,6 +2213,95 @@ BUILTIN("entnext")
                     return lcl::ename(entityContainer->entityAt(i+1)->getId());
                 }
             }
+        }
+    }
+
+    return lcl::nilValue();
+}
+
+BUILTIN("entsel")
+{
+    int args = CHECK_ARGS_BETWEEN(0, 1);
+    QString prompt = "Select object:";
+
+    if (args == 1 && !NIL_PTR)
+    {
+        ARG(lclString, str);
+        prompt = str->value().c_str();
+    }
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_Document* doc = appWin->getDocument();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+
+    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
+    {
+        return lcl::nilValue();
+    }
+
+    if (Lisp_CommandEdit != nullptr)
+    {
+        Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+        Lisp_CommandEdit->setFocus();
+    }
+
+    QC_ActionEntGet* a = new QC_ActionEntGet(*doc, *graphicView);
+    if (a)
+    {
+        if (!(prompt.isEmpty()))
+        {
+            a->setMessage(prompt);
+        }
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!graphicView->getEventHandler()->hasAction())
+                break;
+        }
+
+        if (a->isCompleted())
+        {
+            graphicView->killAllActions();
+
+            if (Lisp_CommandEdit != nullptr)
+            {
+                if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+                {
+                    Lisp_CommandEdit->setPrompt("_$ ");
+                }
+                else
+                {
+                    Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
+                }
+            }
+
+            lclValueVec *ptn = new lclValueVec(3);
+            ptn->at(0) = lcl::ldouble(a->getPoint().x);
+            ptn->at(1) = lcl::ldouble(a->getPoint().y);
+            ptn->at(2) = lcl::ldouble(a->getPoint().z);
+
+            lclValueVec *res = new lclValueVec(2);
+            res->at(0) = lcl::ename((unsigned long) a->getEntityId());
+            res->at(1) = lcl::list(ptn);
+            return lcl::list(res);
+        }
+    }
+
+    graphicView->killAllActions();
+
+    if (Lisp_CommandEdit != nullptr)
+    {
+        if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+        {
+            Lisp_CommandEdit->setPrompt("_$ ");
+        }
+        else
+        {
+            Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
         }
     }
 
@@ -2075,186 +2658,6 @@ BUILTIN("get_tile")
         }
     }
     return lcl::string("");
-}
-
-BUILTIN("getorient")
-{
-    /*
-     * independent of the variables ANGDIR
-     *
-     * getangle to getorient
-     * is only set as alias
-     * nomaly depends of the variables ANGDIR
-     * but is not implemented yet
-     *
-     */
-
-    int args = CHECK_ARGS_BETWEEN(0, 2);
-    QString prompt = QObject::tr("Enter second point: ");
-    double x=0, y=0, z=0;
-    Q_UNUSED(z)
-
-    if (args >= 1)
-    {
-        if (NIL_PTR)
-        {
-            argsBegin++;
-        }
-
-        if (argsBegin->ptr()->type() == LCLTYPE::STR)
-        {
-            ARG(lclString, msg);
-            prompt = QObject::tr(msg->value().c_str());
-        }
-
-        if (argsBegin->ptr()->type() == LCLTYPE::LIST)
-        {
-            ARG(lclSequence, ptn);
-            if (ptn->count() == 2)
-            {
-                if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
-                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
-                    (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
-                {
-                    if (ptn->item(0)->type() == LCLTYPE::REAL)
-                    {
-                        const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
-                        x = X->value();
-                    }
-                    if (ptn->item(0)->type() == LCLTYPE::INT)
-                    {
-                        const lclInteger *X = VALUE_CAST(lclInteger, ptn->item(0));
-                        x = double(X->value());
-                    }
-                    if (ptn->item(1)->type() == LCLTYPE::REAL)
-                    {
-                        const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
-                        y = Y->value();
-                    }
-                    if (ptn->item(1)->type() == LCLTYPE::INT)
-                    {
-                        const lclInteger *Y = VALUE_CAST(lclInteger, ptn->item(1));
-                        y = double(Y->value());
-                    }
-                }
-            }
-
-            if (ptn->count() == 3)
-            {
-                if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
-                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
-                    (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
-                {
-                    if (ptn->item(0)->type() == LCLTYPE::REAL)
-                    {
-                        const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
-                        x = X->value();
-                    }
-                    if (ptn->item(0)->type() == LCLTYPE::INT)
-                    {
-                        const lclInteger *X = VALUE_CAST(lclInteger, ptn->item(0));
-                        x = double(X->value());
-                    }
-                    if (ptn->item(1)->type() == LCLTYPE::REAL)
-                    {
-                        const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
-                        y = Y->value();
-                    }
-                    if (ptn->item(1)->type() == LCLTYPE::INT)
-                    {
-                        const lclInteger *Y = VALUE_CAST(lclInteger, ptn->item(1));
-                        y = double(Y->value());
-                    }
-
-                    if (ptn->item(2)->type() == LCLTYPE::REAL)
-                    {
-                        const lclDouble *Z = VALUE_CAST(lclDouble, ptn->item(2));
-                        z = Z->value();
-                    }
-                    if (ptn->item(2)->type() == LCLTYPE::INT)
-                    {
-                        const lclInteger *Z = VALUE_CAST(lclInteger, ptn->item(2));
-                        z = double(Z->value());
-                    }
-                }
-            }
-        }
-    }
-
-    auto& appWin = QC_ApplicationWindow::getAppWindow();
-    RS_Document* doc = appWin->getDocument();
-    RS_GraphicView* graphicView = appWin->getGraphicView();
-
-    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
-    {
-        return lcl::nilValue();
-    }
-
-    if (Lisp_CommandEdit != nullptr)
-    {
-        Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-        Lisp_CommandEdit->setFocus();
-    }
-
-    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
-    if (a)
-    {
-        QPointF *point = new QPointF;
-        QPointF *base = new QPointF(x, y);
-        bool status = false;
-
-        if (!(prompt.isEmpty()))
-        {
-            a->setMessage(prompt);
-        }
-        graphicView->killAllActions();
-        graphicView->setCurrentAction(a);
-
-        a->setBasepoint(base);
-
-        QEventLoop ev;
-        while (!a->isCompleted())
-        {
-            ev.processEvents ();
-            if (!graphicView->getEventHandler()->hasAction())
-                break;
-        }
-
-        if (a->isCompleted() && !a->wasCanceled())
-        {
-            a->getPoint(point);
-            status = true;
-        }
-        //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
-        graphicView->killAllActions();
-
-        if (Lisp_CommandEdit != nullptr)
-        {
-            if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
-            {
-                Lisp_CommandEdit->setPrompt("_$ ");
-            }
-            else
-            {
-                Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
-            }
-        }
-
-        if(status)
-        {
-            double rad = std::atan2(point->y() - y, point->x() - x);
-            delete point;
-            delete base;
-            return lcl::ldouble(rad);
-        }
-        else
-        {
-            delete point;
-            delete base;
-        }
-    }
-
-    return lcl::nilValue();
 }
 
 BUILTIN("getcorner")
@@ -2748,55 +3151,6 @@ BUILTIN("getint")
     }
 }
 
-BUILTIN("getreal")
-{
-    int args = CHECK_ARGS_BETWEEN(0, 1);
-    double x = 0;
-    QString prompt = "Enter a floating point number: ";
-    QString result;
-
-    if (args == 1)
-    {
-        ARG(lclString, str);
-        prompt = str->value().c_str();
-    }
-    if (Lisp_CommandEdit != nullptr)
-    {
-        while (1) {
-            Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-            Lisp_CommandEdit->setFocus();
-            Lisp_CommandEdit->doProcess(false);
-
-            result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit);
-            if (std::regex_match(qUtf8Printable(result), floatRegex))
-            {
-                x = result.toDouble();
-                break;
-            }
-        }
-
-        if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
-        {
-            Lisp_CommandEdit->setPrompt("_$ ");
-        }
-        else
-        {
-            Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
-        }
-        return lcl::ldouble(x);
-    }
-    else
-    {
-        x = QInputDialog::getDouble(nullptr,
-                "LibreCAD",
-                QObject::tr(qUtf8Printable(prompt)),
-                // double value = 0, double min = -2147483647, double max = 2147483647, int decimals = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), double step = 1)
-                0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags(), 1
-            );
-        return lcl::ldouble(x);
-    }
-}
-
 BUILTIN("getkword") {
     CHECK_ARGS_IS(1);
     ARG(lclString, msg);
@@ -2867,6 +3221,186 @@ BUILTIN("getkword") {
             if ((bit->value() & 1) != 1) {
                 return lcl::nilValue();
             }
+        }
+    }
+
+    return lcl::nilValue();
+}
+
+BUILTIN("getorient")
+{
+    /*
+     * independent of the variables ANGDIR
+     *
+     * getangle to getorient
+     * is only set as alias
+     * nomaly depends of the variables ANGDIR
+     * but is not implemented yet
+     *
+     */
+
+    int args = CHECK_ARGS_BETWEEN(0, 2);
+    QString prompt = QObject::tr("Enter second point: ");
+    double x=0, y=0, z=0;
+    Q_UNUSED(z)
+
+    if (args >= 1)
+    {
+        if (NIL_PTR)
+        {
+            argsBegin++;
+        }
+
+        if (argsBegin->ptr()->type() == LCLTYPE::STR)
+        {
+            ARG(lclString, msg);
+            prompt = QObject::tr(msg->value().c_str());
+        }
+
+        if (argsBegin->ptr()->type() == LCLTYPE::LIST)
+        {
+            ARG(lclSequence, ptn);
+            if (ptn->count() == 2)
+            {
+                if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
+                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
+                    (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
+                {
+                    if (ptn->item(0)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
+                        x = X->value();
+                    }
+                    if (ptn->item(0)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *X = VALUE_CAST(lclInteger, ptn->item(0));
+                        x = double(X->value());
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
+                        y = Y->value();
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Y = VALUE_CAST(lclInteger, ptn->item(1));
+                        y = double(Y->value());
+                    }
+                }
+            }
+
+            if (ptn->count() == 3)
+            {
+                if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
+                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
+                    (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
+                {
+                    if (ptn->item(0)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
+                        x = X->value();
+                    }
+                    if (ptn->item(0)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *X = VALUE_CAST(lclInteger, ptn->item(0));
+                        x = double(X->value());
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Y = VALUE_CAST(lclDouble, ptn->item(1));
+                        y = Y->value();
+                    }
+                    if (ptn->item(1)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Y = VALUE_CAST(lclInteger, ptn->item(1));
+                        y = double(Y->value());
+                    }
+
+                    if (ptn->item(2)->type() == LCLTYPE::REAL)
+                    {
+                        const lclDouble *Z = VALUE_CAST(lclDouble, ptn->item(2));
+                        z = Z->value();
+                    }
+                    if (ptn->item(2)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *Z = VALUE_CAST(lclInteger, ptn->item(2));
+                        z = double(Z->value());
+                    }
+                }
+            }
+        }
+    }
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_Document* doc = appWin->getDocument();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+
+    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
+    {
+        return lcl::nilValue();
+    }
+
+    if (Lisp_CommandEdit != nullptr)
+    {
+        Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+        Lisp_CommandEdit->setFocus();
+    }
+
+    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
+    if (a)
+    {
+        QPointF *point = new QPointF;
+        QPointF *base = new QPointF(x, y);
+        bool status = false;
+
+        if (!(prompt.isEmpty()))
+        {
+            a->setMessage(prompt);
+        }
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+
+        a->setBasepoint(base);
+
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!graphicView->getEventHandler()->hasAction())
+                break;
+        }
+
+        if (a->isCompleted() && !a->wasCanceled())
+        {
+            a->getPoint(point);
+            status = true;
+        }
+        //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
+        graphicView->killAllActions();
+
+        if (Lisp_CommandEdit != nullptr)
+        {
+            if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+            {
+                Lisp_CommandEdit->setPrompt("_$ ");
+            }
+            else
+            {
+                Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
+            }
+        }
+
+        if(status)
+        {
+            double rad = std::atan2(point->y() - y, point->x() - x);
+            delete point;
+            delete base;
+            return lcl::ldouble(rad);
+        }
+        else
+        {
+            delete point;
+            delete base;
         }
     }
 
@@ -3056,6 +3590,55 @@ BUILTIN("getpoint")
     }
 
     return lcl::nilValue();
+}
+
+BUILTIN("getreal")
+{
+    int args = CHECK_ARGS_BETWEEN(0, 1);
+    double x = 0;
+    QString prompt = "Enter a floating point number: ";
+    QString result;
+
+    if (args == 1)
+    {
+        ARG(lclString, str);
+        prompt = str->value().c_str();
+    }
+    if (Lisp_CommandEdit != nullptr)
+    {
+        while (1) {
+            Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+            Lisp_CommandEdit->setFocus();
+            Lisp_CommandEdit->doProcess(false);
+
+            result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit);
+            if (std::regex_match(qUtf8Printable(result), floatRegex))
+            {
+                x = result.toDouble();
+                break;
+            }
+        }
+
+        if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+        {
+            Lisp_CommandEdit->setPrompt("_$ ");
+        }
+        else
+        {
+            Lisp_CommandEdit->setPrompt(QObject::tr("Command: "));
+        }
+        return lcl::ldouble(x);
+    }
+    else
+    {
+        x = QInputDialog::getDouble(nullptr,
+                "LibreCAD",
+                QObject::tr(qUtf8Printable(prompt)),
+                // double value = 0, double min = -2147483647, double max = 2147483647, int decimals = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), double step = 1)
+                0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags(), 1
+            );
+        return lcl::ldouble(x);
+    }
 }
 
 BUILTIN("getstring")
@@ -5217,8 +5800,8 @@ BUILTIN("substr")
 BUILTIN("subst")
 {
     CHECK_ARGS_IS(3);
-    lclValuePtr oldSym = *argsBegin++;
     lclValuePtr newSym = *argsBegin++;
+    lclValuePtr oldSym = *argsBegin++;
     ARG(lclSequence, seq);
 
     const int length = seq->count();

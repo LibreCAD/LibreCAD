@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <map>
 #include <iostream>
+#include <sstream>
 
 #include <QWidget>
 #include <QDialog>
@@ -177,7 +178,9 @@ public:
 
     virtual String print(bool) const override {
         String name = "<Entity name: ";
-        name += std::to_string(m_value);
+        std::stringstream ss;
+        ss << std::uppercase << std::hex << m_value;
+        name += ss.str();
         name += ">";
         return name;
     }
