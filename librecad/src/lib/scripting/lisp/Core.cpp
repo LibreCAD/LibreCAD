@@ -37,6 +37,8 @@
 #include "intern/qc_actiongetcorner.h"
 #include "intern/qc_actionentsel.h"
 
+#include "rs_filterdxfrw.h"
+
 #ifdef DEVELOPER
 
 #include <stdio.h>
@@ -2183,6 +2185,107 @@ BUILTIN("entmake")
         }
 
     }
+    return lcl::nilValue();
+}
+
+BUILTIN("entmod")
+{
+    CHECK_ARGS_IS(1);
+    ARG(lclSequence, seq);
+    unsigned int entityId = 0;
+    bool found = false;
+
+    for (int i = 0; i < seq->count(); i++)
+    {
+        const lclList *list = VALUE_CAST(lclList, seq->item(i));
+
+        if (list->isDotted() && list->item(0)->print(true).compare("0") == 0)
+        {
+            const lclEname *ename = VALUE_CAST(lclEname, list->item(2));
+            entityId = ename->value();
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        return lcl::nilValue();
+    }
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+    RS_EntityContainer* entityContainer = graphicView->getContainer();
+
+
+    if(entityContainer->count())
+    {
+        for (auto entity: *entityContainer)
+        {
+            if (entity->getId() == entityId)
+            {
+                RS_Pen pen = entity->getPen();
+
+                for (int i = 0; i < seq->count(); i++)
+                {
+                    const lclList *list = VALUE_CAST(lclList, seq->item(i));
+
+                    // lineType
+                    if (list->isDotted() && list->item(0)->print(true).compare("6") == 0)
+                    {
+                        const lclString *ltype = VALUE_CAST(lclString, list->item(2));
+                        pen.setLineType(RS_FilterDXFRW::nameToLineType(ltype->value().c_str()));
+                        continue;
+                    }
+#if 0
+                    // TextStyle
+                    if (list->isDotted() && list->item(0)->print(true).compare("7") == 0)
+                    {
+                        const lclString *tstyle = VALUE_CAST(lclString, list->item(2));
+                        continue;
+                    }
+#endif
+                    // layer
+                    if (list->isDotted() && list->item(0)->print(true).compare("8") == 0)
+                    {
+                        const lclString *layer = VALUE_CAST(lclString, list->item(2));
+                        entity->setLayer(layer->value().c_str());
+                        continue;
+                    }
+
+                    // lineWidth
+                    if (list->isDotted() && list->item(0)->print(true).compare("48") == 0)
+                    {
+#if 0
+                        const lclDouble *lwidth = VALUE_CAST(lclDouble, list->item(2));
+                        pen.setWidth(lwidth->value());
+#endif
+                        continue;
+                    }
+
+                    // color
+                    if (list->isDotted() && list->item(0)->print(true).compare("62") == 0)
+                    {
+                        const lclInteger *color = VALUE_CAST(lclInteger, list->item(2));
+                        pen.setColor(RS_FilterDXFRW::numberToColor(color->value()));
+                        continue;
+                    }
+#if 0
+                    if (list->isDotted() && list->item(0)->print(true).compare("0") == 0)
+                    {
+                        continue;
+                    }
+#endif
+                }
+                break;
+            }
+        }
+    }
+    else
+    {
+        return lcl::nilValue();
+    }
+
     return lcl::nilValue();
 }
 

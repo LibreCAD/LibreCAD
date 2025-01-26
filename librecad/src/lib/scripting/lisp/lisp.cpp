@@ -869,6 +869,7 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                 case CENTERED:
                     list->vlayout()->setAlignment(Qt::AlignVCenter);
                     list->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
                 case HORIZONTAL:
                     list->hlayout()->setAlignment(Qt::AlignHCenter);
                     break;
@@ -1360,6 +1361,7 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                 case CENTERED:
                     b->vlayout()->setAlignment(Qt::AlignVCenter);
                     b->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
                 case HORIZONTAL:
                     b->hlayout()->setAlignment(Qt::AlignHCenter);
                     break;
@@ -1453,6 +1455,7 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                 case CENTERED:
                     b->vlayout()->setAlignment(Qt::AlignVCenter);
                     b->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
                 case HORIZONTAL:
                     b->hlayout()->setAlignment(Qt::AlignHCenter);
                     break;
@@ -1544,6 +1547,7 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                 case CENTERED:
                     lp->vlayout()->setAlignment(Qt::AlignVCenter);
                     lp->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
                 case HORIZONTAL:
                     lp->hlayout()->setAlignment(Qt::AlignHCenter);
                     break;
@@ -1657,6 +1661,7 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                 case CENTERED:
                     rb->vlayout()->setAlignment(Qt::AlignVCenter);
                     rb->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
                 case HORIZONTAL:
                     rb->hlayout()->setAlignment(Qt::AlignHCenter);
                     break;
@@ -1842,6 +1847,7 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                 case CENTERED:
                     b->vlayout()->setAlignment(Qt::AlignVCenter);
                     b->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
                 case HORIZONTAL:
                     b->hlayout()->setAlignment(Qt::AlignHCenter);
                     break;
@@ -2000,6 +2006,7 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                 case CENTERED:
                     sl->vlayout()->setAlignment(Qt::AlignVCenter);
                     sl->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
                 case HORIZONTAL:
                     sl->hlayout()->setAlignment(Qt::AlignHCenter);
                     break;
@@ -2207,6 +2214,7 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                 case CENTERED:
                     tb->vlayout()->setAlignment(Qt::AlignVCenter);
                     tb->hlayout()->setAlignment(Qt::AlignHCenter);
+                    break;
                 case HORIZONTAL:
                     tb->hlayout()->setAlignment(Qt::AlignHCenter);
                     break;
