@@ -584,12 +584,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="477"/>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished">從現有線段創建聚合線(&amp;S)</translation>
+        <translation>從現有線段創建聚合線(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="486"/>
         <source>&amp;MText</source>
-        <translation type="unfinished">多行文本 (&amp;M)</translation>
+        <translation>多行文本 (&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="492"/>
@@ -599,7 +599,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="499"/>
         <source>&amp;Hatch</source>
-        <translation type="unfinished">剖面線(&amp;H)</translation>
+        <translation>填充(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="506"/>
@@ -609,42 +609,42 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="515"/>
         <source>&amp;Aligned</source>
-        <translation type="unfinished">對齊(&amp;A)</translation>
+        <translation>對齊(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="522"/>
         <source>&amp;Linear</source>
-        <translation type="unfinished">線性(&amp;L)</translation>
+        <translation>線性(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="536"/>
         <source>&amp;Vertical</source>
-        <translation type="unfinished">垂直(&amp;V)</translation>
+        <translation>垂直(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="543"/>
         <source>&amp;Radial</source>
-        <translation type="unfinished">半徑(&amp;R)</translation>
+        <translation>半徑(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="550"/>
         <source>&amp;Diametric</source>
-        <translation type="unfinished">直徑(&amp;D)</translation>
+        <translation>直徑(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="557"/>
         <source>&amp;Angular</source>
-        <translation type="unfinished">角度(&amp;A)</translation>
+        <translation>角度(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="571"/>
         <source>&amp;Leader</source>
-        <translation type="unfinished">引線(&amp;L)</translation>
+        <translation>引線(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="580"/>
         <source>&amp;Attributes</source>
-        <translation type="unfinished">屬性(&amp;A)</translation>
+        <translation>屬性(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="588"/>
@@ -654,17 +654,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="595"/>
         <source>Delete Freehand</source>
-        <translation type="unfinished">刪除手繪</translation>
+        <translation>刪除手繪</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="602"/>
         <source>&amp;Move / Copy</source>
-        <translation type="unfinished">移動/複製(&amp;M)</translation>
+        <translation>移動/複製(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="610"/>
         <source>Re&amp;vert direction</source>
-        <translation type="unfinished">逆向 (&amp;v)</translation>
+        <translation>逆向 (&amp;v)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="612"/>
@@ -679,7 +679,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="626"/>
         <source>&amp;Scale</source>
-        <translation type="unfinished">縮放(&amp;S)</translation>
+        <translation>縮放(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -694,7 +694,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="656"/>
         <source>&amp;Properties</source>
-        <translation type="unfinished">性質(&amp;P)</translation>
+        <translation>性質(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="664"/>
@@ -709,22 +709,22 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="696"/>
         <source>&amp;Divide</source>
-        <translation type="unfinished">等分(&amp;D)</translation>
+        <translation>等分(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="704"/>
         <source>&amp;Stretch</source>
-        <translation type="unfinished">拉伸(&amp;S)</translation>
+        <translation>拉伸(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="712"/>
         <source>&amp;Bevel</source>
-        <translation type="unfinished">倒角(&amp;B)</translation>
+        <translation>倒角(&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="720"/>
         <source>&amp;Fillet</source>
-        <translation type="unfinished"></translation>
+        <translation>圓角(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="728"/>
@@ -4639,7 +4639,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1207"/>
         <source>Drawing unit.</source>
-        <translation>繪圖單位</translation>
+        <translation>繪圖單位。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="992"/>
@@ -6602,7 +6602,11 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>選取實體</translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選取實體數&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="153"/>
@@ -6611,7 +6615,11 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>選取實體線長</translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選取實體總長&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7504,7 +7512,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="2075"/>
         <source>PC Paint</source>
-        <translation>PC Paint</translation>
+        <translation>PC Paint .PIC 圖形檔案</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="2077"/>
@@ -7683,7 +7691,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="176"/>
         <source>Opened dwg file version %1.</source>
-        <translation>已打開DWG制圖版本%1</translation>
+        <translation>已打開DWG制圖版本%1。</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4017"/>
@@ -7927,7 +7935,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="177"/>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished">rect</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="251"/>
@@ -8011,7 +8019,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="697"/>
         <source>mtext</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished">mtext</translation>
+        <translation>多行文字</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="699"/>
@@ -12224,7 +12232,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="150"/>
         <source>Invalid number of copies, use %1 </source>
-        <translation>無效的份數，使用1％</translation>
+        <translation>無效副本數量，實際使用 %1 </translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="170"/>
@@ -12465,7 +12473,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="101"/>
         <source>No entity found. </source>
-        <translation>找不到物件。</translation>
+        <translation>找不到物件。 </translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="104"/>
@@ -12625,7 +12633,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="129"/>
         <source>Deleting point is invalid.</source>
-        <translation>刪除點無效</translation>
+        <translation>刪除點無效。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="132"/>
@@ -13240,7 +13248,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">繪製切圓的半徑</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;需要繪製的相切圓半徑&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="59"/>
@@ -13780,7 +13788,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="84"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">打印比例被鎖定的當前值</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;列印縮放係數已鎖定&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="87"/>
