@@ -729,42 +729,42 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="728"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation type="unfinished">將文字分解成字母(&amp;E)</translation>
+        <translation>將文字分解成字母(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="744"/>
         <source>Point inside contour</source>
-        <translation type="unfinished">輪廓內的點</translation>
+        <translation>輪廓內的點</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="750"/>
         <source>&amp;Distance Point to Point</source>
-        <translation type="unfinished">兩點之間的距離(&amp;D)</translation>
+        <translation>兩點之間的距離(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="757"/>
         <source>&amp;Distance Entity to Point</source>
-        <translation type="unfinished">物件到點的距離(&amp;D)</translation>
+        <translation>物件到點的距離(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="764"/>
         <source>An&amp;gle between two lines</source>
-        <translation type="unfinished">兩線之間角度 (&amp;g)</translation>
+        <translation>兩線之間角度 (&amp;g)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="771"/>
         <source>&amp;Total length of selected entities</source>
-        <translation type="unfinished">選取物件的總長度(&amp;T)</translation>
+        <translation>選取物件的總長度(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="778"/>
         <source>Polygonal &amp;Area</source>
-        <translation type="unfinished">多邊形面積 (&amp;A)</translation>
+        <translation>多邊形面積 (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1238"/>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished">選擇指向</translation>
+        <translation>選擇指針(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1248"/>
@@ -799,52 +799,52 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1009"/>
         <source>Widget Options</source>
-        <translation type="unfinished"></translation>
+        <translation>窗體選項</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1015"/>
         <source>Device Options</source>
-        <translation type="unfinished"></translation>
+        <translation>設備選項</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1157"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>左</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1166"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>右</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1175"/>
         <source>Top</source>
-        <translation type="unfinished">頂向</translation>
+        <translation>頂部</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1184"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>底部</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1193"/>
         <source>Floating</source>
-        <translation type="unfinished"></translation>
+        <translation>浮動</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1202"/>
         <source>Reload Style Sheet</source>
-        <translation type="unfinished"></translation>
+        <translation>重置樣式表</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="805"/>
         <source>lower after entity</source>
-        <translation type="unfinished">移至實體後</translation>
+        <translation>移至物件下方</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="813"/>
         <source>raise over entity</source>
-        <translation type="unfinished">升至實體前</translation>
+        <translation>升至物件上方</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="821"/>
@@ -859,7 +859,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="866"/>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>移除圖層(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
@@ -869,7 +869,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="880"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished">切換圖層鎖定 (&amp;k)</translation>
+        <translation>切換圖層鎖定 (&amp;k)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="887"/>
@@ -884,7 +884,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="901"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>是否為構造圖層(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="934"/>
@@ -964,7 +964,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1050"/>
         <source>Invert Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>反選</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1305"/>
@@ -1019,7 +1019,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1075"/>
         <source>&amp;Export as image</source>
-        <translation type="unfinished"></translation>
+        <translation>導出為影像(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1081"/>
@@ -1029,7 +1029,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1418"/>
         <source>Save A&amp;ll...</source>
-        <translation type="unfinished"></translation>
+        <translation>全部保存(&amp;L)...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1428"/>
@@ -1039,7 +1039,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1096"/>
         <source>Export as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>匯出為PDF</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1439"/>
