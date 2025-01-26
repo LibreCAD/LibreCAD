@@ -49,7 +49,7 @@ find_package(Boost REQUIRED COMPONENTS)
 
 include_directories(${MIN_GW_PATH_PREFIX}\\include\\QtSvg)
 
-include_directories(${Boost_INCLUDE_DIR})
+include_directories(${Boost_INCLUDE_DIRS})
 
 include_directories(librecad/res/actions)
 include_directories(librecad/res/extui)
@@ -1504,6 +1504,13 @@ qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES ar ca cs da de el en_au en e
 qt_add_executable(librecad
 	${SOURCES})
 
+# add constants like M_PI to cmath
+if(WIN32)
+    target_compile_definitions(librecad PRIVATE _USE_MATH_DEFINES)
+endif(WIN32)
+
+
+
 #add_executable(LibreCAD ${SOURCES})
 target_link_libraries(librecad PRIVATE Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt::Network)
 
@@ -1582,6 +1589,7 @@ set(TS_FILES
 )
 
 qt_add_translations(librecad TS_FILE_DIR ${TS_DIR} TS_FILES ${TS_FILES})
+install(TARGETS librecad RUNTIME DESTINATION bin)
 #set(autouic_options
 #		--connections string
 #)

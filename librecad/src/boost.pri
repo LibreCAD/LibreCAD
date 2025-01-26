@@ -81,7 +81,7 @@ unix {
 
     isEmpty( BOOST_DIR ) {
 
-        BOOST_DIR = $$findBoostDirIn( /usr /usr/local /usr/pkg /opt/local /opt/homebrew /opt/homebrew/Cellar)
+        BOOST_DIR = $$findBoostDirIn($${INSTALL_PREFIX} /usr /usr/local /usr/pkg /opt/local /opt/homebrew /opt/homebrew/Cellar )
 
         isEmpty( BOOST_DIR ) {
             error( Boost installation not found. )
