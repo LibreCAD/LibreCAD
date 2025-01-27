@@ -387,7 +387,7 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{secrets.GITHUB_TOKEN}}"
-          automatic_release_tag: "2.2.1_rc-latest"
+          automatic_release_tag: "2.2.1.1_rc-latest"
           prerelease: true
           draft: false
           title: "Release Candidate"
