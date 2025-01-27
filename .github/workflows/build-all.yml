@@ -393,7 +393,7 @@ jobs:
           title: "Release Candidate"
           files: |
             linuxAssets/LibreCAD*.AppImage
-            linuxAssetsAarch64/LibreCAD*.AppImage
+            linuxAarch64Assets/LibreCAD*.AppImage
             macOSAssets/LibreCAD*.dmg
             win*Assets/LibreCAD*.exe
             snapAssets/LibreCAD*.snap
