@@ -33,6 +33,7 @@
 #include "rs_undo.h"
 #include "lc_viewslist.h"
 #include "lc_ucslist.h"
+#include "rs_graphicview.h"
 
 class RS_BlockList;
 class RS_LayerList;

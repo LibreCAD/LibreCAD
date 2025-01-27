@@ -137,7 +137,7 @@ RS_Entity *RS_EntityContainer::clone() const {
     return ec;
 }
 
-RS_Entity *RS_EntityContainer::cloneProxy(RS_GraphicView *view) const {
+RS_Entity *RS_EntityContainer::cloneProxy(LC_GraphicViewport *view) const {
     RS_DEBUG->print("RS_EntityContainer::cloneproxy: ori autoDel: %d",
                     autoDelete);
 

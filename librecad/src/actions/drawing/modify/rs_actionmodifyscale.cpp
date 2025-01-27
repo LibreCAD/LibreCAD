@@ -78,7 +78,7 @@ void RS_ActionModifyScale::doTrigger(bool keepSelected) {
     if (pPoints->data.isotropicScaling){
         pPoints->data.factor.y = pPoints->data.factor.x;
     }
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, viewport);
     m.scale(pPoints->data, selectedEntities, false, keepSelected);
 }
 
@@ -212,7 +212,7 @@ void RS_ActionModifyScale::showPreview(){
 }
 
 void RS_ActionModifyScale::showPreview(RS_ScaleData &previewData) {
-    RS_Modification m(*preview, graphicView, false);
+    RS_Modification m(*preview, viewport, false);
     m.scale(previewData, selectedEntities, true, false);
 
     if (showRefEntitiesOnPreview) {

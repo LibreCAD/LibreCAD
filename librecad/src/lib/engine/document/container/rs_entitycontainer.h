@@ -261,7 +261,7 @@ public:
 
     void drawAsChild(RS_Painter *painter) override;
 
-    RS_Entity *cloneProxy(RS_GraphicView *view) const override;
+    RS_Entity *cloneProxy(LC_GraphicViewport *view) const override;
 
 protected:
     /**

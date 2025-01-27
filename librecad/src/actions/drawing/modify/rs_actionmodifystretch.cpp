@@ -56,7 +56,7 @@ RS_ActionModifyStretch::~RS_ActionModifyStretch() = default;
 void RS_ActionModifyStretch::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyStretch::trigger()");
 
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, viewport);
     m.stretch(pPoints->firstCorner,
               pPoints->secondCorner,
               pPoints->targetPoint - pPoints->referencePoint, removeOriginals);
@@ -102,7 +102,7 @@ void RS_ActionModifyStretch::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 mouse= getSnapAngleAwarePoint(e, pPoints->referencePoint, mouse, true);
                 pPoints->targetPoint = mouse;
                 // fixme - isn't it more reliable to rely on RS_Modification::stretch there?
-                preview->addStretchablesFrom(*container, graphicView, pPoints->firstCorner, pPoints->secondCorner);
+                preview->addStretchablesFrom(*container, viewport, pPoints->firstCorner, pPoints->secondCorner);
                 const RS_Vector &offset = pPoints->targetPoint - pPoints->referencePoint;
                 preview->stretch(pPoints->firstCorner, pPoints->secondCorner,offset);
                 if (showRefEntitiesOnPreview) {

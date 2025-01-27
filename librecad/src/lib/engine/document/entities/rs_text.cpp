@@ -58,7 +58,6 @@
 #include "rs_insert.h"
 #include "rs_math.h"
 #include "rs_debug.h"
-#include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_painter.h"
 
@@ -559,7 +558,7 @@ std::ostream& operator << (std::ostream& os, const RS_Text& p) {
     return os;
 }
 
-RS_Entity *RS_Text::cloneProxy(RS_GraphicView* view) const {
+RS_Entity *RS_Text::cloneProxy(LC_GraphicViewport* view) const {
     // fixme - sand - ucs - restore
     /*if (view->isDrawTextsAsDraftForPreview()) {
         return new RS_Line(nullptr, baselineStartPoint, baselineEndPoint);

@@ -67,7 +67,7 @@ void RS_ActionModifyRotate::selectionCompleted(bool singleEntity, bool fromInit)
 void RS_ActionModifyRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyRotate::trigger()");
     moveRelativeZero(data->center);
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, viewport);
     m.rotate(*data, selectedEntities, false, keepSelected);
 }
 
@@ -103,7 +103,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
                 if (!freeAngle){
                     RS_RotateData tmpData = *data;
                     tmpData.refPoint = mouse;
-                    RS_Modification m(*preview, graphicView, false);
+                    RS_Modification m(*preview, viewport, false);
                     m.rotate(tmpData, selectedEntities, true, false);
                     previewRotationCircleAndPoints(data->center, mouse, data->angle);
                 }
@@ -127,7 +127,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
                 if (!freeAngle){
                     RS_RotateData tmpData = *data;
                     tmpData.center = mouse;
-                    RS_Modification m(*preview, graphicView, false);
+                    RS_Modification m(*preview, viewport, false);
                     m.rotate(tmpData, selectedEntities, true, false);
                     previewRotationCircleAndPoints(mouse, data->refPoint, data->angle);
                 }
@@ -170,7 +170,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
             RS_RotateData tmpData = *data;
             tmpData.angle = rotationAngle;
 
-            RS_Modification m(*preview, graphicView, false);
+            RS_Modification m(*preview, viewport, false);
             m.rotate(tmpData, selectedEntities, true, false);
 
             // todo - sand - we can temporarily add a copy of circle to the document, so intersection snap for target reference point will work.
@@ -205,7 +205,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
             RS_RotateData tmpData = *data;
             tmpData.secondAngle = secondRotationAngle;
 
-            RS_Modification m(*preview, graphicView, false);
+            RS_Modification m(*preview, viewport, false);
             m.rotate(tmpData, selectedEntities, true, false);
 
             currentAngle2 = secondRotationAngle;

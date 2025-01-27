@@ -54,7 +54,7 @@ void RS_ActionModifyRotate2::init(int status) {
 
 void RS_ActionModifyRotate2::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyRotate2::trigger()");
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, viewport);
     m.rotate2(*data, selectedEntities,false, keepSelected);
     finish(false);
 }
@@ -70,7 +70,7 @@ void RS_ActionModifyRotate2::onMouseMoveEventSelected(int status, LC_MouseEvent 
             if (data->center1.valid){
                 mouse = getSnapAngleAwarePoint(e, data->center1, mouse, true);
                 data->center2 = mouse;
-                RS_Modification m(*preview, graphicView, false);
+                RS_Modification m(*preview, viewport, false);
                 m.rotate2(*data, selectedEntities, true, false);
 
                 if (showRefEntitiesOnPreview) {

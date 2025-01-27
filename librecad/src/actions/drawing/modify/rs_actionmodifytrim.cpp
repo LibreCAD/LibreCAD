@@ -65,7 +65,7 @@ void RS_ActionModifyTrim::doTrigger() {
     if (trimEntity && trimEntity->isAtomic() &&
         limitEntity /* && limitEntity->isAtomic()*/) {
 
-        RS_Modification m(*container, graphicView);
+        RS_Modification m(*container, viewport);
         [[maybe_unused]] LC_TrimResult trimResult =  m.trim(pPoints->trimCoord,  trimEntity,
                pPoints->limitCoord, /*(RS_AtomicEntity*)*/limitEntity,
                both);
@@ -100,7 +100,7 @@ void RS_ActionModifyTrim::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
                     auto *atomicTrimCandidate = dynamic_cast<RS_AtomicEntity *>(se);
 
-                    RS_Modification m(*container, graphicView);
+                    RS_Modification m(*container, viewport);
                     LC_TrimResult trimResult = m.trim(mouse, atomicTrimCandidate,
                                                       pPoints->limitCoord, limitEntity,
                                                       both, true);

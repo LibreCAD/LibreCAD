@@ -1051,7 +1051,7 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
     QString s;
     s = QFileInfo(data.file).completeBaseName();
 
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, viewport);
     m.paste( RS_PasteData(data.insertionPoint,data.factor, data.angle, true,s),&g);
 
     RS_DEBUG->print("RS_Creation::createLibraryInsert: OK");

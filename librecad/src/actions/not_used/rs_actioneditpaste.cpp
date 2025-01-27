@@ -58,7 +58,7 @@ void RS_ActionEditPaste::init(int status) {
 void RS_ActionEditPaste::trigger() {
     deletePreview();
 
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, viewport);
     m.paste(RS_PasteData(*targetPoint, 1.0, 0.0, false, ""));
 
     redrawDrawing();
@@ -73,7 +73,7 @@ void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
         case SetTargetPoint: {
             *targetPoint = snapPoint(e);
 
-            preview->addAllFrom(*RS_CLIPBOARD->getGraphic(), graphicView);
+            preview->addAllFrom(*RS_CLIPBOARD->getGraphic(), viewport);
             preview->move(*targetPoint);
 
             if (graphic) {

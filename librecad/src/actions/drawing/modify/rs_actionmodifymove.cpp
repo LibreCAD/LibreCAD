@@ -53,7 +53,7 @@ RS_ActionModifyMove::~RS_ActionModifyMove() = default;
 
 void RS_ActionModifyMove::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMove::trigger()");
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, viewport);
     m.move(pPoints->data, selectedEntities, false, keepSelected);
     finish(false);
 }
@@ -75,7 +75,7 @@ void RS_ActionModifyMove::onMouseMoveEventSelected(int status, LC_MouseEvent *e)
                 const RS_Vector &offset = pPoints->targetPoint - pPoints->referencePoint;
                 pPoints->data.offset = offset;
 
-                RS_Modification m(*preview, graphicView, false);
+                RS_Modification m(*preview, viewport, false);
                 m.move(pPoints->data, selectedEntities, true, false);
 
                 if (e->isShift){

@@ -53,7 +53,7 @@ RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate() = default;
 
 void RS_ActionModifyMoveRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMoveRotate::trigger()");
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, viewport);
 	   m.moveRotate(pPoints->data, selectedEntities, false, keepSelected);
     pPoints->targetPoint = RS_Vector(false);
     finish(false);
@@ -71,7 +71,7 @@ void RS_ActionModifyMoveRotate::onMouseMoveEventSelected(int status, LC_MouseEve
             if (pPoints->data.referencePoint.valid) {
                 mouse = getSnapAngleAwarePoint(e, pPoints->data.referencePoint, mouse, true);
                 pPoints->data.offset = mouse - pPoints->data.referencePoint;
-                RS_Modification m(*preview, graphicView);
+                RS_Modification m(*preview, viewport);
                 m.moveRotate(pPoints->data, selectedEntities, true, false);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->data.referencePoint);
@@ -96,7 +96,7 @@ void RS_ActionModifyMoveRotate::onMouseMoveEventSelected(int status, LC_MouseEve
                 mouse = getSnapAngleAwarePoint(e, pPoints->targetPoint, mouse, true);
                 double angle = pPoints->targetPoint.angleTo(mouse);
                 pPoints->data.angle = angle;
-                RS_Modification m(*preview, graphicView);
+                RS_Modification m(*preview, viewport);
                 m.moveRotate(pPoints->data, selectedEntities, true);
                 if (showRefEntitiesOnPreview) {
                     previewRefPoint(pPoints->data.referencePoint);

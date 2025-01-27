@@ -36,7 +36,6 @@
 #include "rs_creation.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
-#include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_information.h"
 #include "rs_insert.h"
@@ -50,6 +49,7 @@
 #include "lc_splinepoints.h"
 #include "lc_undosection.h"
 #include "lc_linemath.h"
+#include "lc_graphicviewport.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -230,12 +230,11 @@ RS_PasteData::RS_PasteData(RS_Vector _insertionPoint,
  * @param handleUndo true: Handle undo functionalitiy.
  */
 RS_Modification::RS_Modification(RS_EntityContainer& container,
-                                 RS_GraphicView* graphicView,
+                                 LC_GraphicViewport* vp,
                                  bool handleUndo) {
     this->container = &container;
-    this->graphicView = graphicView;
     this->handleUndo = handleUndo;
-    viewport = graphicView->getViewPort();
+    viewport = vp;
     graphic = container.getGraphic();
     document = container.getDocument();
 }
@@ -385,11 +384,7 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data, const std::vecto
     }
 
     cont->calculateBorders();
-
-    if (graphicView){
-        graphicView->redraw();
-    }
-
+    viewport->notifyChanged();
     return true;
 }
 
@@ -533,10 +528,7 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
         e->setSelected(false);
     }
 
-    if (graphicView){
-        graphicView->redraw();
-    }
-
+    viewport->notifyChanged();
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: OK");
 }
 
@@ -874,8 +866,6 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
     return true;
 }
 
-
-
 /**
  * Paste entity in supplied container
  *
@@ -966,17 +956,17 @@ bool RS_Modification::splitPolyline(RS_Polyline& polyline,
         *polyline2 = pl2;
     }
 
-	for(auto e: polyline){
+    for(auto e: polyline){
 
         if (e->rtti()==RS2::EntityLine) {
             line = (RS_Line*)e;
-			arc = nullptr;
+            arc = nullptr;
         } else if (e->rtti()==RS2::EntityArc) {
             arc = (RS_Arc*)e;
-			line = nullptr;
+            line = nullptr;
         } else {
-			line = nullptr;
-			arc = nullptr;
+            line = nullptr;
+            arc = nullptr;
         }
 
         if (line /*|| arc*/) {
@@ -1056,8 +1046,7 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
     // copy polyline and add new node:
     bool first = true;
     RS_Entity* lastEntity = polyline.lastEntity();
-	for(auto e: polyline){
-
+    for(auto e: polyline){
         if (e->isAtomic()) {
             auto ae = (RS_AtomicEntity*)e;
             double bulge = 0.0;
@@ -1091,7 +1080,7 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
                 RS_DEBUG->print("RS_Modification::addPolylineNode: after node: %f/%f",
                                 ae->getEndpoint().x, ae->getEndpoint().y);
 
-				if (ae!=lastEntity || !polyline.isClosed()) {
+                if (ae!=lastEntity || !polyline.isClosed()) {
                     newPolyline->setNextBulge(0.0);
                     newPolyline->addVertex(ae->getEndpoint());
                 }
@@ -1099,7 +1088,7 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
                 RS_DEBUG->print("RS_Modification::addPolylineNode: normal vertex found: %f/%f",
                                 ae->getEndpoint().x, ae->getEndpoint().y);
 
-				if (ae!=lastEntity || !polyline.isClosed()) {
+                if (ae!=lastEntity || !polyline.isClosed()) {
                     newPolyline->setNextBulge(bulge);
                     newPolyline->addVertex(ae->getEndpoint());
                 }
@@ -1124,134 +1113,10 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
         undo.addUndoable(newPolyline);
     }
 
-    if (graphicView){
-        graphicView->redraw();
-    }
+    viewport->notifyChanged();
 
     return newPolyline;
 }
-
-
-
-/*
-    Deletes a node from a set of lines, as if it were a polyline; and if no other
-    lines are near the selected node/point, then it deletes the line itself.
-
-    - by Melwyn Francis Carlo
-*/
-void RS_Modification::deleteLineNode(RS_Line* line, const RS_Vector& node)
-{
-    RS_DEBUG->print("RS_Modification::deleteLineNode");
-
-	if (!container)
-    {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::deleteLineNode: no valid container");
-		return;
-    }
-
-	if (!node.valid)
-    {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::deleteLineNode: node not valid");
-		return;
-    }
-
-
-    bool nodeIsStartPoint { true };
-
-    if (node == line->getEndpoint()) nodeIsStartPoint = false;
-
-
-    for (unsigned int i = 0; i < document->count(); i++) // fixme - iterating over all entities
-    {
-        if (document->entityAt(i)->rtti() == RS2::EntityLine)
-        {
-            RS_DEBUG->print("RS_Modification::deleteLineNode: connecting (another) line found");
-
-            auto *anotherLine = (RS_Line *) (document->entityAt(i));
-
-            if (line == anotherLine) continue;
-
-            RS_Vector startEndPoints[2] { line->getStartpoint(), line->getEndpoint() };
-
-            if (nodeIsStartPoint)
-            {
-                RS_DEBUG->print("RS_Modification::deleteLineNode: node is original line's start point");
-
-                if (node.distanceTo(anotherLine->getStartpoint()) < RS_TOLERANCE)
-                {
-                    startEndPoints[0] = anotherLine->getEndpoint();
-                }
-                else if (node.distanceTo(anotherLine->getEndpoint()) < RS_TOLERANCE)
-                {
-                    startEndPoints[0] = anotherLine->getStartpoint();
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            else
-            {
-                RS_DEBUG->print("RS_Modification::deleteLineNode: node is original line's end point");
-
-                if (node.distanceTo(anotherLine->getStartpoint()) < RS_TOLERANCE)
-                {
-                    startEndPoints[1] = anotherLine->getEndpoint();
-                }
-                else if (node.distanceTo(anotherLine->getEndpoint()) < RS_TOLERANCE)
-                {
-                    startEndPoints[1] = anotherLine->getStartpoint();
-                }
-                else
-                {
-                    continue;
-                }
-            }
-
-
-            RS_DEBUG->print("RS_Modification::deleteLineNode: adding new line and deleting another line");
-
-            RS_Line* newLine { new RS_Line(container, startEndPoints[0], startEndPoints[1]) };
-
-            newLine->setLayer(line->getLayer());
-            newLine->setPen(line->getPen(false));
-
-            container->addEntity(newLine);
-
-            RS_DEBUG->print("RS_Modification::deleteLineNode: handling new and another line's undo");
-
-            if (handleUndo) {
-                LC_UndoSection undo(document, viewport);
-
-                newLine->setUndoState(false);
-                anotherLine->setUndoState(true);
-
-                undo.addUndoable(newLine);
-                undo.addUndoable(anotherLine);
-            }
-
-            break;
-        }
-    }
-
-    RS_DEBUG->print("RS_Modification::deleteLineNode: handling original line's undo");
-
-    if (handleUndo)
-    {
-        LC_UndoSection undo(document, viewport);
-        line->setUndoState(true);
-        undo.addUndoable(line);
-    }
-
-    if (graphicView){
-        graphicView->redraw();
-    }
-
-    RS_DEBUG->print("RS_Modification::deleteLineNode: OK");
-}
-
-
-
 
 /**
  * Deletes a node from a polyline.
@@ -1379,9 +1244,7 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
             undo.addUndoable(newPolyline);
         }
     }
-    if (graphicView){
-        graphicView->redraw();
-    }
+    viewport->notifyChanged();
     return newPolyline;
 }
 
@@ -1596,9 +1459,7 @@ RS_Polyline *RS_Modification::deletePolylineNodesBetween(
             undo.addUndoable(newPolyline);
         }
     }
-    if (graphicView){
-        graphicView->redraw();
-    }
+    viewport->notifyChanged();
     return newPolyline;
 }
 
@@ -1831,9 +1692,7 @@ RS_Polyline *RS_Modification::polylineTrim(
         }
     }
 
-    if (graphicView){
-        graphicView->redraw();
-    }
+    viewport->notifyChanged();
     return newPolyline;
 }
 
@@ -1861,7 +1720,7 @@ bool RS_Modification::move(RS_MoveData& data, const std::vector<RS_Entity*> &ent
     for(auto e: entitiesList){
         // Create new entities
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(graphicView) : e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(viewport) : e->clone();
             ec->move(data.offset*num);
             clonesList.push_back(ec);
         }
@@ -1880,7 +1739,7 @@ void RS_Modification::setupModifiedClones(
         RS_Layer* layer = nullptr;
         RS_Pen pen;
         if (data.useCurrentLayer) {
-            layer = graphicView->getGraphic()->getActiveLayer();
+            layer = viewport->getGraphic()->getActiveLayer();
         }
         if (data.useCurrentAttributes) {
             pen = document->getActivePen();
@@ -1915,7 +1774,7 @@ bool RS_Modification::alignRef(LC_AlignRefData & data, const std::vector<RS_Enti
     for(auto e: entitiesList){
         // Create new entities
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(graphicView) : e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(viewport) : e->clone();
 
             ec->rotate(data.rotationCenter, data.rotationAngle);
 
@@ -2004,7 +1863,7 @@ bool RS_Modification::rotate(RS_RotateData& data, const std::vector<RS_Entity*> 
     int numberOfCopies = data.obtainNumberOfCopies();
     for (auto e: entitiesList) {
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(graphicView) : e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(viewport) : e->clone();
 
             double rotationAngle = data.angle * num;
             ec->rotate(data.center, rotationAngle);
@@ -2090,7 +1949,7 @@ bool RS_Modification::scale(RS_ScaleData& data, const std::vector<RS_Entity*> &e
     for(RS_Entity* e: selectedList) {
         if (e != nullptr) {
             for (int num= 1; num <= numberOfCopies; num++) {
-                RS_Entity* ec = forPreviewOnly ? e->cloneProxy(graphicView) : e->clone();
+                RS_Entity* ec = forPreviewOnly ? e->cloneProxy(viewport) : e->clone();
                 ec->scale(data.referencePoint, RS_Math::pow(data.factor, num));
                 clonesList.push_back(ec);
             }
@@ -2129,10 +1988,8 @@ bool RS_Modification::mirror(RS_MirrorData& data, const std::vector<RS_Entity*> 
 
     for(auto e: entitiesList){
         for (int num=1; num<=numberOfCopies; ++num) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(graphicView) : e->clone();
-
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(viewport) : e->clone();
             ec->mirror(data.axisPoint1, data.axisPoint2);
-
             clonesList.push_back(ec);
         }
     }
@@ -2167,7 +2024,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data, const std::vector<RS_Entity*
 
     for(auto e: entitiesList){
         for (int num= 1; num <= numberOfCopies; num++) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(graphicView) : e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(viewport) : e->clone();
 
             double angle1ForCopy = /*data.sameAngle1ForCopies ?  data.angle1 :*/ data.angle1 * num;
             double angle2ForCopy = data.sameAngle2ForCopies ?  data.angle2 : data.angle2 * num;
@@ -2226,7 +2083,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData &data, const std::vector<RS_E
     // Create new entities
     for(auto e: entitiesList){
         for (int num=1; num <= numberOfCopies; ++num) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(graphicView) : e->clone();
+            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(viewport) : e->clone();
 
             const RS_Vector &offset = data.offset * num;
             ec->move(offset);
@@ -2296,9 +2153,7 @@ void RS_Modification::addNewEntities(const std::vector<RS_Entity*>& addList, boo
 
     container->calculateBorders();
 
-    if (graphicView) { // fixme - remove
-        graphicView->redraw(RS2::RedrawDrawing);
-    }
+    viewport->notifyChanged();
 }
 
 /**
@@ -2447,9 +2302,7 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
         result.intersection2 = trimmed1->getEndpoint();
     }
 
-    if (graphicView != nullptr){
-        graphicView->redraw();
-    }
+    viewport->notifyChanged();
     return result;
 }
 
@@ -2538,9 +2391,7 @@ RS_Entity* RS_Modification::trimAmount(const RS_Vector& trimCoord,
             undo.addUndoable(trimEntity);
         }
     }
-    if (graphicView != nullptr){
-        graphicView->redraw();
-    }
+    viewport->notifyChanged();
     return trimmed;
 }
 
@@ -2664,9 +2515,7 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
         undo.addUndoable(cutEntity);
     }
 
-    if (graphicView){
-        graphicView->redraw();
-    }
+    viewport->notifyChanged();
 
     return true;
 }
@@ -2992,12 +2841,8 @@ LC_BevelResult* RS_Modification::bevel(
         RS_DEBUG->print("RS_Modification::bevel: delete trimmed elements: ok");
     }
 
-    if (graphicView){
-        graphicView->redraw();
-    }
-
+    viewport->notifyChanged();
     return result;
-
 }
 
 
@@ -3227,10 +3072,7 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
     delete par1;
     delete par2;
 
-    if (graphicView){
-        graphicView->redraw();
-    }
-
+    viewport->notifyChanged();
     return result;
 }
 

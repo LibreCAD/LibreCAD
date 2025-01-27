@@ -75,7 +75,7 @@ void RS_ActionDrawLineFree::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         }
         auto ent = static_cast<RS_Polyline*>(polyline->addVertex(v));
         if (ent->count()){
-            preview->addCloneOf(ent, graphicView);
+            preview->addCloneOf(ent, viewport);
             drawPreview();
         }
 

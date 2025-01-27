@@ -327,7 +327,7 @@ void RS_ActionDefault::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 }
                 case RS2::EntityArc: {
                     auto *refMovingArc = dynamic_cast<RS_Arc *>(refMovingEntity);
-                    auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->cloneProxy(graphicView));
+                    auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->cloneProxy(viewport));
 
                     const RS_Vector &arcCenter = refMovingArc->getCenter();
                     const RS_Vector &arcMiddle = refMovingArc->getMiddlePoint();
@@ -445,7 +445,7 @@ void RS_ActionDefault::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 case RS2::EntityCircle:{
                     // fixme -sand - add morphing of circle to ellipse
                     auto *refMovingCircle = dynamic_cast<RS_Circle *>(refMovingEntity);
-                    auto *clone = dynamic_cast<RS_Circle *>(refMovingCircle->cloneProxy(graphicView));
+                    auto *clone = dynamic_cast<RS_Circle *>(refMovingCircle->cloneProxy(viewport));
                     pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
 
                     if (showRefEntitiesOnPreview) {
@@ -508,7 +508,7 @@ void RS_ActionDefault::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
             updateCoordinateWidgetByRelZero(pPoints->v2);
 
-            preview->addSelectionFrom(*container,graphicView);
+            preview->addSelectionFrom(*container,viewport);
             const RS_Vector &offset = pPoints->v2 - pPoints->v1;
             preview->move(offset);
 
@@ -610,7 +610,7 @@ void RS_ActionDefault::onMouseLeftButtonPress(int status, LC_MouseEvent *e) {
             pPoints->v2 = e->snapPoint;
             pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, pPoints->v2);
             deletePreview();
-            RS_Modification m(*container, graphicView);
+            RS_Modification m(*container, viewport);
             RS_MoveData data;
             data.number = 0;
             data.useCurrentLayer = false;

@@ -150,7 +150,7 @@ void RS_ActionModifyRound::doTrigger() {
             }
         }
 
-        RS_Modification m(*container, graphicView);
+        RS_Modification m(*container, viewport);
         m.round(pPoints->coord2,
                 pPoints->coord1,
                 (RS_AtomicEntity *) entity1,

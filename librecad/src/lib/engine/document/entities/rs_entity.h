@@ -41,7 +41,6 @@ class RS_Circle;
 class RS_Document;
 class RS_EntityContainer;
 class RS_Graphic;
-class RS_GraphicView;
 class RS_Insert;
 class RS_Line;
 class RS_Painter;
@@ -52,6 +51,7 @@ class RS_Layer;
 class LC_Quadratic;
 class RS_Vector;
 class RS_VectorSolutions;
+class LC_GraphicViewport;
 class QString;
 
 /**
@@ -65,7 +65,7 @@ public:
     void init();
     virtual void initId();
     virtual RS_Entity *clone() const = 0;
-    virtual RS_Entity *cloneProxy(RS_GraphicView *view) const;
+    virtual RS_Entity *cloneProxy(LC_GraphicViewport *view) const;
 
     virtual void reparent(RS_EntityContainer *parent){
         this->parent = parent;

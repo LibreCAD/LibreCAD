@@ -35,7 +35,7 @@ LC_ActionModifyAlignRef::LC_ActionModifyAlignRef(RS_EntityContainer &container, 
 
 void LC_ActionModifyAlignRef::doTrigger(bool keepSelected) {
     prepareAlignRefData(pPoints.targetPoint2);
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, viewport);
     m.alignRef(pPoints.data, selectedEntities, false, keepSelected);
     finish(false);
 }
@@ -77,7 +77,7 @@ void LC_ActionModifyAlignRef::onMouseMoveEventSelected(int status, LC_MouseEvent
 
             prepareAlignRefData(snap);
 
-            RS_Modification m(*preview, graphicView, false);
+            RS_Modification m(*preview, viewport, false);
             m.alignRef(pPoints.data, selectedEntities, true, true);
 
             if (isInfoCursorForModificationEnabled()) {

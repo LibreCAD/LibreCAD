@@ -263,7 +263,7 @@ protected:
      */
     double usedTextHeight = 0.;
     void rotateLinesRefs() const;
-    RS_Entity *cloneProxy(RS_GraphicView* view) const override;
+    RS_Entity *cloneProxy(LC_GraphicViewport* view) const override;
 };
 
 #endif

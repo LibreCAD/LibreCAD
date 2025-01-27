@@ -65,7 +65,7 @@ void RS_ActionEditCopyPaste::doTrigger() {
         case CUT_QUICK:
         case COPY:
         case COPY_QUICK:{
-            RS_Modification m(*container, graphicView);
+            RS_Modification m(*container, viewport);
             m.copy(*referencePoint, mode == CUT || mode == CUT_QUICK);
 
             if (invokedWithControl){
@@ -80,7 +80,7 @@ void RS_ActionEditCopyPaste::doTrigger() {
             break;
         }
         case PASTE: {
-            RS_Modification m(*container, graphicView);
+            RS_Modification m(*container, viewport);
             m.paste(RS_PasteData(*referencePoint, 1.0, 0.0, false, ""));
 
             if (!invokedWithControl) {
@@ -101,7 +101,7 @@ void RS_ActionEditCopyPaste::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             }
             case PASTE:{
                 *referencePoint = e->snapPoint;
-                preview->addAllFrom(*RS_CLIPBOARD->getGraphic(), graphicView);
+                preview->addAllFrom(*RS_CLIPBOARD->getGraphic(), viewport);
                 preview->move(*referencePoint);
 
                 if (graphic) {

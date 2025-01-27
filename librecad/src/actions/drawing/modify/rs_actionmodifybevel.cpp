@@ -72,7 +72,7 @@ void RS_ActionModifyBevel::doTrigger() {
     if (entity1 && entity1->isAtomic() &&
         entity2 && entity2->isAtomic()){
 
-        RS_Modification m(*container, graphicView);
+        RS_Modification m(*container, viewport);
         LC_BevelResult* bevelResult = m.bevel(pPoints->coord1, entity1, pPoints->coord2, entity2, pPoints->data, false);
         if (bevelResult != nullptr){
             switch (bevelResult->error) {

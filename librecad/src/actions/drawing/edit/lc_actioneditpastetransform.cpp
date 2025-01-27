@@ -48,7 +48,7 @@ void LC_ActionEditPasteTransform::init(int status) {
 }
 
 void LC_ActionEditPasteTransform::doTrigger() {
-    RS_Modification m(*container, graphicView, false);
+    RS_Modification m(*container, viewport, false);
 
     int numX = data->arrayXCount;
     int numY = data->arrayYCount;
@@ -88,7 +88,7 @@ void LC_ActionEditPasteTransform::doTrigger() {
 void LC_ActionEditPasteTransform::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     if (status==SetReferencePoint) {
         *referencePoint = e->snapPoint;
-        preview->addAllFrom(*RS_CLIPBOARD->getGraphic(),graphicView);
+        preview->addAllFrom(*RS_CLIPBOARD->getGraphic(),viewport);
         preview->move(*referencePoint);
 
         if (graphic) {

@@ -86,7 +86,7 @@ void RS_ActionLibraryInsert::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         case SetTargetPoint:
             pPoints->data.insertionPoint = e->snapPoint;
             //if (block) {
-            preview->addAllFrom(pPoints->prev, graphicView);
+            preview->addAllFrom(pPoints->prev, viewport);
             preview->move(pPoints->data.insertionPoint);
             preview->scale(pPoints->data.insertionPoint,
                            RS_Vector(pPoints->data.factor, pPoints->data.factor));

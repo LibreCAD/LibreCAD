@@ -32,7 +32,6 @@
 #include "rs_debug.h"
 #include "rs_font.h"
 #include "rs_fontlist.h"
-#include "rs_graphicview.h"
 #include "rs_insert.h"
 #include "rs_math.h"
 #include "rs_line.h"
@@ -140,7 +139,7 @@ public:
     }
 };
 
-RS_Entity *RS_MText::cloneProxy(RS_GraphicView* view) const {
+RS_Entity *RS_MText::cloneProxy(LC_GraphicViewport* view) const {
     // fixme - sand - ucs - restore!!
 //    bool drawTextsAsDraftForPreview = view->isDrawTextsAsDraftForPreview();
     bool drawTextsAsDraftForPreview = false;

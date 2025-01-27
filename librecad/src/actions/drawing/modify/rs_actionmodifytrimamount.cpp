@@ -71,7 +71,7 @@ void RS_ActionModifyTrimAmount::doTrigger() {
 
     if (trimEntity && trimEntity->isAtomic()){
 
-        RS_Modification m(*container, graphicView, true);
+        RS_Modification m(*container, viewport, true);
         auto* e = dynamic_cast<RS_AtomicEntity *>(trimEntity);
         double dist = determineDistance(e);
 

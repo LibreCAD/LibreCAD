@@ -55,7 +55,7 @@ void RS_ActionPolylineAdd::doTrigger() {
 
     if (polylineToModify && addSegment->isAtomic() && addCoord->valid &&
         addSegment->isPointOnEntity(*addCoord)) {
-        RS_Modification m(*container, graphicView);
+        RS_Modification m(*container, viewport);
         RS_Polyline *createdPolyline = m.addPolylineNode(
             *polylineToModify,
             (RS_AtomicEntity &) *addSegment,
