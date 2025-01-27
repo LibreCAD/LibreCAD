@@ -129,8 +129,13 @@ void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                                                    line1,
                                                    line2);
                 if (ent != nullptr){
-                    // fixme sand - more than one mya be created, but if only one - it's good to show description
                     highlightHover(line2);
+                    if (number == 1){
+                        prepareEntityDescription(ent, RS2::EntityDescriptionLevel::DescriptionCreating);
+                    }
+                    else{
+                        appendInfoCursorZoneMessage(QString::number(number) + tr(" entities will be created"), 2, false);
+                    }
                     if (showRefEntitiesOnPreview) {
                         previewRefPoint(line1->getNearestPointOnEntity(pPoints->coord1));
                         previewRefPoint(ent->getStartpoint());

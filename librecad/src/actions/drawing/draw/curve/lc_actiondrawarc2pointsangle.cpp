@@ -62,7 +62,7 @@ bool LC_ActionDrawArc2PointsAngle::createArcData(RS_ArcData &data, [[maybe_unuse
     double angle2 = center.angleTo(pos);
 
     double radiusDelta = radius - radiusLeg;
-    LC_ERR << radiusDelta;
+//    LC_ERR << radiusDelta;
     
     data.angle1 = angle1;
     data.angle2 = angle2;

@@ -235,6 +235,7 @@ RS_Modification::RS_Modification(RS_EntityContainer& container,
     this->container = &container;
     this->graphicView = graphicView;
     this->handleUndo = handleUndo;
+    viewport = graphicView->getViewPort();
     graphic = container.getGraphic();
     document = container.getDocument();
 }
@@ -268,8 +269,6 @@ void RS_Modification::remove(const std::vector<RS_Entity*> &entitiesList){
         e->changeUndoState();
         undo.addUndoable(e);
     }
-
-    graphicView->redraw(RS2::RedrawDrawing);
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::remove: OK");
 }

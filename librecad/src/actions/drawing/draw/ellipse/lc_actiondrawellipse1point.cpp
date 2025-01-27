@@ -222,20 +222,30 @@ void LC_ActionDrawEllipse1Point::onCoordinateEvent(int status, [[maybe_unused]]b
             break;
         }
         case SetAngle1: {
-            RS_Vector m = pos;
-            m.rotate(pPoints->center, toUCSAngle(-pPoints->getMajorAngle()));
-            RS_Vector v = m - pPoints->center;
-            v.y /= pPoints->getRatio();
-            pPoints->angle1 = v.angle();
+            if (isZero){
+                pPoints->angle1 = 0;
+            }
+            else {
+                RS_Vector m = pos;
+                m.rotate(pPoints->center, toUCSAngle(-pPoints->getMajorAngle()));
+                RS_Vector v = m - pPoints->center;
+                v.y /= pPoints->getRatio();
+                pPoints->angle1 = v.angle();
+            }
             setStatus(SetAngle2);
             break;
         }
         case SetAngle2: {
-            RS_Vector m = pos;
-            m.rotate(pPoints->center, toUCSAngle(-pPoints->getMajorAngle()));
-            RS_Vector v = m - pPoints->center;
-            v.y /= pPoints->getRatio();
-            pPoints->angle2 = v.angle();
+            if (isZero){
+                pPoints->angle2 = 0;
+            }
+            else {
+                RS_Vector m = pos;
+                m.rotate(pPoints->center, toUCSAngle(-pPoints->getMajorAngle()));
+                RS_Vector v = m - pPoints->center;
+                v.y /= pPoints->getRatio();
+                pPoints->angle2 = v.angle();
+            }
             trigger();
             break;
         }
@@ -273,10 +283,10 @@ bool LC_ActionDrawEllipse1Point::doProcessCommand(int status, const QString &com
     switch (status) {
         case SetMajorAngle: {
             bool ok;
-            double a = RS_Math::eval(command, &ok);
+            double ucsAngleDegrees = RS_Math::eval(command, &ok);
             if (ok){
                 accept = true;
-                pPoints->majorRadiusAngle = RS_Math::deg2rad(a);
+                pPoints->majorRadiusAngle = RS_Math::deg2rad(ucsAngleDegrees);
                 if (pPoints->isArc) {
                     setStatus(SetAngle2);
                 }
@@ -289,10 +299,10 @@ bool LC_ActionDrawEllipse1Point::doProcessCommand(int status, const QString &com
         }
         case SetAngle1: {
             bool ok;
-            double a = RS_Math::eval(command, &ok);
+            double ucsAngleDegrees = RS_Math::eval(command, &ok);
             if (ok){
                 accept = true;
-                pPoints->angle1 = RS_Math::deg2rad(a);
+                pPoints->angle1 = RS_Math::deg2rad(ucsAngleDegrees);
                 setStatus(SetAngle2);
             } else
                 commandMessage(tr("Not a valid expression"));
@@ -300,10 +310,10 @@ bool LC_ActionDrawEllipse1Point::doProcessCommand(int status, const QString &com
         }
         case SetAngle2: {
             bool ok;
-            double a = RS_Math::eval(command, &ok);
+            double ucsAngleDegrees = RS_Math::eval(command, &ok);
             if (ok){
                 accept = true;
-                pPoints->angle2 = RS_Math::deg2rad(a);
+                pPoints->angle2 = RS_Math::deg2rad(ucsAngleDegrees);
                 trigger();
             } else
                 commandMessage(tr("Not a valid expression"));

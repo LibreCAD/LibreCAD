@@ -284,7 +284,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         case '0': {
                             RS_Vector ucs0 = RS_Vector(0,0,0);
                             RS_Vector wcs0 = toWCS(ucs0);
-                            RS_CoordinateEvent ce(wcs0);
+                            RS_CoordinateEvent ce(wcs0, true, false);
                             currentActions.last()->coordinateEvent(&ce);
                             e->accept();
                             break;
@@ -292,7 +292,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         case '.':
                         case ',':{
                             RS_Vector wcs0 = relative_zero;
-                            RS_CoordinateEvent ce(wcs0);
+                            RS_CoordinateEvent ce(wcs0, false, true);
                             currentActions.last()->coordinateEvent(&ce);
                             e->accept();
                             break;
@@ -302,10 +302,10 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                     }
                 }
 
-
                 bool wcsCoordinates = cmd.at(0) == '!';
                 if (wcsCoordinates){ // proceed absolute wcs coordinates
                     bool isCartesian = cmd.contains(',');
+                    cmd = cmd.mid(1);
                     if (isCartesian) {
                         int separatorPos = cmd.indexOf(',');
                         bool ok1, ok2;

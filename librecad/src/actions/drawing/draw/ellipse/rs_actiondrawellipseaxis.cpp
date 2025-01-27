@@ -256,22 +256,30 @@ void RS_ActionDrawEllipseAxis::onCoordinateEvent(int status, [[maybe_unused]] bo
             break;
         }
         case SetAngle1: {
-            //angle1 = center.angleTo(mouse);
-            RS_Vector m = mouse;
-            m.rotate(pPoints->center, -pPoints->m_vMajorP.angle());
-            RS_Vector v = m - pPoints->center;
-            v.y /= pPoints->ratio;
-            pPoints->angle1 = v.angle();
+            if (isZero){
+                pPoints->angle1 = 0;
+            }
+            else {
+                RS_Vector m = mouse;
+                m.rotate(pPoints->center, toUCSAngle(-pPoints->m_vMajorP.angle()));
+                RS_Vector v = m - pPoints->center;
+                v.y /= pPoints->ratio;
+                pPoints->angle1 = v.angle();
+            }
             setStatus(SetAngle2);
             break;
         }
         case SetAngle2: {
-            //angle2 = center.angleTo(mouse);
-            RS_Vector m = mouse;
-            m.rotate(pPoints->center, -pPoints->m_vMajorP.angle());
-            RS_Vector v = m - pPoints->center;
-            v.y /= pPoints->ratio;
-            pPoints->angle2 = v.angle();
+            if (isZero){
+                pPoints->angle2 = 0;
+            }
+            else {
+                RS_Vector m = mouse;
+                m.rotate(pPoints->center, toUCSAngle(-pPoints->m_vMajorP.angle()));
+                RS_Vector v = m - pPoints->center;
+                v.y /= pPoints->ratio;
+                pPoints->angle2 = v.angle();
+            }
             trigger();
             break;
         }

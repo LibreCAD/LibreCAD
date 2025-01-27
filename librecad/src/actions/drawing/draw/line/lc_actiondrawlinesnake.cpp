@@ -205,7 +205,6 @@ void LC_ActionDrawLineSnake::onCoordinateEvent(int status, [[maybe_unused]]bool 
                 case DIRECTION_X: {
                     // draw horizontal segment, fix start point y coordinate
                     RS_Vector possiblePoint = restrictHorizontal(pPoints->data.startpoint, mouse);
-//                    RS_Vector possiblePoint(mouse.x, pPoints->data.startpoint.y);
                     if (isNonZeroLine(possiblePoint)){
                         pPoints->data.endpoint = possiblePoint;
                         completeLineSegment(false);
@@ -215,7 +214,6 @@ void LC_ActionDrawLineSnake::onCoordinateEvent(int status, [[maybe_unused]]bool 
                 case DIRECTION_Y: {
                     // draw vertical segment, fix start point x coordinate
                     RS_Vector possiblePoint = restrictVertical(pPoints->data.startpoint, mouse);
-//                    RS_Vector possiblePoint(pPoints->data.startpoint.x, mouse.y);
                     if (isNonZeroLine(possiblePoint)){
                         pPoints->data.endpoint = possiblePoint;
                         completeLineSegment(false);
@@ -348,16 +346,22 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(int status, const QString &c)
             double distance = RS_Math::eval(c, &ok);
             if (ok && LC_LineMath::isMeaningful(distance)){
                 switch (direction) {
-                    case DIRECTION_X: // the value is for x coordinate adjustment
-                        pPoints->data.endpoint.x = pPoints->data.startpoint.x + distance;
-                        pPoints->data.endpoint.y = pPoints->data.startpoint.y;
+                    case DIRECTION_X: {// the value is for x coordinate adjustment
+                        RS_Vector ucsStart = toUCS(pPoints->data.startpoint);
+                        RS_Vector ucsEndPoint = RS_Vector(ucsStart.x + distance, ucsStart.y);
+                        pPoints->data.endpoint = toWorld(ucsEndPoint);
                         completeLineSegment(false);
                         break;
-                    case DIRECTION_Y: // the value is for y coordinate adjustment
-                        pPoints->data.endpoint.x = pPoints->data.startpoint.x;
-                        pPoints->data.endpoint.y = pPoints->data.startpoint.y + distance;
+                    }
+                    case DIRECTION_Y: {// the value is for y coordinate adjustment
+                        RS_Vector ucsStart = toUCS(pPoints->data.startpoint);
+                        RS_Vector ucsEndPoint = RS_Vector(ucsStart.x, ucsStart.y + + distance);
+                        pPoints->data.endpoint = toWorld(ucsEndPoint);
+//                        pPoints->data.endpoint.x = pPoints->data.startpoint.x;
+//                        pPoints->data.endpoint.y = pPoints->data.startpoint.y + distance;
                         completeLineSegment(false);
                         break;
+                    }
                     case DIRECTION_ANGLE: { // the value is for coordinates adjustment in direction specified by angle
                         calculateAngleSegment(distance);
                         completeLineSegment(false);
@@ -639,10 +643,10 @@ bool LC_ActionDrawLineSnake::mayStart(){
     return getStatus() == SetDistance || getStatus() == SetPoint;
 }
 
-// FIXME - check LC_LineMath
 void LC_ActionDrawLineSnake::calculateAngleSegment(double distance){
     double angleRadians = RS_Math::deg2rad(angle);
     double realAngle = defineActualSegmentAngle(angleRadians);
+    realAngle = toWorldAngle(realAngle);
     pPoints->data.endpoint = pPoints->data.startpoint.relative(distance, realAngle);
 }
 

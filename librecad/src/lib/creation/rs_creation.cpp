@@ -492,7 +492,9 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
         RS_Vector const& v = RS_Vector::polar(length, angle);
 
         auto* newLine = new RS_Line{container, inters, inters + v};
-        if (!ret) ret = newLine;
+        if (!ret) {
+            ret = newLine;
+        }
         setupAndAddEntity(newLine);
     }
 

@@ -207,8 +207,8 @@ void RS_ActionInterface::coordinateEvent(RS_CoordinateEvent* e) {
         return;
     }
     // check whether it's zero - so it might be from "0" shortcut
-    RS_Vector zero = RS_Vector(0, 0, 0);
-    bool isZero = wcsPos == zero; // use it to handle "0" shortcut (it is passed as 0,0 vector)
+    // use it to handle "0" shortcut (it is passed as 0,0 vector)
+    bool isZero = e->isZero();
 
     // delegate further processing
     onCoordinateEvent(status, isZero, wcsPos);
