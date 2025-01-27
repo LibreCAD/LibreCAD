@@ -874,12 +874,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="887"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation type="unfinished">切換圖層可視性 (&amp;T)</translation>
+        <translation>切換圖層可視性 (&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="894"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation type="unfinished">切換層列印 (&amp;P)</translation>
+        <translation>切換層列印 (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="901"/>
