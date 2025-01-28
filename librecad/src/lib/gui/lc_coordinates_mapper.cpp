@@ -207,10 +207,10 @@ RS_Vector LC_CoordinatesMapper::restrictVertical(const RS_Vector &baseWCSPoint, 
     }
 }
 
-void LC_CoordinatesMapper::ucsBoundingBox(const RS_Vector& min, const RS_Vector&max, RS_Vector& ucsMin, RS_Vector& ucsMax) const{
+void LC_CoordinatesMapper::ucsBoundingBox(const RS_Vector& wcsMin, const RS_Vector&wcsMax, RS_Vector& ucsMin, RS_Vector& ucsMax) const{
     if (m_hasUcs) {
-        RS_Vector ucsCorner1 = toUCS(min);
-        RS_Vector ucsCorner3 = toUCS(max);
+        RS_Vector ucsCorner1 = toUCS(wcsMin);
+        RS_Vector ucsCorner3 = toUCS(wcsMax);
         RS_Vector ucsCorner2 = RS_Vector(ucsCorner1.x, ucsCorner3.y);
         RS_Vector ucsCorner4 = RS_Vector(ucsCorner3.x, ucsCorner1.y);
 
@@ -237,8 +237,8 @@ void LC_CoordinatesMapper::ucsBoundingBox(const RS_Vector& min, const RS_Vector&
         ucsMax = RS_Vector(maxX, maxY);
     }
     else{
-        ucsMin = min;
-        ucsMax = max;
+        ucsMin = wcsMin;
+        ucsMax = wcsMax;
     }
 }
 

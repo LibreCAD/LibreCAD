@@ -61,23 +61,23 @@ void LC_GraphicViewportRenderer::loadSettings() {
 LC_Rect LC_GraphicViewportRenderer::prepareBoundingClipRect(){
     int width = viewport->getWidth();
     int height = viewport->getHeight();
-    const RS_Vector worldLeftBottom = viewport->toUCSFromGui(0, 0);
-    const RS_Vector worldRightTop = viewport->toUCSFromGui(width, height);
+    const RS_Vector ucsViewportLeftBottom = viewport->toUCSFromGui(0, 0);
+    const RS_Vector ucsViewportRightTop = viewport->toUCSFromGui(width, height);
 
     if (viewport->hasUCS()){
         // here were extend (enlarge) clipping rect to ensure that if there is shift/rotation in ucs, resulting bounding box cover the entire screen
         // thus we'll paint a bit more entities that is necessary (and more comparing to non-ucs world mode), yet ensure that they are not clipped
 
-        RS_Vector worldMin;
-        RS_Vector worldMax;
+        RS_Vector wcsViewportMin;
+        RS_Vector wcsViewportMax;
 
-        viewport->worldBoundingBox(worldLeftBottom, worldRightTop, worldMin, worldMax);
+        viewport->worldBoundingBox(ucsViewportLeftBottom, ucsViewportRightTop, wcsViewportMin, wcsViewportMax);
 
-        return LC_Rect(worldMin,worldMax);
+        return LC_Rect(wcsViewportMin, wcsViewportMax);
     }
     else{
         // clipping rect is defined by the screen (0,0 and width/height)
-        return LC_Rect(worldLeftBottom,worldRightTop);
+        return LC_Rect(ucsViewportLeftBottom, ucsViewportRightTop);
     }
 }
 
