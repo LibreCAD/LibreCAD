@@ -2225,11 +2225,9 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
     }
 
     RS_AtomicEntity* trimmed1 = nullptr;
-    // fixme - sand - ucs - check whether it's correct to set trimmed2 to limiting entity..!!!
-// original
-//    RS_AtomicEntity* trimmed2 = nullptr;
-// nullpointer fix?
-    auto* trimmed2 = static_cast<RS_AtomicEntity*>(limitEntity);
+    RS_AtomicEntity* trimmed2 = nullptr;
+    // nullpointer fix? - yet check is added later in action, and setting trimmed2 to limitEntity is misleading on preview. So restored to previous version here.
+    // auto* trimmed2 = static_cast<RS_AtomicEntity*>(limitEntity);
 
     if (trimEntity->rtti()==RS2::EntityCircle) {
         // convert a circle into a trimmable arc, need to start from intersections
