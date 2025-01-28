@@ -27,8 +27,9 @@
 
 #include <QSet>
 
-#include "rs_modification.h"
-
+#include "lc_linemath.h"
+#include "lc_splinepoints.h"
+#include "lc_undosection.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
@@ -36,20 +37,19 @@
 #include "rs_creation.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
-#include "rs_graphicview.h"
 #include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_image.h"
 #include "rs_information.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_math.h"
+#include "rs_modification.h"
 #include "rs_mtext.h"
 #include "rs_polyline.h"
 #include "rs_text.h"
 #include "rs_units.h"
-#include "lc_splinepoints.h"
-#include "lc_undosection.h"
-#include "lc_linemath.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -2083,13 +2083,16 @@ bool RS_Modification::scale(RS_ScaleData& data, const std::vector<RS_Entity*> &e
             }
         }
         if (forPreviewOnly && ec->rtti() == RS2::EntityImage) {
-            const RS_Vector minV = ec->getMin();
-            const RS_Vector maxV = ec->getMax();
             auto pl = new RS_Polyline(container);
-            pl->addVertex(minV);
-            pl->addVertex({maxV.x, minV.y});
-            pl->addVertex(maxV);
-            pl->addVertex({minV.x, maxV.y});
+            // draw a rectangle for images as preview
+            // Image corners: from insertion point, (0,0), dx, dy, dx + dy
+            const RS_VectorSolutions corners = static_cast<RS_Image*>(ec)->getCorners();
+            for (const RS_Vector& corner: corners)
+                pl->addVertex(corner);
+            pl->addVertex(corners.at(0));
+            pl->addVertex(corners.at(2));
+            pl->addVertex(corners.at(1));
+            pl->addVertex(corners.at(3));
             ec = pl;
         }
         selectedList.push_back(ec);

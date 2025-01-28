@@ -182,14 +182,20 @@ void RS_Image::calculateBorders() {
 }
 
 RS_VectorSolutions RS_Image::getCorners() const {
-    RS_VectorSolutions sol(4);
 
-    sol.set(0, data.insertionPoint);
-    sol.set(1,
-            data.insertionPoint + data.uVector*RS_Math::round(data.size.x));
-    sol.set(3,
-            data.insertionPoint + data.vVector*RS_Math::round(data.size.y));
-    sol.set(2, sol.get(3) + data.uVector*RS_Math::round(data.size.x));
+    // x/y-size
+    const RS_Vector dx = data.uVector*RS_Math::round(data.size.x);
+    const RS_Vector dy = data.vVector*RS_Math::round(data.size.y);
+
+    // image corners without the insertion point
+    RS_VectorSolutions sol{
+        RS_Vector{0., 0.},
+        dx,
+        dy,
+        dx + dy
+    };
+
+    sol.move(data.insertionPoint);
 
     return sol;
 }
