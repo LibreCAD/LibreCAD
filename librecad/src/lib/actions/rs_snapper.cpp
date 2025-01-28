@@ -935,7 +935,7 @@ LC_InfoCursor* RS_Snapper::obtainInfoCursor(){
     LC_InfoCursor * result = nullptr;
     RS_Entity *entity = overlayContainer->firstEntity(); // note - this is not absolutely safe if someone put another cursor to overlay container!
     result = dynamic_cast<LC_InfoCursor *>(entity);
-    if (result == nullptr){
+    if (result == nullptr && infoCursorOverlayPrefs != nullptr){
         result = new LC_InfoCursor(container, pImpData->snapCoord, &infoCursorOverlayPrefs->options);
         overlayContainer->addEntity(result);
     }
@@ -944,7 +944,7 @@ LC_InfoCursor* RS_Snapper::obtainInfoCursor(){
 
 void RS_Snapper::drawInfoCursor(){
     auto overlayContainer = graphicView->getOverlayContainer(RS2::InfoCursor);
-    if (infoCursorOverlayPrefs->enabled) {
+    if (infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled) {
         RS_Entity *entity = overlayContainer->firstEntity(); // note - this is not absolutely safe if someone put another cursor to overlay container!
         auto* infoCursor = dynamic_cast<LC_InfoCursor *>(entity);
         if (infoCursor == nullptr) {
@@ -1086,7 +1086,7 @@ void RS_Snapper::updateCoordinateWidgetFormat(){
 }
 
 void RS_Snapper::updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat){
-    if (infoCursorOverlayPrefs->enabled) {
+    if (infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled) {
         preparePositionsInfoCursorOverlay(updateFormat, abs, rel);
     }
     RS_DIALOGFACTORY->updateCoordinateWidget(abs, rel, updateFormat);
@@ -1094,7 +1094,7 @@ void RS_Snapper::updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& r
 
 void RS_Snapper::updateCoordinateWidgetByRelZero(const RS_Vector& abs, bool updateFormat){
     const RS_Vector &relative = abs - graphicView->getRelativeZero();
-    if (infoCursorOverlayPrefs->enabled) {
+    if (infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled) {
         preparePositionsInfoCursorOverlay(updateFormat, abs, relative);
     }
     RS_DIALOGFACTORY->updateCoordinateWidget(abs, relative, updateFormat);
@@ -1105,7 +1105,7 @@ LC_InfoCursorOverlayPrefs* RS_Snapper::getInfoCursorOverlayPrefs() const {
 }
 
 bool RS_Snapper::isInfoCursorForModificationEnabled() const {
-    return infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnModification;
+    return infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled && infoCursorOverlayPrefs->showEntityInfoOnModification;
 }
 
 void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_Vector &abs,  const RS_Vector &relative) {
@@ -1113,7 +1113,7 @@ void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_V
 
     QString coordAbs = "";
     QString coordPolar = "";
-    if (prefs->showAbsolutePosition || prefs->showRelativePositionDistAngle || prefs->showRelativePositionDeltas){
+    if (prefs != nullptr && (prefs->showAbsolutePosition || prefs->showRelativePositionDistAngle || prefs->showRelativePositionDeltas)){
         RS_Graphic* graphic = graphicView->getGraphic();
         if (graphic != nullptr) {
             if (updateFormat) {
