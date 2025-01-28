@@ -285,6 +285,8 @@ void RS_EntityContainer::setHighlighted(bool on) {
  *
  * @param select True to select, False to invertSelectionOperation the entities.
  */
+ // fixme - sand - ucs - add method for selecting entities within rect that is rotated in wcs
+ // such method is needed for better support UCS with rotation and more precise selection of entities.
 void RS_EntityContainer::selectWindow(
     enum RS2::EntityType typeToSelect, RS_Vector v1, RS_Vector v2,
     bool select, bool cross) {

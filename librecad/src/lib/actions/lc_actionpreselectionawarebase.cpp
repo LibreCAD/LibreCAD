@@ -96,14 +96,25 @@ void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, LC_Mou
         if (inBoxSelectionMode){
             RS_Vector mouse = e->graphPoint;
             deletePreview();
-            bool cross = (selectionCorner1.x > mouse.x);
+
+            // restore selection box to ucs
+            RS_Vector ucsP1 = toUCS(selectionCorner1);
+            RS_Vector ucsP2 = toUCS(mouse);
+
+            bool cross = (ucsP1.x > ucsP2.x);
+
             RS_Selection s(*container, viewport);
             bool select = !e->isShift;
+
+            // expand selection wcs to ensure that selection box in ucs is full within bounding rect in wcs
+            RS_Vector wcsP1, wcsP2;
+            viewport->worldBoundingBox(ucsP1, ucsP2, wcsP1, wcsP2);
+
             if (catchForSelectionEntityTypes.isEmpty()){
-                s.selectWindow(RS2::EntityUnknown, selectionCorner1, mouse, select, cross);
+                s.selectWindow(RS2::EntityUnknown, wcsP1, wcsP2, select, cross);
             }
             else {
-                s.selectWindow(catchForSelectionEntityTypes, selectionCorner1, mouse, select, cross);
+                s.selectWindow(catchForSelectionEntityTypes, wcsP1, wcsP2, select, cross);
             }
             updateSelectionWidget();
         }
@@ -144,7 +155,10 @@ void LC_ActionPreSelectionAwareBase::onMouseMoveEvent(int status, LC_MouseEvent 
         if (inBoxSelectionMode){
             drawOverlayBox(selectionCorner1, mouse);
             if (infoCursorOverlayPrefs->enabled) {
-                bool cross = (selectionCorner1.x > mouse.x);
+                // restore selection box to ucs
+                RS_Vector ucsP1 = toUCS(selectionCorner1);
+                RS_Vector ucsP2 = toUCS(mouse);
+                bool cross = (ucsP1.x > ucsP2.x);
                 bool deselect = e->isShift;
                 QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
                 msg.append(tr(" entities "));

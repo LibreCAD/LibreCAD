@@ -87,17 +87,27 @@ void RS_ActionSelectWindow::init(int status) {
 void RS_ActionSelectWindow::doTrigger() {
     if (pPoints->v1.valid && pPoints->v2.valid){
         if (toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
-            bool cross = (pPoints->v1.x > pPoints->v2.x) || selectIntersecting;
+            // restore selection box to ucs
+            RS_Vector ucsP1 = toUCS(pPoints->v1);
+            RS_Vector ucsP2 = toUCS(pPoints->v2);
+
+            bool cross = (ucsP1.x > ucsP2.x) || selectIntersecting;
             RS_Selection s(*container, viewport);
             bool doSelect = select;
             if (invertSelectionOperation){
                 doSelect = !doSelect;
             }
+
+
+            // expand selection wcs to ensure that selection box in ucs is full within bounding rect in wcs
+            RS_Vector wcsP1, wcsP2;
+            viewport->worldBoundingBox(ucsP1, ucsP2, wcsP1, wcsP2);
+
             if (selectAllEntityTypes) {
-                s.selectWindow(RS2::EntityType::EntityUnknown, pPoints->v1, pPoints->v2, doSelect, cross);
+                s.selectWindow(RS2::EntityType::EntityUnknown, wcsP1, wcsP2, doSelect, cross);
             }
             else{
-                s.selectWindow(entityTypesToSelect, pPoints->v1, pPoints->v2, doSelect, cross);
+                s.selectWindow(entityTypesToSelect, wcsP1, wcsP2, doSelect, cross);
             }
             init(SetCorner1);
         }
@@ -110,6 +120,19 @@ void RS_ActionSelectWindow::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     if (getStatus()==SetCorner2 && pPoints->v1.valid) {
         pPoints->v2 = snapped;
         drawOverlayBox(pPoints->v1, pPoints->v2);
+        if (isInfoCursorForModificationEnabled()) {
+            // restore selection box to ucs
+            RS_Vector ucsP1 = toUCS(pPoints->v1);
+            RS_Vector ucsP2 = toUCS(pPoints->v2);
+            bool cross = (ucsP1.x > ucsP2.x);
+            bool deselect = e->isShift;
+            QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
+            msg.append(tr(" entities "));
+            msg.append(cross? tr("that intersect with box") : tr("that are within box"));
+            infoCursorOverlayData.setZone2(msg);
+            const RS_Vector pos = e->graphPoint;
+            forceUpdateInfoCursor(pos);
+        }
     }
 }
 

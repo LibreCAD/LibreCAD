@@ -540,7 +540,10 @@ void RS_ActionDefault::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 drawOverlayBox(pPoints->v1, pPoints->v2);
 
                 if (isInfoCursorForModificationEnabled()) {
-                    bool cross = (pPoints->v1.x > pPoints->v2.x);
+                    // restore selection box to ucs
+                    RS_Vector ucsP1 = toUCS(pPoints->v1);
+                    RS_Vector ucsP2 = toUCS(pPoints->v2);
+                    bool cross = (ucsP1.x > ucsP2.x);
                     bool deselect = e->isShift;
                     QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
                     msg.append(tr(" entities "));
@@ -805,10 +808,20 @@ void RS_ActionDefault::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
             // select window:
             //if (graphicView->toGuiDX(v1.distanceTo(v2))>20) {
             deletePreview();
-            bool cross = (pPoints->v1.x > pPoints->v2.x);
+
+            // restore selection box to ucs
+            RS_Vector ucsP1 = toUCS(pPoints->v1);
+            RS_Vector ucsP2 = toUCS(pPoints->v2);
+            bool cross = (ucsP1.x > ucsP2.x);
+
             RS_Selection s(*container, viewport);
             bool select = !e->isShift;
-            s.selectWindow(typeToSelect, pPoints->v1, pPoints->v2, select, cross);
+
+            // expand selection wcs to ensure that selection box in ucs is fully within bounding rect in wcs
+            RS_Vector wcsP1, wcsP2;
+            viewport->worldBoundingBox(ucsP1, ucsP2, wcsP1, wcsP2);
+
+            s.selectWindow(typeToSelect, wcsP1, wcsP2, select, cross);
             updateSelectionWidget();
             goToNeutralStatus();
             //}
