@@ -32,12 +32,12 @@
 #include "rs_block.h"
 #include "rs_dialogfactory.h"
 #include "rs_entity.h"
-#include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_selection.h"
+#include "lc_graphicviewport.h"
 
 /**
  * Default constructor.
@@ -48,7 +48,7 @@
  */
 RS_Selection::RS_Selection(
     RS_EntityContainer &container,
-    RS_GraphicView *graphicView):
+    LC_GraphicViewport *graphicView):
     container{&container}, graphic{container.getGraphic()}, graphicView{graphicView}{
 }
 
@@ -73,7 +73,7 @@ void RS_Selection::selectSingle(RS_Entity *e){
             } else {
                 QG_DIALOGFACTORY->displayBlockName("", false);
             }
-            graphicView->redraw();
+            graphicView->notifyChanged();
         }
     }
 }
@@ -85,16 +85,25 @@ void RS_Selection::selectAll(bool select){
     if (graphicView){
         for (auto e: *container) {
             if (e && e->isVisible()){
-                if (graphicView->getTypeToSelect() == RS2::EntityType::EntityUnknown){
+                e->setSelected(select);
+                // fixme - sand - selectAll by entity type - check whether it will not break plugin interface:
+                // NOTE:
+                // this is actually bad practice and development by side-effect.
+                // type to select for graphic view is set only in  Doc_plugin_interface::getSelectByType
+                // and in general it's hardly that this flag is propertly used (as later
+                // RS_ActionSelectSingle with own check is invoked.
+                // So better just create separate function with explicit type of entity, if one will be really
+                // necessary.
+               /* if (graphicView->getTypeToSelect() == RS2::EntityType::EntityUnknown){
                     e->setSelected(select);
                 } else {
                     if (e->rtti() == graphicView->getTypeToSelect()){
                         e->setSelected(select);
                     }
-                }
+                }*/
             }
         }
-        graphicView->redraw();
+        graphicView->notifyChanged();
     }
 }
 
@@ -108,9 +117,7 @@ void RS_Selection::invertSelection(){
         }
     }
 
-    if (graphicView){
-        graphicView->redraw();
-    }
+    graphicView->notifyChanged();
 }
 
 /**
@@ -123,22 +130,15 @@ void RS_Selection::invertSelection(){
 void RS_Selection::selectWindow(
     enum RS2::EntityType typeToSelect, const RS_Vector &v1, const RS_Vector &v2,
     bool select, bool cross){
-
     container->selectWindow(typeToSelect, v1, v2, select, cross);
-
-    if (graphicView){
-        graphicView->redraw();
-    }
+    graphicView->notifyChanged();
 }
 
 void RS_Selection::selectWindow(const QList<RS2::EntityType> &typesToSelect, const RS_Vector &v1, const RS_Vector &v2,
     bool select, bool cross){
 
     container->selectWindow(typesToSelect, v1, v2, select, cross);
-
-    if (graphicView){
-        graphicView->redraw();
-    }
+    graphicView->notifyChanged();
 }
 
 /**
@@ -185,9 +185,7 @@ void RS_Selection::selectIntersected(const RS_Vector &v1, const RS_Vector &v2, b
             }
         }
     }
-    if (graphicView){
-        graphicView->redraw();
-    }
+    graphicView->notifyChanged();
 }
 
 /**
@@ -257,9 +255,7 @@ void RS_Selection::selectContour(RS_Entity *e){
             }
         }
     } while (found);
-    if (graphicView){
-        graphicView->redraw();
-    }
+    graphicView->notifyChanged();
 }
 
 /**
@@ -295,7 +291,5 @@ void RS_Selection::selectLayer(const QString &layerName, bool select){
             }
         }
     }
-    if (graphicView){
-        graphicView->redraw();
-    }
+    graphicView->notifyChanged();
 }
