@@ -2082,6 +2082,16 @@ bool RS_Modification::scale(RS_ScaleData& data, const std::vector<RS_Entity*> &e
                                     c->isReversed()}};
             }
         }
+        if (forPreviewOnly && ec->rtti() == RS2::EntityImage) {
+            const RS_Vector minV = ec->getMin();
+            const RS_Vector maxV = ec->getMax();
+            auto pl = new RS_Polyline(container);
+            pl->addVertex(minV);
+            pl->addVertex({maxV.x, minV.y});
+            pl->addVertex(maxV);
+            pl->addVertex({minV.x, maxV.y});
+            ec = pl;
+        }
         selectedList.push_back(ec);
     }
 
