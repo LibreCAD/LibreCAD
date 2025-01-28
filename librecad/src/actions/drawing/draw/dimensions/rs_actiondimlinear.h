@@ -82,6 +82,8 @@ protected:
     void setExtensionPoint2(RS_Vector p) override;
     RS_Entity *createDim(RS_EntityContainer* parent) override;
     bool doProcessCommand(int status, const QString &command) override;
+
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 
 #endif

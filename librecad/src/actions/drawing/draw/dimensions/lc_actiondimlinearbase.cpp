@@ -138,25 +138,25 @@ void LC_ActionDimLinearBase::onMouseRightButtonRelease(int status, [[maybe_unuse
 
 void LC_ActionDimLinearBase::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     switch (status) {
-        case SetExtPoint1:
+        case SetExtPoint1: {
             setExtensionPoint1(pos);
             moveRelativeZero(pos);
             setStatus(SetExtPoint2);
             break;
-
-        case SetExtPoint2:
+        }
+        case SetExtPoint2: {
             setExtensionPoint2(pos);
             moveRelativeZero(pos);
             setStatus(SetDefPoint);
             break;
-
-        case SetDefPoint:
+        }
+        case SetDefPoint: {
             data->definitionPoint = pos;
             trigger();
             reset();
             setStatus(SetExtPoint1);
             break;
-
+        }
         default:
             break;
     }

@@ -60,7 +60,6 @@ protected:
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void doTrigger() override;
-
     void onMouseLeftButtonPress(int status, LC_MouseEvent *e) override;
 };
 #endif

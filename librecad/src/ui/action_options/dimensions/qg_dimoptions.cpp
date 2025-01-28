@@ -198,6 +198,7 @@ void QG_DimOptions::doSetAction(RS_ActionInterface *a, bool update){
     ui->cbFreeBaselineDistance->setVisible(baseline);
 
     ui->lblAngleCircle->setVisible(circleDim);
+    ui->leAngleCircle->setVisible(circleDim);
     ui->cbAngleCircleFree->setVisible(circleDim);
 }
 

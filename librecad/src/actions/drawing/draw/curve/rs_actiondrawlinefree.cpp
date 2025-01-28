@@ -66,17 +66,16 @@ void RS_ActionDrawLineFree::doTrigger() {
 void RS_ActionDrawLineFree::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     RS_Vector v = e->snapPoint;
     drawSnapper();
-    if (status==Dragging && polyline.get()) {
+    if (status==Dragging && polyline.get())     {
         const QPointF mousePosition = e->uiPosition;
-//     if( (graphicView->toGui(v) - graphicView->toGui(*vertex)).squared()< 1. ){
         if (QLineF(mousePosition,oldMousePosition).length() < 1) {
             //do not add the same mouse position
             return;
         }
         auto ent = static_cast<RS_Polyline*>(polyline->addVertex(v));
+
         if (ent->count()){
-            preview->addCloneOf(ent, viewport);
-            drawPreview();
+            preview->addCloneOf(polyline.get(), viewport);
         }
 
         *vertex = v;

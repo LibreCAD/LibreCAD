@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_actionmodifyduplicate.h"
 #include "lc_abstractactionwithpreview.h"
 #include "rs_previewactioninterface.h"
-
+// fixme - sand - ucs - add support of commands for entering offset(?) and setting direction (for interactive mode)!!
 LC_ActionModifyDuplicate::LC_ActionModifyDuplicate(RS_EntityContainer &container, RS_GraphicView &graphicView):
     LC_AbstractActionWithPreview("ModifyDuplicate", container, graphicView),
     selectedEntity(nullptr),
@@ -105,24 +105,17 @@ RS_Vector LC_ActionModifyDuplicate::determineOffset(RS_Vector& snapOfOffset, con
 
         if (moveX || moveY){
             // create offset vector
-            double mx = LC_LineMath::getMeaningful(offsetX);
-            double my = LC_LineMath::getMeaningful(offsetY);
-            offset = RS_Vector(mx, my, 0.0);
+            double ucsMoveX = LC_LineMath::getMeaningful(offsetX);
+            double ucsMoveY = LC_LineMath::getMeaningful(offsetY);
+            offset = toWorld(RS_Vector(ucsMoveX, ucsMoveY, 0.0));
         }       
         if (snapOfOffset.valid){
-            double angle = center.angleTo(snapOfOffset);
+            double angle = toUCSAngle(center.angleTo(snapOfOffset));
             double correctedAngle = RS_Math::correctAngle(angle);
-            /**
-            int mode = correctedAngle / M_PI_4;
-            
-//            if (mode >= 0 && mode << 8){
-             */
-//                RS_Vector offsetDirection = offsetDirectionVectors.at(mode);
-                RS_Vector offsetDirection = RS_Vector(std::cos(correctedAngle), std::sin(correctedAngle), 0);
-                // prepare vector we'll use for moving shape
-                RS_Vector resultingOffset = offsetDirection * offset;
-                offset = resultingOffset;
-//            }
+            RS_Vector offsetDirection = RS_Vector(std::cos(correctedAngle), std::sin(correctedAngle), 0);
+            // prepare vector we'll use for moving shape
+            RS_Vector resultingOffset = offsetDirection * offset;
+            offset = resultingOffset;
         }
     }
     return offset;
@@ -162,9 +155,7 @@ void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease([[maybe_unused]]LC_Mou
             break;
         }
         case SetOffsetDirection:
-//            if (alternativeActionMode){
-                triggerPoint = snapPoint;
-//            }
+            triggerPoint = snapPoint;
             trigger();
             break;
         default:
@@ -230,7 +221,7 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(LC_MouseEvent *e, [[mayb
                         previewRefSelectablePoint(newCenter);
                         auto data = RS_EllipseData();
                         data.center = center;
-                        data.majorP = RS_Vector(std::abs(offsetX), 0, 0);
+                        data.majorP = toWorld(RS_Vector(std::abs(offsetX), 0, 0));
                         data.ratio = std::abs(offsetY / offsetX);
                         previewRefEllipse(data);
                     }

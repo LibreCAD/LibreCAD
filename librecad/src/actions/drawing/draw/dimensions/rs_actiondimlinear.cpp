@@ -53,6 +53,8 @@ RS_ActionDimLinear::RS_ActionDimLinear(
      edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), angle, 0.)),
      fixedAngle(_fixedAngle), lastStatus(SetExtPoint1){
     actionType = type;
+    setAngle(angle);
+    updateOptions();
     reset();
 }
 
@@ -63,11 +65,11 @@ void RS_ActionDimLinear::reset(){
 
     double oldAngle = edata->angle; // keep selected angle
 
-    *edata = {{}, {}, fixedAngle ? edata->angle :oldAngle, 0.0};
+    *edata = {{}, {}, fixedAngle ? edata->angle :oldAngle, toWorldAngle(0.0)};
 }
 
 void RS_ActionDimLinear::preparePreview(){
-    RS_Vector dirV = RS_Vector::polar(100., edata->angle + M_PI_2);
+    RS_Vector dirV = RS_Vector::polar(100., toUCSAngle(edata->angle) + M_PI_2);
     RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(edata->extensionPoint2,edata->extensionPoint2 + dirV));
     data->definitionPoint = cl.getNearestPointOnEntity(data->definitionPoint);
 }
@@ -78,15 +80,35 @@ RS_Entity *RS_ActionDimLinear::createDim(RS_EntityContainer* parent){
 }
 
 double RS_ActionDimLinear::getAngle() const{
-    return edata->angle;
+    double wcsAngle = edata->angle;
+    double ucsAngle = toUCSAngle(wcsAngle);
+    return ucsAngle;
 }
 
 void RS_ActionDimLinear::setAngle(double a){
-    edata->angle = a;
+    double wcsAngle = toWorldAngle(a);
+    edata->angle = wcsAngle;
 }
 
 bool RS_ActionDimLinear::hasFixedAngle() const{
     return fixedAngle;
+}
+
+void RS_ActionDimLinear::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
+    switch (status){
+        case SetAngle:{
+            if (isZero){
+                setAngle(0);
+                updateOptions();
+                setStatus(lastStatus);
+                return;
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    LC_ActionDimLinearBase::onCoordinateEvent(status, isZero, pos);
 }
 
 bool RS_ActionDimLinear::doProcessCommand(int status, const QString &c) {

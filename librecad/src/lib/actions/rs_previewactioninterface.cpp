@@ -160,7 +160,6 @@ void RS_PreviewActionInterface::drawPreview(){
 
    container->addEntity(preview.get());
    preview->addReferenceEntitiesToContainer(container);
-
    graphicView->redraw(RS2::RedrawOverlay);
    hasPreview = true;
 }
