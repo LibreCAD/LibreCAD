@@ -1,6 +1,7 @@
 # LibreCAD root folder
 /*.dxf
 /*.sh
+!/CMakeLists.txt
 /*.txt
 /\.*
 
