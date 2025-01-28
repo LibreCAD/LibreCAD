@@ -867,7 +867,7 @@ void QC_ApplicationWindow::slotKillAllActions() {
     if (gv && m && m->getDocument()) {
         gv->killAllActions();
 
-        RS_Selection s((RS_EntityContainer&)*m->getDocument(), gv);
+        RS_Selection s((RS_EntityContainer&)*m->getDocument(), gv->getViewPort());
         s.selectAll(false);
         RS_DIALOGFACTORY->updateSelectionWidget(
                     m->getDocument()->countSelected(),

@@ -785,7 +785,7 @@ void RS_ActionDefault::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
             RS_Entity *en = catchEntityByEvent(e);
             if (en != nullptr){
                 deletePreview();
-                RS_Selection s(*container, graphicView);
+                RS_Selection s(*container, viewport);
                 if (e->isShift) {
                     s.selectContour(en);
                 }
@@ -806,7 +806,7 @@ void RS_ActionDefault::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
             //if (graphicView->toGuiDX(v1.distanceTo(v2))>20) {
             deletePreview();
             bool cross = (pPoints->v1.x > pPoints->v2.x);
-            RS_Selection s(*container, graphicView);
+            RS_Selection s(*container, viewport);
             bool select = !e->isShift;
             s.selectWindow(typeToSelect, pPoints->v1, pPoints->v2, select, cross);
             updateSelectionWidget();

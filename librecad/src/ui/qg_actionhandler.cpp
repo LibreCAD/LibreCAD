@@ -316,7 +316,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
                 // DO we need to call some form of a 'clean' function?
                 view->killAllActions();
 
-                RS_Selection s((RS_EntityContainer&)*document, view);
+                RS_Selection s((RS_EntityContainer&)*document, view->getViewPort());
                 s.selectAll(false);
                 RS_DIALOGFACTORY->updateSelectionWidget(document->countSelected(),document->totalSelectedLength());
             }

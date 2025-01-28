@@ -88,7 +88,7 @@ void RS_ActionSelectWindow::doTrigger() {
     if (pPoints->v1.valid && pPoints->v2.valid){
         if (toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
             bool cross = (pPoints->v1.x > pPoints->v2.x) || selectIntersecting;
-            RS_Selection s(*container, graphicView);
+            RS_Selection s(*container, viewport);
             bool doSelect = select;
             if (invertSelectionOperation){
                 doSelect = !doSelect;

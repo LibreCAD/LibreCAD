@@ -97,7 +97,7 @@ void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, LC_Mou
             RS_Vector mouse = e->graphPoint;
             deletePreview();
             bool cross = (selectionCorner1.x > mouse.x);
-            RS_Selection s(*container, graphicView);
+            RS_Selection s(*container, viewport);
             bool select = !e->isShift;
             if (catchForSelectionEntityTypes.isEmpty()){
                 s.selectWindow(RS2::EntityUnknown, selectionCorner1, mouse, select, cross);
@@ -242,7 +242,7 @@ void LC_ActionPreSelectionAwareBase::finishMouseMoveOnSelection([[maybe_unused]]
 
 void LC_ActionPreSelectionAwareBase::doSelectEntity(RS_Entity *entityToSelect, bool selectContour) const {
     if (entityToSelect != nullptr){
-        RS_Selection s(*container, graphicView);
+        RS_Selection s(*container, viewport);
         // try to minimize selection clicks - and select contour based on selected entity. May be optional, but what for?
         if (entityToSelect->isAtomic() && selectContour) {
             s.selectContour(entityToSelect);

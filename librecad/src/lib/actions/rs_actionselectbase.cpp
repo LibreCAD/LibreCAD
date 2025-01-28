@@ -85,7 +85,7 @@ bool RS_ActionSelectBase::selectEntity(RS_Entity* entityToSelect, bool selectCon
 }
 
 void RS_ActionSelectBase::doSelectEntity(RS_Entity* entityToSelect,  [[maybe_unused]]bool selectContour) const {
-    RS_Selection s(*container, graphicView);
+    RS_Selection s(*container, viewport);
     s.selectSingle(entityToSelect);
 }
 
@@ -108,6 +108,6 @@ bool RS_ActionSelectBase::isShowRefPointsOnHighlight() {
 }
 
 void RS_ActionSelectBase::deselectAll(){
-    RS_Selection s(*container, graphicView);
+    RS_Selection s(*container, viewport);
     s.selectAll(false);
 }
