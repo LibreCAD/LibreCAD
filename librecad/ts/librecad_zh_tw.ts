@@ -939,7 +939,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1000"/>
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="unfinished">目前圖面的偏好設定(&amp;D)</translation>
+        <translation>目前圖面的偏好設定(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -954,7 +954,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1041"/>
         <source>Deselect &amp;all</source>
-        <translation type="unfinished">全部取消選取(&amp;A)</translation>
+        <translation>全部取消選取(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1043"/>
@@ -999,7 +999,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1379"/>
         <source>New From &amp;Template</source>
-        <translation type="unfinished">由模板新創建 (&amp;T)</translation>
+        <translation>由模板新創建 (&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1388"/>
@@ -1059,7 +1059,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1110"/>
         <source>&amp;Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;全螢幕</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1121"/>
@@ -1070,12 +1070,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1123"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1131"/>
         <source>&amp;Draft</source>
-        <translation type="unfinished">草圖(&amp;D)</translation>
+        <translation>草圖(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1140"/>
@@ -1086,7 +1086,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1143"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1148"/>
