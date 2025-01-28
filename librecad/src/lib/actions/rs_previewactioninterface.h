@@ -29,6 +29,7 @@
 #define RS_PREVIEWACTIONINTERFACE_H
 
 #include <memory>
+#include <QPoint>
 
 #include "lc_defaults.h"
 
