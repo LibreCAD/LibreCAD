@@ -21,7 +21,9 @@
  ******************************************************************************/
 
 #include <QKeyEvent>
+
 #include "lc_actionmodifyselectionbase.h"
+#include "rs_entitycontainer.h"
 
 
 LC_ActionModifySelectionBase::LC_ActionModifySelectionBase(const char *name,

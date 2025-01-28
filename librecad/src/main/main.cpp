@@ -96,9 +96,7 @@ int main(int argc, char** argv)
 
     RS_Settings::init(app.organizationName(), app.applicationName());
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
     QGuiApplication::setDesktopFileName("librecad.desktop");
-#endif
 
     QSettings settings; // fixme - direct invocation of settings
 
@@ -182,7 +180,7 @@ int main(int argc, char** argv)
                     RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Notice", RS_Debug::D_NOTICE);
                     RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Informational", RS_Debug::D_INFORMATIONAL);
                     RS_DEBUG->print(RS_Debug::D_NOTHING, "    %d Debugging", RS_Debug::D_DEBUGGING);
-                    return false;
+                    return 0;
                 }
                 case '0' + RS_Debug::D_NOTHING : {
                     RS_DEBUG->setLevel(RS_Debug::D_NOTHING);

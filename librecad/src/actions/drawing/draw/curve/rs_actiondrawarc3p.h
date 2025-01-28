@@ -51,26 +51,8 @@ protected:
         SetPoint3        /**< Setting the 3rd point. */
     };
 
-    /**
-     * Arc data defined so far.
-     */
-
-    struct Points {
-        RS_ArcData data;
-        /**
-         * 1st point.
-         */
-        RS_Vector point1;
-        /**
-         * 2nd point.
-         */
-        RS_Vector point2;
-        /**
-         * 3rd point.
-         */
-        RS_Vector point3;
-    };
-    Points pPoints = Points();
+    struct Points;
+    std::unique_ptr<Points> m_pPoints;
     bool alternatedPoints = false;
     void reset() override;
     void preparePreview(bool alternatePoints);

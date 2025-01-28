@@ -20,13 +20,16 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
+#include <QMouseEvent>
+
 #include "lc_actiondrawarc2pointsbase.h"
 #include "lc_actiondrawarc2poptions.h"
-#include "rs_document.h"
-#include "rs_graphicview.h"
-#include "rs_graphic.h"
-#include "rs_math.h"
 #include "lc_linemath.h"
+#include "rs_arc.h"
+#include "rs_document.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_math.h"
 
 LC_ActionDrawArc2PointsBase::LC_ActionDrawArc2PointsBase(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView)
     :RS_PreviewActionInterface(name, container, graphicView)  {

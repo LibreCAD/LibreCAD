@@ -19,18 +19,19 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
+#include <QMouseEvent>
 
 #include "lc_actioneditpastetransform.h"
-#include "rs_modification.h"
 #include "lc_pastetransformoptions.h"
-#include "rs_math.h"
+#include "rs_clipboard.h"
 #include "rs_coordinateevent.h"
-#include "rs_preview.h"
+#include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
-#include "rs_clipboard.h"
+#include "rs_math.h"
+#include "rs_modification.h"
+#include "rs_preview.h"
 #include "rs_units.h"
-#include "rs_debug.h"
 
 LC_ActionEditPasteTransform::LC_ActionEditPasteTransform(RS_EntityContainer &container, RS_GraphicView &graphicView)
     :RS_PreviewActionInterface("PasteTransform",container, graphicView),

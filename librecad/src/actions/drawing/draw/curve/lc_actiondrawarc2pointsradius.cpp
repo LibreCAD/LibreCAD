@@ -22,6 +22,8 @@
 
 #include "lc_actiondrawarc2pointsradius.h"
 
+#include "rs_arc.h"
+
 LC_ActionDrawArc2PointsRadius::LC_ActionDrawArc2PointsRadius(RS_EntityContainer &container, RS_GraphicView &graphicView)
     :LC_ActionDrawArc2PointsBase("DrawArc2PRadius",container, graphicView) {
     actionType = RS2::ActionDrawArc2PRadius;

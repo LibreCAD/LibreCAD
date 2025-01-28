@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<QMouseEvent>
 
 #include "rs.h"
 #include "rs_actioninterface.h"
@@ -73,10 +73,10 @@ RS_ActionInterface::RS_ActionInterface(const char *name,
     // graphic provides a pointer to the graphic if the
     // entity container is a graphic (i.e. can also hold
     // layers).
-    graphic = container.getGraphic();
+    // graphic = container.getGraphic();
 
     // document pointer will be used for undo / redo
-    document = container.getDocument();
+    // document = container.getDocument();
 
     updateSnapAngleStep();
 

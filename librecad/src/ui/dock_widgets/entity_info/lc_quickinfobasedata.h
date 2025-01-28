@@ -24,19 +24,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_QUICKINFOBASEDATA_H
 #define LC_QUICKINFOBASEDATA_H
 
-#include <QString>
 #include <QCoreApplication>
 #include "rs_vector.h"
 #include "rs.h"
 
-
 class LC_GraphicViewport;
 class RS_Document;
+
+
+class QString;
 
 class LC_QuickInfoBaseData{
     Q_DECLARE_TR_FUNCTIONS(LC_QuickInfoBaseData)
 public:
     LC_QuickInfoBaseData();
+    virtual ~LC_QuickInfoBaseData() = default;
     QString getFormattedVectorForIndex(int index) const;
     virtual RS_Vector getVectorForIndex(int index) const = 0;
     virtual bool updateForCoordinateViewMode(int mode) = 0;

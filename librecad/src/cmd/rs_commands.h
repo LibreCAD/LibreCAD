@@ -35,6 +35,7 @@
 
 #define RS_COMMANDS RS_Commands::instance()
 
+class QFile;
 class QString;
 
 /**
@@ -76,6 +77,8 @@ public:
 
 private:
     RS_Commands() ;
+
+    std::map<QString, QString> readAliasFile(QFile& aliasFile);
 
     std::map<QString, RS2::ActionType> m_mainCommands;
     std::map<QString, RS2::ActionType> m_shortCommands;

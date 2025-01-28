@@ -19,15 +19,16 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
+#include <QMouseEvent>
 
 #include "lc_actiondrawdimbaseline.h"
-#include "rs_dimlinear.h"
-#include "rs_preview.h"
-#include "rs_graphicview.h"
-#include "rs_debug.h"
-#include "rs_dimaligned.h"
 #include "qg_dimoptions.h"
 #include "rs_actiondimension.h"
+#include "rs_debug.h"
+#include "rs_dimaligned.h"
+#include "rs_dimlinear.h"
+#include "rs_graphicview.h"
+#include "rs_preview.h"
 
 // some functions are duplicated with DimLiner action, however, that's intentional as later we can support angular dimensions in additional to linear ones
 LC_ActionDrawDimBaseline::LC_ActionDrawDimBaseline(RS_EntityContainer &container, RS_GraphicView &graphicView, RS2::ActionType type)

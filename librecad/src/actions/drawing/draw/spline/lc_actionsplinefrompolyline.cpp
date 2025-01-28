@@ -20,15 +20,17 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "rs_polyline.h"
-#include "rs_document.h"
-#include "rs_spline.h"
-#include "lc_splinepoints.h"
-#include "rs_graphicview.h"
-#include "rs_graphic.h"
 
 #include "lc_actionsplinefrompolyline.h"
 #include "lc_splinefrompolylineoptions.h"
+#include "lc_splinepoints.h"
+#include "rs_arc.h"
+#include "rs_document.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_line.h"
+#include "rs_polyline.h"
+#include "rs_spline.h"
 
 LC_ActionSplineFromPolyline::LC_ActionSplineFromPolyline(RS_EntityContainer &container, RS_GraphicView &graphicView)
 :RS_PreviewActionInterface("ActionSplineFromPolyline",container, graphicView) {

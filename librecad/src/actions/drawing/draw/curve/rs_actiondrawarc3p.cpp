@@ -37,10 +37,30 @@
 #include "rs_preview.h"
 
 
+/**
+ * Arc data defined so far.
+ */
+struct RS_ActionDrawArc3P::Points {
+    RS_ArcData data;
+    /**
+     * 1st point.
+     */
+    RS_Vector point1;
+    /**
+     * 2nd point.
+     */
+    RS_Vector point2;
+    /**
+     * 3rd point.
+     */
+    RS_Vector point3;
+};
+
 RS_ActionDrawArc3P::RS_ActionDrawArc3P(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView)
-    :LC_ActionDrawCircleBase("Draw arcs 3P", container, graphicView){
+    :LC_ActionDrawCircleBase("Draw arcs 3P", container, graphicView)
+, m_pPoints{std::make_unique<RS_ActionDrawArc3P::Points>()}{
     actionType = RS2::ActionDrawArc3P;
 }
 
@@ -56,8 +76,8 @@ void RS_ActionDrawArc3P::init(int status) {
 
 void RS_ActionDrawArc3P::doTrigger() {
     preparePreview(alternatedPoints);
-    if (pPoints.data.isValid()){
-        auto *arc = new RS_Arc{container, pPoints.data};
+    if (m_pPoints->data.isValid()){
+        auto *arc = new RS_Arc{container, m_pPoints->data};
 
         setPenAndLayerToActive(arc);
 
@@ -79,12 +99,11 @@ void RS_ActionDrawArc3P::doTrigger() {
 }
 
 void RS_ActionDrawArc3P::preparePreview(bool alternatePoints){
-    pPoints.data = {};
-    if (pPoints.point1.valid && pPoints.point2.valid && pPoints.point3.valid){
-        RS_Arc arc(nullptr, pPoints.data);
-        RS_Vector &middlePoint = pPoints.point2;
-        RS_Vector &startPoint = pPoints.point1;
-        RS_Vector &endPoint = pPoints.point3;
+    if (m_pPoints->point1.valid && m_pPoints->point2.valid && m_pPoints->point3.valid){
+        RS_Arc arc(nullptr, m_pPoints->data);
+        RS_Vector &middlePoint = m_pPoints->point2;
+        RS_Vector &startPoint = m_pPoints->point1;
+        RS_Vector &endPoint = m_pPoints->point3;
         bool suc;
         if (alternatePoints){
             suc = arc.createFrom3P(startPoint, endPoint, middlePoint);
@@ -93,7 +112,7 @@ void RS_ActionDrawArc3P::preparePreview(bool alternatePoints){
             suc = arc.createFrom3P(startPoint, middlePoint, endPoint);
         }
         if (suc){
-            pPoints.data = arc.getData();
+            m_pPoints->data = arc.getData();
         }
     }
 }
@@ -103,39 +122,39 @@ void RS_ActionDrawArc3P::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
     switch (status) {
         case SetPoint1: {
-            pPoints.point1 = mouse;
+            m_pPoints->point1 = mouse;
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
         case SetPoint2: {
-            mouse = getSnapAngleAwarePoint(e, pPoints.point1, mouse, true);
-            pPoints.point2 = mouse;
-            if (pPoints.point1.valid) { // todo - redundant check
-                previewLine(pPoints.point1, pPoints.point2);
+            mouse = getSnapAngleAwarePoint(e, m_pPoints->point1, mouse, true);
+            m_pPoints->point2 = mouse;
+            if (m_pPoints->point1.valid) { // todo - redundant check
+                previewLine(m_pPoints->point1, m_pPoints->point2);
                 if (showRefEntitiesOnPreview) {
-                    previewRefPoint(pPoints.point1);
-                    previewRefSelectablePoint(pPoints.point2);
+                    previewRefPoint(m_pPoints->point1);
+                    previewRefSelectablePoint(m_pPoints->point2);
                 }
             }
             break;
         }
         case SetPoint3: {
             // todo - which point (1 or 2) is more suitable there for snap?
-            mouse = getSnapAngleAwarePoint(e,pPoints.point1, mouse, true);
-            pPoints.point3 = mouse;
+            mouse = getSnapAngleAwarePoint(e,m_pPoints->point1, mouse, true);
+            m_pPoints->point3 = mouse;
             bool alternatePoints = e->isControl || alternatedPoints;
             preparePreview(alternatePoints);
-            if (pPoints.data.isValid()){
-                previewToCreateArc(pPoints.data);
+            if (m_pPoints->data.isValid()){
+                previewToCreateArc(m_pPoints->data);
 
                 if (showRefEntitiesOnPreview) {
-                    previewRefPoint(pPoints.data.center);
-                    previewRefPoint(pPoints.point1);
-                    previewRefPoint(pPoints.point2);
-                    previewRefSelectablePoint(pPoints.point3);
+                    previewRefPoint(m_pPoints->data.center);
+                    previewRefPoint(m_pPoints->point1);
+                    previewRefPoint(m_pPoints->point2);
+                    previewRefSelectablePoint(m_pPoints->point3);
 
                     if (alternatePoints){
-                        previewRefLine(pPoints.point1, pPoints.point2);
+                        previewRefLine(m_pPoints->point1, m_pPoints->point2);
                     }
                 }
             }
@@ -150,11 +169,11 @@ void RS_ActionDrawArc3P::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
     RS_Vector snap = e->snapPoint;
     switch (status) {
         case SetPoint2:{
-            snap = getSnapAngleAwarePoint(e, pPoints.point1, snap);
+            snap = getSnapAngleAwarePoint(e, m_pPoints->point1, snap);
             break;
         }
         case SetPoint3:{
-            snap = getSnapAngleAwarePoint(e, pPoints.point1, snap);
+            snap = getSnapAngleAwarePoint(e, m_pPoints->point1, snap);
             if (e->isControl){
                alternatedPoints = true;
             }
@@ -174,19 +193,19 @@ void RS_ActionDrawArc3P::onMouseRightButtonRelease(int status, [[maybe_unused]]L
 void RS_ActionDrawArc3P::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetPoint1: {
-            pPoints.point1 = mouse;
+            m_pPoints->point1 = mouse;
             moveRelativeZero(mouse);
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2: {
-            pPoints.point2 = mouse;
+            m_pPoints->point2 = mouse;
             moveRelativeZero(mouse);
             setStatus(SetPoint3);
             break;
         }
         case SetPoint3: {
-            pPoints.point3 = mouse;
+            m_pPoints->point3 = mouse;
             trigger();
             break;
         }

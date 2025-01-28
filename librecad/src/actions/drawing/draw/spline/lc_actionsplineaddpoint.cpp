@@ -19,13 +19,14 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
+#include <QMouseEvent>
 
 #include "lc_actionsplineaddpoint.h"
-#include "rs_graphicview.h"
-#include "lc_splinepoints.h"
-#include "rs_spline.h"
-#include "rs_document.h"
 #include "lc_actionsplinemodifybase.h"
+#include "lc_splinepoints.h"
+#include "rs_document.h"
+#include "rs_graphicview.h"
+#include "rs_spline.h"
 
 namespace {
     const EntityTypeList enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints};

@@ -21,9 +21,10 @@
  ******************************************************************************/
 
 #include "lc_actiondrawarc2pointslength.h"
+#include "lc_linemath.h"
+#include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_information.h"
-#include "lc_linemath.h"
 
 LC_ActionDrawArc2PointsLength::LC_ActionDrawArc2PointsLength(RS_EntityContainer &container, RS_GraphicView &graphicView)
     :LC_ActionDrawArc2PointsBase("DrawArc2Angle",container, graphicView) {
@@ -77,8 +78,7 @@ bool LC_ActionDrawArc2PointsLength::createArcData(RS_ArcData &data, [[maybe_unus
             center = angleLessPI ? ipLeft : ipRight;
         }
     } else {
-        RS_Vector v = RS_Vector();
-        v.setPolar(radius,chordAngle);
+        const auto v = RS_Vector::polar(radius, chordAngle);
         center = startPoint + v;
         pos = startPoint + v*2.0;
     }

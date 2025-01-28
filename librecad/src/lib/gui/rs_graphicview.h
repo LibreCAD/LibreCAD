@@ -35,18 +35,19 @@
 #include <QMap>
 #include <QWidget>
 
-#include "lc_rect.h"
-#include "rs.h"
-#include "rs_pen.h"
 #include "lc_cursoroverlayinfo.h"
-#include "lc_ucs.h"
-#include "lc_view.h"
 #include "lc_graphicviewportlistener.h"
+#include "lc_rect.h"
+#include "lc_view.h"
+#include "lc_ucs.h"
+#include "rs_pen.h"
+#include "rs.h"
 
 
 class QDateTime;
 class QMouseEvent;
 class QKeyEvent;
+
 class RS_ActionInterface;
 class RS_Entity;
 class RS_EntityContainer;
@@ -56,6 +57,7 @@ class RS_CommandEvent;
 class RS_Graphic;
 class RS_Grid;
 class RS_Painter;
+
 struct RS_LineTypePattern;
 struct RS_SnapMode;
 class LC_GraphicViewport;

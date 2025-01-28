@@ -28,21 +28,25 @@
 #ifndef RS_PREVIEWACTIONINTERFACE_H
 #define RS_PREVIEWACTIONINTERFACE_H
 
-#include "rs_line.h"
-#include "rs_vector.h"
-#include "qg_actionhandler.h"
 #include <memory>
-#include "rs_actioninterface.h"
-#include "lc_highlight.h"
-#include "rs_arc.h"
-#include "rs_ellipse.h"
+
 #include "lc_defaults.h"
-#include "lc_refellipse.h"
-#include "rs_constructionline.h"
-#include "lc_overlayentity.h"
 
+#include "rs_actioninterface.h"
+
+class LC_Highlight;
+class LC_RefEllipse;
+
+class RS_Arc;
+class RS_ConstructionLine;
+class RS_Ellipse;
+class RS_Line;
+class RS_Vector;
+
+struct RS_ArcData;
 struct RS_CircleData;
-
+struct RS_EllipseData;
+struct RS_LineData;
 
 struct LC_MouseEvent{
     RS_Vector snapPoint;
@@ -52,6 +56,8 @@ struct LC_MouseEvent{
     bool isShift;
     QMouseEvent* originalEvent;
 };
+
+
 /**
  * This is the interface that must be implemented for all
  * action classes which need a preview.
