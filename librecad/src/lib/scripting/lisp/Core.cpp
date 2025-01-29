@@ -5,6 +5,7 @@
 #include "StaticList.h"
 #include "Types.h"
 #include "lisp.h"
+#include "rs.h"
 #include "rs_dialogs.h"
 #include "rs_lsp_inputhandle.h"
 
@@ -1299,6 +1300,8 @@ BUILTIN("entget")
         for (auto e: *entityContainer) {
             if (e->getId() == en->value())
             {
+                RS_Pen pen = e->getPen();
+
                 lclValueVec *entity = new lclValueVec;
 
                 lclValueVec *ename = new lclValueVec(3);
@@ -1310,11 +1313,55 @@ BUILTIN("entget")
                 ebname->at(0) = lcl::integer(330);
                 ebname->at(1) = lcl::symbol(".");
                 ebname->at(2) = lcl::ename(en->value());
+                entity->push_back(lcl::list(ebname));
 
                 lclValueVec *handle = new lclValueVec(3);
                 handle->at(0) = lcl::integer(5);
                 handle->at(1) = lcl::symbol(".");
-                handle->at(2) = lcl::string("6A");
+                handle->at(2) = lcl::string(en->valueStr());
+                entity->push_back(lcl::list(handle));
+
+                enum RS2::LineType lineType = pen.getLineType();
+                if(lineType != RS2::LineByLayer)
+                {
+                    lclValueVec *lType = new lclValueVec(3);
+                    lType->at(0) = lcl::integer(6);
+                    lType->at(1) = lcl::symbol(".");
+
+                    lType->at(2) = lcl::string(RS_FilterDXFRW::lineTypeToName(pen.getLineType()).toStdString());
+                    entity->push_back(lcl::list(lType));
+                }
+
+                enum RS2::LineWidth lineWidth = pen.getWidth();
+                if(lineWidth != RS2::Width00)
+                {
+                    lclValueVec *lWidth = new lclValueVec(3);
+                    lWidth->at(0) = lcl::integer(48);
+                    lWidth->at(1) = lcl::symbol(".");
+
+                    int width = static_cast<int>(lineWidth);
+                    if (width < 0)
+                    {
+                        lWidth->at(2) = lcl::integer(width);
+                    }
+                    else
+                    {
+                        lWidth->at(2) = lcl::ldouble(double(width) / 100.0);
+                    }
+                    entity->push_back(lcl::list(lWidth));
+
+                }
+
+                RS_Color color = pen.getColor();
+                if(!color.isByLayer())
+                {
+                    int exact_rgb;
+                    lclValueVec *col = new lclValueVec(3);
+                    col->at(0) = lcl::integer(62);
+                    col->at(1) = lcl::symbol(".");
+                    col->at(2) = lcl::integer(RS_FilterDXFRW::colorToNumber(color, &exact_rgb));
+                    entity->push_back(lcl::list(col));
+                }
 
                 lclValueVec *acdb = new lclValueVec(3);
                 acdb->at(0) = lcl::integer(100);
@@ -1342,25 +1389,27 @@ BUILTIN("entget")
                 extrDir->at(2) = lcl::ldouble(0.0);
                 extrDir->at(3) = lcl::ldouble(1.0);
 
+
+
+
+
+                entity->push_back(lcl::list(acdb));
+                entity->push_back(lcl::list(mspace));
+                entity->push_back(lcl::list(layoutTabName));
+                entity->push_back(lcl::list(layer));
+
                 switch (e->rtti())
                 {
                     case RS2::EntityPoint:
                     {
                         RS_Point* p = (RS_Point*)e;
-                        entity->push_back(lcl::list(ename));
 
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
                         name->at(2) = lcl::string("POINT");
-                        entity->push_back(lcl::list(name));
-
-                        entity->push_back(lcl::list(ebname));
-                        entity->push_back(lcl::list(handle));
-                        entity->push_back(lcl::list(acdb));
-                        entity->push_back(lcl::list(mspace));
-                        entity->push_back(lcl::list(layoutTabName));
-                        entity->push_back(lcl::list(layer));
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
 
                         lclValueVec *acdbL = new lclValueVec(3);
                         acdbL->at(0) = lcl::integer(100);
@@ -1384,20 +1433,13 @@ BUILTIN("entget")
                     case RS2::EntityLine:
                     {
                         RS_Line* l = (RS_Line*)e;
-                        entity->push_back(lcl::list(ename));
 
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
                         name->at(2) = lcl::string("LINE");
-                        entity->push_back(lcl::list(name));
-
-                        entity->push_back(lcl::list(ebname));
-                        entity->push_back(lcl::list(handle));
-                        entity->push_back(lcl::list(acdb));
-                        entity->push_back(lcl::list(mspace));
-                        entity->push_back(lcl::list(layoutTabName));
-                        entity->push_back(lcl::list(layer));
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
 
                         lclValueVec *acdbL = new lclValueVec(3);
                         acdbL->at(0) = lcl::integer(100);
@@ -1429,7 +1471,6 @@ BUILTIN("entget")
                     {
 
                         RS_Arc* a = (RS_Arc*)e;
-                        entity->push_back(lcl::list(ename));
 #if 0
                         a->getStartpoint();
                         a->getEndpoint();
@@ -1440,14 +1481,8 @@ BUILTIN("entget")
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
                         name->at(2) = lcl::string("ARC");
-                        entity->push_back(lcl::list(name));
-
-                        entity->push_back(lcl::list(ebname));
-                        entity->push_back(lcl::list(handle));
-                        entity->push_back(lcl::list(acdb));
-                        entity->push_back(lcl::list(mspace));
-                        entity->push_back(lcl::list(layoutTabName));
-                        entity->push_back(lcl::list(layer));
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
 
                         lclValueVec *acdbL = new lclValueVec(3);
                         acdbL->at(0) = lcl::integer(100);
@@ -1489,20 +1524,13 @@ BUILTIN("entget")
                     case RS2::EntityCircle:
                     {
                         RS_Circle* c = (RS_Circle*)e;
-                        entity->push_back(lcl::list(ename));
 
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
                         name->at(2) = lcl::string("CIRCLE");
-                        entity->push_back(lcl::list(name));
-
-                        entity->push_back(lcl::list(ebname));
-                        entity->push_back(lcl::list(handle));
-                        entity->push_back(lcl::list(acdb));
-                        entity->push_back(lcl::list(mspace));
-                        entity->push_back(lcl::list(layoutTabName));
-                        entity->push_back(lcl::list(layer));
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
 
                         lclValueVec *acdbL = new lclValueVec(3);
                         acdbL->at(0) = lcl::integer(100);
@@ -1532,20 +1560,13 @@ BUILTIN("entget")
                 case RS2::EntityEllipse:
                 {
                     RS_Ellipse* ellipse=static_cast<RS_Ellipse*>(e);
-                    entity->push_back(lcl::list(ename));
 
                     lclValueVec *name = new lclValueVec(3);
                     name->at(0) = lcl::integer(0);
                     name->at(1) = lcl::symbol(".");
                     name->at(2) = lcl::string("ELLIPSE");
-                    entity->push_back(lcl::list(name));
-
-                    entity->push_back(lcl::list(ebname));
-                    entity->push_back(lcl::list(handle));
-                    entity->push_back(lcl::list(acdb));
-                    entity->push_back(lcl::list(mspace));
-                    entity->push_back(lcl::list(layoutTabName));
-                    entity->push_back(lcl::list(layer));
+                    entity->insert(entity->begin(), lcl::list(name));
+                    entity->insert(entity->begin(), lcl::list(ename));
 
                     lclValueVec *acdbL = new lclValueVec(3);
                     acdbL->at(0) = lcl::integer(100);
@@ -1576,8 +1597,6 @@ BUILTIN("entget")
                     entity->push_back(lcl::list(ratio));
 
                     // 41 42
-
-
 
                     return lcl::list(entity);
                 }
@@ -1613,20 +1632,12 @@ BUILTIN("entget")
                     {
                         RS_Insert* i = (RS_Insert*)e;
 
-                        entity->push_back(lcl::list(ename));
-
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
                         name->at(2) = lcl::string("INSERT");
-                        entity->push_back(lcl::list(name));
-
-                        entity->push_back(lcl::list(ebname));
-                        entity->push_back(lcl::list(handle));
-                        entity->push_back(lcl::list(acdb));
-                        entity->push_back(lcl::list(mspace));
-                        entity->push_back(lcl::list(layoutTabName));
-                        entity->push_back(lcl::list(layer));
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
 
                         lclValueVec *acdbL = new lclValueVec(3);
                         acdbL->at(0) = lcl::integer(100);
@@ -1699,20 +1710,12 @@ BUILTIN("entget")
                     {
                         RS_MText* t = (RS_MText*)e;
 
-                        entity->push_back(lcl::list(ename));
-
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
                         name->at(2) = lcl::string("MTEXT");
-                        entity->push_back(lcl::list(name));
-
-                        entity->push_back(lcl::list(ebname));
-                        entity->push_back(lcl::list(handle));
-                        entity->push_back(lcl::list(acdb));
-                        entity->push_back(lcl::list(mspace));
-                        entity->push_back(lcl::list(layoutTabName));
-                        entity->push_back(lcl::list(layer));
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
 
                         lclValueVec *acdbL = new lclValueVec(3);
                         acdbL->at(0) = lcl::integer(100);
@@ -1827,20 +1830,13 @@ BUILTIN("entget")
                     case RS2::EntityText:
                     {
                         RS_Text* t = (RS_Text*)e;
-                        entity->push_back(lcl::list(ename));
 
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
                         name->at(2) = lcl::string("TEXT");
-                        entity->push_back(lcl::list(name));
-
-                        entity->push_back(lcl::list(ebname));
-                        entity->push_back(lcl::list(handle));
-                        entity->push_back(lcl::list(acdb));
-                        entity->push_back(lcl::list(mspace));
-                        entity->push_back(lcl::list(layoutTabName));
-                        entity->push_back(lcl::list(layer));
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
 
                         lclValueVec *acdbL = new lclValueVec(3);
                         acdbL->at(0) = lcl::integer(100);
@@ -1900,20 +1896,12 @@ BUILTIN("entget")
                         h->getScale();
                         (int)h->isSolid();
 
-                        entity->push_back(lcl::list(ename));
-
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
                         name->at(2) = lcl::string("HATCH");
-                        entity->push_back(lcl::list(name));
-
-                        entity->push_back(lcl::list(ebname));
-                        entity->push_back(lcl::list(handle));
-                        entity->push_back(lcl::list(acdb));
-                        entity->push_back(lcl::list(mspace));
-                        entity->push_back(lcl::list(layoutTabName));
-                        entity->push_back(lcl::list(layer));
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
 
                         lclValueVec *acdbL = new lclValueVec(3);
                         acdbL->at(0) = lcl::integer(100);
@@ -1944,7 +1932,6 @@ BUILTIN("entget")
                     break;
 
                     default:
-                        delete entity;
                         delete ename;
                         delete handle;
                         delete acdb;
@@ -1953,6 +1940,7 @@ BUILTIN("entget")
                         delete layer;
                         delete layer;
                         delete extrDir;
+                        delete entity;
 
                         return lcl::nilValue();
                         break;
@@ -2004,6 +1992,7 @@ BUILTIN("entmake")
     String text = "";
     String style = "";
     String layer = "";
+    RS_Pen pen;
 
     for (int i = 0; i < length; i++) {
         if (items->at(i)->type() == LCLTYPE::LIST ||
@@ -2022,6 +2011,14 @@ BUILTIN("entmake")
                 const lclString *t = VALUE_CAST(lclString, list->item(2));
                 text = t->value();
             }
+
+            if (list->begin()->ptr()->print(true).compare("6") == 0
+                && (list->item(1)->print(true).compare(".") == 0)
+            ) {
+                const lclString *ltype = VALUE_CAST(lclString, list->item(2));
+                pen.setLineType(RS_FilterDXFRW::nameToLineType(ltype->value().c_str()));
+            }
+
             if (list->begin()->ptr()->print(true).compare("7") == 0
                 && (list->item(1)->print(true).compare(".") == 0)
             ) {
@@ -2037,36 +2034,90 @@ BUILTIN("entmake")
             if (list->begin()->ptr()->print(true).compare("10") == 0
                 && list->count() > 2)
             {
-                if (list->count() == 3)
+                double xVal;
+                double yVal;
+                double zVal = 0.0;
+
+                if (list->item(1)->type() == LCLTYPE::INT)
                 {
-                    const lclDouble *x = VALUE_CAST(lclDouble, list->item(1));
-                    const lclDouble *y = VALUE_CAST(lclDouble, list->item(2));
-                    gc_ten.push_back({ x->value(), y->value(), 0.0 });
+                    const lclInteger *x = VALUE_CAST(lclInteger, list->item(1));
+                    xVal = double(x->value());
                 }
                 else
                 {
                     const lclDouble *x = VALUE_CAST(lclDouble, list->item(1));
-                    const lclDouble *y = VALUE_CAST(lclDouble, list->item(2));
-                    const lclDouble *z = VALUE_CAST(lclDouble, list->item(3));
-                    gc_ten.push_back({ x->value(), y->value(), z->value()});
+                    xVal = x->value();
                 }
+                if (list->item(2)->type() == LCLTYPE::INT)
+                {
+                    const lclInteger *y = VALUE_CAST(lclInteger, list->item(2));
+                    yVal = double(y->value());
+                }
+                else
+                {
+                    const lclDouble *y = VALUE_CAST(lclDouble, list->item(2));
+                    yVal = y->value();
+                }
+
+                if (list->count() > 3)
+                {
+                    if (list->item(2)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *z = VALUE_CAST(lclInteger, list->item(3));
+                        zVal = double(z->value());
+                    }
+                    else
+                    {
+                        const lclDouble *z = VALUE_CAST(lclDouble, list->item(3));
+                        zVal = z->value();
+                    }
+                }
+
+                gc_ten.push_back({ xVal, yVal, zVal });
             }
             if (list->begin()->ptr()->print(true).compare("11") == 0
                 && list->count() > 2)
             {
-                if (list->count() == 3)
+                double xVal;
+                double yVal;
+                double zVal = 0.0;
+
+                if (list->item(1)->type() == LCLTYPE::INT)
                 {
-                    const lclDouble *x = VALUE_CAST(lclDouble, list->item(1));
-                    const lclDouble *y = VALUE_CAST(lclDouble, list->item(2));
-                    gc_eleven.push_back({ x->value(), y->value(), 0.0 });
+                    const lclInteger *x = VALUE_CAST(lclInteger, list->item(1));
+                    xVal = double(x->value());
                 }
                 else
                 {
                     const lclDouble *x = VALUE_CAST(lclDouble, list->item(1));
-                    const lclDouble *y = VALUE_CAST(lclDouble, list->item(2));
-                    const lclDouble *z = VALUE_CAST(lclDouble, list->item(3));
-                    gc_eleven.push_back({ x->value(), y->value(), z->value()});
+                    xVal = x->value();
                 }
+                if (list->item(2)->type() == LCLTYPE::INT)
+                {
+                    const lclInteger *y = VALUE_CAST(lclInteger, list->item(2));
+                    yVal = double(y->value());
+                }
+                else
+                {
+                    const lclDouble *y = VALUE_CAST(lclDouble, list->item(2));
+                    yVal = y->value();
+                }
+
+                if (list->count() > 3)
+                {
+                    if (list->item(2)->type() == LCLTYPE::INT)
+                    {
+                        const lclInteger *z = VALUE_CAST(lclInteger, list->item(3));
+                        zVal = double(z->value());
+                    }
+                    else
+                    {
+                        const lclDouble *z = VALUE_CAST(lclDouble, list->item(3));
+                        zVal = z->value();
+                    }
+                }
+
+                gc_eleven.push_back({ xVal, yVal, zVal });
             }
             if (list->begin()->ptr()->print(true).compare("40") == 0
                 && (list->item(1)->print(true).compare(".") == 0)
@@ -2098,6 +2149,38 @@ BUILTIN("entmake")
                 const lclDouble *sc2 = VALUE_CAST(lclDouble, list->item(2));
                 scale2 = sc2->value();
             }
+            if (list->begin()->ptr()->print(true).compare("48") == 0
+                && (list->item(1)->print(true).compare(".") == 0)
+            ) {
+
+                int width = 0;
+                if (list->item(2)->type() == LCLTYPE::INT)
+                {
+                    const lclInteger *lwidth = VALUE_CAST(lclInteger, list->item(2));
+                    if (lwidth->value() >= 0)
+                    {
+                        width = lwidth->value() * 100;
+                    }
+                    else
+                    {
+                        width = lwidth->value();
+                    }
+                }
+                else
+                {
+                    const lclDouble *lwidth = VALUE_CAST(lclDouble, list->item(2));
+                    if (lwidth->value() >= 0)
+                    {
+                        width = static_cast<int>(lwidth->value()) * 100;
+                    }
+                    else
+                    {
+                        width = static_cast<int>(lwidth->value());
+                    }
+                }
+
+                pen.setWidth(RS2::intToLineWidth(width));
+            }
             if (list->begin()->ptr()->print(true).compare("50") == 0
                 && (list->item(1)->print(true).compare(".") == 0)
             ) {
@@ -2110,6 +2193,15 @@ BUILTIN("entmake")
                 const lclDouble *a2 = VALUE_CAST(lclDouble, list->item(2));
                 angle2 = a2->value();
             }
+
+            if (list->begin()->ptr()->print(true).compare("62") == 0
+                && (list->item(1)->print(true).compare(".") == 0)
+            ) {
+                const lclInteger *color = VALUE_CAST(lclInteger, list->item(2));
+                pen.setColor(RS_FilterDXFRW::numberToColor(color->value()));
+            }
+
+
         }
     }
 
@@ -2138,7 +2230,7 @@ BUILTIN("entmake")
                                         RS_Vector(gc_eleven.at(0).at(0),
                                                   gc_eleven.at(0).at(1),
                                                   gc_eleven.at(0).at(2)));
-            //line->setPen(RS_Pen(RS_Color(128, 128, 128), RS2::Width01, RS2::SolidLine));
+            line->setPen(pen);
             graphic->addEntity(line);
 
         }
@@ -2151,6 +2243,7 @@ BUILTIN("entmake")
                                                                                gc_ten.at(0).at(1),
                                                                                gc_ten.at(0).at(2)),
                                                                      radius1));
+            circle->setPen(pen);
             graphic->addEntity(circle);
 
         }
@@ -2162,6 +2255,7 @@ BUILTIN("entmake")
                                                                    gc_ten.at(0).at(1),
                                                                    gc_ten.at(0).at(2)),
                                                          radius1, angle1, angle2, false));
+            arc->setPen(pen);
             graphic->addEntity(arc);
         }
 
@@ -2175,6 +2269,7 @@ BUILTIN("entmake")
             data.majorP = RS_Vector(gc_eleven.at(0).at(0),gc_eleven.at(0).at(1),gc_eleven.at(0).at(2));
             data.ratio = radius1;
             RS_Ellipse *ellipse = new RS_Ellipse(graphic, data);
+            ellipse->setPen(pen);
             graphic->addEntity(ellipse);
 
         }
@@ -2217,7 +2312,6 @@ BUILTIN("entmod")
     RS_GraphicView* graphicView = appWin->getGraphicView();
     RS_EntityContainer* entityContainer = graphicView->getContainer();
 
-
     if(entityContainer->count())
     {
         for (auto entity: *entityContainer)
@@ -2225,6 +2319,8 @@ BUILTIN("entmod")
             if (entity->getId() == entityId)
             {
                 RS_Pen pen = entity->getPen();
+                std::vector<std::vector<double>> gc_ten;
+                std::vector<std::vector<double>> gc_eleven;
 
                 for (int i = 0; i < seq->count(); i++)
                 {
@@ -2253,13 +2349,124 @@ BUILTIN("entmod")
                         continue;
                     }
 
+                    if (list->item(0)->print(true).compare("10") == 0 && list->count() > 2)
+                    {
+                        double xVal;
+                        double yVal;
+                        double zVal = 0.0;
+
+                        if (list->item(1)->type() == LCLTYPE::INT)
+                        {
+                            const lclInteger *x = VALUE_CAST(lclInteger, list->item(1));
+                            xVal = double(x->value());
+                        }
+                        else
+                        {
+                            const lclDouble *x = VALUE_CAST(lclDouble, list->item(1));
+                            xVal = x->value();
+                        }
+                        if (list->item(2)->type() == LCLTYPE::INT)
+                        {
+                            const lclInteger *y = VALUE_CAST(lclInteger, list->item(2));
+                            yVal = double(y->value());
+                        }
+                        else
+                        {
+                            const lclDouble *y = VALUE_CAST(lclDouble, list->item(2));
+                            yVal = y->value();
+                        }
+
+                        if (list->count() > 3)
+                        {
+                            if (list->item(2)->type() == LCLTYPE::INT)
+                            {
+                                const lclInteger *z = VALUE_CAST(lclInteger, list->item(3));
+                                zVal = double(z->value());
+                            }
+                            else
+                            {
+                                const lclDouble *z = VALUE_CAST(lclDouble, list->item(3));
+                                zVal = z->value();
+                            }
+                        }
+                        gc_ten.push_back({ xVal, yVal, zVal });
+                        continue;
+                    }
+
+                    if (list->isDotted() && list->item(0)->print(true).compare("11") == 0)
+                    {
+                        double xVal;
+                        double yVal;
+                        double zVal = 0.0;
+
+                        if (list->item(1)->type() == LCLTYPE::INT)
+                        {
+                            const lclInteger *x = VALUE_CAST(lclInteger, list->item(1));
+                            xVal = double(x->value());
+                        }
+                        else
+                        {
+                            const lclDouble *x = VALUE_CAST(lclDouble, list->item(1));
+                            xVal = x->value();
+                        }
+                        if (list->item(2)->type() == LCLTYPE::INT)
+                        {
+                            const lclInteger *y = VALUE_CAST(lclInteger, list->item(2));
+                            yVal = double(y->value());
+                        }
+                        else
+                        {
+                            const lclDouble *y = VALUE_CAST(lclDouble, list->item(2));
+                            yVal = y->value();
+                        }
+
+                        if (list->count() > 3)
+                        {
+                            if (list->item(2)->type() == LCLTYPE::INT)
+                            {
+                                const lclInteger *z = VALUE_CAST(lclInteger, list->item(3));
+                                zVal = double(z->value());
+                            }
+                            else
+                            {
+                                const lclDouble *z = VALUE_CAST(lclDouble, list->item(3));
+                                zVal = z->value();
+                            }
+                        }
+                        gc_eleven.push_back({ xVal, yVal, zVal });
+                        continue;
+                    }
+
                     // lineWidth
                     if (list->isDotted() && list->item(0)->print(true).compare("48") == 0)
                     {
-#if 0
-                        const lclDouble *lwidth = VALUE_CAST(lclDouble, list->item(2));
-                        pen.setWidth(lwidth->value());
-#endif
+                        int width = 0;
+                        if (list->item(2)->type() == LCLTYPE::INT)
+                        {
+                            const lclInteger *lwidth = VALUE_CAST(lclInteger, list->item(2));
+                            if (lwidth->value() >= 0)
+                            {
+                                width = lwidth->value() * 100;
+                            }
+                            else
+                            {
+                                width = lwidth->value();
+                            }
+                        }
+                        else
+                        {
+                            const lclDouble *lwidth = VALUE_CAST(lclDouble, list->item(2));
+                            if (lwidth->value() >= 0)
+                            {
+                                width = static_cast<int>(lwidth->value()) * 100;
+                            }
+                            else
+                            {
+                                width = static_cast<int>(lwidth->value());
+                            }
+                        }
+
+                        pen.setWidth(RS2::intToLineWidth(width));
                         continue;
                     }
 
@@ -2277,6 +2484,7 @@ BUILTIN("entmod")
                     }
 #endif
                 }
+                entity->setPen(pen);
                 break;
             }
         }

@@ -185,6 +185,12 @@ public:
         return name;
     }
 
+    String valueStr() const {
+            std::stringstream ss;
+            ss << std::uppercase << std::hex << m_value;
+            return ss.str();
+        }
+
     virtual LCLTYPE type() const override { return LCLTYPE::ENAME; }
 
     unsigned long int value() const { return m_value; }
