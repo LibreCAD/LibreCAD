@@ -786,7 +786,7 @@ set(SOURCES
         librecad/src/lib/scripting/lisp/lisp.cpp
         librecad/src/lib/scripting/lisp/lisp.h
         librecad/src/lib/scripting/lisp/Reader.cpp
-        librecad/src/lib/scripting/lisp/MAL.h
+        librecad/src/lib/scripting/lisp/LCL.h
         librecad/src/lib/scripting/lisp/RefCountedPtr.h
         librecad/src/lib/scripting/lisp/StaticList.h
         librecad/src/lib/scripting/lisp/String.cpp
