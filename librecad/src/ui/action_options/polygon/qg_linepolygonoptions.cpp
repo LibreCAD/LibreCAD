@@ -23,11 +23,10 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include "qg_linepolygonoptions.h"
-
-#include "ui_qg_linepolygonoptions.h"
-#include "rs_debug.h"
 #include "lc_actiondrawlinepolygon4.h"
+#include "qg_linepolygonoptions.h"
+#include "rs_debug.h"
+#include "ui_qg_linepolygonoptions.h"
 
 QG_LinePolygonOptions::QG_LinePolygonOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionNone, "Draw", "LinePolygon")
@@ -88,12 +87,15 @@ QString QG_LinePolygonOptions::getSettingsOptionNamePrefix(){
 
 void QG_LinePolygonOptions::doSetAction(RS_ActionInterface *a, bool update){
     action = dynamic_cast<LC_ActionDrawLinePolygonBase*>(a);
+    assert(action != nullptr);
+    if (action == nullptr)
+        return;
 
-    int number;
-    bool polyline;
-    bool rounded;
+    int number = 0;
+    bool polyline = false;
+    bool rounded = false;
     QString radius;
-    bool vertextVertex;
+    bool vertextVertex = false;
     if (update){
         number = action->getNumber();
         polyline = action->isPolyline();
@@ -136,13 +138,15 @@ void QG_LinePolygonOptions::setRoundedToActionAndView(bool val) {
 void QG_LinePolygonOptions::setVertexVertexToActionAndView(bool val) {
     if (sideSideAction){
         auto* specificAction = dynamic_cast<LC_ActionDrawLinePolygon4 *>(action);
-        specificAction->setVertexVertexMode(val);
+        assert(action != nullptr);
+        if (action != nullptr)
+            specificAction->setVertexVertexMode(val);
     }
     ui->cbVertexToVertex->setChecked(val);
 }
 
 void QG_LinePolygonOptions::setRadiusToActionAndView(const QString &val) {
-    double value;
+    double value = 0.;
     if (toDouble(val, value, 0.0, true)){
         action->setRoundingRadius(value);
         ui->leRadius->setText(fromDouble(value));

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-*Options widget for ModifyScale action
+*Options widget for ModifyScale m_action
 
 Copyright (C) 2024 LibreCAD.org
 Copyright (C) 2024 sand1024
@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "lc_modifyscaleoptions.h"
+#include "rs_actionmodifyscale.h"
 #include "ui_lc_modifyscaleoptions.h"
 
 LC_ModifyScaleOptions::LC_ModifyScaleOptions()
@@ -40,10 +41,6 @@ LC_ModifyScaleOptions::LC_ModifyScaleOptions()
     connect(ui->sbNumberOfCopies, &QSpinBox::valueChanged, this, &LC_ModifyScaleOptions::onCopiesNumberValueChanged);
 }
 
-LC_ModifyScaleOptions::~LC_ModifyScaleOptions(){
-    delete ui;
-}
-
 void LC_ModifyScaleOptions::doSaveSettings() {
     save("KeepOriginals", ui->cbKeepOriginals->isChecked());
     save("MultipleCopies", ui->cbMultipleCopies->isChecked());
@@ -58,8 +55,8 @@ void LC_ModifyScaleOptions::doSaveSettings() {
 
 void LC_ModifyScaleOptions::updateUI(int mode) {
     if (mode == 0) { // update on SetTargetPoint
-        QString factorX = fromDouble(action->getFactorX());
-        QString factorY = fromDouble(action->getFactorY());
+        QString factorX = fromDouble(m_action->getFactorX());
+        QString factorY = fromDouble(m_action->getFactorY());
 
         ui->leFactorX->blockSignals(true);
         ui->leFactorY->blockSignals(true);
@@ -80,30 +77,34 @@ void LC_ModifyScaleOptions::updateUI(int mode) {
 }
 
 void LC_ModifyScaleOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<RS_ActionModifyScale *>(a);
+    m_action = dynamic_cast<RS_ActionModifyScale *>(a);
+    assert(m_action != nullptr);
+    if (m_action == nullptr)
+        return;
+
     QString factorX;
     QString factorY;
 
-    bool useMultipleCopies;
-    bool keepOriginals;
-    bool useCurrentLayer;
-    bool useCurrentAttributes;
-    int copiesNumber;
+    bool useMultipleCopies = false;
+    bool keepOriginals = false;
+    bool useCurrentLayer = false;
+    bool useCurrentAttributes = false;
+    int copiesNumber = 0;
 
-    bool explicitFactor;
-    bool isotrophic;
+    bool explicitFactor = false;
+    bool isotrophic = false;
 
     if (update){
-        useCurrentLayer = action->isUseCurrentLayer();
-        useCurrentAttributes = action->isUseCurrentAttributes();
-        keepOriginals = action->isKeepOriginals();
-        useMultipleCopies = action->isUseMultipleCopies();
-        copiesNumber = action->getCopiesNumber();
+        useCurrentLayer = m_action->isUseCurrentLayer();
+        useCurrentAttributes = m_action->isUseCurrentAttributes();
+        keepOriginals = m_action->isKeepOriginals();
+        useMultipleCopies = m_action->isUseMultipleCopies();
+        copiesNumber = m_action->getCopiesNumber();
 
-        explicitFactor = action->isExplicitFactor();
-        isotrophic = action->isIsotropicScaling();
-        factorX = fromDouble(action->getFactorX());
-        factorY= fromDouble(action->getFactorY());
+        explicitFactor = m_action->isExplicitFactor();
+        isotrophic = m_action->isIsotropicScaling();
+        factorX = fromDouble(m_action->getFactorX());
+        factorY= fromDouble(m_action->getFactorY());
     }
     else{
         useCurrentLayer = loadBool("UseCurrentLayer", false);
@@ -123,30 +124,30 @@ void LC_ModifyScaleOptions::doSetAction(RS_ActionInterface *a, bool update) {
     setUseCurrentAttributesToActionAndView(useCurrentAttributes);
     setKeepOriginalsToActionAndView(keepOriginals);
 
-    setExplicitFactorToActionAndView(explicitFactor);
-    setIsotropicScalingFactorToActionAndView(isotrophic);
     setFactorXToActionAndView(factorX);
     setFactorYToActionAndView(factorY);
+    setExplicitFactorToActionAndView(explicitFactor);
+    setIsotropicScalingFactorToActionAndView(isotrophic);
 }
 
 void LC_ModifyScaleOptions::setUseMultipleCopiesToActionAndView(bool copies) {
-    action->setUseMultipleCopies(copies);
+    m_action->setUseMultipleCopies(copies);
     ui->cbMultipleCopies->setChecked(copies);
     ui->sbNumberOfCopies->setEnabled(copies);
 }
 
 void LC_ModifyScaleOptions::setUseCurrentLayerToActionAndView(bool val) {
-    action->setUseCurrentLayer(val);
+    m_action->setUseCurrentLayer(val);
     ui->cbCurrentLayer->setChecked(val);
 }
 
 void LC_ModifyScaleOptions::setUseCurrentAttributesToActionAndView(bool val) {
-    action->setUseCurrentAttributes(val);
+    m_action->setUseCurrentAttributes(val);
     ui->cbCurrentAttr->setChecked(val);
 }
 
 void LC_ModifyScaleOptions::setKeepOriginalsToActionAndView(bool val) {
-    action->setKeepOriginals(val);
+    m_action->setKeepOriginals(val);
     ui->cbKeepOriginals->setChecked(val);
 }
 
@@ -154,44 +155,38 @@ void LC_ModifyScaleOptions::setCopiesNumberToActionAndView(int number) {
     if (number < 1){
         number = 1;
     }
-    action->setCopiesNumber(number);
+    m_action->setCopiesNumber(number);
     ui->sbNumberOfCopies->setValue(number);
 }
 
 void LC_ModifyScaleOptions::setIsotropicScalingFactorToActionAndView(bool val) {
     ui->cbIsotrpic->setChecked(val);
-    action->setIsotropicScaling(val);
-    ui->leFactorY->setEnabled(!val);
+    m_action->setIsotropicScaling(val);
+    ui->leFactorY->setEnabled(!val && !ui->cbExplicitFactor->isChecked() );
 }
 
 void LC_ModifyScaleOptions::setExplicitFactorToActionAndView(bool val) {
     ui->cbExplicitFactor->setChecked(val);
-    action->setExplicitFactor(val);
-    if (val){
-        ui->leFactorX->setEnabled(false);
-        ui->leFactorY->setEnabled(false);
-    }
-    else{
-        ui->leFactorX->setEnabled(true);
-        ui->leFactorY->setEnabled(!ui->cbIsotrpic->isChecked());
-    }
+    m_action->setExplicitFactor(val);
+    ui->leFactorX->setEnabled(!val);
+    ui->leFactorY->setEnabled(!val && !ui->cbIsotrpic->isChecked());
 }
 
 void LC_ModifyScaleOptions::setFactorXToActionAndView(QString val) {
-    double factor;
+    double factor = 1.;
     if (toDouble(val, factor, 0.0, false)) {
         const QString &factorStr = fromDouble(factor);
         ui->leFactorX->setText(factorStr);
-        action->setFactorX(factor);
+        m_action->setFactorX(factor);
     }
 }
 
 void LC_ModifyScaleOptions::setFactorYToActionAndView(QString val) {
-    double factor;
+    double factor = 1.;
     if (toDouble(val, factor, 0.0, false)) {
         const QString &factorStr = fromDouble(factor);
         ui->leFactorY->setText(factorStr);
-        action->setFactorY(factor);
+        m_action->setFactorY(factor);
     }
 }
 
