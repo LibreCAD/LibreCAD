@@ -80,11 +80,14 @@ struct RS_RotateData {
  * Holds the data needed for scale modifications.
  */
 struct RS_ScaleData {
+    RS_Vector referencePoint;
+    RS_Vector factor;
     int number = 0;
     bool useCurrentAttributes = false;
     bool useCurrentLayer = false;
-    RS_Vector referencePoint;
-    RS_Vector factor;
+    bool isotropicScaling = false;
+    // Find the factor by a source and a target point
+    bool toFindFactor = false;
 };
 
 
