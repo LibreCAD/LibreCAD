@@ -696,9 +696,9 @@ void LC_QuickInfoEntityData::collectEllipseProperties(RS_Ellipse *ellipse){
 
         addRawAngleProperty(tr("Angle Length"), angleLength);
         addVectorProperty(tr("Start"), startPoint);
-        addAngleProperty(tr("Start Angle"), startAngle);
+        addAngleProperty(tr("Start Angle"), startAngle); // fixme - sand - or raw angle value should be there? Check!
         addVectorProperty(tr("End"), endPoint);
-        addAngleProperty(tr("End Angle"), endAngle);
+        addAngleProperty(tr("End Angle"), endAngle); // fixme - sand - or raw angle value should be there? Check!
 
     } else {
         double area = ellipse->areaLineIntegral();
@@ -739,9 +739,9 @@ QString LC_QuickInfoEntityData::prepareEllipseDescription(RS_Ellipse *ellipse, R
             RS_Vector startPoint = ellipse->getStartpoint();
             RS_Vector endPoint = ellipse->getEndpoint();
             appendAbsolute(result, tr("Start"), startPoint);
-            appendAngle(result, tr("Start Angle"), startAngle);
+            appendAngle(result, tr("Start Angle"), startAngle); // fixme - sand - or raw angle value should be there? Check!
             appendAbsolute(result, tr("End"), endPoint);
-            appendAngle(result, tr("End Angle"), endAngle);
+            appendAngle(result, tr("End Angle"), endAngle);// fixme - sand - or raw angle value should be there? Check!
         }
         else{
             double area = ellipse->areaLineIntegral();
@@ -1269,7 +1269,7 @@ QString LC_QuickInfoEntityData::prepareHatchDescription(RS_Hatch *hatch, RS2::En
     appendValue(result, tr("Solid"), hatch->isSolid() ? tr("Yes") : tr("No"));
     appendValue(result, tr("Pattern"), hatch->getPattern());
     appendDouble(result, tr("Scale"), hatch->getScale());
-    appendAngle(result, tr("Angle"), hatch->getAngle());
+    appendAngle(result, tr("Angle"), hatch->getAngle()); // fixme - sand - or raw angle value should be there? Check!
     if (level != RS2::EntityDescriptionLevel::DescriptionCatched){
         appendArea(result, tr("Area"), hatch->getTotalArea());
     }
@@ -1292,7 +1292,7 @@ void LC_QuickInfoEntityData::collectHatchProperties(RS_Hatch *hatch){
 
         addProperty(tr("Pattern"), pattern, OTHER);
         addProperty(tr("Scale"), formatDouble(scale), OTHER);
-        addAngleProperty(tr("Angle"), angle);
+        addAngleProperty(tr("Angle"), angle); // fixme - sand - or raw angle value should be there? Check!
         addAreaProperty(tr("Total Area"), hatch->getTotalArea());
     }
 }

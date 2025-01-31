@@ -38,8 +38,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgCircle::QG_DlgCircle(QWidget* parent)
-    : LC_Dialog(parent, "CircleProperties"){
+QG_DlgCircle::QG_DlgCircle(QWidget *parent, LC_GraphicViewport *pViewport)
+    :LC_EntityPropertiesDlg(parent, "CircleProperties", pViewport){
     setupUi(this);
 }
 
@@ -58,7 +58,7 @@ void QG_DlgCircle::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgCircle::setCircle(RS_Circle& c) {
+void QG_DlgCircle::setEntity(RS_Circle& c) {
     circle = &c;
 
     RS_Graphic *graphic = circle->getGraphic();
@@ -77,7 +77,7 @@ void QG_DlgCircle::setCircle(RS_Circle& c) {
 //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgCircle::setCircle, leRadius->setText '%s'",qPrintable(s));
 }
 
-void QG_DlgCircle::updateCircle() {
+void QG_DlgCircle::updateEntity() {
     circle->setCenter(RS_Vector(RS_Math::eval(leCenterX->text()),
                                   RS_Math::eval(leCenterY->text())));
 //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgCircle::updateCircle, setRadius '%s'",qPrintable(leRadius->text()));

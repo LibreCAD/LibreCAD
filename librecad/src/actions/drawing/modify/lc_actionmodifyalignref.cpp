@@ -83,7 +83,7 @@ void LC_ActionModifyAlignRef::onMouseMoveEventSelected(int status, LC_MouseEvent
             if (isInfoCursorForModificationEnabled()) {
                 LC_InfoMessageBuilder msg(tr("Align References"));
                 msg.add(tr("Offset:"),formatRelative(pPoints.data.offset));
-                msg.add(tr("Angle:"),formatAngle(pPoints.data.rotationAngle));
+                msg.add(tr("Angle:"), formatAngleRaw(pPoints.data.rotationAngle));
                 msg.add(tr("Scale:"),formatLinear(pPoints.data.scaleFactor));
                 appendInfoCursorZoneMessage(msg.toString(), 2, false);
             }

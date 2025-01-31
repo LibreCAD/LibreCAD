@@ -29,26 +29,30 @@
 class RS_Point;
 
 #include "ui_qg_dlgpoint.h"
-#include "lc_dialog.h"
+#include "lc_entitypropertiesdlg.h"
 
-class QG_DlgPoint : public LC_Dialog, public Ui::QG_DlgPoint{
+class QG_DlgPoint : public LC_EntityPropertiesDlg, public Ui::QG_DlgPoint{
     Q_OBJECT
-
 public:
-    explicit QG_DlgPoint(QWidget* parent = nullptr);
+    explicit QG_DlgPoint(QWidget *parent, LC_GraphicViewport *pViewport);
     ~QG_DlgPoint() override;
-
 public slots:
-    virtual void setPoint( RS_Point & p );
-    virtual void updatePoint();
-
+    void setEntity(RS_Point & p );
+    void updateEntity() override;
 protected slots:
     virtual void languageChange();
-
 private:
     RS_Pen pen;
     RS_Point* point;
 
+    void initAttributes(RS_Layer *layer, RS_LayerList &layerList);
+
+    void setProperties();
+    void setAttributes(RS_Entity* e);
+
+    void updateProperties();
+
+    void updateAttributes();
 };
 
 #endif // QG_DLGPOINT_H

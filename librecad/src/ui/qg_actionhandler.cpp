@@ -474,17 +474,17 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionDrawLine(*document, *view);
             break;
         case RS2::ActionDrawLineAngle:
-            a = new RS_ActionDrawLineAngle(*document, *view, 0.0, false);
+            a = new RS_ActionDrawLineAngle(*document, *view,false);
             break;
         case RS2::ActionDrawLineHorizontal:
-            a = new RS_ActionDrawLineAngle(*document, *view, 0.0, true,
+            a = new RS_ActionDrawLineAngle(*document, *view, true,
                                            RS2::ActionDrawLineHorizontal);
             break;
         case RS2::ActionDrawLineHorVert:
             a = new RS_ActionDrawLineHorVert(*document, *view);
             break;
         case RS2::ActionDrawLineVertical:
-            a = new RS_ActionDrawLineAngle(*document, *view, 90, true,
+            a = new RS_ActionDrawLineAngle(*document, *view, true,
                                            RS2::ActionDrawLineVertical);
             break;
         case RS2::ActionDrawLineFree:
@@ -1097,6 +1097,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionOptionsDrawingGrid:
             a = new RS_ActionOptionsDrawing(*document, *view, 2);
+            break;
+        case RS2::ActionOptionsDrawingUnits:
+            a = new RS_ActionOptionsDrawing(*document, *view, 1);
             break;
         case RS2::ActionUCSCreate:
             a = new LC_ActionUCSCreate(*document, *view);

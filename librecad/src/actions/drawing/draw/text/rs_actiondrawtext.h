@@ -49,8 +49,8 @@ public:
     QStringList getAvailableCommands() override;
     void setText(const QString &t);
     const QString &getText() const;
-    void setAngle(double a);
-    double getAngle() const;
+    void setUcsAngleDegrees(double a);
+    double getUcsAngleDegrees() const;
 protected:
     /**
  * Action States.

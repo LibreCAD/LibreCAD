@@ -119,6 +119,7 @@ include_directories(librecad/src/lib/engine/overlays/info_cursor)
 include_directories(librecad/src/lib/engine/overlays/overlay_box)
 include_directories(librecad/src/lib/engine/overlays/crosshair)
 include_directories(librecad/src/lib/engine/overlays/ucs_mark)
+include_directories(librecad/src/lib/engine/overlays/angles_base)
 include_directories(librecad/src/lib/engine/document)
 include_directories(librecad/src/lib/engine/document/blocks)
 include_directories(librecad/src/lib/engine/document/layers)
@@ -1431,6 +1432,14 @@ set(SOURCES
 		librecad/src/lib/engine/overlays/lc_overlayentity.cpp
 		librecad/src/ui/view/lc_printpreviewview.h
 		librecad/src/ui/view/lc_printpreviewview.cpp
+		librecad/src/lib/engine/overlays/angles_base/lc_overlayanglesbasemark.h
+        librecad/src/lib/engine/overlays/angles_base/lc_overlayanglesbasemark.cpp
+		librecad/src/ui/components/status_bar/lc_anglesbasiswidget.h
+		librecad/src/ui/components/status_bar/lc_anglesbasiswidget.cpp
+		librecad/src/ui/components/status_bar/lc_anglesbasiswidget.h
+		librecad/src/ui/components/status_bar/lc_anglesbasiswidget.h
+		librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.h
+		librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

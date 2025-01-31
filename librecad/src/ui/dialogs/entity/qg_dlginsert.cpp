@@ -36,16 +36,15 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgInsert::QG_DlgInsert(QWidget* parent)
-    : LC_Dialog(parent, "InsertProperties"){
+QG_DlgInsert::QG_DlgInsert(QWidget *parent, LC_GraphicViewport *pViewport)
+    :LC_EntityPropertiesDlg(parent, "InsertProperties",pViewport){
     setupUi(this);
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgInsert::~QG_DlgInsert()
-{
+QG_DlgInsert::~QG_DlgInsert(){
     // no need to delete child widgets, Qt does it all for us
 }
 
@@ -53,15 +52,12 @@ QG_DlgInsert::~QG_DlgInsert()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgInsert::languageChange()
-{
+void QG_DlgInsert::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgInsert::setInsert(RS_Insert& i) {
+void QG_DlgInsert::setEntity(RS_Insert& i) {
     insert = &i;
-
-
     RS_Graphic* graphic = insert->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -94,7 +90,7 @@ void QG_DlgInsert::setInsert(RS_Insert& i) {
     leColSpacing->setText(s);
 }
 
-void QG_DlgInsert::updateInsert() {
+void QG_DlgInsert::updateEntity() {
     insert->setInsertionPoint(RS_Vector(RS_Math::eval(leInsertionPointX->text()),
                                   RS_Math::eval(leInsertionPointY->text())));
     insert->setScale(RS_Vector(RS_Math::eval(leScaleX->text()),

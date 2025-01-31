@@ -59,9 +59,18 @@ void RS_ActionDrawText::init(int status){
     switch (status) {
         case ShowDialog: {
             reset();
+            // as dialog is used to show angle in degrees, add necessary translation/conversion.
+            // Actually, a bit of hack due to implementation of the text editing dialog
+            data->angle = getUcsAngleDegrees();
             RS_Text tmp(nullptr, *data);
+            
             if (RS_DIALOGFACTORY->requestTextDialog(&tmp)){
-                data.reset(new RS_TextData(tmp.getData()));
+                const RS_TextData &editedData = tmp.getData();
+                double editedAngle = editedData.angle;
+                data.reset(new RS_TextData(editedData));
+                double ucsAngle = viewport->toAbsUCSAngle(editedAngle);
+                double wcsAngle = viewport->toWorldAngle(ucsAngle);
+                data->angle = wcsAngle;
                 setStatus(SetPos);
                 updateOptions();
             } else {
@@ -201,6 +210,7 @@ void RS_ActionDrawText::onCoordinateEvent(int status, [[maybe_unused]]bool isZer
     }
 }
 
+// fixme - sand - cmd - expand by other attributes (angle?, height?)
 bool RS_ActionDrawText::doProcessCommand(int status, const QString &c) {
     bool accept = true;
     switch (status) {
@@ -265,13 +275,13 @@ const QString &RS_ActionDrawText::getText() const{
     return data->text;
 }
 
-void RS_ActionDrawText::setAngle(double a){
-    data->angle = a;
+void RS_ActionDrawText::setUcsAngleDegrees(double ucsRelAngleDegrees){
+    data->angle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
     textChanged = true;
 }
 
-double RS_ActionDrawText::getAngle() const{
-    return data->angle;
+double RS_ActionDrawText::getUcsAngleDegrees() const{
+    return toUCSBasisAngleDegrees(data->angle);
 }
 
 LC_ActionOptionsWidget* RS_ActionDrawText::createOptionsWidget(){

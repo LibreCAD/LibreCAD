@@ -408,8 +408,6 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
     cbEncoding->setEditText(encoding);
     */
 
-
-
     // Paper margins
     bool block = true;
     leMarginLeft->blockSignals(block);
@@ -430,7 +428,6 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
 
     updatePaperSize();
     updateUnitLabels();
-
     updatePaperPreview();
 
     // Number of pages
@@ -528,6 +525,14 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
 
     int joinStyle = graphic->getGraphicVariableInt("$JOINSTYLE", 1);
     cbLineJoin ->setCurrentIndex(joinStyle);
+
+    // angles system setup
+    double baseAngle = graphic->getAnglesBase();
+    leAngleBaseZero->setText(QString("%1").arg(RS_Math::rad2deg(baseAngle)));
+
+    bool anglesAreCounterClockwise = graphic->areAnglesCounterClockWise();
+    rbAngleBasePositive->setChecked(anglesAreCounterClockwise);
+    rbAngleBaseNegative->setChecked(!anglesAreCounterClockwise);
 
     initVariables();
 }
@@ -839,7 +844,17 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->addVariable("$JOINSTYLE", cbLineJoin ->currentIndex(), DXF_FORMAT_GC_JoinStyle);
         graphic->addVariable("$ENDCAPS", cbLineCap->currentIndex(), DXF_FORMAT_GC_Endcaps);
 
-// indicate graphic is modified and requires save
+        // angles system
+
+        double baseAngle = RS_Math::eval(leAngleBaseZero->text(), &ok);
+        if (ok){
+            double baseAngleRad = RS_Math::deg2rad(baseAngle);
+            graphic->setAnglesBase(baseAngleRad);
+        }
+        bool anglesCounterClockwise = rbAngleBasePositive->isChecked();
+        graphic->setAnglesCounterClockwise(anglesCounterClockwise);
+
+        // indicate graphic is modified and requires save
         graphic->setModified(true);
     }
     accept();

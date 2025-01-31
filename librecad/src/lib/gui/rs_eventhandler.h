@@ -98,6 +98,7 @@ protected:
     RS_Vector toWCS(const RS_Vector& ucs);
     RS_Vector toUCS(const RS_Vector& wcs);
     double toWCSAngle(double ucsAngle);
+    double toAbsUCSAngle(double ucsBasisAngle);
 private:
     RS_GraphicView* graphicView;
     QAction* q_action{nullptr};

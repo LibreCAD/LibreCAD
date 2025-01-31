@@ -25,10 +25,13 @@
 **********************************************************************/
 
 #include <QDialog>
+#include "qc_applicationwindow.h"
 #include "rs_actionoptionsdrawing.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_debug.h"
+#include "lc_quickinfowidget.h"
+#include "lc_anglesbasiswidget.h"
 
 RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(RS_EntityContainer& container,
         RS_GraphicView& graphicView, int tabIndex)
@@ -49,6 +52,15 @@ void RS_ActionOptionsDrawing::trigger() {
         int dialogResult = RS_DIALOGFACTORY->requestOptionsDrawingDialog(*graphic,tabToShow);
         if (dialogResult == QDialog::Accepted){
             updateCoordinateWidgetFormat();
+            // fixme sand - create better way for accessing widgets
+            LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
+            if (entityInfoWidget != nullptr){
+                entityInfoWidget->updateFormats();
+            }
+            LC_AnglesBasisWidget *anglesBasisWidget = QC_ApplicationWindow::getAppWindow()->getAnglesBasisWidget();
+            if (anglesBasisWidget != nullptr){
+                anglesBasisWidget->update(graphic);
+            }
             if (graphicView != nullptr) {
                 graphicView->loadSettings();
                 redraw();

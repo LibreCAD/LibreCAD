@@ -35,8 +35,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgDimension::QG_DlgDimension(QWidget* parent)
-    : LC_Dialog(parent, "DimensionProperties"){
+QG_DlgDimension::QG_DlgDimension(QWidget *parent, LC_GraphicViewport *pViewport)
+    :LC_EntityPropertiesDlg(parent, "DimensionProperties", pViewport){
     setupUi(this);
 }
 
@@ -53,7 +53,7 @@ void QG_DlgDimension::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgDimension::setDim(RS_Dimension& d) {
+void QG_DlgDimension::setEntity(RS_Dimension& d) {
     dim = &d;
 
     RS_Graphic* graphic = dim->getGraphic();
@@ -71,7 +71,7 @@ void QG_DlgDimension::setDim(RS_Dimension& d) {
     wLabel->setLabel(dim->getLabel(false));
 }
 
-void QG_DlgDimension::updateDim() {
+void QG_DlgDimension::updateEntity() {
     dim->setLabel(wLabel->getLabel());
     dim->setPen(wPen->getPen());
     dim->setLayer(cbLayer->currentText());

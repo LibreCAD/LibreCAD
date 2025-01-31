@@ -28,44 +28,40 @@
 
 #include "ui_qg_dlgmtext.h"
 #include "rs_mtext.h"
-#include "lc_dialog.h"
+#include "lc_entitypropertiesdlg.h"
 
-class QG_DlgMText : public LC_Dialog, public Ui::QG_DlgMText{
+class QG_DlgMText : public LC_EntityPropertiesDlg, public Ui::QG_DlgMText{
     Q_OBJECT
 public:
-    QG_DlgMText(QWidget* parent = nullptr);
+    QG_DlgMText(QWidget *parent, LC_GraphicViewport *pViewport);
     ~QG_DlgMText() override;
-
-    virtual int getAlignment();
-
+    int getAlignment();
 public slots:
-    virtual void updateUniCharComboBox( int );
-    virtual void setText( RS_MText & t, bool isNew );
-    virtual void updateText();
-    virtual void setAlignmentTL();
-    virtual void setAlignmentTC();
-    virtual void setAlignmentTR();
-    virtual void setAlignmentML();
-    virtual void setAlignmentMC();
-    virtual void setAlignmentMR();
-    virtual void setAlignmentBL();
-    virtual void setAlignmentBC();
-    virtual void setAlignmentBR();
-    virtual void setAlignment(QToolButton* button);
-    virtual void setFont( const QString & f );
-    virtual void defaultChanged( bool );
-    virtual void loadText();
-    virtual void load( const QString & fn );
-    virtual void saveText();
-    virtual void save( const QString & fn );
-    virtual void insertSymbol( int );
-    virtual void updateUniCharButton( int );
-    virtual void insertChar();
-    void reject() override;
-
+     void updateUniCharComboBox( int );
+     void setEntity(RS_MText & t, bool isNew );
+     void updateEntity() override;
+     void setAlignmentTL();
+     void setAlignmentTC();
+     void setAlignmentTR();
+     void setAlignmentML();
+     void setAlignmentMC();
+     void setAlignmentMR();
+     void setAlignmentBL();
+     void setAlignmentBC();
+     void setAlignmentBR();
+     void setAlignment(QToolButton* button);
+     void setFont( const QString & f );
+     void defaultChanged( bool );
+     void loadText();
+     void load( const QString & fn );
+     void saveText();
+     void save( const QString & fn );
+     void insertSymbol( int );
+     void updateUniCharButton( int );
+     void insertChar();
+     void reject() override;
 protected slots:
     virtual void languageChange();
-
 private:
     void layoutDirectionChanged();
     bool isNew = false;
@@ -75,7 +71,6 @@ private:
 
     void init();
     void destroy();
-
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
 private:

@@ -13,7 +13,9 @@ protected:
 public:
     TwoStackedLabels(QWidget* parent);
     void setTopLabel(const QString& status);
+    void setTopLabelToolTip(const QString& tooltip);
     void setBottomLabel(const QString& status);
+    void setBottomLabelToolTips(const QString& tooltip);
 signals:
     void clicked();
 

@@ -46,8 +46,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgMText::QG_DlgMText(QWidget* parent)
-    : LC_Dialog(parent,"MTextProperties"){
+QG_DlgMText::QG_DlgMText(QWidget *parent, LC_GraphicViewport *pViewport)
+    :LC_EntityPropertiesDlg(parent,"MTextProperties", pViewport) {
     setupUi(this);
     alignmentButtons = {{bTL, bTC, bTR, bML, bMC, bMR, bBL, bBC, bBR}};
     init();
@@ -56,8 +56,7 @@ QG_DlgMText::QG_DlgMText(QWidget* parent)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgMText::~QG_DlgMText()
-{
+QG_DlgMText::~QG_DlgMText(){
     destroy();
     // no need to delete child widgets, Qt does it all for us
 }
@@ -66,8 +65,7 @@ QG_DlgMText::~QG_DlgMText()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgMText::languageChange()
-{
+void QG_DlgMText::languageChange(){
     retranslateUi(this);
 }
 
@@ -161,7 +159,7 @@ void QG_DlgMText::destroy() {
 /**
  * Sets the text entity represented by this dialog.
  */
-void QG_DlgMText::setText(RS_MText& t, bool isNew) {
+void QG_DlgMText::setEntity(RS_MText& t, bool isNew) {
     text = &t;
     this->isNew = isNew;
 
@@ -239,12 +237,13 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
        str = text->getText();
 //#endif
         //QString shape = RS_SETTINGS->readEntry("/TextShape", "0");
-        angle = QString("%1").arg(RS_Math::rad2deg(text->getAngle()));
+        angle = QString("%1").arg(RS_Math::rad2deg(text->getAngle()));  // fixme - sand - ucs - editing text angle, fix
 
         RS_Graphic* graphic = text->getGraphic();
         if (graphic) {
             cbLayer->init(*(graphic->getLayerList()), false, false);
         }
+
         RS_Layer* lay = text->getLayer(false);
         if (lay) {
             cbLayer->setLayer(*lay);
@@ -299,7 +298,7 @@ void QG_DlgMText::layoutDirectionChanged()
 /**
  * Updates the text entity represented by the dialog to fit the choices of the user.
  */
-void QG_DlgMText::updateText() {
+void QG_DlgMText::updateEntity() {
     if (text) {
         text->setStyle(cbFont->currentText());
         text->setHeight(leHeight->text().toDouble());

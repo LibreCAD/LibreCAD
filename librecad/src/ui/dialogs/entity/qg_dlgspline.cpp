@@ -40,8 +40,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgSpline::QG_DlgSpline(QWidget* parent)
-    : LC_Dialog(parent, "SplineProperties"){
+QG_DlgSpline::QG_DlgSpline(QWidget *parent, LC_GraphicViewport *pViewport)
+    :LC_EntityPropertiesDlg(parent, "SplineProperties", pViewport){
     setupUi(this);
 }
 
@@ -53,7 +53,7 @@ void QG_DlgSpline::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgSpline::setSpline(RS_Spline& e) {
+void QG_DlgSpline::setEntity(RS_Spline& e) {
     spline = &e;
 
     RS_Graphic* graphic = spline->getGraphic();
@@ -81,7 +81,7 @@ void QG_DlgSpline::setSpline(RS_Spline& e) {
     }
 }
 
-void QG_DlgSpline::updateSpline() {
+void QG_DlgSpline::updateEntity() {
     spline->setDegree(RS_Math::round(RS_Math::eval(cbDegree->currentText())));
     spline->setClosed(cbClosed->isChecked());
     spline->setPen(wPen->getPen());

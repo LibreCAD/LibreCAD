@@ -59,8 +59,8 @@ public:
     void preparePreview() override;
     QStringList getAvailableCommands() override;
 //    void showOptions() override;
-    double getAngle() const;
-    void setAngle(double a);
+    double getUcsAngleDegrees() const;
+    void setUcsAngleDegrees(double a);
     bool hasFixedAngle() const;
 protected:
 

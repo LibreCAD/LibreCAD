@@ -571,7 +571,7 @@ void RS_ActionDefault::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 void RS_ActionDefault::createEditedLineDescription([[maybe_unused]]RS_Line* clone, [[maybe_unused]]bool ctrlPressed,  [[maybe_unused]]bool shiftPressed) {
     LC_InfoMessageBuilder msg(tr("Line"));
     msg.add(tr("Length: "), formatLinear(pPoints->v1.distanceTo(pPoints->v2)));
-    msg.add(tr("Angle: "), formatAngle(pPoints->v1.angleTo(pPoints->v2)));
+    msg.add(tr("Angle: "), formatWCSAngle(pPoints->v1.angleTo(pPoints->v2)));
     appendInfoCursorZoneMessage(msg.toString(), 2, true);
 }
 
@@ -583,7 +583,7 @@ void RS_ActionDefault::createEditedArcDescription(RS_Arc* clone,  [[maybe_unused
     LC_InfoMessageBuilder msg(tr("Arc"));
     msg.add(tr("Radius:"),formatLinear(clone->getRadius()));
     msg.add(tr("Center:"),formatVector(center));
-    msg.add(tr("Angle Length:"), formatAngle(clone->getAngleLength()));
+    msg.add(tr("Angle Length:"), formatAngleRaw(clone->getAngleLength()));
     msg.add(tr("Chord Length:"), formatLinear(clone->getStartpoint().distanceTo(clone->getEndpoint())));
     msg.add(tr("Height:"), formatLinear(height));
     appendInfoCursorZoneMessage(msg.toString(), 2, true);

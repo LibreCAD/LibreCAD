@@ -133,7 +133,7 @@
    <sender>teText</sender>
    <signal>textChanged()</signal>
    <receiver>Ui_MTextOptions</receiver>
-   <slot>updateText()</slot>
+   <slot>updateEntity()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>20</x>
@@ -163,7 +163,7 @@
   </connection>
  </connections>
  <slots>
-  <slot>updateText()</slot>
+  <slot>updateEntity()</slot>
   <slot>updateAngle()</slot>
  </slots>
 </ui>

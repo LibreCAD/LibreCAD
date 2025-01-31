@@ -27,6 +27,7 @@
 #include "rs_debug.h"
 #include "lc_ucssetoptions.h"
 #include "lc_overlayentitiescontainer.h"
+#include "lc_overlayanglesbasemark.h"
 
 LC_ActionUCSCreate::LC_ActionUCSCreate(RS_EntityContainer &container, RS_GraphicView &graphicView)
     :RS_PreviewActionInterface("UCSCreate", container, graphicView){
@@ -36,7 +37,7 @@ LC_ActionUCSCreate::LC_ActionUCSCreate(RS_EntityContainer &container, RS_Graphic
 LC_ActionUCSCreate::~LC_ActionUCSCreate() = default;
 
 void LC_ActionUCSCreate::doTrigger() {
-   LC_ERR << "SET Origin. UCS: " << formatVector(m_originPoint) << " World: "<< formatVectorWCS(m_originPoint) << " Angle: " << formatAngle(m_angle);
+//   LC_ERR << "SET Origin. UCS: " << formatVector(m_originPoint) << " World: "<< formatVectorWCS(m_originPoint) << " Angle: " << formatAngle(m_angle);
 
    double angle = m_fixedAngle ? toWorldAngle(m_angle) : m_angle;
    viewport->createUCS(m_originPoint, angle);

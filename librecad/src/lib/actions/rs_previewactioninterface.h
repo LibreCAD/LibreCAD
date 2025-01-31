@@ -80,6 +80,8 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *event) override;
 protected:
+    // fixme - sand - tmp -  move to overlay!!!
+    int m_angleSnapMarkerSize = 20;
     /**
      * Preview that holds the entities to be previewed.
      */
@@ -196,5 +198,9 @@ protected:
     virtual void onMouseRightButtonRelease(int status, LC_MouseEvent *e);
     virtual void onMouseLeftButtonPress(int status, LC_MouseEvent *e);
     virtual void onMouseRightButtonPress(int status, LC_MouseEvent *e);
+
+    bool parseToWCSAngle(const QString &c, double &wcsAngleRad);
+
+    void initFromSettings() override;
 };
 #endif

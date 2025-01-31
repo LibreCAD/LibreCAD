@@ -665,23 +665,19 @@ void LC_QuickInfoWidget::onEditEntityProperties(){
             en->setSelected(true);
 
             RS_Entity* newEntity = clone.get();
-            if (RS_DIALOGFACTORY->requestModifyEntityDialog(newEntity)){
+            if (RS_DIALOGFACTORY->requestModifyEntityDialog(newEntity, graphicView->getViewPort())){
                 // properties changed, do edit
                 document->addEntity(newEntity);
 
                 // update widget view
                 processEntity(newEntity);
-
                 en->setSelected(false);
-
                 clone->setSelected(false);
 
                 document->startUndoCycle();
-
                 document->addUndoable(newEntity);
                 en->setUndoState(true);
                 document->addUndoable(en);
-
                 document->endUndoCycle();
 
                 clone.release();
@@ -721,6 +717,11 @@ void LC_QuickInfoWidget::setDocumentAndView(RS_Document *doc, QG_GraphicView* v)
     pointsData.setDocumentAndView(doc, viewport);
     showNoDataMessage();
     hasOwnPreview = false;
+}
+
+void LC_QuickInfoWidget::updateFormats(){
+    entityData.updateFormats();
+    pointsData.updateFormats();
 }
 
 /**

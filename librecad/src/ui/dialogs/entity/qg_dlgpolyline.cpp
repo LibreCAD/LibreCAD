@@ -37,8 +37,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgPolyline::QG_DlgPolyline(QWidget* parent)
-    : LC_Dialog(parent, "PolylineProperties"){
+QG_DlgPolyline::QG_DlgPolyline(QWidget *parent, LC_GraphicViewport *pViewport)
+    :LC_EntityPropertiesDlg(parent, "PolylineProperties", pViewport) {
     setupUi(this);
 }
 
@@ -57,7 +57,7 @@ void QG_DlgPolyline::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgPolyline::setPolyline(RS_Polyline& e) {
+void QG_DlgPolyline::setEntity(RS_Polyline& e) {
     polyline = &e;
 
 
@@ -74,7 +74,7 @@ void QG_DlgPolyline::setPolyline(RS_Polyline& e) {
     cbClosed->setChecked(polyline->isClosed());
 }
 
-void QG_DlgPolyline::updatePolyline() {
+void QG_DlgPolyline::updateEntity() {
     polyline->setClosed(cbClosed->isChecked());
     polyline->setPen(wPen->getPen());
     polyline->setLayer(cbLayer->currentText());

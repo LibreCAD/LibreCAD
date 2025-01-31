@@ -42,8 +42,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgHatch::QG_DlgHatch(QWidget* parent)
-    : LC_Dialog(parent, "HatchProperties"){
+QG_DlgHatch::QG_DlgHatch(QWidget *parent, LC_GraphicViewport *pViewport)
+    :LC_EntityPropertiesDlg(parent, "HatchProperties", pViewport) {
     setupUi(this);
     init();
 }
@@ -114,7 +114,7 @@ void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
     }
 }
 
-void QG_DlgHatch::updateHatch() {
+void QG_DlgHatch::updateEntity() {
     if (hatch) {
         hatch->setSolid(cbSolid->isChecked());
         hatch->setPattern(cbPattern->currentText());

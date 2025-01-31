@@ -91,7 +91,7 @@ void LC_OverlayUCSMark::draw(RS_Painter *painter) {
     painter->drawText(yRect, Qt::AlignTop | Qt::AlignRight | Qt::TextDontClip, yString, &yBoundingRect);
 
     // square
-    double angleFactor = 0.1;
+    double angleFactor = 0.05;
     double angleLen = zr*angleFactor;
 
     RS_Vector angleX0 = uiOrigin.relative(angleLen, xAxisAngle);
@@ -99,7 +99,7 @@ void LC_OverlayUCSMark::draw(RS_Painter *painter) {
     RS_Vector anchorY0 = uiOrigin.relative(angleLen, yAxisAngle);
 
     RS_Pen anglePen (options->m_colorAngleMark, RS2::Width00, RS2::SolidLine);
-    anglePen.setScreenWidth(2);
+    anglePen.setScreenWidth(0);
 
     painter->setPen(anglePen);
 

@@ -50,7 +50,7 @@ struct RS_ActionDrawLineAngle::Points {
 /**
  * Line angle.
  */
-    double angle;
+    double wcsAngle;
 /**
  * Line length.
  */
@@ -68,14 +68,14 @@ struct RS_ActionDrawLineAngle::Points {
 RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView,
-    double angle,
     bool fixedAngle, RS2::ActionType actionType)
     :RS_PreviewActionInterface("Draw lines with given angle",
                                container, graphicView), pPoints(std::make_unique<Points>()){
 
     this->actionType = actionType;
-    pPoints->angle = angle;
     pPoints->fixedAngle = fixedAngle;
+    double wcsAngle = 0.0;
+    pPoints->wcsAngle = wcsAngle;
     reset();
 }
 
@@ -89,6 +89,18 @@ void RS_ActionDrawLineAngle::reset() {
 void RS_ActionDrawLineAngle::init(int status) {
     RS_PreviewActionInterface::init(status);
     reset();
+}
+
+void RS_ActionDrawLineAngle::initFromSettings() {
+    RS_PreviewActionInterface::initFromSettings();
+    if (actionType == RS2::ActionDrawLineVertical){
+        double wcsAngle = toWorldAngleFromUCSBasisDegrees(90);
+        pPoints->wcsAngle = wcsAngle;
+    }
+    else if (actionType == RS2::ActionDrawLineHorizontal){
+        double wcsAngle = toWorldAngleFromUCSBasisDegrees(0);
+        pPoints->wcsAngle = wcsAngle;
+    }
 }
 
 void RS_ActionDrawLineAngle::doTrigger() {
@@ -150,8 +162,7 @@ void RS_ActionDrawLineAngle::onMouseRightButtonRelease(int status, [[maybe_unuse
 void RS_ActionDrawLineAngle::preparePreview(){
     RS_Vector p1, p2;
     // End:
-    double angleRad = RS_Math::deg2rad(pPoints->angle);
-    angleRad = toWorldAngle(angleRad);
+    double angleRad = pPoints->wcsAngle;
     if (pPoints->snpPoint == SNAP_END){
         p2.setPolar(-pPoints->length, angleRad);
     } else {
@@ -197,11 +208,11 @@ bool RS_ActionDrawLineAngle::doProcessCommand(int status, const QString &c) {
             break;
         }
         case SetAngle: {
-            bool ok;
-            double a = RS_Math::eval(c, &ok);
+            double wcsAngle;
+            bool ok = parseToWCSAngle(c, wcsAngle);
             if (ok){
                 accept = true;
-                pPoints->angle = a;
+                pPoints->wcsAngle = wcsAngle;
             } else {
                 commandMessage(tr("Not a valid expression"));
             }
@@ -236,12 +247,12 @@ int RS_ActionDrawLineAngle::getSnapPoint() const{
     return pPoints->snpPoint;
 }
 
-void RS_ActionDrawLineAngle::setAngle(double a){
-    pPoints->angle = a;
+void RS_ActionDrawLineAngle::setUcsAngleDegrees(double ucsRelAngleDegrees){
+    pPoints->wcsAngle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
 }
 
-double RS_ActionDrawLineAngle::getAngle() const{
-    return pPoints->angle;
+double RS_ActionDrawLineAngle::getUcsAngleDegrees() const{
+    return toUCSBasisAngleDegrees(pPoints->wcsAngle);
 }
 
 void RS_ActionDrawLineAngle::setLength(double l){

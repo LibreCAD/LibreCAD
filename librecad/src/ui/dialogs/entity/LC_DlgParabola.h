@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include<memory>
 #include <QDialog>
-#include "lc_dialog.h"
+#include "lc_entitypropertiesdlg.h"
 
 class LC_Parabola;
 
@@ -34,21 +34,18 @@ namespace Ui {
 class DlgParabola;
 }
 
-class LC_DlgParabola : public LC_Dialog
-{
+class LC_DlgParabola : public LC_EntityPropertiesDlg{
 	Q_OBJECT
 public:
-    LC_DlgParabola(QWidget* parent=nullptr);
+    LC_DlgParabola(QWidget* parent, LC_GraphicViewport *pViewport);
     ~LC_DlgParabola() override;
 
 public slots:
-    virtual void setParabola(LC_Parabola& b);
-    virtual void updatePoints();
-    virtual void updateParabola();
-
+    void setEntity(LC_Parabola& b);
+    void updatePoints();
+    void updateEntity() override;
 protected slots:
     virtual void languageChange();
-
 private:
     LC_DlgParabola(LC_DlgParabola const&) = delete;
     LC_DlgParabola& operator = (LC_DlgParabola const&) = delete;

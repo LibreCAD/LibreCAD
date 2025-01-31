@@ -81,7 +81,7 @@ void LC_ActionCircleDimBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 RS_Vector pointOnCircle = preparePreview(entity, *pos, false);
 
                 auto *d = createDim(preview.get());
-                currentAngle = entity->getCenter().angleTo(pointOnCircle);
+                m_currentAngle = entity->getCenter().angleTo(pointOnCircle);
                 updateOptionsUI(QG_DimOptions::UI_UPDATE_CIRCLE_ANGLE);
                 d->update();
                 previewEntity(d);
@@ -166,12 +166,12 @@ bool LC_ActionCircleDimBase::doProcessCommand(int status, const QString &c) {
         setStatus(SetText);
         accept = true;
     } else if (status == SetPos) {// setting angle
-        bool ok;
-        double a = RS_Math::eval(c, &ok);
+        double wcsAngle;
+        bool ok = parseToWCSAngle(c, wcsAngle);
         if (ok) {
             accept = true;
-            currentAngle = RS_Math::deg2rad(a);
-            pos->setPolar(1.0, currentAngle);
+            m_currentAngle = wcsAngle;
+            pos->setPolar(1.0, m_currentAngle);
             *pos += data->definitionPoint;
             updateOptionsUI(QG_DimOptions::UI_UPDATE_CIRCLE_ANGLE);
             trigger();
@@ -215,12 +215,13 @@ void LC_ActionCircleDimBase::updateMouseButtonHints() {
     }
 }
 
-double LC_ActionCircleDimBase::getAngle() const {
-    return angle;
+double LC_ActionCircleDimBase::getUcsAngleDegrees() const {
+    return toUCSBasisAngleDegrees(angle);
 }
 
-void LC_ActionCircleDimBase::setAngle(double angle) {
-    this->angle = angle;
+void LC_ActionCircleDimBase::setUcsAngleDegrees(double ucsRelAngleDegrees) {
+    double wcsAngle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
+    angle = wcsAngle;
 }
 
 bool LC_ActionCircleDimBase::isAngleIsFree() const {

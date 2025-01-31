@@ -29,24 +29,20 @@
 class RS_Insert;
 
 #include "ui_qg_dlginsert.h"
-#include "lc_dialog.h"
+#include "lc_entitypropertiesdlg.h"
 
-class QG_DlgInsert : public LC_Dialog, public Ui::QG_DlgInsert{
+class QG_DlgInsert : public LC_EntityPropertiesDlg, public Ui::QG_DlgInsert{
     Q_OBJECT
 public:
-    QG_DlgInsert(QWidget* parent = nullptr);
+    QG_DlgInsert(QWidget *parent, LC_GraphicViewport *pViewport);
     ~QG_DlgInsert() override;
-
 public slots:
-    virtual void setInsert( RS_Insert & i );
-    virtual void updateInsert();
-
+    void setEntity(RS_Insert & i );
+    void updateEntity() override;
 protected slots:
     virtual void languageChange();
-
 private:
     RS_Insert* insert;
-
 };
 
 #endif // QG_DLGINSERT_H

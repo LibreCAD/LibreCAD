@@ -61,7 +61,7 @@ public:
 	bool requestMirrorDialog(RS_MirrorData&) override {return false;}
 	bool requestMoveRotateDialog(RS_MoveRotateData&) override {return false;}
 	bool requestRotate2Dialog(RS_Rotate2Data&) override {return false;}
-	bool requestModifyEntityDialog(RS_Entity*) override {return false;}
+	bool requestModifyEntityDialog(RS_Entity *, LC_GraphicViewport *viewport) override {return false;}
 	bool requestMTextDialog(RS_MText*) override {return false;}
 	bool requestTextDialog(RS_Text*) override {return false;}
 	bool requestHatchDialog(RS_Hatch*) override {return false;}

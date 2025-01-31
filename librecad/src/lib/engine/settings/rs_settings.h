@@ -97,6 +97,9 @@ public:
     static constexpr char const* overlayInfoCursorRelativePos = "Orange";
     static constexpr char const* overlayInfoCursorCommandPrompt = "Gray";
 
+    static constexpr char const* anglesBasisDirection = "#017CFF";
+    static constexpr char const* anglesBasisAngleRay = "#00FFFF";
+
 
 
     // Used to have RAII style GroupGuard: endGroup is called automatically whenever a unique_ptr<GroupGuard>

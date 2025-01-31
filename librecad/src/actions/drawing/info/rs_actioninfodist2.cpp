@@ -304,7 +304,7 @@ void RS_ActionInfoDist2::updateInfoCursor(const RS_Vector &mouse, const RS_Vecto
         double distance = startPoint.distanceTo(mouse);
         LC_InfoMessageBuilder msg(tr("Info"));
         msg.add(tr("Distance:"), formatLinear(distance));
-        msg.add(tr("Angle:"), formatAngle(startPoint.angleTo(mouse)));
+        msg.add(tr("Angle:"), formatWCSAngle(startPoint.angleTo(mouse)));
         msg.add(tr("From:"), formatVector(startPoint));
         msg.add(tr("To:"), formatVector(mouse));
         appendInfoCursorZoneMessage(msg.toString(), 2, false);

@@ -105,15 +105,9 @@ void LC_ActionDrawLinePoints::doPreparePreviewEntities([[maybe_unused]]LC_MouseE
             switch (direction) {
                 case DIRECTION_X: // use only x coordinate from snap
                     possibleEndPoint = restrictHorizontal(startpoint, snap);
-//                    possibleEndPoint = RS_Vector(snap);
-//                    possibleEndPoint.y = startpoint.y;
-//                    possibleEndPoint.x = snap.x;
                     break;
                 case DIRECTION_Y: // use only y coordinate from snap
                     possibleEndPoint = restrictVertical(startpoint, snap);
-//                    possibleEndPoint = RS_Vector(snap);
-//                    possibleEndPoint.x = startpoint.x;
-//                    possibleEndPoint.y = snap.y;
                     break;
                 case DIRECTION_POINT:
                     possibleEndPoint = snap;
@@ -149,12 +143,12 @@ void LC_ActionDrawLinePoints::doPreparePreviewEntities([[maybe_unused]]LC_MouseE
 
 RS_Vector LC_ActionDrawLinePoints::getPossibleEndPointForAngle(const RS_Vector &snap){
     // if shift is pressed, we'll use alternative mirrored angle for direction
-    double angleToUse = angle;
+    double angleToUse = angleDegrees;
     if (alternativeActionMode){
-        angleToUse = 180-angle;
+        angleToUse = 180 - angleDegrees;
     }
-    double worldAngle = toWorldAngleDegrees(angleToUse);
-    return LC_LineMath::calculateEndpointForAngleDirection(worldAngle,startpoint, snap);
+    double wcsAngle = toWorldAngleFromUCSBasisDegrees(angleToUse);
+    return LC_LineMath::calculateEndpointForAngleDirection(wcsAngle,startpoint, snap);
 }
 
 /**
@@ -251,7 +245,6 @@ void LC_ActionDrawLinePoints::onCoordinateEvent(int status, [[maybe_unused]]bool
             switch (direction) {
                 case DIRECTION_X: { // calculate  point on X axis
                     RS_Vector possiblePoint = restrictHorizontal(startpoint, mouse);
-//                    RS_Vector possiblePoint(mouse.x,startpoint.y);
                     if (isNonZeroLine(possiblePoint)){
                         endpoint = possiblePoint;
                         trigger();
@@ -260,7 +253,6 @@ void LC_ActionDrawLinePoints::onCoordinateEvent(int status, [[maybe_unused]]bool
                 }
                 case DIRECTION_Y: {// calculate  point on y axis
                     RS_Vector possiblePoint = restrictVertical(startpoint, mouse);
-//                    RS_Vector possiblePoint(startpoint.x, mouse.y);
                     if (isNonZeroLine(possiblePoint)){
                         endpoint = possiblePoint;
                         trigger();
@@ -436,7 +428,7 @@ bool LC_ActionDrawLinePoints::doProcessCommandValue(int status, const QString &c
                         trigger();
                         break;
                     case DIRECTION_ANGLE: { // calculate endpoint coordinate by previously set angle and distance
-                        endpoint = LC_LineMath::getEndOfLineSegment(startpoint, angle, distance);
+                        endpoint = LC_LineMath::getEndOfLineSegment(startpoint, angleDegrees, distance);
                         endpoint.valid = true;
                         trigger();
                         break;
@@ -550,7 +542,7 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
             } else if (direction == DIRECTION_ANGLE){
                 msg += "|" + command("x");
                 msg += "|" + command("y");
-                QString angleStr = RS_Math::doubleToString(angle, 1);
+                QString angleStr = RS_Math::doubleToString(angleDegrees, 1);
                 updateMouseWidget(tr("Specify  distance (angle %1 deg)\nor [%2]").arg(angleStr, msg),tr("Back"), MOD_SHIFT_MIRROR_ANGLE);
             }
             break;

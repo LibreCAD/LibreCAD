@@ -36,11 +36,11 @@ public:
     ~LC_ActionCircleDimBase() override;
     void updateMouseButtonHints() override;
     QStringList getAvailableCommands() override;
-    double getAngle() const;
-    void setAngle(double angle);
+    double getUcsAngleDegrees() const;
+    void setUcsAngleDegrees(double angle);
     bool isAngleIsFree() const;
     void setAngleIsFree(bool angleIsFree);
-    double getCurrentAngle(){return currentAngle;}
+    double getCurrentAngle(){return m_currentAngle;}
 protected:
 
     enum Status {
@@ -60,7 +60,7 @@ protected:
     bool angleIsFree = false;
     bool alternateAngle = false;
 
-    double currentAngle = 0.0;
+    double m_currentAngle = 0.0;
 
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

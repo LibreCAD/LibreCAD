@@ -48,7 +48,7 @@ public:
     void setSetXDirectionState();
     void setSetYDirectionState();
     void setAngleValue(double value);
-    void setAngle(double value){doSetAngle(angle = value);};
+    void setAngle(double value){doSetAngle(angleDegrees = value);};
     double getAngle() const;
     bool isAngleRelative() const;
     void setAngleIsRelative(bool value);
@@ -66,7 +66,7 @@ protected:
     };
 
 
-    double angle = 0.0; // fixed angle for line
+    double angleDegrees = 0.0; // fixed angle for line
     bool angleIsRelative = true; // is angle relative to previous segment (if any)
     int direction = DIRECTION_NONE; // current line direction
     int primaryDirection = DIRECTION_NONE; // major direction of line - used for subsequent lines

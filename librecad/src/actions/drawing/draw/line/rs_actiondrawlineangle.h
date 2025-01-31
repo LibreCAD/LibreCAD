@@ -41,7 +41,6 @@ public:
     RS_ActionDrawLineAngle(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView,
-        double angle = 0.0,
         bool fixedAngle = false,
         RS2::ActionType actionType = RS2::ActionDrawLineAngle);
     ~RS_ActionDrawLineAngle() override;
@@ -51,8 +50,8 @@ public:
     QStringList getAvailableCommands() override;
     void setSnapPoint(int sp);
     int getSnapPoint() const;
-    void setAngle(double a);
-    double getAngle() const;
+    void setUcsAngleDegrees(double ucsRelAngle);
+    double getUcsAngleDegrees() const;
     void setLength(double l);
     double getLength() const;
     bool hasFixedAngle() const;
@@ -81,5 +80,7 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 
     void doTrigger() override;
+
+    void initFromSettings() override;
 };
 #endif

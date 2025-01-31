@@ -92,6 +92,9 @@ protected:
     int pdmode = 1;
     double pdsize = 1;
 
+    double m_angleBasisBaseAngle = 0.0;
+    bool m_angleBasisCounterClockwise = false;
+
     virtual void setupPainter(RS_Painter *painter);
     virtual void updateGraphicRelatedSettings(RS_Graphic *g);
     void updateEndCapsStyle(const RS_Graphic *graphic);
@@ -121,6 +124,7 @@ protected:
 #endif
 
 
+    void updateAnglesBasis(RS_Graphic *g);
 };
 
 #endif // LC_GRAPHICVIEWPORTRENDERER_H

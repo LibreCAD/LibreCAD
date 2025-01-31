@@ -53,7 +53,7 @@ RS_ActionDimLinear::RS_ActionDimLinear(
      edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), angle, 0.)),
      fixedAngle(_fixedAngle), lastStatus(SetExtPoint1){
     actionType = type;
-    setAngle(angle);
+    setUcsAngleDegrees(0);
     updateOptions();
     reset();
 }
@@ -79,15 +79,12 @@ RS_Entity *RS_ActionDimLinear::createDim(RS_EntityContainer* parent){
     return dim;
 }
 
-double RS_ActionDimLinear::getAngle() const{
-    double wcsAngle = edata->angle;
-    double ucsAngle = toUCSAngle(wcsAngle);
-    return ucsAngle;
+double RS_ActionDimLinear::getUcsAngleDegrees() const{
+    return toUCSBasisAngleDegrees(edata->angle);
 }
 
-void RS_ActionDimLinear::setAngle(double a){
-    double wcsAngle = toWorldAngle(a);
-    edata->angle = wcsAngle;
+void RS_ActionDimLinear::setUcsAngleDegrees(double ucsRelAngleDegrees){
+    edata->angle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
 }
 
 bool RS_ActionDimLinear::hasFixedAngle() const{
@@ -98,7 +95,7 @@ void RS_ActionDimLinear::onCoordinateEvent(int status, bool isZero, const RS_Vec
     switch (status){
         case SetAngle:{
             if (isZero){
-                setAngle(0);
+                setUcsAngleDegrees(0);
                 updateOptions();
                 setStatus(lastStatus);
                 return;
@@ -123,11 +120,11 @@ bool RS_ActionDimLinear::doProcessCommand(int status, const QString &c) {
             break;
         }
         case SetAngle: {
-            bool ok;
-            double a = RS_Math::eval(c, &ok);
+            double wcsAngle;
+            bool ok = parseToWCSAngle(c, wcsAngle);
             if (ok){
                 accept = true;
-                setAngle(RS_Math::deg2rad(a));
+                edata->angle = wcsAngle;
             } else {
                 commandMessage(tr("Not a valid expression"));
             }
@@ -178,6 +175,7 @@ RS_Vector RS_ActionDimLinear::getExtensionPoint2(){
     return edata->extensionPoint2;
 }
 
+// fixme - sand - ucs - check angle coordinates basis!
 double RS_ActionDimLinear::getDimAngle(){
     return edata->angle;
 }

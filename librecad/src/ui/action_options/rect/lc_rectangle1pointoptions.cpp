@@ -104,7 +104,7 @@ void LC_Rectangle1PointOptions::doSetAction(RS_ActionInterface * a, bool update)
 
             double w = action->getWidth();
             double h = action->getHeight();
-            double an = action->getAngle();
+            double an = action->getUcsAngleDegrees();
             double r  = action->getRadius();
             double lX = action->getLengthX();
             double lY = action->getLengthY();
@@ -161,7 +161,7 @@ void LC_Rectangle1PointOptions::onCornersIndexChanged(int index){
 
 void LC_Rectangle1PointOptions::updateUI(int mode) {
      if (mode == UPDATE_ANGLE){
-         double angle = action->getAngle();
+         double angle = action->getUcsAngleDegrees();
          ui->leAngle->blockSignals(true);
          ui->leAngle->setText(fromDouble(angle));
          ui->leAngle->blockSignals(false);
@@ -245,7 +245,7 @@ void LC_Rectangle1PointOptions::onAngleEditingFinished(){
 void LC_Rectangle1PointOptions::setAngleToActionAndView(const QString &val){
     double angle;
     if (toDoubleAngle(val, angle, 0.0, false)){
-        action->setAngle(angle);
+        action->setUcsAngleDegrees(angle);
         ui->leAngle->setText(fromDouble(angle));
     }
 }

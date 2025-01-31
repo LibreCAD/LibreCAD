@@ -162,10 +162,10 @@ bool RS_ActionDrawImage::doProcessCommand(int status, const QString &c) {
             break;
         }
         case SetAngle: {
-            bool ok;
-            double a = RS_Math::eval(c, &ok);
+            double wcsAngle;
+            bool ok = parseToWCSAngle(c, wcsAngle);
             if (ok){
-                setAngle(RS_Math::deg2rad(a));
+                setAngle(wcsAngle);
                 accept = true;
             } else {
                 commandMessage(tr("Not a valid expression"));
@@ -207,14 +207,19 @@ bool RS_ActionDrawImage::doProcessCommand(int status, const QString &c) {
     return accept;
 }
 
-double RS_ActionDrawImage::getAngle() const{
-    return pImg->data.uVector.angle();
+double RS_ActionDrawImage::getUcsAngleDegrees() const{
+    return toUCSBasisAngleDegrees(pImg->data.uVector.angle());
 }
 
-void RS_ActionDrawImage::setAngle(double a) const{
+void RS_ActionDrawImage::setUcsAngleDegrees(double ucsRelAngleDegrees){
+    double wcsAngle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
+    setAngle(wcsAngle);
+}
+
+void RS_ActionDrawImage::setAngle(double wcsAngle) const{
     double l = pImg->data.uVector.magnitude();
-    pImg->data.uVector.setPolar(l, a);
-    pImg->data.vVector.setPolar(l, a + M_PI_2);
+    pImg->data.uVector.setPolar(l, wcsAngle);
+    pImg->data.vVector.setPolar(l, wcsAngle + M_PI_2);
 }
 
 double RS_ActionDrawImage::getFactor() const{

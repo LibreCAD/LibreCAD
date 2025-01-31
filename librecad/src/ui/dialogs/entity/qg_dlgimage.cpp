@@ -39,8 +39,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgImage::QG_DlgImage(QWidget* parent)
-    : LC_Dialog(parent, "ImageProperties"){
+QG_DlgImage::QG_DlgImage(QWidget *parent, LC_GraphicViewport *pViewport)
+    :LC_EntityPropertiesDlg(parent, "ImageProperties", pViewport) {
     setupUi(this);
 }
 
@@ -53,7 +53,7 @@ void QG_DlgImage::languageChange()
     retranslateUi(this);
 }
 
-void QG_DlgImage::setImage(RS_Image& e) {
+void QG_DlgImage::setEntity(RS_Image& e) {
     image = &e;
     val = std::make_unique<QDoubleValidator>(leScale);
 
@@ -112,7 +112,7 @@ void QG_DlgImage::changeDPI(){
     leHeight->setText(QString("%1").arg(image->getHeight() * scale));    
 }
 
-void QG_DlgImage::updateImage() {
+void QG_DlgImage::updateEntity() {
     image->setPen(wPen->getPen());
     image->setLayer(cbLayer->currentText());
     image->setInsertionPoint(RS_Vector(leInsertX->text().toDouble(), leInsertY->text().toDouble()) );

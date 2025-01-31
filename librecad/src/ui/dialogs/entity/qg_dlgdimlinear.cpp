@@ -36,8 +36,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgDimLinear::QG_DlgDimLinear(QWidget* parent)
-    : LC_Dialog(parent, "DimLinearProperties"){
+QG_DlgDimLinear::QG_DlgDimLinear(QWidget *parent, LC_GraphicViewport *pViewport)
+    :LC_EntityPropertiesDlg(parent, "DimLinearProperties", pViewport){
     setupUi(this);
 }
 
@@ -56,7 +56,7 @@ void QG_DlgDimLinear::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgDimLinear::setDim(RS_DimLinear& d) {
+void QG_DlgDimLinear::setEntity(RS_DimLinear& d) {
     dim = &d;
 
     RS_Graphic* graphic = dim->getGraphic();
@@ -74,7 +74,7 @@ void QG_DlgDimLinear::setDim(RS_DimLinear& d) {
     leAngle->setText(QString("%1").arg(RS_Math::rad2deg(dim->getAngle())));
 }
 
-void QG_DlgDimLinear::updateDim() {
+void QG_DlgDimLinear::updateEntity() {
     dim->setLabel(wLabel->getLabel());
     dim->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text(), 0.0)));
     dim->setPen(wPen->getPen());

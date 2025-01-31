@@ -283,6 +283,7 @@ HEADERS += \
     actions/drawing/modify/lc_actionmodifyalignsingle.h \
     lib/actions/lc_overlayboxaction.h \
     lib/engine/document/ucs/lc_ucslist.h \
+    lib/engine/overlays/angles_base/lc_overlayanglesbasemark.h \
     lib/engine/overlays/highlight/lc_highlight.h \
     lib/actions/lc_modifiersinfo.h \
     lib/actions/rs_actioninterface.h \
@@ -400,8 +401,10 @@ HEADERS += \
     ui/action_options/point/lc_pastetopointsoptions.h \
     ui/action_options/point/lc_pointslatticeoptions.h \
     ui/action_options/selection/lc_selectwindowoptions.h \
+    ui/components/status_bar/lc_anglesbasiswidget.h \
     ui/components/status_bar/lc_qtstatusbarmanager.h \
     ui/components/status_bar/lc_ucsstatewidget.h \
+    ui/dialogs/entity/lc_entitypropertiesdlg.h \
     ui/dialogs/main/lc_dlgabout.h \
     ui/dialogs/main/lc_dlgnewversionavailable.h \
     ui/dock_widgets/ucs_list/lc_dlgucslistoptions.h \
@@ -481,6 +484,7 @@ SOURCES += \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
     lib/actions/lc_overlayboxaction.cpp \
     lib/engine/document/ucs/lc_ucslist.cpp \
+    lib/engine/overlays/angles_base/lc_overlayanglesbasemark.cpp \
     lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.cpp \
     lib/engine/overlays/lc_overlayentitiescontainer.cpp \
     lib/engine/overlays/lc_overlayentity.cpp \
@@ -594,8 +598,10 @@ SOURCES += \
     ui/action_options/point/lc_pastetopointsoptions.cpp \
     ui/action_options/point/lc_pointslatticeoptions.cpp \
     ui/action_options/selection/lc_selectwindowoptions.cpp \
+    ui/components/status_bar/lc_anglesbasiswidget.cpp \
     ui/components/status_bar/lc_qtstatusbarmanager.cpp \
     ui/components/status_bar/lc_ucsstatewidget.cpp \
+    ui/dialogs/entity/lc_entitypropertiesdlg.cpp \
     ui/dialogs/main/lc_dlgabout.cpp \
     ui/dialogs/main/lc_dlgnewversionavailable.cpp \
     ui/dock_widgets/ucs_list/lc_dlgucslistoptions.cpp \
@@ -1455,6 +1461,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/components/containers/lc_snapoptionswidgetsholder.ui \
        ui/components/creators/widgetcreator.ui \
        ui/components/pen/qg_widgetpen.ui \
+       ui/components/status_bar/lc_anglesbasiswidget.ui \
        ui/components/status_bar/lc_relzerocoordinateswidget.ui \
        ui/components/status_bar/lc_ucsstatewidget.ui \
        ui/components/status_bar/qg_activelayername.ui \

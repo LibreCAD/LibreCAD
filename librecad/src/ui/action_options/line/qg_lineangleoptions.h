@@ -55,7 +55,7 @@ private:
     RS_ActionDrawLineAngle *action = nullptr;
     void setAngleToActionAndView(QString val);
     void setSnapPointToActionAndView(int val);
-    void setLengthToActionAndVeiw(QString val);
+    void setLengthToActionAndView(QString val);
 };
 
 #endif // QG_LINEANGLEOPTIONS_H

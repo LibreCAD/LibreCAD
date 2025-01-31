@@ -236,11 +236,14 @@ protected:
     LC_InfoCursorOverlayPrefs* infoCursorOverlayPrefs = nullptr;
     LC_InfoCursorData infoCursorOverlayData = LC_InfoCursorData();
 
+    // values cached for the efficiency
     RS2::LinearFormat linearFormat;
     int linearPrecision;
     RS2::AngleFormat angleFormat;
     int anglePrecision;
     RS2::Unit unit;
+    double m_anglesBase = 0.0;
+    bool m_anglesCounterClockWise = true;
 
     RS_Vector toGraph(const QMouseEvent *e) const;
     void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false);
@@ -254,17 +257,21 @@ protected:
     LC_InfoCursorOverlayPrefs* getInfoCursorOverlayPrefs() const;
 
     QString formatLinear(double value) const;
-    QString formatAngle(double value) const;
+    QString formatWCSAngle(double wcsAngle) const;
+    QString formatAngleRaw(double angle) const;
     QString formatVector(const RS_Vector& value) const;
     QString formatVectorWCS(const RS_Vector &value) const;
     QString formatRelative(const RS_Vector& value) const;
     QString formatPolar(const RS_Vector& value) const;
-    QString formatRelativePolar(const RS_Vector& value) const;
+    QString formatRelativePolar(const RS_Vector& wcsAngle) const;
     void forceUpdateInfoCursor(const RS_Vector &pos);
     bool isInfoCursorForModificationEnabled() const;
     double toWorldAngle(double tickAngleRad) const;
     double toWorldAngleDegrees(double angle) const;
     double toUCSAngle(double tickAngleRad) const;
+    double toUCSBasisAngle(double wcsAngle) const;
+    double toUCSBasisAngleDegrees(double wcsAngle) const;
+    double toWorldAngleFromUCSBasisDegrees(double ucsBasisAngleDegrees) const;
     RS_Vector toWorld(const RS_Vector& ucsPos) const;
     RS_Vector toUCS(const RS_Vector& worldPos) const;
     void calcRectCorners(const RS_Vector &worldCorner1, const RS_Vector &worldCorner3, RS_Vector &worldCorner2, RS_Vector &worldCorner4) const;

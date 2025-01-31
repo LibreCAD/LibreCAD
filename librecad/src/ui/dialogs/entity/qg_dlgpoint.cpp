@@ -36,8 +36,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgPoint::QG_DlgPoint(QWidget* parent)
-    : LC_Dialog(parent, "PointProperties"){
+QG_DlgPoint::QG_DlgPoint(QWidget *parent, LC_GraphicViewport *pViewport)
+    :LC_EntityPropertiesDlg(parent, "PointProperties", pViewport){
     setupUi(this);
 }
 
@@ -56,30 +56,58 @@ void QG_DlgPoint::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgPoint::setPoint(RS_Point& p) {
-    point = &p;
-
-    RS_Graphic* graphic = point->getGraphic();
-    if (graphic) {
-        cbLayer->init(*(graphic->getLayerList()), false, false);
+void QG_DlgPoint::initAttributes(RS_Layer* layer, RS_LayerList& layerList){
+    if (layer) {
+        cbLayer->setLayer(*layer);
     }
-    RS_Layer* lay = point->getLayer(false);
-    if (lay) {
-        cbLayer->setLayer(*lay);
-    }
-
-    wPen->setPen(point, lay,"Pen");
-
-    QString s;
-    s.setNum(point->getPos().x);
-    lePosX->setText(s);
-    s.setNum(point->getPos().y);
-    lePosY->setText(s);
+    cbLayer->init(layerList, false, false);
+    wPen->setPen(point, layer, "Pen");
 }
 
-void QG_DlgPoint::updatePoint() {
-    point->setPos(RS_Vector(RS_Math::eval(lePosX->text()),
-                            RS_Math::eval(lePosY->text())));
-    point->setPen(wPen->getPen());
-    point->setLayer(cbLayer->currentText());
+void QG_DlgPoint::setEntity(RS_Point& p) {
+    point = &p;
+    setAttributes(point);
+    setProperties();
+}
+
+void QG_DlgPoint::updateEntity() {
+    updateProperties();
+    updateAttributes();
+}
+
+void QG_DlgPoint::setAttributes(RS_Entity* e) {
+    RS_Graphic* graphic = e->getGraphic();
+    if (graphic != nullptr){
+        RS_Layer* lay = e->getLayer(false);
+        RS_LayerList &layerList = *(graphic->getLayerList());
+        initAttributes(lay, layerList);
+    }
+}
+
+void QG_DlgPoint::setProperties() {
+    RS_Vector uiPos = toUIVector(point->getPos());
+    QString sx = asString(uiPos.x);
+    lePosX->setText(sx);
+    QString sy = asString(uiPos.y);
+    lePosY->setText(sy);
+}
+
+void QG_DlgPoint::updateAttributes() {
+    const RS_Pen &rsPen = wPen->getPen();
+    RS_Layer *layer = cbLayer->getLayer();
+    point->setPen(rsPen);
+    point->setLayer(layer);
+}
+
+void QG_DlgPoint::updateProperties() {
+    const QString &sx = lePosX->text();
+    const QString &sy = lePosY->text();
+
+    double uix = toDouble(sx);
+    double uiy = toDouble(sy);
+
+    const RS_Vector &uiPos = RS_Vector(uix,uiy);
+    RS_Vector entityPos = toEntityVector(uiPos);
+
+    point->setPos(entityPos);
 }

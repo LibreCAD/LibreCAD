@@ -29,6 +29,7 @@
 #include "lc_graphicviewport.h"
 #include "rs_settings.h"
 #include "lc_overlayentitiescontainer.h"
+#include "lc_linemath.h"
 
 LC_GraphicViewRenderer::LC_GraphicViewRenderer(LC_GraphicViewport *viewport, QPaintDevice* p)
    :LC_WidgetViewPortRenderer(viewport, p) {
@@ -43,6 +44,7 @@ void LC_GraphicViewRenderer::loadSettings() {
     m_relZeroOptions.loadSettings();
     m_absZeroOptions.loadSettings();
     m_ucsMarkOptions.loadSettings();
+    m_anglesBaseOptions.loadSettings();
 
     LC_GROUP("Appearance");
     {
@@ -212,6 +214,15 @@ void LC_GraphicViewRenderer::doDrawLayerBackground(RS_Painter *painter) {
 
     if (isHiDpi)
         painter->setPen(penSaved);
+
+
+    if (m_absZeroOptions.m_extendAxisLines) {
+        double originPointX = viewport->toGuiX(0.0);
+        double originPointY = viewport->toGuiY(0.0);
+        //ucs absolute zero, x and y axis
+        m_overlayAbsZero.updateOrigin(originPointX, originPointY);
+        m_overlayAbsZero.draw(painter);
+    }
 }
 
 void LC_GraphicViewRenderer::drawLayerEntitiesOver(RS_Painter *painter) {
@@ -553,9 +564,11 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter *painter, RS_Entity
 void LC_GraphicViewRenderer::drawCoordinateSystems(RS_Painter *painter){
     double originPointX = viewport->toGuiX(0.0);
     double originPointY = viewport->toGuiY(0.0);
-    //ucs absolute zero, x and y axis
-    m_overlayAbsZero.updateOrigin(originPointX, originPointY);
-    m_overlayAbsZero.draw(painter);
+    if (!m_absZeroOptions.m_extendAxisLines) {
+        //ucs absolute zero, x and y axis
+        m_overlayAbsZero.updateOrigin(originPointX, originPointY);
+        m_overlayAbsZero.draw(painter);
+    }
 
     // origin of UCS coordinates marker (0.0 in UCS)
     if (m_ucsMarkOptions.m_showUCSZeroMarker){
@@ -570,6 +583,19 @@ void LC_GraphicViewRenderer::drawCoordinateSystems(RS_Painter *painter){
         double wcsXAxisAngleInUCS = -viewport->getXAxisAngle();
         m_overlayUCSMark.update({uiWCSOriginX, uiWCSOriginY}, wcsXAxisAngleInUCS, true);
         m_overlayUCSMark.draw(painter);
+    }
+
+    if (m_anglesBaseOptions.m_showAnglesBaseMark){
+        bool showByPolicy = true;
+        double baseAngle = m_angleBasisBaseAngle;
+        bool counterClockWise = m_angleBasisCounterClockwise;
+        if (m_anglesBaseOptions.m_displayPolicy != LC_AnglesBaseMarkOptions::SHOW_ALWAYS){
+            showByPolicy = LC_LineMath::isMeaningfulAngle(baseAngle) || !counterClockWise;
+        }
+        if (showByPolicy) {
+            m_overlayAnglesBaseMark.update({originPointX, originPointY}, baseAngle, counterClockWise);
+            m_overlayAnglesBaseMark.draw(painter);
+        }
     }
 }
 

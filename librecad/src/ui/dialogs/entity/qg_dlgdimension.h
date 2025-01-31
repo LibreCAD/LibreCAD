@@ -27,24 +27,20 @@
 #define QG_DLGDIMENSION_H
 
 #include "ui_qg_dlgdimension.h"
-#include "lc_dialog.h"
+#include "lc_entitypropertiesdlg.h"
 
 class RS_Dimension;
 
-class QG_DlgDimension : public LC_Dialog, public Ui::QG_DlgDimension{
+class QG_DlgDimension : public LC_EntityPropertiesDlg, public Ui::QG_DlgDimension{
     Q_OBJECT
-
 public:
-    QG_DlgDimension(QWidget* parent = nullptr);
+    QG_DlgDimension(QWidget *parent, LC_GraphicViewport *pViewport);
     ~QG_DlgDimension() override;
-
 public slots:
-    virtual void setDim(RS_Dimension & d );
-    virtual void updateDim();
-
+    void setEntity(RS_Dimension & d );
+    void updateEntity() override;
 protected slots:
     virtual void languageChange();
-
 private:
     RS_Dimension* dim = nullptr;
 };

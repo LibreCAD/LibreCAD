@@ -296,6 +296,7 @@ void RS_ActionDrawEllipseAxis::setReversed(bool b) const {
     pPoints->reversed = b;
 }
 
+// fixme - sand - complete support of command line!
 bool RS_ActionDrawEllipseAxis::doProcessCommand(int status, const QString &c) {
     bool accept = false;
     switch (status) {

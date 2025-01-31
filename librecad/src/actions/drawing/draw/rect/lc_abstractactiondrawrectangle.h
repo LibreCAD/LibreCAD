@@ -48,8 +48,8 @@ public:
     double getLengthX() const{return bevelX;};
     void setLengthY(double value);
     double getLengthY() const{return bevelY;};
-    void setAngle(double angle);
-    double getAngle() const;
+    void setUcsAngleDegrees(double angle);
+    double getUcsAngleDegrees() const;
     void setCornersMode(int value);
     int getCornersMode() const{return cornersDrawMode;};
     void setInsertionPointSnapMode(int value);

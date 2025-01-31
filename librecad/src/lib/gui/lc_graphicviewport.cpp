@@ -52,12 +52,25 @@ void LC_GraphicViewport::setBorders(int left, int top, int right, int bottom) {
     borderBottom = bottom;
 }
 
+bool LC_GraphicViewport::areAnglesCounterClockwise(){
+    if (graphic != nullptr){
+        return graphic->areAnglesCounterClockWise();
+    }
+    return true;
+}
+
+double LC_GraphicViewport::getAnglesBaseAngle(){
+    if (graphic != nullptr){
+        return graphic->getAnglesBase();
+    }
+    return 0.0;
+}
 
 /**
  * @return true if the grid is switched on.
  */
 bool LC_GraphicViewport::isGridOn() const {
-    if (container) {
+    if (container != nullptr) {
         RS_Graphic *graphic = container->getGraphic();
         if (graphic != nullptr) {
             return graphic->isGridOn();
@@ -700,6 +713,10 @@ RS_Vector LC_GraphicViewport::getUCSViewLeftBottom() const{
 
 RS_Vector LC_GraphicViewport::getUCSViewRightTop() const{
     return toUCSFromGui(getWidth(),getHeight());
+}
+
+double LC_GraphicViewport::toAbsUCSAngle(double ucsRelAngle) {
+    return toUCSAbsAngle(ucsRelAngle, getAnglesBaseAngle(), areAnglesCounterClockwise());
 }
 
 void LC_GraphicViewport::toUI(RS_Vector wcsCoordinate, double &uiX, double &uiY) const{

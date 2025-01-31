@@ -69,7 +69,7 @@ void QG_ImageOptions::doSetAction(RS_ActionInterface *a, bool update) {
     QString sAngle;
     QString sFactor;
     if (update) {
-        sAngle = fromDouble(RS_Math::rad2deg(action->getAngle()));
+        sAngle = fromDouble(action->getUcsAngleDegrees());
         sFactor = fromDouble(action->getFactor());
     } else {
         sAngle = load("Angle", "0.0");
@@ -108,9 +108,11 @@ void QG_ImageOptions::setDPIToActionAndView(const QString& val) {
 }
 
 void QG_ImageOptions::setAngleToActionAndView(const QString& val) {
-    double angleDegree = RS_Math::eval(val);
-    action->setAngle(RS_Math::deg2rad(angleDegree));
-    ui->leAngle->setText(val);
+    double angleDegree = 0.;
+    if (toDoubleAngle(val, angleDegree, 0.0, false)) {
+        action->setUcsAngleDegrees(angleDegree);
+        ui->leAngle->setText(fromDouble(angleDegree));
+    }
 }
 
 void QG_ImageOptions::setFactorToActionAndView(const QString& val) {

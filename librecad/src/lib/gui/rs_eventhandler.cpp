@@ -387,10 +387,11 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                                 if (absoluteCoordinates) { // handle absolute polar coordinate input:
                                     bool ok1, ok2;
                                     double ucsR = RS_Math::eval(updateForFraction(cmd.left(separatorPos)), &ok1);
-                                    double ucsAngleDegrees = RS_Math::eval(cmd.mid(separatorPos + 1), &ok2);
+                                    double ucsBasisAngleDegrees = RS_Math::eval(cmd.mid(separatorPos + 1), &ok2);
 
                                     if (ok1 && ok2) {
-                                        double ucsAngle = RS_Math::deg2rad(ucsAngleDegrees);
+                                        double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDegrees);
+                                        double ucsAngle = toAbsUCSAngle(ucsBasisAngleRad);
                                         RS_Vector ucsPos{RS_Vector::polar(ucsR, ucsAngle)};
                                         RS_Vector wcsPos = toWCS(ucsPos);
                                         RS_CoordinateEvent ce(wcsPos);
@@ -403,10 +404,12 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                                     int commaPos = cmd.indexOf('<');
                                     bool ok1, ok2;
                                     double r = RS_Math::eval(updateForFraction(cmd.mid(1, commaPos - 1)), &ok1);
-                                    double a = RS_Math::eval(cmd.mid(commaPos + 1), &ok2);
+                                    double ucsBasisAngleDegrees = RS_Math::eval(cmd.mid(commaPos + 1), &ok2);
 
                                     if (ok1 && ok2) {
-                                        RS_Vector ucsOffset = RS_Vector::polar(r, RS_Math::deg2rad(a));
+                                        double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDegrees);
+                                        double ucsAngle = toAbsUCSAngle(ucsBasisAngleRad);
+                                        RS_Vector ucsOffset = RS_Vector::polar(r, ucsAngle);
                                         const RS_Vector ucsRelZero = toUCS(relative_zero);
                                         const RS_Vector ucsPosition = ucsOffset + ucsRelZero;
                                         const RS_Vector &wcsPosition = toWCS(ucsPosition);
@@ -730,6 +733,10 @@ RS_Vector RS_EventHandler::toWCS(const RS_Vector &ucs) {
 
 RS_Vector RS_EventHandler::toUCS(const RS_Vector &wcs) {
     return graphicView->getViewPort()->toUCS(wcs);
+}
+
+double RS_EventHandler::toAbsUCSAngle(double ucsBasisAngle) {
+    return graphicView->getViewPort()->toAbsUCSAngle(ucsBasisAngle);
 }
 
 double RS_EventHandler::toWCSAngle(double ucsAngle) {

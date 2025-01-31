@@ -290,14 +290,18 @@ void RS_Snapper::initFromSettings() {
 }
 
 void RS_Snapper::initFromGraphic(RS_Graphic *graphic) {
-    linearFormat = graphic->getLinearFormat();
-    linearPrecision = graphic->getLinearPrecision();
-    angleFormat = graphic->getAngleFormat();
-    anglePrecision = graphic->getAnglePrecision();
-    unit = graphic->getUnit();
     if (graphic != nullptr) {
+        linearFormat = graphic->getLinearFormat();
+        linearPrecision = graphic->getLinearPrecision();
+        angleFormat = graphic->getAngleFormat();
+        anglePrecision = graphic->getAnglePrecision();
+        unit = graphic->getUnit();
+
         snap_indicator->pointType = graphic->getVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
         snap_indicator->pointSize = graphic->getVariableInt("$PDSIZE", LC_DEFAULTS_PDSize);
+
+        m_anglesBase = graphic->getAnglesBase();
+        m_anglesCounterClockWise = graphic->areAnglesCounterClockWise();
     }
 }
 
@@ -635,8 +639,6 @@ RS_Vector RS_Snapper::snapDist(const RS_Vector& coord) {
     return vec;
 }
 
-
-
 /**
  * Snaps to the closest intersection point.
  *
@@ -646,12 +648,9 @@ RS_Vector RS_Snapper::snapDist(const RS_Vector& coord) {
 RS_Vector RS_Snapper::snapIntersection(const RS_Vector& coord) {
     RS_Vector vec{};
 
-    vec = container->getNearestIntersection(coord,
-                                            nullptr);
+    vec = container->getNearestIntersection(coord,nullptr);
     return vec;
 }
-
-
 
 /**
  * 'Corrects' the given coordinates to 0, 90, 180, 270 degrees relative to
@@ -694,7 +693,6 @@ RS_Vector RS_Snapper::restrictHorizontal(const RS_Vector& coord) {
     return viewport->restrictHorizontal(viewport->getRelativeZero(), coord);
 }
 
-
 /**
  * 'Corrects' the given coordinates to 90, 270 degrees relative to
  * the current relative zero point.
@@ -726,7 +724,6 @@ RS_Vector RS_Snapper::restrictAngle(const RS_Vector &basePoint, const RS_Vector&
     possibleEndPoint = pointOnInfiniteTick;
     return possibleEndPoint;
 }
-
 
 /**
  * Catches an entity which is close to the given position 'pos'.
@@ -762,7 +759,6 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos,
     }
     RS_DEBUG->print("RS_Snapper::catchEntity: OK");
 }
-
 
 /**
  * Catches an entity which is close to the given position 'pos'.
@@ -900,6 +896,7 @@ void RS_Snapper::suspend() {
 
 void RS_Snapper::resume() {
     drawSnapper();
+    initSettings();
     infoCursorOverlayPrefs = graphicView->getInfoCursorOverlayPreferences(); // fixme - review/rework this, load from settings as other overlays action(??)
 }
 
@@ -986,7 +983,9 @@ void RS_Snapper::drawInfoCursor(){
             QString snapName = getSnapName(pImpData->snapType);
             QString restrictionName;
             if (pImpData->snapType == ANGLE || pImpData->snapType == ANGLE_REL || pImpData->snapType == ANGLE_ON_ENTITY) {
-                restrictionName = RS_Units::formatAngle(pImpData->angle, angleFormat, anglePrecision);
+                double ucsAbsSnapAngle = pImpData->angle;
+                double ucsBasisAngle = viewport->toUCSBasisAngle(ucsAbsSnapAngle, m_anglesBase, m_anglesCounterClockWise);
+                restrictionName = RS_Units::formatAngle(ucsBasisAngle, angleFormat, anglePrecision);
             } else {
                 restrictionName = getRestrictionName(pImpData->restriction);
             }
@@ -1072,7 +1071,6 @@ RS_Vector RS_Snapper::snapToRelativeAngle(double baseAngle, const RS_Vector &cur
         snapPoint(res, true);
         return res;
     }
-
 }
 
 RS_Vector RS_Snapper::snapToAngle(
@@ -1083,8 +1081,13 @@ RS_Vector RS_Snapper::snapToAngle(
     }
 
     double wcsAngleRaw = referenceCoord.angleTo(currentCoord);
-    double ucsAngleRaw = toUCSAngle(wcsAngleRaw);
-    double ucsAngleSnapped = ucsAngleRaw - std::remainder(ucsAngleRaw, angularResolution);
+    double ucsAngleAbs = toUCSAngle(wcsAngleRaw);
+
+    double ucsAngle = ucsAngleAbs - m_anglesBase;
+
+    double ucsAngleSnapped = ucsAngleAbs - std::remainder(ucsAngle, angularResolution);
+
+    LC_ERR << "BASE " << RS_Math::rad2deg(m_anglesBase) << " UCSabs " << RS_Math::rad2deg(ucsAngleAbs) << " UCS " << RS_Math::rad2deg(ucsAngle) << " Snapped " << RS_Math::rad2deg(ucsAngleSnapped) << " UCSRel " << RS_Math::rad2deg(ucsAngleSnapped);
     double wcsAngleSnapped = toWorldAngle(ucsAngleSnapped);
 
     RS_Vector res = RS_Vector::polar(referenceCoord.distanceTo(currentCoord), wcsAngleSnapped);
@@ -1200,7 +1203,14 @@ void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_V
             if (prefs->showRelativePositionDistAngle) {
                 QString lenStr = (showLabels ? tr("Dist: ") : "@ ") + formatLinear(relativeToUse.magnitude());
                 // as we're in ucs coordinates there, use raw formatAngle instead of method
-                QString angleStr = (showLabels ? tr("Angle: ") : "< ") + RS_Units::formatAngle(relativeToUse.angle(), angleFormat, anglePrecision);
+
+                double relativeAngle = relativeToUse.angle();
+
+                // fixme - sand - ucs - utility methods for ucs angle conversion to display format?
+
+                double ucsBasisAngle = viewport->toUCSBasisAngle(relativeAngle, m_anglesBase, m_anglesCounterClockWise);
+
+                QString angleStr = (showLabels ? tr("Angle: ") : "< ") + formatAngleRaw(ucsBasisAngle);
 
                 coordPolar = lenStr + (prefs->multiLine ? "\n" : showLabels ? " " : " ") + angleStr;
             }
@@ -1230,16 +1240,21 @@ void RS_Snapper::invalidateSnapSpot() {
 QString RS_Snapper::formatLinear(double value) const{
     return RS_Units::formatLinear(value, unit, linearFormat, linearPrecision);
 }
-// fixme - ucs-  move to coordinate mapper?
-QString RS_Snapper::formatAngle(double value) const{
-    double angleToUse;
+
+QString RS_Snapper::formatWCSAngle(double wcsAngle) const{
+    double ucsAbsAngle;
     if (viewport->hasUCS()){
-        angleToUse = toUCSAngle(value);
+        ucsAbsAngle = toUCSAngle(wcsAngle);
     }
     else{
-        angleToUse = value;
+        ucsAbsAngle = wcsAngle;
     }
-    return RS_Units::formatAngle(angleToUse, angleFormat, anglePrecision);
+    double ucsBasisAngle = viewport->toUCSBasisAngle(ucsAbsAngle, m_anglesBase, m_anglesCounterClockWise);
+    return RS_Units::formatAngle(ucsBasisAngle, angleFormat, anglePrecision);
+}
+
+QString RS_Snapper::formatAngleRaw(double angle) const {
+    return RS_Units::formatAngle(angle, angleFormat, anglePrecision);
 }
 // fixme - ucs-  move to coordinate mapper?
 QString RS_Snapper::formatVector(const RS_Vector &value) const{
@@ -1267,25 +1282,11 @@ QString RS_Snapper::formatRelative(const RS_Vector &value) const {
 }
 
 QString RS_Snapper::formatPolar(const RS_Vector &value) const {
-    double angleValue;
-    if (viewport->hasUCS()){
-        angleValue = viewport->toUCSAngle(value.angle());
-    }
-    else{
-        angleValue = value.angle();
-    }
-    return formatLinear(value.magnitude()).append(" < ").append(formatAngle(angleValue));
+    return formatLinear(value.magnitude()).append(" < ").append(formatWCSAngle(value.angle()));
 }
 
-QString RS_Snapper::formatRelativePolar(const RS_Vector &value) const {
-    double angleValue;
-    if (viewport->hasUCS()){
-        angleValue = viewport->toUCSAngle(value.angle());
-    }
-    else{
-        angleValue = value.angle();
-    }
-    return QString("@ ").append(formatLinear(value.magnitude())).append(" < ").append(formatAngle(angleValue));
+QString RS_Snapper::formatRelativePolar(const RS_Vector &wcsAngle) const {
+    return QString("@ ").append(formatLinear(wcsAngle.magnitude())).append(" < ").append(formatWCSAngle(wcsAngle.angle()));
 }
 
 void RS_Snapper::forceUpdateInfoCursor(const RS_Vector &pos) {
@@ -1304,6 +1305,26 @@ double RS_Snapper::toWorldAngleDegrees(double angle) const{
 
 double RS_Snapper::toUCSAngle(double angle) const{
     return viewport->toUCSAngle(angle);
+}
+
+double RS_Snapper::toUCSBasisAngleDegrees(double wcsAngle) const{
+    double ucsAngle = viewport->toUCSAngle(wcsAngle);
+    double ucsBasisAngle = viewport->toUCSBasisAngle(ucsAngle, m_anglesBase, m_anglesCounterClockWise);
+    double result = RS_Math::rad2deg(ucsBasisAngle);
+    return result;
+}
+
+double RS_Snapper::toWorldAngleFromUCSBasisDegrees(double ucsBasisAngleDegrees) const{
+    double ucsBasisAngle = RS_Math::deg2rad(ucsBasisAngleDegrees);
+    double ucsAngle = viewport->toUCSAbsAngle(ucsBasisAngle, m_anglesBase, m_anglesCounterClockWise);
+    double wcsAngle = viewport->toWorldAngle(ucsAngle);
+    return wcsAngle;
+}
+
+double RS_Snapper::toUCSBasisAngle(double wcsAngle) const{
+    double ucsAngle = viewport->toUCSAngle(wcsAngle);
+    double ucsBasisAngle = viewport->toUCSBasisAngle(ucsAngle, m_anglesBase, m_anglesCounterClockWise);
+    return ucsBasisAngle;
 }
 
 RS_Vector RS_Snapper::toWorld(const RS_Vector &ucsPos) const {

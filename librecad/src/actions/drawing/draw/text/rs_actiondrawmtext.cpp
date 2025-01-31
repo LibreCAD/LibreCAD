@@ -55,7 +55,15 @@ void RS_ActionDrawMText::init(int status){
             reset();
             RS_MText tmp(nullptr, *data);
             if (RS_DIALOGFACTORY->requestMTextDialog(&tmp)){
-                data.reset(new RS_MTextData(tmp.getData()));
+//                data.reset(new RS_MTextData(tmp.getData()));
+
+                const RS_MTextData &editedData = tmp.getData();
+                double editedAngle = editedData.angle;
+                data.reset(new RS_MTextData(editedData));
+                double ucsAngle = viewport->toAbsUCSAngle(editedAngle);
+                double wcsAngle = viewport->toWorldAngle(ucsAngle);
+                data->angle = wcsAngle;
+
                 setStatus(SetPos);
                 updateOptions();
             } else {
@@ -210,13 +218,13 @@ QString RS_ActionDrawMText::getText(){
     return data->text;
 }
 
-void RS_ActionDrawMText::setAngle(double a){
-    data->angle = a;
+void RS_ActionDrawMText::setUcsAngleDegrees(double ucsRelAngleDegrees){
+    data->angle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
     textChanged = true;
 }
 
-double RS_ActionDrawMText::getAngle(){
-    return data->angle;
+double RS_ActionDrawMText::getUcsAngleDegrees(){
+    return toUCSBasisAngleDegrees(data->angle);
 }
 
 LC_ActionOptionsWidget* RS_ActionDrawMText::createOptionsWidget(){

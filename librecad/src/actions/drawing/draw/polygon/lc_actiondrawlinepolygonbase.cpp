@@ -157,7 +157,7 @@ bool LC_ActionDrawLinePolygonBase::doProcessCommand(int status, const QString &c
         bool ok = false;
         double value = RS_Math::eval(c, &ok);
         if (ok){
-            switch (getStatus()) {
+            switch (status) {
                 case SetNumber:{ // handling number of rays
                     // fixme - check range to conform to UI
                     if ((value >= 3) && (value <= 10000)){
@@ -254,7 +254,8 @@ void LC_ActionDrawLinePolygonBase::createPolygonPreview(const RS_Vector &mouse) 
             LC_InfoMessageBuilder msg{};
             msg.add(tr("To be created:"), tr("Polygon"));
             msg.add(tr("Center:"), formatVector(polygonInfo.centerPoint));
-            msg.add(tr("Start angle:"), formatAngle(polygonInfo.startingAngle));
+            double wcsStartingAngle = polygonInfo.startingAngle;
+            msg.add(tr("Start angle:"), formatWCSAngle(wcsStartingAngle));
             msg.add(tr("Radius:"), formatLinear(polygonInfo.vertexRadius));
             msg.add(tr("Radius Inner:"), formatLinear(polygonInfo.innerRadius));
             appendInfoCursorZoneMessage(msg.toString(), 2, false);

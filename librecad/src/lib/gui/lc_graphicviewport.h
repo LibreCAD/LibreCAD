@@ -101,6 +101,7 @@ public:
     RS_Vector toUCSFromGui(double uiX, double uiY) const { return RS_Vector(toUcsX(uiX), toUcsY(uiY));}
     RS_Vector toWorldFromUi(double uiX, double uiY) const {return toWorld(toUcsX(uiX), toUcsY(uiY));}
     void toUI(RS_Vector wcsCoordinate, double &uiX, double &uiY) const;
+    double toAbsUCSAngle(double ucsBasisAngle);
 
 //    RS_Vector toUCS(const RS_Vector& v) const;
 //    RS_Vector toWorld(const RS_Vector& v) const;
@@ -129,10 +130,14 @@ public:
     bool isPanning() const {return panning;};
     void setPanning(bool state) {  panning = state;};
     RS_Graphic* getGraphic() {return graphic;};
-
     void addViewportListener(LC_GraphicViewPortListener* listener);
     void removeViewportListener(LC_GraphicViewPortListener* listener);
     void notifyChanged(){ fireRedrawNeeded();}
+
+    bool areAnglesCounterClockwise();
+    double getAnglesBaseAngle();
+
+
 protected:
     int width = 0;
     int height = 0;

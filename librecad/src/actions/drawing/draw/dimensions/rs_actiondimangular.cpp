@@ -182,7 +182,7 @@ void RS_ActionDimAngular::onCoordinateEvent(int status, [[maybe_unused]] bool is
 bool RS_ActionDimAngular::doProcessCommand(int status, const QString &c) {
     bool accept = false;
     // setting new text label:
-    if (SetText == getStatus()) {
+    if (SetText == status) {
         setText( c);
         updateOptions();
         enableCoordinateInput();

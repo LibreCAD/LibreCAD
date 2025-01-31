@@ -81,15 +81,15 @@ void RS_ActionInfoAngle::doTrigger() {
                 auto line = dynamic_cast<RS_Line*>(entity1);
                 double angle1 = line->getAngle1();
                 double angle2 = line->getAngle2();
-                QString strAngle1 = formatAngle(angle1);
+                QString strAngle1 = formatWCSAngle(angle1);
                 if (angle1 < 0.) {
                     strAngle1 += " or ";
-                    strAngle1 += formatAngle(angle1 + 2. * M_PI);
+                    strAngle1 += formatWCSAngle(angle1 + 2. * M_PI);
                 }
-                QString strAngle2 = formatAngle(angle2);
+                QString strAngle2 = formatWCSAngle(angle2);
                 if (angle2 < 0.) {
                     strAngle2 += " or ";
-                    strAngle2 += formatAngle(angle2 + 2. * M_PI);
+                    strAngle2 += formatWCSAngle(angle2 + 2. * M_PI);
                 }
                 commandMessage("---");
                 const QString &msgTemplate = tr("Angle 1: %1\nAngle 2: %2");
@@ -108,12 +108,12 @@ void RS_ActionInfoAngle::doTrigger() {
                     double angle1 = pPoints->intersection.angleTo(pPoints->point1);
                     double angle2 = pPoints->intersection.angleTo(pPoints->point2);
                     double angle = remainder(angle2 - angle1, 2. * M_PI);
-                    QString str = formatAngle(angle);
+                    QString str = formatAngleRaw(angle);
                     QString intersectX = formatLinear(pPoints->intersection.x);
                     QString intersectY = formatLinear(pPoints->intersection.y);
                     if (angle < 0.) {
                         str += " or ";
-                        str += formatAngle(angle + 2. * M_PI);
+                        str += formatAngleRaw(angle + 2. * M_PI);
                     }
 
                     RS_Vector relPoint = getRelativeZero(); // fixme - ucs - review this, why relative zero is invoked there?
@@ -247,16 +247,16 @@ void RS_ActionInfoAngle::updateInfoCursor(const RS_Vector &point2, const RS_Vect
         double angle1 = intersection.angleTo(pPoints->point1);
         double angle2 = intersection.angleTo(point2);
         double angle = remainder(angle2 - angle1, 2. * M_PI);
-        QString str = formatAngle(angle);
+        QString str = formatAngleRaw(angle);
 
         LC_InfoMessageBuilder msg(tr("Info"));
-        msg.add(tr("Angle:"),formatAngle(angle));
+        msg.add(tr("Angle:"), formatAngleRaw(angle));
         if (angle < 0) {
-            msg.add(tr("Angle (alt): "), formatAngle(angle + 2. * M_PI));
+            msg.add(tr("Angle (alt): "), formatAngleRaw(angle + 2. * M_PI));
         }
         msg.add(tr("Intersection:"), formatVector(intersection));
-        msg.add(tr("Line 1 Angle:"), formatAngle(angle1));
-        msg.add(tr("Line 2 Angle:"), formatAngle(angle2));
+        msg.add(tr("Line 1 Angle:"), formatWCSAngle(angle1));
+        msg.add(tr("Line 2 Angle:"), formatWCSAngle(angle2));
         appendInfoCursorZoneMessage(msg.toString(), 2, true);
     }
 }

@@ -65,6 +65,14 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
         addVariable("$SNAPSTYLE", static_cast<int>(LC_GET_INT("IsometricGrid", 0)), 70);
         addVariable("$SNAPISOPAIR", static_cast<int>(LC_GET_INT("IsoGridView", 1)), 70);
         setGridOn(!LC_GET_BOOL("GridOffForNewDrawing", false));
+
+        const QString &defaultAnglesBase = LC_GET_STR("AnglesBaseAngle", "0.0");
+        bool anglesCounterClockwise = LC_GET_BOOL("AnglesCounterClockwise", true);
+
+        double angleBaseDegrees = RS_Math::eval(defaultAnglesBase, 0.0);
+        double angleBaseRadians = RS_Math::deg2rad(angleBaseDegrees);
+        setAnglesCounterClockwise(anglesCounterClockwise);
+        setAnglesBase(angleBaseRadians);
     }
     RS2::Unit unit = getUnit();
 
@@ -91,7 +99,7 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
     setPaperScale(getPaperScale());
     setPaperInsertionBase(getPaperInsertionBase());
 
-//set default values for point style
+    //set default values for point style
     addVariable("$PDMODE", LC_DEFAULTS_PDMode, DXF_FORMAT_GC_PDMode);
     addVariable("$PDSIZE", LC_DEFAULTS_PDSize, DXF_FORMAT_GC_PDSize);
 
@@ -629,6 +637,24 @@ void RS_Graphic::setIsometricGrid(bool on) {
     addVariable("$SNAPSTYLE", (int)on, 70);
 }
 
+double RS_Graphic::getAnglesBase(){
+    double result = getVariableDouble("$ANGBASE",0.0);
+    return result;
+}
+
+void RS_Graphic::setAnglesBase(double baseAngle){
+    addVariable("$ANGBASE", baseAngle, 50);
+}
+
+bool RS_Graphic::areAnglesCounterClockWise(){
+    int on = getVariableInt("$ANGBASE", 0);
+    return on == 0;
+}
+
+void RS_Graphic::setAnglesCounterClockwise(bool on){
+    addVariable("$ANGDIR", on ? 0: 1, 70);
+}
+
 void RS_Graphic::setCurrentUCS(LC_UCS* ucs){
     QString name = ucs->getName();
     if (!ucs->isUCS()){
@@ -1062,4 +1088,12 @@ void RS_Graphic::setPagesNum(const QString &horizXvert) {
         if (ok1 && ok2)
             setPagesNum(h, v);
     }
+}
+
+QString RS_Graphic::formatAngle(double angle) {
+    return RS_Units::formatAngle(angle, getAngleFormat(), getAnglePrecision());
+}
+
+QString RS_Graphic::formatLinear(double linear) {
+    return RS_Units::formatLinear(linear, getUnit(), getLinearFormat(), getLinearPrecision(), false);
 }

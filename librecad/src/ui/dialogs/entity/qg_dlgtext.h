@@ -28,50 +28,46 @@
 
 #include "ui_qg_dlgtext.h"
 #include "rs_text.h"
-#include "lc_dialog.h"
+#include "lc_entitypropertiesdlg.h"
 
-class QG_DlgText : public LC_Dialog, public Ui::QG_DlgText{
+class QG_DlgText : public LC_EntityPropertiesDlg, public Ui::QG_DlgText{
     Q_OBJECT
-
 public:
-    QG_DlgText(QWidget* parent = nullptr);
-    ~QG_DlgText();
-    virtual int getAlignment();
-
+    QG_DlgText(QWidget *parent, LC_GraphicViewport *pViewport);
+    ~QG_DlgText() override;
+    int getAlignment();
 public slots:
-    virtual void updateUniCharComboBox( int );
-    virtual void setText( RS_Text & t, bool isNew );
-    virtual void updateText();
-    virtual void setAlignmentTL();
-    virtual void setAlignmentTC();
-    virtual void setAlignmentTR();
-    virtual void setAlignmentML();
-    virtual void setAlignmentMC();
-    virtual void setAlignmentMR();
-    virtual void setAlignmentLL();
-    virtual void setAlignmentLC();
-    virtual void setAlignmentLR();
-    virtual void setAlignmentBL();
-    virtual void setAlignmentBC();
-    virtual void setAlignmentBR();
-    virtual void setAlignmentFit();
-    virtual void setAlignmentAlign();
-    virtual void setAlignmentMiddle();
-    virtual void setAlignment( int a );
-    virtual void setFont( const QString & f );
-//    virtual void defaultChanged( bool );
-    virtual void loadText();
-    virtual void load( const QString & fn );
-    virtual void saveText();
-    virtual void save( const QString & fn );
-    virtual void insertSymbol( int );
-    virtual void updateUniCharButton( int );
-    virtual void insertChar();
+     void updateUniCharComboBox( int );
+     void setText( RS_Text & t, bool isNew );
+     void updateEntity() override;
+     void setAlignmentTL();
+     void setAlignmentTC();
+     void setAlignmentTR();
+     void setAlignmentML();
+     void setAlignmentMC();
+     void setAlignmentMR();
+     void setAlignmentLL();
+     void setAlignmentLC();
+     void setAlignmentLR();
+     void setAlignmentBL();
+     void setAlignmentBC();
+     void setAlignmentBR();
+     void setAlignmentFit();
+     void setAlignmentAlign();
+     void setAlignmentMiddle();
+     void setAlignment( int a );
+     void setFont( const QString & f );
+//     void defaultChanged( bool );
+     void loadText();
+     void load( const QString & fn );
+     void saveText();
+     void save( const QString & fn );
+     void insertSymbol( int );
+     void updateUniCharButton( int );
+     void insertChar();
     void reject() override;
-
 protected slots:
     virtual void languageChange();
-
 private:
     bool isNew;
     bool saveSettings;
@@ -80,7 +76,6 @@ private:
 
     void init();
     void destroy();
-
 };
 
 #endif // QG_DLGTEXT_H

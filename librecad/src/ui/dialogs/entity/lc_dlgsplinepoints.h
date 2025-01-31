@@ -3,7 +3,7 @@
 
 #include<memory>
 #include <QDialog>
-#include "lc_dialog.h"
+#include "lc_entitypropertiesdlg.h"
 
 class LC_SplinePoints;
 
@@ -11,28 +11,24 @@ namespace Ui {
 class DlgSplinePoints;
 }
 
-class LC_DlgSplinePoints : public LC_Dialog{
+class LC_DlgSplinePoints : public LC_EntityPropertiesDlg{
 	Q_OBJECT
 public:
-	LC_DlgSplinePoints(QWidget* parent = nullptr);
-	~LC_DlgSplinePoints() override;
-
+    LC_DlgSplinePoints(QWidget* parent, LC_GraphicViewport* vp);
+    ~LC_DlgSplinePoints() override;
 public slots:
-	virtual void setSpline(LC_SplinePoints& b);
-	virtual void updateSpline();
-	void updatePoints();
-
+    void setEntity(LC_SplinePoints& b);
+    void updateEntity() override;
+    void updatePoints();
 protected slots:
     virtual void languageChange();
-
 private:
-	LC_DlgSplinePoints(LC_DlgSplinePoints const&) = delete;
-	LC_DlgSplinePoints& operator = (LC_DlgSplinePoints const&) = delete;
-	LC_DlgSplinePoints(LC_DlgSplinePoints &&) = delete;
-	LC_DlgSplinePoints& operator = (LC_DlgSplinePoints &&) = delete;
+    LC_DlgSplinePoints(LC_DlgSplinePoints const&) = delete;
+    LC_DlgSplinePoints& operator = (LC_DlgSplinePoints const&) = delete;
+    LC_DlgSplinePoints(LC_DlgSplinePoints &&) = delete;
+    LC_DlgSplinePoints& operator = (LC_DlgSplinePoints &&) = delete;
 
-	LC_SplinePoints* bezier;
-	std::unique_ptr<Ui::DlgSplinePoints> ui;
+    LC_SplinePoints* bezier;
+    std::unique_ptr<Ui::DlgSplinePoints> ui;
 };
-
 #endif // LC_DLGSPLINEPOINTS_H

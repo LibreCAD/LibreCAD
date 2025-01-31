@@ -188,6 +188,7 @@ void LC_GraphicViewportRenderer::updateGraphicRelatedSettings(RS_Graphic *g) {
     updatePointEntitiesStyle(g);
     updateEndCapsStyle(g);
     updateJoinStyle(g);
+    updateAnglesBasis(g);
 }
 
 void LC_GraphicViewportRenderer::updateUnitAndDefaultWidthFactors(const RS_Graphic *g) {
@@ -206,4 +207,9 @@ void LC_GraphicViewportRenderer::setupPainter(RS_Painter *painter) {
 
 bool LC_GraphicViewportRenderer::isTextLineNotRenderable(double d) {
     return false;
+}
+
+void LC_GraphicViewportRenderer::updateAnglesBasis(RS_Graphic *g) {
+    m_angleBasisBaseAngle = g->getAnglesBase();
+    m_angleBasisCounterClockwise = g->areAnglesCounterClockWise();
 }

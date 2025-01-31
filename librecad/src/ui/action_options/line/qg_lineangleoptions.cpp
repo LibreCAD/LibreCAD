@@ -76,7 +76,7 @@ void QG_LineAngleOptions::doSetAction(RS_ActionInterface *a, bool update){
         // settings from action:
         if (update) {
             if (!angleIsFixed){
-                angle = fromDouble(action->getAngle());
+                angle = fromDouble(action->getUcsAngleDegrees());
             }
             length = fromDouble(action->getLength());
             snapPoint = action->getSnapPoint();
@@ -95,7 +95,7 @@ void QG_LineAngleOptions::doSetAction(RS_ActionInterface *a, bool update){
             setAngleToActionAndView(angle);
         }
         setSnapPointToActionAndView(snapPoint);
-        setLengthToActionAndVeiw(length);
+    setLengthToActionAndView(length);
 
         ui->leAngle->setText(angle);
         ui->leLength->setText(length);
@@ -115,7 +115,7 @@ void QG_LineAngleOptions::onSnapPointCurrentIndexChanged(int number){
 }
 
 void QG_LineAngleOptions::onLengthEditingFinished(){
-    setLengthToActionAndVeiw(ui->leLength->text());
+    setLengthToActionAndView(ui->leLength->text());
 }
 void QG_LineAngleOptions::onAngleEditingFinished(){
     setAngleToActionAndView(ui->leAngle->text());
@@ -123,8 +123,8 @@ void QG_LineAngleOptions::onAngleEditingFinished(){
 
 void QG_LineAngleOptions::setAngleToActionAndView(QString val){
     double angle = 0.;
-    if (toDoubleAngle(val, angle, 1.0, false)){
-        action->setAngle(angle);
+    if (toDoubleAngle(val, angle, 0.0, false)){
+        action->setUcsAngleDegrees(angle);
         ui->leAngle->setText(fromDouble(angle));
     }
 }
@@ -134,7 +134,7 @@ void QG_LineAngleOptions::setSnapPointToActionAndView(int val){
     ui->cbSnapPoint->setCurrentIndex(val);
 }
 
-void QG_LineAngleOptions::setLengthToActionAndVeiw(QString val){
+void QG_LineAngleOptions::setLengthToActionAndView(QString val){
     double len = 0.;
     if (toDouble(val, len, 1.0, false)){
         action->setLength(len);

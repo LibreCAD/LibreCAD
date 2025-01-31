@@ -46,6 +46,7 @@
 #include "lc_namedviewslistwidget.h"
 #include "lc_ucslistwidget.h"
 #include "lc_ucsstatewidget.h"
+#include "lc_anglesbasiswidget.h"
 
 class LC_ActionGroupManager;
 class LC_CustomToolbar;
@@ -134,6 +135,7 @@ public slots:
     void slotFocusOptionsWidget();
     void slotError(const QString& msg);
     void slotShowDrawingOptions();
+    void slotShowDrawingOptionsUnits();
 
     void slotWindowActivated(QMdiSubWindow* w, bool forced=false) override;
     void slotWindowsMenuAboutToShow();
@@ -301,6 +303,7 @@ public:
     LC_PenPaletteWidget* getPenPaletteWidget(void) const{ return penPaletteWidget;};
 
     LC_QuickInfoWidget* getEntityInfoWidget(void) const {return quickInfoWidget;};
+    LC_AnglesBasisWidget* getAnglesBasisWidget() const {return anglesBasisWidget;};
 
     // Highlight the active block in the block widget
     void showBlockActivated(const RS_Block* block);
@@ -400,6 +403,8 @@ private:
     QG_ActiveLayerName* m_pActiveLayerName {nullptr};
     TwoStackedLabels* grid_status {nullptr};
     LC_UCSStateWidget* ucsStateWidget {nullptr};
+    LC_AnglesBasisWidget* anglesBasisWidget{nullptr};
+
 
     LC_QTStatusbarManager* statusbarManager {nullptr};
 

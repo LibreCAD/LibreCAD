@@ -175,7 +175,7 @@ void LC_AbstractActionDrawRectangle::doPreparePreviewEntities([[maybe_unused]]LC
         msg.add(tr("Width:"), formatLinear(data.width));
         msg.add(tr("Height:"), formatLinear(data.height));
         msg.add(tr("Center:"), formatVector(data.centerPoint));
-        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+        appendInfoCursorZoneMessage(msg.toString(), 2, true);
     }
 }
 
@@ -238,11 +238,10 @@ void LC_AbstractActionDrawRectangle::doProcessCoordinateEvent([[maybe_unused]]co
  * @return
  */
 double LC_AbstractActionDrawRectangle::getActualBaseAngle() const{
-    double result = 0.0;
+    double result = toUCSBasisAngle(0.0);
     if (baseAngleIsFixed){
-        result = RS_Math::deg2rad(angle);
+        result = angle;
     }
-    result = toWorldAngle(result);
     return result;
 }
 
@@ -336,7 +335,9 @@ bool LC_AbstractActionDrawRectangle::doProcessCommand(int status, const QString 
         if (ok){
             switch (status) {
                 case SetAngle: {
-                    angle = LC_LineMath::getMeaningfulAngle(value);
+                    double wcsAngle;
+                    ok = parseToWCSAngle(c, wcsAngle);
+                    angle = LC_LineMath::getMeaningfulAngle(wcsAngle);
                     baseAngleIsFixed = true;
                     updateOptions();
                     toMainStatus = true;
@@ -589,7 +590,8 @@ void LC_AbstractActionDrawRectangle::setCornersMode(int value){
  * Setter for base angle
  * @param value
  */
-void LC_AbstractActionDrawRectangle::setAngle(double value){
+void LC_AbstractActionDrawRectangle::setUcsAngleDegrees(double ucsRelAngleDegrees){
+    double value = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
     doSetAngle(value);
     setBaseAngleFixed(true);
     drawPreviewForLastPoint();
@@ -599,8 +601,8 @@ void LC_AbstractActionDrawRectangle::doSetAngle(double value) {
     angle = value;
 }
 
-double LC_AbstractActionDrawRectangle::getAngle() const {
-    return angle;
+double LC_AbstractActionDrawRectangle::getUcsAngleDegrees() const {
+    return toUCSBasisAngleDegrees(angle);
 }
 
 /**

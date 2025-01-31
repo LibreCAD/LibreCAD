@@ -58,6 +58,7 @@ class RS_Painter;
 class RS_Solid;
 class RS_Text;
 class RS_Vector;
+class LC_GraphicViewport;
 
 struct RS_ArcData;
 struct RS_AttributesData;
@@ -330,7 +331,7 @@ public:
      *
      * @param entity Pointer to the entity.
      */
-    virtual bool requestModifyEntityDialog(RS_Entity* entity) = 0;
+    virtual bool requestModifyEntityDialog(RS_Entity *entity, LC_GraphicViewport *viewport) = 0;
 
     /**
      * This virtual method must be overwritten and must present

@@ -126,19 +126,19 @@ LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle1Point::createPo
 
     center.move(moveVector);
 
-    double actualBaseAngle = 0.0;
+    double actualBaseAngle = toUCSBasisAngle(0.0);
     if (baseAngleIsFixed){
-        actualBaseAngle = RS_Math::deg2rad(angle);
+        actualBaseAngle = angle;
         if (angleIsFree){
             if (inFreeAngleMode){
                 actualBaseAngle = insertionPoint.angleTo(snapPoint);
-                doSetAngle(RS_Math::rad2deg(actualBaseAngle));
+                doSetAngle(actualBaseAngle);
                 updateOptionsUI(LC_Rectangle1PointOptions::UPDATE_ANGLE);
             }
         }
     }
 
-    double baseAngle = toWorldAngle(actualBaseAngle);
+    double baseAngle = actualBaseAngle;
 
     if (LC_LineMath::isMeaningfulAngle(baseAngle)){
         // now we'll rotate shape on specific angle

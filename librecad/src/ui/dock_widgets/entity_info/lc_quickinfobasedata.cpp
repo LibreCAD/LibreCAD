@@ -64,7 +64,8 @@ QString LC_QuickInfoBaseData::formatAngle(double angle){
     if (viewport->hasUCS()){
         angle = viewport->toUCSAngle(angle);
     }
-    return formatRawAngle(angle);
+    double ucsRelAngle = viewport->toUCSBasisAngle(angle, m_anglesBase, m_anglesCounterClockWise);
+    return formatRawAngle(ucsRelAngle);
 }
 
 QString LC_QuickInfoBaseData::formatRawAngle(double angle) const {
@@ -134,6 +135,9 @@ void LC_QuickInfoBaseData::updateFormats(){
         m_linearPrecision = graphic->getLinearPrecision();
         m_angleFormat = graphic->getAngleFormat();
         m_anglePrecision = graphic->getAnglePrecision();
+
+        m_anglesBase = graphic->getAnglesBase();
+        m_anglesCounterClockWise = graphic->areAnglesCounterClockWise();
     }
 }
 

@@ -226,7 +226,7 @@ void LC_AbstractActionDrawLine::setAngleValue(double value){
 }
 
 void LC_AbstractActionDrawLine::doSetAngle(double value) {
-   angle = value;
+    angleDegrees = value;
 }
 
 void LC_AbstractActionDrawLine::setStatusForValidStartPoint(int newStatus){
@@ -239,7 +239,7 @@ void LC_AbstractActionDrawLine::setStatusForValidStartPoint(int newStatus){
 }
 
 double LC_AbstractActionDrawLine::getAngle() const{
-    return angle;
+    return angleDegrees;
 }
 
 bool LC_AbstractActionDrawLine::processAngleValueInput(const QString &c){

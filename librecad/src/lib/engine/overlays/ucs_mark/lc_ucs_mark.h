@@ -45,7 +45,7 @@ struct LC_UCSMarkOptions{
 class LC_OverlayUCSMark:public LC_OverlayDrawable{
 public:
     LC_OverlayUCSMark(RS_Vector uiOrigin, double xAxisAngle, bool forWcs, LC_UCSMarkOptions *options);
-    LC_OverlayUCSMark(LC_UCSMarkOptions *options);
+    explicit LC_OverlayUCSMark(LC_UCSMarkOptions *options) ;
     void draw(RS_Painter *painter) override;
     void update(RS_Vector uiPos, double xAngle, bool wcs);
 protected:

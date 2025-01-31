@@ -69,6 +69,9 @@ public:
     RS_Vector restrictHorizontal(const RS_Vector &baseWCSPoint, const RS_Vector& wcsCoord) const;
     RS_Vector restrictVertical(const RS_Vector &baseWCSPoint, const RS_Vector& wcsCoord) const;
 
+    double toUCSBasisAngle(double ucsAbsAngle, double baseAngle, bool counterclockwise);
+    double toUCSAbsAngle(double ucsBasisAngle, double baseAngle, bool conterclockwise);
+
     RS_Vector getUcsOrigin(){
         return ucs.getUcsOrigin();
     }

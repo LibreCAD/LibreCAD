@@ -179,7 +179,7 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
             if (isInfoCursorForModificationEnabled()) {
                 RS_Vector offset = newRefPoint - data->refPoint;
                 LC_InfoMessageBuilder msg(tr("Rotation"));
-                msg.add(tr("Angle:"),formatAngle(rotationAngle));
+                msg.add(tr("Angle:"), formatAngleRaw(rotationAngle));
                 msg.add(tr("Source Point:"),formatVector(data->refPoint));
                 msg.add(tr("Target Point:"),formatVector(newRefPoint));
                 msg.add(tr("Offset:"));
@@ -217,13 +217,13 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
                 RS_Vector offset = newRefPoint - data->refPoint;
 
                 LC_InfoMessageBuilder msg(tr("Rotation"));
-                msg.add(tr("Angle:"), formatAngle(data->angle));
+                msg.add(tr("Angle:"), formatAngleRaw(data->angle));
                 msg.add("Source Point:", formatVector(data->refPoint));
                 msg.add("Target Point:", formatVector(newRefPoint));
                 msg.add(tr("Offset:"));
                 msg.add(formatRelative(offset));
                 msg.add(formatRelativePolar(offset));
-                msg.add(tr("Second Angle:"),formatAngle(secondRotationAngle));
+                msg.add(tr("Second Angle:"), formatAngleRaw(secondRotationAngle));
                 appendInfoCursorZoneMessage(msg.toString(), 2, false);
             }
             break;

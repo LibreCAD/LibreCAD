@@ -37,8 +37,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgArc::QG_DlgArc(QWidget* parent)
-    : LC_Dialog(parent, "ArcProperties"){
+QG_DlgArc::QG_DlgArc(QWidget *parent, LC_GraphicViewport *pViewport)
+    :LC_EntityPropertiesDlg (parent, "ArcProperties", pViewport){
     setupUi(this);
 }
 
@@ -50,7 +50,7 @@ void QG_DlgArc::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgArc::setArc(RS_Arc& a) {
+void QG_DlgArc::setEntity(RS_Arc& a) {
     arc = &a;
     RS_Graphic* graphic = arc->getGraphic();
     if (graphic) {
@@ -79,7 +79,7 @@ void QG_DlgArc::setArc(RS_Arc& a) {
     }
 }
 
-void QG_DlgArc:: updateArc() {
+void QG_DlgArc:: updateEntity() {
     arc->setCenter(RS_Vector(RS_Math::eval(leCenterX->text()),
                              RS_Math::eval(leCenterY->text())));
     arc->setRadius(RS_Math::eval(leRadius->text()));

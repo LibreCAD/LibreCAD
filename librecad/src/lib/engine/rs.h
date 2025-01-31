@@ -458,6 +458,7 @@ namespace RS2 {
         ActionOptionsGeneral,
         ActionOptionsDrawing,
         ActionOptionsDrawingGrid,
+        ActionOptionsDrawingUnits,
 
         ActionToolRegenerateDimensions,
 

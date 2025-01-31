@@ -28,6 +28,7 @@
 #include "lc_overlayrelativezero.h"
 #include "lc_overlayucszero.h"
 #include "lc_ucs_mark.h"
+#include "lc_overlayanglesbasemark.h"
 
 class RS_EntityContainer;
 class LC_OverlaysManager;
@@ -54,6 +55,7 @@ protected:
     LC_OverlayRelZeroOptions m_relZeroOptions;
     LC_OverlayUCSZeroOptions m_absZeroOptions;
     LC_UCSMarkOptions m_ucsMarkOptions;
+    LC_AnglesBaseMarkOptions m_anglesBaseOptions;
 
     int m_entityHandleHalfSize = 2;
 
@@ -96,6 +98,7 @@ protected:
     LC_OverlayRelativeZero m_overlayRelZero = LC_OverlayRelativeZero(&m_relZeroOptions);
     LC_OverlayUCSZero m_overlayAbsZero = LC_OverlayUCSZero(&m_absZeroOptions);
     LC_OverlayUCSMark m_overlayUCSMark = LC_OverlayUCSMark(&m_ucsMarkOptions);
+    LC_OverlayAnglesBaseMark m_overlayAnglesBaseMark = LC_OverlayAnglesBaseMark(&m_anglesBaseOptions);
 
     void doDrawLayerBackground(RS_Painter *painter) override;
     void doDrawLayerOverlays(RS_Painter *painter) override;

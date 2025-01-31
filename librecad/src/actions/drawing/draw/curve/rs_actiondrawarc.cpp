@@ -419,11 +419,10 @@ bool RS_ActionDrawArc::doProcessCommand(int status, const QString &c) {
                 break;
             }
             case SetAngle1: {
-                bool ok = false;
-                double a = RS_Math::eval(c, &ok);
+                double wcsAngle;
+                bool ok = parseToWCSAngle(c, wcsAngle);
                 if (ok) {
-                    double ucsAngle = RS_Math::deg2rad(a);
-                    data->angle1 = toWorldAngle(ucsAngle);
+                    data->angle1 = toWorldAngle(wcsAngle);
                     accept = true;
                     setStatus(SetAngle2);
                 } else
@@ -440,11 +439,10 @@ bool RS_ActionDrawArc::doProcessCommand(int status, const QString &c) {
                     setStatus(SetChordLength);
                     accept = true;
                 } else {
-                    bool ok = false;
-                    double a = RS_Math::eval(c, &ok);
+                    double wcsAngle;
+                    bool ok = parseToWCSAngle(c, wcsAngle);
                     if (ok) {
-                        double ucsAngle = RS_Math::deg2rad(a);
-                        data->angle2 = toWorldAngle(ucsAngle);
+                        data->angle2 = wcsAngle;
                         accept = true;
                         trigger();
                     } else {

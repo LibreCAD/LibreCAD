@@ -411,19 +411,25 @@ void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector &center, co
     previewSnapAngleMark(center, angle);
 }
 
+// fixme - sand - move to overlay!
+void RS_PreviewActionInterface::initFromSettings() {
+    RS_Snapper::initFromSettings();
+    m_angleSnapMarkerSize = LC_GET_ONE_INT("Appearance", "AngleSnapMarkerSize", 20);
+}
+
 // fixme - sand - snap to relative angle support!!!
 // fixme - rework to natural paint via overlay
 void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector &center, double angle) {
 // todo - add separate option that will control visibility of mark?
-    int radiusInPixels = 20; // todo - move to settings
+    int radiusInPixels = m_angleSnapMarkerSize; // todo - move to settings
     int lineInPixels = radiusInPixels * 2; // todo - move to settings
     double radius = toGraphDX(radiusInPixels);
     double lineLength = toGraphDX(lineInPixels);
 
     angle = RS_Math::correctAnglePlusMinusPi(angle);
-    double angleZero = toWorldAngle(0);
+    double angleZero = toWorldAngle(m_anglesBase);
     if (LC_LineMath::isMeaningfulAngle(angle)){
-        previewRefArc(RS_ArcData(center, radius, angleZero, angle, false));
+        previewRefArc(RS_ArcData(center, radius, angleZero, angle, !m_anglesCounterClockWise));
         previewRefLine(center, center + RS_Vector::polar(lineLength, angle));
     }
     previewRefLine(center, center.relative(lineLength, angleZero));
@@ -742,3 +748,30 @@ RS_Entity *RS_PreviewActionInterface::catchEntityByEvent(LC_MouseEvent *e, RS2::
 RS_Entity *RS_PreviewActionInterface::catchEntityByEvent(LC_MouseEvent *e, const EntityTypeList &enTypeList, RS2::ResolveLevel level) {
     return catchEntity(e->graphPoint, enTypeList, level);
 }
+
+// fixme - sand - this function may be expanded to support values in non-degrees formats. Check later!
+bool RS_PreviewActionInterface::parseToWCSAngle(const QString &c, double& wcsAngleRad){
+    bool ok = false;
+    double ucsBasisAngleDeg = RS_Math::eval(c, &ok);
+    if (ok){
+        ucsBasisAngleDeg = LC_LineMath::getMeaningfulAngle(ucsBasisAngleDeg);
+        double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDeg);
+        double ucsAbsValueRad = viewport->toUCSAbsAngle(ucsBasisAngleRad, m_anglesBase, m_anglesCounterClockWise);
+        wcsAngleRad = viewport->toWorldAngle(ucsAbsValueRad);
+    }
+    return ok;
+}
+
+/*bool RS_PreviewActionInterface::parseUCSAngleDeg(const QString &c, double& ucsAngleDeg){
+    bool ok = false;
+    double ucsBasisAngleDeg = RS_Math::eval(c, &ok);
+    if (ok){
+        ucsBasisAngleDeg = LC_LineMath::getMeaningfulAngle(ucsBasisAngleDeg);
+
+        double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDeg);
+        double ucsAbsValueRad = viewport->toUCSAbsAngle(ucsBasisAngleDeg, m_anglesBase, m_anglesCounterClockWise);
+        wcsAngleRad = viewport->toWorldAngle(ucsAbsValueRad);
+    }
+    return ok;
+}
+*/

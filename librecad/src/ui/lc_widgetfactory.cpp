@@ -1062,6 +1062,7 @@ QToolBar* LC_WidgetFactory::createUCSToolbar(const QString& title, const QString
     return result;
 }
 
+
 QToolBar* LC_WidgetFactory::createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames){
 
     QToolBar * result = doCreateToolBar(title, name, toolBarPolicy);
@@ -1133,10 +1134,12 @@ void LC_WidgetFactory::initStatusBar() {
 
     main_window->grid_status = new TwoStackedLabels(status_bar);
     main_window->grid_status->setTopLabel(tr("Grid Status"));
-    
-    auto* ucsStateWidget = new LC_UCSStateWidget(status_bar, "ucs");
 
+    auto* ucsStateWidget = new LC_UCSStateWidget(status_bar, "ucs");
     main_window->ucsStateWidget = ucsStateWidget;
+
+    auto* anglesBasisWidget = new LC_AnglesBasisWidget(status_bar, "anglesBase");
+    main_window->anglesBasisWidget = anglesBasisWidget;
 
     main_window->statusbarManager = new LC_QTStatusbarManager(status_bar);
     main_window->statusbarManager->loadSettings();
@@ -1150,6 +1153,7 @@ void LC_WidgetFactory::initStatusBar() {
         status_bar->addWidget(main_window->grid_status);
         status_bar->addWidget(main_window->relativeZeroCoordinatesWidget);
         status_bar->addWidget(main_window->ucsStateWidget);
+        status_bar->addWidget(main_window->anglesBasisWidget);
 
         LC_GROUP_GUARD("Widgets");{
             bool allow_statusbar_fontsize = LC_GET_BOOL("AllowStatusbarFontSize", false);
@@ -1220,10 +1224,16 @@ void LC_WidgetFactory::initStatusBar() {
         tb->setProperty("_group", 3);
         addToBottom(tb);
 
+        tb = new QToolBar(tr("Angles Basis"), main_window);
+        tb->setSizePolicy(tbPolicy);
+        tb->setObjectName("TBAnglesBasis");
+        tb->addWidget(main_window->anglesBasisWidget);
+        tb->setProperty("_group", 3);
+        addToBottom(tb);
+
         main_window->statusbarManager->setup();
 
         main_window->grid_status->setToolTip(tr("Current size of Grid/MetaGrid. Click to change grid size."));
-
         connect(main_window->grid_status, &TwoStackedLabels::clicked, main_window, &QC_ApplicationWindow::slotShowDrawingOptions);
 
 /*
@@ -1236,6 +1246,7 @@ void LC_WidgetFactory::initStatusBar() {
         addAction(tb,"ViewGridIsoRight");
 */
     }
+    connect(main_window->anglesBasisWidget, &LC_AnglesBasisWidget::clicked, main_window, &QC_ApplicationWindow::slotShowDrawingOptionsUnits);
 }
 
 

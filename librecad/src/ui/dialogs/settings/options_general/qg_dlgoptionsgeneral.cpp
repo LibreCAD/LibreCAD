@@ -123,7 +123,7 @@ void QG_DlgOptionsGeneral::init() {
         }
     }
 
-    LC_GROUP("Appearance");
+    LC_GROUP("Appearance"); // fixme - refactor to several groups?
     {
         // set current language:
         QString def_lang = "en";
@@ -327,6 +327,15 @@ void QG_DlgOptionsGeneral::init() {
 
         int draftMarkerFntSize = LC_GET_INT("DraftMarkerFontSize", 10);
         sbDraftModeFontSize->setValue(draftMarkerFntSize);
+
+        bool showAnglesBasisMark = LC_GET_BOOL("AnglesBasisMarkEnabled", true);
+        cbAnglesMarkVisible->setChecked(showAnglesBasisMark);
+
+        int anglesBasisMarkPolicy = LC_GET_INT("AnglesBasisMarkPolicy", 0);
+        cbAnglesBaseShowPolicy->setCurrentIndex(anglesBasisMarkPolicy);
+
+        int angleSnapMarkerSize = LC_GET_INT("AngleSnapMarkerSize", 20);
+        sbAngleSnapMarkRadius->setValue(angleSnapMarkerSize);
     }
     LC_GROUP_END();
 
@@ -449,6 +458,8 @@ void QG_DlgOptionsGeneral::init() {
 
         initComboBox(cbDraftModeMarkerColor, LC_GET_STR("draft_mode_marker",RS_Settings::select));
 
+        initComboBox(cbAnglesMarkColorDirection, LC_GET_STR("angles_basis_direction",RS_Settings::anglesBasisDirection));
+        initComboBox(cbAnglesMarkColorAngleRay, LC_GET_STR("angles_basis_angleray",RS_Settings::anglesBasisAngleRay));
 
         int overlayTransparency = LC_GET_INT("overlay_box_transparency",90);
         sbOverlayBoxTransparency->setValue(overlayTransparency);
@@ -521,6 +532,11 @@ void QG_DlgOptionsGeneral::init() {
         else{
             rbGridOrtho->setChecked(true);
         }
+
+        const QString &defaultAnglesBase = LC_GET_STR("AnglesBaseAngle", "0.0");
+        bool anglesCounterClockwise = LC_GET_BOOL("AnglesCounterClockwise", true);
+        rbDefAngleBasePositive->setChecked(anglesCounterClockwise);
+        leDefAngleBaseZero->setText(defaultAnglesBase);
     }
     LC_GROUP_END();
 
@@ -669,6 +685,12 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("ShowDraftModeMarker", cbShowDraftModeMarker->isChecked());
             LC_SET("DraftMarkerFontName", fcbDraftModeFont->currentText());
             LC_SET("DraftMarkerFontSize", sbDraftModeFontSize->value());
+
+
+            LC_SET("AnglesBasisMarkEnabled", cbAnglesMarkVisible->isChecked());
+            LC_SET("AnglesBasisMarkPolicy", cbAnglesBaseShowPolicy->currentIndex());
+
+            LC_SET("AngleSnapMarkerSize", sbAngleSnapMarkRadius->value());
         }
         LC_GROUP_END();
 
@@ -730,11 +752,13 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("overlay_box_fill_inv", cbOverlayBoxFillInverted->currentText());
             LC_SET("overlay_box_transparency",sbOverlayBoxTransparency->value());
 
-
             LC_SET("info_overlay_absolute",cbInfoOverlayAbsolutePositionColor->currentText());
             LC_SET("info_overlay_snap", cbInfoOverlaySnapColor->currentText());
             LC_SET("info_overlay_prompt",cbInfoOverlayCommandPromptColor->currentText());
             LC_SET("info_overlay_relative",cbInfoOverlayRelativeColor->currentText());
+
+            LC_SET("angles_basis_direction",cbAnglesMarkColorDirection->currentText());
+            LC_SET("angles_basis_angleray",cbAnglesMarkColorAngleRay->currentText());
 
             LC_SET("draft_mode_marker",cbDraftModeMarkerColor->currentText());
         }
@@ -785,6 +809,9 @@ void QG_DlgOptionsGeneral::ok(){
 
                 LC_SET("IsoGridView", defaultIsoView);
             }
+
+            LC_SET("AnglesBaseAngle", leDefAngleBaseZero->text());
+            LC_SET("AnglesCounterClockwise", rbDefAngleBasePositive->isChecked());
         }
         LC_GROUP_END();
 
@@ -958,6 +985,14 @@ void QG_DlgOptionsGeneral::on_pbInfoOverlayRelativeColor_clicked() {
 
 void QG_DlgOptionsGeneral::on_pbInfoOverlayCommandPromptColor_clicked() {
     set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::overlayInfoCursorCommandPrompt));
+}
+
+void QG_DlgOptionsGeneral::on_pbAnglesMarkDirection_clicked() {
+    set_color(cbAnglesMarkColorDirection, QColor(RS_Settings::anglesBasisDirection));
+}
+
+void QG_DlgOptionsGeneral::on_pbAnglesMarkAngleRay_clicked() {
+    set_color(cbAnglesMarkColorAngleRay, QColor(RS_Settings::anglesBasisAngleRay));
 }
 
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked() {

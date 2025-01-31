@@ -31,8 +31,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 #include "ui_LC_DlgParabola.h"
 
-LC_DlgParabola::LC_DlgParabola(QWidget* parent)
-	: LC_Dialog(parent, "ParabolaProperties")
+LC_DlgParabola::LC_DlgParabola(QWidget* parent, LC_GraphicViewport* vp)
+	: LC_EntityPropertiesDlg(parent, "ParabolaProperties", vp)
     , ui(std::make_unique<Ui::DlgParabola>()){
 //	setModal(modal);
 	ui->setupUi(this);
@@ -40,27 +40,25 @@ LC_DlgParabola::LC_DlgParabola(QWidget* parent)
 
 LC_DlgParabola::~LC_DlgParabola() = default;
 
-void LC_DlgParabola::languageChange()
-{
+void LC_DlgParabola::languageChange(){
 	ui->retranslateUi(this);
 }
 
-void LC_DlgParabola::setParabola(LC_Parabola& b)
-{
+void LC_DlgParabola::setEntity(LC_Parabola& b){
     parabola = &b;
-	//pen = spline->getPen();
-	ui->wPen->setPen(b.getPen(false), true, false, "Pen");
-	RS_Graphic* graphic = b.getGraphic();
-	if (graphic) {
-		ui->cbLayer->init(*(graphic->getLayerList()), false, false);
-	}
-	RS_Layer* lay = b.getLayer(false);
-	if (lay) {
-		ui->cbLayer->setLayer(*lay);
-	}
+//pen = spline->getPen();
+    ui->wPen->setPen(b.getPen(false), true, false, "Pen");
+    RS_Graphic* graphic = b.getGraphic();
+    if (graphic) {
+        ui->cbLayer->init(*(graphic->getLayerList()), false, false);
+    }
+    RS_Layer* lay = b.getLayer(false);
+    if (lay) {
+        ui->cbLayer->setLayer(*lay);
+    }
 
-	//number of control points
-	updatePoints();
+//number of control points
+    updatePoints();
 }
 
 void LC_DlgParabola::updatePoints(){
@@ -82,7 +80,7 @@ void LC_DlgParabola::updatePoints(){
     //connect(model, itemChanged(QStandardItem), this, &LC_DlgParabola::updateParabola);
 }
 
-void LC_DlgParabola::updateParabola(){
+void LC_DlgParabola::updateEntity(){
     if (parabola == nullptr)
         return;
 

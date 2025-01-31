@@ -64,7 +64,7 @@ void QG_MTextOptions::doSetAction(RS_ActionInterface *a, bool update){
     QString angle;
     if (update){
         text = action->getText();
-        angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
+        angle = fromDouble(action->getUcsAngleDegrees());
     } else {
         text = "";
         angle = "0.0";
@@ -89,9 +89,9 @@ void QG_MTextOptions::updateText() {
 }
 
 void QG_MTextOptions::updateAngle() {
-    if (action) {
-		        action->setAngle(RS_Math::deg2rad(RS_Math::eval(ui->leAngle->text())));
+    double angle;
+    QString val = ui->leAngle->text();
+    if (toDoubleAngle(val, angle, 0.0, false)) {
+        action->setUcsAngleDegrees(angle);
     }
 }
-
-

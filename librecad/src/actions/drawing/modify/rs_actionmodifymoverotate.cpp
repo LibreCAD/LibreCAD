@@ -113,7 +113,7 @@ void RS_ActionModifyMoveRotate::onMouseMoveEventSelected(int status, LC_MouseEve
                     msg.add(tr("Offset:"));
                     msg.add(formatRelative(pPoints->data.offset));
                     msg.add(formatRelativePolar(pPoints->data.offset));
-                    msg.add(tr("Angle:"), formatAngle(pPoints->data.angle));
+                    msg.add(tr("Angle:"), formatAngleRaw(pPoints->data.angle));
                     appendInfoCursorZoneMessage(msg.toString(), 2, false);
                 }
                 updateOptions();
@@ -257,6 +257,7 @@ bool RS_ActionModifyMoveRotate::doProcessCommand(int status, const QString &c) {
             double a = RS_Math::eval(c, &ok);
             if (ok){
                 accept = true;
+                // relative angle is used, no need to translate
                 pPoints->data.angle = RS_Math::deg2rad(a);
                 if (angleIsFixed) {
                     updateOptions();

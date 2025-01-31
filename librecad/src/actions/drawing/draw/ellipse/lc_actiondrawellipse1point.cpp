@@ -281,50 +281,73 @@ void LC_ActionDrawEllipse1Point::updateMouseButtonHints() {
 
 bool LC_ActionDrawEllipse1Point::doProcessCommand(int status, const QString &command) {
     bool accept = false;
-    switch (status) {
-        case SetMajorAngle: {
-            bool ok;
-            double ucsAngleDegrees = RS_Math::eval(command, &ok);
-            if (ok){
-                accept = true;
-                pPoints->majorRadiusAngle = RS_Math::deg2rad(ucsAngleDegrees);
-                if (pPoints->isArc) {
+    if (checkCommand("angle", command)){
+        accept = true;
+        setStatus(SetMajorAngle);
+    }
+    else if (checkCommand("angle1", command)){
+        accept = true;
+        setStatus(SetAngle1);
+    }
+    else if (checkCommand("angle2", command)){
+        accept = true;
+        setStatus(SetAngle2);
+    }
+    else {
+        switch (status) {
+            case SetMajorAngle: {
+                double wcsAngle;
+                bool ok = parseToWCSAngle(command, wcsAngle);
+                if (ok) {
+                    accept = true;
+                    pPoints->majorRadiusAngle = wcsAngle;
+                    if (pPoints->isArc) {
+                        setStatus(SetAngle2);
+                    } else {
+                        trigger();
+                    }
+                } else
+                    commandMessage(tr("Not a valid expression"));
+                break;
+            }
+            case SetAngle1: {
+                bool ok;
+                double ucsAngleDegrees = RS_Math::eval(command, &ok);
+                if (ok) {
+                    accept = true;
+                    pPoints->angle1 = RS_Math::deg2rad(ucsAngleDegrees);
                     setStatus(SetAngle2);
-                }
-                else{
+                } else
+                    commandMessage(tr("Not a valid expression"));
+                break;
+            }
+            case SetAngle2: {
+                bool ok;
+                double ucsAngleDegrees = RS_Math::eval(command, &ok);
+                if (ok) {
+                    accept = true;
+                    pPoints->angle2 = RS_Math::deg2rad(ucsAngleDegrees);
                     trigger();
-                }
-            } else
-                commandMessage(tr("Not a valid expression"));
-            break;
+                } else
+                    commandMessage(tr("Not a valid expression"));
+                break;
+            }
+            default:
+                break;
         }
-        case SetAngle1: {
-            bool ok;
-            double ucsAngleDegrees = RS_Math::eval(command, &ok);
-            if (ok){
-                accept = true;
-                pPoints->angle1 = RS_Math::deg2rad(ucsAngleDegrees);
-                setStatus(SetAngle2);
-            } else
-                commandMessage(tr("Not a valid expression"));
-            break;
-        }
-        case SetAngle2: {
-            bool ok;
-            double ucsAngleDegrees = RS_Math::eval(command, &ok);
-            if (ok){
-                accept = true;
-                pPoints->angle2 = RS_Math::deg2rad(ucsAngleDegrees);
-                trigger();
-            } else
-                commandMessage(tr("Not a valid expression"));
-            break;
-        }
-        default:
-            break;
     }
     return accept;
 }
+
+QStringList LC_ActionDrawEllipse1Point::getAvailableCommands() {
+    if (actionType == RS2::ActionDrawEllipseArc1Point) {
+        return {command("angle"), command("angle1"),command("angle2")};
+    }
+    else{
+        return {command("angle")};
+    }
+}
+
 
 double LC_ActionDrawEllipse1Point::getMajorRadius() {
     return pPoints->majorRadius;
@@ -332,14 +355,6 @@ double LC_ActionDrawEllipse1Point::getMajorRadius() {
 
 double LC_ActionDrawEllipse1Point::getMinorRadius() {
     return pPoints->minorRadius;
-}
-
-double LC_ActionDrawEllipse1Point::getAngle() {
-    return pPoints->majorRadiusAngle;
-}
-
-bool LC_ActionDrawEllipse1Point::hasAngle() {
-    return pPoints->hasAngle;
 }
 
 bool LC_ActionDrawEllipse1Point::isAngleFree() {
@@ -354,8 +369,12 @@ void LC_ActionDrawEllipse1Point::setMinorRadius(double val) {
     pPoints->minorRadius = val;
 }
 
-void LC_ActionDrawEllipse1Point::setAngle(double val) {
-    pPoints->majorRadiusAngle = val;
+double LC_ActionDrawEllipse1Point::getUcsMajorAngleDegrees() {
+    return toUCSBasisAngleDegrees(pPoints->majorRadiusAngle);
+}
+
+void LC_ActionDrawEllipse1Point::setUcsMajorAngleDegrees(double ucsRelAngleDegrees) {
+    pPoints->majorRadiusAngle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
 }
 
 void LC_ActionDrawEllipse1Point::setHasAngle(bool val) {
@@ -366,6 +385,10 @@ void LC_ActionDrawEllipse1Point::setHasAngle(bool val) {
 void LC_ActionDrawEllipse1Point::setAngleFree(bool val) {
     pPoints->freeAngle = val;
     toSetPointStatus();
+}
+
+bool LC_ActionDrawEllipse1Point::hasAngle() {
+    return pPoints->hasAngle;
 }
 
 void LC_ActionDrawEllipse1Point::toSetPointStatus() {

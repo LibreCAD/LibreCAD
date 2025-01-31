@@ -29,15 +29,15 @@
 #include <memory>
 
 #include "ui_qg_dlghatch.h"
-#include "lc_dialog.h"
+#include "lc_entitypropertiesdlg.h"
 
 class RS_Hatch;
 
-class QG_DlgHatch : public LC_Dialog, public Ui::QG_DlgHatch{
+class QG_DlgHatch : public LC_EntityPropertiesDlg, public Ui::QG_DlgHatch{
     Q_OBJECT
 
 public:
-    QG_DlgHatch(QWidget* parent = nullptr);
+    QG_DlgHatch(QWidget *parent, LC_GraphicViewport *pViewport);
     ~QG_DlgHatch() override;
     void saveSettings();
 
@@ -45,7 +45,7 @@ public slots:
     void polish();
     void showEvent( QShowEvent * e ) override;
     void setHatch( RS_Hatch & h, bool isNew );
-    void updateHatch();
+    void updateEntity() override;
     void setPattern( const QString & p );
     void resizeEvent( QResizeEvent * ) override;
 	   void updatePreview();

@@ -90,6 +90,8 @@ protected slots:
     void on_pbOverlayBoxFill_clicked();
     void on_pbOverlayBoxLineInverted_clicked();
     void on_pbOverlayBoxFillInverted_clicked();
+    void on_pbAnglesMarkDirection_clicked();
+    void on_pbAnglesMarkAngleRay_clicked();
 
     void onInfoCursorPromptChanged();
     void onInfoCursorAbsolutePositionChanged();

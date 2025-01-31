@@ -227,6 +227,13 @@ public:
     LC_UCS *findNamedUCS(QString ucsName) {return ucsList.find(ucsName);};
     void addNamedView(LC_View *view) {namedViewsList.add(view);};
     void addUCS(LC_UCS *ucs) {ucsList.add(ucs);};
+
+    double getAnglesBase();
+    void setAnglesBase(double baseAngle);
+    bool areAnglesCounterClockWise();
+    void setAnglesCounterClockwise(bool on);
+    QString formatAngle(double angle);
+    QString formatLinear(double linear);
 private:
     bool BackupDrawingFile(const QString &filename);
     QDateTime modifiedTime;

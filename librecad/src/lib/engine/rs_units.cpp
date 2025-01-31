@@ -719,7 +719,7 @@ QString RS_Units::formatAngle(double angle, RS2::AngleFormat format,
         break;
     default:
         RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Units::formatAngle: Unknown Angle Unit");
+                        "RS_Units::formatWCSAngle: Unknown Angle Unit");
         return "";
         break;
     }

@@ -119,8 +119,8 @@ void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, con
 
     if (isInfoCursorForModificationEnabled()){
         LC_InfoMessageBuilder msg(tr("Mirror"));
-        msg.add(tr("Angle:"),formatAngle(mirrorLinePoint1.angleTo(mirrorLinePoint2)));
-        msg.add(tr("Angle (alt):"),formatAngle(mirrorLinePoint2.angleTo(mirrorLinePoint1)));
+        msg.add(tr("Angle:"), formatWCSAngle(mirrorLinePoint1.angleTo(mirrorLinePoint2)));
+        msg.add(tr("Angle (alt):"), formatWCSAngle(mirrorLinePoint2.angleTo(mirrorLinePoint1)));
         msg.add(tr("Line From:"), formatVector(mirrorLinePoint1));
         msg.add(tr("Line To:"),formatVector(mirrorLinePoint2));
         appendInfoCursorZoneMessage(msg.toString(), 2, false);

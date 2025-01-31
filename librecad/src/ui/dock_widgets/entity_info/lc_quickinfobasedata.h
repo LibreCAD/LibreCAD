@@ -71,6 +71,9 @@ protected:
     RS2::AngleFormat m_angleFormat;
     int m_anglePrecision;
 
+    double m_anglesBase = 0;
+    bool m_anglesCounterClockWise = true;
+
     // fixme - sand - think about these formatting methods.. they are present there, and similar ones are in snapper...
     // fixme - what about moving them to RS_GraphicView which is shared anyway may be? And this will simplify updating cached formats...
     QString formatVector(const RS_Vector &vector) const;

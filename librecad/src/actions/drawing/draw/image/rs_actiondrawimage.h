@@ -49,8 +49,9 @@ public:
     void reset();
     QStringList getAvailableCommands() override;
 //    void updateToolBar() override;
-    double getAngle() const;
-    void setAngle(double a) const;
+    double getUcsAngleDegrees() const;
+    void setUcsAngleDegrees(double ucsRelAngleDegrees);
+    void setAngle(double wcsAngle) const;
     double getFactor() const;
     void setFactor(double f) const;
     double dpiToScale(double dpi) const;

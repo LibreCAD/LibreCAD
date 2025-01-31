@@ -378,3 +378,39 @@ RS_Vector LC_CoordinatesMapper::toWorld(const RS_Vector& ucsPos) const{
     }
     return result;
 }
+
+/**
+ * Transforms absolute angle in UCS (with zero at 3.pm) to angle in UCS basis (with user defined base zero angle)
+ * @param ucsAbsAngle
+ * @param baseAngle
+ * @param counterclockwise
+ * @return
+ */
+double LC_CoordinatesMapper::toUCSBasisAngle(double ucsAbsAngle, double baseAngle, bool counterclockwise) {
+    double ucsBasisAngle;
+    if (counterclockwise){
+        ucsBasisAngle = ucsAbsAngle - baseAngle;
+    }
+    else{
+        ucsBasisAngle = M_PI * 2 - ucsAbsAngle + baseAngle;
+    }
+    return ucsBasisAngle;
+}
+
+/**
+ * transforms angle in ucs basis (with user defined base zero angle) to absolute LC-standard angle value (with zero of angles at at 3.pm)
+ * @param ucsBasisAngle
+ * @param baseAngle
+ * @param conterclockwise
+ * @return
+ */
+double LC_CoordinatesMapper::toUCSAbsAngle(double ucsBasisAngle, double baseAngle, bool conterclockwise) {
+    double ucsAbsAngle;
+    if (conterclockwise){
+        ucsAbsAngle = ucsBasisAngle + baseAngle;
+    }
+    else{
+        ucsAbsAngle = M_PI * 2 - ucsBasisAngle + baseAngle;
+    }
+    return ucsAbsAngle;
+}

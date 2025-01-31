@@ -215,6 +215,7 @@ void RS_Painter::drawSolidWCS(const RS_Vector &wcsP0, const RS_Vector &wcsP1, co
     }
 }
 
+
 void RS_Painter::drawLineWCS(const RS_Vector& wcsP1, const RS_Vector& wcsP2){
     double uiX1, uiY1, uiX2, uiY2;
     toGui(wcsP1, uiX1, uiY1);

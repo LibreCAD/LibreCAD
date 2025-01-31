@@ -97,8 +97,6 @@ void RS_ActionSelectWindow::doTrigger() {
             if (invertSelectionOperation){
                 doSelect = !doSelect;
             }
-
-
             // expand selection wcs to ensure that selection box in ucs is full within bounding rect in wcs
             RS_Vector wcsP1, wcsP2;
             viewport->worldBoundingBox(ucsP1, ucsP2, wcsP1, wcsP2);
@@ -124,8 +122,8 @@ void RS_ActionSelectWindow::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             // restore selection box to ucs
             RS_Vector ucsP1 = toUCS(pPoints->v1);
             RS_Vector ucsP2 = toUCS(pPoints->v2);
-            bool cross = (ucsP1.x > ucsP2.x);
-            bool deselect = e->isShift;
+            bool cross = (ucsP1.x > ucsP2.x) || e->isControl;
+            bool deselect = e->isShift ? select : !select;
             QString msg = deselect ? tr("De-Selecting") : tr("Selecting");
             msg.append(tr(" entities "));
             msg.append(cross? tr("that intersect with box") : tr("that are within box"));

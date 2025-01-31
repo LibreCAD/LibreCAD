@@ -29,23 +29,18 @@
 class RS_Circle;
 
 #include "ui_qg_dlgcircle.h"
-#include "lc_dialog.h"
+#include "lc_entitypropertiesdlg.h"
 
-class QG_DlgCircle : public LC_Dialog, public Ui::QG_DlgCircle
-{
+class QG_DlgCircle : public LC_EntityPropertiesDlg, public Ui::QG_DlgCircle{
     Q_OBJECT
-
 public:
-    QG_DlgCircle(QWidget* parent = nullptr);
+    QG_DlgCircle(QWidget *parent, LC_GraphicViewport *pViewport);
     ~QG_DlgCircle() override;
-
 public slots:
-    virtual void setCircle( RS_Circle & c );
-    virtual void updateCircle();
-
+    void setEntity(RS_Circle & c );
+    void updateEntity() override;
 protected slots:
     virtual void languageChange();
-
 private:
     RS_Circle* circle;
 };

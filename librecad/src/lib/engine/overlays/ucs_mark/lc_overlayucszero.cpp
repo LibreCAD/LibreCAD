@@ -61,7 +61,6 @@ void LC_OverlayUCSZero::draw(RS_Painter *painter) {
     int height = viewport->getHeight();
 
     if (options->m_extendAxisLines){ // axises are extended
-
         int xAxisStartPoint;
         int xAxisEndPoint;
 

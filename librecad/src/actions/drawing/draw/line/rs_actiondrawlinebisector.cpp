@@ -179,7 +179,6 @@ void RS_ActionDrawLineBisector::onMouseLeftButtonRelease(int status, LC_MouseEve
         default:
             break;
     }
-
 }
 
 void RS_ActionDrawLineBisector::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {

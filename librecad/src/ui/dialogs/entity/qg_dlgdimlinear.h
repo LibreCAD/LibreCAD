@@ -27,27 +27,23 @@
 #define QG_DLGDIMLINEAR_H
 
 #include "ui_qg_dlgdimlinear.h"
-#include "lc_dialog.h"
+#include "lc_entitypropertiesdlg.h"
+
 
 class RS_DimLinear;
 
-class QG_DlgDimLinear : public LC_Dialog, public Ui::QG_DlgDimLinear{
+class QG_DlgDimLinear : public LC_EntityPropertiesDlg, public Ui::QG_DlgDimLinear{
     Q_OBJECT
-
 public:
-    QG_DlgDimLinear(QWidget* parent = nullptr);
+    QG_DlgDimLinear(QWidget *parent, LC_GraphicViewport *pViewport);
     ~QG_DlgDimLinear() override;
-
 public slots:
-    virtual void setDim( RS_DimLinear & d );
-    virtual void updateDim();
-
+    void setEntity(RS_DimLinear & d );
+    void updateEntity() override;
 protected slots:
     virtual void languageChange();
-
 private:
     RS_DimLinear* dim = nullptr;
-
 };
 
 #endif // QG_DLGDIMLINEAR_H

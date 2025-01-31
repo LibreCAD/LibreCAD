@@ -35,16 +35,19 @@ public:
     void init(int status) override;
     double getMajorRadius();
     double getMinorRadius();
-    double getAngle();
+    double getUcsMajorAngleDegrees();
     bool hasAngle();
     bool isAngleFree();
     void setMajorRadius(double val);
     void setMinorRadius(double val);
-    void setAngle(double val);
+    void setUcsMajorAngleDegrees(double val);
     void setHasAngle(bool val);
     void setAngleFree(bool val);
     bool isReversed() const override;
     void setReversed(bool b) const override;
+
+    QStringList getAvailableCommands() override;
+
 protected:
     struct Points;
 

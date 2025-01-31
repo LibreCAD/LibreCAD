@@ -39,8 +39,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgText::QG_DlgText(QWidget* parent)
-    : LC_Dialog(parent, "TextProperties"), saveSettings(true){
+QG_DlgText::QG_DlgText(QWidget *parent, LC_GraphicViewport *pViewport)
+    :LC_EntityPropertiesDlg(parent, "TextProperties", pViewport), saveSettings(true){
     setupUi(this);
     init();
 }
@@ -231,7 +231,7 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
 /**
  * Updates the text entity represented by the dialog to fit the choices of the user.
  */
-void QG_DlgText::updateText() {
+void QG_DlgText::updateEntity() {
     if (text) {
         text->setStyle(cbFont->currentText());
         text->setHeight(leHeight->text().toDouble());

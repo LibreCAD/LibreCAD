@@ -82,9 +82,9 @@ void RS_ActionModifyRotate2::onMouseMoveEventSelected(int status, LC_MouseEvent 
                 if (isInfoCursorForModificationEnabled()){
                     LC_InfoMessageBuilder msg(tr("Rotating Twice"));
                     msg.add(tr("Center 1:"), formatVector(data->center1));
-                    msg.add(tr("Angle 1:"), formatAngle(data->angle1));
+                    msg.add(tr("Angle 1:"), formatAngleRaw(data->angle1));
                     msg.add(tr("Center 2:"), formatVector(data->center2));
-                    msg.add(tr("Angle 2:"), formatAngle(data->angle2));
+                    msg.add(tr("Angle 2:"), formatAngleRaw(data->angle2));
                     appendInfoCursorZoneMessage(msg.toString(), 2, false);
                 }
             }

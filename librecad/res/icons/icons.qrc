@@ -316,5 +316,9 @@
         <file>ucs_preview.svg</file>
         <file>ucs_set.svg</file>
         <file>ucs_set_wcs.svg</file>
+        <file>dirpos.svg</file>
+        <file>dirneg.svg</file>
+        <file>dirpos_plus.svg</file>
+        <file>dirneg_plus.svg</file>
     </qresource>
 </RCC>

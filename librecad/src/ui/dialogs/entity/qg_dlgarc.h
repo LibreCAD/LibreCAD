@@ -29,18 +29,18 @@
 #include <QDialog>
 
 #include "ui_qg_dlgarc.h"
-#include "lc_dialog.h"
+#include "lc_entitypropertiesdlg.h"
 
 class RS_Arc;
 
-class QG_DlgArc : public LC_Dialog, public Ui::QG_DlgArc{
+class QG_DlgArc : public LC_EntityPropertiesDlg, public Ui::QG_DlgArc{
     Q_OBJECT
 public:
-    QG_DlgArc(QWidget* parent = nullptr);
+    QG_DlgArc(QWidget *parent, LC_GraphicViewport *pViewport);
     ~QG_DlgArc() override = default;
 public slots:
-    virtual void setArc(RS_Arc& a);
-    virtual void updateArc();
+    void setEntity(RS_Arc& a);
+    void updateEntity() override;
 protected slots:
     virtual void languageChange();
 private:

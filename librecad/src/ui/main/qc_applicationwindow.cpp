@@ -498,6 +498,9 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
             quickInfoWidget->setDocumentAndView(nullptr, nullptr);
         }
 
+        if (anglesBasisWidget != nullptr){
+            anglesBasisWidget->update(nullptr);
+        }
 
         blockWidget->setBlockList(nullptr);
         coordinateWidget->setGraphic(nullptr, nullptr);
@@ -918,6 +921,10 @@ void QC_ApplicationWindow::slotShowDrawingOptions() {
     actionHandler->setCurrentAction(RS2::ActionOptionsDrawingGrid);
 }
 
+void QC_ApplicationWindow::slotShowDrawingOptionsUnits() {
+    actionHandler->setCurrentAction(RS2::ActionOptionsDrawingUnits);
+}
+
 /**
  * Hands focus back to the application window. In the rare event
  * of a escape press from the layer widget (e.g after switching desktops
@@ -1040,6 +1047,10 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow *w, bool forced) {
 
         if (ucsListWidget != nullptr){
             ucsListWidget->setGraphicView(activatedGraphicView, w);
+        }
+
+        if (anglesBasisWidget != nullptr){
+            anglesBasisWidget->update(activatedGraphic);
         }
 
         coordinateWidget->setGraphic(activatedGraphic,activatedGraphicView);
@@ -1383,6 +1394,10 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
         if (ucsListWidget != nullptr){
             ucsListWidget->setGraphicView(view, w);
         }
+
+        if (anglesBasisWidget != nullptr){
+            anglesBasisWidget->update(graphic);
+        }
     }
 
 
@@ -1724,7 +1739,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
         recentFiles->add(fileName);
         openedFiles.push_back(fileName);
         layerWidget->slotUpdateLayerList();
-        if (layerTreeWidget != nullptr) {
+        if (layerTreeWidget != nullptr) { // fixme - sand - rewrite widget updates in initialization - move to single codebase
             layerTreeWidget->slotFilteringMaskChanged();
         }
         if (namedViewsWidget != nullptr){
@@ -1733,6 +1748,11 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
         if (ucsListWidget != nullptr){
             ucsListWidget->reload();
         }
+        // fixme - sand - the overall workflow of file opening is suxx with lots of redundancy. Review it.
+        if (quickInfoWidget != nullptr) {
+            quickInfoWidget->updateFormats();
+        }
+
 
         if (graphic) {
             if (int objects_removed = graphic->clean()) {
@@ -1740,6 +1760,10 @@ void QC_ApplicationWindow::slotFileOpen(const QString &fileName, RS2::FormatType
                 commandWidget->appendHistory(msg + " " + QString::number(objects_removed));
             }
             emit(gridChanged(graphic->isGridOn()));
+
+            if (anglesBasisWidget != nullptr){
+                anglesBasisWidget->update(graphic);
+            }
         }
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption");

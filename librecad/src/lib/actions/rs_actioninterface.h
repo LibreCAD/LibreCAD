@@ -197,7 +197,7 @@ protected:
     void undoCycleReplace(RS_Entity *entityToReplace, RS_Entity* entityReplacing);
     void undoCycleEnd() const;
     void undoCycleStart() const;
-
     void setPenAndLayerToActive(RS_Entity* e);
+
 };
 #endif

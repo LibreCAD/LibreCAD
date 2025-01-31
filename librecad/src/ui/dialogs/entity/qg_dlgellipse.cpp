@@ -37,8 +37,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgEllipse::QG_DlgEllipse(QWidget* parent)
-    : LC_Dialog(parent, "EllipseProperties"){
+QG_DlgEllipse::QG_DlgEllipse(QWidget *parent, LC_GraphicViewport *pViewport)
+    :LC_EntityPropertiesDlg(parent, "EllipseProperties", pViewport){
     setupUi(this);
 }
 
@@ -57,7 +57,7 @@ void QG_DlgEllipse::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgEllipse::setEllipse(RS_Ellipse& e) {
+void QG_DlgEllipse::setEntity(RS_Ellipse& e) {
     ellipse = &e;
     RS_Graphic* graphic = ellipse->getGraphic();
     if (graphic) {
@@ -88,7 +88,7 @@ void QG_DlgEllipse::setEllipse(RS_Ellipse& e) {
     }
 }
 
-void QG_DlgEllipse::updateEllipse() {
+void QG_DlgEllipse::updateEntity() {
     ellipse->setCenter(RS_Vector(RS_Math::eval(leCenterX->text()),
                                   RS_Math::eval(leCenterY->text())));
 	RS_Vector v = RS_Vector::polar(RS_Math::eval(leMajor->text()),

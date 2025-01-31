@@ -37,8 +37,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgLine::QG_DlgLine(QWidget* parent)
-    : LC_Dialog(parent, "LineProperties"){
+QG_DlgLine::QG_DlgLine(QWidget *parent, LC_GraphicViewport *pViewport)
+    :LC_EntityPropertiesDlg(parent, "LineProperties", pViewport){
     setupUi(this);
 }
 
@@ -50,7 +50,7 @@ void QG_DlgLine::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgLine::setLine(RS_Line& l) {
+void QG_DlgLine::setEntity(RS_Line& l) {
     line = &l;
 
 
@@ -87,7 +87,7 @@ void QG_DlgLine::setLine(RS_Line& l) {
     }
 }
 
-void QG_DlgLine::updateLine() {
+void QG_DlgLine::updateEntity() {
     line->setStartpoint(RS_Vector(RS_Math::eval(leStartX->text()),
                                   RS_Math::eval(leStartY->text())));
     line->setEndpoint(RS_Vector(RS_Math::eval(leEndX->text()),

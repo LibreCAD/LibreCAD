@@ -782,89 +782,89 @@ bool QG_DialogFactory::requestRotate2Dialog(RS_Rotate2Data& data) {
 /**
  * Shows a dialog to edit the given entity.
  */
-bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
+bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity *entity, LC_GraphicViewport *viewport) {
     if (!entity) return false;
 
     bool ret = false;
 
     switch (entity->rtti()) {
     case RS2::EntityPoint: {
-        QG_DlgPoint dlg(parent);
-        dlg.setPoint(*((RS_Point*)entity));
+        QG_DlgPoint dlg(parent, viewport);
+        dlg.setEntity(*((RS_Point *) entity));
         if (dlg.exec()) {
-            dlg.updatePoint();
+            dlg.updateEntity();
             ret = true;
         }
         break;
     }
     case RS2::EntityLine: {
-        QG_DlgLine dlg(parent);
-        dlg.setLine(*((RS_Line*)entity));
+        QG_DlgLine dlg(parent, viewport);
+        dlg.setEntity(*((RS_Line *) entity));
         if (dlg.exec()) {
-            dlg.updateLine();
+            dlg.updateEntity();
             ret = true;
         }
         break;
     }
     case RS2::EntityArc: {
-        QG_DlgArc dlg(parent);
-        dlg.setArc(*((RS_Arc*)entity));
+        QG_DlgArc dlg(parent, viewport);
+        dlg.setEntity(*((RS_Arc *) entity));
         if (dlg.exec()) {
-            dlg.updateArc();
+            dlg.updateEntity();
             ret = true;
         }
         break;
     }
     case RS2::EntityCircle: {
-        QG_DlgCircle dlg(parent);
-        dlg.setCircle(*((RS_Circle*)entity));
+        QG_DlgCircle dlg(parent, viewport);
+        dlg.setEntity(*((RS_Circle *) entity));
         if (dlg.exec()) {
-            dlg.updateCircle();
+            dlg.updateEntity();
             ret = true;
         }
         break;
     }
     case RS2::EntityEllipse: {
-        QG_DlgEllipse dlg(parent);
-        dlg.setEllipse(*((RS_Ellipse*)entity));
+        QG_DlgEllipse dlg(parent, viewport);
+        dlg.setEntity(*((RS_Ellipse *) entity));
         if (dlg.exec()) {
-            dlg.updateEllipse();
+            dlg.updateEntity();
             ret = true;
         }
         break;
     }
     case RS2::EntityParabola: {
-        LC_DlgParabola dlg;
-        dlg.setParabola(*static_cast<LC_Parabola*>(entity));
+        LC_DlgParabola dlg(parent, viewport);
+        dlg.setEntity(*static_cast<LC_Parabola *>(entity));
         if (dlg.exec()) {
-            dlg.updateParabola();
+            dlg.updateEntity();
             ret = true;
         }
         break;
     }
     case RS2::EntitySpline: {
-        QG_DlgSpline dlg;
-        dlg.setSpline(*((RS_Spline*)entity));
+        QG_DlgSpline dlg(parent, viewport);
+        dlg.setEntity(*((RS_Spline *) entity));
         if (dlg.exec()) {
-            dlg.updateSpline();
+            dlg.updateEntity();
             ret = true;
         }
         break;
     }
     case RS2::EntitySplinePoints: {
-        LC_DlgSplinePoints dlg;
-        dlg.setSpline(*static_cast<LC_SplinePoints*>(entity));
+        LC_DlgSplinePoints dlg(parent, viewport);
+        dlg.setEntity(*static_cast<LC_SplinePoints *>(entity));
         if (dlg.exec()) {
-            dlg.updateSpline();
+            dlg.updateEntity();
             ret = true;
         }
         break;
     }
     case RS2::EntityInsert: {
-        QG_DlgInsert dlg;
-        dlg.setInsert(*((RS_Insert*)entity));
+        QG_DlgInsert dlg(parent, viewport);
+        dlg.setEntity(*((RS_Insert *) entity));
         if (dlg.exec()) {
-            dlg.updateInsert();
+            dlg.updateEntity();
             ret = true;
             entity->update();
         }
@@ -875,69 +875,69 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
     case RS2::EntityDimDiametric:
     case RS2::EntityDimRadial:
     case RS2::EntityDimArc: {
-        QG_DlgDimension dlg(parent);
-        dlg.setDim(*((RS_Dimension*)entity));
+        QG_DlgDimension dlg(parent, viewport);
+        dlg.setEntity(*((RS_Dimension *) entity));
         if (dlg.exec()) {
-            dlg.updateDim();
+            dlg.updateEntity();
             ret = true;
             ((RS_Dimension*)entity)->updateDim(true);
         }
         break;
     }
     case RS2::EntityDimLinear: {
-        QG_DlgDimLinear dlg(parent);
-        dlg.setDim(*((RS_DimLinear*)entity));
+        QG_DlgDimLinear dlg(parent, viewport);
+        dlg.setEntity(*((RS_DimLinear *) entity));
         if (dlg.exec()) {
-            dlg.updateDim();
+            dlg.updateEntity();
             ret = true;
             ((RS_DimLinear*)entity)->updateDim(true);
         }
         break;
     }
     case RS2::EntityMText: {
-        QG_DlgMText dlg(parent);
-        dlg.setText(*((RS_MText*)entity), false);
+        QG_DlgMText dlg(parent, viewport);
+        dlg.setEntity(*((RS_MText *) entity), false);
         if (dlg.exec()) {
-            dlg.updateText();
+            dlg.updateEntity();
             ret = true;
             ((RS_MText*)entity)->update();
         }
         break;
     }
     case RS2::EntityText: {
-        QG_DlgText dlg(parent);
+        QG_DlgText dlg(parent, viewport);
         dlg.setText(*((RS_Text*)entity), false);
         if (dlg.exec()) {
-            dlg.updateText();
+            dlg.updateEntity();
             ret = true;
             ((RS_Text*)entity)->update();
         }
         break;
     }
     case RS2::EntityHatch: {
-        QG_DlgHatch dlg(parent);
+        QG_DlgHatch dlg(parent, viewport);
         dlg.setHatch(*((RS_Hatch*)entity), false);
         if (dlg.exec()) {
-            dlg.updateHatch();
+            dlg.updateEntity();
             ret = true;
             ((RS_Hatch*)entity)->update();
         }
         break;
     }
     case RS2::EntityPolyline: {
-        QG_DlgPolyline dlg(parent);
-        dlg.setPolyline(*((RS_Polyline*)entity));
+        QG_DlgPolyline dlg(parent, viewport);
+        dlg.setEntity(*((RS_Polyline *) entity));
         if (dlg.exec()) {
-            dlg.updatePolyline();
+            dlg.updateEntity();
             ret = true;
         }
         break;
     }
     case RS2::EntityImage: {
-        QG_DlgImage dlg(parent);
-        dlg.setImage(*((RS_Image*)entity));
+        QG_DlgImage dlg(parent, viewport);
+        dlg.setEntity(*((RS_Image *) entity));
         if (dlg.exec()) {
-            dlg.updateImage();
+            dlg.updateEntity();
             ret = true;
         }
         break;
@@ -977,10 +977,10 @@ bool QG_DialogFactory::requestDimAlignedDialog(RS_DimAligned* dim) {
 bool QG_DialogFactory::requestMTextDialog(RS_MText* text) {
     if (!text) return false;
 
-    QG_DlgMText dlg(parent);
-    dlg.setText(*text, true);
+    QG_DlgMText dlg(parent, nullptr);
+    dlg.setEntity(*text, true);
     if (dlg.exec()) {
-        dlg.updateText();
+        dlg.updateEntity();
         return true;
     }
 
@@ -993,10 +993,10 @@ bool QG_DialogFactory::requestMTextDialog(RS_MText* text) {
 bool QG_DialogFactory::requestTextDialog(RS_Text* text) {
     if (!text) return false;
 
-    QG_DlgText dlg(parent);
+    QG_DlgText dlg(parent, nullptr);
     dlg.setText(*text, true);
     if (dlg.exec()) {
-        dlg.updateText();
+        dlg.updateEntity();
         return true;
     }
 
@@ -1011,10 +1011,10 @@ bool QG_DialogFactory::requestHatchDialog(RS_Hatch* hatch) {
 
     RS_PATTERNLIST->init();
 
-    QG_DlgHatch dlg(parent);
+    QG_DlgHatch dlg(parent, nullptr);
     dlg.setHatch(*hatch, true);
     if (dlg.exec()) {
-        dlg.updateHatch();
+        dlg.updateEntity();
         dlg.saveSettings();
         return true;
     }

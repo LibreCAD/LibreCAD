@@ -5,9 +5,9 @@
 #include "rs_math.h"
 #include "ui_lc_dlgsplinepoints.h"
 
-LC_DlgSplinePoints::LC_DlgSplinePoints(QWidget* parent)
-	: LC_Dialog(parent,"SplinePointProperties")
-	, ui(new Ui::DlgSplinePoints{}){
+LC_DlgSplinePoints::LC_DlgSplinePoints(QWidget* parent, LC_GraphicViewport* vp)
+    : LC_EntityPropertiesDlg(parent,"SplinePointProperties",vp)
+    , ui(new Ui::DlgSplinePoints{}){
 
     ui->setupUi(this);
     connect(ui->rbSplinePoints, SIGNAL(toggled(bool)),
@@ -18,11 +18,10 @@ LC_DlgSplinePoints::LC_DlgSplinePoints(QWidget* parent)
 LC_DlgSplinePoints::~LC_DlgSplinePoints() = default;
 
 void LC_DlgSplinePoints::languageChange(){
-	ui->retranslateUi(this);
+    ui->retranslateUi(this);
 }
 
-void LC_DlgSplinePoints::setSpline(LC_SplinePoints& b)
-{
+void LC_DlgSplinePoints::setEntity(LC_SplinePoints& b){
     bezier = &b;
 
     RS_Graphic* graphic = b.getGraphic();
@@ -68,7 +67,7 @@ void LC_DlgSplinePoints::updatePoints() {
     ui->tvPoints->setModel(model);
 }
 
-void LC_DlgSplinePoints::updateSpline() {
+void LC_DlgSplinePoints::updateEntity() {
     if (!bezier) return;
 //update closed
     bezier->setClosed(ui->cbClosed->isChecked());
