@@ -2197,8 +2197,6 @@ BUILTIN("entmake")
                 const lclInteger *color = VALUE_CAST(lclInteger, list->item(2));
                 pen.setColor(RS_FilterDXFRW::numberToColor(color->value()));
             }
-
-
         }
     }
 
@@ -2486,8 +2484,104 @@ BUILTIN("entmod")
                 switch (entity->rtti())
                 {
                     case RS2::EntityPoint:
-                        {}
+                        {
+                            if (!gc_ten.empty())
+                            {
+                                RS_Point* p = (RS_Point*)entity;
+                                std::vector<double> pos = gc_ten.front();
+                                p->setPos(RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                            }
+                        }
                         break;
+                    case RS2::EntityLine:
+                    {
+                        if (!gc_ten.empty() || !gc_eleven.empty())
+                        {
+                            RS_Line* l = (RS_Line*)entity;
+                            if (!gc_ten.empty())
+                            {
+                                std::vector<double> pos = gc_ten.front();
+                                l->setStartpoint(RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                            }
+
+                            if (!gc_eleven.empty())
+                            {
+                                std::vector<double> pos = gc_eleven.front();
+                                l->setEndpoint(RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                            }
+                        }
+                    }
+                        break;
+                    case RS2::EntityArc:
+                    {
+                        if (!gc_ten.empty())
+                        {
+                            RS_Arc* a = (RS_Arc*)entity;
+                            std::vector<double> pos = gc_ten.front();
+                            a->setCenter(RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                        }
+                    }
+                        break;
+                    case RS2::EntityCircle:
+                    {
+                        if (!gc_ten.empty())
+                        {
+                            RS_Circle* c = (RS_Circle*)entity;
+                            std::vector<double> pos = gc_ten.front();
+                            c->setCenter(RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                        }
+                    }
+                        break;
+                    case RS2::EntityEllipse:
+                    {
+                        if (!gc_ten.empty() || !gc_eleven.empty())
+                        {
+                            RS_Ellipse* ellipse=static_cast<RS_Ellipse*>(entity);
+
+                            if (!gc_ten.empty())
+                            {
+                                std::vector<double> pos = gc_ten.front();
+                                ellipse->setCenter(RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                            }
+
+                            if (!gc_eleven.empty())
+                            {
+                                std::vector<double> pos = gc_eleven.front();
+                                ellipse->setMajorP(RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                            }
+                        }
+                    }
+                        break;
+                    case RS2::EntityInsert:
+                    {
+                        if (!gc_ten.empty())
+                        {
+                            RS_Insert* i = (RS_Insert*)entity;
+                            std::vector<double> pos = gc_ten.front();
+                            i->setInsertionPoint(RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                        }
+                    }
+                        break;
+                    case RS2::EntityMText:
+                    {
+                        if (!gc_ten.empty())
+                        {
+                            RS_MText* mt = (RS_MText*)entity;
+                            std::vector<double> pos = gc_ten.front();
+                            mt->moveRef(RS_Vector(0,0,0), RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                        }
+                    }
+                        break;
+                    case RS2::EntityText:
+                    {
+                        if (!gc_ten.empty())
+                        {
+                            RS_Text* t = (RS_Text*)entity;
+                            std::vector<double> pos = gc_ten.front();
+                            t->moveRef(RS_Vector(0,0,0), RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                        }
+                    }
+                    break;
                     default: {}
                 }
 
