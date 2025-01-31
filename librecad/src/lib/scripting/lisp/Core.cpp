@@ -1,3 +1,5 @@
+#ifdef DEVELOPER
+
 #include "rs_python.h"
 #include "rs_lisp.h"
 #include "LCL.h"
@@ -40,13 +42,12 @@
 
 #include "rs_filterdxfrw.h"
 
-#ifdef DEVELOPER
-
 #include <stdio.h>
 #include <termios.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <sys/select.h>
+#include <math.h>
 
 #include <cstdlib>
 #include <cctype>
@@ -77,8 +78,6 @@ static const Regex intRegex("[+-]?[0-9]+|[+-]?0[xX][0-9A-Fa-f]");
 static const Regex floatRegex("[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?");
 static const Regex floatPointRegex("[.]{1}\\d+$");
 
-#include <math.h>
-#include <cmath>
 
 #define CHECK_ARGS_IS(expected) \
     checkArgsIs(name.c_str(), expected, \
@@ -1322,18 +1321,19 @@ BUILTIN("entget")
                 entity->push_back(lcl::list(handle));
 
                 enum RS2::LineType lineType = pen.getLineType();
+                qDebug() << "[entget] LineType:" << (int)lineType;
                 if(lineType != RS2::LineByLayer)
                 {
                     lclValueVec *lType = new lclValueVec(3);
                     lType->at(0) = lcl::integer(6);
                     lType->at(1) = lcl::symbol(".");
-
                     lType->at(2) = lcl::string(RS_FilterDXFRW::lineTypeToName(pen.getLineType()).toStdString());
                     entity->push_back(lcl::list(lType));
                 }
 
                 enum RS2::LineWidth lineWidth = pen.getWidth();
-                if(lineWidth != RS2::Width00)
+                qDebug() << "[entget] lineWidth:" << (int)lineWidth;
+                if(lineWidth != RS2::WidthByLayer)
                 {
                     lclValueVec *lWidth = new lclValueVec(3);
                     lWidth->at(0) = lcl::integer(48);
@@ -1353,6 +1353,7 @@ BUILTIN("entget")
                 }
 
                 RS_Color color = pen.getColor();
+                qDebug() << "[entget] color:" << color;
                 if(!color.isByLayer())
                 {
                     int exact_rgb;
@@ -1388,10 +1389,6 @@ BUILTIN("entget")
                 extrDir->at(1) = lcl::ldouble(0.0);
                 extrDir->at(2) = lcl::ldouble(0.0);
                 extrDir->at(3) = lcl::ldouble(1.0);
-
-
-
-
 
                 entity->push_back(lcl::list(acdb));
                 entity->push_back(lcl::list(mspace));
@@ -2485,6 +2482,15 @@ BUILTIN("entmod")
 #endif
                 }
                 entity->setPen(pen);
+
+                switch (entity->rtti())
+                {
+                    case RS2::EntityPoint:
+                        {}
+                        break;
+                    default: {}
+                }
+
                 break;
             }
         }
