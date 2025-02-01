@@ -30,6 +30,7 @@
 #include "rs_mtext.h"
 #include "rs_point.h"
 #include "rs_text.h"
+#include "rs_solid.h"
 #include "rs_layer.h"
 //#include "rs_font.h"
 #include "rs_fontlist.h"
@@ -1313,7 +1314,7 @@ BUILTIN("entget")
                 lclValueVec *ebname = new lclValueVec(3);
                 ebname->at(0) = lcl::integer(330);
                 ebname->at(1) = lcl::symbol(".");
-                ebname->at(2) = lcl::ename(en->value());
+                ebname->at(2) = lcl::ename(e->getParent()->getId());
                 entity->push_back(lcl::list(ebname));
 
                 lclValueVec *handle = new lclValueVec(3);
@@ -1323,7 +1324,6 @@ BUILTIN("entget")
                 entity->push_back(lcl::list(handle));
 
                 enum RS2::LineType lineType = pen.getLineType();
-                qDebug() << "[entget] LineType:" << (int)lineType;
                 if(lineType != RS2::LineByLayer)
                 {
                     lclValueVec *lType = new lclValueVec(3);
@@ -1334,7 +1334,6 @@ BUILTIN("entget")
                 }
 
                 enum RS2::LineWidth lineWidth = pen.getWidth();
-                qDebug() << "[entget] lineWidth:" << (int)lineWidth;
                 if(lineWidth != RS2::WidthByLayer)
                 {
                     lclValueVec *lWidth = new lclValueVec(3);
@@ -1355,7 +1354,6 @@ BUILTIN("entget")
                 }
 
                 RS_Color color = pen.getColor();
-                qDebug() << "[entget] color:" << color;
                 if(!color.isByLayer())
                 {
                     int exact_rgb;
@@ -1464,7 +1462,57 @@ BUILTIN("entget")
 
                         return lcl::list(entity);
                     }
-                    break;
+                        break;
+
+                    case RS2::EntityPolyline:
+                    {
+                        RS_Polyline* pl = (RS_Polyline*)e;
+
+                        lclValueVec *name = new lclValueVec(3);
+                        name->at(0) = lcl::integer(0);
+                        name->at(1) = lcl::symbol(".");
+                        name->at(2) = lcl::string("LWPOLYLINE");
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
+
+                        lclValueVec *acdbL = new lclValueVec(3);
+                        acdbL->at(0) = lcl::integer(100);
+                        acdbL->at(1) = lcl::symbol(".");
+                        acdbL->at(2) = lcl::string("AcDbPolyline");
+                        entity->push_back(lcl::list(acdbL));
+
+                        for (auto &v : pl->getRefPoints())
+                        {
+                            lclValueVec *pnt = new lclValueVec(3);
+                            pnt->at(0) = lcl::integer(10);
+                            pnt->at(1) = lcl::ldouble(v.x);
+                            pnt->at(2) = lcl::ldouble(v.y);
+                            entity->push_back(lcl::list(pnt));
+
+                            lclValueVec *startWidth = new lclValueVec(3);
+                            startWidth->at(0) = lcl::integer(40);
+                            startWidth->at(1) = lcl::symbol(".");
+                            startWidth->at(2) = lcl::ldouble(0.0);
+                            entity->push_back(lcl::list(startWidth));
+
+                            lclValueVec *endWidth = new lclValueVec(3);
+                            endWidth->at(0) = lcl::integer(41);
+                            endWidth->at(1) = lcl::symbol(".");
+                            endWidth->at(2) = lcl::ldouble(0.0);
+                            entity->push_back(lcl::list(endWidth));
+
+                            lclValueVec *bulgeWidth = new lclValueVec(3);
+                            bulgeWidth->at(0) = lcl::integer(42);
+                            bulgeWidth->at(1) = lcl::symbol(".");
+                            bulgeWidth->at(2) = lcl::ldouble(0.0);
+                            entity->push_back(lcl::list(bulgeWidth));
+                        }
+
+                        entity->push_back(lcl::list(extrDir));
+
+                        return lcl::list(entity);
+                    }
+                        break;
 
                     case RS2::EntityArc:
                     {
@@ -1518,7 +1566,7 @@ BUILTIN("entget")
 
                         return lcl::list(entity);
                     }
-                    break;
+                        break;
 
                     case RS2::EntityCircle:
                     {
@@ -1554,68 +1602,124 @@ BUILTIN("entget")
 
                         return lcl::list(entity);
                     }
-                    break;
+                        break;
 
-                case RS2::EntityEllipse:
-                {
-                    RS_Ellipse* ellipse=static_cast<RS_Ellipse*>(e);
+                    case RS2::EntityEllipse:
+                    {
+                        RS_Ellipse* ellipse=static_cast<RS_Ellipse*>(e);
 
-                    lclValueVec *name = new lclValueVec(3);
-                    name->at(0) = lcl::integer(0);
-                    name->at(1) = lcl::symbol(".");
-                    name->at(2) = lcl::string("ELLIPSE");
-                    entity->insert(entity->begin(), lcl::list(name));
-                    entity->insert(entity->begin(), lcl::list(ename));
+                        lclValueVec *name = new lclValueVec(3);
+                        name->at(0) = lcl::integer(0);
+                        name->at(1) = lcl::symbol(".");
+                        name->at(2) = lcl::string("ELLIPSE");
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
 
-                    lclValueVec *acdbL = new lclValueVec(3);
-                    acdbL->at(0) = lcl::integer(100);
-                    acdbL->at(1) = lcl::symbol(".");
-                    acdbL->at(2) = lcl::string("AcDbEllipse");
-                    entity->push_back(lcl::list(acdbL));
+                        lclValueVec *acdbL = new lclValueVec(3);
+                        acdbL->at(0) = lcl::integer(100);
+                        acdbL->at(1) = lcl::symbol(".");
+                        acdbL->at(2) = lcl::string("AcDbEllipse");
+                        entity->push_back(lcl::list(acdbL));
 
-                    lclValueVec *center = new lclValueVec(4);
-                    center->at(0) = lcl::integer(10);
-                    center->at(1) = lcl::ldouble(ellipse->getCenter().x);
-                    center->at(2) = lcl::ldouble(ellipse->getCenter().y);
-                    center->at(3) = lcl::ldouble(ellipse->getCenter().z);
-                    entity->push_back(lcl::list(center));
+                        lclValueVec *center = new lclValueVec(4);
+                        center->at(0) = lcl::integer(10);
+                        center->at(1) = lcl::ldouble(ellipse->getCenter().x);
+                        center->at(2) = lcl::ldouble(ellipse->getCenter().y);
+                        center->at(3) = lcl::ldouble(ellipse->getCenter().z);
+                        entity->push_back(lcl::list(center));
 
-                    lclValueVec *majorpnt = new lclValueVec(4);
-                    majorpnt->at(0) = lcl::integer(11);
-                    majorpnt->at(1) = lcl::ldouble(ellipse->getMajorP().x);
-                    majorpnt->at(2) = lcl::ldouble(ellipse->getMajorP().y);
-                    majorpnt->at(3) = lcl::ldouble(ellipse->getMajorP().z);
-                    entity->push_back(lcl::list(majorpnt));
+                        lclValueVec *majorpnt = new lclValueVec(4);
+                        majorpnt->at(0) = lcl::integer(11);
+                        majorpnt->at(1) = lcl::ldouble(ellipse->getMajorP().x);
+                        majorpnt->at(2) = lcl::ldouble(ellipse->getMajorP().y);
+                        majorpnt->at(3) = lcl::ldouble(ellipse->getMajorP().z);
+                        entity->push_back(lcl::list(majorpnt));
 
-                    entity->push_back(lcl::list(extrDir));
+                        entity->push_back(lcl::list(extrDir));
 
-                    lclValueVec *ratio = new lclValueVec(3);
-                    ratio->at(0) = lcl::integer(40);
-                    ratio->at(1) = lcl::symbol(".");
-                    ratio->at(2) = lcl::ldouble(ellipse->getRatio());
-                    entity->push_back(lcl::list(ratio));
+                        lclValueVec *ratio = new lclValueVec(3);
+                        ratio->at(0) = lcl::integer(40);
+                        ratio->at(1) = lcl::symbol(".");
+                        ratio->at(2) = lcl::ldouble(ellipse->getRatio());
+                        entity->push_back(lcl::list(ratio));
 
-                    // 41 42
+                        /*
+                         * 41
+                         * Start parameter (this value is 0.0 for a full ellipse)
+                         * 42
+                         * End parameter (this value is 2pi for a full ellipse)
+                        */
 
-                    return lcl::list(entity);
-                }
-                break;
+                        return lcl::list(entity);
+                    }
+                        break;
 
                     case RS2::EntityDimAligned:
                     {
+                        lclValueVec *name = new lclValueVec(3);
+                        name->at(0) = lcl::integer(0);
+                        name->at(1) = lcl::symbol(".");
+                        name->at(2) = lcl::string("DIMENSION");
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
+
+                        lclValueVec *acdbL = new lclValueVec(3);
+                        acdbL->at(0) = lcl::integer(100);
+                        acdbL->at(1) = lcl::symbol(".");
+                        acdbL->at(2) = lcl::string("AcDbAlignedDimension");
+                        entity->push_back(lcl::list(acdbL));
+
 #if 0
-                        RS_DimAligned* d = (RS_DimAligned*)e;
-                        d->getDefinitionPoint();
-                        d->getExtensionPoint1();
-                        d->getExtensionPoint2();
-                        d->getText().toLatin1().data();
-                        d->getLabel().toLatin1().data();
+                        RS_DimAligned* dal = (RS_DimAligned*)e;
+                        dal->getDefinitionPoint();
+                        dal->getExtensionPoint1();
+                        dal->getExtensionPoint2();
+                        dal->getText().toLatin1().data();
+                        dal->getLabel().toLatin1().data();
 #endif
                     }
-                    break;
+                        break;
+
+                    case RS2::EntityDimAngular:
+                    {
+                        lclValueVec *name = new lclValueVec(3);
+                        name->at(0) = lcl::integer(0);
+                        name->at(1) = lcl::symbol(".");
+                        name->at(2) = lcl::string("DIMENSION");
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
+
+                        lclValueVec *acdbL = new lclValueVec(3);
+                        acdbL->at(0) = lcl::integer(100);
+                        acdbL->at(1) = lcl::symbol(".");
+                        acdbL->at(2) = lcl::string("AcDb3PointAngularDimension");
+                        entity->push_back(lcl::list(acdbL));
+#if 0
+                        RS_DimAngular* da = (RS_DimAngular*)e;
+
+                        da->getDefinitionPoint();
+                        da->getExtensionPoint1();
+                        da->getExtensionPoint2();
+                        da->getText().toLatin1().data();
+                        da->getLabel().toLatin1().data();
+#endif
+                    }
+                        break;
 
                     case RS2::EntityDimLinear:
                     {
+                        lclValueVec *name = new lclValueVec(3);
+                        name->at(0) = lcl::integer(0);
+                        name->at(1) = lcl::symbol(".");
+                        name->at(2) = lcl::string("DIMENSION");
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
+
+                        lclValueVec *acdbL = new lclValueVec(3);
+                        acdbL->at(0) = lcl::integer(100);
+                        acdbL->at(1) = lcl::symbol(".");
+                        acdbL->at(2) = lcl::string("AcDbAlignedDimension");
+                        entity->push_back(lcl::list(acdbL));
 #if 0
                         RS_DimLinear* d = (RS_DimLinear*)e;
                         d->getDefinitionPoint();
@@ -1624,8 +1728,65 @@ BUILTIN("entget")
                         d->getText().toLatin1().data();
                         d->getLabel().toLatin1().data();
 #endif
+                        lclValueVec *acdbL2 = new lclValueVec(3);
+                        acdbL2->at(0) = lcl::integer(100);
+                        acdbL2->at(1) = lcl::symbol(".");
+                        acdbL2->at(2) = lcl::string("AcDbRotatedDimension");
+                        entity->push_back(lcl::list(acdbL2));
                     }
                     break;
+
+                case RS2::EntityDimRadial:
+                    {
+                        lclValueVec *name = new lclValueVec(3);
+                        name->at(0) = lcl::integer(0);
+                        name->at(1) = lcl::symbol(".");
+                        name->at(2) = lcl::string("DIMENSION");
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
+
+                        lclValueVec *acdbL = new lclValueVec(3);
+                        acdbL->at(0) = lcl::integer(100);
+                        acdbL->at(1) = lcl::symbol(".");
+                        acdbL->at(2) = lcl::string("AcDbRadialDimension");
+                        entity->push_back(lcl::list(acdbL));
+#if 0
+                        RS_DimRadial* dr = (RS_DimRadial*)e;
+
+                        dr->getDefinitionPoint();
+                        dr->getExtensionPoint1();
+                        dr->getExtensionPoint2();
+                        dr->getText().toLatin1().data();
+                        dr->getLabel().toLatin1().data();
+#endif
+                    }
+                        break;
+
+                    case RS2::EntityDimDiametric:
+                    {
+                        lclValueVec *name = new lclValueVec(3);
+                        name->at(0) = lcl::integer(0);
+                        name->at(1) = lcl::symbol(".");
+                        name->at(2) = lcl::string("DIMENSION");
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
+
+                        lclValueVec *acdbL = new lclValueVec(3);
+                        acdbL->at(0) = lcl::integer(100);
+                        acdbL->at(1) = lcl::symbol(".");
+                        acdbL->at(2) = lcl::string("AcDbDiametricDimension");
+                        entity->push_back(lcl::list(acdbL));
+#if 0
+                        RS_DimRadial* dr = (RS_DimRadial*)e;
+
+                        dr->getDefinitionPoint();
+                        dr->getExtensionPoint1();
+                        dr->getExtensionPoint2();
+                        dr->getText().toLatin1().data();
+                        dr->getLabel().toLatin1().data();
+#endif
+                    }
+                        break;
 
                     case RS2::EntityInsert:
                     {
@@ -1650,12 +1811,12 @@ BUILTIN("entget")
                         blockName->at(2) = lcl::string(i->getName().toStdString());
                         entity->push_back(lcl::list(blockName));
 
-                        lclValueVec *center = new lclValueVec(4);
-                        center->at(0) = lcl::integer(10);
-                        center->at(1) = lcl::ldouble(i->getInsertionPoint().x);
-                        center->at(2) = lcl::ldouble(i->getInsertionPoint().y);
-                        center->at(3) = lcl::ldouble(i->getInsertionPoint().z);
-                        entity->push_back(lcl::list(center));
+                        lclValueVec *pnt = new lclValueVec(4);
+                        pnt->at(0) = lcl::integer(10);
+                        pnt->at(1) = lcl::ldouble(i->getInsertionPoint().x);
+                        pnt->at(2) = lcl::ldouble(i->getInsertionPoint().y);
+                        pnt->at(3) = lcl::ldouble(i->getInsertionPoint().z);
+                        entity->push_back(lcl::list(pnt));
 
                         lclValueVec *scaleX = new lclValueVec(3);
                         scaleX->at(0) = lcl::integer(41);
@@ -1888,12 +2049,7 @@ BUILTIN("entget")
 
                     case RS2::EntityHatch:
                     {
-#if 0
                         RS_Hatch* h = (RS_Hatch*)e;
-
-                        qUtf8Printable(h->getPattern());
-                        h->getScale();
-                        (int)h->isSolid();
 
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
@@ -1908,27 +2064,264 @@ BUILTIN("entget")
                         acdbL->at(2) = lcl::string("AcDbHatch");
                         entity->push_back(lcl::list(acdbL));
 
-                        lclValueVec *startpnt = new lclValueVec(4);
-                        startpnt->at(0) = lcl::integer(10);
-                        startpnt->at(1) = lcl::ldouble(l->getStartpoint().x);
-                        startpnt->at(2) = lcl::ldouble(l->getStartpoint().y);
-                        startpnt->at(3) = lcl::ldouble(l->getStartpoint().z);
-                        entity->push_back(lcl::list(startpnt));
+                        lclValueVec *pnt = new lclValueVec(4);
+                        pnt->at(0) = lcl::integer(10);
+                        pnt->at(1) = lcl::ldouble(0.0);
+                        pnt->at(2) = lcl::ldouble(0.0);
+                        pnt->at(3) = lcl::ldouble(0.0);
+                        entity->push_back(lcl::list(pnt));
 
-                        lclValueVec *endpnt = new lclValueVec(4);
-                        endpnt->at(0) = lcl::integer(11);
-                        endpnt->at(1) = lcl::ldouble(l->getEndpoint().x);
-                        endpnt->at(2) = lcl::ldouble(l->getEndpoint().y);
-                        endpnt->at(3) = lcl::ldouble(l->getEndpoint().z);
-                        entity->push_back(lcl::list(endpnt));
+                        entity->push_back(lcl::list(extrDir));
+
+                        lclValueVec *pattern = new lclValueVec(3);
+                        pattern->at(0) = lcl::integer(2);
+                        pattern->at(1) = lcl::symbol(".");
+                        pattern->at(2) = lcl::string(qUtf8Printable(h->getPattern()));
+                        entity->push_back(lcl::list(pattern));
+
+                        if(!h->isSolid())
+                        {
+                            lclValueVec *angle = new lclValueVec(3);
+                            angle->at(0) = lcl::integer(52);
+                            angle->at(1) = lcl::symbol(".");
+                            angle->at(2) = lcl::ldouble(h->getAngle());
+                            entity->push_back(lcl::list(angle));
+
+                            lclValueVec *scale = new lclValueVec(3);
+                            scale->at(0) = lcl::integer(41);
+                            scale->at(1) = lcl::symbol(".");
+                            scale->at(2) = lcl::ldouble(h->getScale());
+                            entity->push_back(lcl::list(scale));
+                        }
+
+                        lclValueVec *solidFill = new lclValueVec(3);
+                        solidFill->at(0) = lcl::integer(70);
+                        solidFill->at(1) = lcl::symbol(".");
+                        solidFill->at(2) = lcl::integer(static_cast<int>(h->isSolid()));
+                        entity->push_back(lcl::list(solidFill));
+
+                        return lcl::list(entity);
+                    }
+                    break;
+
+                    case RS2::EntitySolid:
+                    {
+                        RS_Solid* sol = (RS_Solid*)e;
+
+                        lclValueVec *name = new lclValueVec(3);
+                        name->at(0) = lcl::integer(0);
+                        name->at(1) = lcl::symbol(".");
+                        name->at(2) = lcl::string("SOLID");
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
+
+                        lclValueVec *acdbL = new lclValueVec(3);
+                        acdbL->at(0) = lcl::integer(100);
+                        acdbL->at(1) = lcl::symbol(".");
+                        acdbL->at(2) = lcl::string("AcDbTrace");
+                        entity->push_back(lcl::list(acdbL));
+
+                        lclValueVec *cor = new lclValueVec(4);
+                        cor->at(0) = lcl::integer(10);
+                        cor->at(1) = lcl::ldouble(sol->getCorner(0).x);
+                        cor->at(2) = lcl::ldouble(sol->getCorner(0).y);
+                        cor->at(3) = lcl::ldouble(sol->getCorner(0).z);
+                        entity->push_back(lcl::list(cor));
+
+                        lclValueVec *cor1 = new lclValueVec(4);
+                        cor1->at(0) = lcl::integer(11);
+                        cor1->at(1) = lcl::ldouble(sol->getCorner(0).x);
+                        cor1->at(2) = lcl::ldouble(sol->getCorner(0).y);
+                        cor1->at(3) = lcl::ldouble(sol->getCorner(0).z);
+                        entity->push_back(lcl::list(cor1));
+
+                        lclValueVec *cor2 = new lclValueVec(4);
+                        cor2->at(0) = lcl::integer(12);
+                        cor2->at(1) = lcl::ldouble(sol->getCorner(0).x);
+                        cor2->at(2) = lcl::ldouble(sol->getCorner(0).y);
+                        cor2->at(3) = lcl::ldouble(sol->getCorner(0).z);
+                        entity->push_back(lcl::list(cor2));
+
+                        if (!sol->isTriangle())
+                        {
+                            lclValueVec *cor3 = new lclValueVec(4);
+                            cor3->at(0) = lcl::integer(13);
+                            cor3->at(1) = lcl::ldouble(sol->getCorner(0).x);
+                            cor3->at(2) = lcl::ldouble(sol->getCorner(0).y);
+                            cor3->at(3) = lcl::ldouble(sol->getCorner(0).z);
+                            entity->push_back(lcl::list(cor3));
+                        }
 
                         entity->push_back(lcl::list(extrDir));
 
                         return lcl::list(entity);
-
-#endif
                     }
-                    break;
+                        break;
+
+                    case RS2::EntitySpline:
+                    {
+                        RS_Spline* spl = (RS_Spline*)e;
+
+                        lclValueVec *name = new lclValueVec(3);
+                        name->at(0) = lcl::integer(0);
+                        name->at(1) = lcl::symbol(".");
+                        name->at(2) = lcl::string("SPLINE");
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
+
+                        lclValueVec *acdbL = new lclValueVec(3);
+                        acdbL->at(0) = lcl::integer(100);
+                        acdbL->at(1) = lcl::symbol(".");
+                        acdbL->at(2) = lcl::string("AcDbSpline");
+                        entity->push_back(lcl::list(acdbL));
+
+                        entity->push_back(lcl::list(extrDir));
+
+                        lclValueVec *flag = new lclValueVec(3);
+                        flag->at(0) = lcl::integer(70);
+                        flag->at(1) = lcl::symbol(".");
+                        if (spl->isClosed())
+                        {
+                            flag->at(2) = lcl::integer(1);
+                        }
+                        else
+                        {
+                            flag->at(2) = lcl::integer(8);
+                        }
+                        entity->push_back(lcl::list(flag));
+
+                        lclValueVec *degree = new lclValueVec(3);
+                        degree->at(0) = lcl::integer(71);
+                        degree->at(1) = lcl::symbol(".");
+                        degree->at(2) = lcl::integer(spl->getDegree());
+                        entity->push_back(lcl::list(degree));
+
+                        lclValueVec *numKnots = new lclValueVec(3);
+                        numKnots->at(0) = lcl::integer(72);
+                        numKnots->at(1) = lcl::symbol(".");
+                        numKnots->at(2) = lcl::integer(spl->getNumberOfKnots());
+                        entity->push_back(lcl::list(numKnots));
+
+                        lclValueVec *numCtrlPnts = new lclValueVec(3);
+                        numCtrlPnts->at(0) = lcl::integer(73);
+                        numCtrlPnts->at(1) = lcl::symbol(".");
+                        numCtrlPnts->at(2) = lcl::integer(static_cast<int>(spl->getNumberOfControlPoints()));
+                        entity->push_back(lcl::list(numCtrlPnts));
+
+                        // value missing ad dummy
+                        lclValueVec *numFitPnts = new lclValueVec(3);
+                        numFitPnts->at(0) = lcl::integer(74);
+                        numFitPnts->at(1) = lcl::symbol(".");
+                        numFitPnts->at(2) = lcl::integer(0);
+                        entity->push_back(lcl::list(numFitPnts));
+
+                        return lcl::list(entity);
+                    }
+                        break;
+
+                    case RS2::EntityImage:
+                    {
+                        RS_Image* img = (RS_Image*)e;
+
+                        lclValueVec *name = new lclValueVec(3);
+                        name->at(0) = lcl::integer(0);
+                        name->at(1) = lcl::symbol(".");
+                        name->at(2) = lcl::string("IMAGE");
+                        entity->insert(entity->begin(), lcl::list(name));
+                        entity->insert(entity->begin(), lcl::list(ename));
+
+                        lclValueVec *acdbL = new lclValueVec(3);
+                        acdbL->at(0) = lcl::integer(100);
+                        acdbL->at(1) = lcl::symbol(".");
+                        acdbL->at(2) = lcl::string("AcDbRasterImage");
+                        entity->push_back(lcl::list(acdbL));
+
+                        lclValueVec *pnt = new lclValueVec(4);
+                        pnt->at(0) = lcl::integer(10);
+                        pnt->at(1) = lcl::ldouble(img->getInsertionPoint().x);
+                        pnt->at(2) = lcl::ldouble(img->getInsertionPoint().y);
+                        pnt->at(3) = lcl::ldouble(img->getInsertionPoint().z);
+                        entity->push_back(lcl::list(pnt));
+
+                        lclValueVec *uVector = new lclValueVec(4);
+                        uVector->at(0) = lcl::integer(11);
+                        uVector->at(1) = lcl::ldouble(img->getUVector().x);
+                        uVector->at(2) = lcl::ldouble(img->getUVector().y);
+                        uVector->at(3) = lcl::ldouble(img->getUVector().z);
+                        entity->push_back(lcl::list(uVector));
+
+                        lclValueVec *vVector = new lclValueVec(4);
+                        vVector->at(0) = lcl::integer(12);
+                        vVector->at(1) = lcl::ldouble(img->getVVector().x);
+                        vVector->at(2) = lcl::ldouble(img->getVVector().y);
+                        vVector->at(3) = lcl::ldouble(img->getVVector().z);
+                        entity->push_back(lcl::list(vVector));
+
+                        lclValueVec *size = new lclValueVec(3);
+                        size->at(0) = lcl::integer(13);
+                        size->at(1) = lcl::integer(img->getWidth());
+                        size->at(2) = lcl::integer(img->getHeight());
+                        entity->push_back(lcl::list(size));
+
+                        lclValueVec *file = new lclValueVec(3);
+                        file->at(0) = lcl::integer(340);
+                        file->at(1) = lcl::symbol(".");
+                        file->at(2) = lcl::string(qUtf8Printable(img->getFile()));
+                        entity->push_back(lcl::list(file));
+
+                        // missing value Image display properties ad dummy
+                        lclValueVec *prop = new lclValueVec(3);
+                        prop->at(0) = lcl::integer(70);
+                        prop->at(1) = lcl::symbol(".");
+                        prop->at(2) = lcl::integer(1);
+                        entity->push_back(lcl::list(prop));
+
+                        // missing value Clipping state ad dummy
+                        lclValueVec *clippingState = new lclValueVec(3);
+                        clippingState->at(0) = lcl::integer(280);
+                        clippingState->at(1) = lcl::symbol(".");
+                        clippingState->at(2) = lcl::integer(0);
+                        entity->push_back(lcl::list(clippingState));
+
+                        lclValueVec *brightness = new lclValueVec(3);
+                        brightness->at(0) = lcl::integer(281);
+                        brightness->at(1) = lcl::symbol(".");
+                        brightness->at(2) = lcl::integer(img->getBrightness());
+                        entity->push_back(lcl::list(brightness));
+
+                        lclValueVec *contrast = new lclValueVec(3);
+                        contrast->at(0) = lcl::integer(282);
+                        contrast->at(1) = lcl::symbol(".");
+                        contrast->at(2) = lcl::integer(img->getContrast());
+                        entity->push_back(lcl::list(contrast));
+
+                        lclValueVec *fade = new lclValueVec(3);
+                        fade->at(0) = lcl::integer(283);
+                        fade->at(1) = lcl::symbol(".");
+                        fade->at(2) = lcl::integer(img->getFade());
+                        entity->push_back(lcl::list(fade));
+
+                        // we got only rect boundary
+                        lclValueVec *boundary = new lclValueVec(3);
+                        boundary->at(0) = lcl::integer(71);
+                        boundary->at(1) = lcl::symbol(".");
+                        boundary->at(2) = lcl::integer(1);
+                        entity->push_back(lcl::list(boundary));
+
+                        for (auto &v : img->getCorners())
+                        {
+                            lclValueVec *cor = new lclValueVec(4);
+                            cor->at(0) = lcl::integer(14);
+                            cor->at(1) = lcl::ldouble(v.x);
+                            cor->at(2) = lcl::ldouble(v.y);
+                            cor->at(3) = lcl::ldouble(v.z);
+                            entity->push_back(lcl::list(cor));
+                        }
+                        entity->push_back(lcl::list(extrDir));
+
+                        return lcl::list(entity);
+                    }
+                        break;
 
                     default:
                         delete ename;
@@ -1937,9 +2330,8 @@ BUILTIN("entget")
                         delete mspace;
                         delete layoutTabName;
                         delete layer;
-                        delete layer;
                         delete extrDir;
-                        delete entity;
+                        //delete entity;
 
                         return lcl::nilValue();
                         break;
@@ -1962,6 +2354,7 @@ BUILTIN("entlast")
 
     if(entityContainer->count())
     {
+        //RS_Entity* entity = entityContainer->lastEntity(RS2::ResolveAll);
         RS_Entity* entity = entityContainer->lastEntity();
         unsigned long int id = entity->getId();
         return lcl::ename(id);
@@ -1990,7 +2383,6 @@ BUILTIN("entmake")
     Q_UNUSED(radius3)
     Q_UNUSED(scale1)
     Q_UNUSED(scale2)
-
 
     std::vector<std::vector<double>> gc_ten;
     std::vector<std::vector<double>> gc_eleven;
