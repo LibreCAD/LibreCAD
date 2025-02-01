@@ -31,6 +31,8 @@
 #include "rs_point.h"
 #include "rs_text.h"
 #include "rs_layer.h"
+//#include "rs_font.h"
+#include "rs_fontlist.h"
 #include "rs_entitycontainer.h"
 #include "rs_actionselectsingle.h"
 #include "lc_undosection.h"
@@ -98,16 +100,16 @@ static const Regex floatPointRegex("[.]{1}\\d+$");
     (argsBegin->ptr()->type() == LCLTYPE::INT)
 
 #define NIL_PTR \
-    (argsBegin->ptr()->print(true).compare("nil") == 0)
+    (argsBegin->ptr()->print(true) == "nil")
 
 #define TRUE_PTR \
-    (argsBegin->ptr()->print(true).compare("true") == 0)
+    (argsBegin->ptr()->print(true) == "true")
 
 #define T_PTR \
-    (argsBegin->ptr()->print(true).compare("T") == 0)
+    (argsBegin->ptr()->print(true) == "T")
 
 #define FALSE_PTR \
-    (argsBegin->ptr()->print(true).compare("false") == 0)
+    (argsBegin->ptr()->print(true) == "false")
 
 bool argsHasFloat(lclValueIter argsBegin, lclValueIter argsEnd)
 {
@@ -523,7 +525,7 @@ BUILTIN("action_tile") {
 
     lclValuePtr value = dclEnv->get(std::to_string(dialogId->value()) + "_" + id->value());
     qDebug() << "value->print(true)" << value->print(true).c_str();
-    if (value->print(true).compare("nil") == 0) {
+    if (value->print(true) == "nil") {
         dclEnv->set(std::to_string(dialogId->value()) + "_" + id->value(), lcl::string(action->value()));
         return lcl::trueValue();
     }
@@ -556,7 +558,7 @@ BUILTIN("add_list")
                     const lclListBox *lb = static_cast<const lclListBox*>(tile);
                     if(operation->value() == 1)
                     {
-                        if(dclEnv->get("start_list_index").ptr()->print(true).compare("nil") == 0)
+                        if(dclEnv->get("start_list_index").ptr()->print(true) == "nil")
                         {
                             return lcl::nilValue();
                         }
@@ -594,7 +596,7 @@ BUILTIN("add_list")
                     const lclPopupList *pl = static_cast<const lclPopupList*>(tile);
                     if(operation->value() == 1)
                     {
-                        if(dclEnv->get("start_list_index").ptr()->print(true).compare("nil") == 0)
+                        if(dclEnv->get("start_list_index").ptr()->print(true) == "nil")
                         {
                             return lcl::nilValue();
                         }
@@ -699,15 +701,15 @@ BUILTIN("assoc")
                 if (list->count() == 2) {
                     lclValueVec* duo = new lclValueVec(2);
                     std::copy(list->begin(), list->end(), duo->begin());
-                    if (duo->begin()->ptr()->print(true).compare(op->print(true)) == 0) {
+                    if (duo->begin()->ptr()->print(true) == op->print(true)) {
                         return list;
                     }
                 }
                 if (list->count() == 3) {
                     lclValueVec* dotted = new lclValueVec(3);
                     std::copy(list->begin(), list->end(), dotted->begin());
-                    if (dotted->begin()->ptr()->print(true).compare(op->print(true)) == 0
-                        && (dotted->at(1)->print(true).compare(".") == 0)
+                    if (dotted->begin()->ptr()->print(true) == op->print(true)
+                        && (dotted->at(1)->print(true) == ".")
                     ) {
                         return list;
                     }
@@ -780,7 +782,7 @@ BUILTIN("boolean?")
 BUILTIN("bound?")
 {
     CHECK_ARGS_IS(1);
-    if (EVAL(*argsBegin, replEnv)->print(true).compare("nil") == 0)
+    if (EVAL(*argsBegin, replEnv)->print(true) == "nil")
     {
         return lcl::falseValue();
     }
@@ -805,7 +807,7 @@ BUILTIN("bound?")
 BUILTIN("boundp")
 {
     CHECK_ARGS_IS(1);
-    if (EVAL(*argsBegin, replEnv)->print(true).compare("nil") == 0)
+    if (EVAL(*argsBegin, replEnv)->print(true) == "nil")
     {
         return lcl::nilValue();
     }
@@ -1299,7 +1301,7 @@ BUILTIN("entget")
         for (auto e: *entityContainer) {
             if (e->getId() == en->value())
             {
-                RS_Pen pen = e->getPen();
+                RS_Pen pen = e->getPen(false);
 
                 lclValueVec *entity = new lclValueVec;
 
@@ -1983,6 +1985,13 @@ BUILTIN("entmake")
     double angle2 = 0.0;
     double scale1 = 1.0;
     double scale2 = 1.0;
+
+    Q_UNUSED(radius2)
+    Q_UNUSED(radius3)
+    Q_UNUSED(scale1)
+    Q_UNUSED(scale2)
+
+
     std::vector<std::vector<double>> gc_ten;
     std::vector<std::vector<double>> gc_eleven;
     String ename = "";
@@ -1996,40 +2005,34 @@ BUILTIN("entmake")
                 items->at(i)->type() == LCLTYPE::VEC) {
             lclSequence* list = VALUE_CAST(lclSequence, items->at(i));
 
-            if (list->begin()->ptr()->print(true).compare("0") == 0
-                && (list->item(1)->print(true).compare(".") == 0)
-            ) {
+            if (list->isDotted() && list->begin()->ptr()->print(true) == "0")
+            {
                 const lclString *n = VALUE_CAST(lclString, list->item(2));
                 ename = n->value();
             }
-            if (list->begin()->ptr()->print(true).compare("1") == 0
-                && (list->item(1)->print(true).compare(".") == 0)
-            ) {
+            if (list->isDotted() && list->begin()->ptr()->print(true) == "1")
+            {
                 const lclString *t = VALUE_CAST(lclString, list->item(2));
                 text = t->value();
             }
 
-            if (list->begin()->ptr()->print(true).compare("6") == 0
-                && (list->item(1)->print(true).compare(".") == 0)
-            ) {
+            if (list->isDotted() && list->begin()->ptr()->print(true) == "6")
+            {
                 const lclString *ltype = VALUE_CAST(lclString, list->item(2));
                 pen.setLineType(RS_FilterDXFRW::nameToLineType(ltype->value().c_str()));
             }
 
-            if (list->begin()->ptr()->print(true).compare("7") == 0
-                && (list->item(1)->print(true).compare(".") == 0)
-            ) {
+            if (list->isDotted() && list->begin()->ptr()->print(true) == "7")
+            {
                 const lclString *s = VALUE_CAST(lclString, list->item(2));
                 style = s->value();
             }
-            if (list->begin()->ptr()->print(true).compare("8") == 0
-                && (list->item(1)->print(true).compare(".") == 0)
-            ) {
+            if (list->isDotted() && list->begin()->ptr()->print(true) == "8")
+            {
                 const lclString *l = VALUE_CAST(lclString, list->item(2));
                 layer = l->value();
             }
-            if (list->begin()->ptr()->print(true).compare("10") == 0
-                && list->count() > 2)
+            if (list->count() > 2 && list->begin()->ptr()->print(true) == "10")
             {
                 double xVal;
                 double yVal;
@@ -2072,8 +2075,7 @@ BUILTIN("entmake")
 
                 gc_ten.push_back({ xVal, yVal, zVal });
             }
-            if (list->begin()->ptr()->print(true).compare("11") == 0
-                && list->count() > 2)
+            if (list->count() > 2 && list->begin()->ptr()->print(true) == "11")
             {
                 double xVal;
                 double yVal;
@@ -2116,40 +2118,33 @@ BUILTIN("entmake")
 
                 gc_eleven.push_back({ xVal, yVal, zVal });
             }
-            if (list->begin()->ptr()->print(true).compare("40") == 0
-                && (list->item(1)->print(true).compare(".") == 0)
-            ) {
+            if (list->isDotted() && list->begin()->ptr()->print(true) == "40")
+            {
                 const lclDouble *r1 = VALUE_CAST(lclDouble, list->item(2));
                 radius1 = r1->value();
             }
-            if (list->begin()->ptr()->print(true).compare("41") == 0
-                && (list->item(1)->print(true).compare(".") == 0)
-            ) {
+            if (list->isDotted() && list->begin()->ptr()->print(true) == "41")
+            {
                 const lclDouble *r2 = VALUE_CAST(lclDouble, list->item(2));
                 radius2 = r2->value();
             }
-            if (list->begin()->ptr()->print(true).compare("42") == 0
-                && (list->item(1)->print(true).compare(".") == 0)
-            ) {
+            if (list->isDotted() && list->begin()->ptr()->print(true) == "42")
+            {
                 const lclDouble *r3 = VALUE_CAST(lclDouble, list->item(2));
                 radius3 = r3->value();
             }
-            if (list->begin()->ptr()->print(true).compare("44") == 0
-                && (list->item(1)->print(true).compare(".") == 0)
-            ) {
+            if (list->isDotted() && list->begin()->ptr()->print(true) == "44")
+            {
                 const lclDouble *sc1 = VALUE_CAST(lclDouble, list->item(2));
                 scale1 = sc1->value();
             }
-            if (list->begin()->ptr()->print(true).compare("45") == 0
-                && (list->item(1)->print(true).compare(".") == 0)
-            ) {
+            if (list->isDotted() && list->begin()->ptr()->print(true) == "45")
+            {
                 const lclDouble *sc2 = VALUE_CAST(lclDouble, list->item(2));
                 scale2 = sc2->value();
             }
-            if (list->begin()->ptr()->print(true).compare("48") == 0
-                && (list->item(1)->print(true).compare(".") == 0)
-            ) {
-
+            if (list->isDotted() && list->begin()->ptr()->print(true) == "48")
+            {
                 int width = 0;
                 if (list->item(2)->type() == LCLTYPE::INT)
                 {
@@ -2178,29 +2173,26 @@ BUILTIN("entmake")
 
                 pen.setWidth(RS2::intToLineWidth(width));
             }
-            if (list->begin()->ptr()->print(true).compare("50") == 0
-                && (list->item(1)->print(true).compare(".") == 0)
-            ) {
+            if (list->isDotted() && list->begin()->ptr()->print(true) == "50")
+            {
                 const lclDouble *a1 = VALUE_CAST(lclDouble, list->item(2));
                 angle1 = a1->value();
             }
-            if (list->begin()->ptr()->print(true).compare("51") == 0
-                && (list->item(1)->print(true).compare(".") == 0)
-            ) {
+            if (list->isDotted() && list->begin()->ptr()->print(true) == "51")
+            {
                 const lclDouble *a2 = VALUE_CAST(lclDouble, list->item(2));
                 angle2 = a2->value();
             }
 
-            if (list->begin()->ptr()->print(true).compare("62") == 0
-                && (list->item(1)->print(true).compare(".") == 0)
-            ) {
+            if (list->isDotted() && list->begin()->ptr()->print(true) == "62")
+            {
                 const lclInteger *color = VALUE_CAST(lclInteger, list->item(2));
                 pen.setColor(RS_FilterDXFRW::numberToColor(color->value()));
             }
         }
     }
 
-    if (ename.compare("") == 0)
+    if (ename == "")
     {
         return lcl::nilValue();
     }
@@ -2214,9 +2206,7 @@ BUILTIN("entmake")
             return lcl::nilValue();
         }
 
-        if (ename.compare("LINE") == 0 &&
-                std::distance(gc_ten.begin(), gc_ten.end()) &&
-                std::distance(gc_eleven.begin(), gc_eleven.end()))
+        if (ename == "LINE" && !gc_ten.empty() && !gc_eleven.empty())
         {
             RS_Line *line;
             line = new RS_Line(graphic, RS_Vector(gc_ten.at(0).at(0),
@@ -2230,9 +2220,7 @@ BUILTIN("entmake")
 
         }
 
-        if (ename.compare("CIRCLE") == 0 &&
-                std::distance(gc_ten.begin(), gc_ten.end()) &&
-                radius1 != 0.0)
+        if (ename == "CIRCLE" && !gc_ten.empty() && radius1 != 0.0)
         {
             RS_Circle *circle = new RS_Circle(graphic, RS_CircleData(RS_Vector(gc_ten.at(0).at(0),
                                                                                gc_ten.at(0).at(1),
@@ -2243,8 +2231,7 @@ BUILTIN("entmake")
 
         }
 
-        if (ename.compare("ARC") == 0 &&
-                std::distance(gc_ten.begin(), gc_ten.end()))
+        if (ename == "ARC" && !gc_ten.empty())
         {
             RS_Arc *arc = new RS_Arc(graphic, RS_ArcData(RS_Vector(gc_ten.at(0).at(0),
                                                                    gc_ten.at(0).at(1),
@@ -2254,11 +2241,8 @@ BUILTIN("entmake")
             graphic->addEntity(arc);
         }
 
-        if (ename.compare("ELLIPSE") == 0 &&
-                std::distance(gc_ten.begin(), gc_ten.end()) &&
-                std::distance(gc_eleven.begin(), gc_eleven.end()))
+        if (ename == "ELLIPSE" && !gc_ten.empty() && !gc_eleven.empty())
         {
-
             RS_EllipseData data;
             data.center = RS_Vector(gc_ten.at(0).at(0),gc_ten.at(0).at(1),gc_ten.at(0).at(2));
             data.majorP = RS_Vector(gc_eleven.at(0).at(0),gc_eleven.at(0).at(1),gc_eleven.at(0).at(2));
@@ -2289,7 +2273,7 @@ BUILTIN("entmod")
     {
         const lclList *list = VALUE_CAST(lclList, seq->item(i));
 
-        if (list->isDotted() && list->item(0)->print(true).compare("0") == 0)
+        if (list->isDotted() && list->item(0)->print(true) == "0")
         {
             const lclEname *ename = VALUE_CAST(lclEname, list->item(2));
             entityId = ename->value();
@@ -2313,38 +2297,86 @@ BUILTIN("entmod")
         {
             if (entity->getId() == entityId)
             {
-                RS_Pen pen = entity->getPen();
+                RS_Pen pen = entity->getPen(false);
                 std::vector<std::vector<double>> gc_ten;
                 std::vector<std::vector<double>> gc_eleven;
+                QString text = "";
+                QString textStyle = "";
+                double radius1 = 0.0;
+                double radius2 = 0.0;
+                double radius3 = 0.0;
+                double angle1 = 0.0;
+                double angle2 = 0.0;
+                double scale1 = 1.0;
+                double scale2 = 1.0;
+
+                bool radius1Mod = false;
+                bool radius2Mod = false;
+                bool radius3Mod = false;
+                bool angle1Mod = false;
+                bool angle2Mod = false;
+                bool scale1Mod = false;
+                bool scale2Mod = false;
+
+                Q_UNUSED(angle1)
+                Q_UNUSED(angle2)
+                Q_UNUSED(radius3)
+                Q_UNUSED(scale1)
+                Q_UNUSED(scale2)
+
+                Q_UNUSED(angle1Mod)
+                Q_UNUSED(angle2Mod)
+                Q_UNUSED(radius3Mod)
+                Q_UNUSED(scale1Mod)
+                Q_UNUSED(scale2Mod)
+
+                bool textMod = false;
+                bool styleMod = false;
 
                 for (int i = 0; i < seq->count(); i++)
                 {
                     const lclList *list = VALUE_CAST(lclList, seq->item(i));
 
+                    // text
+                    if (list->isDotted() && list->item(0)->print(true) == "1")
+                    {
+                        const lclString *txt = VALUE_CAST(lclString, list->item(2));
+                        textMod = true;
+                        text = txt->value().c_str();
+                        continue;
+                    }
+
                     // lineType
-                    if (list->isDotted() && list->item(0)->print(true).compare("6") == 0)
+                    if (list->isDotted() && list->item(0)->print(true) == "6")
                     {
                         const lclString *ltype = VALUE_CAST(lclString, list->item(2));
                         pen.setLineType(RS_FilterDXFRW::nameToLineType(ltype->value().c_str()));
                         continue;
                     }
-#if 0
+
                     // TextStyle
-                    if (list->isDotted() && list->item(0)->print(true).compare("7") == 0)
+                    if (list->isDotted() && list->item(0)->print(true) == "7")
                     {
                         const lclString *tstyle = VALUE_CAST(lclString, list->item(2));
+
+                        textStyle = tstyle->value().c_str();
+                        if(RS_FONTLIST->requestFont(textStyle) != nullptr)
+                        {
+                            styleMod = true;
+                        }
+
                         continue;
                     }
-#endif
+
                     // layer
-                    if (list->isDotted() && list->item(0)->print(true).compare("8") == 0)
+                    if (list->isDotted() && list->item(0)->print(true) == "8")
                     {
                         const lclString *layer = VALUE_CAST(lclString, list->item(2));
                         entity->setLayer(layer->value().c_str());
                         continue;
                     }
 
-                    if (list->item(0)->print(true).compare("10") == 0 && list->count() > 2)
+                    if (list->item(0)->print(true) == "10" && list->count() > 2)
                     {
                         double xVal;
                         double yVal;
@@ -2388,7 +2420,7 @@ BUILTIN("entmod")
                         continue;
                     }
 
-                    if (list->isDotted() && list->item(0)->print(true).compare("11") == 0)
+                    if (list->item(0)->print(true) == "11" && list->count() > 2)
                     {
                         double xVal;
                         double yVal;
@@ -2432,8 +2464,44 @@ BUILTIN("entmod")
                         continue;
                     }
 
+                    if (list->isDotted() && list->begin()->ptr()->print(true) == "40")
+                    {
+                        const lclDouble *r1 = VALUE_CAST(lclDouble, list->item(2));
+                        radius1 = r1->value();
+                        radius1Mod = true;
+                        continue;
+                    }
+                    if (list->isDotted() && list->begin()->ptr()->print(true) == "41")
+                    {
+                        const lclDouble *r2 = VALUE_CAST(lclDouble, list->item(2));
+                        radius2 = r2->value();
+                        radius2Mod = true;
+                        continue;
+                    }
+                    if (list->isDotted() && list->begin()->ptr()->print(true) == "42")
+                    {
+                        const lclDouble *r3 = VALUE_CAST(lclDouble, list->item(2));
+                        radius3 = r3->value();
+                        radius3Mod = true;
+                        continue;
+                    }
+                    if (list->isDotted() && list->begin()->ptr()->print(true) == "44")
+                    {
+                        const lclDouble *sc1 = VALUE_CAST(lclDouble, list->item(2));
+                        scale1 = sc1->value();
+                        scale1Mod = true;
+                        continue;
+                    }
+                    if (list->isDotted() && list->begin()->ptr()->print(true) == "45")
+                    {
+                        const lclDouble *sc2 = VALUE_CAST(lclDouble, list->item(2));
+                        scale2 = sc2->value();
+                        scale2Mod = true;
+                        continue;
+                    }
+
                     // lineWidth
-                    if (list->isDotted() && list->item(0)->print(true).compare("48") == 0)
+                    if (list->isDotted() && list->item(0)->print(true) == "48")
                     {
                         int width = 0;
                         if (list->item(2)->type() == LCLTYPE::INT)
@@ -2465,15 +2533,30 @@ BUILTIN("entmod")
                         continue;
                     }
 
+                    if (list->isDotted() && list->begin()->ptr()->print(true) == "50")
+                    {
+                        const lclDouble *a1 = VALUE_CAST(lclDouble, list->item(2));
+                        angle1 = a1->value();
+                        angle1Mod = true;
+                        continue;
+                    }
+                    if (list->isDotted() && list->begin()->ptr()->print(true) == "51")
+                    {
+                        const lclDouble *a2 = VALUE_CAST(lclDouble, list->item(2));
+                        angle2 = a2->value();
+                        angle2Mod = true;
+                        continue;
+                    }
+
                     // color
-                    if (list->isDotted() && list->item(0)->print(true).compare("62") == 0)
+                    if (list->isDotted() && list->item(0)->print(true) == "62")
                     {
                         const lclInteger *color = VALUE_CAST(lclInteger, list->item(2));
                         pen.setColor(RS_FilterDXFRW::numberToColor(color->value()));
                         continue;
                     }
 #if 0
-                    if (list->isDotted() && list->item(0)->print(true).compare("0") == 0)
+                    if (list->isDotted() && list->item(0)->print(true) == "0")
                     {
                         continue;
                     }
@@ -2517,18 +2600,37 @@ BUILTIN("entmod")
                         if (!gc_ten.empty())
                         {
                             RS_Arc* a = (RS_Arc*)entity;
-                            const std::vector<double> pos = gc_ten.front();
-                            a->setCenter(RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                            if (!gc_ten.empty())
+                            {
+                                const std::vector<double> pos = gc_ten.front();
+                                a->setCenter(RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                            }
+                            if (radius1Mod)
+                            {
+                                a->setAngle1(radius1);
+                            }
+                            if (radius2Mod)
+                            {
+                                a->setAngle2(radius2);
+                            }
                         }
                     }
                         break;
                     case RS2::EntityCircle:
                     {
-                        if (!gc_ten.empty())
+                        if (!gc_ten.empty() || radius1Mod)
                         {
                             RS_Circle* c = (RS_Circle*)entity;
-                            const std::vector<double> pos = gc_ten.front();
-                            c->setCenter(RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                            if (!gc_ten.empty())
+                            {
+                                const std::vector<double> pos = gc_ten.front();
+                                c->setCenter(RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                            }
+
+                            if (radius1Mod)
+                            {
+                                c->setRadius(radius1);
+                            }
                         }
                     }
                         break;
@@ -2549,6 +2651,11 @@ BUILTIN("entmod")
                                 const std::vector<double> pos = gc_eleven.front();
                                 ellipse->setMajorP(RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
                             }
+
+                            if (radius1Mod)
+                            {
+                                ellipse->setRatio(radius1);
+                            }
                         }
                     }
                         break;
@@ -2564,24 +2671,54 @@ BUILTIN("entmod")
                         break;
                     case RS2::EntityMText:
                     {
-                        if (!gc_ten.empty())
+                        if (!gc_ten.empty() || text.size() || textStyle.size())
                         {
                             RS_MText* mt = (RS_MText*)entity;
-                            const std::vector<double> pos = gc_ten.front();
-                            mt->moveRef(RS_Vector(0,0,0), RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+
+                            if (!gc_ten.empty())
+                            {
+                                const std::vector<double> pos = gc_ten.front();
+                                mt->moveRef(RS_Vector(0,0,0), RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                            }
+
+                            if (textMod)
+                            {
+                                mt->setText(text);
+                            }
+
+                            if (styleMod)
+                            {
+                                mt->setStyle(textStyle);
+                            }
+
                         }
                     }
                         break;
                     case RS2::EntityText:
                     {
-                        if (!gc_ten.empty())
+                        if (!gc_ten.empty() || text.size() || textStyle.size())
                         {
                             RS_Text* t = (RS_Text*)entity;
-                            const std::vector<double> pos = gc_ten.front();
-                            t->moveRef(RS_Vector(0,0,0), RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+
+                            if (!gc_ten.empty())
+                            {
+                                const std::vector<double> pos = gc_ten.front();
+                                t->moveRef(RS_Vector(0,0,0), RS_Vector(pos.at(0), pos.at(1), pos.at(2)));
+                            }
+
+                            if (textMod)
+                            {
+                                t->setText(text);
+                            }
+
+                            if (styleMod)
+                            {
+                                t->setStyle(textStyle);
+                            }
+
                         }
                     }
-                    break;
+                        break;
                     default: {}
                 }
 
@@ -2681,7 +2818,7 @@ BUILTIN("entsel")
 
             if (Lisp_CommandEdit != nullptr)
             {
-                if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+                if (Lisp_CommandEdit->dockName() == "Lisp Ide")
                 {
                     Lisp_CommandEdit->setPrompt("_$ ");
                 }
@@ -2712,7 +2849,7 @@ BUILTIN("entsel")
 
     if (Lisp_CommandEdit != nullptr)
     {
-        if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+        if (Lisp_CommandEdit->dockName() == "Lisp Ide")
         {
             Lisp_CommandEdit->setPrompt("_$ ");
         }
@@ -3227,7 +3364,7 @@ BUILTIN("getcorner")
 
         if (Lisp_CommandEdit != nullptr)
         {
-            if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+            if (Lisp_CommandEdit->dockName() == "Lisp Ide")
             {
                 Lisp_CommandEdit->setPrompt("_$ ");
             }
@@ -3406,7 +3543,7 @@ BUILTIN("getdist")
 
         if (Lisp_CommandEdit != nullptr)
         {
-            if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+            if (Lisp_CommandEdit->dockName() == "Lisp Ide")
             {
                 Lisp_CommandEdit->setPrompt("_$ ");
             }
@@ -3547,7 +3684,7 @@ BUILTIN("getint")
             }
         }
 
-        if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+        if (Lisp_CommandEdit->dockName() == "Lisp Ide")
         {
             Lisp_CommandEdit->setPrompt("_$ ");
         }
@@ -3597,7 +3734,7 @@ BUILTIN("getkword") {
 
             for (auto &it : StringList) {
                 if (it == result) {
-                    if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+                    if (Lisp_CommandEdit->dockName() == "Lisp Ide")
                     {
                         Lisp_CommandEdit->setPrompt("_$ ");
                     }
@@ -3609,7 +3746,7 @@ BUILTIN("getkword") {
                 }
             }
             if ((bit->value() & 1) != 1) {
-                if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+                if (Lisp_CommandEdit->dockName() == "Lisp Ide")
                 {
                     Lisp_CommandEdit->setPrompt("_$ ");
                 }
@@ -3797,7 +3934,7 @@ BUILTIN("getorient")
 
         if (Lisp_CommandEdit != nullptr)
         {
-            if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+            if (Lisp_CommandEdit->dockName() == "Lisp Ide")
             {
                 Lisp_CommandEdit->setPrompt("_$ ");
             }
@@ -3973,7 +4110,7 @@ BUILTIN("getpoint")
 
         if (Lisp_CommandEdit != nullptr)
         {
-            if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+            if (Lisp_CommandEdit->dockName() == "Lisp Ide")
             {
                 Lisp_CommandEdit->setPrompt("_$ ");
             }
@@ -4036,7 +4173,7 @@ BUILTIN("getreal")
             }
         }
 
-        if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+        if (Lisp_CommandEdit->dockName() == "Lisp Ide")
         {
             Lisp_CommandEdit->setPrompt("_$ ");
         }
@@ -4083,7 +4220,7 @@ BUILTIN("getstring")
 
         String result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit).toStdString();
 
-        if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+        if (Lisp_CommandEdit->dockName() == "Lisp Ide")
         {
             Lisp_CommandEdit->setPrompt("_$ ");
         }
@@ -4479,7 +4616,7 @@ BUILTIN("member?")
     std::copy(seq->begin(), seq->end(), items->begin());
 
     for (int i = 0; i < length; i++) {
-        if (items->at(i)->print(true).compare(op->print(true)) == 0) {
+        if (items->at(i)->print(true) == op->print(true)) {
             return lcl::trueValue();
         }
     }
@@ -5019,7 +5156,7 @@ BUILTIN("prin1")
 
     if (args == 2) {
         argsBegin++;
-        if (argsBegin->ptr()->print(true).compare("nil") != 0) {
+        if (argsBegin->ptr()->print(true) != "nil") {
             pf = VALUE_CAST(lclFile, *argsBegin);
         }
     }
@@ -5189,7 +5326,7 @@ BUILTIN("princ")
 
     if (args == 2) {
         argsBegin++;
-        if (argsBegin->ptr()->print(true).compare("nil") != 0) {
+        if (argsBegin->ptr()->print(true) != "nil") {
             pf = VALUE_CAST(lclFile, *argsBegin);
         }
     }
@@ -5360,7 +5497,7 @@ BUILTIN("print")
 
     if (args == 2) {
         argsBegin++;
-        if (argsBegin->ptr()->print(true).compare("nil") != 0) {
+        if (argsBegin->ptr()->print(true) != "nil") {
             pf = VALUE_CAST(lclFile, *argsBegin);
         }
     }
@@ -5543,7 +5680,7 @@ BUILTIN("prompt")
         String result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit).toStdString();
         Q_UNUSED(result);
 
-        if (Lisp_CommandEdit->dockName().compare("Lisp Ide") == 0)
+        if (Lisp_CommandEdit->dockName() == "Lisp Ide")
         {
             Lisp_CommandEdit->setPrompt("_$ ");
         }
@@ -6226,7 +6363,7 @@ BUILTIN("subst")
     std::copy(seq->begin(), seq->end(), items->begin());
 
     for (int i = 0; i < length; i++) {
-        if (items->at(i)->print(true).compare(oldSym->print(true)) == 0) {
+        if (items->at(i)->print(true) == oldSym->print(true)) {
             items->at(i) = newSym;
             return lcl::list(items);
         }
@@ -6370,7 +6507,8 @@ BUILTIN("type?")
 {
     CHECK_ARGS_IS(1);
 
-    if (argsBegin->ptr()->print(true).compare("nil") == 0) {
+    if (argsBegin->ptr()->print(true) == "nil")
+    {
         return lcl::nilValue();
     }
 
@@ -6803,7 +6941,7 @@ BUILTIN("vl-position")
 
     const lclSequence* seq = VALUE_CAST(lclSequence, *(argsBegin));
     for (int i = 0; i < seq->count(); i++) {
-        if(seq->item(i)->print(true).compare(op->print(true)) == 0) {
+        if(seq->item(i)->print(true) == op->print(true)) {
             return lcl::integer(i);
         }
     }
