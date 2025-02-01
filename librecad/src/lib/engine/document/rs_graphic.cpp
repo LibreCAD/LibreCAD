@@ -647,7 +647,7 @@ void RS_Graphic::setAnglesBase(double baseAngle){
 }
 
 bool RS_Graphic::areAnglesCounterClockWise(){
-    int on = getVariableInt("$ANGBASE", 0);
+    int on = getVariableInt("$ANGDIR", 0);
     return on == 0;
 }
 

@@ -33,12 +33,11 @@
 class QG_DlgText : public LC_EntityPropertiesDlg, public Ui::QG_DlgText{
     Q_OBJECT
 public:
-    QG_DlgText(QWidget *parent, LC_GraphicViewport *pViewport);
+    QG_DlgText(QWidget *parent, LC_GraphicViewport *pViewport, RS_Text* text, bool forNew);
     ~QG_DlgText() override;
     int getAlignment();
 public slots:
      void updateUniCharComboBox( int );
-     void setText( RS_Text & t, bool isNew );
      void updateEntity() override;
      void setAlignmentTL();
      void setAlignmentTC();
@@ -68,12 +67,14 @@ public slots:
     void reject() override;
 protected slots:
     virtual void languageChange();
-private:
+
+protected:
     bool isNew;
     bool saveSettings;
-    RS_Text* text;
+    RS_Text* entity;
     RS_Font* font;
 
+    void setEntity(RS_Text* t, bool isNew );
     void init();
     void destroy();
 };

@@ -37,14 +37,13 @@ class QG_DlgHatch : public LC_EntityPropertiesDlg, public Ui::QG_DlgHatch{
     Q_OBJECT
 
 public:
-    QG_DlgHatch(QWidget *parent, LC_GraphicViewport *pViewport);
+    QG_DlgHatch(QWidget *parent, LC_GraphicViewport *pViewport, RS_Hatch* hatch, bool isNew);
     ~QG_DlgHatch() override;
     void saveSettings();
 
 public slots:
     void polish();
     void showEvent( QShowEvent * e ) override;
-    void setHatch( RS_Hatch & h, bool isNew );
     void updateEntity() override;
     void setPattern( const QString & p );
     void resizeEvent( QResizeEvent * ) override;
@@ -52,16 +51,15 @@ public slots:
 
 protected slots:
     virtual void languageChange();
-
-private:
-    void init();
-    void showArea();
+protected:
     std::unique_ptr<RS_EntityContainer> preview;
     std::shared_ptr<RS_Pattern> pattern;
-    RS_Hatch* hatch = nullptr;
+    RS_Hatch* entity = nullptr;
     bool isNew = false;
-
     void addRectangle(RS_Pen pen, const RS_Vector &v0, const RS_Vector &v1, RS_EntityContainer *container);
+    void init();
+    void showArea();
+    void setEntity(RS_Hatch *h, bool isNew);
 };
 
 #endif // QG_DLGHATCH_H

@@ -150,9 +150,9 @@ public:
     bool requestRotate2Dialog(RS_Rotate2Data& data) override;
 
     bool requestModifyEntityDialog(RS_Entity *entity, LC_GraphicViewport *viewport) override;
-    bool requestMTextDialog(RS_MText* text) override;
-    bool requestTextDialog(RS_Text* text) override;
-    bool requestHatchDialog(RS_Hatch* hatch) override;
+    bool requestMTextDialog(RS_MText *text, LC_GraphicViewport *viewport) override;
+    bool requestTextDialog(RS_Text *text, LC_GraphicViewport *viewport) override;
+    bool requestHatchDialog(RS_Hatch *hatch, LC_GraphicViewport *viewport) override;
     int requestOptionsGeneralDialog() override;
     void requestKeyboardShortcutsDialog(LC_ActionGroupManager *pManager) override;
     int requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIndex) override;

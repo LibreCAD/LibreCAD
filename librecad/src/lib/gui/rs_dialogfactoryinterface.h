@@ -339,7 +339,7 @@ public:
      *
      * @param entity Pointer to the mtext entity.
      */
-    virtual bool requestMTextDialog(RS_MText* text) = 0;
+    virtual bool requestMTextDialog(RS_MText *text, LC_GraphicViewport *viewport) = 0;
 
     /**
      * This virtual method must be overwritten and must present
@@ -347,7 +347,7 @@ public:
      *
      * @param entity Pointer to the text entity.
      */
-    virtual bool requestTextDialog(RS_Text* text) = 0;
+    virtual bool requestTextDialog(RS_Text *text, LC_GraphicViewport *viewport) = 0;
 
     /**
      * This virtual method must be overwritten and must present
@@ -355,7 +355,7 @@ public:
      *
      * @param entity Pointer to the hatch entity.
      */
-    virtual bool requestHatchDialog(RS_Hatch* hatch) = 0;
+    virtual bool requestHatchDialog(RS_Hatch *hatch, LC_GraphicViewport *viewport) = 0;
 
     /**
      * This virtual method must be overwritten and must present

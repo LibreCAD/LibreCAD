@@ -36,15 +36,15 @@ class RS_Arc;
 class QG_DlgArc : public LC_EntityPropertiesDlg, public Ui::QG_DlgArc{
     Q_OBJECT
 public:
-    QG_DlgArc(QWidget *parent, LC_GraphicViewport *pViewport);
+    QG_DlgArc(QWidget *parent, LC_GraphicViewport *pViewport, RS_Arc* arc);
     ~QG_DlgArc() override = default;
 public slots:
-    void setEntity(RS_Arc& a);
     void updateEntity() override;
 protected slots:
     virtual void languageChange();
-private:
-    RS_Arc* arc = nullptr;
+protected:
+    RS_Arc* entity = nullptr;
+    void setEntity(RS_Arc* a);
 };
 
 #endif // QG_DLGARC_H

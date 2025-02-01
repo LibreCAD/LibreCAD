@@ -102,6 +102,7 @@ public:
     RS_Vector toWorldFromUi(double uiX, double uiY) const {return toWorld(toUcsX(uiX), toUcsY(uiY));}
     void toUI(RS_Vector wcsCoordinate, double &uiX, double &uiY) const;
     double toAbsUCSAngle(double ucsBasisAngle);
+    double toBasisUCSAngle(double ucsAbsAngle);
 
 //    RS_Vector toUCS(const RS_Vector& v) const;
 //    RS_Vector toWorld(const RS_Vector& v) const;

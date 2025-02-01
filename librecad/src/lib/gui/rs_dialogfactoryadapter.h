@@ -62,9 +62,9 @@ public:
 	bool requestMoveRotateDialog(RS_MoveRotateData&) override {return false;}
 	bool requestRotate2Dialog(RS_Rotate2Data&) override {return false;}
 	bool requestModifyEntityDialog(RS_Entity *, LC_GraphicViewport *viewport) override {return false;}
-	bool requestMTextDialog(RS_MText*) override {return false;}
-	bool requestTextDialog(RS_Text*) override {return false;}
-	bool requestHatchDialog(RS_Hatch*) override {return false;}
+	bool requestMTextDialog(RS_MText *, LC_GraphicViewport *viewport) override {return false;}
+	bool requestTextDialog(RS_Text *, LC_GraphicViewport *viewport) override {return false;}
+	bool requestHatchDialog(RS_Hatch *, LC_GraphicViewport *viewport) override {return false;}
 	int requestOptionsGeneralDialog() override {return -1;}
     void requestKeyboardShortcutsDialog([[maybe_unused]]LC_ActionGroupManager *pManager) override{}
 	int requestOptionsDrawingDialog(RS_Graphic&, int) override {return -1;}

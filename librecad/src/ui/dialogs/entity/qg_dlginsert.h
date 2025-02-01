@@ -34,15 +34,15 @@ class RS_Insert;
 class QG_DlgInsert : public LC_EntityPropertiesDlg, public Ui::QG_DlgInsert{
     Q_OBJECT
 public:
-    QG_DlgInsert(QWidget *parent, LC_GraphicViewport *pViewport);
+    QG_DlgInsert(QWidget *parent, LC_GraphicViewport *pViewport, RS_Insert* insert);
     ~QG_DlgInsert() override;
 public slots:
-    void setEntity(RS_Insert & i );
     void updateEntity() override;
 protected slots:
     virtual void languageChange();
-private:
-    RS_Insert* insert;
+protected:
+    RS_Insert* entity;
+    void setEntity(RS_Insert *i);
 };
 
 #endif // QG_DLGINSERT_H

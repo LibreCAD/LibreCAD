@@ -34,15 +34,15 @@ class RS_Circle;
 class QG_DlgCircle : public LC_EntityPropertiesDlg, public Ui::QG_DlgCircle{
     Q_OBJECT
 public:
-    QG_DlgCircle(QWidget *parent, LC_GraphicViewport *pViewport);
+    QG_DlgCircle(QWidget *parent, LC_GraphicViewport *pViewport, RS_Circle* circle);
     ~QG_DlgCircle() override;
 public slots:
-    void setEntity(RS_Circle & c );
     void updateEntity() override;
 protected slots:
     virtual void languageChange();
-private:
-    RS_Circle* circle;
+protected:
+    RS_Circle* entity;
+    void setEntity(RS_Circle *c);
 };
 
 #endif // QG_DLGCIRCLE_H

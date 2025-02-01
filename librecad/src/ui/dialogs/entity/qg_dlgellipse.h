@@ -35,15 +35,15 @@ class RS_Ellipse;
 class QG_DlgEllipse : public LC_EntityPropertiesDlg, public Ui::QG_DlgEllipse{
     Q_OBJECT
 public:
-    QG_DlgEllipse(QWidget *parent, LC_GraphicViewport *pViewport);
+    QG_DlgEllipse(QWidget *parent, LC_GraphicViewport *pViewport, RS_Ellipse* ellipse);
     ~QG_DlgEllipse();
 public slots:
-    void setEntity(RS_Ellipse & e);
     void updateEntity() override;
 protected slots:
     virtual void languageChange();
-private:
-    RS_Ellipse* ellipse = nullptr;
+protected:
+    RS_Ellipse* entity = nullptr;
+    void setEntity(RS_Ellipse *e);
 };
 
 #endif // QG_DLGELLIPSE_H

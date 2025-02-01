@@ -34,24 +34,20 @@ class RS_Point;
 class QG_DlgPoint : public LC_EntityPropertiesDlg, public Ui::QG_DlgPoint{
     Q_OBJECT
 public:
-    explicit QG_DlgPoint(QWidget *parent, LC_GraphicViewport *pViewport);
+    QG_DlgPoint(QWidget *parent, LC_GraphicViewport *pViewport, RS_Point* point);
     ~QG_DlgPoint() override;
 public slots:
-    void setEntity(RS_Point & p );
     void updateEntity() override;
 protected slots:
     virtual void languageChange();
-private:
+protected:
     RS_Pen pen;
-    RS_Point* point;
-
+    RS_Point* entity;
+    void setEntity(RS_Point *p);
     void initAttributes(RS_Layer *layer, RS_LayerList &layerList);
-
     void setProperties();
     void setAttributes(RS_Entity* e);
-
     void updateProperties();
-
     void updateAttributes();
 };
 

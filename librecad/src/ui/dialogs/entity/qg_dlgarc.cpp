@@ -37,9 +37,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgArc::QG_DlgArc(QWidget *parent, LC_GraphicViewport *pViewport)
+QG_DlgArc::QG_DlgArc(QWidget *parent, LC_GraphicViewport *pViewport, RS_Arc* arc)
     :LC_EntityPropertiesDlg (parent, "ArcProperties", pViewport){
     setupUi(this);
+    setEntity(arc);
 }
 
 /*
@@ -50,29 +51,28 @@ void QG_DlgArc::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgArc::setEntity(RS_Arc& a) {
-    arc = &a;
-    RS_Graphic* graphic = arc->getGraphic();
+void QG_DlgArc::setEntity(RS_Arc* a) {
+    entity = a;
+    RS_Graphic* graphic = entity->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = arc->getLayer(false);
+    RS_Layer* lay = entity->getLayer(false);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(arc, lay, "Pen");
+    wPen->setPen(entity, lay, "Pen");
 
-    leCenterX->setText(asString(arc->getCenter().x));
-    leCenterY->setText(asString(arc->getCenter().y));
-    leRadius->setText(asString(arc->getRadius()));
-    leAngle1->setText(asStringAngleDeg(arc->getAngle1()));
-    leAngle2->setText(asStringAngleDeg(arc->getAngle2()));
+    toUI(entity->getCenter(), leCenterX, leCenterY);
+    toUIValue(entity->getRadius(), leRadius);
+    toUIAngleDeg(entity->getAngle1(), leAngle1);
+    toUIAngleDeg(entity->getAngle2(), leAngle2);
+    toUIBool(entity->isReversed(), cbReversed);
 
-    cbReversed->setChecked(arc->isReversed());
     // fixme - sand - refactor to common function
     if (LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false)){
-        lId->setText(QString("ID: %1").arg(arc->getId()));
+        lId->setText(QString("ID: %1").arg(entity->getId()));
     }
     else{
         lId->setVisible(false);
@@ -80,15 +80,17 @@ void QG_DlgArc::setEntity(RS_Arc& a) {
 }
 
 void QG_DlgArc:: updateEntity() {
-    arc->setCenter(RS_Vector(RS_Math::eval(leCenterX->text()),
-                             RS_Math::eval(leCenterY->text())));
-    arc->setRadius(RS_Math::eval(leRadius->text()));
-    arc->setAngle1(RS_Math::deg2rad(RS_Math::eval(leAngle1->text())));
-    arc->setAngle2(RS_Math::deg2rad(RS_Math::eval(leAngle2->text())));
-    if (arc->isReversed() != cbReversed->isChecked()) {
-        arc->revertDirection();
+    entity->setCenter(toWCS(leCenterX, leCenterY, entity->getCenter()));
+    entity->setRadius(toWCSValue(leRadius, entity->getRadius()));
+
+    entity->setAngle1(toWCSAngle(leAngle1, entity->getAngle1()));
+    entity->setAngle2(toWCSAngle(leAngle2, entity->getAngle2()));
+
+    if (entity->isReversed() != cbReversed->isChecked()) {
+        entity->revertDirection();
     }
-    arc->setPen(wPen->getPen());
-    arc->setLayer(cbLayer->currentText());
-    arc->calculateBorders();
+
+    entity->setPen(wPen->getPen());
+    entity->setLayer(cbLayer->getLayer());
+    entity->calculateBorders();
 }

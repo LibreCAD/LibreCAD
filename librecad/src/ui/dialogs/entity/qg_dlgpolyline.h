@@ -34,15 +34,15 @@ class RS_Polyline;
 class QG_DlgPolyline : public LC_EntityPropertiesDlg, public Ui::QG_DlgPolyline{
     Q_OBJECT
 public:
-    QG_DlgPolyline(QWidget *parent, LC_GraphicViewport *pViewport);
+    QG_DlgPolyline(QWidget *parent, LC_GraphicViewport *pViewport, RS_Polyline* polyline);
     ~QG_DlgPolyline();
 public slots:
-    void setEntity(RS_Polyline & e );
     void updateEntity() override;
 protected slots:
     virtual void languageChange();
-private:
-    RS_Polyline* polyline;
+protected:
+    RS_Polyline* entity;
+    void setEntity(RS_Polyline *e);
 };
 
 #endif // QG_DLGPOLYLINE_H

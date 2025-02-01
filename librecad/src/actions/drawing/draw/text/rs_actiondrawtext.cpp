@@ -59,18 +59,11 @@ void RS_ActionDrawText::init(int status){
     switch (status) {
         case ShowDialog: {
             reset();
-            // as dialog is used to show angle in degrees, add necessary translation/conversion.
-            // Actually, a bit of hack due to implementation of the text editing dialog
-            data->angle = getUcsAngleDegrees();
             RS_Text tmp(nullptr, *data);
             
-            if (RS_DIALOGFACTORY->requestTextDialog(&tmp)){
+            if (RS_DIALOGFACTORY->requestTextDialog(&tmp, viewport)){
                 const RS_TextData &editedData = tmp.getData();
-                double editedAngle = editedData.angle;
                 data.reset(new RS_TextData(editedData));
-                double ucsAngle = viewport->toAbsUCSAngle(editedAngle);
-                double wcsAngle = viewport->toWorldAngle(ucsAngle);
-                data->angle = wcsAngle;
                 setStatus(SetPos);
                 updateOptions();
             } else {

@@ -37,9 +37,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgLine::QG_DlgLine(QWidget *parent, LC_GraphicViewport *pViewport)
+QG_DlgLine::QG_DlgLine(QWidget *parent, LC_GraphicViewport *pViewport, RS_Line* line)
     :LC_EntityPropertiesDlg(parent, "LineProperties", pViewport){
     setupUi(this);
+    setEntity(line);
 }
 
 /*
@@ -50,37 +51,26 @@ void QG_DlgLine::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgLine::setEntity(RS_Line& l) {
-    line = &l;
+void QG_DlgLine::setEntity(RS_Line* l) {
+    entity = l;
 
 
-    RS_Graphic* graphic = line->getGraphic();
+    RS_Graphic* graphic = entity->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = line->getLayer(true);
+    RS_Layer* lay = entity->getLayer(true);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
 
-    RS_Pen linePen = line->getPen(false);
-    RS_Pen lineResolvedPen = line->getPen(true);
+    wPen->setPen(entity, lay, "Pen");
+    toUI(entity->getStartpoint(), leStartX, leStartY);
+    toUI(entity->getEndpoint(), leEndX, leEndY);
 
-    RS_Color originalColor = linePen.getColor();
-    RS_Color resolvedColor = lineResolvedPen.getColor();
-    resolvedColor.applyFlags(originalColor);
-    lineResolvedPen.setColor(resolvedColor);
-
-    wPen->setPen(lineResolvedPen, lay, "Pen");
-//    wPen->setPen(linePen,lay, "Pen");
-
-    leStartX->setText(asString(line->getStartpoint().x));
-    leStartY->setText(asString(line->getStartpoint().y));
-    leEndX->setText(asString(line->getEndpoint().x));
-    leEndY->setText(asString(line->getEndpoint().y));
     // fixme - sand - refactor to common function
     if (LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false)){
-        lId->setText(QString("ID: %1").arg(line->getId()));
+        lId->setText(QString("ID: %1").arg(entity->getId()));
     }
     else{
         lId->setVisible(false);
@@ -88,10 +78,9 @@ void QG_DlgLine::setEntity(RS_Line& l) {
 }
 
 void QG_DlgLine::updateEntity() {
-    line->setStartpoint(RS_Vector(RS_Math::eval(leStartX->text()),
-                                  RS_Math::eval(leStartY->text())));
-    line->setEndpoint(RS_Vector(RS_Math::eval(leEndX->text()),
-                                RS_Math::eval(leEndY->text())));
-    line->setPen(wPen->getPen());
-    line->setLayer(cbLayer->currentText());
+    entity->setStartpoint(toWCS(leStartX, leStartY, entity->getStartpoint()));
+    entity->setEndpoint(toWCS(leEndX, leEndY, entity->getEndpoint()));
+
+    entity->setPen(wPen->getPen());
+    entity->setLayer(cbLayer->getLayer());
 }

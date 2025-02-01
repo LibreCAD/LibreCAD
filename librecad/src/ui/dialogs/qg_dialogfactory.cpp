@@ -83,6 +83,7 @@
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "rs_vector.h"
+#include "rs_insert.h"
 #include "lc_crossoptions.h"
 #include "lc_lineanglereloptions.h"
 #include "lc_rectangle1pointoptions.h"
@@ -786,88 +787,44 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity *entity, LC_GraphicVi
     if (!entity) return false;
 
     bool ret = false;
+    LC_EntityPropertiesDlg* editDialog;
+    bool hasDialog = true;
 
     switch (entity->rtti()) {
     case RS2::EntityPoint: {
-        QG_DlgPoint dlg(parent, viewport);
-        dlg.setEntity(*((RS_Point *) entity));
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-        }
+        editDialog = new QG_DlgPoint(parent, viewport, dynamic_cast<RS_Point *>(entity));
         break;
     }
     case RS2::EntityLine: {
-        QG_DlgLine dlg(parent, viewport);
-        dlg.setEntity(*((RS_Line *) entity));
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-        }
+        editDialog = new QG_DlgLine(parent, viewport, dynamic_cast<RS_Line *>(entity));
         break;
     }
     case RS2::EntityArc: {
-        QG_DlgArc dlg(parent, viewport);
-        dlg.setEntity(*((RS_Arc *) entity));
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-        }
+        editDialog = new QG_DlgArc(parent, viewport, dynamic_cast<RS_Arc *>(entity));
         break;
     }
     case RS2::EntityCircle: {
-        QG_DlgCircle dlg(parent, viewport);
-        dlg.setEntity(*((RS_Circle *) entity));
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-        }
+        editDialog = new QG_DlgCircle(parent, viewport, dynamic_cast<RS_Circle *>(entity));
         break;
     }
     case RS2::EntityEllipse: {
-        QG_DlgEllipse dlg(parent, viewport);
-        dlg.setEntity(*((RS_Ellipse *) entity));
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-        }
+        editDialog = new QG_DlgEllipse(parent, viewport,dynamic_cast<RS_Ellipse *>(entity));
         break;
     }
     case RS2::EntityParabola: {
-        LC_DlgParabola dlg(parent, viewport);
-        dlg.setEntity(*static_cast<LC_Parabola *>(entity));
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-        }
+        editDialog = new LC_DlgParabola(parent, viewport,dynamic_cast<LC_Parabola *>(entity));
         break;
     }
     case RS2::EntitySpline: {
-        QG_DlgSpline dlg(parent, viewport);
-        dlg.setEntity(*((RS_Spline *) entity));
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-        }
+        editDialog = new QG_DlgSpline(parent, viewport,dynamic_cast<RS_Spline *>(entity));
         break;
     }
     case RS2::EntitySplinePoints: {
-        LC_DlgSplinePoints dlg(parent, viewport);
-        dlg.setEntity(*static_cast<LC_SplinePoints *>(entity));
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-        }
+        editDialog = new LC_DlgSplinePoints(parent, viewport,dynamic_cast<LC_SplinePoints *>(entity));
         break;
     }
     case RS2::EntityInsert: {
-        QG_DlgInsert dlg(parent, viewport);
-        dlg.setEntity(*((RS_Insert *) entity));
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-            entity->update();
-        }
+        editDialog = new QG_DlgInsert(parent, viewport,dynamic_cast<RS_Insert *>(entity));
         break;
     }
     case RS2::EntityDimAligned:
@@ -875,110 +832,56 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity *entity, LC_GraphicVi
     case RS2::EntityDimDiametric:
     case RS2::EntityDimRadial:
     case RS2::EntityDimArc: {
-        QG_DlgDimension dlg(parent, viewport);
-        dlg.setEntity(*((RS_Dimension *) entity));
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-            ((RS_Dimension*)entity)->updateDim(true);
-        }
+        editDialog = new QG_DlgDimension(parent, viewport,dynamic_cast<RS_Dimension *>(entity));
         break;
     }
     case RS2::EntityDimLinear: {
-        QG_DlgDimLinear dlg(parent, viewport);
-        dlg.setEntity(*((RS_DimLinear *) entity));
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-            ((RS_DimLinear*)entity)->updateDim(true);
-        }
+        editDialog = new QG_DlgDimLinear(parent, viewport,dynamic_cast<RS_DimLinear *>(entity));
         break;
     }
     case RS2::EntityMText: {
-        QG_DlgMText dlg(parent, viewport);
-        dlg.setEntity(*((RS_MText *) entity), false);
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-            ((RS_MText*)entity)->update();
-        }
+        editDialog = new QG_DlgMText(parent, viewport,dynamic_cast<RS_MText *>(entity), false);
         break;
     }
     case RS2::EntityText: {
-        QG_DlgText dlg(parent, viewport);
-        dlg.setText(*((RS_Text*)entity), false);
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-            ((RS_Text*)entity)->update();
-        }
+        editDialog = new QG_DlgText(parent, viewport,dynamic_cast<RS_Text *>(entity), false);
         break;
     }
     case RS2::EntityHatch: {
-        QG_DlgHatch dlg(parent, viewport);
-        dlg.setHatch(*((RS_Hatch*)entity), false);
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-            ((RS_Hatch*)entity)->update();
-        }
+        editDialog = new QG_DlgHatch(parent, viewport,dynamic_cast<RS_Hatch *>(entity), false);
         break;
     }
     case RS2::EntityPolyline: {
-        QG_DlgPolyline dlg(parent, viewport);
-        dlg.setEntity(*((RS_Polyline *) entity));
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-        }
+        editDialog = new QG_DlgPolyline(parent, viewport,dynamic_cast<RS_Polyline *>(entity));
         break;
     }
     case RS2::EntityImage: {
-        QG_DlgImage dlg(parent, viewport);
-        dlg.setEntity(*((RS_Image *) entity));
-        if (dlg.exec()) {
-            dlg.updateEntity();
-            ret = true;
-        }
+        editDialog = new QG_DlgImage(parent, viewport, dynamic_cast<RS_Image *>(entity));
         break;
     }
     default:
+        bool hasDialog = false;
         break;
+    }
+
+    if (hasDialog){
+        if (editDialog->exec()) {
+            editDialog->updateEntity();
+            ret = true;
+        }
+        delete editDialog;
     }
 
     return ret;
 }
 
 /**
- * Shows a dialog to edit the attributes of the given dimension entity.
- */
-/*
-bool QG_DialogFactory::requestDimAlignedDialog(RS_DimAligned* dim) {
-    if (dim==nullptr) {
-        return false;
-    }
-
-    QG_DlgDimAligned dlg(parent);
-    dlg.setDim(*dim, true);
-    if (dlg.exec()) {
-        dlg.updateDim();
-        return true;
-    }
-
-    return false;
-}
-*/
-
-
-
-/**
  * Shows a dialog to edit the attributes of the given multi-line text entity.
  */
-bool QG_DialogFactory::requestMTextDialog(RS_MText* text) {
+bool QG_DialogFactory::requestMTextDialog(RS_MText *text, LC_GraphicViewport *viewport) {
     if (!text) return false;
 
-    QG_DlgMText dlg(parent, nullptr);
-    dlg.setEntity(*text, true);
+    QG_DlgMText dlg(parent, viewport, text, true);
     if (dlg.exec()) {
         dlg.updateEntity();
         return true;
@@ -990,11 +893,10 @@ bool QG_DialogFactory::requestMTextDialog(RS_MText* text) {
 /**
  * Shows a dialog to edit the attributes of the given text entity.
  */
-bool QG_DialogFactory::requestTextDialog(RS_Text* text) {
+bool QG_DialogFactory::requestTextDialog(RS_Text *text, LC_GraphicViewport *viewport) {
     if (!text) return false;
 
-    QG_DlgText dlg(parent, nullptr);
-    dlg.setText(*text, true);
+    QG_DlgText dlg(parent, viewport, text, true);
     if (dlg.exec()) {
         dlg.updateEntity();
         return true;
@@ -1006,13 +908,12 @@ bool QG_DialogFactory::requestTextDialog(RS_Text* text) {
 /**
  * Shows a dialog to edit pattern / hatch attributes of the given entity.
  */
-bool QG_DialogFactory::requestHatchDialog(RS_Hatch* hatch) {
+bool QG_DialogFactory::requestHatchDialog(RS_Hatch *hatch, LC_GraphicViewport *viewport) {
     if (!hatch) return false;
 
     RS_PATTERNLIST->init();
 
-    QG_DlgHatch dlg(parent, nullptr);
-    dlg.setHatch(*hatch, true);
+    QG_DlgHatch dlg(parent, viewport, hatch, true);
     if (dlg.exec()) {
         dlg.updateEntity();
         dlg.saveSettings();

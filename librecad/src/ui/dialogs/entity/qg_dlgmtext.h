@@ -33,12 +33,11 @@
 class QG_DlgMText : public LC_EntityPropertiesDlg, public Ui::QG_DlgMText{
     Q_OBJECT
 public:
-    QG_DlgMText(QWidget *parent, LC_GraphicViewport *pViewport);
+    QG_DlgMText(QWidget *parent, LC_GraphicViewport *pViewport, RS_MText* mtext, bool forNew);
     ~QG_DlgMText() override;
     int getAlignment();
 public slots:
      void updateUniCharComboBox( int );
-     void setEntity(RS_MText & t, bool isNew );
      void updateEntity() override;
      void setAlignmentTL();
      void setAlignmentTC();
@@ -62,20 +61,19 @@ public slots:
      void reject() override;
 protected slots:
     virtual void languageChange();
-private:
+protected:
     void layoutDirectionChanged();
     bool isNew = false;
     bool saveSettings = true;
-    RS_MText* text = nullptr;
+    RS_MText* entity = nullptr;
     RS_Font* font = nullptr;
+    std::vector<QToolButton*> alignmentButtons;
 
     void init();
     void destroy();
-protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
-private:
     size_t alignmentButtonIdex(QToolButton* button) const;
-    std::vector<QToolButton*> alignmentButtons;
+    void setEntity(RS_MText *t, bool isNew );
 };
 
 #endif // QG_DLGMTEXT_H

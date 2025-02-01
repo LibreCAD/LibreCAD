@@ -25,8 +25,11 @@
 
 #include "lc_dialog.h"
 
+class QCheckBox;
 class LC_GraphicViewport;
 class RS_Vector;
+class QLineEdit;
+
 
 class LC_EntityPropertiesDlg:public LC_Dialog{
     Q_OBJECT
@@ -37,17 +40,38 @@ public:
 protected:
     LC_GraphicViewport* viewport;
 
-    QString toUIAngle(double angle) const;
-    double toEntityAngle(QString value) const;
-    RS_Vector toUIVector(const RS_Vector& vect) const;
-    RS_Vector toEntityVector(const RS_Vector& vect) const;
+    double toUCSAngle(double angle) const;
+    RS_Vector toUCSVector(const RS_Vector& vect) const;
 
-    QString asString(double value);
-    QString asStringAngleDeg(double value);
-    QString asStringAngle(double value);
-    bool toDoubleAngle(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
-    bool toDouble(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
-    double toDouble(const QString &strValue, double notMeaningful = 0.0, double defValue = 0.0);
+    QPair<QString, QString> toUIStr(const RS_Vector &vect) const;
+    void toUI(const RS_Vector &vect, QLineEdit* sx, QLineEdit *sy) const;
+    RS_Vector toWCSVector(const RS_Vector& vect) const;
+    RS_Vector toWCSVector(const QString &sx, const QString &sy, const RS_Vector& wcsDefaults) const;
+    RS_Vector toWCS(QLineEdit* leX, const QLineEdit* leY, const RS_Vector& wcsDefaults) const;
+
+    QString asString(double value) const;
+    QString asStringAngleDeg(double value) const;
+    QString asStringAngle(double value) const;
+    bool toDoubleAngle(const QString &strValue, double &res, double notMeaningful, bool positiveOnly) const;
+    bool toDouble(const QString &strValue, double &res, double notMeaningful, bool positiveOnly) const;
+    double toDouble(const QString &strValue, double notMeaningful = 0.0, double defValue = 0.0) const;
+    double toDoubleAngle(const QString &strValue, double notMeaningful = 0.0, double defValue = 0.0) const;
+
+    double toWCSValue(const QString &val, double wcsDefault);
+    double toWCSValue(QLineEdit *ed, double wcsDefault);
+    void toUIValue(double val, QLineEdit *ed);
+    void toUIAngleDeg(double wcsAngle, QLineEdit *ed);
+    void toUIAngleDegRaw(double val, QLineEdit *ed);
+    void toUIBool(bool val, QCheckBox *ed);
+
+    double toWCSAngle(QLineEdit *ed, double wcsDefault);
+    double toWCSAngle(const QString &val, double wcsDefault);
+    double toRawAngleValue(QLineEdit *ed, double ucsDefault);
+    void toUIRaw(const RS_Vector &vect, QLineEdit *leX, QLineEdit *leY) const;
+    QPair<QString, QString> toUIStrRaw(const RS_Vector &vect) const;
+    RS_Vector toWCSRaw(QLineEdit *leX, const QLineEdit *leY, const RS_Vector& defs) const;
+
+    QString toUIAngle(double wcsAngle) const;
 };
 
 #endif // LC_ENTITYPROPERTIESDLG_H

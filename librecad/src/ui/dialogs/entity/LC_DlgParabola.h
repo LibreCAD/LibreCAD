@@ -37,22 +37,23 @@ class DlgParabola;
 class LC_DlgParabola : public LC_EntityPropertiesDlg{
 	Q_OBJECT
 public:
-    LC_DlgParabola(QWidget* parent, LC_GraphicViewport *pViewport);
+    LC_DlgParabola(QWidget* parent, LC_GraphicViewport *pViewport, LC_Parabola *parabola);
     ~LC_DlgParabola() override;
 
 public slots:
-    void setEntity(LC_Parabola& b);
     void updatePoints();
     void updateEntity() override;
 protected slots:
     virtual void languageChange();
-private:
+protected:
+
+    void setEntity(LC_Parabola* b);
     LC_DlgParabola(LC_DlgParabola const&) = delete;
     LC_DlgParabola& operator = (LC_DlgParabola const&) = delete;
     LC_DlgParabola(LC_DlgParabola &&) = delete;
     LC_DlgParabola& operator = (LC_DlgParabola &&) = delete;
 
-    LC_Parabola* parabola = nullptr;
+    LC_Parabola* entity = nullptr;
     std::unique_ptr<Ui::DlgParabola> ui;
 };
 

@@ -34,14 +34,14 @@ class RS_Line;
 class QG_DlgLine : public LC_EntityPropertiesDlg, public Ui::QG_DlgLine{
     Q_OBJECT
 public:
-    QG_DlgLine(QWidget *parent, LC_GraphicViewport *pViewport);
+    QG_DlgLine(QWidget *parent, LC_GraphicViewport *pViewport, RS_Line* line);
 public slots:
-    void setEntity(RS_Line & l);
     void updateEntity() override;
 protected slots:
     virtual void languageChange();
-private:
-    RS_Line* line;
+protected:
+    RS_Line* entity;
+    void setEntity(RS_Line * l);
 };
 
 #endif // QG_DLGLINE_H

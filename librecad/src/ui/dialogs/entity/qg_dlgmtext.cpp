@@ -46,11 +46,12 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgMText::QG_DlgMText(QWidget *parent, LC_GraphicViewport *pViewport)
+QG_DlgMText::QG_DlgMText(QWidget *parent, LC_GraphicViewport *pViewport, RS_MText* text, bool forNew)
     :LC_EntityPropertiesDlg(parent,"MTextProperties", pViewport) {
     setupUi(this);
     alignmentButtons = {{bTL, bTC, bTR, bML, bMC, bMR, bBL, bBC, bBR}};
     init();
+     setEntity(text, forNew);
 }
 
 /*
@@ -72,7 +73,7 @@ void QG_DlgMText::languageChange(){
 void QG_DlgMText::init() {
     cbFont->init();
     font = nullptr;
-    text = nullptr;
+    entity = nullptr;
     isNew = false;
     updateUniCharComboBox(0);
     updateUniCharButton(0);
@@ -159,8 +160,8 @@ void QG_DlgMText::destroy() {
 /**
  * Sets the text entity represented by this dialog.
  */
-void QG_DlgMText::setEntity(RS_MText& t, bool isNew) {
-    text = &t;
+void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
+    entity = t;
     this->isNew = isNew;
 
     QString fon;
@@ -209,20 +210,20 @@ void QG_DlgMText::setEntity(RS_MText& t, bool isNew) {
             // leftToRight = RS_SETTINGS->readNumEntry("/TextLeftToRight", 1);
         }
     } else {
-        fon = text->getStyle();
+        fon = entity->getStyle();
         setFont(fon);
-        height = QString("%1").arg(text->getHeight());
+        height = QString("%1").arg(entity->getHeight());
         if (font) {
-            if (font->getLineSpacingFactor()==text->getLineSpacingFactor()) {
+            if (font->getLineSpacingFactor() == entity->getLineSpacingFactor()) {
                 def = "1";
             } else {
                 def = "0";
             }
         }
-        alignment = QString("%1").arg(text->getAlignment());
+        alignment = QString("%1").arg(entity->getAlignment());
         //QString letterSpacing = RS_SETTINGS->readEntry("/TextLetterSpacing", "0");
         //QString wordSpacing = RS_SETTINGS->readEntry("/TextWordSpacing", "0");
-        lineSpacingFactor = QString("%1").arg(text->getLineSpacingFactor());
+        lineSpacingFactor = QString("%1").arg(entity->getLineSpacingFactor());
 
 /* // Doesn't make sense. We don't want to show native DXF strings in the Dialog.
 #if defined(OOPL_VERSION) && defined(Q_WS_WIN)
@@ -234,24 +235,25 @@ void QG_DlgMText::setEntity(RS_MText& t, bool isNew) {
             str = RS_FilterDXF::toNativeString(text->getText().local8Bit());
         }
 #else*/
-       str = text->getText();
+       str = entity->getText();
 //#endif
         //QString shape = RS_SETTINGS->readEntry("/TextShape", "0");
-        angle = QString("%1").arg(RS_Math::rad2deg(text->getAngle()));  // fixme - sand - ucs - editing text angle, fix
 
-        RS_Graphic* graphic = text->getGraphic();
+        double wcsAngle = entity->getAngle();
+        angle = toUIAngle(wcsAngle);
+
+        RS_Graphic* graphic = entity->getGraphic();
         if (graphic) {
             cbLayer->init(*(graphic->getLayerList()), false, false);
         }
 
-        RS_Layer* lay = text->getLayer(false);
+        RS_Layer* lay = entity->getLayer(false);
         if (lay) {
             cbLayer->setLayer(*lay);
         }
 
-        wPen->setPen(text,lay, "Pen");
-
-        leftToRight = text->getDrawingDirection() == RS_MTextData::LeftToRight;
+        wPen->setPen(entity, lay, "Pen");
+        leftToRight = entity->getDrawingDirection() == RS_MTextData::LeftToRight;
     }
 
     cbDefault->setChecked(def=="1");
@@ -285,7 +287,7 @@ void QG_DlgMText::layoutDirectionChanged()
     rbRightToLeft->setChecked(!leftToRight);
     Qt::LayoutDirection direction =  leftToRight ? Qt::LeftToRight : Qt::RightToLeft;
     teText->setLayoutDirection(direction);
-    text->setDrawingDirection(leftToRight ? RS_MTextData::LeftToRight : RS_MTextData::RightToLeft);
+    entity->setDrawingDirection(leftToRight ? RS_MTextData::LeftToRight : RS_MTextData::RightToLeft);
     QTextDocument* doc = teText->document();
     if (doc) {
         QTextOption option = doc->defaultTextOption();
@@ -299,9 +301,9 @@ void QG_DlgMText::layoutDirectionChanged()
  * Updates the text entity represented by the dialog to fit the choices of the user.
  */
 void QG_DlgMText::updateEntity() {
-    if (text) {
-        text->setStyle(cbFont->currentText());
-        text->setHeight(leHeight->text().toDouble());
+    if (entity) {
+        entity->setStyle(cbFont->currentText());
+        entity->setHeight(leHeight->text().toDouble());
 
 //fix for windows (causes troubles if locale returns en_us):
 /*#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
@@ -312,18 +314,21 @@ void QG_DlgMText::updateEntity() {
             )
         );
 #else*/
-        text->setText(teText->toPlainText());
+        entity->setText(teText->toPlainText());
 //#endif
         //text->setLetterSpacing(leLetterSpacing.toDouble());
-        text->setLineSpacingFactor(leLineSpacingFactor->text().toDouble());
-        text->setAlignment(getAlignment());
-        text->setAngle(RS_Math::deg2rad(leAngle->text().toDouble()));
-        text->setDrawingDirection(rbLeftToRight->isChecked() ? RS_MTextData::LeftToRight : RS_MTextData::RightToLeft);
+        entity->setLineSpacingFactor(leLineSpacingFactor->text().toDouble());
+        entity->setAlignment(getAlignment());
+
+        double wcsAngle = toWCSAngle(leAngle, entity->getAngle());
+        entity->setAngle(wcsAngle);
+
+        entity->setDrawingDirection(rbLeftToRight->isChecked() ? RS_MTextData::LeftToRight : RS_MTextData::RightToLeft);
     }
-    if (text && !isNew) {
-        text->setPen(wPen->getPen());
-        text->setLayer(cbLayer->currentText());
-        text->update();
+    if (entity && !isNew) {
+        entity->setPen(wPen->getPen());
+        entity->setLayer(cbLayer->getLayer());
+        entity->update();
     }
 }
 

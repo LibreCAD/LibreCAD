@@ -719,6 +719,10 @@ double LC_GraphicViewport::toAbsUCSAngle(double ucsRelAngle) {
     return toUCSAbsAngle(ucsRelAngle, getAnglesBaseAngle(), areAnglesCounterClockwise());
 }
 
+double LC_GraphicViewport::toBasisUCSAngle(double ucsAbsAngle) {
+    return toUCSBasisAngle(ucsAbsAngle, getAnglesBaseAngle(), areAnglesCounterClockwise());
+}
+
 void LC_GraphicViewport::toUI(RS_Vector wcsCoordinate, double &uiX, double &uiY) const{
     if (m_hasUcs){
         ucs.toUCS(wcsCoordinate.x, wcsCoordinate.y, uiX, uiY);

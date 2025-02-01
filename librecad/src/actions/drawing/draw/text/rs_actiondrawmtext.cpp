@@ -54,16 +54,9 @@ void RS_ActionDrawMText::init(int status){
         case ShowDialog: {
             reset();
             RS_MText tmp(nullptr, *data);
-            if (RS_DIALOGFACTORY->requestMTextDialog(&tmp)){
-//                data.reset(new RS_MTextData(tmp.getData()));
-
+            if (RS_DIALOGFACTORY->requestMTextDialog(&tmp, viewport)){
                 const RS_MTextData &editedData = tmp.getData();
-                double editedAngle = editedData.angle;
                 data.reset(new RS_MTextData(editedData));
-                double ucsAngle = viewport->toAbsUCSAngle(editedAngle);
-                double wcsAngle = viewport->toWorldAngle(ucsAngle);
-                data->angle = wcsAngle;
-
                 setStatus(SetPos);
                 updateOptions();
             } else {

@@ -14,15 +14,15 @@ class DlgSplinePoints;
 class LC_DlgSplinePoints : public LC_EntityPropertiesDlg{
 	Q_OBJECT
 public:
-    LC_DlgSplinePoints(QWidget* parent, LC_GraphicViewport* vp);
+    LC_DlgSplinePoints(QWidget* parent, LC_GraphicViewport* vp, LC_SplinePoints * splinePoints);
     ~LC_DlgSplinePoints() override;
 public slots:
-    void setEntity(LC_SplinePoints& b);
     void updateEntity() override;
     void updatePoints();
 protected slots:
     virtual void languageChange();
-private:
+protected:
+    void setEntity(LC_SplinePoints* b);
     LC_DlgSplinePoints(LC_DlgSplinePoints const&) = delete;
     LC_DlgSplinePoints& operator = (LC_DlgSplinePoints const&) = delete;
     LC_DlgSplinePoints(LC_DlgSplinePoints &&) = delete;

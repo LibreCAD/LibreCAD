@@ -34,15 +34,15 @@ class RS_Dimension;
 class QG_DlgDimension : public LC_EntityPropertiesDlg, public Ui::QG_DlgDimension{
     Q_OBJECT
 public:
-    QG_DlgDimension(QWidget *parent, LC_GraphicViewport *pViewport);
+    QG_DlgDimension(QWidget *parent, LC_GraphicViewport *pViewport, RS_Dimension* dim);
     ~QG_DlgDimension() override;
 public slots:
-    void setEntity(RS_Dimension & d );
     void updateEntity() override;
 protected slots:
     virtual void languageChange();
-private:
-    RS_Dimension* dim = nullptr;
+protected:
+    RS_Dimension* entity = nullptr;
+    void setEntity(RS_Dimension *d);
 };
 
 #endif // QG_DLGDIMENSION_H

@@ -36,9 +36,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgInsert::QG_DlgInsert(QWidget *parent, LC_GraphicViewport *pViewport)
+QG_DlgInsert::QG_DlgInsert(QWidget *parent, LC_GraphicViewport *pViewport, RS_Insert* insert)
     :LC_EntityPropertiesDlg(parent, "InsertProperties",pViewport){
     setupUi(this);
+    setEntity(insert);
 }
 
 /*
@@ -56,50 +57,47 @@ void QG_DlgInsert::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgInsert::setEntity(RS_Insert& i) {
-    insert = &i;
-    RS_Graphic* graphic = insert->getGraphic();
+void QG_DlgInsert::setEntity(RS_Insert* i) {
+    entity = i;
+    RS_Graphic* graphic = entity->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = insert->getLayer(false);
+    RS_Layer* lay = entity->getLayer(false);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(insert, lay,  "Pen");
+    wPen->setPen(entity, lay, "Pen");
 
+    toUI(entity->getInsertionPoint(), leInsertionPointX, leInsertionPointY);
+    toUIRaw(entity->getScale(), leScaleX, leScaleY);
+    toUIAngleDeg(entity->getAngle(), leAngle);
     QString s;
-    s.setNum(insert->getInsertionPoint().x);
-    leInsertionPointX->setText(s);
-    s.setNum(insert->getInsertionPoint().y);
-    leInsertionPointY->setText(s);
-    s.setNum(insert->getScale().x);
-    leScaleX->setText(s);
-    s.setNum(insert->getScale().y);
-    leScaleY->setText(s);
-    s.setNum(RS_Math::rad2deg(insert->getAngle()));
-    leAngle->setText(s);
-    s.setNum(insert->getRows());
+
+    s.setNum(entity->getRows());
     leRows->setText(s);
-    s.setNum(insert->getCols());
+    s.setNum(entity->getCols());
     leCols->setText(s);
-    s.setNum(insert->getSpacing().y);
+    s.setNum(entity->getSpacing().y);
     leRowSpacing->setText(s);
-    s.setNum(insert->getSpacing().x);
+    s.setNum(entity->getSpacing().x);
     leColSpacing->setText(s);
 }
 
 void QG_DlgInsert::updateEntity() {
-    insert->setInsertionPoint(RS_Vector(RS_Math::eval(leInsertionPointX->text()),
-                                  RS_Math::eval(leInsertionPointY->text())));
-    insert->setScale(RS_Vector(RS_Math::eval(leScaleX->text()),
-                                RS_Math::eval(leScaleY->text())));
-    insert->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
-    insert->setRows(RS_Math::round(RS_Math::eval(leRows->text())));
-    insert->setCols(RS_Math::round(RS_Math::eval(leCols->text())));
-    insert->setSpacing(RS_Vector(RS_Math::eval(leColSpacing->text()),
+    entity->setInsertionPoint(toWCS(leInsertionPointX, leInsertionPointY, entity->getInsertionPoint()));
+    entity->setScale(toWCSRaw(leScaleX,leScaleY, entity->getScale()));
+    entity->setAngle(toWCSAngle(leAngle, entity->getAngle()));
+
+    // fixme - complete
+    entity->setRows(RS_Math::round(RS_Math::eval(leRows->text())));
+    entity->setCols(RS_Math::round(RS_Math::eval(leCols->text())));
+    entity->setSpacing(RS_Vector(RS_Math::eval(leColSpacing->text()),
                                  RS_Math::eval(leRowSpacing->text())));
-    insert->setPen(wPen->getPen());
-    insert->setLayer(cbLayer->currentText());
+
+    entity->setPen(wPen->getPen());
+    entity->setLayer(cbLayer->getLayer());
+
+    entity->update();
 }

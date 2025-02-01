@@ -34,9 +34,8 @@ class RS_Image;
 class QG_DlgImage : public LC_EntityPropertiesDlg, public Ui::QG_DlgImage{
     Q_OBJECT
 public:
-    QG_DlgImage(QWidget *parent, LC_GraphicViewport *pViewport);
+    QG_DlgImage(QWidget *parent, LC_GraphicViewport *pViewport, RS_Image* image);
 public slots:
-     void setEntity(RS_Image & e );
      void changeWidth();
      void changeHeight();
      void changeScale();
@@ -45,10 +44,11 @@ public slots:
      void setImageFile();
 protected slots:
     virtual void languageChange();
+protected:
+    void setEntity(RS_Image *e);
 private:
-    RS_Image* image = nullptr;
+    RS_Image* entity = nullptr;
     double scale = 1.;
-    std::unique_ptr<QDoubleValidator> val;
 };
 
 #endif // QG_DLGIMAGE_H

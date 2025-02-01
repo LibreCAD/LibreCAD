@@ -38,9 +38,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgCircle::QG_DlgCircle(QWidget *parent, LC_GraphicViewport *pViewport)
+QG_DlgCircle::QG_DlgCircle(QWidget *parent, LC_GraphicViewport *pViewport, RS_Circle* circle)
     :LC_EntityPropertiesDlg(parent, "CircleProperties", pViewport){
     setupUi(this);
+    setEntity(circle);
 }
 
 /*
@@ -58,31 +59,30 @@ void QG_DlgCircle::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgCircle::setEntity(RS_Circle& c) {
-    circle = &c;
+void QG_DlgCircle::setEntity(RS_Circle* c) {
+    entity = c;
 
-    RS_Graphic *graphic = circle->getGraphic();
+    RS_Graphic *graphic = entity->getGraphic();
     if (graphic != nullptr) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer *lay = circle->getLayer(false);
+    RS_Layer *lay = entity->getLayer(false);
     if (lay != nullptr) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(circle, lay, "Pen");
-    leCenterX->setText(asString(circle->getCenter().x));
-    leCenterY->setText(asString(circle->getCenter().y));
-    leRadius->setText(asString(circle->getRadius()));
+    wPen->setPen(entity, lay, "Pen");
+
+    toUI(entity->getCenter(), leCenterX, leCenterY);
+    toUIValue(entity->getRadius(), leRadius);
 //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgCircle::setCircle, leRadius->setText '%s'",qPrintable(s));
 }
 
 void QG_DlgCircle::updateEntity() {
-    circle->setCenter(RS_Vector(RS_Math::eval(leCenterX->text()),
-                                  RS_Math::eval(leCenterY->text())));
-//	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgCircle::updateCircle, setRadius '%s'",qPrintable(leRadius->text()));
-    circle->setRadius(RS_Math::eval(leRadius->text()));
-    circle->setPen(wPen->getPen());
-    circle->setLayer(cbLayer->currentText());
-    circle->calculateBorders();
+    entity->setCenter(toWCS(leCenterX, leCenterY, entity->getCenter()));
+    entity->setRadius(toWCSValue(leRadius, entity->getRadius()));
+
+    entity->setPen(wPen->getPen());
+    entity->setLayer(cbLayer->getLayer());
+    entity->calculateBorders();
 }

@@ -35,15 +35,15 @@ class RS_DimLinear;
 class QG_DlgDimLinear : public LC_EntityPropertiesDlg, public Ui::QG_DlgDimLinear{
     Q_OBJECT
 public:
-    QG_DlgDimLinear(QWidget *parent, LC_GraphicViewport *pViewport);
+    QG_DlgDimLinear(QWidget *parent, LC_GraphicViewport *pViewport, RS_DimLinear* dim);
     ~QG_DlgDimLinear() override;
 public slots:
-    void setEntity(RS_DimLinear & d );
     void updateEntity() override;
 protected slots:
     virtual void languageChange();
-private:
-    RS_DimLinear* dim = nullptr;
+protected:
+    RS_DimLinear* entity = nullptr;
+    void setEntity(RS_DimLinear *d);
 };
 
 #endif // QG_DLGDIMLINEAR_H

@@ -62,7 +62,7 @@ void RS_ActionModifyEntity::doTrigger() {
         unsigned long originalEntityId = en->getId();
 
         graphicView->setForcedActionKillAllowed(false);
-        if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone.get(), nullptr)) {
+        if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone.get(), viewport)) {
             container->addEntity(clone.get());
 
             en->setSelected(false);

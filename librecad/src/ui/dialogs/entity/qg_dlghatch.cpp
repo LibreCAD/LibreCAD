@@ -42,10 +42,11 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgHatch::QG_DlgHatch(QWidget *parent, LC_GraphicViewport *pViewport)
+QG_DlgHatch::QG_DlgHatch(QWidget *parent, LC_GraphicViewport *pViewport, RS_Hatch* hatch, bool forNew)
     :LC_EntityPropertiesDlg(parent, "HatchProperties", pViewport) {
     setupUi(this);
     init();
+    setEntity(hatch, forNew);
 }
 
 QG_DlgHatch::~QG_DlgHatch() = default;
@@ -79,8 +80,8 @@ void QG_DlgHatch::showEvent ( QShowEvent * e) {
     gvPreview->zoomAuto();
 }
 
-void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
-    hatch = &h;
+void QG_DlgHatch::setEntity(RS_Hatch* h, bool isNew) {
+    entity = h;
     this->isNew = isNew;
     bool enablePrev = LC_GET_ONE_BOOL("Draw","HatchPreview", false);
 
@@ -103,34 +104,35 @@ void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
     }
     // initialize dialog based on given hatch:
     else {
-        cbSolid->setChecked(hatch->isSolid());
-        setPattern(hatch->getPattern());
+        cbSolid->setChecked(entity->isSolid());
+        setPattern(entity->getPattern());
         QString s;
-        s.setNum(hatch->getScale());
+        s.setNum(entity->getScale());
         leScale->setText(s);
-        s.setNum(RS_Math::rad2deg(hatch->getAngle()));
+        s.setNum(RS_Math::rad2deg(entity->getAngle()));
         leAngle->setText(s);
         showArea();
     }
 }
 
 void QG_DlgHatch::updateEntity() {
-    if (hatch) {
-        hatch->setSolid(cbSolid->isChecked());
-        hatch->setPattern(cbPattern->currentText());
-        hatch->setScale(RS_Math::eval(leScale->text()));
-        hatch->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
+    if (entity) {
+        entity->setSolid(cbSolid->isChecked());
+        entity->setPattern(cbPattern->currentText());
+        entity->setScale(RS_Math::eval(leScale->text()));
+        entity->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
         if (!isNew) {
             showArea();
         }
         saveSettings();
+        entity->update();
     }
 }
 
 void QG_DlgHatch::showArea(){
-    double area = hatch->getTotalArea();
+    double area = entity->getTotalArea();
     if (!RS_Math::equal(area, RS_MAXDOUBLE)) {
-        QString number = QString::number(hatch->getTotalArea(), 'g', 10);
+        QString number = QString::number(entity->getTotalArea(), 'g', 10);
         leHatchArea->setText(number);
     } else {
         leHatchArea->setText({});
@@ -153,7 +155,7 @@ void QG_DlgHatch::updatePreview() {
     if (preview==nullptr) {
         return;
     }
-    if (hatch==nullptr || !cbEnablePreview->isChecked()) {
+    if (entity == nullptr || !cbEnablePreview->isChecked()) {
         preview->clear();
         gvPreview->zoomAuto();
         return;
@@ -176,7 +178,7 @@ void QG_DlgHatch::updatePreview() {
 
     auto* prevHatch = new RS_Hatch(preview.get(),
                                        RS_HatchData(isSolid, scale, angle, patName));
-    prevHatch->setPen(hatch->getPen());
+    prevHatch->setPen(entity->getPen());
 
     auto* loop = new RS_EntityContainer(prevHatch);
 //    loop->setPen(RS_Pen(RS2::FlagInvalid));
