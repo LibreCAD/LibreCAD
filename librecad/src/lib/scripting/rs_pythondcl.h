@@ -25,10 +25,9 @@
 **********************************************************************/
 
 #pragma once
-
 #ifndef RS_PYTHONDCL_H
 #define RS_PYTHONDCL_H
-#include <array>
+#include "Python.h"
 
 class RS_PythonDcl
 {
@@ -42,7 +41,7 @@ public:
     void termDialog();
 
     bool newDialog(const char *name, int id);
-    std::array<int, 2> doneDialog(int res=-1);
+    PyObject* doneDialog(int res=-1);
     bool setTile(const char *key, const char *val);
     bool modeTile(const char *key, int mode);
     bool actionTile(const char *id, const char *action);

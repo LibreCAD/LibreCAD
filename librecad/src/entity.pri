@@ -16,7 +16,7 @@ SWIG_OUT_PYTHON += \
     $${INSTALLDIR}/librecad.py
 
 SWIG_FLAGS += \
-    -v -c++ -python -cpperraswarn -w314
+    -v -c++ -python -w509 -w503 -w476
 
 SWIG = swig
 

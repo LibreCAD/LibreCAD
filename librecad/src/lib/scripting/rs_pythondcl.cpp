@@ -155,7 +155,7 @@ void RS_PythonDcl::termDialog()
     dclEnv->set("load_dialog_id", lcl::nilValue());
 }
 
-std::array<int, 2> RS_PythonDcl::doneDialog(int res)
+PyObject* RS_PythonDcl::doneDialog(int res)
 {
     int result = -1;
     std::array<int, 2> dlgPos = {-0xffff , -0xffff};
@@ -180,11 +180,11 @@ std::array<int, 2> RS_PythonDcl::doneDialog(int res)
                 }
                 qDebug() << "res:" << res;
                 dlg->dialog()->done(result);
-                break;
+                return Py_BuildValue("(ii)", dlg->dialog()->x(), dlg->dialog()->y());
             }
         }
     }
-    return dlgPos;
+    Py_RETURN_NONE;
 }
 
 bool RS_PythonDcl::setTile(const char *key, const char *val)
