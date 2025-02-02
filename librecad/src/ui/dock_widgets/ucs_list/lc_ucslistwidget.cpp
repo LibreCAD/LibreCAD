@@ -190,6 +190,9 @@ void LC_UCSListWidget::onViewUCSChanged(LC_UCS *ucs) {
     if (ucsStateWidget != nullptr){
         QIcon typeIcon = getUCSTypeIcon(ucs);
         QString name = ucs->getName();
+        if (name.isEmpty()){
+            name = tr("<No name>");
+        }
         QString info = ucsListModel->getUCSInfo(ucs);
         ucsStateWidget->update(typeIcon, name, info);
     }

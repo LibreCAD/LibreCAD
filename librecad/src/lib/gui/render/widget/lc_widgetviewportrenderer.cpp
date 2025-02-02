@@ -222,6 +222,9 @@ void LC_WidgetViewPortRenderer::drawLayerBackground(RS_Painter *painter) {
 #endif
 }
 
+
+// fixme - sand - ADD additional pass with ordering of entities - in order to draw construction entities under normal ones!!!
+
 void LC_WidgetViewPortRenderer::drawLayerEntities(RS_Painter* painter) {
 #ifdef DEBUG_RENDERING_DETAILS
     drawLayerEntitiesTimer.start();

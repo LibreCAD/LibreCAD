@@ -4529,6 +4529,13 @@
           <string>Program Defaults</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_17">
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbUseQtFileOpenDialog">
+            <property name="text">
+             <string>Don't use native OS file open dialog</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="1">
            <widget class="QSpinBox" name="cbAutoSaveTime">
             <property name="toolTip">
@@ -4545,6 +4552,26 @@
             </property>
            </widget>
           </item>
+          <item row="6" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbShowCurrentActionIconInOptions">
+            <property name="toolTip">
+             <string>If checked, the icon for current action will be shown in options toolbar before action's options</string>
+            </property>
+            <property name="text">
+             <string>Show current command icon in options toolbar</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cbAutoBackup">
+            <property name="toolTip">
+             <string>When set, LibreCAD will automatically generate a backup of your current drawing.</string>
+            </property>
+            <property name="text">
+             <string>Auto save backup each</string>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="0" colspan="2">
            <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
             <property name="toolTip">
@@ -4552,6 +4579,29 @@
             </property>
             <property name="text">
              <string>Show keyboard shortcuts in actions tooltips</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
+            <property name="toolTip">
+             <string>If checked, location of dialog will not be saved, but size will</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
+            </property>
+            <property name="text">
+             <string>Persist dialog size only</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbPersistentDialogs">
+            <property name="toolTip">
+             <string>If checked, dialogs will be positioned and resized to position/size of last invocation.</string>
+            </property>
+            <property name="text">
+             <string>Persistent dialogs location and size</string>
             </property>
            </widget>
           </item>
@@ -4569,46 +4619,6 @@
             </item>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbUseQtFileOpenDialog">
-            <property name="text">
-             <string>Don't use native OS file open dialog</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbShowCurrentActionIconInOptions">
-            <property name="toolTip">
-             <string>If checked, the icon for current action will be shown in options toolbar before action's options</string>
-            </property>
-            <property name="text">
-             <string>Show current command icon in options toolbar</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
-            <property name="toolTip">
-             <string>If checked, location of dialog will not be saved, but size will</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
-            </property>
-            <property name="text">
-             <string>Persist dialog size only</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="cbAutoBackup">
-            <property name="toolTip">
-             <string>When set, LibreCAD will automatically generate a backup of your current drawing.</string>
-            </property>
-            <property name="text">
-             <string>Auto save backup each</string>
-            </property>
-           </widget>
-          </item>
           <item row="5" column="0">
            <widget class="QCheckBox" name="cbTabCloseButton">
             <property name="toolTip">
@@ -4619,16 +4629,6 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbPersistentDialogs">
-            <property name="toolTip">
-             <string>If checked, dialogs will be positioned and resized to position/size of last invocation.</string>
-            </property>
-            <property name="text">
-             <string>Persistent dialogs location and size</string>
-            </property>
-           </widget>
-          </item>
           <item row="7" column="0" colspan="2">
            <widget class="QCheckBox" name="cbShowEntityIDs">
             <property name="toolTip">
@@ -4636,6 +4636,16 @@
             </property>
             <property name="text">
              <string>Show internal IDs of entities</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbChangingViewOnlyModifiesDrawing">
+            <property name="toolTip">
+             <string>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </string>
+            </property>
+            <property name="text">
+             <string>Changing view only modifies drawing</string>
             </property>
            </widget>
           </item>

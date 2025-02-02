@@ -103,7 +103,6 @@ QList<LC_ActionGroup *> LC_ActionGroupManager::toolGroups() {
             << select
             << pen
             << ucs;
-
     return ag_list;
 }
 

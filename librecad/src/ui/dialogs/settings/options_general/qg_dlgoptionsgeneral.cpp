@@ -336,6 +336,9 @@ void QG_DlgOptionsGeneral::init() {
 
         int angleSnapMarkerSize = LC_GET_INT("AngleSnapMarkerSize", 20);
         sbAngleSnapMarkRadius->setValue(angleSnapMarkerSize);
+
+        checked = LC_GET_BOOL("ModifyOnViewChange", true);
+        cbChangingViewOnlyModifiesDrawing->setChecked(checked);
     }
     LC_GROUP_END();
 
@@ -691,6 +694,8 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("AnglesBasisMarkPolicy", cbAnglesBaseShowPolicy->currentIndex());
 
             LC_SET("AngleSnapMarkerSize", sbAngleSnapMarkRadius->value());
+
+            LC_SET("ModifyOnViewChange", cbChangingViewOnlyModifiesDrawing->isChecked());
         }
         LC_GROUP_END();
 

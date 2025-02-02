@@ -37,6 +37,7 @@ void LC_GraphicViewport::loadSettings() {
     LC_GROUP("Appearance");
     {
         m_ucsApplyingPolicy = LC_GET_INT("UCSApplyPolicy",0);
+        m_modifyOnZoom = LC_GET_BOOL("ModifyOnViewChange", true);
     }
     LC_GROUP_END();
 
@@ -640,7 +641,9 @@ void LC_GraphicViewport::zoomPrevious() {
  */
 void LC_GraphicViewport::saveView() {
     if (graphic != nullptr) {
-        getGraphic()->setModified(true);
+        if (m_modifyOnZoom) {
+            getGraphic()->setModified(true);
+        }
     }
     QDateTime noUpdateWindow = QDateTime::currentDateTime().addMSecs(-500);
 //do not update view within 500 milliseconds

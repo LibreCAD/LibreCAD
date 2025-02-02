@@ -1476,6 +1476,8 @@ void QG_GraphicView::ucsHighlightStep(){
             auto m_ucsMark = new LC_OverlayUCSMark(m_ucsHighlightData->origin, m_ucsHighlightData->angle, m_ucsHighlightData->forWCS, &m_ucsMarkOptions);
             overlayContainer->add(m_ucsMark);
         }
+        else{
+        }
     }
     else{
         m_ucsHighlightData->stop();
@@ -1505,8 +1507,13 @@ void QG_GraphicView::highlightUCSLocation(LC_UCS *ucs){
     double AXIS_SIZE = viewport->toUcsDX(20); // fixme - ucs - or toUcsX?
     viewport->zoomAutoEnsurePointsIncluded(origin, origin.relative(AXIS_SIZE, angle),  origin.relative(AXIS_SIZE, angle+M_PI_2));
 
-    m_ucsHighlightData->origin = origin;
-    m_ucsHighlightData->angle = angle;
+    double uiOriginPointX, uiOriginPointY;
+    viewport->toUI(origin, uiOriginPointX, uiOriginPointY);
+
+    double ucsXAxisAngleInUCS = viewport->toUCSAngle(angle);
+
+    m_ucsHighlightData->origin = RS_Vector(uiOriginPointX, uiOriginPointY);
+    m_ucsHighlightData->angle = -ucsXAxisAngleInUCS;
     m_ucsHighlightData->forWCS = ! ucs->isUCS();
     double timerInterval = m_ucsHighlightData->m_timerInterval;
     m_ucsHighlightData->start(timerInterval, *this);

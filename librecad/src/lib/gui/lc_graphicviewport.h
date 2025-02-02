@@ -151,6 +151,8 @@ protected:
     int offsetX = 0;
     int offsetY = 0;
 
+    bool m_modifyOnZoom = true;
+
     /** Grid */
     std::unique_ptr<RS_Grid> grid;
 
