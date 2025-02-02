@@ -360,7 +360,8 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) const
     for(auto const& p: m_mainCommands){
         if(p.second==ret){
             RS_DEBUG->print("RS_Commands::cmdToAction: commandMessage");
-            RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1 (%2)").arg(full).arg(p.first));
+            // fixme - sand - indicate current command somewhere in UI, not in the history window!!!
+//            RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1 (%2)").arg(full).arg(p.first));
             //                                        RS_DialogFactory::instance()->commandMessage( QObject::tr("Command: %1").arg(full));
             RS_DEBUG->print("RS_Commands::cmdToAction: "
                             "commandMessage: ok");
