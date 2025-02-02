@@ -145,6 +145,7 @@ INCLUDEPATH += \
     lib/printing \
     lib/scripting \
     lib/scripting/lisp \
+    lib/scripting/python \
     actions \
     actions/dock_widgets \
     actions/dock_widgets/block \
@@ -441,16 +442,18 @@ HEADERS += \
     lib/scripting/lisp/String.h \
     lib/scripting/lisp/Types.h \
     lib/scripting/lisp/Validation.h \
+    lib/scripting/python/rs_pythoncore.h \
+    lib/scripting/python/rs_pythondcl.h \
+    lib/scripting/python/rs_pythongui.h \
+    lib/scripting/python/rs_pythonlisp.h \
     lib/scripting/rs_dialogs.h \
     lib/scripting/rs_lisp.h \
     lib/scripting/rs_lsp_inputhandle.h \
     lib/scripting/rs_py_inputhandle.h \
     lib/scripting/rs_python.h \
-    lib/scripting/rs_pythondcl.h \
-    lib/scripting/rs_pythongui.h \
-    lib/scripting/rs_pythonlisp.h \
     lib/scripting/rs_python_wrappers.h \
     lib/scripting/rs_script.h \
+    lib/scripting/rs_scriptingapi.h \
     lib/scripting/rs_scriptlist.h \
     lib/scripting/rs_simplepython.h \
     main/lc_application.h \
@@ -627,16 +630,18 @@ SOURCES += \
     lib/scripting/lisp/String.cpp \
     lib/scripting/lisp/Types.cpp \
     lib/scripting/lisp/Validation.cpp \
+    lib/scripting/python/rs_pythoncore.cpp \
+    lib/scripting/python/rs_pythondcl.cpp \
+    lib/scripting/python/rs_pythongui.cpp \
+    lib/scripting/python/rs_pythonlisp.cpp \
     lib/scripting/rs_dialogs.cpp \
     lib/scripting/rs_lisp.cpp \
     lib/scripting/rs_lsp_inputhandle.cpp \
     lib/scripting/rs_py_inputhandle.cpp \
     lib/scripting/rs_python.cpp \
-    lib/scripting/rs_pythondcl.cpp \
-    lib/scripting/rs_pythongui.cpp \
-    lib/scripting/rs_pythonlisp.cpp \
     lib/scripting/rs_python_wrappers.cpp \
     lib/scripting/rs_script.cpp \
+    lib/scripting/rs_scriptingapi.cpp \
     lib/scripting/rs_scriptlist.cpp \
     lib/scripting/rs_simplepython.cpp \
     main/lc_application.cpp \

@@ -672,7 +672,7 @@ typedef struct position_prop {
     pos_t pos;
 } position_prop_t;
 
-static position_prop_t dclPosition[MAX_DCL_POS] = {
+[[maybe_unused]] static position_prop_t dclPosition[MAX_DCL_POS] = {
     { "nopos", NOPOS },
     { "left", LEFT },
     { "right", RIGHT },
@@ -705,7 +705,7 @@ typedef struct color_prop {
     int color;
 } color_prop_t;
 
-static color_prop_t dclColor[MAX_DCL_COLOR] = {
+[[maybe_unused]] static color_prop_t dclColor[MAX_DCL_COLOR] = {
     { "dialog_line", -1002 },
     { "dialog_background", -1001},
     { "dialog_foreground", -1000 },
@@ -1060,7 +1060,7 @@ typedef struct child_config {
     pos_t           children_alignment = NOPOS;
 } child_config_t;
 
-static attribute_prop_t dclAttribute[MAX_DCL_ATTR] = {
+[[maybe_unused]] static attribute_prop_t dclAttribute[MAX_DCL_ATTR] = {
     { "action", ACTION },
     { "alignment", ALIGNMENT },
     { "allow_accept", ALLOW_ACCEPT },
@@ -1097,7 +1097,6 @@ static attribute_prop_t dclAttribute[MAX_DCL_ATTR] = {
     { "value", VALUE },
     { "width", WIDTH }
 };
-
 
 enum PaintAction { DCL_NON, DCL_LINE, DCL_RECT, DCL_TXT, DCL_PIX, DCL_SLD};
 

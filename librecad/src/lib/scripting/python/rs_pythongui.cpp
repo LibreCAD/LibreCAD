@@ -35,7 +35,6 @@
 #include <regex>
 
 #include "qc_applicationwindow.h"
-#include "qg_actionhandler.h"
 #include "rs_eventhandler.h"
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetcorner.h"
@@ -684,21 +683,5 @@ void RS_PythonGui::prompt(const char *prompt)
         msgBox.setText(prompt);
         msgBox.setIcon(QMessageBox::Information);
         msgBox.exec();
-    }
-}
-
-void RS_PythonGui::command(const char *cmd)
-{
-    QString scmd = cmd;
-    scmd = scmd.simplified();
-    QStringList coms = scmd.split(" ");
-
-    QG_ActionHandler* actionHandler = nullptr;
-    actionHandler = QC_ApplicationWindow::getAppWindow()->getActionHandler();
-    if (actionHandler) {
-        for(auto & s : coms)
-        {
-            actionHandler->command(s);
-        }
     }
 }

@@ -19,7 +19,7 @@
 #include <QKeySequence>
 #include <QShortcut>
 
-#define MAX_FUNC 23
+#define MAX_FUNC 22
 
 static const char* lclEvalFunctionTable[MAX_FUNC] = {
 //    "bla",
@@ -33,7 +33,6 @@ static const char* lclEvalFunctionTable[MAX_FUNC] = {
     "if",
     "lambda",
     "let*",
-    "new_dialog",
     "not",
     "or",
     "progn",
@@ -351,25 +350,6 @@ lclValuePtr EVAL(lclValuePtr ast, lclEnvPtr env)
                     ast = list->item(2);
                     env = inner;
                     continue; // TCO
-                }
-
-                if (special == "new_dialog") {
-                    checkArgsAtLeast("new_dialog", 2, argCount);
-                    const lclString*  dlgName = DYNAMIC_CAST(lclString, list->item(1));
-                    const lclInteger* id      = DYNAMIC_CAST(lclInteger, EVAL(list->item(2), env));
-                    const lclGui*     gui     = DYNAMIC_CAST(lclGui, dclEnv->get(STRF("#builtin-gui(%d)", id->value())));
-                    lclValueVec*      items   = new lclValueVec(gui->value().tiles->size());
-                    std::copy(gui->value().tiles->begin(), gui->value().tiles->end(), items->begin());
-
-                    for (auto it = items->begin(), end = items->end(); it != end; it++) {
-                        const lclGui* dlg = DYNAMIC_CAST(lclGui, *it);
-                        qDebug() << "[EVAL] Dialog name: " << dlg->value().name.c_str();
-                        if (dlg->value().name == dlgName->value()) {
-                            openTile(dlg);
-                            return lcl::trueValue();
-                        }
-                    }
-                    return lcl::nilValue();
                 }
 
                 if (special == "not") {
@@ -1261,6 +1241,7 @@ void openTile(const lclGui* tile, const child_config_t child_cfg)
                     break;
                 case CENTERED:
                     l->label()->setAlignment(Qt::AlignCenter);
+                    break;
                 case HORIZONTAL:
                     l->label()->setAlignment(Qt::AlignHCenter);
                     break;

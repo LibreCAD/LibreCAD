@@ -25,32 +25,251 @@
 **********************************************************************/
 
 #include "rs_python.h"
-#include "rs_pythondcl.h"
-#include "rs_dialogs.h"
-#include "rs_py_inputhandle.h"
+#include "rs_scriptingapi.h"
+
 #include "LCL.h"
 #include "Types.h"
 #include "Environment.h"
 
-#include <QMessageBox>
-#include <QFileDialog>
-#include <QInputDialog>
+#include "rs_entity.h"
+#include "rs_entitycontainer.h"
+#include "qc_applicationwindow.h"
+#include "qg_actionhandler.h"
 
 #include <regex>
 
-typedef std::regex              Regex;
+/**
+ * static instance to class RS_ScriptingApi
+ */
+RS_ScriptingApi* RS_ScriptingApi::unique = nullptr;
 
-static const Regex intRegex("^[-+]?\\d+$");
+RS_ScriptingApi* RS_ScriptingApi::instance() {
+    qInfo() << "[RS_ScriptingApi] RS_ScriptingApi::instance requested";
+    if (unique == nullptr) {
+        unique = new RS_ScriptingApi();
+    }
+    return unique;
+}
 
-RS_PythonDcl::RS_PythonDcl()
+RS_ScriptingApi::RS_ScriptingApi()
 {
 }
 
-RS_PythonDcl::~RS_PythonDcl()
+RS_ScriptingApi::~RS_ScriptingApi()
 {
 }
 
-int RS_PythonDcl::loadDialog(const char *filename)
+void RS_ScriptingApi::command(QString &cmd)
+{
+    QG_ActionHandler* actionHandler = nullptr;
+    actionHandler = QC_ApplicationWindow::getAppWindow()->getActionHandler();
+
+    if (actionHandler)
+    {
+        actionHandler->command(cmd.simplified());
+    }
+}
+
+unsigned int RS_ScriptingApi::entlast()
+{
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+    RS_EntityContainer* entityContainer = graphicView->getContainer();
+    unsigned int id = 0;
+
+    if(entityContainer->count())
+    {
+        for (auto e: *entityContainer)
+
+        {
+            switch(e->rtti())
+            {
+            case RS2::EntityContainer:
+                qDebug() << "[entlast] rtti: RS2::EntityContainer";
+                break;
+            case RS2::EntityBlock:
+                qDebug() << "[entlast] rtti: RS2::EntityBlock";
+                break;
+            case RS2::EntityFontChar:
+                qDebug() << "[entlast] rtti: RS2::EntityFontChar";
+                break;
+            case RS2::EntityInsert:
+                qDebug() << "[entlast] rtti: RS2::EntityInsert";
+                break;
+            case RS2::EntityGraphic:
+                qDebug() << "[entlast] rtti: RS2::EntityGraphic";
+                break;
+            case RS2::EntityPoint:
+                qDebug() << "[entlast] rtti: RS2::EntityPoint";
+                break;
+            case RS2::EntityLine:
+                qDebug() << "[entlast] rtti: RS2::EntityLine";
+                break;
+            case RS2::EntityPolyline:
+                qDebug() << "[entlast] rtti: RS2::EntityPolyline";
+                break;
+            case RS2::EntityVertex:
+                qDebug() << "[entlast] rtti: RS2::EntityVertex";
+                break;
+            case RS2::EntityArc:
+                qDebug() << "[entlast] rtti: RS2::EntityArc";
+                break;
+            case RS2::EntityCircle:
+                qDebug() << "[entlast] rtti: RS2::EntityCircle";
+                break;
+            case RS2::EntityEllipse:
+                qDebug() << "[entlast] rtti: RS2::EntityEllipse";
+                break;
+            case RS2::EntityHyperbola:
+                qDebug() << "[entlast] rtti: RS2::EntityHyperbola";
+                break;
+            case RS2::EntitySolid:
+                qDebug() << "[entlast] rtti: RS2::EntitySolid";
+                break;
+            case RS2::EntityConstructionLine:
+                qDebug() << "[entlast] rtti: RS2::EntityConstructionLine";
+                break;
+            case RS2::EntityMText:
+                qDebug() << "[entlast] rtti: RS2::EntityMText";
+                break;
+            case RS2::EntityText:
+                qDebug() << "[entlast] rtti: RS2::EntityText";
+                break;
+            case RS2::EntityDimAligned:
+                qDebug() << "[entlast] rtti: RS2::EntityDimAligned";
+                break;
+            case RS2::EntityDimLinear:
+                qDebug() << "[entlast] rtti: RS2::EntityDimLinear";
+                break;
+            case RS2::EntityDimRadial:
+                qDebug() << "[entlast] rtti: RS2::EntityDimRadial";
+                break;
+            case RS2::EntityDimDiametric:
+                qDebug() << "[entlast] rtti: RS2::EntityDimDiametric";
+                break;
+            case RS2::EntityDimAngular:
+                qDebug() << "[entlast] rtti: RS2::EntityDimAngular";
+                break;
+            case RS2::EntityDimArc:
+                qDebug() << "[entlast] rtti: RS2::EntityDimArc";
+                break;
+            case RS2::EntityDimLeader:
+                qDebug() << "[entlast] rtti: RS2::EntityDimLeader";
+                break;
+            case RS2::EntityHatch:
+                qDebug() << "[entlast] rtti: RS2::EntityHatch";
+                break;
+            case RS2::EntityImage:
+                qDebug() << "[entlast] rtti: RS2::EntityImage";
+                break;
+            case RS2::EntitySpline:
+                qDebug() << "[entlast] rtti: RS2::EntitySpline";
+                break;
+            case RS2::EntitySplinePoints:
+                qDebug() << "[entlast] rtti: RS2::EntitySplinePoints";
+                break;
+            case RS2::EntityParabola:
+                qDebug() << "[entlast] rtti: RS2::EntityParabola";
+                break;
+            case RS2::EntityOverlayBox:
+                qDebug() << "[entlast] rtti: RS2::EntityOverlayBox";
+                break;
+            case RS2::EntityPreview:
+                qDebug() << "[entlast] rtti: RS2::EntityPreview";
+                break;
+            case RS2::EntityPattern:
+                qDebug() << "[entlast] rtti: RS2::EntityPattern";
+                break;
+            case RS2::EntityOverlayLine:
+                qDebug() << "[entlast] rtti: RS2::EntityOverlayLine";
+                break;
+            case RS2::EntityRefPoint:
+                qDebug() << "[entlast] rtti: RS2::EntityRefPoint";
+                break;
+            case RS2::EntityRefLine:
+                qDebug() << "[entlast] rtti: RS2::EntityRefLine";
+                break;
+            case RS2::EntityRefConstructionLine:
+                qDebug() << "[entlast] rtti: RS2::EntityRefConstructionLine";
+                break;
+            case RS2::EntityRefArc:
+                qDebug() << "[entlast] rtti: RS2::EntityRefArc";
+                break;
+            case RS2::EntityRefCircle:
+                qDebug() << "[entlast] rtti: RS2::EntityRefCircle";
+                break;
+            case RS2::EntityRefEllipse:
+                qDebug() << "[entlast] rtti: RS2::EntityRefEllipse";
+                break;
+
+            default:
+                qDebug() << "[entlast] rtti: RS2::EntityUnknown";
+                break;
+            }
+
+            qDebug() << "[entlast] id:" << e->getId();
+            qDebug() << "[entlast] Flags:" << e->getFlags();
+            qDebug() << "[entlast] -----------------------------";
+
+            if (e->getFlags() == 2 && e->getId() > id)
+            {
+                id = e->getId();
+            }
+        }
+    }
+    return id;
+}
+
+unsigned int RS_ScriptingApi::entnext(unsigned int current)
+{
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+    RS_EntityContainer* entityContainer = graphicView->getContainer();
+    unsigned int maxId = 0;
+    unsigned int id = 0;
+
+    if(entityContainer->count())
+    {
+        for (auto e: *entityContainer)
+        {
+            if (e->getFlags() == 2 && maxId < e->getId())
+            {
+                maxId = e->getId();
+            }
+        }
+        id = maxId;
+
+        if (current == 0)
+        {
+            for (auto e: *entityContainer)
+            {
+                if (e->getFlags() == 2 && e->getId() < id)
+                {
+                    id = e->getId();
+                }
+            }
+            return id <= maxId ? id : 0;
+        }
+        else
+        {
+            for (auto e: *entityContainer)
+            {
+                if (e->getFlags() == 2 && e->getId() > current)
+                {
+                    if (id > e->getId())
+                    {
+                        id = e->getId();
+                    }
+                }
+            }
+            return id > current ? id : 0;
+        }
+    }
+
+    return 0;
+}
+
+int RS_ScriptingApi::loadDialog(const char *filename)
 {
     std::string path = filename;
     const std::filesystem::path p(path.c_str());
@@ -73,7 +292,7 @@ int RS_PythonDcl::loadDialog(const char *filename)
     return -1;
 }
 
-bool RS_PythonDcl::newDialog(const char *name, int id)
+bool RS_ScriptingApi::newDialog(const char *name, int id)
 {
     const lclGui*     gui     = DYNAMIC_CAST(lclGui, dclEnv->get(STRF("#builtin-gui(%d)", id)));
     lclValueVec*      items   = new lclValueVec(gui->value().tiles->size());
@@ -90,7 +309,7 @@ bool RS_PythonDcl::newDialog(const char *name, int id)
     return false;
 }
 
-int RS_PythonDcl::startDialog()
+int RS_ScriptingApi::startDialog()
 {
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
@@ -104,14 +323,95 @@ int RS_PythonDcl::startDialog()
                 dlg->dialog()->show();
                 dlg->dialog()->setFixedSize(dlg->dialog()->geometry().width(),
                                             dlg->dialog()->geometry().height());
+                if(tile->value().initial_focus != "")
+                {
+                    for (auto & child : dclTiles)
+                    {
+                        if (child->value().dialog_Id == dialogId->value() &&
+                            child->value().key == tile->value().initial_focus)
+                        {
+                            switch (child->value().id)
+                            {
+                                case BUTTON:
+                                {
+                                    const lclButton* b = static_cast<const lclButton*>(tile);
+                                    b->button()->setFocus();
+                                }
+                                    break;
+                                case EDIT_BOX:
+                                {
+                                    const lclEdit* edit = static_cast<const lclEdit*>(tile);
+                                    edit->edit()->setFocus();
+                                }
+                                    break;
+                                case IMAGE_BUTTON:
+                                {
+                                    const lclImageButton* ib = static_cast<const lclImageButton*>(tile);
+                                    ib->button()->setFocus();
+                                }
+                                    break;
+                                case LIST_BOX:
+                                {
+                                    const lclListBox* l = static_cast<const lclListBox*>(tile);
+                                    l->list()->setFocus();
+                                }
+                                    break;
+                                case POPUP_LIST:
+                                {
+                                    const lclPopupList* pl = static_cast<const lclPopupList*>(tile);
+                                    pl->list()->setFocus();
+                                }
+                                    break;
+                                case RADIO_BUTTON:
+                                {
+                                    const lclRadioButton* rb = static_cast<const lclRadioButton*>(tile);
+                                    rb->button()->setFocus();
+                                }
+                                    break;
+                                case SCROLL:
+                                {
+                                    const lclScrollBar* sb = static_cast<const lclScrollBar*>(tile);
+                                    sb->slider()->setFocus();
+                                }
+                                    break;
+                                case SLIDER:
+                                {
+                                    const lclSlider* sl = static_cast<const lclSlider*>(tile);
+                                    sl->slider()->setFocus();
+                                }
+                                    break;
+                                case DIAL:
+                                {
+                                    const lclDial* sc = static_cast<const lclDial*>(tile);
+                                    sc->slider()->setFocus();
+                                }
+                                    break;
+                                case TOGGLE:
+                                {
+                                    const lclToggle* tb = static_cast<const lclToggle*>(tile);
+                                    tb->toggle()->setFocus();
+                                }
+                                    break;
+                                case TAB:
+                                {
+                                    const lclWidget* w = static_cast<const lclWidget*>(tile);
+                                    w->widget()->setFocus();
+                                }
+                                break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                }
                 return dlg->dialog()->exec();
             }
         }
     }
-    return -2;
+    return -1;
 }
 
-void RS_PythonDcl::unloadDialog(int id)
+void RS_ScriptingApi::unloadDialog(int id)
 {
     if(id)
     {
@@ -139,7 +439,7 @@ void RS_PythonDcl::unloadDialog(int id)
     dclEnv->set("load_dialog_id", lcl::nilValue());
 }
 
-void RS_PythonDcl::termDialog()
+void RS_ScriptingApi::termDialog()
 {
     for (int i = dclTiles.size() - 1; i >= 0; i--)
     {
@@ -155,10 +455,9 @@ void RS_PythonDcl::termDialog()
     dclEnv->set("load_dialog_id", lcl::nilValue());
 }
 
-PyObject* RS_PythonDcl::doneDialog(int res)
+bool RS_ScriptingApi::doneDialog(int res, int &x, int &y)
 {
     int result = -1;
-    std::array<int, 2> dlgPos = {-0xffff , -0xffff};
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
     if(dialogId)
@@ -171,24 +470,26 @@ PyObject* RS_PythonDcl::doneDialog(int res)
                 const lclInteger *dlg_result = VALUE_CAST(lclInteger, dclEnv->get(std::to_string(dialogId->value()) + "_dcl_result"));
 
                 result = dlg_result->value();
-                dlgPos = {dlg->dialog()->x(), dlg->dialog()->y()};
 
-                qDebug() << "result:" << result;
+                //qDebug() << "RS_ScriptingApi::doneDialog] result:" << result;
                 if (res > 1)
                 {
                     result = res;
                 }
-                qDebug() << "res:" << res;
+                //qDebug() << "RS_ScriptingApi::doneDialog] res:" << res;
                 dlg->dialog()->done(result);
-                return Py_BuildValue("(ii)", dlg->dialog()->x(), dlg->dialog()->y());
+                x = dlg->dialog()->x();
+                y = dlg->dialog()->y();
+                return true;
             }
         }
     }
-    Py_RETURN_NONE;
+    return false;
 }
 
-bool RS_PythonDcl::setTile(const char *key, const char *val)
+bool RS_ScriptingApi::setTile(const char *key, const char *val)
 {
+    static const std::regex intRegex("^[-+]?\\d+$");
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
     for (auto & tile : dclTiles)
     {
@@ -213,19 +514,6 @@ bool RS_PythonDcl::setTile(const char *key, const char *val)
                 l->label()->setText(val);
             }
                 break;
-            case TOGGLE:
-            {
-                const lclToggle* tb = static_cast<const lclToggle*>(tile);
-                if(String("0") == val)
-                {
-                    tb->toggle()->setChecked(false);
-                }
-                if(String("1") == val)
-                {
-                    tb->toggle()->setChecked(true);
-                }
-            }
-                break;
             case BUTTON:
             {
                 const lclButton* b = static_cast<const lclButton*>(tile);
@@ -236,6 +524,19 @@ bool RS_PythonDcl::setTile(const char *key, const char *val)
             {
                 const lclRadioButton* rb = static_cast<const lclRadioButton*>(tile);
                 rb->button()->setText(val);
+            }
+                break;
+            case TOGGLE:
+            {
+                const lclToggle* tb = static_cast<const lclToggle*>(tile);
+                if(std::string("0") == val)
+                {
+                    tb->toggle()->setChecked(false);
+                }
+                if(std::string("1") == val)
+                {
+                    tb->toggle()->setChecked(true);
+                }
             }
                 break;
             case OK_CANCEL_HELP_ERRTILE:
@@ -252,7 +553,7 @@ bool RS_PythonDcl::setTile(const char *key, const char *val)
                     sc->slider()->setValue(atoi(val));
                 }
             }
-                break;
+             break;
             case SCROLL:
             {
                 const lclScrollBar* sc = static_cast<const lclScrollBar*>(tile);
@@ -280,7 +581,7 @@ bool RS_PythonDcl::setTile(const char *key, const char *val)
     return false;
 }
 
-bool RS_PythonDcl::actionTile(const char *id, const char *action)
+bool RS_ScriptingApi::actionTile(const char *id, const char *action)
 {
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
@@ -293,7 +594,7 @@ bool RS_PythonDcl::actionTile(const char *id, const char *action)
     return false;
 }
 
-const std::string RS_PythonDcl::getTile(const char *key)
+const std::string RS_ScriptingApi::getTile(const char *key)
 {
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
     static std::string result = "";
@@ -352,15 +653,15 @@ const std::string RS_PythonDcl::getTile(const char *key)
                     break;
                 default: {}
             }
+            break;
         }
     }
     return result;
 }
 
-const std::string RS_PythonDcl::getAttr(const char *key, const char *attr)
+bool RS_ScriptingApi::getAttr(const char *key, const char *attr, std::string &result)
 {
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
-    static std::string result = "";
 
     for (auto & tile : dclTiles)
     {
@@ -479,6 +780,7 @@ const std::string RS_PythonDcl::getAttr(const char *key, const char *attr)
                 break;
             case MIN_VALUE:
                 result = std::to_string(tile->value().min_value);
+                break;
             case MNEMONIC:
                 result = tile->value().mnemonic;
                 break;
@@ -503,15 +805,16 @@ const std::string RS_PythonDcl::getAttr(const char *key, const char *attr)
             case WIDTH:
                 result = std::to_string(tile->value().width);
                 break;
-            default: {}
-                break;
+            default:
+                return false;
             }
+            return true;
         }
     }
-    return result;
+    return false;
 }
 
-bool RS_PythonDcl::modeTile(const char *key, int mode)
+bool RS_ScriptingApi::modeTile(const char *key, int mode)
 {
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
@@ -701,7 +1004,7 @@ bool RS_PythonDcl::modeTile(const char *key, int mode)
     return false;
 }
 
-const std::string RS_PythonDcl::startList(const char *key, int operation, int index)
+const std::string RS_ScriptingApi::startList(const char *key, int operation, int index)
 {
     //FIXME !env->find => ""
 
@@ -728,7 +1031,7 @@ const std::string RS_PythonDcl::startList(const char *key, int operation, int in
     return std::string(key);
 }
 
-const std::string RS_PythonDcl::addList(const char *val)
+bool RS_ScriptingApi::addList(const char *val, std::string &result)
 {
     const lclString  *key       = VALUE_CAST(lclString, dclEnv->get("start_list_key"));
     const lclInteger *operation = VALUE_CAST(lclInteger, dclEnv->get("start_list_operation"));
@@ -753,12 +1056,13 @@ const std::string RS_PythonDcl::addList(const char *val)
                     {
                         if(dclEnv->get("start_list_index").ptr()->print(true).compare("nil") == 0)
                         {
-                            return "";
+                            return false;
                         }
                         const lclInteger *index = VALUE_CAST(lclInteger, dclEnv->get("start_list_index"));
                         QListWidgetItem *item = lb->list()->item(index->value());
                         item->setText(val);
-                        return std::string(val);
+                        result = std::string(val);
+                        return true;
                     }
                     if(operation->value() == 3)
                     {
@@ -778,7 +1082,8 @@ const std::string RS_PythonDcl::addList(const char *val)
                                 lb->list()->setCurrentRow(i-1);
                             }
                         }
-                        return std::string(val);
+                        result = std::string(val);
+                        return true;
                     }
                 }
                 if (tile->value().id == POPUP_LIST)
@@ -789,11 +1094,12 @@ const std::string RS_PythonDcl::addList(const char *val)
                     {
                         if(dclEnv->get("start_list_index").ptr()->print(true).compare("nil") == 0)
                         {
-                            return "";
+                            return false;
                         }
                         const lclInteger *index = VALUE_CAST(lclInteger, dclEnv->get("start_list_index"));
                         pl->list()->setItemText(index->value(), val);
-                        return std::string(val);
+                        result = std::string(val);
+                        return true;
                     }
                     if(operation->value() == 3)
                     {
@@ -813,23 +1119,24 @@ const std::string RS_PythonDcl::addList(const char *val)
                                 pl->list()->setCurrentIndex(i-1);
                             }
                         }
-                        return std::string(val);
+                        result = std::string(val);
+                        return true;
                     }
                 }
             }
         }
     }
-    return "";
+    return false;
 }
 
-void RS_PythonDcl::endList()
+void RS_ScriptingApi::endList()
 {
     dclEnv->set("start_list_operation", lcl::nilValue());
     dclEnv->set("start_list_index", lcl::nilValue());
     dclEnv->set("start_list_key", lcl::nilValue());
 }
 
-int RS_PythonDcl::dimxTile(const char *key)
+bool RS_ScriptingApi::dimxTile(const char *key, int &x)
 {
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
@@ -844,24 +1151,21 @@ int RS_PythonDcl::dimxTile(const char *key)
             switch (tile->value().id)
             {
                 case IMAGE:
-                {
-                    return int(tile->value().width);
-                }
-                    break;
                 case IMAGE_BUTTON:
                 {
-                    return int(tile->value().width);
+                    x = int(tile->value().width);
+                    return true;
                 }
                     break;
                 default:
-                    return 0;
+                    return false;
             }
         }
     }
-    return 0;
+    return false;
 }
 
-int RS_PythonDcl::dimyTile(const char *key)
+bool RS_ScriptingApi::dimyTile(const char *key, int &y)
 {
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
@@ -876,24 +1180,21 @@ int RS_PythonDcl::dimyTile(const char *key)
             switch (tile->value().id)
             {
                 case IMAGE:
-                {
-                    return int(tile->value().height);
-                }
-                    break;
                 case IMAGE_BUTTON:
                 {
-                    return int(tile->value().height);
+                    y = int(tile->value().height);
+                    return true;
                 }
                     break;
                 default:
-                    return 0;
+                    return false;
             }
         }
     }
-    return 0;
+    return false;
 }
 
-int RS_PythonDcl::fillImage(int x, int y, int width, int height, int color)
+bool RS_ScriptingApi::fillImage(int x, int y, int width, int height, int color)
 {
     const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
@@ -912,25 +1213,24 @@ int RS_PythonDcl::fillImage(int x, int y, int width, int height, int color)
                 {
                     const lclImage* img = static_cast<const lclImage*>(tile);
                     img->image()->addRect(x, y, width, height, color);
-                    return color;
                 }
                     break;
                 case IMAGE_BUTTON:
                 {
                     const lclImageButton* img = static_cast<const lclImageButton*>(tile);
                     img->button()->addRect(x, y, width, height, color);
-                    return color;
                 }
                     break;
                 default:
-                    return -1;
+                    return false;
             }
+            return true;
         }
     }
-    return -1;
+    return false;
 }
 
-int RS_PythonDcl::vectorImage(int x1, int y1, int x2, int y2, int color)
+bool RS_ScriptingApi::vectorImage(int x1, int y1, int x2, int y2, int color)
 {
     const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
@@ -949,25 +1249,24 @@ int RS_PythonDcl::vectorImage(int x1, int y1, int x2, int y2, int color)
                 {
                     const lclImage* img = static_cast<const lclImage*>(tile);
                     img->image()->addLine(x1, y1, x2, y2, color);
-                    return color;
                 }
                 break;
                 case IMAGE_BUTTON:
                 {
                     const lclImageButton* img = static_cast<const lclImageButton*>(tile);
                     img->button()->addLine(x1, y1, x2, y2, color);
-                    return color;
                 }
                     break;
                 default:
-                    return -1;
+                    return false;
             }
+            return true;
         }
     }
-    return -1;
+    return false;
 }
 
-const std::string RS_PythonDcl::pixImage(int x1, int y1, int x2, int y2, const char *path)
+bool RS_ScriptingApi::pixImage(int x1, int y1, int x2, int y2, const char *path)
 {
     const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
@@ -986,25 +1285,24 @@ const std::string RS_PythonDcl::pixImage(int x1, int y1, int x2, int y2, const c
                 {
                     const lclImage* img = static_cast<const lclImage*>(tile);
                     img->image()->addPicture(x1, y1, x2, y2, tile->value().aspect_ratio, path);
-                    return std::string(path);
                 }
                     break;
                 case IMAGE_BUTTON:
                 {
                     const lclImageButton* img = static_cast<const lclImageButton*>(tile);
                     img->button()->addPicture(x1, y1, x2, y2, tile->value().aspect_ratio, path);
-                    return std::string(path);
                 }
                     break;
                 default:
-                    return "";
+                    return false;
             }
+            return true;
         }
     }
-    return "";
+    return false;
 }
 
-const std::string RS_PythonDcl::textImage(int x1, int y1, int x2, int y2, const char *text, int color)
+bool RS_ScriptingApi::textImage(int x1, int y1, int x2, int y2, const char *text, int color)
 {
     const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
@@ -1023,25 +1321,24 @@ const std::string RS_PythonDcl::textImage(int x1, int y1, int x2, int y2, const 
                 {
                     const lclImage* img = static_cast<const lclImage*>(tile);
                     img->image()->addText(x1, y1, x2, y2, text, color);
-                    return std::string(text);
                 }
-                break;
+                    break;
                 case IMAGE_BUTTON:
                 {
                     const lclImageButton* img = static_cast<const lclImageButton*>(tile);
                     img->button()->addText(x1, y1, x2, y2, text, color);
-                    return std::string(text);
                 }
-                break;
+                    break;
                 default:
-                    return "";
+                    return false;
             }
+            return true;
         }
     }
-    return "";
+    return false;
 }
 
-void RS_PythonDcl::endImage()
+void RS_ScriptingApi::endImage()
 {
     const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
@@ -1075,7 +1372,7 @@ void RS_PythonDcl::endImage()
     }
 }
 
-const std::string RS_PythonDcl::startImage(const char *key)
+const std::string RS_ScriptingApi::startImage(const char *key)
 {
 
     dclEnv->set("start_image_key", lcl::string(key));
@@ -1085,3 +1382,4 @@ const std::string RS_PythonDcl::startImage(const char *key)
     // FIXMI check if not in current
     //return lcl::nilValue();
 }
+

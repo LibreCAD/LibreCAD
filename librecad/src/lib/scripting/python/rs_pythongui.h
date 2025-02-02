@@ -42,7 +42,6 @@ public:
     ~RS_PythonGui();
 
     void prompt(const char *prompt);
-    void command(const char *cmd);
     void initGet(const char *str="", int bit=0);
     void MessageBox(const char *msg);
 

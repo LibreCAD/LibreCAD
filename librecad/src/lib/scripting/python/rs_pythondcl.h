@@ -41,26 +41,27 @@ public:
     void termDialog();
 
     bool newDialog(const char *name, int id);
-    PyObject* doneDialog(int res=-1);
     bool setTile(const char *key, const char *val);
     bool modeTile(const char *key, int mode);
     bool actionTile(const char *id, const char *action);
 
     int loadDialog(const char *filename);
-    int dimxTile(const char *key);
-    int dimyTile(const char *key);
     int startDialog();
-    int fillImage(int x, int y, int width, int height, int color);
-    int vectorImage(int x1, int y1, int x2, int y2, int color);
-
-    const std::string pixImage(int x1, int y1, int x2, int y2, const char *path);
-    const std::string textImage(int x1, int y1, int x2, int y2, const char *text, int color);
 
     const std::string getTile(const char *key);
-    const std::string getAttr(const char *key, const char *attr);
     const std::string startList(const char *key, int operation=-1, int index=-1);
-    const std::string addList(const char *val);
     const std::string startImage(const char *key);
+
+    PyObject* addList(const char *val) const;
+    PyObject* dimxTile(const char *key) const;
+    PyObject* dimyTile(const char *key) const;
+    PyObject* doneDialog(int res=-1) const;
+    PyObject* fillImage(int x, int y, int width, int height, int color) const;
+    PyObject *getAttr(const char *key, const char *attr) const;
+    PyObject* pixImage(int x1, int y1, int x2, int y2, const char *path) const;
+    PyObject* textImage(int x1, int y1, int x2, int y2, const char *text, int color) const;
+    PyObject* vectorImage(int x1, int y1, int x2, int y2, int color) const;
+
 };
 
 #endif // RS_PYTHONDCL_H

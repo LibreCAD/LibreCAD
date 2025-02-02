@@ -139,6 +139,7 @@ include_directories(librecad/src/lib/modification)
 include_directories(librecad/src/lib/printing)
 include_directories(librecad/src/lib/scripting)
 include_directories(librecad/src/lib/scripting/lisp)
+include_directories(librecad/src/lib/scripting/python)
 include_directories(librecad/src/main)
 include_directories(librecad/src/main/console_dxf2pdf)
 include_directories(librecad/src/plugins)
@@ -794,6 +795,14 @@ set(SOURCES
         librecad/src/lib/scripting/lisp/String.h
         librecad/src/lib/scripting/lisp/Types.h
         librecad/src/lib/scripting/lisp/Validation.cpp
+        librecad/src/lib/scripting/python/rs_pythoncore.cpp
+        librecad/src/lib/scripting/python/rs_pythoncore.h
+        librecad/src/lib/scripting/python/rs_pythondcl.cpp
+        librecad/src/lib/scripting/python/rs_pythondcl.h
+        librecad/src/lib/scripting/python/rs_pythongui.cpp
+        librecad/src/lib/scripting/python/rs_pythongui.h
+        librecad/src/lib/scripting/python/rs_pythonlisp.cpp
+        librecad/src/lib/scripting/python/rs_pythonlisp.h
         librecad/src/lib/scripting/rs_lisp.cpp
         librecad/src/lib/scripting/rs_lisp.h
         librecad/src/lib/scripting/rs_lsp_inputhandle.cpp
@@ -802,14 +811,12 @@ set(SOURCES
         librecad/src/lib/scripting/rs_py_inputhandle.h
         librecad/src/lib/scripting/rs_python.cpp
         librecad/src/lib/scripting/rs_python.h
-        librecad/src/lib/scripting/rs_pythondcl.cpp
-        librecad/src/lib/scripting/rs_pythondcl.h
-        librecad/src/lib/scripting/rs_pythongui.cpp
-        librecad/src/lib/scripting/rs_pythongui.h
         librecad/src/lib/scripting/rs_python_wrappers.cpp
         librecad/src/lib/scripting/rs_python_wrappers.h
         librecad/src/lib/scripting/rs_script.cpp
         librecad/src/lib/scripting/rs_script.h
+        librecad/src/lib/scripting/rs_scriptingapi.cpp
+        librecad/src/lib/scripting/rs_scriptingapi.h
         librecad/src/lib/scripting/rs_scriptlist.cpp
         librecad/src/lib/scripting/rs_scriptlist.h
         librecad/src/lib/scripting/rs_simplepython.cpp
@@ -840,6 +847,8 @@ set(SOURCES
 #        librecad/src/main/qc_graphicview.h
 		librecad/src/ui/main/qc_mdiwindow.cpp
 		librecad/src/ui/main/qc_mdiwindow.h
+		librecad/src/plugins/intern/qc_actionentget.cpp
+		librecad/src/plugins/intern/qc_actionentget.h
         librecad/src/plugins/intern/qc_actiongetent.cpp
         librecad/src/plugins/intern/qc_actiongetent.h
         librecad/src/plugins/intern/qc_actiongetpoint.cpp

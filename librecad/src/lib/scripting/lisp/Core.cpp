@@ -7,6 +7,7 @@
 #include "StaticList.h"
 #include "Types.h"
 #include "lisp.h"
+#include "rs_scriptingapi.h"
 #include "rs.h"
 #include "rs_dialogs.h"
 #include "rs_lsp_inputhandle.h"
@@ -522,15 +523,7 @@ BUILTIN("action_tile") {
     ARG(lclString, id);
     ARG(lclString, action);
 
-    const lclInteger *dialogId  = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
-
-    lclValuePtr value = dclEnv->get(std::to_string(dialogId->value()) + "_" + id->value());
-    qDebug() << "value->print(true)" << value->print(true).c_str();
-    if (value->print(true) == "nil") {
-        dclEnv->set(std::to_string(dialogId->value()) + "_" + id->value(), lcl::string(action->value()));
-        return lcl::trueValue();
-    }
-    return lcl::nilValue();
+    return RS_SCRIPTINGAPI->actionTile(id->value().c_str(), action->value().c_str()) ? lcl::trueValue() : lcl::nilValue();
 }
 
 BUILTIN("add_list")
@@ -905,9 +898,6 @@ BUILTIN("close")
 BUILTIN("command")
 {
     CHECK_ARGS_AT_LEAST(1);
-
-    QG_ActionHandler* actionHandler = nullptr;
-    actionHandler = QC_ApplicationWindow::getAppWindow()->getActionHandler();
     QString cmd = "";
 
     for (auto it = argsBegin; it != argsEnd; ++it)
@@ -918,13 +908,8 @@ BUILTIN("command")
             {
                 const lclString* s = DYNAMIC_CAST(lclString,*it);
                 cmd = s->value().c_str();
-                cmd = cmd.simplified();
-
-                if (actionHandler) {
-                    actionHandler->command(cmd);
-                    qDebug() << "command:" << cmd;
-                    cmd = "";
-                }
+                RS_SCRIPTINGAPI->command(cmd);
+                cmd = "";
             }
                 break;
             case LCLTYPE::LIST:
@@ -940,13 +925,8 @@ BUILTIN("command")
                     }
                 }
 
-                cmd = cmd.simplified();
-
-                if (actionHandler) {
-                    actionHandler->command(cmd);
-                    qDebug() << "command:" << cmd;
-                    cmd = "";
-                }
+                RS_SCRIPTINGAPI->command(cmd);
+                cmd = "";
             }
                 break;
 
@@ -954,22 +934,14 @@ BUILTIN("command")
             case LCLTYPE::REAL:
             {
                 cmd += it->ptr()->print(true).c_str();
-                cmd = cmd.simplified();
-
-                if (actionHandler) {
-                    actionHandler->command(cmd);
-                    qDebug() << "command:" << cmd;
-                    cmd = "";
-                }
+                RS_SCRIPTINGAPI->command(cmd);
+                cmd = "";
             }
                 break;
             default:
             {
-                if (actionHandler) {
-                    actionHandler->command("");
-                    qDebug() << "command: ''";
-                    cmd = "";
-                }
+                cmd = "";
+                RS_SCRIPTINGAPI->command(cmd);
             }
                 break;
         }
@@ -1099,33 +1071,13 @@ BUILTIN("dimx_tile")
     CHECK_ARGS_IS(1);
     ARG(lclString, key);
 
-    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+    int x;
 
-    for (auto & tile : dclTiles)
+    if (RS_SCRIPTINGAPI->dimxTile(key->value().c_str(), x))
     {
-        if(tile->value().dialog_Id != dialogId->value())
-        {
-            continue;
-        }
-        if (noQuotes(tile->value().key) == key->value())
-        {
-            switch (tile->value().id)
-            {
-            case IMAGE:
-            {
-                return lcl::integer(int(tile->value().width));
-            }
-            break;
-            case IMAGE_BUTTON:
-            {
-                return lcl::integer(int(tile->value().width));
-            }
-            break;
-            default:
-                return lcl::nilValue();
-            }
-        }
+        return lcl::integer(x);
     }
+
     return lcl::nilValue();
 }
 
@@ -1134,33 +1086,13 @@ BUILTIN("dimy_tile")
     CHECK_ARGS_IS(1);
     ARG(lclString, key);
 
-    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+    int y;
 
-    for (auto & tile : dclTiles)
+    if (RS_SCRIPTINGAPI->dimyTile(key->value().c_str(), y))
     {
-        if(tile->value().dialog_Id != dialogId->value())
-        {
-            continue;
-        }
-        if (noQuotes(tile->value().key) == key->value())
-        {
-            switch (tile->value().id)
-            {
-            case IMAGE:
-            {
-                return lcl::integer(int(tile->value().height));
-            }
-            break;
-            case IMAGE_BUTTON:
-            {
-                return lcl::integer(int(tile->value().height));
-            }
-            break;
-            default:
-                return lcl::nilValue();
-            }
-        }
+        return lcl::integer(y);
     }
+
     return lcl::nilValue();
 }
 
@@ -1175,36 +1107,22 @@ BUILTIN("dissoc")
 BUILTIN("done_dialog") {
     int args = CHECK_ARGS_BETWEEN(0, 1);
     int result = -1;
-    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+    int x, y;
 
-    if(dialogId)
+    if (args == 1)
     {
-        for (auto & tile : dclTiles)
-        {
-            if (tile->value().dialog_Id == dialogId->value())
-            {
-                const lclDialog* dlg = static_cast<const lclDialog*>(tile);
-                const lclInteger *dlg_result = VALUE_CAST(lclInteger, dclEnv->get(std::to_string(dialogId->value()) + "_dcl_result"));
-                result = dlg_result->value();
-
-                lclValueVec* items = new lclValueVec(2);
-                items->at(0) = lcl::integer(dlg->dialog()->x());
-                items->at(1) = lcl::integer(dlg->dialog()->y());
-
-                if (args == 1)
-                {
-                    AG_INT(val);
-                    if (val->value() > 1)
-                    {
-                        result = val->value();
-                    }
-                }
-                // FIXME do try eval list??
-                dlg->dialog()->done(result);
-                return lcl::list(items);
-            }
-        }
+        AG_INT(val);
+        result = val->value();
     }
+
+    if (RS_SCRIPTINGAPI->doneDialog(result, x, y))
+    {
+        lclValueVec* items = new lclValueVec(2);
+        items->at(0) = lcl::integer(x);
+        items->at(1) = lcl::integer(y);
+        return lcl::list(items);
+    }
+
     return lcl::nilValue();
 }
 
@@ -1219,45 +1137,19 @@ BUILTIN("empty?")
 BUILTIN("end_image")
 {
     CHECK_ARGS_IS(0);
-    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
-    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
-    for (auto & tile : dclTiles)
-    {
-        if(tile->value().dialog_Id != dialogId->value())
-        {
-            continue;
-        }
-        if (noQuotes(tile->value().key) == key->value())
-        {
-            switch (tile->value().id)
-            {
-                case IMAGE:
-                {
-                    const lclImage* img = static_cast<const lclImage*>(tile);
-                    img->image()->repaint();
-                }
-                    break;
-                case IMAGE_BUTTON:
-                {
-                    const lclImageButton* img = static_cast<const lclImageButton*>(tile);
-                    img->button()->repaint();
-                }
-                break;
-                default: {}
-            }
-        }
-    }
+    RS_SCRIPTINGAPI->endImage();
 
-    return dclEnv->set("start_image_key",  lcl::nilValue());
+    return lcl::nilValue();
 }
 
 BUILTIN("end_list")
 {
     CHECK_ARGS_IS(0);
-    dclEnv->set("start_list_operation", lcl::nilValue());
-    dclEnv->set("start_list_index", lcl::nilValue());
-    return dclEnv->set("start_list_key", lcl::nilValue());
+
+    RS_SCRIPTINGAPI->endList();
+
+    return lcl::nilValue();
 }
 
 BUILTIN("entdel")
@@ -2348,19 +2240,9 @@ BUILTIN("entlast")
 {
     CHECK_ARGS_IS(0);
 
-    auto& appWin = QC_ApplicationWindow::getAppWindow();
-    RS_GraphicView* graphicView = appWin->getGraphicView();
-    RS_EntityContainer* entityContainer = graphicView->getContainer();
+    unsigned int id = RS_SCRIPTINGAPI->entlast();
 
-    if(entityContainer->count())
-    {
-        //RS_Entity* entity = entityContainer->lastEntity(RS2::ResolveAll);
-        RS_Entity* entity = entityContainer->lastEntity();
-        unsigned long int id = entity->getId();
-        return lcl::ename(id);
-    }
-
-    return lcl::nilValue();
+    return id > 0 ? lcl::ename(id) : lcl::nilValue();
 }
 
 BUILTIN("entmake")
@@ -3129,35 +3011,19 @@ BUILTIN("entmod")
 BUILTIN("entnext")
 {
     int args = CHECK_ARGS_BETWEEN(0, 1);
+    unsigned int id = 0;
 
-    auto& appWin = QC_ApplicationWindow::getAppWindow();
-    RS_GraphicView* graphicView = appWin->getGraphicView();
-    RS_EntityContainer* entityContainer = graphicView->getContainer();
-
-    if(entityContainer->count())
+    if (args == 0)
     {
-        if (args == 0)
-        {
-            RS_Entity* entity = entityContainer->first();
-            unsigned long int id = entity->getId();
-            return lcl::ename(id);
-        }
-        else
-        {
-            ARG(lclEname, en);
-
-            for (unsigned int i = 0; i < entityContainer->count(); i++)
-            {
-                if (entityContainer->entityAt(i)->getId() == en->value() &&
-                    i+1 < entityContainer->count())
-                {
-                    return lcl::ename(entityContainer->entityAt(i+1)->getId());
-                }
-            }
-        }
+        id = RS_SCRIPTINGAPI->entnext();
+    }
+    else
+    {
+        ARG(lclEname, en);
+        id = RS_SCRIPTINGAPI->entnext(en->value());
     }
 
-    return lcl::nilValue();
+    return id > 0 ? lcl::ename(id) : lcl::nilValue();
 }
 
 BUILTIN("entsel")
@@ -3318,44 +3184,17 @@ BUILTIN("expt")
 BUILTIN("fill_image")
 {
     CHECK_ARGS_IS(5);
-    AG_INT(x1);
-    AG_INT(y1);
+    AG_INT(x);
+    AG_INT(y);
     AG_INT(width);
     AG_INT(height);
     AG_INT(color);
 
-    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
-    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
-
-    for (auto & tile : dclTiles)
+    if (RS_SCRIPTINGAPI->fillImage(x->value(), y->value(), width->value(), height->value(), color->value()))
     {
-        if(tile->value().dialog_Id != dialogId->value())
-        {
-            continue;
-        }
-        if (noQuotes(tile->value().key) == key->value())
-        {
-            switch (tile->value().id)
-            {
-            case IMAGE:
-            {
-                const lclImage* img = static_cast<const lclImage*>(tile);
-                img->image()->addRect(x1->value(), y1->value(), width->value(), height->value(), color->value());
-                return lcl::integer(color->value());
-            }
-            break;
-            case IMAGE_BUTTON:
-            {
-                const lclImageButton* img = static_cast<const lclImageButton*>(tile);
-                img->button()->addRect(x1->value(), y1->value(), width->value(), height->value(), color->value());
-                return lcl::integer(color->value());
-            }
-            break;
-            default:
-                return lcl::nilValue();
-            }
-        }
+        return lcl::integer(color->value());
     }
+
     return lcl::nilValue();
 }
 
@@ -3429,120 +3268,13 @@ BUILTIN("get_attr")
     CHECK_ARGS_IS(2);
     ARG(lclString, key);
     ARG(lclString, attr);
-    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+    String result;
 
-    for (auto & tile : dclTiles)
+    if (RS_SCRIPTINGAPI->getAttr(key->value().c_str(), attr->value().c_str(), result))
     {
-        if(tile->value().dialog_Id != dialogId->value())
-        {
-            continue;
-        }
-        if (noQuotes(tile->value().key) == key->value())
-        {
-            switch (getDclAttributeId(attr->value())) {
-                case ACTION:
-                    return lcl::string(tile->value().action);
-                case ALIGNMENT:
-                    return lcl::string(std::to_string((int)tile->value().alignment));
-                case ALLOW_ACCEPT:
-                    return lcl::string(boolToString(tile->value().allow_accept));
-                case ASPECT_RATIO:
-                    return lcl::string(std::to_string(tile->value().aspect_ratio));
-                case BIG_INCREMENT:
-                    return lcl::string(std::to_string(tile->value().big_increment));
-                case CHILDREN_ALIGNMENT:
-                {
-                    for (int i = 0; i < MAX_DCL_POS; i++)
-                    {
-                        if (tile->value().children_alignment == dclPosition[i].pos)
-                        {
-                            return lcl::string(dclPosition[i].name);
-                        }
-                    }
-                    break;
-                }
-                case CHILDREN_FIXED_HEIGHT:
-                    return lcl::string(boolToString(tile->value().children_fixed_height));
-                case CHILDREN_FIXED_WIDTH:
-                    return lcl::string(boolToString(tile->value().children_fixed_width));
-                case COLOR:
-                {
-                    for (int i = 0; i < MAX_DCL_COLOR; i++)
-                    {
-                        if (tile->value().color == dclColor[i].color)
-                        {
-                            return lcl::string(dclColor[i].name);
-                        }
-                    }
-                    return lcl::string(std::to_string((int)tile->value().color));
-                    break;
-                }
-                case EDIT_LIMIT:
-                    return lcl::string(std::to_string(tile->value().edit_limit));
-                case EDIT_WIDTH:
-                    return lcl::string(std::to_string(tile->value().edit_width));
-                case FIXED_HEIGHT:
-                    return lcl::string(boolToString(tile->value().fixed_height));
-                case FIXED_WIDTH:
-                    return lcl::string(boolToString(tile->value().fixed_width));
-                case FIXED_WIDTH_FONT:
-                    return lcl::string(boolToString(tile->value().fixed_width_font));
-                case HEIGHT:
-                    return lcl::string(std::to_string(tile->value().height));
-                case INITIAL_FOCUS:
-                    return lcl::string(tile->value().initial_focus);
-                case IS_BOLD:
-                    return lcl::string(boolToString(tile->value().is_bold));
-                case IS_CANCEL:
-                    return lcl::string(boolToString(tile->value().is_cancel));
-                case IS_DEFAULT:
-                    return lcl::string(boolToString(tile->value().is_default));
-                case IS_ENABLED:
-                    return lcl::string(boolToString(tile->value().is_enabled));
-                case IS_TAB_STOP:
-                    return lcl::string(boolToString(tile->value().is_tab_stop));
-                case KEY:
-                    return lcl::string(tile->value().key);
-                case LABEL:
-                    return lcl::string(tile->value().label);
-                case LAYOUT:
-                {
-                    for (int i = 0; i < MAX_DCL_POS; i++)
-                    {
-                        if (tile->value().layout == dclPosition[i].pos)
-                        {
-                            return lcl::string(dclPosition[i].name);
-                        }
-                    }
-                }
-                    break;
-                case LIST:
-                    return lcl::string(tile->value().list);
-                case MAX_VALUE:
-                    return lcl::string(std::to_string(tile->value().max_value));
-                case MIN_VALUE:
-                    return lcl::string(std::to_string(tile->value().min_value));
-                case MNEMONIC:
-                    return lcl::string(tile->value().mnemonic);
-                case MULTIPLE_SELECT:
-                    return lcl::string(boolToString(tile->value().multiple_select));
-                case PASSWORD_CHAR:
-                    return lcl::string(tile->value().password_char);
-                case SMALL_INCREMENT:
-                    return lcl::string(std::to_string(tile->value().small_increment));
-                case TABS:
-                    return lcl::string(tile->value().tabs);
-                case TAB_TRUNCATE:
-                    return lcl::string(boolToString(tile->value().tab_truncate));
-                case VALUE:
-                    return lcl::string(tile->value().value);
-                case WIDTH:
-                    return lcl::string(std::to_string(tile->value().width));
-                default:
-                    return lcl::nilValue();
-            }
-        }
+        return lcl::string(result);
     }
+
     return lcl::nilValue();
 }
 
@@ -3550,60 +3282,8 @@ BUILTIN("get_tile")
 {
     CHECK_ARGS_IS(1);
     ARG(lclString, key);
-    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
-    for (auto & tile : dclTiles)
-    {
-        if(tile->value().dialog_Id != dialogId->value())
-        {
-            continue;
-        }
-        if (noQuotes(tile->value().key) == key->value())
-        {
-            switch (tile->value().id)
-            {
-            case EDIT_BOX:
-            {
-                const lclEdit* e = static_cast<const lclEdit*>(tile);
-                return lcl::string(e->edit()->text().toStdString());
-            }
-            break;
-            case LIST_BOX:
-            {
-                const lclListBox* lb = static_cast<const lclListBox*>(tile);
-                return lcl::string(std::to_string(lb->list()->currentRow()));
-            }
-            break;
-            case BUTTON:
-            {
-                const lclButton* b = static_cast<const lclButton*>(tile);
-                return lcl::string(b->button()->text().toStdString());
-            }
-            break;
-            case RADIO_BUTTON:
-            {
-                const lclButton* rb = static_cast<const lclButton*>(tile);
-                return lcl::string(rb->button()->text().toStdString());
-            }
-            break;
-            case TEXT:
-            {
-                const lclLabel* l = static_cast<const lclLabel*>(tile);
-                return lcl::string(l->label()->text().toStdString());
-            }
-            break;
-            case POPUP_LIST:
-            {
-                const lclPopupList* pl = static_cast<const lclPopupList*>(tile);
-                return lcl::string(std::to_string(pl->list()->currentIndex()));
-            }
-            break;
-            default:
-                return lcl::string("");
-            }
-        }
-    }
-    return lcl::string("");
+    return lcl::string(RS_SCRIPTINGAPI->getTile(key->value().c_str()));
 }
 
 BUILTIN("getcorner")
@@ -4748,26 +4428,9 @@ BUILTIN("listp")
 
 BUILTIN("load_dialog") {
     CHECK_ARGS_IS(1);
-    ARG(lclString, arg);
-    String path = arg->value();
-    const std::filesystem::path p(path.c_str());
-    if (!p.has_extension()) {
-        path += ".dcl";
-    }
-    if (!std::filesystem::exists(path.c_str())) {
-        return lcl::integer(-1);
-    }
+    ARG(lclString, path);
 
-    lclValuePtr dcl = loadDcl(path);
-    const lclGui *container = VALUE_CAST(lclGui, dcl);
-
-    if (dcl) {
-        int uniq = container->value().dialog_Id;
-        dclEnv->set(STRF("#builtin-gui(%d)", uniq), dcl);
-        dclEnv->set("load_dialog_id", lcl::integer(uniq));
-        return lcl::integer(uniq);
-    }
-    return lcl::integer(-1);
+    return lcl::integer(RS_SCRIPTINGAPI->loadDialog(path->value().c_str()));
 }
 
 BUILTIN("log")
@@ -5128,193 +4791,18 @@ BUILTIN("mode_tile")
 {
     CHECK_ARGS_IS(2);
     ARG(lclString, key);
-    AG_INT(val);
-    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+    AG_INT(mode);
 
-    for (auto & tile : dclTiles)
-    {
-        if(tile->value().dialog_Id != dialogId->value())
-        {
-            continue;
-        }
+    return RS_SCRIPTINGAPI->modeTile(key->value().c_str(), mode->value()) ? lcl::trueValue() : lcl::nilValue();
+}
 
-        if (noQuotes(tile->value().key) == key->value())
-        {
-            switch (tile->value().id)
-            {
-            case EDIT_BOX:
-            {
-                qDebug() << "mode_tile EDIT_BOX";
-                const lclEdit* e = static_cast<const lclEdit*>(tile);
-                switch (val->value())
-                {
-                case 0:
-                {
-                    e->edit()->setEnabled(true);
-                }
-                break;
-                case 1:
-                {
-                    e->edit()->setEnabled(false);
-                }
-                break;
-                case 2:
-                {
-                    e->edit()->setFocus();
-                }
-                break;
-                case 3:
-                {
-                    e->edit()->selectAll();
-                }
-                break;
-                default:
-                    return lcl::nilValue();
-                }
-            }
-            break;
-            case LIST_BOX:
-            {
-                qDebug() << "mode_tile LIST_BOX";
-                const lclListBox* e = static_cast<const lclListBox*>(tile);
-                switch (val->value())
-                {
-                case 0:
-                {
-                    e->list()->setEnabled(true);
-                }
-                break;
-                case 1:
-                {
-                    e->list()->setEnabled(false);
-                }
-                break;
-                case 2:
-                {
-                    e->list()->setFocus();
-                }
-                break;
-                case 3:
-                {
-                    e->list()->selectAll();
-                }
-                break;
-                default:
-                    return lcl::nilValue();
-                }
-            }
-            break;
-            case BUTTON:
-            {
-                qDebug() << "mode_tile BUTTON";
-                const lclButton* b = static_cast<const lclButton*>(tile);
-                switch (val->value())
-                {
-                case 0:
-                {
-                    b->button()->setEnabled(true);
-                }
-                break;
-                case 1:
-                {
-                    b->button()->setEnabled(false);
-                }
-                break;
-                case 2:
-                {
-                    b->button()->setFocus();
-                }
-                break;
-                default:
-                    return lcl::nilValue();
-                }
-            }
-            break;
-            case RADIO_BUTTON:
-            {
-                qDebug() << "mode_tile RADIO_BUTTON";
-                const lclButton* rb = static_cast<const lclButton*>(tile);
-                switch (val->value())
-                {
-                case 0:
-                {
-                    rb->button()->setEnabled(true);
-                }
-                break;
-                case 1:
-                {
-                    rb->button()->setEnabled(false);
-                }
-                break;
-                case 2:
-                {
-                    rb->button()->setFocus();
-                }
-                break;
-                default:
-                    return lcl::nilValue();
-                }
-            }
-            break;
-            case TEXT:
-            {
-                qDebug() << "mode_tile TEXT";
-                const lclLabel* l = static_cast<const lclLabel*>(tile);
-                switch (val->value())
-                {
-                case 0:
-                {
-                    l->label()->setEnabled(true);
-                }
-                break;
-                case 1:
-                {
-                    l->label()->setEnabled(false);
-                }
-                break;
-                case 2:
-                {
-                    l->label()->setFocus();
-                }
-                break;
-                default:
-                    return lcl::nilValue();
-                }
-            }
-            break;
-            case POPUP_LIST:
-            {
-                qDebug() << "mode_tile POPUP_LIST";
-                const lclPopupList* pl = static_cast<const lclPopupList*>(tile);
-                switch (val->value())
-                {
-                case 0:
-                {
-                    pl->list()->setEnabled(true);
-                }
-                break;
-                case 1:
-                {
-                    pl->list()->setEnabled(false);
-                }
-                break;
-                case 2:
-                {
-                    pl->list()->setFocus();
-                }
-                break;
-                default:
-                    return lcl::nilValue();
-                }
-            }
-            break;
-            default:
-                return lcl::nilValue();
-            }
-            return lcl::trueValue();
-        }
-    }
-    return lcl::nilValue();
+BUILTIN("new_dialog")
+{
+    CHECK_ARGS_IS(2);
+    ARG(lclString, dlgName);
+    AG_INT(id);
+
+    return RS_SCRIPTINGAPI->newDialog(dlgName->value().c_str(), id->value()) ? lcl::trueValue() : lcl::nilValue();
 }
 
 BUILTIN("nth")
@@ -5383,44 +4871,17 @@ BUILTIN("open")
 BUILTIN("pix_image")
 {
     CHECK_ARGS_IS(5);
-    AG_INT(x1);
-    AG_INT(y1);
+    AG_INT(x);
+    AG_INT(y);
     AG_INT(width);
     AG_INT(height);
-    ARG(lclString, filename);
+    ARG(lclString, path);
 
-    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
-    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
-
-    for (auto & tile : dclTiles)
+    if (RS_SCRIPTINGAPI->pixImage(x->value(), y->value(), width->value(), height->value(), path->value().c_str()))
     {
-        if(tile->value().dialog_Id != dialogId->value())
-        {
-            continue;
-        }
-        if (noQuotes(tile->value().key) == key->value())
-        {
-            switch (tile->value().id)
-            {
-            case IMAGE:
-            {
-                const lclImage* img = static_cast<const lclImage*>(tile);
-                img->image()->addPicture(x1->value(), y1->value(), width->value(), height->value(), tile->value().aspect_ratio, filename->value().c_str());
-                return lcl::string(filename->value());
-            }
-            break;
-            case IMAGE_BUTTON:
-            {
-                const lclImageButton* img = static_cast<const lclImageButton*>(tile);
-                img->button()->addPicture(x1->value(), y1->value(), width->value(), height->value(), tile->value().aspect_ratio, filename->value().c_str());
-                return lcl::string(filename->value());
-            }
-            break;
-            default:
-                return lcl::nilValue();
-            }
-        }
+        return lcl::string(path->value());
     }
+
     return lcl::nilValue();
 }
 
@@ -6392,96 +5853,7 @@ BUILTIN("set_tile")
     ARG(lclString, key);
     ARG(lclString, val);
 
-    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
-    for (auto & tile : dclTiles)
-    {
-        if(tile->value().dialog_Id != dialogId->value())
-        {
-            continue;
-        }
-        if (noQuotes(tile->value().key) == key->value())
-        {
-            switch (tile->value().id)
-            {
-            case EDIT_BOX:
-            {
-                const lclEdit* edit = static_cast<const lclEdit*>(tile);
-                edit->edit()->setText(val->value().c_str());
-            }
-                break;
-            case TEXT:
-            case ERRTILE:
-            {
-                const lclLabel* l = static_cast<const lclLabel*>(tile);
-                l->label()->setText(val->value().c_str());
-            }
-                break;
-            case BUTTON:
-            {
-                const lclButton* b = static_cast<const lclButton*>(tile);
-                b->button()->setText(val->value().c_str());
-            }
-                break;
-            case RADIO_BUTTON:
-            {
-                const lclRadioButton* rb = static_cast<const lclRadioButton*>(tile);
-                rb->button()->setText(val->value().c_str());
-            }
-                break;
-            case TOGGLE:
-            {
-                const lclToggle* tb = static_cast<const lclToggle*>(tile);
-                if(val->value() == "0")
-                {
-                    tb->toggle()->setChecked(false);
-                }
-                if(val->value() == "1")
-                {
-                    tb->toggle()->setChecked(true);
-                }
-            }
-                break;
-            case OK_CANCEL_HELP_ERRTILE:
-            {
-                const lclOkCancelHelpErrtile* err = static_cast<const lclOkCancelHelpErrtile*>(tile);
-                err->errtile()->setText(val->value().c_str());
-            }
-                break;
-            case DIAL:
-            {
-                const lclDial* sc = static_cast<const lclDial*>(tile);
-                if (std::regex_match(val->value().c_str(), intRegex))
-                {
-                    sc->slider()->setValue(atoi(val->value().c_str()));
-                }
-            }
-             break;
-            case SCROLL:
-            {
-                const lclScrollBar* sc = static_cast<const lclScrollBar*>(tile);
-                if (std::regex_match(val->value().c_str(), intRegex))
-                {
-                    sc->slider()->setValue(atoi(val->value().c_str()));
-                }
-            }
-                break;
-            case SLIDER:
-            {
-                const lclSlider* sc = static_cast<const lclSlider*>(tile);
-                if (std::regex_match(val->value().c_str(), intRegex))
-                {
-                    sc->slider()->setValue(atoi(val->value().c_str()));
-                }
-            }
-                break;
-            default:
-                return lcl::nilValue();
-            }
-            return lcl::trueValue();
-        }
-    }
-
-    return lcl::nilValue();
+    return RS_SCRIPTINGAPI->setTile(key->value().c_str(), val->value().c_str()) ? lcl::trueValue() : lcl::nilValue();
 }
 
 BUILTIN("setvar")
@@ -6523,104 +5895,10 @@ BUILTIN("sqrt")
 BUILTIN("start_dialog")
 {
     CHECK_ARGS_IS(0);
-    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
-    if(dialogId)
-    {
-        for (auto & tile : dclTiles)
-        {
-            if (tile->value().dialog_Id == dialogId->value())
-            {
-                const lclDialog* dlg = static_cast<const lclDialog*>(tile);
-                dlg->dialog()->show();
-                dlg->dialog()->setFixedSize(dlg->dialog()->geometry().width(),
-                                            dlg->dialog()->geometry().height());
-                if(tile->value().initial_focus != "")
-                {
-                    for (auto & child : dclTiles)
-                    {
-                        if (child->value().dialog_Id == dialogId->value() &&
-                            child->value().key == tile->value().initial_focus)
-                        {
-                            switch (child->value().id)
-                            {
-                                case BUTTON:
-                                {
-                                    const lclButton* b = static_cast<const lclButton*>(tile);
-                                    b->button()->setFocus();
-                                }
-                                    break;
-                                case EDIT_BOX:
-                                {
-                                    const lclEdit* edit = static_cast<const lclEdit*>(tile);
-                                    edit->edit()->setFocus();
-                                }
-                                    break;
-                                case IMAGE_BUTTON:
-                                {
-                                    const lclImageButton* ib = static_cast<const lclImageButton*>(tile);
-                                    ib->button()->setFocus();
-                                }
-                                    break;
-                                case LIST_BOX:
-                                {
-                                    const lclListBox* l = static_cast<const lclListBox*>(tile);
-                                    l->list()->setFocus();
-                                }
-                                    break;
-                                case POPUP_LIST:
-                                {
-                                    const lclPopupList* pl = static_cast<const lclPopupList*>(tile);
-                                    pl->list()->setFocus();
-                                }
-                                    break;
-                                case RADIO_BUTTON:
-                                {
-                                    const lclRadioButton* rb = static_cast<const lclRadioButton*>(tile);
-                                    rb->button()->setFocus();
-                                }
-                                    break;
-                                case SCROLL:
-                                {
-                                    const lclScrollBar* sb = static_cast<const lclScrollBar*>(tile);
-                                    sb->slider()->setFocus();
-                                }
-                                    break;
-                                case SLIDER:
-                                {
-                                    const lclSlider* sl = static_cast<const lclSlider*>(tile);
-                                    sl->slider()->setFocus();
-                                }
-                                    break;
-                                case DIAL:
-                                {
-                                    const lclDial* sc = static_cast<const lclDial*>(tile);
-                                    sc->slider()->setFocus();
-                                }
-                                    break;
-                                case TOGGLE:
-                                {
-                                    const lclToggle* tb = static_cast<const lclToggle*>(tile);
-                                    tb->toggle()->setFocus();
-                                }
-                                    break;
-                                case TAB:
-                                {
-                                    const lclWidget* w = static_cast<const lclWidget*>(tile);
-                                    w->widget()->setFocus();
-                                }
-                                break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-                }
-                return lcl::integer(dlg->dialog()->exec());
-            }
-        }
-    }
-    return lcl::nilValue();
+    int id =  RS_SCRIPTINGAPI->startDialog();
+
+    return id > -1 ? lcl::integer(id) : lcl::nilValue();
 }
 
 BUILTIN("start_image")
@@ -6793,18 +6071,8 @@ BUILTIN("tan")
 BUILTIN("term_dialog")
 {
     CHECK_ARGS_IS(0);
-    for (int i = dclTiles.size() - 1; i >= 0; i--)
-    {
-        if (dclTiles.at(i)->value().id == DIALOG)
-        {
-            const lclDialog* dlg = static_cast<const lclDialog*>(dclTiles.at(i));
-            dlg->dialog()->done(0);
-            dlg->dialog()->deleteLater();
-            dclEnv->set(STRF("#builtin-gui(%d)", dclTiles.at(i)->value().dialog_Id), lcl::nilValue());
-        }
-    }
-    dclTiles.clear();
-    dclEnv->set("load_dialog_id", lcl::nilValue());
+
+    RS_SCRIPTINGAPI->termDialog();
 
     return lcl::nilValue();
 }
@@ -6819,53 +6087,18 @@ BUILTIN("terpri")
 BUILTIN("text_image")
 {
     CHECK_ARGS_IS(6);
-    AG_INT(x1);
-    AG_INT(y1);
+    AG_INT(x);
+    AG_INT(y);
     AG_INT(width);
     AG_INT(height);
     ARG(lclString, text);
     AG_INT(color);
 
-    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
-    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
-
-    for (auto & tile : dclTiles)
+    if (RS_SCRIPTINGAPI->textImage(x->value(), y->value(), width->value(), height->value(), text->value().c_str(), color->value()))
     {
-        if(tile->value().dialog_Id != dialogId->value())
-        {
-            continue;
-        }
-        if (noQuotes(tile->value().key) == key->value())
-        {
-            switch (tile->value().id)
-            {
-            case IMAGE:
-            {
-                const lclImage* img = static_cast<const lclImage*>(tile);
-                img->image()->addText(x1->value(), y1->value(),
-                                    width->value(), height->value(),
-                                    text->value().c_str(),
-                                    color->value());
-
-                return lcl::string(text->value());
-            }
-            break;
-            case IMAGE_BUTTON:
-            {
-                const lclImageButton* img = static_cast<const lclImageButton*>(tile);
-                img->button()->addText(x1->value(), y1->value(),
-                                      width->value(), height->value(),
-                                      text->value().c_str(),
-                                      color->value());
-
-                return lcl::string(text->value());
-            }
-            break;
-            default:
-                return lcl::nilValue();
-            }
-        }
+        return lcl::string(text->value());
     }
+
     return lcl::nilValue();
 }
 
@@ -6912,30 +6145,7 @@ BUILTIN("unload_dialog")
     CHECK_ARGS_IS(1);
     AG_INT(id);
 
-    if(id)
-    {
-        for (auto & tile : dclTiles)
-        {
-            if (tile->value().dialog_Id == id->value())
-            {
-                const lclDialog* dlg = static_cast<const lclDialog*>(tile);
-                delete dlg->dialog();
-
-                break;
-            }
-        }
-    }
-
-    for (int i = 0; i < (int) dclTiles.size(); i++)
-    {
-        if(dclTiles.at(i)->value().dialog_Id == id->value())
-        {
-            dclTiles.erase(dclTiles.begin()+i);
-        }
-    }
-
-    dclEnv->set(STRF("#builtin-gui(%d)", id->value()), lcl::nilValue());
-    dclEnv->set("load_dialog_id", lcl::nilValue());
+    RS_SCRIPTINGAPI->unloadDialog(id->value());
 
     return lcl::nilValue();
 }
@@ -7402,38 +6612,11 @@ BUILTIN("vector_image")
     AG_INT(y2);
     AG_INT(color);
 
-    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
-    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
-
-    for (auto & tile : dclTiles)
+    if (RS_SCRIPTINGAPI->vectorImage(x1->value(), y1->value(), x2->value(), y2->value(), color->value()))
     {
-        if(tile->value().dialog_Id != dialogId->value())
-        {
-            continue;
-        }
-        if (noQuotes(tile->value().key) == key->value())
-        {
-            switch (tile->value().id)
-            {
-            case IMAGE:
-            {
-                const lclImage* img = static_cast<const lclImage*>(tile);
-                img->image()->addLine(x1->value(), y1->value(), x2->value(), y2->value(), color->value());
-                return lcl::integer(color->value());
-            }
-            break;
-            case IMAGE_BUTTON:
-            {
-                const lclImageButton* img = static_cast<const lclImageButton*>(tile);
-                img->button()->addLine(x1->value(), y1->value(), x2->value(), y2->value(), color->value());
-                return lcl::integer(color->value());
-            }
-            break;
-            default:
-                return lcl::nilValue();
-            }
-        }
+        return lcl::integer(color->value());
     }
+
     return lcl::nilValue();
 }
 
