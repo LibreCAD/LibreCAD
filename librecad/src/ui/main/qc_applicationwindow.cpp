@@ -2841,7 +2841,14 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
         return;
     }
 
-    view->setCurrentQAction(q_action);
+    // fixme - ugly fix for #2012. Actually, if some action does not invoke setCurrentAction(*) - it should not set current qaction..
+    bool setAsCurrentActionInView = true;
+    if (ag_manager->getActionByName("LockRelativeZero") == q_action){
+        setAsCurrentActionInView = false;
+    }
+    if (setAsCurrentActionInView) {
+        view->setCurrentQAction(q_action);
+    }
 
     RS_DIALOGFACTORY->setCurrentQAction(q_action);
 
