@@ -26,15 +26,25 @@
 
 #include "rs_python.h"
 #include "rs_scriptingapi.h"
+#include "rs_entity.h"
+#include "rs_entitycontainer.h"
+#include "rs_eventhandler.h"
+
+#include "qc_applicationwindow.h"
+#include "qc_applicationwindow.h"
+
+#include "qg_actionhandler.h"
+
+#include "intern/qc_actiongetpoint.h"
+#include "intern/qc_actiongetcorner.h"
+
+#include <QMessageBox>
+#include <QInputDialog>
+#include <QFileDialog>
 
 #include "LCL.h"
 #include "Types.h"
 #include "Environment.h"
-
-#include "rs_entity.h"
-#include "rs_entitycontainer.h"
-#include "qc_applicationwindow.h"
-#include "qg_actionhandler.h"
 
 #include <regex>
 
@@ -69,6 +79,339 @@ void RS_ScriptingApi::command(QString &cmd)
         actionHandler->command(cmd.simplified());
     }
 }
+
+void RS_ScriptingApi::msgInfo(const char *msg)
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("LibreCAD");
+    msgBox.setText(msg);
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.exec();
+}
+
+int RS_ScriptingApi::getIntDlg(const char *prompt)
+{
+    return QInputDialog::getInt(nullptr,
+            "LibreCAD",
+            QObject::tr(prompt),
+            // , int value = 0, int min = -2147483647, int max = 2147483647, int step = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags())
+            0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags());
+}
+
+double RS_ScriptingApi::getDoubleDlg(const char *prompt)
+{
+    return QInputDialog::getDouble(nullptr,
+            "LibreCAD",
+            QObject::tr(prompt),
+            // double value = 0, double min = -2147483647, double max = 2147483647, int decimals = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), double step = 1)
+            0.0, -2147483647.0, 2147483647.0, 1, nullptr, Qt::WindowFlags(), 1);
+}
+
+const std::string RS_ScriptingApi::getStrDlg(const char *prompt)
+{
+    return QInputDialog::getText(nullptr,
+            "LibreCAD",
+            QObject::tr(prompt),
+            //QLineEdit::EchoMode mode = QLineEdit::Normal, const QString &text = QString(), bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), Qt::InputMethodHints inputMethodHints = Qt::ImhNone)
+            QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone).toStdString();
+}
+
+bool RS_ScriptingApi::getFiled(const char *title, const char *def, const char *ext, int flags, std::string &filename)
+{
+    QString path = def;
+    QString fileExt = "(*.";
+    fileExt += ext;
+    fileExt += ")";
+
+    if (flags & 1)
+    {
+        if (flags & 4) {
+            path += ".";
+            path += ext;
+        }
+
+        QFileDialog saveFile;
+        if (flags & 32) {
+            saveFile.setAcceptMode(QFileDialog::AcceptSave);
+            saveFile.setOptions(QFileDialog::DontConfirmOverwrite);
+        }
+        filename = saveFile.getSaveFileName(nullptr, title, path, fileExt).toStdString();
+
+        if (filename.size())
+        {
+            if (flags & 4) {
+                filename += ".";
+                filename += ext;
+            }
+            return true;
+        }
+    }
+
+    if (flags & 2)
+    {
+        if (!(flags & 4)) {
+            fileExt = "(*.dxf)";
+        }
+        if (!(flags & 16)) {
+            // pfad abschliesen
+        }
+        if (fileExt.size() == 0) {
+            fileExt = "(*)";
+        }
+        filename = QFileDialog::getOpenFileName(nullptr, title, path, fileExt).toStdString();
+        if (filename.size())
+        {
+            return true;
+        }
+    }
+
+    /*
+     * not implemented yet
+     *
+     * 8 (bit 3) -- If this bit is set and bit 0 is not set, getfiled performs a library
+     *  search for the file name entered. If it finds the file and its directory in the library search path,
+     *  it strips the path and returns only the file name.
+     *  (It does not strip the path name if it finds that a file of the same name is in a different directory.)
+     *
+     * 64  (bit 6) -- Do not transfer the remote file if the user specifies a URL.
+     *
+     * 128 (bit 7) -- Do not allow URLs at all.
+     *
+     */
+
+    return false;
+}
+
+RS_Vector RS_ScriptingApi::getCorner(const char *msg, const RS_Vector &basePoint) const
+{
+    double x=0.0, y=0.0;
+    QString prompt = QObject::tr(msg);
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_Document* doc = appWin->getDocument();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+
+    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
+    {
+        qDebug() << "graphicView == nullptr";
+        return RS_Vector();
+    }
+
+    QC_ActionGetCorner* a = new QC_ActionGetCorner(*doc, *graphicView);
+    if (a)
+    {
+        QPointF *point = new QPointF;
+        QPointF *base;
+        bool status = false;
+
+        if (!(prompt.isEmpty()))
+        {
+            a->setMessage(prompt);
+        }
+
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+
+        if (basePoint.valid)
+        {
+            base = new QPointF(basePoint.x, basePoint.y);
+            a->setBasepoint(base);
+        }
+
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!graphicView->getEventHandler()->hasAction())
+                break;
+        }
+        if (a->isCompleted() && !a->wasCanceled())
+        {
+            a->getPoint(point);
+            status = true;
+        }
+
+        graphicView->killAllActions();
+
+        if(status)
+        {
+            x = point->x();
+            y = point->y();
+            delete point;
+            if (basePoint.valid)
+            {
+                delete base;
+            }
+            return RS_Vector(x, y);
+        }
+        else
+        {
+            delete point;
+            if (basePoint.valid)
+            {
+                delete base;
+            }
+        }
+    }
+
+    return RS_Vector();
+}
+
+RS_Vector RS_ScriptingApi::getPoint(const char *msg, const RS_Vector basePoint) const
+{
+    double x=0.0, y=0.0, z=0.0;
+    QString prompt = QObject::tr(msg);
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_Document* doc = appWin->getDocument();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+
+    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
+    {
+        qDebug() << "graphicView == nullptr";
+        return RS_Vector();
+    }
+
+    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
+    if (a)
+    {
+        QPointF *point = new QPointF;
+        QPointF *base;
+        bool status = false;
+
+        if (!(prompt.isEmpty()))
+        {
+            a->setMessage(prompt);
+        }
+
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+
+        if (basePoint.valid)
+        {
+            base = new QPointF(basePoint.x, basePoint.y);
+            z = basePoint.z;
+            a->setBasepoint(base);
+        }
+
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!graphicView->getEventHandler()->hasAction())
+                break;
+        }
+        if (a->isCompleted() && !a->wasCanceled())
+        {
+            a->getPoint(point);
+            status = true;
+        }
+
+        graphicView->killAllActions();
+
+        if(status)
+        {
+            x = point->x();
+            y = point->y();
+            delete point;
+            if (basePoint.valid)
+            {
+                delete base;
+            }
+            return RS_Vector(x, y, z);
+        }
+        else
+        {
+            delete point;
+            if (basePoint.valid)
+            {
+                delete base;
+            }
+        }
+    }
+
+    return RS_Vector();
+}
+
+bool RS_ScriptingApi::getDist(const char *msg, const RS_Vector &basePoint, double &distance)
+{
+    QString prompt = QObject::tr(msg);
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_Document* doc = appWin->getDocument();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+
+    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
+    {
+        qDebug() << "graphicView == nullptr";
+        return false;
+    }
+
+    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
+    if (a)
+    {
+        QPointF *point = new QPointF;
+        QPointF *base;
+        bool status = false;
+
+        if (!(prompt.isEmpty()))
+        {
+            a->setMessage(prompt);
+        }
+
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+
+        if (basePoint.valid)
+        {
+            base = new QPointF(basePoint.x, basePoint.y);
+            a->setBasepoint(base);
+        }
+        else
+        {
+            return false;
+        }
+
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!graphicView->getEventHandler()->hasAction())
+                break;
+        }
+        if (a->isCompleted() && !a->wasCanceled())
+        {
+            a->getPoint(point);
+            status = true;
+        }
+
+        graphicView->killAllActions();
+
+        if(status)
+        {
+            distance = std::sqrt(std::pow(basePoint.x - point->x(), 2)
+                                + std::pow(basePoint.y - point->y(), 2));
+            delete point;
+            if (basePoint.valid)
+            {
+                delete base;
+            }
+            return true;
+
+        }
+        else
+        {
+            delete point;
+            if (basePoint.valid)
+            {
+                delete base;
+            }
+        }
+    }
+
+    return false;
+}
+
 
 unsigned int RS_ScriptingApi::entlast()
 {

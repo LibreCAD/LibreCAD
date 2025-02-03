@@ -29,6 +29,10 @@
 #define RS_PYTHONCORE_H
 #include "Python.h"
 
+#include "rs_document.h"
+#include "rs_graphic.h"
+#include "rs_entitycontainer.h"
+
 class RS_PythonCore
 {
 public:
@@ -37,6 +41,10 @@ public:
 
     void command(const char *cmd);
     PyObject *entlast();
+
+    RS_Document *getDocument() const;
+    RS_Graphic *getGraphic() const;
+    RS_EntityContainer* getContainer() const;
 
 };
 

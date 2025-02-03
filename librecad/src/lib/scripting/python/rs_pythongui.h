@@ -28,12 +28,9 @@
 
 #ifndef RS_PYTHONGUI_H
 #define RS_PYTHONGUI_H
-#include "rs_document.h"
-#include "rs_graphic.h"
-#include "rs_entitycontainer.h"
-#include "rs_vector.h"
 
-#include <array>
+#include "rs_python.h"
+#include "rs_vector.h"
 
 class RS_PythonGui
 {
@@ -50,7 +47,7 @@ public:
 
     double GetDoubleDialog(const char *prompt);
     double getReal(const char *msg = "Enter a floating point number: ") const;
-    double getDist(const char *msg = "Enter second point: ", const RS_Vector &basePoint=RS_Vector(0, 0)) const;
+
     double getOrient(const char *msg = "Enter a point: ", const RS_Vector &basePoint=RS_Vector(0, 0)) const;
 
     char ReadCharDialog();
@@ -62,9 +59,8 @@ public:
     RS_Vector getPoint(const char *msg = "Enter a point: ", const RS_Vector basePoint=RS_Vector()) const;
     RS_Vector getCorner(const char *msg = "Enter second corner: ", const RS_Vector &basePoint=RS_Vector(0, 0)) const;
 
-    RS_Document *getDocument() const;
-    RS_Graphic *getGraphic() const;
-    RS_EntityContainer* getContainer() const;
+    PyObject *getDist(const char *msg = "Enter second point: ", const RS_Vector &basePoint=RS_Vector(0, 0)) const;
+
 };
 
 #endif // RS_PYTHONGUI_H

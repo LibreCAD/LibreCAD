@@ -26,6 +26,8 @@
 
 #include "rs_python.h"
 #include "rs_pythongui.h"
+#include "rs_scriptingapi.h"
+
 #include "rs_dialogs.h"
 #include "rs_py_inputhandle.h"
 
@@ -41,7 +43,6 @@
 
 #include <QMessageBox>
 #include <QFileDialog>
-#include <QInputDialog>
 
 RS_PythonGui::RS_PythonGui()
 {
@@ -51,41 +52,9 @@ RS_PythonGui::~RS_PythonGui()
 {
 }
 
-RS_Document* RS_PythonGui::getDocument() const
-{
-    return QC_ApplicationWindow::getAppWindow()->getDocument();
-}
-
-RS_EntityContainer* RS_PythonGui::getContainer() const
-{
-    auto& appWin = QC_ApplicationWindow::getAppWindow();
-    RS_GraphicView* graphicView = appWin->getGraphicView();
-    return graphicView->getContainer();
-}
-
-RS_Graphic* RS_PythonGui::getGraphic() const
-{
-    auto& appWin=QC_ApplicationWindow::getAppWindow();
-    RS_Document* d = appWin->getDocument();
-
-    if (d && d->rtti()==RS2::EntityGraphic)
-    {
-        RS_Graphic* graphic = (RS_Graphic*)d;
-        if (graphic==NULL) {
-            return NULL;
-        }
-        return graphic;
-    }
-    return NULL;
-}
-
 void RS_PythonGui::MessageBox(const char *msg)
 {
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("LibreCAD");
-    msgBox.setText(QObject::tr(msg));
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.exec();
+    RS_SCRIPTINGAPI->msgInfo(msg);
 }
 
 const std::string RS_PythonGui::OpenFileDialog(const char *title, const char *fileName, const char *fileExt)
@@ -95,53 +64,36 @@ const std::string RS_PythonGui::OpenFileDialog(const char *title, const char *fi
 
 int RS_PythonGui::GetIntDialog(const char *prompt)
 {
-    return QInputDialog::getInt(nullptr,
-            "LibreCAD",
-            QObject::tr(prompt),
-            // , int value = 0, int min = -2147483647, int max = 2147483647, int step = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags())
-            0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags());
+    return RS_SCRIPTINGAPI->getIntDlg(prompt);
 }
 
 double RS_PythonGui::GetDoubleDialog(const char *prompt)
 {
-    return QInputDialog::getDouble(nullptr,
-            "LibreCAD",
-            QObject::tr(prompt),
-            // double value = 0, double min = -2147483647, double max = 2147483647, int decimals = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), double step = 1)
-            0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags(), 1);
+    return RS_SCRIPTINGAPI->getDoubleDlg(prompt);
 }
 
 const std::string RS_PythonGui::GetStringDialog(const char *prompt)
 {
-    return QInputDialog::getText(nullptr,
-            "LibreCAD",
-            QObject::tr(prompt),
-            //QLineEdit::EchoMode mode = QLineEdit::Normal, const QString &text = QString(), bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), Qt::InputMethodHints inputMethodHints = Qt::ImhNone)
-            QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone).toStdString();
+    return RS_SCRIPTINGAPI->getStrDlg(prompt);
 }
 
 const std::string RS_PythonGui::getString(const char *msg)
 {
     QString result;
-    QString prompt = QObject::tr(msg);
 
     if (Py_CommandEdit != nullptr)
     {
-        Py_CommandEdit->setPrompt(prompt);
+        Py_CommandEdit->setPrompt(QObject::tr(msg));
         Py_CommandEdit->setFocus();
         Py_CommandEdit->doProcess(false);
 
         result = RS_Py_InputHandle::readLine(Py_CommandEdit);
 
-        Py_CommandEdit->setPrompt(QObject::tr(">>> "));
+        Py_CommandEdit->resetPrompt();
     }
     else
     {
-        result = QInputDialog::getText(nullptr,
-                                  "LibreCAD",
-                                  QObject::tr(qUtf8Printable(prompt)),
-                                  //QLineEdit::EchoMode mode = QLineEdit::Normal, const QString &text = QString(), bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags(), Qt::InputMethodHints inputMethodHints = Qt::ImhNone)
-                                  QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone);
+        result = RS_SCRIPTINGAPI->getStrDlg(msg).c_str();
     }
 
     return result.toStdString();
@@ -149,283 +101,77 @@ const std::string RS_PythonGui::getString(const char *msg)
 
 RS_Vector RS_PythonGui::getCorner(const char *msg, const RS_Vector &basePoint) const
 {
-    double x=0, y=0;
-    QString prompt = QObject::tr(msg);
-
-    auto& appWin = QC_ApplicationWindow::getAppWindow();
-    RS_Document* doc = appWin->getDocument();
-    RS_GraphicView* graphicView = appWin->getGraphicView();
-
-    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
-    {
-        qDebug() << "graphicView == nullptr";
-        return RS_Vector();
-    }
-
     if (Py_CommandEdit != nullptr)
     {
-        Py_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+        Py_CommandEdit->setPrompt(QObject::tr(msg));
         Py_CommandEdit->setFocus();
         Py_CommandEdit->doProcessLc(true);
     }
 
-    QC_ActionGetCorner* a = new QC_ActionGetCorner(*doc, *graphicView);
-    if (a)
+    RS_Vector result = RS_SCRIPTINGAPI->getCorner(msg, basePoint);
+
+    if (Py_CommandEdit != nullptr)
     {
-        QPointF *point = new QPointF;
-        QPointF *base;
-        bool status = false;
-
-        if (!(prompt.isEmpty()))
-        {
-            a->setMessage(prompt);
-        }
-
-        graphicView->killAllActions();
-        graphicView->setCurrentAction(a);
-
-        if (basePoint.valid)
-        {
-            base = new QPointF(basePoint.x, basePoint.y);
-            a->setBasepoint(base);
-        }
-
-        QEventLoop ev;
-        while (!a->isCompleted())
-        {
-            ev.processEvents ();
-            if (!graphicView->getEventHandler()->hasAction())
-                break;
-        }
-        if (a->isCompleted() && !a->wasCanceled())
-        {
-            a->getPoint(point);
-            status = true;
-        }
-        //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
-        graphicView->killAllActions();
-
-        if (Py_CommandEdit != nullptr)
-        {
-            Py_CommandEdit->setPrompt(">>> ");
-            Py_CommandEdit->doProcessLc(false);
-        }
-
-        if(status)
-        {
-            x = point->x();
-            y = point->y();
-            delete point;
-            if (basePoint.valid)
-            {
-                delete base;
-            }
-            return RS_Vector(x, y);
-        }
-        else
-        {
-            delete point;
-            if (basePoint.valid)
-            {
-                delete base;
-            }
-        }
+        Py_CommandEdit->resetPrompt();
+        Py_CommandEdit->doProcessLc(false);
     }
 
-    return RS_Vector();
+    return result;
 }
 
 RS_Vector RS_PythonGui::getPoint(const char *msg, const RS_Vector basePoint) const
 {
-    double x=0, y=0, z=0;
-    QString prompt = QObject::tr(msg);
-
-    auto& appWin = QC_ApplicationWindow::getAppWindow();
-    RS_Document* doc = appWin->getDocument();
-    RS_GraphicView* graphicView = appWin->getGraphicView();
-
-    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
-    {
-        qDebug() << "graphicView == nullptr";
-        return RS_Vector();
-    }
-
     if (Py_CommandEdit != nullptr)
     {
-        Py_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+        Py_CommandEdit->setPrompt(QObject::tr(msg));
         Py_CommandEdit->setFocus();
         Py_CommandEdit->doProcessLc(true);
     }
 
-    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
-    if (a)
+    RS_Vector result = RS_SCRIPTINGAPI->getPoint(msg, basePoint);
+
+    if (Py_CommandEdit != nullptr)
     {
-        QPointF *point = new QPointF;
-        QPointF *base;
-        bool status = false;
-
-        if (!(prompt.isEmpty()))
-        {
-            a->setMessage(prompt);
-        }
-
-        graphicView->killAllActions();
-        graphicView->setCurrentAction(a);
-
-        if (basePoint.valid)
-        {
-            base = new QPointF(basePoint.x, basePoint.y);
-            z = basePoint.z;
-            a->setBasepoint(base);
-        }
-
-        QEventLoop ev;
-        while (!a->isCompleted())
-        {
-            ev.processEvents ();
-            if (!graphicView->getEventHandler()->hasAction())
-                break;
-        }
-        if (a->isCompleted() && !a->wasCanceled())
-        {
-            a->getPoint(point);
-            status = true;
-        }
-        //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
-        graphicView->killAllActions();
-
-        if (Py_CommandEdit != nullptr)
-        {
-            Py_CommandEdit->setPrompt(">>> ");
-            Py_CommandEdit->doProcessLc(false);
-        }
-
-        if(status)
-        {
-            x = point->x();
-            y = point->y();
-            delete point;
-            if (basePoint.valid)
-            {
-                delete base;
-            }
-            return RS_Vector(x, y, z);
-        }
-        else
-        {
-            delete point;
-            if (basePoint.valid)
-            {
-                delete base;
-            }
-        }
+        Py_CommandEdit->resetPrompt();
+        Py_CommandEdit->doProcessLc(false);
     }
 
-    return RS_Vector();
+    return result;
 }
 
-double RS_PythonGui::getDist(const char *msg, const RS_Vector &basePoint) const
+PyObject* RS_PythonGui::getDist(const char *msg, const RS_Vector &basePoint) const
 {
-    double x=0, y=0, z=0;
-    QString prompt = QObject::tr(msg);
-    Q_UNUSED(z)
-
-    auto& appWin = QC_ApplicationWindow::getAppWindow();
-    RS_Document* doc = appWin->getDocument();
-    RS_GraphicView* graphicView = appWin->getGraphicView();
-
-    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
-    {
-        qDebug() << "graphicView == nullptr";
-        return 0.0;
-    }
-
     if (Py_CommandEdit != nullptr)
     {
-        Py_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+        Py_CommandEdit->setPrompt(QObject::tr(msg));
         Py_CommandEdit->setFocus();
         Py_CommandEdit->doProcessLc(true);
     }
 
-    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
-    if (a)
+    double distance;
+
+    if (RS_SCRIPTINGAPI->getDist(msg, basePoint, distance))
     {
-        QPointF *point = new QPointF;
-        QPointF *base;
-        bool status = false;
-
-        if (!(prompt.isEmpty()))
-        {
-            a->setMessage(prompt);
-        }
-
-        graphicView->killAllActions();
-        graphicView->setCurrentAction(a);
-
-        if (basePoint.valid)
-        {
-            base = new QPointF(basePoint.x, basePoint.y);
-            z = basePoint.z;
-            a->setBasepoint(base);
-        }
-        else
-        {
-            return 0.0;
-        }
-
-        QEventLoop ev;
-        while (!a->isCompleted())
-        {
-            ev.processEvents ();
-            if (!graphicView->getEventHandler()->hasAction())
-                break;
-        }
-        if (a->isCompleted() && !a->wasCanceled())
-        {
-            a->getPoint(point);
-            status = true;
-        }
-        //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
-        graphicView->killAllActions();
-
         if (Py_CommandEdit != nullptr)
         {
-            Py_CommandEdit->setPrompt(">>> ");
+            Py_CommandEdit->resetPrompt();
             Py_CommandEdit->doProcessLc(false);
         }
-
-        if(status)
-        {
-            x = point->x();
-            y = point->y();
-
-            double dist = std::sqrt(std::pow(x - point->x(), 2)
-                                  + std::pow(y - point->y(), 2));
-            delete point;
-            if (basePoint.valid)
-            {
-                delete base;
-            }
-            return dist;
-
-        }
-        else
-        {
-            delete point;
-            if (basePoint.valid)
-            {
-                delete base;
-            }
-        }
+        return Py_BuildValue("d", distance);
     }
 
-    return 0.0;
+    if (Py_CommandEdit != nullptr)
+    {
+        Py_CommandEdit->resetPrompt();
+        Py_CommandEdit->doProcessLc(false);
+    }
+
+    Py_RETURN_NONE;
 }
 
 int RS_PythonGui::getInt(const char *msg) const
 {
     int x = 0;
-    QString prompt = QObject::tr(msg);
     QString result;
     static const std::regex intRegex("[+-]?[0-9]+|[+-]?0[xX][0-9A-Fa-f]");
 
@@ -433,7 +179,7 @@ int RS_PythonGui::getInt(const char *msg) const
     {
         while (1)
         {
-            Py_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+            Py_CommandEdit->setPrompt(QObject::tr(msg));
             Py_CommandEdit->setFocus();
             Py_CommandEdit->doProcess(false);
 
@@ -444,15 +190,11 @@ int RS_PythonGui::getInt(const char *msg) const
                 break;
             }
         }
-        Py_CommandEdit->setPrompt(QObject::tr(">>> "));
+        Py_CommandEdit->resetPrompt();
     }
     else
     {
-        x = QInputDialog::getInt(nullptr,
-                                 "LibreCAD",
-                                 QObject::tr(qUtf8Printable(prompt)),
-                                 // , int value = 0, int min = -2147483647, int max = 2147483647, int step = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags())
-                                 0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags());
+        x = RS_SCRIPTINGAPI->getIntDlg(msg);
     }
     return x;
 }
@@ -479,15 +221,11 @@ double RS_PythonGui::getReal(const char *msg) const
                 break;
             }
         }
-        Py_CommandEdit->setPrompt(QObject::tr(">>> "));
+        Py_CommandEdit->resetPrompt();
     }
     else
     {
-        x = QInputDialog::getInt(nullptr,
-                                 "LibreCAD",
-                                 QObject::tr(qUtf8Printable(prompt)),
-                                 // , int value = 0, int min = -2147483647, int max = 2147483647, int step = 1, bool *ok = nullptr, Qt::WindowFlags flags = Qt::WindowFlags())
-                                 0, -2147483647, 2147483647, 1, nullptr, Qt::WindowFlags());
+        x = RS_SCRIPTINGAPI->getDoubleDlg(qUtf8Printable(prompt));
     }
     return x;
 }
@@ -558,7 +296,7 @@ double RS_PythonGui::getOrient(const char *msg, const RS_Vector &basePoint) cons
 
         if (Py_CommandEdit != nullptr)
         {
-            Py_CommandEdit->setPrompt(">>> ");
+            Py_CommandEdit->resetPrompt();
             Py_CommandEdit->doProcessLc(false);
         }
 
@@ -622,13 +360,13 @@ const std::string RS_PythonGui::getKword(const char *msg)
 
             for (auto &it : StringList) {
                 if (it == qUtf8Printable(result)) {
-                    Py_CommandEdit->setPrompt(">>> ");
+                    Py_CommandEdit->resetPrompt();
                     std::string res = qUtf8Printable(result);
                     return res.c_str();
                 }
             }
             if ((bit->value() & 1) != 1) {
-                Py_CommandEdit->setPrompt(">>> ");
+                Py_CommandEdit->resetPrompt();
                 return "";
             }
         }
@@ -636,11 +374,7 @@ const std::string RS_PythonGui::getKword(const char *msg)
     else
     {
         while (1) {
-            result = QInputDialog::getText(nullptr,
-                                           "LibreCAD",
-                                           QObject::tr(qUtf8Printable(msg)),
-                                           QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone
-                                           );
+            result = RS_SCRIPTINGAPI->getStrDlg(qUtf8Printable(msg)).c_str();
 
             for (auto &it : StringList)
             {
@@ -674,14 +408,10 @@ void RS_PythonGui::prompt(const char *prompt)
         Py_CommandEdit->doProcess(false);
 
         RS_Py_InputHandle::readLine(Py_CommandEdit);
-        Py_CommandEdit->setPrompt(">>> ");
+        Py_CommandEdit->resetPrompt();
     }
     else
     {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("LibreCAD");
-        msgBox.setText(prompt);
-        msgBox.setIcon(QMessageBox::Information);
-        msgBox.exec();
+        RS_SCRIPTINGAPI->msgInfo(prompt);
     }
 }

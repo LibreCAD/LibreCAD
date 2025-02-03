@@ -85,6 +85,12 @@ QG_Py_CommandEdit::QG_Py_CommandEdit(QWidget* parent)
     readHistoryFile();
 }
 
+void QG_Py_CommandEdit::resetPrompt()
+{
+    setPrompt(">>> ");
+    prompt();
+}
+
 void QG_Py_CommandEdit::readHistoryFile()
 {
     m_histFile.setFileName(m_path);

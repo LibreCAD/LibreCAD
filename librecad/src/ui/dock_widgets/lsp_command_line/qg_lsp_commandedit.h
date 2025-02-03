@@ -50,6 +50,7 @@ public:
     void runFile(const QString& path);
     void processInput(QString input);
     void setPrompt(const QString& p) { prom = p; prompt(); }
+    void resetPrompt();
     void doProcess(bool proc) { m_doProcess = proc; }
     void setCurrent();
     QString dockName() const { return parentWidget()->objectName(); }

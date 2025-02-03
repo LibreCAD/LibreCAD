@@ -27,7 +27,10 @@
 #pragma once
 #ifndef RS_SCRIPTINGAPI_H
 #define RS_SCRIPTINGAPI_H
+
 #include "Python.h"
+#include "rs_vector.h"
+
 #include <QString>
 
 #define RS_SCRIPTINGAPI RS_ScriptingApi::instance()
@@ -41,6 +44,7 @@ public:
     void command(QString &com);
     void endList();
     void endImage();
+    void msgInfo(const char *msg);
     void termDialog();
     void unloadDialog(int id);
 
@@ -49,6 +53,10 @@ public:
 
     int loadDialog(const char *filename);
     int startDialog();
+
+    int getIntDlg(const char *prompt);
+    double getDoubleDlg(const char *prompt);
+    const std::string getStrDlg(const char *prompt);
 
     bool actionTile(const char *id, const char *action);
     bool addList(const char *val, std::string &result);
@@ -63,10 +71,16 @@ public:
     bool setTile(const char *key, const char *val);
     bool textImage(int x1, int y1, int x2, int y2, const char *text, int color);
     bool vectorImage(int x1, int y1, int x2, int y2, int color);
+    bool getFiled(const char *title, const char *def, const char *ext, int flags, std::string &filename);
+    bool getDist(const char *msg, const RS_Vector &basePoint, double &distance);
 
     const std::string startImage(const char *key);
     const std::string startList(const char *key, int operation, int index);
     const std::string getTile(const char *key);
+
+    RS_Vector getCorner(const char *msg, const RS_Vector &basePoint) const;
+    RS_Vector getPoint(const char *msg, const RS_Vector basePoint) const;
+
 
 private:
     RS_ScriptingApi();

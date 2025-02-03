@@ -84,6 +84,22 @@ QG_Lsp_CommandEdit::QG_Lsp_CommandEdit(QWidget* parent)
         });
 
     readHistoryFile();
+
+    qDebug() << "[QG_Lsp_CommandEdit::QG_Lsp_CommandEdit]" << this->parent()->objectName();
+
+}
+
+void QG_Lsp_CommandEdit::resetPrompt()
+{
+    if (this->dockName() == "Lisp Ide")
+    {
+        setPrompt("_$ ");
+    }
+    else
+    {
+        setPrompt(QObject::tr("Command: "));
+    }
+    prompt();
 }
 
 void QG_Lsp_CommandEdit::readHistoryFile()

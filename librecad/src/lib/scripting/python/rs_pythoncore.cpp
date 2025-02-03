@@ -28,12 +28,42 @@
 #include "rs_pythoncore.h"
 #include "rs_scriptingapi.h"
 
+#include "qc_applicationwindow.h"
+
 RS_PythonCore::RS_PythonCore()
 {
 }
 
 RS_PythonCore::~RS_PythonCore()
 {
+}
+
+RS_Document* RS_PythonCore::getDocument() const
+{
+    return QC_ApplicationWindow::getAppWindow()->getDocument();
+}
+
+RS_EntityContainer* RS_PythonCore::getContainer() const
+{
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+    return graphicView->getContainer();
+}
+
+RS_Graphic* RS_PythonCore::getGraphic() const
+{
+    auto& appWin=QC_ApplicationWindow::getAppWindow();
+    RS_Document* d = appWin->getDocument();
+
+    if (d && d->rtti()==RS2::EntityGraphic)
+    {
+        RS_Graphic* graphic = (RS_Graphic*)d;
+        if (graphic==NULL) {
+            return NULL;
+        }
+        return graphic;
+    }
+    return NULL;
 }
 
 void RS_PythonCore::command(const char *cmd)
