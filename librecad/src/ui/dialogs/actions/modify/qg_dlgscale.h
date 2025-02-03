@@ -36,7 +36,6 @@ class QG_DlgScale : public QDialog, public Ui::QG_DlgScale{
 
 public:
     QG_DlgScale(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
-    virtual ~QG_DlgScale();
 
 public slots:
     void setData( RS_ScaleData * d );
@@ -46,7 +45,7 @@ protected slots:
 private slots:
     void onIsotropicToggled(bool checked);
     void onFactorXChanged(const QString &arg1);
-    void onFactorByPoints();
+    void onFactorByPoints(bool checked);
     void onMultipleCopiesClicked();
 private:
     RS_ScaleData* data = nullptr;

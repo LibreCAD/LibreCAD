@@ -44,14 +44,6 @@ QG_DlgScale::QG_DlgScale(QWidget *parent, bool modal, Qt::WindowFlags fl)
 }
 
 /*
-*  Destroys the object and frees any allocated resources
-*/
-QG_DlgScale::~QG_DlgScale() {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
-}
-
-/*
 *  Sets the strings of the subwidgets using the current
 *  language.
 */
@@ -95,18 +87,24 @@ void QG_DlgScale::init() {
         leFactorY->setText(QString("%1").arg(data->factor.y));
     }
 
-    leFactorY->setReadOnly(isotropic);
+    bool findFactor = data->toFindFactor;
+    bFindFactor->setChecked(findFactor);
+
+    leFactorY->setDisabled(findFactor || isotropic);
+    leFactorY->setReadOnly(findFactor || isotropic);
 
     connect(cbIsotropic, &QCheckBox::toggled, this, &QG_DlgScale::onIsotropicToggled);
     connect(leFactorX, &QLineEdit::textEdited, this, &QG_DlgScale::onFactorXChanged);
     connect(cbMultipleCopies, &QCheckBox::clicked, this, &QG_DlgScale::onMultipleCopiesClicked);
-    connect(bFindFactor, &QPushButton::clicked, this, &QG_DlgScale::onFactorByPoints);
+    connect(bFindFactor, &QPushButton::toggled, this, &QG_DlgScale::onFactorByPoints);
 }
 
-void QG_DlgScale::onFactorByPoints() {
+void QG_DlgScale::onFactorByPoints(bool checked) {
     if (data != nullptr) {
-        data->toFindFactor = true;
+        data->toFindFactor = checked;
         data->isotropicScaling = cbIsotropic->isChecked();
+        leFactorX->setDisabled(checked);
+        leFactorY->setDisabled(checked || cbIsotropic->isChecked());
         accept();
     }
 }
@@ -132,6 +130,7 @@ void QG_DlgScale::updateData() {
     data->multipleCopies = cbMultipleCopies->isChecked();
 
     data->isotropicScaling = cbIsotropic->isChecked();
+    data->toFindFactor = bFindFactor->isChecked();
 
     bool okX = false;
     double sx = RS_Math::eval(leFactorX->text(), &okX);
@@ -140,6 +139,14 @@ void QG_DlgScale::updateData() {
     if (okX && okY) {
         data->factor = RS_Vector(sx, sy);
     } else {
-        data->factor = RS_Vector(1,1,0);
+        data->factor = RS_Vector(1., 1.);
+    }
+
+    if (data->isotropicScaling) {
+        if (okX) {
+            data->factor = RS_Vector{sx, sx};
+            leFactorY->setText(leFactorX->text());
+        }
+        leFactorY->setDisabled(true);
     }
 }

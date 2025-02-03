@@ -25,7 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
-#include "rs_actionmodifyscale.h"
+
+class RS_ActionModifyScale;
 
 namespace Ui {
     class LC_ModifyScaleOptions;
@@ -36,7 +37,6 @@ class LC_ModifyScaleOptions : public LC_ActionOptionsWidgetBase{
 
 public:
     explicit LC_ModifyScaleOptions();
-    ~LC_ModifyScaleOptions();
 public slots:
     void languageChange() override;
     void cbKeepOriginalsClicked(bool val);
@@ -53,8 +53,8 @@ protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
-    Ui::LC_ModifyScaleOptions *ui;
-    RS_ActionModifyScale* action = nullptr;
+    Ui::LC_ModifyScaleOptions *ui = nullptr;
+    RS_ActionModifyScale* m_action = nullptr;
     void setUseMultipleCopiesToActionAndView(bool copies);
     void setUseCurrentLayerToActionAndView(bool val);
     void setUseCurrentAttributesToActionAndView(bool val);
