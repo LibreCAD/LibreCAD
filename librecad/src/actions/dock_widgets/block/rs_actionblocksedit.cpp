@@ -26,7 +26,9 @@
 
 #include "rs_actionblocksedit.h"
 #include "rs_debug.h"
+#include "rs_block.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 
 RS_ActionBlocksEdit::RS_ActionBlocksEdit(RS_EntityContainer& container,
@@ -60,4 +62,3 @@ void RS_ActionBlocksEdit::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-

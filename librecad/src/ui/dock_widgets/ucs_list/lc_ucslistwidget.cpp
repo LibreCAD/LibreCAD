@@ -23,6 +23,7 @@
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QMenu>
+#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "lc_ucslistwidget.h"
 #include "ui_lc_ucslistwidget.h"

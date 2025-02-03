@@ -28,7 +28,9 @@
 #include <QMouseEvent>
 
 #include "rs_actionorder.h"
+#include "rs_document.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
 
@@ -103,7 +105,7 @@ void RS_ActionOrder::doTrigger(bool keepSelected) {
     setStatus(getStatus()-1);
 }
 
-void RS_ActionOrder::onMouseMoveEventSelected(int status, LC_MouseEvent *e) {
+void RS_ActionOrder::onMouseMoveEventSelected([[maybe_unused]]int status, LC_MouseEvent *e) {
     targetEntity = catchEntityByEvent(e);
     if (targetEntity != nullptr){
         highlightHover(targetEntity);

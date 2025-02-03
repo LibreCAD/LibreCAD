@@ -300,7 +300,7 @@ void RS_ActionPolylineSegment::doTrigger() {
     }
 }
 
-void RS_ActionPolylineSegment::onMouseMoveEvent(int status, LC_MouseEvent *event) {
+void RS_ActionPolylineSegment::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *event) {
     RS_Entity* en = catchAndDescribe(event, entityType, RS2::ResolveNone);
     if (en != nullptr){
         highlightHover(en);

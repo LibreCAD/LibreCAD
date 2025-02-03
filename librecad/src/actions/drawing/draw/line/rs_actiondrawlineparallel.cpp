@@ -79,7 +79,7 @@ void RS_ActionDrawLineParallel::doTrigger() {
     }
 }
 
-void RS_ActionDrawLineParallel::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void RS_ActionDrawLineParallel::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     *coord = {e->graphPoint};
 
     entity = catchAndDescribe(e, RS2::ResolveAll);

@@ -42,7 +42,7 @@ public:
         viewport->notifyChanged();
     }
 
-    bool isTextLineNotRenderable(double uiLineHeight) override { return false;};
+    bool isTextLineNotRenderable([[maybe_unused]]double uiLineHeight) override { return false;};
 protected:
     RS2::DrawingMode drawingMode = RS2::DrawingMode::ModeAuto;
     double paperScale = 1.0;

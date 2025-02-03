@@ -139,7 +139,7 @@ public:
     }
 };
 
-RS_Entity *RS_MText::cloneProxy(LC_GraphicViewport* view) const {
+RS_Entity *RS_MText::cloneProxy([[maybe_unused]]LC_GraphicViewport* view) const {
     // fixme - sand - ucs - restore!!
 //    bool drawTextsAsDraftForPreview = view->isDrawTextsAsDraftForPreview();
     bool drawTextsAsDraftForPreview = false;

@@ -28,7 +28,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_commands.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
+
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
 #include "rs_preview.h"
 #include "rs_line.h"
@@ -142,7 +144,7 @@ bool LC_AbstractActionWithPreview::isAcceptSelectedEntityToTriggerOnInit([[maybe
 void LC_AbstractActionWithPreview::doPerformOriginalEntitiesDeletionOnInitTrigger([[maybe_unused]]QList<RS_Entity *> &list){}
 
 
-void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget(LC_MouseEvent* e, [[maybe_unused]]int status){
+void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget([[maybe_unused]]LC_MouseEvent* e, [[maybe_unused]]int status){
     // todo - actually, this is a bit ugly to call snap point  - yet as side effect, it will draw snapper and update coordinates widget..
 //    snapPoint(e);
 }

@@ -34,7 +34,7 @@ class LC_TagInfo{
 
 public:
     LC_TagInfo() = default;
-    LC_TagInfo(int major, int minor, int revision, int bugfix, const QString &label, const QString &tagName);
+    LC_TagInfo(int majorVer, int minorVer, int revisionNum, int bugfixVer, const QString &labelVer, const QString &tagNameVer);
 
     bool isBefore(const LC_TagInfo& other) const;
     bool isSameVersion(const LC_TagInfo& other) const;

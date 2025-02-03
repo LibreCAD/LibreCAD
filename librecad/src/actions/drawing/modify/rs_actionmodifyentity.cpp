@@ -31,6 +31,7 @@
 #include "rs_actionmodifyentity.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
 
 RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
@@ -88,7 +89,7 @@ void RS_ActionModifyEntity::doTrigger() {
     }
 }
 
-void RS_ActionModifyEntity::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void RS_ActionModifyEntity::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     RS_Entity* entity = catchAndDescribe(e);
     if (entity != nullptr){
         highlightHoverWithRefPoints(entity, true);

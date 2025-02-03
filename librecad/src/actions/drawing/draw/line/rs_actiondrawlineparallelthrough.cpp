@@ -70,7 +70,7 @@ void RS_ActionDrawLineParallelThrough::doTrigger() {
     }
 }
 
-void RS_ActionDrawLineParallelThrough::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void RS_ActionDrawLineParallelThrough::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     const RS_Vector &snap = e->snapPoint;
     switch (getStatus()) {
         case SetEntity: {

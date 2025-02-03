@@ -39,7 +39,7 @@ RS_ActionSelectLayer::RS_ActionSelectLayer(
     actionType = RS2::ActionSelectLayer;
 }
 
-void RS_ActionSelectLayer::onMouseMoveEvent(int status, LC_MouseEvent *event) {
+void RS_ActionSelectLayer::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *event) {
     deleteSnapper();
     auto ent = catchAndDescribe(event);
     if (ent != nullptr){

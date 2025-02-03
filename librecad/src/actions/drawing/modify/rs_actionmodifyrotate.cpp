@@ -24,18 +24,18 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-#include <QApplication>
 
+#include <QApplication>
+#include <QKeyEvent>
 #include "rs_actionmodifyrotate.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
-#include "rs_arc.h"
 #include "lc_modifyrotateoptions.h"
 
 // fixme - sand - add options for point selection mode (ref point/center)? Or just remove center selection first and have one way?

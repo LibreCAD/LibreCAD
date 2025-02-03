@@ -79,7 +79,7 @@ void RS_ActionDrawLineHorVert::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawLineHorVert::trigger(): line added: %lu", line->getId());
 }
 
-void RS_ActionDrawLineHorVert::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void RS_ActionDrawLineHorVert::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
     if (getStatus() == SetEndpoint && pPoints->p1.valid){
         RS_Vector p2x = RS_Vector(mouse.x, pPoints->p1.y);

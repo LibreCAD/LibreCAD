@@ -117,7 +117,7 @@ void RS_ActionDrawEllipseAxis::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawEllipseAxis::trigger():entity added: %lu", ellipse->getId());
 }
 
-void RS_ActionDrawEllipseAxis::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void RS_ActionDrawEllipseAxis::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
     switch (getStatus()) {
         case SetCenter: {

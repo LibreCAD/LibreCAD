@@ -41,6 +41,7 @@
 #include "qg_actionhandler.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 #include "lc_flexlayout.h"
 

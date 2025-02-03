@@ -103,7 +103,7 @@ void RS_Entity::initId() {
     id = idCounter++;
 }
 
-RS_Entity *RS_Entity::cloneProxy(LC_GraphicViewport *view) const {
+RS_Entity *RS_Entity::cloneProxy([[maybe_unused]]LC_GraphicViewport *view) const {
     return clone();
 }
 

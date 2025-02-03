@@ -860,7 +860,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity *entity, LC_GraphicVi
         break;
     }
     default:
-        bool hasDialog = false;
+        hasDialog = false;
         break;
     }
 

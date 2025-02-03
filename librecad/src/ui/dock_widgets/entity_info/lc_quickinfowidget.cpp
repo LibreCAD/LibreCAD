@@ -34,6 +34,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_quickinfowidget.h"
 #include "lc_quickinfowidgetoptionsdialog.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_math.h"
 #include "rs_point.h"
 #include "rs_settings.h"

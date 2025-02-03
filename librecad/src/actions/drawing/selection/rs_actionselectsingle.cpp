@@ -56,7 +56,7 @@ void RS_ActionSelectSingle::trigger(){
     selectContour = false;
 }
 
-void RS_ActionSelectSingle::onMouseMoveEvent(int status, LC_MouseEvent *event) {
+void RS_ActionSelectSingle::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *event) {
     selectionMouseMove(event);
 }
 

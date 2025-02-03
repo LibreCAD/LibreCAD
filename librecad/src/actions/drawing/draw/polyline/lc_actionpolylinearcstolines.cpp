@@ -46,7 +46,7 @@ void LC_ActionPolylineArcsToLines::doTrigger() {
     polyline = nullptr;
 }
 
-void LC_ActionPolylineArcsToLines::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void LC_ActionPolylineArcsToLines::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     auto entity = catchAndDescribe(e, RS2::EntityPolyline);
     if (entity != nullptr){
         auto* selectedPolyline = dynamic_cast<RS_Polyline*>(entity);

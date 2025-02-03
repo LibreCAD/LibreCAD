@@ -232,7 +232,7 @@ bool RS_ActionDefault::isShowEntityDescriptionOnHighlight(){
     return graphicView->isShowEntityDescriptionOnHover() && (infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled);
 }
 
-void RS_ActionDefault::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->graphPoint;
 
     updateCoordinateWidgetByRelZero(mouse);
@@ -773,7 +773,7 @@ void RS_ActionDefault::onMouseLeftButtonPress(int status, LC_MouseEvent *e) {
 
 }
 
-void RS_ActionDefault::onMouseRightButtonPress(int status, LC_MouseEvent *e) {
+void RS_ActionDefault::onMouseRightButtonPress([[maybe_unused]]int status, LC_MouseEvent *e) {
     //cleanup
     goToNeutralStatus();
     e->originalEvent->accept();
@@ -835,7 +835,7 @@ void RS_ActionDefault::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     }
 }
 
-void RS_ActionDefault::onMouseRightButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+void RS_ActionDefault::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
     //cleanup
     goToNeutralStatus();

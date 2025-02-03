@@ -2599,6 +2599,8 @@ void QC_ApplicationWindow::updateGridViewActions(bool isometric, RS2::IsoGridVie
             case RS2::IsoRight:{
                 viewIsoRight = true;
             }
+            default:
+                break;
         }
     }
     else{

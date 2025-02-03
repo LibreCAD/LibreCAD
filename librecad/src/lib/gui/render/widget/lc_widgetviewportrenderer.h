@@ -66,9 +66,9 @@ protected:
     void drawLayerEntities(RS_Painter* painter);
     void drawLayerOverlays(RS_Painter *painter);
 
-    virtual void drawLayerEntitiesOver(RS_Painter* painter){}
-    virtual void doDrawLayerBackground(RS_Painter *painter) {};
-    virtual void doDrawLayerOverlays(RS_Painter *painter) {};
+    virtual void drawLayerEntitiesOver([[maybe_unused]]RS_Painter* painter){}
+    virtual void doDrawLayerBackground([[maybe_unused]]RS_Painter *painter) {};
+    virtual void doDrawLayerOverlays([[maybe_unused]]RS_Painter *painter) {};
 
 #ifdef DEBUG_RENDERING
     QElapsedTimer drawLayerBackgroundTimer;

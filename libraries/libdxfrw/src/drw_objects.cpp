@@ -1301,7 +1301,7 @@ bool DRW_AppId::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-bool DRW_UCS::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs) {
+bool DRW_UCS::parseDwg([[maybe_unused]]DRW::Version version, dwgBuffer *buf, [[maybe_unused]]duint32 bs) {
     // fixme - sand - complete reading UCS from DWG
     DRW_DBG("\n********************** parsing UCS Settings from DWG is not yet implemented **************************\n");
     return buf->isGood();

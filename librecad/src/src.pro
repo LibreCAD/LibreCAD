@@ -119,6 +119,7 @@ INCLUDEPATH += \
     lib/engine/document/views \
     lib/engine/clipboard \
     lib/engine/overlays \
+    lib/engine/overlays/angles_base \
     lib/engine/overlays/highlight \
     lib/engine/overlays/preview \
     lib/engine/overlays/references \
@@ -134,7 +135,9 @@ INCLUDEPATH += \
     lib/generators \
     lib/gui \
     lib/gui/grid \
-    lib/gui/render \
+    lib/gui/render \    
+    lib/gui/render/headless \
+    lib/gui/render/widget \
     lib/information \
     lib/math \
     lib/modification \
@@ -145,6 +148,7 @@ INCLUDEPATH += \
     actions/dock_widgets/entity_info \
     actions/dock_widgets/layer \
     actions/dock_widgets/library \
+    actions/dock_widgets/ucs_list \
     actions/drawing \
     actions/drawing/draw \
     actions/drawing/draw/circle \
@@ -366,6 +370,7 @@ HEADERS += \
     lib/engine/undo/rs_undoable.h \
     lib/engine/undo/rs_undocycle.h \
     lib/engine/rs_units.h \
+    lib/engine/lc_drawable.h \
     lib/engine/utils/rs_utility.h \
     lib/engine/document/variables/rs_variable.h \
     lib/engine/document/variables/rs_variabledict.h \
@@ -382,13 +387,10 @@ HEADERS += \
     lib/gui/lc_graphicviewport.h \
     lib/gui/lc_graphicviewportlistener.h \
     lib/gui/render/headless/lc_printviewportrenderer.h \
-    lib/gui/render/lc_basegraphicviewrenderer.h \
-    lib/gui/render/lc_graphicviewportrenderer.h \
-    lib/gui/render/lc_graphicviewrenderer.h \
-    lib/gui/render/lc_penmanager.h \
-    lib/gui/render/lc_printpreviewviewrenderer.h \
-    lib/gui/render/lc_viewrenderer.h \
-    lib/gui/render/widget/lc_widgetviewportrenderer.h \
+    lib/gui/render/lc_graphicviewportrenderer.h \    
+    lib/gui/render/widget/lc_graphicviewrenderer.cpp \
+    lib/gui/render/widget/lc_printpreviewviewrenderer.cpp \
+    lib/gui/render/widget/lc_widgetviewportrenderer.cpp \
     lib/modification/lc_align.h \
     ui/action_options/curve/lc_actiondrawarc2poptions.h \
     ui/action_options/misc/lc_midlineoptions.h \
@@ -426,16 +428,15 @@ HEADERS += \
     lib/gui/rs_commandevent.h \
     lib/gui/rs_coordinateevent.h \
     lib/gui/rs_dialogfactory.h \
-    lib/gui/rs_dialogfactoryinterface.h \
-    lib/gui/rs_dialogfactoryadapter.h \
+    lib/gui/rs_dialogfactoryinterface.h \    
     lib/gui/rs_eventhandler.h \
     lib/gui/rs_graphicview.h \
-    lib/gui/rs_grid.h \
+    lib/gui/grid/rs_grid.h \
     lib/gui/rs_linetypepattern.h \
     lib/gui/rs_mainwindowinterface.h \
-    lib/gui/rs_painter.h \     \
-    ui/view/lc_printpreviewview.h
-    lib/gui/rs_staticgraphicview.h \
+    lib/gui/render/rs_painter.h \
+    lib/gui/lc_coordinates_mapper.h \
+    ui/view/lc_printpreviewview.h \    
     lib/information/rs_locale.h \
     lib/information/rs_information.h \
     lib/information/rs_infoarea.h \
@@ -496,13 +497,10 @@ SOURCES += \
     lib/engine/undo/lc_undoablerelzero.cpp \
     lib/gui/lc_graphicviewport.cpp \
     lib/gui/lc_graphicviewportlistener.cpp \
-    lib/gui/render/headless/lc_printviewportrenderer.cpp \
-    lib/gui/render/lc_basegraphicviewrenderer.cpp \
+    lib/gui/render/headless/lc_printviewportrenderer.cpp \    
     lib/gui/render/lc_graphicviewportrenderer.cpp \
-    lib/gui/render/lc_graphicviewrenderer.cpp \
-    lib/gui/render/lc_penmanager.cpp \
-    lib/gui/render/lc_printpreviewviewrenderer.cpp \
-    lib/gui/render/lc_viewrenderer.cpp \
+    lib/gui/render/widget/lc_graphicviewrenderer.cpp \
+    lib/gui/render/widget/lc_printpreviewviewrenderer.cpp \
     lib/gui/render/widget/lc_widgetviewportrenderer.cpp \
     lib/modification/lc_align.cpp \
     ui/action_options/curve/lc_actiondrawarc2poptions.cpp \
@@ -580,6 +578,7 @@ SOURCES += \
     lib/engine/document/entities/rs_spline.cpp \
     lib/engine/document/entities/lc_splinepoints.cpp \
     lib/engine/rs_system.cpp \
+    lib/engine/lc_drawable.cpp \
     lib/engine/document/entities/rs_text.cpp \
     lib/engine/undo/rs_undo.cpp \
     lib/engine/undo/rs_undoable.cpp \
@@ -614,7 +613,7 @@ SOURCES += \
     ui/dock_widgets/views_list/lc_namedviewsbutton.cpp \
     ui/dock_widgets/views_list/lc_namedviewslistoptions.cpp \
     ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp \
-    ui/dock_widgets/views_list/lc_namedviewsmodel.cpp \
+    ui/dock_widgets/views_list/lc_namedviewsmodel.cpp \    
     ui/main/lc_releasechecker.cpp \
     lib/gui/grid/lc_gridsystem.cpp \
     lib/gui/grid/lc_isometricgrid.cpp \
@@ -623,11 +622,11 @@ SOURCES += \
     lib/gui/rs_dialogfactory.cpp \
     lib/gui/rs_eventhandler.cpp \
     lib/gui/rs_graphicview.cpp \
-    lib/gui/rs_grid.cpp \
+    lib/gui/grid/rs_grid.cpp \
     lib/gui/rs_linetypepattern.cpp \
-    lib/gui/rs_painter.cpp \     \
-    ui/view/lc_printpreviewview.cpp
-    lib/gui/rs_staticgraphicview.cpp \
+    lib/gui/render/rs_painter.cpp \
+    lib/gui/lc_coordinates_mapper.cpp \
+    ui/view/lc_printpreviewview.cpp \    
     lib/information/rs_locale.cpp \
     lib/information/rs_information.cpp \
     lib/information/rs_infoarea.cpp \
@@ -1516,7 +1515,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dock_widgets/pen_palette/lc_penpalettewidget.ui \
        ui/dock_widgets/pen_wizard/colorwizard.ui \
        ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui \
-       ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui
+       ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui \
        ui/dock_widgets/ucs_list/lc_ucslistwidget.ui \
        ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui \
        ui/dock_widgets/views_list/lc_namedviewslistwidget.ui \

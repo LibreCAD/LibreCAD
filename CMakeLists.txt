@@ -749,7 +749,6 @@ set(SOURCES
         librecad/src/lib/gui/rs_coordinateevent.h
         librecad/src/lib/gui/rs_dialogfactory.cpp
         librecad/src/lib/gui/rs_dialogfactory.h
-        librecad/src/lib/gui/rs_dialogfactoryadapter.h
         librecad/src/lib/gui/rs_dialogfactoryinterface.h
         librecad/src/lib/gui/rs_eventhandler.cpp
         librecad/src/lib/gui/rs_eventhandler.h

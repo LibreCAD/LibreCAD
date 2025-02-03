@@ -107,7 +107,7 @@ void RS_ActionDrawCircleTan2::drawSnapper() {
     // disable snapper for action
 }
 
-void RS_ActionDrawCircleTan2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void RS_ActionDrawCircleTan2::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     for (RS_AtomicEntity *const pc: pPoints->circles) { // highlight already selected
         highlightSelected(pc);
     }

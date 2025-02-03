@@ -71,7 +71,7 @@ void LC_ActionModifyAlign::doTrigger([[maybe_unused]]bool keepSelected) {
     }
 }
 
-void LC_ActionModifyAlign::onMouseMoveEventSelected(int status, LC_MouseEvent *e) {
+void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, LC_MouseEvent *e) {
     RS_Vector snap = e->snapPoint;
 
     RS_Vector min;
@@ -167,7 +167,7 @@ void LC_ActionModifyAlign::onMouseMoveEventSelected(int status, LC_MouseEvent *e
     }
 }
 
-void LC_ActionModifyAlign::previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef) {
+void LC_ActionModifyAlign::previewRefLines(bool drawVertical, [[maybe_unused]]double verticalRef, bool drawHorizontal, [[maybe_unused]]double horizontalRef) {
     if (drawVertical) {
         // fixme - sand - ucs - restore
         /*double g0 = graphicView->toGraphY(0);

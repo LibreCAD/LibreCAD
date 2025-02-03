@@ -29,6 +29,7 @@
 #include "rs_actionlayersedit.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_layer.h"

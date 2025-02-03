@@ -205,7 +205,7 @@ void LC_GraphicViewportRenderer::setupPainter(RS_Painter *painter) {
     painter->setDefaultWidthFactor(defaultWidthFactor);
 }
 
-bool LC_GraphicViewportRenderer::isTextLineNotRenderable(double d) {
+bool LC_GraphicViewportRenderer::isTextLineNotRenderable([[maybe_unused]]double d) {
     return false;
 }
 

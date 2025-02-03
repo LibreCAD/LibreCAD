@@ -29,6 +29,8 @@
 
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
+#include "rs_actioninterface.h"
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
 #include "rs_system.h"
@@ -122,4 +124,3 @@ std::ostream& operator << (std::ostream& os, RS_PatternList& l) {
 
     return os;
 }
-

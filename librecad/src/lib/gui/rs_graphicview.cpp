@@ -48,6 +48,8 @@
 #include "rs_units.h"
 #include "lc_graphicviewport.h"
 #include "lc_widgetviewportrenderer.h"
+#include "lc_shortcuts_manager.h"
+
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
@@ -383,7 +385,7 @@ double RS_GraphicView::toGuiX(double x) const {
 /**
  * Translates a real coordinate in Y to a screen coordinate Y.
  */
-/*double RS_GraphicView::toGuiY(double y) const {
+ /*double RS_GraphicView::toGuiY(double y) const {
     return -y * factor.y + getHeight() - offsetY;
 }*/
 

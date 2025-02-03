@@ -26,8 +26,10 @@
 
 #include <QMouseEvent>
 #include "rs_actionsetrelativezero.h"
+#include "rs_document.h"
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
 #include "rs_previewactioninterface.h"
 

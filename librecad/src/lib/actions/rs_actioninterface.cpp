@@ -32,8 +32,8 @@
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_entitycontainer.h"
-#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_settings.h"
 #include "lc_actionoptionswidget.h"
@@ -636,10 +636,6 @@ bool RS_ActionInterface::isShift(const QInputEvent *e){
 void RS_ActionInterface::fireCoordinateEvent(const RS_Vector &coord){
     auto ce = RS_CoordinateEvent(coord);
     coordinateEvent(&ce);
-}
-
-void RS_ActionInterface::fireCoordinateEventForSnap(QMouseEvent *e){
-    fireCoordinateEvent(snapPoint(e));
 }
 
 void RS_ActionInterface::initPrevious(int stat) {

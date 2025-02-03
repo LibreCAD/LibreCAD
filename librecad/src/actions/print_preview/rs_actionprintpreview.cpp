@@ -29,6 +29,7 @@
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_math.h"

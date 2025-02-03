@@ -39,7 +39,7 @@ RS_ActionSelectContour::RS_ActionSelectContour(RS_EntityContainer& container,
 	actionType=RS2::ActionSelectContour;
 }
 
-void RS_ActionSelectContour::onMouseMoveEvent(int status, LC_MouseEvent *event) {
+void RS_ActionSelectContour::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *event) {
     auto ent = catchAndDescribe(event);
     if (ent != nullptr){
         // fixme - proper highlighting of planned selection - yet after fixing underlying logic!

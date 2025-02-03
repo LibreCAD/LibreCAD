@@ -5,6 +5,7 @@
 #include "rs_grid.h"
 #include "rs_entitycontainer.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "lc_linemath.h"
 #include "rs_settings.h"
 #include "lc_undoablerelzero.h"
@@ -388,7 +389,7 @@ void LC_GraphicViewport::fireUcsChanged(LC_UCS *ucs) {
     }
 }
 
-void LC_GraphicViewport::firePreviousZoomChanged(bool value) {
+void LC_GraphicViewport::firePreviousZoomChanged([[maybe_unused]]bool value) {
 // fixme - ucs - complete
 }
 

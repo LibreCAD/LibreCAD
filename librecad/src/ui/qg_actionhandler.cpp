@@ -37,6 +37,7 @@
 #include "lc_actiondrawparabolaFD.h"
 
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
 

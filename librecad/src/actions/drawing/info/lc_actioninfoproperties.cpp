@@ -79,7 +79,7 @@ void LC_ActionInfoProperties::onMouseRightButtonRelease([[maybe_unused]]int stat
     finish();
 }
 
-void LC_ActionInfoProperties::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void LC_ActionInfoProperties::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     highlightAndShowEntityInfo(e, e->isControl);
 }
 

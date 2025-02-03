@@ -439,8 +439,8 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter *painter, RS_Entity *e, 
         }
         else{
             if (pen.getColor().isEqualIgnoringFlags(m_colorBackground)
-                || (pen.getColor().toIntColor() == RS_Color::Black
-                    & pen.getColor().colorDistance(m_colorBackground) < RS_Color::MinColorDistance)) {
+                || (pen.getColor().toIntColor() == RS_Color::Black) // fixme - sand - think about Black... is it really necessary there?
+                || (pen.getColor().colorDistance(m_colorBackground) < RS_Color::MinColorDistance)) {
                 pen.setColor(m_colorForeground);
             }
         }
@@ -459,7 +459,7 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter *painter, RS_Entity *e, 
             pen.setColor(m_colorBackground);
         }
         else if (pen.getColor().isEqualIgnoringFlags(m_colorBackground)
-                 || (pen.getColor().toIntColor() == RS_Color::Black
+                 || (pen.getColor().toIntColor() == RS_Color::Black// fixme - sand - think about Black... is it really necessary there?
                      && pen.getColor().colorDistance(m_colorBackground) < RS_Color::MinColorDistance)) {
             pen.setColor(m_colorForeground);
         }

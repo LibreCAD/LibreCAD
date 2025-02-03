@@ -24,13 +24,12 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionmodifyrotate2.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "lc_rotate2options.h"

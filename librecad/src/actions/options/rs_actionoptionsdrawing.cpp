@@ -28,8 +28,8 @@
 #include "qc_applicationwindow.h"
 #include "rs_actionoptionsdrawing.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
-#include "rs_debug.h"
 #include "lc_quickinfowidget.h"
 #include "lc_anglesbasiswidget.h"
 

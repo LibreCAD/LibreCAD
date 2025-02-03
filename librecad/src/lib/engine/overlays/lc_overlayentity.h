@@ -28,6 +28,7 @@
 class LC_OverlayDrawable:public LC_Drawable {
 public:
     explicit LC_OverlayDrawable() = default;
+    virtual ~LC_OverlayDrawable() = default;
 protected:
 
 };

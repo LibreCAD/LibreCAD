@@ -41,6 +41,7 @@
 
 #include "qg_blockwidget.h"
 #include "qg_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "qg_graphicview.h"
 #include "qg_scrollbar.h"
 
@@ -55,6 +56,7 @@
 #include "rs_actionzoomscroll.h"
 #include "rs_blocklist.h"
 #include "rs_debug.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_eventhandler.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
@@ -98,6 +100,8 @@ namespace {
     constexpr double zoomFactor = 1.137;// fixme - to settings
 // zooming factor is wheel angle delta divided by this factor
     constexpr double zoomWheelDivisor = 200.; // fixme - to settings
+
+
 
 
 /**
@@ -325,6 +329,12 @@ void QG_GraphicView::initView() {
 
 void QG_GraphicView::createViewRenderer() {
     renderer =  new LC_GraphicViewRenderer(viewport, this);
+}
+
+void QG_GraphicView::layerToggled(RS_Layer *) {
+    const RS_EntityContainer::LC_SelectionInfo &info = container->getSelectionInfo();
+    RS_DIALOGFACTORY->updateSelectionWidget(info.count, info.length);
+    redraw(RS2::RedrawDrawing);
 }
 
 /**
@@ -1143,7 +1153,7 @@ void QG_GraphicView::slotVScrolled(int value) {
  * @param ox, offset X
  * @param oy, offset Y
  */
-void QG_GraphicView::setOffset(int ox, int oy) {
+void QG_GraphicView::setOffset([[maybe_unused]]int ox, [[maybe_unused]]int oy) {
 // fixme - sand - ucs - restore
 //    RS_GraphicView::setOffset(ox, oy);
     // need to adjust offset control for scrollbars when setting graphicview offset

@@ -35,7 +35,8 @@
 #include "rs_commands.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
-#include "rs_math.h"
+#include "rs_dialogfactoryinterface.h"
+
 #include "rs_system.h"
 
 namespace {

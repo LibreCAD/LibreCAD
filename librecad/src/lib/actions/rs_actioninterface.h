@@ -185,7 +185,6 @@ protected:
     void commandMessage(const QString &msg) const;
 
     void fireCoordinateEvent(const RS_Vector& coord);
-    void fireCoordinateEventForSnap(QMouseEvent *e);
 
     virtual void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos);
     void initPrevious(int status);

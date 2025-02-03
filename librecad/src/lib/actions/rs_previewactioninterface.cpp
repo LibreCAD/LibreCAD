@@ -715,12 +715,12 @@ void RS_PreviewActionInterface::onMouseRightButtonPress(int status, QMouseEvent 
     onMouseRightButtonPress(status, lcEvent);
 }
 
-void RS_PreviewActionInterface::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {}
-void RS_PreviewActionInterface::onMouseRightButtonRelease(int status, LC_MouseEvent *e) {}
-void RS_PreviewActionInterface::onMouseLeftButtonPress(int status, LC_MouseEvent *e) {}
-void RS_PreviewActionInterface::onMouseRightButtonPress(int status, LC_MouseEvent *e) {}
+void RS_PreviewActionInterface::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {}
+void RS_PreviewActionInterface::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {}
+void RS_PreviewActionInterface::onMouseLeftButtonPress([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {}
+void RS_PreviewActionInterface::onMouseRightButtonPress([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {}
 
-void RS_PreviewActionInterface::onMouseMoveEvent(int status, LC_MouseEvent* event) {}
+void RS_PreviewActionInterface::onMouseMoveEvent([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent* event) {}
 
 LC_MouseEvent *RS_PreviewActionInterface::toLCMouseMoveEvent(QMouseEvent *e) {
     auto* result = new LC_MouseEvent();
@@ -758,6 +758,16 @@ bool RS_PreviewActionInterface::parseToWCSAngle(const QString &c, double& wcsAng
         double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDeg);
         double ucsAbsValueRad = viewport->toUCSAbsAngle(ucsBasisAngleRad, m_anglesBase, m_anglesCounterClockWise);
         wcsAngleRad = viewport->toWorldAngle(ucsAbsValueRad);
+    }
+    return ok;
+}
+
+bool RS_PreviewActionInterface::parseToUCSBasisAngle(const QString &c, double& ucsBasisAngleRad){
+    bool ok = false;
+    double ucsBasisAngleDeg = RS_Math::eval(c, &ok);
+    if (ok){
+        ucsBasisAngleDeg = LC_LineMath::getMeaningfulAngle(ucsBasisAngleDeg);
+        ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDeg);
     }
     return ok;
 }

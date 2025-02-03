@@ -36,6 +36,8 @@
 #include "rs_block.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
+#include "rs_actioninterface.h"
 #include "rs_fileio.h"
 #include "rs_layer.h"
 #include "rs_graphicview.h"
@@ -599,7 +601,7 @@ QHash<QString, RS_Variable>& RS_Graphic::getVariableDict() {
 }
 
 void RS_Graphic::loadVariables(){
-    bool gridOn = getVariableInt("$GRIDMODE", 1) != 0;
+    bool gridOn = getVariableInt("$GRIDMODE", 1) != 0; // fixme - sand - check
 }
 
 

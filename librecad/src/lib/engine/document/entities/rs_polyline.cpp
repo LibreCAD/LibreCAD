@@ -32,9 +32,8 @@
 
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_ellipse.h"
-#include "rs_document.h"
-#include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_math.h"

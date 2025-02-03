@@ -30,6 +30,7 @@
 #include "rs_eventhandler.h"
 #include "rs_actioninterface.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"

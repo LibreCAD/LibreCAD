@@ -53,7 +53,7 @@ void LC_DlgUCSProperties::updateUCS() {
     }
 }
 
-void LC_DlgUCSProperties::setUCS(LC_UCSList *ulist, bool applyDuplicates, LC_UCS* u, RS2::Unit unit, RS2::LinearFormat linearFormat, int linearPrec, RS2::AngleFormat angleFormat, int anglePrec) {
+void LC_DlgUCSProperties::setUCS(LC_UCSList *ulist, bool applyDuplicates, [[maybe_unused]]LC_UCS* u, RS2::Unit unit, RS2::LinearFormat linearFormat, int linearPrec, RS2::AngleFormat angleFormat, int anglePrec) {
 
     double angleValue = RS_Math::correctAnglePlusMinusPi(ucs->getXAxis().angle());
     QString originX = RS_Units::formatLinear(ucs->getOrigin().x, unit, linearFormat, linearPrec);

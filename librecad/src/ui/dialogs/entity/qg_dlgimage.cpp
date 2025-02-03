@@ -27,9 +27,9 @@
 #include "qg_dlgimage.h"
 
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 #include "rs_image.h"
-#include "rs_math.h"
 #include "rs_units.h"
 
 /*
@@ -138,5 +138,5 @@ void QG_DlgImage::updateEntity() {
 }
 
 void QG_DlgImage::setImageFile() {
-    lePath->setText(RS_DIALOGFACTORY->requestImageOpenDialog());
+    lePath->setText(RS_DIALOGFACTORY->requestImageOpenDialog()); // fixme - is it bad dependency?
 }

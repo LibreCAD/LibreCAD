@@ -130,7 +130,7 @@ LC_UCS *LC_View::getUCS() const{
     return ucs;
 }
 
-bool LC_View::isValidName(QString &nameCandidate) {
+bool LC_View::isValidName([[maybe_unused]]QString &nameCandidate) {
     // fixme - implement Named View name validation rules there
     return true;
 }

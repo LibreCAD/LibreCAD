@@ -200,6 +200,7 @@ protected:
     virtual void onMouseRightButtonPress(int status, LC_MouseEvent *e);
 
     bool parseToWCSAngle(const QString &c, double &wcsAngleRad);
+    bool parseToUCSBasisAngle(const QString &c, double& ucsBasisAngleRad);
 
     void initFromSettings() override;
 };

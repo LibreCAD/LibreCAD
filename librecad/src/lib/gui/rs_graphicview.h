@@ -29,18 +29,13 @@
 #define RS_GRAPHICVIEW_H
 
 #include <memory>
-#include <tuple>
-#include <vector>
 
 #include <QMap>
 #include <QWidget>
 
 #include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewportlistener.h"
-#include "lc_rect.h"
-#include "lc_view.h"
 #include "lc_ucs.h"
-#include "rs_pen.h"
 #include "rs.h"
 
 
@@ -182,7 +177,7 @@ public:
     bool isShowEntityDescriptionOnHover(){
         return showEntityDescriptionOnHover;
     }
-    virtual void highlightUCSLocation(LC_UCS *ucs) {};
+   virtual void highlightUCSLocation([[maybe_unused]]LC_UCS *ucs) {};
     void onViewportChanged() override;
     void onRelativeZeroChanged(const RS_Vector &pos) override;
     void onUCSChanged(LC_UCS* ucs) override;

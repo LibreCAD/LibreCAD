@@ -38,6 +38,8 @@ class LC_UCS {
 public:
     LC_UCS();
     LC_UCS(QString name);
+    virtual ~LC_UCS();
+
     void setOrigin(RS_Vector o);
     RS_Vector getOrigin() {return ucsOrigin;};
     void setElevation(double d);

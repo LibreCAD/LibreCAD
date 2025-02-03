@@ -112,7 +112,7 @@ void RS_ActionSelectWindow::doTrigger() {
     }
 }
 
-void RS_ActionSelectWindow::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void RS_ActionSelectWindow::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     RS_Vector snapped = e->graphPoint;
     updateCoordinateWidgetByRelZero(snapped);
     if (getStatus()==SetCorner2 && pPoints->v1.valid) {

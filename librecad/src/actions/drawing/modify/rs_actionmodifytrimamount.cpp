@@ -97,7 +97,7 @@ double RS_ActionModifyTrimAmount::determineDistance(const RS_AtomicEntity *e) co
     return d;
 }
 
-void RS_ActionModifyTrimAmount::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void RS_ActionModifyTrimAmount::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     RS_Vector coord =  e->graphPoint;
     auto en = catchAndDescribe(e, enTypeList, RS2::ResolveNone);
     deleteSnapper();

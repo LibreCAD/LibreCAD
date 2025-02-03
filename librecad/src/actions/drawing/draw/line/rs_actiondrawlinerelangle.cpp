@@ -55,15 +55,22 @@ RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
                                container, graphicView)
     , pos(std::make_unique<RS_Vector>())
     , fixedAngle(fixedAngle){
-    angle = RS_Math::rad2deg(ang);
+    relativeAngleRad = /*RS_Math::rad2deg(ang)*/ ang;
 }
 
 RS_ActionDrawLineRelAngle::~RS_ActionDrawLineRelAngle() = default;
 
+void RS_ActionDrawLineRelAngle::setAngle(double angleDeg) {
+    relativeAngleRad = RS_Math::deg2rad(angleDeg);
+}
+
+double RS_ActionDrawLineRelAngle::getAngle() const {
+    return RS_Math::rad2deg(relativeAngleRad);
+}
 
 RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
     if( fixedAngle &&
-            RS_Math::getAngleDifference(RS_Math::deg2rad(angle), M_PI_2) < RS_TOLERANCE_ANGLE)
+        RS_Math::getAngleDifference(RS_Math::deg2rad(relativeAngleRad), M_PI_2) < RS_TOLERANCE_ANGLE)
         return RS2::ActionDrawLineOrthogonal;
     else
         return RS2::ActionDrawLineRelAngle;
@@ -75,12 +82,12 @@ void RS_ActionDrawLineRelAngle::finish(bool updateTB) {
 
 void RS_ActionDrawLineRelAngle::doTrigger() {
     RS_Creation creation(container, graphicView);
-    double angleRad = RS_Math::deg2rad(angle);
     moveRelativeZero(*pos); // fixme - to undoable?
-    RS_Line* line = creation.createLineRelAngle(*pos,entity,angleRad,length);
+    RS_Line* line = creation.createLineRelAngle(*pos,entity,relativeAngleRad,length);
 
-    if (line == nullptr)
-        LC_LOG(RS_Debug::D_ERROR)<<"RS_ActionDrawLineRelAngle::"<<__func__<<"(): cannot create line";
+    if (line == nullptr) {
+        LC_LOG(RS_Debug::D_ERROR) << "RS_ActionDrawLineRelAngle::" << __func__ << "(): cannot create line";
+    }
 }
 
 void RS_ActionDrawLineRelAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
@@ -97,8 +104,7 @@ void RS_ActionDrawLineRelAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             highlightSelected(entity);
             *pos = getRelZeroAwarePoint(e, snap);
             RS_Creation creation(preview.get(), nullptr, false);
-            double angleRad = RS_Math::deg2rad(angle);
-            RS_Line* lineToCreate = creation.createLineRelAngle(*pos,entity, angleRad, length);
+            auto lineToCreate = creation.createLineRelAngle(*pos, entity, relativeAngleRad, length);
             if (lineToCreate != nullptr){
                 previewEntityToCreate(lineToCreate, false);
             }
@@ -176,7 +182,7 @@ bool RS_ActionDrawLineRelAngle::doProcessCommand(int status, const QString &c) {
             double a = RS_Math::eval(c, &ok);
             if (ok){
                 accept = true;
-                angle = RS_Math::deg2rad(a);
+                relativeAngleRad = RS_Math::deg2rad(a);
             } else {
                 commandMessage(tr("Not a valid expression"));
             }

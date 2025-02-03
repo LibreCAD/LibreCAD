@@ -21,10 +21,10 @@
  ******************************************************************************/
 #include <iostream>
 
-#include <QMouseEvent>
 
 #include "rs_actiondrawhatch.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_eventhandler.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"

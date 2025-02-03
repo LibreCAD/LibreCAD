@@ -55,6 +55,7 @@
 #include "rs_text.h"
 #include "rs_graphicview.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_math.h"
 #include "dxf_format.h"
 #include "lc_defaults.h"

@@ -83,7 +83,7 @@ void RS_ActionDrawLineFree::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
-void RS_ActionDrawLineFree::onMouseLeftButtonPress(int status, LC_MouseEvent *e) {
+void RS_ActionDrawLineFree::onMouseLeftButtonPress([[maybe_unused]]int status, LC_MouseEvent *e) {
     switch(getStatus()){
         case SetStartpoint:
             setStatus(Dragging);

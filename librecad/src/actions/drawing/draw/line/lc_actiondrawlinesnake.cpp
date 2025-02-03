@@ -248,11 +248,18 @@ void LC_ActionDrawLineSnake::onCoordinateEvent(int status, [[maybe_unused]]bool 
             break;
         }
         case SetAngle: {
-            // draw segment in direction specified by angle
-            RS_Vector possiblePoint = calculateAngleEndpoint(mouse);
-            if (isNonZeroLine(possiblePoint)){
-                pPoints->data.endpoint = possiblePoint;
-                completeLineSegment(false);
+            if (isZero){
+                setAngleValue(0);
+                // ask for distance after angle entering
+                setStatus(SetDistance);
+            }
+            else {
+                // draw segment in direction specified by angle
+                RS_Vector possiblePoint = calculateAngleEndpoint(mouse);
+                if (isNonZeroLine(possiblePoint)) {
+                    pPoints->data.endpoint = possiblePoint;
+                    completeLineSegment(false);
+                }
             }
             break;
         }
@@ -646,8 +653,15 @@ bool LC_ActionDrawLineSnake::mayStart(){
 }
 
 void LC_ActionDrawLineSnake::calculateAngleSegment(double distance){
-    double angleRadians = RS_Math::deg2rad(angleDegrees);
-    double realAngle = defineActualSegmentAngle(angleRadians);
+        double realAngle;
+    if (angleIsRelative){
+        double angleRadians = RS_Math::deg2rad(angleDegrees);
+        realAngle = defineActualSegmentAngle(angleRadians);
+    }
+    else{
+        double wcsAngle = toWorldAngleFromUCSBasisDegrees(angleDegrees);
+        realAngle = wcsAngle;
+    }
     pPoints->data.endpoint = pPoints->data.startpoint.relative(distance, realAngle);
 }
 

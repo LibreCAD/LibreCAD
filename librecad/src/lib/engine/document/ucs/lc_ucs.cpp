@@ -77,7 +77,7 @@ long LC_UCS::getBaseUcsId() const {
     return baseUCS_ID;
 }
 
-bool LC_UCS::isValidName(QString &nameCandidate) {
+bool LC_UCS::isValidName([[maybe_unused]]QString &nameCandidate) {
     // fixme - implement UCS name validation rule here
     return true;
 }
@@ -128,3 +128,5 @@ RS2::IsoGridViewType LC_UCS::getIsoGridViewType() {
 bool LC_UCS::isIsometric() {
     return ucsOrthoType != LC_UCS::NON_ORTHO;
 }
+
+LC_UCS::~LC_UCS() = default;

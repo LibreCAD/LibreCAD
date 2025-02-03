@@ -57,7 +57,7 @@ RS_Vector RS_ActionDrawPoint::getFreeSnapAwarePointAlt(const LC_MouseEvent *e, c
     return mouse;
 }
 
-void RS_ActionDrawPoint::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void RS_ActionDrawPoint::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
     RS_Vector pos = e->snapPoint;
     if (!trySnapToRelZeroCoordinateEvent(e)){
         pos = getFreeSnapAwarePointAlt(e, pos);

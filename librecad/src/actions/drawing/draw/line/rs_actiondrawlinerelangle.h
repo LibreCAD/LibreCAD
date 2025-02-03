@@ -50,8 +50,8 @@ public:
     RS2::ActionType rtti() const override;
     void finish(bool updateTB) override;
     QStringList getAvailableCommands() override;
-    void setAngle(double a){angle = a;}
-    double getAngle() const{return angle;}
+    void setAngle(double angleDeg);
+    double getAngle() const;
     void setLength(double l){length = l;}
     double getLength() const{return length;}
     bool hasFixedAngle() const{return fixedAngle;}
@@ -69,7 +69,7 @@ protected:
     /**
      * Line angle.
      */
-    double angle = 0.;
+    double relativeAngleRad = 0.;
     /**
      * Line length.
      */

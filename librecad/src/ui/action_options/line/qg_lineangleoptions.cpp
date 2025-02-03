@@ -95,7 +95,7 @@ void QG_LineAngleOptions::doSetAction(RS_ActionInterface *a, bool update){
             setAngleToActionAndView(angle);
         }
         setSnapPointToActionAndView(snapPoint);
-    setLengthToActionAndView(length);
+        setLengthToActionAndView(length);
 
         ui->leAngle->setText(angle);
         ui->leLength->setText(length);

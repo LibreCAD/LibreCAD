@@ -124,7 +124,7 @@ void LC_ActionUCSCreate::onCoordinateEvent(int status, [[maybe_unused]]bool isZe
     }
 }
 
-void LC_ActionUCSCreate::onMouseRightButtonRelease(int status, LC_MouseEvent *e) {
+void LC_ActionUCSCreate::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     setStatus(getStatus() - 1); // fixme - temporary
 }
 
@@ -156,6 +156,6 @@ LC_ActionOptionsWidget *LC_ActionUCSCreate::createOptionsWidget() {
     return new LC_UCSSetOptions();
 }
 
-RS2::CursorType LC_ActionUCSCreate::doGetMouseCursor(int status) {
+RS2::CursorType LC_ActionUCSCreate::doGetMouseCursor([[maybe_unused]]int status) {
     return RS2::CadCursor;
 }

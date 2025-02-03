@@ -38,7 +38,7 @@ public:
     bool isFixedAngle() const {return m_fixedAngle;};
     void setFixedAngle(bool val) {m_fixedAngle = val;};
     bool isParentIsWcs() const {return m_parentIsWCS;};
-    void setParentIsWcs(bool parentIsWcs) {parentIsWcs = m_parentIsWCS;};
+    void setParentIsWcs(bool parentIsWcs) {m_parentIsWCS =parentIsWcs;};
     QStringList getAvailableCommands() override;
     double getCurrentAngle(){return m_currentAngle;}
 protected:

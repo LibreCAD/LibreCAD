@@ -371,7 +371,7 @@ void RS_Image::draw(RS_Painter* painter) {
     }
 }
 
-void RS_Image::drawDraft(RS_Painter *painter) {
+void RS_Image::drawDraft([[maybe_unused]]RS_Painter *painter) {
 
     // fixme - sand - ucs - RESTORE and fix image draft drawing!!!
     /*const RS_Vector &uiMin = painter->toGui(getMin());

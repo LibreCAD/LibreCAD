@@ -24,6 +24,9 @@
 **
 **********************************************************************/
 
+#include <algorithm>
+#include<cmath>
+#include <QMouseEvent>
 
 #include "lc_linemath.h"
 #include "rs_actioninterface.h"
@@ -31,16 +34,14 @@
 #include "rs_commandevent.h"
 #include "rs_actiondefault.h"
 #include "qc_applicationwindow.h"
-#include <algorithm>
-#include<cmath>
-#include<QMouseEvent>
 #include "rs_circle.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
+#include "rs_actioninterface.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
 #include "rs_grid.h"
-#include "rs_line.h"
 #include "rs_pen.h"
 #include "rs_settings.h"
 #include "rs_snapper.h"
@@ -229,10 +230,6 @@ RS_Snapper::RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicVie
 }
 
 RS_Snapper::~RS_Snapper() = default;
-RS_Entity *catchEntity(const RS_Vector &coord, const EntityTypeList &enTypeList, RS2::ResolveLevel level);
-
-QString getSnapName(int snapType);
-
 
 /**
  * Initialize (called by all constructors)
@@ -1084,10 +1081,9 @@ RS_Vector RS_Snapper::snapToAngle(
     double ucsAngleAbs = toUCSAngle(wcsAngleRaw);
 
     double ucsAngle = ucsAngleAbs - m_anglesBase;
-
     double ucsAngleSnapped = ucsAngleAbs - std::remainder(ucsAngle, angularResolution);
 
-    LC_ERR << "BASE " << RS_Math::rad2deg(m_anglesBase) << " UCSabs " << RS_Math::rad2deg(ucsAngleAbs) << " UCS " << RS_Math::rad2deg(ucsAngle) << " Snapped " << RS_Math::rad2deg(ucsAngleSnapped) << " UCSRel " << RS_Math::rad2deg(ucsAngleSnapped);
+//    LC_ERR << "BASE " << RS_Math::rad2deg(m_anglesBase) << " UCSabs " << RS_Math::rad2deg(ucsAngleAbs) << " UCS " << RS_Math::rad2deg(ucsAngle) << " Snapped " << RS_Math::rad2deg(ucsAngleSnapped) << " UCSRel " << RS_Math::rad2deg(ucsAngleSnapped);
     double wcsAngleSnapped = toWorldAngle(ucsAngleSnapped);
 
     RS_Vector res = RS_Vector::polar(referenceCoord.distanceTo(currentCoord), wcsAngleSnapped);
@@ -1158,7 +1154,7 @@ void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_V
 
     QString coordAbs = "";
     QString coordPolar = "";
-    if (prefs != nullptr && prefs->showAbsolutePosition || prefs->showRelativePositionDistAngle || prefs->showRelativePositionDeltas){
+    if (prefs != nullptr && (prefs->showAbsolutePosition || prefs->showRelativePositionDistAngle || prefs->showRelativePositionDeltas)){
         RS_Graphic* graphic = graphicView->getGraphic();
         if (graphic != nullptr) {
             if (updateFormat) {
@@ -1295,12 +1291,12 @@ void RS_Snapper::forceUpdateInfoCursor(const RS_Vector &pos) {
     infoCursor->setZonesData(&infoCursorOverlayData);
 }
 
-double RS_Snapper::toWorldAngle(double angle) const{
-    return viewport->toWorldAngle(angle);
+double RS_Snapper::toWorldAngle(double ucsAbsAngle) const{
+    return viewport->toWorldAngle(ucsAbsAngle);
 }
 
-double RS_Snapper::toWorldAngleDegrees(double angle) const{
-    return viewport->toWorldAngleDegrees(angle);
+double RS_Snapper::toWorldAngleDegrees(double ucsAbsAngleDegrees) const{
+    return viewport->toWorldAngleDegrees(ucsAbsAngleDegrees);
 }
 
 double RS_Snapper::toUCSAngle(double angle) const{
@@ -1316,6 +1312,12 @@ double RS_Snapper::toUCSBasisAngleDegrees(double wcsAngle) const{
 
 double RS_Snapper::toWorldAngleFromUCSBasisDegrees(double ucsBasisAngleDegrees) const{
     double ucsBasisAngle = RS_Math::deg2rad(ucsBasisAngleDegrees);
+    double ucsAngle = viewport->toUCSAbsAngle(ucsBasisAngle, m_anglesBase, m_anglesCounterClockWise);
+    double wcsAngle = viewport->toWorldAngle(ucsAngle);
+    return wcsAngle;
+}
+
+double RS_Snapper::toWorldAngleFromUCSBasis(double ucsBasisAngle) const{
     double ucsAngle = viewport->toUCSAbsAngle(ucsBasisAngle, m_anglesBase, m_anglesCounterClockWise);
     double wcsAngle = viewport->toWorldAngle(ucsAngle);
     return wcsAngle;

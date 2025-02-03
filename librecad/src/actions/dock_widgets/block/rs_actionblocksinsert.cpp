@@ -138,7 +138,7 @@ void RS_ActionBlocksInsert::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 }
 
 void RS_ActionBlocksInsert::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    RS_ActionInterface::fireCoordinateEventForSnap(e);
+    fireCoordinateEvent(snapPoint(e));
 }
 
 void RS_ActionBlocksInsert::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {

@@ -1,3 +1,4 @@
+
 /****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
@@ -266,12 +267,13 @@ protected:
     QString formatRelativePolar(const RS_Vector& wcsAngle) const;
     void forceUpdateInfoCursor(const RS_Vector &pos);
     bool isInfoCursorForModificationEnabled() const;
-    double toWorldAngle(double tickAngleRad) const;
-    double toWorldAngleDegrees(double angle) const;
+    double toWorldAngle(double ucsAbsAngle) const;
+    double toWorldAngleDegrees(double ucsAbsAngleDegrees) const;
     double toUCSAngle(double tickAngleRad) const;
     double toUCSBasisAngle(double wcsAngle) const;
     double toUCSBasisAngleDegrees(double wcsAngle) const;
     double toWorldAngleFromUCSBasisDegrees(double ucsBasisAngleDegrees) const;
+    double toWorldAngleFromUCSBasis(double ucBasisAngle) const;
     RS_Vector toWorld(const RS_Vector& ucsPos) const;
     RS_Vector toUCS(const RS_Vector& worldPos) const;
     void calcRectCorners(const RS_Vector &worldCorner1, const RS_Vector &worldCorner3, RS_Vector &worldCorner2, RS_Vector &worldCorner4) const;
