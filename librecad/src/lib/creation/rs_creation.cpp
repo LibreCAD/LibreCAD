@@ -127,9 +127,7 @@ RS_Entity* RS_Creation::createParallelThrough(const RS_Vector& coord,
 
     if (e->rtti()==RS2::EntityLine) {
         auto* l = (RS_Line*)e;
-        RS_ConstructionLine cl(nullptr,
-                               RS_ConstructionLineData(l->getStartpoint(),
-                                                       l->getEndpoint()));
+        RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(l->getStartpoint(),l->getEndpoint()));
         dist = cl.getDistanceToPoint(coord);
     } else {
         dist = e->getDistanceToPoint(coord);
@@ -165,21 +163,21 @@ RS_Entity* RS_Creation::createParallel(const RS_Vector& coord,
     }
 
     switch (e->rtti()) {
-    case RS2::EntityLine:
-        return createParallelLine(coord, distance, number, (RS_Line*)e, symmetric);
+        case RS2::EntityLine:
+            return createParallelLine(coord, distance, number, (RS_Line*)e, symmetric);
 
-    case RS2::EntityArc:
-        return createParallelArc(coord, distance, number, (RS_Arc*)e);
+        case RS2::EntityArc:
+            return createParallelArc(coord, distance, number, (RS_Arc*)e);
 
-    case RS2::EntityCircle:
-        return createParallelCircle(coord, distance, number, (RS_Circle*)e);
+        case RS2::EntityCircle:
+            return createParallelCircle(coord, distance, number, (RS_Circle*)e);
 
-    case RS2::EntityParabola:
-    case RS2::EntitySplinePoints:
-        return createParallelSplinePoints(coord, distance, number, (LC_SplinePoints*)e);
+        case RS2::EntityParabola:
+        case RS2::EntitySplinePoints:
+            return createParallelSplinePoints(coord, distance, number, (LC_SplinePoints*)e);
 
-    default:
-        break;
+        default:
+            break;
     }
 
     return nullptr;
@@ -248,6 +246,8 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
             if (!ret){
                 ret = newLine;
             }
+
+            // fixme - sand - use ONE undo-cycle, move adding to the document to upper level
             setupAndAddEntity(newLine);
 
             if (symmetric){
