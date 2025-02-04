@@ -30,16 +30,23 @@
 #include "rs_entitycontainer.h"
 #include "rs_eventhandler.h"
 
+#include "lc_undosection.h"
+
 #include "qc_applicationwindow.h"
 #include "qc_applicationwindow.h"
+
 
 #include "qg_actionhandler.h"
 
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetcorner.h"
+#include "intern/qc_actionentsel.h"
 
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QFile>
+#include <QTextStream>
+
 #include <QFileDialog>
 
 #include "LCL.h"
@@ -69,7 +76,7 @@ RS_ScriptingApi::~RS_ScriptingApi()
 {
 }
 
-void RS_ScriptingApi::command(QString &cmd)
+void RS_ScriptingApi::command(const QString &cmd)
 {
     QG_ActionHandler* actionHandler = nullptr;
     actionHandler = QC_ApplicationWindow::getAppWindow()->getActionHandler();
@@ -78,6 +85,44 @@ void RS_ScriptingApi::command(QString &cmd)
     {
         actionHandler->command(cmd.simplified());
     }
+}
+
+std::string RS_ScriptingApi::copyright()
+{
+    QFile f(":/readme.md");
+    if (!f.open(QFile::ReadOnly | QFile::Text))
+    {
+        return "";
+    }
+    QTextStream in(&f);
+    return in.readAll().toStdString();
+}
+
+std::string RS_ScriptingApi::credits()
+{
+    return "Thanks to all the people supporting LibreCAD for supporting LibreCAD development. See https://dokuwiki.librecad.org for more information.\n";
+}
+
+void RS_ScriptingApi::help(const QString &tag)
+{
+    QDir directory(QDir::currentPath());
+    QString librebrowser = directory.absoluteFilePath("librebrowser");
+
+    if(QFile::exists(librebrowser))
+    {
+        if (!tag.isEmpty())
+        {
+            librebrowser += " '";
+            librebrowser += tag;
+            librebrowser += "' &";
+        }
+        system(qUtf8Printable(librebrowser));
+    }
+    else
+    {
+        msgInfo("poor Help call 'SOS' :-b");
+    }
+
 }
 
 void RS_ScriptingApi::msgInfo(const char *msg)
@@ -412,6 +457,113 @@ bool RS_ScriptingApi::getDist(const char *msg, const RS_Vector &basePoint, doubl
     return false;
 }
 
+bool RS_ScriptingApi::getOrient(const char *msg, const RS_Vector &basePoint, double &rad)
+{
+    double x=0.0, y=0.0, z=0.0;
+    Q_UNUSED(z)
+    QString prompt = QObject::tr(msg);
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_Document* doc = appWin->getDocument();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+
+    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
+    {
+        qDebug() << "graphicView == nullptr";
+        return false;
+    }
+
+    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
+    if (a)
+    {
+        QPointF *point = new QPointF;
+        QPointF *base;
+        bool status = false;
+
+        if (!(prompt.isEmpty()))
+        {
+            a->setMessage(prompt);
+        }
+
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+
+        if (basePoint.valid)
+        {
+            base = new QPointF(basePoint.x, basePoint.y);
+            z = basePoint.z;
+            a->setBasepoint(base);
+        }
+        else
+        {
+            return false;
+        }
+
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!graphicView->getEventHandler()->hasAction())
+                break;
+        }
+        if (a->isCompleted() && !a->wasCanceled())
+        {
+            a->getPoint(point);
+            status = true;
+        }
+
+        graphicView->killAllActions();
+
+        if(status)
+        {
+            x = point->x();
+            y = point->y();
+
+            rad = std::atan2(point->y() - y, point->x() - x);
+            delete point;
+            if (basePoint.valid)
+            {
+                delete base;
+            }
+            return true;
+        }
+        else
+        {
+            delete point;
+            if (basePoint.valid)
+            {
+                delete base;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool RS_ScriptingApi::entdel(unsigned int id)
+{
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_Document* doc = appWin->getDocument();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+    RS_EntityContainer* entityContainer = graphicView->getContainer();
+    LC_UndoSection undo(doc, graphicView);
+
+    if(entityContainer->count())
+    {
+        for (auto e: *entityContainer) {
+            if (e->getId() == id)
+            {
+                e->setSelected(false);
+                e->changeUndoState();
+                undo.addUndoable(e);
+                graphicView->redraw(RS2::RedrawDrawing);
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
 
 unsigned int RS_ScriptingApi::entlast()
 {
@@ -610,6 +762,61 @@ unsigned int RS_ScriptingApi::entnext(unsigned int current)
     }
 
     return 0;
+}
+
+bool RS_ScriptingApi::entsel(const QString &prombt, unsigned long &id, RS_Vector &point)
+{
+    QString prom = "Select object: ";
+
+    if (!prombt.isEmpty())
+    {
+        prom = prombt;
+    }
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_Document* doc = appWin->getDocument();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+
+    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
+    {
+        return false;
+    }
+
+    QC_ActionEntSel* a = new QC_ActionEntSel(*doc, *graphicView);
+    if (a)
+    {
+        a->setMessage(prom);
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!graphicView->getEventHandler()->hasAction())
+                break;
+        }
+
+        if (a->isCompleted())
+        {
+            graphicView->killAllActions();
+
+            if (a->wasCanceled())
+            {
+                return false;
+            }
+
+            point.x = a->getPoint().x;
+            point.y = a->getPoint().y;
+            point.z = a->getPoint().z;
+            id = static_cast<unsigned long>(a->getEntityId());
+
+            return true;
+        }
+    }
+
+    graphicView->killAllActions();
+    return false;
 }
 
 int RS_ScriptingApi::loadDialog(const char *filename)

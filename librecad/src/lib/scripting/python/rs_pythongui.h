@@ -35,31 +35,29 @@
 class RS_PythonGui
 {
 public:
-    RS_PythonGui();
-    ~RS_PythonGui();
+    RS_PythonGui() {}
+    ~RS_PythonGui() {}
 
     void prompt(const char *prompt);
     void initGet(const char *str="", int bit=0);
-    void MessageBox(const char *msg);
+    void MessageBox(const char *message);
 
     int GetIntDialog(const char *prompt);
-    int getInt(const char *msg =  "Enter an integer: ") const;
-
     double GetDoubleDialog(const char *prompt);
-    double getReal(const char *msg = "Enter a floating point number: ") const;
-
-    double getOrient(const char *msg = "Enter a point: ", const RS_Vector &basePoint=RS_Vector(0, 0)) const;
 
     char ReadCharDialog();
-    const std::string OpenFileDialog(const char *title, const char *fileName, const char *fileExt);
+    const std::string OpenFileDialog(const char *title, const char *filename, const char *ext);
     const std::string GetStringDialog(const char *prompt);
-    const std::string getString(const char *msg = "Enter a text: ");
-    const std::string getKword(const char *msg);
+    const std::string getKword(const char *prompt);
 
-    RS_Vector getPoint(const char *msg = "Enter a point: ", const RS_Vector basePoint=RS_Vector()) const;
-    RS_Vector getCorner(const char *msg = "Enter second corner: ", const RS_Vector &basePoint=RS_Vector(0, 0)) const;
+    RS_Vector getPoint(const char *prompt = "", const RS_Vector basePoint=RS_Vector()) const;
+    RS_Vector getCorner(const char *prompt = "", const RS_Vector &basePoint=RS_Vector()) const;
 
-    PyObject *getDist(const char *msg = "Enter second point: ", const RS_Vector &basePoint=RS_Vector(0, 0)) const;
+    PyObject *getDist(const char *prompt = "", const RS_Vector &basePoint=RS_Vector()) const;
+    PyObject *getInt(const char *prompt = "") const;
+    PyObject *getOrient(const char *prompt = "", const RS_Vector &basePoint=RS_Vector()) const;
+    PyObject *getReal(const char *prompt = "") const;
+    PyObject *getString(const char *prompt = "") const;
 
 };
 

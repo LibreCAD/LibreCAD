@@ -65,12 +65,7 @@ PyObject* RS_PythonDcl::doneDialog(int res) const
 {
     int x, y;
 
-    if (RS_SCRIPTINGAPI->doneDialog(res, x, y))
-    {
-        return Py_BuildValue("(ii)", x, y);
-    }
-
-    Py_RETURN_NONE;
+    return RS_SCRIPTINGAPI->doneDialog(res, x, y) ? Py_BuildValue("(ii)", x, y) : Py_None;
 }
 
 bool RS_PythonDcl::setTile(const char *key, const char *val)
@@ -92,12 +87,7 @@ PyObject* RS_PythonDcl::getAttr(const char *key, const char *attr) const
 {
     static std::string result;
 
-    if (RS_SCRIPTINGAPI->getAttr(key, attr, result))
-    {
-        return Py_BuildValue("s", result.c_str());
-    }
-
-    Py_RETURN_NONE;
+    return RS_SCRIPTINGAPI->getAttr(key, attr, result) ? Py_BuildValue("s", result.c_str()) : Py_None;
 }
 
 bool RS_PythonDcl::modeTile(const char *key, int mode)
@@ -114,12 +104,7 @@ PyObject* RS_PythonDcl::addList(const char *val) const
 {
     static std::string result;
 
-    if (RS_SCRIPTINGAPI->addList(val, result))
-    {
-        return Py_BuildValue("s", result.c_str());
-    }
-
-    Py_RETURN_NONE;
+    return RS_SCRIPTINGAPI->addList(val, result) ? Py_BuildValue("s", result.c_str()) : Py_None;
 }
 
 void RS_PythonDcl::endList()
@@ -131,12 +116,7 @@ PyObject* RS_PythonDcl::dimxTile(const char *key) const
 {
     int x;
 
-    if (RS_SCRIPTINGAPI->dimxTile(key, x))
-    {
-        return Py_BuildValue("i", x);
-    }
-
-    Py_RETURN_NONE;
+    return RS_SCRIPTINGAPI->dimxTile(key, x) ? Py_BuildValue("i", x) : Py_None;
 }
 
 PyObject* RS_PythonDcl::dimyTile(const char *key) const
@@ -153,42 +133,22 @@ PyObject* RS_PythonDcl::dimyTile(const char *key) const
 
 PyObject* RS_PythonDcl::fillImage(int x, int y, int width, int height, int color) const
 {
-    if (RS_SCRIPTINGAPI->fillImage(x, y, width, height, color))
-    {
-        return Py_BuildValue("i", color);
-    }
-
-    Py_RETURN_NONE;
+    return RS_SCRIPTINGAPI->fillImage(x, y, width, height, color) ? Py_BuildValue("i", color) : Py_None;
 }
 
 PyObject* RS_PythonDcl::vectorImage(int x1, int y1, int x2, int y2, int color) const
 {
-    if (RS_SCRIPTINGAPI->vectorImage(x1, y1, x2, y2, color))
-    {
-        return Py_BuildValue("i", color);
-    }
-
-    Py_RETURN_NONE;
+    return RS_SCRIPTINGAPI->vectorImage(x1, y1, x2, y2, color) ? Py_BuildValue("i", color) : Py_None;
 }
 
 PyObject* RS_PythonDcl::pixImage(int x1, int y1, int x2, int y2, const char *path) const
 {
-    if (RS_SCRIPTINGAPI->pixImage(x1, y1, x2, y2, path))
-    {
-        return Py_BuildValue("s", path);
-    }
-
-    Py_RETURN_NONE;
+    return RS_SCRIPTINGAPI->pixImage(x1, y1, x2, y2, path) ? Py_BuildValue("s", path) : Py_None;
 }
 
 PyObject* RS_PythonDcl::textImage(int x1, int y1, int x2, int y2, const char *text, int color) const
 {
-    if (RS_SCRIPTINGAPI->textImage(x1, y1, x2, y2, text, color))
-    {
-        return Py_BuildValue("s", text);
-    }
-
-    Py_RETURN_NONE;
+    return RS_SCRIPTINGAPI->textImage(x1, y1, x2, y2, text, color) ? Py_BuildValue("s", text) : Py_None;
 }
 
 void RS_PythonDcl::endImage()

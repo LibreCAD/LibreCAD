@@ -41,15 +41,21 @@ public:
     static RS_ScriptingApi* instance();
     ~RS_ScriptingApi();
 
-    void command(QString &com);
+    void command(const QString &com);
     void endList();
     void endImage();
     void msgInfo(const char *msg);
     void termDialog();
     void unloadDialog(int id);
+    void help(const QString &tag="");
+
+    std::string copyright();
+    std::string credits();
 
     unsigned int entlast();
     unsigned int entnext(unsigned int current=0);
+    bool entdel(unsigned int id);
+    bool entsel(const QString &prombt, unsigned long &id, RS_Vector &point);
 
     int loadDialog(const char *filename);
     int startDialog();
@@ -73,6 +79,7 @@ public:
     bool vectorImage(int x1, int y1, int x2, int y2, int color);
     bool getFiled(const char *title, const char *def, const char *ext, int flags, std::string &filename);
     bool getDist(const char *msg, const RS_Vector &basePoint, double &distance);
+    bool getOrient(const char *msg, const RS_Vector &basePoint, double &rad);
 
     const std::string startImage(const char *key);
     const std::string startList(const char *key, int operation, int index);

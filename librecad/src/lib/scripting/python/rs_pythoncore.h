@@ -33,6 +33,14 @@
 #include "rs_graphic.h"
 #include "rs_entitycontainer.h"
 
+class DXF_Ename
+{
+    DXF_Ename(unsigned int id) : id(id) {}
+    ~DXF_Ename() {}
+public:
+    unsigned int id;
+};
+
 class RS_PythonCore
 {
 public:
@@ -41,6 +49,8 @@ public:
 
     void command(const char *cmd);
     PyObject *entlast();
+    PyObject *entdel(unsigned int id);
+    PyObject *entsel(const char* prombt);
 
     RS_Document *getDocument() const;
     RS_Graphic *getGraphic() const;

@@ -84,3 +84,41 @@ PyObject *RS_PythonCore::entlast()
 
     return id > 0 ? Py_BuildValue("{s:i}", "-1", static_cast<int>(id)) : Py_None;
 }
+
+PyObject *RS_PythonCore::entdel(unsigned int id)
+{
+    return RS_SCRIPTINGAPI->entdel(id) ? Py_BuildValue("{s:i}", "-1", static_cast<int>(id)) : Py_None;
+}
+
+PyObject *RS_PythonCore::entsel(const char* prombt)
+{
+    QString prom = "Select object:";
+    unsigned long id;
+    RS_Vector result;
+
+    if (std::strcmp(prombt, ""))
+    {
+        prom = prombt;
+    }
+
+    if (Py_CommandEdit != nullptr)
+    {
+        Py_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prom)));
+        Py_CommandEdit->setFocus();
+        Py_CommandEdit->doProcess(false);
+    }
+
+    if (RS_SCRIPTINGAPI->entsel(QObject::tr(qUtf8Printable(prom)), id, result))
+    {
+        if (Py_CommandEdit != nullptr)
+        {
+            Py_CommandEdit->resetPrompt();
+        }
+
+        return Py_BuildValue("(i(ddd)))", id, result.x, result.y, result.z);
+    }
+
+    Py_CommandEdit->resetPrompt();
+
+    Py_RETURN_NONE;
+}

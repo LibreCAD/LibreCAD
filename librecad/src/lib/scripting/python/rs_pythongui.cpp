@@ -44,22 +44,14 @@
 #include <QMessageBox>
 #include <QFileDialog>
 
-RS_PythonGui::RS_PythonGui()
+void RS_PythonGui::MessageBox(const char *message)
 {
+    RS_SCRIPTINGAPI->msgInfo(message);
 }
 
-RS_PythonGui::~RS_PythonGui()
+const std::string RS_PythonGui::OpenFileDialog(const char *title, const char *filename, const char *ext)
 {
-}
-
-void RS_PythonGui::MessageBox(const char *msg)
-{
-    RS_SCRIPTINGAPI->msgInfo(msg);
-}
-
-const std::string RS_PythonGui::OpenFileDialog(const char *title, const char *fileName, const char *fileExt)
-{
-    return QFileDialog::getOpenFileName(nullptr, QObject::tr(title), fileName, QObject::tr(fileExt)).toStdString();
+    return QFileDialog::getOpenFileName(nullptr, QObject::tr(title), filename, QObject::tr(ext)).toStdString();
 }
 
 int RS_PythonGui::GetIntDialog(const char *prompt)
@@ -77,38 +69,48 @@ const std::string RS_PythonGui::GetStringDialog(const char *prompt)
     return RS_SCRIPTINGAPI->getStrDlg(prompt);
 }
 
-const std::string RS_PythonGui::getString(const char *msg)
+PyObject* RS_PythonGui::getString(const char *prompt) const
 {
+    QString prom = "Enter a string: ";
     QString result;
+
+    if (std::strcmp(prompt, ""))
+    {
+        prom = prompt;
+    }
 
     if (Py_CommandEdit != nullptr)
     {
-        Py_CommandEdit->setPrompt(QObject::tr(msg));
+        Py_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prom)));
         Py_CommandEdit->setFocus();
         Py_CommandEdit->doProcess(false);
 
         result = RS_Py_InputHandle::readLine(Py_CommandEdit);
+        if (result.isEmpty())
+        {
+            Py_RETURN_NONE;
+        }
 
         Py_CommandEdit->resetPrompt();
     }
     else
     {
-        result = RS_SCRIPTINGAPI->getStrDlg(msg).c_str();
+        result = RS_SCRIPTINGAPI->getStrDlg(qUtf8Printable(prom)).c_str();
     }
 
-    return result.toStdString();
+    return Py_BuildValue("s", qUtf8Printable(result));
 }
 
-RS_Vector RS_PythonGui::getCorner(const char *msg, const RS_Vector &basePoint) const
+RS_Vector RS_PythonGui::getCorner(const char *prompt, const RS_Vector &basePoint) const
 {
     if (Py_CommandEdit != nullptr)
     {
-        Py_CommandEdit->setPrompt(QObject::tr(msg));
+        Py_CommandEdit->setPrompt(QObject::tr(prompt));
         Py_CommandEdit->setFocus();
         Py_CommandEdit->doProcessLc(true);
     }
 
-    RS_Vector result = RS_SCRIPTINGAPI->getCorner(msg, basePoint);
+    RS_Vector result = RS_SCRIPTINGAPI->getCorner(prompt, basePoint);
 
     if (Py_CommandEdit != nullptr)
     {
@@ -119,16 +121,16 @@ RS_Vector RS_PythonGui::getCorner(const char *msg, const RS_Vector &basePoint) c
     return result;
 }
 
-RS_Vector RS_PythonGui::getPoint(const char *msg, const RS_Vector basePoint) const
+RS_Vector RS_PythonGui::getPoint(const char *prompt, const RS_Vector basePoint) const
 {
     if (Py_CommandEdit != nullptr)
     {
-        Py_CommandEdit->setPrompt(QObject::tr(msg));
+        Py_CommandEdit->setPrompt(QObject::tr(prompt));
         Py_CommandEdit->setFocus();
         Py_CommandEdit->doProcessLc(true);
     }
 
-    RS_Vector result = RS_SCRIPTINGAPI->getPoint(msg, basePoint);
+    RS_Vector result = RS_SCRIPTINGAPI->getPoint(prompt, basePoint);
 
     if (Py_CommandEdit != nullptr)
     {
@@ -139,25 +141,185 @@ RS_Vector RS_PythonGui::getPoint(const char *msg, const RS_Vector basePoint) con
     return result;
 }
 
-PyObject* RS_PythonGui::getDist(const char *msg, const RS_Vector &basePoint) const
+PyObject* RS_PythonGui::getDist(const char *prompt, const RS_Vector &basePoint) const
 {
+    QString prom = "Enter second point: ";
+
+    if (std::strcmp(prompt, ""))
+    {
+        prom = prompt;
+    }
+
     if (Py_CommandEdit != nullptr)
     {
-        Py_CommandEdit->setPrompt(QObject::tr(msg));
+        Py_CommandEdit->setPrompt(QObject::tr(prompt));
         Py_CommandEdit->setFocus();
         Py_CommandEdit->doProcessLc(true);
     }
 
     double distance;
 
-    if (RS_SCRIPTINGAPI->getDist(msg, basePoint, distance))
+    if (basePoint.valid)
     {
-        if (Py_CommandEdit != nullptr)
+        if (RS_SCRIPTINGAPI->getDist(qUtf8Printable(prom), basePoint, distance))
         {
-            Py_CommandEdit->resetPrompt();
-            Py_CommandEdit->doProcessLc(false);
+            if (Py_CommandEdit != nullptr)
+            {
+                Py_CommandEdit->resetPrompt();
+                Py_CommandEdit->doProcessLc(false);
+            }
+            return Py_BuildValue("d", distance);
         }
-        return Py_BuildValue("d", distance);
+    }
+    else
+    {
+        RS_Vector result = RS_SCRIPTINGAPI->getPoint(qUtf8Printable(QObject::tr("Enter first point: ")), basePoint);
+
+        if (result.valid && RS_SCRIPTINGAPI->getDist(qUtf8Printable(prom), basePoint, distance))
+        {
+            if (Lisp_CommandEdit != nullptr)
+            {
+                Lisp_CommandEdit->resetPrompt();
+                Py_CommandEdit->doProcessLc(false);
+            }
+            return Py_BuildValue("d", distance);
+        }
+    }
+
+
+    if (Py_CommandEdit != nullptr)
+    {
+        Py_CommandEdit->resetPrompt();
+        Py_CommandEdit->doProcessLc(false);
+    }
+
+    Py_RETURN_NONE;
+}
+
+PyObject* RS_PythonGui::getInt(const char *prompt) const
+{
+    QString prom = "Enter an integer: ";
+
+    if (std::strcmp(prompt, ""))
+    {
+        prom = prompt;
+    }
+
+    int x;
+    static const std::regex intRegex("[+-]?[0-9]+|[+-]?0[xX][0-9A-Fa-f]");
+
+    if (Py_CommandEdit != nullptr)
+    {
+        while (1)
+        {
+            Py_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prom)));
+            Py_CommandEdit->setFocus();
+            Py_CommandEdit->doProcess(false);
+
+            QString result = RS_Py_InputHandle::readLine(Py_CommandEdit);
+            if (result.isEmpty())
+            {
+                Py_RETURN_NONE;
+            }
+            if (std::regex_match(qUtf8Printable(result), intRegex))
+            {
+                x = result.toInt();
+                break;
+            }
+        }
+        Py_CommandEdit->resetPrompt();
+    }
+    else
+    {
+        x = RS_SCRIPTINGAPI->getIntDlg(qUtf8Printable(prom));
+    }
+    return Py_BuildValue("i", x);
+}
+
+PyObject* RS_PythonGui::getReal(const char *prompt) const
+{
+    QString prom = "Enter a floating point number: ";
+
+    if (std::strcmp(prompt, ""))
+    {
+        prom = prompt;
+    }
+
+    double x = 0;
+    QString result;
+    static const std::regex floatRegex("[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?");
+
+    if (Py_CommandEdit != nullptr)
+    {
+        while (1)
+        {
+            Py_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prom)));
+            Py_CommandEdit->setFocus();
+            Py_CommandEdit->doProcess(false);
+
+            result = RS_Py_InputHandle::readLine(Py_CommandEdit);
+            if (result.isEmpty())
+            {
+                Py_RETURN_NONE;
+            }
+            if (std::regex_match(qUtf8Printable(result), floatRegex))
+            {
+                x = result.toInt();
+                break;
+            }
+        }
+        Py_CommandEdit->resetPrompt();
+    }
+    else
+    {
+        x = RS_SCRIPTINGAPI->getDoubleDlg(qUtf8Printable(prom));
+    }
+    return Py_BuildValue("d", x);
+}
+
+PyObject* RS_PythonGui::getOrient(const char *prompt, const RS_Vector &basePoint) const
+{
+    QString prom = "Enter second point: ";
+
+    if (std::strcmp(prompt, ""))
+    {
+        prom = prompt;
+    }
+
+    if (Py_CommandEdit != nullptr)
+    {
+        Py_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prom)));
+        Py_CommandEdit->setFocus();
+        Py_CommandEdit->doProcessLc(true);
+    }
+
+    double radius;
+
+    if (basePoint.valid)
+    {
+        if(RS_SCRIPTINGAPI->getOrient(qUtf8Printable(prom), basePoint, radius))
+        {
+            if (Lisp_CommandEdit != nullptr)
+            {
+                Lisp_CommandEdit->resetPrompt();
+                Py_CommandEdit->doProcessLc(false);
+            }
+            return Py_BuildValue("d", radius);
+        }
+    }
+    else
+    {
+        RS_Vector result = RS_SCRIPTINGAPI->getPoint(qUtf8Printable(QObject::tr("Enter first point: ")), basePoint);
+
+        if (result.valid && RS_SCRIPTINGAPI->getOrient(qUtf8Printable(prom), result, radius))
+        {
+            if (Lisp_CommandEdit != nullptr)
+            {
+                Lisp_CommandEdit->resetPrompt();
+                Py_CommandEdit->doProcessLc(false);
+            }
+            return Py_BuildValue("d", radius);
+        }
     }
 
     if (Py_CommandEdit != nullptr)
@@ -169,169 +331,12 @@ PyObject* RS_PythonGui::getDist(const char *msg, const RS_Vector &basePoint) con
     Py_RETURN_NONE;
 }
 
-int RS_PythonGui::getInt(const char *msg) const
-{
-    int x = 0;
-    QString result;
-    static const std::regex intRegex("[+-]?[0-9]+|[+-]?0[xX][0-9A-Fa-f]");
-
-    if (Py_CommandEdit != nullptr)
-    {
-        while (1)
-        {
-            Py_CommandEdit->setPrompt(QObject::tr(msg));
-            Py_CommandEdit->setFocus();
-            Py_CommandEdit->doProcess(false);
-
-            result = RS_Py_InputHandle::readLine(Py_CommandEdit);
-            if (std::regex_match(qUtf8Printable(result), intRegex))
-            {
-                x = result.toInt();
-                break;
-            }
-        }
-        Py_CommandEdit->resetPrompt();
-    }
-    else
-    {
-        x = RS_SCRIPTINGAPI->getIntDlg(msg);
-    }
-    return x;
-}
-
-double RS_PythonGui::getReal(const char *msg) const
-{
-    double x = 0;
-    QString prompt = QObject::tr(msg);
-    QString result;
-    static const std::regex floatRegex("[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?");
-
-    if (Py_CommandEdit != nullptr)
-    {
-        while (1)
-        {
-            Py_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-            Py_CommandEdit->setFocus();
-            Py_CommandEdit->doProcess(false);
-
-            result = RS_Py_InputHandle::readLine(Py_CommandEdit);
-            if (std::regex_match(qUtf8Printable(result), floatRegex))
-            {
-                x = result.toInt();
-                break;
-            }
-        }
-        Py_CommandEdit->resetPrompt();
-    }
-    else
-    {
-        x = RS_SCRIPTINGAPI->getDoubleDlg(qUtf8Printable(prompt));
-    }
-    return x;
-}
-
-double RS_PythonGui::getOrient(const char *msg, const RS_Vector &basePoint) const
-{
-    double x=0, y=0, z=0;
-    QString prompt = QObject::tr(msg);
-    Q_UNUSED(z)
-
-    auto& appWin = QC_ApplicationWindow::getAppWindow();
-    RS_Document* doc = appWin->getDocument();
-    RS_GraphicView* graphicView = appWin->getGraphicView();
-
-    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
-    {
-        qDebug() << "graphicView == nullptr";
-        return 0.0;
-    }
-
-    if (Py_CommandEdit != nullptr)
-    {
-        Py_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-        Py_CommandEdit->setFocus();
-        Py_CommandEdit->doProcessLc(true);
-    }
-
-    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
-    if (a)
-    {
-        QPointF *point = new QPointF;
-        QPointF *base;
-        bool status = false;
-
-        if (!(prompt.isEmpty()))
-        {
-            a->setMessage(prompt);
-        }
-
-        graphicView->killAllActions();
-        graphicView->setCurrentAction(a);
-
-        if (basePoint.valid)
-        {
-            base = new QPointF(basePoint.x, basePoint.y);
-            z = basePoint.z;
-            a->setBasepoint(base);
-        }
-        else
-        {
-            return 0.0;
-        }
-
-        QEventLoop ev;
-        while (!a->isCompleted())
-        {
-            ev.processEvents ();
-            if (!graphicView->getEventHandler()->hasAction())
-                break;
-        }
-        if (a->isCompleted() && !a->wasCanceled())
-        {
-            a->getPoint(point);
-            status = true;
-        }
-        //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
-        graphicView->killAllActions();
-
-        if (Py_CommandEdit != nullptr)
-        {
-            Py_CommandEdit->resetPrompt();
-            Py_CommandEdit->doProcessLc(false);
-        }
-
-        if(status)
-        {
-            x = point->x();
-            y = point->y();
-
-            double rad = std::atan2(point->y() - y, point->x() - x);
-            delete point;
-            if (basePoint.valid)
-            {
-                delete base;
-            }
-            return rad;
-        }
-        else
-        {
-            delete point;
-            if (basePoint.valid)
-            {
-                delete base;
-            }
-        }
-    }
-
-    return 0.0;
-}
-
 char RS_PythonGui::ReadCharDialog()
 {
     return RS_InputDialog::readChar();
 }
 
-const std::string RS_PythonGui::getKword(const char *msg)
+const std::string RS_PythonGui::getKword(const char *prompt)
 {
     const lclInteger* bit = VALUE_CAST(lclInteger, shadowEnv->get("initget_bit"));
     const lclString* pat = VALUE_CAST(lclString, shadowEnv->get("initget_string"));
@@ -353,7 +358,7 @@ const std::string RS_PythonGui::getKword(const char *msg)
     if (Py_CommandEdit != nullptr)
     {
         while (1) {
-            Py_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(msg)));
+            Py_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
             Py_CommandEdit->setFocus();
             Py_CommandEdit->doProcess(false);
             result = RS_Py_InputHandle::readLine(Py_CommandEdit);
@@ -374,7 +379,7 @@ const std::string RS_PythonGui::getKword(const char *msg)
     else
     {
         while (1) {
-            result = RS_SCRIPTINGAPI->getStrDlg(qUtf8Printable(msg)).c_str();
+            result = RS_SCRIPTINGAPI->getStrDlg(qUtf8Printable(prompt)).c_str();
 
             for (auto &it : StringList)
             {

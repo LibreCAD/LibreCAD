@@ -37,12 +37,9 @@
 #include "rs_fontlist.h"
 #include "rs_entitycontainer.h"
 #include "rs_actionselectsingle.h"
-#include "lc_undosection.h"
+//#include "lc_undosection.h"
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
-#include "intern/qc_actiongetpoint.h"
-#include "intern/qc_actiongetcorner.h"
-#include "intern/qc_actionentsel.h"
 
 #include "rs_filterdxfrw.h"
 
@@ -1018,13 +1015,7 @@ BUILTIN("contains?")
 BUILTIN("copyright")
 {
     CHECK_ARGS_IS(0);
-    QFile f(":/readme.md");
-    if (!f.open(QFile::ReadOnly | QFile::Text))
-    {
-        return lcl::nilValue();
-    }
-    QTextStream in(&f);
-    std::cout << in.readAll().toStdString();
+    std::cout << RS_SCRIPTINGAPI->copyright();
 
     return lcl::nilValue();
 }
@@ -1048,7 +1039,7 @@ BUILTIN("count")
 BUILTIN("credits")
 {
     CHECK_ARGS_IS(0);
-    std::cout << "Thanks to all the people supporting LibreCAD for supporting LibreCAD development. See https://dokuwiki.librecad.org for more information." << std::endl;
+    std::cout << RS_SCRIPTINGAPI->credits();
     return lcl::nilValue();
 }
 
@@ -1151,27 +1142,7 @@ BUILTIN("entdel")
     CHECK_ARGS_IS(1);
     ARG(lclEname, en);
 
-    auto& appWin = QC_ApplicationWindow::getAppWindow();
-    RS_Document* doc = appWin->getDocument();
-    RS_GraphicView* graphicView = appWin->getGraphicView();
-    RS_EntityContainer* entityContainer = graphicView->getContainer();
-    LC_UndoSection undo(doc, graphicView);
-
-    if(entityContainer->count())
-    {
-        for (auto e: *entityContainer) {
-            if (e->getId() == en->value())
-            {
-                e->setSelected(false);
-                e->changeUndoState();
-                undo.addUndoable(e);
-                graphicView->redraw(RS2::RedrawDrawing);
-                return lcl::ename(en->value());
-            }
-        }
-    }
-
-    return lcl::nilValue();
+    return RS_SCRIPTINGAPI->entdel(en->value()) ? lcl::ename(en->value()) : lcl::nilValue();
 }
 
 BUILTIN("entget")
@@ -3023,21 +2994,14 @@ BUILTIN("entnext")
 BUILTIN("entsel")
 {
     int args = CHECK_ARGS_BETWEEN(0, 1);
-    QString prompt = "Select object:";
+    QString prompt = "Select object: ";
+    unsigned long id;
+    RS_Vector result;
 
     if (args == 1 && !NIL_PTR)
     {
         ARG(lclString, str);
         prompt = str->value().c_str();
-    }
-
-    auto& appWin = QC_ApplicationWindow::getAppWindow();
-    RS_Document* doc = appWin->getDocument();
-    RS_GraphicView* graphicView = appWin->getGraphicView();
-
-    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
-    {
-        return lcl::nilValue();
     }
 
     if (Lisp_CommandEdit != nullptr)
@@ -3046,51 +3010,24 @@ BUILTIN("entsel")
         Lisp_CommandEdit->setFocus();
     }
 
-    QC_ActionEntSel* a = new QC_ActionEntSel(*doc, *graphicView);
-    if (a)
+    if (RS_SCRIPTINGAPI->entsel(QObject::tr(qUtf8Printable(prompt)), id, result))
     {
-        if (!(prompt.isEmpty()))
+        if (Lisp_CommandEdit != nullptr)
         {
-            a->setMessage(prompt);
-        }
-        graphicView->killAllActions();
-        graphicView->setCurrentAction(a);
-
-        QEventLoop ev;
-        while (!a->isCompleted())
-        {
-            ev.processEvents ();
-            if (!graphicView->getEventHandler()->hasAction())
-                break;
+            Lisp_CommandEdit->resetPrompt();
         }
 
-        if (a->isCompleted())
-        {
-            graphicView->killAllActions();
+        lclValueVec *ptn = new lclValueVec(3);
+        ptn->at(0) = lcl::ldouble(result.x);
+        ptn->at(1) = lcl::ldouble(result.y);
+        ptn->at(2) = lcl::ldouble(result.z);
 
-            if (Lisp_CommandEdit != nullptr)
-            {
-                Lisp_CommandEdit->resetPrompt();
-            }
+        lclValueVec *res = new lclValueVec(2);
+        res->at(0) = lcl::ename(id);
+        res->at(1) = lcl::list(ptn);
 
-            if (a->wasCanceled())
-            {
-                return lcl::nilValue();
-            }
-
-            lclValueVec *ptn = new lclValueVec(3);
-            ptn->at(0) = lcl::ldouble(a->getPoint().x);
-            ptn->at(1) = lcl::ldouble(a->getPoint().y);
-            ptn->at(2) = lcl::ldouble(a->getPoint().z);
-
-            lclValueVec *res = new lclValueVec(2);
-            res->at(0) = lcl::ename((unsigned long) a->getEntityId());
-            res->at(1) = lcl::list(ptn);
-            return lcl::list(res);
-        }
+        return lcl::list(res);
     }
-
-    graphicView->killAllActions();
 
     if (Lisp_CommandEdit != nullptr)
     {
@@ -3278,10 +3215,8 @@ BUILTIN("get_tile")
 BUILTIN("getcorner")
 {
     int args = CHECK_ARGS_BETWEEN(1, 2);
-    bool second = false;
     QString prompt = QObject::tr("Enter a point: ");
     double x=0.0, y=0.0, z=0.0;
-
     ARG(lclSequence, ptn);
 
     if (ptn->count() == 2)
@@ -3289,7 +3224,6 @@ BUILTIN("getcorner")
         if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
             (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT))
         {
-            second = true;
             if (ptn->item(0)->type() == LCLTYPE::REAL)
             {
                 const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
@@ -3319,7 +3253,6 @@ BUILTIN("getcorner")
             (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
             (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
         {
-            second = true;
             if (ptn->item(0)->type() == LCLTYPE::REAL)
             {
                 const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
@@ -3391,7 +3324,8 @@ BUILTIN("getdist")
     int args = CHECK_ARGS_BETWEEN(0, 2);
     QString prompt = QObject::tr("Enter second point: ");
     double x=0.0, y=0.0, z=0.0;
-    Q_UNUSED(z)
+    double distance;
+    bool ref = false;
 
     if (args >= 1)
     {
@@ -3400,14 +3334,9 @@ BUILTIN("getdist")
             argsBegin++;
         }
 
-        if (argsBegin->ptr()->type() == LCLTYPE::STR)
-        {
-            ARG(lclString, msg);
-            prompt = QObject::tr(msg->value().c_str());
-        }
-
         if (argsBegin->ptr()->type() == LCLTYPE::LIST)
         {
+            ref = true;
             ARG(lclSequence, ptn);
             if (ptn->count() == 2)
             {
@@ -3477,6 +3406,38 @@ BUILTIN("getdist")
                 }
             }
         }
+
+        if (argsBegin->ptr()->type() == LCLTYPE::STR)
+        {
+            ARG(lclString, msg);
+            prompt = QObject::tr(msg->value().c_str());
+        }
+    }
+
+    if (!ref)
+    {
+        if (Lisp_CommandEdit != nullptr)
+        {
+            Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable("Enter first point: ")));
+            Lisp_CommandEdit->setFocus();
+        }
+
+        RS_Vector result = RS_SCRIPTINGAPI->getPoint(qUtf8Printable(prompt), RS_Vector());
+
+        if (result.valid)
+        {
+            x = result.x;
+            y = result.y;
+            z = result.z;
+        }
+        else
+        {
+            if (Lisp_CommandEdit != nullptr)
+            {
+                Lisp_CommandEdit->resetPrompt();
+            }
+            return lcl::nilValue();
+        }
     }
 
     if (Lisp_CommandEdit != nullptr)
@@ -3484,8 +3445,6 @@ BUILTIN("getdist")
         Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
         Lisp_CommandEdit->setFocus();
     }
-
-    double distance;
 
     if (RS_SCRIPTINGAPI->getDist(qUtf8Printable(prompt), RS_Vector(x, y, z), distance))
     {
@@ -3650,8 +3609,9 @@ BUILTIN("getorient")
 
     int args = CHECK_ARGS_BETWEEN(0, 2);
     QString prompt = QObject::tr("Enter second point: ");
-    double x=0, y=0, z=0;
-    Q_UNUSED(z)
+    double x=0.0, y=0.0, z=0.0;
+    double radius;
+    bool ref = false;
 
     if (args >= 1)
     {
@@ -3668,12 +3628,12 @@ BUILTIN("getorient")
 
         if (argsBegin->ptr()->type() == LCLTYPE::LIST)
         {
+            ref = true;
             ARG(lclSequence, ptn);
             if (ptn->count() == 2)
             {
                 if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
-                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
-                    (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
+                    (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT))
                 {
                     if (ptn->item(0)->type() == LCLTYPE::REAL)
                     {
@@ -3740,13 +3700,30 @@ BUILTIN("getorient")
         }
     }
 
-    auto& appWin = QC_ApplicationWindow::getAppWindow();
-    RS_Document* doc = appWin->getDocument();
-    RS_GraphicView* graphicView = appWin->getGraphicView();
-
-    if (graphicView == nullptr || graphicView->getGraphic() == nullptr)
+    if (!ref)
     {
-        return lcl::nilValue();
+        if (Lisp_CommandEdit != nullptr)
+        {
+            Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable("Enter first point: ")));
+            Lisp_CommandEdit->setFocus();
+        }
+
+        RS_Vector result = RS_SCRIPTINGAPI->getPoint(qUtf8Printable(prompt), RS_Vector());
+
+        if (result.valid)
+        {
+            x = result.x;
+            y = result.y;
+            z = result.z;
+        }
+        else
+        {
+            if (Lisp_CommandEdit != nullptr)
+            {
+                Lisp_CommandEdit->resetPrompt();
+            }
+            return lcl::nilValue();
+        }
     }
 
     if (Lisp_CommandEdit != nullptr)
@@ -3755,55 +3732,18 @@ BUILTIN("getorient")
         Lisp_CommandEdit->setFocus();
     }
 
-    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
-    if (a)
+    if(RS_SCRIPTINGAPI->getOrient(qUtf8Printable(prompt), RS_Vector(x, y, z), radius))
     {
-        QPointF *point = new QPointF;
-        QPointF *base = new QPointF(x, y);
-        bool status = false;
-
-        if (!(prompt.isEmpty()))
-        {
-            a->setMessage(prompt);
-        }
-        graphicView->killAllActions();
-        graphicView->setCurrentAction(a);
-
-        a->setBasepoint(base);
-
-        QEventLoop ev;
-        while (!a->isCompleted())
-        {
-            ev.processEvents ();
-            if (!graphicView->getEventHandler()->hasAction())
-                break;
-        }
-
-        if (a->isCompleted() && !a->wasCanceled())
-        {
-            a->getPoint(point);
-            status = true;
-        }
-        //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
-        graphicView->killAllActions();
-
         if (Lisp_CommandEdit != nullptr)
         {
             Lisp_CommandEdit->resetPrompt();
         }
+        return lcl::ldouble(radius);
+    }
 
-        if(status)
-        {
-            double rad = std::atan2(point->y() - y, point->x() - x);
-            delete point;
-            delete base;
-            return lcl::ldouble(rad);
-        }
-        else
-        {
-            delete point;
-            delete base;
-        }
+    if (Lisp_CommandEdit != nullptr)
+    {
+        Lisp_CommandEdit->resetPrompt();
     }
 
     return lcl::nilValue();
@@ -3812,7 +3752,6 @@ BUILTIN("getorient")
 BUILTIN("getpoint")
 {
     int args = CHECK_ARGS_BETWEEN(0, 2);
-    bool second = false;
     QString prompt = QObject::tr("Enter a point: ");
     double x, y, z= 0.0;
     bool ref = false;
@@ -3839,7 +3778,6 @@ BUILTIN("getpoint")
                 if ((ptn->item(0)->type() == LCLTYPE::REAL || ptn->item(0)->type() == LCLTYPE::INT) &&
                     (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT))
                 {
-                    second = true;
                     if (ptn->item(0)->type() == LCLTYPE::REAL)
                     {
                         const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
@@ -3869,7 +3807,6 @@ BUILTIN("getpoint")
                     (ptn->item(1)->type() == LCLTYPE::REAL || ptn->item(1)->type() == LCLTYPE::INT) &&
                     (ptn->item(2)->type() == LCLTYPE::REAL || ptn->item(2)->type() == LCLTYPE::INT))
                 {
-                    second = true;
                     if (ptn->item(0)->type() == LCLTYPE::REAL)
                     {
                         const lclDouble *X = VALUE_CAST(lclDouble, ptn->item(0));
@@ -4036,26 +3973,14 @@ BUILTIN("help")
 {
     int args = CHECK_ARGS_BETWEEN(0, 1);
 
-    QDir directory(QDir::currentPath());
-    QString librebrowser = directory.absoluteFilePath("librebrowser");
-
-    if(QFile::exists(librebrowser))
+    if (args == 1)
     {
-        if (args == 1)
-        {
-            ARG(lclString, str);
-            librebrowser += " '";
-            librebrowser += str->value().c_str();
-            librebrowser += "' &";
-        }
-        system(qUtf8Printable(librebrowser));
-    }
-    else
-    {
-        std::cout << "poor Help call 'SOS' :-b" << std::endl;
+        ARG(lclString, str);
+        RS_SCRIPTINGAPI->help(str->value().c_str());
         return lcl::nilValue();
     }
 
+    RS_SCRIPTINGAPI->help();
     return lcl::nilValue();
 }
 
