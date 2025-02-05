@@ -62,7 +62,7 @@ RS_Vector RS_ActionDimDiametric::preparePreview(RS_Entity *en, RS_Vector &positi
     if (en != nullptr){
         double radius = en->getRadius();
         RS_Vector center = en->getCenter();
-        double angleToUse = angle;
+        double angleToUse = m_currentAngle;
         if (angleIsFree || forcePosition){
             angleToUse = center.angleTo(position);
         }

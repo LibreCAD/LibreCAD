@@ -190,7 +190,7 @@ RS_Vector LC_CoordinatesMapper::restrictHorizontal(const RS_Vector &baseWCSPoint
         return RS_Vector(resX, resY);
     }
     else{
-        return RS_Vector(baseWCSPoint.x, wcsCoord.y);
+        return RS_Vector(wcsCoord.x, baseWCSPoint.y);
     }
 }
 
@@ -203,7 +203,7 @@ RS_Vector LC_CoordinatesMapper::restrictVertical(const RS_Vector &baseWCSPoint, 
         return RS_Vector(resX, resY);
     }
     else{
-        return RS_Vector(wcsCoord.x, baseWCSPoint.y);
+        return RS_Vector(baseWCSPoint.x, wcsCoord.y);
     }
 }
 

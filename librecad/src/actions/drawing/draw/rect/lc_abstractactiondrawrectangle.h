@@ -116,7 +116,7 @@ protected:
     /**
      * angle of rectangle's rotation (angle between bottom edge and x axis)
      */
-    double angle = 0;
+    double ucsBasisBaseAngleRad = 0;
     /**
      * flag that controls how to position rect relative to insertion point - may have different meanings in different actions
      */

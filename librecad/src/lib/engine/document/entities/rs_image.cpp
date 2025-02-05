@@ -364,22 +364,34 @@ void RS_Image::draw(RS_Painter* painter) {
 
     if (isSelected() && !(painter->isPrinting() || painter->isPrintPreview())) {
         RS_VectorSolutions sol = getCorners();
-        for (size_t i = 0; i < sol.size(); ++i){
-            size_t const j = (i+1)%sol.size();
-            painter->drawLineWCS(sol.get(i), sol.get(j));
-        }
+
+        RS_Vector c0 = sol.get(0);
+        RS_Vector c1 = sol.get(2);
+        RS_Vector c2 = sol.get(3);
+        RS_Vector c3 = sol.get(1);
+
+        painter->drawLineWCS(c0, c1);
+        painter->drawLineWCS(c1, c2);
+        painter->drawLineWCS(c2, c3);
+        painter->drawLineWCS(c0, c3);
     }
 }
 
 void RS_Image::drawDraft([[maybe_unused]]RS_Painter *painter) {
 
-    // fixme - sand - ucs - RESTORE and fix image draft drawing!!!
-    /*const RS_Vector &uiMin = painter->toGui(getMin());
-    const RS_Vector &uiMax = painter->toGui(getMax());
-    painter->drawRect(uiMin, uiMax);
+    RS_VectorSolutions sol = getCorners();
 
-    painter->drawLine(uiMin.x, uiMin.y, uiMax.x, uiMax.y);
-    painter->drawLine(uiMin.x, uiMax.y, uiMax.x, uiMin.y);*/
+    RS_Vector c0 = sol.get(0);
+    RS_Vector c1 = sol.get(1);
+    RS_Vector c2 = sol.get(2);
+    RS_Vector c3 = sol.get(3);
+
+    painter->drawLineWCS(c0, c1);
+    painter->drawLineWCS(c1, c2);
+    painter->drawLineWCS(c2, c3);
+    painter->drawLineWCS(c3, c0);
+    painter->drawLineWCS(c0, c2);
+    painter->drawLineWCS(c1, c3);
 }
 
 /**

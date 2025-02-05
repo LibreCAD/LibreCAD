@@ -128,6 +128,9 @@ bool LC_ActionOptionsWidget::toDoubleAngle(const QString& strValue, double &res,
  * @return corresponding string
  */
 QString LC_ActionOptionsWidget::fromDouble(double value){
+    if (LC_LineMath::isNotMeaningful(value)){
+        value = 0.0;
+    }
     return QString::number(value, 'g', 6);
 }
 

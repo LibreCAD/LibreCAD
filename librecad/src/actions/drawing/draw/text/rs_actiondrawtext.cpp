@@ -104,6 +104,7 @@ void RS_ActionDrawText::reset(){
 void RS_ActionDrawText::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawText::trigger()");
     if (pPoints->pos.valid){
+        data->angle = toWorldAngleFromUCSBasisDegrees(ucsBasicAngleDegrees);
         auto *text = new RS_Text(container, *data);
         text->update();
 
@@ -122,6 +123,7 @@ void RS_ActionDrawText::doTrigger() {
 }
 
 void RS_ActionDrawText::preparePreview(){
+    data->angle = toWorldAngleFromUCSBasisDegrees(ucsBasicAngleDegrees);
     if (data->halign == RS_TextData::HAFit || data->halign == RS_TextData::HAAligned){
         if (pPoints->secPos.valid){
             auto *text = new RS_Line(data->insertionPoint, pPoints->secPos);
@@ -268,12 +270,13 @@ const QString &RS_ActionDrawText::getText() const{
 }
 
 void RS_ActionDrawText::setUcsAngleDegrees(double ucsRelAngleDegrees){
+    ucsBasicAngleDegrees = ucsRelAngleDegrees;
     data->angle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
     textChanged = true;
 }
 
 double RS_ActionDrawText::getUcsAngleDegrees() const{
-    return toUCSBasisAngleDegrees(data->angle);
+    return ucsBasicAngleDegrees;
 }
 
 LC_ActionOptionsWidget* RS_ActionDrawText::createOptionsWidget(){

@@ -190,9 +190,8 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
     RS_Vector vertStart;
     RS_Vector vertEnd;
 
-    // convert angle in degrees to radians
-    double angleDegrees = RS_Math::deg2rad(angle);
-    double orientationAngle = toWorldAngle(angleDegrees);
+
+    double orientationAngle = toWorldAngleFromUCSBasisDegrees(ucsBasisAngleDegrees);
 //    ellipseAngle = toUCSAngle(ellipseAngle);
 
     // determine start and end points for cross lines based on calculated lengths and angle

@@ -389,9 +389,7 @@ void LC_ActionDrawSliceDivide::prepareArcTicks(RS_Arc *arc){
 void LC_ActionDrawSliceDivide::prepareCircleTicks(RS_Circle *circle){
     double radius = circle->getRadius();
     RS_Vector center = circle->getCenter();
-    double startPointAngle = RS_Math::deg2rad(getCircleStartAngle());
-
-    startPointAngle = toWorldAngle(startPointAngle);
+    double startPointAngle = toWorldAngleFromUCSBasisDegrees(circleStartTickAngleDegrees);
 
     RS_Vector startPoint = LC_LineMath::findPointOnCircle(radius, startPointAngle, center);
 
@@ -442,7 +440,6 @@ void LC_ActionDrawSliceDivide::prepareLineTicks(RS_Line *line){
         // for fixed distance between ticks, adjust length and ticks count
         segmentLength = distance;
         segmentsCount = std::ceil(lineLength / segmentLength + 1);
-//        remainingPartOfLine = lineLength - (segmentLength + 1)* segmentsCount;
     }
     else {
         segmentLength = lineLength / segmentsCount;
@@ -518,21 +515,24 @@ void LC_ActionDrawSliceDivide::addTick(RS_Vector &tickSnapPoint, RS_LineData &li
  * @param tickLineData tick line data
  */
 void LC_ActionDrawSliceDivide::prepareTickData(RS_Vector &tickSnapPosition, RS_Entity *ent, RS_LineData &tickLineData){
-
     double actualTickLength = tickLength;
     auto const vp = ent->getNearestPointOnEntity(tickSnapPosition, false);
 
-    double tickAngleToUse = tickAngle;
+    double tickAngleToUse = tickAngleDegrees;
     if (alternativeActionMode){
         // if SHIFT is pressed, we'll mirror angle specified in options
-        tickAngleToUse = 180 - tickAngle;
+        tickAngleToUse = 180 - tickAngleDegrees;
     }
-    double tickAngleRad = RS_Math::deg2rad(tickAngleToUse);
-    double actualTickAngle = toWorldAngle(tickAngleRad);
+
+    double actualTickAngle;
 
     // if angle should be related, take into consideration own angle of entity
     if (tickAngleIsRelative){
-        actualTickAngle = actualTickAngle + toUCSAngle(ent->getTangentDirection(vp).angle());
+        double tickAngleRad = RS_Math::deg2rad(tickAngleToUse);
+        actualTickAngle = tickAngleRad + toUCSAngle(ent->getTangentDirection(vp).angle());
+    }
+    else{
+        actualTickAngle = toWorldAngleFromUCSBasisDegrees(tickAngleToUse);
     }
 
     // proceed offset of tick specified by options

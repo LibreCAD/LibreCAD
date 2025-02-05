@@ -238,9 +238,12 @@ void LC_AbstractActionDrawRectangle::doProcessCoordinateEvent([[maybe_unused]]co
  * @return
  */
 double LC_AbstractActionDrawRectangle::getActualBaseAngle() const{
-    double result = toUCSBasisAngle(0.0);
+    double result;
     if (baseAngleIsFixed){
-        result = angle;
+        result = toWorldAngleFromUCSBasis(ucsBasisBaseAngleRad);
+    }
+    else{
+        result = toWorldAngleFromUCSBasis(0.0);
     }
     return result;
 }
@@ -335,9 +338,9 @@ bool LC_AbstractActionDrawRectangle::doProcessCommand(int status, const QString 
         if (ok){
             switch (status) {
                 case SetAngle: {
-                    double wcsAngle;
-                    ok = parseToWCSAngle(c, wcsAngle);
-                    angle = LC_LineMath::getMeaningfulAngle(wcsAngle);
+                    double ucsBasisAngleRad;
+                    ok = parseToUCSBasisAngle(c, ucsBasisAngleRad);
+                    ucsBasisBaseAngleRad = LC_LineMath::getMeaningfulAngle(ucsBasisAngleRad);
                     baseAngleIsFixed = true;
                     updateOptions();
                     toMainStatus = true;
@@ -590,19 +593,19 @@ void LC_AbstractActionDrawRectangle::setCornersMode(int value){
  * Setter for base angle
  * @param value
  */
-void LC_AbstractActionDrawRectangle::setUcsAngleDegrees(double ucsRelAngleDegrees){
-    double value = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
+void LC_AbstractActionDrawRectangle::setUcsAngleDegrees(double ucsBasisAngleDegrees){
+    double value = RS_Math::deg2rad(ucsBasisAngleDegrees);
     doSetAngle(value);
     setBaseAngleFixed(true);
     drawPreviewForLastPoint();
 }
 
 void LC_AbstractActionDrawRectangle::doSetAngle(double value) {
-    angle = value;
+    ucsBasisBaseAngleRad = value;
 }
 
 double LC_AbstractActionDrawRectangle::getUcsAngleDegrees() const {
-    return toUCSBasisAngleDegrees(angle);
+    return RS_Math::rad2deg(ucsBasisBaseAngleRad);
 }
 
 /**

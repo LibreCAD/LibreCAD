@@ -307,7 +307,8 @@ LC_ActionDrawLineAngleRel::TickData* LC_ActionDrawLineAngleRel::prepareLineData(
     double tickAngleRad = RS_Math::deg2rad(angle);
 
     // handle relative angle, if needed
-    double actualTickAngle = toWorldAngle(tickAngleRad);
+//    double actualTickAngle = toWorldAngle(tickAngleRad);
+    double actualTickAngle = toWorldAngleFromUCSBasis(tickAngleRad);
     if (relativeAngle){
         actualTickAngle = actualTickAngle + targetLine->getTangentDirection(vp).angle();
     }
@@ -438,6 +439,7 @@ void LC_ActionDrawLineAngleRel::updateMouseButtonHints() {
     bool hasModifiers = (actionType == RS2::ActionDrawLineAngleRel);
     switch (getStatus()) {
         case SetLine:
+            // fixme - sand - support mirrorring of snap by CTRL? 
             updateMouseWidgetTRCancel(tr("Select base line"), hasModifiers ? MOD_SHIFT_MIRROR_ANGLE : MOD_NONE);
             break;
         case SetTickLength:

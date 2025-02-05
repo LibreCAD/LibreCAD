@@ -40,7 +40,7 @@ public:
     bool isAngleFree();
     void setMajorRadius(double val);
     void setMinorRadius(double val);
-    void setUcsMajorAngleDegrees(double val);
+    void setUcsMajorAngleDegrees(double ucsBasisAngleDegrees);
     void setHasAngle(bool val);
     void setAngleFree(bool val);
     bool isReversed() const override;

@@ -84,7 +84,7 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
     RS_Hatch tmp(container, *data);
     setPenAndLayerToActive(&tmp);
 
-    if (RS_DIALOGFACTORY->requestHatchDialog(&tmp, nullptr)) {
+    if (RS_DIALOGFACTORY->requestHatchDialog(&tmp, viewport)) {
         *data = tmp.getData();
 
         // fixme - sand - optimize that mess with cycles!!!

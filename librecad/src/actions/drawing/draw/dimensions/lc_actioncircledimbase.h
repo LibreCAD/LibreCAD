@@ -40,7 +40,7 @@ public:
     void setUcsAngleDegrees(double angle);
     bool isAngleIsFree() const;
     void setAngleIsFree(bool angleIsFree);
-    double getCurrentAngle(){return m_currentAngle;}
+    double getCurrentAngle();
 protected:
 
     enum Status {
@@ -56,7 +56,7 @@ protected:
     /** Chosen position */
     std::unique_ptr<RS_Vector> pos;
 
-    double angle = 0;
+    double ucsBasisAngleDegrees = 0;
     bool angleIsFree = false;
     bool alternateAngle = false;
 

@@ -42,8 +42,8 @@ public:
     QG_TextOptions();
     ~QG_TextOptions() override;
 public slots:
-    virtual void updateText();
-    virtual void updateAngle();
+    void onTextChanged();
+    void onAngleChanged();
     void languageChange() override;
 protected:
     RS_ActionDrawText* action;

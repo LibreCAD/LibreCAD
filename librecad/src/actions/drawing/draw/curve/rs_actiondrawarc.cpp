@@ -350,7 +350,7 @@ void RS_ActionDrawArc::onCoordinateEvent(int status, [[maybe_unused]] bool isZer
         }
         case SetAngle1: {
             if (isZero){
-                data->angle1 = toWorldAngle(0);
+                data->angle1 = toWorldAngleFromUCSBasisDegrees(0);
             }
             else {
                 data->angle1 = data->center.angleTo(mouse);
@@ -360,7 +360,7 @@ void RS_ActionDrawArc::onCoordinateEvent(int status, [[maybe_unused]] bool isZer
         }
         case SetAngle2: {
             if (isZero) {
-                data->angle2 = toWorldAngle(0);
+                data->angle2 = toWorldAngleFromUCSBasisDegrees(0);
             }
             else {
                 data->angle2 = data->center.angleTo(mouse);
@@ -422,7 +422,7 @@ bool RS_ActionDrawArc::doProcessCommand(int status, const QString &c) {
                 double wcsAngle;
                 bool ok = parseToWCSAngle(c, wcsAngle);
                 if (ok) {
-                    data->angle1 = toWorldAngle(wcsAngle);
+                    data->angle1 = wcsAngle;
                     accept = true;
                     setStatus(SetAngle2);
                 } else

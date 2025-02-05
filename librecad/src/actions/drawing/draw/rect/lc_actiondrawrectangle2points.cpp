@@ -36,7 +36,7 @@ LC_ActionDrawRectangle2Points::LC_ActionDrawRectangle2Points(
     :LC_AbstractActionDrawRectangle("Draw rectangle 2 points",
                                     container, graphicView){
     actionType = RS2::ActionDrawRectangle2Points;
-    angle = 0;
+    ucsBasisBaseAngleRad = 0;
     LC_ActionDrawRectangle2Points::init(SetPoint1);
     setMainStatus(SetPoint1);
 }

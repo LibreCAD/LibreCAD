@@ -236,6 +236,12 @@ void RS_ActionDrawLineRelAngle::updateMouseButtonHints(){
         case SetPos:
             updateMouseWidgetTRBack(tr("Specify position"), MOD_SHIFT_RELATIVE_ZERO);
             break;
+        case SetAngle:
+            updateMouseWidgetTRBack(tr("Specify angle"));
+            break;
+        case SetLength:
+            updateMouseWidgetTRBack(tr("Specify length"));
+            break;
         default:
             updateMouseWidget();
             break;

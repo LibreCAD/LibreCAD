@@ -35,9 +35,10 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_TextOptions::QG_TextOptions()
-    :LC_ActionOptionsWidgetBase(RS2::ActionDrawText, "","")
-	, ui(new Ui::Ui_TextOptions{}){
-	ui->setupUi(this);
+    :LC_ActionOptionsWidgetBase(RS2::ActionDrawText, "", ""), ui(new Ui::Ui_TextOptions{}) {
+    ui->setupUi(this);
+    connect(ui->leAngle, &QLineEdit::textChanged, this, &QG_TextOptions::onAngleChanged);
+    connect(ui->leText, &QLineEdit::textChanged, this, &QG_TextOptions::onTextChanged);
 }
 
 /*
@@ -49,18 +50,15 @@ QG_TextOptions::~QG_TextOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_TextOptions::languageChange()
-{
-	ui->retranslateUi(this);
+void QG_TextOptions::languageChange() {
+    ui->retranslateUi(this);
 }
 
-void QG_TextOptions::doSetAction(RS_ActionInterface *a, bool update){
-
+void QG_TextOptions::doSetAction(RS_ActionInterface *a, bool update) {
     action = dynamic_cast<RS_ActionDrawText *>(a);
-
     QString text;
     QString angle;
-    if (update){
+    if (update) {
         text = action->getText();
         angle = fromDouble(action->getUcsAngleDegrees());
     } else {
@@ -68,8 +66,7 @@ void QG_TextOptions::doSetAction(RS_ActionInterface *a, bool update){
         angle = "0.0";
     }
 
-    LC_ERR << " Options: --- " <<  text << " Angle: " << angle;
-
+    LC_ERR << " Options: --- " << text << " Angle: " << angle;
 /*#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
         QCString iso = RS_System::localeToISO( QTextCodec::locale() );
         QTextCodec *codec = QTextCodec::codecForName(iso);
@@ -79,12 +76,12 @@ void QG_TextOptions::doSetAction(RS_ActionInterface *a, bool update){
             st = RS_FilterDXF::toNativeString(action->getText().local8Bit());
         }
 //#else*/
-    ui->teText->setText(text);
+    ui->leText->setText(text);
 //#endif
     ui->leAngle->setText(angle);
 }
 
-void QG_TextOptions::updateText() {
+void QG_TextOptions::onTextChanged() {
     if (action) {
 /*#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
         QCString iso = RS_System::localeToISO( QTextCodec::locale() );
@@ -94,12 +91,13 @@ void QG_TextOptions::updateText() {
             )
         );
 //#else*/
-	   action->setText(ui->teText->toPlainText());
+        const QString &plainText = ui->leText->text();
+        action->setText(plainText);
 //#endif
     }
 }
 
-void QG_TextOptions::updateAngle() {
+void QG_TextOptions::onAngleChanged() {
     double angle;
     QString val = ui->leAngle->text();
     if (toDoubleAngle(val, angle, 0.0, false)) {
@@ -107,5 +105,5 @@ void QG_TextOptions::updateAngle() {
     }
 }
 
-void QG_TextOptions::doSaveSettings(){
+void QG_TextOptions::doSaveSettings() {
 }

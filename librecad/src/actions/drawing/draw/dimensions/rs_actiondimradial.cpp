@@ -67,9 +67,8 @@ RS_Vector RS_ActionDimRadial::preparePreview(RS_Entity *en, RS_Vector &position,
         double radius = en->getRadius();
         RS_Vector center = en->getCenter();
         data->definitionPoint = center;
-        double angleToUse = angle;
+        double angleToUse = m_currentAngle;
         if (angleIsFree || forcePosition){
-//            angleToUse = center.angleTo(position);
             angleToUse = data->definitionPoint.angleTo(position);
         }
         edata->definitionPoint.setPolar(radius, angleToUse);

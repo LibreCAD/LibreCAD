@@ -82,6 +82,7 @@ void LC_ActionCircleDimBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
                 auto *d = createDim(preview.get());
                 m_currentAngle = entity->getCenter().angleTo(pointOnCircle);
+                ucsBasisAngleDegrees = toUCSBasisAngleDegrees(m_currentAngle);
                 updateOptionsUI(QG_DimOptions::UI_UPDATE_CIRCLE_ANGLE);
                 d->update();
                 previewEntity(d);
@@ -166,11 +167,12 @@ bool LC_ActionCircleDimBase::doProcessCommand(int status, const QString &c) {
         setStatus(SetText);
         accept = true;
     } else if (status == SetPos) {// setting angle
-        double wcsAngle;
-        bool ok = parseToWCSAngle(c, wcsAngle);
+        double angle;
+        bool ok = parseToUCSBasisAngle(c, angle);
         if (ok) {
             accept = true;
-            m_currentAngle = wcsAngle;
+            ucsBasisAngleDegrees = angle;
+            m_currentAngle = toWorldAngleFromUCSBasisDegrees(angle);
             pos->setPolar(1.0, m_currentAngle);
             *pos += data->definitionPoint;
             updateOptionsUI(QG_DimOptions::UI_UPDATE_CIRCLE_ANGLE);
@@ -216,12 +218,12 @@ void LC_ActionCircleDimBase::updateMouseButtonHints() {
 }
 
 double LC_ActionCircleDimBase::getUcsAngleDegrees() const {
-    return toUCSBasisAngleDegrees(angle);
+    return ucsBasisAngleDegrees;
 }
 
 void LC_ActionCircleDimBase::setUcsAngleDegrees(double ucsRelAngleDegrees) {
-    double wcsAngle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
-    angle = wcsAngle;
+    ucsBasisAngleDegrees = ucsRelAngleDegrees;
+    m_currentAngle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
 }
 
 bool LC_ActionCircleDimBase::isAngleIsFree() const {
@@ -230,4 +232,9 @@ bool LC_ActionCircleDimBase::isAngleIsFree() const {
 
 void LC_ActionCircleDimBase::setAngleIsFree(bool angleIsFree) {
     this->angleIsFree = angleIsFree;
+}
+
+double LC_ActionCircleDimBase::getCurrentAngle() {
+    double angleDeg = toUCSBasisAngleDegrees(m_currentAngle);
+    return angleDeg;
 }

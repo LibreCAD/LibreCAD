@@ -52,6 +52,7 @@ public:
     void setUcsAngleDegrees(double a);
     double getUcsAngleDegrees() const;
 protected:
+    // fixme - sand - cmd -  add support of entering angle as part of command line
     /**
  * Action States.
  */
@@ -65,6 +66,7 @@ protected:
     struct Points;
     std::unique_ptr<Points> pPoints;
     std::unique_ptr<RS_TextData> data;
+    double ucsBasicAngleDegrees = 0.0;
     bool textChanged = false;
     bool snappedToRelZero = false;
 

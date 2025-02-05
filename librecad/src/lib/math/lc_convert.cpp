@@ -26,14 +26,23 @@
 
 // fixme - sand - review the entire codebase and insure uniform string/double and vice-versa conversion
 QString LC_Convert::asString(double value, int precision){
+    if (LC_LineMath::isNotMeaningful(value)){
+        value = 0.0;
+    }
     return QString::number(value, 'g', precision);
 }
 
 QString LC_Convert::asStringAngle(double value, int precision){
+    if (!LC_LineMath::isMeaningfulAngle(value)){
+        value = 0.0;
+    }
     return QString::number(value, 'g', precision);
 }
 
 QString LC_Convert::asStringAngleDeg(double value, int precision){
+    if (!LC_LineMath::isMeaningfulAngle(value)){
+        value = 0.0;
+    }
     double angleDeg = RS_Math::rad2deg(value);
     return QString::number(angleDeg, 'g', precision);
 }

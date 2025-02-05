@@ -126,29 +126,33 @@ LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle1Point::createPo
 
     center.move(moveVector);
 
-    double actualBaseAngle = toUCSBasisAngle(0.0);
+    double wcsActualBaseAngle = 0.0;
     if (baseAngleIsFixed){
-        actualBaseAngle = angle;
+        wcsActualBaseAngle = toWorldAngleFromUCSBasis(ucsBasisBaseAngleRad);
         if (angleIsFree){
             if (inFreeAngleMode){
-                actualBaseAngle = insertionPoint.angleTo(snapPoint);
-                doSetAngle(actualBaseAngle);
+                wcsActualBaseAngle = insertionPoint.angleTo(snapPoint);
+                double ucsBasisAngle = toUCSBasisAngle(wcsActualBaseAngle);
+                doSetAngle(ucsBasisAngle);
                 updateOptionsUI(LC_Rectangle1PointOptions::UPDATE_ANGLE);
             }
         }
     }
+    else{
+        wcsActualBaseAngle = toWorldAngleFromUCSBasis(0.0);
+    }
 
-    double baseAngle = actualBaseAngle;
+    double wcsBaseAngle = wcsActualBaseAngle;
 
-    if (LC_LineMath::isMeaningfulAngle(baseAngle)){
+    if (LC_LineMath::isMeaningfulAngle(wcsBaseAngle)){
         // now we'll rotate shape on specific angle
         if (inFreeAngleMode){
-            polyline->rotate(insertionPoint, baseAngle);
-            center.rotate(insertionPoint, baseAngle);
+            polyline->rotate(insertionPoint, wcsBaseAngle);
+            center.rotate(insertionPoint, wcsBaseAngle);
         }
         else {
-            polyline->rotate(snapPoint, baseAngle);
-            center.rotate(snapPoint, baseAngle);
+            polyline->rotate(snapPoint, wcsBaseAngle);
+            center.rotate(snapPoint, wcsBaseAngle);
         }
     }
     result.centerPoint = center;

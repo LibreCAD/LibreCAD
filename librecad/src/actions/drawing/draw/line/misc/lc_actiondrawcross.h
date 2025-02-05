@@ -72,12 +72,12 @@ public:
 
     double getLenX() const {return lenX;};
     double getLenY() const {return lenY;};
-    double getCrossAngle() const{return angle;};
+    double getCrossAngle() const{return ucsBasisAngleDegrees;};
     int getCrossMode() const{return crossSizeMode;};
 
     void setXLength(double d) {lenX = d;};
     void setYLength(double d) {lenY = d;};
-    void setCrossAngle(double d) {angle = d;};
+    void setCrossAngle(double d) { ucsBasisAngleDegrees = d;};
     void setCrossMode(int i) {crossSizeMode = i;};
 protected:
     enum Status {
@@ -116,7 +116,7 @@ protected:
     /**
      * Angle between axis x and horizontal cross line
      */
-    double angle = 0.0;
+    double ucsBasisAngleDegrees = 0.0;
 
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     bool doCheckMayTrigger() override;

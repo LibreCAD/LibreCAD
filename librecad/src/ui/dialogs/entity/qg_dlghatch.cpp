@@ -106,11 +106,12 @@ void QG_DlgHatch::setEntity(RS_Hatch* h, bool isNew) {
     else {
         cbSolid->setChecked(entity->isSolid());
         setPattern(entity->getPattern());
-        QString s;
-        s.setNum(entity->getScale());
-        leScale->setText(s);
-        s.setNum(RS_Math::rad2deg(entity->getAngle()));
-        leAngle->setText(s);
+
+        toUIValue(entity->getScale(), leScale);
+
+        // todo - here we assumed that angle in hatch is always stored in wcs coordinates
+        toUIAngleDeg(entity->getAngle(),leAngle);
+
         showArea();
     }
 }
@@ -119,8 +120,11 @@ void QG_DlgHatch::updateEntity() {
     if (entity) {
         entity->setSolid(cbSolid->isChecked());
         entity->setPattern(cbPattern->currentText());
-        entity->setScale(RS_Math::eval(leScale->text()));
-        entity->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
+
+        entity->setScale(toWCSValue(leScale,1.0));
+        // here we assume that the user enters angle of the hatch as current ucs basis angle, and it is stored as wcs
+        entity->setAngle(toWCSValue(leAngle, 0.0));
+
         if (!isNew) {
             showArea();
         }
@@ -166,8 +170,8 @@ void QG_DlgHatch::updatePreview() {
 
     QString patName = cbPattern->currentText();
     bool isSolid = cbSolid->isChecked();
-    double scale = RS_Math::eval(leScale->text(), 1.0);
-    double angle = RS_Math::deg2rad(RS_Math::eval(leAngle->text(), 0.0));
+    double scale = toWCSValue(leScale, 1.0);
+    double angle = toWCSAngle(leAngle, 0.0);
     double prevSize = 100.0;
     if (pattern) {
         pattern->calculateBorders();

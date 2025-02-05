@@ -87,8 +87,6 @@ protected:
      */
     virtual QString getSettingsOptionNamePrefix(){ return "";}
 
-
-
     // saving settings shortcut methods
     void save(QString name, QString value);
     void save(QString name, int value);

@@ -121,7 +121,6 @@ void LC_ActionSplineAddPoint::onMouseLeftButtonRelease(int status, LC_MouseEvent
                 }
             }
             fireCoordinateEventForSnap(e);
-            trigger();
         }
         default:
             break;

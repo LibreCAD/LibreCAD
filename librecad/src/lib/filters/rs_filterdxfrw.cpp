@@ -1235,99 +1235,99 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
     currentContainer->appendEntity(hatch);
 
     for (unsigned int i=0; i < data->looplist.size(); i++) {
-		auto& loop = data->looplist.at(i);
+        auto& loop = data->looplist.at(i);
         if ((loop->type & 32) == 32) continue;
         hatchLoop = new RS_EntityContainer(hatch);
-		hatchLoop->setLayer(nullptr);
+        hatchLoop->setLayer(nullptr);
         hatch->addEntity(hatchLoop);
 
-		RS_Entity* e = nullptr;
+        RS_Entity* e = nullptr;
         if ((loop->type & 2) == 2){   //polyline, convert to lines & arcs
-			DRW_LWPolyline* pline = (DRW_LWPolyline *)loop->objlist.at(0).get();
-			RS_Polyline polyline{nullptr,
-					RS_PolylineData(RS_Vector(false), RS_Vector(false), pline->flags)};
-			for (auto const& vert: pline->vertlist)
-				polyline.addVertex(RS_Vector{vert->x, vert->y}, vert->bulge);
+            DRW_LWPolyline* pline = (DRW_LWPolyline *)loop->objlist.at(0).get();
+            RS_Polyline polyline{nullptr,
+                                 RS_PolylineData(RS_Vector(false), RS_Vector(false), pline->flags)};
+            for (auto const& vert: pline->vertlist)
+                polyline.addVertex(RS_Vector{vert->x, vert->y}, vert->bulge);
 
-			for (RS_Entity* e=polyline.firstEntity(); e;
-					e=polyline.nextEntity()) {
+            for (RS_Entity* e=polyline.firstEntity(); e;
+                 e=polyline.nextEntity()) {
                 RS_Entity* tmp = e->clone();
                 tmp->reparent(hatchLoop);
-				tmp->setLayer(nullptr);
+                tmp->setLayer(nullptr);
                 hatchLoop->addEntity(tmp);
-			}
+            }
 
         } else {
             for (unsigned int j=0; j<loop->objlist.size(); j++) {
-				e = nullptr;
-				auto& ent = loop->objlist.at(j);
+                e = nullptr;
+                auto& ent = loop->objlist.at(j);
                 switch (ent->eType) {
-                case DRW::LINE: {
-					DRW_Line *e2 = (DRW_Line *)ent.get();
-					e = new RS_Line{hatchLoop,
-					{{e2->basePoint.x, e2->basePoint.y},
-					{e2->secPoint.x, e2->secPoint.y}}};
-					break;
-                }
-                case DRW::ARC: {
-					DRW_Arc *e2 = (DRW_Arc *)ent.get();
-                    if (e2->isccw && e2->staangle<1.0e-6 && e2->endangle>RS_Math::deg2rad(360)-1.0e-6) {
-                        e = new RS_Circle(hatchLoop,
-						{{e2->basePoint.x, e2->basePoint.y},
-														e2->radious});
-                    } else {
-
-                        if (e2->isccw) {
-                            e = new RS_Arc(hatchLoop,
-                                        RS_ArcData(RS_Vector(e2->basePoint.x, e2->basePoint.y), e2->radious,
-                                                   RS_Math::correctAngle(e2->staangle),
-                                                   RS_Math::correctAngle(e2->endangle),
-                                                   false));
+                    case DRW::LINE: {
+                        DRW_Line *e2 = (DRW_Line *)ent.get();
+                        e = new RS_Line{hatchLoop,
+                                        {{e2->basePoint.x, e2->basePoint.y},
+                                         {e2->secPoint.x, e2->secPoint.y}}};
+                        break;
+                    }
+                    case DRW::ARC: {
+                        DRW_Arc *e2 = (DRW_Arc *)ent.get();
+                        if (e2->isccw && e2->staangle<1.0e-6 && e2->endangle>RS_Math::deg2rad(360)-1.0e-6) {
+                            e = new RS_Circle(hatchLoop,
+                                              {{e2->basePoint.x, e2->basePoint.y},
+                                               e2->radious});
                         } else {
-                            e = new RS_Arc(hatchLoop,
-                                        RS_ArcData(RS_Vector(e2->basePoint.x, e2->basePoint.y), e2->radious,
-                                                   RS_Math::correctAngle(2*M_PI-e2->staangle),
-                                                   RS_Math::correctAngle(2*M_PI-e2->endangle),
-                                                   true));
+
+                            if (e2->isccw) {
+                                e = new RS_Arc(hatchLoop,
+                                               RS_ArcData(RS_Vector(e2->basePoint.x, e2->basePoint.y), e2->radious,
+                                                          RS_Math::correctAngle(e2->staangle),
+                                                          RS_Math::correctAngle(e2->endangle),
+                                                          false));
+                            } else {
+                                e = new RS_Arc(hatchLoop,
+                                               RS_ArcData(RS_Vector(e2->basePoint.x, e2->basePoint.y), e2->radious,
+                                                          RS_Math::correctAngle(2*M_PI-e2->staangle),
+                                                          RS_Math::correctAngle(2*M_PI-e2->endangle),
+                                                          true));
+                            }
                         }
+                        break;
                     }
-                    break;
-                }
-                case DRW::ELLIPSE: {
-					DRW_Ellipse *e2 = (DRW_Ellipse *)ent.get();
-                    double ang1 = e2->staparam;
-                    double ang2 = e2->endparam;
-					if ( fabs(ang2 - 2.*M_PI) < 1.0e-10 && fabs(ang1) < 1.0e-10 )
-                        ang2 = 0.0;
-                    else { //convert angle to parameter
-                        ang1 = atan(tan(ang1)/e2->ratio);
-                        ang2 = atan(tan(ang2)/e2->ratio);
-                        if (ang1 < 0){//quadrant 2 & 4
-                            ang1 +=M_PI;
-                            if (e2->staparam > M_PI) //quadrant 4
+                    case DRW::ELLIPSE: {
+                        DRW_Ellipse *e2 = (DRW_Ellipse *)ent.get();
+                        double ang1 = e2->staparam;
+                        double ang2 = e2->endparam;
+                        if ( fabs(ang2 - 2.*M_PI) < 1.0e-10 && fabs(ang1) < 1.0e-10 )
+                            ang2 = 0.0;
+                        else { //convert angle to parameter
+                            ang1 = atan(tan(ang1)/e2->ratio);
+                            ang2 = atan(tan(ang2)/e2->ratio);
+                            if (ang1 < 0){//quadrant 2 & 4
                                 ang1 +=M_PI;
-                        } else if (e2->staparam > M_PI){//3 quadrant
-                            ang1 +=M_PI;
-                        }
-                        if (ang2 < 0){//quadrant 2 & 4
-                            ang2 +=M_PI;
-                            if (e2->endparam > M_PI) //quadrant 4
+                                if (e2->staparam > M_PI) //quadrant 4
+                                    ang1 +=M_PI;
+                            } else if (e2->staparam > M_PI){//3 quadrant
+                                ang1 +=M_PI;
+                            }
+                            if (ang2 < 0){//quadrant 2 & 4
                                 ang2 +=M_PI;
-                        } else if (e2->endparam > M_PI){//3 quadrant
-                            ang2 +=M_PI;
+                                if (e2->endparam > M_PI) //quadrant 4
+                                    ang2 +=M_PI;
+                            } else if (e2->endparam > M_PI){//3 quadrant
+                                ang2 +=M_PI;
+                            }
                         }
+                        e = new RS_Ellipse{hatchLoop,
+                                           {{e2->basePoint.x, e2->basePoint.y},
+                                            {e2->secPoint.x, e2->secPoint.y},
+                                            e2->ratio, ang1, ang2, !e2->isccw}};
+                        break;
                     }
-					e = new RS_Ellipse{hatchLoop,
-					{{e2->basePoint.x, e2->basePoint.y},
-					{e2->secPoint.x, e2->secPoint.y},
-							e2->ratio, ang1, ang2, !e2->isccw}};
-					break;
-                }
-                default:
-                    break;
+                    default:
+                        break;
                 }
                 if (e) {
-					e->setLayer(nullptr);
+                    e->setLayer(nullptr);
                     hatchLoop->addEntity(e);
                 }
             }
@@ -1341,7 +1341,7 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
     } else {
         graphic->removeEntity(hatch);
         RS_DEBUG->print(RS_Debug::D_ERROR,
-                    "RS_FilterDXFRW::endEntity(): updating hatch failed: invalid hatch area");
+                        "RS_FilterDXFRW::endEntity(): updating hatch failed: invalid hatch area");
     }
 }
 
