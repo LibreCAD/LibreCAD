@@ -85,6 +85,8 @@ protected:
 
     bool allowEntityQuickInfoForCTRL = false;
     bool allowEntityQuickInfoAuto = false;
+    bool m_selectWithPressedMouseOnly = true; // fixme - sand - retrieve from setting (for backward compatibility or rather historic bug support)
+
     void checkSupportOfQuickEntityInfo();
     void clearQuickInfoWidget();
     void updateQuickInfoWidget(RS_Entity *pEntity);

@@ -114,8 +114,8 @@ void RS_ActionDefault::init(int status){
 void RS_ActionDefault::checkSupportOfQuickEntityInfo(){
     LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
     if (entityInfoWidget != nullptr){
-        this->allowEntityQuickInfoAuto = entityInfoWidget->isAutoSelectEntitiesInDefaultAction();
-        this->allowEntityQuickInfoForCTRL = entityInfoWidget->isSelectEntitiesInDefaultActionWithCTRL();
+        allowEntityQuickInfoAuto = entityInfoWidget->isAutoSelectEntitiesInDefaultAction();
+        allowEntityQuickInfoForCTRL = entityInfoWidget->isSelectEntitiesInDefaultActionWithCTRL();
     }
 }
 
@@ -798,7 +798,12 @@ void RS_ActionDefault::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
                 updateSelectionWidget();
                 goToNeutralStatus();
             } else {
-                setStatus(SetCorner2);
+                if (m_selectWithPressedMouseOnly){
+                    goToNeutralStatus();
+                }
+                else {
+                   setStatus(SetCorner2);
+                }
             }
             break;
         }
