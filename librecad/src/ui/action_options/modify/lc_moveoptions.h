@@ -24,8 +24,10 @@
 #define LC_MOVEOPTIONS_H
 
 #include <QWidget>
+
 #include "lc_actionoptionswidgetbase.h"
-#include "rs_actionmodifymove.h"
+
+class RS_ActionModifyMove;
 
 namespace Ui {
     class LC_MoveOptions;
@@ -36,7 +38,6 @@ class LC_MoveOptions : public LC_ActionOptionsWidgetBase{
 
 public:
     explicit LC_MoveOptions();
-    ~LC_MoveOptions() override;
 public slots:
     void cbKeepOriginalsClicked(bool val);
     void cbMultipleCopiesClicked(bool val);
@@ -53,8 +54,8 @@ protected:
     void setUseCurrentAttributesToActionAndView(bool val);
     void setKeepOriginalsToActionAndView(bool val);
 private:
-    Ui::LC_MoveOptions *ui;
-    RS_ActionModifyMove* action;
+    Ui::LC_MoveOptions *ui = nullptr;
+    RS_ActionModifyMove* action = nullptr;
 
 };
 

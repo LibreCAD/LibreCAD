@@ -24,9 +24,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_MODIFYBREAKOUTOPTIONS_H
 #define LC_MODIFYBREAKOUTOPTIONS_H
 
-#include "lc_actionmodifybreakdivide.h"
 #include "lc_actionoptionswidgetbase.h"
 
+class LC_ActionModifyBreakDivide;
 namespace Ui {
 class LC_ModifyBreakDivideOptions;
 }
@@ -36,7 +36,6 @@ class LC_ModifyBreakDivideOptions :public LC_ActionOptionsWidgetBase{
 
 public:
     explicit LC_ModifyBreakDivideOptions();
-    ~LC_ModifyBreakDivideOptions() override;
 protected slots:
     void onRemoveSegmentsClicked(bool value);
     void onRemoveSelectedClicked(bool value);
@@ -45,8 +44,8 @@ protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
 private:
-    Ui::LC_ModifyBreakDivideOptions *ui;
-    LC_ActionModifyBreakDivide* action;
+    Ui::LC_ModifyBreakDivideOptions *ui = nullptr;
+    LC_ActionModifyBreakDivide* action = nullptr;
     void setRemoveSegmentsToActionAndView(bool val);
     void setRemoveSelectedToActionAndView(bool val);
 };
