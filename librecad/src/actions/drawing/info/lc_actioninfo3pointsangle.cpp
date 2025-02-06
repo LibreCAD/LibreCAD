@@ -40,12 +40,16 @@ void LC_ActionInfo3PointsAngle::doTrigger() {
     double angle = RS_Math::correctAngle(angle1-angle2);
     QString angleStr = formatAngleRaw(angle);
 
-    QString p1X = formatLinear(point1.x);
-    QString p1Y = formatLinear(point1.y);
-    QString p2X = formatLinear(point2.x);
-    QString p2Y = formatLinear(point2.y);
-    QString p3X = formatLinear(point3.x);
-    QString p3Y = formatLinear(point3.y);
+    RS_Vector ucsPoint1 = toUCS(point1);
+    RS_Vector ucsPoint2 = toUCS(point2);
+    RS_Vector ucsPoint3 = toUCS(point3);
+
+    QString p1X = formatLinear(ucsPoint1.x);
+    QString p1Y = formatLinear(ucsPoint1.y);
+    QString p2X = formatLinear(ucsPoint2.x);
+    QString p2Y = formatLinear(ucsPoint2.y);
+    QString p3X = formatLinear(ucsPoint3.x);
+    QString p3Y = formatLinear(ucsPoint3.y);
 
     QString altAngleStr = formatAngleRaw(RS_Math::correctAngle(2 * M_PI - angle));
 

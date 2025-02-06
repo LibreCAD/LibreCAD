@@ -59,15 +59,12 @@ void RS_ActionInfoDist::doTrigger() {
     if (pPoints->point1.valid && pPoints->point2.valid){
         RS_Vector dV = pPoints->point2 - pPoints->point1;
         QStringList dists;
-        int linearPrecision = graphic->getLinearPrecision();
-        RS2::Unit unit = graphic->getUnit();
-        RS2::LinearFormat linearFormat = graphic->getLinearFormat();
         for (double a: {dV.magnitude(), dV.x, dV.y, pPoints->point1.x, pPoints->point1.y, pPoints->point2.x, pPoints->point2.y}) {
-            dists << RS_Units::formatLinear(a, unit,linearFormat, linearPrecision);
+            dists << formatLinear(a);
         }
 
-        QString angle = RS_Units::formatAngle(dV.angle(),
-                                              graphic->getAngleFormat(), graphic->getAnglePrecision());
+        double wcsAngle = dV.angle();
+        QString angle = formatWCSAngle(wcsAngle);
         commandMessage("--- ");
         const QString &templateStr = tr("Distance: %1\nCartesian: (%2 , %3)\nPolar: (%4 < %5)\nStart: (%6 , %7)\nEnd: (%8 , %9)");
         QString message = templateStr.arg(dists[0],dists[1],dists[2],dists[0],angle, dists[3], dists[4], dists[5], dists[6]);

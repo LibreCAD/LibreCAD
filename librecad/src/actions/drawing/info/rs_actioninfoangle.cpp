@@ -52,11 +52,10 @@ struct RS_ActionInfoAngle::Points {
 
 RS_ActionInfoAngle::RS_ActionInfoAngle(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Info Angle",
-						   container, graphicView)
-		,entity1(nullptr)
-        ,entity2(nullptr)
-    , pPoints(std::make_unique<Points>()){
+    :RS_PreviewActionInterface("Info Angle",container, graphicView)
+    ,entity1(nullptr)
+    ,entity2(nullptr)
+    ,pPoints(std::make_unique<Points>()){
     actionType = RS2::ActionInfoAngle;
 }
 
@@ -65,7 +64,6 @@ RS_ActionInfoAngle::~RS_ActionInfoAngle() = default;
 void RS_ActionInfoAngle::init(int status){
     RS_PreviewActionInterface::init(status);
 }
-
 
 void RS_ActionInfoAngle::drawSnapper() {
     // disable snapper
@@ -109,19 +107,22 @@ void RS_ActionInfoAngle::doTrigger() {
                     double angle2 = pPoints->intersection.angleTo(pPoints->point2);
                     double angle = remainder(angle2 - angle1, 2. * M_PI);
                     QString str = formatAngleRaw(angle);
-                    QString intersectX = formatLinear(pPoints->intersection.x);
-                    QString intersectY = formatLinear(pPoints->intersection.y);
+
+                    RS_Vector ucsIntersection = toUCS(pPoints->intersection);
+                    QString intersectX = formatLinear(ucsIntersection.x);
+                    QString intersectY = formatLinear(ucsIntersection.y);
                     if (angle < 0.) {
                         str += " or ";
                         str += formatAngleRaw(angle + 2. * M_PI);
                     }
 
-                    RS_Vector relPoint = getRelativeZero(); // fixme - ucs - review this, why relative zero is invoked there?
+                    RS_Vector wcsRelPoint = getRelativeZero(); // fixme - ucs - review this, why relative zero is invoked there?
+                    RS_Vector ucsRelPoint = toUCS(wcsRelPoint);
                     RS_Vector intersectRel;
-                    if (relPoint.valid) {
-                        intersectRel = pPoints->intersection - relPoint;
+                    if (wcsRelPoint.valid) {
+                        intersectRel = ucsIntersection - ucsRelPoint;
                     } else {
-                        intersectRel = pPoints->intersection;
+                        intersectRel = ucsIntersection;
                     }
 
                     QString intersectRelX = formatLinear(intersectRel.x);

@@ -77,15 +77,13 @@ void RS_ActionInfoDist2::doTrigger() {
         } else {
             dV = entityNearestPoint - point;
         }
-        int linearPrecision = graphic->getLinearPrecision();
-        RS2::Unit unit = graphic->getUnit();
-        RS2::LinearFormat linearFormat = graphic->getLinearFormat();
         QStringList dists;
         for (double a: {dV.magnitude(), dV.x, dV.y, entityNearestPoint.x, entityNearestPoint.y, point.x, point.y}) {
-            dists << RS_Units::formatLinear(a, unit, linearFormat, linearPrecision);
-        }
+            dists << formatLinear(a);
 
-        QString angle = RS_Units::formatAngle(dV.angle(), graphic->getAngleFormat(), graphic->getAnglePrecision());
+        }
+        double wcsAngle = dV.angle();
+        QString angle = formatWCSAngle(wcsAngle);
         commandMessage("---");
         const QString &msgTemplate = tr("Distance: %1\nCartesian: (%2 , %3)\nPolar: (%4 < %5)\nPoint On Entity: (%6 , %7)\nPoint: (%8 , %9)");
         QString message = msgTemplate.arg(dists[0], dists[1], dists[2], dists[0], angle, dists[3], dists[4], dists[5], dists[6]);

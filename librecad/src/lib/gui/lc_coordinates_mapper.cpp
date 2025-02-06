@@ -306,6 +306,7 @@ double LC_CoordinatesMapper::toUCSAngleDegrees(double angle) const{
     return result;
 }
 
+
 void LC_CoordinatesMapper::toUCSDelta(const RS_Vector &worldDelta, double &ucsDX, double &ucsDY) const {
     if (m_hasUcs){
         ucs.toUCSDelta(worldDelta, ucsDX, ucsDY);
