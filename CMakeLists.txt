@@ -1439,6 +1439,8 @@ set(SOURCES
 		librecad/src/ui/components/status_bar/lc_anglesbasiswidget.h
 		librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.h
 		librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.cpp
+		librecad/src/lib/engine/utils/lc_rectregion.h
+		librecad/src/lib/engine/utils/lc_rectregion.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

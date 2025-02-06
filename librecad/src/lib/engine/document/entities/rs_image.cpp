@@ -98,7 +98,7 @@ RS_Image::RS_Image(RS_EntityContainer* parent,
 }
 
 RS_Entity* RS_Image::clone() const {
-    RS_Image* i = new RS_Image(*this);
+    auto* i = new RS_Image(*this);
     i->setHandle(getHandle());
     i->initId();
     i->update();
@@ -166,6 +166,7 @@ void RS_Image::update() {
 }
 
 void RS_Image::calculateBorders() {
+    updateRectRegion();
     RS_VectorSolutions sol = getCorners();
     minV =  RS_Vector::minimum(
         RS_Vector::minimum(sol.get(0), sol.get(1)),
@@ -177,8 +178,7 @@ void RS_Image::calculateBorders() {
     );
 }
 
-RS_VectorSolutions RS_Image::getCorners() const {
-
+void RS_Image::updateRectRegion()  {
     // x/y-size
     const RS_Vector dx = data.uVector*RS_Math::round(data.size.x);
     const RS_Vector dy = data.vVector*RS_Math::round(data.size.y);
@@ -193,7 +193,11 @@ RS_VectorSolutions RS_Image::getCorners() const {
 
     sol.move(data.insertionPoint);
 
-    return sol;
+    rectRegion.setCorners(sol.get(0),sol.get(2),sol.get(3), sol.get(1));
+
+}
+RS_VectorSolutions RS_Image::getCorners() const {
+    return rectRegion.getCorners();
 }
 
 /**
@@ -203,7 +207,7 @@ RS_VectorSolutions RS_Image::getCorners() const {
   */
 bool RS_Image::containsPoint(const RS_Vector& coord) const{
     QPolygonF paf;
-    RS_VectorSolutions corners =getCorners();
+    RS_VectorSolutions corners = getCorners();
     for(const RS_Vector& vp: corners){
         paf.push_back(QPointF(vp.x, vp.y));
     }
@@ -321,7 +325,7 @@ double RS_Image::getDistanceToPoint(const RS_Vector& coord,
 
 void RS_Image::move(const RS_Vector& offset) {
     data.insertionPoint.move(offset);
-    moveBorders(offset);
+    calculateBorders();
 }
 
 void RS_Image::rotate(const RS_Vector& center, const double& angle) {
@@ -343,7 +347,7 @@ void RS_Image::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.insertionPoint.scale(center, factor);
     data.uVector.scale(factor);
     data.vVector.scale(factor);
-    scaleBorders(center,factor);
+    calculateBorders();
 }
 
 void RS_Image::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
@@ -366,9 +370,9 @@ void RS_Image::draw(RS_Painter* painter) {
         RS_VectorSolutions sol = getCorners();
 
         RS_Vector c0 = sol.get(0);
-        RS_Vector c1 = sol.get(2);
-        RS_Vector c2 = sol.get(3);
-        RS_Vector c3 = sol.get(1);
+        RS_Vector c1 = sol.get(1);
+        RS_Vector c2 = sol.get(2);
+        RS_Vector c3 = sol.get(3);
 
         painter->drawLineWCS(c0, c1);
         painter->drawLineWCS(c1, c2);
@@ -392,6 +396,30 @@ void RS_Image::drawDraft([[maybe_unused]]RS_Painter *painter) {
     painter->drawLineWCS(c3, c0);
     painter->drawLineWCS(c0, c2);
     painter->drawLineWCS(c1, c3);
+}
+
+RS_VectorSolutions RS_Image::getRefPoints() const {
+    return rectRegion.getAllPoints();
+}
+
+void RS_Image::moveRef(const RS_Vector &vector, const RS_Vector &offset) {
+    move(offset);
+}
+
+void RS_Image::moveSelectedRef(const RS_Vector &ref, const RS_Vector &offset) {
+    /* todo - sand - restore later and support resizing of image via ref points
+     * double uAngle = data.uVector.angle();
+
+    RS_Vector newRef = ref+offset; // new position of ref
+
+    // rotate rect and points if needed to ensure that rect now is parallel to axises
+    RS_Vector normalizedRef = rectRegion.getRotatedPoint(ref, uAngle);
+    RS_Vector normalizedNewRef = rectRegion.getRotatedPoint(newRef, uAngle);
+    LC_RectRegion* rotated = rectRegion.getRotated(uAngle);
+
+    LC_TransformData rectTransformData = rotated->determineTransformData(normalizedRef, normalizedNewRef);
+    */
+    move(offset);
 }
 
 /**

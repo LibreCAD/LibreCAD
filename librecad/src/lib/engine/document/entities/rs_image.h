@@ -28,6 +28,7 @@
 
 #include <memory>
 #include "rs_atomicentity.h"
+#include "lc_rectregion.h"
 
 class QImage;
 
@@ -201,10 +202,20 @@ public:
     friend std::ostream& operator << (std::ostream& os, const RS_Image& l);
     void calculateBorders() override;
     void drawDraft(RS_Painter *painter) override;
+
+    RS_VectorSolutions getRefPoints() const override;
+
+    void updateRectRegion();
+
+    void moveSelectedRef(const RS_Vector &ref, const RS_Vector &offset) override;
+
+    void moveRef(const RS_Vector &vector, const RS_Vector &rsVector) override;
+
 protected:
 // whether the point is within image
     bool containsPoint(const RS_Vector& coord) const;
     RS_ImageData data;
+    LC_RectRegion rectRegion;
     std::shared_ptr<QImage> img;
 };
 

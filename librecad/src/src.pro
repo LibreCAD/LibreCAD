@@ -371,6 +371,7 @@ HEADERS += \
     lib/engine/undo/rs_undocycle.h \
     lib/engine/rs_units.h \
     lib/engine/lc_drawable.h \
+    lib/engine/utils/lc_rectregion.h \
     lib/engine/utils/rs_utility.h \
     lib/engine/document/variables/rs_variable.h \
     lib/engine/document/variables/rs_variabledict.h \
@@ -495,6 +496,7 @@ SOURCES += \
     lib/engine/overlays/ucs_mark/lc_overlayucszero.cpp \
     lib/engine/overlays/ucs_mark/lc_ucs_mark.cpp \
     lib/engine/undo/lc_undoablerelzero.cpp \
+    lib/engine/utils/lc_rectregion.cpp \
     lib/gui/lc_graphicviewport.cpp \
     lib/gui/lc_graphicviewportlistener.cpp \
     lib/gui/render/headless/lc_printviewportrenderer.cpp \    

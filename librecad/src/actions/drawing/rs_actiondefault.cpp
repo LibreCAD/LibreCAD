@@ -63,7 +63,7 @@ namespace {
             return false;
         switch (entity->rtti()) {
             case RS2::EntityHatch:
-            case RS2::EntityImage:
+//            case RS2::EntityImage:
             case RS2::EntitySolid:
             case RS2::EntityUnknown:
             case RS2::EntityPattern:

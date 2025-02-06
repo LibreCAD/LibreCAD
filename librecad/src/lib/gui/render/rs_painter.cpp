@@ -674,18 +674,34 @@ void RS_Painter::drawSplineWCS(const RS_Spline& spline){
 void RS_Painter::drawImgWCS(QImage& img, const RS_Vector& wcsInsertionPoint,
                            const RS_Vector& uVector, const RS_Vector& vVector) {
 
+//    if (viewport->hasUCS()) {
+    double wcsAngle = uVector.angle();
+    double ucsAngle = viewport->toUCSAngle(wcsAngle);
+
+    auto ucsUVector = uVector;
+    auto ucsVVector = vVector;
+
+    auto angleVector = RS_Vector(ucsAngle - wcsAngle);
+
+    ucsUVector.rotate(angleVector);
+    ucsVVector.rotate(angleVector);
+//    }
+
     double magnitudeU = uVector.magnitude();
     double magnitudeV = vVector.magnitude();
     RS_Vector scale{toGuiDX(magnitudeU),toGuiDY(magnitudeV)};
     double uiInsertX, uiInsertY;
     toGui(wcsInsertionPoint, uiInsertX, uiInsertY);
-    drawImgUI(img,uiInsertX, uiInsertY,uVector, vVector, scale);
+    drawImgUI(img,uiInsertX, uiInsertY,ucsUVector, ucsVVector, scale);
 }
 
 void RS_Painter::drawImgUI(QImage& img, double uiInsertX, double uiInsertY,
                            const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor) {
     save();
+
+//    LC_ERR << "IMG FACTOR " << factor;
     // Render smooth only at close zooms
+    // fixme - sand - check later - actually, these two hints are equivalent!
     if (factor.x < 1 || factor.y < 1) {
         RS_Painter::setRenderHint(SmoothPixmapTransform , true);
     }
@@ -693,16 +709,13 @@ void RS_Painter::drawImgUI(QImage& img, double uiInsertX, double uiInsertY,
         RS_Painter::setRenderHint(SmoothPixmapTransform);
     }
 
-//    RS_Vector un = uVector/uVector.magnitude();
-//    RS_Vector vn = vVector/vVector.magnitude();
-
-    RS_Vector un = uVector/factor.x;
-    RS_Vector vn = vVector/factor.y;
+    RS_Vector un = uVector/uVector.magnitude();
+    RS_Vector vn = vVector/vVector.magnitude();
 
     // Image mirroring is switching the handedness of u-v vectors pair which can be detected by
     // looking at the sign of the z component of their cross product. If z is negative image is mirrored.
     std::unique_ptr<QTransform> wm;
-    if(RS_Vector::crossP(uVector, vVector).z < 0) {
+    if(RS_Vector::crossP(uVector, vVector).z < 0) { // mirrored
         wm.reset(new QTransform(un.x, -vn.x, -un.y, vn.y, uiInsertX, uiInsertY));
     } else {
         wm.reset( new QTransform(un.x, vn.x, un.y, vn.y, uiInsertX, uiInsertY));

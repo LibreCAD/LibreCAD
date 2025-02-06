@@ -59,7 +59,7 @@ void RS_Preview::addEntity(RS_Entity* entity) {
     bool refEntity = false;
 
     switch (rtti) {
-        case RS2::EntityImage:
+//        case RS2::EntityImage:
         case RS2::EntityHatch:
         case RS2::EntityInsert:
             addBorder = true;
@@ -222,6 +222,10 @@ void RS_Preview::draw(RS_Painter* painter) {
                 else {
                     e->draw(painter);
                 }
+                break;
+            }
+            case RS2::EntityImage: {
+                e->drawDraft(painter);
                 break;
             }
             default:
