@@ -48,12 +48,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_dimarc.h"
 #include "lc_quickinfowidgetoptions.h"
 
-class LC_QuickInfoEntityData: public LC_QuickInfoBaseData
-{
+class LC_QuickInfoEntityData: public LC_QuickInfoBaseData{
     Q_DECLARE_TR_FUNCTIONS(LC_QuickInfoEntityData)
 
 public:
-
     explicit LC_QuickInfoEntityData();
     virtual ~LC_QuickInfoEntityData();
 

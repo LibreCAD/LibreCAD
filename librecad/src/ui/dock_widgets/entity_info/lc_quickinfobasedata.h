@@ -76,20 +76,22 @@ protected:
 
     // fixme - sand - think about these formatting methods.. they are present there, and similar ones are in snapper...
     // fixme - what about moving them to RS_GraphicView which is shared anyway may be? And this will simplify updating cached formats...
-    QString formatVector(const RS_Vector &vector) const;
-    QString formatDeltaVector(const RS_Vector &vector) const;
-    QString formatAngle(double angle);
+    QString formatWCSVector(const RS_Vector &wcsPos) const;
+    QString formatUCSVector(const RS_Vector &ucsPos) const;
+    QString formatWCSDeltaVector(const RS_Vector &wcsDelta) const;
+    QString formatWCSAngle(double wcsAngle);
+    QString formatUCSAngle(double wcsAngle);
     QString formatLinear(double length);
     QString formatDouble(const double &x) const;
     QString formatInt(const int &x) const;
     QString createLink(QString &data, const QString &path, int index, QString title, QString &value);
     void appendLinear(QString &result, const QString &label, double value);
     void appendDouble(QString &result, const QString &label, double value);
-    void appendAngle(QString &result, const QString &label, double value);
+    void appendWCSAngle(QString &result, const QString &label, double value);
     void appendRawAngle(QString &result, const QString &label, double value);
     void appendArea(QString &result, const QString &label, double value);
-    void appendAbsolute(QString &result, const QString &label, const RS_Vector& value);
-    void appendAbsoluteDelta(QString &result, const QString &label, const RS_Vector& value);
+    void appendWCSAbsolute(QString &result, const QString &label, const RS_Vector& value);
+    void appendWCSAbsoluteDelta(QString &result, const QString &label, const RS_Vector& value);
     void appendRelativePolar(QString &result, const QString &label, const RS_Vector& value);
     void appendInt(QString &result, const QString &label, const int& value);
     void appendValue(QString &result, const QString &label, const QString& value);

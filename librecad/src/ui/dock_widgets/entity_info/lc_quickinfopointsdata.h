@@ -52,7 +52,7 @@ public:
         QString angle;
     };
 
-    void processCoordinate(const RS_Vector &point);
+    void processCoordinate(const RS_Vector &wcsPoint);
     bool updateForCoordinateViewMode(int mode) override;
     void clear() override;
     QString generateView(bool showDistanceAndAngle, bool forceUpdate = false);
