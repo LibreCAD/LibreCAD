@@ -62,6 +62,14 @@ void LC_ActionDrawBoundingBox::doTrigger([[maybe_unused]]bool keepSelected) {
         }
         undoCycleEnd();
     }
+    // fixme - sand - ucs - rework later as bounding box for entities will support ucs
+    if (viewport->hasUCS()){
+        if (LC_LineMath::isMeaningfulAngle(viewport->getXAxisAngle())){
+            // ucs is rotated and resulting bounding box will be actually for wcs.
+            // warn the user
+            commandMessage(tr("Note: Bounding box was created for world coordinate system."));
+        }
+    }
     selectedEntities.clear();
     finish(false);
 }
