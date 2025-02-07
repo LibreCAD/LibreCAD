@@ -265,15 +265,109 @@ void RS_Painter::drawArcEntityUI( double uiCenterX,
         QPainter::drawPoint(QPointF(uiCenterX, uiCenterY));
         return;
     }
-    // The rect for the circle
     QPainterPath path;
-    double rx = uiCenterX - uiRadiusX;
-    double ry = uiCenterY - uiRadiusY;
-    double dX = uiRadiusX + uiRadiusX;
-    double dY = uiRadiusY + uiRadiusY;
-    path.arcMoveTo(rx, ry, dX, dY, uiStartAngleDegrees);
-    path.arcTo(rx, ry, dX, dY, uiStartAngleDegrees, angularLength);
+    drawArc(uiCenterX, uiCenterY, uiRadiusX, uiRadiusY, uiStartAngleDegrees, angularLength, path);
     QPainter::drawPath(path);
+}
+
+void RS_Painter::drawArc(double uiCenterX, double uiCenterY, double uiRadiusX, double uiRadiusY,
+                         double uiStartAngleDegrees, double angularLength, QPainterPath &path) const {
+    if (arcRenderInterpolate) {
+        drawInterpolatedArc(uiCenterX, uiCenterY, uiRadiusX, uiStartAngleDegrees, angularLength, path);
+
+    } else {
+        // this is faster and QT-rendering native. However, it delivers rendering artefacts on large zooms/arcs sizes
+        // at the endpoints of the arcs due to internal interpolations.
+        // For some cases it's acceptable, however, so lets user's preference decide
+        double rx = uiCenterX - uiRadiusX;
+        double ry = uiCenterY - uiRadiusY;
+        double dX = uiRadiusX + uiRadiusX;
+        double dY = uiRadiusY + uiRadiusY;
+
+        path.arcMoveTo(rx, ry, dX, dY, uiStartAngleDegrees);
+        path.arcTo(rx, ry, dX, dY, uiStartAngleDegrees, angularLength);
+    }
+}
+
+void RS_Painter::drawInterpolatedArc(double uiCenterX, double uiCenterY, double uiRadiusX, double uiStartAngleDegrees,
+                                     double angularLength, QPainterPath &path) const {
+ // draw arc interpolated by a set of line segments.
+// This is more precise drawing for arc's endpoints, yet in general slower by performance.
+// Also, with too high allowed tolerance, arcs may be drawn not smoothly.
+
+    double angularLengthRad = RS_Math::deg2rad(angularLength);
+    // actually, this is not only tolerance, but also arc's height (sagitta, https://en.wikipedia.org/wiki/Sagitta_(geometry))
+// sagitta will represent max distance between true arc and line chord that is used for interpolation
+// so, based on expected sagitta we'll calculate the angle for single line interpolation segment
+
+    int stepsCount = 0;
+    if (arcRenderInterpolationAngleFixed){
+        // this is fixes amount of steps - based on line segment angle
+        stepsCount = int(angularLengthRad / arcRenderInterpolationAngleValue) + 2;
+    }
+    else {
+        double lineSegmentAngle = 2 * acos(1 - arcRenderInterpolationMaxSagitta / uiRadiusX);
+        double stepsTolerance = angularLengthRad / lineSegmentAngle;
+        stepsCount = int(ceil(stepsTolerance)) + 2;
+    }
+//        LC_ERR << "ARC steps: " << stepsTol <<  " " << steps << " len " << angularLength << " start " << uiStartAngleDegrees;
+    double uiStartAngleRad = RS_Math::deg2rad(uiStartAngleDegrees);
+
+    double deltaAngleRad = std::abs(angularLengthRad) / stepsCount;
+    if (angularLength < 0) {
+        deltaAngleRad = -deltaAngleRad;
+    }
+
+    double cosStart = cos(uiStartAngleRad);
+    double sinStart = sin(uiStartAngleRad);
+
+    double cosDelta = cos(deltaAngleRad);
+    double sinDelta = sin(deltaAngleRad);
+
+    double uiX = uiCenterX + cosStart * uiRadiusX;
+    double uiY = uiCenterY - sinStart * uiRadiusX;
+
+    double cosCurrent = cosStart;
+    double sinCurrent = sinStart;
+
+    path.moveTo(QPointF(uiX, uiY));
+    double remainingAngle = angularLengthRad;
+    for (int i = 1; i <= stepsCount; ++i) {
+#ifdef STRAIGHT_ARC_INTERPOLATION
+        double a = uiStartAngleRad + deltaAngleRad * i;
+        double currentCos = std::cos(a);
+        double currentSin = std::sin(a);
+        double uiX = uiCenterX + currentCos * uiRadiusX;
+        double uiY = uiCenterY - currentSin * uiRadiusX;
+#else
+        // here we avoid computation of sin and cos on each approximation step
+        // the approach is described, for example, here https://stackoverflow.com/a/6669751 and "Angle sum and difference identities"
+        double uiX = uiCenterX + cosCurrent * uiRadiusX;
+        double uiY = uiCenterY - sinCurrent * uiRadiusX;
+        double tmp = cosCurrent * cosDelta - sinCurrent * sinDelta;
+        sinCurrent = sinCurrent * cosDelta + cosCurrent * sinDelta;
+        cosCurrent = tmp;
+
+        remainingAngle -= deltaAngleRad;
+#endif
+        path.lineTo(QPointF(uiX, uiY));
+    }
+
+#ifndef STRAIGHT_ARC_INTERPOLATION
+
+    // complete interpolation - to the end point of the arc
+    cosDelta = cos(remainingAngle);
+    sinDelta = sin(remainingAngle);
+
+    double tmp = cosCurrent * cosDelta - sinCurrent * sinDelta;
+    sinCurrent = sinCurrent * cosDelta + cosCurrent * sinDelta;
+    cosCurrent = tmp;
+
+    double uiEndpointX = uiCenterX + cosCurrent * uiRadiusX;
+    double uiEndpointY = uiCenterY - sinCurrent * uiRadiusX;
+
+    path.lineTo(QPointF(uiEndpointX, uiEndpointY));
+#endif
 }
 
 /**
@@ -293,7 +387,19 @@ void RS_Painter::drawCircleUI(double uiCenterX, double uiCenterY, double uiRadiu
         QPainter::drawPoint(QPointF(uiCenterX, uiCenterY));
     }
     else {
-        QPainter::drawEllipse(QPointF(uiCenterX, uiCenterY), uiRadius, uiRadius);
+        if (circleRenderSameAsArcs) {
+            if (arcRenderInterpolate){
+                QPainterPath path;
+                drawArc(uiCenterX, uiCenterY, uiRadius, uiRadius, 0, 360, path);
+                QPainter::drawPath(path);
+            }
+            else {
+                QPainter::drawEllipse(QPointF(uiCenterX, uiCenterY), uiRadius, uiRadius);
+            }
+        }
+        else{
+            QPainter::drawEllipse(QPointF(uiCenterX, uiCenterY), uiRadius, uiRadius);
+        }
     }
 }
 
@@ -606,22 +712,29 @@ void RS_Painter::drawPolylineWCS(const RS_Polyline* polyline){
                 if (radius > minArcDrawingRadius) {
                     double centerX, centerY;
                     toGui(data.center, centerX, centerY);
-
                     double startAngleDegrees, angularLength;
 
-                    if (arc.isReversed()) {
-                        startAngleDegrees = data.otherAngleDegrees;
-                        startAngleDegrees = startAngleDegrees - 360;
-                        angularLength = -data.angularLength;
-                    } else {
+                    if (arcRenderInterpolate){
                         startAngleDegrees = data.startAngleDegrees;
                         angularLength = data.angularLength;
+                        startAngleDegrees = toUCSAngleDegrees(startAngleDegrees);
+                        drawInterpolatedArc(centerX, centerY, radius, startAngleDegrees, angularLength, path);
                     }
-                    double size = radius + radius;
-                    toGui(arc.getStartpoint(), startX, startY);
-                    path.moveTo(startX, startY);
-                    double startAngle = toUCSAngleDegrees(startAngleDegrees); // fixme - cache?
-                    path.arcTo(centerX - radius, centerY - radius, size, size, startAngle, angularLength);
+                    else {
+                        if (arc.isReversed()) {
+                            startAngleDegrees = data.otherAngleDegrees;
+                            startAngleDegrees = startAngleDegrees - 360;
+                            angularLength = -data.angularLength;
+                        } else {
+                            startAngleDegrees = data.startAngleDegrees;
+                            angularLength = data.angularLength;
+                        }
+                        double startAngle = toUCSAngleDegrees(startAngleDegrees); // fixme - cache?
+                        double size = radius + radius;
+                        toGui(arc.getStartpoint(), startX, startY);
+                        path.moveTo(startX, startY);
+                        path.arcTo(centerX - radius, centerY - radius, size, size, startAngle, angularLength);
+                    }
                 }
                 break;
             }
@@ -669,7 +782,6 @@ void RS_Painter::drawSplineWCS(const RS_Spline& spline){
 
     QPainter::drawPath(path);
 }
-
 
 void RS_Painter::drawImgWCS(QImage& img, const RS_Vector& wcsInsertionPoint,
                            const RS_Vector& uVector, const RS_Vector& vVector) {

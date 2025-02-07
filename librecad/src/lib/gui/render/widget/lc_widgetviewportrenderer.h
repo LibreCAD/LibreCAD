@@ -46,12 +46,18 @@ protected:
 
     RS2::RedrawMethod redrawMethod = RS2::RedrawAll;
 
-    int minRenderableTextHeightInPx = 4;
-    double minCircleDrawingRadius = 2.0;
-    double minArcDrawingRadius = 0.5;
-    double minEllipseMajorRadius = 2.;
-    double minEllipseMinorRadius = 1.;
-    double minLineDrawingLen = 2;
+    int m_render_minRenderableTextHeightInPx = 4;
+    double m_render_minCircleDrawingRadius = 2.0;
+    double m_render_minArcDrawingRadius = 0.5;
+    double m_render_minEllipseMajorRadius = 2.;
+    double m_render_minEllipseMinorRadius = 1.;
+    double m_render_minLineDrawingLen = 2;
+
+    bool m_render_arcsInterpolate = true;
+    bool m_render_arcsInterpolateAngleFixed = true;
+    double m_render_arcsInterpolateAngleValue = M_PI / 36;
+    double m_render_arcsInterpolateMaxSagitta = 0.9;
+    bool m_render_circlesSameAsArcs = false;
 
     // Used for buffering different paint layers
     std::unique_ptr<QPixmap> PixmapLayer1;  // Used for grids and absolute 0

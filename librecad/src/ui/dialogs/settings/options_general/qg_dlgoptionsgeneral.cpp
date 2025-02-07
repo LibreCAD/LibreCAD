@@ -424,6 +424,24 @@ void QG_DlgOptionsGeneral::init() {
 
         bool drawTextsAsDraftInPreview = LC_GET_BOOL("DrawTextsAsDraftInPreview", true);
         cbTextDraftInPreview->setChecked(drawTextsAsDraftInPreview);
+
+
+        bool drawInterpolate = LC_GET_BOOL("ArcRenderInterpolate", false);
+        rbRenderArcInterpolate->setChecked(drawInterpolate);
+        rbRenderArcQT->setChecked(!drawInterpolate);
+
+        bool segmentFixed = LC_GET_BOOL("ArcRenderInterpolateSegmentFixed", true);
+        rbRenderArcMethodFixed->setChecked(segmentFixed);
+        rbRenderArcMethodSagitta->setChecked(!segmentFixed);
+
+        int angle100 = LC_GET_INT("ArcRenderInterpolateSegmentAngle", 500);
+        sbRenderArcSegmentAngle->setValue(angle100 / 100.0);
+
+        int sagittaMax = LC_GET_INT("ArcRenderInterpolateSegmentSagitta",90);
+        sbRenderArcMaxSagitta->setValue(sagittaMax / 100.0);
+
+        bool checked = LC_GET_BOOL("CircleRenderAsArcs", false);
+        rbRenderCirclesAsArcs->setChecked(checked);
     }
 
     LC_GROUP("NewDrawingDefaults");
@@ -729,6 +747,12 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("MinEllipseMinor", (int)(sbRenderMinEllipseMinor->value()*100));
             LC_SET("DrawTextsAsDraftInPanning", cbTextDraftOnPanning->isChecked());
             LC_SET("DrawTextsAsDraftInPreview", cbTextDraftInPreview->isChecked());
+
+            LC_SET("ArcRenderInterpolate", rbRenderArcInterpolate->isChecked());
+            LC_SET("ArcRenderInterpolateSegmentFixed", rbRenderArcMethodFixed->isChecked());
+            LC_SET("ArcRenderInterpolateSegmentAngle", sbRenderArcSegmentAngle->value()*100);
+            LC_SET("ArcRenderInterpolateSegmentSagitta", sbRenderArcMaxSagitta->value()*100);
+            LC_SET("CircleRenderAsArcs", rbRenderCirclesAsArcs->isChecked());
         }
 
         LC_GROUP("Colors");

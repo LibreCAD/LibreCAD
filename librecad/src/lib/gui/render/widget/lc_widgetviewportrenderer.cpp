@@ -26,6 +26,7 @@
 #include "lc_graphicviewport.h"
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
+#include "rs_math.h"
 
 LC_WidgetViewPortRenderer::LC_WidgetViewPortRenderer(LC_GraphicViewport *viewport, QPaintDevice* paintDevice):LC_GraphicViewportRenderer(viewport){
     pd = paintDevice;
@@ -42,21 +43,33 @@ void LC_WidgetViewPortRenderer::loadSettings() {
 
     LC_GROUP("Render");
     {
-        minRenderableTextHeightInPx = LC_GET_INT("MinRenderableTextHeightPx", 4);
+        m_render_minRenderableTextHeightInPx = LC_GET_INT("MinRenderableTextHeightPx", 4);
         int minArcRadius100 = LC_GET_INT("MinArcRadius", 80);
-        minArcDrawingRadius = minArcRadius100 / 100.0;
+        m_render_minArcDrawingRadius = minArcRadius100 / 100.0;
 
         int minCircleRadius100 = LC_GET_INT("MinCircleRadius", 200);
-        minCircleDrawingRadius = minCircleRadius100 / 100.0;
+        m_render_minCircleDrawingRadius = minCircleRadius100 / 100.0;
 
         int minLineLen100 = LC_GET_INT("MinLineLen", 200);
-        minLineDrawingLen = minLineLen100 / 100.0;
+        m_render_minLineDrawingLen = minLineLen100 / 100.0;
 
         int minEllipseMajor100 = LC_GET_INT("MinEllipseMajor", 200);
-        minEllipseMajorRadius = minEllipseMajor100 / 100.0;
+        m_render_minEllipseMajorRadius = minEllipseMajor100 / 100.0;
 
         int minEllipseMinor100 = LC_GET_INT("MinEllipseMinor", 200);
-        minEllipseMinorRadius = minEllipseMinor100 / 100.0;
+        m_render_minEllipseMinorRadius = minEllipseMinor100 / 100.0;
+
+        m_render_arcsInterpolate = LC_GET_BOOL("ArcRenderInterpolate", false);
+
+        m_render_arcsInterpolateAngleFixed = LC_GET_BOOL("ArcRenderInterpolateSegmentFixed", true);
+
+        int angle100 = LC_GET_INT("ArcRenderInterpolateSegmentAngle", 500);
+        m_render_arcsInterpolateAngleValue = RS_Math::deg2rad(angle100 / 100.0);
+
+        int sagittaMax = LC_GET_INT("ArcRenderInterpolateSegmentSagitta",90);
+        m_render_arcsInterpolateMaxSagitta = sagittaMax / 100.0;
+
+        m_render_circlesSameAsArcs = LC_GET_BOOL("CircleRenderAsArcs", false);
     } // Render group
     LC_GROUP_END();
 }
@@ -197,14 +210,20 @@ void LC_WidgetViewPortRenderer::paintClassicalBuffered(QPaintDevice* pd) {
 
 void LC_WidgetViewPortRenderer::setupPainter(RS_Painter *painter) {
     LC_GraphicViewportRenderer::setupPainter(painter);
-    painter->setMinCircleDrawingRadius(minCircleDrawingRadius);
-    painter->setMinArcDrawingRadius(minArcDrawingRadius);
-    painter->setMinLineDrawingLen(minLineDrawingLen);
-    painter->setMinEllipseMajorRadius(minEllipseMajorRadius);
-    painter->setMinEllipseMinorRadius(minEllipseMinorRadius);
+    painter->setMinCircleDrawingRadius(m_render_minCircleDrawingRadius);
+    painter->setMinArcDrawingRadius(m_render_minArcDrawingRadius);
+    painter->setMinLineDrawingLen(m_render_minLineDrawingLen);
+    painter->setMinEllipseMajorRadius(m_render_minEllipseMajorRadius);
+    painter->setMinEllipseMinorRadius(m_render_minEllipseMinorRadius);
     painter->setPenCapStyle(penCapStyle);
     painter->setPenJoinStyle(penJoinStyle);
-    painter->setMinRenderableTextHeightInPx(minRenderableTextHeightInPx);
+    painter->setMinRenderableTextHeightInPx(m_render_minRenderableTextHeightInPx);
+
+    painter->setRenderArcsInterpolate(m_render_arcsInterpolate);
+    painter->setRenderArcsInterpolationAngleFixed(m_render_arcsInterpolateAngleFixed);
+    painter->setRenderArcsInterpolationAngleValue(m_render_arcsInterpolateAngleValue);
+    painter->setRenderArcsInterpolationMaxSagitta(m_render_arcsInterpolateMaxSagitta);
+    painter->setRenderCirclesSameAsArcs(m_render_circlesSameAsArcs);
 
     if (antialiasing) {
         painter->setRenderHint(QPainter::Antialiasing);

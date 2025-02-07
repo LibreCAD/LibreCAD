@@ -45,7 +45,7 @@ public:
   */
     bool isDraftMode() const {return m_draftMode;};
     void setDraftMode(bool dm) { m_draftMode = dm;};
-    bool isTextLineNotRenderable(double uiLineHeight) override { return uiLineHeight < minRenderableTextHeightInPx;};
+    bool isTextLineNotRenderable(double uiLineHeight) override { return uiLineHeight < m_render_minRenderableTextHeightInPx;};
 protected:
     bool inOverlayDrawing = false;
     bool isHiDpi = false;

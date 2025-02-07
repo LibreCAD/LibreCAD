@@ -118,6 +118,7 @@ public:
     // methods invoked from entity containers and printing
     void drawEntity(RS_Entity* entity) {renderer->renderEntity(this, entity);}
     void drawAsChild(RS_Entity* entity){renderer->renderEntityAsChild(this, entity);};
+    void drawInfiniteWCS(RS_Vector start, RS_Vector end);
 
     /**
      * Sets the drawing mode.
@@ -175,9 +176,14 @@ public:
     void setMinRenderableTextHeightInPx(int i);
     void setDefaultWidthFactor(double factor){ defaultWidthFactor = factor;};
     void updatePointsScreenSize(double pdSize);
-    void drawInfiniteWCS(RS_Vector start, RS_Vector end);
 
     bool isTextLineNotRenderable(double d);
+
+    void setRenderArcsInterpolate(bool value){ arcRenderInterpolate = value;}
+    void setRenderArcsInterpolationAngleFixed(bool value){arcRenderInterpolationAngleFixed = value;}
+    void setRenderArcsInterpolationAngleValue(double val) {arcRenderInterpolationAngleValue = val;}
+    void setRenderArcsInterpolationMaxSagitta(double val) {arcRenderInterpolationMaxSagitta = val;}
+    void setRenderCirclesSameAsArcs(bool val) {circleRenderSameAsArcs = val;}
 
 protected:
     /**
@@ -200,6 +206,12 @@ protected:
     double minEllipseMajorRadius = 2.;
     double minEllipseMinorRadius = 1.;
     double minLineDrawingLen = 2;
+    bool arcRenderInterpolate = false;
+    bool arcRenderInterpolationAngleFixed = false;
+    double arcRenderInterpolationAngleValue = M_PI/36;
+    double arcRenderInterpolationMaxSagitta = 0.9;
+    bool circleRenderSameAsArcs = false;
+
     double minRenderableTextHeightInPx = 1;
     double defaultWidthFactor = 1.0;
 
@@ -223,6 +235,8 @@ protected:
     void drawSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, bool closed);
 
     void drawArcEntityUI( double uiCenterX,double uiCenterY,double uiRadiusX,double uiRadiusY,double uiStartAngleDegrees,double angularLength);
+    void drawArc(double uiCenterX, double uiCenterY, double uiRadiusX, double uiRadiusY,
+                 double uiStartAngleDegrees, double angularLength, QPainterPath &path) const;
     void drawLineUI(const double &x1, const double &y1, const double &x2, const double &y2);
     void drawImgUI(QImage& img, double uiInsertX, double uiInsertY, const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor);
 
@@ -237,6 +251,9 @@ protected:
 // fixme - sand, ucs - temporary, remove
    bool printinMode = false;
    bool printPreview = false;
+
+
+    void drawInterpolatedArc(double uiCenterX, double uiCenterY, double uiRadiusX, double uiStartAngleDegrees, double angularLength, QPainterPath &path) const;
 };
 
 #endif

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>753</width>
+    <width>768</width>
     <height>746</height>
    </rect>
   </property>
@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>4</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -3717,6 +3717,118 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="3" column="0">
+        <widget class="QGroupBox" name="groupBox_22">
+         <property name="toolTip">
+          <string>Defines how arcs are rendered in UI. </string>
+         </property>
+         <property name="title">
+          <string>Arcs Rendering Method</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_36">
+          <item row="1" column="0" colspan="2">
+           <widget class="QRadioButton" name="rbRenderArcInterpolate">
+            <property name="toolTip">
+             <string>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs. </string>
+            </property>
+            <property name="text">
+             <string>Interpolate by line segments</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QRadioButton" name="rbRenderArcQT">
+            <property name="toolTip">
+             <string>If this method is selected, arcs are drawn using methods of QT library. While in some cases this method may be faster and produce smoother arcs, it is posible that unexact drawing with errors is performed in end points of arcs</string>
+            </property>
+            <property name="text">
+             <string>Qt-native unexact drawing method</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QGroupBox" name="groupBox_23">
+            <property name="title">
+             <string>Single segment angle</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_37">
+             <item row="0" column="0">
+              <widget class="QRadioButton" name="rbRenderArcMethodSagitta">
+               <property name="toolTip">
+                <string>If selected, the agble of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</string>
+               </property>
+               <property name="text">
+                <string>Determine segments by max sagitta</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QRadioButton" name="rbRenderArcMethodFixed">
+               <property name="toolTip">
+                <string>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</string>
+               </property>
+               <property name="text">
+                <string>Use fixed segment angle value</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QSpinBox" name="sbRenderArcSegmentAngle">
+               <property name="suffix">
+                <string> degrees</string>
+               </property>
+               <property name="prefix">
+                <string> </string>
+               </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>30</number>
+               </property>
+               <property name="value">
+                <number>5</number>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QDoubleSpinBox" name="sbRenderArcMaxSagitta">
+               <property name="toolTip">
+                <string>Maximal distance betwen arc and segment interpolation line</string>
+               </property>
+               <property name="suffix">
+                <string> px</string>
+               </property>
+               <property name="minimum">
+                <double>0.050000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>20.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>0.050000000000000</double>
+               </property>
+               <property name="value">
+                <double>0.900000000000000</double>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="rbRenderCirclesAsArcs">
+            <property name="toolTip">
+             <string>If selected, redering settings for arc will be applied also to circles.</string>
+            </property>
+            <property name="text">
+             <string>Render circles in the same way as arcs.</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>

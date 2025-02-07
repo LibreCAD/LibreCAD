@@ -286,4 +286,8 @@ void LC_PrintPreviewViewRenderer::setupPainter(RS_Painter *painter)  {
     painter->setPenCapStyle(Qt::RoundCap);
     painter->setPenJoinStyle(Qt::RoundJoin);
     painter->setMinRenderableTextHeightInPx(0);
+
+    painter->setRenderArcsInterpolate(true);
+    painter->setRenderArcsInterpolationAngleFixed(true);
+    painter->setRenderArcsInterpolationAngleValue(M_PI/36); // 5 degrees
 }
