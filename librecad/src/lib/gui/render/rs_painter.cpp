@@ -35,7 +35,6 @@
 #include "rs_arc.h"
 #include "rs_ellipse.h"
 #include "rs_circle.h"
-#include "lc_coordinates_mapper.h"
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
 
@@ -621,7 +620,8 @@ void RS_Painter::debugOutPath(const QPainterPath &tmpPath) const {
 
 void RS_Painter::drawSplinePointsWCS(const 	std::vector<RS_Vector> &wcsControlPoints, bool closed){
     int controlPointsCount = wcsControlPoints.size()/*data.controlPoints.size()*/;
-    std::vector<RS_Vector> uiControlPoints = std::vector<RS_Vector>(wcsControlPoints); // fixme - not actual creation of intermediate vector...
+    // fixme - sand - render - eliminate creation of intermediate vector...
+    std::vector<RS_Vector> uiControlPoints = std::vector<RS_Vector>(wcsControlPoints);
     for (int i = 0; i < controlPointsCount; i++){
         double x, y;
         toGui(wcsControlPoints[i], x,y);
@@ -747,7 +747,7 @@ void RS_Painter::drawPolylineWCS(const RS_Polyline* polyline){
                 double uiCenterX, uiCenterY;
                 toGui(data.center, uiCenterX, uiCenterY);
 
-                const double uiMajorRadius = toGuiDX(data.majorP.magnitude());
+                const double uiMajorRadius = toGuiDX(data.majorP.magnitude()); // fixme - sand - render - cache?
                 const double uiMinorRadius = data.ratio * uiMajorRadius;
                 if (data.isArc) {
                     drawEllipseArcUI(uiCenterX, uiCenterY, uiMajorRadius, uiMinorRadius, toWorldAngleDegrees(data.angleDegrees), /*view.toWorldAngleDegrees(*/data.startAngleDegrees/*)*/,
@@ -788,7 +788,7 @@ void RS_Painter::drawImgWCS(QImage& img, const RS_Vector& wcsInsertionPoint,
 
 //    if (viewport->hasUCS()) {
     double wcsAngle = uVector.angle();
-    double ucsAngle = viewport->toUCSAngle(wcsAngle);
+    double ucsAngle = toUCSAngle(wcsAngle);
 
     auto ucsUVector = uVector;
     auto ucsVVector = vVector;
@@ -799,8 +799,8 @@ void RS_Painter::drawImgWCS(QImage& img, const RS_Vector& wcsInsertionPoint,
     ucsVVector.rotate(angleVector);
 //    }
 
-    double magnitudeU = uVector.magnitude();
-    double magnitudeV = vVector.magnitude();
+    double magnitudeU = uVector.magnitude(); // fixme - sand - render - cache?
+    double magnitudeV = vVector.magnitude(); // fixme - sand - render - cache?
     RS_Vector scale{toGuiDX(magnitudeU),toGuiDY(magnitudeV)};
     double uiInsertX, uiInsertY;
     toGui(wcsInsertionPoint, uiInsertX, uiInsertY);
@@ -1185,28 +1185,6 @@ void RS_Painter::updatePointsScreenSize(double pdSize) {
     screenPointsSize = determinePointScreenSize(pdSize);
 }
 
-// todo - sand - ucs - NOTE: investigate later whether we it's possible to speed up coordinates transform (via duplicating all transform data in painter)
-// so there will be no need for delegation to viewport....
-void RS_Painter::toGui(const RS_Vector &pos, double &x, double &y) {
-    viewport->toUI(pos, x,y);
-}
-
-double RS_Painter::toGuiDX(double d) const {
-    return viewport->toGuiDX(d);
-}
-
-double RS_Painter::toGuiDY(double d) const {
-    return viewport->toGuiDY(d);
-}
-
-double RS_Painter::toUCSAngleDegrees(double angle) {
-    return viewport->toUCSAngleDegrees(angle);
-}
-
-double RS_Painter::toWorldAngleDegrees(double angle) {
-    return viewport->toWorldAngleDegrees(angle);
-}
-
 void RS_Painter::drawInfiniteWCS(RS_Vector startpoint, RS_Vector endpoint) {
     const LC_Rect viewportRect = renderer->getBoundingClipRect();
     RS_Vector start(false);
@@ -1258,4 +1236,69 @@ void RS_Painter::drawInfiniteWCS(RS_Vector startpoint, RS_Vector endpoint) {
 bool RS_Painter::isTextLineNotRenderable(double wcsLineHeight) {
     double uiHeight = toGuiDY(wcsLineHeight);
     return renderer->isTextLineNotRenderable(uiHeight);
+}
+
+void RS_Painter::setViewPort(LC_GraphicViewport *v) {
+    viewport = v;
+    apply(viewport);
+    RS_Vector factor = v->getFactor();
+    viewPortFactorX = factor.x;
+    viewPortFactorY = factor.y;
+    viewPortOffsetX = v->getOffsetX();
+    viewPortOffsetY = v->getOffsetY();
+    viewPortHeight = v->getHeight();
+}
+
+// NOTE:
+// ----------------------------------------------------------------------------------------------------------------
+// The code below duplicates coordinates translations from Viewport/mapper. This is INTENTIONAL and is performed for the
+// performance's sake, as coordinates translation is more than heavily used operation during the rendering pass.
+// Painter is inherited from Coordinates Mapper also for increasing the speed of rendering.
+//
+// The major gain for performance is gained due to
+//  1) one time calculation of sin/cos of xaxis angle
+//  2) methods unwrapping/inlining
+// ----------------------------------------------------------------------------------------------------------------
+
+void RS_Painter::toGui(const RS_Vector &wcsCoordinate, double &uiX, double &uiY) {
+//    viewport->toUI(pos, x,y);
+
+    if (m_hasUcs){
+//   ucsToUCS(wcsCoordinate.x, wcsCoordinate.y, uiX, uiY);
+// the code below is equivalent to
+
+/*
+        RS_Vector wcs = RS_Vector(wcsCoordinate.x, wcsCoordinate.y);
+        RS_Vector newPos = wcs-ucsOrigin;
+        newPos.rotate(xAxisAngle);
+        uiY = newPos.x;
+        uiX = newPos.y;
+*/
+        double ucsPositionX = wcsCoordinate.x - ucsOrigin.x;
+        double ucsPositionY = wcsCoordinate.y - ucsOrigin.y;
+
+        double ucsX = ucsPositionX * cosXAngle - ucsPositionY * sinXAngle;
+        double ucsY = ucsPositionX * sinXAngle + ucsPositionY * cosXAngle;
+
+//        uiX = toGuiX(uiX);
+        uiX = ucsX * viewPortFactorX + viewPortOffsetX;
+//        uiY = toGuiY(uiY);
+        uiY = -ucsY * viewPortFactorY + viewPortHeight - viewPortOffsetY;
+    }
+    else{
+//        uiX = toGuiX(wcsCoordinate.x);
+        uiX = wcsCoordinate.x * viewPortFactorX + viewPortOffsetX;
+//        uiY = toGuiY(wcsCoordinate.y);
+        uiY = -wcsCoordinate.y * viewPortFactorY + viewPortHeight - viewPortOffsetY;
+    }
+}
+
+double RS_Painter::toGuiDX(double ucsDX) const {
+//    return viewport->toGuiDX(d);
+   return ucsDX * viewPortFactorX;
+}
+
+double RS_Painter::toGuiDY(double ucsDY) const {
+//    return viewport->toGuiDY(d);
+    return ucsDY * viewPortFactorY;
 }

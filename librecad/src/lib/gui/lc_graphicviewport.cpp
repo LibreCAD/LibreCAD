@@ -729,7 +729,7 @@ double LC_GraphicViewport::toBasisUCSAngle(double ucsAbsAngle) {
 
 void LC_GraphicViewport::toUI(RS_Vector wcsCoordinate, double &uiX, double &uiY) const{
     if (m_hasUcs){
-        ucs.toUCS(wcsCoordinate.x, wcsCoordinate.y, uiX, uiY);
+        doWCS2UCS(wcsCoordinate.x, wcsCoordinate.y, uiX, uiY);
         uiX = toGuiX(uiX);
         uiY = toGuiY(uiY);
     }
@@ -788,7 +788,7 @@ void LC_GraphicViewport::extractUCS(){
     if (m_hasUcs){
         if (graphic != nullptr) {
             LC_UCSList *ucsList = graphic->getUCSList();
-            LC_UCS *candidate = createUCSEntity(ucs.getUcsOrigin(), -ucs.getXAxisAngle(), isGridIsometric(), getIsoViewType());
+            LC_UCS *candidate = createUCSEntity(getUcsOrigin(), -getXAxisAngle(), isGridIsometric(), getIsoViewType());
             LC_UCS *createdUCS = ucsList->tryAddUCS(candidate);
             if (createdUCS != nullptr) {
                 applyUCS(createdUCS);
@@ -802,7 +802,7 @@ RS_Vector LC_GraphicViewport::doSetUCS(const RS_Vector &origin, double angle, bo
     bool customUCS = LC_LineMath::isMeaningfulAngle(angle) || LC_LineMath::isMeaningfulDistance(origin, RS_Vector(0, 0, 0));
     RS_Vector ucsOrigin;
     if (customUCS) {
-        ucs.update(origin, -angle);
+        update(origin, -angle);
         m_hasUcs = true;
         ucsOrigin = toUCS(origin);
     } else {
@@ -899,7 +899,7 @@ void LC_GraphicViewport::applyUCSAfterLoad(){
 LC_UCS* LC_GraphicViewport::getCurrentUCS() const{
     LC_UCS* result = nullptr;
     if (m_hasUcs){
-        result = createUCSEntity(ucs.getUcsOrigin(), -ucs.getXAxisAngle(),isGridIsometric(), getIsoViewType());
+        result = createUCSEntity(getUcsOrigin(), -getXAxisAngle(),isGridIsometric(), getIsoViewType());
     }
     return result;
 }
@@ -1037,7 +1037,6 @@ void LC_GraphicViewport::setGraphic(RS_Graphic *g) {
      graphic = g;
      overlaysManager.setGraphic(g);
 }
-
 
 /**
  * Zooms to page extends.

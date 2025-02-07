@@ -28,39 +28,15 @@ class QPointF;
 
 class LC_CoordinatesMapper {
 public:
-//    RS_Vector toGui(RS_Vector v) const;
-//    void toGui(const RS_Vector &v, double& x, double& y) const;
-//    RS_Vector toGui(double x, double y) const;
-//    RS_Vector toGuiFromUCS(const RS_Vector &ucs) const;
-//    RS_Vector toGuiFromUCS(double x, double y) const;
-//    RS_Vector toGuiD(RS_Vector v) const;
-//    double toGuiX(double x) const;
-//    double toGuiY(double y) const;
-//    double toGuiDX(double d) const;
-//    double toGuiDY(double d) const;
-//    RS_Vector toUCSFromGui(const QPointF& pos) const;
-//    RS_Vector toUCSFromGui(double x, double y) const;
-//    RS_Vector toGraph(const RS_Vector &v) const;
-//    RS_Vector toGraph(const QPointF &v) const;
-//    RS_Vector toGraph(int x, int y) const;
-//    double toGraphX(int x) const;
-//    double toGraphY(int y) const;
-//    double toGraphDX(int uiDX) const {return 0.0;};// FIXME - ucs - complete
-//    double toGraphDY(int d) const;
-//    RS_Vector toGraphD(int d, int y) const;
-//    RS_Vector toUCS(const QPointF &position) const;
-
     LC_CoordinatesMapper();
-
-
-    double toUCSAngle(double a) const;
-    double toUCSAngleDegrees(double a) const;
     void toUCSDelta(const RS_Vector& worldDelta, double& ucsDX, double &ucsDY) const;
     RS_Vector toUCSDelta(const RS_Vector& worldDelta) const;
-    double toWorldAngle(double angle) const;
-    double toWorldAngleDegrees(double angle) const;
-    RS_Vector toUCS(const RS_Vector& v) const;
-    void toUCS(const RS_Vector& v, double& ucsX, double &ucsY) const;
+    double toWorldAngle(double ucsAngle) const;
+    double toWorldAngleDegrees(double ucsAngle) const;
+    double toUCSAngle(double wcsAngle) const;
+    double toUCSAngleDegrees(double wcsAngle) const;
+    RS_Vector toUCS(const RS_Vector& wcsPos) const;
+    void toUCS(const RS_Vector& wcsPos, double& ucsX, double &ucsY) const;
     RS_Vector toWorld(double ucsX, double ucsY) const;
     RS_Vector toWorld(const RS_Vector& ucsPos) const;
     bool hasUCS() const {return m_hasUcs;};
@@ -72,13 +48,10 @@ public:
     double toUCSBasisAngle(double ucsAbsAngle, double baseAngle, bool counterclockwise);
     double toUCSAbsAngle(double ucsBasisAngle, double baseAngle, bool conterclockwise);
 
-    RS_Vector getUcsOrigin(){
-        return ucs.getUcsOrigin();
-    }
+    void apply(LC_CoordinatesMapper* other);
 
-    double getXAxisAngle(){
-        return ucs.getXAxisAngle();
-    }
+    const RS_Vector &getUcsOrigin() const;
+    double getXAxisAngle() const{return xAxisAngle;}
 
 protected:
     /**
@@ -90,38 +63,22 @@ protected:
      * will be faster than virtual method call.
      */
     bool m_hasUcs = false;
+    RS_Vector ucsOrigin = RS_Vector(0, 0, 0);
+    double xAxisAngle = 0.0;
+    double xAxisAngleDegrees = 0.0;
+    double sinXAngle = 0.0;
+    double cosXAngle = 0.0;
+    double sinNegativeXAngle = 0.0;
+    double cosNegativeXAngle = 0.0;
+    void setXAxisAngle(double angle);
 
-    // ucs support
-
-    class UserCoordinateSystem{
-    public:
-        UserCoordinateSystem(){ ucsOrigin = RS_Vector(0, 0, 0); setXAxisAngle(0.0);}
-        double toWorldAngle(double angle) const;
-        double toWorldAngleDegrees(double angle) const;
-        double toUCSAngle(double angle) const;
-        double toUCSAngleDegree(double angle) const;
-        void toUCS(double worldX, double worldY, double &ucsX, double &ucsY) const;
-        void toUCS(const RS_Vector &worldCoordinate, RS_Vector& ucsCoordinate) const;
-        void toUCSDelta(const RS_Vector &worldDelta, double &ucsDX, double &ucsDY) const;
-        void toWorld(const RS_Vector &ucsCoordinate, RS_Vector& worldCoordinate) const;
-        void toWorld(double ucsX, double ucsY, double &worldX, double &worldY) const;
-        void update(const RS_Vector& origin, double angle);
-        void rotate(double &x, double &y) const;
-        void rotateBack(double &x, double &y) const;
-        const RS_Vector &getUcsOrigin() const;
-        double getXAxisAngle() const;
-    protected:
-        RS_Vector ucsOrigin = RS_Vector(0, 0, 0);
-        double xAxisAngle = 0.0;
-        double xAxisAngleDegrees = 0.0;
-        double sinXAngle = 0.0;
-        double cosXAngle = 0.0;
-        double sinNegativeXAngle = 0.0;
-        double cosNegativeXAngle = 0.0;
-        void setXAxisAngle(double angle);
-    };
-
-    UserCoordinateSystem ucs = UserCoordinateSystem();
+    double toUCSAngleDegree(double angle) const;
+    void doWCS2UCS(double worldX, double worldY, double &ucsX, double &ucsY) const;
+    void doWCS2UCS(const RS_Vector &worldCoordinate, RS_Vector& ucsCoordinate) const;
+    void doWCSDelta2UCSDelta(const RS_Vector &worldDelta, double &ucsDX, double &ucsDY) const;
+    void doUCS2WCS(const RS_Vector &ucsCoordinate, RS_Vector& worldCoordinate) const;
+    void doUCS2WCS(double ucsX, double ucsY, double &worldX, double &worldY) const;
+    void update(const RS_Vector& origin, double angle);
 };
 
 

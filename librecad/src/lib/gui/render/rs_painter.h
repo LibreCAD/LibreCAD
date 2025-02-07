@@ -35,6 +35,7 @@
 #include "rs_vector.h"
 #include "rs_entity.h"
 #include "lc_graphicviewportrenderer.h"
+#include "lc_coordinates_mapper.h"
 
 class RS_Color;
 class RS_Pen;
@@ -48,7 +49,6 @@ class QPolygonF;
 class QImage;
 class QBrush;
 class QString;
-class LC_CoordinatesMapper;
 class LC_GraphicViewport;
 
 struct LC_SplinePointsData;
@@ -62,7 +62,7 @@ struct LC_SplinePointsData;
  * communicate with the LibreCAD from a GUI level. This
  * does not contain any Qt or platform specific code.
  */
-class RS_Painter: public QPainter {
+class RS_Painter: public QPainter, LC_CoordinatesMapper {
 public:
     explicit RS_Painter(QPaintDevice* pd);
     ~RS_Painter() = default;
@@ -72,14 +72,14 @@ public:
     double toGuiDX(double d) const;
     double toGuiDY(double d) const;
 
-    double toUCSAngleDegrees(double angle);
-    double toWorldAngleDegrees(double angle);
+//    double toUCSAngleDegrees(double angle);
+//    double toWorldAngleDegrees(double angle);
 
     bool isPrinting() {return printinMode;}; // fixme - temporary support, refactor further
     bool isPrintPreview() {return printPreview;}; // fixme - temporary support, refactor further
 
     LC_GraphicViewport* getViewPort() {return viewport;}
-    void setViewPort(LC_GraphicViewport* v) {viewport = v;};
+    void setViewPort(LC_GraphicViewport* v);
     void setRenderer(LC_GraphicViewportRenderer *r) {renderer = r;}
     void updateDashOffset(RS_Entity* e);
     void clearDashOffset() {currenPatternOffset = 0.0;};
@@ -220,6 +220,13 @@ protected:
     int screenPointsSize = 0;
     int pointsMode = 0;
 
+    // cached factor and offset from viewport - for efficiency of coordinates translations.
+    double viewPortFactorX = 1.0;
+    double viewPortFactorY = 1.0;
+    int viewPortOffsetX = 0;
+    int viewPortOffsetY = 0;
+    double viewPortHeight = 0.0;
+
     LC_GraphicViewportRenderer* renderer = nullptr;
     LC_GraphicViewport* viewport = nullptr;
 
@@ -251,7 +258,6 @@ protected:
 // fixme - sand, ucs - temporary, remove
    bool printinMode = false;
    bool printPreview = false;
-
 
     void drawInterpolatedArc(double uiCenterX, double uiCenterY, double uiRadiusX, double uiStartAngleDegrees, double angularLength, QPainterPath &path) const;
 };

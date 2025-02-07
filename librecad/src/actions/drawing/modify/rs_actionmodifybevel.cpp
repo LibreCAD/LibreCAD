@@ -121,7 +121,7 @@ void RS_ActionModifyBevel::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             if (se != entity1 && areBothEntityAccepted(entity1, se)){
                 auto atomicCandidate2 = dynamic_cast<RS_AtomicEntity *>(se);
 
-                RS_Modification m(*container, nullptr);
+                RS_Modification m(*container, viewport);
                 LC_BevelResult* bevelResult = m.bevel(pPoints->coord1,  entity1, mouse, atomicCandidate2, pPoints->data, true);
 
                 if (bevelResult != nullptr){

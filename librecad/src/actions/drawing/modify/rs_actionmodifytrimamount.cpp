@@ -105,7 +105,7 @@ void RS_ActionModifyTrimAmount::onMouseMoveEvent([[maybe_unused]]int status, LC_
         if (en->isAtomic()){
             highlightHover(en);
             auto* atomic = reinterpret_cast<RS_AtomicEntity *>(en);
-            RS_Modification m(*container, nullptr, false);
+            RS_Modification m(*container, viewport, false);
             double dist = determineDistance(atomic);
             bool trimBoth = symmetricDistance && !distanceIsTotalLength;
             bool trimStart;

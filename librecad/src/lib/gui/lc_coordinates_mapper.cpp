@@ -24,119 +24,91 @@
 #include "lc_coordinates_mapper.h"
 #include "rs_math.h"
 
-LC_CoordinatesMapper::LC_CoordinatesMapper() {}
-
-double  LC_CoordinatesMapper::UserCoordinateSystem::toWorldAngle(double angle) const {return angle - xAxisAngle;};
-double  LC_CoordinatesMapper::UserCoordinateSystem::toWorldAngleDegrees(double angle) const {return angle - xAxisAngleDegrees;};
-double  LC_CoordinatesMapper::UserCoordinateSystem::toUCSAngle(double angle) const {return angle + xAxisAngle;}
-
-// fixme - sand - ucs - unwrapp calculations
-void LC_CoordinatesMapper::UserCoordinateSystem::toUCS(const RS_Vector &worldCoordinate, RS_Vector &ucsCoordinate) const{
-    // the code below is equivalent to this
-    //  RS_Vector newPos = world - ucsOrigin;
-    //  RS_Vector rotated = newPos.rotate(ucsOrigin, xAxisAngle);
-
-    /* double x = worldCoordinate.x - ucsOrigin.x;
-     double y = worldCoordinate.y - ucsOrigin.y;
-
-     rotate(x,y);
-
-     ucsCoordinate.x = x;
-     ucsCoordinate.y = y;*/
-
-    RS_Vector wcs = worldCoordinate;
-    RS_Vector newPos = wcs-ucsOrigin;
-    ucsCoordinate = newPos.rotate(xAxisAngle);
+LC_CoordinatesMapper::LC_CoordinatesMapper(){
+    ucsOrigin = RS_Vector(0, 0, 0); setXAxisAngle(0.0);
 }
-// fixme - sand - ucs - unwrapp calculations
-void LC_CoordinatesMapper::UserCoordinateSystem::toUCS(double worldX, double worldY, double &ucsX, double &ucsY) const {
-    // the code below is equivalent to this
-    //  RS_Vector newPos = world - ucsOrigin;
-    //  RS_Vector rotated = newPos.rotate(ucsOrigin, xAxisAngle);
-
-    /*ucsX = worldX - ucsOrigin.x;
-    ucsY = worldY - ucsOrigin.y;
-
-    rotate(ucsX,ucsY);*/
 
 
-    RS_Vector wcs = RS_Vector(worldX, worldY);
-    RS_Vector newPos = wcs-ucsOrigin;
-    newPos.rotate(xAxisAngle);
-    ucsX = newPos.x;
-    ucsY = newPos.y;
+void LC_CoordinatesMapper::doWCS2UCS(const RS_Vector &worldCoordinate, RS_Vector &ucsCoordinate) const{
+    // the code below is unwrapped equivalent to this
+/*
+        RS_Vector wcs = RS_Vector(worldX, worldY);
+        RS_Vector newPos = wcs-ucsOrigin;
+        newPos.rotate(xAxisAngle);
+        uiY = newPos.x;
+        uiX = newPos.y;
+*/
+
+    double ucsPositionX = worldCoordinate.x - ucsOrigin.x;
+    double ucsPositionY = worldCoordinate.y - ucsOrigin.y;
+
+    double ucsX = ucsPositionX * cosXAngle - ucsPositionY * sinXAngle;
+    double ucsY = ucsPositionX * sinXAngle + ucsPositionY * cosXAngle;
+
+    ucsCoordinate.x = ucsX;
+    ucsCoordinate.y = ucsY;
 }
+
+void LC_CoordinatesMapper::doWCS2UCS(double worldX, double worldY, double &ucsX, double &ucsY) const {
+    // the code below is unwrapped equivalent to this
+/*
+        RS_Vector wcs = RS_Vector(worldX, worldY);
+        RS_Vector newPos = wcs-ucsOrigin;
+        newPos.rotate(xAxisAngle);
+        uiY = newPos.x;
+        uiX = newPos.y;
+*/
+
+    double ucsPositionX = worldX - ucsOrigin.x;
+    double ucsPositionY = worldY - ucsOrigin.y;
+
+    ucsX = ucsPositionX * cosXAngle - ucsPositionY * sinXAngle;
+    ucsY = ucsPositionX * sinXAngle + ucsPositionY * cosXAngle;
+}
+
 // fixme - sand - ucs - unwrapp calculations
-void LC_CoordinatesMapper::UserCoordinateSystem::toUCSDelta(const RS_Vector &worldDelta, double &ucsDX, double &ucsDY) const {
+void LC_CoordinatesMapper::doWCSDelta2UCSDelta(const RS_Vector &worldDelta, double &ucsDX, double &ucsDY) const {
     double magnitude = worldDelta.magnitude();
     double angle = worldDelta.angle();
     double ucsAngle = angle + xAxisAngle;
     ucsDX = magnitude*cos(ucsAngle);
     ucsDY = magnitude*sin(ucsAngle);
 }
-// fixme - sand - ucs - unwrapp calculations
-void LC_CoordinatesMapper::UserCoordinateSystem::toWorld(const RS_Vector &ucsCoordinate, RS_Vector &worldCoordinate) const{
-    // RS_Vector rotated = ucs.rotate(UCS_Origin, -ucs_Angle);
-    // world = rotated + ucsOrigin
 
-/*    double x = ucsCoordinate.x;
-    double y = ucsCoordinate.y;
+void LC_CoordinatesMapper::doUCS2WCS(const RS_Vector &ucsCoordinate, RS_Vector &worldCoordinate) const{
 
-    rotateBack(x,y);
-
-    x = x + ucsOrigin.x;
-    y = y + ucsOrigin.y;
-
-    worldCoordinate.x = x;
-    worldCoordinate.y = y;*/
-
-//    ******
+    // code is equivalent to
+/*
     RS_Vector newPos = ucsCoordinate;
     newPos.rotate(-xAxisAngle);
     worldCoordinate  = newPos + ucsOrigin;
+*/
+    double wcsX = ucsCoordinate.x * cosNegativeXAngle - ucsCoordinate.y * sinNegativeXAngle;
+    double wcsY = ucsCoordinate.x * sinNegativeXAngle + ucsCoordinate.y * cosNegativeXAngle;
+
+    worldCoordinate.x = wcsX + ucsOrigin.x;
+    worldCoordinate.y = wcsY + ucsOrigin.y;
 }
-// fixme - sand - ucs - unwrapp calculations
-void LC_CoordinatesMapper::UserCoordinateSystem::toWorld(double ucsX, double ucsY, double &worldX, double &worldY) const{
-    // RS_Vector rotated = ucs.rotate(UCS_Origin, -ucs_Angle);
-    // world = rotated + ucsOrigin
 
-    /* double x = ucsX;
-     double y = ucsY;
+void LC_CoordinatesMapper::doUCS2WCS(double ucsX, double ucsY, double &worldX, double &worldY) const{
 
-     rotateBack(x,y);
-
-     x = x + ucsOrigin.x;
-     y = y + ucsOrigin.y;
-
-     worldX = x;
-     worldY = y;*/
-
+    // code is equivalent to
+/*
     RS_Vector ucsCoordinate = RS_Vector(ucsX, ucsY);
     ucsCoordinate.rotate(-xAxisAngle);
     RS_Vector world = ucsCoordinate + ucsOrigin;
     worldX  = world.x;
     worldY = world.y;
+*/
+
+    double wcsX = ucsX * cosNegativeXAngle - ucsY * sinNegativeXAngle;
+    double wcsY = ucsX * sinNegativeXAngle + ucsY * cosNegativeXAngle;
+
+    worldX = wcsX + ucsOrigin.x;
+    worldY = wcsY + ucsOrigin.y;
 }
 
-
-void LC_CoordinatesMapper::UserCoordinateSystem::rotate(double &x, double &y) const{
-    double deltaX = x - ucsOrigin.x;
-    double deltaY = y - ucsOrigin.y;
-
-    x = ucsOrigin.x + deltaX * cosXAngle - deltaY * sinXAngle;
-    y = ucsOrigin.y + deltaX * sinXAngle + deltaY * cosXAngle;
-}
-
-void LC_CoordinatesMapper::UserCoordinateSystem::rotateBack(double &x, double &y) const{
-    double deltaX = x - ucsOrigin.x;
-    double deltaY = y - ucsOrigin.y;
-
-    x = ucsOrigin.x + deltaX * cosNegativeXAngle - deltaY * sinNegativeXAngle;
-    y = ucsOrigin.y + deltaX * sinNegativeXAngle + deltaY * cosNegativeXAngle;
-}
-
-
-void LC_CoordinatesMapper::UserCoordinateSystem::setXAxisAngle(double angle){
+void LC_CoordinatesMapper::setXAxisAngle(double angle){
     xAxisAngle = angle;
     xAxisAngleDegrees = RS_Math::rad2deg(angle);
     sinXAngle = sin(angle);
@@ -145,39 +117,30 @@ void LC_CoordinatesMapper::UserCoordinateSystem::setXAxisAngle(double angle){
     cosNegativeXAngle = cos(-angle);
 }
 
-void LC_CoordinatesMapper::UserCoordinateSystem::update(const RS_Vector &origin, double angle) {
+void LC_CoordinatesMapper::update(const RS_Vector &origin, double angle) {
     ucsOrigin = origin;
     setXAxisAngle(angle);
 }
 
-double LC_CoordinatesMapper::UserCoordinateSystem::toUCSAngleDegree(double angle) const {
-    return angle + xAxisAngleDegrees;
-}
-
-const RS_Vector &LC_CoordinatesMapper::UserCoordinateSystem::getUcsOrigin() const {
+const RS_Vector &LC_CoordinatesMapper::getUcsOrigin() const {
     return ucsOrigin;
 }
 
-double LC_CoordinatesMapper::UserCoordinateSystem::getXAxisAngle() const {
-    return xAxisAngle;
-}
-
-
-double LC_CoordinatesMapper::toWorldAngle(double angle) const{
+double LC_CoordinatesMapper::toWorldAngle(double ucsAngle) const{
     if (m_hasUcs){
-        return ucs.toWorldAngle(angle);
+        return ucsAngle - xAxisAngle;
     }
     else{
-        return angle;
+        return ucsAngle;
     }
 }
 
-double LC_CoordinatesMapper::toWorldAngleDegrees(double angle) const{
+double LC_CoordinatesMapper::toWorldAngleDegrees(double ucsAngle) const{
     if (m_hasUcs){
-        return ucs.toWorldAngleDegrees(angle);
+        return ucsAngle - xAxisAngleDegrees;
     }
     else{
-        return angle;
+        return ucsAngle;
     }
 }
 
@@ -186,7 +149,7 @@ RS_Vector LC_CoordinatesMapper::restrictHorizontal(const RS_Vector &baseWCSPoint
         RS_Vector ucsBase = toUCS(baseWCSPoint);
         RS_Vector ucsCoord = toUCS(wcsCoord);
         double resX, resY;
-        ucs.toWorld(ucsCoord.x, ucsBase.y, resX, resY);
+        doUCS2WCS(ucsCoord.x, ucsBase.y, resX, resY);
         return RS_Vector(resX, resY);
     }
     else{
@@ -199,7 +162,7 @@ RS_Vector LC_CoordinatesMapper::restrictVertical(const RS_Vector &baseWCSPoint, 
         RS_Vector ucsBase = toUCS(baseWCSPoint);
         RS_Vector ucsCoord = toUCS(wcsCoord);
         double resX, resY;
-        ucs.toWorld(ucsBase.x, ucsCoord.y, resX, resY);
+        doUCS2WCS(ucsBase.x, ucsCoord.y, resX, resY);
         return RS_Vector(resX, resY);
     }
     else{
@@ -283,25 +246,24 @@ void LC_CoordinatesMapper::worldBoundingBox(const RS_Vector& ucsMin, const RS_Ve
     }
 }
 
-
-double LC_CoordinatesMapper::toUCSAngle(double angle) const{
+double LC_CoordinatesMapper::toUCSAngle(double wcsAngle) const{
     double result;
     if (m_hasUcs){
-        result = ucs.toUCSAngle(angle);
+        result = wcsAngle + xAxisAngle;
     }
     else{
-        result = angle;
+        result = wcsAngle;
     }
     return result;
 }
 
-double LC_CoordinatesMapper::toUCSAngleDegrees(double angle) const{
+double LC_CoordinatesMapper::toUCSAngleDegrees(double wcsAngle) const{
     double result;
     if (m_hasUcs){
-        result = ucs.toUCSAngleDegree(angle);
+        result = wcsAngle + xAxisAngleDegrees;
     }
     else{
-        result = angle;
+        result = wcsAngle;
     }
     return result;
 }
@@ -309,7 +271,7 @@ double LC_CoordinatesMapper::toUCSAngleDegrees(double angle) const{
 
 void LC_CoordinatesMapper::toUCSDelta(const RS_Vector &worldDelta, double &ucsDX, double &ucsDY) const {
     if (m_hasUcs){
-        ucs.toUCSDelta(worldDelta, ucsDX, ucsDY);
+        doWCSDelta2UCSDelta(worldDelta, ucsDX, ucsDY);
     }
     else{
         ucsDX = worldDelta.x;
@@ -321,7 +283,7 @@ RS_Vector LC_CoordinatesMapper::toUCSDelta(const RS_Vector& worldDelta) const {
     RS_Vector result;
     if (m_hasUcs){
         double ucsDX, ucsDY;
-        ucs.toUCSDelta(worldDelta, ucsDX, ucsDY);
+        doWCSDelta2UCSDelta(worldDelta, ucsDX, ucsDY);
         result = RS_Vector(ucsDX, ucsDY, 0);
     }
     else{
@@ -331,26 +293,26 @@ RS_Vector LC_CoordinatesMapper::toUCSDelta(const RS_Vector& worldDelta) const {
 }
 
 
-RS_Vector LC_CoordinatesMapper::toUCS(const RS_Vector& v) const{
+RS_Vector LC_CoordinatesMapper::toUCS(const RS_Vector& wcsPos) const{
     RS_Vector result;
     if (m_hasUcs){
-        ucs.toUCS(v, result);
+        doWCS2UCS(wcsPos, result);
         result.valid = true;
         return result;
     }
     else{
-        result = v;
+        result = wcsPos;
     }
     return result;
 }
 
-void LC_CoordinatesMapper::toUCS(const RS_Vector& v, double& ucsX, double &ucsY) const{
+void LC_CoordinatesMapper::toUCS(const RS_Vector& wcsPos, double& ucsX, double &ucsY) const{
     if (m_hasUcs){
-        ucs.toUCS(v.x, v.y, ucsX, ucsY);
+        doWCS2UCS(wcsPos.x, wcsPos.y, ucsX, ucsY);
     }
     else{
-        ucsX = v.x;
-        ucsY = v.y;
+        ucsX = wcsPos.x;
+        ucsY = wcsPos.y;
     }
 }
 
@@ -358,7 +320,7 @@ RS_Vector LC_CoordinatesMapper::toWorld(double ucsX, double ucsY) const{
     RS_Vector result;
     if (m_hasUcs){
         double wcsX, wcsY;
-        ucs.toWorld(ucsX, ucsY, wcsX, wcsY);
+        doUCS2WCS(ucsX, ucsY, wcsX, wcsY);
         result = RS_Vector(wcsX, wcsY);
     }
     else{
@@ -370,7 +332,7 @@ RS_Vector LC_CoordinatesMapper::toWorld(double ucsX, double ucsY) const{
 RS_Vector LC_CoordinatesMapper::toWorld(const RS_Vector& ucsPos) const{
     RS_Vector result;
     if (m_hasUcs){
-        ucs.toWorld(ucsPos, result);
+        doUCS2WCS(ucsPos, result);
         result.valid = true;
         return result;
     }
@@ -414,4 +376,10 @@ double LC_CoordinatesMapper::toUCSAbsAngle(double ucsBasisAngle, double baseAngl
         ucsAbsAngle = M_PI * 2 - ucsBasisAngle + baseAngle;
     }
     return ucsAbsAngle;
+}
+
+
+void LC_CoordinatesMapper::apply(LC_CoordinatesMapper *other) {
+    m_hasUcs = other->hasUCS();
+    update(other->getUcsOrigin(), other->getXAxisAngle());
 }
