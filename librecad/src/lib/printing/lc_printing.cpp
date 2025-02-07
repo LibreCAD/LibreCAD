@@ -326,9 +326,9 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
                 viewport.justSetOffsetAndFactor((int) ((baseX - offsetX) * f),
                                                 (int) ((baseY - offsetY) * f),
                                                 factor);
-                //fixme, I don't understand the meaning of 'true' here
-                //        gv.drawEntity(&painter, graphic, true);
 
+
+                painter.setViewPort(&viewport);  // update offset
                 renderer.render();
 
 //                painter.setDrawSelectedOnly(true);

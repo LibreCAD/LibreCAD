@@ -301,6 +301,7 @@ static void drawGraphic(RS_Graphic* graphic, QPrinter& printer,
             viewport.justSetOffsetAndFactor((int)((baseX - offsetX) * f),
                                             (int)((baseY - offsetY) * f),
                                             factor);
+            painter.setViewPort(&viewport);  // update offset
             renderer.render();
         }
     }
