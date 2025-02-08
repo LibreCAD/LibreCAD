@@ -63,6 +63,7 @@ namespace{
 //fixme - actually, inheritance from snapper is rather bad design... not all actions (say, file open or print-preview) should be
 // inherited from snapper - only ones that really work with drawing should be snap-aware
 class RS_ActionInterface : public RS_Snapper {
+Q_OBJECT
 public:
     RS_ActionInterface(const char* name,
                        RS_EntityContainer& container,
