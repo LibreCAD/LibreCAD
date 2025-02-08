@@ -31,6 +31,7 @@ public:
     LC_CoordinatesMapper();
     void toUCSDelta(const RS_Vector& worldDelta, double& ucsDX, double &ucsDY) const;
     RS_Vector toUCSDelta(const RS_Vector& worldDelta) const;
+    RS_Vector toWorldDelta(const RS_Vector& worldDelta) const;
     double toWorldAngle(double ucsAngle) const;
     double toWorldAngleDegrees(double ucsAngle) const;
     double toUCSAngle(double wcsAngle) const;
@@ -76,6 +77,7 @@ protected:
     void doWCS2UCS(double worldX, double worldY, double &ucsX, double &ucsY) const;
     void doWCS2UCS(const RS_Vector &worldCoordinate, RS_Vector& ucsCoordinate) const;
     void doWCSDelta2UCSDelta(const RS_Vector &worldDelta, double &ucsDX, double &ucsDY) const;
+    void doUCSDelta2WCSDelta(const RS_Vector &ucsDelta, double &wcsDX, double &wcsDY) const;
     void doUCS2WCS(const RS_Vector &ucsCoordinate, RS_Vector& worldCoordinate) const;
     void doUCS2WCS(double ucsX, double ucsY, double &worldX, double &worldY) const;
     void update(const RS_Vector& origin, double angle);

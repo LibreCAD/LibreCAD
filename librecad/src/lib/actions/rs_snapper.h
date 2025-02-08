@@ -275,7 +275,9 @@ protected:
     double toWorldAngleFromUCSBasisDegrees(double ucsBasisAngleDegrees) const;
     double toWorldAngleFromUCSBasis(double ucBasisAngle) const;
     RS_Vector toWorld(const RS_Vector& ucsPos) const;
+    RS_Vector toWorldDelta(const RS_Vector &ucsDelta) const;
     RS_Vector toUCS(const RS_Vector& worldPos) const;
+    RS_Vector toUCSDelta(const RS_Vector& worldPos) const;
     void calcRectCorners(const RS_Vector &worldCorner1, const RS_Vector &worldCorner3, RS_Vector &worldCorner2, RS_Vector &worldCorner4) const;
     double getCatchDistance(double catchDistance, int catchEntityGuiRange);
     double toGuiDX(double wcsDX) const;

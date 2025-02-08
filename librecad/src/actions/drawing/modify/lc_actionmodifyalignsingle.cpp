@@ -32,8 +32,13 @@ LC_ActionModifyAlignSingle::LC_ActionModifyAlignSingle( RS_EntityContainer &cont
 }
 
 void LC_ActionModifyAlignSingle::init(int status) {
-    RS_PreviewActionInterface::init(status);
-//    showOptions();
+    if (viewport->hasUCS()){
+        commandMessage(tr("Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active."));
+        finish();
+    }
+    else {
+        RS_PreviewActionInterface::init(status);
+    }
 }
 
 void LC_ActionModifyAlignSingle::doTrigger() {
@@ -188,36 +193,32 @@ QString LC_ActionModifyAlignSingle::prepareInfoCursorMessage(double verticalRef,
 }
 
 void LC_ActionModifyAlignSingle::previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef) {
-    // fixme - sand - ucs - restore
-    /*if (drawVertical) {
-        double g0 = graphicView->toGraphY(0);
-        double gHeight = graphicView->toGraphY(graphicView->getHeight());
-        previewRefConstructionLine({verticalRef, g0}, {verticalRef, gHeight});
+    // NOTE:
+    // AS Action so far do not support UCS, coordinates below will be in WCS despite used methods.
+    RS_Vector wcsLeftBottom = viewport->getUCSViewLeftBottom();
+    RS_Vector wcsRightTop = viewport->getUCSViewRightTop();
+    if (drawVertical) {
+        previewRefConstructionLine({verticalRef, wcsLeftBottom.y}, {verticalRef, wcsRightTop.y});
     }
-
     if (drawHorizontal) {
-        double g0 = graphicView->toGraphX(0);
-        double gWidth = graphicView->toGraphX(graphicView->getWidth());
-        previewRefConstructionLine({g0, horizontalRef}, {gWidth, horizontalRef});
-    }*/
+        previewRefConstructionLine({wcsLeftBottom.x, horizontalRef}, {wcsRightTop.x, horizontalRef});
+    }
 }
 
 void LC_ActionModifyAlignSingle::previewAlignRefPoint(const RS_Vector &min, const RS_Vector &max) {
     double verticalRef;
     bool drawVertical  = LC_Align::getVerticalRefCoordinate(min, max, hAlign, verticalRef);
+    RS_Vector wcsLeftBottom = viewport->getUCSViewLeftBottom();
+    RS_Vector wcsRightTop = viewport->getUCSViewRightTop();
     if (drawVertical) {
-        // fixme - sand - ucs - restore
-        /*double g0 = graphicView->toGraphY(0);
-        double gHeight = graphicView->toGraphY(graphicView->getHeight());
-        previewRefConstructionLine({verticalRef, g0}, {verticalRef, gHeight});*/
+        // NOTE:: works properly for WCS only
+        previewRefConstructionLine({verticalRef, wcsLeftBottom.y}, {verticalRef, wcsRightTop.y});
     }
     double horizontalRef;
     bool drawHorizontal = LC_Align::getHorizontalRefCoordinate(min, max, vAlign, horizontalRef);
     if (drawHorizontal) {
-        // fixme - sand - ucs - restore
-        /*double g0 = graphicView->toGraphX(0);
-        double gWidth = graphicView->toGraphX(graphicView->getWidth());
-        previewRefConstructionLine({g0, horizontalRef}, {gWidth, horizontalRef});*/
+        // NOTE:: works properly for WCS only
+        previewRefConstructionLine({wcsLeftBottom.x, horizontalRef}, {wcsRightTop.x, horizontalRef});
     }
 }
 

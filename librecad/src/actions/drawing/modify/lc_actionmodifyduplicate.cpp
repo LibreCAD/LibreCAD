@@ -102,7 +102,7 @@ namespace {
  * @return
  */
 RS_Vector LC_ActionModifyDuplicate::determineOffset(RS_Vector& snapOfOffset, const RS_Vector& center) const{
-    RS_Vector offset(false);
+    RS_Vector wcsOffset(false);
     if (!duplicateInplace){
         bool moveX = LC_LineMath::isMeaningful(offsetX);
         bool moveY = LC_LineMath::isMeaningful(offsetY);
@@ -111,18 +111,19 @@ RS_Vector LC_ActionModifyDuplicate::determineOffset(RS_Vector& snapOfOffset, con
             // create offset vector
             double ucsMoveX = LC_LineMath::getMeaningful(offsetX);
             double ucsMoveY = LC_LineMath::getMeaningful(offsetY);
-            offset = toWorld(RS_Vector(ucsMoveX, ucsMoveY, 0.0));
+            auto ucsOffset = RS_Vector(ucsMoveX, ucsMoveY);
+            wcsOffset = toWorldDelta(ucsOffset);
         }       
         if (snapOfOffset.valid){
-            double angle = toUCSAngle(center.angleTo(snapOfOffset));
-            double correctedAngle = RS_Math::correctAngle(angle);
-            RS_Vector offsetDirection = RS_Vector(std::cos(correctedAngle), std::sin(correctedAngle), 0);
+            double wcsAngle = center.angleTo(snapOfOffset);
+            double correctedAngle = RS_Math::correctAngle(wcsAngle);
+            auto wcsOffsetDirection = RS_Vector(correctedAngle);
             // prepare vector we'll use for moving shape
-            RS_Vector resultingOffset = offsetDirection * offset;
-            offset = resultingOffset;
+            auto resultingOffset = wcsOffsetDirection * wcsOffset;
+            wcsOffset = resultingOffset;
         }
     }
-    return offset;
+    return wcsOffset;
 }
 
 void LC_ActionModifyDuplicate::doAfterTrigger(){
@@ -225,7 +226,7 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(LC_MouseEvent *e, [[mayb
                         previewRefSelectablePoint(newCenter);
                         auto data = RS_EllipseData();
                         data.center = center;
-                        data.majorP = toWorld(RS_Vector(std::abs(offsetX), 0, 0));
+                        data.majorP = toWorldDelta(RS_Vector(std::abs(offsetX), 0, 0));
                         data.ratio = std::abs(offsetY / offsetX);
                         previewRefEllipse(data);
                     }

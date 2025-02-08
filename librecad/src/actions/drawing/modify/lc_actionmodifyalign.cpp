@@ -33,8 +33,14 @@ LC_ActionModifyAlign::LC_ActionModifyAlign(RS_EntityContainer &container, RS_Gra
 }
 
 void LC_ActionModifyAlign::init(int status) {
-    showOptions();
-    LC_ActionPreSelectionAwareBase::init(status);
+    if (viewport->hasUCS()){
+        commandMessage(tr("Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active."));
+        finish();
+    }
+    else {
+        showOptions();
+        LC_ActionPreSelectionAwareBase::init(status);
+    }
 }
 
 void LC_ActionModifyAlign::selectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
@@ -168,18 +174,15 @@ void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, 
 }
 
 void LC_ActionModifyAlign::previewRefLines(bool drawVertical, [[maybe_unused]]double verticalRef, bool drawHorizontal, [[maybe_unused]]double horizontalRef) {
+    // NOTE:
+    // AS Action so far do not support UCS, coordinates below will be in WCS despite used methods.
+    RS_Vector wcsLeftBottom = viewport->getUCSViewLeftBottom();
+    RS_Vector wcsRightTop = viewport->getUCSViewRightTop();
     if (drawVertical) {
-        // fixme - sand - ucs - restore
-        /*double g0 = graphicView->toGraphY(0);
-        double gHeight = graphicView->toGraphY(graphicView->getHeight());
-        previewRefConstructionLine({verticalRef, g0}, {verticalRef, gHeight});*/
+        previewRefConstructionLine({verticalRef, wcsLeftBottom.y}, {verticalRef, wcsRightTop.y});
     }
     if (drawHorizontal) {
-        // fixme - sand - ucs - restore
-        /*double g0 = graphicView->toGraphX(0);
-        double gWidth = graphicView->toGraphX(graphicView->getWidth());
-        previewRefConstructionLine({g0, horizontalRef}, {gWidth, horizontalRef});
-         */
+        previewRefConstructionLine({wcsLeftBottom.x, horizontalRef}, {wcsRightTop.x, horizontalRef});
     }
 }
 
@@ -275,7 +278,7 @@ LC_ActionOptionsWidget *LC_ActionModifyAlign::createOptionsWidget() {
 }
 
 RS_Vector LC_ActionModifyAlign::createAlignedEntities(QList<RS_Entity *> &list, RS_Vector min, RS_Vector max, bool previewOnly) {
-    RS_Vector result =  RS_Vector(false);
+    auto result =  RS_Vector(false);
 
     RS_Vector targetPoint = getReferencePoint(min, max);
     bool updateAttributes = !previewOnly;

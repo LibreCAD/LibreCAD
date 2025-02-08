@@ -1337,6 +1337,14 @@ RS_Vector RS_Snapper::toUCS(const RS_Vector &worldPos) const {
     return viewport->toUCS(worldPos);
 }
 
+RS_Vector RS_Snapper::toWorldDelta(const RS_Vector &ucsDelta) const {
+    return viewport->toWorldDelta(ucsDelta);
+}
+
+RS_Vector RS_Snapper::toUCSDelta(const RS_Vector &worldDelta) const {
+    return viewport->toUCSDelta(worldDelta);
+}
+
 // fixme - sand - ucs - move to coordinates mapper
 void RS_Snapper::calcRectCorners(const RS_Vector &worldCorner1, const RS_Vector &worldCorner3, RS_Vector &worldCorner2, RS_Vector &worldCorner4) const {
     RS_Vector ucsCorner1 = toUCS(worldCorner1);

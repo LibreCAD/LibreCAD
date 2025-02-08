@@ -69,7 +69,7 @@ void RS_ActionModifyOffset::onMouseMoveEventSelected(int status, LC_MouseEvent *
     switch (status){
         case SetReferencePoint:{
             data->coord = getRelZeroAwarePoint(e, mouse);
-            RS_Modification m(*preview, nullptr, false);
+            RS_Modification m(*preview, viewport, false);
             m.offset(*data, selectedEntities, true, false);
             break;
         }
@@ -79,7 +79,7 @@ void RS_ActionModifyOffset::onMouseMoveEventSelected(int status, LC_MouseEvent *
             if (!distanceIsFixed){
                 data->distance = offset.magnitude();
             }
-            RS_Modification m(*preview, nullptr, false);
+            RS_Modification m(*preview, viewport, false);
             m.offset(*data, selectedEntities, true, false);
 
             if (showRefEntitiesOnPreview) {

@@ -75,6 +75,15 @@ void LC_CoordinatesMapper::doWCSDelta2UCSDelta(const RS_Vector &worldDelta, doub
     ucsDY = magnitude*sin(ucsAngle);
 }
 
+void LC_CoordinatesMapper::doUCSDelta2WCSDelta(const RS_Vector &ucsDelta, double &wcsDX, double &wcsDY) const {
+    double magnitude = ucsDelta.magnitude();
+    double angle = ucsDelta.angle();
+    double ucsAngle = angle - xAxisAngle;
+    wcsDX = magnitude*cos(ucsAngle);
+    wcsDY = magnitude*sin(ucsAngle);
+}
+
+
 void LC_CoordinatesMapper::doUCS2WCS(const RS_Vector &ucsCoordinate, RS_Vector &worldCoordinate) const{
 
     // code is equivalent to
@@ -288,6 +297,19 @@ RS_Vector LC_CoordinatesMapper::toUCSDelta(const RS_Vector& worldDelta) const {
     }
     else{
         result = RS_Vector(worldDelta.x, worldDelta.y, 0);
+    }
+    return result;
+}
+
+RS_Vector LC_CoordinatesMapper::toWorldDelta(const RS_Vector& ucsDelta) const {
+    RS_Vector result;
+    if (m_hasUcs){
+        double ucsDX, ucsDY;
+        doUCSDelta2WCSDelta(ucsDelta, ucsDX, ucsDY);
+        result = RS_Vector(ucsDX, ucsDY, 0);
+    }
+    else{
+        result = RS_Vector(ucsDelta.x, ucsDelta.y, 0);
     }
     return result;
 }
