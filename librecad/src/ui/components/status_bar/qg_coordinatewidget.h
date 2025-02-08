@@ -33,27 +33,27 @@
 
 class RS_Graphic;
 
-class QG_CoordinateWidget : public QWidget, public Ui::QG_CoordinateWidget
-{
+class QG_CoordinateWidget : public QWidget, public Ui::QG_CoordinateWidget{
     Q_OBJECT
-
 public:
     QG_CoordinateWidget(QWidget *parent = 0, const char *name = 0, Qt::WindowFlags fl = {});
     ~QG_CoordinateWidget();
     void clearContent();
-    void setGraphic( RS_Graphic * graphic, RS_GraphicView* graphicView);
+    void setGraphic(RS_Graphic * g, RS_GraphicView* gv);
 public slots:
-    virtual void setCoordinates( const RS_Vector & abs, const RS_Vector & rel, bool updateFormat ); // fixme - check why updateFormat is always true
+    virtual void setCoordinates(const RS_Vector & wcsAbs, const RS_Vector & wcsDelta, bool updateFormat ); // fixme - check why updateFormat is always true
 protected slots:
     virtual void languageChange();
-    virtual void setCoordinates( double x, double y, double rx, double ry, bool updateFormat );
+    virtual void setCoordinates(double ucsX, double ucsY, double ucsDeltaX, double ucsDeltaY, bool updateFormat );
 private:
     RS_Graphic* graphic = nullptr;
     RS_GraphicView *graphicView = nullptr;
+    LC_GraphicViewport* viewport = nullptr;
     int prec = 0;
     RS2::LinearFormat format = RS2::Decimal;
     int aprec = 0;
     RS2::AngleFormat aformat = RS2::DegreesDecimal;
+
 
     RS_Vector absoluteCoordinates;
     RS_Vector relativeCoordinates;

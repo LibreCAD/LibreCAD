@@ -30,7 +30,7 @@ namespace Ui {
     class LC_RelZeroCoordinatesWidget;
 }
 
-class LC_RelZeroCoordinatesWidget : public QWidget{
+class LC_RelZeroCoordinatesWidget : public QWidget, LC_GraphicViewPortListener{
     Q_OBJECT
 
 public:
@@ -45,11 +45,14 @@ public slots:
 protected:
     RS_Graphic* graphic = nullptr;
     RS_GraphicView* graphicView = nullptr;
+    LC_GraphicViewport* viewport = nullptr;
     int prec = 0;
     RS2::LinearFormat format = RS2::Decimal;
     int aprec = 0;
     RS2::AngleFormat aformat = RS2::DegreesDecimal;
 private:
+    void onUCSChanged(LC_UCS *ucs) override;
+
     Ui::LC_RelZeroCoordinatesWidget *ui;
 };
 

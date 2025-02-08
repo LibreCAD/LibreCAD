@@ -185,6 +185,7 @@ public:
     void setRenderArcsInterpolationMaxSagitta(double val) {arcRenderInterpolationMaxSagitta = val;}
     void setRenderCirclesSameAsArcs(bool val) {circleRenderSameAsArcs = val;}
 
+    void disableUCS();
 protected:
     /**
      * Current drawing mode.

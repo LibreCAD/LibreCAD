@@ -3368,6 +3368,9 @@ void QC_ApplicationWindow::enableWidgets(bool enable) {
     enableWidget(penToolBar, enable);
     enableWidget(pen_wiz, enable);
 //    enableWidget(namedViewsWidget,enable);
+    enableWidget(ucsListWidget, enable);
+    enableWidget(ucsStateWidget, enable);
+    enableWidget(anglesBasisWidget, enable);
 
     if (libraryWidget != nullptr) {
         enableWidget(libraryWidget->getInsertButton(), enable);

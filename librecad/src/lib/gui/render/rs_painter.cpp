@@ -1302,3 +1302,7 @@ double RS_Painter::toGuiDY(double ucsDY) const {
 //    return viewport->toGuiDY(d);
     return ucsDY * viewPortFactorY;
 }
+
+void RS_Painter::disableUCS(){
+    m_hasUcs = false;
+}

@@ -161,4 +161,6 @@ void LC_PrintViewportRenderer::loadSettings() {
 void LC_PrintViewportRenderer::setupPainter(RS_Painter* painter) {
     LC_GraphicViewportRenderer::setupPainter(painter);
     painter->setDrawingMode(drawingMode);
+    // fixme - sand - paperspace - disabling UCS for print - for now, restore later
+    painter->disableUCS();
 }

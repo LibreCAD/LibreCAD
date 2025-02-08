@@ -56,14 +56,28 @@ void LC_RelZeroCoordinatesWidget::setGraphicView(RS_GraphicView *gv) {
     if (gv == nullptr){
         if (graphicView != nullptr){
             disconnect(graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_RelZeroCoordinatesWidget::relativeZeroChanged);
+            if (viewport != nullptr){
+                viewport->removeViewportListener(this);
+            }
         }
         setRelativeZero(RS_Vector(0.0,0.0), true); // in which system? ucs? wcs?
+        viewport = nullptr;
     }
-    else{
+    else {
+        if (graphicView != nullptr) {
+            disconnect(graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_RelZeroCoordinatesWidget::relativeZeroChanged);
+        }
+        if (viewport != nullptr){
+            viewport->removeViewportListener(this);
+        }
         graphicView = gv;
         graphic = graphicView->getGraphic();
+        viewport = gv->getViewPort();
+
+        viewport->addViewportListener(this);
+
         connect(graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_RelZeroCoordinatesWidget::relativeZeroChanged);
-        setRelativeZero(graphicView->getViewPort()->getRelativeZero(), true);
+        setRelativeZero(viewport->getRelativeZero(), true);
     }
 }
 
@@ -81,7 +95,7 @@ void LC_RelZeroCoordinatesWidget::setRelativeZero(const RS_Vector &rel, bool upd
             aprec = graphic->getAnglePrecision();
         }
 
-        RS_Vector ucsRelZero = graphicView->getViewPort()->toUCS(rel);
+        RS_Vector ucsRelZero = viewport->toUCS(rel);
 
         double x = ucsRelZero.x;
         double y = ucsRelZero.y;
@@ -92,6 +106,10 @@ void LC_RelZeroCoordinatesWidget::setRelativeZero(const RS_Vector &rel, bool upd
         if (LC_LineMath::isNotMeaningful(magnitude)){
             len = 0;
             angle = 0;
+        }
+
+        if (viewport != nullptr){
+            angle = viewport->toBasisUCSAngle(angle);
         }
 
         if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true)){
@@ -116,4 +134,8 @@ void LC_RelZeroCoordinatesWidget::setRelativeZero(const RS_Vector &rel, bool upd
         str = rStr + " < " + aStr;
         ui->lPolarCoordinates->setText(str);
     }
+}
+
+void LC_RelZeroCoordinatesWidget::onUCSChanged(LC_UCS *ucs) {
+    setRelativeZero(viewport->getRelativeZero(), true);
 }

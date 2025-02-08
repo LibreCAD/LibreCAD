@@ -290,4 +290,6 @@ void LC_PrintPreviewViewRenderer::setupPainter(RS_Painter *painter)  {
     painter->setRenderArcsInterpolate(true);
     painter->setRenderArcsInterpolationAngleFixed(true);
     painter->setRenderArcsInterpolationAngleValue(M_PI/36); // 5 degrees
+   // fixme - sand - paperspace - disabling UCS for print - for now, restore later
+    painter->disableUCS();
 }

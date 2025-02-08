@@ -338,7 +338,9 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "ViewGridOrtho",
         "ViewGridIsoLeft",
         "ViewGridIsoTop",
-        "ViewGridIsoRight"
+        "ViewGridIsoRight",
+        "UCSSetWCS",
+        "UCSCreate"
     });
 
     actionsToDisableInPrintPreview.append(line_actions);

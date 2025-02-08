@@ -138,7 +138,6 @@ public:
     bool areAnglesCounterClockwise();
     double getAnglesBaseAngle();
 
-
 protected:
     int width = 0;
     int height = 0;
@@ -173,8 +172,8 @@ protected:
     RS_EntityContainer *container = nullptr; // Holds a pointer to all the entities
     RS_Graphic* graphic = nullptr; // may be extracted from container, yet have separate reference for performance reasons
 
-    bool printPreview;
-    bool printing;
+    bool printPreview = false;
+    bool printing = false;
 
     std::unique_ptr<QDateTime> previousViewTime;
 
