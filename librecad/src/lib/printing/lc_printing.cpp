@@ -270,7 +270,7 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
         painter.setDrawingMode(drawingMode);
 
         QMarginsF margins = printer.pageLayout().margins(QPageLayout::Millimeter);
-        LC_ERR << "Printer margins (mm): " << margins.left()<<": "<<margins.top()<<" : "<<margins.right()<<" : "<<margins.bottom();
+//        LC_ERR << "Printer margins (mm): " << margins.left()<<": "<<margins.top()<<" : "<<margins.right()<<" : "<<margins.bottom();
 
         double printerWidth = printer.width();
         double printerHeight = printer.height();

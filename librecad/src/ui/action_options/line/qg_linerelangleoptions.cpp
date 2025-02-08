@@ -37,11 +37,11 @@ namespace {
     {
         precision = std::max(precision, 0);
         precision = std::min(precision, 16);
-        LC_ERR<<"value: "<<value;
+//        LC_ERR<<"value: "<<value;
         QString text = QString("%1").arg(value, 0, 'f', precision);
-        LC_ERR<<"value: "<<text;
+//        LC_ERR<<"value: "<<text;
         text = RS_Dimension::stripZerosLinear(text, 12);
-        LC_ERR<<"value: "<<text;
+//        LC_ERR<<"value: "<<text;
         return text;
     }
 }

@@ -66,7 +66,7 @@ void QG_TextOptions::doSetAction(RS_ActionInterface *a, bool update) {
         angle = "0.0";
     }
 
-    LC_ERR << " Options: --- " << text << " Angle: " << angle;
+//    LC_ERR << " Options: --- " << text << " Angle: " << angle;
 /*#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
         QCString iso = RS_System::localeToISO( QTextCodec::locale() );
         QTextCodec *codec = QTextCodec::codecForName(iso);

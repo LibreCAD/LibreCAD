@@ -75,7 +75,7 @@ void LC_ActionEditPasteTransform::doTrigger() {
                                                          false, "");
             m.paste(pasteData);
             // fixme - some progress is needed there, ++++ speed improvement for paste operation!!
-            LC_ERR << "Paste: " << x+y;
+//            LC_ERR << "Paste: " << x+y;
         }
     }
 
