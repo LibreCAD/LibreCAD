@@ -428,6 +428,7 @@ public:
      */
     virtual void commandMessage([[maybe_unused]]const QString& message) {};
     virtual void command([[maybe_unused]]const QString& message) {};
+    virtual void commandPrompt([[maybe_unused]]const QString& message) {};
 
     virtual void setMouseWidget([[maybe_unused]]QG_MouseWidget*) {};
     virtual void setCoordinateWidget([[maybe_unused]]QG_CoordinateWidget* ){};

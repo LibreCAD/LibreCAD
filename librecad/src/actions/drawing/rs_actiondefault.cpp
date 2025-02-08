@@ -31,6 +31,7 @@
 #include "rs_actiondefault.h"
 #include "rs_commandevent.h"
 #include "rs_debug.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_modification.h"
@@ -907,6 +908,7 @@ void RS_ActionDefault::updateMouseButtonHints(){
         }
         case Neutral: {
             updateMouseWidget(tr("Zoom, pan or select entity"), "", MOD_SHIFT_AND_CTRL(tr("Scroll Horizontally / Select Contour"), tr("Scroll Vertically / Select Child entities")));
+            commandPrompt("");
             break;
         }
         case SetCorner2: {

@@ -175,6 +175,7 @@ public:
     void updateSelectionWidget(int num, double length) override;//updated for total number of selected, and total length of selected
     void commandMessage(const QString& message) override;
     void command(const QString& message) override;
+    void commandPrompt(const QString& message) override;
 
     static QString extToFormat(const QString& ext);
     void displayBlockName(const QString& blockName, const bool& display) override;

@@ -183,6 +183,7 @@ protected:
     virtual QString prepareCommand(RS_CommandEvent *e) const;
 
     void commandMessage(const QString &msg) const;
+    void commandPrompt(const QString &msg) const;
 
     void fireCoordinateEvent(const RS_Vector& coord);
 

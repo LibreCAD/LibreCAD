@@ -1051,6 +1051,15 @@ void QG_DialogFactory::command(const QString& message) {
     RS_DEBUG->print("QG_DialogFactory::command: OK");
 }
 
+void QG_DialogFactory::commandPrompt(const QString& message) {
+    RS_DEBUG->print("QG_DialogFactory::command");
+    if (commandWidget) {
+        commandWidget->setCommand(message);
+    }
+    RS_DEBUG->print("QG_DialogFactory::command: OK");
+}
+
+
 /**
  * Converts an extension to a format description.
  * e.g. "PNG" to "Portable Network Graphic"

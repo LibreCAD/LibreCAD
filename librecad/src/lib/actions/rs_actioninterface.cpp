@@ -585,6 +585,10 @@ void RS_ActionInterface::commandMessage(const QString &msg) const{
     RS_DIALOGFACTORY->commandMessage(msg);
 }
 
+void RS_ActionInterface::commandPrompt(const QString &msg) const{
+    RS_DIALOGFACTORY->commandPrompt(msg);
+}
+
 void RS_ActionInterface::updateSnapAngleStep() {
     int stepType = LC_GET_ONE_INT("Defaults", "AngleSnapStep", 3);
     double snapStepDegrees;
