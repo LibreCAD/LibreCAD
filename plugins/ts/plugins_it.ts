@@ -258,12 +258,12 @@ primo iniziale, secondo iniziale, primo finale, secondo finale.</translation>
     <message>
         <location filename="../list/list.cpp" line="172"/>
         <source>SOLID</source>
-        <translation type="unfinished"></translation>
+        <translation>SOLIDO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
         <source>MTEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>MTEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="179"/>
