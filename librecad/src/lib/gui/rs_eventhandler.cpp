@@ -41,6 +41,10 @@ namespace {
         return action != nullptr && !action->isFinished();
     }
 
+    bool isInactive(const std::shared_ptr<RS_ActionInterface>& action) {
+        return action == nullptr || action->isFinished();
+    }
+
     QString evaluateFraction(QString input, QRegExp rx, int index, int tailI)
     {
         QString copy = input;
@@ -598,9 +602,10 @@ bool RS_EventHandler::isValid(RS_ActionInterface* action) const{
  */
 bool RS_EventHandler::hasAction()
 {
-    return std::any_of(currentActions.begin(), currentActions.end(), isActive);
+    auto it = std::remove_if(currentActions.begin(), currentActions.end(), isInactive);
+    currentActions.erase(it, currentActions.end());
+    return !currentActions.empty();
 }
-
 
 
 /**
@@ -609,15 +614,6 @@ bool RS_EventHandler::hasAction()
 void RS_EventHandler::cleanUp() {
     RS_DEBUG->print("RS_EventHandler::cleanUp");
 
-    for (auto it=currentActions.begin(); it != currentActions.end();)
-    {
-        if(isActive(*it))
-        {
-            ++it;
-        }else{
-            it= currentActions.erase(it);
-        }
-    }
     if(hasAction()){
         currentActions.last()->resume();
         currentActions.last()->showOptions();
