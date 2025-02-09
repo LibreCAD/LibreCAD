@@ -21,19 +21,18 @@
  ******************************************************************************/
 
 #include "lc_moveoptions.h"
+#include "rs_actionmodifymove.h"
 #include "ui_lc_moveoptions.h"
 
 LC_MoveOptions::LC_MoveOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionModifyMove, "Modify", "Move")
-    , ui(new Ui::LC_MoveOptions){
+    , ui(new Ui::LC_MoveOptions)
+{
     ui->setupUi(this);
     connect(ui->cbKeepOriginals, &QCheckBox::clicked, this, &LC_MoveOptions::cbKeepOriginalsClicked);
     connect(ui->cbMultipleCopies, &QCheckBox::clicked, this, &LC_MoveOptions::cbMultipleCopiesClicked);
     connect(ui->cbCurrentAttr, &QCheckBox::clicked, this, &LC_MoveOptions::cbUseCurrentAttributesClicked);
-    connect(ui->cbCurrentLayer, &QCheckBox::clicked, this, &LC_MoveOptions::cbUseCurrentLayerClicked);}
-
-LC_MoveOptions::~LC_MoveOptions(){
-    delete ui;
+    connect(ui->cbCurrentLayer, &QCheckBox::clicked, this, &LC_MoveOptions::cbUseCurrentLayerClicked);
 }
 
 void LC_MoveOptions::doSaveSettings() {
@@ -45,12 +44,12 @@ void LC_MoveOptions::doSaveSettings() {
 }
 
 void LC_MoveOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    action = dynamic_cast<RS_ActionModifyMove *>(a);
-    bool useMultipleCopies;
-    bool keepOriginals;
-    bool useCurrentLayer;
-    bool useCurrentAttributes;
-    int copiesNumber;
+    action = static_cast<RS_ActionModifyMove *>(a);
+    bool useMultipleCopies = false;
+    bool keepOriginals = false;
+    bool useCurrentLayer = false;
+    bool useCurrentAttributes = false;
+    int copiesNumber = 1;
     if (update){
         useCurrentLayer = action->isUseCurrentLayer();
         useCurrentAttributes  = action->isUseCurrentAttributes();
@@ -77,9 +76,7 @@ void LC_MoveOptions::languageChange() {
 }
 
 void LC_MoveOptions::setCopiesNumberToActionAndView(int number) {
-    if (number < 1){
-        number = 1;
-    }
+    number = std::max(number, 1);
     action->setCopiesNumber(number);
     ui->sbNumberOfCopies->setValue(number);
 }

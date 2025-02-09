@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
+#include "lc_actionmodifybreakdivide.h"
 #include "lc_modifybreakdivideoptions.h"
 #include "ui_lc_modifybreakdivideoptions.h"
 
@@ -30,10 +31,6 @@ LC_ModifyBreakDivideOptions::LC_ModifyBreakDivideOptions() :
     ui->setupUi(this);
     connect(ui->cbRemoveSegments, SIGNAL(clicked(bool)), this, SLOT(onRemoveSegmentsClicked(bool)));
     connect(ui->cbRemoveSelected, SIGNAL(clicked(bool)), this, SLOT(onRemoveSelectedClicked(bool)));
-}
-
-LC_ModifyBreakDivideOptions::~LC_ModifyBreakDivideOptions(){
-    delete ui;
 }
 
 void LC_ModifyBreakDivideOptions::doSetAction(RS_ActionInterface *a, bool update){
