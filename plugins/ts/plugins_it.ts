@@ -873,7 +873,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>
         <source>Inside</source>
-        <translation type="unfinished"></translation>
+        <translation>Interno</translation>
     </message>
 </context>
 <context>
