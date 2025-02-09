@@ -88,13 +88,13 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
 }
 
 
-RS_Block *QG_BlockModel::getBlock( int row ){
+RS_Block *QG_BlockModel::getBlock( int row) const{
     if ( row >= listBlock.size() || row < 0)
         return nullptr;
     return listBlock.at(row);
 }
 
-QModelIndex QG_BlockModel::getIndex (RS_Block * blk){
+QModelIndex QG_BlockModel::getIndex (RS_Block * blk) const{
     int row = listBlock.indexOf(blk);
     if (row<0)
         return QModelIndex();
@@ -280,9 +280,8 @@ void QG_BlockWidget::restoreSelections() {
     QItemSelectionModel* selectionModel = blockView->selectionModel();
 
     for (auto block: *blockList) {
-        if (!block) continue;
-        if (!block->isVisibleInBlockList()) continue;
-        if (!block->isSelectedInBlockList()) continue;
+        if (block == nullptr || !block->isVisibleInBlockList() || !block->isSelectedInBlockList())
+            continue;
 
         QModelIndex idx = blockModel->getIndex(block);
         QItemSelection selection(idx, idx);
@@ -315,12 +314,7 @@ void QG_BlockWidget::activateBlock(RS_Block* block) {
     blockView->viewport()->update();
 
     // restore selected status of the block
-    QItemSelectionModel::SelectionFlag selFlag;
-    if (selected) {
-        selFlag = QItemSelectionModel::Select;
-    } else {
-        selFlag = QItemSelectionModel::Deselect;
-    }
+    QItemSelectionModel::SelectionFlag selFlag = selected ? QItemSelectionModel::Select : QItemSelectionModel::Deselect;
     block->selectedInBlockList(selected);
     blockView->selectionModel()->select(QItemSelection(idx, idx), selFlag);
     blockView->verticalScrollBar()->setValue(yPos);
@@ -334,7 +328,7 @@ void QG_BlockWidget::slotActivated(QModelIndex blockIdx) {
         return;
 
     RS_Block * block = blockModel->getBlock( blockIdx.row() );
-    if (block == 0)
+    if (block == nullptr)
         return;
 
     if (blockIdx.column() == QG_BlockModel::VISIBLE) {
@@ -359,10 +353,9 @@ void QG_BlockWidget::slotSelectionChanged(
     const QItemSelection &selected,
     const QItemSelection &deselected)
 {
-    QModelIndex index;
     QItemSelectionModel *selectionModel {blockView->selectionModel()};
 
-    foreach (index, selected.indexes()) {
+    foreach (QModelIndex index, selected.indexes()) {
         auto block = blockModel->getBlock(index.row());
         if (block) {
             block->selectedInBlockList(true);
@@ -370,7 +363,7 @@ void QG_BlockWidget::slotSelectionChanged(
         }
     }
 
-    foreach (index, deselected.indexes()) {
+    foreach (QModelIndex index, deselected.indexes()) {
         auto block = blockModel->getBlock(index.row());
         if (block && block->isVisibleInBlockList()) {
             block->selectedInBlockList(false);
