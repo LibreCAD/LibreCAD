@@ -760,7 +760,7 @@ primo iniziale, secondo iniziale, primo finale, secondo finale.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
@@ -818,7 +818,7 @@ primo iniziale, secondo iniziale, primo finale, secondo finale.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
         <source>places</source>
-        <translation type="unfinished"></translation>
+        <translation>posti</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
@@ -868,7 +868,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation type="unfinished"></translation>
+        <translation>All&apos;esterno</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>
@@ -896,7 +896,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Modulus</source>
-        <translation type="unfinished"></translation>
+        <translation>Modulo</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
