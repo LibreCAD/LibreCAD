@@ -41,8 +41,8 @@ void LC_UCSListOptions::load() {
         showColumnGridType = LC_GET_BOOL("ShowColumnGridType", false);
         showColumnPositionAndAngle = LC_GET_BOOL("ShowColumnPositionAndAngle", false);
         askForDeletionConfirmation = LC_GET_BOOL("ConfirmDelete", false);
+        restoreViewBySingleClick = LC_GET_BOOL("SingleClickRestore", false);
         doubleClickPolicy = LC_GET_INT("DoubleClickPolicy",APPLY_UCS);
-        // fixme - sand - ucs complete
     }
 }
 
@@ -62,9 +62,6 @@ void LC_UCSListOptions::save() const{
         LC_SET("ShowColumnPositionAndAngle", showColumnPositionAndAngle);
         LC_SET("ConfirmDelete", askForDeletionConfirmation);
         LC_SET("DoubleClickPolicy", doubleClickPolicy);
-        // fixme - sand - ucs complete
-
-//        bool restoreViewBySingleClick= false;
-//        bool duplicatedNameReplacesSilently
+        LC_GET_BOOL("SingleClickRestore", restoreViewBySingleClick);
     }
 }

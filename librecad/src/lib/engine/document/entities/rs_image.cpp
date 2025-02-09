@@ -363,7 +363,6 @@ void RS_Image::draw(RS_Painter* painter) {
     if (!img.get() || img->isNull()) {
         return;
     }
-    // fixme - sand - ucs - fix of rotation of image for ucs!!!
     painter->drawImgWCS(*img, data.insertionPoint, data.uVector, data.vVector);
 
     if (isSelected() && !(painter->isPrinting() || painter->isPrintPreview())) {

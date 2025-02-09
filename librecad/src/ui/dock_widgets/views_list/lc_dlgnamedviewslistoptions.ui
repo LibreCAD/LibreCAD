@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>393</width>
-    <height>386</height>
+    <height>412</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -62,7 +62,7 @@
       <item row="4" column="0">
        <widget class="QCheckBox" name="cbColumnUCSDetails">
         <property name="toolTip">
-         <string>If checked, the column with details for type of grid for type of view's UCS will be shown in the table. </string>
+         <string>If checked, the column with details of view's coordinate system will be show</string>
         </property>
         <property name="text">
          <string>UCS Details column</string>
@@ -82,7 +82,7 @@
       <item row="0" column="0">
        <widget class="QCheckBox" name="cbShowViewTypeIcon">
         <property name="toolTip">
-         <string>If checked, the column with icon for type of grid for view will be shown in the table. </string>
+         <string>If checked, the column with view type icon will be shown.</string>
         </property>
         <property name="text">
          <string>Type icon column</string>
@@ -92,7 +92,7 @@
       <item row="2" column="0">
        <widget class="QCheckBox" name="cbColumnUCSType">
         <property name="toolTip">
-         <string>If checked, the column with icon for type of grid for type of view's UCS will be shown in the table. </string>
+         <string>If checked, the column with icon for type of coordinate system for the view will be shown.</string>
         </property>
         <property name="text">
          <string>UCS Type icon column</string>
