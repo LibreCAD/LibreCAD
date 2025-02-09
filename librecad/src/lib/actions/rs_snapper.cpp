@@ -1038,7 +1038,7 @@ QString RS_Snapper::getSnapName(int snapType){
             return "";
     }
 }
-// fixme - sand - ucs-  review whether it used, correct
+// fixme - sand - ucs -  review whether it used, correct
 RS_Vector RS_Snapper::snapToRelativeAngle(double baseAngle, const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution){
 
     if(snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid){
@@ -1201,11 +1201,7 @@ void RS_Snapper::preparePositionsInfoCursorOverlay(bool updateFormat, const RS_V
                 // as we're in ucs coordinates there, use raw formatAngle instead of method
 
                 double relativeAngle = relativeToUse.angle();
-
-                // fixme - sand - ucs - utility methods for ucs angle conversion to display format?
-
-                double ucsBasisAngle = viewport->toUCSBasisAngle(relativeAngle, m_anglesBase, m_anglesCounterClockWise);
-
+                double ucsBasisAngle = ucsAbsToBasisAngle(relativeAngle);
                 QString angleStr = (showLabels ? tr("Angle: ") : "< ") + formatAngleRaw(ucsBasisAngle);
 
                 coordPolar = lenStr + (prefs->multiLine ? "\n" : showLabels ? " " : " ") + angleStr;
@@ -1303,6 +1299,14 @@ double RS_Snapper::toUCSAngle(double angle) const{
     return viewport->toUCSAngle(angle);
 }
 
+double RS_Snapper::ucsAbsToBasisAngle(double angle) const{
+    return viewport->toBasisUCSAngle(angle);
+}
+
+double RS_Snapper::ucsBasisToAbsAngle(double angle) const{
+    return viewport->toAbsUCSAngle(angle);
+}
+
 double RS_Snapper::toUCSBasisAngleDegrees(double wcsAngle) const{
     double ucsAngle = viewport->toUCSAngle(wcsAngle);
     double ucsBasisAngle = viewport->toUCSBasisAngle(ucsAngle, m_anglesBase, m_anglesCounterClockWise);
@@ -1345,7 +1349,7 @@ RS_Vector RS_Snapper::toUCSDelta(const RS_Vector &worldDelta) const {
     return viewport->toUCSDelta(worldDelta);
 }
 
-// fixme - sand - ucs - move to coordinates mapper
+// fixme - sand - ucs - move to coordinates mapper?
 void RS_Snapper::calcRectCorners(const RS_Vector &worldCorner1, const RS_Vector &worldCorner3, RS_Vector &worldCorner2, RS_Vector &worldCorner4) const {
     RS_Vector ucsCorner1 = toUCS(worldCorner1);
     RS_Vector ucsCorner3 = toUCS(worldCorner3);

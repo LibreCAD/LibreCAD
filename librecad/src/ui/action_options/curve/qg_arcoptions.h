@@ -54,7 +54,6 @@ protected:
     RS_ActionDrawArc* action = nullptr;
 	   std::unique_ptr<Ui::Ui_ArcOptions> ui;
     void setReversedToActionAndView(bool reversed);
-
     bool checkActionRttiValid(RS2::ActionType actionType) override;
 };
 

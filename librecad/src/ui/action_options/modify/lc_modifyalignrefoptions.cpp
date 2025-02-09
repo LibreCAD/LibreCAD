@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_modifyalignrefoptions.h"
+#include "lc_actionmodifyalignref.h"
 #include "ui_lc_modifyalignrefoptions.h"
 
 LC_ModifyAlignRefOptions::LC_ModifyAlignRefOptions()

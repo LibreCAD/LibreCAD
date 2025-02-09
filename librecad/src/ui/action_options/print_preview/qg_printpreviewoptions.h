@@ -30,13 +30,13 @@
 
 class RS_ActionInterface;
 class RS_ActionPrintPreview;
+
 namespace Ui {
-class Ui_PrintPreviewOptions;
+    class Ui_PrintPreviewOptions;
 }
 
 class QG_PrintPreviewOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     QG_PrintPreviewOptions();
     ~QG_PrintPreviewOptions() override;
@@ -45,7 +45,6 @@ public:
         MODE_UPDATE_ORIENTATION,
         MODE_UPDATE_PAGE_NUMBERS
     };
-
 public slots:
     void updateUI(int mode) override;
     void onCenterClicked();
@@ -85,7 +84,5 @@ private:
     void saveCustomRatios();
     void fitPage();
     void updatePageNumbers();
-
 };
-
 #endif // QG_PRINTPREVIEWOPTIONS_H

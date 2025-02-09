@@ -22,6 +22,7 @@
 
 #include "lc_ellipse1pointoptions.h"
 #include "ui_lc_ellipse1pointoptions.h"
+#include "lc_actiondrawellipse1point.h"
 #include "rs_math.h"
 
 LC_Ellipse1PointOptions::LC_Ellipse1PointOptions()

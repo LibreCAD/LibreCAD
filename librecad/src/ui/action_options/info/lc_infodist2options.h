@@ -25,14 +25,14 @@
 
 #include <QWidget>
 #include "lc_actionoptionswidget.h"
-#include "rs_actioninfodist2.h"
 
 namespace Ui {
 class LC_InfoDist2Options;
 }
 
-class LC_InfoDist2Options : public LC_ActionOptionsWidget
-{
+class RS_ActionInfoDist2;
+
+class LC_InfoDist2Options : public LC_ActionOptionsWidget{
     Q_OBJECT
 
 public:

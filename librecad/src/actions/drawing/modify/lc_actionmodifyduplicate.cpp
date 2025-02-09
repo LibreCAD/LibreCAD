@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_ellipse.h"
 #include "rs_math.h"
 #include "rs_previewactioninterface.h"
-// fixme - sand - ucs - add support of commands for entering offset(?) and setting direction (for interactive mode)!!
+// fixme - sand - cmd - add support of commands for entering offset(?) and setting direction (for interactive mode)!!
 LC_ActionModifyDuplicate::LC_ActionModifyDuplicate(RS_EntityContainer &container, RS_GraphicView &graphicView):
     LC_AbstractActionWithPreview("ModifyDuplicate", container, graphicView),
     selectedEntity(nullptr),

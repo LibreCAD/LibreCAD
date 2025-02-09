@@ -32,25 +32,23 @@
 
 class RS_ActionInterface;
 class RS_ActionDrawLine;
+
 namespace Ui {
-class Ui_LineOptions;
+    class Ui_LineOptions;
 }
 
-class QG_LineOptions : public LC_ActionOptionsWidgetBase
-{
+class QG_LineOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     QG_LineOptions();
     ~QG_LineOptions() override;
-
 public slots:
     virtual void close(); // fixme - rename
     virtual void undo();
     virtual void redo();
     void languageChange() override;
 protected:
-    RS_ActionDrawLine* action;
+    RS_ActionDrawLine* action = nullptr;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
 private:

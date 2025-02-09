@@ -36,12 +36,10 @@ namespace Ui {
 }
 
 class QG_MoveRotateOptions : public LC_ActionOptionsWidgetBase{
-Q_OBJECT
-
+    Q_OBJECT
 public:
     QG_MoveRotateOptions();
     ~QG_MoveRotateOptions() override;
-
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
@@ -65,9 +63,6 @@ protected slots:
     void onAngleEditingFinished();
 private:
     std::unique_ptr<Ui::Ui_MoveRotateOptions> ui;
-    RS_ActionModifyMoveRotate* action;
-
-
+    RS_ActionModifyMoveRotate* action = nullptr;
 };
-
 #endif // QG_MOVEROTATEOPTIONS_H

@@ -30,14 +30,14 @@
 #include<QWidget>
 #include "lc_actionoptionswidgetbase.h"
 
-class RS_ActionInterface;
 class RS_ActionModifyTrimAmount;
+
 namespace Ui {
     class Ui_TrimAmountOptions;
 }
-class QG_TrimAmountOptions:public LC_ActionOptionsWidgetBase {
-Q_OBJECT
 
+class QG_TrimAmountOptions:public LC_ActionOptionsWidgetBase {
+    Q_OBJECT
 public:
     QG_TrimAmountOptions();
     ~QG_TrimAmountOptions() override;
@@ -50,11 +50,10 @@ public slots:
     void onSymmetricToggled(bool checked);
     void onDistEditingFinished();
 private:
-    RS_ActionModifyTrimAmount *action;
+    RS_ActionModifyTrimAmount *action = nullptr;
     std::unique_ptr<Ui::Ui_TrimAmountOptions> ui;
     void setDistanceToActionAndView(const QString &strValue);
     void setByTotalToActionAndView(bool val);
     void setDistanceSymmetricToActionAndView(bool val);
 };
-
 #endif // QG_TRIMAMOUNTOPTIONS_H

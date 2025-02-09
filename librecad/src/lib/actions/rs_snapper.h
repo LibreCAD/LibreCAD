@@ -1,4 +1,5 @@
 
+
 /****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
@@ -272,6 +273,8 @@ protected:
     double toUCSAngle(double tickAngleRad) const;
     double toUCSBasisAngle(double wcsAngle) const;
     double toUCSBasisAngleDegrees(double wcsAngle) const;
+    double ucsAbsToBasisAngle(double relAngle) const;
+    double ucsBasisToAbsAngle(double relAngle) const;
     double toWorldAngleFromUCSBasisDegrees(double ucsBasisAngleDegrees) const;
     double toWorldAngleFromUCSBasis(double ucBasisAngle) const;
     RS_Vector toWorld(const RS_Vector& ucsPos) const;

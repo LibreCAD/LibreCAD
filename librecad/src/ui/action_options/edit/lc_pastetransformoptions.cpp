@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_pastetransformoptions.h"
 #include "ui_lc_pastetransformoptions.h"
+#include "lc_actioneditpastetransform.h"
 #include "rs_math.h"
 
 LC_PasteTransformOptions::LC_PasteTransformOptions()

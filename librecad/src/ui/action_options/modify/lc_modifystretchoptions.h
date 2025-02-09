@@ -24,12 +24,11 @@
 #define LC_MODIFYSTRETCHOPTIONS_H
 
 #include <QWidget>
-
-#include "rs_actionmodifystretch.h"
 #include "lc_actionoptionswidgetbase.h"
 
+class RS_ActionModifyStretch;
 namespace Ui {
-class LC_ModifyStretchOptions;
+    class LC_ModifyStretchOptions;
 }
 
 class LC_ModifyStretchOptions : public LC_ActionOptionsWidgetBase {

@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_ucssetoptions.h"
+#include "lc_actionucscreate.h"
 #include "ui_lc_ucssetoptions.h"
 #include "rs_math.h"
 

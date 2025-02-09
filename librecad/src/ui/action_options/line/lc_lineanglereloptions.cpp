@@ -21,10 +21,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "lc_lineanglereloptions.h"
-#include "rs_debug.h"
-#include "rs_math.h"
 #include "ui_lc_lineanglereloptions.h"
-
+#include "lc_actiondrawlineanglerel.h"
 
 LC_LineAngleRelOptions::LC_LineAngleRelOptions() :
     LC_ActionOptionsWidget(nullptr),

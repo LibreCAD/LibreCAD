@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_selectwindowoptions.h"
+#include "rs_actionselectwindow.h"
 #include "ui_lc_selectwindowoptions.h"
 
 LC_SelectWindowOptions::LC_SelectWindowOptions()

@@ -46,10 +46,9 @@ public slots:
     void onAngleChanged();
     void languageChange() override;
 protected:
-    RS_ActionDrawText* action;
+    RS_ActionDrawText* action = nullptr;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     std::unique_ptr<Ui::Ui_TextOptions> ui;
 };
-
 #endif // QG_TEXTOPTIONS_H

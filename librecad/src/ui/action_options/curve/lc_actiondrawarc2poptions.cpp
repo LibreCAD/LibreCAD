@@ -1,5 +1,6 @@
 #include "lc_actiondrawarc2poptions.h"
 #include "ui_lc_actiondrawarc2poptions.h"
+#include "lc_actiondrawarc2pointsbase.h"
 #include "rs_math.h"
 
 LC_ActionDrawArc2POptions::LC_ActionDrawArc2POptions(int actionType)

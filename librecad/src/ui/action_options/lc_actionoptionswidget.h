@@ -33,10 +33,8 @@ class RS_ActionInterface;
  * Method contains several utility methods as well as default workflows, and it's purpose is
  * simply creation of options UI and reduce code repetition there.
  */
-class LC_ActionOptionsWidget:public QWidget
-{
+class LC_ActionOptionsWidget:public QWidget{
     Q_OBJECT
-
 public:
     explicit LC_ActionOptionsWidget(QWidget *parent = nullptr, Qt::WindowFlags fl = {});
     ~LC_ActionOptionsWidget();
@@ -45,7 +43,6 @@ public:
      * Called externally when the widget should be hidded
      */
     virtual void hideOptions();
-
     /**
      * Extension point. Method allows action to request update of UI (say, by enabling or hiding some parts of the widget).
      * Mode value is action-specific and should be processed by related option widget.
@@ -67,7 +64,6 @@ protected:
      * @param update true if options widget should be updated by action values, false - loading from settings
      */
     virtual void doSetAction(RS_ActionInterface* a, bool update) = 0;
-
     /**
      * Performs check that provided action type is accepted by options widget
      * @param actionType type of action
@@ -80,7 +76,6 @@ protected:
      * @return name of group
      */
     virtual QString getSettingsGroupName(){return "Draw";};
-
     /**
      * Default name for prefix for settings. It assumes that all settings for the action starts with the same prefix.
      * @return  prefix to use.
@@ -101,10 +96,7 @@ protected:
     QString fromDouble(double value);
     bool toDouble(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
     bool toDoubleAngle(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
-
 protected slots:
     virtual void languageChange() {}
-
 };
-
 #endif // LC_ACTIONOPTIONSWIDGET_H

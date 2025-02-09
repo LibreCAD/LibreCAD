@@ -22,6 +22,7 @@
 
 #include "lc_rotate2options.h"
 #include "ui_lc_rotate2options.h"
+#include "rs_actionmodifyrotate2.h"
 #include "rs_math.h"
 
 // todo - potentially, instead of specifying secondary angle it is possible to let the user enter the sum of angles
@@ -32,8 +33,7 @@
 
 LC_Rotate2Options::LC_Rotate2Options()
     : LC_ActionOptionsWidgetBase(RS2::ActionModifyRotate2, "Modify", "Rotate2")
-    , ui(new Ui::LC_Rotate2Options)
-{
+    , ui(new Ui::LC_Rotate2Options){
     ui->setupUi(this);
 
     connect(ui->cbKeepOriginals, &QCheckBox::clicked, this, &LC_Rotate2Options::cbKeepOriginalsClicked);

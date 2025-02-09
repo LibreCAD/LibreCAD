@@ -25,14 +25,14 @@
 
 #include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
-#include "lc_actionucscreate.h"
 
+class LC_ActionUCSCreate;
 namespace Ui {
-class LC_UCSSetOptions;
+    class LC_UCSSetOptions;
 }
 
 class LC_UCSSetOptions : public LC_ActionOptionsWidgetBase{
-Q_OBJECT
+    Q_OBJECT
 public:
     explicit LC_UCSSetOptions();
     ~LC_UCSSetOptions() override;
@@ -48,7 +48,6 @@ protected:
     void setAngleIsFreeToActionAndView(bool val);
 private:
     Ui::LC_UCSSetOptions *ui;
-    LC_ActionUCSCreate* action;
+    LC_ActionUCSCreate* action = nullptr;
 };
-
 #endif // LC_UCSSETOPTIONS_H

@@ -243,7 +243,7 @@ static void setupPrinterAndPaper(RS_Graphic* graphic, QPrinter& printer,
         printer.setColorMode(QPrinter::Color);
 }
 
-// fixme - sand - ucs - refactor to separate class?
+// fixme - sand - printing - refactor to separate class?
 static void drawGraphic(RS_Graphic* graphic, QPrinter& printer,
                         RS_Painter& painter){
     double printerFx = (double)printer.width() / printer.widthMM();

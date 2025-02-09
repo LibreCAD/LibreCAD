@@ -31,13 +31,13 @@
 
 class RS_ActionModifyBevel;
 class RS_ActionInterface;
+
 namespace Ui {
-class Ui_BevelOptions;
+    class Ui_BevelOptions;
 }
 
 class QG_BevelOptions:public LC_ActionOptionsWidgetBase {
-Q_OBJECT
-
+    Q_OBJECT
 public:
     QG_BevelOptions();
     ~QG_BevelOptions() override;

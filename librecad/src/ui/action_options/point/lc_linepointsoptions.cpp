@@ -20,6 +20,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_linepointsoptions.h"
+#include "lc_actiondrawlinepoints.h"
 #include "ui_lc_linepointsoptions.h"
 #include "rs_settings.h"
 #include "rs_math.h"

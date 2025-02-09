@@ -21,9 +21,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <cmath>
 #include "lc_linefrompointtolineoptions.h"
+#include "lc_actiondrawlinefrompointtoline.h"
 #include "ui_lc_linefrompointtolineoptions.h"
 #include "rs_math.h"
-
 
 LC_LineFromPointToLineOptions::LC_LineFromPointToLineOptions() :
     LC_ActionOptionsWidgetBase(RS2::ActionDrawLineFromPointToLine, "Draw", "LinePointToLine"),

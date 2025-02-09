@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_pastetopointsoptions.h"
+#include "lc_actionpastetopoints.h"
 #include "ui_lc_pastetopointsoptions.h"
 #include "rs_math.h"
 

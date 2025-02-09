@@ -20,6 +20,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_slicedivideoptions.h"
+#include "lc_actiondrawslicedivide.h"
 #include "ui_lc_slicedivideoptions.h"
 
 LC_SliceDivideOptions::LC_SliceDivideOptions() :

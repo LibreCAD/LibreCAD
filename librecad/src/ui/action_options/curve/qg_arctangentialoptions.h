@@ -32,6 +32,7 @@
 
 class RS_ActionInterface;
 class RS_ActionDrawArcTangential;
+
 namespace Ui {
 class Ui_ArcTangentialOptions;
 }

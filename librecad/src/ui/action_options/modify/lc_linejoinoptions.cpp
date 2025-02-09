@@ -20,8 +20,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_linejoinoptions.h"
+#include "lc_actionmodifylinejoin.h"
 #include "ui_lc_linejoinoptions.h"
-
 
 LC_LineJoinOptions::LC_LineJoinOptions() :
     LC_ActionOptionsWidgetBase(RS2::ActionModifyLineJoin, "Modify", "LineJoin"),

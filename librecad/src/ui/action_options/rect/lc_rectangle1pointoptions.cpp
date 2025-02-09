@@ -23,9 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_rectangle1pointoptions.h"
 #include "rs_actioninterface.h"
 #include "rs_debug.h"
-#include "rs_math.h"
 #include "ui_lc_rectangle1pointoptions.h"
-
 
 LC_Rectangle1PointOptions::LC_Rectangle1PointOptions() :
     LC_ActionOptionsWidgetBase(RS2::ActionDrawRectangle1Point, "Draw","Rectangle1Point"),
