@@ -43,6 +43,7 @@
 #include "lc_linemath.h"
 #include "rs_snapper.h"
 #include "lc_graphicviewport.h"
+#include "rs_settings.h"
 
 struct RS_ActionDefault::Points {
     RS_Vector v1;
@@ -328,7 +329,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEven
                 }
                 case RS2::EntityArc: {
                     auto *refMovingArc = dynamic_cast<RS_Arc *>(refMovingEntity);
-                    auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->cloneProxy(viewport));
+                    auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->cloneProxy());
 
                     const RS_Vector &arcCenter = refMovingArc->getCenter();
                     const RS_Vector &arcMiddle = refMovingArc->getMiddlePoint();
@@ -446,7 +447,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEven
                 case RS2::EntityCircle:{
                     // fixme -sand - add morphing of circle to ellipse
                     auto *refMovingCircle = dynamic_cast<RS_Circle *>(refMovingEntity);
-                    auto *clone = dynamic_cast<RS_Circle *>(refMovingCircle->cloneProxy(viewport));
+                    auto *clone = dynamic_cast<RS_Circle *>(refMovingCircle->cloneProxy());
                     pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
 
                     if (showRefEntitiesOnPreview) {
@@ -481,7 +482,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEven
             updateCoordinateWidgetByRelZero(pPoints->v2);
 
             if (addClone){
-                RS_Entity* clone = refMovingEntity->clone();
+                RS_Entity* clone = getClone(refMovingEntity);
                 const RS_Vector &offset = pPoints->v2 - pPoints->v1;
                 clone->moveRef(pPoints->v1, offset);
                 preview->addEntity(clone);
@@ -509,7 +510,15 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEven
             pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
             updateCoordinateWidgetByRelZero(pPoints->v2);
 
-            preview->addSelectionFrom(*container,viewport);
+//            preview->addSelectionFrom(*container,viewport);
+             // fixme - sand - iterating over all entities!!! Rework selection. Add selection manager to the document, after all...
+             for(auto ent: *container) {
+                if (ent->isSelected()) {
+                    RS_Entity* clone = getClone(ent);
+                    preview->addEntity(clone);
+                }
+            }
+
             const RS_Vector &offset = pPoints->v2 - pPoints->v1;
             preview->move(offset);
 
@@ -567,6 +576,27 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEven
         default:
             break;
     }
+}
+
+RS_Entity* RS_ActionDefault::getClone(RS_Entity* e){
+    RS_Entity* clone;
+    int rtti =e->rtti();
+    switch (rtti) {
+        case RS2::EntityText:
+        case RS2::EntityMText: {
+            // fixme - sand - ucs - BAD dependency, rework.
+            bool drawTextAsDraftInPreview = LC_GET_ONE_BOOL("Render", "DrawTextsAsDraftInPreview", true);
+            if (drawTextAsDraftInPreview) {
+                clone = e->cloneProxy();
+            } else {
+                clone = e->clone();
+            }
+            break;
+        }
+        default:
+            clone = e->clone();
+    }
+    return clone;
 }
 
 void RS_ActionDefault::createEditedLineDescription([[maybe_unused]]RS_Line* clone, [[maybe_unused]]bool ctrlPressed,  [[maybe_unused]]bool shiftPressed) {

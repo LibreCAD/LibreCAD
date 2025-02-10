@@ -241,7 +241,7 @@ public:
     friend std::ostream& operator << (std::ostream& os, const RS_Text& p);
     void draw(RS_Painter* painter) override;
     void drawDraft(RS_Painter *painter) override;
-    RS_Entity *cloneProxy(LC_GraphicViewport* view) const override;
+    RS_Entity *cloneProxy() const override;
     RS_Vector getNearestSelectedRef(const RS_Vector &coord, double *dist) const override;
     void moveSelectedRef(const RS_Vector &ref, const RS_Vector &offset) override;
     RS_Vector getNearestRef(const RS_Vector &coord, double *dist) const override;

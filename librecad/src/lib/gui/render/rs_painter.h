@@ -72,9 +72,6 @@ public:
     double toGuiDX(double d) const;
     double toGuiDY(double d) const;
 
-//    double toUCSAngleDegrees(double angle);
-//    double toWorldAngleDegrees(double angle);
-
     bool isPrinting() {return printinMode;}; // fixme - temporary support, refactor further
     bool isPrintPreview() {return printPreview;}; // fixme - temporary support, refactor further
 
@@ -158,8 +155,8 @@ public:
     void disablePen();
     void setBrushColor(const RS_Color& color);
     void erase();
-    int getWidth() const;  // fixme - sand - ucs - check usage!!! Probably it's different width expected (from viewport, rather than from device)
-    int getHeight() const; // fixme - sand - ucs - check usage!!! Probably it's different width expected (from viewport, rather than from device)
+    int getWidth() const;  // todo - sand - ucs - check usage!!! Probably it's different width expected (from viewport, rather than from device)
+    int getHeight() const; // todo - sand - ucs - check usage!!! Probably it's different width expected (from viewport, rather than from device)
     double getDpmm() const;
     void setClipRect(int x, int y, int w, int h);
     void resetClipping();

@@ -83,6 +83,8 @@ public:
 
     RS_Entity* clone() const override;
 
+    RS_Entity *cloneProxy() const override;
+
     /**	@return RS2::EntityImage */
     RS2::EntityType rtti() const override{
         return RS2::EntityImage;

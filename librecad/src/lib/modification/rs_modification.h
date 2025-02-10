@@ -400,6 +400,8 @@ protected:
 
     void setupModifiedClones(std::vector<RS_Entity *> &addList, const LC_ModifyOperationFlags &data,
                              bool forPreviewOnly, bool keepSelected) const;
+
+    RS_Entity *getClone(bool forPreviewOnly, const RS_Entity *e) const;
 };
 
 #endif

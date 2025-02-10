@@ -231,6 +231,7 @@ RS_Snapper::RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicVie
 
 RS_Snapper::~RS_Snapper() = default;
 
+
 /**
  * Initialize (called by all constructors)
  */
@@ -280,10 +281,21 @@ void RS_Snapper::initFromSettings() {
         else{
             snap_indicator->shape_type = LC_Crosshair::NoShape;
         }
+
+        m_ignoreSnapToGridIfNoGrid = LC_GET_BOOL("SnapGridIgnoreIfNoGrid", false);
+
     }
     LC_GROUP_END();
 
-    catchEntityGuiRange = LC_GET_ONE_INT("Snapping", "CatchEntityGuiDistance", 32); // fixme - sand - add to option ui?
+    LC_GROUP("Snap");
+    {
+        m_distanceBeforeSwitchToFreeSnap = LC_GET_INT("AdvSnapOnEntitySwitchToFreeDistance", 500) / 100.0;
+        m_catchEntityGuiRange =  LC_GET_INT("AdvSnapEntityCatchRange", 32);
+        m_minGridCellSnapFactor = LC_GET_INT("AdvSnapGridCellSnapFactor", 25) / 100.0;
+    }
+    LC_GROUP_END();
+
+    m_catchEntityGuiRange = LC_GET_ONE_INT("Snapping", "CatchEntityGuiDistance", 32); // fixme - sand - add to option ui?
 }
 
 void RS_Snapper::initFromGraphic(RS_Graphic *graphic) {
@@ -410,8 +422,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e){
         }
     }
 
-    if (snapMode.snapOnEntity &&
-        pImpData->snapSpot.distanceTo(mouseCoord) > snapMode.distance) {
+    if (snapMode.snapOnEntity && pImpData->snapSpot.distanceTo(mouseCoord) > m_distanceBeforeSwitchToFreeSnap) {
         t = snapOnEntity(mouseCoord);
         double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
@@ -421,7 +432,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e){
         }
     }
 
-    if (snapMode.snapGrid) {
+    if (isSnapToGrid()) {
         t = snapGrid(mouseCoord);
         double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
@@ -497,7 +508,6 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e){
     return pImpData->snapCoord;
 }
 
-
 /**manually set snapPoint*/
 RS_Vector RS_Snapper::snapPoint(const RS_Vector& coord, bool setSpot){
     if(coord.valid){
@@ -514,7 +524,6 @@ RS_Vector RS_Snapper::snapPoint(const RS_Vector& coord, bool setSpot){
 double RS_Snapper::getSnapRange() const{
     // issue #1631: redefine this method to the minimum graph distance to allow "Snap Free"
     // When the closest of any other snapping point is beyond this distance, free snapping is used.
-    constexpr double Min_Snap_Factor = 0.25;
     std::vector<double> distances(3, RS_MAXDOUBLE);
     double& minGui=distances[0];
     double& minGrid=distances[1];
@@ -522,10 +531,12 @@ double RS_Snapper::getSnapRange() const{
     if (graphicView != nullptr) {
         minGui = toGraphDX(32);
         // if grid is on, less than one quarter of the cell vector
-        if (viewport->isGridOn()) {
+//        if (viewport->isGridOn()) {
+// todo - sand - check whether it's correct apply this check only if "Snap to Grid" is enabled
+        if (viewport->isGridOn() && snapMode.snapGrid) {
             RS_Grid *grid = viewport->getGrid();
             const RS_Vector &cellVector = grid->getCellVector();
-            minGrid = cellVector.magnitude() * Min_Snap_Factor;
+            minGrid = cellVector.magnitude() * m_minGridCellSnapFactor;
         }
     }
     if (container != nullptr && isSizeValid(container->getSize())) {
@@ -560,9 +571,7 @@ RS_Vector RS_Snapper::snapFree(const RS_Vector& coord) {
  */
 RS_Vector RS_Snapper::snapEndpoint(const RS_Vector& coord) {
     RS_Vector vec(false);
-
-    vec = container->getNearestEndpoint(coord,
-                                        nullptr/*, &keyEntity*/);
+    vec = container->getNearestEndpoint(coord,nullptr/*, &keyEntity*/);
     return vec;
 }
 
@@ -573,7 +582,6 @@ RS_Vector RS_Snapper::snapEndpoint(const RS_Vector& coord) {
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapGrid(const RS_Vector& coord) {
-
 //    RS_DEBUG->print("RS_Snapper::snapGrid begin");
 
 //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
@@ -589,7 +597,6 @@ RS_Vector RS_Snapper::snapGrid(const RS_Vector& coord) {
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapOnEntity(const RS_Vector& coord) {
-
     RS_Vector vec{};
     vec = container->getNearestPointOnEntity(coord, true, nullptr, &keyEntity);
     return vec;
@@ -603,7 +610,6 @@ RS_Vector RS_Snapper::snapOnEntity(const RS_Vector& coord) {
  */
 RS_Vector RS_Snapper::snapCenter(const RS_Vector& coord) {
     RS_Vector vec{};
-
     vec = container->getNearestCenter(coord, nullptr);
     return vec;
 }
@@ -619,7 +625,6 @@ RS_Vector RS_Snapper::snapMiddle(const RS_Vector& coord) {
     return container->getNearestMiddle(coord,static_cast<double *>(nullptr),middlePoints);
 }
 
-
 /**
  * Snaps to the closest point with a given distance to the endpoint.
  *
@@ -628,7 +633,6 @@ RS_Vector RS_Snapper::snapMiddle(const RS_Vector& coord) {
  */
 RS_Vector RS_Snapper::snapDist(const RS_Vector& coord) {
     RS_Vector vec;
-
 //std::cout<<" RS_Snapper::snapDist(RS_Vector coord): distance="<<distance<<std::endl;
     vec = container->getNearestDist(m_SnapDistance,
                                     coord,
@@ -644,7 +648,6 @@ RS_Vector RS_Snapper::snapDist(const RS_Vector& coord) {
  */
 RS_Vector RS_Snapper::snapIntersection(const RS_Vector& coord) {
     RS_Vector vec{};
-
     vec = container->getNearestIntersection(coord,nullptr);
     return vec;
 }
@@ -746,7 +749,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos,
         idx = entity->getParent()->findEntity(entity);
     }
 
-    if (entity != nullptr && dist <= getCatchDistance(getSnapRange(), catchEntityGuiRange)) {
+    if (entity != nullptr && dist <= getCatchDistance(getSnapRange(), m_catchEntityGuiRange)) {
         // highlight:
         RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
         return entity;
@@ -818,7 +821,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
         idx = entity->getParent()->findEntity(entity);
     }
 
-    if (entity != nullptr && dist <= getCatchDistance(getSnapRange(), catchEntityGuiRange)) {
+    if (entity != nullptr && dist <= getCatchDistance(getSnapRange(), m_catchEntityGuiRange)) {
         // highlight:
         RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
         return entity;
@@ -1038,10 +1041,20 @@ QString RS_Snapper::getSnapName(int snapType){
             return "";
     }
 }
-// fixme - sand - ucs -  review whether it used, correct
+
+bool RS_Snapper::isSnapToGrid(){
+    bool result = snapMode.snapGrid;
+    if (result) {
+        if (m_ignoreSnapToGridIfNoGrid) {
+            result = viewport->isGridOn();
+        }
+    }
+    return result;
+}
+
 RS_Vector RS_Snapper::snapToRelativeAngle(double baseAngle, const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution){
 
-    if(snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid){
+    if(snapMode.restriction != RS2::RestrictNothing || isSnapToGrid()){
         return currentCoord;
     }
 
@@ -1070,41 +1083,42 @@ RS_Vector RS_Snapper::snapToRelativeAngle(double baseAngle, const RS_Vector &cur
     }
 }
 
-RS_Vector RS_Snapper::snapToAngle(
-    const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution) {
-
-    if (snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid) {
+RS_Vector RS_Snapper::snapToAngle(const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution) {
+    if (snapMode.restriction != RS2::RestrictNothing || isSnapToGrid()) {
         return currentCoord;
     }
+    return doSnapToAngle(currentCoord, referenceCoord, angularResolution);
+}
 
+RS_Vector RS_Snapper::doSnapToAngle(const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution) {
     double wcsAngleRaw = referenceCoord.angleTo(currentCoord);
-    double ucsAngleAbs = toUCSAngle(wcsAngleRaw);
+    double ucsAngleAbs = this->toUCSAngle(wcsAngleRaw);
 
-    double ucsAngle = ucsAngleAbs - m_anglesBase;
-    double ucsAngleSnapped = ucsAngleAbs - std::remainder(ucsAngle, angularResolution);
+    double ucsAngle = ucsAngleAbs - this->m_anglesBase;
+    double ucsAngleSnapped = ucsAngleAbs - remainder(ucsAngle, angularResolution);
 
 //    LC_ERR << "BASE " << RS_Math::rad2deg(m_anglesBase) << " UCSabs " << RS_Math::rad2deg(ucsAngleAbs) << " UCS " << RS_Math::rad2deg(ucsAngle) << " Snapped " << RS_Math::rad2deg(ucsAngleSnapped) << " UCSRel " << RS_Math::rad2deg(ucsAngleSnapped);
-    double wcsAngleSnapped = toWorldAngle(ucsAngleSnapped);
+    double wcsAngleSnapped = this->toWorldAngle(ucsAngleSnapped);
 
     RS_Vector res = RS_Vector::polar(referenceCoord.distanceTo(currentCoord), wcsAngleSnapped);
     res += referenceCoord;
 
-    if (snapMode.snapOnEntity) {
-        RS_Vector t = container->getNearestVirtualIntersection(res, wcsAngleSnapped, nullptr);
-        pImpData->snapSpot = t;
-        pImpData->snapType = (t == res) ? SnapType::ANGLE : SnapType::ANGLE_ON_ENTITY;
-        pImpData->angle = ucsAngleSnapped;
-        snapPoint(pImpData->snapSpot, true);
+    if (this->snapMode.snapOnEntity) {
+        RS_Vector t = this->container->getNearestVirtualIntersection(res, wcsAngleSnapped, nullptr);
+        this->pImpData->snapSpot = t;
+        this->pImpData->snapType = (t == res) ? ANGLE : ANGLE_ON_ENTITY;
+        this->pImpData->angle = ucsAngleSnapped;
+        this->snapPoint(this->pImpData->snapSpot, true);
         return t;
     } else {
-        pImpData->snapType = SnapType::ANGLE;
-        pImpData->angle = ucsAngleSnapped;
-        snapPoint(res, true);
+        this->pImpData->snapType = ANGLE;
+        this->pImpData->angle = ucsAngleSnapped;
+        this->snapPoint(res, true);
         return res;
     }
 }
 
- RS_Vector RS_Snapper::toGraph(const QMouseEvent* e) const{
+RS_Vector RS_Snapper::toGraph(const QMouseEvent* e) const{
      const QPointF &pointF = e->position();
      RS_Vector result = viewport->toWorldFromUi(pointF.x(), pointF.y());
     return result;
@@ -1349,7 +1363,7 @@ RS_Vector RS_Snapper::toUCSDelta(const RS_Vector &worldDelta) const {
     return viewport->toUCSDelta(worldDelta);
 }
 
-// fixme - sand - ucs - move to coordinates mapper?
+// todo - sand - ucs - move to coordinates mapper?
 void RS_Snapper::calcRectCorners(const RS_Vector &worldCorner1, const RS_Vector &worldCorner3, RS_Vector &worldCorner2, RS_Vector &worldCorner4) const {
     RS_Vector ucsCorner1 = toUCS(worldCorner1);
     RS_Vector ucsCorner3 = toUCS(worldCorner3);

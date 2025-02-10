@@ -230,8 +230,8 @@ RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const LC_MouseEvent 
     if (force){
         RS_Vector freePosition  = e->graphPoint; // fixme = test, review and decide whether free snap is actually needed there. May be use snapMode instead of free?
         // todo -  if there are restrictions or snap to grid, snap to angle will not work in snapper... yet this is double calc!
-        if(!(snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid)){
-            result = snapToAngle(freePosition, basepoint, snapToAngleStep);
+        if(!(snapMode.restriction != RS2::RestrictNothing || isSnapToGrid())){
+            result = doSnapToAngle(freePosition, basepoint, snapToAngleStep);
             if (drawMark){
                 previewSnapAngleMark(basepoint, result);
             }

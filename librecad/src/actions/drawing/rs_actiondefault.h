@@ -107,5 +107,6 @@ protected:
     void createEditedCircleDescription(RS_Circle* clone, bool ctrlPressed, bool shiftPressed);
     bool isShowEntityDescriptionOnHighlight();
     void forceUpdateInfoCursor(const LC_MouseEvent *event);
+    RS_Entity* getClone(RS_Entity* e);
 };
 #endif

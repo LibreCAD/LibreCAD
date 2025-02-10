@@ -160,7 +160,7 @@ void RS_ActionDrawLineAngle::preparePreview(){
     RS_Vector p1, p2;
     // End:
     double angleRad = pPoints->ucsBasisAngleRad;
-    // fixme - sand - ucs - add option for this in options widget
+    // todo - sand - ucs - add option for this in options widget
    // todo: note - commented code also delivers nice effect - it could draws line orthogonal to angles basis. Think about adding some options for this?
 //     angleRad = toWorldAngle(angleRad);
     angleRad = toWorldAngleFromUCSBasis(angleRad);

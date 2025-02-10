@@ -337,7 +337,7 @@ void RS_ActionPolylineEquidistant::onMouseRightButtonRelease(int status, [[maybe
 
 bool RS_ActionPolylineEquidistant::isPointOnRightSideOfPolyline(const RS_Polyline *polyline, const RS_Vector &snapPoint) const{
     bool pointOnRightSide = false;
-    double d = toGraphDX(catchEntityGuiRange) * 0.9;
+    double d = toGraphDX(m_catchEntityGuiRange) * 0.9;
     auto segment = polyline->getNearestEntity(snapPoint, &d, RS2::ResolveNone);
     if (isLine(segment)){
         auto line = dynamic_cast<RS_Line *>(segment);

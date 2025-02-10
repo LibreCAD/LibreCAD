@@ -339,6 +339,22 @@ void QG_DlgOptionsGeneral::init() {
 
         checked = LC_GET_BOOL("ModifyOnViewChange", true);
         cbChangingViewOnlyModifiesDrawing->setChecked(checked);
+
+        checked = LC_GET_BOOL("SnapGridIgnoreIfNoGrid", false);
+        cbDontSnapToInvisibleGrid->setChecked(checked);
+    }
+    LC_GROUP_END();
+
+    LC_GROUP("Snap");
+    {
+        double val = LC_GET_INT("AdvSnapOnEntitySwitchToFreeDistance", 500) / 100.0;
+        sbFreeSnapSwitchDistance->setValue(val);
+
+        int catchEntitySnapDistance =  LC_GET_INT("AdvSnapEntityCatchRange", 32);
+        sbCatchEntitySnapDistance->setValue(catchEntitySnapDistance);
+
+        double gridCellFactor = LC_GET_INT("AdvSnapGridCellSnapFactor", 25) / 100.0;
+        sbMinGridCellSnapFactor->setValue(gridCellFactor);
     }
     LC_GROUP_END();
 
@@ -707,13 +723,19 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("DraftMarkerFontName", fcbDraftModeFont->currentText());
             LC_SET("DraftMarkerFontSize", sbDraftModeFontSize->value());
 
-
             LC_SET("AnglesBasisMarkEnabled", cbAnglesMarkVisible->isChecked());
             LC_SET("AnglesBasisMarkPolicy", cbAnglesBaseShowPolicy->currentIndex());
-
             LC_SET("AngleSnapMarkerSize", sbAngleSnapMarkRadius->value());
-
             LC_SET("ModifyOnViewChange", cbChangingViewOnlyModifiesDrawing->isChecked());
+            LC_SET("SnapGridIgnoreIfNoGrid", cbDontSnapToInvisibleGrid->isChecked());
+        }
+        LC_GROUP_END();
+
+        LC_GROUP("Snap");
+        {
+            LC_SET("AdvSnapOnEntitySwitchToFreeDistance", (int)(sbFreeSnapSwitchDistance->value()*100));
+            LC_SET("AdvSnapEntityCatchRange", sbCatchEntitySnapDistance->value());
+            LC_SET("AdvSnapGridCellSnapFactor", (int) (sbMinGridCellSnapFactor->value()*100));
         }
         LC_GROUP_END();
 

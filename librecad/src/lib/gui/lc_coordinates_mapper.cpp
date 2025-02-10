@@ -66,7 +66,7 @@ void LC_CoordinatesMapper::doWCS2UCS(double worldX, double worldY, double &ucsX,
     ucsY = ucsPositionX * sinXAngle + ucsPositionY * cosXAngle;
 }
 
-// fixme - sand - ucs - unwrapp calculations
+// todo - sand - ucs - inline calculations
 void LC_CoordinatesMapper::doWCSDelta2UCSDelta(const RS_Vector &worldDelta, double &ucsDX, double &ucsDY) const {
     double magnitude = worldDelta.magnitude();
     double angle = worldDelta.angle();

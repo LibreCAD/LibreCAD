@@ -558,15 +558,8 @@ std::ostream& operator << (std::ostream& os, const RS_Text& p) {
     return os;
 }
 
-RS_Entity *RS_Text::cloneProxy([[maybe_unused]]LC_GraphicViewport* view) const {
-    // fixme - sand - ucs - restore
-    /*if (view->isDrawTextsAsDraftForPreview()) {
-        return new RS_Line(nullptr, baselineStartPoint, baselineEndPoint);
-    }
-    else{
-        return clone();
-    }*/
-    return clone();
+RS_Entity *RS_Text::cloneProxy() const {
+   return new RS_Line(nullptr, baselineStartPoint, baselineEndPoint);
 }
 
 void RS_Text::drawDraft(RS_Painter *painter) {

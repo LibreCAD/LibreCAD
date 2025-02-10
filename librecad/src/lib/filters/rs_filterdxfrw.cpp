@@ -301,7 +301,8 @@ void RS_FilterDXFRW::addDimStyle(const DRW_Dimstyle& data){
 }
 
 
-// fixme - sand - ucs - rework to direct setup of LC_GraphicViewport
+// todo - sand - ucs - rework to direct setup of LC_GraphicViewport instead of RS_GraphicView
+// But this modification requires cleanup of the overall file open flow, so leave it as it is for now
 /**
  * Implementation of the method which handles vports.
  */
@@ -314,7 +315,7 @@ void RS_FilterDXFRW::addVport(const DRW_Vport &data) {
         RS_GraphicView *gv = graphic->getGraphicView();  // fixme - sand - review this dependency
         if (gv ) {
             double width = data.height * data.ratio;
-            // fixme - sand - ucs - investigate different x and y factors
+            // todo - sand - ucs - investigate support/usage of different x and y factors.
             double factorX= gv->getWidth() / width;
             double factorY= gv->getHeight() / data.height;
             if (factorX > factorY)

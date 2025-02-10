@@ -428,3 +428,22 @@ std::ostream& operator << (std::ostream& os, const RS_Image& i) {
     os << " Image: " << i.getData() << "\n";
     return os;
 }
+
+RS_Entity *RS_Image::cloneProxy() const {
+    auto result = new RS_EntityContainer(nullptr, true);
+    auto pl = new RS_Polyline(result);
+    // draw a rectangle for images as preview
+    // Image corners: from insertion point, (0,0), dx, dy, dx + dy
+    const RS_VectorSolutions corners = getCorners();
+    for (const RS_Vector& corner: corners) {
+        pl->addVertex(corner);
+    }
+    pl->addVertex(corners.at(0));
+    pl->addVertex(corners.at(2));
+
+    result->addEntity(pl);
+
+    auto* diag = new RS_Line(result, {corners.at(1), corners.at(3)});
+    result->addEntity(diag);
+    return result;
+}

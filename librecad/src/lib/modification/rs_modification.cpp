@@ -51,6 +51,7 @@
 #include "rs_polyline.h"
 #include "rs_text.h"
 #include "rs_units.h"
+#include "rs_settings.h"
 
 
 #ifdef EMU_C99
@@ -1728,7 +1729,7 @@ bool RS_Modification::move(RS_MoveData& data, const std::vector<RS_Entity*> &ent
     for(auto e: entitiesList){
         // Create new entities
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(viewport) : e->clone();
+            RS_Entity* ec = getClone(forPreviewOnly, e);
             ec->move(data.offset*num);
             clonesList.push_back(ec);
         }
@@ -1739,6 +1740,38 @@ bool RS_Modification::move(RS_MoveData& data, const std::vector<RS_Entity*> &ent
     deleteOriginalAndAddNewEntities(clonesList, entitiesList, forPreviewOnly, !data.keepOriginals);
     clonesList.clear();
     return true;
+}
+
+RS_Entity *RS_Modification::getClone(bool forPreviewOnly, const RS_Entity *e) const {
+    RS_Entity* result = nullptr;
+    if (forPreviewOnly){
+        int rtti = e->rtti();
+        switch (rtti){
+            case RS2::EntityText:
+            case RS2::EntityMText:{
+                // fixme - sand - ucs - BAD dependency, rework.
+                bool  drawTextAsDraftInPreview = LC_GET_ONE_BOOL("Render","DrawTextsAsDraftInPreview", true);
+                if (drawTextAsDraftInPreview) {
+                    result = e->cloneProxy();
+                }
+                else{
+                    result = e->clone();
+                }
+                break;
+            }
+            case RS2::EntityImage:{
+                result = e->cloneProxy();
+                break;
+            }
+            default:
+                result = e->clone();
+        }
+    }
+    else{
+        result = e->clone();
+    }
+
+    return result;
 }
 
 void RS_Modification::setupModifiedClones(
@@ -1782,7 +1815,7 @@ bool RS_Modification::alignRef(LC_AlignRefData & data, const std::vector<RS_Enti
     for(auto e: entitiesList){
         // Create new entities
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(viewport) : e->clone();
+            RS_Entity* ec = getClone(forPreviewOnly, e);
 
             ec->rotate(data.rotationCenter, data.rotationAngle);
 
@@ -1871,7 +1904,7 @@ bool RS_Modification::rotate(RS_RotateData& data, const std::vector<RS_Entity*> 
     int numberOfCopies = data.obtainNumberOfCopies();
     for (auto e: entitiesList) {
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(viewport) : e->clone();
+            RS_Entity* ec = getClone(forPreviewOnly, e);
 
             double rotationAngle = data.angle * num;
             ec->rotate(data.center, rotationAngle);
@@ -1948,19 +1981,8 @@ bool RS_Modification::scale(RS_ScaleData& data, const std::vector<RS_Entity*> &e
                                     c->isReversed()}};
             }
         }
-        // fixme - sand - ucs - use cloneProxy for image instead?
-        if (forPreviewOnly && ec->rtti() == RS2::EntityImage) {
-            auto pl = new RS_Polyline(container);
-            // draw a rectangle for images as preview
-            // Image corners: from insertion point, (0,0), dx, dy, dx + dy
-            const RS_VectorSolutions corners = static_cast<RS_Image*>(ec)->getCorners();
-            for (const RS_Vector& corner: corners)
-                pl->addVertex(corner);
-            pl->addVertex(corners.at(0));
-            pl->addVertex(corners.at(2));
-            pl->addVertex(corners.at(1));
-            pl->addVertex(corners.at(3));
-            ec = pl;
+        if (ec->rtti() == RS2::EntityImage) {
+            ec = getClone(forPreviewOnly, ec);
         }
         selectedList.push_back(ec);
     }
@@ -1971,7 +1993,7 @@ bool RS_Modification::scale(RS_ScaleData& data, const std::vector<RS_Entity*> &e
     for(RS_Entity* e: selectedList) {
         if (e != nullptr) {
             for (int num= 1; num <= numberOfCopies; num++) {
-                RS_Entity* ec = forPreviewOnly ? e->cloneProxy(viewport) : e->clone();
+                RS_Entity* ec = getClone(forPreviewOnly, e);
                 ec->scale(data.referencePoint, RS_Math::pow(data.factor, num));
                 clonesList.push_back(ec);
             }
@@ -2010,7 +2032,7 @@ bool RS_Modification::mirror(RS_MirrorData& data, const std::vector<RS_Entity*> 
 
     for(auto e: entitiesList){
         for (int num=1; num<=numberOfCopies; ++num) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(viewport) : e->clone();
+            RS_Entity* ec = getClone(forPreviewOnly, e);
             ec->mirror(data.axisPoint1, data.axisPoint2);
             clonesList.push_back(ec);
         }
@@ -2046,7 +2068,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data, const std::vector<RS_Entity*
 
     for(auto e: entitiesList){
         for (int num= 1; num <= numberOfCopies; num++) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(viewport) : e->clone();
+            RS_Entity* ec = getClone(forPreviewOnly, e);
 
             double angle1ForCopy = /*data.sameAngle1ForCopies ?  data.angle1 :*/ data.angle1 * num;
             double angle2ForCopy = data.sameAngle2ForCopies ?  data.angle2 : data.angle2 * num;
@@ -2105,7 +2127,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData &data, const std::vector<RS_E
     // Create new entities
     for(auto e: entitiesList){
         for (int num=1; num <= numberOfCopies; ++num) {
-            RS_Entity* ec = forPreviewOnly ? e->cloneProxy(viewport) : e->clone();
+            RS_Entity* ec = getClone(forPreviewOnly, e);
 
             const RS_Vector &offset = data.offset * num;
             ec->move(offset);

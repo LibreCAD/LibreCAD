@@ -627,7 +627,7 @@ bool QG_GraphicView::event(QEvent *event){
             // It seems the NativeGestureEvent::pos() incorrectly reports global coordinates
             QPointF g = mapFromGlobal(nge->globalPosition().toPoint());
             RS_Vector mouse = viewport->toWorldFromUi(g.x(), g.y());
-            // fixme - sand - ucs - replace by direct zoom call?
+            // todo - sand - ucs - replace by direct zoom call?
             setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
                                                  RS2::Both, &mouse, factor));
         }
@@ -828,7 +828,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                 } else {
                     direction = RS2::In;  factor = 1+v;
                 }
-
+                // todo - sand - ucs - replace by direct zoom call??
                 setCurrentAction(new RS_ActionZoomIn(*container, *this, direction, RS2::Both, &mouse, factor));
             }
             else{
@@ -841,6 +841,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                     vScrollBar->setValue(vScrollBar->value() - vDelta);
                 }
                 else {
+                    // todo - sand - ucs - replace by direct zoom call??
                     setCurrentAction(new RS_ActionZoomScroll(hDelta, vDelta,
                                                              *container, *this));
                 }
@@ -1154,8 +1155,8 @@ void QG_GraphicView::slotVScrolled(int value) {
  * @param oy, offset Y
  */
 void QG_GraphicView::setOffset([[maybe_unused]]int ox, [[maybe_unused]]int oy) {
-// fixme - sand - ucs - restore
-//    RS_GraphicView::setOffset(ox, oy);
+    viewport->setOffsetX(ox);
+    viewport->setOffsetY(oy);
     // need to adjust offset control for scrollbars when setting graphicview offset
     adjustOffsetControls();
 }

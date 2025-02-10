@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>753</width>
-    <height>516</height>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,368 +39,14 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>9</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
        <string>&amp;Graphic View</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_6">
-       <item row="0" column="0" rowspan="3">
-        <widget class="QGroupBox" name="gbGVBehavior">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="title">
-          <string>General</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_15">
-          <property name="verticalSpacing">
-           <number>6</number>
-          </property>
-          <item row="11" column="1">
-           <widget class="QDoubleSpinBox" name="sbDefaultZoomFactor">
-            <property name="toolTip">
-             <string>Controls how quickly the scroll wheel will zoom in &amp; out. Higher values - faster zoom.</string>
-            </property>
-            <property name="decimals">
-             <number>3</number>
-            </property>
-            <property name="minimum">
-             <double>1.001000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>1.500000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>0.001000000000000</double>
-            </property>
-            <property name="value">
-             <double>1.137000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QCheckBox" name="scrollbars_check_box">
-            <property name="toolTip">
-             <string>Defines whether scrollbar should be shown in graphic view</string>
-            </property>
-            <property name="text">
-             <string>Scrollbars</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="cb_antialiasing">
-            <property name="toolTip">
-             <string>If checked,  objects will be painted smoother due to anti-aliasing</string>
-            </property>
-            <property name="text">
-             <string>Anti-aliasing</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbWheelScrollInvertH">
-            <property name="toolTip">
-             <string>Inverts scrolling direction when using mouse wheel with Shift key.</string>
-            </property>
-            <property name="text">
-             <string>Invert horizontal scrolling direction</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbWheelScrollInvertV">
-            <property name="toolTip">
-             <string>Inverts scrolling direction when using mouse wheel with Ctrl key.</string>
-            </property>
-            <property name="text">
-             <string>Invert vertical scrolling direction</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="0">
-           <widget class="QLabel" name="label_18">
-            <property name="text">
-             <string>Default zoom factor:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbClassicRendering">
-            <property name="toolTip">
-             <string>If disabled, more sequental painting algorithm is used that may deliver better antialising results</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
-            </property>
-            <property name="text">
-             <string>Use Buffered (classic) rendering</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbInvertZoomDirection">
-            <property name="toolTip">
-             <string>Inverts zoom direction when using mouse wheel.</string>
-            </property>
-            <property name="text">
-             <string>Invert zoom direction</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QCheckBox" name="cb_autopanning">
-            <property name="toolTip">
-             <string>If selected, drawing will be panned automatically if mouse is near drawing view boundaries</string>
-            </property>
-            <property name="text">
-             <string>Auto-panning</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QCheckBox" name="cbPanOnWheelZoom">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-              <horstretch>1</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>On mouse wheel zoom, pan to the middle of the window.</string>
-            </property>
-            <property name="text">
-             <string>Pan on wheel zoom</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbFirstTimeNoZoom">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-              <horstretch>1</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>First time only pan</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
        <item row="0" column="2">
-        <widget class="QGroupBox" name="gbGVEntityHandle">
-         <property name="title">
-          <string>Entity Handle</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="6" column="1">
-           <widget class="QLabel" name="lHandleEndColor">
-            <property name="text">
-             <string>&amp;End Handle Color:</string>
-            </property>
-            <property name="buddy">
-             <cstring>cbEndHandleColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1" colspan="2">
-           <widget class="QLabel" name="lStartHandleColor">
-            <property name="text">
-             <string>St&amp;art Handle Color:</string>
-            </property>
-            <property name="buddy">
-             <cstring>cbStartHandleColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3">
-           <widget class="QComboBox" name="cbStartHandleColor">
-            <property name="toolTip">
-             <string>Color for start handle of entity</string>
-            </property>
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#00FFFF</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="3" column="4">
-           <widget class="QPushButton" name="pb_start">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Click to select color</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="3">
-           <widget class="QComboBox" name="cbEndHandleColor">
-            <property name="toolTip">
-             <string>Color of end handle for entity</string>
-            </property>
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#0000FF</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="6" column="4">
-           <widget class="QPushButton" name="pb_end">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Click to select color</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="lEntityHandleSize">
-            <property name="text">
-             <string>Handle Size:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="3">
-           <widget class="QComboBox" name="cbHandleColor">
-            <property name="toolTip">
-             <string>Color of non-endpoint handle of entity</string>
-            </property>
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#0000FF</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="4" column="1" colspan="2">
-           <widget class="QLabel" name="lHandleStartColor">
-            <property name="text">
-             <string>&amp;Handle Color:</string>
-            </property>
-            <property name="buddy">
-             <cstring>cbHandleColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QSpinBox" name="sbHandleSize">
-            <property name="toolTip">
-             <string>Size of square that is highlights entities reference points (endpoints etc.)</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="minimum">
-             <number>2</number>
-            </property>
-            <property name="maximum">
-             <number>12</number>
-            </property>
-            <property name="singleStep">
-             <number>2</number>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="4">
-           <widget class="QPushButton" name="pb_handle">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Click to select color</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QCheckBox" name="cbShowRefPointsOnHovering">
-            <property name="toolTip">
-             <string>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="text">
-             <string>Show entity handles on mouse hover</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <spacer name="verticalSpacer_7">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="3" column="0">
         <widget class="QGroupBox" name="groupBox_19">
          <property name="title">
           <string>Background and Selection</string>
@@ -527,7 +173,20 @@
          </layout>
         </widget>
        </item>
-       <item row="1" column="2" rowspan="3">
+       <item row="6" column="0">
+        <spacer name="verticalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="2">
         <widget class="QGroupBox" name="groupBox_13">
          <property name="title">
           <string>Overlay Selection Box</string>
@@ -725,6 +384,12 @@
           </item>
           <item row="6" column="1">
            <widget class="QSpinBox" name="sbOverlayBoxTransparency">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="toolTip">
              <string>Transparency for overlay selection box. Smaller value - more transparent.</string>
             </property>
@@ -733,6 +398,517 @@
             </property>
             <property name="value">
              <number>90</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QGroupBox" name="gbWorldZero_2">
+         <property name="title">
+          <string>Draft Mode Marker</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_39">
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_26">
+            <property name="text">
+             <string>Font:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QComboBox" name="cbDraftModeMarkerColor">
+            <property name="toolTip">
+             <string>Color of line for overlay selection box if box is inverted (from right to left)</string>
+            </property>
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#00FFFF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="4">
+           <widget class="QCheckBox" name="cbShowDraftModeMarker">
+            <property name="toolTip">
+             <string>If selected, in draft mode text label will be drawin in view corners</string>
+            </property>
+            <property name="text">
+             <string>Show Draft mode marker</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QFontComboBox" name="fcbDraftModeFont">
+            <property name="toolTip">
+             <string>Font that should be used for draft mode marker</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_25">
+            <property name="text">
+             <string>Marker Color:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QPushButton" name="pbDraftModeColor">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Click to select color</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QSpinBox" name="sbDraftModeFontSize">
+            <property name="toolTip">
+             <string>Font size that should be used for drawing name of axis in coordinate system zero.</string>
+            </property>
+            <property name="suffix">
+             <string> pt</string>
+            </property>
+            <property name="minimum">
+             <number>5</number>
+            </property>
+            <property name="maximum">
+             <number>30</number>
+            </property>
+            <property name="value">
+             <number>10</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="label_27">
+            <property name="text">
+             <string>Font size:</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0" rowspan="3">
+        <widget class="QGroupBox" name="gbGVBehavior">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="title">
+          <string>General</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_15" columnstretch="0,0">
+          <property name="verticalSpacing">
+           <number>6</number>
+          </property>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="scrollbars_check_box">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Defines whether scrollbar should be shown in graphic view</string>
+            </property>
+            <property name="text">
+             <string>Scrollbars</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="cb_antialiasing">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>If checked,  objects will be painted smoother due to anti-aliasing</string>
+            </property>
+            <property name="text">
+             <string>Anti-aliasing</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbWheelScrollInvertH">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Inverts scrolling direction when using mouse wheel with Shift key.</string>
+            </property>
+            <property name="text">
+             <string>Invert horizontal scrolling direction</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbFirstTimeNoZoom">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>First time only pan</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbPanOnWheelZoom">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>On mouse wheel zoom, pan to the middle of the window.</string>
+            </property>
+            <property name="text">
+             <string>Pan on wheel zoom</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbWheelScrollInvertV">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Inverts scrolling direction when using mouse wheel with Ctrl key.</string>
+            </property>
+            <property name="text">
+             <string>Invert vertical scrolling direction</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbClassicRendering">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>If disabled, more sequental painting algorithm is used that may deliver better antialising results</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
+            </property>
+            <property name="text">
+             <string>Use Buffered (classic) rendering</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbInvertZoomDirection">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Inverts zoom direction when using mouse wheel.</string>
+            </property>
+            <property name="text">
+             <string>Invert zoom direction</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QCheckBox" name="cb_autopanning">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>If selected, drawing will be panned automatically if mouse is near drawing view boundaries</string>
+            </property>
+            <property name="text">
+             <string>Auto-panning</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QDoubleSpinBox" name="sbDefaultZoomFactor">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>80</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Controls how quickly the scroll wheel will zoom in &amp; out. Higher values - faster zoom.</string>
+            </property>
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="minimum">
+             <double>1.001000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>1.500000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
+            <property name="value">
+             <double>1.137000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>Default zoom factor:</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="2" rowspan="2">
+        <widget class="QGroupBox" name="gbGVEntityHandle">
+         <property name="title">
+          <string>Entity Handle</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="6" column="1">
+           <widget class="QLabel" name="lHandleEndColor">
+            <property name="text">
+             <string>&amp;End Handle Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbEndHandleColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="2">
+           <widget class="QLabel" name="lStartHandleColor">
+            <property name="text">
+             <string>St&amp;art Handle Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbStartHandleColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QComboBox" name="cbStartHandleColor">
+            <property name="toolTip">
+             <string>Color for start handle of entity</string>
+            </property>
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#00FFFF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="4">
+           <widget class="QPushButton" name="pb_start">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Click to select color</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="3">
+           <widget class="QComboBox" name="cbEndHandleColor">
+            <property name="toolTip">
+             <string>Color of end handle for entity</string>
+            </property>
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#0000FF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="6" column="4">
+           <widget class="QPushButton" name="pb_end">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Click to select color</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="lEntityHandleSize">
+            <property name="text">
+             <string>Handle Size:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QComboBox" name="cbHandleColor">
+            <property name="toolTip">
+             <string>Color of non-endpoint handle of entity</string>
+            </property>
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#0000FF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="4" column="1" colspan="2">
+           <widget class="QLabel" name="lHandleStartColor">
+            <property name="text">
+             <string>&amp;Handle Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbHandleColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QSpinBox" name="sbHandleSize">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Size of square that is highlights entities reference points (endpoints etc.)</string>
+            </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="minimum">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <number>12</number>
+            </property>
+            <property name="singleStep">
+             <number>2</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="4">
+           <widget class="QPushButton" name="pb_handle">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Click to select color</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="4">
+           <widget class="QCheckBox" name="cbShowRefPointsOnHovering">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>Show entity handles on mouse hover</string>
             </property>
            </widget>
           </item>
@@ -772,6 +948,9 @@
               <width>100</width>
               <height>0</height>
              </size>
+            </property>
+            <property name="toolTip">
+             <string>Type of grid to be drawn</string>
             </property>
             <property name="editable">
              <bool>false</bool>
@@ -913,7 +1092,7 @@
             </property>
            </widget>
           </item>
-          <item row="8" column="0">
+          <item row="8" column="0" colspan="2">
            <widget class="QCheckBox" name="cbDrawGrid">
             <property name="toolTip">
              <string>If checked, grid wil be drawn</string>
@@ -923,7 +1102,7 @@
             </property>
            </widget>
           </item>
-          <item row="9" column="0">
+          <item row="9" column="0" colspan="2">
            <widget class="QCheckBox" name="cbDrawMetaGrid">
             <property name="toolTip">
              <string>If checked, metagrid will be drawn as part of grid drawing.</string>
@@ -939,7 +1118,7 @@
        <item row="1" column="1" rowspan="3">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="points">
           <attribute name="title">
@@ -1427,6 +1606,9 @@
           </item>
           <item row="1" column="1">
            <widget class="QSpinBox" name="sbAngleSnapMarkRadius">
+            <property name="toolTip">
+             <string>Radius of arc within angle snap mark.</string>
+            </property>
             <property name="suffix">
              <string> px</string>
             </property>
@@ -1438,21 +1620,8 @@
          </layout>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="3" column="0">
         <spacer name="verticalSpacer_14">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="3" column="1" rowspan="2">
-        <spacer name="verticalSpacer_11">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -1487,6 +1656,16 @@
             </property>
             <property name="text">
              <string>Show snap options in Snap Selection Toolbar</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="cbDontSnapToInvisibleGrid">
+            <property name="toolTip">
+             <string>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</string>
+            </property>
+            <property name="text">
+             <string>Ignore &quot;Snap to Grid&quot; if grid is not drawn</string>
             </property>
            </widget>
           </item>
@@ -1717,6 +1896,113 @@
          </layout>
         </widget>
        </item>
+       <item row="3" column="1">
+        <spacer name="verticalSpacer_11">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_25">
+         <property name="title">
+          <string>Advanced Snap Fine-tuning settings</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_48">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_36">
+            <property name="text">
+             <string>Snap on Entity &quot;Free snap&quot; distance switch:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="sbFreeSnapSwitchDistance">
+            <property name="toolTip">
+             <string>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</string>
+            </property>
+            <property name="suffix">
+             <string> drawing units</string>
+            </property>
+            <property name="maximum">
+             <double>100.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+            <property name="value">
+             <double>5.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="sbCatchEntitySnapDistance">
+            <property name="toolTip">
+             <string>Distance in screen coordinates that is used for catching entities </string>
+            </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="value">
+             <number>32</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_34">
+            <property name="text">
+             <string>Min grid cell snap factor:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_35">
+            <property name="toolTip">
+             <string>Snap distance (in pixels) for catching entities.</string>
+            </property>
+            <property name="text">
+             <string>Catch entities Snap Distance:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="sbMinGridCellSnapFactor">
+            <property name="toolTip">
+             <string>Grid cell factor used for snap to grid.</string>
+            </property>
+            <property name="maximum">
+             <double>1.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+            <property name="value">
+             <double>0.250000000000000</double>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_4">
@@ -1726,12 +2012,18 @@
       <layout class="QGridLayout" name="gridLayout_44">
        <item row="1" column="0">
         <widget class="QGroupBox" name="groupBox_20">
+         <property name="toolTip">
+          <string>Color of the marker</string>
+         </property>
          <property name="title">
           <string>Angles Basis Marker</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_41">
           <item row="0" column="2">
            <widget class="QComboBox" name="cbAnglesBaseShowPolicy">
+            <property name="toolTip">
+             <string>Defines where to draw angle basis marker</string>
+            </property>
             <item>
              <property name="text">
               <string>Always</string>
@@ -1747,7 +2039,7 @@
           <item row="1" column="0">
            <widget class="QLabel" name="label_28">
             <property name="text">
-             <string>Positive Direction Color:</string>
+             <string>Marker Color:</string>
             </property>
            </widget>
           </item>
@@ -1773,6 +2065,9 @@
           </item>
           <item row="0" column="0">
            <widget class="QCheckBox" name="cbAnglesMarkVisible">
+            <property name="toolTip">
+             <string>If enabled, angles basis marker will be shown in the orign of coordinates system</string>
+            </property>
             <property name="text">
              <string>Show angles basis marker</string>
             </property>
@@ -1807,6 +2102,9 @@
           </item>
           <item row="1" column="2">
            <widget class="QComboBox" name="cbAnglesMarkColorDirection">
+            <property name="toolTip">
+             <string>Color of the marker</string>
+            </property>
             <property name="editable">
              <bool>true</bool>
             </property>
@@ -1817,6 +2115,9 @@
           </item>
           <item row="3" column="2">
            <widget class="QComboBox" name="cbAnglesMarkColorAngleRay">
+            <property name="toolTip">
+             <string>Color of the ray that displays zero angle position</string>
+            </property>
             <property name="editable">
              <bool>true</bool>
             </property>
@@ -2052,6 +2353,19 @@
          </layout>
         </widget>
        </item>
+       <item row="2" column="0">
+        <spacer name="verticalSpacer_12">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="0" column="0">
         <widget class="QGroupBox" name="gbWorldZero">
          <property name="title">
@@ -2183,19 +2497,6 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbHideRelativeZero">
-            <property name="toolTip">
-             <string>If checked, relative zero marker will not be drawn</string>
-            </property>
-            <property name="text">
-             <string>Hide marker</string>
-            </property>
-            <property name="shortcut">
-             <string>Alt+Z</string>
-            </property>
-           </widget>
-          </item>
           <item row="3" column="2">
            <widget class="QPushButton" name="pb_relativeZeroColor">
             <property name="sizePolicy">
@@ -2239,21 +2540,21 @@
             </item>
            </widget>
           </item>
+          <item row="1" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbHideRelativeZero">
+            <property name="toolTip">
+             <string>If checked, relative zero marker will not be drawn</string>
+            </property>
+            <property name="text">
+             <string>Hide marker</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+Z</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
-       </item>
-       <item row="2" column="0">
-        <spacer name="verticalSpacer_12">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -2332,7 +2633,7 @@
             </item>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
+          <item row="1" column="0" colspan="3">
            <widget class="QCheckBox" name="cbHighlightWIthLinewidthInDraft">
             <property name="toolTip">
              <string>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity's linewidth instead of 1px</string>
@@ -2342,7 +2643,7 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
+          <item row="0" column="0" colspan="3">
            <widget class="QCheckBox" name="cbVisualizeHovering">
             <property name="toolTip">
              <string>Visualize the entity under the mouse cursor</string>
@@ -2446,197 +2747,6 @@
           </item>
          </layout>
         </widget>
-       </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QGroupBox" name="gbPreview">
-         <property name="title">
-          <string>Preview</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_5">
-          <item row="1" column="0" colspan="4">
-           <widget class="QCheckBox" name="cbDisplayRefPoints">
-            <property name="toolTip">
-             <string>If checked, more informative and explaining preview will be drawn for operations</string>
-            </property>
-            <property name="text">
-             <string>Show operation's preview explanatory entities </string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QPushButton" name="pb_previewRefColor">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Click to select color</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="lMaxPreview">
-            <property name="text">
-             <string>N&amp;umber of preview entities:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbMaxPreview</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QComboBox" name="cbMaxPreview">
-            <property name="toolTip">
-             <string>If more entities in preview than specified, rect will be drawn instead of entities.</string>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">0</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">50</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">100</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">200</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">400</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">800</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QComboBox" name="cbPreviewRefHighlightColor">
-            <property name="toolTip">
-             <string>Color for selected preview reference entiites</string>
-            </property>
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#1E90FF</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">#FFC200</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="lbPreviewRefHighlightColor">
-            <property name="text">
-             <string>Active preview's explanatory entity's Color:</string>
-            </property>
-            <property name="buddy">
-             <cstring>cbPreviewRefHighlightColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3">
-           <widget class="QPushButton" name="pb_previewRefHighlightColor">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Click to select color</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QComboBox" name="cbPreviewRefColor">
-            <property name="toolTip">
-             <string>Color for preview reference entities</string>
-            </property>
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#1E90FF</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">#FFC200</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="lbPreviewRefColor">
-            <property name="text">
-             <string>Preview's explanatory entity's Color:</string>
-            </property>
-            <property name="buddy">
-             <cstring>cbPreviewRefColor</cstring>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <spacer name="verticalSpacer_9">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item row="1" column="2" rowspan="3">
         <widget class="QGroupBox" name="gbPointStyle">
@@ -3464,79 +3574,24 @@
          </layout>
         </widget>
        </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QGroupBox" name="gbWorldZero_2">
+       <item row="0" column="0" colspan="2">
+        <widget class="QGroupBox" name="gbPreview">
          <property name="title">
-          <string>Draft Mode Marker</string>
+          <string>Preview</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_39">
-          <item row="2" column="1">
-           <widget class="QLabel" name="label_26">
-            <property name="text">
-             <string>Font:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLabel" name="label_27">
-            <property name="text">
-             <string>Font size:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="label_25">
-            <property name="text">
-             <string>Marker Color:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QComboBox" name="cbDraftModeMarkerColor">
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="1" column="0" colspan="4">
+           <widget class="QCheckBox" name="cbDisplayRefPoints">
             <property name="toolTip">
-             <string>Color of line for overlay selection box if box is inverted (from right to left)</string>
+             <string>If checked, more informative and explaining preview will be drawn for operations</string>
             </property>
-            <property name="accessibleDescription">
-             <string notr="true"/>
+            <property name="text">
+             <string>Show operation's preview explanatory entities </string>
             </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#00FFFF</string>
-             </property>
-            </item>
            </widget>
           </item>
           <item row="2" column="3">
-           <widget class="QFontComboBox" name="fcbDraftModeFont">
-            <property name="toolTip">
-             <string>Font that should be used for draft mode marker</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3">
-           <widget class="QSpinBox" name="sbDraftModeFontSize">
-            <property name="toolTip">
-             <string>Font size that should be used for drawing name of axis in coordinate system zero.</string>
-            </property>
-            <property name="suffix">
-             <string> pt</string>
-            </property>
-            <property name="minimum">
-             <number>5</number>
-            </property>
-            <property name="maximum">
-             <number>30</number>
-            </property>
-            <property name="value">
-             <number>10</number>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="4">
-           <widget class="QPushButton" name="pbDraftModeColor">
+           <widget class="QPushButton" name="pb_previewRefColor">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -3555,18 +3610,160 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1" colspan="4">
-           <widget class="QCheckBox" name="cbShowDraftModeMarker">
+          <item row="0" column="0">
+           <widget class="QLabel" name="lMaxPreview">
+            <property name="text">
+             <string>N&amp;umber of preview entities:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbMaxPreview</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QComboBox" name="cbMaxPreview">
             <property name="toolTip">
-             <string>If selected, in draft mode text label will be drawin in view corners</string>
+             <string>If more entities in preview than specified, rect will be drawn instead of entities.</string>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">50</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">100</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">200</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">400</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">800</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QComboBox" name="cbPreviewRefHighlightColor">
+            <property name="toolTip">
+             <string>Color for selected preview reference entiites</string>
+            </property>
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#1E90FF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">#FFC200</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="lbPreviewRefHighlightColor">
+            <property name="text">
+             <string>Active preview's explanatory entity's Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbPreviewRefHighlightColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QPushButton" name="pb_previewRefHighlightColor">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Click to select color</string>
             </property>
             <property name="text">
-             <string>Show Draft mode marker</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QComboBox" name="cbPreviewRefColor">
+            <property name="toolTip">
+             <string>Color for preview reference entities</string>
+            </property>
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#1E90FF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">#FFC200</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lbPreviewRefColor">
+            <property name="text">
+             <string>Preview's explanatory entity's Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbPreviewRefColor</cstring>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
+       </item>
+       <item row="4" column="2">
+        <spacer name="verticalSpacer_9">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -3808,19 +4005,6 @@
                </property>
               </widget>
              </item>
-             <item row="7" column="0" colspan="2">
-              <widget class="QCheckBox" name="cbInfoOverlaySnapEntityInfo">
-               <property name="toolTip">
-                <string>If checked, short overview properties of the entity's that is catched for selection will be shown. </string>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">margin-left:15px</string>
-               </property>
-               <property name="text">
-                <string>Show properties of catched entity</string>
-               </property>
-              </widget>
-             </item>
              <item row="4" column="2">
               <widget class="QPushButton" name="pbcbInfoOverlayAbsolutePositionColor">
                <property name="sizePolicy">
@@ -3930,19 +4114,6 @@
                </item>
               </widget>
              </item>
-             <item row="3" column="0">
-              <widget class="QCheckBox" name="cbInfoOverlayCommandName">
-               <property name="toolTip">
-                <string>If checked, name of active command will be shown before command prompt</string>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">margin-left:15px</string>
-               </property>
-               <property name="text">
-                <string>Show active command name</string>
-               </property>
-              </widget>
-             </item>
              <item row="2" column="1">
               <widget class="QComboBox" name="cbInfoOverlayCommandPromptColor">
                <property name="toolTip">
@@ -3979,6 +4150,32 @@
                </property>
               </widget>
              </item>
+             <item row="3" column="0" colspan="3">
+              <widget class="QCheckBox" name="cbInfoOverlayCommandName">
+               <property name="toolTip">
+                <string>If checked, name of active command will be shown before command prompt</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">margin-left:15px</string>
+               </property>
+               <property name="text">
+                <string>Show active command name</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0" colspan="3">
+              <widget class="QCheckBox" name="cbInfoOverlaySnapEntityInfo">
+               <property name="toolTip">
+                <string>If checked, short overview properties of the entity's that is catched for selection will be shown. </string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">margin-left:15px</string>
+               </property>
+               <property name="text">
+                <string>Show properties of catched entity</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -4005,7 +4202,43 @@
        <string>&amp;Defaults</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="6" column="1">
+       <item row="1" column="1">
+        <widget class="QGroupBox" name="groupBox_5">
+         <property name="title">
+          <string>CAD Preferences</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QCheckBox" name="cbToActiveLayer">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string>Modify layer of selected entities, at layer activation</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbAutoZoomDrawing">
+            <property name="text">
+             <string>Automatically zoom drawing when opening</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbKeepModifiedSelected">
+            <property name="toolTip">
+             <string>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </string>
+            </property>
+            <property name="text">
+             <string>Keep modified entities selected</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="7" column="1">
         <spacer name="verticalSpacer_10">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -4018,239 +4251,7 @@
          </property>
         </spacer>
        </item>
-       <item row="0" column="1">
-        <widget class="QGroupBox" name="buttonGroup5">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>70</height>
-          </size>
-         </property>
-         <property name="title">
-          <string>Defaults for new drawings</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_43">
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_32">
-            <property name="text">
-             <string>Angles Positive Direction:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QCheckBox" name="cbNewDrawingGridOff">
-            <property name="toolTip">
-             <string>If checked, new drawing will be created with grid disabled</string>
-            </property>
-            <property name="text">
-             <string>Grid is Off </string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_30">
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="text">
-             <string>Zero base angle:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QRadioButton" name="rbGridOrtho">
-            <property name="text">
-             <string>Orthogonal Grid</string>
-            </property>
-            <property name="autoExclusive">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="leDefAngleBaseZero">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="cbUnit">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Drawing units</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="lUnit">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>&amp;Unit:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbUnit</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLabel" name="label_31">
-            <property name="text">
-             <string>degrees.</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QRadioButton" name="rbGridIsoRight">
-            <property name="text">
-             <string>RIght Isometric Grid</string>
-            </property>
-            <property name="autoExclusive">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QRadioButton" name="rbGridIsoLeft">
-            <property name="text">
-             <string>Left  Isometric Grid</string>
-            </property>
-            <property name="autoExclusive">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QRadioButton" name="rbGridIsoTop">
-            <property name="text">
-             <string>Top Isometric Grid</string>
-            </property>
-            <property name="autoExclusive">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QWidget" name="widget" native="true">
-            <layout class="QGridLayout" name="gridLayout_42">
-             <property name="leftMargin">
-              <number>1</number>
-             </property>
-             <property name="topMargin">
-              <number>1</number>
-             </property>
-             <property name="rightMargin">
-              <number>3</number>
-             </property>
-             <property name="bottomMargin">
-              <number>1</number>
-             </property>
-             <property name="spacing">
-              <number>2</number>
-             </property>
-             <item row="0" column="0">
-              <widget class="QRadioButton" name="rbDefAngleBasePositive">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Counterclockwise, 90 degrees is north.</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../../../../../res/icons/icons.qrc">
-                 <normaloff>:/icons/dirpos_plus.svg</normaloff>:/icons/dirpos_plus.svg</iconset>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QRadioButton" name="rbDefAngleBaseNegative">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Clockwise, 90 degrees is sourth.</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../../../../../res/icons/icons.qrc">
-                 <normaloff>:/icons/dirneg_plus.svg</normaloff>:/icons/dirneg_plus.svg</iconset>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <spacer name="verticalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="1">
+       <item row="2" column="0">
         <widget class="QGroupBox" name="groupBox_4">
          <property name="title">
           <string>Keyboard Settings</string>
@@ -4417,41 +4418,237 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QGroupBox" name="groupBox_5">
-         <property name="title">
-          <string>CAD Preferences</string>
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="buttonGroup5">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <item>
-           <widget class="QCheckBox" name="cbToActiveLayer">
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Defaults for new drawings</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_43">
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_32">
             <property name="text">
-             <string>Modify layer of selected entities, at layer activation</string>
+             <string>Angles Positive Direction:</string>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QCheckBox" name="cbAutoZoomDrawing">
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_30">
+            <property name="toolTip">
+             <string/>
+            </property>
             <property name="text">
-             <string>Automatically zoom drawing when opening</string>
+             <string>Zero base angle:</string>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QCheckBox" name="cbKeepModifiedSelected">
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="rbGridOrtho">
+            <property name="text">
+             <string>Orthogonal Grid</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="leDefAngleBaseZero">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="toolTip">
-             <string>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </string>
+             <string>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="cbUnit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Drawing units</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="lUnit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
             <property name="text">
-             <string>Keep modified entities selected</string>
+             <string>&amp;Unit:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbUnit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLabel" name="label_31">
+            <property name="text">
+             <string>degrees.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QRadioButton" name="rbGridIsoRight">
+            <property name="text">
+             <string>RIght Isometric Grid</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QRadioButton" name="rbGridIsoLeft">
+            <property name="text">
+             <string>Left  Isometric Grid</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="rbGridIsoTop">
+            <property name="text">
+             <string>Top Isometric Grid</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QWidget" name="widget" native="true">
+            <layout class="QGridLayout" name="gridLayout_42">
+             <property name="leftMargin">
+              <number>1</number>
+             </property>
+             <property name="topMargin">
+              <number>1</number>
+             </property>
+             <property name="rightMargin">
+              <number>3</number>
+             </property>
+             <property name="bottomMargin">
+              <number>1</number>
+             </property>
+             <property name="spacing">
+              <number>2</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QRadioButton" name="rbDefAngleBasePositive">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Counterclockwise, 90 degrees is north.</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../../../res/icons/icons.qrc">
+                 <normaloff>:/icons/dirpos_plus.svg</normaloff>:/icons/dirpos_plus.svg</iconset>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QRadioButton" name="rbDefAngleBaseNegative">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Clockwise, 90 degrees is sourth.</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../../../res/icons/icons.qrc">
+                 <normaloff>:/icons/dirneg_plus.svg</normaloff>:/icons/dirneg_plus.svg</iconset>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="cbNewDrawingGridOff">
+            <property name="toolTip">
+             <string>If checked, new drawing will be created with grid disabled</string>
+            </property>
+            <property name="text">
+             <string>Grid is Off </string>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
+       </item>
+       <item row="7" column="0">
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -4460,7 +4657,54 @@
        <string>Startup</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_47">
-       <item row="0" column="0" rowspan="4">
+       <item row="2" column="1">
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>Clear Settings</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="topMargin">
+           <number>6</number>
+          </property>
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="pb_clear_geometry">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Restores program geometry/layout to original state</string>
+            </property>
+            <property name="text">
+             <string>Layout</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pb_clear_all">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Restores the program settings to its original state</string>
+            </property>
+            <property name="text">
+             <string>All</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0" rowspan="3">
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
           <string>Startup</string>
@@ -4559,52 +4803,50 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QGroupBox" name="groupBox_3">
+       <item row="1" column="1">
+        <widget class="QGroupBox" name="groupBox_12">
          <property name="title">
-          <string>Clear Settings</string>
+          <string>New Versions</string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="topMargin">
-           <number>6</number>
-          </property>
-          <property name="bottomMargin">
-           <number>6</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="pb_clear_geometry">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+         <layout class="QGridLayout" name="gridLayout_11">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cbCheckNewVersion">
             <property name="toolTip">
-             <string>Restores program geometry/layout to original state</string>
+             <string>Check GitHub for new releases of LibreCAD on program startup</string>
             </property>
             <property name="text">
-             <string>Layout</string>
+             <string>Check for new versions on startup</string>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QPushButton" name="pb_clear_all">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="cbCheckNewVersionIgnorePreRelease">
             <property name="toolTip">
-             <string>Restores the program settings to its original state</string>
+             <string>If checked, pre-release versions will be ignored</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
             </property>
             <property name="text">
-             <string>All</string>
+             <string>Ignore pre-release versions</string>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
+       </item>
+       <item row="4" column="0">
+        <spacer name="verticalSpacer_17">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item row="0" column="1">
         <widget class="QGroupBox" name="bgLanguage">
@@ -4660,51 +4902,6 @@
           </item>
          </layout>
         </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QGroupBox" name="groupBox_12">
-         <property name="title">
-          <string>New Versions</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_11">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="cbCheckNewVersion">
-            <property name="toolTip">
-             <string>Check GitHub for new releases of LibreCAD on program startup</string>
-            </property>
-            <property name="text">
-             <string>Check for new versions on startup</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="cbCheckNewVersionIgnorePreRelease">
-            <property name="toolTip">
-             <string>If checked, pre-release versions will be ignored</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
-            </property>
-            <property name="text">
-             <string>Ignore pre-release versions</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <spacer name="verticalSpacer_17">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -4934,36 +5131,6 @@
           <string>Rendering Minimums</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_27">
-          <item row="0" column="4">
-           <widget class="QDoubleSpinBox" name="sbRenderMinArcRadius">
-            <property name="toolTip">
-             <string>If screen radius of arc is less than value, arc is drawn as point</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="maximum">
-             <double>5.000000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QLabel" name="label_14">
-            <property name="text">
-             <string>Arc Radius:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Height of text line:</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_13">
             <property name="text">
@@ -4971,53 +5138,7 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="4">
-           <widget class="QDoubleSpinBox" name="sbRenderMinCircleRadius">
-            <property name="toolTip">
-             <string>If screen radius of circle is less than value, circle is drawn as point</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="maximum">
-             <double>5.000000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QLabel" name="label_15">
-            <property name="text">
-             <string>Circle Radius:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QLabel" name="label_17">
-            <property name="text">
-             <string>Ellipse Major Axis:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="4">
-           <widget class="QDoubleSpinBox" name="sbRenderMinEllipseMinor">
-            <property name="toolTip">
-             <string>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="maximum">
-             <double>5.000000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
+          <item row="2" column="1">
            <widget class="QDoubleSpinBox" name="sbRenderMinEllipseMajor">
             <property name="toolTip">
              <string>If screen size for major ellipse axis is less than value, ellipse is drawn as point</string>
@@ -5033,7 +5154,99 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="sbRenderMinLineLen">
+            <property name="toolTip">
+             <string>If screen length of line is less than value, the line is drawn as point</string>
+            </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="maximum">
+             <double>5.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QDoubleSpinBox" name="sbRenderMinArcRadius">
+            <property name="toolTip">
+             <string>If screen radius of arc is less than value, arc is drawn as point</string>
+            </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="maximum">
+             <double>5.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Height of text line:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QDoubleSpinBox" name="sbRenderMinCircleRadius">
+            <property name="toolTip">
+             <string>If screen radius of circle is less than value, circle is drawn as point</string>
+            </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="maximum">
+             <double>5.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QDoubleSpinBox" name="sbRenderMinEllipseMinor">
+            <property name="toolTip">
+             <string>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</string>
+            </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="maximum">
+             <double>5.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="2">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Arc Radius:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Ellipse Minor Axis:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="label_17">
+            <property name="text">
+             <string>Ellipse Major Axis:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
            <widget class="QSpinBox" name="sbTextMinHeight">
             <property name="toolTip">
              <string>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</string>
@@ -5056,52 +5269,29 @@
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QDoubleSpinBox" name="sbRenderMinLineLen">
-            <property name="toolTip">
-             <string>If screen length of line is less than value, the line is drawn as point</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="maximum">
-             <double>5.000000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>0.010000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="5">
-           <widget class="QCheckBox" name="cbTextDraftOnPanning">
-            <property name="statusTip">
-             <string>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </string>
-            </property>
+           <widget class="QLabel" name="label_15">
             <property name="text">
-             <string>Draw text as draft within paning operations</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_16">
-            <property name="text">
-             <string>Ellipse Minor Axis:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="5">
-           <widget class="QCheckBox" name="cbTextDraftInPreview">
-            <property name="toolTip">
-             <string>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </string>
-            </property>
-            <property name="text">
-             <string>Draw text as draft in preview</string>
+             <string>Circle Radius:</string>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="3" column="0">
+        <spacer name="verticalSpacer_15">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="0">
         <widget class="QGroupBox" name="groupBox_22">
          <property name="toolTip">
           <string>Defines how arcs are rendered in UI. </string>
@@ -5123,10 +5313,10 @@
           <item row="0" column="0" colspan="2">
            <widget class="QRadioButton" name="rbRenderArcQT">
             <property name="toolTip">
-             <string>If this method is selected, arcs are drawn using methods of QT library. While in some cases this method may be faster and produce smoother arcs, it is posible that unexact drawing with errors is performed in end points of arcs</string>
+             <string>If this method is selected, arcs are drawn using method of QT library. </string>
             </property>
             <property name="text">
-             <string>Qt-native unexact drawing method</string>
+             <string>Qt-native drawing method</string>
             </property>
            </widget>
           </item>
@@ -5158,6 +5348,9 @@
              </item>
              <item row="1" column="1">
               <widget class="QSpinBox" name="sbRenderArcSegmentAngle">
+               <property name="toolTip">
+                <string>Value of fixed segment's angle</string>
+               </property>
                <property name="suffix">
                 <string> degrees</string>
                </property>
@@ -5213,18 +5406,50 @@
          </layout>
         </widget>
        </item>
-       <item row="1" column="0">
-        <spacer name="verticalSpacer_15">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="groupBox_26">
+         <property name="title">
+          <string>Operations</string>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
+         <layout class="QGridLayout" name="gridLayout_49">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cbTextDraftInPreview">
+            <property name="toolTip">
+             <string>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </string>
+            </property>
+            <property name="text">
+             <string>Draw text as draft in preview</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="cbTextDraftOnPanning">
+            <property name="toolTip">
+             <string>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</string>
+            </property>
+            <property name="statusTip">
+             <string>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </string>
+            </property>
+            <property name="text">
+             <string>Draw text as draft within paning operations</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <spacer name="verticalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>

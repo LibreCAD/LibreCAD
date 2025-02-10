@@ -22,7 +22,6 @@
 
 #include "lc_ucslist.h"
 
-// fixme - sand - UCS _ Cleanup not used methods
 LC_UCSList::LC_UCSList() {
     ucsList.append(wcs);
     setModified(false);

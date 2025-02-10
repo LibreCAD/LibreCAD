@@ -71,7 +71,7 @@ void RS_ActionPolylineAppend::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
                     RS_Vector endpointToUse;
 
-                    double dist = toGraphDX(catchEntityGuiRange) * 0.9;
+                    double dist = toGraphDX(m_catchEntityGuiRange) * 0.9;
                     const RS_Vector &mouse = e->graphPoint;
                     const RS_Vector &startPoint = polyline->getStartpoint();
                     const RS_Vector &endPoint = polyline->getEndpoint();
@@ -124,7 +124,7 @@ void RS_ActionPolylineAppend::onMouseLeftButtonRelease(int status, LC_MouseEvent
             auto entFirst = op->firstEntity();
             auto entLast = op->lastEntity();
 
-            double dist = toGraphDX(catchEntityGuiRange) * 0.9;
+            double dist = toGraphDX(m_catchEntityGuiRange) * 0.9;
             const RS_Vector &mouse = e->graphPoint;
             if (entFirst == entLast) { // single segment of polyline
                 double distToStart = originalPolyline->getStartpoint().distanceTo(mouse);

@@ -137,7 +137,7 @@ RS_Entity *RS_EntityContainer::clone() const {
     return ec;
 }
 
-RS_Entity *RS_EntityContainer::cloneProxy(LC_GraphicViewport *view) const {
+RS_Entity *RS_EntityContainer::cloneProxy() const {
     RS_DEBUG->print("RS_EntityContainer::cloneproxy: ori autoDel: %d",
                     autoDelete);
 
@@ -145,7 +145,7 @@ RS_Entity *RS_EntityContainer::cloneProxy(LC_GraphicViewport *view) const {
     if (isOwner()) {
         for (const auto *entity: std::as_const(entities)) {
             if (entity != nullptr) {
-                ec->entities.push_back(entity->cloneProxy(view));
+                ec->entities.push_back(entity->cloneProxy());
             }
         }
     } else {
@@ -285,8 +285,8 @@ void RS_EntityContainer::setHighlighted(bool on) {
  *
  * @param select True to select, False to invertSelectionOperation the entities.
  */
- // fixme - sand - ucs - add method for selecting entities within rect that is rotated in wcs
- // such method is needed for better support UCS with rotation and more precise selection of entities.
+ // todo - sand - ucs - add method for selecting entities within rect that is rotated in wcs
+ // Such method is needed for better support UCS with rotation and more precise selection of entities.
 void RS_EntityContainer::selectWindow(
     enum RS2::EntityType typeToSelect, RS_Vector v1, RS_Vector v2,
     bool select, bool cross) {
@@ -2007,7 +2007,7 @@ double RS_EntityContainer::areaLineIntegral() const {
         double lineIntegral = e->areaLineIntegral();
         RS_Vector startPoint = e->getStartpoint();
         RS_Vector endPoint = e->getEndpoint();
-        LC_ERR << e->getId() << ": int = " << lineIntegral << ": " << startPoint.x << " - " << endPoint.x;
+//        LC_ERR << e->getId() << ": int = " << lineIntegral << ": " << startPoint.x << " - " << endPoint.x;
 
         // the line integral is always by the direction: from the start point to the end point
         if (previousPoint.valid) {

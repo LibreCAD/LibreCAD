@@ -347,7 +347,7 @@ void LC_GraphicViewRenderer::setPenForOverlayEntity(RS_Painter *painter, RS_Enti
             pen.setLineType(RS2::SolidLine);
             pen.setWidth(RS2::LineWidth::Width00);
 
-            // fixme - sand - ucs -  USE THE SAME CACHING OF THE PEN!!!! The amount of overlay entities should be small, yet still...
+            // todo - sand - ucs -  USE THE SAME CACHING OF THE PEN!!!! The amount of overlay entities should be small, yet still...
             e->setPen(pen);
             painter->setPen(pen);
             break;
@@ -409,13 +409,16 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter *painter, RS_Entity *e, 
     double width = pen.getWidth();
     if (pen.getAlpha() == 1.0) {
         if (width>0) {
-            // fixme - sand - ucs - investigate were it's possible to cache calculated screen width. Amount of pens widths is limited!!!!!
+            // todo - sand - ucs - investigate were it's possible to cache calculated screen width at least during the same render pass.
+            // The amount of pens widths is limited - so probably accessing precalculated width will be slightly faster
             double screenWidth = painter->toGuiDX(width * unitFactor100);
             // prevent drawing with 1-width which is slow:
             /* if (RS_Math::round(screenWidth) == 1) {
                  screenWidth = 0.0;
              }
-             else*/ if (screenWidth < 1){ // fixme - not sure about this check. However, without it, lines will stay transparent and then disappear on zooming out. Probably some other threshold value (instead 1) should be used?
+             else*/
+            // fixme - not sure about this check. However, without it, lines will stay transparent and then disappear on zooming out. Probably some other threshold value (instead 1) should be used?
+            if (screenWidth < 1){
                 screenWidth = 0.0;
             }
             pen.setScreenWidth(screenWidth);

@@ -139,27 +139,19 @@ public:
     }
 };
 
-RS_Entity *RS_MText::cloneProxy([[maybe_unused]]LC_GraphicViewport* view) const {
-    // fixme - sand - ucs - restore!!
-//    bool drawTextsAsDraftForPreview = view->isDrawTextsAsDraftForPreview();
-    bool drawTextsAsDraftForPreview = false;
-    if (drawTextsAsDraftForPreview) {
-        auto* proxy = new RS_EntityContainer();
-        proxy->setOwner(true);
-        for (RS_Entity *entity: std::as_const(entities)) {
-            auto line = dynamic_cast<LC_TextLine*>(entity);
-            if (line != nullptr && line->count() > 0) {
-                const RS_Vector &start = line->getBaselineStart();
-                const RS_Vector &end = line->getBaselineEnd();
-                auto line = new RS_Line(proxy, start, end);
-                proxy->addEntity(line);
-            }
+RS_Entity *RS_MText::cloneProxy() const {
+    auto* proxy = new RS_EntityContainer();
+    proxy->setOwner(true);
+    for (RS_Entity *entity: std::as_const(entities)) {
+        auto line = dynamic_cast<LC_TextLine*>(entity);
+        if (line != nullptr && line->count() > 0) {
+            const RS_Vector &start = line->getBaselineStart();
+            const RS_Vector &end = line->getBaselineEnd();
+            auto line = new RS_Line(proxy, start, end);
+            proxy->addEntity(line);
         }
-        return proxy;
     }
-    else{
-        return clone();
-    }
+    return proxy;
 }
 
 /**

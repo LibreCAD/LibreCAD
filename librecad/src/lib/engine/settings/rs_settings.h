@@ -179,10 +179,7 @@ protected:
     static inline RS_Settings* INSTANCE;
 
     bool writeEntrySingle(const QString &group, const QString &key, const QVariant &value);
-
     QString getFullName(const QString &group, const QString &key) const;
-
-
 };
 
 #endif

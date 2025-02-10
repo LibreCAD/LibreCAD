@@ -65,7 +65,7 @@ public:
     void init();
     virtual void initId();
     virtual RS_Entity *clone() const = 0;
-    virtual RS_Entity *cloneProxy(LC_GraphicViewport *view) const;
+    virtual RS_Entity *cloneProxy() const;
 
     virtual void reparent(RS_EntityContainer *parent){
         this->parent = parent;

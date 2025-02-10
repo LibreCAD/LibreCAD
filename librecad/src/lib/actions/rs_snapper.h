@@ -86,8 +86,6 @@ struct RS_SnapMode {
 
     RS2::SnapRestriction restriction {RS2::RestrictNothing}; /// The restriction on the free snap.
 
-    double distance {5.0}; //< The distance to snap before defaulting to free snapping.
-
     /**
       * Disable all snapping.
       *
@@ -153,10 +151,11 @@ public:
      * @see catchEntity()
      */
     void setSnapRange(int r){
-        catchEntityGuiRange = r;
+        m_catchEntityGuiRange = r;
     }
 
     /**manually set snapPoint*/
+    bool isSnapToGrid();
     RS_Vector snapPoint(const RS_Vector &coord, bool setSpot = false);
     RS_Vector snapPoint(QMouseEvent *e);
     RS_Vector snapFree(QMouseEvent *e);
@@ -218,7 +217,9 @@ protected:
     LC_GraphicViewport* viewport = nullptr;
     RS_Entity *keyEntity = nullptr;
     RS_SnapMode snapMode{};
-    //RS2::SnapRestriction snapRes;
+
+    double m_distanceBeforeSwitchToFreeSnap {5.0}; //< The distance to snap before defaulting to free snapping.
+    double m_minGridCellSnapFactor = 0.25;
     /**
      * Snap distance for snapping to points with a
      * given distance from endpoints.
@@ -232,7 +233,9 @@ protected:
     /**
      * Snap range for catching entities. In GUI units
      */
-    int catchEntityGuiRange = 32;
+    int m_catchEntityGuiRange = 32;
+
+
     bool finished{false};
 
     LC_InfoCursorOverlayPrefs* infoCursorOverlayPrefs = nullptr;
@@ -247,6 +250,8 @@ protected:
     double m_anglesBase = 0.0;
     bool m_anglesCounterClockWise = true;
 
+    bool m_ignoreSnapToGridIfNoGrid = false;
+
     RS_Vector toGraph(const QMouseEvent *e) const;
     void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false);
     void updateCoordinateWidgetByRelZero(const RS_Vector& abs, bool updateFormat=false);
@@ -257,6 +262,8 @@ protected:
     void preparePositionsInfoCursorOverlay(bool updateFormat, const RS_Vector &abs, const RS_Vector &relative);
     LC_OverlayInfoCursor* obtainInfoCursor();
     LC_InfoCursorOverlayPrefs* getInfoCursorOverlayPrefs() const;
+
+    RS_Vector doSnapToAngle(const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution);
 
     QString formatLinear(double value) const;
     QString formatWCSAngle(double wcsAngle) const;

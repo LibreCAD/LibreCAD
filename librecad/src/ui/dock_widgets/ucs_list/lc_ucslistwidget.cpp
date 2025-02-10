@@ -177,7 +177,7 @@ void LC_UCSListWidget::setUCSList(LC_UCSList *viewsList) {
     updateData(false);
     if (nullptr != viewsList && ucsListModel->count() > 0){
         // fixme - sand - ucs complete
-//        selectView(currentViewList->at(0));
+//        selectUCS(currentUCSList->at(0));
     }
 }
 

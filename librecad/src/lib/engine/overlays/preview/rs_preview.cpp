@@ -92,6 +92,7 @@ void RS_Preview::addEntity(RS_Entity* entity) {
     }
 
     if (addBorder){
+        // fixme - sand - ucs - better displaying of placeholders is needed if there is UCS with rotation
         RS_Vector min = entity->getMin();
         RS_Vector max = entity->getMax();
         auto l1 = new RS_Line(this, {min.x, min.y}, {max.x, min.y});
@@ -141,7 +142,7 @@ void RS_Preview::addCloneOf(RS_Entity* entity, LC_GraphicViewport* view) {
         return;
     }
 
-    RS_Entity* clone = entity->cloneProxy(view);
+    RS_Entity* clone = entity->cloneProxy();
     clone->reparent(this);
     addEntity(clone);
 }
@@ -153,7 +154,7 @@ void RS_Preview::addAllFrom(RS_EntityContainer& container, LC_GraphicViewport* v
     unsigned int c=0;
     for(auto e: container){
         if (c < maxEntities) {
-            RS_Entity* clone = e->cloneProxy(view);
+            RS_Entity* clone = e->cloneProxy();
             clone->setSelected(false);
             clone->reparent(this);
 
@@ -171,9 +172,7 @@ void RS_Preview::addSelectionFrom(RS_EntityContainer& container, LC_GraphicViewp
     unsigned int c=0;
     for(auto e: container){ // fixme - sand - wow - iterating over all entities!!! Rework selection
         if (e->isSelected() && c<maxEntities) {
-            RS_Entity* clone = e->cloneProxy(view);
-            clone->setSelected(false);
-            clone->reparent(this);
+            RS_Entity* clone = e->cloneProxy();
 
             c+=clone->countDeep();
             addEntity(clone);
@@ -195,7 +194,7 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container, LC_GraphicVi
             ((e->isInWindow(v1, v2)) || e->hasEndpointsWithinWindow(v1, v2)) &&
             c < maxEntities) {
 
-            RS_Entity *clone = e->cloneProxy(view);
+            RS_Entity *clone = e->cloneProxy();
             //clone->setSelected(false);
             clone->reparent(this);
 

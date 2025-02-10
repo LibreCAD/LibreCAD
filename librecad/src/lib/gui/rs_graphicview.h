@@ -215,7 +215,5 @@ protected:
     bool m_panOnZoom = false;
     bool m_skipFirstZoom = false;
     const RS_LineTypePattern *getPattern(RS2::LineType t);
-
 };
-
 #endif
