@@ -1,0 +1,971 @@
+cmake_minimum_required(VERSION 3.22)
+project(LibreCAD VERSION 2.2.2 LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC OFF)
+if(CMAKE_VERSION VERSION_LESS "3.7.0")
+    set(CMAKE_INCLUDE_CURRENT_DIR ON)
+endif()
+#set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
+set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT5\\5.11.0\\mingw_64")
+#set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
+set(BOOST_DIR "c:\\Local\\boost_1_87_0")
+#set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_87_0")
+#set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
+#set(Qt5_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5")
+#set(Qt5Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5Core")
+#set(Qt5Svg_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5Svg")
+#set(Qt5CoreTools_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5CoreTools")
+#set(Qt5Gui_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtGui")
+#set(QtNetwork_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtNetwork")
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+#set(CMAKE_AUTOUIC_OPTIONS --connections string)
+add_compile_definitions(DWGSUPPORT)
+add_compile_definitions(MUPARSER_STATIC)
+add_compile_definitions(LC_VERSION=2.2.1.1_rc)
+add_compile_definitions(LC_PRERELEASE=true)
+find_package(Qt5 COMPONENTS Gui Core Widgets PrintSupport Svg Network REQUIRED)
+find_package(Qt5 REQUIRED COMPONENTS LinguistTools)
+#qt_standard_project_setup()
+find_package(Boost 1.74.0 REQUIRED)
+#include_directories(${MIN_GW_PATH_PREFIX}\\include\\QtSvg)
+#include_directories(${Boost_INCLUDE_DIRS})
+include_directories(librecad/res/actions)
+include_directories(librecad/res/extui)
+include_directories(librecad/res/icons)
+include_directories(librecad/res/main)
+include_directories(librecad/res/ui)
+include_directories(libraries/jwwlib/src)
+include_directories(libraries/libdxfrw/src)
+include_directories(libraries/libdxfrw/src/intern)
+include_directories(libraries/muparser/include)
+include_directories(librecad/src/actions)
+include_directories(librecad/src/actions/drawing)
+include_directories(librecad/src/actions/drawing/draw)
+include_directories(librecad/src/actions/drawing/arc)
+include_directories(librecad/src/actions/drawing/draw/line)
+include_directories(librecad/src/actions/drawing/draw/line/misc)
+include_directories(librecad/src/actions/drawing/draw/misc)
+include_directories(librecad/src/actions/drawing/draw/rect)
+include_directories(librecad/src/actions/drawing/draw/polygon)
+include_directories(librecad/src/actions/drawing/draw/line/shapes)
+include_directories(librecad/src/actions/drawing/draw/line/shapes/rect)
+include_directories(librecad/src/actions/drawing/draw/line/shapes/polygon)
+include_directories(librecad/src/actions/drawing/draw/circle)
+include_directories(librecad/src/actions/drawing/draw/curve)
+include_directories(librecad/src/actions/drawing/draw/spline)
+include_directories(librecad/src/actions/drawing/draw/polyline)
+include_directories(librecad/src/actions/drawing/draw/point)
+include_directories(librecad/src/actions/drawing/draw/ellipse)
+include_directories(librecad/src/actions/drawing/draw/dimensions)
+include_directories(librecad/src/actions/drawing/draw/text)
+include_directories(librecad/src/actions/drawing/draw/image)
+include_directories(librecad/src/actions/drawing/draw/hatch)
+include_directories(librecad/src/actions/drawing/modify)
+include_directories(librecad/src/actions/drawing/info)
+include_directories(librecad/src/actions/drawing/selection)
+include_directories(librecad/src/actions/drawing/zoom)
+include_directories(librecad/src/actions/drawing/pen)
+include_directories(librecad/src/actions/drawing/snap)
+include_directories(librecad/src/actions/drawing/edit)
+include_directories(librecad/src/actions/drawing/rel_zero)
+include_directories(librecad/src/actions/dock_widgets)
+include_directories(librecad/src/actions/dock_widgets/block)
+include_directories(librecad/src/actions/dock_widgets/library)
+include_directories(librecad/src/actions/dock_widgets/layer)
+include_directories(librecad/src/actions/dock_widgets/entity_info)
+include_directories(librecad/src/actions/file)
+include_directories(librecad/src/actions/options)
+include_directories(librecad/src/actions/print_preview)
+include_directories(librecad/src/cmd)
+include_directories(librecad/src/lib/actions)
+include_directories(librecad/src/lib/creation)
+include_directories(librecad/src/lib/debug)
+include_directories(librecad/src/lib/engine)
+include_directories(librecad/src/lib/engine/undo)
+include_directories(librecad/src/lib/engine/utils)
+include_directories(librecad/src/lib/engine/clipboard)
+include_directories(librecad/src/lib/engine/settings)
+include_directories(librecad/src/lib/engine/overlays)
+include_directories(librecad/src/lib/engine/overlays/preview)
+include_directories(librecad/src/lib/engine/overlays/highlight)
+include_directories(librecad/src/lib/engine/overlays/references)
+include_directories(librecad/src/lib/engine/overlays/info_cursor)
+include_directories(librecad/src/lib/engine/overlays/overlay_box)
+include_directories(librecad/src/lib/engine/overlays/crosshair)
+include_directories(librecad/src/lib/engine/document)
+include_directories(librecad/src/lib/engine/document/blocks)
+include_directories(librecad/src/lib/engine/document/layers)
+include_directories(librecad/src/lib/engine/document/views)
+include_directories(librecad/src/lib/engine/document/fonts)
+include_directories(librecad/src/lib/engine/document/patterns)
+include_directories(librecad/src/lib/engine/document/entities)
+include_directories(librecad/src/lib/engine/document/container)
+include_directories(librecad/src/lib/engine/document/variables)
+include_directories(librecad/src/lib/engine/document/ucs)
+include_directories(librecad/src/lib/fileio)
+include_directories(librecad/src/lib/filters)
+include_directories(librecad/src/lib/generators)
+include_directories(librecad/src/lib/gui)
+include_directories(librecad/src/lib/gui/grid)
+include_directories(librecad/src/lib/information)
+include_directories(librecad/src/lib/math)
+include_directories(librecad/src/lib/modification)
+include_directories(librecad/src/lib/printing)
+include_directories(librecad/src/lib/scripting)
+include_directories(librecad/src/main)
+include_directories(librecad/src/main/console_dxf2pdf)
+include_directories(librecad/src/plugins)
+include_directories(librecad/src/plugins/intern)
+include_directories(librecad/src/test)
+include_directories(librecad/src/ui)
+include_directories(librecad/src/ui/dialogs)
+include_directories(librecad/src/ui/dialogs/actions)
+include_directories(librecad/src/ui/dialogs/actions/modify)
+include_directories(librecad/src/ui/dialogs/settings/device_options)
+include_directories(librecad/src/ui/dialogs/settings/options_device)
+include_directories(librecad/src/ui/dialogs/settings/options_general)
+include_directories(librecad/src/ui/dialogs/settings/options_drawing)
+include_directories(librecad/src/ui/dialogs/settings/options_widget)
+include_directories(librecad/src/ui/dialogs/settings/shortcuts)
+include_directories(librecad/src/ui/dialogs/settings)
+include_directories(librecad/src/ui/dialogs/entity)
+include_directories(librecad/src/ui/dialogs/file)
+include_directories(librecad/src/ui/dialogs/file/export)
+include_directories(librecad/src/ui/dialogs/main)
+include_directories(librecad/src/ui/action_options)
+include_directories(librecad/src/ui/action_options/draw)
+include_directories(librecad/src/ui/action_options/modify)
+include_directories(librecad/src/ui/action_options/info)
+include_directories(librecad/src/ui/action_options/select)
+include_directories(librecad/src/ui/action_options/line)
+include_directories(librecad/src/ui/action_options/polygon)
+include_directories(librecad/src/ui/action_options/rect)
+include_directories(librecad/src/ui/action_options/circle)
+include_directories(librecad/src/ui/action_options/polyline)
+include_directories(librecad/src/ui/action_options/point)
+include_directories(librecad/src/ui/action_options/curve)
+include_directories(librecad/src/ui/action_options/spline)
+include_directories(librecad/src/ui/action_options/ellipse)
+include_directories(librecad/src/ui/action_options/dimensions)
+include_directories(librecad/src/ui/action_options/selection)
+include_directories(librecad/src/ui/action_options/snap)
+include_directories(librecad/src/ui/action_options/edit)
+include_directories(librecad/src/ui/action_options/print_preview)
+include_directories(librecad/src/ui/action_options/text)
+include_directories(librecad/src/ui/action_options/image)
+include_directories(librecad/src/ui/action_options/misc)
+include_directories(librecad/src/ui/action_options/insert)
+include_directories(librecad/src/ui/action_options/other)
+#include_directories(librecad/src/ui/not_used)
+include_directories(librecad/src/ui/actions)
+include_directories(librecad/src/ui/components)
+include_directories(librecad/src/ui/components/comboboxes)
+include_directories(librecad/src/ui/components/toolbars)
+include_directories(librecad/src/ui/components/containers)
+include_directories(librecad/src/ui/components/status_bar)
+include_directories(librecad/src/ui/components/layouts)
+include_directories(librecad/src/ui/components/creators)
+include_directories(librecad/src/ui/components/pen)
+include_directories(librecad/src/ui/forms)
+include_directories(librecad/src/ui/generic)
+include_directories(librecad/src/ui/view)
+include_directories(librecad/src/ui/main)
+include_directories(librecad/src/ui/dock_widgets)
+include_directories(librecad/src/ui/dock_widgets/command_line)
+include_directories(librecad/src/ui/dock_widgets/pen_wizard)
+include_directories(librecad/src/ui/dock_widgets/layers_tree)
+include_directories(librecad/src/ui/dock_widgets/entity_info)
+include_directories(librecad/src/ui/dock_widgets/pen_palette)
+include_directories(librecad/src/ui/dock_widgets/block_widget)
+include_directories(librecad/src/ui/dock_widgets/library_widget)
+include_directories(librecad/src/ui/dock_widgets/layer_widget)
+include_directories(librecad/src/ui/dock_widgets/views_list)
+#Temporary disabled for build
+#include_directories(plugins/align)
+#include_directories(plugins/asciifile)
+#include_directories(plugins/divide)
+#include_directories(plugins/gear)
+#include_directories(plugins/list)
+#include_directories(plugins/picfile)
+#include_directories(plugins/plotequation)
+#include_directories(plugins/sameprop)
+#include_directories(plugins/sample)
+set(SOURCES
+	librecad/src/ui/qg_scrollbar.h
+librecad/src/ui/forms/lc_widgetoptionsdialog.cpp
+librecad/src/cmd/rs_commands.cpp
+librecad/src/lib/actions/rs_actioninterface.cpp
+librecad/src/lib/actions/rs_preview.cpp
+librecad/src/lib/actions/rs_previewactioninterface.cpp
+librecad/src/lib/actions/rs_snapper.cpp
+librecad/src/lib/debug/rs_debug.cpp
+librecad/src/lib/engine/rs_flags.cpp
+librecad/src/lib/engine/rs_pen.cpp
+librecad/src/lib/engine/lc_rect.cpp
+librecad/src/lib/engine/rs_leader.cpp
+librecad/src/lib/engine/rs_overlaybox.cpp
+librecad/src/lib/engine/rs_overlayline.cpp
+librecad/src/lib/engine/rs_solid.cpp
+librecad/src/lib/engine/rs_text.cpp
+librecad/src/lib/engine/rs_undoable.cpp
+librecad/src/lib/engine/rs_undocycle.cpp
+librecad/src/lib/engine/rs_variabledict.cpp
+librecad/src/lib/engine/lc_undosection.cpp
+librecad/src/lib/engine/rs_blocklist.cpp
+librecad/src/lib/engine/rs_dimangular.cpp
+librecad/src/lib/engine/rs_undo.cpp
+librecad/src/lib/engine/rs_utility.cpp
+librecad/src/lib/engine/rs_dimaligned.cpp
+librecad/src/lib/engine/rs_dimdiametric.cpp
+librecad/src/lib/engine/rs_dimlinear.cpp
+librecad/src/lib/engine/rs_graphic.cpp
+librecad/src/lib/engine/rs_units.cpp
+librecad/src/lib/engine/rs_atomicentity.cpp
+librecad/src/lib/engine/rs_fontlist.cpp
+librecad/src/lib/engine/lc_dimarc.cpp
+librecad/src/lib/engine/lc_hyperbola.cpp
+librecad/src/lib/engine/lc_looputils.cpp
+librecad/src/lib/engine/lc_parabola.cpp
+librecad/src/lib/engine/lc_splinepoints.cpp
+librecad/src/lib/engine/rs.cpp
+librecad/src/lib/engine/rs_arc.cpp
+librecad/src/lib/engine/rs_block.cpp
+librecad/src/lib/engine/rs_circle.cpp
+librecad/src/lib/engine/rs_clipboard.cpp
+librecad/src/lib/engine/rs_color.cpp
+librecad/src/lib/engine/rs_constructionline.cpp
+librecad/src/lib/engine/rs_dimension.cpp
+librecad/src/lib/engine/rs_dimradial.cpp
+librecad/src/lib/engine/rs_document.cpp
+librecad/src/lib/engine/rs_ellipse.cpp
+librecad/src/lib/engine/rs_entity.cpp
+librecad/src/lib/engine/rs_font.cpp
+librecad/src/lib/engine/rs_hatch.cpp
+librecad/src/lib/engine/rs_insert.cpp
+librecad/src/lib/engine/rs_layer.cpp
+librecad/src/lib/engine/rs_layerlist.cpp
+librecad/src/lib/engine/rs_line.cpp
+librecad/src/lib/engine/rs_mtext.cpp
+librecad/src/lib/engine/rs_pattern.cpp
+librecad/src/lib/engine/rs_patternlist.cpp
+librecad/src/lib/engine/rs_point.cpp
+librecad/src/lib/engine/rs_polyline.cpp
+librecad/src/lib/engine/rs_settings.cpp
+librecad/src/lib/engine/rs_spline.cpp
+librecad/src/lib/engine/rs_system.cpp
+librecad/src/lib/engine/rs_vector.cpp
+librecad/src/lib/engine/rs_entitycontainer.cpp
+librecad/src/lib/engine/rs_image.cpp
+librecad/src/lib/filters/rs_filterdxf1.cpp
+librecad/src/lib/filters/rs_filterjww.cpp
+librecad/src/lib/filters/rs_filterlff.cpp
+librecad/src/lib/filters/rs_filtercxf.cpp
+librecad/src/lib/filters/rs_filterdxfrw.cpp
+librecad/src/lib/generators/lc_makercamsvg.cpp
+librecad/src/lib/generators/lc_xmlwriterqxmlstreamwriter.cpp
+librecad/src/lib/gui/rs_dialogfactory.cpp
+librecad/src/lib/gui/rs_grid.cpp
+librecad/src/lib/gui/rs_staticgraphicview.cpp
+librecad/src/lib/gui/rs_linetypepattern.cpp
+librecad/src/lib/gui/rs_graphicview.cpp
+librecad/src/lib/gui/rs_painter.cpp
+librecad/src/lib/gui/rs_painterqt.cpp
+librecad/src/lib/gui/rs_eventhandler.cpp
+librecad/src/lib/information/rs_infoarea.cpp
+librecad/src/lib/information/rs_locale.cpp
+librecad/src/lib/information/rs_information.cpp
+librecad/src/lib/math/lc_linemath.cpp
+librecad/src/lib/math/lc_quadratic.cpp
+librecad/src/lib/math/rs_math.cpp
+librecad/src/lib/printing/lc_printing.cpp
+librecad/src/lib/creation/rs_creation.cpp
+librecad/src/lib/fileio/rs_fileio.cpp
+librecad/src/lib/modification/rs_selection.cpp
+librecad/src/lib/modification/rs_modification.cpp
+librecad/src/lib/scripting/rs_python.cpp
+librecad/src/lib/scripting/rs_python_wrappers.cpp
+librecad/src/lib/scripting/rs_simplepython.cpp
+librecad/src/lib/scripting/rs_script.cpp
+librecad/src/lib/scripting/rs_scriptlist.cpp
+librecad/src/main/lc_application.cpp
+librecad/src/main/mainwindowx.cpp
+librecad/src/main/console_dxf2pdf/console_dxf2pdf.cpp
+librecad/src/main/console_dxf2pdf/pdf_print_loop.cpp
+librecad/src/main/qc_dialogfactory.cpp
+librecad/src/main/console_dxf2png.cpp
+librecad/src/main/doc_plugin_interface.cpp
+librecad/src/main/main.cpp
+librecad/src/main/qc_applicationwindow.cpp
+librecad/src/main/qc_mdiwindow.cpp
+librecad/src/ui/forms/qg_activelayername.cpp
+librecad/src/ui/forms/qg_blockdialog.cpp
+librecad/src/ui/forms/qg_dlginitial.cpp
+librecad/src/ui/forms/qg_dlgmirror.cpp
+librecad/src/ui/forms/qg_dlgmove.cpp
+librecad/src/ui/forms/qg_dlgmoverotate.cpp
+librecad/src/ui/forms/qg_dlgrotate.cpp
+librecad/src/ui/forms/qg_dlgrotate2.cpp
+librecad/src/ui/forms/qg_layerdialog.cpp
+librecad/src/ui/forms/qg_lineoptions.cpp
+librecad/src/ui/forms/qg_mtextoptions.cpp
+librecad/src/ui/forms/qg_polylineoptions.cpp
+librecad/src/ui/forms/qg_textoptions.cpp
+librecad/src/ui/forms/qg_coordinatewidget.cpp
+librecad/src/ui/forms/qg_dlgattributes.cpp
+librecad/src/ui/forms/qg_mousewidget.cpp
+librecad/src/ui/forms/qg_polylineequidistantoptions.cpp
+librecad/src/ui/forms/qg_dlgimageoptions.cpp
+librecad/src/ui/forms/qg_selectionwidget.cpp
+librecad/src/ui/forms/LC_DlgParabola.cpp
+librecad/src/ui/forms/lc_actionoptionswidget.cpp
+librecad/src/ui/forms/lc_circlebyarcoptions.cpp
+librecad/src/ui/forms/lc_crossoptions.cpp
+librecad/src/ui/forms/lc_dlgsplinepoints.cpp
+librecad/src/ui/forms/lc_duplicateoptions.cpp
+librecad/src/ui/forms/lc_layerdialog_ex.cpp
+librecad/src/ui/forms/lc_layertreeoptionsdialog.cpp
+librecad/src/ui/forms/lc_lineanglereloptions.cpp
+librecad/src/ui/forms/lc_linefrompointtolineoptions.cpp
+librecad/src/ui/forms/lc_linejoinoptions.cpp
+librecad/src/ui/forms/lc_lineoptions.cpp
+librecad/src/ui/forms/lc_linepointsoptions.cpp
+librecad/src/ui/forms/lc_modifybreakdivideoptions.cpp
+librecad/src/ui/forms/lc_modifygapoptions.cpp
+librecad/src/ui/forms/lc_rectangle1pointoptions.cpp
+librecad/src/ui/forms/lc_rectangle2pointsoptions.cpp
+librecad/src/ui/forms/lc_rectangle3pointsoptions.cpp
+librecad/src/ui/forms/lc_slicedivideoptions.cpp
+librecad/src/ui/forms/lc_staroptions.cpp
+librecad/src/ui/forms/qg_arcoptions.cpp
+librecad/src/ui/forms/qg_arctangentialoptions.cpp
+librecad/src/ui/forms/qg_beveloptions.cpp
+librecad/src/ui/forms/qg_circleoptions.cpp
+librecad/src/ui/forms/qg_circletan2options.cpp
+librecad/src/ui/forms/qg_commandwidget.cpp
+librecad/src/ui/forms/qg_dimensionlabeleditor.cpp
+librecad/src/ui/forms/qg_dimlinearoptions.cpp
+librecad/src/ui/forms/qg_dimoptions.cpp
+librecad/src/ui/forms/qg_dlgarc.cpp
+librecad/src/ui/forms/qg_dlgcircle.cpp
+librecad/src/ui/forms/qg_dlgdimension.cpp
+librecad/src/ui/forms/qg_dlgdimlinear.cpp
+librecad/src/ui/forms/qg_dlgellipse.cpp
+librecad/src/ui/forms/qg_dlghatch.cpp
+librecad/src/ui/forms/qg_dlgimage.cpp
+librecad/src/ui/forms/qg_dlginsert.cpp
+librecad/src/ui/forms/qg_dlgline.cpp
+librecad/src/ui/forms/qg_dlgmtext.cpp
+librecad/src/ui/forms/qg_dlgoptionsdrawing.cpp
+librecad/src/ui/forms/qg_dlgoptionsgeneral.cpp
+librecad/src/ui/forms/qg_dlgoptionsmakercam.cpp
+librecad/src/ui/forms/qg_dlgpoint.cpp
+librecad/src/ui/forms/qg_dlgpolyline.cpp
+librecad/src/ui/forms/qg_dlgspline.cpp
+librecad/src/ui/forms/qg_dlgtext.cpp
+librecad/src/ui/forms/qg_exitdialog.cpp
+librecad/src/ui/forms/qg_imageoptions.cpp
+librecad/src/ui/forms/qg_insertoptions.cpp
+librecad/src/ui/forms/qg_libraryinsertoptions.cpp
+librecad/src/ui/forms/qg_lineangleoptions.cpp
+librecad/src/ui/forms/qg_linebisectoroptions.cpp
+librecad/src/ui/forms/qg_lineparalleloptions.cpp
+librecad/src/ui/forms/qg_lineparallelthroughoptions.cpp
+librecad/src/ui/forms/qg_linepolygon2options.cpp
+librecad/src/ui/forms/qg_linepolygonoptions.cpp
+librecad/src/ui/forms/qg_linerelangleoptions.cpp
+librecad/src/ui/forms/qg_modifyoffsetoptions.cpp
+librecad/src/ui/forms/qg_moverotateoptions.cpp
+librecad/src/ui/forms/qg_printpreviewoptions.cpp
+librecad/src/ui/forms/qg_roundoptions.cpp
+librecad/src/ui/forms/qg_snapdistoptions.cpp
+librecad/src/ui/forms/qg_snapmiddleoptions.cpp
+librecad/src/ui/forms/qg_splineoptions.cpp
+librecad/src/ui/forms/qg_trimamountoptions.cpp
+librecad/src/ui/forms/qg_widgetpen.cpp
+librecad/src/ui/forms/qg_snaptoolbar.cpp
+librecad/src/ui/forms/qg_dlgscale.cpp
+librecad/src/ui/generic/comboboxoption.cpp
+librecad/src/ui/generic/actionlist.cpp
+librecad/src/ui/generic/colorcombobox.cpp
+librecad/src/ui/generic/colorwizard.cpp
+librecad/src/ui/generic/lc_flexlayout.cpp
+librecad/src/ui/generic/linklist.cpp
+librecad/src/ui/generic/textfileviewer.cpp
+librecad/src/ui/generic/widgetcreator.cpp
+librecad/src/ui/qg_commandhistory.cpp
+librecad/src/ui/qg_fontbox.cpp
+librecad/src/ui/qg_layerbox.cpp
+librecad/src/ui/qg_linetypebox.cpp
+librecad/src/ui/twostackedlabels.cpp
+librecad/src/ui/lc_filedialogservice.cpp
+librecad/src/ui/lc_actionfactory.cpp
+librecad/src/ui/lc_actiongroupmanager.cpp
+librecad/src/ui/lc_centralwidget.cpp
+librecad/src/ui/lc_deviceoptions.cpp
+librecad/src/ui/lc_dockwidget.cpp
+librecad/src/ui/lc_layertreeitem.cpp
+librecad/src/ui/lc_layertreemodel.cpp
+librecad/src/ui/lc_layertreemodel_options.cpp
+librecad/src/ui/lc_layertreeview.cpp
+librecad/src/ui/lc_layertreewidget.cpp
+librecad/src/ui/lc_peninforegistry.cpp
+librecad/src/ui/lc_penitem.cpp
+librecad/src/ui/lc_penpalettedata.cpp
+librecad/src/ui/lc_penpalettemodel.cpp
+librecad/src/ui/lc_penpaletteoptions.cpp
+librecad/src/ui/lc_penpaletteoptionsdialog.cpp
+librecad/src/ui/lc_penpalettewidget.cpp
+librecad/src/ui/lc_penwizard.cpp
+librecad/src/ui/lc_widgetfactory.cpp
+librecad/src/ui/lg_dimzerosbox.cpp
+librecad/src/ui/qg_blockwidget.cpp
+librecad/src/ui/qg_colorbox.cpp
+librecad/src/ui/qg_commandedit.cpp
+librecad/src/ui/qg_dialogfactory.cpp
+librecad/src/ui/qg_filedialog.cpp
+librecad/src/ui/qg_layerwidget.cpp
+librecad/src/ui/qg_librarywidget.cpp
+librecad/src/ui/qg_patternbox.cpp
+librecad/src/ui/qg_pentoolbar.cpp
+librecad/src/ui/qg_recentfiles.cpp
+librecad/src/ui/qg_widthbox.cpp
+librecad/src/ui/qg_actionhandler.cpp
+librecad/src/ui/qg_graphicview.cpp
+librecad/src/plugins/intern/qc_actiongetent.cpp
+librecad/src/plugins/intern/qc_actiongetpoint.cpp
+librecad/src/plugins/intern/qc_actiongetselect.cpp
+librecad/src/test/lc_simpletests.cpp
+librecad/src/actions/rs_actionblockscreate.cpp
+librecad/src/actions/rs_actionblocksedit.cpp
+librecad/src/actions/rs_actionblocksexplode.cpp
+librecad/src/actions/rs_actionblocksfreezeall.cpp
+librecad/src/actions/rs_actiondrawlineparallel.cpp
+librecad/src/actions/rs_actiondrawlineparallelthrough.cpp
+librecad/src/actions/rs_actiondrawpoint.cpp
+librecad/src/actions/rs_actioneditcopy.cpp
+librecad/src/actions/rs_actioneditundo.cpp
+librecad/src/actions/rs_actionfilenew.cpp
+librecad/src/actions/rs_actionfilenewtemplate.cpp
+librecad/src/actions/rs_actionfileopen.cpp
+librecad/src/actions/rs_actionfilesave.cpp
+librecad/src/actions/rs_actionfilesaveas.cpp
+librecad/src/actions/rs_actionlayersadd.cpp
+librecad/src/actions/rs_actionlayersedit.cpp
+librecad/src/actions/rs_actionlayersfreezeall.cpp
+librecad/src/actions/rs_actionlayerslockall.cpp
+librecad/src/actions/rs_actionmodifyattributes.cpp
+librecad/src/actions/rs_actionmodifydelete.cpp
+librecad/src/actions/rs_actionmodifydeletequick.cpp
+librecad/src/actions/rs_actionmodifyexplodetext.cpp
+librecad/src/actions/rs_actionmodifyoffset.cpp
+librecad/src/actions/rs_actionmodifyrevertdirection.cpp
+librecad/src/actions/rs_actionmodifyrotate.cpp
+librecad/src/actions/rs_actionmodifyrotate2.cpp
+librecad/src/actions/rs_actionmodifytrimamount.cpp
+librecad/src/actions/rs_actionoptionsdrawing.cpp
+librecad/src/actions/rs_actionorder.cpp
+librecad/src/actions/rs_actionpolylinedel.cpp
+librecad/src/actions/rs_actionselectall.cpp
+librecad/src/actions/rs_actionselectbase.cpp
+librecad/src/actions/rs_actionselectcontour.cpp
+librecad/src/actions/rs_actionselectinvert.cpp
+librecad/src/actions/rs_actionsetsnapmode.cpp
+librecad/src/actions/rs_actionsetsnaprestriction.cpp
+librecad/src/actions/rs_actiontoolregeneratedimensions.cpp
+librecad/src/actions/rs_actionzoomauto.cpp
+librecad/src/actions/rs_actionzoomautoy.cpp
+librecad/src/actions/rs_actionzoomprevious.cpp
+librecad/src/actions/rs_actionzoomredraw.cpp
+librecad/src/actions/rs_actionzoomscroll.cpp
+librecad/src/actions/rs_actionlockrelativezero.cpp
+librecad/src/actions/lc_actiondrawlinepolygon3.cpp
+librecad/src/actions/lc_actionlayerstoggleconstruction.cpp
+librecad/src/actions/rs_actionblocksadd.cpp
+librecad/src/actions/rs_actionblocksattributes.cpp
+librecad/src/actions/rs_actionblocksinsert.cpp
+librecad/src/actions/rs_actionblocksremove.cpp
+librecad/src/actions/rs_actionblockssave.cpp
+librecad/src/actions/rs_actionblockstoggleview.cpp
+librecad/src/actions/rs_actiondimangular.cpp
+librecad/src/actions/rs_actiondimradial.cpp
+librecad/src/actions/rs_actiondrawarc3p.cpp
+librecad/src/actions/rs_actiondrawcircle3p.cpp
+librecad/src/actions/rs_actiondrawimage.cpp
+librecad/src/actions/rs_actiondrawlinebisector.cpp
+librecad/src/actions/rs_actiondrawlinepolygon.cpp
+librecad/src/actions/rs_actiondrawlinepolygon2.cpp
+librecad/src/actions/rs_actiondrawlinerectangle.cpp
+librecad/src/actions/rs_actiondrawtext.cpp
+librecad/src/actions/rs_actioninfoangle.cpp
+librecad/src/actions/rs_actioninfoarea.cpp
+librecad/src/actions/rs_actioninfodist.cpp
+librecad/src/actions/rs_actioninfodist2.cpp
+librecad/src/actions/rs_actioninfoinside.cpp
+librecad/src/actions/rs_actioninfototallength.cpp
+librecad/src/actions/rs_actionlayersremove.cpp
+librecad/src/actions/rs_actionlayerstogglelock.cpp
+librecad/src/actions/rs_actionlayerstoggleprint.cpp
+librecad/src/actions/rs_actionlayerstoggleview.cpp
+librecad/src/actions/rs_actionlibraryinsert.cpp
+librecad/src/actions/rs_actionmodifymoverotate.cpp
+librecad/src/actions/rs_actionmodifystretch.cpp
+librecad/src/actions/rs_actionmodifytrim.cpp
+librecad/src/actions/rs_actionselectintersected.cpp
+librecad/src/actions/rs_actionselectlayer.cpp
+librecad/src/actions/rs_actionsetrelativezero.cpp
+librecad/src/actions/rs_actionsnapintersectionmanual.cpp
+librecad/src/actions/rs_actionzoomwindow.cpp
+librecad/src/actions/lc_actiondimarc.cpp
+librecad/src/actions/lc_actiondrawcircle2pr.cpp
+librecad/src/actions/lc_actiondrawsplinepoints.cpp
+librecad/src/actions/lc_actionlayersexport.cpp
+librecad/src/actions/rs_actiondimaligned.cpp
+librecad/src/actions/rs_actiondimdiametric.cpp
+librecad/src/actions/rs_actiondimlinear.cpp
+librecad/src/actions/rs_actiondrawarc.cpp
+librecad/src/actions/rs_actiondrawcirclecr.cpp
+librecad/src/actions/rs_actiondrawcircleinscribe.cpp
+librecad/src/actions/rs_actiondrawcircletan1_2p.cpp
+librecad/src/actions/rs_actiondrawcircletan2.cpp
+librecad/src/actions/rs_actiondrawcircletan2_1p.cpp
+librecad/src/actions/rs_actiondrawellipse4points.cpp
+librecad/src/actions/rs_actiondrawellipseaxis.cpp
+librecad/src/actions/rs_actiondrawellipsecenter3points.cpp
+librecad/src/actions/rs_actiondrawellipsefocipoint.cpp
+librecad/src/actions/rs_actiondrawellipseinscribe.cpp
+librecad/src/actions/rs_actiondrawlineangle.cpp
+librecad/src/actions/rs_actiondrawlinefree.cpp
+librecad/src/actions/rs_actiondrawlinehorvert.cpp
+librecad/src/actions/rs_actionmodifybevel.cpp
+librecad/src/actions/rs_actionpolylinedelbetween.cpp
+librecad/src/actions/rs_actionpolylinetrim.cpp
+librecad/src/actions/rs_actionselect.cpp
+librecad/src/actions/rs_actionzoomin.cpp
+librecad/src/actions/rs_actionzoompan.cpp
+librecad/src/actions/rs_actiondrawlinerelangle.cpp
+librecad/src/actions/rs_actionmodifyentity.cpp
+librecad/src/actions/rs_actionpolylineadd.cpp
+librecad/src/actions/rs_actiondrawmtext.cpp
+librecad/src/actions/rs_actiondrawhatch.cpp
+librecad/src/actions/lc_abstractactiondrawline.cpp
+librecad/src/actions/lc_abstractactiondrawrectangle.cpp
+librecad/src/actions/lc_abstractactionwithpreview.cpp
+librecad/src/actions/lc_actiondrawcirclebyarc.cpp
+librecad/src/actions/lc_actiondrawcross.cpp
+librecad/src/actions/lc_actiondrawlineanglerel.cpp
+librecad/src/actions/lc_actiondrawlinefrompointtoline.cpp
+librecad/src/actions/lc_actiondrawlinepoints.cpp
+librecad/src/actions/lc_actiondrawlinesnake.cpp
+librecad/src/actions/lc_actiondrawparabola4points.cpp
+librecad/src/actions/lc_actiondrawparabolaFD.cpp
+librecad/src/actions/lc_actiondrawrectangle1point.cpp
+librecad/src/actions/lc_actiondrawrectangle2points.cpp
+librecad/src/actions/lc_actiondrawrectangle3points.cpp
+librecad/src/actions/lc_actiondrawslicedivide.cpp
+librecad/src/actions/lc_actiondrawstar.cpp
+librecad/src/actions/lc_actionfileexportmakercam.cpp
+librecad/src/actions/lc_actionmodifybreakdivide.cpp
+librecad/src/actions/lc_actionmodifyduplicate.cpp
+librecad/src/actions/lc_actionmodifylinegap.cpp
+librecad/src/actions/lc_actionmodifylinejoin.cpp
+librecad/src/actions/lc_actionpenapply.cpp
+librecad/src/actions/lc_actionpenpick.cpp
+librecad/src/actions/lc_actionpensyncactivebylayer.cpp
+librecad/src/actions/lc_actionsnapmiddlemanual.cpp
+librecad/src/actions/rs_actiondefault.cpp
+librecad/src/actions/rs_actiondimension.cpp
+librecad/src/actions/rs_actiondimleader.cpp
+librecad/src/actions/rs_actiondrawarctangential.cpp
+librecad/src/actions/rs_actiondrawcircle.cpp
+librecad/src/actions/rs_actiondrawcircle2p.cpp
+librecad/src/actions/rs_actiondrawcircletan3.cpp
+librecad/src/actions/rs_actiondrawline.cpp
+librecad/src/actions/rs_actiondrawlineorthtan.cpp
+librecad/src/actions/rs_actiondrawlinetangent1.cpp
+librecad/src/actions/rs_actiondrawlinetangent2.cpp
+librecad/src/actions/rs_actiondrawpolyline.cpp
+librecad/src/actions/rs_actiondrawspline.cpp
+librecad/src/actions/rs_actioneditpaste.cpp
+librecad/src/actions/rs_actionmodifycut.cpp
+librecad/src/actions/rs_actionmodifydeletefree.cpp
+librecad/src/actions/rs_actionmodifymirror.cpp
+librecad/src/actions/rs_actionmodifymove.cpp
+librecad/src/actions/rs_actionmodifyround.cpp
+librecad/src/actions/rs_actionpolylineappend.cpp
+librecad/src/actions/rs_actionpolylineequidistant.cpp
+librecad/src/actions/rs_actionpolylinesegment.cpp
+librecad/src/actions/rs_actionprintpreview.cpp
+librecad/src/actions/rs_actionselectsingle.cpp
+librecad/src/actions/rs_actionselectwindow.cpp
+librecad/src/actions/rs_actionmodifyscale.cpp
+)
+set(JWW_SRC
+	  libraries/jwwlib/src/dl_attributes.h
+        libraries/jwwlib/src/dl_codes.h
+        libraries/jwwlib/src/dl_creationinterface.h
+        libraries/jwwlib/src/dl_entities.h
+        libraries/jwwlib/src/dl_exception.h
+        libraries/jwwlib/src/dl_extrusion.h
+#        libraries/jwwlib/src/dl_jww-copy.cpp
+        libraries/jwwlib/src/dl_jww.cpp
+        libraries/jwwlib/src/dl_jww.h
+        libraries/jwwlib/src/dl_writer.h
+        libraries/jwwlib/src/dl_writer_ascii.cpp
+        libraries/jwwlib/src/dl_writer_ascii.h
+        libraries/jwwlib/src/jwtype.h
+        libraries/jwwlib/src/jwwdoc.cpp
+        libraries/jwwlib/src/jwwdoc.h
+)
+
+set(DXFRW_SRC
+	 libraries/libdxfrw/src/intern/drw_cptable932.h
+        libraries/libdxfrw/src/intern/drw_cptable936.h
+        libraries/libdxfrw/src/intern/drw_cptable949.h
+        libraries/libdxfrw/src/intern/drw_cptable950.h
+        libraries/libdxfrw/src/intern/drw_cptables.h
+        libraries/libdxfrw/src/intern/drw_dbg.cpp
+        libraries/libdxfrw/src/intern/drw_dbg.h
+        libraries/libdxfrw/src/intern/drw_reserve.h
+        libraries/libdxfrw/src/intern/drw_textcodec.cpp
+        libraries/libdxfrw/src/intern/drw_textcodec.h
+        libraries/libdxfrw/src/intern/dwgbuffer.cpp
+        libraries/libdxfrw/src/intern/dwgbuffer.h
+        libraries/libdxfrw/src/intern/dwgreader.cpp
+        libraries/libdxfrw/src/intern/dwgreader.h
+        libraries/libdxfrw/src/intern/dwgreader15.cpp
+        libraries/libdxfrw/src/intern/dwgreader15.h
+        libraries/libdxfrw/src/intern/dwgreader18.cpp
+        libraries/libdxfrw/src/intern/dwgreader18.h
+        libraries/libdxfrw/src/intern/dwgreader21.cpp
+        libraries/libdxfrw/src/intern/dwgreader21.h
+        libraries/libdxfrw/src/intern/dwgreader24.cpp
+        libraries/libdxfrw/src/intern/dwgreader24.h
+        libraries/libdxfrw/src/intern/dwgreader27.cpp
+        libraries/libdxfrw/src/intern/dwgreader27.h
+        libraries/libdxfrw/src/intern/dwgutil.cpp
+        libraries/libdxfrw/src/intern/dwgutil.h
+        libraries/libdxfrw/src/intern/dxfreader.cpp
+        libraries/libdxfrw/src/intern/dxfreader.h
+        libraries/libdxfrw/src/intern/dxfwriter.cpp
+        libraries/libdxfrw/src/intern/dxfwriter.h
+        libraries/libdxfrw/src/intern/rscodec.cpp
+        libraries/libdxfrw/src/intern/rscodec.h
+        libraries/libdxfrw/src/drw_base.cpp
+        libraries/libdxfrw/src/drw_base.h
+        libraries/libdxfrw/src/drw_classes.cpp
+        libraries/libdxfrw/src/drw_classes.h
+        libraries/libdxfrw/src/drw_entities.cpp
+        libraries/libdxfrw/src/drw_entities.h
+        libraries/libdxfrw/src/drw_header.cpp
+        libraries/libdxfrw/src/drw_header.h
+        libraries/libdxfrw/src/drw_interface.h
+        libraries/libdxfrw/src/drw_objects.cpp
+        libraries/libdxfrw/src/drw_objects.h
+        libraries/libdxfrw/src/libdwgr.cpp
+        libraries/libdxfrw/src/libdwgr.h
+        libraries/libdxfrw/src/libdxfrw.cpp
+        libraries/libdxfrw/src/libdxfrw.h
+        libraries/libdxfrw/src/main_doc.h
+)
+
+set(MUPARSER_SRC
+libraries/muparser/include/muParser.h
+        libraries/muparser/include/muParserBase.h
+        libraries/muparser/include/muParserBytecode.h
+        libraries/muparser/include/muParserCallback.h
+        libraries/muparser/include/muParserDef.h
+        libraries/muparser/include/muParserDLL.h
+        libraries/muparser/include/muParserError.h
+        libraries/muparser/include/muParserFixes.h
+        libraries/muparser/include/muParserInt.h
+        libraries/muparser/include/muParserTemplateMagic.h
+        libraries/muparser/include/muParserToken.h
+        libraries/muparser/include/muParserTokenReader.h
+	
+libraries/muparser/src/muParser.cpp
+libraries/muparser/src/muParserBase.cpp
+libraries/muparser/src/muParserBytecode.cpp
+libraries/muparser/src/muParserCallback.cpp
+libraries/muparser/src/muParserDLL.cpp
+libraries/muparser/src/muParserError.cpp
+libraries/muparser/src/muParserInt.cpp
+libraries/muparser/src/muParserTokenReader.cpp
+)
+
+qt5_wrap_ui(UI_HEADERS
+librecad/src/ui/forms/lc_dlgsplinepoints.ui
+librecad/src/ui/forms/qg_beveloptions.ui
+librecad/src/ui/forms/qg_circleoptions.ui
+librecad/src/ui/forms/qg_circletan2options.ui
+librecad/src/ui/forms/qg_dimensionlabeleditor.ui
+librecad/src/ui/forms/qg_dimoptions.ui
+librecad/src/ui/forms/qg_dlgattributes.ui
+librecad/src/ui/forms/qg_dlgcircle.ui
+librecad/src/ui/forms/qg_dlgdimension.ui
+librecad/src/ui/forms/qg_dlgdimlinear.ui
+librecad/src/ui/forms/qg_dlgimageoptions.ui
+librecad/src/ui/forms/qg_dlginitial.ui
+librecad/src/ui/forms/qg_dlginsert.ui
+librecad/src/ui/forms/qg_dlgmirror.ui
+librecad/src/ui/forms/qg_dlgmove.ui
+librecad/src/ui/forms/qg_dlgmoverotate.ui
+librecad/src/ui/forms/qg_dlgpoint.ui
+librecad/src/ui/forms/qg_dlgpolyline.ui
+librecad/src/ui/forms/qg_dlgrotate.ui
+librecad/src/ui/forms/qg_dlgrotate2.ui
+librecad/src/ui/forms/qg_exitdialog.ui
+librecad/src/ui/forms/qg_imageoptions.ui
+librecad/src/ui/forms/qg_layerdialog.ui
+librecad/src/ui/forms/qg_libraryinsertoptions.ui
+librecad/src/ui/forms/qg_linebisectoroptions.ui
+librecad/src/ui/forms/qg_lineoptions.ui
+librecad/src/ui/forms/qg_lineparalleloptions.ui
+librecad/src/ui/forms/qg_lineparallelthroughoptions.ui
+librecad/src/ui/forms/qg_linepolygon2options.ui
+librecad/src/ui/forms/qg_linepolygonoptions.ui
+librecad/src/ui/forms/qg_linerelangleoptions.ui
+librecad/src/ui/forms/qg_modifyoffsetoptions.ui
+librecad/src/ui/forms/qg_moverotateoptions.ui
+librecad/src/ui/forms/qg_mtextoptions.ui
+librecad/src/ui/forms/qg_polylineequidistantoptions.ui
+librecad/src/ui/forms/qg_polylineoptions.ui
+librecad/src/ui/forms/qg_roundoptions.ui
+librecad/src/ui/forms/qg_snapdistoptions.ui
+librecad/src/ui/forms/qg_snapmiddleoptions.ui
+librecad/src/ui/forms/qg_splineoptions.ui
+librecad/src/ui/forms/qg_textoptions.ui
+librecad/src/ui/forms/qg_trimamountoptions.ui
+librecad/src/ui/forms/qg_snaptoolbar.ui
+librecad/src/ui/forms/qg_printpreviewoptions.ui
+librecad/src/ui/forms/qg_insertoptions.ui
+librecad/src/ui/forms/qg_blockdialog.ui
+librecad/src/ui/forms/LC_DlgParabola.ui
+librecad/src/ui/forms/lc_circlebyarcoptions.ui
+librecad/src/ui/forms/lc_crossoptions.ui
+librecad/src/ui/forms/lc_duplicateoptions.ui
+librecad/src/ui/forms/lc_layerdialog_ex.ui
+librecad/src/ui/forms/lc_layertreeoptionsdialog.ui
+librecad/src/ui/forms/lc_lineanglereloptions.ui
+librecad/src/ui/forms/lc_linefrompointtolineoptions.ui
+librecad/src/ui/forms/lc_linejoinoptions.ui
+librecad/src/ui/forms/lc_lineoptions.ui
+librecad/src/ui/forms/lc_linepointsoptions.ui
+librecad/src/ui/forms/lc_modifybreakdivideoptions.ui
+librecad/src/ui/forms/lc_modifygapoptions.ui
+librecad/src/ui/forms/lc_rectangle1pointoptions.ui
+librecad/src/ui/forms/lc_rectangle2pointsoptions.ui
+librecad/src/ui/forms/lc_rectangle3pointsoptions.ui
+librecad/src/ui/forms/lc_slicedivideoptions.ui
+librecad/src/ui/forms/lc_staroptions.ui
+librecad/src/ui/forms/lc_widgetoptionsdialog.ui
+librecad/src/ui/forms/qg_activelayername.ui
+librecad/src/ui/forms/qg_arcoptions.ui
+librecad/src/ui/forms/qg_arctangentialoptions.ui
+librecad/src/ui/forms/qg_commandwidget.ui
+librecad/src/ui/forms/qg_coordinatewidget.ui
+librecad/src/ui/forms/qg_dimlinearoptions.ui
+librecad/src/ui/forms/qg_dlgarc.ui
+librecad/src/ui/forms/qg_dlgellipse.ui
+librecad/src/ui/forms/qg_dlghatch.ui
+librecad/src/ui/forms/qg_dlgimage.ui
+librecad/src/ui/forms/qg_dlgline.ui
+librecad/src/ui/forms/qg_dlgmtext.ui
+librecad/src/ui/forms/qg_dlgoptionsdrawing.ui
+librecad/src/ui/forms/qg_dlgoptionsgeneral.ui
+librecad/src/ui/forms/qg_dlgoptionsmakercam.ui
+librecad/src/ui/forms/qg_dlgscale.ui
+librecad/src/ui/forms/qg_dlgspline.ui
+librecad/src/ui/forms/qg_dlgtext.ui
+librecad/src/ui/forms/qg_lineangleoptions.ui
+librecad/src/ui/forms/qg_mousewidget.ui
+librecad/src/ui/forms/qg_selectionwidget.ui
+librecad/src/ui/forms/qg_widgetpen.ui
+librecad/src/ui/generic/colorwizard.ui
+librecad/src/ui/generic/comboboxoption.ui
+librecad/src/ui/generic/customtoolbarcreator.ui
+librecad/src/ui/generic/customwidgetcreator.ui
+librecad/src/ui/generic/textfileviewer.ui
+librecad/src/ui/generic/widgetcreator.ui
+librecad/src/ui/lc_deviceoptions.ui
+librecad/src/ui/lc_penpaletteoptionsdialog.ui
+librecad/src/ui/lc_penpalettewidget.ui
+librecad/src/ui/lc_quickinfowidget.ui
+librecad/src/ui/lc_quickinfowidgetoptionsdialog.ui
+)
+# add constants like M_PI to cmath
+if(WIN32)
+    target_compile_definitions(librecad PRIVATE _USE_MATH_DEFINES)
+    set(SOURCES
+	    ${SOURCES}
+	librecad/src/main/emu_c99.cpp
+	)
+endif(WIN32)
+
+    set(SOURCES
+	    ${SOURCES}
+	${JWW_SRC}
+	${DXFRW_SRC}
+	    ${MUPARSER_SRC}
+    )
+
+# set(CMAKE_AUTOUIC_OPTIONS --connections string)
+set(TS_DIR ../librecad/ts)
+set(TS_FILES
+librecad/ts/librecad_es_bo.ts
+librecad/ts/librecad_es_cl.ts
+librecad/ts/librecad_es_co.ts
+librecad/ts/librecad_es_do.ts
+librecad/ts/librecad_es_ec.ts
+librecad/ts/librecad_es_hn.ts
+librecad/ts/librecad_es_ni.ts
+librecad/ts/librecad_es_pa.ts
+librecad/ts/librecad_es_pe.ts
+librecad/ts/librecad_es_pr.ts
+librecad/ts/librecad_es_py.ts
+librecad/ts/librecad_es_sv.ts
+librecad/ts/librecad_es_us.ts
+librecad/ts/librecad_es_uy.ts
+librecad/ts/librecad_es_ve.ts
+librecad/ts/librecad_ar.ts
+librecad/ts/librecad_ca.ts
+librecad/ts/librecad_cs.ts
+librecad/ts/librecad_da.ts
+librecad/ts/librecad_de.ts
+librecad/ts/librecad_el.ts
+librecad/ts/librecad_en.ts
+librecad/ts/librecad_en_au.ts
+librecad/ts/librecad_es.ts
+librecad/ts/librecad_es_ar.ts
+librecad/ts/librecad_es_cr.ts
+librecad/ts/librecad_es_gt.ts
+librecad/ts/librecad_es_mx.ts
+librecad/ts/librecad_et.ts
+librecad/ts/librecad_eu.ts
+librecad/ts/librecad_fi.ts
+librecad/ts/librecad_fr.ts
+librecad/ts/librecad_gl.ts
+librecad/ts/librecad_he.ts
+librecad/ts/librecad_hi.ts
+librecad/ts/librecad_hu.ts
+librecad/ts/librecad_id_ID.ts
+librecad/ts/librecad_it.ts
+librecad/ts/librecad_ja.ts
+librecad/ts/librecad_ka.ts
+librecad/ts/librecad_ko.ts
+librecad/ts/librecad_lv.ts
+librecad/ts/librecad_mk.ts
+librecad/ts/librecad_nl.ts
+librecad/ts/librecad_no.ts
+librecad/ts/librecad_pa.ts
+librecad/ts/librecad_pl.ts
+librecad/ts/librecad_pt_br.ts
+librecad/ts/librecad_pt_pt.ts
+librecad/ts/librecad_ro_ro.ts
+librecad/ts/librecad_ru.ts
+librecad/ts/librecad_sk.ts
+librecad/ts/librecad_sl.ts
+librecad/ts/librecad_sq_al.ts
+librecad/ts/librecad_sr.ts
+librecad/ts/librecad_sv.ts
+librecad/ts/librecad_ta.ts
+librecad/ts/librecad_th.ts
+librecad/ts/librecad_tr.ts
+librecad/ts/librecad_uk.ts
+librecad/ts/librecad_zh_cn.ts
+librecad/ts/librecad_zh_tw.ts
+librecad/plugins/ts/plugins_ar.ts
+librecad/plugins/ts/plugins_ca.ts
+librecad/plugins/ts/plugins_cs.ts
+librecad/plugins/ts/plugins_da.ts
+librecad/plugins/ts/plugins_de.ts
+librecad/plugins/ts/plugins_el.ts
+librecad/plugins/ts/plugins_en.ts
+librecad/plugins/ts/plugins_en_au.ts
+librecad/plugins/ts/plugins_es.ts
+librecad/plugins/ts/plugins_es_ar.ts
+librecad/plugins/ts/plugins_es_bo.ts
+librecad/plugins/ts/plugins_es_cl.ts
+librecad/plugins/ts/plugins_es_co.ts
+librecad/plugins/ts/plugins_es_cr.ts
+librecad/plugins/ts/plugins_es_do.ts
+librecad/plugins/ts/plugins_es_ec.ts
+librecad/plugins/ts/plugins_es_gt.ts
+librecad/plugins/ts/plugins_es_hn.ts
+librecad/plugins/ts/plugins_es_mx.ts
+librecad/plugins/ts/plugins_es_ni.ts
+librecad/plugins/ts/plugins_es_pa.ts
+librecad/plugins/ts/plugins_es_pe.ts
+librecad/plugins/ts/plugins_es_pr.ts
+librecad/plugins/ts/plugins_es_py.ts
+librecad/plugins/ts/plugins_es_sv.ts
+librecad/plugins/ts/plugins_es_us.ts
+librecad/plugins/ts/plugins_es_uy.ts
+librecad/plugins/ts/plugins_es_ve.ts
+librecad/plugins/ts/plugins_et.ts
+librecad/plugins/ts/plugins_eu.ts
+librecad/plugins/ts/plugins_fi.ts
+librecad/plugins/ts/plugins_fr.ts
+librecad/plugins/ts/plugins_gl.ts
+librecad/plugins/ts/plugins_he.ts
+librecad/plugins/ts/plugins_hi.ts
+librecad/plugins/ts/plugins_hu.ts
+librecad/plugins/ts/plugins_id_ID.ts
+librecad/plugins/ts/plugins_it.ts
+librecad/plugins/ts/plugins_ja.ts
+librecad/plugins/ts/plugins_ka.ts
+librecad/plugins/ts/plugins_ko.ts
+librecad/plugins/ts/plugins_lv.ts
+librecad/plugins/ts/plugins_mk.ts
+librecad/plugins/ts/plugins_nl.ts
+librecad/plugins/ts/plugins_no.ts
+librecad/plugins/ts/plugins_pa.ts
+librecad/plugins/ts/plugins_pl.ts
+librecad/plugins/ts/plugins_pt_br.ts
+librecad/plugins/ts/plugins_pt_pt.ts
+librecad/plugins/ts/plugins_ro_ro.ts
+librecad/plugins/ts/plugins_ru.ts
+librecad/plugins/ts/plugins_sk.ts
+librecad/plugins/ts/plugins_sl.ts
+librecad/plugins/ts/plugins_sq_al.ts
+librecad/plugins/ts/plugins_sr.ts
+librecad/plugins/ts/plugins_sv.ts
+librecad/plugins/ts/plugins_ta.ts
+librecad/plugins/ts/plugins_th.ts
+librecad/plugins/ts/plugins_tr.ts
+librecad/plugins/ts/plugins_uk.ts
+librecad/plugins/ts/plugins_zh_cn.ts
+librecad/plugins/ts/plugins_zh_tw.ts
+)
+set(QRC_FILES
+librecad/res/actions/actions.qrc
+librecad/res/extui/extui.qrc
+librecad/res/icons/icons.qrc
+librecad/res/main/main.qrc
+librecad/res/ui/ui.qrc
+licenses/licenses.qrc
+)
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+add_executable(librecad
+	${UI_HEADERS}
+	${SOURCES}
+        ${QRC_FILES}
+	${QM_FILES}
+ )
+target_link_libraries(librecad PRIVATE Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg Qt5::Network)
+set_target_properties(librecad PROPERTIES
+	WIN32_EXECUTABLE ON
+	MACOSX_BUNDLE ON
+   AUTOUIC_OPTIONS "--connections string")
+set_property(TARGET librecad PROPERTY AUTOUIC_OPTIONS --connections string)
+install(TARGETS librecad RUNTIME DESTINATION bin)
+#set(autouic_options
+#		--connections string
+#)
+#set_property(TARGET LibreCAD APPEND PROPERTY
+#  INTERFACE_AUTOUIC_OPTIONS ${autouic_options}
+#)
+#target_link_libraries(LibreCAD Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg)
+#target_link_libraries(LibreCAD Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg)

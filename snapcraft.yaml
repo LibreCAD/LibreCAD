@@ -1,5 +1,5 @@
 name: librecad
-version: '2.2.1-rc4'
+version: '2.2.1.1-rc'
 grade: stable
 base: core22
 confinement: strict
@@ -42,10 +42,10 @@ plugs:
     interface: content
     target: $SNAP/data-dir/sounds
     default-provider: gtk-common-themes
-  kf5-5-113-qt-5-15-11-core22:
-    content: kf5-5-113-qt-5-15-11-core22-all
+  kf5-core22-sdk:
+    content: kf5-core22-sdk
     interface: content
-    default-provider: kf5-5-113-qt-5-15-11-core22
+    default-provider: kf5-core22-sdk
     target: $SNAP/kf5
   gtk-3-themes:
     interface: content
@@ -54,38 +54,40 @@ plugs:
 
 parts:
   librecad:
-    plugin: make #qmake
+    plugin: cmake #qmake
     #qmake-parameters:
     #  - "QMAKE_CFLAGS+=-march=x86_64"
     #  - "QMAKE_CXXFLAGS+=-march=x86-64"
-    #build-environment:
-    #  - QT_SELECT: qt5 #qt6
+    build-environment:
+      - QT_SELECT: qt5 #qt6
     source: .
     build-packages:
       - build-essential
-      #- qtbase5-dev #qt6-base-dev
-      #- qttools5-dev #qt6-tools-dev
+      - qtbase5-dev #qt6-base-dev
+      - qttools5-dev #qt6-tools-dev
       #- qttools5-dev-tools #qt6-tools-dev-tools
-      #- librsvg2-bin
-      #- libqt5waylandclient5-dev #qt6-wayland-dev
+      - librsvg2-bin
+      - libqt5waylandclient5-dev #qt6-wayland-dev
       - libfreetype6-dev
-      #- libicu-dev
-      #- libqt5opengl5-dev #libqt6opengl6-dev
+      - libicu-dev
+      - libqt5opengl5-dev #libqt6opengl6-dev
       #- libcairo2-dev
       #- libpango-1.0-0
       #- libpango1.0-dev
       - libboost-dev
       - libgl1-mesa-dev # avoid openGL fatal error: GL/gl.h: No such file or directory
-      #- libqt5svg5-dev #libqt6svg6-dev
+      - libqt5svg5-dev #libqt6svg6-dev
       #- libgtest-dev
       #- libcurl4-gnutls-dev
       #- libgtk-3-dev
+      - qt3d5-dev
       - rsync
       
     override-build: |
       # craftctl default
       export QT_SELECT=qt5
-      /snap/kf5-5-113-qt-5-15-11-core22-sdk/current/usr/lib/qt5/bin/qmake -r 'QMAKE_CFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_CXXFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_LFLAGS+=-L$CRAFT_STAGE/lib -L$CRAFT_STAGE/usr/lib -L$CRAFT_STAGE/usr/lib/x86_64-linux-gnu'
+      cmake ../../..
+      #/snap/kf5-5-113-qt-5-15-11-core22-sdk/current/usr/lib/qt5/bin/qmake -r 'QMAKE_CFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_CXXFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_LFLAGS+=-L$CRAFT_STAGE/lib -L$CRAFT_STAGE/usr/lib -L$CRAFT_STAGE/usr/lib/x86_64-linux-gnu'
       make -r -j$(nproc)
 
     #stage-packages:
@@ -96,23 +98,26 @@ parts:
       - -usr/share/pkgconfig
 
     override-stage: |
-      #echo "1"
-      #echo $PWD 
-      #find .. -type f -name librecad
-      export SRC_DIR=../parts/librecad/build/unix
+      ls
+      export SRC_DIR=../parts/librecad/build/
       echo $CRAFT_STAGE
       mkdir -p $CRAFT_STAGE/usr/bin
-      mkdir -p $CRAFT_STAGE/usr/share/librecad
+      mkdir -p $CRAFT_STAGE/usr/share/icons
+      mkdir -p $CRAFT_STAGE/usr/share/librecad/resources/qm
       mkdir -p $CRAFT_STAGE/usr/share/applications
       mkdir -p usr/bin
       mkdir -p usr/share/librecad
       cp -a $SRC_DIR/librecad $CRAFT_STAGE/usr/bin/
       #cp -a $SRC_DIR/ttf2lff $CRAFT_STAGE/usr/bin/
-      cp -a $SRC_DIR/resources/* $CRAFT_STAGE/usr/share/librecad/
+      cp -a $SRC_DIR/*.qm $CRAFT_STAGE/usr/share/librecad/resources/qm
+      rsync -vaut ../librecad/support/* $CRAFT_STAGE/usr/share/librecad/resources/
       export DESKTOP_DIR=../parts/librecad/src/desktop
+      find ../CI -type f -name librecad.svg -exec cp -av '{}' $CRAFT_STAGE/usr/share/icons/ ';'
       cp -a $DESKTOP_DIR/*.desktop $CRAFT_STAGE/usr/share/applications/org.librecad.librecad.desktop
+      sed -i'' -e 's:^\s*Icon=.*$:Icon=/usr/share/icons/librecad.svg:' $CRAFT_STAGE/usr/share/applications/org.librecad.librecad.desktop
       cp -a $DESKTOP_DIR/org.librecad.*.xml $CRAFT_STAGE/usr/share/applications/org.librecad.librecad.xml
       craftctl default
+
     override-prime: |
       rsync -av ../stage/* ./
       craftctl default
