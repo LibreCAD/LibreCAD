@@ -960,7 +960,16 @@ set_target_properties(librecad PROPERTIES
 	MACOSX_BUNDLE ON
    AUTOUIC_OPTIONS "--connections string")
 set_property(TARGET librecad PROPERTY AUTOUIC_OPTIONS --connections string)
+
+find_package(Freetype REQUIRED)
+
+add_executable(ttf2lff
+	tools/ttf2lff/main.cpp
+)
+target_include_directories(ttf2lff PRIVATE ${FREETYPE_INCLUDE_DIRS})
+target_link_libraries(ttf2lff ${FREETYPE_LIBRARIES})
 install(TARGETS librecad RUNTIME DESTINATION bin)
+install(TARGETS ttf2lff RUNTIME DESTINATION bin)
 #set(autouic_options
 #		--connections string
 #)
