@@ -313,8 +313,6 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
     // arrow size:
     double arrowSize = getArrowSize()*dimscale;
 
-    // arrow angles:
-    double arrowAngle1, arrowAngle2;
 
     RS_Pen pen(getDimensionLineColor(),
            getDimensionLineWidth(),
@@ -380,22 +378,22 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
     bool outsideArrows = (textIntersectionLength+3*arrowSize) > distance;
 
     // add arrows
-    if (outsideArrows==false) {
-        arrowAngle1 = dimensionLine->getAngle2();
-        arrowAngle2 = dimensionLine->getAngle1();
-    } else {
-        arrowAngle1 = dimensionLine->getAngle1();
-        arrowAngle2 = dimensionLine->getAngle2();
+    // arrow angles:
+    double arrowAngle1 = outsideArrows ? dimensionLine->getAngle1() : dimensionLine->getAngle2();
+    double arrowAngle2 = outsideArrows ? dimensionLine->getAngle2() : dimensionLine->getAngle1();
+    const bool showArrows = arrowSize > 1e-6 * p1.distanceTo(p2);
+    if (outsideArrows) {
 
         // extend dimension line outside arrows
-        RS_Vector dir = RS_Vector::polar(arrowSize*2, dimensionLine->getAngle1());
-        dimensionLineOutside1 = new RS_Line{this, p1 - dir, p1};
-        dimensionLineOutside2 = new RS_Line{this, p2 + dir, p2};
+        if (showArrows) {
+            auto dir = RS_Vector::polar(arrowSize*2, dimensionLine->getAngle1());
+            dimensionLineOutside1 = new RS_Line{this, p1 - dir, p1};
+            dimensionLineOutside2 = new RS_Line{this, p2 + dir, p2};
+        }
 
         // move text to the side if it won't fit either
-        RS_Vector distH;
         if (textIntersectionLength>distance && autoText) {
-            distH.setPolar(textIntersectionLength/2.0+arrowSize*2+distance/2.0,
+            RS_Vector  distH = RS_Vector::polar(textIntersectionLength/2.0+arrowSize*2+distance/2.0,
                            arrowAngle1);
             text->move(distH);
             textPos = text->getInsertionPoint();
@@ -403,16 +401,15 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
         }
     }
     double dimtsz=getTickSize()*dimscale;
-    bool displayArrows = dimtsz < 0.01;
+    bool displayArrows = dimtsz < 0.01 && showArrows;
     if(displayArrows) {
         //display arrow
         // Arrows:
-        RS_SolidData sd;
-        RS_Solid* arrow;
+        RS_SolidData sd{};
 
         if (arrow1) {
             // arrow 1
-            arrow = new RS_Solid(this, sd);
+            auto arrow = new RS_Solid(this, sd);
             arrow->shapeArrow(p1,
                               arrowAngle1,
                               arrowSize);
@@ -423,7 +420,7 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
 
         if (arrow2) {
             // arrow 2:
-            arrow = new RS_Solid(this, sd);
+            auto arrow = new RS_Solid(this, sd);
             arrow->shapeArrow(p2,
                               arrowAngle2,
                               arrowSize);
@@ -435,12 +432,11 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
         //display ticks
         // Arrows:
 
-        RS_Line* tick;
         RS_Vector tickVector = RS_Vector::polar(dimtsz,arrowAngle1 + M_PI*0.25); //tick is 45 degree away
 
         if (arrow1) {
             // tick 1
-            tick = new RS_Line(this, p1-tickVector, p1+tickVector);
+            auto tick = new RS_Line(this, p1-tickVector, p1+tickVector);
             tick->setPen(pen);
             tick->setLayer(nullptr);
             addEntity(tick);
@@ -448,7 +444,7 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
 
         if (arrow2) {
             // tick 2:
-            tick = new RS_Line(this, p2-tickVector, p2+tickVector);
+            auto tick = new RS_Line(this, p2-tickVector, p2+tickVector);
             tick->setPen(pen);
             tick->setLayer(nullptr);
             addEntity(tick);
