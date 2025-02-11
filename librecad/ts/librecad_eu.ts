@@ -1525,7 +1525,7 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation type="unfinished">Irudia izten</translation>
+        <translation>Irudia ixten</translation>
     </message>
     <message>
         <source>Save changes to the following item?
@@ -1539,7 +1539,7 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Gorde &amp;bezala</translation>
+        <translation>Gorde &amp;honela</translation>
     </message>
     <message>
         <source>&amp;Save %1</source>
@@ -1607,7 +1607,7 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Hamartarra</translation>
     </message>
     <message>
         <source>Dock</source>
@@ -1640,7 +1640,7 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Zulip &amp;Chat</translation>
     </message>
     <message>
         <source>&amp;Release Information</source>
@@ -1882,7 +1882,7 @@ beste lehio batean</translation>
     </message>
     <message>
         <source>/ColorBox</source>
-        <translation type="unfinished"></translation>
+        <translation>/KoloreKaxa</translation>
     </message>
     <message>
         <source>Custom Picked</source>
@@ -3316,7 +3316,7 @@ Mesedez, aukeratu irudietan erabili nahi dituzun unitateak eta hizkuntza.&lt;br&
     </message>
     <message>
         <source>Tick size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarte tamaina:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3388,7 +3388,7 @@ Mesedez, aukeratu irudietan erabili nahi dituzun unitateak eta hizkuntza.&lt;br&
     </message>
     <message>
         <source>Length to enlarge over dimension line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">kota lerroa handitzeko luzeera</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
