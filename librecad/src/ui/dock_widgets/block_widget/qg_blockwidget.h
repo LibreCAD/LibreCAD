@@ -38,6 +38,10 @@ class QG_ActionHandler;
 class QTableView;
 class QLineEdit;
 
+class RS_Block;
+class RS_BlockList;
+class QG_BlockModel;
+
 
 /**
  * Implementation of a model to use in QG_BlockWidget
@@ -47,19 +51,21 @@ public:
     enum {
         VISIBLE,
         NAME,
-        LAST
+        LAST = 2
     };
-    QG_BlockModel(QObject * parent = 0);
+    QG_BlockModel(QObject * parent = nullptr);
     Qt::ItemFlags flags ( const QModelIndex & /*index*/ ) const override {
             return Qt::ItemIsSelectable|Qt::ItemIsEnabled;}
-    int columnCount(const QModelIndex &/*parent*/) const  override {return LAST;}
-    int rowCount ( const QModelIndex & parent = QModelIndex() ) const override;
+    int columnCount(const QModelIndex &/*parent*/) const  override {
+        return static_cast<int>(LAST);
+    }
+    int rowCount ( const QModelIndex & parent = {} ) const override;
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const override;
     QModelIndex parent ( const QModelIndex & index ) const override;
-    QModelIndex index ( int row, int column, const QModelIndex & parent = QModelIndex() ) const override;
+    QModelIndex index ( int row, int column, const QModelIndex & parent = {} ) const override;
     void setBlockList(RS_BlockList* bl);
-    RS_Block *getBlock( int row );
-    QModelIndex getIndex (RS_Block * blk);
+    RS_Block *getBlock( int row) const;
+    QModelIndex getIndex (RS_Block * blk) const;
 
     RS_Block* getActiveBlock() const { return activeBlock; }
     void setActiveBlock(RS_Block* b) { activeBlock = b; }

@@ -816,8 +816,14 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: processing container: %s", name_old.toLatin1().data());
     // rename if needed
     if (graphic->findBlock(name_old)) {
-        name_new = graphic->getBlockList()->newName(name_old);
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: new block name: %s", name_new.toLatin1().data());
+        if (insertBlock->getParent() == graphic) {
+            // If block is already in graphic, only paste a new insert
+            pasteEntity(entity, container);
+            return true;
+        } else {
+            name_new = graphic->getBlockList()->newName(name_old);
+            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: new block name: %s", name_new.toLatin1().data());
+        }
     }
     blocksDict[name_old] = name_new;
     // make new block in the destination
