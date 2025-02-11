@@ -90,10 +90,14 @@ parts:
       #/snap/kf5-5-113-qt-5-15-11-core22-sdk/current/usr/lib/qt5/bin/qmake -r 'QMAKE_CFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_CXXFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_LFLAGS+=-L$CRAFT_STAGE/lib -L$CRAFT_STAGE/usr/lib -L$CRAFT_STAGE/usr/lib/x86_64-linux-gnu'
       make -r -j$(nproc)
 
-    #stage-packages:
-      #- libfreetype6
-      #- libqt5gui5 #libqt6gui6
-      #- libqt5printsupport5 #libqt6printsupport6
+    stage-packages:
+      - libfreetype6
+      - libqt5gui5 #libqt6gui6
+      - libqt5pdf5 #libqt6gui6
+      - libqt5svg5 #libqt6gui6
+      - libqt5printsupport5 #libqt6printsupport6
+      - libqt5waylandclient5
+
     stage:
       - -usr/share/pkgconfig
 
