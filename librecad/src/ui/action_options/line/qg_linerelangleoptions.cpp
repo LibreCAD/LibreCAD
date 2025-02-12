@@ -130,7 +130,7 @@ void QG_LineRelAngleOptions::setLengthToActionAndView(QString val){
 
 void QG_LineRelAngleOptions::setAngleToActionAndView(QString val){
     double angle;
-    if (toDoubleAngle(val, angle, 1.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 1.0, false)){
         action->setAngle(angle);
         ui->leAngle->setText(fromDouble(angle));
     }

@@ -96,6 +96,8 @@ protected:
     bool highlightEntitiesOnHover = false;
     bool highlightEntitiesRefPointsOnHover = false;
 
+    bool m_doNotAllowNonDecimalAnglesInput = false;
+
     virtual void doTrigger(){};
 
     void deletePreview();
@@ -202,7 +204,7 @@ protected:
     bool parseToWCSAngle(const QString &c, double &wcsAngleRad);
     bool parseToUCSBasisAngle(const QString &c, double& ucsBasisAngleRad);
     bool parseToRelativeAngle(const QString&c, double &ucsBasisAngleRad);
-
+    double evalAngleValue(const QString &c, bool *ok) const;
     void initFromSettings() override;
 };
 #endif

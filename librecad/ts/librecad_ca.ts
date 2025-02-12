@@ -657,12 +657,12 @@ la distància entre els punts=%2 és més gran que el diàmetre=%3</translation>
 <context>
     <name>LC_ActionDrawLineAngleRel</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="443"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="442"/>
         <source>Select base line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="446"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="445"/>
         <source>Specify length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2983,22 +2983,22 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="63"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="64"/>
         <source>UCS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="63"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="64"/>
         <source>UCS operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="64"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="63"/>
         <source>Named Views</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="64"/>
+        <location filename="../src/ui/actions/lc_actiongroupmanager.cpp" line="63"/>
         <source>Persistent Views operations</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14978,7 +14978,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2921"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1200"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1292"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1294"/>
         <source>Dwg Units</source>
         <translation>Unitats de dibuix</translation>
     </message>
@@ -15019,7 +15019,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1198"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1290"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1292"/>
         <source>Screen %</source>
         <translation>% Pantalla</translation>
     </message>
@@ -15027,32 +15027,32 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
 <context>
     <name>QG_DlgOptionsGeneral</name>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="908"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="910"/>
         <source>Preferences</source>
         <translation>Preferències</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4964"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4974"/>
         <source>Translations:</source>
         <translation>Traduccions:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5051"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5061"/>
         <source>Hatch Patterns:</source>
         <translation>Patrons d&apos;ombreig:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5013"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5023"/>
         <source>Fonts:</source>
         <translation>Lletres:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4929"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4939"/>
         <source>Part Libraries:</source>
         <translation>Biblioteques de components:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4860"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4870"/>
         <source>Language</source>
         <translation>Idioma</translation>
     </message>
@@ -15066,7 +15066,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation>Preferències de l&apos;aplicació</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4436"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4446"/>
         <source>Defaults for new drawings</source>
         <translation>Valors predeterminats per als dibuixos nous</translation>
     </message>
@@ -15075,17 +15075,17 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation type="vanished">&amp;Aparença</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4893"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4903"/>
         <source>&amp;GUI Language:</source>
         <translation>Idioma de la interfície &amp;gràfica:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4866"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4876"/>
         <source>&amp;Command Language:</source>
         <translation>Idio&amp;ma de la línia d&apos;ordres:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4910"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4920"/>
         <source>&amp;Paths</source>
         <translation>&amp;Camins</translation>
     </message>
@@ -15095,7 +15095,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation>Valors pre&amp;determinats</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4501"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4511"/>
         <source>&amp;Unit:</source>
         <translation>&amp;Unitat:</translation>
     </message>
@@ -15127,7 +15127,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation type="vanished">Color del ressal&amp;tat:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="909"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="911"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>Reinicieu l&apos;aplicació per aplicar tots els canvis.</translation>
     </message>
@@ -15142,7 +15142,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation>Alt+U</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4295"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4305"/>
         <source>Program Defaults</source>
         <translation>Valors predeterminats del programa</translation>
     </message>
@@ -15151,12 +15151,12 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation type="vanished">Unitat per al dibuix.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4308"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4318"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>Temps en minuts entre els desaments automàtics del document.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4334"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4344"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>Si està marcada, LibreCAD generarà automàticament una còpia de seguretat del dibuix actual.</translation>
     </message>
@@ -15165,7 +15165,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation type="vanished">Còpia de seguretat automàtica</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5100"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5110"/>
         <source>Template:</source>
         <translation>Plantilla:</translation>
     </message>
@@ -15209,18 +15209,18 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2402"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2480"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3853"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5147"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5163"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5179"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5202"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5218"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5255"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5377"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5157"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5173"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5189"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5212"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5228"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5265"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5387"/>
         <source> px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5137"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5147"/>
         <source>Line length:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15229,27 +15229,27 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation type="vanished">Modifica la capa de les entitats seleccionades</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4270"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4280"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4531"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4541"/>
         <source>Left  Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4521"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4531"/>
         <source>RIght Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4459"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4469"/>
         <source>Orthogonal Grid</source>
         <translation type="unfinished">Quadrícula ortogonal</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4541"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4551"/>
         <source>Top Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15322,42 +15322,32 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5316"/>
-        <source>If this method is selected, arcs are drawn using method of QT library. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5319"/>
-        <source>Qt-native drawing method</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5332"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5342"/>
         <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5399"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5409"/>
         <source>If selected, the same rendering settings will be applied also to circles.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4324"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4334"/>
         <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4327"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4337"/>
         <source>Show current command icon in options toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4401"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4411"/>
         <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4404"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4414"/>
         <source>Show internal IDs of entities</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15372,77 +15362,77 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4733"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4743"/>
         <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4739"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4749"/>
         <source>Duplicate prompt messages of actions in statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4630"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4640"/>
         <source>If checked, new drawing will be created with grid disabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4633"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4643"/>
         <source>Grid is Off </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4809"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4819"/>
         <source>New Versions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4815"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4825"/>
         <source>Check GitHub for new releases of LibreCAD on program startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4818"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4828"/>
         <source>Check for new versions on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4825"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4835"/>
         <source>If checked, pre-release versions will be ignored</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4831"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4841"/>
         <source>Ignore pre-release versions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4769"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4779"/>
         <source>Open last opened files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4756"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4766"/>
         <source>If enabled, drop-down menus may become floating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4759"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4769"/>
         <source>Allow menus detaching</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4746"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4756"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4749"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4759"/>
         <source>Use &quot;classic&quot; statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4663"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4673"/>
         <source>Clear Settings</source>
         <translation>Neteja les preferències</translation>
     </message>
@@ -15451,7 +15441,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation type="vanished">restaura la disposició i la geometria del programa a l&apos;estat original</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4684"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4694"/>
         <source>Layout</source>
         <translation>Disposició</translation>
     </message>
@@ -15460,7 +15450,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation type="vanished">restaura el programa al seu estat original</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4700"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4710"/>
         <source>All</source>
         <translation>Tot</translation>
     </message>
@@ -15483,33 +15473,33 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation>Oculta el cursor amb el forçament</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4789"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4799"/>
         <source>Start in tab mode</source>
         <translation>Comença amb el mode de pestanyes</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4657"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4710"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4667"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4720"/>
         <source>Startup</source>
         <translation>Iniciació</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4799"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4809"/>
         <source>Display loading screen</source>
         <translation>Mostra la pantalla de càrrega</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4779"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4789"/>
         <source>Start with main window maximized</source>
         <translation>Comença amb la finestra principal maximitzada</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4726"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4736"/>
         <source>Enable CAD dockwidgets</source>
         <translation>Habilita els acobladors d&apos;estris CAD</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4716"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4726"/>
         <source>Enable CAD toolbars</source>
         <translation>Habilita les barres d&apos;eines CAD</translation>
     </message>
@@ -15524,12 +15514,12 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation>#1E90FF</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1051"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1053"/>
         <source>Clear settings</source>
         <translation>Neteja els ajusts</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1052"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1054"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation>Això també inclou els menús personalitzats i les barres d&apos;eines personalitzades. Voleu continuar?</translation>
     </message>
@@ -15539,7 +15529,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Un cop habilitada, activant una capa modificaria totes les entitats seleccionades d’aquesta nova capa. Per a canviar de capa varies entitats: primer selecciona les entitats desitjades i després activa la capa en l’estri de capes. Això fa que totes les entitats seleccionades pertanyin a la nova capa.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5110"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5120"/>
         <source>Variable File:</source>
         <translation>Fitxer de variables:</translation>
     </message>
@@ -15554,7 +15544,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation>Nombre d’entitats a previsualitzar:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4301"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4311"/>
         <source>Don&apos;t use native OS file open dialog</source>
         <translation>No utilitzis el diàleg d&apos;obertura de fitxers del SO nadiu</translation>
     </message>
@@ -16366,82 +16356,82 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation type="unfinished">Mida en unitats del dibuix</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5131"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5141"/>
         <source>Rendering Minimums</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5252"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5262"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5192"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5202"/>
         <source>Height of text line:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5245"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5255"/>
         <source>Ellipse Major Axis:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5215"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5225"/>
         <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5160"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5170"/>
         <source>If screen length of line is less than value, the line is drawn as point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5199"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5209"/>
         <source>If screen radius of circle is less than value, circle is drawn as point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5274"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5284"/>
         <source>Circle Radius:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5231"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5241"/>
         <source>Arc Radius:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5176"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5186"/>
         <source>If screen radius of arc is less than value, arc is drawn as point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5238"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5248"/>
         <source>Ellipse Minor Axis:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5144"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5154"/>
         <source>If screen size for major ellipse axis is less than value, ellipse is drawn as point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5431"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5441"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5434"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5444"/>
         <source>Draw text as draft within paning operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5418"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5428"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5421"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5431"/>
         <source>Draw text as draft in preview</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16657,103 +16647,103 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4391"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4401"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4394"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4404"/>
         <source>Show Close button on drawings tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2029"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4378"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4388"/>
         <source>Always</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4383"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4393"/>
         <source>Active Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4344"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4354"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4347"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4357"/>
         <source>Show keyboard shortcuts in actions tooltips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4337"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4347"/>
         <source>Auto save backup each</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4354"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4364"/>
         <source>If checked, location of dialog will not be saved, but size will</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4360"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4370"/>
         <source>Persist dialog size only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4311"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4321"/>
         <source> minutes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4367"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4377"/>
         <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4370"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4380"/>
         <source>Persistent dialogs location and size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4257"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4267"/>
         <source>Keyboard Settings</source>
         <translation>Ajustaments del teclat</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4263"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4273"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
         <translation>Avaluar ordres quan es premi la BARRA ESPAIADORA</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4488"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4498"/>
         <source>Drawing units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4886"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4896"/>
         <source>Languages for commands in Cmd Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4879"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4889"/>
         <source>Language to use for GUI and messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4796"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4806"/>
         <source>Defines whether splash screen will be shown on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4786"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4796"/>
         <source>Controls default mode for drawings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4776"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4786"/>
         <source>If checked, after start the main window will be maximized</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16980,77 +16970,97 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5125"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4241"/>
+        <source>If checked, it will be possible to enter value of angle in decimal degrees only. Otherwise, angles in surveyor, radiant, imperial degrees and bearing formats are allowed for input.  </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4244"/>
+        <source>Allow angles input in decimal degrees only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5135"/>
         <source>Renderer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5412"/>
-        <source>Operations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5428"/>
-        <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5297"/>
-        <source>Defines how arcs are rendered in UI. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5300"/>
-        <source>Arcs Rendering Method</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5306"/>
-        <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5309"/>
-        <source>Interpolate by line segments</source>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5316"/>
+        <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5326"/>
+        <source>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5329"/>
+        <source>Qt-native drawing method (unexact near endpoints)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5422"/>
+        <source>Operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5438"/>
+        <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5307"/>
+        <source>Defines how arcs are rendered in UI. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5310"/>
+        <source>Arcs Rendering Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5319"/>
+        <source>Interpolate by line segments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5336"/>
         <source>Single segment angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5335"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5345"/>
         <source>Determine segments by max sagitta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5342"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5352"/>
         <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5345"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5355"/>
         <source>Use fixed segment angle value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5352"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5362"/>
         <source>Value of fixed segment&apos;s angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5355"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5365"/>
         <source> degrees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5374"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5384"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5402"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5412"/>
         <source>Render circles in the same way as arcs.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17065,47 +17075,47 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4411"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4421"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4414"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4424"/>
         <source>Changing view only modifies drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4766"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4776"/>
         <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4442"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4452"/>
         <source>Angles Positive Direction:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4452"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4462"/>
         <source>Zero base angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4475"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4485"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4514"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4524"/>
         <source>degrees.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4581"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4591"/>
         <source>Counterclockwise, 90 degrees is north.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4610"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4620"/>
         <source>Clockwise, 90 degrees is sourth.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17114,67 +17124,67 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
         <translation type="obsolete">Altres</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4939"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4974"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4985"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5075"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5089"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4949"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4995"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5085"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5099"/>
         <source>Click to select directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5117"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5127"/>
         <source>Path to folder with fonts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5044"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5054"/>
         <source>Path to file with keyboard shortcuts mapping variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4681"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4691"/>
         <source>Restores program geometry/layout to original state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4697"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4707"/>
         <source>Restores the program settings to its original state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4953"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5061"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4963"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5071"/>
         <source>Click to select file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5037"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5047"/>
         <source>Path to folder with hatch patterns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4996"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5006"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5030"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5040"/>
         <source>Path to file with variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5006"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5016"/>
         <source>Path to folder with translation files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5023"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5033"/>
         <source>Shortcuts Mappings:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4273"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4283"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -19909,122 +19919,122 @@ Voleu substituir-ho?</translation>
         <translation>Tots els fitxers (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="210"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="266"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="206"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="262"/>
         <source>Inch</source>
         <translation>Polzada</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="212"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="268"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="208"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="264"/>
         <source>Foot</source>
         <translation>Peu</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="214"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="270"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="210"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="266"/>
         <source>Mile</source>
         <translation>Milla</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="216"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="272"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="212"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="268"/>
         <source>Millimeter</source>
         <translation>Mil·límetre</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="218"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="274"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="214"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="270"/>
         <source>Centimeter</source>
         <translation>Centímetre</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="220"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="276"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="216"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="272"/>
         <source>Meter</source>
         <translation>Metre</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="222"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="278"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="218"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="274"/>
         <source>Kilometer</source>
         <translation>Quilòmetre</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="224"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="280"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="220"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="276"/>
         <source>Microinch</source>
         <translation>Micropolzada</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="226"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="282"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="222"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="278"/>
         <source>Mil</source>
         <translation>Mil·lipolzada</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="228"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="284"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="224"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="280"/>
         <source>Yard</source>
         <translation>Iarda</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="230"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="286"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="226"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="282"/>
         <source>Angstrom</source>
         <translation>Àngstrom</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="232"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="288"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="228"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="284"/>
         <source>Nanometer</source>
         <translation>Nanòmetre</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="234"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="290"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="230"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="286"/>
         <source>Micron</source>
         <translation>Micra</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="236"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="292"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="232"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="288"/>
         <source>Decimeter</source>
         <translation>Decímetre</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="238"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="294"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="234"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="290"/>
         <source>Decameter</source>
         <translation>Decàmetre</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="240"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="296"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="236"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="292"/>
         <source>Hectometer</source>
         <translation>Hectòmetre</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="242"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="298"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="238"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="294"/>
         <source>Gigameter</source>
         <translation>Gigàmetre</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="244"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="300"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="240"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="296"/>
         <source>Astro</source>
         <translation>Unitat astronòmica</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="246"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="302"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="242"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="298"/>
         <source>Lightyear</source>
         <translation>Any llum</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="248"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="304"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="244"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="300"/>
         <source>Parsec</source>
         <translation>Parsec</translation>
     </message>
@@ -21386,7 +21396,7 @@ Voleu substituir-ho?</translation>
         <translation type="vanished">calcular</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="208"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
         <translation>Cap</translation>
@@ -23221,205 +23231,205 @@ Voleu substituir-ho?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="943"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="939"/>
         <source>Custom</source>
         <comment>Paper format</comment>
         <translation type="unfinished">Personalitzat</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="945"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="941"/>
         <source>A0</source>
         <comment>Paper format</comment>
         <translation type="unfinished">A0</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="946"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="942"/>
         <source>A1</source>
         <comment>Paper format</comment>
         <translation type="unfinished">A1</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="947"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="943"/>
         <source>A2</source>
         <comment>Paper format</comment>
         <translation type="unfinished">A2</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="948"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="944"/>
         <source>A3</source>
         <comment>Paper format</comment>
         <translation type="unfinished">A3</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="949"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="945"/>
         <source>A4</source>
         <comment>Paper format</comment>
         <translation type="unfinished">A4</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="953"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="949"/>
         <source>Letter / ANSI A</source>
         <comment>Paper format</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="954"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="950"/>
         <source>Legal</source>
         <comment>Paper format</comment>
         <translation type="unfinished">Legal</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="955"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="951"/>
         <source>Tabloid / ANSI B</source>
         <comment>Paper format</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="959"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="955"/>
         <source>ANSI C</source>
         <comment>Paper format</comment>
         <translation type="unfinished">ANSI C</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="960"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="956"/>
         <source>ANSI D</source>
         <comment>Paper format</comment>
         <translation type="unfinished">ANSI D</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="961"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="957"/>
         <source>ANSI E</source>
         <comment>Paper format</comment>
         <translation type="unfinished">ANSI E</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="963"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="959"/>
         <source>Arch A</source>
         <comment>Paper format</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="964"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="960"/>
         <source>Arch B</source>
         <comment>Paper format</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="965"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="961"/>
         <source>Arch C</source>
         <comment>Paper format</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="966"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="962"/>
         <source>Arch D</source>
         <comment>Paper format</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="967"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="963"/>
         <source>Arch E</source>
         <comment>Paper format</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="985"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="981"/>
         <source>custom</source>
         <comment>Paper format</comment>
         <translation type="unfinished">personalitzat</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="988"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="984"/>
         <source>a0</source>
         <comment>Paper format</comment>
         <translation>a0</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="990"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="986"/>
         <source>a1</source>
         <comment>Paper format</comment>
         <translation>a1</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="992"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="988"/>
         <source>a2</source>
         <comment>Paper format</comment>
         <translation>a2</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="994"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="990"/>
         <source>a3</source>
         <comment>Paper format</comment>
         <translation>a3</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="996"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="992"/>
         <source>a4</source>
         <comment>Paper format</comment>
         <translation>a4</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1001"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="997"/>
         <source>letter</source>
         <comment>Paper format</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1003"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="999"/>
         <source>legal</source>
         <comment>Paper format</comment>
         <translation>legal</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1005"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1001"/>
         <source>tabloid</source>
         <comment>Paper format</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1012"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1008"/>
         <source>ansi c</source>
         <comment>Paper format</comment>
         <translation>ansi c</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1014"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1010"/>
         <source>ansi d</source>
         <comment>Paper format</comment>
         <translation>ansi d</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1016"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1012"/>
         <source>ansi e</source>
         <comment>Paper format</comment>
         <translation>ansi e</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1019"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1015"/>
         <source>arch a</source>
         <comment>Paper format</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1021"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1017"/>
         <source>arch b</source>
         <comment>Paper format</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1023"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1019"/>
         <source>arch c</source>
         <comment>Paper format</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1025"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1021"/>
         <source>arch d</source>
         <comment>Paper format</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1027"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1023"/>
         <source>arch e</source>
         <comment>Paper format</comment>
         <translation type="unfinished"></translation>
@@ -24360,47 +24370,47 @@ Aquest bloc no es pot inserir.</translation>
 <context>
     <name>RS_ActionDrawArc</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="279"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="283"/>
         <source>Length of chord should be non-zero</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="418"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="429"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="449"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="462"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="484"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="423"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="434"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="454"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="467"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="489"/>
         <source>Not a valid expression</source>
         <translation>L&apos;expressió no és vàlida</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="482"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="487"/>
         <source>Not a valid chord length</source>
         <translation>La longitud de la corda no és vàlida</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="506"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="511"/>
         <source>Specify center</source>
         <translation>Especifiqueu el centre</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="513"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="518"/>
         <source>Specify start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="520"/>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="523"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="525"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="528"/>
         <source>Alternative Arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="526"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="531"/>
         <source>Specify chord length (negative for alt point):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="526"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="531"/>
         <source>Use alternative arc point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24409,7 +24419,7 @@ Aquest bloc no es pot inserir.</translation>
         <translation type="vanished">Cancel·la</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="510"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="515"/>
         <source>Specify radius</source>
         <translation>Especifiqueu el radi</translation>
     </message>
@@ -24418,17 +24428,17 @@ Aquest bloc no es pot inserir.</translation>
         <translation type="vanished">Enrere</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="517"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="522"/>
         <source>Specify start angle:</source>
         <translation>Especifiqueu l&apos;angle inicial:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="520"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="525"/>
         <source>Specify end angle or [angle/chordlen]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="523"/>
+        <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="528"/>
         <source>Specify included angle:</source>
         <translation>Especifiqueu l&apos;angle inclòs:</translation>
     </message>
@@ -25117,13 +25127,13 @@ Aquest bloc no es pot inserir.</translation>
 <context>
     <name>RS_ActionDrawLineAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="219"/>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="232"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="245"/>
         <source>Not a valid expression</source>
         <translation>L&apos;expressió no és vàlida</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="297"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="310"/>
         <source>Specify position</source>
         <translation>Especifiqueu la posició</translation>
     </message>
@@ -25132,7 +25142,7 @@ Aquest bloc no es pot inserir.</translation>
         <translation type="vanished">Cancel·la</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="300"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="313"/>
         <source>Enter angle:</source>
         <translation>Introduïu l&apos;angle:</translation>
     </message>
@@ -25141,7 +25151,7 @@ Aquest bloc no es pot inserir.</translation>
         <translation type="vanished">Enrere</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="303"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="316"/>
         <source>Enter length:</source>
         <translation>Introduïu la longitud:</translation>
     </message>
@@ -25435,23 +25445,23 @@ Aquest bloc no es pot inserir.</translation>
 <context>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="187"/>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="200"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="186"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="199"/>
         <source>Not a valid expression</source>
         <translation>L&apos;expressió no és vàlida</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="234"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="231"/>
         <source>Select base entity</source>
         <translation>Especifiqueu l&apos;entitat de base</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="240"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="237"/>
         <source>Specify angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="243"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="240"/>
         <source>Specify length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25460,7 +25470,7 @@ Aquest bloc no es pot inserir.</translation>
         <translation type="vanished">Cancel·la</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="237"/>
+        <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="234"/>
         <source>Specify position</source>
         <translation>Especifiqueu la posició</translation>
     </message>
@@ -26549,56 +26559,56 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="82"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="109"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="83"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="116"/>
         <source>Moving with rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="83"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="110"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="84"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="117"/>
         <source>Source:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="84"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="111"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="85"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="118"/>
         <source>Target:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="85"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="112"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="86"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="119"/>
         <source>Offset:</source>
         <translation type="unfinished">Desplaçament:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="115"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="122"/>
         <source>Angle:</source>
         <translation type="unfinished">Angle:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="274"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="284"/>
         <source>Not a valid expression</source>
         <translation>L&apos;expressió no és vàlida</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="310"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="320"/>
         <source>Specify reference point</source>
         <translation>Especifiqueu el punt de referència</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="329"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="339"/>
         <source>Select to move and rotate  (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="329"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="339"/>
         <source>Move and rotate immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="329"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="339"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26607,7 +26617,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Cancel·la</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="313"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="323"/>
         <source>Specify target point</source>
         <translation>Especifiqueu el punt de destí</translation>
     </message>
@@ -26616,7 +26626,7 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Enrere</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="316"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="326"/>
         <source>Enter rotation angle:</source>
         <translation>Introduïu l&apos;angle de gir:</translation>
     </message>
@@ -26685,7 +26695,7 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="543"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="579"/>
         <source>Specify reference point</source>
         <translation>Especifiqueu el punt de referència</translation>
     </message>
@@ -26694,71 +26704,88 @@ Point: (%8 , %9)</source>
         <translation type="vanished">Enrere</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="181"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="219"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="135"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="147"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="203"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="244"/>
         <source>Rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="182"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="220"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="136"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="204"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="245"/>
         <source>Angle:</source>
         <translation type="unfinished">Angle:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="183"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="205"/>
         <source>Source Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="184"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="206"/>
         <source>Target Point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="185"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="223"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="139"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="150"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="207"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="248"/>
         <source>Offset:</source>
         <translation type="unfinished">Desplaçament:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="226"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="137"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="148"/>
+        <source>Reference Point:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="138"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="149"/>
+        <source>Center Point:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="251"/>
         <source>Second Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="537"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="573"/>
         <source>Select to rotate (Enter to complete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="537"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="573"/>
         <source>Rotate immediately after selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="537"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="573"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="543"/>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="546"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="579"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
         <source>Snap to center of selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="546"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
         <source>Specify rotation center</source>
         <translation>Especifiqueu el centre de rotació</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="549"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="585"/>
         <source>Specify target point to rotate to</source>
         <translation>Especifiqueu el punt de destí per girar</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="552"/>
+        <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588"/>
         <source>Specify target point for rotation around reference point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28297,49 +28324,59 @@ Point: (%8 , %9)</source>
         <translation>Opcions de línia amb angle</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="62"/>
+        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="164"/>
         <source>Angle:</source>
         <translation>Angle:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="141"/>
+        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="186"/>
         <source>Point on created line that will be placed into insertion point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="175"/>
+        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="132"/>
         <source>Line angle</source>
         <translation>Línia amb angle</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="106"/>
+        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="69"/>
         <source>Length:</source>
         <translation>Longitud:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="87"/>
+        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="94"/>
         <source>Length of line</source>
         <translation>Longitud de la línia</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="188"/>
+        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="107"/>
         <source>Snap Point:</source>
         <translation>Força al punt:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="145"/>
+        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="190"/>
         <source>Start</source>
         <translation>Començament</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="150"/>
+        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="195"/>
         <source>Middle</source>
         <translation>Mig</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="155"/>
+        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="200"/>
         <source>End</source>
         <translation>Acabament</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="208"/>
+        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="211"/>
+        <source>To Angles Basis</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

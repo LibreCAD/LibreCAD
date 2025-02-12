@@ -40,8 +40,6 @@ public:
     QG_DlgOptionsGeneral(QWidget* parent = nullptr);
     ~QG_DlgOptionsGeneral() override = default;
     static int current_tab;
-
-
 protected slots:
     void ok();
     void languageChange();

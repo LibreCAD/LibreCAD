@@ -117,7 +117,7 @@ void QG_MoveRotateOptions::doSetAction(RS_ActionInterface *a, bool update) {
 
 void QG_MoveRotateOptions::setAngleToActionAndView(QString val) {
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         ui->leAngle->setText(fromDouble(angle));
         action->setAngle(RS_Math::deg2rad(angle));
     }

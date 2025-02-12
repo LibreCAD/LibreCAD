@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>9</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -4232,6 +4232,16 @@
             </property>
             <property name="text">
              <string>Keep modified entities selected</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbAnglesInputInDecimalDegreesOnly">
+            <property name="toolTip">
+             <string>If checked, it will be possible to enter value of angle in decimal degrees only. Otherwise, angles in surveyor, radiant, imperial degrees and bearing formats are allowed for input.  </string>
+            </property>
+            <property name="text">
+             <string>Allow angles input in decimal degrees only</string>
             </property>
            </widget>
           </item>

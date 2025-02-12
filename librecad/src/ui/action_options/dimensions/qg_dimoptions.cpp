@@ -219,7 +219,7 @@ void QG_DimOptions::updateAngle(const QString & a) {
     auto dimLinearAction = dynamic_cast<RS_ActionDimLinear *>(action);
 
     double ucsBasisAngleDegrees = 0.;
-    if (toDoubleAngle(a, ucsBasisAngleDegrees, 0.0, false)){
+    if (toDoubleAngleDegrees(a, ucsBasisAngleDegrees, 0.0, false)){
         dimLinearAction->setUcsAngleDegrees(ucsBasisAngleDegrees);
 
         bool checkVert = !LC_LineMath::isMeaningfulAngle(90-ucsBasisAngleDegrees);
@@ -272,7 +272,7 @@ void QG_DimOptions::onBaselineDistanceTextChanged() {
 void QG_DimOptions::onAngleCircleTextChanged() {
     QString val = ui->leAngleCircle->text();
     double angle;
-    if (toDoubleAngle(val, angle, 45, false)){
+    if (toDoubleAngleDegrees(val, angle, 45, false)){
         auto dimAction = dynamic_cast<LC_ActionCircleDimBase *>(action);
         dimAction->setUcsAngleDegrees(RS_Math::deg2rad(angle)   );
         ui->leAngleCircle->blockSignals(true);

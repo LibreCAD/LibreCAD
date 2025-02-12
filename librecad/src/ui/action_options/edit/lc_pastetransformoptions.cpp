@@ -102,7 +102,7 @@ void LC_PasteTransformOptions::doSetAction(RS_ActionInterface *a, bool update) {
 
 void LC_PasteTransformOptions::setAngleToActionAndView(QString val) {
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         action->setAngle(RS_Math::deg2rad(angle));
         ui->leAngle->setText(fromDouble(angle));
     }
@@ -174,7 +174,7 @@ void LC_PasteTransformOptions::setArrayYSpacingToActionAndView(QString val) {
 
 void LC_PasteTransformOptions::setArrayAngleToActionAndView(QString val) {
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         action->setArrayAngle(RS_Math::deg2rad(angle));
         const QString &angleStr = fromDouble(angle);
         ui->leArrayAngle->setText(angleStr);

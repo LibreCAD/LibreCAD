@@ -101,7 +101,7 @@ void QG_ArcTangentialOptions::setRadiusToActionAndView(const QString& s) {
 void QG_ArcTangentialOptions::setAngleToActionAndView(const QString& s) {
     ui->leAngle->setText(s);
     double angleDegree;
-    if (toDoubleAngle(s, angleDegree, 1.0, true)){
+    if (toDoubleAngleDegrees(s, angleDegree, 1.0, true)){
         double angleRad = RS_Math::correctAngle(RS_Math::deg2rad(angleDegree));
         if(angleRad <RS_TOLERANCE_ANGLE || angleRad  + RS_TOLERANCE_ANGLE > 2. * M_PI)
             angleRad =M_PI; // can not do full circle

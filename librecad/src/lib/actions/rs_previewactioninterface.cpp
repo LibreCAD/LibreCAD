@@ -415,6 +415,7 @@ void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector &center, co
 void RS_PreviewActionInterface::initFromSettings() {
     RS_Snapper::initFromSettings();
     m_angleSnapMarkerSize = LC_GET_ONE_INT("Appearance", "AngleSnapMarkerSize", 20);
+    m_doNotAllowNonDecimalAnglesInput = LC_GET_ONE_BOOL("CADPreferences", "InputAnglesAsDecimalsOnly", false);
 }
 
 // fixme - sand - snap to relative angle support!!!
@@ -749,10 +750,9 @@ RS_Entity *RS_PreviewActionInterface::catchEntityByEvent(LC_MouseEvent *e, const
     return catchEntity(e->graphPoint, enTypeList, level);
 }
 
-// fixme - sand - this function may be expanded to support values in non-degrees formats. Check later!
 bool RS_PreviewActionInterface::parseToWCSAngle(const QString &c, double& wcsAngleRad){
     bool ok = false;
-    double ucsBasisAngleDeg = RS_Math::eval(c, &ok);
+    double ucsBasisAngleDeg = evalAngleValue(c, &ok);
     if (ok){
         ucsBasisAngleDeg = LC_LineMath::getMeaningfulAngle(ucsBasisAngleDeg);
         double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDeg);
@@ -764,7 +764,7 @@ bool RS_PreviewActionInterface::parseToWCSAngle(const QString &c, double& wcsAng
 
 bool RS_PreviewActionInterface::parseToUCSBasisAngle(const QString &c, double& ucsBasisAngleRad){
     bool ok = false;
-    double ucsBasisAngleDeg = RS_Math::eval(c, &ok);
+    double ucsBasisAngleDeg = evalAngleValue(c, &ok);
     if (ok){
         ucsBasisAngleDeg = LC_LineMath::getMeaningfulAngle(ucsBasisAngleDeg);
         ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDeg);
@@ -774,7 +774,7 @@ bool RS_PreviewActionInterface::parseToUCSBasisAngle(const QString &c, double& u
 
 bool RS_PreviewActionInterface::parseToRelativeAngle(const QString &c, double& ucsBasisAngleRad){
     bool ok = false;
-    double ucsBasisAngleDeg = RS_Math::eval(c, &ok);
+    double ucsBasisAngleDeg = evalAngleValue(c, &ok);
     if (ok){
         ucsBasisAngleDeg = LC_LineMath::getMeaningfulAngle(ucsBasisAngleDeg);
         ucsBasisAngleRad = adjustRelativeAngleSignByBasis(RS_Math::deg2rad(ucsBasisAngleDeg));
@@ -782,16 +782,18 @@ bool RS_PreviewActionInterface::parseToRelativeAngle(const QString &c, double& u
     return ok;
 }
 
-/*bool RS_PreviewActionInterface::parseUCSAngleDeg(const QString &c, double& ucsAngleDeg){
-    bool ok = false;
-    double ucsBasisAngleDeg = RS_Math::eval(c, &ok);
-    if (ok){
-        ucsBasisAngleDeg = LC_LineMath::getMeaningfulAngle(ucsBasisAngleDeg);
 
-        double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDeg);
-        double ucsAbsValueRad = viewport->toUCSAbsAngle(ucsBasisAngleDeg, m_anglesBase, m_anglesCounterClockWise);
-        wcsAngleRad = viewport->toWorldAngle(ucsAbsValueRad);
+double RS_PreviewActionInterface::evalAngleValue(const QString &c, bool *ok) const{
+    QString stringToEval;
+    if (m_doNotAllowNonDecimalAnglesInput) {
+        stringToEval = c;
     }
-    return ok;
+    else{
+        stringToEval = RS_Units::replaceAllPotentialAnglesByDecimalDegrees(c, ok);
+    }
+    double result = 0.0;
+    if (ok){
+        result = RS_Math::eval(stringToEval, ok);
+    }
+    return result;
 }
-*/

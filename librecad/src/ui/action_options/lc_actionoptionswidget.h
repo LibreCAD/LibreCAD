@@ -95,7 +95,7 @@ protected:
     // conversion utilities
     QString fromDouble(double value);
     bool toDouble(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
-    bool toDoubleAngle(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
+    bool toDoubleAngleDegrees(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
 protected slots:
     virtual void languageChange() {}
 };

@@ -242,7 +242,7 @@ void LC_Rectangle1PointOptions::onAngleEditingFinished(){
 
 void LC_Rectangle1PointOptions::setAngleToActionAndView(const QString &val){
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         action->setUcsAngleDegrees(angle);
         ui->leAngle->setText(fromDouble(angle));
     }

@@ -112,7 +112,7 @@ void LC_ActionDrawArc2POptions::onValueChanged() {
 void LC_ActionDrawArc2POptions::setParameterToActionAndView(QString val) {
     double param;
     if (supportedActionType == RS2::ActionDrawArc2PAngle){
-        if (toDoubleAngle(val, param, 1.0, true)){
+        if (toDoubleAngleDegrees(val, param, 1.0, true)){
             ui->leValue->setText(fromDouble(param));
             param = RS_Math::deg2rad(param);
             action->setParameter(param);

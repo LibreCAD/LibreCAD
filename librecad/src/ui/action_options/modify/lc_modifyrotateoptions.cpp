@@ -226,7 +226,7 @@ void LC_ModifyRotateOptions::setFreeRefAngleToActionAndView(bool checked) {
 
 void LC_ModifyRotateOptions::setAngleToActionAndView(QString val) {
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)) {
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
         const QString &factorStr = fromDouble(angle);
         ui->leAngle->setText(factorStr);
         action->setAngle(RS_Math::deg2rad(angle));
@@ -235,7 +235,7 @@ void LC_ModifyRotateOptions::setAngleToActionAndView(QString val) {
 
 void LC_ModifyRotateOptions::setRefPointAngleToActionAndView(QString val) {
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)) {
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
         const QString &factorStr = fromDouble(angle);
         ui->leAngle2->setText(factorStr);
         action->setRefPointAngle(RS_Math::deg2rad(angle));

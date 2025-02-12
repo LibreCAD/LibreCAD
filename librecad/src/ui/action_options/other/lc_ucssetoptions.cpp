@@ -76,7 +76,7 @@ void LC_UCSSetOptions::languageChange() {
 
 void LC_UCSSetOptions::setAngleToActionAndView(QString val) {
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)) {
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
         const QString &factorStr = fromDouble(angle);
         ui->leAngle->setText(factorStr);
         action->setAngle(RS_Math::deg2rad(angle));

@@ -110,7 +110,7 @@ void LC_CrossOptions::setYToActionAndView(const QString &strValue){
 
 void LC_CrossOptions::setAngleToActionAndView(const QString &expr){
     double angle;
-    if (toDoubleAngle(expr, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(expr, angle, 0.0, false)){
         action->setCrossAngle(angle);
         ui->leAngle->setText(fromDouble(angle));
     }

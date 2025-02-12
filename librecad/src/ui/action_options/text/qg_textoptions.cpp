@@ -100,7 +100,7 @@ void QG_TextOptions::onTextChanged() {
 void QG_TextOptions::onAngleChanged() {
     double angle;
     QString val = ui->leAngle->text();
-    if (toDoubleAngle(val, angle, 0.0, false)) {
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
         action->setUcsAngleDegrees(angle);
     }
 }

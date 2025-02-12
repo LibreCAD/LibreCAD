@@ -139,6 +139,19 @@ Later, this concept could be extended further - to support several viewports in 
 
 Thus, this refactoring may be considered rather as a preparation step for later functionality.
 
+### Angles and Polar coordinates Input formats
+
+Now it's possible to enter angles (and so, polar coordinates) in several formats: 
+
+1) Decimal degrees (as it was before)
+2) **Surveyor** e.g. N21d33'19.9"E
+3) **Radiant** - e.g. 2.7r
+4) **Grad** - e.g. 231g
+5) **Degrees** - e.g. 85d23'3
+6) **Bearing** - e.g. 83b24'7"
+
+Also, there is an option in Application Preferences that allows to disable input in all formats except decimal degrees. 
+
 ### Other changes
 
 * Option that allows to disable marking the drawing as "modified" if zoom or pan was performed only was added to the Application Preferences (inspired by johnfound)
@@ -147,6 +160,7 @@ Thus, this refactoring may be considered rather as a preparation step for later 
 * Added option that allows to ignore "Snap To Grid" mode during snapping if the grid is not visible (inspired by johnfound)
 * Added options for fine-tuning of snap constants (inspired by johnfound)
 * Line Horizontal/Vertical actions - if there is non-standard UCS basis, options added that allows to create lines, orthogonal to angles basis axis 
+  
 
 ### Bugfixes
 A couple of issues were fixed:

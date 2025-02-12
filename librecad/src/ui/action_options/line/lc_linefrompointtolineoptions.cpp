@@ -141,7 +141,7 @@ void LC_LineFromPointToLineOptions::setSizeModelIndexToActionAndView(int index){
 
 void LC_LineFromPointToLineOptions::setAngleToActionAndView(const QString& value){
     double angle;
-    if (toDoubleAngle(value, angle, 1.0, false)){
+    if (toDoubleAngleDegrees(value, angle, 1.0, false)){
         // ensure angle in 0..180
         double angleRad = RS_Math::deg2rad(angle);
         double correctedAngle = std::remainder(angleRad, M_PI);

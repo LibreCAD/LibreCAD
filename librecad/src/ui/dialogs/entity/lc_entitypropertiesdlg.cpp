@@ -171,7 +171,7 @@ bool LC_EntityPropertiesDlg::toDouble(const QString& strValue, double &res, doub
 }
 
 bool LC_EntityPropertiesDlg::toDoubleAngle(const QString& strValue, double &res, double notMeaningful, bool positiveOnly) const{
-    return LC_Convert::toDoubleAngle(strValue, res, notMeaningful, positiveOnly);
+    return LC_Convert::parseToToDoubleAngleDegrees(strValue, res, notMeaningful, positiveOnly);
 }
 
 QString LC_EntityPropertiesDlg::asString(double value) const{

@@ -157,7 +157,7 @@ void LC_Rotate2Options::setSameAngleForCopiesToActionAndView(bool val) {
 
 void LC_Rotate2Options::setAngle1ToActionAndView(QString val) {
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         ui->leAngle1->setText(fromDouble(angle));
         action->setAngle1(RS_Math::deg2rad(angle));
         bool anglesMirrored = ui->cbAnglesMirrored->isChecked();
@@ -170,7 +170,7 @@ void LC_Rotate2Options::setAngle1ToActionAndView(QString val) {
 
 void LC_Rotate2Options::setAngle2ToActionAndView(QString val) {
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)) {
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
         const QString &angleStr = fromDouble(angle);
         ui->leAngle2->setText(angleStr);
         action->setAngle2(RS_Math::deg2rad(angle));

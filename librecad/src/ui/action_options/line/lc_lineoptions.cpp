@@ -208,7 +208,7 @@ void LC_LineOptions::setPointDirectionToActionAndView(bool value){
 
 void LC_LineOptions::setAngleToActionAndView(const QString& val, bool affectState){
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         if (affectState){
             action->setAngleValue(angle);
         }

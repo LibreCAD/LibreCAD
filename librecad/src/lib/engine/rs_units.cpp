@@ -30,6 +30,7 @@
 
 #include<QObject>
 #include<QStringList>
+#include <QRegularExpression>
 
 #include "rs_units.h"
 
@@ -44,31 +45,27 @@ namespace {
  * @param double length - the value to check
  * @return bool - true, the absolute value of the input can be rounded up to a an unsigned integer
  */
-bool isAbsInRange(double length)
-{
-    if (std::isnan(length) || !std::isfinite(length) ) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "length=%lg", length);
-        return false;
+    bool isAbsInRange(double length)
+    {
+        if (std::isnan(length) || !std::isfinite(length) ) {
+            RS_DEBUG->print(RS_Debug::D_ERROR, "length=%lg", length);
+            return false;
+        }
+        if (std::abs(length) > std::numeric_limits<unsigned>::max()) {
+            RS_DEBUG->print(RS_Debug::D_ERROR, "length=%lg is too big in magnitude for the current dimension type", length);
+            return false;
+        }
+        return true;
     }
-    if (std::abs(length) > std::numeric_limits<unsigned>::max()) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "length=%lg is too big in magnitude for the current dimension type", length);
-        return false;
-    }
-    return true;
 }
-
-}
-
 
 RS2::Unit RS_Units::currentDrawingUnits = (RS2::Unit) 0;
-
 
 /**
  * Converts a DXF integer () to a Unit enum.
  */
 RS2::Unit RS_Units::dxfint2unit(int dxfint) {
     return (RS2::Unit)dxfint;
-
     /*switch(dxfint) {
     default:
     case  0:
@@ -115,7 +112,6 @@ RS2::Unit RS_Units::dxfint2unit(int dxfint) {
         return RS2::Parsec;
 }*/
 }
-
 
 /**
  * @return a short string representing the given unit (e.g. "mm")
@@ -1045,6 +1041,252 @@ double RS_Units::scaleToDpi(double scale, RS2::Unit unit) {
     double dpi = RS_Units::convert(1.0, RS2::Inch, unit) / scale;
     return dpi;
 }
+
+namespace{
+   static QRegularExpression surveyorRegExp = QRegularExpression(
+        "\\b"                               // a word
+        "(?:"
+        "(?:"
+        "([NS])"                        // expression starts with nord or south
+        "(?:"
+        "([+-]?)"                     // sign
+        "(?:"
+        "(?:(\\d*\\.?\\d*)[d°])?"   // degrees with d
+        "(?:(\\d*\\.?\\d*)')?"      // minutes with '
+        "(?:(\\d*\\.?\\d*)\")?"     // seconds with "
+        "|"                         // or...
+        "(\\d*)"                    // degrees without d
+        ")"
+        "([EW])"                      // east or west
+        ")?"
+        ")"
+        "|"                               // or...
+        "([EW])"                          // only east (0d) or west (180d)
+        ")"
+        "\\b",
+        QRegularExpression::CaseInsensitiveOption
+    );
+
+   static QRegularExpression surveyorQuickCheckRegExp = QRegularExpression("[NESW]", QRegularExpression::CaseInsensitiveOption);
+
+   static QRegularExpression radiantRegExp =  QRegularExpression("((?:\\.\\d+)|(?:\\d+\\.\\d*)|(?:\\d+))r\\b", QRegularExpression::CaseInsensitiveOption);
+
+   static QRegularExpression gradRegExp = QRegularExpression("((?:\\.\\d+)|(?:\\d+\\.\\d*)|(?:\\d+))g\\b", QRegularExpression::CaseInsensitiveOption);
+
+   static  QRegularExpression explicitDegreesRegExp = QRegularExpression(
+       "(?:[^a-zA-Z0-9]|^)"                                // should not be preceded by letter or number
+       "("
+       "(?:((?:\\.\\d+)|(?:\\d+\\.\\d*)|(?:\\d+))[d°])"  // degrees
+       "(?:((?:\\.\\d+)|(?:\\d+\\.\\d*)|(?:\\d+))')?"    // minutes
+       "(?:((?:\\.\\d+)|(?:\\d+\\.\\d*)|(?:\\d+))\")?"   // seconds
+       ")"
+       "(?:[^\\d]|$)",             // followed by not a number or end
+       QRegularExpression::CaseInsensitiveOption);
+
+   static QRegularExpression explicitBearingRexExp = QRegularExpression(
+       "(?:[^a-zA-Z0-9]|^)"                                // not preceded by letter or number (could be part of a function)
+       "("
+       "(?:((?:\\.\\d+)|(?:\\d+\\.\\d*)|(?:\\d+))b)"  // degrees
+       "(?:((?:\\.\\d+)|(?:\\d+\\.\\d*)|(?:\\d+))')?"    // minutes
+       "(?:((?:\\.\\d+)|(?:\\d+\\.\\d*)|(?:\\d+))\")?"   // seconds
+       ")"
+       "(?:[^\\d]|$)",             // followed by not a number or end
+       QRegularExpression::CaseInsensitiveOption);
+}
+
+QString RS_Units::replaceSurveyorsAnglesByDecimalDegrees(QString val, bool *ok, QString& errorMsg){
+    int idx = -1;
+    QString expr = val;
+    // convert surveyor type angles (e.g. N21d33'19.9"E) to degrees:
+    if (expr.contains(surveyorQuickCheckRegExp)) {
+        QRegularExpressionMatch match;
+        do {
+            idx = (int)expr.indexOf(surveyorRegExp, 0, &match);
+
+            if (idx==-1) {
+                break;
+            }
+            double angle = 0.0;
+            QString sign;
+
+            // "E" or "W":
+            const QString &group8 = match.captured(8).toUpper();
+            if (!group8.isEmpty()) {
+                if (group8 == "E") {
+                    angle = 0.0;
+                }
+                else if (group8 == "W") {
+                    angle = 180.0;
+                }
+                else {
+                    if (ok != nullptr) {
+                        *ok = false;
+                    }
+                    // fixme - sand - either use error code or localize message. As it's not shown so far, leave it is as it is for now.
+                    errorMsg = "Uxexpected cardinal direction for surveyor angle candidate (valid values are: N,E,S,W)";
+                    return "";
+                }
+            }
+            // "[NS]...[EW]":
+            else {
+                const QString &group1 = match.captured(1).toUpper();
+                bool north = group1 == "N";
+                bool south = group1 == "S";
+                sign = match.captured(2);
+                double degrees = 0.0;
+                double minutes = 0.0;
+                double seconds = 0.0;
+                if (!match.captured(6).isEmpty()) {
+                    degrees = match.captured(6).toDouble(ok);
+                }
+                else {
+                    const QString &strDegrees = match.captured(3);
+                    const QString &strMinutes = match.captured(4);
+                    const QString &strSeconds = match.captured(5);
+                    degrees = strDegrees.toDouble(ok);
+                    minutes = strMinutes.toDouble(ok);
+                    seconds = strSeconds.toDouble(ok);
+                }
+                const QString &group7 = match.captured(7).toUpper();
+                bool east = group7 == "E";
+                bool west = group7 == "W";
+
+                double base = (north ? 90.0 : 270.0);
+                int dir = ((north && west) || (south && east) ? 1 : -1);
+                angle = base + dir * (degrees + minutes/60.0 + seconds/3600.0);
+            }
+
+            expr.replace(match.captured(0),QString("%1%2").arg(sign).arg(angle, 0, 'g', 16));
+        } while(idx!=-1);
+    }
+    return expr;
+}
+
+QString RS_Units::replaceRadiantAnglesByDecimalDegrees(QString& val, bool *ok){
+    // convert radiant angles (e.g. "2.7r") to degrees:
+    QString expr = val;
+    int idx = -1;
+    QRegularExpressionMatch match;
+    do {
+        idx = (int)expr.indexOf(radiantRegExp, 0,&match);
+        if (idx==-1) {
+            break;
+        }
+        QString m = match.captured(1);
+        expr.replace(radiantRegExp, QString("%1").arg(RS_Math::rad2deg(m.toDouble(ok)), 0, 'g', 16)
+        );
+    } while(idx!=-1);
+    return expr;
+}
+
+QString RS_Units::replaceGradAnglesByDecimalDegrees(QString& val, bool *ok) {
+    // convert grad angles (e.g. "100g") to degrees:
+    QRegularExpressionMatch match;
+    QString expr = val;
+    int idx = -1;
+    do {
+        int idx = (int) expr.indexOf(gradRegExp, 0, &match);
+        if (idx==-1) {
+            break;
+        }
+        QString m = match.captured(1);
+        expr.replace(gradRegExp, QString("%1").arg(RS_Math::gra2deg(m.toDouble(ok)), 0, 'g', 16));
+    } while(idx!=-1);
+    return expr;
+}
+
+QString RS_Units::replaceExplicitDegreesByDecimalDegrees(QString& val, bool *ok) {
+    // convert explicitly indicated degree angles (e.g. "85d23'3") to degrees:
+    QRegularExpressionMatch match;
+    QString expr = val;
+    int idx = -1;
+    do {
+        idx = (int) expr.indexOf(explicitDegreesRegExp, 0, &match);
+        if (idx==-1) {
+            break;
+        }
+
+        double degrees = 0.0;
+        double minutes = 0.0;
+        double seconds = 0.0;
+        const QString &strDegrees = match.captured(2);
+        const QString &strMinutes = match.captured(3);
+        const QString &strSeconds = match.captured(4);
+        degrees = strDegrees.toDouble(ok);
+        minutes = strMinutes.toDouble(ok);
+        seconds = strSeconds.toDouble(ok);
+
+        double angle = degrees + minutes/60.0 + seconds/3600.0;
+
+        expr.replace(match.captured(1), QString("%1").arg(angle, 0, 'g', 16));
+    } while(idx!=-1);
+    return expr;
+}
+
+QString RS_Units::replaceExplicitBearingAnglesByDecimalDegrees(QString& val, bool *ok) {
+    // convert explicitly indicated bearing angles (e.g. "83b24'7"") to degrees:
+    QRegularExpressionMatch match;
+    QString expr = val;
+    int idx = -1;
+    do {
+        idx = (int) expr.indexOf(explicitBearingRexExp, 0, &match);
+        if (idx==-1) {
+            break;
+        }
+
+        double degrees = 0.0;
+        double minutes = 0.0;
+        double seconds = 0.0;
+        const QString &strDegrees = match.captured(2);
+        const QString &strMinutes = match.captured(3);
+        const QString &strSeconds = match.captured(4);
+        degrees = strDegrees.toDouble(ok);
+        minutes = strMinutes.toDouble(ok);
+        seconds = strSeconds.toDouble(ok);
+
+        double angle = degrees + minutes/60.0 + seconds/3600.0;
+        angle = 90.0 - angle;
+        angle = fmod(angle,360.0);
+
+        expr.replace(match.captured(1),QString("%1").arg(angle, 0, 'g', 16));
+    } while(idx!=-1);
+    return expr;
+}
+
+QString RS_Units::replaceAllPotentialAnglesByDecimalDegrees(const QString &val, bool *ok) {
+    QString expr = val;
+    QString msg;
+    bool noError;
+    expr = replaceSurveyorsAnglesByDecimalDegrees(expr, &noError, msg);
+    if (noError){
+        expr = replaceRadiantAnglesByDecimalDegrees(expr, &noError);
+        if (noError){
+            expr = replaceExplicitDegreesByDecimalDegrees(expr, &noError);
+            if (noError){
+                expr = replaceExplicitDegreesByDecimalDegrees(expr, &noError);
+            }
+        }
+    }
+    if (ok != nullptr){
+        *ok = noError;
+    }
+    if (noError){
+        return expr;
+    }
+    else{
+        return val;
+    }
+}
+
+double RS_Units::evalAngleValue(const QString &c, bool *ok){
+    QString normalizedString = replaceAllPotentialAnglesByDecimalDegrees(c, ok);
+    double result = 0.0;
+    if (ok){
+        result = RS_Math::eval(normalizedString, ok);
+    }
+    return result;
+}
+
 
 /**
  * Performs some testing for the math class.

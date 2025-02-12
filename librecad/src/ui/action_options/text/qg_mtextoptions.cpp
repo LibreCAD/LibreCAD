@@ -91,7 +91,7 @@ void QG_MTextOptions::updateText() {
 void QG_MTextOptions::updateAngle() {
     double angle;
     QString val = ui->leAngle->text();
-    if (toDoubleAngle(val, angle, 0.0, false)) {
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
         action->setUcsAngleDegrees(angle);
     }
 }

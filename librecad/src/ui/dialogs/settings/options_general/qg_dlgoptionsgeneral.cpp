@@ -592,6 +592,7 @@ void QG_DlgOptionsGeneral::init() {
     LC_GROUP("CADPreferences");
     {
         cbAutoZoomDrawing->setChecked(LC_GET_BOOL("AutoZoomDrawing"));
+        cbAnglesInputInDecimalDegreesOnly->setChecked(LC_GET_BOOL("InputAnglesAsDecimalsOnly",false));
     }
     LC_GROUP_END();
 
@@ -877,6 +878,7 @@ void QG_DlgOptionsGeneral::ok(){
         LC_GROUP("CADPreferences");
         {
             LC_SET("AutoZoomDrawing", cbAutoZoomDrawing->isChecked());
+            LC_SET("InputAnglesAsDecimalsOnly", cbAnglesInputInDecimalDegreesOnly->isChecked());
         }
         LC_GROUP_END();
 

@@ -127,7 +127,7 @@ void LC_Ellipse1PointOptions::setMinorRadiusToActionAndView(QString val) {
 
 void LC_Ellipse1PointOptions::setAngleToActionAndView(QString val) {
     double y;
-    if (toDoubleAngle(val, y, 0, false)){
+    if (toDoubleAngleDegrees(val, y, 0, false)){
         action->setUcsMajorAngleDegrees(y);
         ui->leAngle->setText(fromDouble(y));
     }

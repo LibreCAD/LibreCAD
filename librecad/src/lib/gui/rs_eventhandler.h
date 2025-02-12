@@ -99,6 +99,7 @@ protected:
     RS_Vector toUCS(const RS_Vector& wcs);
     double toWCSAngle(double ucsAngle);
     double toAbsUCSAngle(double ucsBasisAngle);
+    double evalAngleValue(const QString &angleStr, bool &ok2) const;
 private:
     RS_GraphicView* graphicView;
     QAction* q_action{nullptr};
@@ -109,6 +110,8 @@ private:
 public slots:
     void setRelativeZero(const RS_Vector&);
     void checkLastActionCompletedAndUncheckQAction(const std::shared_ptr<RS_ActionInterface> &lastAction);
+
+
 };
 
 #endif

@@ -125,7 +125,7 @@ void LC_LineAngleRelOptions::languageChange(){
 
 void LC_LineAngleRelOptions::setAngleToActionAndView(const QString &expr){
     double angle = 0.;
-    if (toDoubleAngle(expr, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(expr, angle, 0.0, false)){
         action->setTickAngle(angle);
         ui->leAngle->setText(fromDouble(angle));
     }

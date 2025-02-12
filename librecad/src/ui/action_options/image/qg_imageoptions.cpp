@@ -109,7 +109,7 @@ void QG_ImageOptions::setDPIToActionAndView(const QString& val) {
 
 void QG_ImageOptions::setAngleToActionAndView(const QString& val) {
     double angleDegree = 0.;
-    if (toDoubleAngle(val, angleDegree, 0.0, false)) {
+    if (toDoubleAngleDegrees(val, angleDegree, 0.0, false)) {
         action->setUcsAngleDegrees(angleDegree);
         ui->leAngle->setText(fromDouble(angleDegree));
     }

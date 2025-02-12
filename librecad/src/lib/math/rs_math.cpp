@@ -132,6 +132,12 @@ double RS_Math::gra2rad(double a) {
     return M_PI / 200. * a;
 }
 
+double RS_Math::gra2deg(double a){
+    double deg = 180 / 200. * a;
+    return deg;
+}
+
+
 
 /**
  * Finds greatest common divider using Euclid's algorithm.

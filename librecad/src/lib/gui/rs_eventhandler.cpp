@@ -37,6 +37,9 @@
 #include "rs_snapper.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
+#include "rs_settings.h"
+#include "rs_units.h"
+#include "lc_convert.h"
 
 namespace {
     bool isActive(const std::shared_ptr<RS_ActionInterface>& action) {
@@ -329,19 +332,19 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         bool isPolar = cmd.contains('<');
                         if (isPolar) {  // proceed absolute polar coordinates
                             int separatorPos = cmd.indexOf('<');
-                                bool ok1, ok2;
-                                double r = RS_Math::eval(updateForFraction(cmd.left(separatorPos)), &ok1);
-                                double angleDegrees = RS_Math::eval(cmd.mid(separatorPos + 1), &ok2);
-
-                                if (ok1 && ok2) {
-                                    double wcsAngle = RS_Math::deg2rad(angleDegrees);
-                                    RS_Vector wcsPos = RS_Vector(r, wcsAngle);
-                                    RS_CoordinateEvent ce(wcsPos);
-                                    currentActions.last()->coordinateEvent(&ce);
-                                } else {
-                                    RS_DIALOGFACTORY->commandMessage("Expression Syntax Error");
-                                }
-                                e->accept();
+                            bool ok1, ok2;
+                            double r = RS_Math::eval(updateForFraction(cmd.left(separatorPos)), &ok1);
+                            const QString &angleStr = cmd.mid(separatorPos + 1);
+                            double angleDegrees = evalAngleValue(angleStr, ok2);
+                            if (ok1 && ok2) {
+                                double wcsAngle = RS_Math::deg2rad(angleDegrees);
+                                RS_Vector wcsPos = RS_Vector(r, wcsAngle);
+                                RS_CoordinateEvent ce(wcsPos);
+                                currentActions.last()->coordinateEvent(&ce);
+                            } else {
+                                RS_DIALOGFACTORY->commandMessage("Expression Syntax Error");
+                            }
+                            e->accept();
                         }
                         else{
                             RS_DIALOGFACTORY->commandMessage("Expression Syntax Error");
@@ -392,7 +395,8 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                                 if (absoluteCoordinates) { // handle absolute polar coordinate input:
                                     bool ok1, ok2;
                                     double ucsR = RS_Math::eval(updateForFraction(cmd.left(separatorPos)), &ok1);
-                                    double ucsBasisAngleDegrees = RS_Math::eval(cmd.mid(separatorPos + 1), &ok2);
+                                    const QString &angleStr = cmd.mid(separatorPos + 1);
+                                    double ucsBasisAngleDegrees = evalAngleValue(angleStr, ok2);
 
                                     if (ok1 && ok2) {
                                         double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDegrees);
@@ -409,7 +413,8 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                                     int commaPos = cmd.indexOf('<');
                                     bool ok1, ok2;
                                     double r = RS_Math::eval(updateForFraction(cmd.mid(1, commaPos - 1)), &ok1);
-                                    double ucsBasisAngleDegrees = RS_Math::eval(cmd.mid(commaPos + 1), &ok2);
+                                    const QString &angleStr = cmd.mid(commaPos + 1);
+                                    double ucsBasisAngleDegrees = evalAngleValue(angleStr, ok2);
 
                                     if (ok1 && ok2) {
                                         double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDegrees);
@@ -446,6 +451,12 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
     }
 
     RS_DEBUG->print("RS_EventHandler::commandEvent: OK");
+}
+
+double RS_EventHandler::evalAngleValue(const QString &angleStr, bool &ok2) const {
+    double angleDegrees;
+    ok2 = LC_Convert::parseToToDoubleAngleDegrees(angleStr, angleDegrees, 0.0, false);
+    return angleDegrees;
 }
 
 /**

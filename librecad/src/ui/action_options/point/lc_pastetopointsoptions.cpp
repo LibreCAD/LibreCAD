@@ -91,7 +91,7 @@ void LC_PasteToPointsOptions::setFactorToActionAndView(QString val) {
 
 void LC_PasteToPointsOptions::setAngleToActionAndView(QString val) {
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         action->setAngle(RS_Math::deg2rad(angle));
         ui->leAngle->setText(fromDouble(angle));
     }

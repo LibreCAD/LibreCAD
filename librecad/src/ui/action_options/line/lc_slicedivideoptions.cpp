@@ -255,7 +255,7 @@ void LC_SliceDivideOptions::setTickLengthToActionAndView(const QString &val){
 
 void LC_SliceDivideOptions::setTickAngleToActionAndView(const QString &val){
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         action->setTickAngle(angle);
         ui->leTickAngle->setText(fromDouble(angle));
     }
@@ -271,7 +271,7 @@ void LC_SliceDivideOptions::setTickOffsetToActionAndView(const QString &val){
 
 void LC_SliceDivideOptions::setCircleStartAngleToActionAndView(const QString &val){
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         action->setCircleStartTickAngle(angle);
         ui->leCircleStartAngle->setText(fromDouble(angle));
     }
