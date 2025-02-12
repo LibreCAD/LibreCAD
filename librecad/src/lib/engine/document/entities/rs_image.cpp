@@ -401,11 +401,11 @@ RS_VectorSolutions RS_Image::getRefPoints() const {
     return rectRegion.getAllPoints();
 }
 
-void RS_Image::moveRef(const RS_Vector &vector, const RS_Vector &offset) {
+void RS_Image::moveRef([[maybe_unused]]const RS_Vector &vector, const RS_Vector &offset) {
     move(offset);
 }
 
-void RS_Image::moveSelectedRef(const RS_Vector &ref, const RS_Vector &offset) {
+void RS_Image::moveSelectedRef([[maybe_unused]]const RS_Vector &ref, const RS_Vector &offset) {
     /* todo - sand - restore later and support resizing of image via ref points
      * double uAngle = data.uVector.angle();
 

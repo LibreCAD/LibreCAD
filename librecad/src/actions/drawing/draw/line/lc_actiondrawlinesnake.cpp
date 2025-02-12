@@ -652,37 +652,24 @@ bool LC_ActionDrawLineSnake::mayStart(){
     return getStatus() == SetDistance || getStatus() == SetPoint;
 }
 
-void LC_ActionDrawLineSnake::calculateAngleSegment(double distance){
-        double realAngle;
-    if (angleIsRelative){
-        double angleRadians = RS_Math::deg2rad(angleDegrees);
-        realAngle = defineActualSegmentAngle(angleRadians);
-    }
-    else{
-        double wcsAngle = toWorldAngleFromUCSBasisDegrees(angleDegrees);
-        realAngle = wcsAngle;
-    }
-    pPoints->data.endpoint = pPoints->data.startpoint.relative(distance, realAngle);
-}
+double LC_ActionDrawLineSnake::defineActualSegmentAngle(double relativeAngleRad){
+    size_t currentIndex = pPoints->index();  // this should be start point of current line
+    double ucsBasisAngle = relativeAngleRad;
+    if (currentIndex > 0){
+        History h(pPoints->history.at(currentIndex));
 
-double LC_ActionDrawLineSnake::defineActualSegmentAngle(double realAngle){
-    if (angleIsRelative){
-        size_t currentIndex = pPoints->index();  // this should be start point of current line
-        if (currentIndex > 0){
-            History h(pPoints->history.at(currentIndex));
+        if (h.histAct == HA_SetEndpoint){ // this is start of previous line segment
+            RS_Vector previousSegmentStart = h.prevPt;
+            RS_Vector previousSegmentEnd = h.currPt;
 
-            if (h.histAct == HA_SetEndpoint){ // this is start of previous line segment
-              RS_Vector previousSegmentStart = h.prevPt;
-              RS_Vector previousSegmentEnd = h.currPt;
+            RS_Vector line = previousSegmentEnd - previousSegmentStart;
+            double previousSegmentAngle = line.angle();
 
-              RS_Vector line = previousSegmentEnd - previousSegmentStart;
-              double previousSegmentAngle = line.angle();
-
-              realAngle = realAngle + previousSegmentAngle;
-            }
+            ucsBasisAngle = relativeAngleRad + toUCSBasisAngle(previousSegmentAngle);
         }
     }
-    return realAngle;
+    double result = toWorldAngleFromUCSBasis(ucsBasisAngle);
+    return result;
 }
 
 RS_Vector LC_ActionDrawLineSnake::calculateAngleEndpoint(const RS_Vector &snap){
@@ -691,18 +678,31 @@ RS_Vector LC_ActionDrawLineSnake::calculateAngleEndpoint(const RS_Vector &snap){
         ucsBasisAngleToUse = 180 - angleDegrees;
     }
 
-    double realAngle;
+    double wcsAngle;
     if (angleIsRelative){
         double angleRadians = RS_Math::deg2rad(ucsBasisAngleToUse);
-        realAngle = defineActualSegmentAngle(angleRadians);
+        wcsAngle = defineActualSegmentAngle(angleRadians);
     }
     else{
-        double wcsAngle = toWorldAngleFromUCSBasisDegrees(ucsBasisAngleToUse);
-        realAngle = wcsAngle;
+        wcsAngle = toWorldAngleFromUCSBasisDegrees(ucsBasisAngleToUse);
     }
-    RS_Vector possibleEndPoint = LC_LineMath::calculateEndpointForAngleDirection(realAngle,pPoints->data.startpoint, snap);
+    RS_Vector possibleEndPoint = LC_LineMath::calculateEndpointForAngleDirection(wcsAngle,pPoints->data.startpoint, snap);
     return possibleEndPoint;
 }
+
+
+void LC_ActionDrawLineSnake::calculateAngleSegment(double distance){
+    double wcsAngle;
+    if (angleIsRelative){
+        double angleRadians = RS_Math::deg2rad(angleDegrees);
+        wcsAngle = defineActualSegmentAngle(angleRadians);
+    }
+    else{
+        wcsAngle = toWorldAngleFromUCSBasisDegrees(angleDegrees);
+    }
+    pPoints->data.endpoint = pPoints->data.startpoint.relative(distance, wcsAngle);
+}
+
 
 LC_ActionOptionsWidget* LC_ActionDrawLineSnake::createOptionsWidget(){
     return new LC_LineOptions();

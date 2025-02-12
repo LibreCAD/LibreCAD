@@ -206,7 +206,7 @@ void QG_DlgText::setEntity(RS_Text* t, bool isNew) {
 
 
         double wcsAngle = entity->getAngle();
-        angle = toUIAngle(wcsAngle);
+        angle = toUIAngleDeg(wcsAngle);
 
         RS_Graphic* graphic = entity->getGraphic();
         if (graphic) {

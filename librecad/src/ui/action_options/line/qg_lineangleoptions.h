@@ -51,6 +51,7 @@ public slots:
     void onAngleEditingFinished();
     void onLengthEditingFinished();
     void onSnapPointCurrentIndexChanged(int number);
+    void onAnglesBasisToggled(bool val);
     void languageChange() override;
 private:
     std::unique_ptr<Ui::Ui_LineAngleOptions> ui;
@@ -58,6 +59,8 @@ private:
     void setAngleToActionAndView(QString val);
     void setSnapPointToActionAndView(int val);
     void setLengthToActionAndView(QString val);
+
+    void setToAngleBasis(bool val);
 };
 
 #endif // QG_LINEANGLEOPTIONS_H

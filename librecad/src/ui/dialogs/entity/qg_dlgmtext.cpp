@@ -240,7 +240,7 @@ void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
         //QString shape = RS_SETTINGS->readEntry("/TextShape", "0");
 
         double wcsAngle = entity->getAngle();
-        angle = toUIAngle(wcsAngle);
+        angle = toUIAngleDeg(wcsAngle);
 
         RS_Graphic* graphic = entity->getGraphic();
         if (graphic) {

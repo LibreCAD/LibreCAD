@@ -37,6 +37,9 @@
  */
 class RS_ActionDrawLineAngle : public RS_PreviewActionInterface {
 	Q_OBJECT
+
+
+
 public:
     RS_ActionDrawLineAngle(
         RS_EntityContainer &container,
@@ -55,6 +58,8 @@ public:
     void setLength(double l);
     double getLength() const;
     bool hasFixedAngle() const;
+    void setInAngleBasis(bool b);
+    bool isInAngleBasis(){return orthoToAnglesBasis;}
 protected:
     /**
  * Action States.
@@ -70,6 +75,7 @@ protected:
     struct Points;
     std::unique_ptr<Points> pPoints;
     bool persistRelativeZero = false;
+    bool orthoToAnglesBasis = false;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
@@ -78,9 +84,7 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     void updateMouseButtonHints() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-
     void doTrigger() override;
-
     void initFromSettings() override;
 };
 #endif

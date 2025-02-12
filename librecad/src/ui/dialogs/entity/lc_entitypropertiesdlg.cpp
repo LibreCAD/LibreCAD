@@ -105,11 +105,11 @@ void LC_EntityPropertiesDlg::toUIValue(double val, QLineEdit* ed){
 }
 
 void LC_EntityPropertiesDlg::toUIAngleDeg(double wcsAngle, QLineEdit* ed){
-    QString sValue = toUIAngle(wcsAngle);
+    QString sValue = toUIAngleDeg(wcsAngle);
     ed->setText(sValue);
 }
 
-QString LC_EntityPropertiesDlg::toUIAngle(double wcsAngle) const {
+QString LC_EntityPropertiesDlg::toUIAngleDeg(double wcsAngle) const {
     double ucsAngle = toUCSAngle(wcsAngle);
     QString sValue = asStringAngleDeg(ucsAngle);
     return sValue;

@@ -57,8 +57,8 @@ public:
     int getLineSnapMode() const{return lineSnapMode;};
     void setTickSnapMode(int mode) {tickSnapMode = mode;};
     int getTickSnapMode() const {return tickSnapMode;};
-    void setTickAngle(double a){tickAngle = a;};
-    double getTickAngle() const {return tickAngle;};
+    void setTickAngle(double a){ tickAngleDegrees = a;};
+    double getTickAngle() const {return tickAngleDegrees;};
     void setTickLength(double len){tickLength = len;};
     double getTickLength() const {return tickLength;};
     void setTickOffset(double o){tickOffset = o;};
@@ -87,7 +87,7 @@ private:
      * angle used for drawing line (absolute or relative).
      * Alternative action mode uses alternative angle (mirrored original) instead of original one
      */
-    double tickAngle = 0;
+    double tickAngleDegrees = 0;
     /**
      * Length of tick if it is fixed
      */
@@ -105,7 +105,6 @@ private:
      * Distance (offset) from original line snap-point to which intersection line will be shifted
      */
     double snapDistance = 0;
-
 
     /**
      * indicates that angle specified by options is relative (i.e between original line and drawn line).

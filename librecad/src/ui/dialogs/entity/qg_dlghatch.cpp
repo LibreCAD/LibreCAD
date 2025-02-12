@@ -123,7 +123,7 @@ void QG_DlgHatch::updateEntity() {
 
         entity->setScale(toWCSValue(leScale,1.0));
         // here we assume that the user enters angle of the hatch as current ucs basis angle, and it is stored as wcs
-        entity->setAngle(toWCSValue(leAngle, 0.0));
+        entity->setAngle(toWCSAngle(leAngle, 0.0));
 
         if (!isNew) {
             showArea();

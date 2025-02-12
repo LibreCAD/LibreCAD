@@ -32,20 +32,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_actiondrawlineanglerel.h"
 
 namespace {
-
     //list of entity types supported by current action - only lines so far
     const auto enTypeList = EntityTypeList{RS2::EntityLine/*, RS2::EntityArc, RS2::EntityCircle,RS2::EntityEllipse*/};
 }
-
 
 LC_ActionDrawLineAngleRel:: LC_ActionDrawLineAngleRel(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView,
     double angle,
     bool fixedAngle)
-    :LC_AbstractActionWithPreview("Draw Line with angle",
-                               container, graphicView),
-     tickAngle(angle),
+    :LC_AbstractActionWithPreview("Draw Line with angle",container, graphicView),
+     tickAngleDegrees(angle),
      tickData{nullptr}{
 
     // the same action may be used for drawing orthogonal lines and lines with specified angles
@@ -88,6 +85,7 @@ void LC_ActionDrawLineAngleRel::doPrepareTriggerEntities(QList<RS_Entity *> &lis
         }
     }
 }
+
 /**
  * Tries to divide original line into to segments if tick line is between endpoints of line
  * @param data tick data
@@ -163,51 +161,49 @@ void LC_ActionDrawLineAngleRel::doFinish([[maybe_unused]]bool updateTB){
  * @param snapPoint
  */
 void LC_ActionDrawLineAngleRel::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint){
-        switch (status) {
-            case SetLine:{ // line selection state
-                RS_Entity* en = catchModifiableEntity(e, enTypeList);
-                if (en != nullptr) {
-                    auto* line = dynamic_cast<RS_Line *>(en);
-                    // determine where tick line should be snapped on original line
-                    RS_Vector nearestPoint = LC_LineMath::getNearestPointOnLine(line, snapPoint, true);
-                    RS_Vector tickSnapPosition = obtainLineSnapPointForMode(line, nearestPoint);
+    switch (status) {
+        case SetLine:{ // line selection state
+            RS_Entity* en = catchModifiableEntity(e, enTypeList);
+            if (en != nullptr) {
+                auto* line = dynamic_cast<RS_Line *>(en);
+                // determine where tick line should be snapped on original line
+                RS_Vector nearestPoint = LC_LineMath::getNearestPointOnLine(line, snapPoint, true);
+                RS_Vector tickSnapPosition = obtainLineSnapPointForMode(line, nearestPoint);
 
-                    // prepare line data for the snap point
-                    auto tickEnd = RS_Vector(false);
-                    tickData = prepareLineData(line, tickSnapPosition, tickEnd, alternativeActionMode);
+                // prepare line data for the snap point
+                auto tickEnd = RS_Vector(false);
+                tickData = prepareLineData(line, tickSnapPosition, tickEnd, alternativeActionMode);
 
-                    // if length is not fixed, we need additional input from the user for the length
-                    if (lengthIsFree){
-                        setStatus(SetTickLength);
-                    }
-                    else{
-                        // length of tick is fixed, triggering action
-                        trigger();
-                    }
+                // if length is not fixed, we need additional input from the user for the length
+                if (lengthIsFree){
+                    setStatus(SetTickLength);
                 }
-                invalidateSnapSpot();
-                break;
-            }
-            case SetTickLength:{ // tick length selection state
-
-                    TickData* oldData = tickData;
-                    // update tick data based on last snap point that is used for calculation of tick length
-                    tickData = prepareLineData( tickData->line, tickData->tickSnapPosition, snapPoint, alternativeActionMode);
-                    delete oldData;
-                    // we're set now, so triggering action
+                else{
+                    // length of tick is fixed, triggering action
                     trigger();
-                    setStatus(SetLine);
-                break;
+                }
             }
-            default:
-                break;
+            invalidateSnapSpot();
+            break;
         }
+        case SetTickLength:{ // tick length selection state
+            TickData* oldData = tickData;
+            // update tick data based on last snap point that is used for calculation of tick length
+            tickData = prepareLineData( tickData->line, tickData->tickSnapPosition, snapPoint, alternativeActionMode);
+            delete oldData;
+            // we're set now, so triggering action
+            trigger();
+            setStatus(SetLine);
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 bool LC_ActionDrawLineAngleRel::doCheckMayDrawPreview[[maybe_unused]]([[maybe_unused]]LC_MouseEvent *event, [[maybe_unused]]int status){
     return true;  // can draw preview in any state
 }
-
 
 /**
  * Creating preview
@@ -299,24 +295,27 @@ LC_ActionDrawLineAngleRel::TickData* LC_ActionDrawLineAngleRel::prepareLineData(
     auto const vp = targetLine->getNearestPointOnEntity(tickSnapPosition, false);
 
     // prepare angle
-    double angle = tickAngle;
+    double angleDegress = tickAngleDegrees;
     if (useAlternateAngle){
-        angle = 180 - tickAngle;
+        angleDegress = 180 - tickAngleDegrees;
     }
 
-    double tickAngleRad = RS_Math::deg2rad(angle);
+    double angleRad = RS_Math::deg2rad(angleDegress);
 
     // handle relative angle, if needed
-//    double actualTickAngle = toWorldAngle(tickAngleRad);
-    double actualTickAngle = toWorldAngleFromUCSBasis(tickAngleRad);
+    double wcsTickAngle;
     if (relativeAngle){
-        actualTickAngle = actualTickAngle + targetLine->getTangentDirection(vp).angle();
+        double targetLineOwnAngle = targetLine->getTangentDirection(vp).angle();
+        wcsTickAngle = toWorldAngleFromUCSBasis(angleRad + toUCSBasisAngle(targetLineOwnAngle));
+    }
+    else{
+        wcsTickAngle = toWorldAngleFromUCSBasis(angleRad);
     }
 
     // handle offset of tick line by preparing offset vector
     RS_Vector vectorOffset(0,0,0);
     if (LC_LineMath::isMeaningful(tickOffset)){
-        vectorOffset = RS_Vector::polar(tickOffset, actualTickAngle);
+        vectorOffset = RS_Vector::polar(tickOffset, wcsTickAngle);
     }
 
     // handle tick length if length is free
@@ -325,7 +324,7 @@ LC_ActionDrawLineAngleRel::TickData* LC_ActionDrawLineAngleRel::prepareLineData(
         if (tickEndSnapPosition.valid){
 
             /// just create vector of length 10 using angle of tick that is used to set direction
-            RS_Vector infiniteTickEndPoint = tickSnapPosition.relative(10.0, actualTickAngle);
+            RS_Vector infiniteTickEndPoint = tickSnapPosition.relative(10.0, wcsTickAngle);
 
             // determine end tick position for provided snap point - it will lay on direction vector
             RS_Vector tickEndPosition = LC_LineMath::getNearestPointOnInfiniteLine(tickEndSnapPosition, tickSnapPosition, infiniteTickEndPoint);
@@ -364,10 +363,10 @@ LC_ActionDrawLineAngleRel::TickData* LC_ActionDrawLineAngleRel::prepareLineData(
         case TICK_SNAP_START:
             break;
         case TICK_SNAP_END:
-            vectorOffsetCorrection =  RS_Vector::polar(-actualTickLength, actualTickAngle);
+            vectorOffsetCorrection =  RS_Vector::polar(-actualTickLength, wcsTickAngle);
             break;
         case TICK_SNAP_MIDDLE:
-            vectorOffsetCorrection =  RS_Vector::polar(-actualTickLength/2, actualTickAngle);
+            vectorOffsetCorrection =  RS_Vector::polar(-actualTickLength/2, wcsTickAngle);
             break;
     }
 
@@ -376,7 +375,7 @@ LC_ActionDrawLineAngleRel::TickData* LC_ActionDrawLineAngleRel::prepareLineData(
     result -> tickLineData.startpoint = tickStartPoint;
 
     // determine end point of tick
-    result -> tickLineData.endpoint = tickStartPoint.relative(actualTickLength, actualTickAngle);
+    result -> tickLineData.endpoint = tickStartPoint.relative(actualTickLength, wcsTickAngle);
     result->line = targetLine;
 
     return result;

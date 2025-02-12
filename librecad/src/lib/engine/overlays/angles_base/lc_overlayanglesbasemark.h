@@ -27,7 +27,6 @@
 #include "lc_overlayentity.h"
 #include "rs_vector.h"
 
-
 struct LC_AnglesBaseMarkOptions{
     enum {
         SHOW_ALWAYS,

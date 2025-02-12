@@ -206,7 +206,7 @@ public:
     void hideSnapOptions();
     virtual void drawSnapper();
     void drawInfoCursor();
-
+    bool hasNonDefaultAnglesBasis();
     LC_GraphicViewport* getViewPort() {return viewport;}
 protected:
     void deleteSnapper();
@@ -277,11 +277,12 @@ protected:
     bool isInfoCursorForModificationEnabled() const;
     double toWorldAngle(double ucsAbsAngle) const;
     double toWorldAngleDegrees(double ucsAbsAngleDegrees) const;
-    double toUCSAngle(double tickAngleRad) const;
+    double toUCSAngle(double wcsAngle) const;
     double toUCSBasisAngle(double wcsAngle) const;
     double toUCSBasisAngleDegrees(double wcsAngle) const;
-    double ucsAbsToBasisAngle(double relAngle) const;
-    double ucsBasisToAbsAngle(double relAngle) const;
+    double ucsAbsToBasisAngle(double ucsAbsAngle) const;
+    double ucsBasisToAbsAngle(double ucsRelAngle) const;
+    double adjustRelativeAngleSignByBasis(double relativeAngle) const;
     double toWorldAngleFromUCSBasisDegrees(double ucsBasisAngleDegrees) const;
     double toWorldAngleFromUCSBasis(double ucBasisAngle) const;
     RS_Vector toWorld(const RS_Vector& ucsPos) const;

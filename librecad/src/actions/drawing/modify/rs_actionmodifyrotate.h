@@ -44,7 +44,7 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionModifyRotate() override;
     void init(int status) override;
-    double getAngle();
+    double getAngle() const;
     void setAngle(double angle);
     void setFreeAngle(bool enable);
     bool isFreeAngle() const {return freeAngle;};
@@ -56,8 +56,8 @@ public:
     void setRefPointAngleAbsolute(bool val);
     bool isRotateAlsoAroundReferencePoint();
     void setRotateAlsoAroundReferencePoint(bool value);
-    double getCurrentAngle(){return currentAngle;}
-    double getCurrentAngle2(){return currentAngle2;};
+    double getCurrentAngleDegrees();
+    double getCurrentAngle2Degrees();
     void keyPressEvent(QKeyEvent *e) override;
 protected:
     /**

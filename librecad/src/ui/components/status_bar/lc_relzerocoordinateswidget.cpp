@@ -62,6 +62,8 @@ void LC_RelZeroCoordinatesWidget::setGraphicView(RS_GraphicView *gv) {
         }
         setRelativeZero(RS_Vector(0.0,0.0), true); // in which system? ucs? wcs?
         viewport = nullptr;
+        graphicView  = nullptr;
+        graphic = nullptr;
     }
     else {
         if (graphicView != nullptr) {
@@ -136,6 +138,6 @@ void LC_RelZeroCoordinatesWidget::setRelativeZero(const RS_Vector &rel, bool upd
     }
 }
 
-void LC_RelZeroCoordinatesWidget::onUCSChanged(LC_UCS *ucs) {
+void LC_RelZeroCoordinatesWidget::onUCSChanged([[maybe_unused]]LC_UCS *ucs) {
     setRelativeZero(viewport->getRelativeZero(), true);
 }

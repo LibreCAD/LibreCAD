@@ -256,8 +256,5 @@ private:
     // Number of pages drawing occupies
     int pagesNumH = 1;
     int pagesNumV = 1;
-
-
-    void loadVariables();
 };
 #endif

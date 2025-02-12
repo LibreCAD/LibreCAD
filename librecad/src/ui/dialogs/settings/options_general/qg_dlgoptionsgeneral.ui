@@ -5303,7 +5303,7 @@
           <item row="1" column="0" colspan="2">
            <widget class="QRadioButton" name="rbRenderArcInterpolate">
             <property name="toolTip">
-             <string>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs. </string>
+             <string>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</string>
             </property>
             <property name="text">
              <string>Interpolate by line segments</string>
@@ -5313,10 +5313,10 @@
           <item row="0" column="0" colspan="2">
            <widget class="QRadioButton" name="rbRenderArcQT">
             <property name="toolTip">
-             <string>If this method is selected, arcs are drawn using method of QT library. </string>
+             <string>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</string>
             </property>
             <property name="text">
-             <string>Qt-native drawing method</string>
+             <string>Qt-native drawing method (unexact near endpoints)</string>
             </property>
            </widget>
           </item>

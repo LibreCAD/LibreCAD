@@ -98,6 +98,6 @@ void LC_RectRegion::scale(RS_Vector factor){
     updateOther();
 }
 
-LC_TransformData LC_RectRegion::determineTransformData(RS_Vector ref, RS_Vector newRef) {
+LC_TransformData LC_RectRegion::determineTransformData([[maybe_unused]]RS_Vector ref, [[maybe_unused]] RS_Vector newRef) {
     return LC_TransformData();
 }

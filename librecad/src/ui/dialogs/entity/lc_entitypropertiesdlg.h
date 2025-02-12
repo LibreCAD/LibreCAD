@@ -71,7 +71,7 @@ protected:
     QPair<QString, QString> toUIStrRaw(const RS_Vector &vect) const;
     RS_Vector toWCSRaw(QLineEdit *leX, const QLineEdit *leY, const RS_Vector& defs) const;
 
-    QString toUIAngle(double wcsAngle) const;
+    QString toUIAngleDeg(double wcsAngle) const;
 };
 
 #endif // LC_ENTITYPROPERTIESDLG_H

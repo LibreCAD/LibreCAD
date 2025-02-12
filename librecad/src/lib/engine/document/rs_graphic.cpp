@@ -600,10 +600,16 @@ QHash<QString, RS_Variable>& RS_Graphic::getVariableDict() {
     return variableDict.getVariableDict();
 }
 
-void RS_Graphic::loadVariables(){
-    bool gridOn = getVariableInt("$GRIDMODE", 1) != 0; // fixme - sand - check
-}
-
+//
+// fixme - sand - actually, some additional caching of variables may be used,
+// in order to avoid loading/writing them into hashmap on each access...
+// need to measure and provile the cost of direct access to variables map first.
+// so it might be something like common initialization below..
+//  void RS_Graphic::loadVariables(){
+//    gridOn = getVariableInt("$GRIDMODE", 1) != 0;
+//     etc...
+//  }
+//
 
 /**
  * @return true if the grid is switched on (visible).

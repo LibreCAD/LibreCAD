@@ -66,7 +66,7 @@ void LC_ModifyRotateOptions::doSaveSettings() {
 void LC_ModifyRotateOptions::updateUI(int mode) {
     switch (mode){
         case UPDATE_ANGLE: {  // update on SetTargetPoint
-            QString angle = fromDouble(RS_Math::rad2deg(action->getCurrentAngle()));
+            QString angle = fromDouble(action->getCurrentAngleDegrees());
 
             ui->leAngle->blockSignals(true);
             ui->leAngle->setText(angle);
@@ -84,7 +84,7 @@ void LC_ModifyRotateOptions::updateUI(int mode) {
             break;
         }
         case UPDATE_ANGLE2: {  // update on SetTargetPoint
-            QString angle2 = fromDouble(RS_Math::rad2deg(action->getCurrentAngle2()));
+            QString angle2 = fromDouble(action->getCurrentAngle2Degrees());
 
             ui->leAngle2->blockSignals(true);
             ui->leAngle2->setText(angle2);
@@ -205,11 +205,9 @@ void LC_ModifyRotateOptions::setFreeAngleToActionAndView(bool val) {
     action->setFreeAngle(val);
     if (val){
         ui->leAngle->setEnabled(false);
-//        ui->leFactorY->setEnabled(false);
     }
     else{
         ui->leAngle->setEnabled(true);
-//        ui->leFactorY->setEnabled(!ui->cbIsotrpic->isChecked());
     }
 }
 

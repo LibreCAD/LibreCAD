@@ -51,8 +51,7 @@ RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
         RS_GraphicView& graphicView,
         double ang,
         bool fixedAngle)
-    :RS_PreviewActionInterface("Draw Lines with relative angles",
-                               container, graphicView)
+    :RS_PreviewActionInterface("Draw Lines with relative angles",container, graphicView)
     , pos(std::make_unique<RS_Vector>())
     , fixedAngle(fixedAngle){
     relativeAngleRad = /*RS_Math::rad2deg(ang)*/ ang;
@@ -61,11 +60,11 @@ RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
 RS_ActionDrawLineRelAngle::~RS_ActionDrawLineRelAngle() = default;
 
 void RS_ActionDrawLineRelAngle::setAngle(double angleDeg) {
-    relativeAngleRad = RS_Math::deg2rad(angleDeg);
+    relativeAngleRad = adjustRelativeAngleSignByBasis(RS_Math::deg2rad(angleDeg));
 }
 
 double RS_ActionDrawLineRelAngle::getAngle() const {
-    return RS_Math::rad2deg(relativeAngleRad);
+    return adjustRelativeAngleSignByBasis(RS_Math::rad2deg(relativeAngleRad));
 }
 
 RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
@@ -178,11 +177,11 @@ bool RS_ActionDrawLineRelAngle::doProcessCommand(int status, const QString &c) {
             break;
         }
         case SetAngle: {
-            bool ok = false;
-            double a = RS_Math::eval(c, &ok);
+            double angle;
+            bool ok = parseToRelativeAngle(c, angle);
             if (ok){
                 accept = true;
-                relativeAngleRad = RS_Math::deg2rad(a);
+                relativeAngleRad = angle;
             } else {
                 commandMessage(tr("Not a valid expression"));
             }
@@ -211,7 +210,6 @@ bool RS_ActionDrawLineRelAngle::doProcessCommand(int status, const QString &c) {
 
 QStringList RS_ActionDrawLineRelAngle::getAvailableCommands(){
     QStringList cmd;
-
     switch (getStatus()) {
         case SetPos:
         case SetLength: {
@@ -224,7 +222,6 @@ QStringList RS_ActionDrawLineRelAngle::getAvailableCommands(){
         default:
             break;
     }
-
     return cmd;
 }
 

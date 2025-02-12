@@ -65,7 +65,6 @@ RS_GraphicView::RS_GraphicView(QWidget *parent, Qt::WindowFlags f)
     viewport->addViewportListener(this);
 }
 
-
 void RS_GraphicView::loadSettings() {
     LC_GROUP("Appearance");
     {
@@ -99,7 +98,6 @@ void RS_GraphicView::setContainer(RS_EntityContainer *c) {
     viewport->setContainer(c);
 //adjustOffsetControls();
 }
-
 
 /**
  * @return Current action or nullptr.
@@ -205,8 +203,6 @@ void RS_GraphicView::enter() {
 
 void keyPressEvent(QKeyEvent *event);
 
-
-
 void RS_GraphicView::keyPressEvent(QKeyEvent *event) {
     if (eventHandler && eventHandler->hasAction()) {
         eventHandler->keyPressEvent(event);
@@ -244,7 +240,6 @@ void RS_GraphicView::zoomAuto(bool axis){
     viewport->zoomAuto(axis);
 }
 
-
 void RS_GraphicView::onViewportChanged() {
     adjustOffsetControls();
     adjustZoomControls();
@@ -277,7 +272,6 @@ const RS_LineTypePattern *RS_GraphicView::getPattern(RS2::LineType t) {
     return RS_LineTypePattern::getPattern(t);
 }
 
-
 RS2::SnapRestriction RS_GraphicView::getSnapRestriction() const {
     return defaultSnapRes;
 }
@@ -307,201 +301,9 @@ void RS_GraphicView::setSnapRestriction(RS2::SnapRestriction sr) {
     }
 }
 
-
-/**
- * Translates a vector in real coordinates to a vector in screen coordinates.
- */
-/*RS_Vector RS_GraphicView::toGui(RS_Vector v) const {
-    double ucsX, ucsY;
-    if(m_hasUcs){
-        ucs.toUCS(v.x, v.y, ucsX, ucsY);
-    }
-    else{
-        ucsX = v.x;
-        ucsY = v.y;
-    }
-    RS_Vector result = RS_Vector(ucsX * factor.x + offsetX, -ucsY * factor.y + getHeight() - offsetY, 0);
-    return result;
-}
-
-void RS_GraphicView::toGui(const RS_Vector &v, double& x, double& y) const {
-    if(m_hasUcs){
-        ucs.toUCS(v.x, v.y, x, y);
-    }
-    else{
-        x = v.x;
-        y = v.y;
-    }
-    x = x * factor.x + offsetX;
-    y = -y * factor.y + getHeight() - offsetY;
-}
-
-RS_Vector RS_GraphicView::toUCSFromGui(const QPointF& pos) const{
-    return RS_Vector(toGraphX(pos.x()), toGraphY(pos.y()));
-}
-
-RS_Vector RS_GraphicView::toUCSFromGui(double x, double y) const{
-    return RS_Vector(toGraphX(x), toGraphY(y));
-}
-
-RS_Vector RS_GraphicView::toGuiFromUCS(const RS_Vector &ucs) const {
-    RS_Vector result = RS_Vector(ucs.x * factor.x + offsetX, -ucs.y * factor.y + getHeight() - offsetY, 0);
-    return result;
-}
-
-RS_Vector RS_GraphicView::toGuiFromUCS(double x, double y) const {
-    RS_Vector result = RS_Vector(x * factor.x + offsetX, -y * factor.y + getHeight() - offsetY, 0);
-    return result;
-}
-
-
-RS_Vector RS_GraphicView::toGui(double x, double y) const{
-    double ucsX, ucsY;
-    if(m_hasUcs){
-        ucs.toUCS(x, y, ucsX, ucsY);
-    }
-    else{
-        ucsX = x;
-        ucsY = y;
-    }
-    RS_Vector result = RS_Vector(ucsX * factor.x + offsetX, -ucsY * factor.y + getHeight() - offsetY, 0);
-    return result;
-}
-
-RS_Vector RS_GraphicView::toGuiD(RS_Vector v) const {
-    return RS_Vector(toGuiDX(v.x), toGuiDY(v.y));
-}
-*/
-/**
- * Translates a real coordinate in X to a screen coordinate X.
- * @param visible Pointer to a boolean which will contain true
- * after the call if the coordinate is within the visible range.
- */
-/*
-double RS_GraphicView::toGuiX(double x) const {
-    return x * factor.x + offsetX;
-}
-
-/**
- * Translates a real coordinate in Y to a screen coordinate Y.
- */
- /*double RS_GraphicView::toGuiY(double y) const {
-    return -y * factor.y + getHeight() - offsetY;
-}*/
-
-/**
- * Translates a real coordinate distance to a screen coordinate distance.
- */
-/*double RS_GraphicView::toGuiDY(double d) const {
-    return d * factor.y;
-}*/
-
-/**
- * Translates a vector in screen coordinates to a vector in real coordinates.
- */
-/*RS_Vector RS_GraphicView::toGraph(const RS_Vector &v) const {
-//    return RS_Vector(toGraphX(RS_Math::round(v.x)),
-//                     toGraphY(RS_Math::round(v.y)));
-
-    double ucsX = (v.x - offsetX) / factor.x;
-    double ucsY = -(v.y - getHeight() + offsetY) / factor.y;
-
-    double worldX, worldY;
-
-    if (m_hasUcs){
-        ucs.toWorld(ucsX, ucsY, worldX, worldY);
-    }
-    else{
-        worldX = ucsX;
-        worldY = ucsY;
-    }
-
-    RS_Vector result = RS_Vector(worldX, worldY, 0);
-    return result;
-}
-
-*/
-
-
-/**
- * Translates a real coordinate distance to a screen coordinate distance.
- */
-/*double RS_GraphicView::toGuiDX(double d) const {
-    return d * factor.x;
-}
-
-*/
-/**
- * Translates two screen coordinates to a vector in real coordinates.
- */
-/*
-RS_Vector RS_GraphicView::toGraph(const QPointF &position) const {
-    return toGraph(position.x(), position.y());
-}
-*/
-/*
-RS_Vector RS_GraphicView::toUCS(const QPointF &position) const {
-    return toUCS(RS_Vector(position.x(), position.y()));
-}*/
-
-/**
- * Translates two screen coordinates to a vector in real coordinates.
- */
-/*RS_Vector RS_GraphicView::toGraph(int x, int y) const {
-//    return RS_Vector(toGraphX(x), toGraphY(y));
-     RS_Vector gui = RS_Vector(x, y, 0);
-     return toGraph(gui);
-}*/
-
-/**
- * Translates a screen coordinate in X to a real coordinate X.
- */
-/*double RS_GraphicView::toGraphX(int x) const {
-    return (x - offsetX) / factor.x;
-}*/
-
-/**
- * Translates a screen coordinate in Y to a real coordinate Y.
- */
-/*
-double RS_GraphicView::toGraphY(int y) const {
-    return -(y - getHeight() + offsetY) / factor.y;
-}
-*/
-
-/**
- * Translates a screen coordinate distance to a real coordinate distance.
- */
-/*double RS_GraphicView::toGraphDX(int d) const {
-    return d / factor.x;
-}*/
-
-/**
- * Translates a screen coordinate distance to a real coordinate distance.
- */
-/*double RS_GraphicView::toGraphDY(int d) const {
-    return d / factor.y;
-}*/
-
-/*RS_Vector RS_GraphicView::toGraphD(int x, int y) const{
-    return RS_Vector(x /factor.x, y / factor.y);
-}*/
-
-
-
-
-
-
-
-
-/*RS_Grid *RS_GraphicView::getGrid() const {
-    return grid.get();
-}*/
-
 RS_EventHandler *RS_GraphicView::getEventHandler() const {
     return eventHandler;
 }
-
 
 RS_Graphic *RS_GraphicView::getGraphic() const {
     if (container && container->rtti() == RS2::EntityGraphic) {

@@ -52,55 +52,54 @@ bool LC_LineAngleRelOptions::checkActionRttiValid(RS2::ActionType actionType){
 void LC_LineAngleRelOptions::doSetAction(RS_ActionInterface *a, bool update){
     action = dynamic_cast<LC_ActionDrawLineAngleRel*>(a);
     fixedAngle = a->rtti()==RS2::ActionDrawLineOrthogonalRel;
-        QString length;
-        QString offset;
-        QString angle;
-        int lineSnapMode = 0;
-        int tickSnapMode = 0;
-        bool angleIsRelative = false;
-        bool lengthIsFree = false;
-        bool divide = false;
-        QString distance;
-        if (update) {
-            length = fromDouble(action->getTickLength());
-            offset = fromDouble(action->getTickOffset());
-            angle = fromDouble(action->getTickAngle());
-            lineSnapMode = action->getLineSnapMode();
-            tickSnapMode = action->getTickSnapMode();
-            angleIsRelative = action->isAngleRelative();
-            lengthIsFree = action->isLengthFree();
-            divide = action->isDivideLine();
-            distance = QString("%1").arg(action->getSnapDistance());
-        } else {
-            length = load("Length", "1.0");
-            offset = load("Offset", "1.0");
-            if (!fixedAngle){
-                angle = load("Angle", "1.0");
-                angleIsRelative = loadBool("AngleIsRelative", true);
-            }
-            lengthIsFree = loadBool("LengthIsFree", true);
-            lineSnapMode = loadInt("LineSnapMode", 0);
-            tickSnapMode = loadInt("TickSnapMode", 1);
-            divide = loadBool("DoDivide", false);
-            distance = load("SnapDistance", "0.0");
-        }
-        ui->leAngle->setVisible(!fixedAngle);
-        ui->lblAngle->setVisible(!fixedAngle);
-        ui->cbRelativeAngle->setVisible(!fixedAngle);
-
-        setLengthIsFreeToActionAndView(lengthIsFree);
-        setLengthToActionAndView(length);
-        setOffsetToActionAndView(offset);
+    QString length;
+    QString offset;
+    QString angle;
+    int lineSnapMode = 0;
+    int tickSnapMode = 0;
+    bool angleIsRelative = false;
+    bool lengthIsFree = false;
+    bool divide = false;
+    QString distance;
+    if (update) {
+        length = fromDouble(action->getTickLength());
+        offset = fromDouble(action->getTickOffset());
+        angle = fromDouble(action->getTickAngle());
+        lineSnapMode = action->getLineSnapMode();
+        tickSnapMode = action->getTickSnapMode();
+        angleIsRelative = action->isAngleRelative();
+        lengthIsFree = action->isLengthFree();
+        divide = action->isDivideLine();
+        distance = QString("%1").arg(action->getSnapDistance());
+    } else {
+        length = load("Length", "1.0");
+        offset = load("Offset", "1.0");
         if (!fixedAngle){
-            setAngleToActionAndView(angle);
-            setAngleIsRelativeToActionAndView(angleIsRelative);
+            angle = load("Angle", "1.0");
+            angleIsRelative = loadBool("AngleIsRelative", true);
         }
-        setLineSnapModeToActionAndView(lineSnapMode);
-        setTickSnapModeToActionAndView(tickSnapMode);
-        setDivideToActionAndView(divide);
-        setDistanceToActionAndView(distance);
-}
+        lengthIsFree = loadBool("LengthIsFree", true);
+        lineSnapMode = loadInt("LineSnapMode", 0);
+        tickSnapMode = loadInt("TickSnapMode", 1);
+        divide = loadBool("DoDivide", false);
+        distance = load("SnapDistance", "0.0");
+    }
+    ui->leAngle->setVisible(!fixedAngle);
+    ui->lblAngle->setVisible(!fixedAngle);
+    ui->cbRelativeAngle->setVisible(!fixedAngle);
 
+    setLengthIsFreeToActionAndView(lengthIsFree);
+    setLengthToActionAndView(length);
+    setOffsetToActionAndView(offset);
+    if (!fixedAngle){
+        setAngleToActionAndView(angle);
+        setAngleIsRelativeToActionAndView(angleIsRelative);
+    }
+    setLineSnapModeToActionAndView(lineSnapMode);
+    setTickSnapModeToActionAndView(tickSnapMode);
+    setDivideToActionAndView(divide);
+    setDistanceToActionAndView(distance);
+}
 
 QString LC_LineAngleRelOptions::getSettingsOptionNamePrefix(){
     return fixedAngle ? "LineOrthogonalRel" : "LineAngleRel";
@@ -126,7 +125,7 @@ void LC_LineAngleRelOptions::languageChange(){
 
 void LC_LineAngleRelOptions::setAngleToActionAndView(const QString &expr){
     double angle = 0.;
-    if (toDoubleAngle(expr, angle, 1.0, false)){
+    if (toDoubleAngle(expr, angle, 0.0, false)){
         action->setTickAngle(angle);
         ui->leAngle->setText(fromDouble(angle));
     }
@@ -163,7 +162,7 @@ void LC_LineAngleRelOptions::setAngleIsRelativeToActionAndView(bool relative){
 
 void LC_LineAngleRelOptions::setDivideToActionAndView(bool divide){
     action->setDivideLine(divide);
-    ui->cbRelativeAngle->setChecked(divide);
+    ui->cbDivide->setChecked(divide);
 }
 
 void LC_LineAngleRelOptions::setLengthIsFreeToActionAndView(bool free){

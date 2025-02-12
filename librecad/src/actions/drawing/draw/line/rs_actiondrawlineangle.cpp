@@ -158,12 +158,17 @@ void RS_ActionDrawLineAngle::onMouseRightButtonRelease(int status, [[maybe_unuse
 
 void RS_ActionDrawLineAngle::preparePreview(){
     RS_Vector p1, p2;
-    // End:
-    double angleRad = pPoints->ucsBasisAngleRad;
-    // todo - sand - ucs - add option for this in options widget
-   // todo: note - commented code also delivers nice effect - it could draws line orthogonal to angles basis. Think about adding some options for this?
-//     angleRad = toWorldAngle(angleRad);
-    angleRad = toWorldAngleFromUCSBasis(angleRad);
+    double angleRad = adjustRelativeAngleSignByBasis(pPoints->ucsBasisAngleRad);
+    if (hasFixedAngle()) {
+        if (orthoToAnglesBasis) {
+            angleRad = toWorldAngleFromUCSBasis(angleRad);
+        } else {
+            angleRad = toWorldAngle(angleRad);
+        }
+    }
+    else{
+        angleRad = toWorldAngleFromUCSBasis(angleRad);
+    }
 
     if (pPoints->snpPoint == SNAP_END){
         p2.setPolar(-pPoints->length, angleRad);
@@ -187,6 +192,14 @@ void RS_ActionDrawLineAngle::onCoordinateEvent(int status, [[maybe_unused]] bool
         case SetPos:{
             pPoints->pos = pos;
             trigger();
+            break;
+        }
+        case SetAngle:{
+            if (isZero){
+                pPoints->ucsBasisAngleRad = 0.0;
+                updateOptions();
+                setStatus(SetPos);
+            }
             break;
         }
         default:
@@ -250,7 +263,7 @@ int RS_ActionDrawLineAngle::getSnapPoint() const{
 }
 
 void RS_ActionDrawLineAngle::setUcsAngleDegrees(double ucsRelAngleDegrees){
-    pPoints->ucsBasisAngleRad = RS_Math::deg2rad(ucsRelAngleDegrees);
+    pPoints->ucsBasisAngleRad =RS_Math::deg2rad(ucsRelAngleDegrees);
 }
 
 double RS_ActionDrawLineAngle::getUcsAngleDegrees() const{
@@ -313,4 +326,8 @@ RS2::CursorType RS_ActionDrawLineAngle::doGetMouseCursor([[maybe_unused]] int st
 
 LC_ActionOptionsWidget* RS_ActionDrawLineAngle::createOptionsWidget(){
     return new QG_LineAngleOptions();
+}
+
+void RS_ActionDrawLineAngle::setInAngleBasis(bool b) {
+  orthoToAnglesBasis = b;
 }

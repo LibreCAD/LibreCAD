@@ -81,9 +81,9 @@ void RS_ActionModifyRotate2::onMouseMoveEventSelected(int status, LC_MouseEvent 
                 if (isInfoCursorForModificationEnabled()){
                     LC_InfoMessageBuilder msg(tr("Rotating Twice"));
                     msg.add(tr("Center 1:"), formatVector(data->center1));
-                    msg.add(tr("Angle 1:"), formatAngleRaw(data->angle1));
+                    msg.add(tr("Angle 1:"), formatWCSAngle(data->angle1));
                     msg.add(tr("Center 2:"), formatVector(data->center2));
-                    msg.add(tr("Angle 2:"), formatAngleRaw(data->angle2));
+                    msg.add(tr("Angle 2:"), formatWCSAngle(data->angle2));
                     appendInfoCursorZoneMessage(msg.toString(), 2, false);
                 }
             }
@@ -201,19 +201,19 @@ LC_ActionOptionsWidget *RS_ActionModifyRotate2::createOptionsWidget() {
 }
 
 void RS_ActionModifyRotate2::setAngle2(double d) {
-    data->angle2 = d;
+    data->angle2 = toWorldAngleFromUCSBasis(d);
 }
 
 void RS_ActionModifyRotate2::setAngle1(double d) {
-    data->angle1 = d;
+    data->angle1 = toWorldAngleFromUCSBasis(d);
 }
 
 double RS_ActionModifyRotate2::getAngle1() {
-    return data->angle1;
+    return toUCSBasisAngle(data->angle1);
 }
 
 double RS_ActionModifyRotate2::getAngle2() {
-    return data->angle2;
+    return toUCSBasisAngle(data->angle2);
 }
 
 void RS_ActionModifyRotate2::setUseSameAngle2ForCopies(bool b) {

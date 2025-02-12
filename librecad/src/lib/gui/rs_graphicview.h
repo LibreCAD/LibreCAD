@@ -189,7 +189,7 @@ protected:
     RS_EventHandler *eventHandler = nullptr;
     RS_EntityContainer *container = nullptr;
     LC_GraphicViewport* viewport = nullptr;
-    LC_WidgetViewPortRenderer* renderer = nullptr; // fixme - initialize properly
+    LC_WidgetViewPortRenderer* renderer = nullptr;
 
     void resizeEvent(QResizeEvent *event) override;
     /**

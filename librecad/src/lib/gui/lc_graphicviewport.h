@@ -104,6 +104,7 @@ public:
     double toAbsUCSAngle(double ucsBasisAngle);
     double toBasisUCSAngle(double ucsAbsAngle);
 
+
 //    RS_Vector toUCS(const RS_Vector& v) const;
 //    RS_Vector toWorld(const RS_Vector& v) const;
 

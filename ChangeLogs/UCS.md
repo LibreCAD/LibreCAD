@@ -146,6 +146,7 @@ Thus, this refactoring may be considered rather as a preparation step for later 
 * Settings that allows to control rendering of arc/circles were added, and now it's possible to define whether arcs should be drawn natively by QT or be interpolated by line segments.
 * Added option that allows to ignore "Snap To Grid" mode during snapping if the grid is not visible (inspired by johnfound)
 * Added options for fine-tuning of snap constants (inspired by johnfound)
+* Line Horizontal/Vertical actions - if there is non-standard UCS basis, options added that allows to create lines, orthogonal to angles basis axis 
 
 ### Bugfixes
 A couple of issues were fixed:

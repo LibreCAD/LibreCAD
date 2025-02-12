@@ -772,6 +772,16 @@ bool RS_PreviewActionInterface::parseToUCSBasisAngle(const QString &c, double& u
     return ok;
 }
 
+bool RS_PreviewActionInterface::parseToRelativeAngle(const QString &c, double& ucsBasisAngleRad){
+    bool ok = false;
+    double ucsBasisAngleDeg = RS_Math::eval(c, &ok);
+    if (ok){
+        ucsBasisAngleDeg = LC_LineMath::getMeaningfulAngle(ucsBasisAngleDeg);
+        ucsBasisAngleRad = adjustRelativeAngleSignByBasis(RS_Math::deg2rad(ucsBasisAngleDeg));
+    }
+    return ok;
+}
+
 /*bool RS_PreviewActionInterface::parseUCSAngleDeg(const QString &c, double& ucsAngleDeg){
     bool ok = false;
     double ucsBasisAngleDeg = RS_Math::eval(c, &ok);

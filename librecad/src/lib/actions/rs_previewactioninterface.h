@@ -201,6 +201,7 @@ protected:
 
     bool parseToWCSAngle(const QString &c, double &wcsAngleRad);
     bool parseToUCSBasisAngle(const QString &c, double& ucsBasisAngleRad);
+    bool parseToRelativeAngle(const QString&c, double &ucsBasisAngleRad);
 
     void initFromSettings() override;
 };

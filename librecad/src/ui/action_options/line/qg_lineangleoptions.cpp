@@ -44,6 +44,7 @@ QG_LineAngleOptions::QG_LineAngleOptions()
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_LineAngleOptions::onAngleEditingFinished);
     connect(ui->leLength, &QLineEdit::editingFinished, this, &QG_LineAngleOptions::onLengthEditingFinished);
     connect(ui->cbSnapPoint, &QComboBox::currentIndexChanged, this, &QG_LineAngleOptions::onSnapPointCurrentIndexChanged);
+    connect(ui->cbForAnglesBasis, &QCheckBox::toggled, this, &QG_LineAngleOptions::onAnglesBasisToggled);
 }
 
 /*
@@ -66,43 +67,56 @@ bool QG_LineAngleOptions::checkActionRttiValid(RS2::ActionType actionType){
 }
 
 void QG_LineAngleOptions::doSetAction(RS_ActionInterface *a, bool update){
-        action = dynamic_cast<RS_ActionDrawLineAngle*>(a);
-        bool angleIsFixed = action->hasFixedAngle();
+    action = dynamic_cast<RS_ActionDrawLineAngle*>(a);
+    bool angleIsFixed = action->hasFixedAngle();
 
-        QString angle;
-        QString length;
-        int snapPoint;
+    QString angle;
+    QString length;
+    int snapPoint;
+    bool inAngleBasis = false;
 
-        // settings from action:
-        if (update) {
-            if (!angleIsFixed){
-                angle = fromDouble(action->getUcsAngleDegrees());
-            }
-            length = fromDouble(action->getLength());
-            snapPoint = action->getSnapPoint();
+    // settings from action:
+    if (update) {
+        if (angleIsFixed) {
+            inAngleBasis = action->isInAngleBasis();
         } else {
-            if (!angleIsFixed){
-                angle = load("Angle", "30.0");
-            }
-            length = load("Length", "10.0");
-            snapPoint = loadInt("SnapPoint", 0);
+            angle = fromDouble(action->getUcsAngleDegrees());
         }
-
-        ui->leAngle->setVisible(!angleIsFixed);
-        ui->lAngle->setVisible(!angleIsFixed);
-    
-        if (!angleIsFixed){
-            setAngleToActionAndView(angle);
+        length = fromDouble(action->getLength());
+        snapPoint = action->getSnapPoint();
+    } else {
+        if (angleIsFixed) {
+            inAngleBasis = loadBool("InAnglesBasis", false);
+        } else {
+            angle = load("Angle", "30.0");
         }
-        setSnapPointToActionAndView(snapPoint);
-        setLengthToActionAndView(length);
+        length = load("Length", "10.0");
+        snapPoint = loadInt("SnapPoint", 0);
+    }
 
-        ui->leAngle->setText(angle);
-        ui->leLength->setText(length);
+    ui->leAngle->setVisible(!angleIsFixed);
+    ui->lAngle->setVisible(!angleIsFixed);
+
+    bool hasCustomAnglesBasis = action->hasNonDefaultAnglesBasis();
+
+    if (angleIsFixed) {
+        ui->cbForAnglesBasis->setVisible(hasCustomAnglesBasis);
+        setToAngleBasis(inAngleBasis);
+    } else {
+        setAngleToActionAndView(angle);
+        ui->cbForAnglesBasis->setVisible(false);
+    }
+    setSnapPointToActionAndView(snapPoint);
+    setLengthToActionAndView(length);
+
+    ui->leAngle->setText(angle);
+    ui->leLength->setText(length);
 }
 
 void QG_LineAngleOptions::doSaveSettings() {
-    if (!action->hasFixedAngle()){
+    if (action->hasFixedAngle()) {
+        save("InAnglesBasis", ui->cbForAnglesBasis->isChecked());
+    } else {
         save("Angle", ui->leAngle->text());
     }
 
@@ -119,6 +133,10 @@ void QG_LineAngleOptions::onLengthEditingFinished(){
 }
 void QG_LineAngleOptions::onAngleEditingFinished(){
     setAngleToActionAndView(ui->leAngle->text());
+}
+
+void QG_LineAngleOptions::onAnglesBasisToggled(bool val) {
+    setToAngleBasis(val);
 }
 
 void QG_LineAngleOptions::setAngleToActionAndView(QString val){
@@ -140,4 +158,9 @@ void QG_LineAngleOptions::setLengthToActionAndView(QString val){
         action->setLength(len);
         ui->leLength->setText(fromDouble(len));
     }
+}
+
+void QG_LineAngleOptions::setToAngleBasis(bool val) {
+    ui->cbForAnglesBasis->setChecked(val);
+    action->setInAngleBasis(val);
 }

@@ -1309,16 +1309,27 @@ double RS_Snapper::toWorldAngleDegrees(double ucsAbsAngleDegrees) const{
     return viewport->toWorldAngleDegrees(ucsAbsAngleDegrees);
 }
 
-double RS_Snapper::toUCSAngle(double angle) const{
-    return viewport->toUCSAngle(angle);
+double RS_Snapper::toUCSAngle(double wcsAngle) const{
+    return viewport->toUCSAngle(wcsAngle);
 }
 
-double RS_Snapper::ucsAbsToBasisAngle(double angle) const{
-    return viewport->toBasisUCSAngle(angle);
+double RS_Snapper::ucsAbsToBasisAngle(double ucsAbsAngle) const{
+    return viewport->toBasisUCSAngle(ucsAbsAngle);
 }
 
-double RS_Snapper::ucsBasisToAbsAngle(double angle) const{
-    return viewport->toAbsUCSAngle(angle);
+double RS_Snapper::ucsBasisToAbsAngle(double ucsRelAngle) const{
+    return viewport->toAbsUCSAngle(ucsRelAngle);
+}
+
+double RS_Snapper::adjustRelativeAngleSignByBasis(double relativeAngle) const{
+    double result;
+    if (m_anglesCounterClockWise){
+        result = relativeAngle;
+    }
+    else{
+        result = -relativeAngle;
+    }
+    return result;
 }
 
 double RS_Snapper::toUCSBasisAngleDegrees(double wcsAngle) const{
@@ -1373,6 +1384,10 @@ void RS_Snapper::calcRectCorners(const RS_Vector &worldCorner1, const RS_Vector 
     worldCorner4 = toWorld(ucsCorner4);
 }
 
+bool RS_Snapper::hasNonDefaultAnglesBasis(){
+    return  LC_LineMath::isMeaningfulAngle(m_anglesBase) || !m_anglesCounterClockWise;
+}
+
 // get catching entity distance in graph distance
 double RS_Snapper::getCatchDistance(double catchDistance, int catchEntityGuiRange){
     return (graphicView != nullptr) ? std::min(catchDistance, toGraphDX(catchEntityGuiRange)) : catchDistance;
@@ -1381,10 +1396,10 @@ double RS_Snapper::getCatchDistance(double catchDistance, int catchEntityGuiRang
 void RS_Snapper::enableCoordinateInput(){
     graphicView->enableCoordinateInput();
 }
+
 void RS_Snapper::disableCoordinateInput(){
     graphicView->disableCoordinateInput();
 };
-
 
 void RS_Snapper::redraw(RS2::RedrawMethod method) {
     // fixme - sand - ucs - decide how it's better to invoke redraw

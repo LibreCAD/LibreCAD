@@ -50,7 +50,7 @@ void LC_GraphicViewRenderer::loadSettings() {
     {
         m_entityHandleHalfSize = LC_GET_INT("EntityHandleSize", 4) / 2;
         m_ignoreDraftForHighlight = LC_GET_BOOL("IgnoreDraftForHighlight", false);
-        m_scaleLineWidth = LC_GET_BOOL("DraftLinesMode", false);
+        m_scaleLineWidth = !LC_GET_BOOL("DraftLinesMode", false);
 
         QString draftMarkerFontName =  LC_GET_STR("DraftMarkerFontName", "Verdana");
         int draftMarkerFontSize = LC_GET_INT("DraftMarkerFontSize", 10);
@@ -298,8 +298,8 @@ void LC_GraphicViewRenderer::drawOverlayEntitiesInOverlay(LC_OverlaysManager *ov
 void LC_GraphicViewRenderer::drawEntityReferencePoints(RS_Painter *painter, const RS_Entity *e) const {
     RS_VectorSolutions const &s = e->getRefPoints();
     int sz = m_entityHandleHalfSize;
-    int refsCount = s.getNumber();
-    int lastRef = refsCount - 1;
+    size_t refsCount = s.getNumber();
+    size_t lastRef = refsCount - 1;
     for (size_t i = 0; i < refsCount; ++i) {
         RS_Color col = m_colorHangle;
         if (i == 0) {

@@ -150,10 +150,12 @@ void RS_ActionDrawArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         }
         case SetIncAngle: {
-            mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
-            double angleToMouse = data->center.angleTo(mouse);
-            double wcsAngle = toUCSAngle(angleToMouse);
-            data->angle2 = data->angle1 + wcsAngle;
+
+            RS_Vector &center = data->center;
+            mouse = getSnapAngleAwarePoint(e, center, mouse, true);
+            double wcsAngleToMouse = center.angleTo(mouse);
+            double wcsAngle = toUCSBasisAngle(wcsAngleToMouse);
+            data->angle2 = data->angle1 + adjustRelativeAngleSignByBasis(wcsAngle);
 
             bool alternateDirection = e->isControl;
             RS_ArcData tmpData = *data;
@@ -169,14 +171,16 @@ void RS_ActionDrawArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 RS_Vector nearest = arc->getNearestPointOnEntity(mouse, false);
                 previewRefSelectablePoint(nearest);
 
+                previewSnapAngleMark(center, mouse);
+
                 double halfRadius = data->radius / 2;
-                const RS_Vector &horizontalPoint = toWorld(toUCS(data->center) + RS_Vector(halfRadius, 0, 0));
-                previewRefLine(data->center, mouse);
-                previewRefLine(data->center, horizontalPoint);
-                previewRefLine(data->center, arc->getEndpoint());
-                previewRefLine(data->center, arc->getStartpoint());
-                previewRefArc(RS_ArcData(data->center, halfRadius, toWorldAngle(0.0), angleToMouse, data->reversed));
-                previewRefArc(RS_ArcData(data->center, halfRadius * 1.1, arc->getAngle1(), arc->getAngle2(), data->reversed));
+                RS_Vector horizontalPoint = center.relative(halfRadius, toWorldAngleFromUCSBasis(0));
+                previewRefLine(center, mouse);
+                previewRefLine(center, horizontalPoint);
+                previewRefLine(center, arc->getEndpoint());
+                previewRefLine(center, arc->getStartpoint());
+                previewRefArc(RS_ArcData(center, halfRadius, toWorldAngleFromUCSBasis(0.0), wcsAngleToMouse, data->reversed));
+                previewRefArc(RS_ArcData(center, halfRadius * 1.1, arc->getAngle1(), arc->getAngle2(), data->reversed));
             }
             break;
         }
@@ -369,9 +373,10 @@ void RS_ActionDrawArc::onCoordinateEvent(int status, [[maybe_unused]] bool isZer
             break;
         }
         case SetIncAngle: {
-            double angleToMouse = data->center.angleTo(mouse);
-            double wcsAngle = toUCSAngle(angleToMouse);
-            data->angle2 = data->angle1 + wcsAngle;
+            double wcsAngle = data->center.angleTo(mouse);
+            double rotationAngle = RS_Math::correctAngle(toUCSBasisAngle(wcsAngle));
+            double innerAngle = adjustRelativeAngleSignByBasis(rotationAngle);
+            data->angle2 = data->angle1 + innerAngle;
             trigger();
             break;
         }
@@ -452,10 +457,10 @@ bool RS_ActionDrawArc::doProcessCommand(int status, const QString &c) {
                 break;
             }
             case SetIncAngle: {
-                bool ok = false;
-                double a = RS_Math::eval(c, &ok);
+                double relativeAngleRad;
+                bool ok = parseToRelativeAngle(c, relativeAngleRad);
                 if (ok) {
-                    data->angle2 = data->angle1 + RS_Math::deg2rad(a);
+                    data->angle2 = data->angle1 + relativeAngleRad;
                     accept = true;
                     trigger();
                 } else

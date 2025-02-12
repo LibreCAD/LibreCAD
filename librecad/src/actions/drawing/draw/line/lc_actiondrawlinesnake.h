@@ -124,7 +124,7 @@ private:
     void completeLineSegment(bool close);
     void calculateAngleSegment(double distance);
     RS_Vector calculateAngleEndpoint(const RS_Vector &snap);
-    double defineActualSegmentAngle(double realAngle);
+    double defineActualSegmentAngle(double relativeAngleRad);
     bool isNonZeroLine(const RS_Vector &possiblePoint) const;
     void createEntities(RS_Vector &potentialEndPoint, QList<RS_Entity *> &entitiesList);
 };
