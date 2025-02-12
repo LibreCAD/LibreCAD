@@ -117,7 +117,8 @@ Related settings were added to Application Preferences and settings of UCS list 
 
 #### UCS Limitations
 
-At the moment, there are several limitations in current implementation of UCS support. 
+At the moment, there are several limitations in current implementation of UCS support. Mostly, they are related to determining the bounding box of entities within active UCS. 
+So far, the entire WCS bounding box is rotated for UCS (instead of proper recalculation of the bounding box for new basis). 
 
 1. If UCS is rotated to WCS, selection of entities by window may work not always correctly (and some additional entities outsider of selecting box may be selected).  
 This is due to current selection logic that assumes that selection region represent rectangle parallel to x.
