@@ -14,6 +14,7 @@
     <name>ColorWizard</name>
     <message>
         <location filename="../src/ui/generic/colorwizard.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_colorwizard.h" line="92"/>
         <location filename="../../build/ui_colorwizard.h" line="92"/>
         <location filename="../../generated/librecad/ui/ui_colorwizard.h" line="92"/>
         <source>Frame</source>
@@ -21,6 +22,7 @@
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.ui" line="35"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_colorwizard.h" line="94"/>
         <location filename="../../build/ui_colorwizard.h" line="94"/>
         <location filename="../../generated/librecad/ui/ui_colorwizard.h" line="94"/>
         <source>Add to favorites</source>
@@ -29,6 +31,8 @@
     <message>
         <location filename="../src/ui/generic/colorwizard.ui" line="38"/>
         <location filename="../src/ui/generic/colorwizard.ui" line="62"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_colorwizard.h" line="96"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_colorwizard.h" line="97"/>
         <location filename="../../build/ui_colorwizard.h" line="96"/>
         <location filename="../../build/ui_colorwizard.h" line="97"/>
         <location filename="../../generated/librecad/ui/ui_colorwizard.h" line="96"/>
@@ -41,6 +45,7 @@
     <name>ComboBoxOption</name>
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_comboboxoption.h" line="71"/>
         <location filename="../../build/ui_comboboxoption.h" line="71"/>
         <location filename="../../generated/librecad/ui/ui_comboboxoption.h" line="71"/>
         <source>Frame</source>
@@ -48,6 +53,7 @@
     </message>
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_comboboxoption.h" line="72"/>
         <location filename="../../build/ui_comboboxoption.h" line="72"/>
         <location filename="../../generated/librecad/ui/ui_comboboxoption.h" line="72"/>
         <source>GroupBox</source>
@@ -55,6 +61,7 @@
     </message>
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="41"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_comboboxoption.h" line="73"/>
         <location filename="../../build/ui_comboboxoption.h" line="73"/>
         <location filename="../../generated/librecad/ui/ui_comboboxoption.h" line="73"/>
         <source>Set</source>
@@ -137,6 +144,7 @@
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_LC_DlgParabola.h" line="161"/>
         <location filename="../../build/ui_LC_DlgParabola.h" line="161"/>
         <location filename="../../generated/librecad/ui/ui_LC_DlgParabola.h" line="161"/>
         <source>Parabola</source>
@@ -144,6 +152,7 @@
     </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="62"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_LC_DlgParabola.h" line="162"/>
         <location filename="../../build/ui_LC_DlgParabola.h" line="162"/>
         <location filename="../../generated/librecad/ui/ui_LC_DlgParabola.h" line="162"/>
         <source>Layer:</source>
@@ -151,6 +160,7 @@
     </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="95"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_LC_DlgParabola.h" line="163"/>
         <location filename="../../build/ui_LC_DlgParabola.h" line="163"/>
         <location filename="../../generated/librecad/ui/ui_LC_DlgParabola.h" line="163"/>
         <source>Geometry</source>
@@ -159,6 +169,8 @@
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="110"/>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="113"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_LC_DlgParabola.h" line="165"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_LC_DlgParabola.h" line="168"/>
         <location filename="../../build/ui_LC_DlgParabola.h" line="165"/>
         <location filename="../../build/ui_LC_DlgParabola.h" line="168"/>
         <location filename="../../generated/librecad/ui/ui_LC_DlgParabola.h" line="165"/>
@@ -168,6 +180,7 @@
     </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="142"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_LC_DlgParabola.h" line="170"/>
         <location filename="../../build/ui_LC_DlgParabola.h" line="170"/>
         <location filename="../../generated/librecad/ui/ui_LC_DlgParabola.h" line="170"/>
         <source>Control Points</source>
@@ -178,6 +191,7 @@
     <name>DlgSplinePoints</name>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="176"/>
         <location filename="../../build/ui_lc_dlgsplinepoints.h" line="176"/>
         <location filename="../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="176"/>
         <source>SplinePoints</source>
@@ -185,6 +199,7 @@
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="62"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="177"/>
         <location filename="../../build/ui_lc_dlgsplinepoints.h" line="177"/>
         <location filename="../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="177"/>
         <source>Layer:</source>
@@ -192,6 +207,7 @@
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="95"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="178"/>
         <location filename="../../build/ui_lc_dlgsplinepoints.h" line="178"/>
         <location filename="../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="178"/>
         <source>Geometry</source>
@@ -199,6 +215,7 @@
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="101"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="179"/>
         <location filename="../../build/ui_lc_dlgsplinepoints.h" line="179"/>
         <location filename="../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="179"/>
         <source>Closed</source>
@@ -206,6 +223,7 @@
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="110"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="180"/>
         <location filename="../../build/ui_lc_dlgsplinepoints.h" line="180"/>
         <location filename="../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="180"/>
         <source>Spline Points</source>
@@ -213,6 +231,7 @@
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="120"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="181"/>
         <location filename="../../build/ui_lc_dlgsplinepoints.h" line="181"/>
         <location filename="../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="181"/>
         <source>Control Points</source>
@@ -221,6 +240,8 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="135"/>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="138"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="183"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="186"/>
         <location filename="../../build/ui_lc_dlgsplinepoints.h" line="183"/>
         <location filename="../../build/ui_lc_dlgsplinepoints.h" line="186"/>
         <location filename="../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="183"/>
@@ -1717,6 +1738,7 @@ first base, second base, first target, second target.</source>
     <name>LC_CircleByArcOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="99"/>
         <location filename="../../build/ui_lc_circlebyarcoptions.h" line="99"/>
         <location filename="../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="99"/>
         <source>Form</source>
@@ -1725,6 +1747,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="27"/>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="73"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="100"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="106"/>
         <location filename="../../build/ui_lc_circlebyarcoptions.h" line="100"/>
         <location filename="../../build/ui_lc_circlebyarcoptions.h" line="106"/>
         <location filename="../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="100"/>
@@ -1735,6 +1759,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="32"/>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="78"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="101"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="107"/>
         <location filename="../../build/ui_lc_circlebyarcoptions.h" line="101"/>
         <location filename="../../build/ui_lc_circlebyarcoptions.h" line="107"/>
         <location filename="../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="101"/>
@@ -1744,6 +1770,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="37"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="102"/>
         <location filename="../../build/ui_lc_circlebyarcoptions.h" line="102"/>
         <location filename="../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="102"/>
         <source>Original Resolved</source>
@@ -1751,6 +1778,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="45"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="104"/>
         <location filename="../../build/ui_lc_circlebyarcoptions.h" line="104"/>
         <location filename="../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="104"/>
         <source>Radius Shift:</source>
@@ -1758,6 +1786,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="65"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="105"/>
         <location filename="../../build/ui_lc_circlebyarcoptions.h" line="105"/>
         <location filename="../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="105"/>
         <source>Layer:</source>
@@ -1765,6 +1794,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="102"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="109"/>
         <location filename="../../build/ui_lc_circlebyarcoptions.h" line="109"/>
         <location filename="../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="109"/>
         <source>Replace arc</source>
@@ -1772,6 +1802,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="109"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="110"/>
         <location filename="../../build/ui_lc_circlebyarcoptions.h" line="110"/>
         <location filename="../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="110"/>
         <source>Pen:</source>
@@ -1782,6 +1813,7 @@ first base, second base, first target, second target.</source>
     <name>LC_CrossOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_crossoptions.h" line="131"/>
         <location filename="../../build/ui_lc_crossoptions.h" line="131"/>
         <location filename="../../generated/librecad/ui/ui_lc_crossoptions.h" line="131"/>
         <source>Form</source>
@@ -1789,6 +1821,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="63"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_crossoptions.h" line="132"/>
         <location filename="../../build/ui_lc_crossoptions.h" line="132"/>
         <location filename="../../generated/librecad/ui/ui_lc_crossoptions.h" line="132"/>
         <source>Extension</source>
@@ -1796,6 +1829,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="68"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_crossoptions.h" line="133"/>
         <location filename="../../build/ui_lc_crossoptions.h" line="133"/>
         <location filename="../../generated/librecad/ui/ui_lc_crossoptions.h" line="133"/>
         <source>Total Length</source>
@@ -1803,6 +1837,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="73"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_crossoptions.h" line="134"/>
         <location filename="../../build/ui_lc_crossoptions.h" line="134"/>
         <location filename="../../generated/librecad/ui/ui_lc_crossoptions.h" line="134"/>
         <source>Percent</source>
@@ -1810,6 +1845,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="125"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_crossoptions.h" line="136"/>
         <location filename="../../build/ui_lc_crossoptions.h" line="136"/>
         <location filename="../../generated/librecad/ui/ui_lc_crossoptions.h" line="136"/>
         <source>X:</source>
@@ -1817,6 +1853,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="132"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_crossoptions.h" line="137"/>
         <location filename="../../build/ui_lc_crossoptions.h" line="137"/>
         <location filename="../../generated/librecad/ui/ui_lc_crossoptions.h" line="137"/>
         <source>Y:</source>
@@ -1824,6 +1861,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="161"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_crossoptions.h" line="138"/>
         <location filename="../../build/ui_lc_crossoptions.h" line="138"/>
         <location filename="../../generated/librecad/ui/ui_lc_crossoptions.h" line="138"/>
         <source>Type</source>
@@ -1831,6 +1869,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="168"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_crossoptions.h" line="139"/>
         <location filename="../../build/ui_lc_crossoptions.h" line="139"/>
         <location filename="../../generated/librecad/ui/ui_lc_crossoptions.h" line="139"/>
         <source>Angle:</source>
@@ -1849,6 +1888,7 @@ first base, second base, first target, second target.</source>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_deviceoptions.h" line="68"/>
         <location filename="../../build/ui_lc_deviceoptions.h" line="68"/>
         <location filename="../../generated/librecad/ui/ui_lc_deviceoptions.h" line="68"/>
         <source>Form</source>
@@ -1856,6 +1896,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_deviceoptions.h" line="69"/>
         <location filename="../../build/ui_lc_deviceoptions.h" line="69"/>
         <location filename="../../generated/librecad/ui/ui_lc_deviceoptions.h" line="69"/>
         <source>Device</source>
@@ -1863,6 +1904,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="53"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_deviceoptions.h" line="71"/>
         <location filename="../../build/ui_lc_deviceoptions.h" line="71"/>
         <location filename="../../generated/librecad/ui/ui_lc_deviceoptions.h" line="71"/>
         <source>Save</source>
@@ -1881,6 +1923,7 @@ first base, second base, first target, second target.</source>
     <name>LC_DuplicateOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_duplicateoptions.h" line="113"/>
         <location filename="../../build/ui_lc_duplicateoptions.h" line="113"/>
         <location filename="../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="113"/>
         <source>Form</source>
@@ -1888,6 +1931,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_duplicateoptions.h" line="114"/>
         <location filename="../../build/ui_lc_duplicateoptions.h" line="114"/>
         <location filename="../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="114"/>
         <source>Layer:</source>
@@ -1895,6 +1939,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="33"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_duplicateoptions.h" line="115"/>
         <location filename="../../build/ui_lc_duplicateoptions.h" line="115"/>
         <location filename="../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="115"/>
         <source>In Place</source>
@@ -1902,6 +1947,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="40"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_duplicateoptions.h" line="116"/>
         <location filename="../../build/ui_lc_duplicateoptions.h" line="116"/>
         <location filename="../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="116"/>
         <source>Offset X:</source>
@@ -1910,6 +1956,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="48"/>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="62"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_duplicateoptions.h" line="117"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_duplicateoptions.h" line="120"/>
         <location filename="../../build/ui_lc_duplicateoptions.h" line="117"/>
         <location filename="../../build/ui_lc_duplicateoptions.h" line="120"/>
         <location filename="../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="117"/>
@@ -1920,6 +1968,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="53"/>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="67"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_duplicateoptions.h" line="118"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_duplicateoptions.h" line="121"/>
         <location filename="../../build/ui_lc_duplicateoptions.h" line="118"/>
         <location filename="../../build/ui_lc_duplicateoptions.h" line="121"/>
         <location filename="../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="118"/>
@@ -1929,6 +1979,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="72"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_duplicateoptions.h" line="122"/>
         <location filename="../../build/ui_lc_duplicateoptions.h" line="122"/>
         <location filename="../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="122"/>
         <source>Original Resolved</source>
@@ -1936,6 +1987,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="80"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_duplicateoptions.h" line="124"/>
         <location filename="../../build/ui_lc_duplicateoptions.h" line="124"/>
         <location filename="../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="124"/>
         <source>Offset Y:</source>
@@ -1943,6 +1995,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_duplicateoptions.h" line="125"/>
         <location filename="../../build/ui_lc_duplicateoptions.h" line="125"/>
         <location filename="../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="125"/>
         <source>Pen:</source>
@@ -1966,6 +2019,7 @@ first base, second base, first target, second target.</source>
     <name>LC_LayerDialogEx</name>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layerdialog_ex.h" line="162"/>
         <location filename="../../build/ui_lc_layerdialog_ex.h" line="162"/>
         <location filename="../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="162"/>
         <source>Layer Settings</source>
@@ -1973,6 +2027,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="61"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layerdialog_ex.h" line="164"/>
         <location filename="../../build/ui_lc_layerdialog_ex.h" line="164"/>
         <location filename="../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="164"/>
         <source>Parent Layers Path:</source>
@@ -1980,6 +2035,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="78"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layerdialog_ex.h" line="165"/>
         <location filename="../../build/ui_lc_layerdialog_ex.h" line="165"/>
         <location filename="../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="165"/>
         <source>Layer Type</source>
@@ -1987,6 +2043,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="90"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layerdialog_ex.h" line="166"/>
         <location filename="../../build/ui_lc_layerdialog_ex.h" line="166"/>
         <location filename="../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="166"/>
         <source>Informational</source>
@@ -1994,6 +2051,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="100"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layerdialog_ex.h" line="167"/>
         <location filename="../../build/ui_lc_layerdialog_ex.h" line="167"/>
         <location filename="../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="167"/>
         <source>Normal</source>
@@ -2001,6 +2059,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="110"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layerdialog_ex.h" line="168"/>
         <location filename="../../build/ui_lc_layerdialog_ex.h" line="168"/>
         <location filename="../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="168"/>
         <source>Dimensions</source>
@@ -2008,6 +2067,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="120"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layerdialog_ex.h" line="169"/>
         <location filename="../../build/ui_lc_layerdialog_ex.h" line="169"/>
         <location filename="../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="169"/>
         <source>Alternative Position</source>
@@ -2015,6 +2075,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layerdialog_ex.h" line="171"/>
         <location filename="../../build/ui_lc_layerdialog_ex.h" line="171"/>
         <location filename="../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="171"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
@@ -2023,6 +2084,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layerdialog_ex.h" line="174"/>
         <location filename="../../build/ui_lc_layerdialog_ex.h" line="174"/>
         <location filename="../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="174"/>
         <source>Construction Layer</source>
@@ -2030,6 +2092,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="179"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layerdialog_ex.h" line="176"/>
         <location filename="../../build/ui_lc_layerdialog_ex.h" line="176"/>
         <location filename="../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="176"/>
         <source>Layer Name:</source>
@@ -2072,6 +2135,7 @@ first base, second base, first target, second target.</source>
     <name>LC_LayerTreeOptionsDialog</name>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="454"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="454"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="454"/>
         <source>Layers Tree Options</source>
@@ -2079,6 +2143,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="33"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="464"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="464"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="464"/>
         <source>Naming Convention</source>
@@ -2086,6 +2151,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="68"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="456"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="456"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="456"/>
         <source>Layer Level Name Separator</source>
@@ -2093,6 +2159,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="88"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="457"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="457"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="457"/>
         <source>Secondary Layer Suffixes</source>
@@ -2100,6 +2167,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="458"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="458"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="458"/>
         <source>Dimensional</source>
@@ -2107,6 +2175,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="114"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="459"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="459"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="459"/>
         <source>Informational</source>
@@ -2114,6 +2183,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="134"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="460"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="460"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="460"/>
         <source>Alternative Position </source>
@@ -2121,6 +2191,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="157"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="461"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="461"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="461"/>
         <source>Duplicating Name</source>
@@ -2128,6 +2199,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="163"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="462"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="462"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="462"/>
         <source>Prefix</source>
@@ -2135,6 +2207,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="183"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="463"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="463"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="463"/>
         <source>Suffix</source>
@@ -2142,6 +2215,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="207"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="471"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="471"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="471"/>
         <source>Display and Operations</source>
@@ -2149,6 +2223,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="213"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="465"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="465"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="465"/>
         <source>Show full name as ToolTip</source>
@@ -2156,6 +2231,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="220"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="466"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="466"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="466"/>
         <source>Show layer type icons</source>
@@ -2163,6 +2239,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="233"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="467"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="467"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="467"/>
         <source>Show indented layer names. Ident size:</source>
@@ -2170,6 +2247,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="266"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="469"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="469"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="469"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
@@ -2177,6 +2255,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="273"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="470"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="470"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="470"/>
         <source>Rename secondary layers on primary rename</source>
@@ -2184,6 +2263,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="281"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="487"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="487"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="487"/>
         <source>Colors</source>
@@ -2191,6 +2271,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="384"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="476"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="476"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="476"/>
         <source>Matched item in highlight filter mode</source>
@@ -2198,6 +2279,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="416"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="477"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="477"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="477"/>
         <source>#1E90FF</source>
@@ -2205,6 +2287,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="441"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="480"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="480"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="480"/>
         <source>Virtual layer background color</source>
@@ -2212,6 +2295,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="465"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="482"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="482"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="482"/>
         <source>Threeview items separator grid</source>
@@ -2219,6 +2303,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="475"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="483"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="483"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="483"/>
         <source>Selected items background color</source>
@@ -2226,6 +2311,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="504"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="486"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="486"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="486"/>
         <source>Active layer background color</source>
@@ -2233,6 +2319,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="525"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="488"/>
         <location filename="../../build/ui_lc_layertreeoptionsdialog.h" line="488"/>
         <location filename="../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="488"/>
         <source>Default Pens</source>
@@ -2519,6 +2606,7 @@ first base, second base, first target, second target.</source>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="160"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="160"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="160"/>
         <source>Form</source>
@@ -2526,6 +2614,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="42"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="161"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="161"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="161"/>
         <source>Offset:</source>
@@ -2534,6 +2623,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="162"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="176"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="162"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="176"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="162"/>
@@ -2544,6 +2635,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="110"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="163"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="169"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="163"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="169"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="163"/>
@@ -2554,6 +2647,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="60"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="115"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="164"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="170"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="164"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="170"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="164"/>
@@ -2564,6 +2659,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="65"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="120"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="165"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="171"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="165"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="171"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="165"/>
@@ -2573,6 +2670,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="167"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="167"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="167"/>
         <source>Line Snap:</source>
@@ -2580,6 +2678,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="168"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="168"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="168"/>
         <source>Rel</source>
@@ -2587,6 +2686,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="144"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="173"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="173"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="173"/>
         <source>Divide</source>
@@ -2594,6 +2694,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="167"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="174"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="174"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="174"/>
         <source>Tick Snap:</source>
@@ -2601,6 +2702,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="174"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="175"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="175"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="175"/>
         <source>Length:</source>
@@ -2608,6 +2710,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="201"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="177"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="177"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="177"/>
         <source>Angle:</source>
@@ -2615,6 +2718,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="208"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineanglereloptions.h" line="178"/>
         <location filename="../../build/ui_lc_lineanglereloptions.h" line="178"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="178"/>
         <source>Snap Distance:</source>
@@ -2625,6 +2729,7 @@ first base, second base, first target, second target.</source>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="190"/>
         <location filename="../../build/ui_lc_linefrompointtolineoptions.h" line="190"/>
         <location filename="../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="190"/>
         <source>Form</source>
@@ -2632,6 +2737,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="48"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="191"/>
         <location filename="../../build/ui_lc_linefrompointtolineoptions.h" line="191"/>
         <location filename="../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="191"/>
         <source>Angle:</source>
@@ -2639,6 +2745,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="55"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="192"/>
         <location filename="../../build/ui_lc_linefrompointtolineoptions.h" line="192"/>
         <location filename="../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="192"/>
         <source>Size:</source>
@@ -2646,6 +2753,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="62"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="193"/>
         <location filename="../../build/ui_lc_linefrompointtolineoptions.h" line="193"/>
         <location filename="../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="193"/>
         <source>Orthogonal</source>
@@ -2653,6 +2761,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="105"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="195"/>
         <location filename="../../build/ui_lc_linefrompointtolineoptions.h" line="195"/>
         <location filename="../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="195"/>
         <source>To Intersection</source>
@@ -2660,6 +2769,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="110"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="196"/>
         <location filename="../../build/ui_lc_linefrompointtolineoptions.h" line="196"/>
         <location filename="../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="196"/>
         <source>Fixed Length</source>
@@ -2667,6 +2777,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="139"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="198"/>
         <location filename="../../build/ui_lc_linefrompointtolineoptions.h" line="198"/>
         <location filename="../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="198"/>
         <source>End offset:</source>
@@ -2674,6 +2785,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="217"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="199"/>
         <location filename="../../build/ui_lc_linefrompointtolineoptions.h" line="199"/>
         <location filename="../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="199"/>
         <source>Start</source>
@@ -2681,6 +2793,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="222"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="200"/>
         <location filename="../../build/ui_lc_linefrompointtolineoptions.h" line="200"/>
         <location filename="../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="200"/>
         <source>Middle</source>
@@ -2688,6 +2801,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="227"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="201"/>
         <location filename="../../build/ui_lc_linefrompointtolineoptions.h" line="201"/>
         <location filename="../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="201"/>
         <source>End</source>
@@ -2695,6 +2809,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="241"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="203"/>
         <location filename="../../build/ui_lc_linefrompointtolineoptions.h" line="203"/>
         <location filename="../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="203"/>
         <source>Length:</source>
@@ -2702,6 +2817,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="270"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="204"/>
         <location filename="../../build/ui_lc_linefrompointtolineoptions.h" line="204"/>
         <location filename="../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="204"/>
         <source>Snap:</source>
@@ -2712,6 +2828,7 @@ first base, second base, first target, second target.</source>
     <name>LC_LineJoinOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="123"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="123"/>
         <location filename="../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="123"/>
         <source>Form</source>
@@ -2720,6 +2837,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="144"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="124"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="135"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="124"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="135"/>
         <location filename="../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="124"/>
@@ -2730,6 +2849,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="149"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="125"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="136"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="125"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="136"/>
         <location filename="../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="125"/>
@@ -2740,6 +2861,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="61"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="154"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="126"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="137"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="126"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="137"/>
         <location filename="../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="126"/>
@@ -2749,6 +2872,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="128"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="128"/>
         <location filename="../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="128"/>
         <source>Create Polyline</source>
@@ -2756,6 +2880,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="129"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="129"/>
         <location filename="../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="129"/>
         <source>Attributes:</source>
@@ -2763,6 +2888,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="102"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="130"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="130"/>
         <location filename="../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="130"/>
         <source>Active Pen</source>
@@ -2770,6 +2896,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="107"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="131"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="131"/>
         <location filename="../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="131"/>
         <source>Line 1</source>
@@ -2777,6 +2904,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="112"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="132"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="132"/>
         <location filename="../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="132"/>
         <source>Line 2</source>
@@ -2784,6 +2912,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="117"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="133"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="133"/>
         <location filename="../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="133"/>
         <source>Both lines</source>
@@ -2791,6 +2920,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="162"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="139"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="139"/>
         <location filename="../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="139"/>
         <source>Remove originals</source>
@@ -2798,6 +2928,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="169"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="140"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="140"/>
         <location filename="../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="140"/>
         <source>Line 2:</source>
@@ -2805,6 +2936,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="176"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linejoinoptions.h" line="141"/>
         <location filename="../../build/ui_lc_linejoinoptions.h" line="141"/>
         <location filename="../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="141"/>
         <source>Line 1:</source>
@@ -2815,6 +2947,7 @@ first base, second base, first target, second target.</source>
     <name>LC_LinePointsOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linepointsoptions.h" line="159"/>
         <location filename="../../build/ui_lc_linepointsoptions.h" line="159"/>
         <location filename="../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="159"/>
         <source>Form</source>
@@ -2822,6 +2955,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linepointsoptions.h" line="160"/>
         <location filename="../../build/ui_lc_linepointsoptions.h" line="160"/>
         <location filename="../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="160"/>
         <source>Angle:</source>
@@ -2829,6 +2963,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="73"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linepointsoptions.h" line="161"/>
         <location filename="../../build/ui_lc_linepointsoptions.h" line="161"/>
         <location filename="../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="161"/>
         <source>Fit Line</source>
@@ -2836,6 +2971,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="128"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linepointsoptions.h" line="162"/>
         <location filename="../../build/ui_lc_linepointsoptions.h" line="162"/>
         <location filename="../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="162"/>
         <source>None</source>
@@ -2843,6 +2979,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="133"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linepointsoptions.h" line="163"/>
         <location filename="../../build/ui_lc_linepointsoptions.h" line="163"/>
         <location filename="../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="163"/>
         <source>Both</source>
@@ -2850,6 +2987,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="138"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linepointsoptions.h" line="164"/>
         <location filename="../../build/ui_lc_linepointsoptions.h" line="164"/>
         <location filename="../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="164"/>
         <source>Start</source>
@@ -2857,6 +2995,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="143"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linepointsoptions.h" line="165"/>
         <location filename="../../build/ui_lc_linepointsoptions.h" line="165"/>
         <location filename="../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="165"/>
         <source>End</source>
@@ -2864,6 +3003,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="183"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linepointsoptions.h" line="167"/>
         <location filename="../../build/ui_lc_linepointsoptions.h" line="167"/>
         <location filename="../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="167"/>
         <source>Edge Points:</source>
@@ -2871,6 +3011,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="196"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linepointsoptions.h" line="168"/>
         <location filename="../../build/ui_lc_linepointsoptions.h" line="168"/>
         <location filename="../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="168"/>
         <source>Number of points:</source>
@@ -2878,6 +3019,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="209"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_linepointsoptions.h" line="169"/>
         <location filename="../../build/ui_lc_linepointsoptions.h" line="169"/>
         <location filename="../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="169"/>
         <source>Fixed Distance</source>
@@ -3184,6 +3326,7 @@ first base, second base, first target, second target.</source>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifybreakdivideoptions.h" line="59"/>
         <location filename="../../build/ui_lc_modifybreakdivideoptions.h" line="59"/>
         <location filename="../../generated/librecad/ui/ui_lc_modifybreakdivideoptions.h" line="59"/>
         <source>Form</source>
@@ -3191,6 +3334,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="39"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifybreakdivideoptions.h" line="60"/>
         <location filename="../../build/ui_lc_modifybreakdivideoptions.h" line="60"/>
         <location filename="../../generated/librecad/ui/ui_lc_modifybreakdivideoptions.h" line="60"/>
         <source>Remove Segments</source>
@@ -3198,6 +3342,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="46"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifybreakdivideoptions.h" line="61"/>
         <location filename="../../build/ui_lc_modifybreakdivideoptions.h" line="61"/>
         <location filename="../../generated/librecad/ui/ui_lc_modifybreakdivideoptions.h" line="61"/>
         <source>Remove Selected</source>
@@ -3208,6 +3353,7 @@ first base, second base, first target, second target.</source>
     <name>LC_ModifyGapOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifygapoptions.h" line="115"/>
         <location filename="../../build/ui_lc_modifygapoptions.h" line="115"/>
         <location filename="../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="115"/>
         <source>Form</source>
@@ -3215,6 +3361,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifygapoptions.h" line="116"/>
         <location filename="../../build/ui_lc_modifygapoptions.h" line="116"/>
         <location filename="../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="116"/>
         <source>Gap Snap:</source>
@@ -3222,6 +3369,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifygapoptions.h" line="117"/>
         <location filename="../../build/ui_lc_modifygapoptions.h" line="117"/>
         <location filename="../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="117"/>
         <source>Snap Distance:</source>
@@ -3230,6 +3378,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifygapoptions.h" line="118"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifygapoptions.h" line="120"/>
         <location filename="../../build/ui_lc_modifygapoptions.h" line="118"/>
         <location filename="../../build/ui_lc_modifygapoptions.h" line="120"/>
         <location filename="../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="118"/>
@@ -3239,6 +3389,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifygapoptions.h" line="119"/>
         <location filename="../../build/ui_lc_modifygapoptions.h" line="119"/>
         <location filename="../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="119"/>
         <source>Gap Size:</source>
@@ -3247,6 +3398,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="92"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="111"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifygapoptions.h" line="121"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifygapoptions.h" line="125"/>
         <location filename="../../build/ui_lc_modifygapoptions.h" line="121"/>
         <location filename="../../build/ui_lc_modifygapoptions.h" line="125"/>
         <location filename="../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="121"/>
@@ -3257,6 +3410,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="97"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="116"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifygapoptions.h" line="122"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifygapoptions.h" line="126"/>
         <location filename="../../build/ui_lc_modifygapoptions.h" line="122"/>
         <location filename="../../build/ui_lc_modifygapoptions.h" line="126"/>
         <location filename="../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="122"/>
@@ -3267,6 +3422,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="102"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="121"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifygapoptions.h" line="123"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifygapoptions.h" line="127"/>
         <location filename="../../build/ui_lc_modifygapoptions.h" line="123"/>
         <location filename="../../build/ui_lc_modifygapoptions.h" line="127"/>
         <location filename="../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="123"/>
@@ -3276,6 +3433,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_modifygapoptions.h" line="129"/>
         <location filename="../../build/ui_lc_modifygapoptions.h" line="129"/>
         <location filename="../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="129"/>
         <source>Line Snap:</source>
@@ -3286,6 +3444,7 @@ first base, second base, first target, second target.</source>
     <name>LC_PenPaletteOptionsDialog</name>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="18"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="295"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="295"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="295"/>
         <source>Pen Palette Settings</source>
@@ -3293,6 +3452,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="37"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="296"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="296"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="296"/>
         <source>Columns to display</source>
@@ -3300,6 +3460,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="43"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="297"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="297"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="297"/>
         <source>Line Type Name</source>
@@ -3307,6 +3468,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="50"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="298"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="298"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="298"/>
         <source>Color Name</source>
@@ -3314,6 +3476,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="57"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="299"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="299"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="299"/>
         <source>Line Type Icon</source>
@@ -3321,6 +3484,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="64"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="300"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="300"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="300"/>
         <source>Color Icon</source>
@@ -3328,6 +3492,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="301"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="301"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="301"/>
         <source>Line Width Icon</source>
@@ -3335,6 +3500,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="302"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="302"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="302"/>
         <source>Line Width Name</source>
@@ -3342,6 +3508,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="303"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="303"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="303"/>
         <source>Colors</source>
@@ -3349,6 +3516,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="132"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="305"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="305"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="305"/>
         <source>Active Pen Background:</source>
@@ -3356,6 +3524,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="150"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="307"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="307"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="307"/>
         <source>Entire table row is bold for active pen</source>
@@ -3363,6 +3532,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="157"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="308"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="308"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="308"/>
         <source>Grid Color:</source>
@@ -3370,6 +3540,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="164"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="309"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="309"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="309"/>
         <source>Matched Item Color:</source>
@@ -3377,6 +3548,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="192"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="311"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="311"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="311"/>
         <source>Case-insensitive pens filtering</source>
@@ -3384,6 +3556,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="209"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="313"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="313"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="313"/>
         <source>Controls whether tooltip will be shown for table item or not</source>
@@ -3391,6 +3564,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="315"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="315"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="315"/>
         <source>Show tooltip for table items</source>
@@ -3398,6 +3572,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="221"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="316"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="316"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="316"/>
         <source>Pens file:</source>
@@ -3405,6 +3580,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="244"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="318"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="318"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="318"/>
         <source>Show colorn name as</source>
@@ -3412,6 +3588,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="250"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="319"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="319"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="319"/>
         <source>HEX</source>
@@ -3419,6 +3596,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="257"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="320"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="320"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="320"/>
         <source>RGB</source>
@@ -3426,6 +3604,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="264"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="321"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="321"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="321"/>
         <source>Natural name where possible</source>
@@ -3433,6 +3612,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="274"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="322"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="322"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="322"/>
         <source>Show info message if no entities may be selected by pen</source>
@@ -3440,6 +3620,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="283"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="323"/>
         <location filename="../../build/ui_lc_penpaletteoptionsdialog.h" line="323"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="323"/>
         <source>On double click on table item</source>
@@ -3465,6 +3646,7 @@ first base, second base, first target, second target.</source>
     <name>LC_PenPaletteWidget</name>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="335"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="335"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="335"/>
         <source>Pen Palette</source>
@@ -3472,6 +3654,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="44"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="336"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="336"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="336"/>
         <source>Pen Name:</source>
@@ -3479,6 +3662,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="94"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="337"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="337"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="337"/>
         <source>Color:</source>
@@ -3486,6 +3670,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="191"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="338"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="338"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="338"/>
         <source>Filter...</source>
@@ -3493,6 +3678,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="201"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="339"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="339"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="339"/>
         <source>Highlight Mode</source>
@@ -3500,6 +3686,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="224"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="340"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="340"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="340"/>
         <source>Type:</source>
@@ -3507,6 +3694,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="246"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="341"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="341"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="341"/>
         <source>Width:</source>
@@ -3514,6 +3702,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="271"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="343"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="343"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="343"/>
         <source>Settings</source>
@@ -3521,6 +3710,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="290"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="347"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="347"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="347"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
@@ -3528,6 +3718,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="304"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="351"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="351"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="351"/>
         <source>Fill Pen Editor by Entity Attributes</source>
@@ -3535,6 +3726,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="318"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="355"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="355"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="355"/>
         <source>Select Entities By Drawing Pen</source>
@@ -3542,6 +3734,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="332"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="359"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="359"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="359"/>
         <source>Select Entities By Pen Attributes</source>
@@ -3550,6 +3743,8 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="352"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="363"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="365"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="363"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="365"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="363"/>
@@ -3559,6 +3754,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="367"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="367"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="367"/>
         <source>Apply Pen To Selection</source>
@@ -3566,6 +3762,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="377"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="371"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="371"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="371"/>
         <source>Fill Editor Pen by Current Pen</source>
@@ -3573,6 +3770,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="391"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="375"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="375"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="375"/>
         <source>Apply Editor Pen As Current Pen</source>
@@ -3580,6 +3778,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="394"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="377"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="377"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="377"/>
         <source>to current</source>
@@ -3587,6 +3786,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="405"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="379"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="379"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="379"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
@@ -3594,6 +3794,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="419"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="383"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="383"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="383"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
@@ -3601,6 +3802,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="422"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="385"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="385"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="385"/>
         <source>Pick from Active Layer</source>
@@ -3608,6 +3810,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="433"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="387"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="387"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="387"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
@@ -3615,6 +3818,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="436"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="389"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="389"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="389"/>
         <source>Apply To Layer</source>
@@ -3622,6 +3826,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="447"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="391"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="391"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="391"/>
         <source>Remove Selected Pen</source>
@@ -3629,6 +3834,7 @@ first base, second base, first target, second target.</source>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="450"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_penpalettewidget.h" line="393"/>
         <location filename="../../build/ui_lc_penpalettewidget.h" line="393"/>
         <location filename="../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="393"/>
         <source>Delete Pen</source>
@@ -3696,6 +3902,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="203"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="203"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="203"/>
         <source>Form</source>
@@ -3703,6 +3910,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="204"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="204"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="204"/>
         <source>Polyline</source>
@@ -3710,6 +3918,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="33"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="205"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="205"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="205"/>
         <source>Height:</source>
@@ -3717,6 +3926,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="40"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="206"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="206"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="206"/>
         <source>Edges:</source>
@@ -3724,6 +3934,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="63"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="207"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="207"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="207"/>
         <source>Corners:</source>
@@ -3731,6 +3942,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="86"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="208"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="208"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="208"/>
         <source>Size inner</source>
@@ -3738,6 +3950,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="93"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="209"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="209"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="209"/>
         <source>Length X:</source>
@@ -3745,6 +3958,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="100"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="210"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="210"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="210"/>
         <source>Radius:</source>
@@ -3752,6 +3966,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="123"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="211"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="211"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="211"/>
         <source>Snap:</source>
@@ -3759,6 +3974,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="162"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="212"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="212"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="212"/>
         <source>Length Y:</source>
@@ -3766,6 +3982,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="170"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="213"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="213"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="213"/>
         <source>Top-left</source>
@@ -3773,6 +3990,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="175"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="214"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="214"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="214"/>
         <source>Top</source>
@@ -3780,6 +3998,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="180"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="215"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="215"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="215"/>
         <source>Top-right</source>
@@ -3787,6 +4006,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="185"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="216"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="216"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="216"/>
         <source>Left</source>
@@ -3794,6 +4014,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="190"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="217"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="217"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="217"/>
         <source>Middle</source>
@@ -3801,6 +4022,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="195"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="218"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="218"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="218"/>
         <source>Right</source>
@@ -3808,6 +4030,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="200"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="219"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="219"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="219"/>
         <source>Bottom-left</source>
@@ -3815,6 +4038,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="205"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="220"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="220"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="220"/>
         <source>Bottom</source>
@@ -3822,6 +4046,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="210"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="221"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="221"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="221"/>
         <source>Bottom-right</source>
@@ -3829,6 +4054,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="219"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="223"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="223"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="223"/>
         <source>Straight</source>
@@ -3836,6 +4062,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="224"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="224"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="224"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="224"/>
         <source>Round</source>
@@ -3843,6 +4070,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="229"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="225"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="225"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="225"/>
         <source>Bevel</source>
@@ -3850,6 +4078,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="227"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="227"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="227"/>
         <source>Snap shift</source>
@@ -3857,6 +4086,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="228"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="228"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="228"/>
         <source>Both</source>
@@ -3864,6 +4094,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="250"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="229"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="229"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="229"/>
         <source>Vertical</source>
@@ -3871,6 +4102,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="255"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="230"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="230"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="230"/>
         <source>Horizontal</source>
@@ -3878,6 +4110,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="279"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="232"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="232"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="232"/>
         <source>Width:</source>
@@ -3885,6 +4118,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="286"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="233"/>
         <location filename="../../build/ui_lc_rectangle1pointoptions.h" line="233"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="233"/>
         <source>Base Angle:</source>
@@ -3895,6 +4129,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="180"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="180"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="180"/>
         <source>Form</source>
@@ -3902,6 +4137,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="181"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="181"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="181"/>
         <source>Snap shift</source>
@@ -3909,6 +4145,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="33"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="182"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="182"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="182"/>
         <source>Radius:</source>
@@ -3916,6 +4153,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="183"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="183"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="183"/>
         <source>Edges:</source>
@@ -3923,6 +4161,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="63"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="184"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="184"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="184"/>
         <source>Polyline</source>
@@ -3930,6 +4169,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="185"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="185"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="185"/>
         <source>End Snap:</source>
@@ -3937,6 +4177,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="186"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="186"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="186"/>
         <source>Corners:</source>
@@ -3944,6 +4185,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="100"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="187"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="187"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="187"/>
         <source>Length X:</source>
@@ -3951,6 +4193,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="107"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="188"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="188"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="188"/>
         <source>Start Snap:</source>
@@ -3959,6 +4202,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="178"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="189"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="195"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="189"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="195"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="189"/>
@@ -3969,6 +4214,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="136"/>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="183"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="190"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="196"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="190"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="196"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="190"/>
@@ -3979,6 +4226,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="141"/>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="188"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="191"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="197"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="191"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="197"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="191"/>
@@ -3989,6 +4238,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="146"/>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="193"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="192"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="198"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="192"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="198"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="192"/>
@@ -3998,6 +4249,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="170"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="194"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="194"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="194"/>
         <source>Base Angle:</source>
@@ -4005,6 +4257,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="202"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="200"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="200"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="200"/>
         <source>Straight</source>
@@ -4012,6 +4265,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="207"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="201"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="201"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="201"/>
         <source>Round</source>
@@ -4019,6 +4273,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="212"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="202"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="202"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="202"/>
         <source>Bevel</source>
@@ -4026,6 +4281,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="220"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="204"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="204"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="204"/>
         <source>Length Y:</source>
@@ -4033,6 +4289,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="228"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="205"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="205"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="205"/>
         <source>Both</source>
@@ -4040,6 +4297,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="233"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="206"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="206"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="206"/>
         <source>Vertical</source>
@@ -4047,6 +4305,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="238"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="207"/>
         <location filename="../../build/ui_lc_rectangle2pointsoptions.h" line="207"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="207"/>
         <source>Horizontal</source>
@@ -4057,6 +4316,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="236"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="236"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="236"/>
         <source>Form</source>
@@ -4064,6 +4324,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="237"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="237"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="237"/>
         <source>Polyline</source>
@@ -4071,6 +4332,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="238"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="238"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="238"/>
         <source>Both</source>
@@ -4078,6 +4340,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="68"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="239"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="239"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="239"/>
         <source>Vertical</source>
@@ -4085,6 +4348,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="73"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="240"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="240"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="240"/>
         <source>Horizontal</source>
@@ -4092,6 +4356,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="81"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="242"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="242"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="242"/>
         <source>Edges:</source>
@@ -4099,6 +4364,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="88"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="243"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="243"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="243"/>
         <source>Quadrangle</source>
@@ -4106,6 +4372,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="95"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="244"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="244"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="244"/>
         <source>Fixed Base Angle:</source>
@@ -4113,6 +4380,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="130"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="245"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="245"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="245"/>
         <source>Length X:</source>
@@ -4120,6 +4388,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="160"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="246"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="246"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="246"/>
         <source>Straight</source>
@@ -4127,6 +4396,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="165"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="247"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="247"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="247"/>
         <source>Round</source>
@@ -4134,6 +4404,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="170"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="248"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="248"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="248"/>
         <source>Bevel</source>
@@ -4141,6 +4412,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="178"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="250"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="250"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="250"/>
         <source>Corners:</source>
@@ -4148,6 +4420,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="185"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="251"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="251"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="251"/>
         <source>Snap shift</source>
@@ -4155,6 +4428,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="192"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="252"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="252"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="252"/>
         <source>Length Y:</source>
@@ -4162,6 +4436,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="243"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="253"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="253"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="253"/>
         <source>Radius:</source>
@@ -4169,6 +4444,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="312"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="254"/>
         <location filename="../../build/ui_lc_rectangle3pointsoptions.h" line="254"/>
         <location filename="../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="254"/>
         <source>Fixed Inner Angle:</source>
@@ -4220,6 +4496,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_SliceDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="245"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="245"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="245"/>
         <source>Form</source>
@@ -4227,6 +4504,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="48"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="246"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="246"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="246"/>
         <source>None</source>
@@ -4234,6 +4512,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="53"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="247"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="247"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="247"/>
         <source>Both</source>
@@ -4242,6 +4521,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="58"/>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="266"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="248"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="260"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="248"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="260"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="248"/>
@@ -4252,6 +4533,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="63"/>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="276"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="249"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="262"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="249"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="262"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="249"/>
@@ -4261,6 +4544,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="71"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="251"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="251"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="251"/>
         <source>Edge Tick:</source>
@@ -4268,6 +4552,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="113"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="252"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="252"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="252"/>
         <source>Rel</source>
@@ -4275,6 +4560,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="120"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="253"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="253"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="253"/>
         <source>Offset:</source>
@@ -4282,6 +4568,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="158"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="254"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="254"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="254"/>
         <source>Count:</source>
@@ -4289,6 +4576,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="189"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="255"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="255"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="255"/>
         <source>Start Circle Angle:</source>
@@ -4296,6 +4584,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="221"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="256"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="256"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="256"/>
         <source>Tick Length:</source>
@@ -4303,6 +4592,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="257"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="257"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="257"/>
         <source>Tick snap:</source>
@@ -4310,6 +4600,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="258"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="258"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="258"/>
         <source>Angle:</source>
@@ -4317,6 +4608,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="242"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="259"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="259"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="259"/>
         <source>Divide</source>
@@ -4324,6 +4616,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="271"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="261"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="261"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="261"/>
         <source>Middle</source>
@@ -4331,6 +4624,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="284"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="264"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="264"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="264"/>
         <source>Fixed </source>
@@ -4338,6 +4632,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="318"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_slicedivideoptions.h" line="265"/>
         <location filename="../../build/ui_lc_slicedivideoptions.h" line="265"/>
         <location filename="../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="265"/>
         <source>Distance:</source>
@@ -4348,6 +4643,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_StarOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_staroptions.h" line="103"/>
         <location filename="../../build/ui_lc_staroptions.h" line="103"/>
         <location filename="../../generated/librecad/ui/ui_lc_staroptions.h" line="103"/>
         <source>Form</source>
@@ -4355,6 +4651,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_staroptions.h" line="104"/>
         <location filename="../../build/ui_lc_staroptions.h" line="104"/>
         <location filename="../../generated/librecad/ui/ui_lc_staroptions.h" line="104"/>
         <source>Radius Inner</source>
@@ -4362,6 +4659,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="49"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_staroptions.h" line="105"/>
         <location filename="../../build/ui_lc_staroptions.h" line="105"/>
         <location filename="../../generated/librecad/ui/ui_lc_staroptions.h" line="105"/>
         <source>Polyline</source>
@@ -4369,6 +4667,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_staroptions.h" line="106"/>
         <location filename="../../build/ui_lc_staroptions.h" line="106"/>
         <location filename="../../generated/librecad/ui/ui_lc_staroptions.h" line="106"/>
         <source>Radius Outer</source>
@@ -4376,6 +4675,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="86"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_staroptions.h" line="107"/>
         <location filename="../../build/ui_lc_staroptions.h" line="107"/>
         <location filename="../../generated/librecad/ui/ui_lc_staroptions.h" line="107"/>
         <source>Symmetric</source>
@@ -4383,6 +4683,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="93"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_staroptions.h" line="108"/>
         <location filename="../../build/ui_lc_staroptions.h" line="108"/>
         <location filename="../../generated/librecad/ui/ui_lc_staroptions.h" line="108"/>
         <source>Number:</source>
@@ -4461,6 +4762,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_WidgetOptionsDialog</name>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="213"/>
         <location filename="../../build/ui_lc_widgetoptionsdialog.h" line="213"/>
         <location filename="../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="213"/>
         <source>Widget Options</source>
@@ -4468,6 +4770,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="38"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="214"/>
         <location filename="../../build/ui_lc_widgetoptionsdialog.h" line="214"/>
         <location filename="../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="214"/>
         <source>Toolbar</source>
@@ -4475,6 +4778,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="57"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="216"/>
         <location filename="../../build/ui_lc_widgetoptionsdialog.h" line="216"/>
         <location filename="../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="216"/>
         <source>Icon Size</source>
@@ -4482,6 +4786,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="70"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="218"/>
         <location filename="../../build/ui_lc_widgetoptionsdialog.h" line="218"/>
         <location filename="../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="218"/>
         <source>side length in pixels</source>
@@ -4489,6 +4794,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="44"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="215"/>
         <location filename="../../build/ui_lc_widgetoptionsdialog.h" line="215"/>
         <location filename="../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="215"/>
         <source>Use themed icons</source>
@@ -4496,6 +4802,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="86"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="220"/>
         <location filename="../../build/ui_lc_widgetoptionsdialog.h" line="220"/>
         <location filename="../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="220"/>
         <source>Left toolbar columns:</source>
@@ -4503,6 +4810,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="109"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="221"/>
         <location filename="../../build/ui_lc_widgetoptionsdialog.h" line="221"/>
         <location filename="../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="221"/>
         <source>General</source>
@@ -4510,6 +4818,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="121"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="222"/>
         <location filename="../../build/ui_lc_widgetoptionsdialog.h" line="222"/>
         <location filename="../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="222"/>
         <source>Style</source>
@@ -4517,6 +4826,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="147"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="223"/>
         <location filename="../../build/ui_lc_widgetoptionsdialog.h" line="223"/>
         <location filename="../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="223"/>
         <source>Style Sheet</source>
@@ -4524,6 +4834,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="160"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="225"/>
         <location filename="../../build/ui_lc_widgetoptionsdialog.h" line="225"/>
         <location filename="../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="225"/>
         <source>Input the path of a Qt style sheet.</source>
@@ -4531,6 +4842,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="176"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="227"/>
         <location filename="../../build/ui_lc_widgetoptionsdialog.h" line="227"/>
         <location filename="../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="227"/>
         <source>Statusbar</source>
@@ -4538,6 +4850,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="182"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="228"/>
         <location filename="../../build/ui_lc_widgetoptionsdialog.h" line="228"/>
         <location filename="../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="228"/>
         <source>Height</source>
@@ -4545,6 +4858,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="192"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="229"/>
         <location filename="../../build/ui_lc_widgetoptionsdialog.h" line="229"/>
         <location filename="../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="229"/>
         <source>Font Size</source>
@@ -4596,6 +4910,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>PolylineEquidistantOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="114"/>
         <location filename="../../build/ui_qg_polylineequidistantoptions.h" line="114"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="114"/>
         <source>Line Relative Angle Options</source>
@@ -4603,6 +4918,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="59"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="115"/>
         <location filename="../../build/ui_qg_polylineequidistantoptions.h" line="115"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="115"/>
         <source>Spacing:</source>
@@ -4611,6 +4927,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="122"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="117"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="121"/>
         <location filename="../../build/ui_qg_polylineequidistantoptions.h" line="117"/>
         <location filename="../../build/ui_qg_polylineequidistantoptions.h" line="121"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="117"/>
@@ -4620,6 +4938,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="119"/>
         <location filename="../../build/ui_qg_polylineequidistantoptions.h" line="119"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="119"/>
         <source>Copies:</source>
@@ -5406,6 +5725,7 @@ Auto-save disabled.</source>
     <name>QG_ActiveLayerName</name>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_activelayername.h" line="80"/>
         <location filename="../../build/ui_qg_activelayername.h" line="80"/>
         <location filename="../../generated/librecad/ui/ui_qg_activelayername.h" line="80"/>
         <source>Selection</source>
@@ -5413,6 +5733,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="71"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_activelayername.h" line="82"/>
         <location filename="../../build/ui_qg_activelayername.h" line="82"/>
         <location filename="../../generated/librecad/ui/ui_qg_activelayername.h" line="82"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5420,6 +5741,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="80"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_activelayername.h" line="84"/>
         <location filename="../../build/ui_qg_activelayername.h" line="84"/>
         <location filename="../../generated/librecad/ui/ui_qg_activelayername.h" line="84"/>
         <source>Current Layer</source>
@@ -5427,6 +5749,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="105"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_activelayername.h" line="86"/>
         <location filename="../../build/ui_qg_activelayername.h" line="86"/>
         <location filename="../../generated/librecad/ui/ui_qg_activelayername.h" line="86"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -5441,6 +5764,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_BlockDialog</name>
     <message>
         <location filename="../src/ui/forms/qg_blockdialog.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_blockdialog.h" line="84"/>
         <location filename="../../build/ui_qg_blockdialog.h" line="84"/>
         <location filename="../../generated/librecad/ui/ui_qg_blockdialog.h" line="84"/>
         <source>Block Settings</source>
@@ -5448,6 +5772,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_blockdialog.ui" line="43"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_blockdialog.h" line="85"/>
         <location filename="../../build/ui_qg_blockdialog.h" line="85"/>
         <location filename="../../generated/librecad/ui/ui_qg_blockdialog.h" line="85"/>
         <source>Block Name:</source>
@@ -5719,6 +6044,7 @@ in a separate window</source>
     <name>QG_CommandWidget</name>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_commandwidget.h" line="113"/>
         <location filename="../../build/ui_qg_commandwidget.h" line="113"/>
         <location filename="../../generated/librecad/ui/ui_qg_commandwidget.h" line="113"/>
         <source>Command Line</source>
@@ -5726,6 +6052,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_commandwidget.h" line="115"/>
         <location filename="../../build/ui_qg_commandwidget.h" line="115"/>
         <location filename="../../generated/librecad/ui/ui_qg_commandwidget.h" line="115"/>
         <source>Command history and output</source>
@@ -5733,6 +6060,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="82"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_commandwidget.h" line="117"/>
         <location filename="../../build/ui_qg_commandwidget.h" line="117"/>
         <location filename="../../generated/librecad/ui/ui_qg_commandwidget.h" line="117"/>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="183"/>
@@ -5741,6 +6069,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_commandwidget.h" line="118"/>
         <location filename="../../build/ui_qg_commandwidget.h" line="118"/>
         <location filename="../../generated/librecad/ui/ui_qg_commandwidget.h" line="118"/>
         <source>...</source>
@@ -5787,6 +6116,11 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="92"/>
         <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="131"/>
         <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="141"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_coordinatewidget.h" line="108"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_coordinatewidget.h" line="109"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_coordinatewidget.h" line="110"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_coordinatewidget.h" line="111"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_coordinatewidget.h" line="112"/>
         <location filename="../../build/ui_qg_coordinatewidget.h" line="108"/>
         <location filename="../../build/ui_qg_coordinatewidget.h" line="109"/>
         <location filename="../../build/ui_qg_coordinatewidget.h" line="110"/>
@@ -5814,6 +6148,7 @@ in a separate window</source>
     <name>QG_DimensionLabelEditor</name>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="169"/>
         <location filename="../../build/ui_qg_dimensionlabeleditor.h" line="169"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="169"/>
         <source>Dimension Label Editor</source>
@@ -5821,6 +6156,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="170"/>
         <location filename="../../build/ui_qg_dimensionlabeleditor.h" line="170"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="170"/>
         <source>Dimension Label:</source>
@@ -5828,6 +6164,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="57"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="171"/>
         <location filename="../../build/ui_qg_dimensionlabeleditor.h" line="171"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="171"/>
         <source>Label:</source>
@@ -5835,6 +6172,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="174"/>
         <location filename="../../build/ui_qg_dimensionlabeleditor.h" line="174"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="174"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5842,6 +6180,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="133"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="176"/>
         <location filename="../../build/ui_qg_dimensionlabeleditor.h" line="176"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="176"/>
         <source>Insert:</source>
@@ -5849,6 +6188,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="150"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="177"/>
         <location filename="../../build/ui_qg_dimensionlabeleditor.h" line="177"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="177"/>
         <source>⌀ (Diameter)</source>
@@ -5856,6 +6196,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="165"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="180"/>
         <location filename="../../build/ui_qg_dimensionlabeleditor.h" line="180"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="180"/>
         <source>π (Pi)</source>
@@ -5863,6 +6204,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="155"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="178"/>
         <location filename="../../build/ui_qg_dimensionlabeleditor.h" line="178"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="178"/>
         <source>° (Degree)</source>
@@ -5870,6 +6212,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="160"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="179"/>
         <location filename="../../build/ui_qg_dimensionlabeleditor.h" line="179"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="179"/>
         <source>± (Plus / Minus)</source>
@@ -5877,6 +6220,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="170"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="181"/>
         <location filename="../../build/ui_qg_dimensionlabeleditor.h" line="181"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="181"/>
         <source>× (Times)</source>
@@ -5884,6 +6228,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="175"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="182"/>
         <location filename="../../build/ui_qg_dimensionlabeleditor.h" line="182"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="182"/>
         <source>÷ (Division)</source>
@@ -5907,6 +6252,7 @@ in a separate window</source>
     <name>QG_DlgArc</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgarc.h" line="224"/>
         <location filename="../../build/ui_qg_dlgarc.h" line="224"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgarc.h" line="224"/>
         <source>Arc</source>
@@ -5914,6 +6260,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgarc.h" line="226"/>
         <location filename="../../build/ui_qg_dlgarc.h" line="226"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgarc.h" line="226"/>
         <source>Layer:</source>
@@ -5921,6 +6268,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="78"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgarc.h" line="227"/>
         <location filename="../../build/ui_qg_dlgarc.h" line="227"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgarc.h" line="227"/>
         <source>Geometry</source>
@@ -5928,6 +6276,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="84"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgarc.h" line="228"/>
         <location filename="../../build/ui_qg_dlgarc.h" line="228"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgarc.h" line="228"/>
         <source>Radius:</source>
@@ -5935,6 +6284,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="104"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgarc.h" line="229"/>
         <location filename="../../build/ui_qg_dlgarc.h" line="229"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgarc.h" line="229"/>
         <source>Center (y):</source>
@@ -5942,6 +6292,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="124"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgarc.h" line="230"/>
         <location filename="../../build/ui_qg_dlgarc.h" line="230"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgarc.h" line="230"/>
         <source>Center (x):</source>
@@ -5949,6 +6300,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="144"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgarc.h" line="231"/>
         <location filename="../../build/ui_qg_dlgarc.h" line="231"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgarc.h" line="231"/>
         <source>Start Angle:</source>
@@ -5956,6 +6308,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="174"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgarc.h" line="232"/>
         <location filename="../../build/ui_qg_dlgarc.h" line="232"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgarc.h" line="232"/>
         <source>End Angle:</source>
@@ -5963,6 +6316,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="216"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgarc.h" line="233"/>
         <location filename="../../build/ui_qg_dlgarc.h" line="233"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgarc.h" line="233"/>
         <source>Reversed</source>
@@ -5973,6 +6327,7 @@ in a separate window</source>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgattributes.h" line="115"/>
         <location filename="../../build/ui_qg_dlgattributes.h" line="115"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgattributes.h" line="115"/>
         <source>Attributes</source>
@@ -5980,6 +6335,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="44"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgattributes.h" line="116"/>
         <location filename="../../build/ui_qg_dlgattributes.h" line="116"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgattributes.h" line="116"/>
         <source>Layer:</source>
@@ -5987,6 +6343,7 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgattributes.h" line="118"/>
         <location filename="../../build/ui_qg_dlgattributes.h" line="118"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgattributes.h" line="118"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
@@ -5995,6 +6352,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgattributes.h" line="121"/>
         <location filename="../../build/ui_qg_dlgattributes.h" line="121"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgattributes.h" line="121"/>
         <source>Apply attributes Block-deep</source>
@@ -6005,6 +6363,7 @@ This recursively modifies all entities of the Block itself.</source>
     <name>QG_DlgCircle</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgcircle.h" line="180"/>
         <location filename="../../build/ui_qg_dlgcircle.h" line="180"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgcircle.h" line="180"/>
         <source>Circle</source>
@@ -6012,6 +6371,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="44"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgcircle.h" line="181"/>
         <location filename="../../build/ui_qg_dlgcircle.h" line="181"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgcircle.h" line="181"/>
         <source>Layer:</source>
@@ -6019,6 +6379,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="71"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgcircle.h" line="182"/>
         <location filename="../../build/ui_qg_dlgcircle.h" line="182"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgcircle.h" line="182"/>
         <source>Geometry</source>
@@ -6026,6 +6387,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="77"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgcircle.h" line="183"/>
         <location filename="../../build/ui_qg_dlgcircle.h" line="183"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgcircle.h" line="183"/>
         <source>Radius:</source>
@@ -6033,6 +6395,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="97"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgcircle.h" line="184"/>
         <location filename="../../build/ui_qg_dlgcircle.h" line="184"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgcircle.h" line="184"/>
         <source>Center (y):</source>
@@ -6040,6 +6403,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="117"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgcircle.h" line="185"/>
         <location filename="../../build/ui_qg_dlgcircle.h" line="185"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgcircle.h" line="185"/>
         <source>Center (x):</source>
@@ -6050,6 +6414,7 @@ This recursively modifies all entities of the Block itself.</source>
     <name>QG_DlgDimLinear</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgdimlinear.h" line="161"/>
         <location filename="../../build/ui_qg_dlgdimlinear.h" line="161"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgdimlinear.h" line="161"/>
         <source>Linear Dimension</source>
@@ -6057,6 +6422,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="47"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgdimlinear.h" line="162"/>
         <location filename="../../build/ui_qg_dlgdimlinear.h" line="162"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgdimlinear.h" line="162"/>
         <source>Layer:</source>
@@ -6064,6 +6430,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="79"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgdimlinear.h" line="163"/>
         <location filename="../../build/ui_qg_dlgdimlinear.h" line="163"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgdimlinear.h" line="163"/>
         <source>Geometry</source>
@@ -6071,6 +6438,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="103"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgdimlinear.h" line="164"/>
         <location filename="../../build/ui_qg_dlgdimlinear.h" line="164"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgdimlinear.h" line="164"/>
         <source>Angle:</source>
@@ -6081,6 +6449,7 @@ This recursively modifies all entities of the Block itself.</source>
     <name>QG_DlgDimension</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgdimension.h" line="114"/>
         <location filename="../../build/ui_qg_dlgdimension.h" line="114"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgdimension.h" line="114"/>
         <source>Dimension</source>
@@ -6088,6 +6457,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="47"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgdimension.h" line="115"/>
         <location filename="../../build/ui_qg_dlgdimension.h" line="115"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgdimension.h" line="115"/>
         <source>Layer:</source>
@@ -6098,6 +6468,7 @@ This recursively modifies all entities of the Block itself.</source>
     <name>QG_DlgEllipse</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgellipse.h" line="254"/>
         <location filename="../../build/ui_qg_dlgellipse.h" line="254"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgellipse.h" line="254"/>
         <source>Ellipse</source>
@@ -6105,6 +6476,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="51"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgellipse.h" line="256"/>
         <location filename="../../build/ui_qg_dlgellipse.h" line="256"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgellipse.h" line="256"/>
         <source>Layer:</source>
@@ -6112,6 +6484,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="78"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgellipse.h" line="257"/>
         <location filename="../../build/ui_qg_dlgellipse.h" line="257"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgellipse.h" line="257"/>
         <source>Geometry</source>
@@ -6119,6 +6492,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="84"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgellipse.h" line="258"/>
         <location filename="../../build/ui_qg_dlgellipse.h" line="258"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgellipse.h" line="258"/>
         <source>Center (y):</source>
@@ -6126,6 +6500,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="104"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgellipse.h" line="259"/>
         <location filename="../../build/ui_qg_dlgellipse.h" line="259"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgellipse.h" line="259"/>
         <source>Center (x):</source>
@@ -6133,6 +6508,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="156"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgellipse.h" line="260"/>
         <location filename="../../build/ui_qg_dlgellipse.h" line="260"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgellipse.h" line="260"/>
         <source>End Angle:</source>
@@ -6140,6 +6516,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="186"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgellipse.h" line="261"/>
         <location filename="../../build/ui_qg_dlgellipse.h" line="261"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgellipse.h" line="261"/>
         <source>Start Angle:</source>
@@ -6147,6 +6524,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="196"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgellipse.h" line="262"/>
         <location filename="../../build/ui_qg_dlgellipse.h" line="262"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgellipse.h" line="262"/>
         <source>Rotation:</source>
@@ -6154,6 +6532,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="226"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgellipse.h" line="263"/>
         <location filename="../../build/ui_qg_dlgellipse.h" line="263"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgellipse.h" line="263"/>
         <source>Minor:</source>
@@ -6161,6 +6540,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="236"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgellipse.h" line="264"/>
         <location filename="../../build/ui_qg_dlgellipse.h" line="264"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgellipse.h" line="264"/>
         <source>Major:</source>
@@ -6168,6 +6548,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="256"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgellipse.h" line="265"/>
         <location filename="../../build/ui_qg_dlgellipse.h" line="265"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgellipse.h" line="265"/>
         <source>Reversed</source>
@@ -6178,6 +6559,7 @@ This recursively modifies all entities of the Block itself.</source>
     <name>QG_DlgHatch</name>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlghatch.h" line="176"/>
         <location filename="../../build/ui_qg_dlghatch.h" line="176"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlghatch.h" line="176"/>
         <source>Choose Hatch Attributes</source>
@@ -6185,6 +6567,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlghatch.h" line="177"/>
         <location filename="../../build/ui_qg_dlghatch.h" line="177"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlghatch.h" line="177"/>
         <source>Pattern</source>
@@ -6192,6 +6575,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="34"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlghatch.h" line="178"/>
         <location filename="../../build/ui_qg_dlghatch.h" line="178"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlghatch.h" line="178"/>
         <source>Angle:</source>
@@ -6199,6 +6583,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="44"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlghatch.h" line="179"/>
         <location filename="../../build/ui_qg_dlghatch.h" line="179"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlghatch.h" line="179"/>
         <source>Scale:</source>
@@ -6206,6 +6591,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="57"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlghatch.h" line="180"/>
         <location filename="../../build/ui_qg_dlghatch.h" line="180"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlghatch.h" line="180"/>
         <source>Solid Fill</source>
@@ -6213,6 +6599,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="67"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlghatch.h" line="181"/>
         <location filename="../../build/ui_qg_dlghatch.h" line="181"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlghatch.h" line="181"/>
         <source>Preview</source>
@@ -6220,6 +6607,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="73"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlghatch.h" line="182"/>
         <location filename="../../build/ui_qg_dlghatch.h" line="182"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlghatch.h" line="182"/>
         <source>Enable Preview</source>
@@ -6227,6 +6615,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="86"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlghatch.h" line="183"/>
         <location filename="../../build/ui_qg_dlghatch.h" line="183"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlghatch.h" line="183"/>
         <source>Area</source>
@@ -6237,6 +6626,7 @@ This recursively modifies all entities of the Block itself.</source>
     <name>QG_DlgImage</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimage.h" line="281"/>
         <location filename="../../build/ui_qg_dlgimage.h" line="281"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimage.h" line="281"/>
         <source>Image</source>
@@ -6244,6 +6634,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="44"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimage.h" line="282"/>
         <location filename="../../build/ui_qg_dlgimage.h" line="282"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimage.h" line="282"/>
         <source>Layer:</source>
@@ -6251,6 +6642,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="80"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimage.h" line="283"/>
         <location filename="../../build/ui_qg_dlgimage.h" line="283"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimage.h" line="283"/>
         <source>Geometry</source>
@@ -6258,6 +6650,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="253"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimage.h" line="292"/>
         <location filename="../../build/ui_qg_dlgimage.h" line="292"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimage.h" line="292"/>
         <source>Width:</source>
@@ -6265,6 +6658,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="270"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimage.h" line="294"/>
         <location filename="../../build/ui_qg_dlgimage.h" line="294"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimage.h" line="294"/>
         <source>Select an image file</source>
@@ -6272,6 +6666,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="93"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimage.h" line="285"/>
         <location filename="../../build/ui_qg_dlgimage.h" line="285"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimage.h" line="285"/>
         <source>Height:</source>
@@ -6279,6 +6674,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="203"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimage.h" line="289"/>
         <location filename="../../build/ui_qg_dlgimage.h" line="289"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimage.h" line="289"/>
         <source>insert (x):</source>
@@ -6286,6 +6682,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="226"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimage.h" line="290"/>
         <location filename="../../build/ui_qg_dlgimage.h" line="290"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimage.h" line="290"/>
         <source>Scale:</source>
@@ -6293,6 +6690,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="153"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimage.h" line="287"/>
         <location filename="../../build/ui_qg_dlgimage.h" line="287"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimage.h" line="287"/>
         <source>Size (px):</source>
@@ -6300,6 +6698,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="196"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimage.h" line="288"/>
         <location filename="../../build/ui_qg_dlgimage.h" line="288"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimage.h" line="288"/>
         <source>path:</source>
@@ -6307,6 +6706,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="110"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimage.h" line="286"/>
         <location filename="../../build/ui_qg_dlgimage.h" line="286"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimage.h" line="286"/>
         <source>insert (y):</source>
@@ -6314,6 +6714,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="86"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimage.h" line="284"/>
         <location filename="../../build/ui_qg_dlgimage.h" line="284"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimage.h" line="284"/>
         <source>Angle:</source>
@@ -6321,6 +6722,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="246"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimage.h" line="291"/>
         <location filename="../../build/ui_qg_dlgimage.h" line="291"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimage.h" line="291"/>
         <source>DPI</source>
@@ -6331,6 +6733,7 @@ This recursively modifies all entities of the Block itself.</source>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginitial.h" line="148"/>
         <location filename="../../build/ui_qg_dlginitial.h" line="148"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginitial.h" line="148"/>
         <source>Welcome</source>
@@ -6338,6 +6741,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="64"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginitial.h" line="149"/>
         <location filename="../../build/ui_qg_dlginitial.h" line="149"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginitial.h" line="149"/>
         <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
@@ -6349,6 +6753,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="104"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginitial.h" line="154"/>
         <location filename="../../build/ui_qg_dlginitial.h" line="154"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginitial.h" line="154"/>
         <source>Default Unit:</source>
@@ -6356,6 +6761,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="114"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginitial.h" line="155"/>
         <location filename="../../build/ui_qg_dlginitial.h" line="155"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginitial.h" line="155"/>
         <source>GUI Language:</source>
@@ -6363,6 +6769,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="124"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginitial.h" line="156"/>
         <location filename="../../build/ui_qg_dlginitial.h" line="156"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginitial.h" line="156"/>
         <source>Command Language:</source>
@@ -6373,6 +6780,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgInsert</name>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginsert.h" line="270"/>
         <location filename="../../build/ui_qg_dlginsert.h" line="270"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginsert.h" line="270"/>
         <source>Insert</source>
@@ -6380,6 +6788,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="44"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginsert.h" line="271"/>
         <location filename="../../build/ui_qg_dlginsert.h" line="271"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginsert.h" line="271"/>
         <source>Layer:</source>
@@ -6387,6 +6796,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="71"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginsert.h" line="272"/>
         <location filename="../../build/ui_qg_dlginsert.h" line="272"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginsert.h" line="272"/>
         <source>Geometry</source>
@@ -6394,6 +6804,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="129"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginsert.h" line="273"/>
         <location filename="../../build/ui_qg_dlginsert.h" line="273"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginsert.h" line="273"/>
         <source>Insertion point (x):</source>
@@ -6401,6 +6812,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="139"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginsert.h" line="274"/>
         <location filename="../../build/ui_qg_dlginsert.h" line="274"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginsert.h" line="274"/>
         <source>Insertion point (y):</source>
@@ -6408,6 +6820,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="159"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginsert.h" line="275"/>
         <location filename="../../build/ui_qg_dlginsert.h" line="275"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginsert.h" line="275"/>
         <source>Scale X:</source>
@@ -6415,6 +6828,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="179"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginsert.h" line="276"/>
         <location filename="../../build/ui_qg_dlginsert.h" line="276"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginsert.h" line="276"/>
         <source>Scale Y:</source>
@@ -6422,6 +6836,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="189"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginsert.h" line="277"/>
         <location filename="../../build/ui_qg_dlginsert.h" line="277"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginsert.h" line="277"/>
         <source>Angle:</source>
@@ -6429,6 +6844,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="209"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginsert.h" line="278"/>
         <location filename="../../build/ui_qg_dlginsert.h" line="278"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginsert.h" line="278"/>
         <source>Rows:</source>
@@ -6436,6 +6852,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="239"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginsert.h" line="279"/>
         <location filename="../../build/ui_qg_dlginsert.h" line="279"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginsert.h" line="279"/>
         <source>Columns:</source>
@@ -6443,6 +6860,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="249"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginsert.h" line="280"/>
         <location filename="../../build/ui_qg_dlginsert.h" line="280"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginsert.h" line="280"/>
         <source>Row Spacing:</source>
@@ -6450,6 +6868,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="279"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlginsert.h" line="281"/>
         <location filename="../../build/ui_qg_dlginsert.h" line="281"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlginsert.h" line="281"/>
         <source>Column Spacing:</source>
@@ -6460,6 +6879,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgLine</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgline.h" line="200"/>
         <location filename="../../build/ui_qg_dlgline.h" line="200"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgline.h" line="200"/>
         <source>Line</source>
@@ -6467,6 +6887,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="35"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgline.h" line="201"/>
         <location filename="../../build/ui_qg_dlgline.h" line="201"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgline.h" line="201"/>
         <source>ID: </source>
@@ -6474,6 +6895,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="54"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgline.h" line="202"/>
         <location filename="../../build/ui_qg_dlgline.h" line="202"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgline.h" line="202"/>
         <source>Layer:</source>
@@ -6481,6 +6903,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="87"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgline.h" line="203"/>
         <location filename="../../build/ui_qg_dlgline.h" line="203"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgline.h" line="203"/>
         <source>Geometry</source>
@@ -6488,6 +6911,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="93"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgline.h" line="204"/>
         <location filename="../../build/ui_qg_dlgline.h" line="204"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgline.h" line="204"/>
         <source>End point (x):</source>
@@ -6495,6 +6919,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="123"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgline.h" line="205"/>
         <location filename="../../build/ui_qg_dlgline.h" line="205"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgline.h" line="205"/>
         <source>End point (y):</source>
@@ -6502,6 +6927,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="133"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgline.h" line="206"/>
         <location filename="../../build/ui_qg_dlgline.h" line="206"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgline.h" line="206"/>
         <source>Start point (y):</source>
@@ -6509,6 +6935,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="153"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgline.h" line="207"/>
         <location filename="../../build/ui_qg_dlgline.h" line="207"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgline.h" line="207"/>
         <source>Start point (x):</source>
@@ -6519,6 +6946,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgMText</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="801"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="801"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="801"/>
         <source>MText</source>
@@ -6526,6 +6954,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="45"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="802"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="802"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="802"/>
         <source>Layer:</source>
@@ -6533,6 +6962,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="223"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="809"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="809"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="809"/>
         <source>&amp;Height:</source>
@@ -6540,6 +6970,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="132"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="805"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="805"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="805"/>
         <source>&amp;Default line spacing</source>
@@ -6547,6 +6978,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="104"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="803"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="803"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="803"/>
         <source>Font Settings</source>
@@ -6554,6 +6986,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="135"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="807"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="807"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="807"/>
         <source>Alt+D</source>
@@ -6561,6 +6994,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="298"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="811"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="811"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="811"/>
         <source>Alignment</source>
@@ -6568,6 +7002,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="316"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="813"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="813"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="813"/>
         <source>Top Right</source>
@@ -6575,6 +7010,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="348"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="817"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="817"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="817"/>
         <source>Top Left</source>
@@ -6582,6 +7018,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="380"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="821"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="821"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="821"/>
         <source>Middle Left</source>
@@ -6589,6 +7026,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="412"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="825"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="825"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="825"/>
         <source>Middle Center</source>
@@ -6596,6 +7034,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="444"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="829"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="829"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="829"/>
         <source>Middle Right</source>
@@ -6603,6 +7042,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="476"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="833"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="833"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="833"/>
         <source>Bottom Left</source>
@@ -6610,6 +7050,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="508"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="837"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="837"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="837"/>
         <source>Bottom Right</source>
@@ -6617,6 +7058,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="540"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="841"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="841"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="841"/>
         <source>Bottom Center</source>
@@ -6624,6 +7066,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="572"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="845"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="845"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="845"/>
         <source>Top Center</source>
@@ -6631,6 +7074,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="607"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="848"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="848"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="848"/>
         <source>Angle</source>
@@ -6638,6 +7082,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="691"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="852"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="852"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="852"/>
         <source>Text:</source>
@@ -6645,6 +7090,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="717"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="854"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="854"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="854"/>
         <source>Clear Text</source>
@@ -6652,6 +7098,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="731"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="858"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="858"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="858"/>
         <source>Load Text From File</source>
@@ -6659,6 +7106,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="745"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="862"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="862"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="862"/>
         <source>Save Text To File</source>
@@ -6666,6 +7114,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="759"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="866"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="866"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="866"/>
         <source>Cut</source>
@@ -6673,6 +7122,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="773"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="870"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="870"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="870"/>
         <source>Copy</source>
@@ -6680,6 +7130,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="874"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="874"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="874"/>
         <source>Paste</source>
@@ -6687,6 +7138,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="834"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="877"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="877"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="877"/>
         <source>Insert Symbol</source>
@@ -6694,6 +7146,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="113"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="804"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="804"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="804"/>
         <source>&amp;Line spacing:</source>
@@ -6701,6 +7154,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="246"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="810"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="810"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="810"/>
         <source>Font:</source>
@@ -6708,6 +7162,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="645"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="849"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="849"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="849"/>
         <source>Text Direction</source>
@@ -6715,6 +7170,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="657"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="850"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="850"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="850"/>
         <source>Left to right</source>
@@ -6722,6 +7178,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="670"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="851"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="851"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="851"/>
         <source>Right to left</source>
@@ -6729,6 +7186,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="847"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="878"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="878"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="878"/>
         <source>Diameter (⌀)</source>
@@ -6736,6 +7194,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="852"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="879"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="879"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="879"/>
         <source>Degree (°)</source>
@@ -6743,6 +7202,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="857"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="880"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="880"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="880"/>
         <source>Plus / Minus (±)</source>
@@ -6750,6 +7210,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="862"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="881"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="881"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="881"/>
         <source>At (@)</source>
@@ -6757,6 +7218,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="867"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="882"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="882"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="882"/>
         <source>Hash (#)</source>
@@ -6764,6 +7226,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="872"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="883"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="883"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="883"/>
         <source>Dollar ($)</source>
@@ -6771,6 +7234,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="877"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="884"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="884"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="884"/>
         <source>Copyright (©)</source>
@@ -6778,6 +7242,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="882"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="885"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="885"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="885"/>
         <source>Registered (®)</source>
@@ -6785,6 +7250,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="887"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="886"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="886"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="886"/>
         <source>Paragraph (§)</source>
@@ -6792,6 +7258,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="892"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="887"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="887"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="887"/>
         <source>Pi (π)</source>
@@ -6799,6 +7266,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="897"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="888"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="888"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="888"/>
         <source>Pound (£)</source>
@@ -6806,6 +7274,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="902"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="889"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="889"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="889"/>
         <source>Yen (¥)</source>
@@ -6813,6 +7282,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="907"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="890"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="890"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="890"/>
         <source>Times (×)</source>
@@ -6820,6 +7290,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="912"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="891"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="891"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="891"/>
         <source>Division (÷)</source>
@@ -6827,6 +7298,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="923"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="893"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="893"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="893"/>
         <source>Insert Unicode</source>
@@ -6834,6 +7306,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="929"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="894"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="894"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="894"/>
         <source>Page:</source>
@@ -6841,6 +7314,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="939"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="895"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="895"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="895"/>
         <source>Char:</source>
@@ -6848,6 +7322,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="962"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="896"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="896"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="896"/>
         <source>[0000-007F] Basic Latin</source>
@@ -6855,6 +7330,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="967"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="897"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="897"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="897"/>
         <source>[0080-00FF] Latin-1 Supplementary</source>
@@ -6862,6 +7338,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="972"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="898"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="898"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="898"/>
         <source>[0100-017F] Latin Extended-A</source>
@@ -6869,6 +7346,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="977"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="899"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="899"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="899"/>
         <source>[0180-024F] Latin Extended-B</source>
@@ -6876,6 +7354,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="982"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="900"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="900"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="900"/>
         <source>[0250-02AF] IPA Extensions</source>
@@ -6883,6 +7362,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="987"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="901"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="901"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="901"/>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
@@ -6890,6 +7370,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="992"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="902"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="902"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="902"/>
         <source>[0300-036F] Combining Diacritical Marks</source>
@@ -6897,6 +7378,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="997"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="903"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="903"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="903"/>
         <source>[0370-03FF] Greek and Coptic</source>
@@ -6904,6 +7386,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1002"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="904"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="904"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="904"/>
         <source>[0400-04FF] Cyrillic</source>
@@ -6911,6 +7394,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1007"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="905"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="905"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="905"/>
         <source>[0500-052F] Cyrillic Supplementary</source>
@@ -6918,6 +7402,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1012"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="906"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="906"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="906"/>
         <source>[0530-058F] Armenian</source>
@@ -6925,6 +7410,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1017"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="907"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="907"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="907"/>
         <source>[0590-05FF] Hebrew</source>
@@ -6932,6 +7418,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1022"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="908"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="908"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="908"/>
         <source>[0600-06FF] Arabic</source>
@@ -6939,6 +7426,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1027"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="909"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="909"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="909"/>
         <source>[0700-074F] Syriac</source>
@@ -6946,6 +7434,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1032"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="910"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="910"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="910"/>
         <source>[0780-07BF] Thaana</source>
@@ -6953,6 +7442,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1037"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="911"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="911"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="911"/>
         <source>[0900-097F] Devanagari</source>
@@ -6960,6 +7450,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1042"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="912"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="912"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="912"/>
         <source>[0980-09FF] Bengali</source>
@@ -6967,6 +7458,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1047"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="913"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="913"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="913"/>
         <source>[0A00-0A7F] Gurmukhi</source>
@@ -6974,6 +7466,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1052"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="914"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="914"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="914"/>
         <source>[0A80-0AFF] Gujarati</source>
@@ -6981,6 +7474,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1057"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="915"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="915"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="915"/>
         <source>[0B00-0B7F] Oriya</source>
@@ -6988,6 +7482,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1062"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="916"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="916"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="916"/>
         <source>[0B80-0BFF] Tamil</source>
@@ -6995,6 +7490,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1067"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="917"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="917"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="917"/>
         <source>[0C00-0C7F] Telugu</source>
@@ -7002,6 +7498,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1072"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="918"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="918"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="918"/>
         <source>[0C80-0CFF] Kannada</source>
@@ -7009,6 +7506,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1077"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="919"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="919"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="919"/>
         <source>[0D00-0D7F] Malayalam</source>
@@ -7016,6 +7514,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1082"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="920"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="920"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="920"/>
         <source>[0D80-0DFF] Sinhala</source>
@@ -7023,6 +7522,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1087"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="921"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="921"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="921"/>
         <source>[0E00-0E7F] Thai</source>
@@ -7030,6 +7530,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1092"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="922"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="922"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="922"/>
         <source>[0E80-0EFF] Lao</source>
@@ -7037,6 +7538,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1097"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="923"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="923"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="923"/>
         <source>[0F00-0FFF] Tibetan</source>
@@ -7044,6 +7546,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1102"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="924"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="924"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="924"/>
         <source>[1000-109F] Myanmar</source>
@@ -7051,6 +7554,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1107"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="925"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="925"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="925"/>
         <source>[10A0-10FF] Georgian</source>
@@ -7058,6 +7562,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1112"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="926"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="926"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="926"/>
         <source>[1100-11FF] Hangul Jamo</source>
@@ -7065,6 +7570,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1117"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="927"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="927"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="927"/>
         <source>[1200-137F] Ethiopic</source>
@@ -7072,6 +7578,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1122"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="928"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="928"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="928"/>
         <source>[13A0-13FF] Cherokee</source>
@@ -7079,6 +7586,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1127"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="929"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="929"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="929"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
@@ -7086,6 +7594,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1132"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="930"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="930"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="930"/>
         <source>[1680-169F] Ogham</source>
@@ -7093,6 +7602,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1137"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="931"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="931"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="931"/>
         <source>[16A0-16FF] Runic</source>
@@ -7100,6 +7610,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1142"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="932"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="932"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="932"/>
         <source>[1700-171F] Tagalog</source>
@@ -7107,6 +7618,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1147"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="933"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="933"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="933"/>
         <source>[1720-173F] Hanunoo</source>
@@ -7114,6 +7626,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1152"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="934"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="934"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="934"/>
         <source>[1740-175F] Buhid</source>
@@ -7121,6 +7634,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1157"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="935"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="935"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="935"/>
         <source>[1760-177F] Tagbanwa</source>
@@ -7128,6 +7642,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1162"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="936"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="936"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="936"/>
         <source>[1780-17FF] Khmer</source>
@@ -7135,6 +7650,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1167"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="937"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="937"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="937"/>
         <source>[1800-18AF] Mongolian</source>
@@ -7142,6 +7658,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1172"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="938"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="938"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="938"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
@@ -7149,6 +7666,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1177"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="939"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="939"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="939"/>
         <source>[1F00-1FFF] Greek Extended</source>
@@ -7156,6 +7674,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1182"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="940"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="940"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="940"/>
         <source>[2000-206F] General Punctuation</source>
@@ -7163,6 +7682,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1187"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="941"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="941"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="941"/>
         <source>[2070-209F] Superscripts and Subscripts</source>
@@ -7170,6 +7690,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1192"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="942"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="942"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="942"/>
         <source>[20A0-20CF] Currency Symbols</source>
@@ -7177,6 +7698,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1197"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="943"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="943"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="943"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
@@ -7184,6 +7706,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1202"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="944"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="944"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="944"/>
         <source>[2100-214F] Letterlike Symbols</source>
@@ -7191,6 +7714,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1207"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="945"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="945"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="945"/>
         <source>[2150-218F] Number Forms</source>
@@ -7198,6 +7722,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1212"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="946"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="946"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="946"/>
         <source>[2190-21FF] Arrows</source>
@@ -7205,6 +7730,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1217"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="947"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="947"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="947"/>
         <source>[2200-22FF] Mathematical Operators</source>
@@ -7212,6 +7738,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1222"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="948"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="948"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="948"/>
         <source>[2300-23FF] Miscellaneous Technical</source>
@@ -7219,6 +7746,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1227"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="949"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="949"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="949"/>
         <source>[2400-243F] Control Pictures</source>
@@ -7226,6 +7754,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1232"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="950"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="950"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="950"/>
         <source>[2440-245F] Optical Character Recognition</source>
@@ -7233,6 +7762,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1237"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="951"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="951"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="951"/>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
@@ -7240,6 +7770,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1242"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="952"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="952"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="952"/>
         <source>[2500-257F] Box Drawing</source>
@@ -7247,6 +7778,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1247"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="953"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="953"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="953"/>
         <source>[2580-259F] Block Elements</source>
@@ -7254,6 +7786,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1252"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="954"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="954"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="954"/>
         <source>[25A0-25FF] Geometric Shapes</source>
@@ -7261,6 +7794,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1257"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="955"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="955"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="955"/>
         <source>[2600-26FF] Miscellaneous Symbols</source>
@@ -7268,6 +7802,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1262"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="956"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="956"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="956"/>
         <source>[2700-27BF] Dingbats</source>
@@ -7275,6 +7810,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1267"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="957"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="957"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="957"/>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
@@ -7282,6 +7818,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1272"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="958"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="958"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="958"/>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
@@ -7289,6 +7826,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1277"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="959"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="959"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="959"/>
         <source>[2800-28FF] Braille Patterns</source>
@@ -7296,6 +7834,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1282"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="960"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="960"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="960"/>
         <source>[2900-297F] Supplemental Arrows-B</source>
@@ -7303,6 +7842,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1287"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="961"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="961"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="961"/>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
@@ -7310,6 +7850,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1292"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="962"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="962"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="962"/>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
@@ -7317,6 +7858,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1297"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="963"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="963"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="963"/>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
@@ -7324,6 +7866,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1302"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="964"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="964"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="964"/>
         <source>[2F00-2FDF] Kangxi Radicals</source>
@@ -7331,6 +7874,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1307"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="965"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="965"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="965"/>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
@@ -7338,6 +7882,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1312"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="966"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="966"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="966"/>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
@@ -7345,6 +7890,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1317"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="967"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="967"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="967"/>
         <source>[3040-309F] Hiragana</source>
@@ -7352,6 +7898,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1322"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="968"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="968"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="968"/>
         <source>[30A0-30FF] Katakana</source>
@@ -7359,6 +7906,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1327"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="969"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="969"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="969"/>
         <source>[3100-312F] Bopomofo</source>
@@ -7366,6 +7914,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1332"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="970"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="970"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="970"/>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
@@ -7373,6 +7922,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1337"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="971"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="971"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="971"/>
         <source>[3190-319F] Kanbun</source>
@@ -7380,6 +7930,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1342"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="972"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="972"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="972"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
@@ -7387,6 +7938,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1347"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="973"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="973"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="973"/>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
@@ -7394,6 +7946,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1352"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="974"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="974"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="974"/>
         <source>[3300-33FF] CJK Compatibility</source>
@@ -7401,6 +7954,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1357"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="975"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="975"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="975"/>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
@@ -7408,6 +7962,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1362"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="976"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="976"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="976"/>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
@@ -7415,6 +7970,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1367"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="977"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="977"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="977"/>
         <source>[A000-A48F] Yi Syllables</source>
@@ -7422,6 +7978,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1372"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="978"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="978"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="978"/>
         <source>[A490-A4CF] Yi Radicals</source>
@@ -7429,6 +7986,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1377"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="979"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="979"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="979"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
@@ -7436,6 +7994,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1382"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="980"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="980"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="980"/>
         <source>[D800-DBFF] High Surrogates</source>
@@ -7443,6 +8002,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1387"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="981"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="981"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="981"/>
         <source>[DC00-DFFF] Low Surrogate Area</source>
@@ -7450,6 +8010,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1392"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="982"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="982"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="982"/>
         <source>[E000-F8FF] Private Use Area</source>
@@ -7457,6 +8018,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1397"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="983"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="983"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="983"/>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
@@ -7464,6 +8026,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1402"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="984"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="984"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="984"/>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
@@ -7471,6 +8034,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1407"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="985"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="985"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="985"/>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
@@ -7478,6 +8042,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1412"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="986"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="986"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="986"/>
         <source>[FE00-FE0F] Variation Selectors</source>
@@ -7485,6 +8050,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1417"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="987"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="987"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="987"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
@@ -7492,6 +8058,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1422"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="988"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="988"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="988"/>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
@@ -7499,6 +8066,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1427"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="989"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="989"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="989"/>
         <source>[FE50-FE6F] Small Form Variants</source>
@@ -7506,6 +8074,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1432"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="990"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="990"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="990"/>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
@@ -7513,6 +8082,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1437"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="991"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="991"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="991"/>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
@@ -7520,6 +8090,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1442"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="992"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="992"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="992"/>
         <source>[FFF0-FFFF] Specials</source>
@@ -7527,6 +8098,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1447"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="993"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="993"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="993"/>
         <source>[10300-1032F] Old Italic</source>
@@ -7534,6 +8106,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1452"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="994"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="994"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="994"/>
         <source>[10330-1034F] Gothic</source>
@@ -7541,6 +8114,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1457"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="995"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="995"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="995"/>
         <source>[10400-1044F] Deseret</source>
@@ -7548,6 +8122,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1462"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="996"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="996"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="996"/>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
@@ -7555,6 +8130,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1467"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="997"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="997"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="997"/>
         <source>[1D100-1D1FF] Musical Symbols</source>
@@ -7562,6 +8138,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1472"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="998"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="998"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="998"/>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
@@ -7569,6 +8146,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1477"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="999"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="999"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="999"/>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
@@ -7576,6 +8154,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1482"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="1000"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="1000"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="1000"/>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
@@ -7583,6 +8162,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1487"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="1001"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="1001"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="1001"/>
         <source>[E0000-E007F] Tags</source>
@@ -7590,6 +8170,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1492"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="1002"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="1002"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="1002"/>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
@@ -7597,6 +8178,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1497"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmtext.h" line="1003"/>
         <location filename="../../build/ui_qg_dlgmtext.h" line="1003"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmtext.h" line="1003"/>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
@@ -7607,6 +8189,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgMirror</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmirror.h" line="123"/>
         <location filename="../../build/ui_qg_dlgmirror.h" line="123"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmirror.h" line="123"/>
         <source>Mirroring Options</source>
@@ -7614,6 +8197,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="70"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmirror.h" line="127"/>
         <location filename="../../build/ui_qg_dlgmirror.h" line="127"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmirror.h" line="127"/>
         <source>Number of copies</source>
@@ -7621,6 +8205,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="88"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmirror.h" line="128"/>
         <location filename="../../build/ui_qg_dlgmirror.h" line="128"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmirror.h" line="128"/>
         <source>&amp;Delete Original</source>
@@ -7628,6 +8213,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="107"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmirror.h" line="129"/>
         <location filename="../../build/ui_qg_dlgmirror.h" line="129"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmirror.h" line="129"/>
         <source>&amp;Keep Original</source>
@@ -7635,6 +8221,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="39"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmirror.h" line="124"/>
         <location filename="../../build/ui_qg_dlgmirror.h" line="124"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmirror.h" line="124"/>
         <source>Use current &amp;attributes</source>
@@ -7642,6 +8229,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="46"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmirror.h" line="125"/>
         <location filename="../../build/ui_qg_dlgmirror.h" line="125"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmirror.h" line="125"/>
         <source>Use current &amp;layer</source>
@@ -7649,6 +8237,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="53"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmirror.h" line="126"/>
         <location filename="../../build/ui_qg_dlgmirror.h" line="126"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmirror.h" line="126"/>
         <source>...</source>
@@ -7659,6 +8248,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgMove</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmove.h" line="142"/>
         <location filename="../../build/ui_qg_dlgmove.h" line="142"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmove.h" line="142"/>
         <source>Move/Copy Options</source>
@@ -7666,6 +8256,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmove.h" line="143"/>
         <location filename="../../build/ui_qg_dlgmove.h" line="143"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmove.h" line="143"/>
         <source>Number of copies</source>
@@ -7673,6 +8264,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="50"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmove.h" line="144"/>
         <location filename="../../build/ui_qg_dlgmove.h" line="144"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmove.h" line="144"/>
         <source>&amp;Delete Original</source>
@@ -7680,6 +8272,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="69"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmove.h" line="145"/>
         <location filename="../../build/ui_qg_dlgmove.h" line="145"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmove.h" line="145"/>
         <source>&amp;Keep Original</source>
@@ -7687,6 +8280,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="88"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmove.h" line="146"/>
         <location filename="../../build/ui_qg_dlgmove.h" line="146"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmove.h" line="146"/>
         <source>&amp;Multiple Copies</source>
@@ -7694,6 +8288,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="95"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmove.h" line="148"/>
         <location filename="../../build/ui_qg_dlgmove.h" line="148"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmove.h" line="148"/>
         <source>Number of copies. Maximum 100</source>
@@ -7701,6 +8296,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="121"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmove.h" line="150"/>
         <location filename="../../build/ui_qg_dlgmove.h" line="150"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmove.h" line="150"/>
         <source>Use current &amp;attributes</source>
@@ -7708,6 +8304,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="128"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmove.h" line="151"/>
         <location filename="../../build/ui_qg_dlgmove.h" line="151"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmove.h" line="151"/>
         <source>Use current &amp;layer</source>
@@ -7715,6 +8312,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="135"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmove.h" line="152"/>
         <location filename="../../build/ui_qg_dlgmove.h" line="152"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmove.h" line="152"/>
         <source>...</source>
@@ -7725,6 +8323,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgMoveRotate</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmoverotate.h" line="185"/>
         <location filename="../../build/ui_qg_dlgmoverotate.h" line="185"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="185"/>
         <source>Move/Rotate Options</source>
@@ -7732,6 +8331,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="41"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmoverotate.h" line="186"/>
         <location filename="../../build/ui_qg_dlgmoverotate.h" line="186"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="186"/>
         <source>...</source>
@@ -7739,6 +8339,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="54"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmoverotate.h" line="188"/>
         <location filename="../../build/ui_qg_dlgmoverotate.h" line="188"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="188"/>
         <source>Ctrl+S</source>
@@ -7746,6 +8347,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="63"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmoverotate.h" line="190"/>
         <location filename="../../build/ui_qg_dlgmoverotate.h" line="190"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="190"/>
         <source>&amp;Angle (a):</source>
@@ -7753,6 +8355,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="97"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmoverotate.h" line="191"/>
         <location filename="../../build/ui_qg_dlgmoverotate.h" line="191"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="191"/>
         <source>Use current &amp;attributes</source>
@@ -7760,6 +8363,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="104"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmoverotate.h" line="192"/>
         <location filename="../../build/ui_qg_dlgmoverotate.h" line="192"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="192"/>
         <source>Use current &amp;layer</source>
@@ -7767,6 +8371,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="113"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmoverotate.h" line="193"/>
         <location filename="../../build/ui_qg_dlgmoverotate.h" line="193"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="193"/>
         <source>Number of copies</source>
@@ -7774,6 +8379,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="131"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmoverotate.h" line="194"/>
         <location filename="../../build/ui_qg_dlgmoverotate.h" line="194"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="194"/>
         <source>&amp;Delete Original</source>
@@ -7781,6 +8387,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="150"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmoverotate.h" line="195"/>
         <location filename="../../build/ui_qg_dlgmoverotate.h" line="195"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="195"/>
         <source>&amp;Keep Original</source>
@@ -7788,6 +8395,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="169"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgmoverotate.h" line="196"/>
         <location filename="../../build/ui_qg_dlgmoverotate.h" line="196"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="196"/>
         <source>&amp;Multiple Copies</source>
@@ -7798,6 +8406,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgOptionsDrawing</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1741"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1741"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1741"/>
         <source>Drawing Preferences</source>
@@ -7805,6 +8414,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="34"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1769"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1769"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1769"/>
         <source>&amp;Paper</source>
@@ -7812,6 +8422,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="108"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1746"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1746"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1746"/>
         <source>&amp;Landscape</source>
@@ -7819,6 +8430,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="115"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1747"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1747"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1747"/>
         <source>P&amp;ortrait</source>
@@ -7826,6 +8438,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="326"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1782"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1782"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1782"/>
         <source>&amp;Units</source>
@@ -7833,6 +8446,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="332"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1770"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1770"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1770"/>
         <source>Main Unit</source>
@@ -7840,6 +8454,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="338"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1771"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1771"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1771"/>
         <source>&amp;Main drawing unit:</source>
@@ -7847,6 +8462,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="377"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1772"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1772"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1772"/>
         <source>Length</source>
@@ -7854,6 +8470,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="383"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1773"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1773"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1773"/>
         <source>&amp;Format:</source>
@@ -7861,6 +8478,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="402"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1774"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1774"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1774"/>
         <source>P&amp;recision:</source>
@@ -7870,6 +8488,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="285"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="450"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="546"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1768"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1775"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1780"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1768"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1775"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1780"/>
@@ -7881,6 +8502,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="44"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1742"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1742"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1742"/>
         <source>Format</source>
@@ -7888,6 +8510,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="66"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1743"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1743"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1743"/>
         <source>&amp;Height:</source>
@@ -7895,6 +8518,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="82"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1744"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1744"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1744"/>
         <source>&amp;Width:</source>
@@ -7902,6 +8526,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="102"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1745"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1745"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1745"/>
         <source>Orientation</source>
@@ -7909,6 +8534,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="138"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1748"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1748"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1748"/>
         <source>Margins</source>
@@ -7917,6 +8543,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="165"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="185"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1753"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1758"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1753"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1758"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1753"/>
@@ -7926,6 +8554,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="240"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1765"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1765"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1765"/>
         <source>Number of pages</source>
@@ -7933,6 +8562,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="246"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1766"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1766"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1766"/>
         <source>Horizontally:</source>
@@ -7940,6 +8570,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="263"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1767"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1767"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1767"/>
         <source>Vertically:</source>
@@ -7947,6 +8578,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="456"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1776"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1776"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1776"/>
         <source>linear</source>
@@ -7954,6 +8586,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="473"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1777"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1777"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1777"/>
         <source>Angle</source>
@@ -7961,6 +8594,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="479"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1778"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1778"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1778"/>
         <source>F&amp;ormat:</source>
@@ -7968,6 +8602,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="527"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1779"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1779"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1779"/>
         <source>Pre&amp;cision:</source>
@@ -7975,6 +8610,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="552"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1781"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1781"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1781"/>
         <source>angular</source>
@@ -7982,6 +8618,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="570"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1812"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1812"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1812"/>
         <source>&amp;Grid</source>
@@ -7989,6 +8626,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1783"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1783"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1783"/>
         <source>Grid Settings</source>
@@ -7996,6 +8634,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="588"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1784"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1784"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1784"/>
         <source>Show Grid</source>
@@ -8003,6 +8642,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="720"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1805"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1805"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1805"/>
         <source>Crosshair</source>
@@ -8010,6 +8650,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1271"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1850"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1850"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1850"/>
         <source>Length to enlarge over dimension line</source>
@@ -8017,6 +8658,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1854"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1854"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1854"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -8024,6 +8666,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1889"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1889"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1889"/>
         <source>fixed extension line length</source>
@@ -8031,6 +8674,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1894"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1894"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1894"/>
         <source>&amp;Splines</source>
@@ -8038,6 +8682,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1683"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1921"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1921"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1921"/>
         <source>&amp;Points</source>
@@ -8045,6 +8690,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1692"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1895"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1895"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1895"/>
         <source>Point Style</source>
@@ -8071,6 +8717,26 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2424"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2465"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2506"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1896"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1897"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1898"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1899"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1900"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1901"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1902"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1903"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1904"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1905"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1906"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1907"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1908"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1909"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1910"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1911"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1912"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1913"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1914"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1915"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1896"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1897"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1898"/>
@@ -8116,6 +8782,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2557"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1916"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1916"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1916"/>
         <source>Point Size</source>
@@ -8123,6 +8790,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2592"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1917"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1917"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1917"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="1108"/>
@@ -8131,6 +8799,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2629"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1918"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1918"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1918"/>
         <source>Size relative to screen</source>
@@ -8138,6 +8807,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2642"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1919"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1919"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1919"/>
         <source>Size in drawing units</source>
@@ -8145,6 +8815,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2669"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1920"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1920"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1920"/>
         <source>(0 =&gt; 5% relative to screen size)</source>
@@ -8152,6 +8823,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="654"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1794"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1794"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1794"/>
         <source>Left crosshair with isometric grid</source>
@@ -8161,6 +8833,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="152"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="212"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="657"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1750"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1761"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1796"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1750"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1761"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1796"/>
@@ -8172,6 +8847,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1798"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1798"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1798"/>
         <source>Top crosshair with isometric grid</source>
@@ -8181,6 +8857,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="195"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="228"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="679"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1759"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1763"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1800"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1759"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1763"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1800"/>
@@ -8192,6 +8871,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1802"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1802"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1802"/>
         <source>Right crosshair with isometric grid</source>
@@ -8201,6 +8881,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="178"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="205"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="701"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1756"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1760"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1804"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1756"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1760"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1804"/>
@@ -8212,6 +8895,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="595"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1786"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1786"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1786"/>
         <source>Use orthogonal grid</source>
@@ -8219,6 +8903,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="598"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1788"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1788"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1788"/>
         <source>Orthogonal Grid</source>
@@ -8226,6 +8911,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1790"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1790"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1790"/>
         <source>Use isometric grid</source>
@@ -8233,6 +8919,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="611"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1792"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1792"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1792"/>
         <source>Isometric Grid</source>
@@ -8240,6 +8927,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="741"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1806"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1806"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1806"/>
         <source>X Spacing:</source>
@@ -8248,6 +8936,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="761"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="803"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1807"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1810"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1807"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1810"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1807"/>
@@ -8261,6 +8951,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="789"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1809"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1809"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1809"/>
         <source>Y Spacing:</source>
@@ -8268,6 +8959,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="860"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1891"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1891"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1891"/>
         <source>&amp;Dimensions</source>
@@ -8275,6 +8967,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1813"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1813"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1813"/>
         <source>Text style:</source>
@@ -8282,6 +8975,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="893"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1814"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1814"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1814"/>
         <source>&apos;.&apos; (Period)</source>
@@ -8289,6 +8983,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="898"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1815"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1815"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1815"/>
         <source>&apos;,&apos; (Comma)</source>
@@ -8296,6 +8991,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="906"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1817"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1817"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1817"/>
         <source>Decimal separator:</source>
@@ -8303,6 +8999,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="933"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1820"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1820"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1820"/>
         <source>Linear units:</source>
@@ -8312,6 +9009,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="949"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1384"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1571"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1821"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1861"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1883"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1821"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1861"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1883"/>
@@ -8323,6 +9023,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="959"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1822"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1822"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1822"/>
         <source>Length Factor:</source>
@@ -8330,6 +9031,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1086"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1829"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1829"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1829"/>
         <source>Angular units:</source>
@@ -8337,6 +9039,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1109"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1831"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1831"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1831"/>
         <source>Linear zeros:</source>
@@ -8344,6 +9047,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1146"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1836"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1836"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1836"/>
         <source>Format units</source>
@@ -8351,6 +9055,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1153"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1839"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1839"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1839"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -8358,6 +9063,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1226"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1845"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1845"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1845"/>
         <source>Text size &amp; position</source>
@@ -8365,6 +9071,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1233"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1846"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1846"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1846"/>
         <source>General Scale:</source>
@@ -8372,6 +9079,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1825"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1825"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1825"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -8379,6 +9087,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1099"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1830"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1830"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1830"/>
         <source>Text Height:</source>
@@ -8392,6 +9101,13 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1469"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1479"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1527"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1818"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1819"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1828"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1858"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1872"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1873"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1878"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1818"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1819"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1828"/>
@@ -8411,6 +9127,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1337"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1856"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1856"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1856"/>
         <source>Arrow size:</source>
@@ -8419,6 +9136,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1350"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1578"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1857"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1884"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1857"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1884"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1857"/>
@@ -8428,6 +9147,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1370"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1859"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1859"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1859"/>
         <source>Dimension lines, arrows &amp; ticks</source>
@@ -8435,6 +9155,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1860"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1860"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1860"/>
         <source>Angular zeros:</source>
@@ -8442,6 +9163,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1391"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1862"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1862"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1862"/>
         <source>Angular precision:</source>
@@ -8449,6 +9171,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1404"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1863"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1863"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1863"/>
         <source>Enlarge:</source>
@@ -8456,6 +9179,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1414"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1864"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1864"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1864"/>
         <source>Offset:</source>
@@ -8463,6 +9187,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1427"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1865"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1865"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1865"/>
         <source>Linear precision:</source>
@@ -8470,6 +9195,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1446"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1870"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1870"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1870"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -8477,6 +9203,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1456"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1866"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1866"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1866"/>
         <source>Aligned</source>
@@ -8484,6 +9211,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1502"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1876"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1876"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1876"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -8491,6 +9219,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1534"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1879"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1879"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1879"/>
         <source>Text alignment:</source>
@@ -8498,6 +9227,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1544"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1880"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1880"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1880"/>
         <source>Dimension line gap:</source>
@@ -8505,6 +9235,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1178"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1843"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1843"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1843"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -8512,6 +9243,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1047"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1827"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1827"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1827"/>
         <source>Tick size:</source>
@@ -8519,6 +9251,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1116"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1834"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1834"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1834"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -8526,6 +9259,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1867"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1867"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1867"/>
         <source>Horizontal</source>
@@ -8533,6 +9267,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1881"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1881"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1881"/>
         <source>Extension lines</source>
@@ -8540,6 +9275,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1882"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1882"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1882"/>
         <source>Fixed length:</source>
@@ -8547,6 +9283,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1892"/>
         <location filename="../../build/ui_qg_dlgoptionsdrawing.h" line="1892"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1892"/>
         <source>Number of line segments per spline patch:</source>
@@ -8633,6 +9370,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgOptionsGeneral</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="961"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="961"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="961"/>
         <source>Application Preferences</source>
@@ -8640,6 +9378,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="46"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1025"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1025"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1025"/>
         <source>&amp;Appearance</source>
@@ -8647,6 +9386,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="58"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="962"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="962"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="962"/>
         <source>Language</source>
@@ -8654,6 +9394,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="64"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="963"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="963"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="963"/>
         <source>&amp;GUI Language:</source>
@@ -8661,6 +9402,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="80"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="964"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="964"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="964"/>
         <source>&amp;Command Language:</source>
@@ -8668,6 +9410,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="693"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1016"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1016"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1016"/>
         <source>Backgr&amp;ound:</source>
@@ -8675,6 +9418,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="398"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="997"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="997"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="997"/>
         <source>G&amp;rid Color:</source>
@@ -8682,6 +9426,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="627"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1011"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1011"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1011"/>
         <source>&amp;Meta Grid Color:</source>
@@ -8689,6 +9434,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="655"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1013"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1013"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1013"/>
         <source>S&amp;elected Color:</source>
@@ -8696,6 +9442,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="599"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1009"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1009"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1009"/>
         <source>&amp;Highlighted Color:</source>
@@ -8703,6 +9450,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="105"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="965"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="965"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="965"/>
         <source>Graphic View</source>
@@ -8710,6 +9458,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="192"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="971"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="971"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="971"/>
         <source>Scrollbars</source>
@@ -8717,6 +9466,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="983"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="983"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="983"/>
         <source>Snap indicator lines</source>
@@ -8724,6 +9474,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="278"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="985"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="985"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="985"/>
         <source>Alt+S</source>
@@ -8731,6 +9482,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="968"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="968"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="968"/>
         <source>Snap indicator shape</source>
@@ -8738,6 +9490,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="970"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="970"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="970"/>
         <source>Hide cursor when snapping</source>
@@ -8745,6 +9498,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="255"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="975"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="975"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="975"/>
         <source>A&amp;utomatically scale grid</source>
@@ -8752,6 +9506,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="258"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="977"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="977"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="977"/>
         <source>Alt+U</source>
@@ -8759,6 +9514,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="683"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1015"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1015"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1015"/>
         <source>St&amp;art Handle Color:</source>
@@ -8766,6 +9522,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="767"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1020"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1020"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1020"/>
         <source>&amp;Handle Color:</source>
@@ -8773,6 +9530,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="378"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="995"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="995"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="995"/>
         <source>&amp;End Handle Color:</source>
@@ -8780,6 +9538,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="354"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="993"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="993"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="993"/>
         <source>Graphic Colors</source>
@@ -8787,6 +9546,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="777"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1021"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1021"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1021"/>
         <source>Snap indicator:</source>
@@ -8794,6 +9554,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="972"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="972"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="972"/>
         <source>Anti-aliasing</source>
@@ -8801,6 +9562,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="799"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1022"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1022"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1022"/>
         <source>#1E90FF</source>
@@ -8808,6 +9570,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="828"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1035"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1035"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1035"/>
         <source>&amp;Paths</source>
@@ -8815,6 +9578,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="922"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1033"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1033"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1033"/>
         <source>Translations:</source>
@@ -8822,6 +9586,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1034"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1034"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1034"/>
         <source>Hatch Patterns:</source>
@@ -8829,6 +9594,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1027"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1027"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1027"/>
         <source>Fonts:</source>
@@ -8836,6 +9602,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="854"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1028"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1028"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1028"/>
         <source>Part Libraries:</source>
@@ -8843,6 +9610,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="867"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1029"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1029"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1029"/>
         <source>Template:</source>
@@ -8850,6 +9618,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="978"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1091"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1091"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1091"/>
         <source>&amp;Defaults</source>
@@ -8857,6 +9626,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1130"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1067"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1067"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1067"/>
         <source>Startup</source>
@@ -8864,6 +9634,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1136"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1068"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1068"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1068"/>
         <source>Display loading screen</source>
@@ -8871,6 +9642,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1150"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1070"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1070"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1070"/>
         <source>Start with main window maximized</source>
@@ -8878,6 +9650,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1164"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1072"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1072"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1072"/>
         <source>Enable CAD dockwidgets</source>
@@ -8885,6 +9658,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1171"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1073"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1073"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1073"/>
         <source>Enable CAD toolbars</source>
@@ -8892,6 +9666,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1193"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1074"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1074"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1074"/>
         <source>Defaults for new drawings</source>
@@ -8899,6 +9674,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1205"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1075"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1075"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1075"/>
         <source>&amp;Unit:</source>
@@ -8906,6 +9682,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1218"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1077"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1077"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1077"/>
         <source>Drawing unit.</source>
@@ -8913,6 +9690,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="996"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1036"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1036"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1036"/>
         <source>Program Defaults</source>
@@ -8920,6 +9698,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1021"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1043"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1043"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1043"/>
         <source>Time between automatic saving of the document in minutes.</source>
@@ -8927,6 +9706,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1036"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1045"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1045"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1045"/>
         <source>Don&apos;t use native OS file open dialog</source>
@@ -8934,6 +9714,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1228"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1079"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1079"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1079"/>
         <source>Keyboard Settings</source>
@@ -8941,6 +9722,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1234"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1080"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1080"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1080"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
@@ -8948,6 +9730,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1084"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1084"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1084"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
@@ -8955,6 +9738,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1085"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1085"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1085"/>
         <source>CAD Preferences</source>
@@ -8962,6 +9746,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1087"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1087"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1087"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -8969,6 +9754,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1002"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1038"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1038"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1038"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
@@ -8976,6 +9762,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1005"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1040"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1040"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1040"/>
         <source>Auto backup</source>
@@ -8983,6 +9770,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1263"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1089"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1089"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1089"/>
         <source>Modify layer of selected entities, at  layer activation</source>
@@ -8990,6 +9778,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1069"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1069"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1069"/>
         <source>Start in tab mode</source>
@@ -8997,6 +9786,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="322"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="988"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="988"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="988"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
@@ -9004,6 +9794,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="967"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="967"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="967"/>
         <source>N&amp;umber of preview entities:</source>
@@ -9011,6 +9802,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="966"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="966"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="966"/>
         <source>Auto-panning</source>
@@ -9018,6 +9810,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="979"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="979"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="979"/>
         <source>Hide the relative-&amp;zero marker</source>
@@ -9025,6 +9818,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="268"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="981"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="981"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="981"/>
         <source>Alt+Z</source>
@@ -9032,6 +9826,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="335"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="990"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="990"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="990"/>
         <source>Visualize the entity under the cursor</source>
@@ -9039,6 +9834,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="338"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="992"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="992"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="992"/>
         <source>Mouse-over effects</source>
@@ -9046,6 +9842,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="388"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="996"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="996"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="996"/>
         <source>&amp;Relative-Zero Marker Color:</source>
@@ -9053,6 +9850,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1026"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1026"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1026"/>
         <source>Variable File:</source>
@@ -9060,6 +9858,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1031"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1031"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1031"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -9067,6 +9866,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1014"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1041"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1041"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1041"/>
         <source>Auto save time (minutes):</source>
@@ -9074,6 +9874,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1043"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1047"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1047"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1047"/>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
@@ -9081,6 +9882,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1046"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1049"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1049"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1049"/>
         <source>Invert horizontal scrolling direction</source>
@@ -9088,6 +9890,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1053"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1051"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1051"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1051"/>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
@@ -9095,6 +9898,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1056"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1053"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1053"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1053"/>
         <source>Invert vertical scrolling direction</source>
@@ -9102,6 +9906,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1063"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1055"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1055"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1055"/>
         <source>Inverts zoom direction when using mouse wheel.</source>
@@ -9109,6 +9914,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1066"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1057"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1057"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1057"/>
         <source>Invert zoom direction</source>
@@ -9116,6 +9922,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1058"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1058"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1058"/>
         <source>Clear Settings</source>
@@ -9123,6 +9930,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1101"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1060"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1060"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1060"/>
         <source>restores program geometry/layout to original state</source>
@@ -9130,6 +9938,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1104"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1062"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1062"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1062"/>
         <source>Layout</source>
@@ -9137,6 +9946,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1117"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1064"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1064"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1064"/>
         <source>restores the program to its original state</source>
@@ -9144,6 +9954,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1120"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1066"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1066"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1066"/>
         <source>All</source>
@@ -9151,6 +9962,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1157"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1071"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1071"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1071"/>
         <source>Open last opened files</source>
@@ -9158,6 +9970,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1082"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1082"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1082"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -9165,6 +9978,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1270"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1090"/>
         <location filename="../../build/ui_qg_dlgoptionsgeneral.h" line="1090"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1090"/>
         <source>Automatically zoom drawing when opening</source>
@@ -9195,6 +10009,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgOptionsMakerCam</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="38"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="260"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="260"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="260"/>
         <source>Layers</source>
@@ -9202,6 +10017,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="259"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="259"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="259"/>
         <source>Export as CAM/plain SVG</source>
@@ -9209,6 +10025,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="48"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="261"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="261"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="261"/>
         <source>Default width of elements, mm</source>
@@ -9216,6 +10033,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="73"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="262"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="262"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="262"/>
         <source>Export invisible layers</source>
@@ -9223,6 +10041,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="80"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="263"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="263"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="263"/>
         <source>Export visible construction layers</source>
@@ -9230,6 +10049,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="92"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="264"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="264"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="264"/>
         <source>Blocks</source>
@@ -9237,6 +10057,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="135"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="268"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="268"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="268"/>
         <source>Images</source>
@@ -9244,6 +10065,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="143"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="269"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="269"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="269"/>
         <source>Raster Image export</source>
@@ -9251,6 +10073,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="155"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="270"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="270"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="270"/>
         <source>Dash/Dot Lines</source>
@@ -9258,6 +10081,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="165"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="271"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="271"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="271"/>
         <source>Length of the pattern, mm</source>
@@ -9265,6 +10089,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="187"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="272"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="272"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="272"/>
         <source>Bake dash/dot lines to SVG path</source>
@@ -9272,6 +10097,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="199"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="273"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="273"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="273"/>
         <source>Points</source>
@@ -9279,6 +10105,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="207"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="274"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="274"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="274"/>
         <source>Export Points</source>
@@ -9286,6 +10113,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="100"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="265"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="265"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="265"/>
         <source>Convert blocks to safe inline SVG content</source>
@@ -9293,6 +10121,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="115"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="266"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="266"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="266"/>
         <source>Ellipses / Ellipse arcs</source>
@@ -9300,6 +10129,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="123"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="267"/>
         <location filename="../../build/ui_qg_dlgoptionsmakercam.h" line="267"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="267"/>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
@@ -9406,6 +10236,7 @@ so default step value required for baking</source>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgpoint.h" line="165"/>
         <location filename="../../build/ui_qg_dlgpoint.h" line="165"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgpoint.h" line="165"/>
         <source>Point</source>
@@ -9413,6 +10244,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="44"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgpoint.h" line="166"/>
         <location filename="../../build/ui_qg_dlgpoint.h" line="166"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgpoint.h" line="166"/>
         <source>Layer:</source>
@@ -9420,6 +10252,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="71"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgpoint.h" line="167"/>
         <location filename="../../build/ui_qg_dlgpoint.h" line="167"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgpoint.h" line="167"/>
         <source>Geometry</source>
@@ -9427,6 +10260,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="77"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgpoint.h" line="168"/>
         <location filename="../../build/ui_qg_dlgpoint.h" line="168"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgpoint.h" line="168"/>
         <source>Position (y):</source>
@@ -9434,6 +10268,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="97"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgpoint.h" line="169"/>
         <location filename="../../build/ui_qg_dlgpoint.h" line="169"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgpoint.h" line="169"/>
         <source>Position (x):</source>
@@ -9444,6 +10279,7 @@ so default step value required for baking</source>
     <name>QG_DlgPolyline</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgpolyline.h" line="147"/>
         <location filename="../../build/ui_qg_dlgpolyline.h" line="147"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgpolyline.h" line="147"/>
         <source>Polyline</source>
@@ -9451,6 +10287,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgpolyline.h" line="148"/>
         <location filename="../../build/ui_qg_dlgpolyline.h" line="148"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgpolyline.h" line="148"/>
         <source>Layer:</source>
@@ -9458,6 +10295,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="77"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgpolyline.h" line="149"/>
         <location filename="../../build/ui_qg_dlgpolyline.h" line="149"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgpolyline.h" line="149"/>
         <source>Geometry</source>
@@ -9465,6 +10303,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="115"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgpolyline.h" line="150"/>
         <location filename="../../build/ui_qg_dlgpolyline.h" line="150"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgpolyline.h" line="150"/>
         <source>Closed</source>
@@ -9475,6 +10314,7 @@ so default step value required for baking</source>
     <name>QG_DlgRotate</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate.h" line="184"/>
         <location filename="../../build/ui_qg_dlgrotate.h" line="184"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate.h" line="184"/>
         <source>Rotation Options</source>
@@ -9482,6 +10322,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate.h" line="185"/>
         <location filename="../../build/ui_qg_dlgrotate.h" line="185"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate.h" line="185"/>
         <source>Number of copies</source>
@@ -9489,6 +10330,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="50"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate.h" line="186"/>
         <location filename="../../build/ui_qg_dlgrotate.h" line="186"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate.h" line="186"/>
         <source>&amp;Delete Original</source>
@@ -9496,6 +10338,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="69"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate.h" line="187"/>
         <location filename="../../build/ui_qg_dlgrotate.h" line="187"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate.h" line="187"/>
         <source>&amp;Keep Original</source>
@@ -9503,6 +10346,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="88"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate.h" line="188"/>
         <location filename="../../build/ui_qg_dlgrotate.h" line="188"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate.h" line="188"/>
         <source>&amp;Multiple Copies:</source>
@@ -9510,6 +10354,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="119"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate.h" line="189"/>
         <location filename="../../build/ui_qg_dlgrotate.h" line="189"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate.h" line="189"/>
         <source>...</source>
@@ -9517,6 +10362,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="138"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate.h" line="190"/>
         <location filename="../../build/ui_qg_dlgrotate.h" line="190"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate.h" line="190"/>
         <source>&amp;Angle (a):</source>
@@ -9524,6 +10370,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="179"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate.h" line="191"/>
         <location filename="../../build/ui_qg_dlgrotate.h" line="191"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate.h" line="191"/>
         <source>Use current &amp;attributes</source>
@@ -9531,6 +10378,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="186"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate.h" line="192"/>
         <location filename="../../build/ui_qg_dlgrotate.h" line="192"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate.h" line="192"/>
         <source>Use current &amp;layer</source>
@@ -9541,6 +10389,7 @@ so default step value required for baking</source>
     <name>QG_DlgRotate2</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate2.h" line="205"/>
         <location filename="../../build/ui_qg_dlgrotate2.h" line="205"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="205"/>
         <source>Rotate Two Options</source>
@@ -9548,6 +10397,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate2.h" line="206"/>
         <location filename="../../build/ui_qg_dlgrotate2.h" line="206"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="206"/>
         <source>Number of copies</source>
@@ -9555,6 +10405,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="50"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate2.h" line="207"/>
         <location filename="../../build/ui_qg_dlgrotate2.h" line="207"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="207"/>
         <source>&amp;Delete Original</source>
@@ -9562,6 +10413,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="69"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate2.h" line="208"/>
         <location filename="../../build/ui_qg_dlgrotate2.h" line="208"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="208"/>
         <source>&amp;Keep Original</source>
@@ -9569,6 +10421,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="88"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate2.h" line="209"/>
         <location filename="../../build/ui_qg_dlgrotate2.h" line="209"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="209"/>
         <source>&amp;Multiple Copies</source>
@@ -9576,6 +10429,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="119"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate2.h" line="210"/>
         <location filename="../../build/ui_qg_dlgrotate2.h" line="210"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="210"/>
         <source>...</source>
@@ -9583,6 +10437,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="138"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate2.h" line="211"/>
         <location filename="../../build/ui_qg_dlgrotate2.h" line="211"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="211"/>
         <source>Angle (&amp;a):</source>
@@ -9590,6 +10445,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="174"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate2.h" line="212"/>
         <location filename="../../build/ui_qg_dlgrotate2.h" line="212"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="212"/>
         <source>Angle (&amp;b):</source>
@@ -9597,6 +10453,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="208"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate2.h" line="213"/>
         <location filename="../../build/ui_qg_dlgrotate2.h" line="213"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="213"/>
         <source>Use current &amp;attributes</source>
@@ -9604,6 +10461,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="215"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgrotate2.h" line="214"/>
         <location filename="../../build/ui_qg_dlgrotate2.h" line="214"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="214"/>
         <source>Use current &amp;layer</source>
@@ -9614,6 +10472,7 @@ so default step value required for baking</source>
     <name>QG_DlgScale</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgscale.h" line="209"/>
         <location filename="../../build/ui_qg_dlgscale.h" line="209"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgscale.h" line="209"/>
         <source>Scaling Options</source>
@@ -9621,6 +10480,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="117"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgscale.h" line="214"/>
         <location filename="../../build/ui_qg_dlgscale.h" line="214"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgscale.h" line="214"/>
         <source>...</source>
@@ -9628,6 +10488,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="136"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgscale.h" line="216"/>
         <location filename="../../build/ui_qg_dlgscale.h" line="216"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgscale.h" line="216"/>
         <source>Scale by the same factor at both x- and y- directions</source>
@@ -9635,6 +10496,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="139"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgscale.h" line="218"/>
         <location filename="../../build/ui_qg_dlgscale.h" line="218"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgscale.h" line="218"/>
         <source>Isotropic Scaling</source>
@@ -9642,6 +10504,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="153"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgscale.h" line="219"/>
         <location filename="../../build/ui_qg_dlgscale.h" line="219"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgscale.h" line="219"/>
         <source>X</source>
@@ -9649,6 +10512,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="183"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgscale.h" line="220"/>
         <location filename="../../build/ui_qg_dlgscale.h" line="220"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgscale.h" line="220"/>
         <source>Y</source>
@@ -9656,6 +10520,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="203"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgscale.h" line="222"/>
         <location filename="../../build/ui_qg_dlgscale.h" line="222"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgscale.h" line="222"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -9663,6 +10528,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="219"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgscale.h" line="225"/>
         <location filename="../../build/ui_qg_dlgscale.h" line="225"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgscale.h" line="225"/>
         <source>Use current &amp;attributes</source>
@@ -9670,6 +10536,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="226"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgscale.h" line="226"/>
         <location filename="../../build/ui_qg_dlgscale.h" line="226"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgscale.h" line="226"/>
         <source>Use current &amp;layer</source>
@@ -9677,6 +10544,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgscale.h" line="210"/>
         <location filename="../../build/ui_qg_dlgscale.h" line="210"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgscale.h" line="210"/>
         <source>Number of copies</source>
@@ -9684,6 +10552,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="50"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgscale.h" line="211"/>
         <location filename="../../build/ui_qg_dlgscale.h" line="211"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgscale.h" line="211"/>
         <source>&amp;Delete Original</source>
@@ -9691,6 +10560,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="69"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgscale.h" line="212"/>
         <location filename="../../build/ui_qg_dlgscale.h" line="212"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgscale.h" line="212"/>
         <source>&amp;Keep Original</source>
@@ -9698,6 +10568,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="88"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgscale.h" line="213"/>
         <location filename="../../build/ui_qg_dlgscale.h" line="213"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgscale.h" line="213"/>
         <source>&amp;Multiple Copies</source>
@@ -9708,6 +10579,7 @@ so default step value required for baking</source>
     <name>QG_DlgSpline</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgspline.h" line="171"/>
         <location filename="../../build/ui_qg_dlgspline.h" line="171"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgspline.h" line="171"/>
         <source>Spline</source>
@@ -9715,6 +10587,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="51"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgspline.h" line="173"/>
         <location filename="../../build/ui_qg_dlgspline.h" line="173"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgspline.h" line="173"/>
         <source>Layer:</source>
@@ -9722,6 +10595,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="84"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgspline.h" line="174"/>
         <location filename="../../build/ui_qg_dlgspline.h" line="174"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgspline.h" line="174"/>
         <source>Geometry</source>
@@ -9729,6 +10603,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="122"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgspline.h" line="175"/>
         <location filename="../../build/ui_qg_dlgspline.h" line="175"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgspline.h" line="175"/>
         <source>Degree:</source>
@@ -9736,6 +10611,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="132"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgspline.h" line="176"/>
         <location filename="../../build/ui_qg_dlgspline.h" line="176"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgspline.h" line="176"/>
         <source>Closed</source>
@@ -9746,6 +10622,7 @@ so default step value required for baking</source>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="794"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="794"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="794"/>
         <source>Text</source>
@@ -9753,6 +10630,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="256"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="822"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="822"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="822"/>
         <source>&amp;Height:</source>
@@ -9760,6 +10638,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="384"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="827"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="827"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="827"/>
         <source>Alignment</source>
@@ -9767,6 +10646,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="716"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="869"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="869"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="869"/>
         <source>Top Right</source>
@@ -9774,6 +10654,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="681"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="865"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="865"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="865"/>
         <source>Top Left</source>
@@ -9781,6 +10662,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="542"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="845"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="845"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="845"/>
         <source>Middle Left</source>
@@ -9788,6 +10670,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="751"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="873"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="873"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="873"/>
         <source>Middle Center</source>
@@ -9795,6 +10678,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="472"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="837"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="837"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="837"/>
         <source>Middle Right</source>
@@ -9802,6 +10686,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="507"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="841"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="841"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="841"/>
         <source>Bottom Left</source>
@@ -9809,6 +10694,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="437"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="833"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="833"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="833"/>
         <source>Bottom Right</source>
@@ -9816,6 +10702,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="402"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="829"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="829"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="829"/>
         <source>Bottom Center</source>
@@ -9823,6 +10710,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="600"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="853"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="853"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="853"/>
         <source>Top Center</source>
@@ -9830,6 +10718,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="33"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="795"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="795"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="795"/>
         <source>Text:</source>
@@ -9837,6 +10726,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="59"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="797"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="797"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="797"/>
         <source>Clear Text</source>
@@ -9844,6 +10734,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="73"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="801"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="801"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="801"/>
         <source>Load Text From File</source>
@@ -9851,6 +10742,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="87"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="805"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="805"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="805"/>
         <source>Save Text To File</source>
@@ -9858,6 +10750,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="101"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="809"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="809"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="809"/>
         <source>Cut</source>
@@ -9865,6 +10758,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="115"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="813"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="813"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="813"/>
         <source>Copy</source>
@@ -9872,6 +10766,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="129"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="817"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="817"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="817"/>
         <source>Paste</source>
@@ -9879,6 +10774,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="175"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="820"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="820"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="820"/>
         <source>Layer:</source>
@@ -9886,6 +10782,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="234"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="821"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="821"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="821"/>
         <source>Font settings</source>
@@ -9893,6 +10790,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="269"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="823"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="823"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="823"/>
         <source>Angle:</source>
@@ -9900,6 +10798,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="318"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="824"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="824"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="824"/>
         <source>Oblique:</source>
@@ -9907,6 +10806,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="328"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="825"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="825"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="825"/>
         <source>Width factor:</source>
@@ -9914,6 +10814,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="335"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="826"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="826"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="826"/>
         <source>Font:</source>
@@ -9921,6 +10822,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="565"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="849"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="849"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="849"/>
         <source>Baseline Left</source>
@@ -9930,6 +10832,9 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="568"/>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="626"/>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="649"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="851"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="859"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="863"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="851"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="859"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="863"/>
@@ -9941,6 +10846,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="623"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="857"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="857"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="857"/>
         <source>Baseline Right</source>
@@ -9948,6 +10854,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="646"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="861"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="861"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="861"/>
         <source>Baseline Center</source>
@@ -9955,6 +10862,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="876"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="876"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="876"/>
         <source>Fit</source>
@@ -9962,6 +10870,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="825"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="879"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="879"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="879"/>
         <source>Insert Symbol</source>
@@ -9969,6 +10878,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="784"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="877"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="877"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="877"/>
         <source>A&amp;ligned</source>
@@ -9976,6 +10886,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="794"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="878"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="878"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="878"/>
         <source>&amp;Middle</source>
@@ -9983,6 +10894,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="880"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="880"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="880"/>
         <source>Diameter (⌀)</source>
@@ -9990,6 +10902,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="843"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="881"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="881"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="881"/>
         <source>Degree (°)</source>
@@ -9997,6 +10910,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="848"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="882"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="882"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="882"/>
         <source>Plus / Minus (±)</source>
@@ -10004,6 +10918,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="853"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="883"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="883"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="883"/>
         <source>At (@)</source>
@@ -10011,6 +10926,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="858"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="884"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="884"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="884"/>
         <source>Hash (#)</source>
@@ -10018,6 +10934,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="863"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="885"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="885"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="885"/>
         <source>Dollar ($)</source>
@@ -10025,6 +10942,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="868"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="886"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="886"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="886"/>
         <source>Copyright (©)</source>
@@ -10032,6 +10950,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="873"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="887"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="887"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="887"/>
         <source>Registered (®)</source>
@@ -10039,6 +10958,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="878"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="888"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="888"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="888"/>
         <source>Paragraph (§)</source>
@@ -10046,6 +10966,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="883"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="889"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="889"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="889"/>
         <source>Pi (π)</source>
@@ -10053,6 +10974,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="888"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="890"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="890"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="890"/>
         <source>Pound (£)</source>
@@ -10060,6 +10982,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="893"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="891"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="891"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="891"/>
         <source>Yen (¥)</source>
@@ -10067,6 +10990,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="898"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="892"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="892"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="892"/>
         <source>Times (×)</source>
@@ -10074,6 +10998,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="903"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="893"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="893"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="893"/>
         <source>Division (÷)</source>
@@ -10081,6 +11006,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="914"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="895"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="895"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="895"/>
         <source>Insert Unicode</source>
@@ -10088,6 +11014,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="920"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="896"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="896"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="896"/>
         <source>Page:</source>
@@ -10095,6 +11022,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="930"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="897"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="897"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="897"/>
         <source>Char:</source>
@@ -10102,6 +11030,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="953"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="898"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="898"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="898"/>
         <source>[0000-007F] Basic Latin</source>
@@ -10109,6 +11038,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="958"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="899"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="899"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="899"/>
         <source>[0080-00FF] Latin-1 Supplementary</source>
@@ -10116,6 +11046,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="963"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="900"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="900"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="900"/>
         <source>[0100-017F] Latin Extended-A</source>
@@ -10123,6 +11054,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="968"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="901"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="901"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="901"/>
         <source>[0180-024F] Latin Extended-B</source>
@@ -10130,6 +11062,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="973"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="902"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="902"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="902"/>
         <source>[0250-02AF] IPA Extensions</source>
@@ -10137,6 +11070,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="978"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="903"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="903"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="903"/>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
@@ -10144,6 +11078,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="983"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="904"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="904"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="904"/>
         <source>[0300-036F] Combining Diacritical Marks</source>
@@ -10151,6 +11086,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="988"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="905"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="905"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="905"/>
         <source>[0370-03FF] Greek and Coptic</source>
@@ -10158,6 +11094,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="993"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="906"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="906"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="906"/>
         <source>[0400-04FF] Cyrillic</source>
@@ -10165,6 +11102,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="998"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="907"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="907"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="907"/>
         <source>[0500-052F] Cyrillic Supplementary</source>
@@ -10172,6 +11110,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1003"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="908"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="908"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="908"/>
         <source>[0530-058F] Armenian</source>
@@ -10179,6 +11118,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1008"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="909"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="909"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="909"/>
         <source>[0590-05FF] Hebrew</source>
@@ -10186,6 +11126,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1013"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="910"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="910"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="910"/>
         <source>[0600-06FF] Arabic</source>
@@ -10193,6 +11134,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1018"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="911"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="911"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="911"/>
         <source>[0700-074F] Syriac</source>
@@ -10200,6 +11142,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1023"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="912"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="912"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="912"/>
         <source>[0780-07BF] Thaana</source>
@@ -10207,6 +11150,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1028"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="913"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="913"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="913"/>
         <source>[0900-097F] Devanagari</source>
@@ -10214,6 +11158,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1033"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="914"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="914"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="914"/>
         <source>[0980-09FF] Bengali</source>
@@ -10221,6 +11166,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1038"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="915"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="915"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="915"/>
         <source>[0A00-0A7F] Gurmukhi</source>
@@ -10228,6 +11174,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1043"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="916"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="916"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="916"/>
         <source>[0A80-0AFF] Gujarati</source>
@@ -10235,6 +11182,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1048"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="917"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="917"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="917"/>
         <source>[0B00-0B7F] Oriya</source>
@@ -10242,6 +11190,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1053"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="918"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="918"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="918"/>
         <source>[0B80-0BFF] Tamil</source>
@@ -10249,6 +11198,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1058"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="919"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="919"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="919"/>
         <source>[0C00-0C7F] Telugu</source>
@@ -10256,6 +11206,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1063"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="920"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="920"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="920"/>
         <source>[0C80-0CFF] Kannada</source>
@@ -10263,6 +11214,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1068"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="921"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="921"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="921"/>
         <source>[0D00-0D7F] Malayalam</source>
@@ -10270,6 +11222,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1073"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="922"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="922"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="922"/>
         <source>[0D80-0DFF] Sinhala</source>
@@ -10277,6 +11230,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1078"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="923"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="923"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="923"/>
         <source>[0E00-0E7F] Thai</source>
@@ -10284,6 +11238,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1083"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="924"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="924"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="924"/>
         <source>[0E80-0EFF] Lao</source>
@@ -10291,6 +11246,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1088"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="925"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="925"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="925"/>
         <source>[0F00-0FFF] Tibetan</source>
@@ -10298,6 +11254,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1093"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="926"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="926"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="926"/>
         <source>[1000-109F] Myanmar</source>
@@ -10305,6 +11262,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1098"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="927"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="927"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="927"/>
         <source>[10A0-10FF] Georgian</source>
@@ -10312,6 +11270,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1103"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="928"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="928"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="928"/>
         <source>[1100-11FF] Hangul Jamo</source>
@@ -10319,6 +11278,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1108"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="929"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="929"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="929"/>
         <source>[1200-137F] Ethiopic</source>
@@ -10326,6 +11286,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1113"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="930"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="930"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="930"/>
         <source>[13A0-13FF] Cherokee</source>
@@ -10333,6 +11294,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1118"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="931"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="931"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="931"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
@@ -10340,6 +11302,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1123"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="932"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="932"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="932"/>
         <source>[1680-169F] Ogham</source>
@@ -10347,6 +11310,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1128"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="933"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="933"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="933"/>
         <source>[16A0-16FF] Runic</source>
@@ -10354,6 +11318,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1133"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="934"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="934"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="934"/>
         <source>[1700-171F] Tagalog</source>
@@ -10361,6 +11326,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1138"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="935"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="935"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="935"/>
         <source>[1720-173F] Hanunoo</source>
@@ -10368,6 +11334,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1143"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="936"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="936"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="936"/>
         <source>[1740-175F] Buhid</source>
@@ -10375,6 +11342,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1148"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="937"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="937"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="937"/>
         <source>[1760-177F] Tagbanwa</source>
@@ -10382,6 +11350,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1153"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="938"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="938"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="938"/>
         <source>[1780-17FF] Khmer</source>
@@ -10389,6 +11358,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1158"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="939"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="939"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="939"/>
         <source>[1800-18AF] Mongolian</source>
@@ -10396,6 +11366,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1163"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="940"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="940"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="940"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
@@ -10403,6 +11374,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1168"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="941"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="941"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="941"/>
         <source>[1F00-1FFF] Greek Extended</source>
@@ -10410,6 +11382,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1173"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="942"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="942"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="942"/>
         <source>[2000-206F] General Punctuation</source>
@@ -10417,6 +11390,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1178"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="943"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="943"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="943"/>
         <source>[2070-209F] Superscripts and Subscripts</source>
@@ -10424,6 +11398,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1183"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="944"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="944"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="944"/>
         <source>[20A0-20CF] Currency Symbols</source>
@@ -10431,6 +11406,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1188"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="945"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="945"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="945"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
@@ -10438,6 +11414,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1193"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="946"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="946"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="946"/>
         <source>[2100-214F] Letterlike Symbols</source>
@@ -10445,6 +11422,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1198"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="947"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="947"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="947"/>
         <source>[2150-218F] Number Forms</source>
@@ -10452,6 +11430,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1203"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="948"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="948"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="948"/>
         <source>[2190-21FF] Arrows</source>
@@ -10459,6 +11438,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1208"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="949"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="949"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="949"/>
         <source>[2200-22FF] Mathematical Operators</source>
@@ -10466,6 +11446,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1213"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="950"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="950"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="950"/>
         <source>[2300-23FF] Miscellaneous Technical</source>
@@ -10473,6 +11454,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1218"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="951"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="951"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="951"/>
         <source>[2400-243F] Control Pictures</source>
@@ -10480,6 +11462,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1223"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="952"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="952"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="952"/>
         <source>[2440-245F] Optical Character Recognition</source>
@@ -10487,6 +11470,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1228"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="953"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="953"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="953"/>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
@@ -10494,6 +11478,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1233"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="954"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="954"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="954"/>
         <source>[2500-257F] Box Drawing</source>
@@ -10501,6 +11486,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1238"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="955"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="955"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="955"/>
         <source>[2580-259F] Block Elements</source>
@@ -10508,6 +11494,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1243"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="956"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="956"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="956"/>
         <source>[25A0-25FF] Geometric Shapes</source>
@@ -10515,6 +11502,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1248"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="957"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="957"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="957"/>
         <source>[2600-26FF] Miscellaneous Symbols</source>
@@ -10522,6 +11510,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1253"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="958"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="958"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="958"/>
         <source>[2700-27BF] Dingbats</source>
@@ -10529,6 +11518,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1258"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="959"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="959"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="959"/>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
@@ -10536,6 +11526,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1263"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="960"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="960"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="960"/>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
@@ -10543,6 +11534,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1268"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="961"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="961"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="961"/>
         <source>[2800-28FF] Braille Patterns</source>
@@ -10550,6 +11542,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1273"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="962"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="962"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="962"/>
         <source>[2900-297F] Supplemental Arrows-B</source>
@@ -10557,6 +11550,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1278"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="963"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="963"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="963"/>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
@@ -10564,6 +11558,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1283"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="964"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="964"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="964"/>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
@@ -10571,6 +11566,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1288"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="965"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="965"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="965"/>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
@@ -10578,6 +11574,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1293"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="966"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="966"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="966"/>
         <source>[2F00-2FDF] Kangxi Radicals</source>
@@ -10585,6 +11582,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1298"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="967"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="967"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="967"/>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
@@ -10592,6 +11590,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1303"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="968"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="968"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="968"/>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
@@ -10599,6 +11598,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1308"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="969"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="969"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="969"/>
         <source>[3040-309F] Hiragana</source>
@@ -10606,6 +11606,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1313"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="970"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="970"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="970"/>
         <source>[30A0-30FF] Katakana</source>
@@ -10613,6 +11614,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1318"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="971"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="971"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="971"/>
         <source>[3100-312F] Bopomofo</source>
@@ -10620,6 +11622,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1323"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="972"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="972"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="972"/>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
@@ -10627,6 +11630,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1328"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="973"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="973"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="973"/>
         <source>[3190-319F] Kanbun</source>
@@ -10634,6 +11638,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1333"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="974"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="974"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="974"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
@@ -10641,6 +11646,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1338"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="975"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="975"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="975"/>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
@@ -10648,6 +11654,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1343"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="976"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="976"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="976"/>
         <source>[3300-33FF] CJK Compatibility</source>
@@ -10655,6 +11662,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1348"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="977"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="977"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="977"/>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
@@ -10662,6 +11670,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1353"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="978"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="978"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="978"/>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
@@ -10669,6 +11678,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1358"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="979"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="979"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="979"/>
         <source>[A000-A48F] Yi Syllables</source>
@@ -10676,6 +11686,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1363"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="980"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="980"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="980"/>
         <source>[A490-A4CF] Yi Radicals</source>
@@ -10683,6 +11694,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1368"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="981"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="981"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="981"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
@@ -10690,6 +11702,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1373"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="982"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="982"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="982"/>
         <source>[D800-DBFF] High Surrogates</source>
@@ -10697,6 +11710,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1378"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="983"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="983"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="983"/>
         <source>[DC00-DFFF] Low Surrogate Area</source>
@@ -10704,6 +11718,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1383"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="984"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="984"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="984"/>
         <source>[E000-F8FF] Private Use Area</source>
@@ -10711,6 +11726,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1388"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="985"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="985"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="985"/>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
@@ -10718,6 +11734,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1393"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="986"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="986"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="986"/>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
@@ -10725,6 +11742,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1398"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="987"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="987"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="987"/>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
@@ -10732,6 +11750,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1403"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="988"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="988"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="988"/>
         <source>[FE00-FE0F] Variation Selectors</source>
@@ -10739,6 +11758,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1408"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="989"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="989"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="989"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
@@ -10746,6 +11766,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1413"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="990"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="990"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="990"/>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
@@ -10753,6 +11774,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1418"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="991"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="991"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="991"/>
         <source>[FE50-FE6F] Small Form Variants</source>
@@ -10760,6 +11782,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1423"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="992"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="992"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="992"/>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
@@ -10767,6 +11790,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1428"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="993"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="993"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="993"/>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
@@ -10774,6 +11798,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1433"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="994"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="994"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="994"/>
         <source>[FFF0-FFFF] Specials</source>
@@ -10781,6 +11806,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1438"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="995"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="995"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="995"/>
         <source>[10300-1032F] Old Italic</source>
@@ -10788,6 +11814,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1443"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="996"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="996"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="996"/>
         <source>[10330-1034F] Gothic</source>
@@ -10795,6 +11822,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1448"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="997"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="997"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="997"/>
         <source>[10400-1044F] Deseret</source>
@@ -10802,6 +11830,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1453"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="998"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="998"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="998"/>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
@@ -10809,6 +11838,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1458"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="999"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="999"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="999"/>
         <source>[1D100-1D1FF] Musical Symbols</source>
@@ -10816,6 +11846,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1463"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="1000"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="1000"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="1000"/>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
@@ -10823,6 +11854,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1468"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="1001"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="1001"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="1001"/>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
@@ -10830,6 +11862,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1473"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="1002"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="1002"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="1002"/>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
@@ -10837,6 +11870,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1478"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="1003"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="1003"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="1003"/>
         <source>[E0000-E007F] Tags</source>
@@ -10844,6 +11878,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1483"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="1004"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="1004"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="1004"/>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
@@ -10851,6 +11886,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1488"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgtext.h" line="1005"/>
         <location filename="../../build/ui_qg_dlgtext.h" line="1005"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgtext.h" line="1005"/>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
@@ -10861,6 +11897,7 @@ so default step value required for baking</source>
     <name>QG_ExitDialog</name>
     <message>
         <location filename="../src/ui/forms/qg_exitdialog.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_exitdialog.h" line="79"/>
         <location filename="../../build/ui_qg_exitdialog.h" line="79"/>
         <location filename="../../generated/librecad/ui/ui_qg_exitdialog.h" line="79"/>
         <source>QCad</source>
@@ -10868,6 +11905,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_exitdialog.ui" line="44"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_exitdialog.h" line="80"/>
         <location filename="../../build/ui_qg_exitdialog.h" line="80"/>
         <location filename="../../generated/librecad/ui/ui_qg_exitdialog.h" line="80"/>
         <source>again Still No Text supplied.</source>
@@ -10990,6 +12028,7 @@ so default step value required for baking</source>
     <name>QG_ImageOptionsDialog</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="269"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="269"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="269"/>
         <source>Image Export Options</source>
@@ -10997,6 +12036,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="23"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="270"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="270"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="270"/>
         <source>Bitmap Size</source>
@@ -11004,6 +12044,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="144"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="274"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="274"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="274"/>
         <source>Width:</source>
@@ -11011,6 +12052,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="154"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="275"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="275"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="275"/>
         <source>Height:</source>
@@ -11018,6 +12060,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="29"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="271"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="271"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="271"/>
         <source>Resolution:</source>
@@ -11025,6 +12068,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="43"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="272"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="272"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="272"/>
         <source>auto</source>
@@ -11032,6 +12076,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="203"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="276"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="276"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="276"/>
         <source>Background</source>
@@ -11039,6 +12084,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="209"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="277"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="277"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="277"/>
         <source>White</source>
@@ -11046,6 +12092,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="219"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="278"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="278"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="278"/>
         <source>B&amp;lack</source>
@@ -11053,6 +12100,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="258"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="279"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="279"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="279"/>
         <source>Colouring</source>
@@ -11060,6 +12108,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="264"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="280"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="280"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="280"/>
         <source>Black / White</source>
@@ -11067,6 +12116,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="274"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="281"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="281"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="281"/>
         <source>Coloured</source>
@@ -11074,6 +12124,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="310"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="282"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="282"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="282"/>
         <source>Borders</source>
@@ -11081,6 +12132,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="326"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="284"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="284"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="284"/>
         <source>Top / Bottom - Border:</source>
@@ -11088,6 +12140,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="333"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="285"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="285"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="285"/>
         <source>Left / Right - Border:</source>
@@ -11095,6 +12148,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="353"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dlgimageoptions.h" line="286"/>
         <location filename="../../build/ui_qg_dlgimageoptions.h" line="286"/>
         <location filename="../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="286"/>
         <source>set same size</source>
@@ -11113,6 +12167,7 @@ so default step value required for baking</source>
     <name>QG_LayerDialog</name>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_layerdialog.h" line="90"/>
         <location filename="../../build/ui_qg_layerdialog.h" line="90"/>
         <location filename="../../generated/librecad/ui/ui_qg_layerdialog.h" line="90"/>
         <source>Layer Settings</source>
@@ -11120,6 +12175,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_layerdialog.h" line="92"/>
         <location filename="../../build/ui_qg_layerdialog.h" line="92"/>
         <location filename="../../generated/librecad/ui/ui_qg_layerdialog.h" line="92"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
@@ -11128,6 +12184,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_layerdialog.h" line="95"/>
         <location filename="../../build/ui_qg_layerdialog.h" line="95"/>
         <location filename="../../generated/librecad/ui/ui_qg_layerdialog.h" line="95"/>
         <source>Construction Layer</source>
@@ -11135,6 +12192,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="46"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_layerdialog.h" line="96"/>
         <location filename="../../build/ui_qg_layerdialog.h" line="96"/>
         <location filename="../../generated/librecad/ui/ui_qg_layerdialog.h" line="96"/>
         <source>Layer Name:</source>
@@ -11440,6 +12498,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_MouseWidget</name>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_mousewidget.h" line="88"/>
         <location filename="../../build/ui_qg_mousewidget.h" line="88"/>
         <location filename="../../generated/librecad/ui/ui_qg_mousewidget.h" line="88"/>
         <source>Mouse</source>
@@ -11447,6 +12506,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="71"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_mousewidget.h" line="89"/>
         <location filename="../../build/ui_qg_mousewidget.h" line="89"/>
         <location filename="../../generated/librecad/ui/ui_qg_mousewidget.h" line="89"/>
         <source>Right</source>
@@ -11454,6 +12514,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_mousewidget.h" line="90"/>
         <location filename="../../build/ui_qg_mousewidget.h" line="90"/>
         <location filename="../../generated/librecad/ui/ui_qg_mousewidget.h" line="90"/>
         <source>Left</source>
@@ -11461,6 +12522,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_mousewidget.h" line="92"/>
         <location filename="../../build/ui_qg_mousewidget.h" line="92"/>
         <location filename="../../generated/librecad/ui/ui_qg_mousewidget.h" line="92"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -11509,6 +12571,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_SelectionWidget</name>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_selectionwidget.h" line="111"/>
         <location filename="../../build/ui_qg_selectionwidget.h" line="111"/>
         <location filename="../../generated/librecad/ui/ui_qg_selectionwidget.h" line="111"/>
         <source>Selection</source>
@@ -11516,6 +12579,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="80"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_selectionwidget.h" line="112"/>
         <location filename="../../build/ui_qg_selectionwidget.h" line="112"/>
         <location filename="../../generated/librecad/ui/ui_qg_selectionwidget.h" line="112"/>
         <source>Selected</source>
@@ -11523,6 +12587,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="114"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_selectionwidget.h" line="113"/>
         <location filename="../../build/ui_qg_selectionwidget.h" line="113"/>
         <location filename="../../generated/librecad/ui/ui_qg_selectionwidget.h" line="113"/>
         <source>Total Length</source>
@@ -11530,6 +12595,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="139"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_selectionwidget.h" line="115"/>
         <location filename="../../build/ui_qg_selectionwidget.h" line="115"/>
         <location filename="../../generated/librecad/ui/ui_qg_selectionwidget.h" line="115"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -11541,6 +12607,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="177"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_selectionwidget.h" line="122"/>
         <location filename="../../build/ui_qg_selectionwidget.h" line="122"/>
         <location filename="../../generated/librecad/ui/ui_qg_selectionwidget.h" line="122"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -11555,6 +12622,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapToolBar</name>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snaptoolbar.h" line="188"/>
         <location filename="../../build/ui_qg_snaptoolbar.h" line="188"/>
         <location filename="../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="188"/>
         <source>Snap</source>
@@ -11562,6 +12630,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snaptoolbar.h" line="190"/>
         <location filename="../../build/ui_qg_snaptoolbar.h" line="190"/>
         <location filename="../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="190"/>
         <source>Snap to Endpoints</source>
@@ -11569,6 +12638,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snaptoolbar.h" line="194"/>
         <location filename="../../build/ui_qg_snaptoolbar.h" line="194"/>
         <location filename="../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="194"/>
         <source>Snap to equidistant points of entity</source>
@@ -11576,6 +12646,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snaptoolbar.h" line="198"/>
         <location filename="../../build/ui_qg_snaptoolbar.h" line="198"/>
         <location filename="../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="198"/>
         <source>Snap to center points</source>
@@ -11583,6 +12654,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snaptoolbar.h" line="202"/>
         <location filename="../../build/ui_qg_snaptoolbar.h" line="202"/>
         <location filename="../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="202"/>
         <source>Snap to intersections automatically</source>
@@ -11590,6 +12662,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snaptoolbar.h" line="206"/>
         <location filename="../../build/ui_qg_snaptoolbar.h" line="206"/>
         <location filename="../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="206"/>
         <source>Snap to closest point on entity</source>
@@ -11597,6 +12670,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snaptoolbar.h" line="210"/>
         <location filename="../../build/ui_qg_snaptoolbar.h" line="210"/>
         <location filename="../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="210"/>
         <source>Snap to point with given distance to endpoint</source>
@@ -11604,6 +12678,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snaptoolbar.h" line="214"/>
         <location filename="../../build/ui_qg_snaptoolbar.h" line="214"/>
         <location filename="../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="214"/>
         <source>Snap to intersections manually</source>
@@ -11611,6 +12686,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snaptoolbar.h" line="218"/>
         <location filename="../../build/ui_qg_snaptoolbar.h" line="218"/>
         <location filename="../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="218"/>
         <source>Snap to grid</source>
@@ -11618,6 +12694,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snaptoolbar.h" line="222"/>
         <location filename="../../build/ui_qg_snaptoolbar.h" line="222"/>
         <location filename="../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="222"/>
         <source>Restrict Horizontally</source>
@@ -11625,6 +12702,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="200"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snaptoolbar.h" line="226"/>
         <location filename="../../build/ui_qg_snaptoolbar.h" line="226"/>
         <location filename="../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="226"/>
         <source>Restrict Vertically</source>
@@ -11632,6 +12710,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snaptoolbar.h" line="230"/>
         <location filename="../../build/ui_qg_snaptoolbar.h" line="230"/>
         <location filename="../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="230"/>
         <source>Move relative Zero</source>
@@ -11639,6 +12718,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snaptoolbar.h" line="234"/>
         <location filename="../../build/ui_qg_snaptoolbar.h" line="234"/>
         <location filename="../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="234"/>
         <source>Lock relative Zero</source>
@@ -11745,6 +12825,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_widgetpen.h" line="138"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_widgetpen.h" line="139"/>
         <location filename="../../build/ui_qg_widgetpen.h" line="138"/>
         <location filename="../../build/ui_qg_widgetpen.h" line="139"/>
         <location filename="../../generated/librecad/ui/ui_qg_widgetpen.h" line="138"/>
@@ -11754,6 +12836,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_widgetpen.h" line="142"/>
         <location filename="../../build/ui_qg_widgetpen.h" line="142"/>
         <location filename="../../generated/librecad/ui/ui_qg_widgetpen.h" line="142"/>
         <source>Line type:</source>
@@ -11761,6 +12844,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="75"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_widgetpen.h" line="141"/>
         <location filename="../../build/ui_qg_widgetpen.h" line="141"/>
         <location filename="../../generated/librecad/ui/ui_qg_widgetpen.h" line="141"/>
         <source>Width:</source>
@@ -11768,6 +12852,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="59"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_widgetpen.h" line="140"/>
         <location filename="../../build/ui_qg_widgetpen.h" line="140"/>
         <location filename="../../generated/librecad/ui/ui_qg_widgetpen.h" line="140"/>
         <source>Color:</source>
@@ -19052,6 +20137,7 @@ This block cannot be inserted.</source>
     <name>TextFileViewer</name>
     <message>
         <location filename="../src/ui/generic/textfileviewer.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_textfileviewer.h" line="67"/>
         <location filename="../../build/ui_textfileviewer.h" line="67"/>
         <location filename="../../generated/librecad/ui/ui_textfileviewer.h" line="67"/>
         <source>Frame</source>
@@ -19062,6 +20148,7 @@ This block cannot be inserted.</source>
     <name>Ui_ArcOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_arcoptions.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_arcoptions.h" line="109"/>
         <location filename="../../build/ui_qg_arcoptions.h" line="109"/>
         <location filename="../../generated/librecad/ui/ui_qg_arcoptions.h" line="109"/>
         <source>Arc Options</source>
@@ -19069,6 +20156,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arcoptions.ui" line="77"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_arcoptions.h" line="112"/>
         <location filename="../../build/ui_qg_arcoptions.h" line="112"/>
         <location filename="../../generated/librecad/ui/ui_qg_arcoptions.h" line="112"/>
         <source>Counterclockwise</source>
@@ -19076,6 +20164,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arcoptions.ui" line="122"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_arcoptions.h" line="116"/>
         <location filename="../../build/ui_qg_arcoptions.h" line="116"/>
         <location filename="../../generated/librecad/ui/ui_qg_arcoptions.h" line="116"/>
         <source>Clockwise</source>
@@ -19086,6 +20175,7 @@ This block cannot be inserted.</source>
     <name>Ui_ArcTangentialOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="26"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_arctangentialoptions.h" line="82"/>
         <location filename="../../build/ui_qg_arctangentialoptions.h" line="82"/>
         <location filename="../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="82"/>
         <source>Tangential Arc Options</source>
@@ -19093,6 +20183,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_arctangentialoptions.h" line="84"/>
         <location filename="../../build/ui_qg_arctangentialoptions.h" line="84"/>
         <location filename="../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="84"/>
         <source>Radius of the tangential arc</source>
@@ -19100,6 +20191,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_arctangentialoptions.h" line="87"/>
         <location filename="../../build/ui_qg_arctangentialoptions.h" line="87"/>
         <location filename="../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="87"/>
         <source>Total subtending angle of the tangential arc</source>
@@ -19107,6 +20199,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_arctangentialoptions.h" line="89"/>
         <location filename="../../build/ui_qg_arctangentialoptions.h" line="89"/>
         <location filename="../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="89"/>
         <source>Radius</source>
@@ -19115,6 +20208,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="120"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_arctangentialoptions.h" line="90"/>
         <location filename="../../build/ui_qg_arctangentialoptions.h" line="90"/>
         <location filename="../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="90"/>
         <source>Angle</source>
@@ -19126,6 +20220,7 @@ This block cannot be inserted.</source>
     <name>Ui_BevelOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_beveloptions.h" line="111"/>
         <location filename="../../build/ui_qg_beveloptions.h" line="111"/>
         <location filename="../../generated/librecad/ui/ui_qg_beveloptions.h" line="111"/>
         <source>Bevel Options</source>
@@ -19133,6 +20228,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_beveloptions.h" line="116"/>
         <location filename="../../build/ui_qg_beveloptions.h" line="116"/>
         <location filename="../../generated/librecad/ui/ui_qg_beveloptions.h" line="116"/>
         <source>Check to trim both entities to the bevel</source>
@@ -19140,6 +20236,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_beveloptions.h" line="118"/>
         <location filename="../../build/ui_qg_beveloptions.h" line="118"/>
         <location filename="../../generated/librecad/ui/ui_qg_beveloptions.h" line="118"/>
         <source>Trim</source>
@@ -19147,6 +20244,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_beveloptions.h" line="119"/>
         <location filename="../../build/ui_qg_beveloptions.h" line="119"/>
         <location filename="../../generated/librecad/ui/ui_qg_beveloptions.h" line="119"/>
         <source>Length 1:</source>
@@ -19154,6 +20252,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="92"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_beveloptions.h" line="120"/>
         <location filename="../../build/ui_qg_beveloptions.h" line="120"/>
         <location filename="../../generated/librecad/ui/ui_qg_beveloptions.h" line="120"/>
         <source>Length 2:</source>
@@ -19164,6 +20263,7 @@ This block cannot be inserted.</source>
     <name>Ui_CircleOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_circleoptions.h" line="79"/>
         <location filename="../../build/ui_qg_circleoptions.h" line="79"/>
         <location filename="../../generated/librecad/ui/ui_qg_circleoptions.h" line="79"/>
         <source>Circle Options</source>
@@ -19171,6 +20271,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="50"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_circleoptions.h" line="80"/>
         <location filename="../../build/ui_qg_circleoptions.h" line="80"/>
         <location filename="../../generated/librecad/ui/ui_qg_circleoptions.h" line="80"/>
         <source>Radius:</source>
@@ -19181,6 +20282,7 @@ This block cannot be inserted.</source>
     <name>Ui_CircleTan2Options</name>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_circletan2options.h" line="84"/>
         <location filename="../../build/ui_qg_circletan2options.h" line="84"/>
         <location filename="../../generated/librecad/ui/ui_qg_circletan2options.h" line="84"/>
         <source>Circle Tangential2 Options</source>
@@ -19188,6 +20290,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_circletan2options.h" line="86"/>
         <location filename="../../build/ui_qg_circletan2options.h" line="86"/>
         <location filename="../../generated/librecad/ui/ui_qg_circletan2options.h" line="86"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -19195,6 +20298,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="59"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_circletan2options.h" line="88"/>
         <location filename="../../build/ui_qg_circletan2options.h" line="88"/>
         <location filename="../../generated/librecad/ui/ui_qg_circletan2options.h" line="88"/>
         <source>Radius:</source>
@@ -19202,6 +20306,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="69"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_circletan2options.h" line="90"/>
         <location filename="../../build/ui_qg_circletan2options.h" line="90"/>
         <location filename="../../generated/librecad/ui/ui_qg_circletan2options.h" line="90"/>
         <source>Radius of tangential circle</source>
@@ -19212,6 +20317,7 @@ This block cannot be inserted.</source>
     <name>Ui_DimLinearOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimlinearoptions.h" line="119"/>
         <location filename="../../build/ui_qg_dimlinearoptions.h" line="119"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimlinearoptions.h" line="119"/>
         <source>Linear Dimension Options</source>
@@ -19219,6 +20325,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimlinearoptions.h" line="120"/>
         <location filename="../../build/ui_qg_dimlinearoptions.h" line="120"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimlinearoptions.h" line="120"/>
         <source>Angle:</source>
@@ -19229,6 +20336,7 @@ This block cannot be inserted.</source>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimoptions.h" line="164"/>
         <location filename="../../build/ui_qg_dimoptions.h" line="164"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimoptions.h" line="164"/>
         <source>Dimension Options</source>
@@ -19236,6 +20344,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="62"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimoptions.h" line="165"/>
         <location filename="../../build/ui_qg_dimoptions.h" line="165"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimoptions.h" line="165"/>
         <source>Label:</source>
@@ -19243,6 +20352,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="109"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimoptions.h" line="167"/>
         <location filename="../../build/ui_qg_dimoptions.h" line="167"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimoptions.h" line="167"/>
         <source>⌀</source>
@@ -19250,6 +20360,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="114"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimoptions.h" line="168"/>
         <location filename="../../build/ui_qg_dimoptions.h" line="168"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimoptions.h" line="168"/>
         <source>°</source>
@@ -19257,6 +20368,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="119"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimoptions.h" line="169"/>
         <location filename="../../build/ui_qg_dimoptions.h" line="169"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimoptions.h" line="169"/>
         <source>±</source>
@@ -19264,6 +20376,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="124"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimoptions.h" line="170"/>
         <location filename="../../build/ui_qg_dimoptions.h" line="170"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimoptions.h" line="170"/>
         <source>π</source>
@@ -19271,6 +20384,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="129"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimoptions.h" line="171"/>
         <location filename="../../build/ui_qg_dimoptions.h" line="171"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimoptions.h" line="171"/>
         <source>×</source>
@@ -19278,6 +20392,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="134"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimoptions.h" line="172"/>
         <location filename="../../build/ui_qg_dimoptions.h" line="172"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimoptions.h" line="172"/>
         <source>÷</source>
@@ -19286,6 +20401,8 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="142"/>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="163"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimoptions.h" line="174"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_dimoptions.h" line="175"/>
         <location filename="../../build/ui_qg_dimoptions.h" line="174"/>
         <location filename="../../build/ui_qg_dimoptions.h" line="175"/>
         <location filename="../../generated/librecad/ui/ui_qg_dimoptions.h" line="174"/>
@@ -19298,6 +20415,7 @@ This block cannot be inserted.</source>
     <name>Ui_ImageOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_imageoptions.h" line="111"/>
         <location filename="../../build/ui_qg_imageoptions.h" line="111"/>
         <location filename="../../generated/librecad/ui/ui_qg_imageoptions.h" line="111"/>
         <source>Insert Options</source>
@@ -19305,6 +20423,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="53"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_imageoptions.h" line="115"/>
         <location filename="../../build/ui_qg_imageoptions.h" line="115"/>
         <location filename="../../generated/librecad/ui/ui_qg_imageoptions.h" line="115"/>
         <source>Angle:</source>
@@ -19312,6 +20431,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="63"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_imageoptions.h" line="117"/>
         <location filename="../../build/ui_qg_imageoptions.h" line="117"/>
         <location filename="../../generated/librecad/ui/ui_qg_imageoptions.h" line="117"/>
         <source>Rotation Angle</source>
@@ -19319,6 +20439,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="70"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_imageoptions.h" line="119"/>
         <location filename="../../build/ui_qg_imageoptions.h" line="119"/>
         <location filename="../../generated/librecad/ui/ui_qg_imageoptions.h" line="119"/>
         <source>Factor:</source>
@@ -19326,6 +20447,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="86"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_imageoptions.h" line="121"/>
         <location filename="../../build/ui_qg_imageoptions.h" line="121"/>
         <location filename="../../generated/librecad/ui/ui_qg_imageoptions.h" line="121"/>
         <source>Scale Factor</source>
@@ -19333,6 +20455,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="93"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_imageoptions.h" line="123"/>
         <location filename="../../build/ui_qg_imageoptions.h" line="123"/>
         <location filename="../../generated/librecad/ui/ui_qg_imageoptions.h" line="123"/>
         <source>DPI</source>
@@ -19340,6 +20463,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="100"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_imageoptions.h" line="125"/>
         <location filename="../../build/ui_qg_imageoptions.h" line="125"/>
         <location filename="../../generated/librecad/ui/ui_qg_imageoptions.h" line="125"/>
         <source>DPI of Image</source>
@@ -19350,6 +20474,7 @@ This block cannot be inserted.</source>
     <name>Ui_InsertOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_insertoptions.h" line="183"/>
         <location filename="../../build/ui_qg_insertoptions.h" line="183"/>
         <location filename="../../generated/librecad/ui/ui_qg_insertoptions.h" line="183"/>
         <source>Insert Options</source>
@@ -19357,6 +20482,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="65"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_insertoptions.h" line="187"/>
         <location filename="../../build/ui_qg_insertoptions.h" line="187"/>
         <location filename="../../generated/librecad/ui/ui_qg_insertoptions.h" line="187"/>
         <source>Angle:</source>
@@ -19364,6 +20490,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="87"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_insertoptions.h" line="189"/>
         <location filename="../../build/ui_qg_insertoptions.h" line="189"/>
         <location filename="../../generated/librecad/ui/ui_qg_insertoptions.h" line="189"/>
         <source>Rotation Angle</source>
@@ -19371,6 +20498,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="106"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_insertoptions.h" line="191"/>
         <location filename="../../build/ui_qg_insertoptions.h" line="191"/>
         <location filename="../../generated/librecad/ui/ui_qg_insertoptions.h" line="191"/>
         <source>Factor:</source>
@@ -19378,6 +20506,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="128"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_insertoptions.h" line="193"/>
         <location filename="../../build/ui_qg_insertoptions.h" line="193"/>
         <location filename="../../generated/librecad/ui/ui_qg_insertoptions.h" line="193"/>
         <source>Scale Factor</source>
@@ -19385,6 +20514,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="163"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_insertoptions.h" line="195"/>
         <location filename="../../build/ui_qg_insertoptions.h" line="195"/>
         <location filename="../../generated/librecad/ui/ui_qg_insertoptions.h" line="195"/>
         <source>Array:</source>
@@ -19392,6 +20522,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="185"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_insertoptions.h" line="197"/>
         <location filename="../../build/ui_qg_insertoptions.h" line="197"/>
         <location filename="../../generated/librecad/ui/ui_qg_insertoptions.h" line="197"/>
         <source>Number of Columns</source>
@@ -19399,6 +20530,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="210"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_insertoptions.h" line="200"/>
         <location filename="../../build/ui_qg_insertoptions.h" line="200"/>
         <location filename="../../generated/librecad/ui/ui_qg_insertoptions.h" line="200"/>
         <source>Number of Rows</source>
@@ -19406,6 +20538,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="235"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_insertoptions.h" line="202"/>
         <location filename="../../build/ui_qg_insertoptions.h" line="202"/>
         <location filename="../../generated/librecad/ui/ui_qg_insertoptions.h" line="202"/>
         <source>Spacing:</source>
@@ -19413,6 +20546,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="257"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_insertoptions.h" line="204"/>
         <location filename="../../build/ui_qg_insertoptions.h" line="204"/>
         <location filename="../../generated/librecad/ui/ui_qg_insertoptions.h" line="204"/>
         <source>Column Spacing</source>
@@ -19420,6 +20554,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="276"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_insertoptions.h" line="207"/>
         <location filename="../../build/ui_qg_insertoptions.h" line="207"/>
         <location filename="../../generated/librecad/ui/ui_qg_insertoptions.h" line="207"/>
         <source>Row Spacing</source>
@@ -19430,6 +20565,7 @@ This block cannot be inserted.</source>
     <name>Ui_LibraryInsertOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="93"/>
         <location filename="../../build/ui_qg_libraryinsertoptions.h" line="93"/>
         <location filename="../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="93"/>
         <source>Library Insert Options</source>
@@ -19437,6 +20573,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="53"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="97"/>
         <location filename="../../build/ui_qg_libraryinsertoptions.h" line="97"/>
         <location filename="../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="97"/>
         <source>Angle:</source>
@@ -19444,6 +20581,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="63"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="99"/>
         <location filename="../../build/ui_qg_libraryinsertoptions.h" line="99"/>
         <location filename="../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="99"/>
         <source>Rotation Angle</source>
@@ -19451,6 +20589,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="70"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="101"/>
         <location filename="../../build/ui_qg_libraryinsertoptions.h" line="101"/>
         <location filename="../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="101"/>
         <source>Factor:</source>
@@ -19458,6 +20597,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="80"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="103"/>
         <location filename="../../build/ui_qg_libraryinsertoptions.h" line="103"/>
         <location filename="../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="103"/>
         <source>Scale Factor</source>
@@ -19468,6 +20608,7 @@ This block cannot be inserted.</source>
     <name>Ui_LineAngleOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineangleoptions.h" line="135"/>
         <location filename="../../build/ui_qg_lineangleoptions.h" line="135"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="135"/>
         <source>Line Angle Options</source>
@@ -19475,6 +20616,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="65"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineangleoptions.h" line="136"/>
         <location filename="../../build/ui_qg_lineangleoptions.h" line="136"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="136"/>
         <source>Angle:</source>
@@ -19482,6 +20624,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="90"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineangleoptions.h" line="138"/>
         <location filename="../../build/ui_qg_lineangleoptions.h" line="138"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="138"/>
         <source>Line angle</source>
@@ -19489,6 +20632,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="109"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineangleoptions.h" line="140"/>
         <location filename="../../build/ui_qg_lineangleoptions.h" line="140"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="140"/>
         <source>Length:</source>
@@ -19496,6 +20640,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="134"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineangleoptions.h" line="142"/>
         <location filename="../../build/ui_qg_lineangleoptions.h" line="142"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="142"/>
         <source>Length of line</source>
@@ -19503,6 +20648,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineangleoptions.h" line="144"/>
         <location filename="../../build/ui_qg_lineangleoptions.h" line="144"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="144"/>
         <source>Snap Point:</source>
@@ -19510,6 +20656,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineangleoptions.h" line="145"/>
         <location filename="../../build/ui_qg_lineangleoptions.h" line="145"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="145"/>
         <source>Start</source>
@@ -19517,6 +20664,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="175"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineangleoptions.h" line="146"/>
         <location filename="../../build/ui_qg_lineangleoptions.h" line="146"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="146"/>
         <source>Middle</source>
@@ -19524,6 +20672,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="180"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineangleoptions.h" line="147"/>
         <location filename="../../build/ui_qg_lineangleoptions.h" line="147"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="147"/>
         <source>End</source>
@@ -19534,6 +20683,7 @@ This block cannot be inserted.</source>
     <name>Ui_LineBisectorOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linebisectoroptions.h" line="100"/>
         <location filename="../../build/ui_qg_linebisectoroptions.h" line="100"/>
         <location filename="../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="100"/>
         <source>Line Bisector Options</source>
@@ -19541,6 +20691,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linebisectoroptions.h" line="101"/>
         <location filename="../../build/ui_qg_linebisectoroptions.h" line="101"/>
         <location filename="../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="101"/>
         <source>Length:</source>
@@ -19548,6 +20699,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="66"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linebisectoroptions.h" line="103"/>
         <location filename="../../build/ui_qg_linebisectoroptions.h" line="103"/>
         <location filename="../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="103"/>
         <source>Length of bisector</source>
@@ -19555,6 +20707,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="73"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linebisectoroptions.h" line="105"/>
         <location filename="../../build/ui_qg_linebisectoroptions.h" line="105"/>
         <location filename="../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="105"/>
         <source>Number:</source>
@@ -19562,6 +20715,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="83"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linebisectoroptions.h" line="107"/>
         <location filename="../../build/ui_qg_linebisectoroptions.h" line="107"/>
         <location filename="../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="107"/>
         <source>Number of bisectors to create</source>
@@ -19572,6 +20726,7 @@ This block cannot be inserted.</source>
     <name>Ui_LineOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineoptions.h" line="87"/>
         <location filename="../../build/ui_qg_lineoptions.h" line="87"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineoptions.h" line="87"/>
         <source>Line Options</source>
@@ -19579,6 +20734,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="53"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineoptions.h" line="89"/>
         <location filename="../../build/ui_qg_lineoptions.h" line="89"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineoptions.h" line="89"/>
         <source>Form a closed contour from lines drawn</source>
@@ -19586,6 +20742,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineoptions.h" line="91"/>
         <location filename="../../build/ui_qg_lineoptions.h" line="91"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineoptions.h" line="91"/>
         <source>Close</source>
@@ -19593,6 +20750,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="72"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineoptions.h" line="93"/>
         <location filename="../../build/ui_qg_lineoptions.h" line="93"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineoptions.h" line="93"/>
         <source>Undo the last line drawing</source>
@@ -19600,6 +20758,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="75"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineoptions.h" line="95"/>
         <location filename="../../build/ui_qg_lineoptions.h" line="95"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineoptions.h" line="95"/>
         <source>Undo</source>
@@ -19607,6 +20766,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="82"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineoptions.h" line="97"/>
         <location filename="../../build/ui_qg_lineoptions.h" line="97"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineoptions.h" line="97"/>
         <source>Redo the last line drawing</source>
@@ -19614,6 +20774,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="85"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineoptions.h" line="99"/>
         <location filename="../../build/ui_qg_lineoptions.h" line="99"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineoptions.h" line="99"/>
         <source>Redo</source>
@@ -19624,6 +20785,7 @@ This block cannot be inserted.</source>
     <name>Ui_LineOptionsRel</name>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineoptions.h" line="202"/>
         <location filename="../../build/ui_lc_lineoptions.h" line="202"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineoptions.h" line="202"/>
         <source>Line Options</source>
@@ -19631,6 +20793,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineoptions.h" line="203"/>
         <location filename="../../build/ui_lc_lineoptions.h" line="203"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineoptions.h" line="203"/>
         <source>Direction:</source>
@@ -19638,6 +20801,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="103"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineoptions.h" line="204"/>
         <location filename="../../build/ui_lc_lineoptions.h" line="204"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineoptions.h" line="204"/>
         <source>Polyline</source>
@@ -19645,6 +20809,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="122"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineoptions.h" line="205"/>
         <location filename="../../build/ui_lc_lineoptions.h" line="205"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineoptions.h" line="205"/>
         <source>Y</source>
@@ -19652,6 +20817,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="141"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineoptions.h" line="206"/>
         <location filename="../../build/ui_lc_lineoptions.h" line="206"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineoptions.h" line="206"/>
         <source>Angle</source>
@@ -19659,6 +20825,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="160"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineoptions.h" line="207"/>
         <location filename="../../build/ui_lc_lineoptions.h" line="207"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineoptions.h" line="207"/>
         <source>X</source>
@@ -19666,6 +20833,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="195"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineoptions.h" line="211"/>
         <location filename="../../build/ui_lc_lineoptions.h" line="211"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineoptions.h" line="211"/>
         <source>Rel</source>
@@ -19673,6 +20841,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="224"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineoptions.h" line="213"/>
         <location filename="../../build/ui_lc_lineoptions.h" line="213"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineoptions.h" line="213"/>
         <source>Undo the last line drawing</source>
@@ -19680,6 +20849,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="227"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineoptions.h" line="215"/>
         <location filename="../../build/ui_lc_lineoptions.h" line="215"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineoptions.h" line="215"/>
         <source>Undo</source>
@@ -19687,6 +20857,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="234"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineoptions.h" line="217"/>
         <location filename="../../build/ui_lc_lineoptions.h" line="217"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineoptions.h" line="217"/>
         <source>Form a closed contour from lines drawn</source>
@@ -19694,6 +20865,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="237"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineoptions.h" line="219"/>
         <location filename="../../build/ui_lc_lineoptions.h" line="219"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineoptions.h" line="219"/>
         <source>Close</source>
@@ -19701,6 +20873,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="253"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineoptions.h" line="221"/>
         <location filename="../../build/ui_lc_lineoptions.h" line="221"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineoptions.h" line="221"/>
         <source>Redo the last line drawing</source>
@@ -19708,6 +20881,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="256"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineoptions.h" line="223"/>
         <location filename="../../build/ui_lc_lineoptions.h" line="223"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineoptions.h" line="223"/>
         <source>Redo</source>
@@ -19715,6 +20889,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="297"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_lc_lineoptions.h" line="224"/>
         <location filename="../../build/ui_lc_lineoptions.h" line="224"/>
         <location filename="../../generated/librecad/ui/ui_lc_lineoptions.h" line="224"/>
         <source>Point</source>
@@ -19725,6 +20900,7 @@ This block cannot be inserted.</source>
     <name>Ui_LineParallelOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineparalleloptions.h" line="107"/>
         <location filename="../../build/ui_qg_lineparalleloptions.h" line="107"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="107"/>
         <source>Line Parallel Options</source>
@@ -19732,6 +20908,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineparalleloptions.h" line="108"/>
         <location filename="../../build/ui_qg_lineparalleloptions.h" line="108"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="108"/>
         <source>Distance:</source>
@@ -19739,6 +20916,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="72"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineparalleloptions.h" line="110"/>
         <location filename="../../build/ui_qg_lineparalleloptions.h" line="110"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="110"/>
         <source>Distance to original entity</source>
@@ -19746,6 +20924,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="85"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineparalleloptions.h" line="112"/>
         <location filename="../../build/ui_qg_lineparalleloptions.h" line="112"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="112"/>
         <source>Number:</source>
@@ -19753,6 +20932,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="95"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineparalleloptions.h" line="114"/>
         <location filename="../../build/ui_qg_lineparalleloptions.h" line="114"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="114"/>
         <source>Number of parallels to create</source>
@@ -19763,6 +20943,7 @@ This block cannot be inserted.</source>
     <name>Ui_LineParallelThroughOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineparallelthroughoptions.h" line="85"/>
         <location filename="../../build/ui_qg_lineparallelthroughoptions.h" line="85"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineparallelthroughoptions.h" line="85"/>
         <source>Line Parallel Through Options</source>
@@ -19770,6 +20951,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineparallelthroughoptions.h" line="86"/>
         <location filename="../../build/ui_qg_lineparallelthroughoptions.h" line="86"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineparallelthroughoptions.h" line="86"/>
         <source>Number:</source>
@@ -19777,6 +20959,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="66"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_lineparallelthroughoptions.h" line="88"/>
         <location filename="../../build/ui_qg_lineparallelthroughoptions.h" line="88"/>
         <location filename="../../generated/librecad/ui/ui_qg_lineparallelthroughoptions.h" line="88"/>
         <source>Number of parallels to create</source>
@@ -19787,6 +20970,7 @@ This block cannot be inserted.</source>
     <name>Ui_LinePolygon2Options</name>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linepolygon2options.h" line="86"/>
         <location filename="../../build/ui_qg_linepolygon2options.h" line="86"/>
         <location filename="../../generated/librecad/ui/ui_qg_linepolygon2options.h" line="86"/>
         <source>Polygon Options</source>
@@ -19794,6 +20978,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linepolygon2options.h" line="87"/>
         <location filename="../../build/ui_qg_linepolygon2options.h" line="87"/>
         <location filename="../../generated/librecad/ui/ui_qg_linepolygon2options.h" line="87"/>
         <source>Number:</source>
@@ -19801,6 +20986,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="66"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linepolygon2options.h" line="89"/>
         <location filename="../../build/ui_qg_linepolygon2options.h" line="89"/>
         <location filename="../../generated/librecad/ui/ui_qg_linepolygon2options.h" line="89"/>
         <source>Number of edges</source>
@@ -19811,6 +20997,7 @@ This block cannot be inserted.</source>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linepolygonoptions.h" line="86"/>
         <location filename="../../build/ui_qg_linepolygonoptions.h" line="86"/>
         <location filename="../../generated/librecad/ui/ui_qg_linepolygonoptions.h" line="86"/>
         <source>Polygon Options</source>
@@ -19818,6 +21005,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linepolygonoptions.h" line="87"/>
         <location filename="../../build/ui_qg_linepolygonoptions.h" line="87"/>
         <location filename="../../generated/librecad/ui/ui_qg_linepolygonoptions.h" line="87"/>
         <source>Number:</source>
@@ -19825,6 +21013,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="66"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linepolygonoptions.h" line="89"/>
         <location filename="../../build/ui_qg_linepolygonoptions.h" line="89"/>
         <location filename="../../generated/librecad/ui/ui_qg_linepolygonoptions.h" line="89"/>
         <source>Number of edges</source>
@@ -19835,6 +21024,7 @@ This block cannot be inserted.</source>
     <name>Ui_LineRelAngleOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linerelangleoptions.h" line="107"/>
         <location filename="../../build/ui_qg_linerelangleoptions.h" line="107"/>
         <location filename="../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="107"/>
         <source>Line Relative Angle Options</source>
@@ -19842,6 +21032,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linerelangleoptions.h" line="108"/>
         <location filename="../../build/ui_qg_linerelangleoptions.h" line="108"/>
         <location filename="../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="108"/>
         <source>Angle:</source>
@@ -19849,6 +21040,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="72"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linerelangleoptions.h" line="110"/>
         <location filename="../../build/ui_qg_linerelangleoptions.h" line="110"/>
         <location filename="../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="110"/>
         <source>Line angle</source>
@@ -19856,6 +21048,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="85"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linerelangleoptions.h" line="112"/>
         <location filename="../../build/ui_qg_linerelangleoptions.h" line="112"/>
         <location filename="../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="112"/>
         <source>Length:</source>
@@ -19863,6 +21056,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="101"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_linerelangleoptions.h" line="114"/>
         <location filename="../../build/ui_qg_linerelangleoptions.h" line="114"/>
         <location filename="../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="114"/>
         <source>Length of line</source>
@@ -19873,6 +21067,7 @@ This block cannot be inserted.</source>
     <name>Ui_MTextOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_mtextoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_mtextoptions.h" line="103"/>
         <location filename="../../build/ui_qg_mtextoptions.h" line="103"/>
         <location filename="../../generated/librecad/ui/ui_qg_mtextoptions.h" line="103"/>
         <source>Text Options</source>
@@ -19880,6 +21075,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mtextoptions.ui" line="53"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_mtextoptions.h" line="107"/>
         <location filename="../../build/ui_qg_mtextoptions.h" line="107"/>
         <location filename="../../generated/librecad/ui/ui_qg_mtextoptions.h" line="107"/>
         <source>Text:</source>
@@ -19887,6 +21083,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mtextoptions.ui" line="91"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_mtextoptions.h" line="108"/>
         <location filename="../../build/ui_qg_mtextoptions.h" line="108"/>
         <location filename="../../generated/librecad/ui/ui_qg_mtextoptions.h" line="108"/>
         <source>Angle:</source>
@@ -19897,6 +21094,7 @@ This block cannot be inserted.</source>
     <name>Ui_ModifyOffsetOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_modifyoffsetoptions.h" line="89"/>
         <location filename="../../build/ui_qg_modifyoffsetoptions.h" line="89"/>
         <location filename="../../generated/librecad/ui/ui_qg_modifyoffsetoptions.h" line="89"/>
         <source>Modify Offset Options</source>
@@ -19904,6 +21102,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_modifyoffsetoptions.h" line="90"/>
         <location filename="../../build/ui_qg_modifyoffsetoptions.h" line="90"/>
         <location filename="../../generated/librecad/ui/ui_qg_modifyoffsetoptions.h" line="90"/>
         <source>Distance:</source>
@@ -19911,6 +21110,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="72"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_modifyoffsetoptions.h" line="92"/>
         <location filename="../../build/ui_qg_modifyoffsetoptions.h" line="92"/>
         <location filename="../../generated/librecad/ui/ui_qg_modifyoffsetoptions.h" line="92"/>
         <source>Offset from original entity</source>
@@ -19921,6 +21121,7 @@ This block cannot be inserted.</source>
     <name>Ui_MoveRotateOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_moverotateoptions.h" line="79"/>
         <location filename="../../build/ui_qg_moverotateoptions.h" line="79"/>
         <location filename="../../generated/librecad/ui/ui_qg_moverotateoptions.h" line="79"/>
         <source>Move Rotate Options</source>
@@ -19928,6 +21129,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="50"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_moverotateoptions.h" line="80"/>
         <location filename="../../build/ui_qg_moverotateoptions.h" line="80"/>
         <location filename="../../generated/librecad/ui/ui_qg_moverotateoptions.h" line="80"/>
         <source>Angle:</source>
@@ -19938,6 +21140,7 @@ This block cannot be inserted.</source>
     <name>Ui_PolylineOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineoptions.h" line="167"/>
         <location filename="../../build/ui_qg_polylineoptions.h" line="167"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineoptions.h" line="167"/>
         <source>Polyline Options</source>
@@ -19945,6 +21148,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="53"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineoptions.h" line="168"/>
         <location filename="../../build/ui_qg_polylineoptions.h" line="168"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineoptions.h" line="168"/>
         <source>Close</source>
@@ -19952,6 +21156,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="60"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineoptions.h" line="169"/>
         <location filename="../../build/ui_qg_polylineoptions.h" line="169"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineoptions.h" line="169"/>
         <source>Undo</source>
@@ -19959,6 +21164,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineoptions.h" line="170"/>
         <location filename="../../build/ui_qg_polylineoptions.h" line="170"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineoptions.h" line="170"/>
         <source>Line</source>
@@ -19966,6 +21172,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineoptions.h" line="171"/>
         <location filename="../../build/ui_qg_polylineoptions.h" line="171"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineoptions.h" line="171"/>
         <source>Tangential</source>
@@ -19973,6 +21180,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="90"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineoptions.h" line="172"/>
         <location filename="../../build/ui_qg_polylineoptions.h" line="172"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineoptions.h" line="172"/>
         <source>Tan Radius</source>
@@ -19980,6 +21188,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="95"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineoptions.h" line="173"/>
         <location filename="../../build/ui_qg_polylineoptions.h" line="173"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineoptions.h" line="173"/>
         <source>Angle</source>
@@ -19987,6 +21196,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="103"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineoptions.h" line="175"/>
         <location filename="../../build/ui_qg_polylineoptions.h" line="175"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineoptions.h" line="175"/>
         <source>Radius:</source>
@@ -19994,6 +21204,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="126"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineoptions.h" line="176"/>
         <location filename="../../build/ui_qg_polylineoptions.h" line="176"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineoptions.h" line="176"/>
         <source>Angle:</source>
@@ -20001,6 +21212,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="181"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineoptions.h" line="179"/>
         <location filename="../../build/ui_qg_polylineoptions.h" line="179"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineoptions.h" line="179"/>
         <source>Counter Clockwise</source>
@@ -20008,6 +21220,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="204"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_polylineoptions.h" line="183"/>
         <location filename="../../build/ui_qg_polylineoptions.h" line="183"/>
         <location filename="../../generated/librecad/ui/ui_qg_polylineoptions.h" line="183"/>
         <source>Clockwise</source>
@@ -20018,6 +21231,7 @@ This block cannot be inserted.</source>
     <name>Ui_PrintPreviewOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_printpreviewoptions.h" line="164"/>
         <location filename="../../build/ui_qg_printpreviewoptions.h" line="164"/>
         <location filename="../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="164"/>
         <source>Print Preview Options</source>
@@ -20025,6 +21239,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_printpreviewoptions.h" line="169"/>
         <location filename="../../build/ui_qg_printpreviewoptions.h" line="169"/>
         <location filename="../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="169"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -20032,6 +21247,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="87"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_printpreviewoptions.h" line="172"/>
         <location filename="../../build/ui_qg_printpreviewoptions.h" line="172"/>
         <location filename="../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="172"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -20039,6 +21255,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="90"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_printpreviewoptions.h" line="174"/>
         <location filename="../../build/ui_qg_printpreviewoptions.h" line="174"/>
         <location filename="../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="174"/>
         <source>fixed</source>
@@ -20046,6 +21263,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_printpreviewoptions.h" line="176"/>
         <location filename="../../build/ui_qg_printpreviewoptions.h" line="176"/>
         <location filename="../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="176"/>
         <source>Apply Print Scale to line width</source>
@@ -20053,6 +21271,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="145"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_printpreviewoptions.h" line="180"/>
         <location filename="../../build/ui_qg_printpreviewoptions.h" line="180"/>
         <location filename="../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="180"/>
         <source>Toggle Black / White mode</source>
@@ -20060,6 +21279,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="174"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_printpreviewoptions.h" line="184"/>
         <location filename="../../build/ui_qg_printpreviewoptions.h" line="184"/>
         <location filename="../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="184"/>
         <source>Center to page</source>
@@ -20067,6 +21287,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="200"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_printpreviewoptions.h" line="188"/>
         <location filename="../../build/ui_qg_printpreviewoptions.h" line="188"/>
         <location filename="../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="188"/>
         <source>Fit to page</source>
@@ -20074,6 +21295,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_printpreviewoptions.h" line="192"/>
         <location filename="../../build/ui_qg_printpreviewoptions.h" line="192"/>
         <location filename="../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="192"/>
         <source>Calculate number of pages needed to contain the drawing</source>
@@ -20084,6 +21306,7 @@ This block cannot be inserted.</source>
     <name>Ui_RoundOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_roundoptions.h" line="97"/>
         <location filename="../../build/ui_qg_roundoptions.h" line="97"/>
         <location filename="../../generated/librecad/ui/ui_qg_roundoptions.h" line="97"/>
         <source>Round Options</source>
@@ -20091,6 +21314,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_roundoptions.h" line="102"/>
         <location filename="../../build/ui_qg_roundoptions.h" line="102"/>
         <location filename="../../generated/librecad/ui/ui_qg_roundoptions.h" line="102"/>
         <source>Check to trim both edges to the rounding</source>
@@ -20098,6 +21322,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_roundoptions.h" line="104"/>
         <location filename="../../build/ui_qg_roundoptions.h" line="104"/>
         <location filename="../../generated/librecad/ui/ui_qg_roundoptions.h" line="104"/>
         <source>Trim</source>
@@ -20105,6 +21330,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_roundoptions.h" line="105"/>
         <location filename="../../build/ui_qg_roundoptions.h" line="105"/>
         <location filename="../../generated/librecad/ui/ui_qg_roundoptions.h" line="105"/>
         <source>Radius:</source>
@@ -20115,6 +21341,7 @@ This block cannot be inserted.</source>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snapdistoptions.h" line="81"/>
         <location filename="../../build/ui_qg_snapdistoptions.h" line="81"/>
         <location filename="../../generated/librecad/ui/ui_qg_snapdistoptions.h" line="81"/>
         <source>Snap Distance Options</source>
@@ -20122,6 +21349,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snapdistoptions.h" line="82"/>
         <location filename="../../build/ui_qg_snapdistoptions.h" line="82"/>
         <location filename="../../generated/librecad/ui/ui_qg_snapdistoptions.h" line="82"/>
         <source>Distance:</source>
@@ -20132,6 +21360,7 @@ This block cannot be inserted.</source>
     <name>Ui_SnapMiddleOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="58"/>
         <location filename="../../build/ui_qg_snapmiddleoptions.h" line="58"/>
         <location filename="../../generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="58"/>
         <source>Snap Distance Options</source>
@@ -20139,6 +21368,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="59"/>
         <location filename="../../build/ui_qg_snapmiddleoptions.h" line="59"/>
         <location filename="../../generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="59"/>
         <source>Middle Points:</source>
@@ -20146,6 +21376,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="63"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="61"/>
         <location filename="../../build/ui_qg_snapmiddleoptions.h" line="61"/>
         <location filename="../../generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="61"/>
         <source>Number of equidistant division points</source>
@@ -20156,6 +21387,7 @@ This block cannot be inserted.</source>
     <name>Ui_SplineOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_splineoptions.h" line="113"/>
         <location filename="../../build/ui_qg_splineoptions.h" line="113"/>
         <location filename="../../generated/librecad/ui/ui_qg_splineoptions.h" line="113"/>
         <source>Spline Options</source>
@@ -20163,6 +21395,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_splineoptions.h" line="114"/>
         <location filename="../../build/ui_qg_splineoptions.h" line="114"/>
         <location filename="../../generated/librecad/ui/ui_qg_splineoptions.h" line="114"/>
         <source>Degree:</source>
@@ -20170,6 +21403,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="91"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_splineoptions.h" line="116"/>
         <location filename="../../build/ui_qg_splineoptions.h" line="116"/>
         <location filename="../../generated/librecad/ui/ui_qg_splineoptions.h" line="116"/>
         <source>Closed</source>
@@ -20177,6 +21411,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="104"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_splineoptions.h" line="117"/>
         <location filename="../../build/ui_qg_splineoptions.h" line="117"/>
         <location filename="../../generated/librecad/ui/ui_qg_splineoptions.h" line="117"/>
         <source>Undo</source>
@@ -20187,6 +21422,7 @@ This block cannot be inserted.</source>
     <name>Ui_TextOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_textoptions.ui" line="32"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_textoptions.h" line="103"/>
         <location filename="../../build/ui_qg_textoptions.h" line="103"/>
         <location filename="../../generated/librecad/ui/ui_qg_textoptions.h" line="103"/>
         <source>Text Options</source>
@@ -20194,6 +21430,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_textoptions.ui" line="53"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_textoptions.h" line="107"/>
         <location filename="../../build/ui_qg_textoptions.h" line="107"/>
         <location filename="../../generated/librecad/ui/ui_qg_textoptions.h" line="107"/>
         <source>Text:</source>
@@ -20201,6 +21438,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_textoptions.ui" line="91"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_textoptions.h" line="108"/>
         <location filename="../../build/ui_qg_textoptions.h" line="108"/>
         <location filename="../../generated/librecad/ui/ui_qg_textoptions.h" line="108"/>
         <source>Angle:</source>
@@ -20211,6 +21449,7 @@ This block cannot be inserted.</source>
     <name>Ui_TrimAmountOptions</name>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="20"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_trimamountoptions.h" line="103"/>
         <location filename="../../build/ui_qg_trimamountoptions.h" line="103"/>
         <location filename="../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="103"/>
         <source>Trim Amount Options</source>
@@ -20218,6 +21457,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="23"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_trimamountoptions.h" line="105"/>
         <location filename="../../build/ui_qg_trimamountoptions.h" line="105"/>
         <location filename="../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="105"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
@@ -20225,6 +21465,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_trimamountoptions.h" line="107"/>
         <location filename="../../build/ui_qg_trimamountoptions.h" line="107"/>
         <location filename="../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="107"/>
         <source>Length:</source>
@@ -20232,6 +21473,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="78"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_trimamountoptions.h" line="109"/>
         <location filename="../../build/ui_qg_trimamountoptions.h" line="109"/>
         <location filename="../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="109"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
@@ -20239,6 +21481,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="97"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_qg_trimamountoptions.h" line="112"/>
         <location filename="../../build/ui_qg_trimamountoptions.h" line="112"/>
         <location filename="../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="112"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
@@ -20249,6 +21492,7 @@ This block cannot be inserted.</source>
     <name>WidgetCreator</name>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="14"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_widgetcreator.h" line="222"/>
         <location filename="../../build/ui_widgetcreator.h" line="222"/>
         <location filename="../../generated/librecad/ui/ui_widgetcreator.h" line="222"/>
         <source>Frame</source>
@@ -20256,6 +21500,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="96"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_widgetcreator.h" line="223"/>
         <location filename="../../build/ui_widgetcreator.h" line="223"/>
         <location filename="../../generated/librecad/ui/ui_widgetcreator.h" line="223"/>
         <source>&gt;</source>
@@ -20263,6 +21508,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="115"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_widgetcreator.h" line="224"/>
         <location filename="../../build/ui_widgetcreator.h" line="224"/>
         <location filename="../../generated/librecad/ui/ui_widgetcreator.h" line="224"/>
         <source>&lt;</source>
@@ -20270,6 +21516,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="155"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_widgetcreator.h" line="225"/>
         <location filename="../../build/ui_widgetcreator.h" line="225"/>
         <location filename="../../generated/librecad/ui/ui_widgetcreator.h" line="225"/>
         <source>Name</source>
@@ -20277,6 +21524,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="196"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_widgetcreator.h" line="226"/>
         <location filename="../../build/ui_widgetcreator.h" line="226"/>
         <location filename="../../generated/librecad/ui/ui_widgetcreator.h" line="226"/>
         <source>Create</source>
@@ -20284,6 +21532,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="209"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_widgetcreator.h" line="227"/>
         <location filename="../../build/ui_widgetcreator.h" line="227"/>
         <location filename="../../generated/librecad/ui/ui_widgetcreator.h" line="227"/>
         <source>Destroy</source>
@@ -20291,6 +21540,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="216"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_widgetcreator.h" line="228"/>
         <location filename="../../build/ui_widgetcreator.h" line="228"/>
         <location filename="../../generated/librecad/ui/ui_widgetcreator.h" line="228"/>
         <source>Assign</source>
@@ -20298,6 +21548,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
+        <location filename="../../build/Qt_5_15_16_System-Debug/generated/librecad/ui/ui_widgetcreator.h" line="229"/>
         <location filename="../../build/ui_widgetcreator.h" line="229"/>
         <location filename="../../generated/librecad/ui/ui_widgetcreator.h" line="229"/>
         <source>Update</source>
