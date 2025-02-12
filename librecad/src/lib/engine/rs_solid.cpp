@@ -25,15 +25,150 @@
 **
 **********************************************************************/
 
-#include<iostream>
 #include<cmath>
+#include<iostream>
+
+#include <QVariant>
+
+#include "rs_debug.h"
+#include "rs_graphicview.h"
+#include "rs_information.h"
+#include "rs_line.h"
+#include "rs_painter.h"
 #include "rs_solid.h"
 
-#include "rs_line.h"
-#include "rs_graphicview.h"
-#include "rs_painter.h"
-#include "rs_information.h"
-#include "rs_debug.h"
+namespace {
+/**
+ * @brief isCounterclockwise v3 - v1, v2 - v1, if ordered as counterclockwise
+ * @param v1
+ * @param v2
+ * @param v3
+ * @return
+ */
+bool isCounterClockwise (const RS_Vector& v1, const RS_Vector& v2, const RS_Vector& v3)
+{
+    double res = RS_Vector::crossP(v2 - v1, v3 - v1).z;
+
+    return !std::signbit(res);
+}
+
+/**
+ * @brief getLinePointDistance - find the shortest distance from a point to points
+ *                               on a line segment
+ * @param line - a line
+ * @param point - a point
+ * @return the shortest distance in between
+ */
+double getLinePointDistance(const RS_Line& line, const RS_Vector& point)
+{
+    double distance = RS_MAXDOUBLE;
+    line.getNearestPointOnEntity(point, true, &distance);
+    return distance;
+}
+
+// Compare by coordinates, assuming no degenerate points
+bool compareCoordinates(const RS_Vector& p0, const RS_Vector& p1)
+{
+    return p0.distanceTo(p1) >= RS_TOLERANCE && (
+               p0.x < p1.x || (p0.x <= p1.x && p0.y < p1.y));
+}
+
+/**
+ * @brief convexHull - find the convex hull by Graham's scan
+ * @param points - input points
+ * @return - the convex hull found
+ */
+RS_VectorSolutions convexHull(const RS_VectorSolutions& points)
+{
+    RS_VectorSolutions sol = points;
+    // ignore invalid points
+    auto it = std::remove_if(sol.begin(), sol.end(), [](const RS_Vector& p) {
+        return ! p.valid;});
+    sol = {{sol.begin(), it}};
+
+    if (sol.size() <= 1)
+        return sol;
+
+    // find the left-most and lowest corner
+    std::sort(sol.begin(), sol.end(), compareCoordinates);
+
+    // avoid duplicates
+    RS_VectorSolutions hull{{sol.at(0)}};
+    for(size_t i = 1; i < sol.size(); ++i) {
+        if (hull.back().distanceTo(sol.at(i)) > RS_TOLERANCE)
+            hull.push_back(sol.at(i));
+    }
+
+    if (hull.size() <= 2)
+        return hull;
+
+    // soft by the angle to the corner
+    std::sort(hull.begin() + 1, hull.end(),
+              [lowerLeft=hull.at(0)](const RS_Vector& lhs, const RS_Vector& rhs) {
+        return lowerLeft.angleTo(lhs) < lowerLeft.angleTo(rhs);
+    });
+
+    // keep the farthest for the same angle
+    sol = {hull.at(0), hull.at(1)};
+    for (size_t i = 2;
+         i < hull.size(); ++i) {
+        RS_Vector& back = sol.back();
+        const double angle0 = sol.at(0).angleTo(back);
+        const double angle1 = sol.at(0).angleTo(hull.at(i));
+        if (std::abs(angle0 - angle1) <= RS_TOLERANCE) {
+            if (sol.at(0).distanceTo(hull.at(i)) < sol.at(0).distanceTo(back))
+                back = hull.at(i);
+        } else {
+            sol.push_back(hull.at(i));
+        }
+    }
+
+    // only keep left turns
+    hull = {sol.at(0), sol.at(1)};
+    for (size_t i = 2; i < sol.size(); ++i) {
+        const size_t j = hull.size() - 1;
+        if (isCounterClockwise(hull.at(j-1), hull.at(j), sol.at(i)))
+            hull.push_back(sol.at(i));
+        else
+            hull.at(j) = sol.at(i);
+    }
+    return hull;
+}
+
+/**
+ * @brief whether a point is within a contour
+ */
+bool isInternalPoint(const RS_Vector& point, const RS_VectorSolutions& contour)
+{
+    if (!point.valid)
+        return false;
+
+    RS_VectorSolutions convex = convexHull(contour);
+    switch(convex.size()) {
+    case 0:
+        return false;
+    case 1:
+        return convex.at(0).distanceTo(point) < RS_TOLERANCE;
+    case 2:
+        return getLinePointDistance(RS_Line{nullptr, {convex.at(0), convex.at(1)}}, point) < RS_TOLERANCE;
+    default:
+        break;
+    }
+
+    QVariant leftTurn{};
+    for(size_t i = 0; i < convex.size(); ++i) {
+        const bool currentTurn = isCounterClockwise(convex.at(i), convex.at((i+1)%convex.size()), point);
+        if (leftTurn.isNull()) {
+            leftTurn = currentTurn;
+        } else {
+            if (leftTurn.toBool() != currentTurn)
+                return false;
+        }
+    }
+
+    return true;
+}
+}
 
 RS_SolidData::RS_SolidData():
     corner{{RS_Vector(false), RS_Vector(false), RS_Vector(false), RS_Vector(false)}}
@@ -271,20 +406,14 @@ RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
                                             RS_Entity** entity /*= nullptr*/) const
 {
     //first check if point is inside solid
-    bool s1 {sign(data.corner[0], data.corner[1], coord)};
-    bool s2 {sign(data.corner[1], data.corner[2], coord)};
-    bool s3 {sign(data.corner[2], data.corner[0], coord)};
-
-    if ((s1 == s2) && (s2 == s3)) {
+    if (isInternalPoint(coord, {data.corner[0], data.corner[1], data.corner[2]})) {
+        // inside of the triangle: always inside of the solid, distance is zero
         setDistPtr( dist, 0.0);
         return coord;
     }
 
     if (!isTriangle()) {
-        s1 = sign(data.corner[0], data.corner[2], coord);
-        s2 = sign(data.corner[2], data.corner[3], coord);
-        s3 = sign(data.corner[3], data.corner[0], coord);
-        if ((s1 == s2) && (s2 == s3)) {
+        if (isInternalPoint(coord, {data.corner[0], data.corner[1], data.corner[2], data.corner[3]})) {
             setDistPtr( dist, 0.0);
             return coord;
         }

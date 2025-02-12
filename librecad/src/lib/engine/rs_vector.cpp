@@ -664,6 +664,18 @@ const RS_Vector& RS_VectorSolutions::at(size_t i) const {
 		return vector.at(i);
 }
 
+const RS_Vector& RS_VectorSolutions::back() const {
+    return vector.back();
+}
+
+RS_Vector& RS_VectorSolutions::back() {
+    return vector.back();
+}
+
+RS_Vector& RS_VectorSolutions::at(size_t i) {
+    return vector.at(i);
+}
+
 /**
  * @return Number of solutions available.
  */
