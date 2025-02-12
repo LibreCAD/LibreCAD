@@ -137,7 +137,7 @@ void RS_Preview::clear() {
 /**
  * Clones the given entity and adds the clone to the preview.
  */
-void RS_Preview::addCloneOf(RS_Entity* entity, LC_GraphicViewport* view) {
+void RS_Preview::addCloneOf(RS_Entity* entity, [[maybe_unused]]LC_GraphicViewport* view) {
     if (!entity) {
         return;
     }
@@ -150,7 +150,7 @@ void RS_Preview::addCloneOf(RS_Entity* entity, LC_GraphicViewport* view) {
 /**
  * Adds all entities from 'container' to the preview (unselected).
  */
-void RS_Preview::addAllFrom(RS_EntityContainer& container, LC_GraphicViewport* view) {
+void RS_Preview::addAllFrom(RS_EntityContainer& container, [[maybe_unused]]LC_GraphicViewport* view) {
     unsigned int c=0;
     for(auto e: container){
         if (c < maxEntities) {
@@ -168,7 +168,7 @@ void RS_Preview::addAllFrom(RS_EntityContainer& container, LC_GraphicViewport* v
 /**
  * Adds all selected entities from 'container' to the preview (unselected).
  */
-void RS_Preview::addSelectionFrom(RS_EntityContainer& container, LC_GraphicViewport* view) {
+void RS_Preview::addSelectionFrom(RS_EntityContainer& container, [[maybe_unused]]LC_GraphicViewport* view) {
     unsigned int c=0;
     for(auto e: container){ // fixme - sand - wow - iterating over all entities!!! Rework selection
         if (e->isSelected() && c<maxEntities) {
@@ -185,7 +185,7 @@ void RS_Preview::addSelectionFrom(RS_EntityContainer& container, LC_GraphicViewp
  * Adds all entities in the given range and those which have endpoints
  * in the given range to the preview.
  */
-void RS_Preview::addStretchablesFrom(RS_EntityContainer& container, LC_GraphicViewport* view,
+void RS_Preview::addStretchablesFrom(RS_EntityContainer& container, [[maybe_unused]]LC_GraphicViewport* view,
                                      const RS_Vector& v1, const RS_Vector& v2) {
     unsigned int c=0;
 
@@ -231,7 +231,6 @@ void RS_Preview::draw(RS_Painter* painter) {
                 e->draw(painter);
         }
     }
-
 }
 
 void RS_Preview::addReferenceEntitiesToContainer(RS_EntityContainer *container){

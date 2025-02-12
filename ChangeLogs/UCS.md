@@ -8,7 +8,9 @@ It introduced a couple of concepts, that are new for LibreCAD.
 
 Not it is possible to specify positive direction for angles as well as where angle 0 is located. 
 
-In terms of DXF variables, now LC supports both ___ANGDIR___  and  ___ANGBASE___ variables. These variables are stored in drawing.  
+In terms of DXF variables, now LC supports both ___ANGDIR___  and  ___ANGBASE___ variables. These variables are stored in drawing.
+
+It is possible to edit settings in Drawing Preferences on Units tab.  
 
 By default, **ANGDIR** is counterclockwise and **ANGBASE** is 0 (so zero angle is at 3 pm) - standard basis of angles used by LibreCAD. 
 
@@ -36,7 +38,20 @@ Click on that toolbar invokes Drawing Settings dialog that allows to edit angles
 
 #### Settings 
 
-Appropriate settings related to angles basis were added to Application Preferences and Drawing Options.  
+Appropriate settings related to angles basis were added to Application Preferences and Drawing Options.
+
+### Angles and Polar coordinates Input formats
+
+Now it's possible to enter angles (and so, polar coordinates) in several formats:
+
+1) Decimal degrees (as it was before)
+2) **Surveyor** e.g. N21d33'19.9"E
+3) **Radiant** - e.g. 2.7r
+4) **Grad** - e.g. 231g
+5) **Degrees** - e.g. 85d23'3
+6) **Bearing** - e.g. 83b24'7"
+
+Also, there is an option in Application Preferences that allows to disable input in all formats except decimal degrees.
 
 ### User Coordinates System (UCS) 
 
@@ -92,7 +107,7 @@ A dock widget was added for managing the list of UCS of drawing.
 
 #### Named View widget
 
-Named views widget was extended to provide the information about UCS related to named view.  
+Named views widget was extended to provide the information about UCS related to named view. When view is restored, appropriate saved UCS is applied too. 
 
 If UCS is active when VIEW is created, information about that view is stored as part of view.
 
@@ -138,20 +153,7 @@ In general, the major goal for such refactoring (aside of code separation and si
 Later, this concept could be extended further - to support several viewports in paper space and layouts.     
 
 Thus, this refactoring may be considered rather as a preparation step for later functionality.
-
-### Angles and Polar coordinates Input formats
-
-Now it's possible to enter angles (and so, polar coordinates) in several formats: 
-
-1) Decimal degrees (as it was before)
-2) **Surveyor** e.g. N21d33'19.9"E
-3) **Radiant** - e.g. 2.7r
-4) **Grad** - e.g. 231g
-5) **Degrees** - e.g. 85d23'3
-6) **Bearing** - e.g. 83b24'7"
-
-Also, there is an option in Application Preferences that allows to disable input in all formats except decimal degrees. 
-
+ 
 ### Other changes
 
 * Option that allows to disable marking the drawing as "modified" if zoom or pan was performed only was added to the Application Preferences (inspired by johnfound)
@@ -159,9 +161,9 @@ Also, there is an option in Application Preferences that allows to disable input
 * Settings that allows to control rendering of arc/circles were added, and now it's possible to define whether arcs should be drawn natively by QT or be interpolated by line segments.
 * Added option that allows to ignore "Snap To Grid" mode during snapping if the grid is not visible (inspired by johnfound)
 * Added options for fine-tuning of snap constants (inspired by johnfound)
-* Line Horizontal/Vertical actions - if there is non-standard UCS basis, options added that allows to create lines, orthogonal to angles basis axis 
+* Line Horizontal/Vertical actions - if there is non-standard UCS basis, options added that allows to create lines, orthogonal to angles basis axis
+* Added ability to customize "Draft" mode marker
   
-
 ### Bugfixes
 A couple of issues were fixed:
 
