@@ -204,10 +204,9 @@ void QC_MDIWindow::addChildWindow(QC_MDIWindow* w) {
     childWindows.append(w);
     w->setParentWindow(this);
 
-    RS_DEBUG->print("children: %d", childWindows.count());
+    int size = (int)childWindows.count(); // well, yes, loss of precision... yet for windows amount that's fine.
+    RS_DEBUG->print("children: %d", size);
 }
-
-
 
 /**
  * Removes a child window.
