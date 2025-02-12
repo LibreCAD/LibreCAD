@@ -23,8 +23,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #ifndef LC_RECT_H
 #define LC_RECT_H
-#include "rs_vector.h"
 #include <array>
+
+#include "rs_vector.h"
 
 //ported from LibreCAD V3
 namespace lc {

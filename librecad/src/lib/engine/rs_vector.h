@@ -181,6 +181,9 @@ public:
  * @return indexed member, or invalid vector, if out of range
  */
     RS_Vector get(size_t i) const;
+    const RS_Vector& back() const;
+    RS_Vector& back();
+    RS_Vector& at(size_t i);
     const RS_Vector& at(size_t i) const;
     const RS_Vector&  operator [] (const size_t i) const;
     RS_Vector&  operator [] (const size_t i);
