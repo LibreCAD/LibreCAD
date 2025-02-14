@@ -32,11 +32,9 @@
 #include "rs_text.h"
 #include "rs_solid.h"
 #include "rs_layer.h"
-//#include "rs_font.h"
 #include "rs_fontlist.h"
 #include "rs_entitycontainer.h"
 #include "rs_actionselectsingle.h"
-//#include "lc_undosection.h"
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
 
@@ -567,7 +565,8 @@ BUILTIN("apply")
 
     // Then append the argument as a list.
     const lclSequence* lastArg = VALUE_CAST(lclSequence, *(argsEnd-1));
-    for (int i = 0; i < lastArg->count(); i++) {
+    const int length = lastArg->count();
+    for (int i = 0; i < length; i++) {
         args.push_back(lastArg->item(i));
     }
 
@@ -825,11 +824,12 @@ BUILTIN("command")
             case LCLTYPE::LIST:
             {
                 const lclList* l = DYNAMIC_CAST(lclList, *it);
+                const int length = l->count();
 
-                for (int i = 0; i < l->count(); i++)
+                for (int i = 0; i < length; i++)
                 {
                     cmd += l->item(i)->print(true).c_str();
-                    if (i < l->count()-1)
+                    if (i < length -1)
                     {
                         cmd += ",";
                     }
@@ -855,7 +855,7 @@ BUILTIN("command")
             }
                 break;
         }
-        std::cout << "parameter: " << it->ptr()->print(true) << " type: " << (int)it->ptr()->type() << std::endl;
+        //std::cout << "parameter: " << it->ptr()->print(true) << " type: " << (int)it->ptr()->type() << std::endl;
     }
 
     return lcl::nilValue();
@@ -867,15 +867,17 @@ BUILTIN("concat")
     int count = 0;
     for (auto it = argsBegin; it != argsEnd; ++it) {
         const lclSequence* seq = VALUE_CAST(lclSequence, *it);
-        count += seq->count();
+        const int length = seq->count();
+        count += length;
     }
 
     lclValueVec* items = new lclValueVec(count);
     int offset = 0;
     for (auto it = argsBegin; it != argsEnd; ++it) {
         const lclSequence* seq = STATIC_CAST(lclSequence, *it);
+        const int length = seq->count();
         std::copy(seq->begin(), seq->end(), items->begin() + offset);
-        offset += seq->count();
+        offset += length;
     }
 
     return lcl::list(items);
@@ -976,13 +978,7 @@ BUILTIN("dimx_tile")
     ARG(lclString, key);
 
     int x;
-
-    if (RS_SCRIPTINGAPI->dimxTile(key->value().c_str(), x))
-    {
-        return lcl::integer(x);
-    }
-
-    return lcl::nilValue();
+    return RS_SCRIPTINGAPI->dimxTile(key->value().c_str(), x) ? lcl::integer(x) : lcl::nilValue();
 }
 
 BUILTIN("dimy_tile")
@@ -991,13 +987,7 @@ BUILTIN("dimy_tile")
     ARG(lclString, key);
 
     int y;
-
-    if (RS_SCRIPTINGAPI->dimyTile(key->value().c_str(), y))
-    {
-        return lcl::integer(y);
-    }
-
-    return lcl::nilValue();
+    return RS_SCRIPTINGAPI->dimyTile(key->value().c_str(), y) ? lcl::integer(y) : lcl::nilValue();
 }
 
 BUILTIN("dissoc")
@@ -2424,10 +2414,12 @@ BUILTIN("entmod")
 {
     CHECK_ARGS_IS(1);
     ARG(lclSequence, seq);
+
+    const int length = seq->count();
     unsigned int entityId = 0;
     bool found = false;
 
-    for (int i = 0; i < seq->count(); i++)
+    for (int i = 0; i < length; i++)
     {
         const lclList *list = VALUE_CAST(lclList, seq->item(i));
 
@@ -2491,7 +2483,7 @@ BUILTIN("entmod")
                 bool textMod = false;
                 bool styleMod = false;
 
-                for (int i = 0; i < seq->count(); i++)
+                for (int i = 0; i < length; i++)
                 {
                     const lclList *list = VALUE_CAST(lclList, seq->item(i));
 
@@ -2913,7 +2905,7 @@ BUILTIN("entnext")
 BUILTIN("entsel")
 {
     int args = CHECK_ARGS_BETWEEN(0, 1);
-    QString prompt = "Select object: ";
+    QString prompt = "";
     unsigned long id;
     RS_Vector result;
 
@@ -2923,19 +2915,8 @@ BUILTIN("entsel")
         prompt = str->value().c_str();
     }
 
-    if (Lisp_CommandEdit != nullptr)
+    if (RS_SCRIPTINGAPI->entsel(Lisp_CommandEdit, QObject::tr(qUtf8Printable(prompt)), id, result))
     {
-        Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-        Lisp_CommandEdit->setFocus();
-    }
-
-    if (RS_SCRIPTINGAPI->entsel(QObject::tr(qUtf8Printable(prompt)), id, result))
-    {
-        if (Lisp_CommandEdit != nullptr)
-        {
-            Lisp_CommandEdit->reset();
-        }
-
         lclValueVec *ptn = new lclValueVec(3);
         ptn->at(0) = lcl::ldouble(result.x);
         ptn->at(1) = lcl::ldouble(result.y);
@@ -2946,11 +2927,6 @@ BUILTIN("entsel")
         res->at(1) = lcl::list(ptn);
 
         return lcl::list(res);
-    }
-
-    if (Lisp_CommandEdit != nullptr)
-    {
-        Lisp_CommandEdit->reset();
     }
 
     return lcl::nilValue();
@@ -3112,28 +3088,26 @@ BUILTIN("get_attr")
     CHECK_ARGS_IS(2);
     ARG(lclString, key);
     ARG(lclString, attr);
-    String result;
+    std::string result;
 
-    if (RS_SCRIPTINGAPI->getAttr(key->value().c_str(), attr->value().c_str(), result))
-    {
-        return lcl::string(result);
-    }
-
-    return lcl::nilValue();
+    return RS_SCRIPTINGAPI->getAttr(key->value().c_str(),
+                                    attr->value().c_str(), result) ? lcl::string(result) : lcl::nilValue();
 }
 
 BUILTIN("get_tile")
 {
     CHECK_ARGS_IS(1);
     ARG(lclString, key);
+    std::string result;
 
-    return lcl::string(RS_SCRIPTINGAPI->getTile(key->value().c_str()));
+    return RS_SCRIPTINGAPI->getTile(key->value().c_str(),
+                                    result) ? lcl::string(result) : lcl::nilValue();
 }
 
 BUILTIN("getcorner")
 {
     int args = CHECK_ARGS_BETWEEN(1, 2);
-    QString prompt;
+    QString prompt = "";
     double x=0.0, y=0.0, z=0.0;
     ARG(lclSequence, ptn);
 
@@ -3215,12 +3189,12 @@ BUILTIN("getcorner")
 
     if (result.valid)
     {
-        lclValueVec *ptn = new lclValueVec(3);
-                    ptn->at(0) = lcl::ldouble(result.x);
-                    ptn->at(1) = lcl::ldouble(result.y);
-                    ptn->at(2) = lcl::ldouble(result.z);
+        lclValueVec *pt = new lclValueVec(3);
+                    pt->at(0) = lcl::ldouble(result.x);
+                    pt->at(1) = lcl::ldouble(result.y);
+                    pt->at(2) = lcl::ldouble(result.z);
 
-        return lcl::list(ptn);
+        return lcl::list(pt);
     }
 
     return lcl::nilValue();
@@ -3229,7 +3203,7 @@ BUILTIN("getcorner")
 BUILTIN("getdist")
 {
     int args = CHECK_ARGS_BETWEEN(0, 2);
-    QString prompt;
+    QString prompt = "";
     double x=0.0, y=0.0, z=0.0;
     double distance;
     bool ref = false;
@@ -3402,7 +3376,7 @@ BUILTIN("getorient")
      */
 
     int args = CHECK_ARGS_BETWEEN(0, 2);
-    QString prompt = QObject::tr("Enter second point: ");
+    QString prompt = "";
     double x=0.0, y=0.0, z=0.0;
     double radius;
     bool ref = false;
@@ -3503,7 +3477,7 @@ BUILTIN("getorient")
 BUILTIN("getpoint")
 {
     int args = CHECK_ARGS_BETWEEN(0, 2);
-    QString prompt = QObject::tr("Enter a point: ");
+    QString prompt = "";
     double x, y, z= 0.0;
     bool ref = false;
 
@@ -3598,12 +3572,12 @@ BUILTIN("getpoint")
 
     if (result.valid)
     {
-        lclValueVec *ptn = new lclValueVec(3);
-                    ptn->at(0) = lcl::ldouble(result.x);
-                    ptn->at(1) = lcl::ldouble(result.y);
-                    ptn->at(2) = lcl::ldouble(result.z);
+        lclValueVec *pt = new lclValueVec(3);
+                    pt->at(0) = lcl::ldouble(result.x);
+                    pt->at(1) = lcl::ldouble(result.y);
+                    pt->at(2) = lcl::ldouble(result.z);
 
-        return lcl::list(ptn);
+        return lcl::list(pt);
     }
 
     return lcl::nilValue();
@@ -3688,6 +3662,7 @@ BUILTIN("help")
 BUILTIN("initget") {
     int args = CHECK_ARGS_BETWEEN(1, 2);
     int bit = 0;
+
     if (args == 2)
     {
         AG_INT(b);
@@ -3770,7 +3745,7 @@ BUILTIN("logand")
     int argCount = CHECK_ARGS_AT_LEAST(0);
     int result = 0;
     [[maybe_unused]] double floatValue = 0;
-    [[maybe_unused]] int64_t intValue = 0;
+    [[maybe_unused]] int intValue = 0;
 
     if (argCount == 0) {
         return lcl::integer(0);
@@ -3857,27 +3832,23 @@ BUILTIN("map")
 BUILTIN("mapcar")
 {
     int argCount = CHECK_ARGS_AT_LEAST(2);
-    int i = 0;
-    int count = 0;
-    int offset = 0;
+    int i = 0, count = 0, offset = 0;
     int listCount = argCount-1;
-    //int listCounts[listCount];
+
     std::vector<int> listCounts(static_cast<int>(listCount));
     const lclValuePtr op = EVAL(argsBegin++->ptr(), NULL);
 
     for (auto it = argsBegin++; it != argsEnd; it++) {
         const lclSequence* seq = VALUE_CAST(lclSequence, *it);
-        listCounts[i++] = seq->count();
-        offset += seq->count();
-        if (count < seq->count()) {
-            count = seq->count();
+        const int length = seq->count();
+        listCounts[i++] = length;
+        offset += length;
+        if (count < length) {
+            count = length;
         }
     }
 
-    //int newListCounts[count];
-    //std::vector<int> newListCounts(static_cast<int>(count));
     std::vector<int> newListCounts(count);
-    //lclValueVec* valItems[count]; // FIXME [-Wvla-cxx-extension]
     std::vector<lclValueVec *> valItems(count);
     lclValueVec* items = new lclValueVec(offset);
     lclValueVec* result = new lclValueVec(count);
@@ -3885,8 +3856,9 @@ BUILTIN("mapcar")
     offset = 0;
     for (auto it = --argsBegin; it != argsEnd; ++it) {
         const lclSequence* seq = STATIC_CAST(lclSequence, *it);
+        const int length = seq->count();
         std::copy(seq->begin(), seq->end(), items->begin() + offset);
-        offset += seq->count();
+        offset += length;
     }
 
     for (auto l = 0; l < count; l++) {
@@ -4120,7 +4092,8 @@ BUILTIN("mode_tile")
     ARG(lclString, key);
     AG_INT(mode);
 
-    return RS_SCRIPTINGAPI->modeTile(key->value().c_str(), mode->value()) ? lcl::trueValue() : lcl::nilValue();
+    return RS_SCRIPTINGAPI->modeTile(key->value().c_str(),
+                                     mode->value()) ? lcl::trueValue() : lcl::nilValue();
 }
 
 BUILTIN("new_dialog")
@@ -4129,22 +4102,23 @@ BUILTIN("new_dialog")
     ARG(lclString, dlgName);
     AG_INT(id);
 
-    return RS_SCRIPTINGAPI->newDialog(dlgName->value().c_str(), id->value()) ? lcl::trueValue() : lcl::nilValue();
+    return RS_SCRIPTINGAPI->newDialog(dlgName->value().c_str(),
+                                      id->value()) ? lcl::trueValue() : lcl::nilValue();
 }
 
 BUILTIN("nth")
 {
     // twisted parameter for both LISPs!
     CHECK_ARGS_IS(2);
-    int i;
+    int n;
 
     if(INT_PTR)
     {
         AG_INT(index);
         ARG(lclSequence, seq);
-        i = index->value();
-        LCL_CHECK(i >= 0 && i < seq->count(), "Index out of range");
-        return seq->item(i);
+        n = index->value();
+        LCL_CHECK(n >= 0 && n < seq->count(), "Index out of range");
+        return seq->item(n);
     }
     else if(FLOAT_PTR) {
         // add dummy for error msg
@@ -4155,9 +4129,9 @@ BUILTIN("nth")
     else {
         ARG(lclSequence, seq);
         AG_INT(index);
-        i = index->value();
-        LCL_CHECK(i >= 0 && i < seq->count(), "Index out of range");
-        return seq->item(i);
+        n = index->value();
+        LCL_CHECK(n >= 0 && n < seq->count(), "Index out of range");
+        return seq->item(n);
     }
 }
 
@@ -4933,9 +4907,9 @@ BUILTIN("py-eval-value")
             }
         }
 
-        static QRegularExpression dq = QRegularExpression(QStringLiteral("[\"]"));
-        static QRegularExpression q = QRegularExpression(QStringLiteral("[']"));
-        static QRegularExpression rb = QRegularExpression(QStringLiteral("[(]"));
+        static const QRegularExpression dq = QRegularExpression(QStringLiteral("[\"]"));
+        static const QRegularExpression q = QRegularExpression(QStringLiteral("[']"));
+        static const QRegularExpression rb = QRegularExpression(QStringLiteral("[(]"));
         result.remove(',');
         result.replace(dq, "\\\"");
         result.replace(q, "\"");
@@ -5134,7 +5108,8 @@ BUILTIN("set_tile")
     ARG(lclString, key);
     ARG(lclString, val);
 
-    return RS_SCRIPTINGAPI->setTile(key->value().c_str(), val->value().c_str()) ? lcl::trueValue() : lcl::nilValue();
+    return RS_SCRIPTINGAPI->setTile(key->value().c_str(),
+                                    val->value().c_str()) ? lcl::trueValue() : lcl::nilValue();
 }
 
 BUILTIN("setvar")
@@ -5178,7 +5153,6 @@ BUILTIN("start_dialog")
     CHECK_ARGS_IS(0);
 
     int id =  RS_SCRIPTINGAPI->startDialog();
-
     return id > -1 ? lcl::integer(id) : lcl::nilValue();
 }
 
@@ -5187,36 +5161,29 @@ BUILTIN("start_image")
     CHECK_ARGS_IS(1);
     ARG(lclString, key);
 
-    return dclEnv->set("start_image_key", lcl::string(key->value()));
-
-    // FIXMI check if not in current
-    //return lcl::nilValue();
+    return RS_SCRIPTINGAPI->startImage(key->value().c_str()) ? lcl::string(key->value()) : lcl::nilValue();
 }
 
 BUILTIN("start_list")
 {
     int args = CHECK_ARGS_BETWEEN(1, 3);
+    int index = -1, operation = -1;
 
     ARG(lclString, key);
-    if (args == 1)
-    {
-        dclEnv->set("start_list_operation", lcl::integer(2));
-        dclEnv->set("start_list_index", lcl::nilValue());
-    }
+
     if (args > 2)
     {
-        AG_INT(operation);
-        dclEnv->set("start_list_operation", lcl::integer(operation->value()));
+        AG_INT(op);
+        operation = op->value();
     }
     if (args == 3)
     {
-        AG_INT(index);
-        dclEnv->set("start_list_index", lcl::integer(index->value()));
+        AG_INT(idx);
+        index = idx->value();
     }
-    return dclEnv->set("start_list_key", lcl::string(key->value()));
 
-    // FIXMI check if not in current
-    //return lcl::nilValue();
+    return RS_SCRIPTINGAPI->startList(key->value().c_str(),
+                                      operation, index) ? lcl::string(key->value()) : lcl::nilValue();
 }
 
 BUILTIN("startapp")
@@ -5823,7 +5790,8 @@ BUILTIN("vl-position")
     lclValuePtr op = *argsBegin++; // this gets checked in APPLY
 
     const lclSequence* seq = VALUE_CAST(lclSequence, *(argsBegin));
-    for (int i = 0; i < seq->count(); i++) {
+    const int length = seq->count();
+    for (int i = 0; i < length; i++) {
         if(seq->item(i)->print(true) == op->print(true)) {
             return lcl::integer(i);
         }

@@ -44,7 +44,7 @@ public:
     void command(const char *cmd);
     PyObject *entlast() const;
     PyObject *entdel(unsigned int id) const;
-    PyObject *entsel(const char* prombt) const;
+    PyObject *entsel(const char* prompt) const;
 
     RS_Document *getDocument() const;
     RS_Graphic *getGraphic() const;

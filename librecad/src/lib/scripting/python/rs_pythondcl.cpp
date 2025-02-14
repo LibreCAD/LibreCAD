@@ -28,19 +28,10 @@
 #include "rs_pythondcl.h"
 #include "rs_scriptingapi.h"
 
-int RS_PythonDcl::loadDialog(const char *filename)
-{
-    return RS_SCRIPTINGAPI->loadDialog(filename);
-}
 
-bool RS_PythonDcl::newDialog(const char *name, int id)
+void RS_PythonDcl::endList()
 {
-    return RS_SCRIPTINGAPI->newDialog(name, id);
-}
-
-int RS_PythonDcl::startDialog()
-{
-    return RS_SCRIPTINGAPI->startDialog();
+    RS_SCRIPTINGAPI->endList();
 }
 
 void RS_PythonDcl::unloadDialog(int id)
@@ -53,11 +44,14 @@ void RS_PythonDcl::termDialog()
     RS_SCRIPTINGAPI->termDialog();
 }
 
-PyObject* RS_PythonDcl::doneDialog(int res) const
+int RS_PythonDcl::loadDialog(const char *filename)
 {
-    int x, y;
+    return RS_SCRIPTINGAPI->loadDialog(filename);
+}
 
-    return RS_SCRIPTINGAPI->doneDialog(res, x, y) ? Py_BuildValue("(ii)", x, y) : Py_None;
+bool RS_PythonDcl::newDialog(const char *name, int id)
+{
+    return RS_SCRIPTINGAPI->newDialog(name, id);
 }
 
 bool RS_PythonDcl::setTile(const char *key, const char *val)
@@ -65,62 +59,60 @@ bool RS_PythonDcl::setTile(const char *key, const char *val)
     return RS_SCRIPTINGAPI->setTile(key, val);
 }
 
-bool RS_PythonDcl::actionTile(const char *id, const char *action)
-{
-    return RS_SCRIPTINGAPI->actionTile(id, action);
-}
-
-const std::string RS_PythonDcl::getTile(const char *key)
-{
-    return RS_SCRIPTINGAPI->getTile(key);
-}
-
-PyObject* RS_PythonDcl::getAttr(const char *key, const char *attr) const
-{
-    static std::string result;
-
-    return RS_SCRIPTINGAPI->getAttr(key, attr, result) ? Py_BuildValue("s", result.c_str()) : Py_None;
-}
-
 bool RS_PythonDcl::modeTile(const char *key, int mode)
 {
     return RS_SCRIPTINGAPI->modeTile(key, mode);
 }
 
-const std::string RS_PythonDcl::startList(const char *key, int operation, int index)
+bool RS_PythonDcl::actionTile(const char *id, const char *action)
 {
-    return RS_SCRIPTINGAPI->startList(key, operation, index);
+    return RS_SCRIPTINGAPI->actionTile(id, action);
+}
+
+int RS_PythonDcl::startDialog()
+{
+    return RS_SCRIPTINGAPI->startDialog();
+}
+
+PyObject* RS_PythonDcl::getTile(const char *key)
+{
+    static std::string result;
+    return RS_SCRIPTINGAPI->getTile(key, result) ? Py_BuildValue("s", result.c_str()) : Py_None;
+}
+
+PyObject* RS_PythonDcl::doneDialog(int res) const
+{
+    int x, y;
+    return RS_SCRIPTINGAPI->doneDialog(res, x, y) ? Py_BuildValue("(ii)", x, y) : Py_None;
+}
+
+PyObject* RS_PythonDcl::getAttr(const char *key, const char *attr) const
+{
+    static std::string result;
+    return RS_SCRIPTINGAPI->getAttr(key, attr, result) ? Py_BuildValue("s", result.c_str()) : Py_None;
+}
+
+PyObject* RS_PythonDcl::startList(const char *key, int operation, int index)
+{
+    return RS_SCRIPTINGAPI->startList(key, operation, index) ? Py_BuildValue("s", key) : Py_None;
 }
 
 PyObject* RS_PythonDcl::addList(const char *val) const
 {
     static std::string result;
-
     return RS_SCRIPTINGAPI->addList(val, result) ? Py_BuildValue("s", result.c_str()) : Py_None;
-}
-
-void RS_PythonDcl::endList()
-{
-    RS_SCRIPTINGAPI->endList();
 }
 
 PyObject* RS_PythonDcl::dimxTile(const char *key) const
 {
     int x;
-
     return RS_SCRIPTINGAPI->dimxTile(key, x) ? Py_BuildValue("i", x) : Py_None;
 }
 
 PyObject* RS_PythonDcl::dimyTile(const char *key) const
 {
     int y;
-
-    if (RS_SCRIPTINGAPI->dimyTile(key, y))
-    {
-        return Py_BuildValue("i", y);
-    }
-
-    Py_RETURN_NONE;
+    return RS_SCRIPTINGAPI->dimxTile(key, y) ? Py_BuildValue("i", y) : Py_None;
 }
 
 PyObject* RS_PythonDcl::fillImage(int x, int y, int width, int height, int color) const
@@ -148,12 +140,12 @@ PyObject* RS_PythonDcl::textImage(int x1, int y1, int x2, int y2, const char *te
     return RS_SCRIPTINGAPI->textImage(x1, y1, x2, y2, text, color) ? Py_BuildValue("s", text) : Py_None;
 }
 
+PyObject* RS_PythonDcl::startImage(const char *key) const
+{
+    return RS_SCRIPTINGAPI->startImage(key) ? Py_BuildValue("s", key) : Py_None;
+}
+
 void RS_PythonDcl::endImage()
 {
     RS_SCRIPTINGAPI->endImage();
-}
-
-const std::string RS_PythonDcl::startImage(const char *key)
-{
-    return RS_SCRIPTINGAPI->startImage(key);
 }

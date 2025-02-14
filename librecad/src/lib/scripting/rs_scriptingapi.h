@@ -61,7 +61,7 @@ public:
     unsigned int entlast();
     unsigned int entnext(unsigned int current=0);
     bool entdel(unsigned int id);
-    bool entsel(const QString &prombt, unsigned long &id, RS_Vector &point);
+    bool entsel(CommandEdit *cmdline, const QString &prompt, unsigned long &id, RS_Vector &point);
 
     int loadDialog(const char *filename);
     int startDialog();
@@ -95,9 +95,9 @@ public:
     bool getString(CommandEdit *cmdline, bool cr, const char *msg, std::string &res);
     bool getKeyword(CommandEdit *cmdline, const char *msg, std::string &res);
 
-    const std::string startImage(const char *key);
-    const std::string startList(const char *key, int operation, int index);
-    const std::string getTile(const char *key);
+    bool startImage(const char *key);
+    bool startList(const char *key, int operation, int index);
+    bool getTile(const char *key, std::string &result);
 
     RS_Vector getCorner(CommandEdit *cmdline, const char *msg, const RS_Vector &basePoint) const;
     RS_Vector getPoint(CommandEdit *cmdline, const char *msg, const RS_Vector basePoint) const;

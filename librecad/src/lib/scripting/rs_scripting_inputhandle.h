@@ -35,12 +35,12 @@ class RS_Scripting_InputHandle : public QLineEdit
 {
     Q_OBJECT
 public:
-    explicit RS_Scripting_InputHandle(const QString &prombt, QLineEdit *parent = nullptr);
+    explicit RS_Scripting_InputHandle(const QString &prompt, QLineEdit *parent = nullptr);
     ~RS_Scripting_InputHandle() {}
 
-    static QString readLine(const QString &prombt, QLineEdit *parent = nullptr)
+    static QString readLine(const QString &prompt, QLineEdit *parent = nullptr)
     {
-        RS_Scripting_InputHandle hdl(prombt, parent);
+        RS_Scripting_InputHandle hdl(prompt, parent);
         return hdl.getString();
     }
 

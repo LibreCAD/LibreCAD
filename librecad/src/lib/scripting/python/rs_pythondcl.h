@@ -50,10 +50,9 @@ public:
     int loadDialog(const char *filename);
     int startDialog();
 
-    const std::string getTile(const char *key);
-    const std::string startList(const char *key, int operation=-1, int index=-1);
-    const std::string startImage(const char *key);
-
+    PyObject *getTile(const char *key);
+    PyObject *startList(const char *key, int operation=-1, int index=-1);
+    PyObject* startImage(const char *key) const;
     PyObject* addList(const char *val) const;
     PyObject* dimxTile(const char *key) const;
     PyObject* dimyTile(const char *key) const;

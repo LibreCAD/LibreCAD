@@ -345,7 +345,12 @@ RS_Vector RS_ScriptingApi::getCorner(CommandEdit *cmdline, const char *msg, cons
 RS_Vector RS_ScriptingApi::getPoint(CommandEdit *cmdline, const char *msg, const RS_Vector basePoint) const
 {
     double x=0.0, y=0.0, z=0.0;
-    QString prompt = QObject::tr(msg);
+    QString prompt = QObject::tr("Enter a point: ");
+
+    if (strcmp(msg, ""))
+    {
+        prompt = msg;
+    }
 
     auto& appWin = QC_ApplicationWindow::getAppWindow();
     RS_Document* doc = appWin->getDocument();
@@ -1127,13 +1132,13 @@ unsigned int RS_ScriptingApi::entnext(unsigned int current)
     return 0;
 }
 
-bool RS_ScriptingApi::entsel(const QString &prombt, unsigned long &id, RS_Vector &point)
+bool RS_ScriptingApi::entsel(CommandEdit *cmdline, const QString &prompt, unsigned long &id, RS_Vector &point)
 {
     QString prom = "Select object: ";
 
-    if (!prombt.isEmpty())
+    if (!prompt.isEmpty())
     {
-        prom = prombt;
+        prom = prompt;
     }
 
     auto& appWin = QC_ApplicationWindow::getAppWindow();
@@ -1153,12 +1158,19 @@ bool RS_ScriptingApi::entsel(const QString &prombt, unsigned long &id, RS_Vector
         graphicView->setCurrentAction(a);
 
         QEventLoop ev;
+
+        cmdline->setPrompt(QObject::tr(qUtf8Printable(prom)));
+        cmdline->setFocus();
+        cmdline->doProcess(false);
+
         while (!a->isCompleted())
         {
             ev.processEvents ();
             if (!graphicView->getEventHandler()->hasAction())
                 break;
         }
+
+        cmdline->reset();
 
         if (a->isCompleted())
         {
@@ -1510,10 +1522,9 @@ bool RS_ScriptingApi::actionTile(const char *id, const char *action)
     return false;
 }
 
-const std::string RS_ScriptingApi::getTile(const char *key)
+bool RS_ScriptingApi::getTile(const char *key, std::string &result)
 {
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
-    static std::string result = "";
 
     for (auto & tile : dclTiles)
     {
@@ -1567,12 +1578,16 @@ const std::string RS_ScriptingApi::getTile(const char *key)
                     result = std::to_string(pl->list()->currentIndex());
                 }
                     break;
-                default: {}
+                default:
+                {
+                    return false;
+                }
+                return true;
             }
             break;
         }
     }
-    return result;
+    return false;
 }
 
 bool RS_ScriptingApi::getAttr(const char *key, const char *attr, std::string &result)
@@ -1920,31 +1935,41 @@ bool RS_ScriptingApi::modeTile(const char *key, int mode)
     return false;
 }
 
-const std::string RS_ScriptingApi::startList(const char *key, int operation, int index)
+bool RS_ScriptingApi::startList(const char *key, int operation, int index)
 {
-    //FIXME !env->find => ""
+    const lclInteger *dialogId  = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
-    if (operation == -1)
+    for (auto & tile : dclTiles)
     {
-        dclEnv->set("start_list_operation", lcl::integer(2));
-    }
-    else
-    {
-        dclEnv->set("start_list_operation", lcl::integer(operation));
-    }
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key)
+        {
+            if (operation == -1)
+            {
+                dclEnv->set("start_list_operation", lcl::integer(2));
+            }
+            else
+            {
+                dclEnv->set("start_list_operation", lcl::integer(operation));
+            }
 
-    if (index == -1)
-    {
-        dclEnv->set("start_list_index", lcl::nilValue());
-    }
-    else
-    {
-        dclEnv->set("start_list_index", lcl::integer(index));
-    }
+            if (index == -1)
+            {
+                dclEnv->set("start_list_index", lcl::nilValue());
+            }
+            else
+            {
+                dclEnv->set("start_list_index", lcl::integer(index));
+            }
 
-    dclEnv->set("start_list_key", lcl::string(key));
-
-    return std::string(key);
+            dclEnv->set("start_list_key", lcl::string(key));
+            return true;
+        }
+    }
+    return false;
 }
 
 bool RS_ScriptingApi::addList(const char *val, std::string &result)
@@ -2324,15 +2349,24 @@ void RS_ScriptingApi::endImage()
     }
 }
 
-const std::string RS_ScriptingApi::startImage(const char *key)
+bool RS_ScriptingApi::startImage(const char *key)
 {
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
 
-    dclEnv->set("start_image_key", lcl::string(key));
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key)
+        {
+            dclEnv->set("start_image_key", lcl::string(key));
+            return true;
+        }
+    }
 
-    return std::string(key);
-
-    // FIXMI check if not in current
-    //return lcl::nilValue();
+    return false;
 }
 
 #endif // DEVELOPER
