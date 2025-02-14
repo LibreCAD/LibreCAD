@@ -2933,7 +2933,7 @@ BUILTIN("entsel")
     {
         if (Lisp_CommandEdit != nullptr)
         {
-            Lisp_CommandEdit->resetPrompt();
+            Lisp_CommandEdit->reset();
         }
 
         lclValueVec *ptn = new lclValueVec(3);
@@ -2950,7 +2950,7 @@ BUILTIN("entsel")
 
     if (Lisp_CommandEdit != nullptr)
     {
-        Lisp_CommandEdit->resetPrompt();
+        Lisp_CommandEdit->reset();
     }
 
     return lcl::nilValue();

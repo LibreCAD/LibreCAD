@@ -82,7 +82,7 @@
     </widget>
    </item>
    <item row="0" column="0" colspan="2">
-    <widget class="QG_Lsp_CommandHistory" name="teHistory">
+    <widget class="CommandHistory" name="teHistory">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -145,9 +145,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>QG_Lsp_CommandHistory</class>
+   <class>CommandHistory</class>
    <extends>QTextEdit</extends>
-   <header>qg_lsp_commandhistory.h</header>
+   <header>commandhistory.h</header>
   </customwidget>
   <customwidget>
    <class>QG_Lsp_CommandEdit</class>

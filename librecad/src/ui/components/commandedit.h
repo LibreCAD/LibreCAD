@@ -45,7 +45,7 @@ public:
     virtual ~CommandEdit() { writeHistoryFile(); }
 
     virtual QString text() const;
-    virtual void resetPrompt() {}
+    virtual void reset() {}
     virtual void setCurrent() {}
     virtual void processInput(QString) {}
 

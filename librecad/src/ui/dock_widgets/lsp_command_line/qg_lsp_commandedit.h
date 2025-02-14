@@ -46,7 +46,7 @@ public:
 
     void runFile(const QString& path);
     virtual void processInput(QString input);
-    virtual void resetPrompt();
+    virtual void reset();
     virtual void setCurrent();
 };
 

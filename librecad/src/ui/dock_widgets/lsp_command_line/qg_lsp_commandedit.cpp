@@ -47,11 +47,14 @@
 QG_Lsp_CommandEdit::QG_Lsp_CommandEdit(QWidget* parent)
     : CommandEdit(parent)
 {
-    resetPrompt();
+    reset();
 }
 
-void QG_Lsp_CommandEdit::resetPrompt()
+void QG_Lsp_CommandEdit::reset()
 {
+    doProcess(true);
+    doProcessLc(false);
+
     if (this->dockName() == "Lisp Ide")
     {
         setPrompt("_$ ");

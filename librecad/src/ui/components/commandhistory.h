@@ -24,24 +24,24 @@
 
 // -- https://github.com/LibreCAD/LibreCAD --
 
-#ifndef QG_PY_COMMANDHISTORY_H
-#define QG_PY_COMMANDHISTORY_H
+#ifndef COMMANDHISTORY_H
+#define COMMANDHISTORY_H
 
 #ifdef DEVELOPER
 
 #include <QTextEdit>
 
 /**
- * @brief The QG_Py_CommandHistory class holds commands and messages.
+ * @brief The CommandHistory class holds commands and messages.
  * It's a read only textedit widget.
  * \author ravas
  */
-class QG_Py_CommandHistory : public QTextEdit
+class CommandHistory : public QTextEdit
 {
     Q_OBJECT
 
 public:
-    explicit QG_Py_CommandHistory(QWidget* parent);
+    explicit CommandHistory(QWidget* parent);
 
 private slots:
     void mouseReleaseEvent(QMouseEvent* event) override;

@@ -94,8 +94,7 @@ void RS_ScriptingApi::prompt(CommandEdit *cmdline, const char *prompt)
         String result = RS_Scripting_InputHandle::readLine(QObject::tr(prompt), cmdline).toStdString();
         Q_UNUSED(result);
 
-        cmdline->resetPrompt();
-        cmdline->doProcess(true);
+        cmdline->reset();
     }
     else
     {
@@ -320,8 +319,7 @@ RS_Vector RS_ScriptingApi::getCorner(CommandEdit *cmdline, const char *msg, cons
             status = true;
         }
 
-        cmdline->resetPrompt();
-        cmdline->doProcess(true);
+        cmdline->reset();
 
         graphicView->killAllActions();
 
@@ -400,9 +398,7 @@ RS_Vector RS_ScriptingApi::getPoint(CommandEdit *cmdline, const char *msg, const
             status = true;
         }
 
-        cmdline->resetPrompt();
-        cmdline->doProcess(true);
-        cmdline->doProcessLc(false);
+        cmdline->reset();
 
         graphicView->killAllActions();
 
@@ -531,8 +527,7 @@ bool RS_ScriptingApi::getDist(CommandEdit *cmdline, const char *msg, const RS_Ve
 
         graphicView->enableCoordinateInput();
         graphicView->killAllActions();
-        cmdline->resetPrompt();
-        cmdline->doProcess(true);
+        cmdline->reset();
 
         if(a->hasInput())
         {
@@ -665,8 +660,7 @@ bool RS_ScriptingApi::getOrient(CommandEdit *cmdline, const char *msg, const RS_
 
         graphicView->enableCoordinateInput();
         graphicView->killAllActions();
-        cmdline->resetPrompt();
-        cmdline->doProcess(true);
+        cmdline->reset();
 
         if(a->hasInput())
         {
@@ -714,8 +708,7 @@ bool RS_ScriptingApi::getReal(CommandEdit *cmdline, const char *msg, double &res
             result = RS_Scripting_InputHandle::readLine(QObject::tr(qUtf8Printable(prompt)), cmdline);
             if (result.isEmpty())
             {
-                cmdline->resetPrompt();
-                cmdline->doProcess(true);
+                cmdline->reset();
                 return false;
             }
 
@@ -729,8 +722,7 @@ bool RS_ScriptingApi::getReal(CommandEdit *cmdline, const char *msg, double &res
             }
         }
 
-        cmdline->resetPrompt();
-        cmdline->doProcess(true);
+        cmdline->reset();
         return true;
     }
     else
@@ -761,8 +753,7 @@ bool RS_ScriptingApi::getInteger(CommandEdit *cmdline, const char *msg, int &res
             result = RS_Scripting_InputHandle::readLine(QObject::tr(qUtf8Printable(prompt)), cmdline);
             if (result.isEmpty())
             {
-                cmdline->resetPrompt();
-                cmdline->doProcess(true);
+                cmdline->reset();
                 return false;
             }
 
@@ -776,8 +767,7 @@ bool RS_ScriptingApi::getInteger(CommandEdit *cmdline, const char *msg, int &res
             }
         }
 
-        cmdline->resetPrompt();
-        cmdline->doProcess(true);
+        cmdline->reset();
         return true;
     }
     else
@@ -812,8 +802,7 @@ bool RS_ScriptingApi::getString(CommandEdit *cmdline, bool cr, const char *msg, 
             result = RS_Scripting_InputHandle::readLine(QObject::tr(qUtf8Printable(prompt)), cmdline);
             if (result.isEmpty())
             {
-                cmdline->resetPrompt();
-                cmdline->doProcess(true);
+                cmdline->reset();
                 return false;
             }
             else
@@ -824,8 +813,7 @@ bool RS_ScriptingApi::getString(CommandEdit *cmdline, bool cr, const char *msg, 
 
         }
 
-        cmdline->resetPrompt();
-        cmdline->doProcess(true);
+        cmdline->reset();
         return true;
     }
     else
@@ -866,22 +854,19 @@ bool RS_ScriptingApi::getKeyword(CommandEdit *cmdline, const char *msg, std::str
             for (auto &it : StringList) {
                 if (it == res)
                 {
-                    cmdline->resetPrompt();
-                    cmdline->doProcess(true);
+                    cmdline->reset();
                     return true;
                 }
             }
 
             if ((bit->value() & 1) != 1)
             {
-                cmdline->resetPrompt();
-                cmdline->doProcess(true);
+                cmdline->reset();
                 return false;
             }
         }
 
-        cmdline->resetPrompt();
-        cmdline->doProcess(true);
+        cmdline->reset();
     }
     else
     {

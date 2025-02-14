@@ -1082,6 +1082,7 @@ HEADERS += ui/action_options/circle/lc_circlebyarcoptions.h \
     ui/components/creators/widgetcreator.h \
     ui/components/layouts/lc_flexlayout.h \
     ui/components/commandedit.h \
+    ui/components/commandhistory.h \
     ui/components/lc_plaintextedit.h \
     ui/components/pen/qg_widgetpen.h \
     ui/components/qg_scrollbar.h \
@@ -1141,10 +1142,8 @@ HEADERS += ui/action_options/circle/lc_circlebyarcoptions.h \
     ui/dock_widgets/command_line/qg_commandhistory.h \
     ui/dock_widgets/command_line/qg_commandwidget.h \
     ui/dock_widgets/lsp_command_line/qg_lsp_commandedit.h \
-    ui/dock_widgets/lsp_command_line/qg_lsp_commandhistory.h \
     ui/dock_widgets/lsp_command_line/qg_lsp_commandwidget.h \
     ui/dock_widgets/py_command_line/qg_py_commandedit.h \
-    ui/dock_widgets/py_command_line/qg_py_commandhistory.h \
     ui/dock_widgets/py_command_line/qg_py_commandwidget.h \
     ui/dock_widgets/entity_info/lc_quickinfobasedata.h \
     ui/dock_widgets/entity_info/lc_quickinfoentitydata.h \
@@ -1296,6 +1295,7 @@ SOURCES += ui/action_options/circle/lc_circlebyarcoptions.cpp \
     ui/components/toolbars/qg_pentoolbar.cpp \
     ui/components/toolbars/qg_snaptoolbar.cpp \
     ui/components/commandedit.cpp \
+    ui/components/commandhistory.cpp \
     ui/dialogs/actions/modify/qg_dlgmirror.cpp \
     ui/dialogs/actions/modify/qg_dlgmove.cpp \
     ui/dialogs/actions/modify/qg_dlgmoverotate.cpp \
@@ -1344,10 +1344,8 @@ SOURCES += ui/action_options/circle/lc_circlebyarcoptions.cpp \
     ui/dock_widgets/command_line/qg_commandhistory.cpp \
     ui/dock_widgets/command_line/qg_commandwidget.cpp \
     ui/dock_widgets/lsp_command_line/qg_lsp_commandedit.cpp \
-    ui/dock_widgets/lsp_command_line/qg_lsp_commandhistory.cpp \
     ui/dock_widgets/lsp_command_line/qg_lsp_commandwidget.cpp \
     ui/dock_widgets/py_command_line/qg_py_commandedit.cpp \
-    ui/dock_widgets/py_command_line/qg_py_commandhistory.cpp \
     ui/dock_widgets/py_command_line/qg_py_commandwidget.cpp \
     ui/dock_widgets/entity_info/lc_quickinfobasedata.cpp \
     ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp \

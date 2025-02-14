@@ -24,18 +24,17 @@
 
 // -- https://github.com/LibreCAD/LibreCAD --
 
-
 #ifdef DEVELOPER
 
-#include "qg_lsp_commandhistory.h"
+#include "commandhistory.h"
 #include <QAction>
 #include <QMouseEvent>
 #include <QTextBlock>
 
 // -- commandline history (output) widget --
 
-QG_Lsp_CommandHistory::QG_Lsp_CommandHistory(QWidget* parent) :
-    QTextEdit(parent){
+CommandHistory::CommandHistory(QWidget* parent) : QTextEdit(parent)
+{
     setContextMenuPolicy(Qt::ActionsContextMenu);
 
     m_pCopy = new QAction(tr("&Copy"), this);
@@ -57,19 +56,19 @@ QG_Lsp_CommandHistory::QG_Lsp_CommandHistory(QWidget* parent) :
     setStyleSheet("selection-color: white; selection-background-color: green;");
 }
 
-void QG_Lsp_CommandHistory::mouseReleaseEvent(QMouseEvent* event){
+void CommandHistory::mouseReleaseEvent(QMouseEvent* event){
     QTextEdit::mouseReleaseEvent(event);
     if (event->button() == Qt::LeftButton && m_pCopy->isVisible())    {
         copy();
     }
 }
 
-void QG_Lsp_CommandHistory::slotTextChanged(){
+void CommandHistory::slotTextChanged(){
 //only show the selectAll item when there is text
     m_pSelectAll->setVisible(! toPlainText().isEmpty());
 }
 
-void QG_Lsp_CommandHistory::paintEvent(QPaintEvent *e)
+void CommandHistory::paintEvent(QPaintEvent *e)
 {
     int height = this->height();
     height -= 2 * document()->documentMargin();

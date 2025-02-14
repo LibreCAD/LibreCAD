@@ -47,11 +47,13 @@
 QG_Py_CommandEdit::QG_Py_CommandEdit(QWidget* parent)
     : CommandEdit(parent)
 {
-    resetPrompt();
+    reset();
 }
 
-void QG_Py_CommandEdit::resetPrompt()
+void QG_Py_CommandEdit::reset()
 {
+    doProcess(true);
+    doProcessLc(false);
     setPrompt(">>> ");
     prompt();
 }

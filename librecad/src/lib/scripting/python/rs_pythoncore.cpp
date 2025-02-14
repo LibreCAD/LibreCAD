@@ -103,7 +103,7 @@ PyObject *RS_PythonCore::entsel(const char* prombt) const
     {
         if (Py_CommandEdit != nullptr)
         {
-            Py_CommandEdit->resetPrompt();
+            Py_CommandEdit->reset();
         }
 
         return Py_BuildValue("(i(ddd))", id, result.x, result.y, result.z);
@@ -111,7 +111,7 @@ PyObject *RS_PythonCore::entsel(const char* prombt) const
 
     if (Py_CommandEdit != nullptr)
     {
-        Py_CommandEdit->resetPrompt();
+        Py_CommandEdit->reset();
     }
 
     Py_RETURN_NONE;
