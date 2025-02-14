@@ -4,13 +4,13 @@
 #ifndef TEXTEDITOR_H
 #define TEXTEDITOR_H
 
+#ifdef DEVELOPER
+
 #include <QPlainTextEdit>
 #include <QFileInfo>
 #include "dclhighlighter.h"
 #include "lisphighlighter.h"
 #include "pythonhighlighter.h"
-
-#ifdef DEVELOPER
 
 class LineNumberWidget;
 class TextEditor : public QPlainTextEdit

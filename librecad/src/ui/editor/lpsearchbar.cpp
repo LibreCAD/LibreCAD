@@ -1,3 +1,6 @@
+
+#ifdef DEVELOPER
+
 #include "lpsearchbar.h"
 #include "ui_searchbarpower.h"
 #include "ui_searchbarincremental.h"
@@ -22,8 +25,6 @@
 #include <QShortcut>
 #include <QStringView>
 #include <QClipboard>
-
-#ifdef DEVELOPER
 
 namespace
 {

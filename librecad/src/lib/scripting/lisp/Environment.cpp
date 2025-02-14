@@ -1,10 +1,11 @@
+
+#ifdef DEVELOPER
+
 #include "Environment.h"
 #include "Types.h"
 
 #include <iostream>
 #include <algorithm>
-
-#ifdef DEVELOPER
 
 lclEnvPtr replEnv(new lclEnv);
 

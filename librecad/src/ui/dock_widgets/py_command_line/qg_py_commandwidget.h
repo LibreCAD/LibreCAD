@@ -26,9 +26,9 @@
 #ifndef QG_PY_COMMANDWIDGET_H
 #define QG_PY_COMMANDWIDGET_H
 
-#include "ui_qg_py_commandwidget.h"
-
 #ifdef DEVELOPER
+
+#include "ui_qg_py_commandwidget.h"
 
 class QG_ActionHandler;
 class QAction;

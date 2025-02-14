@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+#ifdef DEVELOPER
+
 #include <QMouseEvent>
 #include <QKeyEvent>
 
@@ -110,3 +112,5 @@ Plugin_Entity *QC_ActionEntSel::getSelected(Doc_plugin_interface* d) {
     Plugin_Entity *pe = en ? new Plugin_Entity(en, d) : nullptr;
     return pe;
 }
+
+#endif // DEVELOPER

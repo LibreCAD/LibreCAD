@@ -4,11 +4,11 @@
 #ifndef LISPHIGHLIGHTER_H
 #define LISPHIGHLIGHTER_H
 
+#ifdef DEVELOPER
+
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 #include <QRegularExpression>
-
-#ifdef DEVELOPER
 
 QT_BEGIN_NAMESPACE
 class QTextDocument;

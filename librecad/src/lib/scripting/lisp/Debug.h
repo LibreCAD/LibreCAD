@@ -1,10 +1,10 @@
 #ifndef INCLUDE_DEBUG_H
 #define INCLUDE_DEBUG_H
 
+#ifdef DEVELOPER
+
 #include <stdio.h>
 #include <stdlib.h>
-
-#ifdef DEVELOPER
 
 #define DEBUG_TRACE                    1
 //#define DEBUG_OBJECT_LIFETIMES         1

@@ -23,6 +23,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+
+#ifdef DEVELOPER
+
 #include "rs_lisp.h"
 #include "qg_lsp_commandwidget.h"
 
@@ -43,8 +46,6 @@
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "rs_utility.h"
-
-#ifdef DEVELOPER
 
 /*
  *  Constructs a QG_Lsp_CommandWidget as a child of 'parent', with the

@@ -26,9 +26,10 @@
 
 #ifndef QG_LSP_COMMANDHISTORY_H
 #define QG_LSP_COMMANDHISTORY_H
-#include <QTextEdit>
 
 #ifdef DEVELOPER
+
+#include <QTextEdit>
 
 /**
  * @brief The QG_Lsp_CommandHistory class holds commands and messages.

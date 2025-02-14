@@ -1,6 +1,9 @@
 // Copyright (C) 2016 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
 
+
+#ifdef DEVELOPER
+
 #include "dclhighlighter.h"
 
 //! [0]
@@ -202,3 +205,5 @@ void DclHighlighter::highlightBlock(const QString &text)
         startIndex = text.indexOf(commentStartExpression, startIndex + commentLength);
     }
 }
+
+#endif // DEVELOPER

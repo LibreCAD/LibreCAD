@@ -1,11 +1,11 @@
 #ifndef LIBREPYTHON_H
 #define LIBREPYTHON_H
 
+#ifdef DEVELOPER
+
 #include "texteditor.h"
 #include "librepad.h"
 #include <QWidget>
-
-#ifdef DEVELOPER
 
 class QG_Py_CommandWidget;
 

@@ -27,11 +27,11 @@
 #ifndef COMMANDEDIT_H
 #define COMMANDEDIT_H
 
+#ifdef DEVELOPER
+
 #include <QLineEdit>
 #include <QString>
 #include <QFile>
-
-#ifdef DEVELOPER
 
 /**
  * A python command line edit with some typical console features

@@ -52,10 +52,14 @@ public:
     void setMessage(QString msg);
     bool isCompleted(){return completed;}
     bool wasCanceled(){return canceled;}
+#ifdef DEVELOPER
     bool hasInput(){return input;}
     void Input(){ input = true; }
+#endif // DEVELOPER
 protected:
+#ifdef DEVELOPER
     bool input = false;
+#endif // DEVELOPER
     bool canceled;
     bool completed;
     bool setTargetPoint;

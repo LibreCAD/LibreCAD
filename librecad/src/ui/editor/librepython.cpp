@@ -1,3 +1,6 @@
+
+#ifdef DEVELOPER
+
 #include "rs_python.h"
 #include "librepython.h"
 
@@ -7,8 +10,6 @@
 #include <QApplication>
 #include <QMessageBox>
 #include "qg_py_commandwidget.h"
-
-#ifdef DEVELOPER
 
 LibrePython::LibrePython(QWidget *parent, const QString& fileName)
     : Librepad(parent, tr("LibrePython"), fileName)

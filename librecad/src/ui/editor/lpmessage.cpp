@@ -1,8 +1,8 @@
+#ifdef DEVELOPER
+
 #include "lpmessage.h"
 
 #include <QVBoxLayout>
-
-#ifdef DEVELOPER
 
 LpMessage::LpMessage(QWidget *parent, const QString &message, int timeout)
     : QWidget(parent)

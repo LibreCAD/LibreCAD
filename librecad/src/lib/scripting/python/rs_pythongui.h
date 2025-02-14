@@ -24,10 +24,10 @@
 **
 **********************************************************************/
 
-#pragma once
-
 #ifndef RS_PYTHONGUI_H
 #define RS_PYTHONGUI_H
+
+#ifdef DEVELOPER
 
 #include "rs_python.h"
 #include "rs_vector.h"
@@ -62,5 +62,7 @@ public:
     PyObject *getKword(const char *prompt = "");
 
 };
+
+#endif // DEVELOPER
 
 #endif // RS_PYTHONGUI_H

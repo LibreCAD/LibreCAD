@@ -1,6 +1,8 @@
 #ifndef LPMESSAGE_H
 #define LPMESSAGE_H
 
+#ifdef DEVELOPER
+
 #include <QObject>
 #include <QWidget>
 #include <QDialog>
@@ -8,8 +10,6 @@
 #include <QTimer>
 
 #define LP_MSG_STYLE "border: 3px solid #329a77; border-radius: 4px; border-width: 2px; background: #c6ecd6; color: black; font: 10pt; padding-top: 8px; padding-right: 4px; padding-bottom: 8px;padding-left: 4px;"
-
-#ifdef DEVELOPER
 
 class LpMessage : public QWidget
 {

@@ -1,6 +1,8 @@
 // Copyright (C) 2024 Emanuel Strobel
 // GPLv2
 
+#ifdef DEVELOPER
+
 #include <QFile>
 #include <QSettings>
 #include <QFileDialog>
@@ -26,9 +28,6 @@
 
 #include "lc_dlgabout.h"
 #include "textfileviewer.h"
-
-
-#ifdef DEVELOPER
 
 Librepad::Librepad(QWidget *parent, const QString& name, const QString& fileName)
     : QMainWindow(parent)

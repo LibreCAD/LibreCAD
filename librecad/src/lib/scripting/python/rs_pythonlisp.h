@@ -1,9 +1,8 @@
-//#pragma once
 
 #ifndef RS_PYTHONLISP_H
 #define RS_PYTHONLISP_H
 
-//#ifdef DEVELOPER
+#ifdef DEVELOPER
 
 class RS_PythonLisp
 {
@@ -18,6 +17,6 @@ public:
     const char *EvalSimpleFile(const char *filename);
 };
 
-//#endif // DEVELOPER
+#endif // DEVELOPER
 
 #endif // RS_PYTHONLISP_H

@@ -1,7 +1,8 @@
-#include "LCL.h"
-#include "Types.h"
 
 #ifdef DEVELOPER
+
+#include "LCL.h"
+#include "Types.h"
 
 #include <regex>
 #include <fstream>

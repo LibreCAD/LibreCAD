@@ -23,11 +23,8 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-#ifdef DEVELOPER
-
-#include "rs_python.h"
-#include "commandedit.h"
+#include "rs_lisp.h"
+#include "qg_lsp_commandedit.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -37,6 +34,7 @@
 #include <QRegularExpression>
 #include <QTextStream>
 #include <QDebug>
+#include <QTimer>
 
 #include "rs_commands.h"
 #include "rs_dialogfactory.h"
@@ -48,6 +46,8 @@
 #include <cstdio>
 #include <stdio.h>
 #include <unistd.h>
+
+#ifdef DEVELOPER
 
 //namespace {
 // Limits for command file reading
@@ -61,16 +61,16 @@
  * Default Constructor. You must call init manually if you choose
  * to use this constructor.
  */
-
-CommandEdit::CommandEdit(QWidget* parent)
-    : QLineEdit(parent)
+QG_Lsp_CommandEdit::QG_Lsp_CommandEdit(QWidget* parent)
+    : CommandEdit(parent)
     , keycode_mode(false)
-    , m_path(QDir(QDir::homePath() + QDir::separator() + "." + cmdLang() + "-history-librecad").absolutePath())
+    , relative_ray("none")
+    , calculator_mode(false)
+    , m_path(QDir(QDir::homePath() + QDir::separator() + ".lisp-history-librecad").absolutePath())
 {
     setStyleSheet("selection-color: white; selection-background-color: green;");
     setFrame(false);
     setFocusPolicy(Qt::StrongFocus);
-
     prompt();
 
     QObject::connect(
@@ -78,16 +78,31 @@ CommandEdit::CommandEdit(QWidget* parent)
         &QLineEdit::cursorPositionChanged,
         this,
         [this](){
-            if (cursorPosition() < promptSize())
-            {
+            if (cursorPosition() < promptSize()) {
                 setCursorPosition(promptSize());
             }
         });
 
     readHistoryFile();
+
+    qDebug() << "[QG_Lsp_CommandEdit::QG_Lsp_CommandEdit]" << this->parent()->objectName();
+
 }
 
-void CommandEdit::readHistoryFile()
+void QG_Lsp_CommandEdit::resetPrompt()
+{
+    if (this->dockName() == "Lisp Ide")
+    {
+        setPrompt("_$ ");
+    }
+    else
+    {
+        setPrompt(QObject::tr("Command: "));
+    }
+    prompt();
+}
+
+void QG_Lsp_CommandEdit::readHistoryFile()
 {
     m_histFile.setFileName(m_path);
 
@@ -103,7 +118,7 @@ void CommandEdit::readHistoryFile()
     m_histFile.close();
 }
 
-void CommandEdit::writeHistoryFile()
+void QG_Lsp_CommandEdit::writeHistoryFile()
 {
     m_histFile.setFileName(m_path);
 
@@ -118,23 +133,16 @@ void CommandEdit::writeHistoryFile()
     }
 }
 
-QString CommandEdit::text() const
+QString QG_Lsp_CommandEdit::text() const
 {
     QString str = QLineEdit::text();
     return (QLineEdit::text().size() >= promptSize()) ? str.remove(0, promptSize()) : QLineEdit::text();
 }
 
 /**
- * Bypass for key press events from keys...
- */
-bool CommandEdit::event(QEvent* e) {
-    return QLineEdit::event(e);
-}
-
-/**
  * History (arrow key up/down) support
  */
-void CommandEdit::keyPressEvent(QKeyEvent* e)
+void QG_Lsp_CommandEdit::keyPressEvent(QKeyEvent* e)
 {
     switch (e->key())
     {
@@ -142,7 +150,7 @@ void CommandEdit::keyPressEvent(QKeyEvent* e)
         if (!historyList.isEmpty() && it > historyList.begin())
         {
             it--;
-            setText(m_prom + *it);
+            setText(prom + *it);
         }
         break;
     case Qt::Key_Down:
@@ -150,7 +158,7 @@ void CommandEdit::keyPressEvent(QKeyEvent* e)
         {
             it++;
             if (it<historyList.end()) {
-                setText(m_prom + *it);
+                setText(prom + *it);
             }
             else {
                 prompt();
@@ -196,33 +204,108 @@ void CommandEdit::keyPressEvent(QKeyEvent* e)
     }
 }
 
-void CommandEdit::focusInEvent(QFocusEvent *e) {
-    emit focusIn();
-    setCurrent();
-    QLineEdit::focusInEvent(e);
-}
-
-void CommandEdit::focusOutEvent(QFocusEvent *e) {
-    emit focusOut();
-    QLineEdit::focusOutEvent(e);
-}
-
-bool CommandEdit::isForeignCommand(QString input)
+void QG_Lsp_CommandEdit::processInput(QString input)
 {
-    // author: ravas
+    setCurrent();
 
-    bool r_value = true;
-
-    if (input.contains("="))
+    if (!m_doProcess)
     {
-        auto var_value = input.split("=");
-        variables[var_value[0]] = var_value[1];
-        r_value = false;
+        emit message(prom);
+        m_doProcess = true;
+        return;
     }
-    return r_value;
+
+    if (input.size() == 0)
+    {
+        it = historyList.end();
+        emit message(prom);
+        prompt();
+        return;
+    }
+
+    if (input == "(clear)" ||
+        input == QObject::tr("clear"))
+    {
+        emit clearCommandsHistory();
+        prompt();
+        return;
+    }
+
+    if (input == "help" ||
+        input == "copyright" ||
+        input == "credits" ||
+        input == "license")
+    {
+        input = "(" + input + ")";
+    }
+
+    static QRegularExpression lispRegex(QStringLiteral("[ \t]*[\[!(\"'`~:^]|[ \t]*@[a-zA-Z_-]"));
+    QRegularExpressionMatch lispCom = lispRegex.match(input);
+
+    if (isAlias(qUtf8Printable(input)) || lispCom.hasMatch())
+    {
+        QString buffer_out = "";
+        //QString buffer_err = "";
+
+        buffer_out += RS_LISP->runCommand(input).c_str();
+        historyList.append(input);
+        it = historyList.end();
+        prompt();
+
+        emit message(prom + input);
+        if (buffer_out.compare("") != 0) {
+            const QString out = buffer_out;
+            emit message(out);
+        }
+    }
+    else
+    {
+        input.replace("pline", "polyline");
+        // author: ravas
+
+        // convert 10..0 to @10,0
+        QRegularExpression regex(R"~(([-\w\.\\]+)\.\.)~");
+        input.replace(regex, "@\\1,");
+
+        if (isForeignCommand(input))
+        {
+            if (input.contains(";"))
+            {
+                foreach (auto str, input.split(";"))
+                {
+                    if (str.contains("\\"))
+                        processVariable(str);
+                    else
+                        emit command(str);
+                }
+            }
+            else
+            {
+                if (input.contains("\\"))
+                    processVariable(input);
+                else
+                    emit command(input);
+            }
+
+            historyList.append(input);
+            it = historyList.end();
+            prompt();
+        }
+    }
 }
 
-void CommandEdit::processVariable(QString input)
+void QG_Lsp_CommandEdit::setCurrent()
+{
+    Lisp_CommandEdit = this;
+}
+
+void QG_Lsp_CommandEdit::runFile(const QString& path)
+{
+    setCurrent();
+    emit message(RS_LISP->runFileCmd(path).c_str());
+}
+
+void QG_Lsp_CommandEdit::processVariable(QString input)
 {
     // author: ravas
 
@@ -271,7 +354,7 @@ void CommandEdit::processVariable(QString input)
     }
 }
 
-void CommandEdit::modifiedPaste()
+void QG_Lsp_CommandEdit::modifiedPaste()
 {
     auto txt = qApp->clipboard()->text();
     txt.replace("\n", ";");

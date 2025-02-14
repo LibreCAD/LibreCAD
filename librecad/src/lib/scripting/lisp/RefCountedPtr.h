@@ -1,11 +1,11 @@
 #ifndef INCLUDE_REFCOUNTEDPTR_H
 #define INCLUDE_REFCOUNTEDPTR_H
 
+#ifdef DEVELOPER
+
 #include "Debug.h"
 
 #include <cstddef>
-
-#ifdef DEVELOPER
 
 class RefCounted {
 public:

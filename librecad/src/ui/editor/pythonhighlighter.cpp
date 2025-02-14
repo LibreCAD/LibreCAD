@@ -1,9 +1,9 @@
 // Copyright (C) 2016 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
 
-#include "pythonhighlighter.h"
-
 #ifdef DEVELOPER
+
+#include "pythonhighlighter.h"
 
 //! [0]
 PythonHighlighter::PythonHighlighter(QTextDocument *parent)

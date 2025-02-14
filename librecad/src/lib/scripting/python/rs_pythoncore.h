@@ -24,9 +24,11 @@
 **
 **********************************************************************/
 
-#pragma once
 #ifndef RS_PYTHONCORE_H
 #define RS_PYTHONCORE_H
+
+#ifdef DEVELOPER
+
 #include "Python.h"
 
 #include "rs_document.h"
@@ -49,5 +51,7 @@ public:
     RS_EntityContainer* getContainer() const;
 
 };
+
+#endif // DEVELOPER
 
 #endif // RS_PYTHONCORE_H

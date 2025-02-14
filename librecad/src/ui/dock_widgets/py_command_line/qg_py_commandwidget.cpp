@@ -23,6 +23,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+
+#ifdef DEVELOPER
+
 #include "rs_python.h"
 #include "qg_py_commandwidget.h"
 
@@ -44,8 +47,6 @@
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "rs_utility.h"
-
-#ifdef DEVELOPER
 
 /*
  *  Constructs a QG_Py_CommandWidget as a child of 'parent', with the

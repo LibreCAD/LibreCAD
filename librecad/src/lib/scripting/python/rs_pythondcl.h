@@ -24,9 +24,11 @@
 **
 **********************************************************************/
 
-#pragma once
 #ifndef RS_PYTHONDCL_H
 #define RS_PYTHONDCL_H
+
+#ifdef DEVELOPER
+
 #include "Python.h"
 
 class RS_PythonDcl
@@ -64,5 +66,7 @@ public:
     PyObject* vectorImage(int x1, int y1, int x2, int y2, int color) const;
 
 };
+
+#endif // DEVELOPER
 
 #endif // RS_PYTHONDCL_H

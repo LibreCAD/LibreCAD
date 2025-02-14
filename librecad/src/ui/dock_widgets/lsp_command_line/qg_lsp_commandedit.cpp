@@ -23,10 +23,11 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "rs_lisp.h"
-#include "qg_lsp_commandedit.h"
 
 #ifdef DEVELOPER
+
+#include "rs_lisp.h"
+#include "qg_lsp_commandedit.h"
 
 #include <QRegularExpression>
 #include <QDebug>

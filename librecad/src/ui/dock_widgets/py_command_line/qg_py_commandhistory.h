@@ -26,9 +26,10 @@
 
 #ifndef QG_PY_COMMANDHISTORY_H
 #define QG_PY_COMMANDHISTORY_H
-#include <QTextEdit>
 
 #ifdef DEVELOPER
+
+#include <QTextEdit>
 
 /**
  * @brief The QG_Py_CommandHistory class holds commands and messages.

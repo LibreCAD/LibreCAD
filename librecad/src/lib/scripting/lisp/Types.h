@@ -2,6 +2,8 @@
 #ifndef INCLUDE_TYPES_H
 #define INCLUDE_TYPES_H
 
+#ifdef DEVELOPER
+
 #include "LCL.h"
 
 #include <exception>
@@ -32,8 +34,6 @@
 #include <QColor>
 #include <QPainter>
 #include <QProxyStyle>
-
-#ifdef DEVELOPER
 
 class lclEmptyInputException : public std::exception { };
 

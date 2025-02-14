@@ -24,9 +24,10 @@
 **
 **********************************************************************/
 
-#pragma once
 #ifndef RS_SCRIPTINGAPI_H
 #define RS_SCRIPTINGAPI_H
+
+#ifdef DEVELOPER
 
 #include "Python.h"
 #include "rs_vector.h"
@@ -106,6 +107,8 @@ private:
     RS_ScriptingApi() {}
     static RS_ScriptingApi* unique;
 };
+
+#endif // DEVELOPER
 
 #endif // RS_PYTHONCORE_H
 

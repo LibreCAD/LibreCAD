@@ -1,6 +1,8 @@
 #ifndef INCLUDE_LCL_H
 #define INCLUDE_LCL_H
 
+#ifdef DEVELOPER
+
 #include "Debug.h"
 #include "RefCountedPtr.h"
 #include "String.h"
@@ -8,8 +10,6 @@
 #include <sstream>
 
 #include <vector>
-
-#ifdef DEVELOPER
 
 class lclValue;
 typedef RefCountedPtr<lclValue>  lclValuePtr;

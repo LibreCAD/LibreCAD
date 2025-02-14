@@ -23,10 +23,11 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "rs_python.h"
-#include "qg_py_commandedit.h"
 
 #ifdef DEVELOPER
+
+#include "rs_python.h"
+#include "qg_py_commandedit.h"
 
 #include <QRegularExpression>
 #include <QDebug>

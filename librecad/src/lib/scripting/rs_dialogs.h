@@ -27,6 +27,8 @@
 #ifndef RS_DIALOGS_H
 #define RS_DIALOGS_H
 
+#ifdef DEVELOPER
+
 #include <QDialog>
 #include <QKeyEvent>
 
@@ -54,5 +56,7 @@ protected:
 private:
     char m_char;
 };
+
+#endif // DEVELOPER
 
 #endif // RS_DIALOGS_H

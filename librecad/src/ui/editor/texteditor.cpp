@@ -1,6 +1,8 @@
 // Copyright (C) 2024 Emanuel Strobel
 // GPLv2
 
+#ifdef DEVELOPER
+
 #include "texteditor.h"
 
 #include <QApplication>
@@ -14,8 +16,6 @@
 #include <QPrinter>
 #include <QDir>
 #include <QRect>
-
-#ifdef DEVELOPER
 
 TextEditor::TextEditor(QWidget *parent, const QString& fileName)
     : QPlainTextEdit(parent)

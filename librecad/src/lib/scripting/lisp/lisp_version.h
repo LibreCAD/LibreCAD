@@ -1,6 +1,8 @@
 #ifndef LISP_VERSION_H
 #define LISP_VERSION_H
 
+#ifdef DEVELOPER
+
 #define LISP_STR_HELPER(x) #x
 #define LISP_STR(x) LISP_STR_HELPER(x)
 
@@ -41,4 +43,6 @@
     "for more information."
 #endif
 
-#endif
+#endif // DEVELOPER
+
+#endif // LISP_VERSION_H

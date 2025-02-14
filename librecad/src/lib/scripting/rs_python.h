@@ -43,12 +43,6 @@
 
 extern class QG_Py_CommandEdit *Py_CommandEdit;
 
-typedef struct v3 {
-    double x = 0.0;
-    double y = 0.0;
-    double z = 0.0;
-} v3_t;
-
 /*
  * LibreCAD Python scripting support.
  *
@@ -75,7 +69,6 @@ public:
     int evalString(const QString& command, QString& buf_out, QString& buf_err);
     int evalInteger(const QString& command, int& result, QString& buf_err);
     int evalFloat(const QString& command, double& result, QString& buf_err);
-    int evalVector(const QString& command, v3_t& vec);
     int runString(const QString& str);
     int fflush(const QString& stream);
     int runModulFunc(const QString& module, const QString& func);

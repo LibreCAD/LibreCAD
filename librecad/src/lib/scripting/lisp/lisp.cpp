@@ -1,11 +1,11 @@
+#ifdef DEVELOPER
+
 #include "lisp.h"
 #include "LCL.h"
 
 #include "Environment.h"
 //#include "ReadLine.h"
 #include "Types.h"
-
-#ifdef DEVELOPER
 
 #include <iostream>
 #include <filesystem>

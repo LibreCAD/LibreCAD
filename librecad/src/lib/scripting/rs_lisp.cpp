@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+#ifdef DEVELOPER
+
 #include "rs_lisp.h"
 #include <QtGlobal>
 #include <QJsonArray>
@@ -35,8 +37,6 @@
 
 #include <iostream>
 #include <sstream>
-
-#ifdef DEVELOPER
 
 /**
  * static instance to class RS_Lisp

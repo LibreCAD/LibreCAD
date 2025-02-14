@@ -1,7 +1,8 @@
-#include "Debug.h"
-#include "String.h"
 
 #ifdef DEVELOPER
+
+#include "Debug.h"
+#include "String.h"
 
 #include <stdarg.h>
 #include <stdio.h>

@@ -26,9 +26,9 @@
 #ifndef QG_LSP_COMMANDWIDGET_H
 #define QG_LSP_COMMANDWIDGET_H
 
-#include "ui_qg_lsp_commandwidget.h"
-
 #ifdef DEVELOPER
+
+#include "ui_qg_lsp_commandwidget.h"
 
 class QG_ActionHandler;
 class QAction;

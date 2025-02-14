@@ -24,12 +24,13 @@
 
 // -- https://github.com/LibreCAD/LibreCAD --
 
+
+#ifdef DEVELOPER
+
 #include "qg_lsp_commandhistory.h"
 #include <QAction>
 #include <QMouseEvent>
 #include <QTextBlock>
-
-#ifdef DEVELOPER
 
 // -- commandline history (output) widget --
 

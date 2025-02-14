@@ -4,6 +4,8 @@
 #ifndef HIGHLIGHTER_H
 #define HIGHLIGHTER_H
 
+#ifdef DEVELOPER
+
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 #include <QRegularExpression>
@@ -44,5 +46,7 @@ private:
     QTextCharFormat bracketFormat;
 };
 //! [0]
+
+#endif // DEVELOPER
 
 #endif // HIGHLIGHTER_H

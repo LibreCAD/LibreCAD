@@ -27,6 +27,8 @@
 #ifndef RS_SCRIPTING_INPUTHANDLE_H
 #define RS_SCRIPTING_INPUTHANDLE_H
 
+#ifdef DEVELOPER
+
 #include <QLineEdit>
 
 class RS_Scripting_InputHandle : public QLineEdit
@@ -48,5 +50,7 @@ private:
     int m_size;
     QLineEdit *m_edit;
 };
+
+#endif // DEVELOPER
 
 #endif // RS_INPUTHANDLE_H

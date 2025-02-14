@@ -1,3 +1,6 @@
+
+#ifdef DEVELOPER
+
 #include "rs_scripting_inputhandle.h"
 #include <QEventLoop>
 
@@ -10,3 +13,4 @@ RS_Scripting_InputHandle::RS_Scripting_InputHandle(const QString &prombt, QLineE
     loop.exec();
 }
 
+#endif // DEVELOPER

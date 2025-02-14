@@ -4947,25 +4947,6 @@ BUILTIN("py-eval-value")
     return lcl::nilValue();
 }
 
-BUILTIN("py-eval-vector")
-{
-    CHECK_ARGS_IS(1);
-    ARG(lclString, com);
-    v3_t result;
-    int err = RS_PYTHON->evalVector(com->value().c_str(), result);
-
-    if (err == 0)
-    {
-        lclValueVec* items = new lclValueVec(3);
-        items->at(0) = lcl::ldouble(result.x);
-        items->at(1) = lcl::ldouble(result.y);
-        items->at(2) = lcl::ldouble(result.z);
-        return lcl::list(items);
-    }
-    LCL_FAIL("'py-eval-vector' exec python failed");
-    return lcl::nilValue();
-}
-
 BUILTIN("py-simple-string")
 {
     CHECK_ARGS_IS(1);

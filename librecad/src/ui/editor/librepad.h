@@ -4,6 +4,8 @@
 #ifndef NOTEPAD_H
 #define NOTEPAD_H
 
+#ifdef DEVELOPER
+
 #include <QMainWindow>
 #include <QLineEdit>
 #include <QCloseEvent>
@@ -15,8 +17,6 @@
 #include "lpsearchbar.h"
 
 #include "ui_librepad.h"
-
-#ifdef DEVELOPER
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

@@ -1,11 +1,11 @@
 #ifndef LIBRELISP_H
 #define LIBRELISP_H
 
+#ifdef DEVELOPER
+
 #include "texteditor.h"
 #include "librepad.h"
 #include <QWidget>
-
-#ifdef DEVELOPER
 
 class QG_Lsp_CommandWidget;
 

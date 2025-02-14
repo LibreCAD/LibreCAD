@@ -1,11 +1,11 @@
 #ifndef LPSEARCHBAR_H
 #define LPSEARCHBAR_H
 
+#ifdef DEVELOPER
+
 #include <QWidget>
 
 #include "librepad.h"
-
-#ifdef DEVELOPER
 
 class QVBoxLayout;
 class QToolButton;

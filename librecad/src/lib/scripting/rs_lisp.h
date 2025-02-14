@@ -27,11 +27,11 @@
 #ifndef RS_LISP_H
 #define RS_LISP_H
 
+#ifdef DEVELOPER
+
 #include <QString>
 #include <QThread>
 #include "lisp.h"
-
-#ifdef DEVELOPER
 
 #define RS_LISP RS_Lisp::instance()
 

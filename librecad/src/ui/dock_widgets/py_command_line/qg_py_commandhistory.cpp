@@ -23,12 +23,13 @@
 */
 
 // -- https://github.com/LibreCAD/LibreCAD --
+
+#ifdef DEVELOPER
+
 #include "qg_py_commandhistory.h"
 #include <QAction>
 #include <QMouseEvent>
 #include <QTextBlock>
-
-#ifdef DEVELOPER
 
 // -- commandline history (output) widget --
 

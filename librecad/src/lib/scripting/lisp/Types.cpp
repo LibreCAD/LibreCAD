@@ -1,10 +1,11 @@
+
+#ifdef DEVELOPER
+
 #include "Debug.h"
 #include "Environment.h"
 #include "Types.h"
 #include "lisp.h"
 #include "rs_color.h"
-
-#ifdef DEVELOPER
 
 #include <math.h>
 #include <iostream>

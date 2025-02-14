@@ -1,3 +1,6 @@
+
+#ifdef DEVELOPER
+
 #include "rs_lisp.h"
 #include "librelisp.h"
 
@@ -7,8 +10,6 @@
 #include <QMessageBox>
 #include <QTemporaryFile>
 #include "qg_lsp_commandwidget.h"
-
-#ifdef DEVELOPER
 
 LibreLisp::LibreLisp(QWidget *parent, const QString& fileName)
     : Librepad(parent, tr("LibreLisp"), fileName)

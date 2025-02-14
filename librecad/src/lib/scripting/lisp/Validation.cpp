@@ -1,6 +1,7 @@
-#include "Validation.h"
 
 #ifdef DEVELOPER
+
+#include "Validation.h"
 
 int checkArgsIs(const char* name, int expected, int got)
 {

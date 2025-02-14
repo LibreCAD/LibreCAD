@@ -27,6 +27,7 @@
 #ifndef RS_SCRIPTLIST_H
 #define RS_SCRIPTLIST_H
 
+#ifdef DEVELOPER
 
 #include<QList>
 #include "rs_script.h"
@@ -93,7 +94,8 @@ private:
     //QList<RS_ScriptListListener> scriptListListeners;
     //! Currently active script
     //RS_Script* activeScript;
-}
-;
+};
+
+#endif // DEVELOPER
 
 #endif

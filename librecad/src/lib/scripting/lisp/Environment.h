@@ -1,11 +1,11 @@
 #ifndef INCLUDE_ENVIRONMENT_H
 #define INCLUDE_ENVIRONMENT_H
 
+#ifdef DEVELOPER
+
 #include "LCL.h"
 
 #include <map>
-
-#ifdef DEVELOPER
 
 class lclEnv : public RefCounted {
 public:

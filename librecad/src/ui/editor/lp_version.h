@@ -1,6 +1,8 @@
 #ifndef LP_VERSION_H
 #define LP_VERSION_H
 
+#ifdef DEVELOPER
+
 #define LP_STR_HELPER(x) #x
 #define LP_STR(x) LP_STR_HELPER(x)
 
@@ -29,6 +31,8 @@
     LP_VERSION_STR_HELPER(__LP__)
 
 #endif // __LP__
+
+#endif // DEVELOPER
 
 #endif // LP_VERSION_H
 

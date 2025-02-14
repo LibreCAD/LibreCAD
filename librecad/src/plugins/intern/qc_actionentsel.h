@@ -72,6 +72,6 @@ protected:
     RS_Vector targetPoint;
 };
 
-#endif
+#endif // DEVELOPER
 
-#endif
+#endif // QC_ACTIONEMTSEL_H

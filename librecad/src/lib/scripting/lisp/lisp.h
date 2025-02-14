@@ -1,6 +1,8 @@
 #ifndef LISP_H
 #define LISP_H
 
+#ifdef DEVELOPER
+
 #include "lisp_version.h"
 #include "qg_lsp_commandedit.h"
 #include <LCL.h>
@@ -11,8 +13,6 @@
 #include <ostream>
 #include <iostream>
 #include <sstream>
-
-#ifdef DEVELOPER
 
 extern int lisp_error;
 extern class QG_Lsp_CommandEdit *Lisp_CommandEdit;

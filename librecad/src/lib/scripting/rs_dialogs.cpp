@@ -1,3 +1,6 @@
+
+#ifdef DEVELOPER
+
 #include "rs_dialogs.h"
 #include <QVBoxLayout>
 #include <QLabel>
@@ -20,3 +23,5 @@ void RS_InputDialog::keyPressEvent(QKeyEvent *event)
         accept();
     }
 }
+
+#endif // DEVELOPER

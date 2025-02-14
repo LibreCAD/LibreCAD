@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+#ifdef DEVELOPER
+
 #include "rs_python.h"
 #include "lisp.h"
 #include "rs_scriptingapi.h"
@@ -2348,3 +2350,4 @@ const std::string RS_ScriptingApi::startImage(const char *key)
     //return lcl::nilValue();
 }
 
+#endif // DEVELOPER
