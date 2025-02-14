@@ -3,9 +3,6 @@
 
 //#ifdef DEVELOPER
 
-RS_PythonLisp::RS_PythonLisp() {}
-RS_PythonLisp::~RS_PythonLisp() {}
-
 int RS_PythonLisp::RunSimpleString(const char *cmd)
 {
     return LispRun_SimpleString(cmd);

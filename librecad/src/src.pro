@@ -448,12 +448,11 @@ HEADERS += \
     lib/scripting/python/rs_pythonlisp.h \
     lib/scripting/rs_dialogs.h \
     lib/scripting/rs_lisp.h \
-    lib/scripting/rs_lsp_inputhandle.h \
-    lib/scripting/rs_py_inputhandle.h \
     lib/scripting/rs_python.h \
     lib/scripting/rs_python_wrappers.h \
     lib/scripting/rs_script.h \
     lib/scripting/rs_scriptingapi.h \
+    lib/scripting/rs_scripting_inputhandle.h \
     lib/scripting/rs_scriptlist.h \
     lib/scripting/rs_simplepython.h \
     main/lc_application.h \
@@ -636,12 +635,11 @@ SOURCES += \
     lib/scripting/python/rs_pythonlisp.cpp \
     lib/scripting/rs_dialogs.cpp \
     lib/scripting/rs_lisp.cpp \
-    lib/scripting/rs_lsp_inputhandle.cpp \
-    lib/scripting/rs_py_inputhandle.cpp \
     lib/scripting/rs_python.cpp \
     lib/scripting/rs_python_wrappers.cpp \
     lib/scripting/rs_script.cpp \
     lib/scripting/rs_scriptingapi.cpp \
+    lib/scripting/rs_scripting_inputhandle.cpp \
     lib/scripting/rs_scriptlist.cpp \
     lib/scripting/rs_simplepython.cpp \
     main/lc_application.cpp \
@@ -1083,6 +1081,7 @@ HEADERS += ui/action_options/circle/lc_circlebyarcoptions.h \
     ui/components/creators/actionlist.h \
     ui/components/creators/widgetcreator.h \
     ui/components/layouts/lc_flexlayout.h \
+    ui/components/commandedit.h \
     ui/components/lc_plaintextedit.h \
     ui/components/pen/qg_widgetpen.h \
     ui/components/qg_scrollbar.h \
@@ -1296,6 +1295,7 @@ SOURCES += ui/action_options/circle/lc_circlebyarcoptions.cpp \
     ui/components/textfileviewer.cpp \
     ui/components/toolbars/qg_pentoolbar.cpp \
     ui/components/toolbars/qg_snaptoolbar.cpp \
+    ui/components/commandedit.cpp \
     ui/dialogs/actions/modify/qg_dlgmirror.cpp \
     ui/dialogs/actions/modify/qg_dlgmove.cpp \
     ui/dialogs/actions/modify/qg_dlgmoverotate.cpp \

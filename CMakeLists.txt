@@ -805,10 +805,6 @@ set(SOURCES
         librecad/src/lib/scripting/python/rs_pythonlisp.h
         librecad/src/lib/scripting/rs_lisp.cpp
         librecad/src/lib/scripting/rs_lisp.h
-        librecad/src/lib/scripting/rs_lsp_inputhandle.cpp
-        librecad/src/lib/scripting/rs_lsp_inputhandle.h
-        librecad/src/lib/scripting/rs_py_inputhandle.cpp
-        librecad/src/lib/scripting/rs_py_inputhandle.h
         librecad/src/lib/scripting/rs_python.cpp
         librecad/src/lib/scripting/rs_python.h
         librecad/src/lib/scripting/rs_python_wrappers.cpp
@@ -817,6 +813,8 @@ set(SOURCES
         librecad/src/lib/scripting/rs_script.h
         librecad/src/lib/scripting/rs_scriptingapi.cpp
         librecad/src/lib/scripting/rs_scriptingapi.h
+        librecad/src/lib/scripting/rs_scripting_inputhandle.cpp
+        librecad/src/lib/scripting/rs_scripting_inputhandle.h
         librecad/src/lib/scripting/rs_scriptlist.cpp
         librecad/src/lib/scripting/rs_scriptlist.h
         librecad/src/lib/scripting/rs_simplepython.cpp
@@ -1226,6 +1224,8 @@ set(SOURCES
 		librecad/src/ui/action_options/modify/lc_modifygapoptions.cpp
 		librecad/src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp
 		librecad/src/ui/components/lc_plaintextedit.h
+		librecad/src/ui/components/commandedit.h
+		librecad/src/ui/components/commandedit.cpp
 		librecad/src/actions/drawing/info/lc_actioninfoproperties.cpp
 		librecad/src/actions/dock_widgets/entity_info/lc_actioninfopickcoordinates.cpp
 		librecad/src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.h

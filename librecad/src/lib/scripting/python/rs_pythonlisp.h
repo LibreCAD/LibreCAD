@@ -8,8 +8,8 @@
 class RS_PythonLisp
 {
 public:
-    RS_PythonLisp();
-    ~RS_PythonLisp();
+    RS_PythonLisp() {}
+    ~RS_PythonLisp() {}
 
     int RunSimpleString(const char *cmd);
     int RunSimpleFile(const char *filename);

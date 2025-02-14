@@ -25,16 +25,18 @@
 **********************************************************************/
 
 #include "rs_python.h"
+#include "lisp.h"
 #include "rs_scriptingapi.h"
+#include "rs_scripting_inputhandle.h"
 #include "rs_entity.h"
 #include "rs_entitycontainer.h"
 #include "rs_eventhandler.h"
+#include "rs_dialogs.h"
 
 #include "lc_undosection.h"
 
 #include "qc_applicationwindow.h"
 #include "qc_applicationwindow.h"
-
 
 #include "qg_actionhandler.h"
 
@@ -44,16 +46,16 @@
 
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QFileDialog>
+#include <QColorDialog>
+
 #include <QFile>
 #include <QTextStream>
-
-#include <QFileDialog>
+#include <QRegularExpression>
 
 #include "LCL.h"
 #include "Types.h"
 #include "Environment.h"
-
-#include <regex>
 
 /**
  * static instance to class RS_ScriptingApi
@@ -68,14 +70,6 @@ RS_ScriptingApi* RS_ScriptingApi::instance() {
     return unique;
 }
 
-RS_ScriptingApi::RS_ScriptingApi()
-{
-}
-
-RS_ScriptingApi::~RS_ScriptingApi()
-{
-}
-
 void RS_ScriptingApi::command(const QString &cmd)
 {
     QG_ActionHandler* actionHandler = nullptr;
@@ -85,6 +79,33 @@ void RS_ScriptingApi::command(const QString &cmd)
     {
         actionHandler->command(cmd.simplified());
     }
+}
+
+void RS_ScriptingApi::prompt(CommandEdit *cmdline, const char *prompt)
+{
+    if (cmdline != nullptr)
+    {
+        cmdline->setPrompt(prompt);
+        cmdline->setFocus();
+        cmdline->doProcess(false);
+
+        String result = RS_Scripting_InputHandle::readLine(QObject::tr(prompt), cmdline).toStdString();
+        Q_UNUSED(result);
+
+        cmdline->resetPrompt();
+        cmdline->doProcess(true);
+    }
+    else
+    {
+        msgInfo(qUtf8Printable(QObject::tr(prompt)));
+    }
+}
+
+
+void RS_ScriptingApi::initGet(int bit, const char *str)
+{
+    shadowEnv->set("initget_bit", lcl::integer(bit));
+    shadowEnv->set("initget_string", lcl::string(str));
 }
 
 std::string RS_ScriptingApi::copyright()
@@ -161,6 +182,19 @@ const std::string RS_ScriptingApi::getStrDlg(const char *prompt)
             QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone).toStdString();
 }
 
+const std::string RS_ScriptingApi::getFileNameDlg(const char *title, const char *filename, const char *ext)
+{
+    return QFileDialog::getOpenFileName(nullptr,
+                                        QObject::tr(title),
+                                        filename,
+                                        QObject::tr(ext)).toStdString();
+}
+
+char RS_ScriptingApi::readChar()
+{
+    return RS_InputDialog::readChar();
+}
+
 bool RS_ScriptingApi::getFiled(const char *title, const char *def, const char *ext, int flags, std::string &filename)
 {
     QString path = def;
@@ -227,10 +261,15 @@ bool RS_ScriptingApi::getFiled(const char *title, const char *def, const char *e
     return false;
 }
 
-RS_Vector RS_ScriptingApi::getCorner(const char *msg, const RS_Vector &basePoint) const
+RS_Vector RS_ScriptingApi::getCorner(CommandEdit *cmdline, const char *msg, const RS_Vector &basePoint) const
 {
     double x=0.0, y=0.0;
-    QString prompt = QObject::tr(msg);
+    QString prompt = QObject::tr("Enter a point: ");
+
+    if (strcmp(msg, ""))
+    {
+        prompt = msg;
+    }
 
     auto& appWin = QC_ApplicationWindow::getAppWindow();
     RS_Document* doc = appWin->getDocument();
@@ -257,16 +296,19 @@ RS_Vector RS_ScriptingApi::getCorner(const char *msg, const RS_Vector &basePoint
         graphicView->killAllActions();
         graphicView->setCurrentAction(a);
 
-        if (basePoint.valid)
-        {
-            base = new QPointF(basePoint.x, basePoint.y);
-            a->setBasepoint(base);
-        }
+        base = new QPointF(basePoint.x, basePoint.y);
+        a->setBasepoint(base);
 
         QEventLoop ev;
+
+        cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+        cmdline->setFocus();
+        cmdline->doProcess(false);
+
         while (!a->isCompleted())
         {
             ev.processEvents ();
+
             if (!graphicView->getEventHandler()->hasAction())
                 break;
         }
@@ -276,6 +318,9 @@ RS_Vector RS_ScriptingApi::getCorner(const char *msg, const RS_Vector &basePoint
             status = true;
         }
 
+        cmdline->resetPrompt();
+        cmdline->doProcess(true);
+
         graphicView->killAllActions();
 
         if(status)
@@ -283,26 +328,21 @@ RS_Vector RS_ScriptingApi::getCorner(const char *msg, const RS_Vector &basePoint
             x = point->x();
             y = point->y();
             delete point;
-            if (basePoint.valid)
-            {
-                delete base;
-            }
+            delete base;
+
             return RS_Vector(x, y);
         }
         else
         {
             delete point;
-            if (basePoint.valid)
-            {
-                delete base;
-            }
+            delete base;
         }
     }
 
     return RS_Vector();
 }
 
-RS_Vector RS_ScriptingApi::getPoint(const char *msg, const RS_Vector basePoint) const
+RS_Vector RS_ScriptingApi::getPoint(CommandEdit *cmdline, const char *msg, const RS_Vector basePoint) const
 {
     double x=0.0, y=0.0, z=0.0;
     QString prompt = QObject::tr(msg);
@@ -340,6 +380,12 @@ RS_Vector RS_ScriptingApi::getPoint(const char *msg, const RS_Vector basePoint) 
         }
 
         QEventLoop ev;
+
+        cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+        cmdline->setFocus();
+        cmdline->doProcess(false);
+        cmdline->doProcessLc(true);
+
         while (!a->isCompleted())
         {
             ev.processEvents ();
@@ -351,6 +397,10 @@ RS_Vector RS_ScriptingApi::getPoint(const char *msg, const RS_Vector basePoint) 
             a->getPoint(point);
             status = true;
         }
+
+        cmdline->resetPrompt();
+        cmdline->doProcess(true);
+        cmdline->doProcessLc(false);
 
         graphicView->killAllActions();
 
@@ -378,9 +428,15 @@ RS_Vector RS_ScriptingApi::getPoint(const char *msg, const RS_Vector basePoint) 
     return RS_Vector();
 }
 
-bool RS_ScriptingApi::getDist(const char *msg, const RS_Vector &basePoint, double &distance)
+bool RS_ScriptingApi::getDist(CommandEdit *cmdline, const char *msg, const RS_Vector &basePoint, double &distance)
 {
-    QString prompt = QObject::tr(msg);
+    QString prompt = QObject::tr("Enter second point: ");
+    RS_Vector start = basePoint;
+
+    if (strcmp(msg, ""))
+    {
+        prompt = msg;
+    }
 
     auto& appWin = QC_ApplicationWindow::getAppWindow();
     RS_Document* doc = appWin->getDocument();
@@ -392,76 +448,129 @@ bool RS_ScriptingApi::getDist(const char *msg, const RS_Vector &basePoint, doubl
         return false;
     }
 
-    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
-    if (a)
+    if(!start.valid)
     {
-        QPointF *point = new QPointF;
-        QPointF *base;
-        bool status = false;
-
-        if (!(prompt.isEmpty()))
+        if (prompt == QObject::tr("Enter second point: "))
         {
-            a->setMessage(prompt);
+            prompt = QObject::tr("Enter first point: ");
         }
 
-        graphicView->killAllActions();
-        graphicView->setCurrentAction(a);
+        RS_Vector result = getPoint(cmdline, qUtf8Printable(prompt), RS_Vector());
 
-        if (basePoint.valid)
+        if (result.valid)
         {
-            base = new QPointF(basePoint.x, basePoint.y);
-            a->setBasepoint(base);
+            start.x = result.x;
+            start.y = result.y;
+            start.z = result.z;
         }
         else
         {
             return false;
         }
 
+        if (prompt == QObject::tr("Enter first point: "))
+        {
+            prompt = QObject::tr("Enter second point: ");
+        }
+    }
+
+    cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+    cmdline->setFocus();
+    cmdline->doProcess(false);
+
+    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
+    if (a)
+    {
         QEventLoop ev;
+        QPointF *point = new QPointF;
+        QPointF *base = new QPointF(start.x, start.y);
+
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+        graphicView->disableCoordinateInput();
+
+        a->setBasepoint(base);
+
+        QObject::connect(cmdline, &QLineEdit::returnPressed, a, [cmdline, a, &distance, prompt]
+        {
+            const QString result = cmdline->text();
+            static const QRegularExpression floatRegExpr(QStringLiteral("^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$"));
+            QRegularExpressionMatch match = floatRegExpr.match(result);
+
+            if (result.isEmpty())
+            {
+                a->finish(true);
+            }
+
+            if (match.hasMatch())
+            {
+                qDebug() << "[result]" << result;
+                distance = result.toDouble();
+
+                a->finish(true);
+                a->Input();
+            }
+            else
+            {
+                cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+                cmdline->setFocus();
+                cmdline->doProcess(false);
+            }
+
+        } );
+
         while (!a->isCompleted())
         {
-            ev.processEvents ();
+            ev.processEvents();
+
             if (!graphicView->getEventHandler()->hasAction())
                 break;
         }
+
+        graphicView->enableCoordinateInput();
+        graphicView->killAllActions();
+        cmdline->resetPrompt();
+        cmdline->doProcess(true);
+
+        if(a->hasInput())
+        {
+            delete point;
+            delete base;
+
+            return true;
+        }
+
         if (a->isCompleted() && !a->wasCanceled())
         {
             a->getPoint(point);
-            status = true;
-        }
 
-        graphicView->killAllActions();
-
-        if(status)
-        {
-            distance = std::sqrt(std::pow(basePoint.x - point->x(), 2)
-                                + std::pow(basePoint.y - point->y(), 2));
+            distance = std::sqrt(std::pow(start.x - point->x(), 2)
+                                + std::pow(start.y - point->y(), 2));
             delete point;
-            if (basePoint.valid)
-            {
-                delete base;
-            }
+            delete base;
+
             return true;
 
         }
         else
         {
             delete point;
-            if (basePoint.valid)
-            {
-                delete base;
-            }
+            delete base;
         }
     }
 
     return false;
 }
 
-bool RS_ScriptingApi::getOrient(const char *msg, const RS_Vector &basePoint, double &rad)
+bool RS_ScriptingApi::getOrient(CommandEdit *cmdline, const char *msg, const RS_Vector &basePoint, double &rad)
 {
-    double x=0.0, y=0.0, z=0.0;
-    Q_UNUSED(z)
-    QString prompt = QObject::tr(msg);
+    QString prompt = QObject::tr("Enter second point: ");
+    RS_Vector start = basePoint;
+
+    if (strcmp(msg, ""))
+    {
+        prompt = msg;
+    }
 
     auto& appWin = QC_ApplicationWindow::getAppWindow();
     RS_Document* doc = appWin->getDocument();
@@ -473,71 +582,338 @@ bool RS_ScriptingApi::getOrient(const char *msg, const RS_Vector &basePoint, dou
         return false;
     }
 
-    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
-    if (a)
+    if(!start.valid)
     {
-        QPointF *point = new QPointF;
-        QPointF *base;
-        bool status = false;
-
-        if (!(prompt.isEmpty()))
+        if (prompt == QObject::tr("Enter second point: "))
         {
-            a->setMessage(prompt);
+            prompt = QObject::tr("Enter first point: ");
         }
 
-        graphicView->killAllActions();
-        graphicView->setCurrentAction(a);
+        RS_Vector result = getPoint(cmdline, qUtf8Printable(prompt), RS_Vector());
 
-        if (basePoint.valid)
+        if (result.valid)
         {
-            base = new QPointF(basePoint.x, basePoint.y);
-            z = basePoint.z;
-            a->setBasepoint(base);
+            start.x = result.x;
+            start.y = result.y;
+            start.z = result.z;
         }
         else
         {
             return false;
         }
 
+        if (prompt == QObject::tr("Enter first point: "))
+        {
+            prompt = QObject::tr("Enter second point: ");
+        }
+    }
+
+    cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+    cmdline->setFocus();
+    cmdline->doProcess(false);
+
+    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
+    if (a)
+    {
         QEventLoop ev;
+        QPointF *point = new QPointF;
+        QPointF *base = new QPointF(start.x, start.y);
+
+        graphicView->killAllActions();
+        graphicView->setCurrentAction(a);
+        graphicView->disableCoordinateInput();
+
+        a->setBasepoint(base);
+
+        QObject::connect(cmdline, &QLineEdit::returnPressed, a, [cmdline, a, &rad, prompt]
+        {
+            const QString result = cmdline->text();
+            static const QRegularExpression floatRegExpr(QStringLiteral("^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$"));
+            QRegularExpressionMatch match = floatRegExpr.match(result);
+
+            if (result.isEmpty())
+            {
+                a->finish(true);
+            }
+
+            if (match.hasMatch())
+            {
+                qDebug() << "[result]" << result;
+                rad = result.toDouble();
+
+                a->finish(true);
+                a->Input();
+            }
+            else
+            {
+                cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+                cmdline->setFocus();
+                cmdline->doProcess(false);
+            }
+
+        } );
+
         while (!a->isCompleted())
         {
-            ev.processEvents ();
+            ev.processEvents();
+
             if (!graphicView->getEventHandler()->hasAction())
                 break;
         }
-        if (a->isCompleted() && !a->wasCanceled())
+
+        graphicView->enableCoordinateInput();
+        graphicView->killAllActions();
+        cmdline->resetPrompt();
+        cmdline->doProcess(true);
+
+        if(a->hasInput())
         {
-            a->getPoint(point);
-            status = true;
+            delete point;
+            delete base;
+
+            return true;
         }
 
-        graphicView->killAllActions();
-
-        if(status)
+        if (a->isCompleted() && !a->wasCanceled())
         {
-            x = point->x();
-            y = point->y();
-
-            rad = std::atan2(point->y() - y, point->x() - x);
+            rad = std::atan2(base->y() - point->y(), base->x() - point->x());
             delete point;
-            if (basePoint.valid)
-            {
-                delete base;
-            }
+            delete base;
+
             return true;
         }
         else
         {
             delete point;
-            if (basePoint.valid)
-            {
-                delete base;
-            }
+            delete base;
         }
     }
 
     return false;
+}
+
+bool RS_ScriptingApi::getReal(CommandEdit *cmdline, const char *msg, double &res)
+{
+    QString prompt = "Enter a floating point number: ";
+    QString result;
+
+    if (strcmp(msg, ""))
+    {
+        prompt = msg;
+    }
+
+    if (cmdline != nullptr)
+    {
+        while (1) {
+            cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+            cmdline->setFocus();
+            cmdline->doProcess(false);
+
+            result = RS_Scripting_InputHandle::readLine(QObject::tr(qUtf8Printable(prompt)), cmdline);
+            if (result.isEmpty())
+            {
+                cmdline->resetPrompt();
+                cmdline->doProcess(true);
+                return false;
+            }
+
+            static const QRegularExpression floatRegExpr(QStringLiteral("^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$"));
+            QRegularExpressionMatch match = floatRegExpr.match(result);
+
+            if (match.hasMatch())
+            {
+                res = result.toDouble();
+                break;
+            }
+        }
+
+        cmdline->resetPrompt();
+        cmdline->doProcess(true);
+        return true;
+    }
+    else
+    {
+        res = getDoubleDlg(qUtf8Printable(prompt));
+        return true;
+    }
+    return false;
+}
+
+bool RS_ScriptingApi::getInteger(CommandEdit *cmdline, const char *msg, int &res)
+{
+    QString prompt = "Enter an integer: ";
+    QString result;
+
+    if (strcmp(msg, ""))
+    {
+        prompt = msg;
+    }
+
+    if (cmdline != nullptr)
+    {
+        while (1) {
+            cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+            cmdline->setFocus();
+            cmdline->doProcess(false);
+
+            result = RS_Scripting_InputHandle::readLine(QObject::tr(qUtf8Printable(prompt)), cmdline);
+            if (result.isEmpty())
+            {
+                cmdline->resetPrompt();
+                cmdline->doProcess(true);
+                return false;
+            }
+
+            static const QRegularExpression intRegExpr(QStringLiteral("^[+-]?[0-9]+|[+-]?0[xX][0-9A-Fa-f]"));
+            QRegularExpressionMatch match = intRegExpr.match(result);
+
+            if (match.hasMatch())
+            {
+                res = result.toInt();
+                break;
+            }
+        }
+
+        cmdline->resetPrompt();
+        cmdline->doProcess(true);
+        return true;
+    }
+    else
+    {
+        res = getIntDlg(qUtf8Printable(prompt));
+        return true;
+    }
+    return false;
+}
+
+bool RS_ScriptingApi::getString(CommandEdit *cmdline, bool cr, const char *msg, std::string &res)
+{
+    QString prompt = "Enter a text: ";
+    QString result;
+
+    Q_UNUSED(cr);
+
+    //fixme 'cr' true no return on space input
+
+    if (strcmp(msg, ""))
+    {
+        prompt = msg;
+    }
+
+    if (cmdline != nullptr)
+    {
+        while (1) {
+            cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+            cmdline->setFocus();
+            cmdline->doProcess(false);
+
+            result = RS_Scripting_InputHandle::readLine(QObject::tr(qUtf8Printable(prompt)), cmdline);
+            if (result.isEmpty())
+            {
+                cmdline->resetPrompt();
+                cmdline->doProcess(true);
+                return false;
+            }
+            else
+            {
+                res = qUtf8Printable(result);
+                break;
+            }
+
+        }
+
+        cmdline->resetPrompt();
+        cmdline->doProcess(true);
+        return true;
+    }
+    else
+    {
+        res = getStrDlg(qUtf8Printable(prompt));
+        return true;
+    }
+    return false;
+}
+
+bool RS_ScriptingApi::getKeyword(CommandEdit *cmdline, const char *msg, std::string &res)
+{
+    const lclInteger* bit = VALUE_CAST(lclInteger, shadowEnv->get("initget_bit"));
+    const lclString* pat = VALUE_CAST(lclString, shadowEnv->get("initget_string"));
+
+    std::vector<std::string> StringList;
+    std::string del = " ";
+    std::string pattern = pat->value();
+
+    auto pos = pattern.find(del);
+    while (pos != std::string::npos)
+    {
+        StringList.push_back(pattern.substr(0, pos));
+        pattern.erase(0, pos + del.length());
+        pos = pattern.find(del);
+    }
+    StringList.push_back(pattern);
+
+    if (cmdline != nullptr)
+    {
+        while (1) {
+            cmdline->setPrompt(QObject::tr(msg));
+            cmdline->setFocus();
+            cmdline->doProcess(false);
+
+            res = RS_Scripting_InputHandle::readLine(QObject::tr(msg), cmdline).toStdString();
+
+            for (auto &it : StringList) {
+                if (it == res)
+                {
+                    cmdline->resetPrompt();
+                    cmdline->doProcess(true);
+                    return true;
+                }
+            }
+
+            if ((bit->value() & 1) != 1)
+            {
+                cmdline->resetPrompt();
+                cmdline->doProcess(true);
+                return false;
+            }
+        }
+
+        cmdline->resetPrompt();
+        cmdline->doProcess(true);
+    }
+    else
+    {
+        while (1) {
+            res = getStrDlg(qUtf8Printable(QObject::tr(msg)));
+
+            for (auto &it : StringList) {
+                if (it == res)
+                {
+                    return true;
+                }
+            }
+            if ((bit->value() & 1) != 1)
+            {
+                return false;
+            }
+        }
+    }
+    return false;
+}
+
+bool RS_ScriptingApi::colorDialog(int color, bool by, int &res)
+{
+    Q_UNUSED(by);
+
+    QColor c = QColorDialog::getColor(Qt::white);
+    if (c.isValid())
+    {
+        qDebug() << "[RS_ScriptingApi::colorDialog]" << c;
+        qDebug() << "[RS_ScriptingApi::colorDialog]" << color;
+        res = color;
+    }
+
+    return 0;
 }
 
 bool RS_ScriptingApi::entdel(unsigned int id)
@@ -1039,7 +1415,9 @@ bool RS_ScriptingApi::doneDialog(int res, int &x, int &y)
 
 bool RS_ScriptingApi::setTile(const char *key, const char *val)
 {
-    static const std::regex intRegex("^[-+]?\\d+$");
+    static const QRegularExpression intRegExpr(QStringLiteral("^[-+]?\\d+$"));
+    QRegularExpressionMatch match = intRegExpr.match(val);
+
     const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
     for (auto & tile : dclTiles)
     {
@@ -1098,7 +1476,8 @@ bool RS_ScriptingApi::setTile(const char *key, const char *val)
             case DIAL:
             {
                 const lclDial* sc = static_cast<const lclDial*>(tile);
-                if (std::regex_match(val, intRegex))
+
+                if (match.hasMatch())
                 {
                     sc->slider()->setValue(atoi(val));
                 }
@@ -1107,7 +1486,7 @@ bool RS_ScriptingApi::setTile(const char *key, const char *val)
             case SCROLL:
             {
                 const lclScrollBar* sc = static_cast<const lclScrollBar*>(tile);
-                if (std::regex_match(val, intRegex))
+                if (match.hasMatch())
                 {
                     sc->slider()->setValue(atoi(val));
                 }
@@ -1116,7 +1495,7 @@ bool RS_ScriptingApi::setTile(const char *key, const char *val)
             case SLIDER:
             {
                 const lclSlider* sc = static_cast<const lclSlider*>(tile);
-                if (std::regex_match(val, intRegex))
+                if (match.hasMatch())
                 {
                     sc->slider()->setValue(atoi(val));
                 }
@@ -1841,6 +2220,42 @@ bool RS_ScriptingApi::pixImage(int x1, int y1, int x2, int y2, const char *path)
                 {
                     const lclImageButton* img = static_cast<const lclImageButton*>(tile);
                     img->button()->addPicture(x1, y1, x2, y2, tile->value().aspect_ratio, path);
+                }
+                    break;
+                default:
+                    return false;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+bool RS_ScriptingApi::slideImage(int x1, int y1, int x2, int y2, const char *path)
+{
+    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
+    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+
+    for (auto & tile : dclTiles)
+    {
+        if(tile->value().dialog_Id != dialogId->value())
+        {
+            continue;
+        }
+        if (noQuotes(tile->value().key) == key->value())
+        {
+            switch (tile->value().id)
+            {
+                case IMAGE:
+                {
+                    const lclImage* img = static_cast<const lclImage*>(tile);
+                    img->image()->addSlide(x1, y1, x2, y2, tile->value().aspect_ratio, path);
+                }
+                    break;
+                case IMAGE_BUTTON:
+                {
+                    const lclImageButton* img = static_cast<const lclImageButton*>(tile);
+                    img->button()->addSlide(x1, y1, x2, y2, tile->value().aspect_ratio, path);
                 }
                     break;
                 default:

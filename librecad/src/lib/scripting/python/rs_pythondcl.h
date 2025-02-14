@@ -32,8 +32,8 @@
 class RS_PythonDcl
 {
 public:
-    RS_PythonDcl();
-    ~RS_PythonDcl();
+    RS_PythonDcl() {}
+    ~RS_PythonDcl() {}
 
     void unloadDialog(int id);
     void endList();
@@ -60,6 +60,7 @@ public:
     PyObject *getAttr(const char *key, const char *attr) const;
     PyObject* pixImage(int x1, int y1, int x2, int y2, const char *path) const;
     PyObject* textImage(int x1, int y1, int x2, int y2, const char *text, int color) const;
+    PyObject* slideImage(int x1, int y1, int x2, int y2, const char *path) const;
     PyObject* vectorImage(int x1, int y1, int x2, int y2, int color) const;
 
 };

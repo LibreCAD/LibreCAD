@@ -27,85 +27,27 @@
 #ifndef QG_LSP_COMMANDEDIT_H
 #define QG_LSP_COMMANDEDIT_H
 
-#include <QLineEdit>
-#include <QMap>
-#include <QFile>
+#ifdef DEVELOPER
+
+#include <commandedit.h>
 #include <QString>
 
-#ifdef DEVELOPER
 
 /**
  * A lisp command line edit with some typical console features
  * (uparrow for the history, tab, ..).
  */
-class QG_Lsp_CommandEdit: public QLineEdit {
+class QG_Lsp_CommandEdit: public CommandEdit {
     Q_OBJECT
 
 public:
     QG_Lsp_CommandEdit(QWidget* parent=nullptr);
-    virtual ~QG_Lsp_CommandEdit() { writeHistoryFile(); }
-
-    virtual QString text() const ;
+    virtual ~QG_Lsp_CommandEdit() {}
 
     void runFile(const QString& path);
-    void processInput(QString input);
-    void setPrompt(const QString& p) { prom = p; prompt(); }
-    void resetPrompt();
-    void doProcess(bool proc) { m_doProcess = proc; }
-    void setCurrent();
-    QString dockName() const { return parentWidget()->objectName(); }
-
-    bool keycode_mode = false;
-
-protected:
-    bool event(QEvent* e) override;
-    void keyPressEvent(QKeyEvent* e) override;
-    void focusInEvent(QFocusEvent *e) override;
-    void focusOutEvent(QFocusEvent *e) override;
-    bool isForeignCommand(QString input);
-    void processVariable(QString input);
-
-    QString relative_ray;
-    QMap<QString, QString> variables;
-
-signals:
-    void spacePressed();
-    void tabPressed();
-    void escape();
-    void focusIn();
-    void focusOut();
-    void clearCommandsHistory();
-    void command(QString cmd);
-    void message(QString msg);
-    void keycode(QString code);
-
-private:
-    /**
-      * @brief extractCliCal, filter cli calculator math expression
-      * @param cmd, cli string
-      * @return an empty string, if calculation is performed; the input string, otherwise
-      */
-    QString filterCliCal(const QString& cmd);
-    QStringList historyList;
-    QStringList::const_iterator it = historyList.cbegin();
-    bool acceptCoordinates = false;
-    bool calculator_mode = false;
-    QString prom = QObject::tr("Command: ");
-    /* save history for next session */
-    QString m_path;
-    QFile m_histFile;
-    QTextStream  m_histFileStream;
-    /* for input mode */
-    bool m_doProcess = true;
-
-    int promptSize() const { return (int) prom.size(); }
-    void prompt() { QLineEdit::setText(prom); }
-    void readHistoryFile();
-    void writeHistoryFile();
-
-public slots:
-    void modifiedPaste();
-
+    virtual void processInput(QString input);
+    virtual void resetPrompt();
+    virtual void setCurrent();
 };
 
 #endif // DEVELOPER

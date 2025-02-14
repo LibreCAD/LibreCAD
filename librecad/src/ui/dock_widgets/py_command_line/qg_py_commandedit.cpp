@@ -26,27 +26,10 @@
 #include "rs_python.h"
 #include "qg_py_commandedit.h"
 
-#include <QApplication>
-#include <QClipboard>
-#include <QFile>
-#include <QDir>
-#include <QKeyEvent>
-#include <QRegularExpression>
-#include <QTextStream>
-#include <QDebug>
-
-#include "rs_commands.h"
-#include "rs_dialogfactory.h"
-#include "rs_math.h"
-#include "rs_settings.h"
-
-#include <iostream>
-#include <fstream>
-#include <cstdio>
-#include <stdio.h>
-#include <unistd.h>
-
 #ifdef DEVELOPER
+
+#include <QRegularExpression>
+#include <QDebug>
 
 //namespace {
 // Limits for command file reading
@@ -61,28 +44,9 @@
  * to use this constructor.
  */
 QG_Py_CommandEdit::QG_Py_CommandEdit(QWidget* parent)
-    : QLineEdit(parent)
-    , keycode_mode(false)
-    , relative_ray("none")
-    , calculator_mode(false)
-    , m_path(QDir(QDir::homePath() + QDir::separator() + ".py-history-librecad").absolutePath())
+    : CommandEdit(parent)
 {
-    setStyleSheet("selection-color: white; selection-background-color: green;");
-    setFrame(false);
-    setFocusPolicy(Qt::StrongFocus);
-    prompt();
-
-    QObject::connect(
-        this,
-        &QLineEdit::cursorPositionChanged,
-        this,
-        [this](){
-            if (cursorPosition() < promptSize()) {
-                setCursorPosition(promptSize());
-            }
-        });
-
-    readHistoryFile();
+    resetPrompt();
 }
 
 void QG_Py_CommandEdit::resetPrompt()
@@ -91,134 +55,14 @@ void QG_Py_CommandEdit::resetPrompt()
     prompt();
 }
 
-void QG_Py_CommandEdit::readHistoryFile()
-{
-    m_histFile.setFileName(m_path);
-
-    if (m_histFile.open(QIODevice::ReadOnly | QIODevice::Text | QIODevice::ReadWrite))
-    {
-        m_histFileStream.setDevice(&m_histFile);
-        while (!m_histFileStream.atEnd())
-        {
-            historyList.append(m_histFileStream.readLine());
-        }
-        it = historyList.end();
-    }
-    m_histFile.close();
-}
-
-void QG_Py_CommandEdit::writeHistoryFile()
-{
-    m_histFile.setFileName(m_path);
-
-    if (m_histFile.open(QIODevice::ReadWrite)) {
-
-        m_histFileStream.setDevice(&m_histFile);
-
-        for (const auto& i : historyList) {
-            m_histFileStream << i << "\n";
-        }
-        m_histFile.close();
-    }
-}
-
-QString QG_Py_CommandEdit::text() const
-{
-    QString str = QLineEdit::text();
-    return (QLineEdit::text().size() >= promptSize()) ? str.remove(0, promptSize()) : QLineEdit::text();
-}
-
-/**
- * Bypass for key press events from keys...
- */
-bool QG_Py_CommandEdit::event(QEvent* e) {
-    return QLineEdit::event(e);
-}
-
-/**
- * History (arrow key up/down) support
- */
-void QG_Py_CommandEdit::keyPressEvent(QKeyEvent* e)
-{
-    switch (e->key())
-    {
-    case Qt::Key_Up:
-        if (!historyList.isEmpty() && it > historyList.begin())
-        {
-            it--;
-            setText(prom + *it);
-        }
-        break;
-    case Qt::Key_Down:
-        if (!historyList.isEmpty() && it < historyList.end() )
-        {
-            it++;
-            if (it<historyList.end()) {
-                setText(prom + *it);
-            }
-            else {
-                prompt();
-            }
-        }
-        break;
-    case Qt::Key_Backspace:
-        if (cursorPosition() == promptSize())
-        {
-            break;
-        }
-        if (QLineEdit::text().size() > promptSize())
-        {
-            QLineEdit::keyPressEvent(e);
-        }
-        break;
-    case Qt::Key_Enter:
-    case Qt::Key_Return:
-        processInput(text());
-        emit returnPressed();
-        break;
-    case Qt::Key_Escape:
-        if (text().isEmpty()) {
-            emit escape();
-        }
-        else {
-            prompt();
-        }
-        break;
-    default:
-        QLineEdit::keyPressEvent(e);
-        break;
-    }
-
-    if (keycode_mode)
-    {
-        qDebug() << __func__ << "keycode_mode";
-        auto input = text();
-        if (input.size() == 2)
-        {
-            emit keycode(input);
-        }
-    }
-}
-
-void QG_Py_CommandEdit::focusInEvent(QFocusEvent *e) {
-    emit focusIn();
-    setCurrent();
-    QLineEdit::focusInEvent(e);
-}
-
-void QG_Py_CommandEdit::focusOutEvent(QFocusEvent *e) {
-    emit focusOut();
-    QLineEdit::focusOutEvent(e);
-}
-
 void QG_Py_CommandEdit::processInput(QString input)
 {
     setCurrent();
 
-    if (!m_doProcess)
+    if (!m_doProcess && !m_doProcessLc)
     {
         qDebug() << "[QG_Py_CommandEdit::processInput] !m_doProcess";
-        emit message(prom);
+        emit message("");
         m_doProcess = true;
         return;
     }
@@ -227,7 +71,15 @@ void QG_Py_CommandEdit::processInput(QString input)
     {
         qDebug() << "[QG_Py_CommandEdit::processInput] input.size() == 0";
         it = historyList.end();
-        emit message(prom);
+        emit message("");
+        prompt();
+        return;
+    }
+
+    if (input == "clear" ||
+        input == QObject::tr("clear"))
+    {
+        emit clearCommandsHistory();
         prompt();
         return;
     }
@@ -245,7 +97,7 @@ void QG_Py_CommandEdit::processInput(QString input)
         // author: ravas
 
         // convert 10..0 to @10,0
-        static QRegularExpression regex(R"~(([-\w\.\\]+)\.\.)~");
+        static const QRegularExpression regex(R"~(([-\w\.\\]+)\.\.)~");
         input.replace(regex, "@\\1,");
 
         if (isForeignCommand(input))
@@ -288,8 +140,8 @@ void QG_Py_CommandEdit::processInput(QString input)
     historyList.append(input);
 
     it = historyList.end();
-    emit message(prom + input);
-    qInfo() << qUtf8Printable(prom + input);
+    emit message(input);
+    qInfo() << qUtf8Printable(input);
     if (buffer_out.compare("") != 0) {
         const QString out = buffer_out.remove(buffer_out.size()-1,1);
         emit message(out);
@@ -302,22 +154,6 @@ void QG_Py_CommandEdit::processInput(QString input)
     }
     prompt();
 }
-
-bool QG_Py_CommandEdit::isForeignCommand(QString input)
-{
-    // author: ravas
-
-    bool r_value = true;
-
-    if (input.contains("="))
-    {
-        auto var_value = input.split("=");
-        variables[var_value[0]] = var_value[1];
-        r_value = false;
-    }
-    return r_value;
-}
-
 
 void QG_Py_CommandEdit::setCurrent()
 {
@@ -342,62 +178,6 @@ void QG_Py_CommandEdit::runFile(const QString& path)
         emit message(err);
         qInfo() << qUtf8Printable(err);
     }
-}
-
-void QG_Py_CommandEdit::processVariable(QString input)
-{
-    // author: ravas
-
-    if (input.contains(","))
-    {
-        QString rel = "";
-
-        if (input.contains("@"))
-        {
-            rel = "@";
-            input.remove("@");
-        }
-
-        auto x_y = input.split(",");
-        if (x_y[0].contains("\\"))
-        {
-            x_y[0].remove("\\");
-            if (variables.contains(x_y[0]))
-                x_y[0] = variables[x_y[0]];
-        }
-        if (x_y[1].contains("\\"))
-        {
-            x_y[1].remove("\\");
-            if (variables.contains(x_y[1]))
-                x_y[1] = variables[x_y[1]];
-        }
-        emit command(rel + x_y[0] + "," + x_y[1]);
-        return;
-    }
-
-    input.remove("\\");
-    if (variables.contains(input))
-    {
-        input = variables[input];
-        if (input.contains(";"))
-        {
-            foreach (auto str, input.split(";"))
-            {
-                if (str.contains("\\"))
-                    processVariable(str);
-                else
-                    emit command(str);
-            }
-        }
-        else emit command(input);
-    }
-}
-
-void QG_Py_CommandEdit::modifiedPaste()
-{
-    auto txt = qApp->clipboard()->text();
-    txt.replace("\n", ";");
-    setText(txt);
 }
 
 #endif // DEVELOPER

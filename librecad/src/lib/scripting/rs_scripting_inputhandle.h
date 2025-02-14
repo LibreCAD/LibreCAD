@@ -24,28 +24,29 @@
 **
 **********************************************************************/
 
-#ifndef RS_LSP_INPUTHANDLE_H
-#define RS_LSP_INPUTHANDLE_H
+#ifndef RS_SCRIPTING_INPUTHANDLE_H
+#define RS_SCRIPTING_INPUTHANDLE_H
 
-#include "qg_lsp_commandedit.h"
+#include <QLineEdit>
 
-class RS_Lsp_InputHandle : public QG_Lsp_CommandEdit
+class RS_Scripting_InputHandle : public QLineEdit
 {
     Q_OBJECT
 public:
-    explicit RS_Lsp_InputHandle(QG_Lsp_CommandEdit *parent = nullptr);
-    ~RS_Lsp_InputHandle() {}
+    explicit RS_Scripting_InputHandle(const QString &prombt, QLineEdit *parent = nullptr);
+    ~RS_Scripting_InputHandle() {}
 
-    static QString readLine(QG_Lsp_CommandEdit *parent = nullptr)
+    static QString readLine(const QString &prombt, QLineEdit *parent = nullptr)
     {
-        RS_Lsp_InputHandle hdl(parent);
+        RS_Scripting_InputHandle hdl(prombt, parent);
         return hdl.getString();
     }
 
-    QString getString() const { return m_edit->text(); }
+    QString getString() const { return m_edit->text().remove(0, m_size); }
 
 private:
-    QG_Lsp_CommandEdit *m_edit;
+    int m_size;
+    QLineEdit *m_edit;
 };
 
 #endif // RS_INPUTHANDLE_H

@@ -30,14 +30,6 @@
 
 #include "qc_applicationwindow.h"
 
-RS_PythonCore::RS_PythonCore()
-{
-}
-
-RS_PythonCore::~RS_PythonCore()
-{
-}
-
 RS_Document* RS_PythonCore::getDocument() const
 {
     return QC_ApplicationWindow::getAppWindow()->getDocument();
@@ -78,19 +70,18 @@ void RS_PythonCore::command(const char *cmd)
     }
 }
 
-PyObject *RS_PythonCore::entlast()
+PyObject *RS_PythonCore::entlast() const
 {
     unsigned int id = RS_SCRIPTINGAPI->entlast();
-
-    return id > 0 ? Py_BuildValue("{s:i}", "-1", static_cast<int>(id)) : Py_None;
+    return id > 0 ? Py_BuildValue("i", (int)id) : Py_None;
 }
 
-PyObject *RS_PythonCore::entdel(unsigned int id)
+PyObject *RS_PythonCore::entdel(unsigned int id) const
 {
-    return RS_SCRIPTINGAPI->entdel(id) ? Py_BuildValue("{s:i}", "-1", static_cast<int>(id)) : Py_None;
+    return RS_SCRIPTINGAPI->entdel(id) ? Py_BuildValue("i", (int)id) : Py_None;
 }
 
-PyObject *RS_PythonCore::entsel(const char* prombt)
+PyObject *RS_PythonCore::entsel(const char* prombt) const
 {
     QString prom = "Select object:";
     unsigned long id;
@@ -115,10 +106,13 @@ PyObject *RS_PythonCore::entsel(const char* prombt)
             Py_CommandEdit->resetPrompt();
         }
 
-        return Py_BuildValue("(i(ddd)))", id, result.x, result.y, result.z);
+        return Py_BuildValue("(i(ddd))", id, result.x, result.y, result.z);
     }
 
-    Py_CommandEdit->resetPrompt();
+    if (Py_CommandEdit != nullptr)
+    {
+        Py_CommandEdit->resetPrompt();
+    }
 
     Py_RETURN_NONE;
 }

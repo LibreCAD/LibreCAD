@@ -28,14 +28,6 @@
 #include "rs_pythondcl.h"
 #include "rs_scriptingapi.h"
 
-RS_PythonDcl::RS_PythonDcl()
-{
-}
-
-RS_PythonDcl::~RS_PythonDcl()
-{
-}
-
 int RS_PythonDcl::loadDialog(const char *filename)
 {
     return RS_SCRIPTINGAPI->loadDialog(filename);
@@ -144,6 +136,11 @@ PyObject* RS_PythonDcl::vectorImage(int x1, int y1, int x2, int y2, int color) c
 PyObject* RS_PythonDcl::pixImage(int x1, int y1, int x2, int y2, const char *path) const
 {
     return RS_SCRIPTINGAPI->pixImage(x1, y1, x2, y2, path) ? Py_BuildValue("s", path) : Py_None;
+}
+
+PyObject* RS_PythonDcl::slideImage(int x1, int y1, int x2, int y2, const char *path) const
+{
+    return RS_SCRIPTINGAPI->slideImage(x1, y1, x2, y2, path) ? Py_BuildValue("s", path) : Py_None;
 }
 
 PyObject* RS_PythonDcl::textImage(int x1, int y1, int x2, int y2, const char *text, int color) const

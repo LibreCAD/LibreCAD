@@ -9,8 +9,7 @@
 #include "lisp.h"
 #include "rs_scriptingapi.h"
 #include "rs.h"
-#include "rs_dialogs.h"
-#include "rs_lsp_inputhandle.h"
+#include "rs_scripting_inputhandle.h"
 
 #include "rs_eventhandler.h"
 #include "rs_graphicview.h"
@@ -60,12 +59,6 @@
 #include <iostream>
 #include <filesystem>
 #include <random>
-
-#include <QEventLoop>
-#include <QFile>
-#include <QPainter>
-#include <QPen>
-#include <QDir>
 
 /* temp defined */
 #include <regex>
@@ -513,12 +506,30 @@ BUILTIN("abs")
     }
 }
 
+BUILTIN("acad_colordlg")
+{
+    int args = CHECK_ARGS_BETWEEN(1, 2);
+    AG_INT(color);
+    bool by = true;
+
+    if (args == 2 && NIL_PTR)
+    {
+        by = false;
+    }
+
+    int result;
+    return RS_SCRIPTINGAPI->colorDialog(color->value(),
+                                        by,
+                                        result) ? lcl::integer(result) : lcl::nilValue();
+}
+
 BUILTIN("action_tile") {
     CHECK_ARGS_IS(2);
     ARG(lclString, id);
     ARG(lclString, action);
 
-    return RS_SCRIPTINGAPI->actionTile(id->value().c_str(), action->value().c_str()) ? lcl::trueValue() : lcl::nilValue();
+    return RS_SCRIPTINGAPI->actionTile(id->value().c_str(),
+                                       action->value().c_str()) ? lcl::trueValue() : lcl::nilValue();
 }
 
 BUILTIN("add_list")
@@ -526,100 +537,9 @@ BUILTIN("add_list")
     CHECK_ARGS_IS(1);
     ARG(lclString, val);
 
-    const lclString  *key       = VALUE_CAST(lclString, dclEnv->get("start_list_key"));
-    const lclInteger *operation = VALUE_CAST(lclInteger, dclEnv->get("start_list_operation"));
-    const lclInteger *dialogId  = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
-
-    if (key)
-    {
-        qDebug() << "add_list key: " << key->value().c_str();
-        for (auto & tile : dclTiles)
-        {
-            if(tile->value().dialog_Id != dialogId->value())
-            {
-                continue;
-            }
-            if (noQuotes(tile->value().key) == key->value())
-            {
-                if (tile->value().id == LIST_BOX)
-                {
-                    qDebug() << "add_list got LIST_BOX";
-                    const lclListBox *lb = static_cast<const lclListBox*>(tile);
-                    if(operation->value() == 1)
-                    {
-                        if(dclEnv->get("start_list_index").ptr()->print(true) == "nil")
-                        {
-                            return lcl::nilValue();
-                        }
-                        const lclInteger *index = VALUE_CAST(lclInteger, dclEnv->get("start_list_index"));
-                        QListWidgetItem *item = lb->list()->item(index->value());
-                        item->setText(val->value().c_str());
-                        return lcl::string(val->value());
-                    }
-                    if(operation->value() == 3)
-                    {
-                        lb->list()->clear();
-                    }
-                    if(operation->value() == 2 ||
-                        operation->value() == 3)
-                    {
-                        lb->list()->addItem(new QListWidgetItem(val->value().c_str(), lb->list()));
-
-                        if(noQuotes(tile->value().value) != "")
-                        {
-                            bool ok;
-                            int i = QString::fromStdString(noQuotes(tile->value().value)).toInt(&ok);
-
-                            if (ok && lb->list()->count() == i)
-                            {
-                                lb->list()->setCurrentRow(i-1);
-                            }
-                        }
-
-                        return lcl::string(val->value());
-                    }
-                }
-                if (tile->value().id == POPUP_LIST)
-                {
-                    qDebug() << "add_list got POPUP_LIST";
-                    const lclPopupList *pl = static_cast<const lclPopupList*>(tile);
-                    if(operation->value() == 1)
-                    {
-                        if(dclEnv->get("start_list_index").ptr()->print(true) == "nil")
-                        {
-                            return lcl::nilValue();
-                        }
-                        const lclInteger *index = VALUE_CAST(lclInteger, dclEnv->get("start_list_index"));
-                        pl->list()->setItemText(index->value(), val->value().c_str());
-                        return lcl::string(val->value());
-                    }
-                    if(operation->value() == 3)
-                    {
-                        pl->list()->clear();
-                    }
-                    if(operation->value() == 2 ||
-                        operation->value() == 3)
-                    {
-                        pl->list()->addItem(val->value().c_str());
-
-                        if(noQuotes(tile->value().value) != "")
-                        {
-                            bool ok;
-                            int i = QString::fromStdString(noQuotes(tile->value().value)).toInt(&ok);
-
-                            if (ok && pl->list()->count() == i)
-                            {
-                                pl->list()->setCurrentIndex(i-1);
-                            }
-                        }
-
-                        return lcl::string(val->value());
-                    }
-                }
-            }
-        }
-    }
-    return lcl::nilValue();
+    static std::string result;
+    return RS_SCRIPTINGAPI->addList(val->value().c_str(),
+                                    result) ? lcl::string(result) : lcl::nilValue();
 }
 
 BUILTIN("alert")
@@ -628,7 +548,6 @@ BUILTIN("alert")
     ARG(lclString, msg);
 
     RS_SCRIPTINGAPI->msgInfo(msg->value().c_str());
-
     return lcl::nilValue();
 }
 
@@ -3107,12 +3026,11 @@ BUILTIN("fill_image")
     AG_INT(height);
     AG_INT(color);
 
-    if (RS_SCRIPTINGAPI->fillImage(x->value(), y->value(), width->value(), height->value(), color->value()))
-    {
-        return lcl::integer(color->value());
-    }
-
-    return lcl::nilValue();
+    return RS_SCRIPTINGAPI->fillImage(x->value(),
+                                      y->value(),
+                                      width->value(),
+                                      height->value(),
+                                      color->value()) ? lcl::integer(color->value()) : lcl::nilValue();
 }
 
 BUILTIN("first")
@@ -3215,7 +3133,7 @@ BUILTIN("get_tile")
 BUILTIN("getcorner")
 {
     int args = CHECK_ARGS_BETWEEN(1, 2);
-    QString prompt = QObject::tr("Enter a point: ");
+    QString prompt;
     double x=0.0, y=0.0, z=0.0;
     ARG(lclSequence, ptn);
 
@@ -3293,18 +3211,7 @@ BUILTIN("getcorner")
         prompt = QObject::tr(msg->value().c_str());
     }
 
-    if (Lisp_CommandEdit != nullptr)
-    {
-        Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-        Lisp_CommandEdit->setFocus();
-    }
-
-    RS_Vector result = RS_SCRIPTINGAPI->getCorner(qUtf8Printable(prompt), RS_Vector(x, y, z));
-
-    if (Lisp_CommandEdit != nullptr)
-    {
-        Lisp_CommandEdit->resetPrompt();
-    }
+    RS_Vector result = RS_SCRIPTINGAPI->getCorner(Lisp_CommandEdit, qUtf8Printable(prompt), RS_Vector(x, y, z));
 
     if (result.valid)
     {
@@ -3322,7 +3229,7 @@ BUILTIN("getcorner")
 BUILTIN("getdist")
 {
     int args = CHECK_ARGS_BETWEEN(0, 2);
-    QString prompt = QObject::tr("Enter second point: ");
+    QString prompt;
     double x=0.0, y=0.0, z=0.0;
     double distance;
     bool ref = false;
@@ -3407,60 +3314,17 @@ BUILTIN("getdist")
             }
         }
 
-        if (argsBegin->ptr()->type() == LCLTYPE::STR)
+        if ((!ref && args == 1) || (args == 2))
         {
             ARG(lclString, msg);
             prompt = QObject::tr(msg->value().c_str());
         }
     }
 
-    if (!ref)
-    {
-        if (Lisp_CommandEdit != nullptr)
-        {
-            Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable("Enter first point: ")));
-            Lisp_CommandEdit->setFocus();
-        }
-
-        RS_Vector result = RS_SCRIPTINGAPI->getPoint(qUtf8Printable(prompt), RS_Vector());
-
-        if (result.valid)
-        {
-            x = result.x;
-            y = result.y;
-            z = result.z;
-        }
-        else
-        {
-            if (Lisp_CommandEdit != nullptr)
-            {
-                Lisp_CommandEdit->resetPrompt();
-            }
-            return lcl::nilValue();
-        }
-    }
-
-    if (Lisp_CommandEdit != nullptr)
-    {
-        Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-        Lisp_CommandEdit->setFocus();
-    }
-
-    if (RS_SCRIPTINGAPI->getDist(qUtf8Printable(prompt), RS_Vector(x, y, z), distance))
-    {
-        if (Lisp_CommandEdit != nullptr)
-        {
-            Lisp_CommandEdit->resetPrompt();
-        }
-        return lcl::ldouble(distance);
-    }
-
-    if (Lisp_CommandEdit != nullptr)
-    {
-        Lisp_CommandEdit->resetPrompt();
-    }
-
-    return lcl::nilValue();
+    return RS_SCRIPTINGAPI->getDist(Lisp_CommandEdit,
+                                    qUtf8Printable(prompt),
+                                    ref ? RS_Vector(x, y, z) : RS_Vector(),
+                                    distance) ? lcl::ldouble(distance) : lcl::nilValue();
 }
 
 BUILTIN("getenv")
@@ -3494,9 +3358,8 @@ BUILTIN("getfiled")
 BUILTIN("getint")
 {
     int args = CHECK_ARGS_BETWEEN(0, 1);
-    int x = 0;
-    QString prompt = "Enter an integer: ";
-    QString result;
+    int result;
+    QString prompt = "";
 
     if (args == 1)
     {
@@ -3504,95 +3367,26 @@ BUILTIN("getint")
         prompt = str->value().c_str();
     }
 
-    if (Lisp_CommandEdit != nullptr)
-    {
-        while (1) {
-            Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-            Lisp_CommandEdit->setFocus();
-            Lisp_CommandEdit->doProcess(false);
-
-            result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit);
-            if (result.isEmpty())
-            {
-                Lisp_CommandEdit->resetPrompt();
-                return lcl::nilValue();
-            }
-            if (std::regex_match(qUtf8Printable(result), intRegex))
-            {
-                x = result.toInt();
-                break;
-            }
-        }
-
-        Lisp_CommandEdit->resetPrompt();
-        return lcl::integer(x);
-    }
-    else
-    {
-        x = RS_SCRIPTINGAPI->getIntDlg(qUtf8Printable(prompt));
-
-        return lcl::integer(x);
-    }
+    return RS_SCRIPTINGAPI->getInteger(Lisp_CommandEdit,
+                                    qUtf8Printable(prompt),
+                                    result) ? lcl::integer(result) : lcl::nilValue();
 }
 
 BUILTIN("getkword") {
-    CHECK_ARGS_IS(1);
-    ARG(lclString, msg);
-    const lclInteger* bit = VALUE_CAST(lclInteger, shadowEnv->get("initget_bit"));
-    const lclString* pat = VALUE_CAST(lclString, shadowEnv->get("initget_string"));
-
-    std::vector<String> StringList;
-    String del = " ";
+    int args = CHECK_ARGS_BETWEEN(0, 1);
+    QString prompt = "";
     String result;
-    String pattern = pat->value();
 
-    auto pos = pattern.find(del);
-    while (pos != String::npos) {
-        StringList.push_back(pattern.substr(0, pos));
-        pattern.erase(0, pos + del.length());
-        pos = pattern.find(del);
-    }
-    StringList.push_back(pattern);
-
-    if (Lisp_CommandEdit != nullptr)
+    if (args == 1)
     {
-        while (1) {
-            Lisp_CommandEdit->setPrompt(QObject::tr(msg->value().c_str()));
-            Lisp_CommandEdit->setFocus();
-            Lisp_CommandEdit->doProcess(false);
-            result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit).toStdString();
-
-            for (auto &it : StringList) {
-                if (it == result)
-                {
-                    Lisp_CommandEdit->resetPrompt();
-                    return lcl::string(result);
-                }
-            }
-            if ((bit->value() & 1) != 1)
-            {
-                Lisp_CommandEdit->resetPrompt();
-                return lcl::nilValue();
-            }
-        }
-    }
-    else
-    {
-        while (1) {
-            result = RS_SCRIPTINGAPI->getStrDlg(msg->value().c_str());
-
-            for (auto &it : StringList) {
-                if (it == result) {
-                    return lcl::string(result);
-                }
-            }
-            if ((bit->value() & 1) != 1) {
-                return lcl::nilValue();
-            }
-        }
+        ARG(lclString, str);
+        prompt = str->value().c_str();
     }
 
-    return lcl::nilValue();
+    return RS_SCRIPTINGAPI->getKeyword(Lisp_CommandEdit,
+                                      qUtf8Printable(prompt),
+                                      result) ? lcl::string(result) : lcl::nilValue();
+
 }
 
 BUILTIN("getorient")
@@ -3700,53 +3494,10 @@ BUILTIN("getorient")
         }
     }
 
-    if (!ref)
-    {
-        if (Lisp_CommandEdit != nullptr)
-        {
-            Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable("Enter first point: ")));
-            Lisp_CommandEdit->setFocus();
-        }
-
-        RS_Vector result = RS_SCRIPTINGAPI->getPoint(qUtf8Printable(prompt), RS_Vector());
-
-        if (result.valid)
-        {
-            x = result.x;
-            y = result.y;
-            z = result.z;
-        }
-        else
-        {
-            if (Lisp_CommandEdit != nullptr)
-            {
-                Lisp_CommandEdit->resetPrompt();
-            }
-            return lcl::nilValue();
-        }
-    }
-
-    if (Lisp_CommandEdit != nullptr)
-    {
-        Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-        Lisp_CommandEdit->setFocus();
-    }
-
-    if(RS_SCRIPTINGAPI->getOrient(qUtf8Printable(prompt), RS_Vector(x, y, z), radius))
-    {
-        if (Lisp_CommandEdit != nullptr)
-        {
-            Lisp_CommandEdit->resetPrompt();
-        }
-        return lcl::ldouble(radius);
-    }
-
-    if (Lisp_CommandEdit != nullptr)
-    {
-        Lisp_CommandEdit->resetPrompt();
-    }
-
-    return lcl::nilValue();
+    return RS_SCRIPTINGAPI->getOrient(Lisp_CommandEdit,
+                                    qUtf8Printable(prompt),
+                                    ref ? RS_Vector(x, y, z) : RS_Vector(),
+                                    radius) ? lcl::ldouble(radius) : lcl::nilValue();
 }
 
 BUILTIN("getpoint")
@@ -3843,18 +3594,7 @@ BUILTIN("getpoint")
         }
     }
 
-    if (Lisp_CommandEdit != nullptr)
-    {
-        Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-        Lisp_CommandEdit->setFocus();
-    }
-
-    RS_Vector result = RS_SCRIPTINGAPI->getPoint(qUtf8Printable(prompt), ref ? RS_Vector(x, y, z) : RS_Vector());
-
-    if (Lisp_CommandEdit != nullptr)
-    {
-        Lisp_CommandEdit->resetPrompt();
-    }
+    RS_Vector result = RS_SCRIPTINGAPI->getPoint(Lisp_CommandEdit, qUtf8Printable(prompt), ref ? RS_Vector(x, y, z) : RS_Vector());
 
     if (result.valid)
     {
@@ -3872,85 +3612,46 @@ BUILTIN("getpoint")
 BUILTIN("getreal")
 {
     int args = CHECK_ARGS_BETWEEN(0, 1);
-    double x = 0;
-    QString prompt = "Enter a floating point number: ";
-    QString result;
+    double result;
+    QString prompt = "";
 
     if (args == 1)
     {
         ARG(lclString, str);
         prompt = str->value().c_str();
     }
-    if (Lisp_CommandEdit != nullptr)
-    {
-        while (1) {
-            Lisp_CommandEdit->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-            Lisp_CommandEdit->setFocus();
-            Lisp_CommandEdit->doProcess(false);
 
-            result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit);
-            if (result.isEmpty())
-            {
-                Lisp_CommandEdit->resetPrompt();
-                return lcl::nilValue();
-            }
-            if (std::regex_match(qUtf8Printable(result), floatRegex))
-            {
-                x = result.toDouble();
-                break;
-            }
-        }
-
-        Lisp_CommandEdit->resetPrompt();
-        return lcl::ldouble(x);
-    }
-    else
-    {
-        x = RS_SCRIPTINGAPI->getDoubleDlg(qUtf8Printable(prompt));
-
-        return lcl::ldouble(x);
-    }
+    return RS_SCRIPTINGAPI->getReal(Lisp_CommandEdit,
+                                    qUtf8Printable(prompt),
+                                    result) ? lcl::ldouble(result) : lcl::nilValue();
 }
 
 BUILTIN("getstring")
 {
     int args = CHECK_ARGS_BETWEEN(0, 2);
-    QString s = "";
-    QString prompt = "Enter a text: ";
+    String result;
+    QString prompt = "";
+    bool cr = false;
 
     if (args == 2)
     {
-        //FIXME T or nil or not exists imput with " " space
+        if(TRUE_PTR && T_PTR)
+        {
+            cr = true;
+        }
         argsBegin++;
     }
     if (args >= 1)
     {
-        //FIXME T or nil or not exists imput with " " space
         ARG(lclString, str);
         prompt = str->value().c_str();
     }
-    if (Lisp_CommandEdit != nullptr)
-    {
-        Lisp_CommandEdit->setPrompt(prompt);
-        Lisp_CommandEdit->setFocus();
-        Lisp_CommandEdit->doProcess(false);
 
-        String result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit).toStdString();
-        Lisp_CommandEdit->resetPrompt();
-        if (result == "")
-        {
-            return lcl::nilValue();
-        }
-        return lcl::string(result);
-    }
-    else
-    {
-        s = RS_SCRIPTINGAPI->getStrDlg(qUtf8Printable(prompt)).c_str();
+    return RS_SCRIPTINGAPI->getString(Lisp_CommandEdit,
+                                      cr,
+                                      qUtf8Printable(prompt),
+                                      result) ? lcl::string(result) : lcl::nilValue();
 
-        return lcl::string(s.toStdString());
-    }
-
-    return lcl::string(s.toStdString());
 }
 
 BUILTIN("getvar") {
@@ -3986,15 +3687,15 @@ BUILTIN("help")
 
 BUILTIN("initget") {
     int args = CHECK_ARGS_BETWEEN(1, 2);
-    if (argsBegin->ptr()->type() == LCLTYPE::INT && args == 2) {
-        shadowEnv->set("initget_bit", EVAL(*argsBegin++, NULL));
-        shadowEnv->set("initget_string", EVAL(*argsBegin, NULL));
+    int bit = 0;
+    if (args == 2)
+    {
+        AG_INT(b);
+        bit = b->value();
     }
-    else {
-        //qDebug() << "initget EVAL" << EVAL(*argsBegin, NULL)->print(true).c_str();
-        shadowEnv->set("initget_bit", lcl::integer(0));
-        shadowEnv->set("initget_string", EVAL(*argsBegin, NULL));
-    }
+    ARG(lclString, str);
+    RS_SCRIPTINGAPI->initGet(bit, str->value().c_str());
+
     return lcl::nilValue();
 }
 
@@ -4503,12 +4204,11 @@ BUILTIN("pix_image")
     AG_INT(height);
     ARG(lclString, path);
 
-    if (RS_SCRIPTINGAPI->pixImage(x->value(), y->value(), width->value(), height->value(), path->value().c_str()))
-    {
-        return lcl::string(path->value());
-    }
-
-    return lcl::nilValue();
+    return RS_SCRIPTINGAPI->pixImage(x->value(),
+                                     y->value(),
+                                     width->value(),
+                                     height->value(),
+                                     path->value().c_str()) ? lcl::string(path->value()) : lcl::nilValue();
 }
 
 BUILTIN("polar")
@@ -5150,21 +4850,8 @@ BUILTIN("prompt")
     CHECK_ARGS_IS(1);
     ARG(lclString, str);
 
-    if (Lisp_CommandEdit != nullptr)
-    {
-        Lisp_CommandEdit->setPrompt(str->value().c_str());
-        Lisp_CommandEdit->setFocus();
-        Lisp_CommandEdit->doProcess(false);
+    RS_SCRIPTINGAPI->prompt(Lisp_CommandEdit, str->value().c_str());
 
-        String result = RS_Lsp_InputHandle::readLine(Lisp_CommandEdit).toStdString();
-        Q_UNUSED(result);
-
-        Lisp_CommandEdit->resetPrompt();
-    }
-    else
-    {
-        RS_SCRIPTINGAPI->msgInfo(str->value().c_str());
-    }
     return lcl::nilValue();
 }
 
@@ -5345,7 +5032,7 @@ BUILTIN("read-char")
 {
     if (!CHECK_ARGS_AT_LEAST(0))
     {
-        return lcl::integer(int(RS_InputDialog::readChar()));
+        return lcl::integer(int(RS_SCRIPTINGAPI->readChar()));
     }
     ARG(lclFile, pf);
 
@@ -5707,12 +5394,12 @@ BUILTIN("text_image")
     ARG(lclString, text);
     AG_INT(color);
 
-    if (RS_SCRIPTINGAPI->textImage(x->value(), y->value(), width->value(), height->value(), text->value().c_str(), color->value()))
-    {
-        return lcl::string(text->value());
-    }
-
-    return lcl::nilValue();
+    return RS_SCRIPTINGAPI->textImage(x->value(),
+                                      y->value(),
+                                      width->value(),
+                                      height->value(),
+                                      text->value().c_str(),
+                                      color->value()) ?  lcl::string(text->value()) : lcl::nilValue();
 }
 
 BUILTIN("throw")
@@ -6172,39 +5859,12 @@ BUILTIN("slide_image")
     AG_INT(height);
     ARG(lclString, filename);
 
-    const lclString *key = VALUE_CAST(lclString, dclEnv->get("start_image_key"));
-    const lclInteger *dialogId = VALUE_CAST(lclInteger, dclEnv->get("load_dialog_id"));
+    return RS_SCRIPTINGAPI->slideImage(x1->value(),
+                                       y1->value(),
+                                       width->value(),
+                                       height->value(),
+                                       filename->value().c_str()) ? lcl::string(filename->value()) : lcl::nilValue();
 
-    for (auto & tile : dclTiles)
-    {
-        if(tile->value().dialog_Id != dialogId->value())
-        {
-            continue;
-        }
-        if (noQuotes(tile->value().key) == key->value())
-        {
-            switch (tile->value().id)
-            {
-            case IMAGE:
-            {
-                const lclImage* img = static_cast<const lclImage*>(tile);
-                img->image()->addSlide(x1->value(), y1->value(), width->value(), height->value(), tile->value().aspect_ratio, filename->value().c_str());
-                return lcl::string(filename->value());
-            }
-            break;
-            case IMAGE_BUTTON:
-            {
-                const lclImageButton* img = static_cast<const lclImageButton*>(tile);
-                img->button()->addSlide(x1->value(), y1->value(), width->value(), height->value(), tile->value().aspect_ratio, filename->value().c_str());
-                return lcl::string(filename->value());
-            }
-            break;
-            default:
-                return lcl::nilValue();
-            }
-        }
-    }
-    return lcl::nilValue();
 }
 
 BUILTIN("symbol")
@@ -6225,12 +5885,11 @@ BUILTIN("vector_image")
     AG_INT(y2);
     AG_INT(color);
 
-    if (RS_SCRIPTINGAPI->vectorImage(x1->value(), y1->value(), x2->value(), y2->value(), color->value()))
-    {
-        return lcl::integer(color->value());
-    }
-
-    return lcl::nilValue();
+    return RS_SCRIPTINGAPI->vectorImage(x1->value(),
+                                        y1->value(),
+                                        x2->value(),
+                                        y2->value(),
+                                        color->value()) ? lcl::integer(color->value()) : lcl::nilValue();
 }
 
 BUILTIN("wcmatch")

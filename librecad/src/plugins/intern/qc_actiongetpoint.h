@@ -52,7 +52,10 @@ public:
     void setMessage(QString msg);
     bool isCompleted(){return completed;}
     bool wasCanceled(){return canceled;}
+    bool hasInput(){return input;}
+    void Input(){ input = true; }
 protected:
+    bool input = false;
     bool canceled;
     bool completed;
     bool setTargetPoint;
