@@ -1099,8 +1099,12 @@ set(SOURCES
 		librecad/src/ui/dock_widgets/command_line/qg_commandhistory.h
 		librecad/src/ui/dock_widgets/lsp_command_line/qg_lsp_commandedit.cpp
 		librecad/src/ui/dock_widgets/lsp_command_line/qg_lsp_commandedit.h
+		librecad/src/ui/dock_widgets/lsp_command_line/qg_lsp_commandhistory.cpp
+		librecad/src/ui/dock_widgets/lsp_command_line/qg_lsp_commandhistory.h
 		librecad/src/ui/dock_widgets/py_command_line/qg_py_commandedit.cpp
 		librecad/src/ui/dock_widgets/py_command_line/qg_py_commandedit.h
+		librecad/src/ui/dock_widgets/py_command_line/qg_py_commandhistory.cpp
+		librecad/src/ui/dock_widgets/py_command_line/qg_py_commandhistory.h
 		librecad/src/ui/dialogs/qg_dialogfactory.cpp
 		librecad/src/ui/dialogs/qg_dialogfactory.h
 		librecad/src/ui/dialogs/file/qg_filedialog.cpp
@@ -1220,10 +1224,8 @@ set(SOURCES
 		librecad/src/ui/action_options/modify/lc_modifygapoptions.cpp
 		librecad/src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp
 		librecad/src/ui/components/lc_plaintextedit.h
-		librecad/src/ui/components/commandedit.cpp
 		librecad/src/ui/components/commandedit.h
-		librecad/src/ui/components/commandhistory.cpp
-		librecad/src/ui/components/commandhistory.h
+		librecad/src/ui/components/commandedit.cpp
 		librecad/src/actions/drawing/info/lc_actioninfoproperties.cpp
 		librecad/src/actions/dock_widgets/entity_info/lc_actioninfopickcoordinates.cpp
 		librecad/src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.h
