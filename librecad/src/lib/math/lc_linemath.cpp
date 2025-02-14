@@ -28,6 +28,31 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 #include "rs_vector.h"
 
+namespace {
+
+// Compare by coordinates
+// points within RS_TOLERANCE distance are considered equal
+bool compareCoordinates(const RS_Vector& p0, const RS_Vector& p1)
+{
+    return p0.distanceTo(p1) >= RS_TOLERANCE && (
+               p0.x < p1.x || (p0.x <= p1.x && p0.y < p1.y));
+}
+
+/**
+ * @brief isCounterclockwise v3 - v1, v2 - v1, if ordered as counterclockwise
+ * @param v1
+ * @param v2
+ * @param v3
+ * @return
+ */
+bool isCounterClockwise (const RS_Vector& v1, const RS_Vector& v2, const RS_Vector& v3)
+{
+    double res = RS_Vector::crossP((v2 - v1).normalized(), (v3 - v1).normalized()).z;
+
+    return res >= RS_TOLERANCE;
+}
+}
+
 /**
  * Calculates point located on specified distance and angle from given starting point
  * @param startPoint start point
@@ -438,4 +463,65 @@ bool LC_LineMath::hasLineIntersection(RS_Vector p0, RS_Vector direction, RS_Vect
     }
     return false;
 //    return RS_Vector(-1.0);
+}
+
+
+/**
+ * @brief convexHull - find the convex hull by Graham's scan
+ * @param points - input points
+ * @return - the convex hull found
+ */
+RS_VectorSolutions LC_LineMath::convexHull(const RS_VectorSolutions& points)
+{
+    RS_VectorSolutions sol = points;
+    // ignore invalid points
+    auto it = std::remove_if(sol.begin(), sol.end(), [](const RS_Vector& p) {
+        return ! p.valid;});
+    sol = {{sol.begin(), it}};
+
+    if (sol.size() <= 1)
+        return sol;
+
+    // find the left-most and lowest corner
+    std::sort(sol.begin(), sol.end(), compareCoordinates);
+
+    // avoid duplicates
+    RS_VectorSolutions hull{{sol.at(0)}};
+    for(size_t i = 1; i < sol.size(); ++i) {
+        if (hull.back().distanceTo(sol.at(i)) > RS_TOLERANCE)
+            hull.push_back(sol.at(i));
+    }
+
+    if (hull.size() <= 2)
+        return hull;
+
+    // soft by the angle to the corner
+    std::sort(hull.begin() + 1, hull.end(),
+              [lowerLeft=hull.at(0)](const RS_Vector& lhs, const RS_Vector& rhs) {
+                  return lowerLeft.angleTo(lhs) < lowerLeft.angleTo(rhs);
+              });
+
+    // keep the farthest for the same angle
+    sol = {hull.at(0), hull.at(1)};
+    for (size_t i = 2; i < hull.size(); ++i) {
+        const double angle0 = sol.at(0).angleTo(sol.back());
+        const double angle1 = sol.at(0).angleTo(hull.at(i));
+        if (RS_Math::equal(angle0, angle1, RS_TOLERANCE)) {
+            if (sol.at(0).distanceTo(hull.at(i)) < sol.at(0).distanceTo(sol.back()))
+                sol.back() = hull.at(i);
+        } else {
+            sol.push_back(hull.at(i));
+        }
+    }
+
+    // only keep left turns
+    hull = {sol.at(0), sol.at(1)};
+    for (size_t i = 2; i < sol.size(); ++i) {
+        const size_t j = hull.size() - 1;
+        if (isCounterClockwise(hull.at(j-1), hull.at(j), sol.at(i)))
+            hull.push_back(sol.at(i));
+        else
+            hull.at(j) = sol.at(i);
+    }
+    return hull;
 }

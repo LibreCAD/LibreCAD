@@ -688,6 +688,14 @@ RS_Vector& RS_VectorSolutions::back() {
     return vector.back();
 }
 
+const RS_Vector& RS_VectorSolutions::front() const {
+    return vector.front();
+}
+
+RS_Vector& RS_VectorSolutions::front() {
+    return vector.front();
+}
+
 RS_Vector& RS_VectorSolutions::at(size_t i) {
     return vector.at(i);
 }
