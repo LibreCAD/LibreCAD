@@ -72,7 +72,6 @@ void QG_Lsp_CommandEdit::processInput(QString input)
 
     if (!m_doProcess)
     {
-        emit message("");
         m_doProcess = true;
         return;
     }

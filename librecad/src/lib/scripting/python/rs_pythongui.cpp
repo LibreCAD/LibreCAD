@@ -25,8 +25,8 @@
 **********************************************************************/
 
 #include "rs_pythongui.h"
+#include "rs_python.h"
 #include "rs_scriptingapi.h"
-
 
 void RS_PythonGui::MessageBox(const char *message)
 {

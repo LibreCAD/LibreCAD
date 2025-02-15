@@ -73,12 +73,12 @@ void RS_PythonCore::command(const char *cmd)
 PyObject *RS_PythonCore::entlast() const
 {
     unsigned int id = RS_SCRIPTINGAPI->entlast();
-    return id > 0 ? Py_BuildValue("i", (int)id) : Py_None;
+    return id > 0 ? Py_BuildValue("s", RS_SCRIPTINGAPI->getEntityName(id).c_str()) : Py_None;
 }
 
-PyObject *RS_PythonCore::entdel(unsigned int id) const
+PyObject *RS_PythonCore::entdel(const std::string &ename) const
 {
-    return RS_SCRIPTINGAPI->entdel(id) ? Py_BuildValue("i", (int)id) : Py_None;
+    return RS_SCRIPTINGAPI->entdel(RS_SCRIPTINGAPI->getEntityId(ename)) ? Py_BuildValue("s", ename.c_str()) : Py_None;
 }
 
 PyObject *RS_PythonCore::entsel(const char* prompt) const
@@ -95,5 +95,8 @@ PyObject *RS_PythonCore::entsel(const char* prompt) const
     return RS_SCRIPTINGAPI->entsel(Py_CommandEdit,
                                    QObject::tr(qUtf8Printable(prom)),
                                    id,
-                                   result) ? Py_BuildValue("(i(ddd))", (int)id, result.x, result.y, result.z) : Py_None;
+                                   result) ? Py_BuildValue("(s(ddd))", RS_SCRIPTINGAPI->getEntityName(id).c_str(),
+                                                                       result.x,
+                                                                       result.y,
+                                                                       result.z) : Py_None;
 }

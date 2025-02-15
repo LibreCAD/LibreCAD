@@ -29,7 +29,6 @@
 
 #ifdef DEVELOPER
 
-#include "Python.h"
 #include "rs_vector.h"
 
 #include <QString>
@@ -55,26 +54,30 @@ public:
     void initGet(int bit, const char *str);
     void prompt(CommandEdit *cmdline, const char *prompt);
 
-    std::string copyright();
-    std::string credits();
+    const std::string copyright();
+    const std::string credits();
+    const std::string getEntityName(unsigned int id);
+    const std::string getEntityHndl(unsigned int id);
 
     unsigned int entlast();
     unsigned int entnext(unsigned int current=0);
-    bool entdel(unsigned int id);
-    bool entsel(CommandEdit *cmdline, const QString &prompt, unsigned long &id, RS_Vector &point);
+
+    unsigned int getEntityId(const std::string &name);
+    int getIntDlg(const char *prompt);
 
     int loadDialog(const char *filename);
     int startDialog();
-    bool colorDialog(int color, bool by, int &res);
 
-    int getIntDlg(const char *prompt);
     double getDoubleDlg(const char *prompt);
     const std::string getStrDlg(const char *prompt);
     const std::string getFileNameDlg(const char *title, const char *filename, const char *ext);
     char readChar();
 
+    bool entdel(unsigned int id);
+    bool entsel(CommandEdit *cmdline, const QString &prompt, unsigned long &id, RS_Vector &point);
     bool actionTile(const char *id, const char *action);
     bool addList(const char *val, std::string &result);
+    bool colorDialog(int color, bool by, int &res);
     bool dimxTile(const char *key, int &x);
     bool dimyTile(const char *key, int &y);
     bool doneDialog(int res, int &x, int &y);
@@ -94,14 +97,12 @@ public:
     bool getInteger(CommandEdit *cmdline, const char *msg, int &res);
     bool getString(CommandEdit *cmdline, bool cr, const char *msg, std::string &res);
     bool getKeyword(CommandEdit *cmdline, const char *msg, std::string &res);
-
     bool startImage(const char *key);
     bool startList(const char *key, int operation, int index);
     bool getTile(const char *key, std::string &result);
 
     RS_Vector getCorner(CommandEdit *cmdline, const char *msg, const RS_Vector &basePoint) const;
     RS_Vector getPoint(CommandEdit *cmdline, const char *msg, const RS_Vector basePoint) const;
-
 
 private:
     RS_ScriptingApi() {}

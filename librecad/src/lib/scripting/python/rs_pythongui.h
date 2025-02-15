@@ -29,7 +29,8 @@
 
 #ifdef DEVELOPER
 
-#include "rs_python.h"
+#include "Python.h"
+
 #include "rs_vector.h"
 
 class RS_PythonGui

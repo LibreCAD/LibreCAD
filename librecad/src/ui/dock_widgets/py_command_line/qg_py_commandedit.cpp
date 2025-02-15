@@ -64,15 +64,12 @@ void QG_Py_CommandEdit::processInput(QString input)
 
     if (!m_doProcess && !m_doProcessLc)
     {
-        qDebug() << "[QG_Py_CommandEdit::processInput] !m_doProcess";
-        emit message("");
         m_doProcess = true;
         return;
     }
 
     if (input.size() == 0)
     {
-        qDebug() << "[QG_Py_CommandEdit::processInput] input.size() == 0";
         it = historyList.end();
         emit message("");
         prompt();
@@ -95,7 +92,7 @@ void QG_Py_CommandEdit::processInput(QString input)
             input.remove(0, 1);
         }
 
-        qDebug() << "[QG_Py_CommandEdit::processInput] doProcessLc" << input;
+        qDebug() << "[QG_Py_CommandEdit::processInput] LibreCAD Command" << input;
 
         // author: ravas
 

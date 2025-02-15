@@ -4,6 +4,8 @@
 
 #ifdef DEVELOPER
 
+#include "rs_scriptingapi.h"
+
 #include "LCL.h"
 
 #include <exception>
@@ -11,7 +13,6 @@
 #include <stdlib.h>
 #include <map>
 #include <iostream>
-#include <sstream>
 
 #include <QWidget>
 #include <QDialog>
@@ -177,18 +178,11 @@ public:
         : lclValue(meta), m_value(that.m_value) { }
 
     virtual String print(bool) const override {
-        String name = "<Entity name: ";
-        std::stringstream ss;
-        ss << std::uppercase << std::hex << m_value;
-        name += ss.str();
-        name += ">";
-        return name;
+        return RS_SCRIPTINGAPI->getEntityName(m_value);
     }
 
     String valueStr() const {
-            std::stringstream ss;
-            ss << std::uppercase << std::hex << m_value;
-            return ss.str();
+        return RS_SCRIPTINGAPI->getEntityHndl(m_value);
         }
 
     virtual LCLTYPE type() const override { return LCLTYPE::ENAME; }

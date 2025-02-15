@@ -59,6 +59,9 @@
 #include "Types.h"
 #include "Environment.h"
 
+#include <iostream>
+#include <sstream>
+
 /**
  * static instance to class RS_ScriptingApi
  */
@@ -91,7 +94,7 @@ void RS_ScriptingApi::prompt(CommandEdit *cmdline, const char *prompt)
         cmdline->setFocus();
         cmdline->doProcess(false);
 
-        String result = RS_Scripting_InputHandle::readLine(QObject::tr(prompt), cmdline).toStdString();
+        const std::string result = RS_Scripting_InputHandle::readLine(QObject::tr(prompt), cmdline).toStdString();
         Q_UNUSED(result);
 
         cmdline->reset();
@@ -102,27 +105,10 @@ void RS_ScriptingApi::prompt(CommandEdit *cmdline, const char *prompt)
     }
 }
 
-
 void RS_ScriptingApi::initGet(int bit, const char *str)
 {
     shadowEnv->set("initget_bit", lcl::integer(bit));
     shadowEnv->set("initget_string", lcl::string(str));
-}
-
-std::string RS_ScriptingApi::copyright()
-{
-    QFile f(":/readme.md");
-    if (!f.open(QFile::ReadOnly | QFile::Text))
-    {
-        return "";
-    }
-    QTextStream in(&f);
-    return in.readAll().toStdString();
-}
-
-std::string RS_ScriptingApi::credits()
-{
-    return "Thanks to all the people supporting LibreCAD for supporting LibreCAD development. See https://dokuwiki.librecad.org for more information.\n";
 }
 
 void RS_ScriptingApi::help(const QString &tag)
@@ -156,6 +142,14 @@ void RS_ScriptingApi::msgInfo(const char *msg)
     msgBox.exec();
 }
 
+unsigned int RS_ScriptingApi::getEntityId(const std::string &name)
+{
+    std::string ename = name.substr(name.find(": ") + 2);
+    ename.pop_back();
+
+    return static_cast<unsigned int>(stoi(ename, 0, 16));
+}
+
 int RS_ScriptingApi::getIntDlg(const char *prompt)
 {
     return QInputDialog::getInt(nullptr,
@@ -174,6 +168,22 @@ double RS_ScriptingApi::getDoubleDlg(const char *prompt)
             0.0, -2147483647.0, 2147483647.0, 1, nullptr, Qt::WindowFlags(), 1);
 }
 
+const std::string RS_ScriptingApi::copyright()
+{
+    QFile f(":/readme.md");
+    if (!f.open(QFile::ReadOnly | QFile::Text))
+    {
+        return "";
+    }
+    QTextStream in(&f);
+    return in.readAll().toStdString();
+}
+
+const std::string RS_ScriptingApi::credits()
+{
+    return "Thanks to all the people supporting LibreCAD development. See https://dokuwiki.librecad.org for more information.\n";
+}
+
 const std::string RS_ScriptingApi::getStrDlg(const char *prompt)
 {
     return QInputDialog::getText(nullptr,
@@ -189,6 +199,24 @@ const std::string RS_ScriptingApi::getFileNameDlg(const char *title, const char 
                                         QObject::tr(title),
                                         filename,
                                         QObject::tr(ext)).toStdString();
+}
+
+const std::string RS_ScriptingApi::getEntityName(unsigned int id)
+{
+    std::string ename = "<Entity name: ";
+    std::stringstream ss;
+    ss << std::uppercase << std::hex << id;
+    ename += ss.str();
+    ename += ">";
+    return ename;
+}
+
+const std::string RS_ScriptingApi::getEntityHndl(unsigned int id)
+{
+    std::stringstream ss;
+    ss << std::uppercase << std::hex << id;
+    static std::string hndl = ss.str();
+    return hndl;
 }
 
 char RS_ScriptingApi::readChar()
