@@ -52,10 +52,11 @@ QG_Py_CommandEdit::QG_Py_CommandEdit(QWidget* parent)
 
 void QG_Py_CommandEdit::reset()
 {
+    setPrompt(">>> ");
     doProcess(true);
     doProcessLc(false);
-    setPrompt(">>> ");
     prompt();
+    setFocus();
 }
 
 void QG_Py_CommandEdit::processInput(QString input)
