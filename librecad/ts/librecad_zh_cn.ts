@@ -1166,7 +1166,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="531"/>
         <source>Lines</source>
-        <translation>线</translation>
+        <translation>线条</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="538"/>
@@ -1176,7 +1176,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="545"/>
         <source>Freehand</source>
-        <translation>徒手画</translation>
+        <translation>徒手绘制</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="552"/>
