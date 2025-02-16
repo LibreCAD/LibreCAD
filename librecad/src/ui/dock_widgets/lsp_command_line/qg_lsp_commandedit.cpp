@@ -52,9 +52,6 @@ QG_Lsp_CommandEdit::QG_Lsp_CommandEdit(QWidget* parent)
 
 void QG_Lsp_CommandEdit::reset()
 {
-    doProcess(true);
-    doProcessLc(false);
-
     if (this->dockName() == "Lisp Ide")
     {
         setPrompt("_$ ");
@@ -63,7 +60,10 @@ void QG_Lsp_CommandEdit::reset()
     {
         setPrompt(QObject::tr("Command: "));
     }
+    doProcess(true);
+    doProcessLc(false);
     prompt();
+    setFocus();
 }
 
 void QG_Lsp_CommandEdit::processInput(QString input)

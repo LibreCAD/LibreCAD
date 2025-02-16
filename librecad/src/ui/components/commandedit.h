@@ -49,7 +49,7 @@ public:
     virtual void setCurrent() {}
     virtual void processInput(QString) {}
 
-    void setPrompt(const QString &p) { m_prom = p; prompt(); }
+    void setPrompt(const QString &p) { m_prom = p; doProcess(false); prompt(); setFocus(); }
     void prompt() { QLineEdit::setText(m_prom); }
     void doProcess(bool proc) { m_doProcess = proc; }
     void doProcessLc(bool proc) { m_doProcessLc = proc; }

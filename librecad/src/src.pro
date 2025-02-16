@@ -1557,7 +1557,9 @@ HEADERS += \
     plugins/qc_plugininterface.h \
     plugins/intern/qc_actionentsel.h \
     plugins/intern/qc_actiongetcorner.h \
+    plugins/intern/qc_actiongetdist.h \
     plugins/intern/qc_actiongetpoint.h \
+    plugins/intern/qc_actiongetrad.h \
     plugins/intern/qc_actiongetselect.h \
     plugins/intern/qc_actiongetent.h \
     main/main.h \
@@ -1569,7 +1571,9 @@ SOURCES += \
     main/doc_plugin_interface.cpp \
     plugins/intern/qc_actionentsel.cpp \
     plugins/intern/qc_actiongetcorner.cpp \
+    plugins/intern/qc_actiongetdist.cpp \
     plugins/intern/qc_actiongetpoint.cpp \
+    plugins/intern/qc_actiongetrad.cpp \
     plugins/intern/qc_actiongetselect.cpp \
     plugins/intern/qc_actiongetent.cpp \
     main/main.cpp \

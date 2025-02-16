@@ -15,17 +15,17 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
-#ifndef QC_ACTIONGETPOINT_H
-#define QC_ACTIONGETPOINT_H
+#ifndef QC_ACTIONGETANGLE_H
+#define QC_ACTIONGETANGLE_H
 
 #include "rs_previewactioninterface.h"
 #include "rs_modification.h"
@@ -37,12 +37,12 @@ class QPointF;
  *
  * @author  Rallaz
  */
-class QC_ActionGetPoint : public RS_PreviewActionInterface {
+class QC_ActionGetRad : public RS_PreviewActionInterface {
 	Q_OBJECT
 public:
-    QC_ActionGetPoint(RS_EntityContainer& container,
+    QC_ActionGetRad(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~QC_ActionGetPoint();
+    ~QC_ActionGetRad();
 
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
@@ -52,10 +52,12 @@ public:
     void setMessage(QString msg);
     bool isCompleted(){return completed;}
     bool wasCanceled(){return canceled;}
+    double getRad() { return rad; }
 protected:
     bool canceled;
     bool completed;
     bool setTargetPoint;
+    double rad;
     struct Points;
     std::unique_ptr<Points> pPoints;
     RS2::CursorType doGetMouseCursor(int status) override;

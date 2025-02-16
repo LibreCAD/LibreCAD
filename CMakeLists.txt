@@ -844,13 +844,19 @@ set(SOURCES
 #        librecad/src/main/qc_graphicview.cpp
 #        librecad/src/main/qc_graphicview.h
 		librecad/src/ui/main/qc_mdiwindow.cpp
-		librecad/src/ui/main/qc_mdiwindow.h
-		librecad/src/plugins/intern/qc_actionentget.cpp
-		librecad/src/plugins/intern/qc_actionentget.h
+        librecad/src/ui/main/qc_mdiwindow.h
+        librecad/src/plugins/intern/qc_actionentget.cpp
+        librecad/src/plugins/intern/qc_actionentget.h
+        librecad/src/plugins/intern/qc_actiongetcorner.cpp
+        librecad/src/plugins/intern/qc_actiongetcorner.h
+        librecad/src/plugins/intern/qc_actiongetdist.cpp
+        librecad/src/plugins/intern/qc_actiongetdist.h
         librecad/src/plugins/intern/qc_actiongetent.cpp
         librecad/src/plugins/intern/qc_actiongetent.h
         librecad/src/plugins/intern/qc_actiongetpoint.cpp
         librecad/src/plugins/intern/qc_actiongetpoint.h
+        librecad/src/plugins/intern/qc_actiongetrad.cpp
+        librecad/src/plugins/intern/qc_actiongetrad.h
         librecad/src/plugins/intern/qc_actiongetselect.cpp
         librecad/src/plugins/intern/qc_actiongetselect.h
         librecad/src/plugins/document_interface.h

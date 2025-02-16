@@ -76,7 +76,7 @@ int RS_PythonDcl::startDialog()
 
 PyObject* RS_PythonDcl::getTile(const char *key)
 {
-    static std::string result;
+    std::string result;
     return RS_SCRIPTINGAPI->getTile(key, result) ? Py_BuildValue("s", result.c_str()) : Py_None;
 }
 
@@ -88,7 +88,7 @@ PyObject* RS_PythonDcl::doneDialog(int res) const
 
 PyObject* RS_PythonDcl::getAttr(const char *key, const char *attr) const
 {
-    static std::string result;
+    std::string result;
     return RS_SCRIPTINGAPI->getAttr(key, attr, result) ? Py_BuildValue("s", result.c_str()) : Py_None;
 }
 
@@ -99,7 +99,7 @@ PyObject* RS_PythonDcl::startList(const char *key, int operation, int index)
 
 PyObject* RS_PythonDcl::addList(const char *val) const
 {
-    static std::string result;
+    std::string result;
     return RS_SCRIPTINGAPI->addList(val, result) ? Py_BuildValue("s", result.c_str()) : Py_None;
 }
 

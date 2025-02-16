@@ -535,7 +535,7 @@ BUILTIN("add_list")
     CHECK_ARGS_IS(1);
     ARG(lclString, val);
 
-    static std::string result;
+    std::string result;
     return RS_SCRIPTINGAPI->addList(val->value().c_str(),
                                     result) ? lcl::string(result) : lcl::nilValue();
 }

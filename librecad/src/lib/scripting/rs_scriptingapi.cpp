@@ -42,6 +42,8 @@
 
 #include "qg_actionhandler.h"
 
+#include "intern/qc_actiongetrad.h"
+#include "intern/qc_actiongetdist.h"
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetcorner.h"
 #include "intern/qc_actionentsel.h"
@@ -91,12 +93,8 @@ void RS_ScriptingApi::prompt(CommandEdit *cmdline, const char *prompt)
     if (cmdline != nullptr)
     {
         cmdline->setPrompt(prompt);
-        cmdline->setFocus();
-        cmdline->doProcess(false);
-
         const std::string result = RS_Scripting_InputHandle::readLine(QObject::tr(prompt), cmdline).toStdString();
         Q_UNUSED(result);
-
         cmdline->reset();
     }
     else
@@ -331,8 +329,6 @@ RS_Vector RS_ScriptingApi::getCorner(CommandEdit *cmdline, const char *msg, cons
         QEventLoop ev;
 
         cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-        cmdline->setFocus();
-        cmdline->doProcess(false);
 
         while (!a->isCompleted())
         {
@@ -415,8 +411,6 @@ RS_Vector RS_ScriptingApi::getPoint(CommandEdit *cmdline, const char *msg, const
         QEventLoop ev;
 
         cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-        cmdline->setFocus();
-        cmdline->doProcess(false);
         cmdline->doProcessLc(true);
 
         while (!a->isCompleted())
@@ -461,13 +455,9 @@ RS_Vector RS_ScriptingApi::getPoint(CommandEdit *cmdline, const char *msg, const
 
 bool RS_ScriptingApi::getDist(CommandEdit *cmdline, const char *msg, const RS_Vector &basePoint, double &distance)
 {
-    QString prompt = QObject::tr("Enter second point: ");
+    QString prompt = msg;
     RS_Vector start = basePoint;
-
-    if (strcmp(msg, ""))
-    {
-        prompt = msg;
-    }
+    bool finished = false;
 
     auto& appWin = QC_ApplicationWindow::getAppWindow();
     RS_Document* doc = appWin->getDocument();
@@ -479,50 +469,93 @@ bool RS_ScriptingApi::getDist(CommandEdit *cmdline, const char *msg, const RS_Ve
         return false;
     }
 
+    QEventLoop ev;
+    graphicView->killAllActions();
+    cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+
     if(!start.valid)
     {
-        if (prompt == QObject::tr("Enter second point: "))
+        QC_ActionGetPoint* startAction = new QC_ActionGetPoint(*doc, *graphicView);
+        if (startAction)
         {
-            prompt = QObject::tr("Enter first point: ");
-        }
+            QPointF *startPoint = new QPointF;
+            bool status = false;
 
-        RS_Vector result = getPoint(cmdline, qUtf8Printable(prompt), RS_Vector());
+            startAction->setMessage(prompt);
+            graphicView->setCurrentAction(startAction);
 
-        if (result.valid)
-        {
-            start.x = result.x;
-            start.y = result.y;
-            start.z = result.z;
-        }
-        else
-        {
-            return false;
-        }
+            QObject::connect(cmdline, &QLineEdit::returnPressed, startAction, [cmdline, startAction, prompt, &distance, &finished]
+            {
+                const QString result = cmdline->text();
+                static const QRegularExpression floatRegExpr(QStringLiteral("^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$"));
+                QRegularExpressionMatch match = floatRegExpr.match(result);
 
-        if (prompt == QObject::tr("Enter first point: "))
-        {
-            prompt = QObject::tr("Enter second point: ");
+                if (result.isEmpty())
+                {
+                    startAction->trigger();
+                }
+
+                if (match.hasMatch())
+                {
+                    distance = result.toDouble();
+                    startAction->trigger();
+                    finished = true;
+                }
+                else
+                {
+                    cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+                }
+            } );
+
+            while (!startAction->isCompleted())
+            {
+                ev.processEvents();
+                if (!graphicView->getEventHandler()->hasAction())
+                    break;
+            }
+
+            if(finished)
+            {
+                QObject::disconnect(cmdline, &QLineEdit::returnPressed, startAction, nullptr);
+                graphicView->killAllActions();
+                cmdline->reset();
+                return true;
+            }
+
+            if (startAction->isCompleted() && !startAction->wasCanceled())
+            {
+                startAction->getPoint(startPoint);
+                status = true;
+            }
+
+            if(status)
+            {
+                start.x = startPoint->x();
+                start.y = startPoint->y();
+                delete startPoint;
+            }
+            else
+            {
+                cmdline->reset();
+                graphicView->killAllActions();
+                delete startPoint;
+                return false;
+            }
         }
     }
 
+    prompt = QObject::tr("Enter second point: ");
     cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-    cmdline->setFocus();
-    cmdline->doProcess(false);
 
-    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
-    if (a)
+    QC_ActionGetDist* endAction = new QC_ActionGetDist(*doc, *graphicView);
+    if (endAction)
     {
-        QEventLoop ev;
-        QPointF *point = new QPointF;
         QPointF *base = new QPointF(start.x, start.y);
 
-        graphicView->killAllActions();
-        graphicView->setCurrentAction(a);
-        graphicView->disableCoordinateInput();
+        graphicView->setCurrentAction(endAction);
+        endAction->setBasepoint(base);
 
-        a->setBasepoint(base);
-
-        QObject::connect(cmdline, &QLineEdit::returnPressed, a, [cmdline, a, &distance, prompt]
+        QObject::connect(cmdline, &QLineEdit::returnPressed, endAction, [cmdline, endAction, prompt, &distance, &finished]
         {
             const QString result = cmdline->text();
             static const QRegularExpression floatRegExpr(QStringLiteral("^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$"));
@@ -530,62 +563,46 @@ bool RS_ScriptingApi::getDist(CommandEdit *cmdline, const char *msg, const RS_Ve
 
             if (result.isEmpty())
             {
-                a->finish(true);
+                endAction->trigger();
             }
 
             if (match.hasMatch())
             {
-                qDebug() << "[result]" << result;
                 distance = result.toDouble();
-
-                a->finish(true);
-                a->Input();
+                endAction->trigger();
+                finished = true;
             }
             else
             {
                 cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-                cmdline->setFocus();
-                cmdline->doProcess(false);
             }
-
         } );
 
-        while (!a->isCompleted())
+        while (!endAction->isCompleted())
         {
             ev.processEvents();
 
             if (!graphicView->getEventHandler()->hasAction())
+            {
                 break;
+            }
         }
 
-        graphicView->enableCoordinateInput();
+        QObject::disconnect(cmdline, &QLineEdit::returnPressed, endAction, nullptr);
         graphicView->killAllActions();
+        graphicView->redraw();
         cmdline->reset();
+        delete base;
 
-        if(a->hasInput())
+        if(finished)
         {
-            delete point;
-            delete base;
-
             return true;
         }
 
-        if (a->isCompleted() && !a->wasCanceled())
+        if (endAction->isCompleted() && !endAction->wasCanceled())
         {
-            a->getPoint(point);
-
-            distance = std::sqrt(std::pow(start.x - point->x(), 2)
-                                + std::pow(start.y - point->y(), 2));
-            delete point;
-            delete base;
-
+            distance = endAction->getDist();
             return true;
-
-        }
-        else
-        {
-            delete point;
-            delete base;
         }
     }
 
@@ -594,13 +611,9 @@ bool RS_ScriptingApi::getDist(CommandEdit *cmdline, const char *msg, const RS_Ve
 
 bool RS_ScriptingApi::getOrient(CommandEdit *cmdline, const char *msg, const RS_Vector &basePoint, double &rad)
 {
-    QString prompt = QObject::tr("Enter second point: ");
+    QString prompt = msg;
     RS_Vector start = basePoint;
-
-    if (strcmp(msg, ""))
-    {
-        prompt = msg;
-    }
+    bool finished = false;
 
     auto& appWin = QC_ApplicationWindow::getAppWindow();
     RS_Document* doc = appWin->getDocument();
@@ -612,50 +625,93 @@ bool RS_ScriptingApi::getOrient(CommandEdit *cmdline, const char *msg, const RS_
         return false;
     }
 
+    QEventLoop ev;
+    graphicView->killAllActions();
+    cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+
     if(!start.valid)
     {
-        if (prompt == QObject::tr("Enter second point: "))
+        QC_ActionGetPoint* startAction = new QC_ActionGetPoint(*doc, *graphicView);
+        if (startAction)
         {
-            prompt = QObject::tr("Enter first point: ");
-        }
+            QPointF *startPoint = new QPointF;
+            bool status = false;
 
-        RS_Vector result = getPoint(cmdline, qUtf8Printable(prompt), RS_Vector());
+            startAction->setMessage(prompt);
+            graphicView->setCurrentAction(startAction);
 
-        if (result.valid)
-        {
-            start.x = result.x;
-            start.y = result.y;
-            start.z = result.z;
-        }
-        else
-        {
-            return false;
-        }
+            QObject::connect(cmdline, &QLineEdit::returnPressed, startAction, [cmdline, startAction, prompt, &rad, &finished]
+            {
+                const QString result = cmdline->text();
+                static const QRegularExpression floatRegExpr(QStringLiteral("^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$"));
+                QRegularExpressionMatch match = floatRegExpr.match(result);
 
-        if (prompt == QObject::tr("Enter first point: "))
-        {
-            prompt = QObject::tr("Enter second point: ");
+                if (result.isEmpty())
+                {
+                    startAction->trigger();
+                }
+
+                if (match.hasMatch())
+                {
+                    rad = result.toDouble();
+                    startAction->trigger();
+                    finished = true;
+                }
+                else
+                {
+                    cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
+                }
+            } );
+
+            while (!startAction->isCompleted())
+            {
+                ev.processEvents();
+                if (!graphicView->getEventHandler()->hasAction())
+                    break;
+            }
+
+            if(finished)
+            {
+                QObject::disconnect(cmdline, &QLineEdit::returnPressed, startAction, nullptr);
+                graphicView->killAllActions();
+                cmdline->reset();
+                return true;
+            }
+
+            if (startAction->isCompleted() && !startAction->wasCanceled())
+            {
+                startAction->getPoint(startPoint);
+                status = true;
+            }
+
+            if(status)
+            {
+                start.x = startPoint->x();
+                start.y = startPoint->y();
+                delete startPoint;
+            }
+            else
+            {
+                cmdline->reset();
+                graphicView->killAllActions();
+                delete startPoint;
+                return false;
+            }
         }
     }
 
+    prompt = QObject::tr("Enter second point: ");
     cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-    cmdline->setFocus();
-    cmdline->doProcess(false);
 
-    QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *graphicView);
-    if (a)
+    QC_ActionGetRad* endAction = new QC_ActionGetRad(*doc, *graphicView);
+    if (endAction)
     {
-        QEventLoop ev;
-        QPointF *point = new QPointF;
         QPointF *base = new QPointF(start.x, start.y);
 
-        graphicView->killAllActions();
-        graphicView->setCurrentAction(a);
-        graphicView->disableCoordinateInput();
+        graphicView->setCurrentAction(endAction);
+        endAction->setBasepoint(base);
 
-        a->setBasepoint(base);
-
-        QObject::connect(cmdline, &QLineEdit::returnPressed, a, [cmdline, a, &rad, prompt]
+        QObject::connect(cmdline, &QLineEdit::returnPressed, endAction, [cmdline, endAction, prompt, &rad, &finished]
         {
             const QString result = cmdline->text();
             static const QRegularExpression floatRegExpr(QStringLiteral("^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$"));
@@ -663,61 +719,48 @@ bool RS_ScriptingApi::getOrient(CommandEdit *cmdline, const char *msg, const RS_
 
             if (result.isEmpty())
             {
-                a->finish(true);
+                endAction->trigger();
             }
 
             if (match.hasMatch())
             {
-                qDebug() << "[result]" << result;
                 rad = result.toDouble();
-
-                a->finish(true);
-                a->Input();
+                endAction->trigger();
+                finished = true;
             }
             else
             {
                 cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-                cmdline->setFocus();
-                cmdline->doProcess(false);
             }
-
         } );
 
-        while (!a->isCompleted())
+        while (!endAction->isCompleted())
         {
             ev.processEvents();
 
             if (!graphicView->getEventHandler()->hasAction())
+            {
                 break;
+            }
         }
 
-        graphicView->enableCoordinateInput();
+        QObject::disconnect(cmdline, &QLineEdit::returnPressed, endAction, nullptr);
         graphicView->killAllActions();
+        graphicView->redraw();
         cmdline->reset();
+        delete base;
 
-        if(a->hasInput())
+        if(finished)
         {
-            delete point;
-            delete base;
-
             return true;
         }
 
-        if (a->isCompleted() && !a->wasCanceled())
+        if (endAction->isCompleted() && !endAction->wasCanceled())
         {
-            rad = std::atan2(base->y() - point->y(), base->x() - point->x());
-            delete point;
-            delete base;
-
+            rad = endAction->getRad();
             return true;
-        }
-        else
-        {
-            delete point;
-            delete base;
         }
     }
-
     return false;
 }
 
@@ -733,12 +776,11 @@ bool RS_ScriptingApi::getReal(CommandEdit *cmdline, const char *msg, double &res
 
     if (cmdline != nullptr)
     {
-        while (1) {
+        while (1)
+        {
             cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-            cmdline->setFocus();
-            cmdline->doProcess(false);
-
             result = RS_Scripting_InputHandle::readLine(QObject::tr(qUtf8Printable(prompt)), cmdline);
+
             if (result.isEmpty())
             {
                 cmdline->reset();
@@ -778,12 +820,11 @@ bool RS_ScriptingApi::getInteger(CommandEdit *cmdline, const char *msg, int &res
 
     if (cmdline != nullptr)
     {
-        while (1) {
+        while (1)
+        {
             cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-            cmdline->setFocus();
-            cmdline->doProcess(false);
-
             result = RS_Scripting_InputHandle::readLine(QObject::tr(qUtf8Printable(prompt)), cmdline);
+
             if (result.isEmpty())
             {
                 cmdline->reset();
@@ -827,12 +868,11 @@ bool RS_ScriptingApi::getString(CommandEdit *cmdline, bool cr, const char *msg, 
 
     if (cmdline != nullptr)
     {
-        while (1) {
+        while (1)
+        {
             cmdline->setPrompt(QObject::tr(qUtf8Printable(prompt)));
-            cmdline->setFocus();
-            cmdline->doProcess(false);
-
             result = RS_Scripting_InputHandle::readLine(QObject::tr(qUtf8Printable(prompt)), cmdline);
+
             if (result.isEmpty())
             {
                 cmdline->reset();
@@ -877,11 +917,9 @@ bool RS_ScriptingApi::getKeyword(CommandEdit *cmdline, const char *msg, std::str
 
     if (cmdline != nullptr)
     {
-        while (1) {
+        while (1)
+        {
             cmdline->setPrompt(QObject::tr(msg));
-            cmdline->setFocus();
-            cmdline->doProcess(false);
-
             res = RS_Scripting_InputHandle::readLine(QObject::tr(msg), cmdline).toStdString();
 
             for (auto &it : StringList) {
@@ -1188,8 +1226,6 @@ bool RS_ScriptingApi::entsel(CommandEdit *cmdline, const QString &prompt, unsign
         QEventLoop ev;
 
         cmdline->setPrompt(QObject::tr(qUtf8Printable(prom)));
-        cmdline->setFocus();
-        cmdline->doProcess(false);
 
         while (!a->isCompleted())
         {
