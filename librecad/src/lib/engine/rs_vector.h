@@ -134,6 +134,10 @@ public:
     bool operator == (bool valid) const;
     bool operator != (bool valid) const;
 
+    static bool isValid(const RS_Vector& v) {
+        return v == true;
+    }
+
     static RS_Vector minimum(const RS_Vector& v1, const RS_Vector& v2);
     static RS_Vector maximum(const RS_Vector& v1, const RS_Vector& v2);
 //    crossP only defined for 3D
@@ -183,6 +187,8 @@ public:
     RS_Vector get(size_t i) const;
     const RS_Vector& back() const;
     RS_Vector& back();
+    const RS_Vector& front() const;
+    RS_Vector& front();
     RS_Vector& at(size_t i);
     const RS_Vector& at(size_t i) const;
     const RS_Vector&  operator [] (const size_t i) const;

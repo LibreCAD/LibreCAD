@@ -74,5 +74,12 @@ namespace LC_LineMath {
     bool isNotMeaningfulDistance(const RS_Vector &v1, const RS_Vector &v2);
 
     bool hasLineIntersection(RS_Vector p0, RS_Vector direction, RS_Vector p2, RS_Vector p3);
+
+    /**
+     * @brief convexHull - find the convex hull of a point cloud
+     * @param points - input points
+     * @return - the convex hull
+     */
+    RS_VectorSolutions convexHull(const RS_VectorSolutions& points);
 }
 #endif // LC_LINEMATH_H
