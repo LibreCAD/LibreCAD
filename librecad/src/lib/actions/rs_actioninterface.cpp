@@ -506,7 +506,7 @@ void RS_ActionInterface::setMouseCursor(const RS2::CursorType &cursor){
  * @param right right string (key for tr())
  */
 void RS_ActionInterface::updateMouseWidgetTRBack(const QString &msg, const LC_ModifiersInfo& modifiers){
-    if  (infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled) {
+    if  (infoCursorOverlayPrefs->enabled) {
         preparePromptForInfoCursorOverlay(msg, modifiers);
     }
     RS_DIALOGFACTORY->updateMouseWidget(msg,tr("Back"), modifiers);
@@ -554,7 +554,7 @@ void RS_ActionInterface::preparePromptForInfoCursorOverlay(const QString &msg, c
  * @param right right string (key for tr())
  */
 void RS_ActionInterface::updateMouseWidgetTRCancel(const QString &msg, const LC_ModifiersInfo& modifiers){
-    if (infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled) {
+    if (infoCursorOverlayPrefs->enabled) {
         preparePromptForInfoCursorOverlay(msg, modifiers);
     }
     RS_DIALOGFACTORY->updateMouseWidget(msg,tr("Cancel"), modifiers);
@@ -566,7 +566,7 @@ void RS_ActionInterface::updateMouseWidgetTRCancel(const QString &msg, const LC_
  * @param right string
  */
 void RS_ActionInterface::updateMouseWidget(const QString& left,const QString& right, const LC_ModifiersInfo& modifiers){
-    if (infoCursorOverlayPrefs != nullptr && infoCursorOverlayPrefs->enabled) {
+    if (infoCursorOverlayPrefs->enabled) {
         preparePromptForInfoCursorOverlay(left, modifiers);
     }
     RS_DIALOGFACTORY->updateMouseWidget(left, right, modifiers);
