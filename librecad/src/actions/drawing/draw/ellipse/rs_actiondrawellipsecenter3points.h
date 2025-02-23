@@ -38,7 +38,6 @@ public:
     ~RS_ActionDrawEllipseCenter3Points() override;
     void init(int status) override;
     bool preparePreview();
-    void mouseMoveEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
 protected:
     /**
@@ -54,10 +53,12 @@ protected:
     struct Points;
     std::unique_ptr<Points> pPoints;
 
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
+
     void doTrigger() override;
 };
 #endif

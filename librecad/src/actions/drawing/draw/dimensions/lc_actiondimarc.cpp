@@ -81,15 +81,11 @@ void LC_ActionDimArc::doTrigger() {
     RS_Snapper::finish();
 }
 
-void LC_ActionDimArc::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-
-    RS_DEBUG->print("LC_ActionDimArc::mouseMoveEvent begin");
-    RS_Vector snap = snapPoint(e);
-    switch (getStatus()) {
+void LC_ActionDimArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
+    switch (status) {
         case SetEntity:{
-            auto en = catchEntity(e, RS2::EntityArc, RS2::ResolveAll);
+            auto en = catchEntityByEvent(e,RS2::EntityArc, RS2::ResolveAll);
             if (en != nullptr){
                 highlightHover(en);
             }
@@ -109,15 +105,12 @@ void LC_ActionDimArc::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    RS_DEBUG->print("LC_ActionDimArc::mouseMoveEvent end");
-    drawPreview();
-    drawHighlights();
 }
 
-void LC_ActionDimArc::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionDimArc::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            selectedArcEntity = catchEntity(e, RS2::ResolveAll);
+            selectedArcEntity = catchEntityByEvent(e, RS2::ResolveAll);
 
             if (selectedArcEntity != nullptr){
                 if (selectedArcEntity->is(RS2::EntityArc)){
@@ -149,7 +142,7 @@ void LC_ActionDimArc::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
             break;
         }
         case SetPos: {
-            RS_Vector snap = snapPoint(e);
+            RS_Vector snap = e->snapPoint;
             snap = getFreeSnapAwarePoint(e, snap);
             fireCoordinateEvent(snap);
             break;
@@ -160,7 +153,7 @@ void LC_ActionDimArc::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
 
 }
 
-void LC_ActionDimArc::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDimArc::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

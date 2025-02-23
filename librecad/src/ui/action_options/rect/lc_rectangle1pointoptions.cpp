@@ -23,9 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_rectangle1pointoptions.h"
 #include "rs_actioninterface.h"
 #include "rs_debug.h"
-#include "rs_math.h"
 #include "ui_lc_rectangle1pointoptions.h"
-
 
 LC_Rectangle1PointOptions::LC_Rectangle1PointOptions() :
     LC_ActionOptionsWidgetBase(RS2::ActionDrawRectangle1Point, "Draw","Rectangle1Point"),
@@ -104,7 +102,7 @@ void LC_Rectangle1PointOptions::doSetAction(RS_ActionInterface * a, bool update)
 
             double w = action->getWidth();
             double h = action->getHeight();
-            double an = action->getAngle();
+            double an = action->getUcsAngleDegrees();
             double r  = action->getRadius();
             double lX = action->getLengthX();
             double lY = action->getLengthY();
@@ -161,7 +159,7 @@ void LC_Rectangle1PointOptions::onCornersIndexChanged(int index){
 
 void LC_Rectangle1PointOptions::updateUI(int mode) {
      if (mode == UPDATE_ANGLE){
-         double angle = action->getAngle();
+         double angle = action->getUcsAngleDegrees();
          ui->leAngle->blockSignals(true);
          ui->leAngle->setText(fromDouble(angle));
          ui->leAngle->blockSignals(false);
@@ -244,8 +242,8 @@ void LC_Rectangle1PointOptions::onAngleEditingFinished(){
 
 void LC_Rectangle1PointOptions::setAngleToActionAndView(const QString &val){
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
-        action->setAngle(angle);
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
+        action->setUcsAngleDegrees(angle);
         ui->leAngle->setText(fromDouble(angle));
     }
 }

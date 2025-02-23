@@ -25,11 +25,12 @@
 
 #include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
-#include "lc_actiondrawellipse1point.h"
 
 namespace Ui {
     class LC_Ellipse1PointOptions;
 }
+
+class LC_ActionDrawEllipse1Point;
 
 class LC_Ellipse1PointOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
@@ -51,7 +52,7 @@ protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
 
-    LC_ActionDrawEllipse1Point* action;
+    LC_ActionDrawEllipse1Point* action = nullptr;
     Ui::LC_Ellipse1PointOptions *ui;
 
     void setMajorRadiusToActionAndView(QString val);

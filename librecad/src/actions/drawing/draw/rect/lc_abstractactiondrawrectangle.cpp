@@ -135,7 +135,7 @@ bool LC_AbstractActionDrawRectangle::doCheckPolylineEntityAllowedInTrigger(int i
 void LC_AbstractActionDrawRectangle::doAfterTrigger(){
     LC_AbstractActionWithPreview::doAfterTrigger();
     shapeData.resultingPolyline = nullptr;
-    graphicView->redraw();
+    redraw();
 }
 
 /**
@@ -161,7 +161,7 @@ bool LC_AbstractActionDrawRectangle::doCheckMayTrigger(){
  * @param list list of entities for preview
  * @param status current status of action
  */
-void LC_AbstractActionDrawRectangle::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
+void LC_AbstractActionDrawRectangle::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     ShapeData data = createPolyline(snap);
     auto polyline = data.resultingPolyline;
     doAddPolylineToListOfEntities(polyline, list, true);
@@ -175,7 +175,7 @@ void LC_AbstractActionDrawRectangle::doPreparePreviewEntities([[maybe_unused]]QM
         msg.add(tr("Width:"), formatLinear(data.width));
         msg.add(tr("Height:"), formatLinear(data.height));
         msg.add(tr("Center:"), formatVector(data.centerPoint));
-        appendInfoCursorZoneMessage(msg.toString(), 2, false);
+        appendInfoCursorZoneMessage(msg.toString(), 2, true);
     }
 }
 
@@ -238,9 +238,12 @@ void LC_AbstractActionDrawRectangle::doProcessCoordinateEvent([[maybe_unused]]co
  * @return
  */
 double LC_AbstractActionDrawRectangle::getActualBaseAngle() const{
-    double result = 0.0;
+    double result;
     if (baseAngleIsFixed){
-        result = RS_Math::deg2rad(angle);
+        result = toWorldAngleFromUCSBasis(ucsBasisBaseAngleRad);
+    }
+    else{
+        result = toWorldAngleFromUCSBasis(0.0);
     }
     return result;
 }
@@ -335,7 +338,9 @@ bool LC_AbstractActionDrawRectangle::doProcessCommand(int status, const QString 
         if (ok){
             switch (status) {
                 case SetAngle: {
-                    angle = LC_LineMath::getMeaningfulAngle(value);
+                    double ucsBasisAngleRad;
+                    ok = parseToUCSBasisAngle(c, ucsBasisAngleRad);
+                    ucsBasisBaseAngleRad = LC_LineMath::getMeaningfulAngle(ucsBasisAngleRad);
                     baseAngleIsFixed = true;
                     updateOptions();
                     toMainStatus = true;
@@ -588,10 +593,19 @@ void LC_AbstractActionDrawRectangle::setCornersMode(int value){
  * Setter for base angle
  * @param value
  */
-void LC_AbstractActionDrawRectangle::setAngle(double value){
-    angle = value;
+void LC_AbstractActionDrawRectangle::setUcsAngleDegrees(double ucsBasisAngleDegrees){
+    double value = RS_Math::deg2rad(ucsBasisAngleDegrees);
+    doSetAngle(value);
     setBaseAngleFixed(true);
     drawPreviewForLastPoint();
+}
+
+void LC_AbstractActionDrawRectangle::doSetAngle(double value) {
+    ucsBasisBaseAngleRad = value;
+}
+
+double LC_AbstractActionDrawRectangle::getUcsAngleDegrees() const {
+    return RS_Math::rad2deg(ucsBasisBaseAngleRad);
 }
 
 /**
@@ -629,7 +643,7 @@ void LC_AbstractActionDrawRectangle::stateUpdated(bool toMainStatus){
  * @param pEvent
  * @param status
  */
-void LC_AbstractActionDrawRectangle::doBack([[maybe_unused]]QMouseEvent *pEvent, int status){
+void LC_AbstractActionDrawRectangle::doBack([[maybe_unused]]LC_MouseEvent *pEvent, int status){
     switch (status){
         case (SetPoint1):{
             finishAction();

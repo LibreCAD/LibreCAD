@@ -53,6 +53,8 @@ RS_ActionDimLinear::RS_ActionDimLinear(
      edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), angle, 0.)),
      fixedAngle(_fixedAngle), lastStatus(SetExtPoint1){
     actionType = type;
+    setUcsAngleDegrees(angle);
+    updateOptions();
     reset();
 }
 
@@ -61,32 +63,52 @@ RS_ActionDimLinear::~RS_ActionDimLinear() = default;
 void RS_ActionDimLinear::reset(){
     RS_ActionDimension::reset();
 
-    double oldAngle = edata->angle; // keep selected angle
+    double angleDeg = fixedAngle ? ucsBasisAngleDegrees : 0; // keep selected angle
 
-    *edata = {{}, {}, fixedAngle ? edata->angle :oldAngle, 0.0};
+    *edata = {{}, {}, toWorldAngleFromUCSBasisDegrees(angleDeg), toWorldAngle(0.0)};
 }
 
 void RS_ActionDimLinear::preparePreview(){
-    RS_Vector dirV = RS_Vector::polar(100., edata->angle + M_PI_2);
+    double angle = getDimAngle();
+    RS_Vector dirV = RS_Vector::polar(100., angle + M_PI_2);
     RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(edata->extensionPoint2,edata->extensionPoint2 + dirV));
     data->definitionPoint = cl.getNearestPointOnEntity(data->definitionPoint);
 }
 
 RS_Entity *RS_ActionDimLinear::createDim(RS_EntityContainer* parent){
+    edata->angle = getDimAngle();
+    edata->oblique =  toWorldAngle(0.0);
     auto *dim = new RS_DimLinear(parent, *data, *edata);
     return dim;
 }
 
-double RS_ActionDimLinear::getAngle() const{
-    return edata->angle;
+double RS_ActionDimLinear::getUcsAngleDegrees() const{
+    return ucsBasisAngleDegrees;
 }
 
-void RS_ActionDimLinear::setAngle(double a){
-    edata->angle = a;
+void RS_ActionDimLinear::setUcsAngleDegrees(double ucsRelAngleDegrees){
+    ucsBasisAngleDegrees = ucsRelAngleDegrees;
 }
 
 bool RS_ActionDimLinear::hasFixedAngle() const{
     return fixedAngle;
+}
+
+void RS_ActionDimLinear::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
+    switch (status){
+        case SetAngle:{
+            if (isZero){
+                setUcsAngleDegrees(0);
+                updateOptions();
+                setStatus(lastStatus);
+                return;
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    LC_ActionDimLinearBase::onCoordinateEvent(status, isZero, pos);
 }
 
 bool RS_ActionDimLinear::doProcessCommand(int status, const QString &c) {
@@ -95,17 +117,17 @@ bool RS_ActionDimLinear::doProcessCommand(int status, const QString &c) {
         case SetText: {
             setText(c);
             updateOptions();
-            graphicView->enableCoordinateInput();
+            enableCoordinateInput();
             setStatus(lastStatus);
             accept = true;
             break;
         }
         case SetAngle: {
-            bool ok;
-            double a = RS_Math::eval(c, &ok);
+            double ucsBasisAngleDeg;
+            bool ok = parseToUCSBasisAngle(c, ucsBasisAngleDeg);
             if (ok){
                 accept = true;
-                setAngle(RS_Math::deg2rad(a));
+                ucsBasisAngleDegrees = ucsBasisAngleDeg;
             } else {
                 commandMessage(tr("Not a valid expression"));
             }
@@ -117,7 +139,7 @@ bool RS_ActionDimLinear::doProcessCommand(int status, const QString &c) {
             lastStatus = (Status) getStatus();
             deletePreview();
             if (checkCommand("text", c)){
-                graphicView->disableCoordinateInput();
+                disableCoordinateInput();
                 setStatus(SetText);
                 accept = true;
             } else if (!fixedAngle && (checkCommand("angle", c))){
@@ -157,7 +179,23 @@ RS_Vector RS_ActionDimLinear::getExtensionPoint2(){
 }
 
 double RS_ActionDimLinear::getDimAngle(){
-    return edata->angle;
+// Todo - sand - option for dim behaviour?
+// This is good place for optional behavior for Hor/Vert dims.
+// Implementation below created dims orthogonal to X and Y axises. 0 in UCS Abs values, ignore basis there??
+// however, if translate angles using toWorldAngleFromUCSBasis(), dims will be orthogonal to angles basis.
+// not sure whether this is necessary so far, yet still - an option may be added to the options widget.
+
+    switch (actionType){
+        case RS2::ActionDimLinearHor:{
+            return toWorldAngle(0);
+        }
+        case RS2::ActionDimLinearVer:{
+            return toWorldAngle(M_PI_2);
+        }
+        default:{
+            return toWorldAngleFromUCSBasisDegrees(ucsBasisAngleDegrees);
+        }
+    }
 }
 
 void RS_ActionDimLinear::setExtensionPoint1(RS_Vector p){

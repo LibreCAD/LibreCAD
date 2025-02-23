@@ -58,7 +58,7 @@ void RS_ActionPolylineDelBetween::drawSnapper() {
 void RS_ActionPolylineDelBetween::doTrigger() {
     RS_DEBUG->print("RS_ActionPolylineDelBetween::trigger()");
 
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, viewport);
     RS_Polyline *modifiedPolyline = m.deletePolylineNodesBetween(*polylineToModify, vertexToDelete, vertexToDelete2, false);
     if (modifiedPolyline != nullptr){
         polylineToModify = modifiedPolyline;
@@ -69,17 +69,10 @@ void RS_ActionPolylineDelBetween::doTrigger() {
     }
 }
 
-void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
-    deleteHighlights();
-    deletePreview();
-    RS_DEBUG->print("RS_ActionPolylineDelBetween::mouseMoveEvent begin");
-
-    snapPoint(e);
-    int status = getStatus();
+void RS_ActionPolylineDelBetween::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetPolyline: {
-
-            auto polyline = dynamic_cast<RS_Polyline *>(catchEntityOnPreview(e));
+            auto polyline = dynamic_cast<RS_Polyline *>(catchAndDescribe(e));
             if (polyline != nullptr){
                 highlightHover(polyline);
             }
@@ -112,7 +105,7 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
                         highlightHover(er);
                     }
                     previewRefSelectablePoint(vertex);
-                    RS_Modification m(*preview, graphicView);
+                    RS_Modification m(*preview, viewport);
                     m.deletePolylineNodesBetween(*polylineToModify, vertexToDelete, vertex  , true);
                 }
             }
@@ -121,16 +114,12 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionPolylineDelBetween::mouseMoveEvent end");
-    drawHighlights();
-    drawPreview();
-
 }
 
-void RS_ActionPolylineDelBetween::onMouseLeftButtonRelease(int status, QMouseEvent *e){
+void RS_ActionPolylineDelBetween::onMouseLeftButtonRelease(int status, LC_MouseEvent *e){
     switch (status) {
         case SetPolyline:{
-            auto en = catchEntity(e);
+            auto en = catchEntityByEvent(e);
             if (en == nullptr){
                 commandMessage(tr("No Entity found."));
             } else if (!isPolyline(en)){
@@ -139,7 +128,7 @@ void RS_ActionPolylineDelBetween::onMouseLeftButtonRelease(int status, QMouseEve
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
                 setStatus(SetVertex1);
-                graphicView->redraw();
+                redraw();
             }
             break;
         }

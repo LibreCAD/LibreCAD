@@ -176,7 +176,12 @@ void QG_CommandWidget::setCommand(const QString& cmd) {
         lCommand->setText(tr("Enter Command:"));
     }
     else {
-        lCommand->setText(cmd);
+        if (!cmd.endsWith(":")){
+            lCommand->setText(cmd+":");
+        }
+        else{
+            lCommand->setText(cmd);
+        }
     }
 }
 

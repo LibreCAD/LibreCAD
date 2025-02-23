@@ -32,9 +32,11 @@
 
 class RS_ActionInterface;
 class RS_ActionDrawLineParallelThrough;
+
 namespace Ui {
-class Ui_LineParallelThroughOptions;
+    class Ui_LineParallelThroughOptions;
 }
+
 class QG_LineParallelThroughOptions:public LC_ActionOptionsWidgetBase {
 Q_OBJECT
 
@@ -49,7 +51,7 @@ protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
-    RS_ActionDrawLineParallelThrough *action;
+    RS_ActionDrawLineParallelThrough *action = nullptr;
     std::unique_ptr<Ui::Ui_LineParallelThroughOptions> ui;
     void setCopyNumberToActionAndView(int number);
     void setSymmetricToActionAndView(bool symmetric);

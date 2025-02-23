@@ -22,7 +22,7 @@
 
 #include "lc_ellipsearcoptions.h"
 #include "ui_lc_ellipsearcoptions.h"
-
+#include "rs_actiondrawellipseaxis.h"
 
 /*
  *  Constructs a QG_ArcOptions as a child of 'parent', with the

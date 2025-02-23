@@ -65,15 +65,14 @@ protected:
     struct Points;
     std::unique_ptr<Points> pPoints;
     // set scaling target point to support isotropic or xy-scaling
-    RS_Vector getTargetPoint(QMouseEvent* e);
+    RS_Vector getTargetPoint(LC_MouseEvent* e);
     void findFactor();
     void showPreview();
     void showPreview(RS_ScaleData &previewData);
     void determineScaleFactor(RS_ScaleData& data, const RS_Vector &reference, const RS_Vector &source, const RS_Vector &target);
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
-    void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
-    void mouseMoveEventSelected(QMouseEvent *e) override;
+    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
@@ -82,5 +81,7 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void doTrigger(bool keepSelected) override;
+
+    void onMouseMoveEventSelected(int status, LC_MouseEvent *e) override;
 };
 #endif

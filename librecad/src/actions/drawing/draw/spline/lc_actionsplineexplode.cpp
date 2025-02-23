@@ -103,10 +103,10 @@ void LC_ActionSplineExplode::setupAndAddCreatedEntity(RS_Entity *createdEntity, 
     undoableAdd(createdEntity);
 }
 
-void LC_ActionSplineExplode::onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) {
+void LC_ActionSplineExplode::onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            auto entity = catchEntity(e, enTypeList);
+            auto entity = catchEntityByEvent(e, enTypeList);
             if (entity != nullptr){
                 if (mayModifySplineEntity(entity)) {
                     highlightHoverWithRefPoints(entity, true);
@@ -123,8 +123,8 @@ void LC_ActionSplineExplode::onMouseMove(RS_Vector mouse, int status, QMouseEven
     }
 }
 
-void LC_ActionSplineExplode::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    auto entity = catchEntity(e, enTypeList);
+void LC_ActionSplineExplode::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+    auto entity = catchEntityByEvent(e, enTypeList);
     if (entity != nullptr) {
         if (mayModifySplineEntity(entity)) {
             entityToModify = entity;

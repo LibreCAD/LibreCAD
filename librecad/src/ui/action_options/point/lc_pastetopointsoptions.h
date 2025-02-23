@@ -24,11 +24,11 @@
 #define LC_PASTETOPOINTSACTION_H
 
 #include <QWidget>
-#include "lc_actionpastetopoints.h"
 #include "lc_actionoptionswidgetbase.h"
 
+class LC_ActionPasteToPoints;
 namespace Ui {
-class LC_PasteToPointsOptions;
+    class LC_PasteToPointsOptions;
 }
 
 class LC_PasteToPointsOptions :public LC_ActionOptionsWidgetBase{

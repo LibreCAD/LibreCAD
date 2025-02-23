@@ -69,7 +69,8 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createInfoCursorActions(a_map, agm->infoCursor);
     createSnapExtraActions(a_map, agm->snap_extras);
     createRestrictActions(a_map, agm->restriction);
-    createRelZeroActionsActions(a_map, agm->other);
+    createRelZeroActions(a_map, agm->other);
+    createUCSActions(a_map, agm->ucs);
 
     for (QAction* value: std::as_const(a_map)){
         if (value != nullptr) {
@@ -358,14 +359,28 @@ void LC_ActionFactory::createRestrictActions(QMap<QString, QAction *> &map, QAct
         {"RestrictHorizontal", tr("Restrict Horizontal"), ":/icons/restr_hor.svg"},
         {"RestrictVertical",   tr("Restrict Vertical"),   ":/icons/restr_ver.svg"},
         {"RestrictOrthogonal", tr("Restrict Orthogonal"), ":/icons/restr_ortho.svg"},
-        {"RestrictNothing",    tr("Restrict Nothing"),    ":/extui/restrictnothing.png"},
-        {"LockRelativeZero",   tr("Lock relative zero position"), ":/icons/lock_rel_zero.svg"}
+        {"RestrictNothing",    tr("Restrict Nothing"),    ":/extui/restrictnothing.png"}
     });
 }
 
-void LC_ActionFactory::createRelZeroActionsActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+void LC_ActionFactory::createUCSActions(QMap<QString, QAction *> &map, QActionGroup *group){
     createActions(map, group, {
-        {"SetRelativeZero",    tr("Set relative zero position"),  ":/icons/set_rel_zero.svg"}
+//        {"TMP_FlipUCS",    tr("TMP: Flip UCS"),  ":/icons/modify.svg"},
+        {"UCSSetWCS",   RS2::ActionUCSCreate,   tr("To WCS"),  ":/icons/ucs_set_wcs.svg"}
+        // todo - add action for hiding/showing related zero
+        //{"RestrictOrthogonal", tr("Restrict Orthogonal"),         ":/icons/restr_ortho.svg"}
+    });
+
+    createActionHandlerActions(map, group, {
+        {"UCSCreate",   RS2::ActionUCSCreate,   tr("Create UCS"),  ":/icons/ucs_add.svg"}
+    });
+}
+
+
+void LC_ActionFactory::createRelZeroActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createActions(map, group, {
+        {"SetRelativeZero",    tr("Set relative zero position"),  ":/icons/set_rel_zero.svg"},
+        {"LockRelativeZero",   tr("Lock relative zero position"), ":/icons/lock_rel_zero.svg"}
         // todo - add action for hiding/showing related zero
        //{"RestrictOrthogonal", tr("Restrict Orthogonal"),         ":/icons/restr_ortho.svg"}
     });

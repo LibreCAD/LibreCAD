@@ -24,11 +24,13 @@
 #include <QActionEvent>
 #include "lc_orthogonalgrid.h"
 #include "rs_vector.h"
-#include "rs_graphicview.h"
+
 #include "rs_math.h"
 #include "rs.h"
 #include "lc_gridsystem.h"
-
+#include "lc_lattice.h"
+#include "rs_painter.h"
+#include "lc_graphicviewport.h"
 
 LC_OrthogonalGrid::LC_OrthogonalGrid(LC_GridSystem::LC_GridOptions *options):LC_GridSystem(options) {}
 
@@ -337,7 +339,7 @@ void LC_OrthogonalGrid::createMetaGridLines(const RS_Vector& min, const RS_Vecto
 
 #define DEBUG_META_GRID_
 
-void LC_OrthogonalGrid::drawMetaGridLines(RS_Painter *painter, RS_GraphicView *view) {
+void LC_OrthogonalGrid::drawMetaGridLines(RS_Painter *painter, LC_GraphicViewport *view) {
 
     // draw meta grid:
     doDrawLines(painter, view, metaGridLattice);

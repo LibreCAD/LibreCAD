@@ -32,6 +32,7 @@
 
 class RS_ActionInterface;
 class RS_ActionDrawPolyline;
+
 namespace Ui {
     class Ui_PolylineOptions;
 }
@@ -54,14 +55,11 @@ public slots:
     void tbTanRadiusClicked();
     void tbTanAngleClicked();
     void tbArcAngleClicked();
-
 protected:
-    RS_ActionDrawPolyline* action;
+    RS_ActionDrawPolyline* action = nullptr;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
-
     bool checkActionRttiValid(RS2::ActionType actionType) override;
-
 private:
 	   std::unique_ptr<Ui::Ui_PolylineOptions> ui;
     void setReversedToActionAndView(bool reversed);

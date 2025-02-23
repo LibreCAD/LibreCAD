@@ -20,6 +20,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_rectangle3pointsoptions.h"
+#include "lc_actiondrawrectangle3points.h"
 #include "ui_lc_rectangle3pointsoptions.h"
 #include "rs_math.h"
 
@@ -73,7 +74,7 @@ void LC_Rectangle3PointsOptions::doSetAction(RS_ActionInterface *a, bool update)
         cornersMode = action->getCornersMode();
         usePolyline = action->isUsePolyline();
 
-        double an = action->getAngle();
+        double an = action->getUcsAngleDegrees();
         double r  = action->getRadius();
         double lX = action->getLengthX();
         double lY = action->getLengthY();
@@ -197,8 +198,8 @@ void LC_Rectangle3PointsOptions::onAngleEditingFinished(){
 
 void LC_Rectangle3PointsOptions::setAngleToActionAndView(const QString &val){
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
-        action->setAngle(angle);
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
+        action->setUcsAngleDegrees(angle);
         ui->leAngle->setText(fromDouble(angle));
     }
 }
@@ -288,7 +289,7 @@ void LC_Rectangle3PointsOptions::setBaseAngleFixedToActionAndView(bool value){
 
 void LC_Rectangle3PointsOptions::setInnerAngleToActionAndView(const QString& value){
     double y;
-    if (toDoubleAngle(value, y, 1.0, true)){
+    if (toDoubleAngleDegrees(value, y, 1.0, true)){
         action->setFixedInnerAngle(y);
         ui->leInnerAngle->setText(fromDouble(y));
     }

@@ -108,10 +108,9 @@ public:
     void calculateBorders() override;
 
     //RS_Vector point;
-    void draw(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
+    void draw(RS_Painter *painter) override;
 
 protected:
     RS_PointData data;
-    int determinePointSreenSize(const RS_Painter *painter, const RS_GraphicView *view, double pdsize) const;
 };
 #endif

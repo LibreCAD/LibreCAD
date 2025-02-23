@@ -22,22 +22,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_SLICEDIVIDEOPTIONS_H
 #define LC_SLICEDIVIDEOPTIONS_H
 
-#include "lc_actiondrawslicedivide.h"
 #include "lc_actionoptionswidget.h"
 
+class LC_ActionDrawSliceDivide;
 namespace Ui {
     class LC_SliceDivideOptions;
 }
 
-class LC_SliceDivideOptions : public LC_ActionOptionsWidget
-{
+class LC_SliceDivideOptions : public LC_ActionOptionsWidget{
     Q_OBJECT
-
 public:
     explicit LC_SliceDivideOptions();
     ~LC_SliceDivideOptions() override;
     void updateUI(int mode) override;
-
 protected slots:
     void languageChange() override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
@@ -56,7 +53,7 @@ protected slots:
     void onModeClicked(bool checked);
 private:
     Ui::LC_SliceDivideOptions *ui;
-
+    LC_ActionDrawSliceDivide* action = nullptr;
     bool forCircle {false};
 
     void doSaveSettings() override;
@@ -67,13 +64,10 @@ private:
     void setTickOffsetToActionAndView(const QString &val);
     void setDrawEdgesTicksModeToActionAndView(int index);
     void setCircleStartAngleToActionAndView(const QString &val);
-
-    LC_ActionDrawSliceDivide* action;
-    void setTickAngleRelativeToActionAndView(bool relative);    
+    void setTickAngleRelativeToActionAndView(bool relative);
     void setTicksSnapModeToActionAndView(int index);
     void setDivideFlagToActionAndView(bool value);
     void setFixedDistanceFlagToActionAndView(bool value);
-
 };
 
 #endif // LC_SLICEDIVIDEOPTIONS_H

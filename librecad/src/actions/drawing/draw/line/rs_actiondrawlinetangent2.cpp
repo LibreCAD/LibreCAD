@@ -104,24 +104,19 @@ void RS_ActionDrawLineTangent2::cleanup(){
     this->m_pPoints->circle2 = nullptr;
 }
 
-
-void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent *e){
-    //    RS_DEBUG->print("RS_ActionDrawLineTangent2::mouseMoveEvent begin");
+void RS_ActionDrawLineTangent2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     deleteSnapper();
-    deletePreview();
-    deleteHighlights();
-    snapPoint(e);
-    switch (getStatus()) {
+    switch (status) {
         case SetCircle1: {
             deletePreview();
-            auto *en = catchEntityOnPreview(e, circleType, RS2::ResolveAll);
+            auto *en = catchAndDescribe(e, circleType, RS2::ResolveAll);
             if (en != nullptr){
                 highlightHover(en);
             }
             break;
         }
         case SetCircle2: {
-            RS_Entity *en = catchEntityOnPreview(e, circleType, RS2::ResolveAll);
+            RS_Entity *en = catchAndDescribe(e, circleType, RS2::ResolveAll);
             highlightSelected(m_pPoints->circle1);
             if (en != nullptr && en != m_pPoints->circle1){
                 highlightHover(en);
@@ -130,7 +125,7 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent *e){
                 m_pPoints->tangents = RS_Creation{preview.get()}.createTangent2(m_pPoints->circle1, m_pPoints->circle2);
                 if (m_pPoints->tangents.empty()){
                 } else {
-                    preparePreview(e);
+                    preparePreview(status, e);
                 }
             }
             break;
@@ -139,19 +134,17 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent *e){
             // FIXME _ SAND _ is there not-necessary click?
             highlightSelected(m_pPoints->circle1);
             highlightSelected(m_pPoints->circle2);
-            preparePreview(e);
+            preparePreview(status, e);
             break;
         }
     }
-    drawPreview();
-    drawHighlights();
 }
 
-void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     deleteSnapper();
     switch (status) {
         case SetCircle1: {
-            m_pPoints->circle1 = catchEntity(e, circleType, RS2::ResolveAll);
+            m_pPoints->circle1 = catchEntityByEvent(e, circleType, RS2::ResolveAll);
             if (!m_pPoints->circle1) return;
             init(status + 1);
             break;
@@ -163,7 +156,7 @@ void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, QMouseEvent
                     trigger();
                 } else {
                     init(status + 1);
-                    preparePreview(e);
+                    preparePreview(status, e);
                     invalidateSnapSpot();
                 }
             }
@@ -179,7 +172,7 @@ void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, QMouseEvent
     }
 }
 
-void RS_ActionDrawLineTangent2::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionDrawLineTangent2::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deleteSnapper();
     deletePreview();
     if (status == SetCircle1){
@@ -190,11 +183,11 @@ void RS_ActionDrawLineTangent2::onMouseRightButtonRelease(int status, [[maybe_un
     initPrevious(status);
 }
 
-void RS_ActionDrawLineTangent2::preparePreview(QMouseEvent *e){
-    switch (getStatus()) {
+void RS_ActionDrawLineTangent2::preparePreview(int status, LC_MouseEvent *e){
+    switch (status) {
         case SetCircle2:
         case SelectLine: {
-            RS_Vector mouse = snapFree(e);
+            RS_Vector mouse = e->graphPoint;
             std::sort(m_pPoints->tangents.begin(), m_pPoints->tangents.end(), [&mouse](
                 const std::unique_ptr<RS_Line> &lhs,
                 const std::unique_ptr<RS_Line> &rhs){

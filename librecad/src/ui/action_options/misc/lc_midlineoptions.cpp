@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_midlineoptions.h"
+#include "lc_actiondrawmidline.h"
 #include "ui_lc_midlineoptions.h"
 
 LC_MidLineOptions::LC_MidLineOptions()

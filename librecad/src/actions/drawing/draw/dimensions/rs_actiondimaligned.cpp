@@ -78,14 +78,14 @@ bool RS_ActionDimAligned::doProcessCommand(int status, const QString &c) {
             setText(c);
             updateOptions();
             setStatus(lastStatus);
-            graphicView->enableCoordinateInput();
+            enableCoordinateInput();
             break;
         }
         default:
             if (checkCommand("text", c)){
                 accept = true;
                 lastStatus = (Status) getStatus();
-                graphicView->disableCoordinateInput();
+                disableCoordinateInput();
                 setStatus(SetText);
             }
             break;

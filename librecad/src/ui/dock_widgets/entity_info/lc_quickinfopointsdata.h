@@ -52,7 +52,7 @@ public:
         QString angle;
     };
 
-    void processCoordinate(const RS_Vector &point);
+    void processCoordinate(const RS_Vector &wcsPoint);
     bool updateForCoordinateViewMode(int mode) override;
     void clear() override;
     QString generateView(bool showDistanceAndAngle, bool forceUpdate = false);
@@ -76,6 +76,8 @@ private:
     // list of collected coordinates
     QVector<PointInfo*> collectedPoints;
     void doUpdatePointsAttributes();
+
+    PointInfo *createPointInfo(const RS_Vector &point, const RS_Vector &viewCoordinate, const QString &idxValue, bool relative);
 };
 
 #endif // LC_QUICKINFOPOINTSDATA_H

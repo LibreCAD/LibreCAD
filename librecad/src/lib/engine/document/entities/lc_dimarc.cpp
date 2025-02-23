@@ -289,23 +289,23 @@ void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
     if (RS_DEBUG->getLevel() == RS_Debug::D_INFORMATIONAL)
     {
         std::cout << std::endl 
-                  << " LC_DimArc::updateDim: Text position / angle : " << textPos << " / " << text->getAngle() 
+                  << " LC_DimArc::updateEntity: Text position / angle : " << textPos << " / " << text->getAngle()
                   << std::endl;
 
         std::cout << std::endl 
-                  << " LC_DimArc::updateDim: Reference arc middle point : " << refArc->getMiddlePoint() 
+                  << " LC_DimArc::updateEntity: Reference arc middle point : " << refArc->getMiddlePoint()
                   << std::endl;
 
         std::cout << std::endl 
-                  << " LC_DimArc::updateDim: DimArc-1 start point : " << dimArc1->getStartpoint() 
+                  << " LC_DimArc::updateEntity: DimArc-1 start point : " << dimArc1->getStartpoint()
                   << std::endl;
 
         std::cout << std::endl 
-                  << " LC_DimArc::updateDim: DimArc-2 start point : " << dimArc2->getStartpoint() 
+                  << " LC_DimArc::updateEntity: DimArc-2 start point : " << dimArc2->getStartpoint()
                   << std::endl;
 
         std::cout << std::endl 
-                  << " LC_DimArc::updateDim: Text rectangle corners : " << textRectCorners [0] << ", " 
+                  << " LC_DimArc::updateEntity: Text rectangle corners : " << textRectCorners [0] << ", "
                                                                         << textRectCorners [1] << ", " 
                                                                         << textRectCorners [2] << ", " 
                                                                         << textRectCorners [3] 

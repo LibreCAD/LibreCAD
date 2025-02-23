@@ -31,8 +31,8 @@ LC_ActionModifySelectionBase::LC_ActionModifySelectionBase(const char *name,
                                                            RS_GraphicView &graphicView, RS2::ActionType actionType)
                                                            :RS_PreviewActionInterface(name, container, graphicView,actionType){}
 
-void LC_ActionModifySelectionBase::mouseMoveEvent(QMouseEvent *event){
-    RS_ActionInterface::mouseMoveEvent(event);
+void LC_ActionModifySelectionBase::onMouseMoveEvent(int status, LC_MouseEvent *event) {
+    RS_PreviewActionInterface::onMouseMoveEvent(status, event);
 }
 
 void LC_ActionModifySelectionBase::mouseReleaseEvent(QMouseEvent *event){

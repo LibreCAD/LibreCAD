@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_ellipse.h"
 #include "rs_math.h"
 #include "rs_previewactioninterface.h"
-
+// fixme - sand - cmd - add support of commands for entering offset(?) and setting direction (for interactive mode)!!
 LC_ActionModifyDuplicate::LC_ActionModifyDuplicate(RS_EntityContainer &container, RS_GraphicView &graphicView):
     LC_AbstractActionWithPreview("ModifyDuplicate", container, graphicView),
     selectedEntity(nullptr),
@@ -102,34 +102,28 @@ namespace {
  * @return
  */
 RS_Vector LC_ActionModifyDuplicate::determineOffset(RS_Vector& snapOfOffset, const RS_Vector& center) const{
-    RS_Vector offset(false);
+    RS_Vector wcsOffset(false);
     if (!duplicateInplace){
         bool moveX = LC_LineMath::isMeaningful(offsetX);
         bool moveY = LC_LineMath::isMeaningful(offsetY);
 
         if (moveX || moveY){
             // create offset vector
-            double mx = LC_LineMath::getMeaningful(offsetX);
-            double my = LC_LineMath::getMeaningful(offsetY);
-            offset = RS_Vector(mx, my, 0.0);
+            double ucsMoveX = LC_LineMath::getMeaningful(offsetX);
+            double ucsMoveY = LC_LineMath::getMeaningful(offsetY);
+            auto ucsOffset = RS_Vector(ucsMoveX, ucsMoveY);
+            wcsOffset = toWorldDelta(ucsOffset);
         }       
         if (snapOfOffset.valid){
-            double angle = center.angleTo(snapOfOffset);
-            double correctedAngle = RS_Math::correctAngle(angle);
-            /**
-            int mode = correctedAngle / M_PI_4;
-            
-//            if (mode >= 0 && mode << 8){
-             */
-//                RS_Vector offsetDirection = offsetDirectionVectors.at(mode);
-                RS_Vector offsetDirection = RS_Vector(std::cos(correctedAngle), std::sin(correctedAngle), 0);
-                // prepare vector we'll use for moving shape
-                RS_Vector resultingOffset = offsetDirection * offset;
-                offset = resultingOffset;
-//            }
+            double wcsAngle = center.angleTo(snapOfOffset);
+            double correctedAngle = RS_Math::correctAngle(wcsAngle);
+            auto wcsOffsetDirection = RS_Vector(correctedAngle);
+            // prepare vector we'll use for moving shape
+            auto resultingOffset = wcsOffsetDirection * wcsOffset;
+            wcsOffset = resultingOffset;
         }
     }
-    return offset;
+    return wcsOffset;
 }
 
 void LC_ActionModifyDuplicate::doAfterTrigger(){
@@ -148,10 +142,10 @@ void LC_ActionModifyDuplicate::doAfterTrigger(){
     }
 }
 
-void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
+void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
     switch (status) {
         case SelectEntity: {
-            RS_Entity *en = catchEntity(e, RS2::ResolveNone);
+            RS_Entity *en = catchEntityByEvent(e);
             if (en != nullptr){
                 // just call trigger for duplicate creation
                 selectedEntity = en;
@@ -166,9 +160,7 @@ void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease([[maybe_unused]]QMouse
             break;
         }
         case SetOffsetDirection:
-//            if (alternativeActionMode){
-                triggerPoint = snapPoint;
-//            }
+            triggerPoint = snapPoint;
             trigger();
             break;
         default:
@@ -176,7 +168,7 @@ void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease([[maybe_unused]]QMouse
     }
 }
 
-bool LC_ActionModifyDuplicate::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
+bool LC_ActionModifyDuplicate::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, int status){
     return status ==  SelectEntity || SetOffsetDirection;
 }
 
@@ -187,10 +179,10 @@ bool LC_ActionModifyDuplicate::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent
  * @param list
  * @param status
  */
-void LC_ActionModifyDuplicate::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
+void LC_ActionModifyDuplicate::doPreparePreviewEntities(LC_MouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     switch (status){
         case SelectEntity:{
-            auto en = catchEntity(e, RS2::ResolveNone);
+            auto en = catchEntityByEvent(e);
             if (en != nullptr){
                 // highlight original
                 highlightHover(en);
@@ -234,7 +226,7 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(QMouseEvent *e, [[maybe_
                         previewRefSelectablePoint(newCenter);
                         auto data = RS_EllipseData();
                         data.center = center;
-                        data.majorP = RS_Vector(std::abs(offsetX), 0, 0);
+                        data.majorP = toWorldDelta(RS_Vector(std::abs(offsetX), 0, 0));
                         data.ratio = std::abs(offsetY / offsetX);
                         previewRefEllipse(data);
                     }
@@ -282,8 +274,8 @@ RS2::CursorType LC_ActionModifyDuplicate::doGetMouseCursor([[maybe_unused]]int s
     return RS2::SelectCursor;
 }
 
-RS_Vector LC_ActionModifyDuplicate::doGetMouseSnapPoint(QMouseEvent *e){
-    RS_Vector snapped = snapPoint(e);
+RS_Vector LC_ActionModifyDuplicate::doGetMouseSnapPoint(LC_MouseEvent *e){
+    RS_Vector snapped = e->snapPoint;
     if (getStatus() == SetOffsetDirection){
         snapped = getSnapAngleAwarePoint(e, getEntityCenterPoint(selectedEntity), snapped, isMouseMove(e));
     }

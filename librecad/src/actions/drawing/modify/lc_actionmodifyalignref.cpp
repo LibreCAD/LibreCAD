@@ -35,16 +35,14 @@ LC_ActionModifyAlignRef::LC_ActionModifyAlignRef(RS_EntityContainer &container, 
 
 void LC_ActionModifyAlignRef::doTrigger(bool keepSelected) {
     prepareAlignRefData(pPoints.targetPoint2);
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, viewport);
     m.alignRef(pPoints.data, selectedEntities, false, keepSelected);
     finish(false);
 }
 
-void LC_ActionModifyAlignRef::mouseMoveEventSelected(QMouseEvent *e) {
-    deletePreview();
-    deleteHighlights();
-    RS_Vector snap = snapPoint(e);
-    switch (getStatus()){
+void LC_ActionModifyAlignRef::onMouseMoveEventSelected(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
+    switch (status){
         case SetRefPoint1:{
             snap = getRelZeroAwarePoint(e, snap);
             previewRefPoint(snap);
@@ -79,13 +77,13 @@ void LC_ActionModifyAlignRef::mouseMoveEventSelected(QMouseEvent *e) {
 
             prepareAlignRefData(snap);
 
-            RS_Modification m(*preview, graphicView, false);
+            RS_Modification m(*preview, viewport, false);
             m.alignRef(pPoints.data, selectedEntities, true, true);
 
             if (isInfoCursorForModificationEnabled()) {
                 LC_InfoMessageBuilder msg(tr("Align References"));
                 msg.add(tr("Offset:"),formatRelative(pPoints.data.offset));
-                msg.add(tr("Angle:"),formatAngle(pPoints.data.rotationAngle));
+                msg.add(tr("Angle:"), formatAngleRaw(pPoints.data.rotationAngle));
                 msg.add(tr("Scale:"),formatLinear(pPoints.data.scaleFactor));
                 appendInfoCursorZoneMessage(msg.toString(), 2, false);
             }
@@ -95,8 +93,6 @@ void LC_ActionModifyAlignRef::mouseMoveEventSelected(QMouseEvent *e) {
         default:
             break;
     }
-    drawPreview();
-    drawHighlights();
 }
 
 void LC_ActionModifyAlignRef::prepareAlignRefData(const RS_Vector &snap) {
@@ -121,8 +117,8 @@ void LC_ActionModifyAlignRef::prepareAlignRefData(const RS_Vector &snap) {
     pPoints.data.scaleFactor = scaleFactor;
 }
 
-void LC_ActionModifyAlignRef::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void LC_ActionModifyAlignRef::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     switch (status){
         case SetRefPoint1:{
             snap = getRelZeroAwarePoint(e, snap);
@@ -145,7 +141,7 @@ void LC_ActionModifyAlignRef::mouseLeftButtonReleaseEventSelected(int status, QM
     fireCoordinateEvent(snap);
 }
 
-void LC_ActionModifyAlignRef::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]QMouseEvent *pEvent) {
+void LC_ActionModifyAlignRef::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]LC_MouseEvent *pEvent) {
     if (status == SetRefPoint1){
         if (selectionComplete){
             selectionComplete = false;

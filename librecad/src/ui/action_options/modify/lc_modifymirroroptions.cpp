@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_modifymirroroptions.h"
+#include "rs_actionmodifymirror.h"
 #include "ui_lc_modifymirroroptions.h"
 
 LC_ModifyMirrorOptions::LC_ModifyMirrorOptions()

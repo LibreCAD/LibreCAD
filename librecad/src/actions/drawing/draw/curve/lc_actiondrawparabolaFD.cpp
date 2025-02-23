@@ -135,17 +135,15 @@ void LC_ActionDrawParabolaFD::doTrigger() {
     init(SetFocus);
 }
 
-void LC_ActionDrawParabolaFD::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    deleteHighlights();
-    RS_Vector mouse = snapPoint(e);
-    switch (getStatus()) {
+void LC_ActionDrawParabolaFD::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
+    switch (status) {
         case SetFocus:
             trySnapToRelZeroCoordinateEvent(e);
             break;
         case SetDirectrix: {
-            mouse = toGraph(e); // tmp - which snap is better there?
-            RS_Entity* entity = catchEntity(e, RS2::EntityLine);
+            mouse = e->graphPoint; // tmp - which snap is better there?
+            RS_Entity* entity = catchEntityByEvent(e, RS2::EntityLine);
 
             if (entity != nullptr) {
                 highlightHover(entity);
@@ -219,8 +217,6 @@ void LC_ActionDrawParabolaFD::mouseMoveEvent(QMouseEvent* e) {
     if (pPoints->directrix != nullptr){
         highlightSelected(pPoints->directrix);
     }
-    drawHighlights();
-    drawPreview();
 }
 
 LC_Parabola* LC_ActionDrawParabolaFD::preparePreview(){
@@ -232,17 +228,17 @@ LC_Parabola* LC_ActionDrawParabolaFD::preparePreview(){
     return nullptr;
 }
 
-void LC_ActionDrawParabolaFD::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionDrawParabolaFD::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetDirectrix:{
-            RS_Entity* entity = catchEntity(e, RS2::EntityLine);
+            RS_Entity* entity = catchEntityByEvent(e, RS2::EntityLine);
             if (entity != nullptr) {
                 if (pPoints->setDirectrix(*dynamic_cast<RS_Line *>(entity))) {
                     setStatus(status+1);
                 }
             }
             else{
-                RS_Vector mouse = toGraph(e);  // tmp - should we use free or normal snap there?
+                RS_Vector mouse = e->graphPoint;  // tmp - should we use free or normal snap there?
                 mouse = getSnapAngleAwarePoint(e, pPoints->focus, mouse);
                 if (pPoints->setDirectrix(mouse)) {
                     setStatus(status+1);
@@ -256,7 +252,7 @@ void LC_ActionDrawParabolaFD::onMouseLeftButtonRelease(int status, QMouseEvent *
     }
 }
 
-void LC_ActionDrawParabolaFD::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawParabolaFD::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

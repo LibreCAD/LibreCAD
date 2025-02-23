@@ -34,8 +34,8 @@ public:
 protected:
     bool splineIsClosed = false;
     RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool startDirection) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) override;
     void updateMouseButtonHints() override;
     void collectPointsThatRemainsAfterDeletion(
         const RS_Vector &controlPoint, unsigned int splinePointsCount, bool deleteNotFoundPoints, std::vector<RS_Vector> &pointsVector,

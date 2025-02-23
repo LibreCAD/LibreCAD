@@ -29,7 +29,11 @@ void LC_NamedViewsListOptions::load() {
     LC_GROUP_GUARD("ViewsList");
     {
        showViewInfoToolTip = LC_GET_BOOL("ShowTooltip", true);
-       showTypeIcon = LC_GET_BOOL("ShowTypeIcon", false);
+       showColumnIconType = LC_GET_BOOL("ShowIconType", true);
+       showColumnGridType = LC_GET_BOOL("ShowColumnIconGrid", true);
+       showColumnUCSType = LC_GET_BOOL("ShowColumnIconUCSType", true);
+       showColumnViewDetails = LC_GET_BOOL("ShowColumnViewDetails", true);
+       showColumnUCSDetails = LC_GET_BOOL("ShowColumnUCSDetails", true);
        askForDeletionConfirmation = LC_GET_BOOL("ConfirmDelete", false);
        duplicatedNameReplacesSilently = LC_GET_BOOL("ReplaceDuplicateSilently", false);
        doubleClickPolicy = LC_GET_INT("DoubleClickPolicy", RENAME);
@@ -41,10 +45,14 @@ void LC_NamedViewsListOptions::save() const {
     LC_GROUP_GUARD("ViewsList");
     {
         LC_SET("ShowTooltip", showViewInfoToolTip);
-        LC_SET("ShowTypeIcon", showTypeIcon);
         LC_SET("ConfirmDelete", askForDeletionConfirmation);
         LC_SET("ReplaceDuplicateSilently", duplicatedNameReplacesSilently);
         LC_SET("DoubleClickPolicy", doubleClickPolicy);
         LC_SET("RestoreViewBySingleClick", restoreViewBySingleClick);
+        LC_SET("ShowIconType", showColumnIconType);
+        LC_SET("ShowColumnIconGrid", showColumnGridType);
+        LC_SET("ShowColumnIconUCSType", showColumnUCSType);
+        LC_SET("ShowColumnViewDetails", showColumnViewDetails);
+        LC_SET("ShowColumnUCSDetails", showColumnUCSDetails);
     }
 }

@@ -309,5 +309,16 @@
         <file>info_cursor_zone4.svg</file>
         <file>info_cursor_zone2_entity.svg</file>
         <file>entity_description_info.svg</file>
+        <file>set_ucs.svg</file>
+        <file>ucs_add.svg</file>
+        <file>ucs_ucs.svg</file>
+        <file>ucs_wcs.svg</file>
+        <file>ucs_preview.svg</file>
+        <file>ucs_set.svg</file>
+        <file>ucs_set_wcs.svg</file>
+        <file>dirpos.svg</file>
+        <file>dirneg.svg</file>
+        <file>dirpos_plus.svg</file>
+        <file>dirneg_plus.svg</file>
     </qresource>
 </RCC>

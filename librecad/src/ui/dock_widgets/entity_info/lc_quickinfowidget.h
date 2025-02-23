@@ -83,7 +83,7 @@ public:
     }
 
     void onEntityPropertiesEdited(unsigned long originalId, unsigned long editedCloneId);
-
+    void updateFormats();
 protected slots:
     void onSettings();
     void onClearAll();
@@ -106,7 +106,7 @@ protected slots:
 
 private:
     Ui::LC_QuickInfoWidget *ui = nullptr;
-    RS_GraphicView* graphicView = nullptr;
+    RS_GraphicView* graphicView = nullptr; // fixme - sand - review dependency
     RS_Document* document = nullptr;
 
     /**

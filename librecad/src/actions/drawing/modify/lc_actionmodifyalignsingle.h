@@ -31,8 +31,6 @@ class LC_ActionModifyAlignSingle:public RS_PreviewActionInterface, public LC_Act
 public:
     LC_ActionModifyAlignSingle(RS_EntityContainer &container,
                                 RS_GraphicView &graphicView);
-
-    void mouseMoveEvent(QMouseEvent *event) override;
     void setAlignType(int a) override;
     void init(int status) override;
 protected:
@@ -48,8 +46,9 @@ protected:
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void previewAlignRefPoint(const RS_Vector &min, const RS_Vector &max);

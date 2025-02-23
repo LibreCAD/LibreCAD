@@ -22,20 +22,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_LINEJOINOPTIONS_H
 #define LC_LINEJOINOPTIONS_H
 
-#include "lc_actionmodifylinejoin.h"
 #include "lc_actionoptionswidgetbase.h"
 
+class LC_ActionModifyLineJoin;
+
 namespace Ui {
-class LC_LineJoinOptions;
+    class LC_LineJoinOptions;
 }
 
 class LC_LineJoinOptions : public LC_ActionOptionsWidgetBase {
-Q_OBJECT
-
+    Q_OBJECT
 public:
     explicit LC_LineJoinOptions();
     ~LC_LineJoinOptions() override;
-
 protected slots:
     void languageChange() override;
     void doSetAction( RS_ActionInterface * a, bool update) override;
@@ -48,7 +47,7 @@ protected:
     void doSaveSettings() override;
 private:
     Ui::LC_LineJoinOptions *ui;
-    LC_ActionModifyLineJoin *action;
+    LC_ActionModifyLineJoin *action = nullptr;
 
     void setEdgeModeLine1ToActionAndView(int index);
     void setEdgeModeLine2ToActionAndView(int index);

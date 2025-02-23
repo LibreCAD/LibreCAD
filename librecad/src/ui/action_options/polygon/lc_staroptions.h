@@ -22,20 +22,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_STAROPTIONS_H
 #define LC_STAROPTIONS_H
 
-#include "lc_actiondrawstar.h"
 #include "lc_actionoptionswidgetbase.h"
 
+class LC_ActionDrawStar;
 namespace Ui {
-class LC_StarOptions;
+    class LC_StarOptions;
 }
 
 class LC_StarOptions  :public LC_ActionOptionsWidgetBase {
     Q_OBJECT
-
 public:
     explicit LC_StarOptions();
     ~LC_StarOptions() override;
-
 protected slots:
     void onRadiusInnerEditingFinished();
     void onRadiusOuterEditingFinished();
@@ -50,7 +48,7 @@ protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
     Ui::LC_StarOptions *ui;
-    LC_ActionDrawStar* action;
+    LC_ActionDrawStar* action = nullptr;
     void setRadiusOuterToModelAndView(const QString& val);
     void setRadiusInnerToModelAndView(const QString& val);
     void setRadiusInnerEnabledToModelAndView(bool value);
@@ -59,5 +57,4 @@ private:
     void setNumberToModelAndView(int value);
     void setUsePolylineToActionAndView(bool value);
 };
-
 #endif // LC_STAROPTIONS_H

@@ -32,8 +32,9 @@
 
 class RS_ActionInterface;
 class RS_ActionDrawLineBisector;
+
 namespace Ui {
-class Ui_LineBisectorOptions;
+    class Ui_LineBisectorOptions;
 }
 
 class QG_LineBisectorOptions : public LC_ActionOptionsWidgetBase{

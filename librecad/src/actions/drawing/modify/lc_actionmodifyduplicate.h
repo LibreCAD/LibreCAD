@@ -50,17 +50,17 @@ public:
     void setLayerMode(int value){layerMode = value;};
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
-    RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    RS_Vector doGetMouseSnapPoint(LC_MouseEvent *e) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void doAfterTrigger() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
     bool doCheckMayTrigger() override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     bool isSetActivePenAndLayerOnTrigger() override;
     bool doCheckMayTriggerOnInit(int status) override;
     bool isAcceptSelectedEntityToTriggerOnInit(RS_Entity *pEntity) override;
-    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
+    bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
     void doCreateEntitiesOnTrigger(RS_Entity *entity, QList<RS_Entity *> &list) override;
     void updateMouseButtonHints() override;
 private:

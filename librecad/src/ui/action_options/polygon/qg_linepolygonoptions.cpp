@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 #include "lc_actiondrawlinepolygon4.h"
+#include "lc_actiondrawlinepolygonbase.h"
 #include "qg_linepolygonoptions.h"
 #include "rs_debug.h"
 #include "ui_qg_linepolygonoptions.h"

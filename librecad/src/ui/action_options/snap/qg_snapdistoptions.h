@@ -34,8 +34,7 @@ namespace Ui {
 }
 
 class QG_SnapDistOptions : public QWidget{
-Q_OBJECT
-
+    Q_OBJECT
 public:
     QG_SnapDistOptions(QWidget* parent = nullptr);
     ~QG_SnapDistOptions();
@@ -44,7 +43,6 @@ public:
     double *getDistanceValue();
 protected:
     double* dist;
-
 protected slots:
     virtual void languageChange();
     void onDistEditingFinished();
@@ -52,5 +50,4 @@ private:
     void saveSettings();
     std::unique_ptr<Ui::Ui_SnapDistOptions> ui;
 };
-
 #endif // QG_SNAPDISTOPTIONS_H

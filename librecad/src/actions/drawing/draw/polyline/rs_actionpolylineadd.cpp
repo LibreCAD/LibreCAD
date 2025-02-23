@@ -55,7 +55,7 @@ void RS_ActionPolylineAdd::doTrigger() {
 
     if (polylineToModify && addSegment->isAtomic() && addCoord->valid &&
         addSegment->isPointOnEntity(*addCoord)) {
-        RS_Modification m(*container, graphicView);
+        RS_Modification m(*container, viewport);
         RS_Polyline *createdPolyline = m.addPolylineNode(
             *polylineToModify,
             (RS_AtomicEntity &) *addSegment,
@@ -67,16 +67,11 @@ void RS_ActionPolylineAdd::doTrigger() {
     }
 }
 
-void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    deleteHighlights();
-    RS_DEBUG->print("RS_ActionPolylineAdd::mouseMoveEvent begin");
-    snapPoint(e);
-    int status = getStatus();
+void RS_ActionPolylineAdd::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     switch (status) {
         case ChooseSegment: {
             deleteSnapper();
-            auto polyline = dynamic_cast<RS_Polyline *>(catchEntityOnPreview(e, RS2::EntityPolyline));
+            auto polyline = dynamic_cast<RS_Polyline *>(catchAndDescribe(e, RS2::EntityPolyline));
             if (polyline != nullptr){
                 highlightHover(polyline);
             }
@@ -85,13 +80,13 @@ void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent *e){
         case SetAddCoord: {
             bool oldSnapOnEntity = snapMode.snapOnEntity;
             snapMode.snapOnEntity = true;
-            RS_Vector snap = snapPoint(e);
+            RS_Vector snap = e->snapPoint;
             snapMode.snapOnEntity = oldSnapOnEntity;
-            auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e, RS2::EntityPolyline));
+            auto polyline = dynamic_cast<RS_Polyline *>(catchEntityByEvent(e, RS2::EntityPolyline));
             if (polyline == polylineToModify){
                 RS_Vector coordinate = polyline->getNearestPointOnEntity(snap, true);
                 previewRefSelectablePoint(coordinate);
-                RS_Entity * segment = catchEntityOnPreview(coordinate, RS2::ResolveAll);
+                RS_Entity * segment = catchAndDescribe(coordinate, RS2::ResolveAll);
                 highlightHover(segment);
             }
             break;
@@ -99,15 +94,12 @@ void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-    drawHighlights();
-    drawPreview();
-    RS_DEBUG->print("RS_ActionPolylineAdd::mouseMoveEvent end");
 }
 
-void RS_ActionPolylineAdd::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void RS_ActionPolylineAdd::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case ChooseSegment: {
-            auto en = catchEntity(e);
+            auto en = catchEntityByEvent(e);
             if (!en){
                 commandMessage(tr("No Entity found."));
             } else if (!isPolyline(en)){
@@ -115,7 +107,7 @@ void RS_ActionPolylineAdd::onMouseLeftButtonRelease(int status, QMouseEvent *e) 
             } else {
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
-                graphicView->redraw();
+                redraw();
                 setStatus(SetAddCoord);
             }
             break;
@@ -123,7 +115,7 @@ void RS_ActionPolylineAdd::onMouseLeftButtonRelease(int status, QMouseEvent *e) 
         case SetAddCoord: {
             bool oldSnapOnEntity = snapMode.snapOnEntity;
             snapMode.snapOnEntity = true;
-            RS_Vector snap = snapPoint(e);
+            RS_Vector snap = e->snapPoint;
             snapMode.snapOnEntity = oldSnapOnEntity;
 
             const RS_Vector newCoord = polylineToModify->getNearestPointOnEntity(snap, true);
@@ -149,7 +141,7 @@ void RS_ActionPolylineAdd::onMouseLeftButtonRelease(int status, QMouseEvent *e) 
     }
 }
 
-void RS_ActionPolylineAdd::onMouseRightButtonRelease([[maybe_unused]] int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionPolylineAdd::onMouseRightButtonRelease([[maybe_unused]] int status, [[maybe_unused]] LC_MouseEvent *e) {
     deleteSnapper();
     finish(true);
 }
@@ -157,7 +149,7 @@ void RS_ActionPolylineAdd::onMouseRightButtonRelease([[maybe_unused]] int status
 void RS_ActionPolylineAdd::finish(bool updateTB){
     if (polylineToModify){
         polylineToModify->setSelected(false);
-        graphicView->redraw();
+        redraw();
         polylineToModify = nullptr;
         addSegment = nullptr;
         *addCoord = {};

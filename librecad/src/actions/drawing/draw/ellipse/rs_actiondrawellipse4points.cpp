@@ -77,11 +77,8 @@ void RS_ActionDrawEllipse4Points::doTrigger() {
     //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::trigger():" " entity added: %lu", ellipse->getId());
 }
 
-void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent *e){
-//    RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent begin");
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
+void RS_ActionDrawEllipse4Points::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     if (status == SetPoint1){
         trySnapToRelZeroCoordinateEvent(e);
     }
@@ -126,19 +123,17 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent *e){
                 break;
         }
     }
-    drawPreview();
-//    RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent end");
 }
 
-void RS_ActionDrawEllipse4Points::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void RS_ActionDrawEllipse4Points::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     if (status == SetPoint2){
         snap = getSnapAngleAwarePoint(e, pPoints->points.at(SetPoint1), snap);
     }
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionDrawEllipse4Points::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawEllipse4Points::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

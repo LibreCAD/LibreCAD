@@ -125,7 +125,7 @@ void QG_DimOptions::doSetAction(RS_ActionInterface *a, bool update){
         ui->bDiameter->setChecked(action->getDiameter());
         if (isDimLinear){
             auto dimLinearAction = dynamic_cast<RS_ActionDimLinear *>(action); 
-            sa = fromDouble(RS_Math::rad2deg(dimLinearAction->getAngle()));
+            sa = fromDouble(RS_Math::rad2deg(dimLinearAction->getUcsAngleDegrees()));
         }
         else if (baseline){
             auto dimBaselineAction = dynamic_cast<LC_ActionDrawDimBaseline *>(action);
@@ -134,7 +134,7 @@ void QG_DimOptions::doSetAction(RS_ActionInterface *a, bool update){
         }
         else if (circleDim){
             auto dimAction = dynamic_cast<LC_ActionCircleDimBase *>(action);
-            circleAngle = fromDouble(RS_Math::rad2deg(dimAction->getAngle()));
+            circleAngle = fromDouble(dimAction->getUcsAngleDegrees());
             circleAngleFree  = dimAction->isAngleIsFree();
         }
 
@@ -198,6 +198,7 @@ void QG_DimOptions::doSetAction(RS_ActionInterface *a, bool update){
     ui->cbFreeBaselineDistance->setVisible(baseline);
 
     ui->lblAngleCircle->setVisible(circleDim);
+    ui->leAngleCircle->setVisible(circleDim);
     ui->cbAngleCircleFree->setVisible(circleDim);
 }
 
@@ -216,12 +217,16 @@ void QG_DimOptions::insertSign(const QString &c){
 
 void QG_DimOptions::updateAngle(const QString & a) {
     auto dimLinearAction = dynamic_cast<RS_ActionDimLinear *>(action);
-    double angleDegrees = RS_Math::eval(a);
-    dimLinearAction->setAngle(RS_Math::deg2rad(angleDegrees));
-    bool checkVert = !LC_LineMath::isMeaningfulAngle(90-angleDegrees);
-    ui->bVer->setChecked(checkVert);
-    bool checkHor = !LC_LineMath::isMeaningfulAngle(angleDegrees);
-    ui->bHor->setChecked(checkHor);
+
+    double ucsBasisAngleDegrees = 0.;
+    if (toDoubleAngleDegrees(a, ucsBasisAngleDegrees, 0.0, false)){
+        dimLinearAction->setUcsAngleDegrees(ucsBasisAngleDegrees);
+
+        bool checkVert = !LC_LineMath::isMeaningfulAngle(90-ucsBasisAngleDegrees);
+        ui->bVer->setChecked(checkVert);
+        bool checkHor = !LC_LineMath::isMeaningfulAngle(ucsBasisAngleDegrees);
+        ui->bHor->setChecked(checkHor);
+    }
 }
 
 void QG_DimOptions::onHorClicked(){
@@ -265,13 +270,13 @@ void QG_DimOptions::onBaselineDistanceTextChanged() {
 }
 
 void QG_DimOptions::onAngleCircleTextChanged() {
-    QString distance = ui->leAngleCircle->text();
-    double len;
-    if (toDoubleAngle(distance, len, 45, false)){
+    QString val = ui->leAngleCircle->text();
+    double angle;
+    if (toDoubleAngleDegrees(val, angle, 45, false)){
         auto dimAction = dynamic_cast<LC_ActionCircleDimBase *>(action);
-        dimAction->setAngle(RS_Math::deg2rad(len)   );
+        dimAction->setUcsAngleDegrees(RS_Math::deg2rad(angle)   );
         ui->leAngleCircle->blockSignals(true);
-        ui->leAngleCircle->setText(fromDouble(len));
+        ui->leAngleCircle->setText(fromDouble(angle));
         ui->leAngleCircle->blockSignals(false);
     }
 }
@@ -280,14 +285,18 @@ void QG_DimOptions::updateUI(int mode) {
     switch (mode){
         case UI_UPDATE_BASELINE_DISTANCE:{
             auto dimBaselineAction = dynamic_cast<LC_ActionDrawDimBaseline *>(action);
-//            ui->leBaselineDistance->blockSignals(true);
-            ui->leBaselineDistance->setText(fromDouble(dimBaselineAction->getCurrentBaselineDistance()));
-//            ui->leBaselineDistance->blockSignals(false);
+            double value = dimBaselineAction->getCurrentBaselineDistance();
+            const QString &strValue = fromDouble(value);
+            ui->leBaselineDistance->setText(strValue);
             break;
         }
         case UI_UPDATE_CIRCLE_ANGLE:{
             auto dimAction = dynamic_cast<LC_ActionCircleDimBase *>(action);
-            ui->leAngleCircle->setText(fromDouble(RS_Math::rad2deg(dimAction->getCurrentAngle())));
+            double value = dimAction->getCurrentAngle();
+            const QString &strValue = fromDouble(value);
+            ui->leAngleCircle->blockSignals(true);
+            ui->leAngleCircle->setText(strValue);
+            ui->leAngleCircle->blockSignals(false);
             break;
         }
         default:

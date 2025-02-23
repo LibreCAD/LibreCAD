@@ -1,3 +1,4 @@
+
 /****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
@@ -44,13 +45,11 @@ public:
     ~RS_ActionDrawLine() override;
     void reset();
     void init(int status) override;
-    void mouseMoveEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
     void close();
     void next();
     void undo();
     void redo();
-
 protected:
     /// Action States
     enum Status {
@@ -72,8 +71,9 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
 
     void addHistory(RS_ActionDrawLine::HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s);
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;

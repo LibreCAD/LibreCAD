@@ -45,6 +45,7 @@ public:
     bool writeLineType(DRW_LType *ent);
     bool writeLayer(DRW_Layer *ent);
     bool writeView(DRW_View *ent);
+    bool writeUCS(DRW_UCS* ent);
     bool writeDimstyle(DRW_Dimstyle *ent);
     bool writeTextstyle(DRW_Textstyle *ent);
     bool writeVport(DRW_Vport *ent);
@@ -94,6 +95,7 @@ private:
     bool processTextStyle();
     bool processVports();
     bool processView();
+    bool processUCS();
     bool processAppId();
 
     bool processPoint();

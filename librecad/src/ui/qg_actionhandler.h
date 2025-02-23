@@ -274,6 +274,7 @@ public slots:
     void slotPenApply(); // fixme - remove
     void slotPenCopy(); // fixme - remove
     void slotPenSyncFromLayer(); // fixme - remove
+
 private:
     // Type of draw order selected command
     RS2::ActionType orderType{RS2::ActionOrderTop};

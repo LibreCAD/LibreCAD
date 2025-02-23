@@ -22,20 +22,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_RECTANGLE2POINTSOPTIONS_H
 #define LC_RECTANGLE2POINTSOPTIONS_H
 
-#include "lc_actiondrawrectangle2points.h"
 #include "lc_actionoptionswidgetbase.h"
 
+class LC_ActionDrawRectangle2Points;
+
 namespace Ui {
-class LC_Rectangle2PointsOptions;
+    class LC_Rectangle2PointsOptions;
 }
 
 class LC_Rectangle2PointsOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     explicit LC_Rectangle2PointsOptions();
     ~LC_Rectangle2PointsOptions() override;
-
 public slots:
     void onCornersIndexChanged(int index);
     void onInsertionPointSnapIndexChanged(int index);
@@ -50,9 +49,10 @@ public slots:
     void onBaseAngleFixedClicked(bool value);
     void languageChange() override;
 protected:
+    Ui::LC_Rectangle2PointsOptions *ui = nullptr;
+    LC_ActionDrawRectangle2Points *action = nullptr;
     void doSetAction( RS_ActionInterface * a, bool update) override;
     void doSaveSettings() override;
-private:
     void setAngleToActionAndView(const QString &val);
     void setLenYToActionAnView(const QString& value);
     void setLenXToActionAnView(const QString& value);
@@ -63,8 +63,6 @@ private:
     void setUsePolylineToActionAndView(bool value);
     void setSnapToCornerArcCenter(bool value);
     void setBaseAngleFixedToActionAndView(bool angle);
-    Ui::LC_Rectangle2PointsOptions *ui = nullptr;
-    LC_ActionDrawRectangle2Points *action = nullptr;
     void setEdgesModeToActionAndView(int index);
 };
 

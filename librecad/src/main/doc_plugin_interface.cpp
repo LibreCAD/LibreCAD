@@ -774,7 +774,7 @@ bool Doc_plugin_interface::addToUndo(RS_Entity* current, RS_Entity* modified,
 				     DPI::Disposition how) {
     if (doc) {
         doc->addEntity(modified);
-        LC_UndoSection undo(doc,gView);
+        LC_UndoSection undo(doc,gView->getViewPort());
         if (current->isSelected())
             current->setSelected(false);
 	if (how == DPI::DELETE_ORIGINAL) {
@@ -800,7 +800,7 @@ void Doc_plugin_interface::addPoint(QPointF *start){
     if (doc) {
         RS_Point* entity = new RS_Point(doc, RS_PointData(v1));
         doc->addEntity(entity);
-        LC_UndoSection undo(doc, gView);
+        LC_UndoSection undo(doc, gView->getViewPort());
         undo.addUndoable(entity);
     } else
 		RS_DEBUG->print("Doc_plugin_interface::addPoint: currentContainer is nullptr");
@@ -813,7 +813,7 @@ void Doc_plugin_interface::addLine(QPointF *start, QPointF *end){
     if (doc) {
 		RS_Line* entity = new RS_Line{doc, v1, v2};
         doc->addEntity(entity);
-        LC_UndoSection undo(doc, gView);
+        LC_UndoSection undo(doc, gView->getViewPort());
         undo.addUndoable(entity);
     } else
 		RS_DEBUG->print("Doc_plugin_interface::addLine: currentContainer is nullptr");
@@ -834,7 +834,7 @@ void Doc_plugin_interface::addMText(QString txt, QString sty, QPointF *start,
         RS_MText* entity = new RS_MText(doc, d);
 
         doc->addEntity(entity);
-        LC_UndoSection undo(doc, gView);
+        LC_UndoSection undo(doc, gView->getViewPort());
         undo.addUndoable(entity);
     } else
 		RS_DEBUG->print("Doc_plugin_interface::addMtext: currentContainer is nullptr");
@@ -854,7 +854,7 @@ void Doc_plugin_interface::addText(QString txt, QString sty, QPointF *start,
         RS_Text* entity = new RS_Text(doc, d);
 
         doc->addEntity(entity);
-        LC_UndoSection undo(doc, gView);
+        LC_UndoSection undo(doc, gView->getViewPort());
         undo.addUndoable(entity);
     } else
 		RS_DEBUG->print("Doc_plugin_interface::addText: currentContainer is nullptr");
@@ -867,7 +867,7 @@ void Doc_plugin_interface::addCircle(QPointF *start, qreal radius){
         RS_Circle* entity = new RS_Circle(doc, d);
 
         doc->addEntity(entity);
-        LC_UndoSection undo(doc, gView);
+        LC_UndoSection undo(doc, gView->getViewPort());
         undo.addUndoable(entity);
     } else
 		RS_DEBUG->print("Doc_plugin_interface::addCircle: currentContainer is nullptr");
@@ -882,7 +882,7 @@ void Doc_plugin_interface::addArc(QPointF *start, qreal radius, qreal a1, qreal 
                  false);
         RS_Arc* entity = new RS_Arc(doc, d);
         doc->addEntity(entity);
-        LC_UndoSection undo(doc, gView);
+        LC_UndoSection undo(doc, gView->getViewPort());
         undo.addUndoable(entity);
     } else
 		RS_DEBUG->print("Doc_plugin_interface::addArc: currentContainer is nullptr");
@@ -897,7 +897,7 @@ void Doc_plugin_interface::addEllipse(QPointF *start, QPointF *end, qreal ratio,
         RS_Ellipse* entity = new RS_Ellipse(doc, ed);
 
         doc->addEntity(entity);
-        LC_UndoSection undo(doc, gView);
+        LC_UndoSection undo(doc, gView->getViewPort());
         undo.addUndoable(entity);
     } else
 		RS_DEBUG->print("Doc_plugin_interface::addEllipse: currentContainer is nullptr");
@@ -908,7 +908,7 @@ void Doc_plugin_interface::addLines(std::vector<QPointF> const& points, bool clo
     if (doc) {
         RS_LineData data;
 
-        LC_UndoSection undo(doc, gView);
+        LC_UndoSection undo(doc, gView->getViewPort());
         data.endpoint=RS_Vector(points.front().x(), points.front().y());
 
         for(size_t i=1; i<points.size(); ++i){
@@ -942,7 +942,7 @@ void Doc_plugin_interface::addPolyline(std::vector<Plug_VertexData> const& point
         }
 
         doc->addEntity(entity);
-        LC_UndoSection undo(doc, gView);
+        LC_UndoSection undo(doc, gView->getViewPort());
         undo.addUndoable(entity);
     } else
 		RS_DEBUG->print("%s: currentContainer is nullptr", __func__);
@@ -959,7 +959,7 @@ void Doc_plugin_interface::addSplinePoints(std::vector<QPointF> const& points, b
         auto* entity = new LC_SplinePoints(doc, data);
 
         doc->addEntity(entity);
-        LC_UndoSection undo(doc, gView);
+        LC_UndoSection undo(doc, gView->getViewPort());
         undo.addUndoable(entity);
     } else
 		RS_DEBUG->print("%s: currentContainer is nullptr", __func__);
@@ -985,7 +985,7 @@ void Doc_plugin_interface::addImage(int handle, QPointF *start, QPointF *uvr, QP
                          fade));
 
         doc->addEntity(image);
-        LC_UndoSection undo(doc, gView);
+        LC_UndoSection undo(doc, gView->getViewPort());
         undo.addUndoable(image);
     } else
 		RS_DEBUG->print("Doc_plugin_interface::addImage: currentContainer is nullptr");
@@ -1000,7 +1000,7 @@ void Doc_plugin_interface::addInsert(QString name, QPointF ins, QPointF scale, q
         auto* entity = new RS_Insert(doc, id);
 
         doc->addEntity(entity);
-        LC_UndoSection undo(doc, gView);
+        LC_UndoSection undo(doc, gView->getViewPort());
         undo.addUndoable(entity);
     } else
 		RS_DEBUG->print("Doc_plugin_interface::addInsert: currentContainer is nullptr");
@@ -1057,7 +1057,7 @@ void Doc_plugin_interface::addEntity(Plug_Entity *handle){
         RS_Entity *ent = (reinterpret_cast<Plugin_Entity*>(handle))->getEnt();
 		if (ent) {
             doc->addEntity(ent);
-            LC_UndoSection undo(doc, gView);
+            LC_UndoSection undo(doc, gView->getViewPort());
             undo.addUndoable(ent);
         }
     } else
@@ -1078,7 +1078,7 @@ Plug_Entity *Doc_plugin_interface::newEntity( enum DPI::ETYPE type){
 void Doc_plugin_interface::removeEntity(Plug_Entity *ent){
     RS_Entity *e = (reinterpret_cast<Plugin_Entity*>(ent))->getEnt();
     if (doc && e) {
-        LC_UndoSection undo(doc, gView);
+        LC_UndoSection undo(doc, gView->getViewPort());
         e->setSelected(false);
         e->changeUndoState();
         undo.addUndoable(e);
@@ -1089,7 +1089,7 @@ void Doc_plugin_interface::removeEntity(Plug_Entity *ent){
 
 void Doc_plugin_interface::updateEntity(RS_Entity *org, RS_Entity *newe){
     if (doc) {
-        LC_UndoSection undo(doc, gView);
+        LC_UndoSection undo(doc, gView->getViewPort());
         doc->addEntity(newe);
         undo.addUndoable(newe);
         undo.addUndoable(org);

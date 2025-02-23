@@ -28,6 +28,7 @@
 
 #include "rs_actioninfoinside.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
 

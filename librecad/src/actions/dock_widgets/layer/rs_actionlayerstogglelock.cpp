@@ -60,7 +60,7 @@ void RS_ActionLayersToggleLock::trigger() {
             deselectEntitiesOnLockedLayer(a_layer);
         }
     }
-    graphicView->redraw();
+    redrawDrawing();
     finish(false);
 }
 

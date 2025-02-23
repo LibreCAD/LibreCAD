@@ -25,11 +25,12 @@
 
 #include <QWidget>
 #include "lc_actionoptionswidget.h"
-#include "lc_actiondrawpointslattice.h"
 #include "lc_actionoptionswidgetbase.h"
 
+class LC_ActionDrawPointsLattice;
+
 namespace Ui {
-class LC_PointsLatticeOptions;
+    class LC_PointsLatticeOptions;
 }
 
 class LC_PointsLatticeOptions : public LC_ActionOptionsWidgetBase{
@@ -37,24 +38,19 @@ class LC_PointsLatticeOptions : public LC_ActionOptionsWidgetBase{
 public:
     explicit LC_PointsLatticeOptions();
     ~LC_PointsLatticeOptions() override;
-
 protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
-
 protected slots:
     void languageChange() override;
     void onColumnsChanged(int value);
     void onRowsChanged(int value);
     void onAdjustLastPointToggled(bool value);
-
 private:
     Ui::LC_PointsLatticeOptions *ui;
-    LC_ActionDrawPointsLattice* action;
-
+    LC_ActionDrawPointsLattice* action = nullptr;
     void setColumnsToActionAndView(int value);
     void setRowsToActionAndView(int value);
     void setAdjustLastPointToActionAndView(bool value);
 };
-
 #endif // LC_POINTSLATTICEOPTIONS_H

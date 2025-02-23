@@ -67,7 +67,7 @@ void LC_ActionDrawLineFromPointToLine::doAfterTrigger(){
     setStatus(SetPoint);
 }
 
-void LC_ActionDrawLineFromPointToLine::doBack(QMouseEvent *pEvent, int status){
+void LC_ActionDrawLineFromPointToLine::doBack(LC_MouseEvent *pEvent, int status){
     if (status == SelectLine){
         restoreSnapMode();
     }
@@ -105,7 +105,7 @@ void LC_ActionDrawLineFromPointToLine::doInitialSnapToRelativeZero(RS_Vector zer
  * @param status
  * @param snapPoint
  */
-void LC_ActionDrawLineFromPointToLine::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawLineFromPointToLine::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, int status, const RS_Vector &snapPoint){
     switch (status){
         case (SetPoint):{
             onCoordinateEvent(status, false, snapPoint);
@@ -132,7 +132,7 @@ void LC_ActionDrawLineFromPointToLine::doOnLeftMouseButtonRelease([[maybe_unused
  * @param status
  * @return
  */
-bool LC_ActionDrawLineFromPointToLine::doCheckMayDrawPreview([[maybe_unused]] QMouseEvent *event, int status){
+bool LC_ActionDrawLineFromPointToLine::doCheckMayDrawPreview([[maybe_unused]] LC_MouseEvent *event, int status){
     return status != SetPoint; // draw preview if we're selecting the line only
 }
 
@@ -143,10 +143,10 @@ bool LC_ActionDrawLineFromPointToLine::doCheckMayDrawPreview([[maybe_unused]] QM
  * @param list
  * @param status
  */
-void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     if (status == SelectLine){
         deleteSnapper();
-        RS_Entity* en = catchModifiableEntityOnPreview(e, RS2::EntityLine);
+        RS_Entity* en = catchModifiableAndDescribe(e, RS2::EntityLine);
         RS_Line* line;
         if (en != nullptr){
             auto potentialLine = dynamic_cast<RS_Line *>(en);

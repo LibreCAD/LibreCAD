@@ -33,6 +33,7 @@
 #include "rs_vector.h"
 #include "rs_pen.h"
 #include "rs_undoable.h"
+#include "lc_drawable.h"
 
 class RS_Arc;
 class RS_Block;
@@ -40,7 +41,6 @@ class RS_Circle;
 class RS_Document;
 class RS_EntityContainer;
 class RS_Graphic;
-class RS_GraphicView;
 class RS_Insert;
 class RS_Line;
 class RS_Painter;
@@ -51,6 +51,7 @@ class RS_Layer;
 class LC_Quadratic;
 class RS_Vector;
 class RS_VectorSolutions;
+class LC_GraphicViewport;
 class QString;
 
 /**
@@ -58,13 +59,13 @@ class QString;
  *
  * @author Andrew Mustun
  */
-class RS_Entity:public RS_Undoable {
+class RS_Entity:public RS_Undoable, public LC_Drawable {
 public:
     RS_Entity(RS_EntityContainer *parent = nullptr);
     void init();
     virtual void initId();
     virtual RS_Entity *clone() const = 0;
-    virtual RS_Entity *cloneProxy(RS_GraphicView *view) const;
+    virtual RS_Entity *cloneProxy() const;
 
     virtual void reparent(RS_EntityContainer *parent){
         this->parent = parent;
@@ -74,17 +75,6 @@ public:
     void moveBorders(const RS_Vector &offset);
     void scaleBorders(const RS_Vector &center, const RS_Vector &factor);
 
-    /**
-     * Must be overwritten to return the rtti of this entity
-     * (e.g. RS2::EntityArc).
-     */
-    virtual RS2::EntityType rtti() const{
-        return RS2::EntityUnknown;
-    }
-
-    bool is(RS2::EntityType rttiCandidate) const{
-        return rtti() == rttiCandidate;
-    }
 
     /**
      * Identify all entities as undoable entities.
@@ -547,24 +537,15 @@ public:
         return;
     }
 
-    /** whether the entity's bounding box intersects with visible portion of graphic view */
-    virtual bool isVisibleInWindow(RS_GraphicView *view) const;
-    /**
-     * Implementations must draw the entity on the given device.
-     */
-    virtual void draw(
-        RS_Painter *painter, RS_GraphicView *view,
-        double &patternOffset) = 0;
-
-    virtual void drawAsChild(
-        RS_Painter *painter, RS_GraphicView *view,
-        double &patternOffset){
-        draw(painter, view, patternOffset);
+    virtual void drawAsChild(RS_Painter *painter){
+        draw(painter);
     }
-    virtual void drawDraft(
-        RS_Painter *painter, RS_GraphicView *view,
-        double &patternOffset) {draw(painter, view, patternOffset);};
-    double getStyleFactor(RS_GraphicView *view);
+
+    virtual void drawDraft(RS_Painter *painter) {
+        draw(painter);
+    };
+
+//    double getStyleFactor(RS_GraphicView *view);
     QString getUserDefVar(const QString &key) const;
     std::vector<QString> getAllKeys() const;
     void setUserDefVar(QString key, QString val);

@@ -4,11 +4,12 @@
 #include <QWidget>
 #include <QLabel>
 #include "lc_actionoptionswidget.h"
-#include "lc_actiondrawarc2pointsbase.h"
 
 namespace Ui {
 class LC_ActionDrawArc2POptions;
 }
+
+class LC_ActionDrawArc2PointsBase;
 
 class LC_ActionDrawArc2POptions : public LC_ActionOptionsWidget{
     Q_OBJECT
@@ -30,7 +31,7 @@ protected:
 
 private:
     Ui::LC_ActionDrawArc2POptions *ui;
-    LC_ActionDrawArc2PointsBase* action;
+    LC_ActionDrawArc2PointsBase* action = nullptr;
     int supportedActionType;
     QString optionNamePrefix;
     void updateTooltip( QLabel *label) const;

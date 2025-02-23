@@ -29,24 +29,21 @@
 class RS_Ellipse;
 
 #include "ui_qg_dlgellipse.h"
-#include "lc_dialog.h"
+#include "lc_entitypropertiesdlg.h"
 
-class QG_DlgEllipse : public LC_Dialog, public Ui::QG_DlgEllipse{
+
+class QG_DlgEllipse : public LC_EntityPropertiesDlg, public Ui::QG_DlgEllipse{
     Q_OBJECT
-
 public:
-    QG_DlgEllipse(QWidget* parent = nullptr);
+    QG_DlgEllipse(QWidget *parent, LC_GraphicViewport *pViewport, RS_Ellipse* ellipse);
     ~QG_DlgEllipse();
-
 public slots:
-    virtual void setEllipse( RS_Ellipse & e );
-    virtual void updateEllipse();
-
+    void updateEntity() override;
 protected slots:
     virtual void languageChange();
-
-private:
-    RS_Ellipse* ellipse = nullptr;
+protected:
+    RS_Ellipse* entity = nullptr;
+    void setEntity(RS_Ellipse *e);
 };
 
 #endif // QG_DLGELLIPSE_H

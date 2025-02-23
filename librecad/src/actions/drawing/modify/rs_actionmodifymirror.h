@@ -60,9 +60,8 @@ protected:
     void previewMirror(const RS_Vector &mirrorLinePoint1, const RS_Vector &mirrorLinePoint2);
     void showOptionsAndTrigger();
     RS2::CursorType doGetMouseCursorSelected(int status) override;
-    void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
-    void mouseMoveEventSelected(QMouseEvent *e) override;
+    void mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
+    void mouseRightButtonReleaseEventSelected(int status, LC_MouseEvent *pEvent) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
@@ -71,5 +70,6 @@ protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doTrigger(bool keepSelected) override;
     void obtainFlipLineCoordinates(RS_Vector *start, RS_Vector *end, bool verticalLine);
+    void onMouseMoveEventSelected(int status, LC_MouseEvent *event) override;
 };
 #endif

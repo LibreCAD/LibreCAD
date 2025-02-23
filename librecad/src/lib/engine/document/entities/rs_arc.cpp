@@ -241,8 +241,8 @@ bool RS_Arc::createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& end
 }
 
 void RS_Arc::calculateBorders() {    
-    startPoint = data.center + RS_Vector::polar(data.radius, data.angle1);
-    endPoint = data.center + RS_Vector::polar(data.radius, data.angle2);
+    startPoint = data.center.relative(data.radius, data.angle1);
+    endPoint = data.center.relative(data.radius, data.angle2);
     LC_Rect const rect{startPoint, endPoint};
 
     double minX = rect.lowerLeftCorner().x;
@@ -914,14 +914,9 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
     calculateBorders();
 }
 
-void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
-                  double& patternOffset) {
-    // Adjust dash offset
-    updateDashOffset(*painter, *view, patternOffset);
-    RS_Vector cp = view->toGui(getCenter());
-    double rx = getRadius() * view->getFactor().x;
-    double ry = getRadius() * view->getFactor().y;
-    painter->drawArcEntity(cp, rx, ry, data.startAngleDegrees, data.angularLength);
+void RS_Arc::draw(RS_Painter* painter) {
+    painter->updateDashOffset(this);
+    painter->drawArcWCS(data.center, data.radius, data.startAngleDegrees, data.angularLength);
 }
 
 /**

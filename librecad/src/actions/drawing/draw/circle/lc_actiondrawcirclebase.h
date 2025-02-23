@@ -39,8 +39,8 @@ protected:
     bool moveRelPointAtCenterAfterTrigger = true; // todo - move to options?
     void previewEllipseReferencePoints(const RS_Ellipse *ellipse, bool drawAxises = false,  bool allPointsNotSelectable = false, RS_Vector mouse=RS_Vector(false));
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
 };
 
 #endif // LC_ACTIONDRAWCIRCLEBASE_H

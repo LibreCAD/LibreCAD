@@ -42,6 +42,7 @@ class RS_Polyline;
 class RS_Document;
 class RS_Graphic;
 class RS_GraphicView;
+class LC_GraphicViewport;
 
 struct LC_ModifyOperationFlags{
     bool useCurrentAttributes = false;
@@ -294,7 +295,7 @@ class RS_Modification {
 public:
     RS_Modification(
         RS_EntityContainer &entityContainer,
-        RS_GraphicView *graphicView = nullptr,
+        LC_GraphicViewport *viewport,
         bool handleUndo = true);
     void remove();
     void remove(const std::vector<RS_Entity*> &entitiesList);
@@ -347,7 +348,6 @@ public:
     bool explodeTextIntoLetters(bool keepSelected);
     bool explodeTextIntoLetters(const std::vector<RS_Entity*> &entitiesList, bool keepSelected);
     bool moveRef(RS_MoveRefData &data);
-    void deleteLineNode(RS_Line *polyline, const RS_Vector &node);
     bool splitPolyline(
         RS_Polyline &polyline,
         RS_Entity &e1, RS_Vector v1,
@@ -389,7 +389,7 @@ protected:
     RS_EntityContainer *container = nullptr;
     RS_Graphic *graphic = nullptr;
     RS_Document *document = nullptr;
-    RS_GraphicView *graphicView = nullptr;
+    LC_GraphicViewport* viewport = nullptr;
     bool handleUndo = false;
 
     void trimEnding(const RS_Vector &trimCoord, RS_AtomicEntity *trimmed1, const RS_Vector &is) const;
@@ -400,6 +400,8 @@ protected:
 
     void setupModifiedClones(std::vector<RS_Entity *> &addList, const LC_ModifyOperationFlags &data,
                              bool forPreviewOnly, bool keepSelected) const;
+
+    RS_Entity *getClone(bool forPreviewOnly, const RS_Entity *e) const;
 };
 
 #endif

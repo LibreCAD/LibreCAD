@@ -23,21 +23,19 @@
 #ifndef LC_MIDLINEOPTIONS_H
 #define LC_MIDLINEOPTIONS_H
 
-#include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
-#include "lc_actiondrawmidline.h"
+
+class LC_ActionDrawMidLine;
 
 namespace Ui {
-class LC_MidLineOptions;
+    class LC_MidLineOptions;
 }
 
-class LC_MidLineOptions : public LC_ActionOptionsWidgetBase
-{
+class LC_MidLineOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 public:
     explicit LC_MidLineOptions();
     ~LC_MidLineOptions() override;
-
 protected slots:
     void languageChange() override;
     void onOffsetEditingFinished();
@@ -47,7 +45,7 @@ protected:
     void setOffsetToActionAndView(const QString& val);
 private:
     Ui::LC_MidLineOptions *ui;
-    LC_ActionDrawMidLine* action;
+    LC_ActionDrawMidLine* action = nullptr;
 };
 
 #endif // LC_MIDLINEOPTIONS_H

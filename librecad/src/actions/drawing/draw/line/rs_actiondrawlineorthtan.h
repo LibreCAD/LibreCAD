@@ -39,7 +39,6 @@ public:
     RS_ActionDrawLineOrthTan(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
     void finish(bool updateTB) override;
-    void mouseMoveEvent(QMouseEvent* e) override;
 protected:
     enum Status {
         SetLine,     /**< Choose the line orthogonal to the tangent line */
@@ -55,8 +54,9 @@ protected:
     RS_Entity* circle = nullptr;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void doTrigger() override;
 };
 #endif

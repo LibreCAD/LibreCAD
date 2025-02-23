@@ -22,6 +22,7 @@
 
 #include "lc_rotate2options.h"
 #include "ui_lc_rotate2options.h"
+#include "rs_actionmodifyrotate2.h"
 #include "rs_math.h"
 
 // todo - potentially, instead of specifying secondary angle it is possible to let the user enter the sum of angles
@@ -32,8 +33,7 @@
 
 LC_Rotate2Options::LC_Rotate2Options()
     : LC_ActionOptionsWidgetBase(RS2::ActionModifyRotate2, "Modify", "Rotate2")
-    , ui(new Ui::LC_Rotate2Options)
-{
+    , ui(new Ui::LC_Rotate2Options){
     ui->setupUi(this);
 
     connect(ui->cbKeepOriginals, &QCheckBox::clicked, this, &LC_Rotate2Options::cbKeepOriginalsClicked);
@@ -157,7 +157,7 @@ void LC_Rotate2Options::setSameAngleForCopiesToActionAndView(bool val) {
 
 void LC_Rotate2Options::setAngle1ToActionAndView(QString val) {
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)){
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         ui->leAngle1->setText(fromDouble(angle));
         action->setAngle1(RS_Math::deg2rad(angle));
         bool anglesMirrored = ui->cbAnglesMirrored->isChecked();
@@ -170,7 +170,7 @@ void LC_Rotate2Options::setAngle1ToActionAndView(QString val) {
 
 void LC_Rotate2Options::setAngle2ToActionAndView(QString val) {
     double angle;
-    if (toDoubleAngle(val, angle, 0.0, false)) {
+    if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
         const QString &angleStr = fromDouble(angle);
         ui->leAngle2->setText(angleStr);
         action->setAngle2(RS_Math::deg2rad(angle));

@@ -375,6 +375,31 @@ public:
     int fontFamily;         /*!< ttf font family, italic and bold flags, code 1071 */
 };
 
+class DRW_UCS:public DRW_TableEntry{
+    SETOBJFRIENDS
+public:
+    DRW_Coord origin;
+    DRW_Coord xAxisDirection;
+    DRW_Coord yAxisDirection;
+    DRW_Coord orthoOrigin;
+    double elevation;
+    int orthoType;
+
+    DRW_UCS() { reset();}
+    void reset(){
+        origin.x = origin.y = origin.z = 0.0;
+        xAxisDirection.x = xAxisDirection.y = xAxisDirection.z = 0.0;
+        yAxisDirection.x = yAxisDirection.y = yAxisDirection.z = 0.0;
+        orthoOrigin.x = orthoOrigin.y = orthoOrigin.z = 0.0;
+        elevation = 0.0;
+        orthoType = 0.0;
+    }
+protected:
+    bool parseCode(int code, dxfReader *reader) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+};
+
+
 class DRW_View:public DRW_TableEntry{
     SETOBJFRIENDS
 public:

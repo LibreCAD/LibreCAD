@@ -110,7 +110,7 @@ void LC_ActionDrawCross::doAfterTrigger(){
 LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
     RS_Vector cp = ent->getCenter();
     double lengthX=0., lengthY=0.;
-    double ellipseangle = 0.0;
+    double ellipseAngle = 0.0;
     RS2::EntityType rtti = ent->rtti();
     bool arcShape = rtti == RS2::EntityArc;
     bool isCircle = rtti == RS2::EntityCircle;
@@ -138,13 +138,13 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
                 double radius = ent->getRadius();
                 lengthX = radius + lenX;
                 lengthY = radius + lenYToUse;
-                ellipseangle = 0.0; // we'll draw for circle, so no ellipse angle there
+                ellipseAngle = 0.0; // we'll draw for circle, so no ellipse angle there
 
             } else if (ellipse != nullptr) {
                 // for ellipses - we rely on axis radiuses
                 lengthX = ellipse->getMajorRadius() + lenX;
                 lengthY = ellipse->getMinorRadius() + lenYToUse;
-                ellipseangle = ellipse->getAngle();
+                ellipseAngle = ellipse->getAngle();
             }
             else{
                 // should not be possible unless new entities are added
@@ -158,9 +158,9 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
             lengthX = lenX / 2;
             lengthY = lenYToUse / 2;
             if (isEllipse || isEllipseArcShape){
-                ellipseangle = ellipse->getAngle();
+                ellipseAngle = ellipse->getAngle();
             } else {
-                ellipseangle = 0.0;
+                ellipseAngle = 0.0;
             }
             break;
         case CROSS_SIZE_PERCENT:  //Length is value in percents of radius
@@ -168,11 +168,11 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
                 double radius = ent->getRadius();
                 lengthX = radius * lenX / 100.0;
                 lengthY = radius * lenYToUse / 100.0;
-                ellipseangle = 0.0;
+                ellipseAngle = 0.0;
             } else if (isEllipse || isEllipseArcShape){  // for ellipse, calculate percents for each axis
                 lengthX = ellipse->getMajorRadius() * lenX / 100.0;
                 lengthY = ellipse->getMinorRadius() * lenYToUse / 100.0;
-                ellipseangle = ellipse->getAngle();
+                ellipseAngle = ellipse->getAngle();
             }
             else{
                 // should not be possible unless new entities are added
@@ -190,8 +190,9 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
     RS_Vector vertStart;
     RS_Vector vertEnd;
 
-    // convert angle in degrees to radians
-    double orientationAngle = RS_Math::deg2rad(angle);
+
+    double orientationAngle = toWorldAngleFromUCSBasisDegrees(ucsBasisAngleDegrees);
+//    ellipseAngle = toUCSAngle(ellipseAngle);
 
     // determine start and end points for cross lines based on calculated lengths and angle
 
@@ -202,10 +203,10 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
     } else {
         // normal line - taking care of given angle (plus, take care of ellipse angle, if needed)
         // calculate start point
-        v.setPolar(lengthX, orientationAngle + M_PI + ellipseangle);
+        v.setPolar(lengthX, orientationAngle + M_PI + ellipseAngle);
         horStart = cp + v;
         // end point of horizontal line
-        v.setPolar(lengthX, orientationAngle + ellipseangle);
+        v.setPolar(lengthX, orientationAngle + ellipseAngle);
         horEnd = cp + v;
     }
 
@@ -214,9 +215,9 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
         vertStart = cp;
         vertEnd = cp;
     } else {
-        v.setPolar(lengthY, orientationAngle - M_PI / 2 + ellipseangle);
+        v.setPolar(lengthY, orientationAngle - M_PI / 2 + ellipseAngle);
         vertStart = cp + v;
-        v.setPolar(lengthY, orientationAngle + M_PI / 2 + ellipseangle);
+        v.setPolar(lengthY, orientationAngle + M_PI / 2 + ellipseAngle);
         vertEnd = cp + v;
     }
     // return result
@@ -225,7 +226,7 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
 }
 
 
-bool LC_ActionDrawCross::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
+bool LC_ActionDrawCross::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, int status){
     return status == SetEntity;
 }
 
@@ -236,9 +237,9 @@ bool LC_ActionDrawCross::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *even
  * @param list
  * @param status
  */
-void LC_ActionDrawCross::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list,[[maybe_unused]] int status){
+void LC_ActionDrawCross::doPreparePreviewEntities(LC_MouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list,[[maybe_unused]] int status){
     deleteSnapper();
-    RS_Entity *en = catchEntityOnPreview(e, circleType, RS2::ResolveAll);
+    RS_Entity *en = catchAndDescribe(e, circleType, RS2::ResolveAll);
     // check whether entity is ok for drawing cross
     if (en != nullptr){
         bool isArc = en->isArc();
@@ -272,7 +273,7 @@ void LC_ActionDrawCross::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused
  * @param status
  * @param snapPoint
  */
-void LC_ActionDrawCross::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
+void LC_ActionDrawCross::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
     if (status == SetEntity){
         trigger(); // just draw cross on click
         invalidateSnapSpot();

@@ -73,11 +73,8 @@ void RS_ActionDrawEllipseCenter3Points::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::trigger():entity added: %lu", ellipse->getId());
 }
 
-void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    //    RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::mouseMoveEvent begin");
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
+void RS_ActionDrawEllipseCenter3Points::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     if (status == SetCenter){
         trySnapToRelZeroCoordinateEvent(e);
         return;
@@ -113,8 +110,6 @@ void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){
                 break;
         }
     }
-    RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::mouseMoveEvent end");
-    drawPreview();
 }
 
 bool RS_ActionDrawEllipseCenter3Points::preparePreview(){
@@ -145,11 +140,11 @@ bool RS_ActionDrawEllipseCenter3Points::preparePreview(){
     return pPoints->valid;
 }
 
-void RS_ActionDrawEllipseCenter3Points::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionDrawEllipseCenter3Points::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionDrawEllipseCenter3Points::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawEllipseCenter3Points::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

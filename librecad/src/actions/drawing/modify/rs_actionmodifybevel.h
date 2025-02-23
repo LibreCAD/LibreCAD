@@ -48,7 +48,6 @@ public:
 
     void init(int status) override;
     void finish(bool updateTB) override;
-    void mouseMoveEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
     void setLength1(double l1);
     double getLength1() const;
@@ -78,11 +77,13 @@ protected:
     bool areBothEntityAccepted(RS_Entity *en1, RS_Entity *en2) const;
     void previewLineModifications(const RS_Entity *original, const RS_Entity *trimmed, bool trimOnStart);
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     bool doProcessCommand(int status, const QString &command) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+
     void doTrigger() override;
 };
 #endif

@@ -212,9 +212,8 @@ RS_Vector RS_Line::getMiddlePoint()const{
 /** @return the nearest of equidistant middle points of the line. */
 RS_Vector RS_Line::getNearestMiddle(const RS_Vector& coord,
                                     double* dist,
-                                    int middlePoints
-)const {
-//        RS_DEBUG->print("RS_Line::getNearestMiddle(): begin\n");
+                                    int middlePoints)const {
+
     RS_Vector dvp(getEndpoint() - getStartpoint());
     double l=dvp.magnitude();
     if( l<= RS_TOLERANCE) {
@@ -231,37 +230,22 @@ RS_Vector RS_Line::getNearestMiddle(const RS_Vector& coord,
     if (dist) {
         *dist=vp0.distanceTo(coord);
     }
-//        RS_DEBUG->print("RS_Line::getNearestMiddle(): end\n");
     return vp0;
 }
 
-//RS_Vector RS_Line::getNearestCenter(const RS_Vector& coord,
-//                                    double* dist) {
-
-//    RS_Vector p = (data.startpoint + data.endpoint)*0.5;
-
-//    if (dist) {
-//        *dist = p.distanceTo(coord);
-//    }
-
-//    return p;
-//}
-
-
 RS_Vector RS_Line::getNearestDist(double distance,
                                   const RS_Vector& coord,
-								  double* dist) const{
+                                  double* dist) const{
 
-	RS_Vector dv = RS_Vector::polar(distance, getAngle1());
+    RS_Vector dv = RS_Vector::polar(distance, getAngle1());
 
     RS_Vector ret;
-    //if(coord.distanceTo(getStartpoint()) < coord.distanceTo(getEndpoint())) {
     if( (coord-getStartpoint()).squared()<  (coord-getEndpoint()).squared() ) {
         ret = getStartpoint() + dv;
     }else{
         ret = getEndpoint() - dv;
     }
-	if (dist)
+    if (dist)
         *dist=coord.distanceTo(ret);
 
     return ret;
@@ -347,7 +331,7 @@ RS_Vector RS_Line::prepareTrim(const RS_Vector& trimCoord,
 //prepare trimming for multiple intersections
     if ( ! trimSol.hasValid()) return(RS_Vector(false));
     if ( trimSol.getNumber() == 1 ) return(trimSol.get(0));
-	auto vp0=trimSol.getClosest(trimCoord, nullptr, 0);
+    auto vp0=trimSol.getClosest(trimCoord, nullptr, 0);
 
     double dr2=trimCoord.squaredTo(vp0);
     //the trim point found is closer to mouse location (trimCoord) than both end points, return this trim point
@@ -356,16 +340,16 @@ RS_Vector RS_Line::prepareTrim(const RS_Vector& trimCoord,
     RS_Vector vp1=(trimCoord.squaredTo(getStartpoint()) <= trimCoord.squaredTo(getEndpoint()))?getStartpoint():getEndpoint();
 
     //searching for intersection in the direction of the closer end point
-	auto dvp1=vp1 - trimCoord;
+    auto dvp1=vp1 - trimCoord;
     RS_VectorSolutions sol1;
     for(size_t i=0; i<trimSol.size(); i++){
-		auto dvp2=trimSol.at(i) - trimCoord;
-		if( RS_Vector::dotP(dvp1, dvp2) > RS_TOLERANCE)
-			sol1.push_back(trimSol.at(i));
+        auto dvp2=trimSol.at(i) - trimCoord;
+        if( RS_Vector::dotP(dvp1, dvp2) > RS_TOLERANCE)
+            sol1.push_back(trimSol.at(i));
     }
     //if found intersection in direction, return the closest to trimCoord from it
-	if(sol1.size())
-		return sol1.getClosest(trimCoord, nullptr, 0);
+    if(sol1.size())
+        return sol1.getClosest(trimCoord, nullptr, 0);
 
     //no intersection by direction, return previously found closest intersection
     return vp0;
@@ -455,50 +439,23 @@ void RS_Line::revertDirection(){
 }
 
 void RS_Line::move(const RS_Vector& offset) {
-//    RS_DEBUG->print("RS_Line::move1: sp: %f/%f, ep: %f/%f",
-//                    data.startpoint.x, data.startpoint.y,
-//                    data.endpoint.x, data.endpoint.y);
-
-//    RS_DEBUG->print("RS_Line::move1: offset: %f/%f", offset.x, offset.y);
-
     data.startpoint.move(offset);
     data.endpoint.move(offset);
     moveBorders(offset);
-//    RS_DEBUG->print("RS_Line::move2: sp: %f/%f, ep: %f/%f",
-//                    data.startpoint.x, data.startpoint.y,
-//                    data.endpoint.x, data.endpoint.y);
 }
 
 void RS_Line::rotate(const double& angle) {
-//    RS_DEBUG->print("RS_Line::rotate");
-//    RS_DEBUG->print("RS_Line::rotate1: sp: %f/%f, ep: %f/%f",
-//                    data.startpoint.x, data.startpoint.y,
-//                    data.endpoint.x, data.endpoint.y);
     RS_Vector rvp(angle);
     data.startpoint.rotate(rvp);
     data.endpoint.rotate(rvp);
-//    RS_DEBUG->print("RS_Line::rotate2: sp: %f/%f, ep: %f/%f",
-//                    data.startpoint.x, data.startpoint.y,
-//                    data.endpoint.x, data.endpoint.y);
     calculateBorders();
-//    RS_DEBUG->print("RS_Line::rotate: OK");
 }
 
-
-
 void RS_Line::rotate(const RS_Vector& center, const double& angle) {
-//    RS_DEBUG->print("RS_Line::rotate");
-//    RS_DEBUG->print("RS_Line::rotate1: sp: %f/%f, ep: %f/%f",
-//                    data.startpoint.x, data.startpoint.y,
-//                    data.endpoint.x, data.endpoint.y);
     RS_Vector rvp(angle);
     data.startpoint.rotate(center, rvp);
     data.endpoint.rotate(center, rvp);
-//    RS_DEBUG->print("RS_Line::rotate2: sp: %f/%f, ep: %f/%f",
-//                    data.startpoint.x, data.startpoint.y,
-//                    data.endpoint.x, data.endpoint.y);
     calculateBorders();
-//    RS_DEBUG->print("RS_Line::rotate: OK");
 }
 
 void RS_Line::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
@@ -511,26 +468,14 @@ void RS_Line::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
   *
   */
 void RS_Line::scale(const RS_Vector& factor) {
-//    RS_DEBUG->print("RS_Line::scale1: sp: %f/%f, ep: %f/%f",
-//                    data.startpoint.x, data.startpoint.y,
-//                    data.endpoint.x, data.endpoint.y);
     data.startpoint.scale(factor);
     data.endpoint.scale(factor);
-//    RS_DEBUG->print("RS_Line::scale2: sp: %f/%f, ep: %f/%f",
-//                    data.startpoint.x, data.startpoint.y,
-//                    data.endpoint.x, data.endpoint.y);
     calculateBorders();
 }
 
 void RS_Line::scale(const RS_Vector& center, const RS_Vector& factor) {
-//    RS_DEBUG->print("RS_Line::scale1: sp: %f/%f, ep: %f/%f",
-//                    data.startpoint.x, data.startpoint.y,
-//                    data.endpoint.x, data.endpoint.y);
     data.startpoint.scale(center, factor);
     data.endpoint.scale(center, factor);
-//    RS_DEBUG->print("RS_Line::scale2: sp: %f/%f, ep: %f/%f",
-//                    data.startpoint.x, data.startpoint.y,
-//                    data.endpoint.x, data.endpoint.y);
     calculateBorders();
 }
 
@@ -555,12 +500,10 @@ void RS_Line::stretch(const RS_Vector& firstCorner,
                       const RS_Vector& secondCorner,
                       const RS_Vector& offset) {
 
-	RS_Vector const vLow{std::min(firstCorner.x, secondCorner.x),
-				std::min(firstCorner.y, secondCorner.y)
-				  };
-	RS_Vector const vHigh{std::max(firstCorner.x, secondCorner.x),
-				std::max(firstCorner.y, secondCorner.y)
-				   };
+    RS_Vector const vLow{std::min(firstCorner.x, secondCorner.x),
+                         std::min(firstCorner.y, secondCorner.y)};
+    RS_Vector const vHigh{std::max(firstCorner.x, secondCorner.x),
+                          std::max(firstCorner.y, secondCorner.y)};
 
     if (getStartpoint().isInWindowOrdered(vLow, vHigh)) {
         moveStartpoint(getStartpoint() + offset);
@@ -581,107 +524,15 @@ void RS_Line::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     }
 }
 
-void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
+void RS_Line::draw(RS_Painter* painter) {
     if (isConstruction()) {
         // draw construction lines as infinite lines
-        drawInfinite(painter, view);
+        painter->drawInfiniteWCS(data.startpoint, data.endpoint);
     } else {
         // Adjust dash offset
-        updateDashOffset(*painter, *view, patternOffset);
-        painter->drawLine(view->toGuiX(data.startpoint.x),view->toGuiY(data.startpoint.y), view->toGuiX(data.endpoint.x), view->toGuiY(data.endpoint.y));
+        painter->updateDashOffset(this);
+        painter->drawLineWCS(data.startpoint, data.endpoint);
     }
-}
-
-void RS_Line::drawInfinite(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset, const RS_Vector &startpoint, const RS_Vector &endpoint) {
-    const LC_Rect viewportRect = view->getViewRect();
-/*    RS_EntityContainer borders(nullptr, true);
-    borders.addRectangle(viewportRect.minP(), viewportRect.maxP());
-
-    RS_Vector pStart{view.toGui(data.startpoint)};
-    RS_Vector pEnd{view.toGui( data.endpoint)};
-    //    std::cout<<"draw line: "<<pStart<<" to "<<pEnd<<std::endl;
-    RS_Vector direction = pEnd-pStart;
-    if (direction.squared() < RS_TOLERANCE2)
-        return;
-
-    RS_VectorSolutions vpIts;
-    for(RS_Entity* border: borders) {
-        auto const sol=RS_Information::getIntersection(this, border, false);
-        for(const RS_Vector& vp: sol) {
-            if (vpIts.getClosestDistance(vp) > RS_TOLERANCE * 10.)
-                vpIts.push_back(vp);
-        }
-    }
-
-    //draw construction lines up to viewport border
-    switch (vpIts.size()) {
-    case 2:
-        // no need to sort intersections
-        break;
-    case 3:
-    case 4: {
-        // will use the inner two points
-        size_t i{0};
-        for (size_t j = 0; j < vpIts.size(); ++j)
-            if (viewportRect.inArea(vpIts.at(j), RS_TOLERANCE * 10.))
-                std::swap(vpIts[j], vpIts[i++]);
-
-        break;
-    }
-    default:
-        //should not happen
-        return;
-    }*/
-
-    RS_Vector start(false);
-
-    double offsetX = view->toGuiDX(0.25);
-    double offsetY = view->toGuiDY(0.25);
-
-    RS_Vector pLeft = LC_LineMath::getIntersectionInfiniteLineLineFast(startpoint, endpoint,
-                                                                       viewportRect.minP(), RS_Vector(viewportRect.minP().x, viewportRect.maxP().y),
-                                                                       offsetX, offsetY);
-    if (pLeft.valid){
-        start = pLeft;
-    }
-    RS_Vector pBottom = LC_LineMath::getIntersectionInfiniteLineLineFast(startpoint, endpoint,
-                                                                         viewportRect.minP(), RS_Vector(viewportRect.maxP().x, viewportRect.minP().y),
-                                                                         offsetX, offsetY);
-    if (pBottom.valid){
-        if (start.valid){
-            painter->drawLine(view->toGui(start), view->toGui(pBottom));
-            return;
-        }
-        else{
-            start = pBottom;
-        }
-    }
-
-    RS_Vector pRight = LC_LineMath::getIntersectionInfiniteLineLineFast(startpoint, endpoint,
-                                                                        RS_Vector(viewportRect.maxP().x, viewportRect.minP().y),viewportRect.maxP(),
-                                                                        offsetX, offsetY);
-    if (pRight.valid){
-        if (start.valid){
-            painter->drawLine(view->toGui(start), view->toGui(pRight));
-            return;
-        }
-        else {
-            start = pRight;
-        }
-    }
-    if (start.valid) {
-        RS_Vector pTop = LC_LineMath::getIntersectionInfiniteLineLineFast(startpoint, endpoint,
-                                                                          RS_Vector(viewportRect.minP().x, viewportRect.maxP().y), viewportRect.maxP(),
-                                                                          offsetX, offsetY);
-        if (pTop.valid){
-            painter->drawLine(view->toGui(start), view->toGui(pTop));
-        }
-    }
-}
-
-void RS_Line::drawInfinite(RS_Painter* painter, RS_GraphicView* view){
-    double patternOffset = 0.0;
-    drawInfinite(painter, view, patternOffset, data.startpoint, data.endpoint);
 }
 
 /**

@@ -32,17 +32,16 @@
 
 class RS_ActionInterface;
 class RS_ActionDrawLineParallel;
+
 namespace Ui {
     class Ui_LineParallelOptions;
 }
 
 class QG_LineParallelOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     QG_LineParallelOptions(RS2::ActionType actionType);
     ~QG_LineParallelOptions() override;
-
 public slots:
     void languageChange() override;
     void onNumberValueChanged(int number);
@@ -52,7 +51,7 @@ protected:
     void doSaveSettings() override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
 private:
-    RS_ActionDrawLineParallel* action;
+    RS_ActionDrawLineParallel* action = nullptr;
 	   std::unique_ptr<Ui::Ui_LineParallelOptions> ui;
     void setDistanceToActionAndView(QString val);
     void setNumberToActionAndView(int number);

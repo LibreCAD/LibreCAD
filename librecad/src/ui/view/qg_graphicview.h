@@ -33,6 +33,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_layerlistlistener.h"
+#include "lc_ucs_mark.h"
 
 class QEnterEvent;
 class QG_ScrollBar;
@@ -50,12 +51,13 @@ class QMouseEvent;
  */
 class QG_GraphicView:   public RS_GraphicView,
                         public RS_LayerListListener,
-                        public RS_BlockListListener
+                        public RS_BlockListListener,
+                        public LC_UCSListListener
 {
 Q_OBJECT
 
 public:
-    QG_GraphicView(QWidget *parent = nullptr, Qt::WindowFlags f = {}, RS_Document *doc = nullptr);
+    explicit QG_GraphicView(QWidget *parent = nullptr,  RS_Document *doc = nullptr);
     ~QG_GraphicView() override;
 
     int getWidth() const override;
@@ -63,12 +65,9 @@ public:
     void redraw(RS2::RedrawMethod method=RS2::RedrawAll) override;
     void adjustOffsetControls() override;
     void adjustZoomControls() override;
-    void setBackground(const RS_Color& bg) override;
     void setMouseCursor(RS2::CursorType c) override;
     void updateGridStatusWidget(QString text) override;
     void updateGridPoints();
-
-    virtual	void getPixmapForView(std::unique_ptr<QPixmap>& pm);
     void loadSettings() override;
 
     // Methods from RS_LayerListListener Interface:
@@ -79,27 +78,29 @@ public:
         redraw(RS2::RedrawDrawing);
     }
 
-    void layerToggled(RS_Layer*) override{
-        const RS_EntityContainer::LC_SelectionInfo &info = container->getSelectionInfo();
-        RS_DIALOGFACTORY->updateSelectionWidget(info.count, info.length);
-        redraw(RS2::RedrawDrawing);
-    }
+    void layerToggled(RS_Layer*) override;
 
     void layerActivated(RS_Layer *) override;
+
+
     /**
      * @brief setOffset
      * @param ox, offset X
      * @param oy, offset Y
      */
-    void setOffset(int ox, int oy) override;
-    /**
+    void setOffset(int ox, int oy);
+/*    *//**
      * @brief getMousePosition() mouse position in widget coordinates
      * @return the cursor position in widget coordinates
      * returns the widget center, if cursor is not on the widget
-     */
-    RS_Vector getMousePosition() const override;
+     *//*
+    RS_Vector getMousePosition() const override;*/
 
     void setAntialiasing(bool state);
+    bool isDraftMode() const;
+    void setDraftMode(bool dm);
+    void setDraftLinesMode(bool mode);
+
     void setCursorHiding(bool state);
     void addScrollbars();
     bool hasScrollbars();
@@ -108,7 +109,10 @@ public:
     void destroyMenu(const QString& activator);
     void setMenu(const QString& activator, QMenu* menu);
     QString obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription) override;
-
+    virtual void initView();
+protected slots:
+    void slotHScrolled(int value);
+    void slotVScrolled(int value);
 protected:
     void mousePressEvent(QMouseEvent* e) override;
     void mouseDoubleClickEvent(QMouseEvent* e) override;
@@ -145,43 +149,37 @@ protected:
     //! Hand mouse cursor
     std::unique_ptr<QCursor> curHand;
 
-    // Used for buffering different paint layers
-    std::unique_ptr<QPixmap> PixmapLayer1;  // Used for grids and absolute 0
-    std::unique_ptr<QPixmap> PixmapLayer2;  // Used for the actual CAD drawing
-    std::unique_ptr<QPixmap> PixmapLayer3;  // Used for crosshair and actionitems
-
     double scrollZoomFactor = 1.137;
-    QPixmap pixmapLayer1;
-    QPixmap pixmapLayer2;
-    QPixmap pixmapLayer3;
-    RS2::RedrawMethod redrawMethod;
+
     //! Keep tracks of if we are currently doing a high-resolution scrolling
     bool isSmoothScrolling;
-    bool classicRenderer = true;
+
+    LC_UCSMarkOptions m_ucsMarkOptions;
+
     QMap<QString, QMenu*> menus;
-    void paintClassicalBuffered();
-    void paintSequental();
-private slots:
-    void slotHScrolled(int value);
-    void slotVScrolled(int value);
-private:
+    void highlightUCSLocation(LC_UCS *ucs) override;
+    void ucsHighlightStep();
+
+    virtual void createViewRenderer();
     void addEditEntityEntry(QMouseEvent* event, QMenu& menu);
-    bool antialiasing{false};
+
     bool scrollbars{false};
     bool cursor_hiding{false};
     bool selectCursor_hiding{false};
-    void setupPainter(RS_Painter &painter2) const;
+    bool invertZoomDirection{false};
+    bool invertHorizontalScroll {false};
+    bool invertVerticalScroll {false};
+
     // For auto panning by the cursor close to the view border
     void startAutoPanTimer(QMouseEvent *e);
     bool isAutoPan(QMouseEvent* e) const;
     struct AutoPanData;
     std::unique_ptr<AutoPanData> m_panData;
-
+    struct UCSHighlightData;
+    std::unique_ptr<UCSHighlightData> m_ucsHighlightData;
 signals:
     void xbutton1_released();
     void gridStatusChanged(QString);
-
-
 };
 
 #endif

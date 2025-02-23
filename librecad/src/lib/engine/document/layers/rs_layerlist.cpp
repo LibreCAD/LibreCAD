@@ -37,7 +37,7 @@
  */
 RS_LayerList::RS_LayerList() {
     activeLayer = nullptr;
-	setModified(false);
+    setModified(false);
 }
 
 
@@ -47,7 +47,7 @@ RS_LayerList::RS_LayerList() {
  */
 void RS_LayerList::clear() {
     layers.clear();
-	setModified(true);
+    setModified(true);
 }
 
 
@@ -619,4 +619,3 @@ void RS_LayerList::setModified(bool m) {
 void RS_LayerList::slotUpdateLayerList(){
     setModified(true);
 }
-

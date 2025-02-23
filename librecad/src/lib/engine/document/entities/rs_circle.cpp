@@ -763,32 +763,8 @@ RS_Entity& RS_Circle::shear(double k)
 }
 
 
-
-/** whether the entity's bounding box intersects with visible portion of graphic view
-//fix me, need to handle overlay container separately
-*/
-bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
-{
-
-    RS_Vector vpMin(view->toGraph(0,view->getHeight()));
-    RS_Vector vpMax(view->toGraph(view->getWidth(),0));
-    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
-	std::vector<RS_Vector> vps;
-    for(unsigned short i=0;i<4;i++){
-        const QPointF& vp(visualBox.at(i));
-		vps.emplace_back(vp.x(),vp.y());
-    }
-    for(unsigned short i=0;i<4;i++){
-		RS_Line line{nullptr, {vps.at(i),vps.at((i+1)%4)}};
-		RS_Circle c0{nullptr, getData()};
-        if( RS_Information::getIntersection(&c0, &line, true).size()>0) return true;
-    }
-    if( getCenter().isInWindowOrdered(vpMin,vpMax)==false) return false;
-    return (vpMin-getCenter()).squared() > getRadius()*getRadius();
-}
-
-void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-    painter->drawCircle(view->toGui(getCenter()), view->toGuiDX(getRadius()));
+void RS_Circle::draw(RS_Painter* painter) {
+    painter->drawCircleWCS(data.center, data.radius);
 }
 
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {

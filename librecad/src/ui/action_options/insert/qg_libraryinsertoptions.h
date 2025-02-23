@@ -30,13 +30,13 @@
 
 class RS_ActionInterface;
 class RS_ActionLibraryInsert;
+
 namespace Ui {
-class Ui_LibraryInsertOptions;
+    class Ui_LibraryInsertOptions;
 }
 
 class QG_LibraryInsertOptions : public LC_ActionOptionsWidgetBase{
 Q_OBJECT
-
 public:
     QG_LibraryInsertOptions();
     ~QG_LibraryInsertOptions() override;
@@ -49,7 +49,7 @@ protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
     std::unique_ptr<Ui::Ui_LibraryInsertOptions> ui;
-    RS_ActionLibraryInsert* action;
+    RS_ActionLibraryInsert* action = nullptr;
     void setAngleToActionAndView(QString val);
     void setFactorToActionAndView(QString val);
 };

@@ -33,12 +33,11 @@
 class RS_ActionInterface;
 class RS_ActionDrawMText;
 namespace Ui {
-class Ui_MTextOptions;
+    class Ui_MTextOptions;
 }
 
 class QG_MTextOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     QG_MTextOptions();
     ~QG_MTextOptions() override;
@@ -47,10 +46,9 @@ public slots:
     void updateAngle();
     void languageChange() override;
 protected:
-    RS_ActionDrawMText* action;
+    RS_ActionDrawMText* action = nullptr;
 	   std::unique_ptr<Ui::Ui_MTextOptions> ui;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
 };
-
 #endif // QG_TEXTOPTIONS_H

@@ -113,6 +113,7 @@ public:
 //! \param v0,v1 diagonal vertices of the rectangle
 //!
     void addRectangle(RS_Vector const& v0, RS_Vector const& v1);
+    void addRectangle(RS_Vector const& v0, RS_Vector const& v1,RS_Vector const& v2, RS_Vector const& v3);
 
     virtual RS_Entity* firstEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
     virtual RS_Entity* lastEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
@@ -217,8 +218,7 @@ public:
     void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void revertDirection() override;
 
-
-    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+    void draw(RS_Painter* painter) override;
 
     friend std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec);
 
@@ -259,9 +259,9 @@ public:
 
     inline RS_Entity* unsafeEntityAt(int index) const {return entities.at(index);}
 
-    void drawAsChild(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
+    void drawAsChild(RS_Painter *painter) override;
 
-    RS_Entity *cloneProxy(RS_GraphicView *view) const override;
+    RS_Entity *cloneProxy() const override;
 
 protected:
     /**

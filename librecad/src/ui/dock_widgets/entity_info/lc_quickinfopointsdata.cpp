@@ -21,14 +21,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "lc_quickinfopointsdata.h"
+#include "lc_graphicviewport.h"
 
 LC_QuickInfoPointsData::LC_QuickInfoPointsData():LC_QuickInfoBaseData(){}
-
 
 LC_QuickInfoPointsData::~LC_QuickInfoPointsData(){
     clear();
 }
-
 
 /**
  * Check whether there are some coordinates
@@ -55,72 +54,65 @@ bool LC_QuickInfoPointsData::removeCoordinate(int index){
 
 /**
  * Adds coordinate to the list, taking into consideration coordinates view mode
- * @param point
+ * @param wcsPoint
  */
-void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &point){
+void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &wcsPoint){
 
     int pointsCount = collectedPoints.size();
-    RS_Vector viewCoordinate; // vector used for visual presentation of coordinate
+    PointInfo *pointInfo;
+    int index = pointsCount + 1;
+    QString idxValue;
+    idxValue.setNum(index);
+
+    RS_Vector relZero = getRelativeZero();
+
     switch (coordinatesMode){
         case COORD_ABSOLUTE:
             // just use the vector itself
-            viewCoordinate = point;
+            pointInfo = createPointInfo(wcsPoint, wcsPoint, idxValue, false);
             break;
         case COORD_RELATIVE:{
             // check relative zero position
-            RS_Vector relZero = graphicView->getRelativeZero();
             if (relZero.valid){
                 // calculate relative vector
-                viewCoordinate = point - relZero;
+                RS_Vector wcsRelative = wcsPoint - relZero;
+                pointInfo = createPointInfo(wcsPoint, wcsRelative, idxValue, true);
             }
             else{
-                viewCoordinate = point;
+                pointInfo = createPointInfo(wcsPoint, wcsPoint, idxValue, false);
             }
             break;
         }
         case COORD_RELATIVE_TO_FIRST:{
             if (pointsCount == 0){
-                // for first item, use zero
-                viewCoordinate = RS_Vector(0,0,0);
+                // for first item, use zero at view
+                RS_Vector dummyWCSZero = viewport->toWorld(RS_Vector(0, 0, 0));
+                pointInfo = createPointInfo(wcsPoint, dummyWCSZero, idxValue, false);
             }
             else{
                 // get first vector
                 RS_Vector firstPoint = collectedPoints.at(0)->data;
                 // calculate relative vector from this vector to the first vector in the list
-                viewCoordinate = point - firstPoint;
+                RS_Vector wcsRelative = wcsPoint - firstPoint;
+                pointInfo = createPointInfo(wcsPoint, wcsRelative, idxValue, true);
             }
             break;
         }
         case COORD_RELATIVE_TO_PREVIOUS:{
             if (pointsCount == 0){
-                viewCoordinate = RS_Vector(0,0,0);
+                RS_Vector dummyWCSZero = viewport->toWorld(RS_Vector(0, 0, 0));
+                pointInfo = createPointInfo(wcsPoint, dummyWCSZero, idxValue, false);
             }
             else{
                 // get previous vector in the list
                 RS_Vector prevPoint = collectedPoints.at(pointsCount - 1)->data;
                 // calculate relative vector
-                viewCoordinate = point - prevPoint;
+                RS_Vector wcsRelative = wcsPoint - prevPoint;
+                pointInfo = createPointInfo(wcsPoint, wcsRelative, idxValue, true);
             }
             break;
         }
     }
-
-    int index = pointsCount + 1;
-    QString idxValue;
-    idxValue.setNum(index);
-    QString value = formatVector(viewCoordinate);
-
-    // hold information about vector
-    auto* pointInfo = new PointInfo(point, idxValue, value);
-
-    double angle = viewCoordinate.angle();
-    double len = viewCoordinate.magnitude();
-
-    QString angleVal = formatAngle(angle);
-    QString lengthVal = formatLinear(len);
-
-    pointInfo->angle = angleVal;
-    pointInfo->distance = lengthVal;
 
     // check where we should add point
     if (collectedPointsInsertionIndex < 0){
@@ -138,6 +130,7 @@ void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &point){
     // so doing cleanup pass
     if (collectedPointsInsertionIndex >= 0){
         int size = collectedPoints.size();
+        RS_Vector ucsViewCoordinate; // vector used for visual presentation of coordinate
         for (int i = 0; i < size; i++) {
             PointInfo *info = collectedPoints.at(i);
             int pointIndex = i + 1;
@@ -145,25 +138,58 @@ void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &point){
             indexValue.setNum(pointIndex);
             info->label = indexValue;
             if (coordinatesMode == COORD_RELATIVE_TO_PREVIOUS){
+                QString angleValue;
+                QString lengthValue;
                 if (i == 0){
-                    viewCoordinate = RS_Vector(0,0,0);
+                    ucsViewCoordinate = RS_Vector(0, 0, 0);
+                    angleValue = "";
+                    lengthValue = "";
                 }
                 else{
                     RS_Vector prevPoint = collectedPoints.at(i - 1)->data;
-                    viewCoordinate = point - prevPoint;
+                    ucsViewCoordinate = wcsPoint - prevPoint;
+                    ucsViewCoordinate = viewport->toUCSDelta(ucsViewCoordinate);
+                    double ucsAngleToPrevious = ucsViewCoordinate.angle();
+                    double lenToPrevious = ucsViewCoordinate.magnitude();
+
+                    angleValue = formatUCSAngle(ucsAngleToPrevious);
+                    lengthValue = formatLinear(lenToPrevious);
                 }
-                double angleToPrevious = viewCoordinate.angle();
-                double lenToPrevious = viewCoordinate.magnitude();
-
-                QString angleValue = formatAngle(angleToPrevious);
-                QString lengthValue = formatLinear(lenToPrevious);
-
                 pointInfo->angle = angleValue;
                 pointInfo->distance = lengthValue;
 
             }
         }
     }
+}
+
+LC_QuickInfoPointsData::PointInfo* LC_QuickInfoPointsData::createPointInfo(const RS_Vector &point, const RS_Vector &viewCoordinate, const QString &idxValue, bool relative) {
+    QString value;
+    RS_Vector viewCoord;
+    QString angleVal;
+    if (relative){
+        viewCoord = viewport->toUCSDelta(viewCoordinate);
+        value = formatWCSDeltaVector(viewCoordinate);
+        double ucsAngle = viewCoord.angle();
+        angleVal = formatUCSAngle(ucsAngle);
+    }
+    else{
+        viewCoord = viewCoordinate;
+        value = formatWCSVector(viewCoordinate);
+        double angle = viewCoord.angle();
+        angleVal = formatWCSAngle(angle);
+    }
+
+    // hold information about vector
+    auto* pointInfo = new PointInfo(point, idxValue, value);
+
+    double len = viewCoord.magnitude();
+
+    QString lengthVal = formatLinear(len);
+
+    pointInfo->angle = angleVal;
+    pointInfo->distance = lengthVal;
+    return pointInfo;
 }
 
 /**
@@ -184,21 +210,24 @@ QString LC_QuickInfoPointsData::generateView(bool showDistanceAndAngle, bool for
         RS_Vector zero = RS_Vector(0,0,0);
         switch (coordinatesMode) {
             case COORD_ABSOLUTE:{
-                data.append(tr("Zero")).append(": <b>").append(formatVector(zero)).append("</b><hr>");
+                data.append(tr("Zero")).append(": <b>").append(formatUCSVector(zero)).append("</b><hr>");
                 break;
             }
             case COORD_RELATIVE:{
-                RS_Vector relZero = graphicView->getRelativeZero();
-                if (!relZero.valid){
-                    relZero = zero;
+                RS_Vector wcsRelZero = getRelativeZero();
+                QString vectorStr;
+                if (wcsRelZero.valid) {
+                    vectorStr = formatWCSVector(wcsRelZero);
+                } else {
+                    vectorStr = formatUCSVector(zero);
                 }
-                data.append(tr("Relative Zero")).append(": <b>").append(formatVector(relZero)).append("</b><hr>");
+                data.append(tr("Relative Zero")).append(": <b>").append(vectorStr).append("</b><hr>");
                 break;
             }
             case COORD_RELATIVE_TO_FIRST:
             case COORD_RELATIVE_TO_PREVIOUS: {
                 QString label = tr("First point").append(": ");
-                QString value = formatVector(firstPoint->data);
+                QString value = formatWCSVector(firstPoint->data);
                 createLink(data, "zero", 0, tr("Set Relative Zero"), label);
                 data.append(" <b>");
                 createLink(data, "coord", 0, tr("To Cmd"), value);
@@ -266,49 +295,69 @@ bool LC_QuickInfoPointsData::updateForCoordinateViewMode(int mode){
 void LC_QuickInfoPointsData::doUpdatePointsAttributes(){
     int pointsCount = collectedPoints.size();
 
-    for (int i = 0; i < pointsCount; i++) {
+    RS_Vector relZero = getRelativeZero();
 
+    QString value;
+    QString angleVal;
+    QString lengthVal;
+
+    for (int i = 0; i < pointsCount; i++) {
         PointInfo *pointInfo = collectedPoints.at(i);
-        RS_Vector &data = pointInfo->data;
-        RS_Vector viewCoordinate;
+        RS_Vector &wcsPoint = pointInfo->data;
         switch (coordinatesMode) {
             case COORD_ABSOLUTE:
-                viewCoordinate = data;
+                value = formatWCSVector(wcsPoint);
+                angleVal = formatWCSAngle(wcsPoint.angle());
+                lengthVal = formatLinear(wcsPoint.magnitude());
                 break;
             case COORD_RELATIVE: {
-                RS_Vector relZero = graphicView->getRelativeZero();
                 if (relZero.valid){
-                    viewCoordinate = data - relZero;
+                    RS_Vector wcsRelative = wcsPoint - relZero;
+                    RS_Vector viewCoord = viewport->toUCSDelta(wcsRelative);
+                    value = formatWCSDeltaVector(viewCoord);
+                    double ucsAngle = viewCoord.angle();
+                    angleVal = formatUCSAngle(ucsAngle);
+                    lengthVal = formatLinear(viewCoord.magnitude());
                 } else {
-                    viewCoordinate = data;
+                    value = formatWCSVector(wcsPoint);
+                    angleVal = formatWCSAngle(wcsPoint.angle());
+                    lengthVal = formatLinear(wcsPoint.magnitude());
                 }
                 break;
             }
             case COORD_RELATIVE_TO_FIRST: {
                 if (pointsCount == 0){
-                    viewCoordinate = RS_Vector(0, 0, 0);
+                    value = formatUCSVector(RS_Vector(0, 0, 0));
+                    angleVal = "";
+                    lengthVal = "";
                 } else {
                     RS_Vector firstPoint = collectedPoints.at(0)->data;
-                    viewCoordinate = data - firstPoint;
+                    RS_Vector wcsRelative = wcsPoint - firstPoint;
+                    RS_Vector viewCoord = viewport->toUCSDelta(wcsRelative);
+                    value = formatWCSDeltaVector(viewCoord);
+                    double ucsAngle = viewCoord.angle();
+                    angleVal = formatUCSAngle(ucsAngle);
+                    lengthVal = formatLinear(viewCoord.magnitude());
                 }
                 break;
             }
             case COORD_RELATIVE_TO_PREVIOUS: {
                 if (i == 0){
-                    viewCoordinate = RS_Vector(0, 0, 0);
+                    value = formatUCSVector(RS_Vector(0, 0, 0));
+                    angleVal = "";
+                    lengthVal = "";
                 } else {
                     RS_Vector prevPoint = collectedPoints.at(i - 1)->data;
-                    viewCoordinate = data - prevPoint;
+                    RS_Vector wcsRelative = wcsPoint - prevPoint;
+                    RS_Vector viewCoord = viewport->toUCSDelta(wcsRelative);
+                    value = formatWCSDeltaVector(viewCoord);
+                    double ucsAngle = viewCoord.angle();
+                    angleVal = formatUCSAngle(ucsAngle);
+                    lengthVal = formatLinear(viewCoord.magnitude());
                 }
                 break;
             }
         }
-
-        QString value = formatVector(viewCoordinate);
-        double angle = viewCoordinate.angle();
-        double len = viewCoordinate.magnitude();
-        QString angleVal = formatAngle(angle);
-        QString lengthVal = formatLinear(len);
 
         pointInfo->value = value;
         pointInfo->distance = lengthVal;

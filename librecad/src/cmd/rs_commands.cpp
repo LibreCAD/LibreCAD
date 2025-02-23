@@ -35,7 +35,8 @@
 #include "rs_commands.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
-#include "rs_math.h"
+#include "rs_dialogfactoryinterface.h"
+
 #include "rs_system.h"
 
 namespace {
@@ -360,7 +361,8 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) const
     for(auto const& p: m_mainCommands){
         if(p.second==ret){
             RS_DEBUG->print("RS_Commands::cmdToAction: commandMessage");
-            RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1 (%2)").arg(full).arg(p.first));
+            // fixme - sand - indicate current command somewhere in UI, not in the history window!!!
+//            RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1 (%2)").arg(full).arg(p.first));
             //                                        RS_DialogFactory::instance()->commandMessage( QObject::tr("Command: %1").arg(full));
             RS_DEBUG->print("RS_Commands::cmdToAction: "
                             "commandMessage: ok");

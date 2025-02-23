@@ -44,9 +44,6 @@ bool LC_ActionDrawArc2PointsAngle::createArcData(RS_ArcData &data, [[maybe_unuse
 
     double angleHalf = angle*0.5;
 
-    double secondLegAngle = M_PI - angleHalf;
-
-    double radiusLeg = chordLenHalf / cos(secondLegAngle);
     double distanceFromChordCenterToCenter = chordLenHalf / tan(angleHalf);
 
     RS_Vector chordLenHalfPont = (startPoint + pos) * 0.5;
@@ -63,8 +60,10 @@ bool LC_ActionDrawArc2PointsAngle::createArcData(RS_ArcData &data, [[maybe_unuse
     double angle1 = center.angleTo(startPoint);
     double angle2 = center.angleTo(pos);
 
-    double radiusDelta = radius - radiusLeg;
-    LC_ERR << radiusDelta;
+    // double secondLegAngle = M_PI - angleHalf;
+    // double radiusLeg = chordLenHalf / cos(secondLegAngle);
+    // double radiusDelta = radius - radiusLeg;
+    // LC_ERR << radiusDelta;
     
     data.angle1 = angle1;
     data.angle2 = angle2;

@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_drawboundingboxoptions.h"
+#include "lc_actiondrawboundingbox.h"
 #include "ui_lc_drawboundingboxoptions.h"
 
 LC_DrawBoundingBoxOptions::LC_DrawBoundingBoxOptions()

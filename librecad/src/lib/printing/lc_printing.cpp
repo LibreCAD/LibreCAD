@@ -36,10 +36,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
-#include "rs_staticgraphicview.h"
 #include "rs_units.h"
 #include "rs_vector.h"
 #include "rs_painter.h"
+#include "lc_graphicviewport.h"
+#include "lc_printviewportrenderer.h"
+#include "lc_printpreviewview.h"
 
 namespace {
 
@@ -73,8 +75,7 @@ const std::map<RS2::PaperFormat, QPageSize::PageSizeId> paperToPage = {
 };
 }
 
-QPageSize::PageSizeId LC_Printing::rsToQtPaperFormat(RS2::PaperFormat paper)
-{
+QPageSize::PageSizeId LC_Printing::rsToQtPaperFormat(RS2::PaperFormat paper){
     return (paperToPage.count(paper) == 1) ? paperToPage.at(paper) : QPageSize::Custom;
 }
 
@@ -98,8 +99,9 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
     RS2::PaperFormat pf = graphic->getPaperFormat(&landscape);
     QPageSize::PageSizeId paperSizeName = LC_Printing::rsToQtPaperFormat(pf);
     RS_Vector paperSize = graphic->getPaperSize();
+    RS2::Unit unit = graphic->getUnit();
     if (paperSizeName == QPageSize::Custom) {
-        RS_Vector s = RS_Units::convert(paperSize, graphic->getUnit(), RS2::Millimeter);
+        RS_Vector s = RS_Units::convert(paperSize, unit, RS2::Millimeter);
         if (landscape) s = s.flipXY();
         printer.setPageSize(QPageSize{QSizeF(s.x, s.y), QPageSize::Millimeter});
         // RS_DEBUG->print(RS_Debug::D_ERROR, "set Custom paper size to (%g, %g)\n", s.x,s.y);
@@ -133,7 +135,7 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
         layout.setMode(QPageLayout::FullPageMode);
         layout.setUnits(QPageLayout::Millimeter);
         layout.setMinimumMargins({});
-        RS_Vector s=RS_Units::convert(paperSize, graphic->getUnit(),RS2::Millimeter);
+        RS_Vector s=RS_Units::convert(paperSize, unit, RS2::Millimeter);
         if(landscape) s=s.flipXY();
         layout.setPageSize(QPageSize{QSizeF(s.x,s.y), QPageSize::Millimeter}, paperMargins);
         printer.setPageLayout(layout);
@@ -191,7 +193,7 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
             return std::max({std::abs(diff.left()), std::abs(diff.right()), std::abs(diff.top()), std::abs(diff.bottom())}) <= 2.;
         };
 
-        RS_Vector paperSizeMm = RS_Units::convert(paperSize, graphic->getUnit(), RS2::Millimeter);
+        RS_Vector paperSizeMm = RS_Units::convert(paperSize, unit, RS2::Millimeter);
         QMarginsF printerMargins = printer.pageLayout().margins();
         QRectF paperRect = printer.paperRect(QPrinter::Millimeter);
         RS_Vector printerSizeMm{paperRect.width(), paperRect.height()};
@@ -204,6 +206,10 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
             msgBox.setInformativeText("Do you want to apply changes to current drawing?");
             msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
             msgBox.setDefaultButton(QMessageBox::Cancel);
+            qreal printMarginsLeft = printerMargins.left();
+            qreal printMarginsTop = printerMargins.top();
+            qreal printMarginsRight = printerMargins.right();
+            qreal printMarginsBottom = printerMargins.bottom();
             QString detailedText = QString("Drawing settings:\n"
                                            "\tsize: %1 x %2 (%3)\n"
                                            "\tmargins: %4, %5, %6, %7\n"
@@ -214,24 +220,24 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
                 .arg(paperSize.x)
                 .arg(paperSize.y)
                 .arg(RS_Units::paperFormatToString(pf))
-                .arg(RS_Units::convert(paperMargins.left(), RS2::Millimeter, graphic->getUnit()))
-                .arg(RS_Units::convert(paperMargins.top(), RS2::Millimeter, graphic->getUnit()))
-                .arg(RS_Units::convert(paperMargins.right(), RS2::Millimeter, graphic->getUnit()))
-                .arg(RS_Units::convert(paperMargins.bottom(), RS2::Millimeter, graphic->getUnit()))
-                .arg(RS_Units::convert(printerSizeMm.x, RS2::Millimeter, graphic->getUnit()))
-                .arg(RS_Units::convert(printerSizeMm.y, RS2::Millimeter, graphic->getUnit()))
+                .arg(RS_Units::convert(paperMargins.left(), RS2::Millimeter, unit))
+                .arg(RS_Units::convert(paperMargins.top(), RS2::Millimeter, unit))
+                .arg(RS_Units::convert(paperMargins.right(), RS2::Millimeter, unit))
+                .arg(RS_Units::convert(paperMargins.bottom(), RS2::Millimeter, unit))
+                .arg(RS_Units::convert(printerSizeMm.x, RS2::Millimeter, unit))
+                .arg(RS_Units::convert(printerSizeMm.y, RS2::Millimeter, unit))
                 .arg(printer.pageLayout().pageSize().name())
-                .arg(RS_Units::convert(printerMargins.left(), RS2::Millimeter, graphic->getUnit()))
-                .arg(RS_Units::convert(printerMargins.top(), RS2::Millimeter, graphic->getUnit()))
-                .arg(RS_Units::convert(printerMargins.right(), RS2::Millimeter, graphic->getUnit()))
-                .arg(RS_Units::convert(printerMargins.bottom(), RS2::Millimeter, graphic->getUnit()));
+                .arg(RS_Units::convert(printMarginsLeft, RS2::Millimeter, unit))
+                .arg(RS_Units::convert(printMarginsTop, RS2::Millimeter, unit))
+                .arg(RS_Units::convert(printMarginsRight, RS2::Millimeter, unit))
+                .arg(RS_Units::convert(printMarginsBottom, RS2::Millimeter, unit));
             msgBox.setDetailedText(detailedText);
             int answer = msgBox.exec();
             switch (answer) {
                 case QMessageBox::Yes:
-                    graphic->setPaperSize(RS_Units::convert(printerSizeMm, RS2::Millimeter, graphic->getUnit()));
-                    graphic->setMargins(printerMargins.left(), printerMargins.top(),
-                                        printerMargins.right(), printerMargins.bottom());
+                    graphic->setPaperSize(RS_Units::convert(printerSizeMm, RS2::Millimeter, unit));
+                    graphic->setMargins(printMarginsLeft, printMarginsTop,
+                                        printMarginsRight, printMarginsBottom);
                     break;
                 case QMessageBox::No:
                     break;
@@ -243,7 +249,6 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
     }
 
     if (bStartPrinting) {
-
         RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "QC_ApplicationWindow::slotFilePrint: resolution is %d", printer.resolution());
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
@@ -252,38 +257,58 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
         std::shared_ptr<RS_Painter> painterPtr{&painter, []([[maybe_unused]] RS_Painter *painter) {
             QApplication::restoreOverrideCursor();
         }};
-        painter.setDrawingMode(mdiWindow.getGraphicView()->getDrawingMode());
+
+        // fixme - sand rework this later - it seems that printing in general should be refined.  
+        QG_GraphicView *graphicView = mdiWindow.getGraphicView();
+        RS2::DrawingMode drawingMode = RS2::DrawingMode::ModeAuto;
+        if (graphicView->isPrintPreview()){
+            LC_PrintPreviewView* printPreview = dynamic_cast<LC_PrintPreviewView *>(graphicView);
+            if (printPreview != nullptr){
+                drawingMode = printPreview->getDrawingMode();
+            }
+        }
+        painter.setDrawingMode(drawingMode);
 
         QMarginsF margins = printer.pageLayout().margins(QPageLayout::Millimeter);
-        LC_ERR << "Printer margins (mm): " << margins.left()<<": "<<margins.top()<<" : "<<margins.right()<<" : "<<margins.bottom();
+//        LC_ERR << "Printer margins (mm): " << margins.left()<<": "<<margins.top()<<" : "<<margins.right()<<" : "<<margins.bottom();
 
-        double printerFx = (double) printer.width() / printer.widthMM();
-        double printerFy = (double) printer.height() / printer.heightMM();
+        double printerWidth = printer.width();
+        double printerHeight = printer.height();
+
+        double printerFx = (double) printerWidth / printer.widthMM();
+        double printerFy = (double) printerHeight / printer.heightMM();
 
         painter.setClipRect(margins.left() * printerFx, margins.top() * printerFy,
-                            printer.width() - (margins.left() + margins.right()) * printerFx,
-                            printer.height() - (margins.top() + margins.bottom()) * printerFy);
+                            printerWidth - (margins.left() + margins.right()) * printerFx,
+                            printerHeight - (margins.top() + margins.bottom()) * printerFy);
 
-        RS_StaticGraphicView gv(printer.width(), printer.height(), &painter);
-        gv.setPrinting(true);
-        gv.setBorders(0, 0, 0, 0);
-        gv.setLineWidthScaling(mdiWindow.getGraphicView()->getLineWidthScaling());
+        LC_GraphicViewport viewport;
+        viewport.setContainer(graphic);
+        viewport.setBorders(0, 0, 0, 0);
+        viewport.setSize(printerWidth, printerHeight);
 
-        double fx = printerFx * RS_Units::getFactorToMM(graphic->getUnit());
-        double fy = printerFy * RS_Units::getFactorToMM(graphic->getUnit());
+        LC_PrintViewportRenderer renderer(&viewport, &painter);
+        viewport.loadSettings();
+        renderer.loadSettings();
+
+        bool scaleLineWidth = mdiWindow.getGraphicView()->getLineWidthScaling();
+        renderer.setLineWidthScaling(scaleLineWidth);
+
+        double fx = printerFx * RS_Units::getFactorToMM(unit);
+        double fy = printerFy * RS_Units::getFactorToMM(unit);
         //RS_DEBUG->print(RS_Debug::D_ERROR, "paper size=(%d, %d)\n",
         //                printer.widthMM(),printer.heightMM());
 
         double f = (fx + fy) / 2.0;
 
         double scale = graphic->getPaperScale();
+        double factor = f * scale;
 
-        gv.setFactor(f * scale);
         //RS_DEBUG->print(RS_Debug::D_ERROR, "PaperSize=(%d, %d)\n",printer.widthMM(), printer.heightMM());
-        gv.setContainer(graphic);
 
         double baseX = graphic->getPaperInsertionBase().x;
         double baseY = graphic->getPaperInsertionBase().y;
+
         int numX = graphic->getPagesNumHoriz();
         int numY = graphic->getPagesNumVert();
         RS_Vector printArea = graphic->getPrintAreaSize(false);
@@ -294,15 +319,22 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
                 double offsetX = printArea.x * pX;
                 // First page is created automatically.
                 // Extra pages must be created manually.
-                if (pX > 0 || pY > 0) printer.newPage();
-                gv.setOffset((int) ((baseX - offsetX) * f),
-                             (int) ((baseY - offsetY) * f));
-                //fixme, I don't understand the meaning of 'true' here
-                //        gv.drawEntity(&painter, graphic, true);
-                painter.setDrawSelectedOnly(true);
-                gv.drawEntity(&painter, graphic);
-                painter.setDrawSelectedOnly(false);
-                gv.drawEntity(&painter, graphic);
+                if (pX > 0 || pY > 0) {
+                    printer.newPage();
+                }
+
+                viewport.justSetOffsetAndFactor((int) ((baseX - offsetX) * f),
+                                                (int) ((baseY - offsetY) * f),
+                                                factor);
+
+
+                painter.setViewPort(&viewport);  // update offset
+                renderer.render();
+
+//                painter.setDrawSelectedOnly(true);
+//                gv.drawEntity(&painter, graphic);
+//                painter.setDrawSelectedOnly(false);
+//                gv.drawEntity(&painter, graphic);
             }
         }
 

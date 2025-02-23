@@ -48,7 +48,7 @@ public:
     void setSetXDirectionState();
     void setSetYDirectionState();
     void setAngleValue(double value);
-    void setAngle(double value){angle = value;};
+    void setAngle(double value){doSetAngle(angleDegrees = value);};
     double getAngle() const;
     bool isAngleRelative() const;
     void setAngleIsRelative(bool value);
@@ -66,7 +66,7 @@ protected:
     };
 
 
-    double angle = 0.0; // fixed angle for line
+    double angleDegrees = 0.0; // fixed angle for line
     bool angleIsRelative = true; // is angle relative to previous segment (if any)
     int direction = DIRECTION_NONE; // current line direction
     int primaryDirection = DIRECTION_NONE; // major direction of line - used for subsequent lines
@@ -77,14 +77,14 @@ protected:
     virtual bool doProcessCommandValue(int status, const QString &c);
     virtual const RS_Vector& getStartPointForAngleSnap() const = 0;
     virtual bool isStartPointValid() const;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapped) override;
-    bool doCheckMayDrawPreview(QMouseEvent *pEvent, int status) override;
-    RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapped) override;
+    bool doCheckMayDrawPreview(LC_MouseEvent *pEvent, int status) override;
+    RS_Vector doGetMouseSnapPoint(LC_MouseEvent *e) override;
     virtual void doSetStartPoint(RS_Vector vector) = 0;
     int doGetStatusForInitialSnapToRelativeZero() override;
     void doInitialSnapToRelativeZero(RS_Vector vector) override;
     void setStatusForValidStartPoint(int newStatus);
-
     virtual bool isAllowDirectionCommands();
+    void doSetAngle(double value);
 };
 #endif //LIBRECAD_LC_ABSTRACTACTIONDRAWLINE_H

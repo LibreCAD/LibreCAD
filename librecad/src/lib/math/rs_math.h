@@ -57,6 +57,7 @@ double rad2deg(double a);
 double deg2rad(double a);
 double rad2gra(double a);
 double gra2rad(double a);
+double gra2deg(double a);
 unsigned findGCD(unsigned a, unsigned b);
 
 /**

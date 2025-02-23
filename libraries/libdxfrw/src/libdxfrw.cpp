@@ -312,6 +312,58 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
     return true;
 }
 
+bool dxfRW::writeUCS(DRW_UCS* ent){
+    writer->writeString(0, "UCS");
+    if (version > DRW::AC1009) {
+        writer->writeString(5, toHexStr(++entCount));
+    }
+    if (version > DRW::AC1012) {
+        writer->writeString(330, "42"); // 	Soft-pointer ID/handle to owner object, fixme - check whether id is fixed as for layers?
+    }
+    if (version > DRW::AC1009) {
+        writer->writeString(100, "AcDbSymbolTableRecord");
+        writer->writeString(100, "AcDbViewTableRecord");
+        writer->writeUtf8String(2, ent->name);
+    } else {
+        writer->writeUtf8Caps(2, ent->name);
+    }
+    writer->writeInt16(70, ent->flags);
+
+    writer->writeDouble(10, ent->origin.x);
+    writer->writeDouble(20, ent->origin.y);
+    if (ent->origin.z != 0.0) {
+        writer->writeDouble(30, ent->origin.z);
+    }
+    writer->writeDouble(11, ent->xAxisDirection.x);
+    writer->writeDouble(21, ent->xAxisDirection.y);
+    if (ent->xAxisDirection.z != 0.0) {
+        writer->writeDouble(31, ent->xAxisDirection.z);
+    }
+
+    writer->writeDouble(12, ent->yAxisDirection.x);
+    writer->writeDouble(22, ent->yAxisDirection.y);
+    if (ent->yAxisDirection.z != 0.0) {
+        writer->writeDouble(32, ent->yAxisDirection.z);
+    }
+
+    writer->writeInt16(79, 0);
+    //ID/handle of base UCS if this is an orthographic. This code is not present if the 79 code is 0.
+    // If this code is not present and 79 code is non-zero, then base UCS is assumed to be WORLD
+    // fixme - review this. Probably we'll skip support of it?
+    // writer->writeInt16(346, 0);
+
+    writer->writeDouble(146, ent->elevation);
+
+    writer->writeDouble(71, ent->orthoType);
+
+    writer->writeDouble(13, ent->orthoOrigin.x);
+    writer->writeDouble(23, ent->orthoOrigin.y);
+    if (ent->orthoOrigin.z != 0.0) {
+        writer->writeDouble(33, ent->orthoOrigin.z);
+    }
+    return true;
+}
+
 bool dxfRW::writeView(DRW_View *ent){
     writer->writeString(0, "VIEW");
     if (version > DRW::AC1009) {
@@ -1655,6 +1707,7 @@ bool dxfRW::writeTables() {
         writer->writeString(100, "AcDbSymbolTable");
     }
     writer->writeInt16(70, 0); //end table def
+    iface->writeUCSs();
     writer->writeString(0, "ENDTAB");
 
     writer->writeString(0, "TABLE");
@@ -2123,7 +2176,7 @@ bool dxfRW::processTables() {
                     } else if (sectionstr == "VIEW") {
                        processView();
                     } else if (sectionstr == "UCS") {
-//                        processUCS();
+                        processUCS();
                     } else if (sectionstr == "APPID") {
                         processAppId();
                     } else if (sectionstr == "DIMSTYLE") {
@@ -2138,6 +2191,36 @@ bool dxfRW::processTables() {
         }
     }
 
+    return setError(DRW::BAD_READ_TABLES);
+}
+
+// fixme - sand - code duplication to other entities (VIEW..) Think about more generic reading method
+bool dxfRW::processUCS(){
+    DRW_DBG("dxfRW::processUCS\n");
+    int code;
+    std::string sectionstr;
+    bool reading = false;
+    DRW_UCS ucs;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            if (reading) {
+                iface->addUCS(ucs);
+            }
+            sectionstr = reader->getString();
+            DRW_DBG(sectionstr); DRW_DBG("\n");
+            if (sectionstr == "UCS") {
+                reading = true;
+                ucs.reset();
+            } else if (sectionstr == "ENDTAB") {
+                return true;  //found ENDTAB terminate
+            }
+        } else if (reading) {
+            if (!ucs.parseCode(code, reader)) {
+                return setError( DRW::BAD_CODE_PARSED);
+            }
+        }
+    }
     return setError(DRW::BAD_READ_TABLES);
 }
 

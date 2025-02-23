@@ -61,6 +61,7 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
     , snap_extras(new LC_ActionGroup(this,tr("Snap Extras"), tr("Additional Snaps"), ":/icons/snap_free.svg"))
     , view(new LC_ActionGroup(this,tr("View"),tr("View related operations"), ":/icons/zoom_in.svg"))
     , namedViews(new LC_ActionGroup(this,tr("Named Views"),tr("Persistent Views operations"), ":/icons/visible.svg"))
+    , ucs(new LC_ActionGroup(this,tr("UCS"),tr("UCS operations"), ":/icons/set_ucs.svg"))
     , widgets(new LC_ActionGroup(this,tr("Widgets"), tr("Widgets management"),":/icons/dockwidgets_bottom.svg"))
     , pen(new LC_ActionGroup(this,tr("PenTB"),tr("Pen related operations"), ":/icons/pen_apply.svg"))
     , infoCursor(new LC_ActionGroup(this,tr("InfoCursor"),tr("Informational Cursor"), ":/icons/info_cursor_enable.svg")){
@@ -100,8 +101,8 @@ QList<LC_ActionGroup *> LC_ActionGroupManager::toolGroups() {
             << other
             << polyline
             << select
-            << pen;
-
+            << pen
+            << ucs;
     return ag_list;
 }
 

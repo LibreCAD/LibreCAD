@@ -84,14 +84,10 @@ void LC_ActionSplineFromPolyline::setupAndAddCreatedEntity(RS_Entity *createdEnt
     undoableAdd(createdEntity);
 }
 
-void LC_ActionSplineFromPolyline::mouseMoveEvent(QMouseEvent *e) {
-    deleteHighlights();
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
+void LC_ActionSplineFromPolyline::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            auto polyline = catchEntityOnPreview(e, RS2::EntityPolyline);
+            auto polyline = catchAndDescribe(e, RS2::EntityPolyline);
             if (polyline != nullptr) {
                 highlightHoverWithRefPoints(polyline, true);
                 auto splinePreview = createSplineForPolyline(polyline);
@@ -104,14 +100,12 @@ void LC_ActionSplineFromPolyline::mouseMoveEvent(QMouseEvent *e) {
         default:
             break;
     }
-    drawHighlights();
-    drawPreview();
 }
 
-void LC_ActionSplineFromPolyline::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionSplineFromPolyline::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            auto polyline = catchEntity(e, RS2::EntityPolyline);
+            auto polyline = catchEntityByEvent(e, RS2::EntityPolyline);
             if (polyline != nullptr) {
                 entityToModify = dynamic_cast<RS_Polyline *>(polyline);
                 trigger();
@@ -123,7 +117,7 @@ void LC_ActionSplineFromPolyline::onMouseLeftButtonRelease(int status, QMouseEve
     }
 }
 
-void LC_ActionSplineFromPolyline::onMouseRightButtonRelease([[maybe_unused]]int status,[[maybe_unused]] QMouseEvent *e) {
+void LC_ActionSplineFromPolyline::onMouseRightButtonRelease([[maybe_unused]]int status,[[maybe_unused]] LC_MouseEvent *e) {
     setStatus(-1);
 }
 

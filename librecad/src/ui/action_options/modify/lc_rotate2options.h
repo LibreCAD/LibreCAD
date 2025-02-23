@@ -25,7 +25,8 @@
 
 #include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
-#include "rs_actionmodifyrotate2.h"
+
+class RS_ActionModifyRotate2;
 
 namespace Ui {
     class LC_Rotate2Options;
@@ -33,11 +34,9 @@ namespace Ui {
 
 class LC_Rotate2Options : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     explicit LC_Rotate2Options();
     ~LC_Rotate2Options();
-
 public slots:
     void languageChange() override;
     void cbKeepOriginalsClicked(bool val);

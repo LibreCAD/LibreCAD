@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_splinefrompolylineoptions.h"
+#include "lc_actionsplinefrompolyline.h"
 #include "ui_lc_splinefrompolylineoptions.h"
 
 LC_SplineFromPolylineOptions::LC_SplineFromPolylineOptions()

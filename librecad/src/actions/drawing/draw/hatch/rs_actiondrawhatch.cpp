@@ -21,10 +21,10 @@
  ******************************************************************************/
 #include <iostream>
 
-#include <QMouseEvent>
 
 #include "rs_actiondrawhatch.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_eventhandler.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
@@ -84,7 +84,7 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
     RS_Hatch tmp(container, *data);
     setPenAndLayerToActive(&tmp);
 
-    if (RS_DIALOGFACTORY->requestHatchDialog(&tmp)) {
+    if (RS_DIALOGFACTORY->requestHatchDialog(&tmp, viewport)) {
         *data = tmp.getData();
 
         // fixme - sand - optimize that mess with cycles!!!
@@ -150,7 +150,7 @@ void RS_ActionDrawHatch::doTrigger([[maybe_unused]]bool keepSelected) {
 
             hatch->update();
 
-            graphicView->redraw(RS2::RedrawDrawing);
+            redrawDrawing();
 
             bool printArea = true;
             switch( hatch->getUpdateError()) {

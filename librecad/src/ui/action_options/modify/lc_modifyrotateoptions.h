@@ -25,8 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
-#include "rs_actionmodifyrotate.h"
 
+class RS_ActionModifyRotate;
 namespace Ui {
     class LC_ModifyRotateOptions;
 }
@@ -59,7 +59,6 @@ public slots:
     void onRefPointAngleEditingFinished();
     void onCopiesNumberValueChanged(int value);
 protected:
-
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
 private:

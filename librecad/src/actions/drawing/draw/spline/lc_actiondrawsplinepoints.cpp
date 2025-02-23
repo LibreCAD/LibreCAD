@@ -86,12 +86,8 @@ void LC_ActionDrawSplinePoints::doTrigger() {
     }
 }
 
-void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent *e){
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawSplinePoints::mouseMoveEvent begin");
-
-    RS_Vector mouse = snapPoint(e);
-    int status = getStatus();
+void LC_ActionDrawSplinePoints::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetStartPoint:
             trySnapToRelZeroCoordinateEvent(e);
@@ -114,16 +110,13 @@ void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
-
-    RS_DEBUG->print("RS_ActionDrawSplinePoints::mouseMoveEvent end");
-    drawPreview();
 }
 
-void LC_ActionDrawSplinePoints::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawSplinePoints::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void LC_ActionDrawSplinePoints::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawSplinePoints::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     if (status == SetNextPoint && pPoints->spline.get()){
         trigger();
     }
@@ -283,7 +276,7 @@ void LC_ActionDrawSplinePoints::undo(){
             v = splinePts.back();
             moveRelativeZero(v);
         }
-        graphicView->redraw(RS2::RedrawDrawing);
+        redrawDrawing();
         drawPreview();
     } else {
         commandMessage(tr("Cannot undo: Not enough entities defined yet."));
@@ -300,7 +293,7 @@ void LC_ActionDrawSplinePoints::redo(){
         setStatus(SetNextPoint);
         v = pPoints->data.splinePoints.back();
         moveRelativeZero(v);
-        graphicView->redraw(RS2::RedrawDrawing);
+        redrawDrawing();
     } else {
         commandMessage(tr("Cannot undo: Nothing could be redone."));
     }

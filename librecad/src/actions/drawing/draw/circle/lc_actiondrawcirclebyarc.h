@@ -60,13 +60,13 @@ protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     bool doCheckMayTrigger() override;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
     void doAfterTrigger() override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     void performTriggerDeletions() override;
-    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
+    bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
     bool doCheckMayTriggerOnInit(int status) override;
     bool isAcceptSelectedEntityToTriggerOnInit(RS_Entity *pEntity) override;
     void doCreateEntitiesOnTrigger(RS_Entity *entity, QList<RS_Entity *> &list) override;

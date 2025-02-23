@@ -149,10 +149,10 @@ public:
     bool requestMoveRotateDialog(RS_MoveRotateData& data) override;
     bool requestRotate2Dialog(RS_Rotate2Data& data) override;
 
-    bool requestModifyEntityDialog(RS_Entity* entity) override;
-    bool requestMTextDialog(RS_MText* text) override;
-    bool requestTextDialog(RS_Text* text) override;
-    bool requestHatchDialog(RS_Hatch* hatch) override;
+    bool requestModifyEntityDialog(RS_Entity *entity, LC_GraphicViewport *viewport) override;
+    bool requestMTextDialog(RS_MText *text, LC_GraphicViewport *viewport) override;
+    bool requestTextDialog(RS_Text *text, LC_GraphicViewport *viewport) override;
+    bool requestHatchDialog(RS_Hatch *hatch, LC_GraphicViewport *viewport) override;
     int requestOptionsGeneralDialog() override;
     void requestKeyboardShortcutsDialog(LC_ActionGroupManager *pManager) override;
     int requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIndex) override;
@@ -175,6 +175,7 @@ public:
     void updateSelectionWidget(int num, double length) override;//updated for total number of selected, and total length of selected
     void commandMessage(const QString& message) override;
     void command(const QString& message) override;
+    void commandPrompt(const QString& message) override;
 
     static QString extToFormat(const QString& ext);
     void displayBlockName(const QString& blockName, const bool& display) override;

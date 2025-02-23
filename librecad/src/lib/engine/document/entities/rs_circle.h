@@ -129,15 +129,15 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
     RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                  double* dist = nullptr) const override;
     RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-                                      bool onEntity = true, double* dist = NULL, RS_Entity** entity=NULL)const override;
+                                      bool onEntity = true, double* dist = nullptr, RS_Entity** entity=nullptr)const override;
     RS_Vector getNearestCenter(const RS_Vector& coord,
-                               double* dist = NULL)const override;
+                               double* dist = nullptr)const override;
     RS_Vector getNearestMiddle(const RS_Vector& coord,
                                double* dist = nullptr,
                                int middlePoints = 1 ) const override;
     RS_Vector getNearestDist(double distance,
                              const RS_Vector& coord,
-                             double* dist = NULL)const override;
+                             double* dist = nullptr)const override;
     RS_Vector getNearestDist(double distance,
                              bool startp)const override;
     RS_Vector getNearestOrthTan(const RS_Vector& coord,
@@ -166,9 +166,7 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
      */
     RS_Entity& shear(double k) override;
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
-    /** whether the entity's bounding box intersects with visible portion of graphic view */
-    bool isVisibleInWindow(RS_GraphicView* view) const override;
-    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+    void draw(RS_Painter* painter) override;
     /** return the equation of the entity
 for quadratic,
 

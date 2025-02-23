@@ -101,16 +101,16 @@ protected:
 
     void addPolylineToEntitiesList(RS_Polyline *pPolyline, QList<RS_Entity *> &list, bool b);
     RS_Polyline *createShapePolyline(RS_Vector &snap, QList<RS_Entity *> &list, int status, bool preview);
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
-    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     bool doCheckMayTrigger() override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     int doGetStatusForInitialSnapToRelativeZero() override;
     void doInitialSnapToRelativeZero(RS_Vector vector) override;
     bool doProcessCommand(int status, const QString &c) override;
-    void doBack(QMouseEvent *pEvent, int status) override;
-    RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
+    void doBack(LC_MouseEvent *pEvent, int status) override;
+    RS_Vector doGetMouseSnapPoint(LC_MouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;

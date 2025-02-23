@@ -23,37 +23,21 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
 #pragma once
-
 
 #include "rs_atomicentity.h"
 #include "lc_cachedlengthentity.h"
-
-
 class LC_Quadratic;
-
 
 /**
  * Holds the data that defines a line.
  */
 struct RS_LineData {
-    RS_LineData() :
-        startpoint( false),
-        endpoint( false)
-    {}
-
-    RS_LineData(const RS_Vector& point1,
-                const RS_Vector& point2) :
-        startpoint( point1),
-        endpoint( point2)
-    {}
-
+    RS_LineData() :startpoint( false),endpoint( false) {}
+    RS_LineData(const RS_Vector& point1,const RS_Vector& point2) :startpoint( point1),endpoint( point2){}
     void reverse() {
         std::swap(startpoint, endpoint);
     }
-
     RS_Vector startpoint;
     RS_Vector endpoint;
 };
@@ -68,11 +52,9 @@ std::ostream& operator << (std::ostream& os, const RS_LineData& ld);
 class RS_Line : public LC_CachedLengthEntity {
 public:
     RS_Line() = default;
-    RS_Line(RS_EntityContainer* parent,
-            const RS_LineData& d);
+    RS_Line(RS_EntityContainer* parent,const RS_LineData& d);
     RS_Line(RS_EntityContainer* parent, const RS_Vector& pStart, const RS_Vector& pEnd);
     RS_Line(const RS_Vector& pStart, const RS_Vector& pEnd);
-
     RS_Entity* clone() const override;
 
     /** @return RS2::EntityLine */
@@ -127,10 +109,8 @@ public:
 
     void moveStartpoint(const RS_Vector& pos) override;
     void moveEndpoint(const RS_Vector& pos) override;
-    RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
-                             const RS_Vector& trimPoint) override;
-    RS_Vector prepareTrim(const RS_Vector& trimCoord,
-                          const RS_VectorSolutions& trimSol) override;
+    RS2::Ending getTrimPoint(const RS_Vector& trimCoord, const RS_Vector& trimPoint) override;
+    RS_Vector prepareTrim(const RS_Vector& trimCoord,const RS_VectorSolutions& trimSol) override;
     void reverse() override;
     /** Sets the y coordinate of the startpoint */
     void setStartpointY(double val) {
@@ -185,8 +165,7 @@ public:
     RS_Vector getNearestDist(double distance,
                              const RS_Vector& coord,
                              double* dist = nullptr) const override;
-    RS_Vector getNearestDist(double distance,
-                             bool startp) const override;
+    RS_Vector getNearestDist(double distance, bool startp) const override;
     /**
      * implementations must revert the direction of an atomic entity
      */
@@ -209,7 +188,7 @@ public:
                  const RS_Vector& offset) override;
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     /** whether the entity's bounding box intersects with visible portion of graphic view */
-    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+    void draw(RS_Painter* painter) override;
     friend std::ostream& operator << (std::ostream& os, const RS_Line& l);
     void calculateBorders() override;
     /**
@@ -230,14 +209,7 @@ public:
      * \oint x dy = 0.5*(x0+x1)*(y1-y0)
      */
     double areaLineIntegral() const override;
-    static void drawInfinite(RS_Painter* painter, RS_GraphicView* view, double& patternOffset, const RS_Vector &start, const RS_Vector &end);
 protected:
-    /**
-     * @brief drawInfinite draw the line as an infinite line
-     * @param painter - a painter
-     * @param view - the rendering view
-     */
-    void drawInfinite(RS_Painter* painter, RS_GraphicView* view);
     RS_LineData data;
 private:
     RS_Vector highlightedVertex;

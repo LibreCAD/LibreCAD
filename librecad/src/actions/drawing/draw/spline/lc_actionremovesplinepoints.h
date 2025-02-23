@@ -33,12 +33,12 @@ public:
     ~LC_ActionRemoveSplinePoints() override = default;
     void setStatus(int status) override;
 protected:
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) override;
     void updateMouseButtonHints() override;
     RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool direction) override;
     bool mayModifySplineEntity(RS_Entity *e) override;
     void doAfterTrigger() override;
-    void onMouseMove(RS_Vector mouse, int status, QMouseEvent *e) override;
 };
 
 #endif // LC_ACTIONREMOVESPLINEPOINTS_H

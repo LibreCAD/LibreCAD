@@ -30,6 +30,7 @@
 
 class RS_ActionInterface;
 class RS_ActionBlocksInsert;
+
 namespace Ui {
     class Ui_InsertOptions;
 }
@@ -50,12 +51,11 @@ protected slots:
     void onRowsValueChanged(int number);
     void onColumnsValueChanged(int number);
 protected:
-    RS_ActionBlocksInsert* action;
+    RS_ActionBlocksInsert* action = nullptr;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
-
 private:
-	 std::unique_ptr<Ui::Ui_InsertOptions> ui;
+	    std::unique_ptr<Ui::Ui_InsertOptions> ui;
     void setAngleToActionAndView(QString val);
     void setFactorToActionAndView(QString val);
     void setColumnSpacingActionAndView(QString val);

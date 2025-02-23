@@ -25,10 +25,10 @@
 
 #include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
-#include "lc_actionmodifyalignref.h"
 
+class LC_ActionModifyAlignRef;
 namespace Ui {
-class LC_ModifyAlignRefOptions;
+    class LC_ModifyAlignRefOptions;
 }
 
 class LC_ModifyAlignRefOptions : public LC_ActionOptionsWidgetBase{
@@ -52,7 +52,7 @@ protected:
     void setKeepOriginalsToActionAndView(bool val);
 private:
     Ui::LC_ModifyAlignRefOptions *ui;
-    LC_ActionModifyAlignRef* action;
+    LC_ActionModifyAlignRef* action = nullptr;
 };
 
 #endif // LC_MODIFYALIGNREFOPTIONS_H

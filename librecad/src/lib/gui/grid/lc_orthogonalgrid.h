@@ -23,7 +23,7 @@
 #ifndef LC_ORTHOGONALGRID_H
 #define LC_ORTHOGONALGRID_H
 
-#include "lc_lattice.h"
+
 
 #include "rs_grid.h"
 #include "lc_gridsystem.h"
@@ -79,7 +79,7 @@ protected:
 
     void determineGridBoundaries(const RS_Vector &viewZero,const RS_Vector &viewSize);
 
-    void drawMetaGridLines(RS_Painter *painter, RS_GraphicView *view) override;
+    void drawMetaGridLines(RS_Painter *painter, LC_GraphicViewport *view) override;
 
     void createGridPoints(const RS_Vector &min, const RS_Vector &max,const RS_Vector &gridWidth, bool drawGridWithoutGaps, int numPointsTotal) override;
 

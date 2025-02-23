@@ -7,6 +7,7 @@
 #include "lc_penpalettewidget.h"
 #include "lc_quickinfowidget.h"
 #include "lc_namedviewslistwidget.h"
+#include "lc_ucslistwidget.h"
 
 class QMenu;
 class QAction;
@@ -60,6 +61,7 @@ public:
     LC_LayerTreeWidget* layer_tree_widget = nullptr;
     LC_PenPaletteWidget* pen_palette = nullptr;
     LC_NamedViewsListWidget* named_views_widget = nullptr;
+    LC_UCSListWidget* ucs_widget = nullptr;
     QG_BlockWidget* block_widget = nullptr;
     QG_LibraryWidget* library_widget = nullptr;
     QG_CommandWidget* command_widget = nullptr;
@@ -112,6 +114,7 @@ private:
     void addAction(QToolBar* toolbar, const char* actionName);
     void sortToolbarsByByGroupAndTitle(QList<QToolBar *> &list);
     QToolBar *createNamedViewsToolbar(const QString &title, const QString &name, QSizePolicy toolBarPolicy);
+    QToolBar* createUCSToolbar(const QString& title, const QString& name, QSizePolicy toolBarPolicy);
     void makeActionsInvisible(const std::vector<QString> &actionNames);
     QToolBar *doCreateToolBar(const QString title, const QString &name, const QSizePolicy &toolBarPolicy) const;
     void createInfoCursorToolbar(QSizePolicy &tbPolicy);

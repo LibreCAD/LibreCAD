@@ -1,15 +1,37 @@
+/*******************************************************************************
+ *
+ This file is part of the LibreCAD project, a 2D CAD program
+
+ Copyright (C) 2024 LibreCAD.org
+ Copyright (C) 2024 sand1024
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ ******************************************************************************/
+
 #include "rs_math.h"
-#include "rs_actiondrawlinepolygon2.h"
 #include "rs_actioninterface.h"
 #include "rs_debug.h"
 #include "rs_preview.h"
+#include "rs_graphic.h"
 #include "rs_coordinateevent.h"
+#include "rs_document.h"
 #include "rs_point.h"
 #include "rs_creation.h"
 #include "rs_graphicview.h"
 #include "rs_dialogfactory.h"
 #include "rs_polyline.h"
-#include <QMouseEvent>
 #include "lc_actiondrawlinepolygonbase.h"
 #include "qg_linepolygonoptions.h"
 #include "rs_commandevent.h"
@@ -64,11 +86,9 @@ void LC_ActionDrawLinePolygonBase::doTrigger() {
     }
 }
 
-void LC_ActionDrawLinePolygonBase::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    RS_DEBUG->print("RS_ActionDrawLinePolygon2::mouseMoveEvent begin");
-    RS_Vector mouse = snapPoint(e);
-    switch (getStatus()) {
+void LC_ActionDrawLinePolygonBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector mouse = e->snapPoint;
+    switch (status) {
         case SetPoint1: {
             trySnapToRelZeroCoordinateEvent(e);
             break;
@@ -90,19 +110,18 @@ void LC_ActionDrawLinePolygonBase::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
-    drawPreview();
 }
 
-void LC_ActionDrawLinePolygonBase::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector coord = snapPoint(e);
+void LC_ActionDrawLinePolygonBase::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector coord = e->snapPoint;
     if (status == SetPoint2){
         coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
-        completeActionOnTrigger = isControl(e);
+        completeActionOnTrigger = e->isControl;
     }
     fireCoordinateEvent(coord);
 }
 
-void LC_ActionDrawLinePolygonBase::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawLinePolygonBase::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }
@@ -160,7 +179,7 @@ bool LC_ActionDrawLinePolygonBase::doProcessCommand(int status, const QString &c
         bool ok = false;
         double value = RS_Math::eval(c, &ok);
         if (ok){
-            switch (getStatus()) {
+            switch (status) {
                 case SetNumber:{ // handling number of rays
                     // fixme - check range to conform to UI
                     if ((value >= 3) && (value <= 10000)){
@@ -257,7 +276,8 @@ void LC_ActionDrawLinePolygonBase::createPolygonPreview(const RS_Vector &mouse) 
             LC_InfoMessageBuilder msg{};
             msg.add(tr("To be created:"), tr("Polygon"));
             msg.add(tr("Center:"), formatVector(polygonInfo.centerPoint));
-            msg.add(tr("Start angle:"), formatAngle(polygonInfo.startingAngle));
+            double wcsStartingAngle = polygonInfo.startingAngle;
+            msg.add(tr("Start angle:"), formatWCSAngle(wcsStartingAngle));
             msg.add(tr("Radius:"), formatLinear(polygonInfo.vertexRadius));
             msg.add(tr("Radius Inner:"), formatLinear(polygonInfo.innerRadius));
             appendInfoCursorZoneMessage(msg.toString(), 2, false);

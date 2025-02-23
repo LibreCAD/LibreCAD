@@ -42,14 +42,9 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawCircleTan3() override;
     void init(int status) override;
-    bool preparePreview();
-    void mouseMoveEvent(QMouseEvent *e) override;
 //    void coordinateEvent(RS_CoordinateEvent* e) override;
 //    void commandEvent(RS_CommandEvent* e) override;
     void finish(bool updateTB) override;
-
-    void drawSnapper() override;
-
 protected:
     /**
      * Action States.
@@ -60,17 +55,19 @@ protected:
         SetCircle3,   //  Setting the Third Circle.  */
         SetCenter   //  select the closest tangential Circle.  */
     };
+    void drawSnapper() override;
+    bool preparePreview();
     struct Points;
-    RS_Entity *catchCircle(QMouseEvent *e, bool forPreview);
+    RS_Entity *catchCircle(LC_MouseEvent *e, bool forPreview);
     std::unique_ptr<Points> pPoints;
     bool getData(RS_Entity *en = nullptr);
     RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *pEntity);
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void updateMouseButtonHints() override;
-
     void doTrigger() override;
 };
 #endif

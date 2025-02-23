@@ -23,24 +23,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_RECTANGLE1POINTOPTIONS_H
 #define LC_RECTANGLE1POINTOPTIONS_H
 
-#include "lc_actiondrawrectangle1point.h"
 #include "lc_actionoptionswidgetbase.h"
 
+class LC_ActionDrawRectangle1Point;
 namespace Ui {
-class LC_Rectangle1PointOptions;
+    class LC_Rectangle1PointOptions;
 }
 
 class LC_Rectangle1PointOptions :public LC_ActionOptionsWidgetBase {
     Q_OBJECT
-
 public:
     explicit LC_Rectangle1PointOptions();
     ~LC_Rectangle1PointOptions() override;
-
     enum {
         UPDATE_ANGLE
     };
-
 public slots:
     void onCornersIndexChanged(int index);
     void onSnapPointIndexChanged(int index);
@@ -57,15 +54,13 @@ public slots:
     void onEdgesIndexChanged(int index);
     void onBaseAngleFixedClicked(bool value);
     void languageChange() override;
-
     void updateUI(int mode) override;
-
 protected:
     void doSetAction( RS_ActionInterface * a, bool update) override;
     void doSaveSettings() override;
 private:
     Ui::LC_Rectangle1PointOptions *ui;
-    LC_ActionDrawRectangle1Point *action;
+    LC_ActionDrawRectangle1Point *action = nullptr;
     void setAngleToActionAndView(const QString &val);
     void setLenYToActionAnView(const QString& value);
     void setLenXToActionAnView(const QString& value);

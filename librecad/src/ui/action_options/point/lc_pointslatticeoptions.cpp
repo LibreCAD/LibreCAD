@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_pointslatticeoptions.h"
+#include "lc_actiondrawpointslattice.h"
 #include "ui_lc_pointslatticeoptions.h"
 
 LC_PointsLatticeOptions::LC_PointsLatticeOptions()

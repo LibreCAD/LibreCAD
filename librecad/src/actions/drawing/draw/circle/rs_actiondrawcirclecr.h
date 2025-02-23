@@ -47,7 +47,6 @@ public:
     ~RS_ActionDrawCircleCR() override;
     void reset() override;
     void init(int status) override;
-    void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
     double getRadius() const;
     void setRadius(double val);
@@ -70,5 +69,7 @@ protected:
     void updateMouseButtonHints() override;
 
     void doTrigger() override;
+
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
 };
 #endif

@@ -44,7 +44,6 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     ~RS_ActionDrawCircle3P() override;
-    void mouseMoveEvent(QMouseEvent *e) override;
 protected:
     /**
  * Action States.
@@ -63,8 +62,9 @@ protected:
 
     void reset() override;
     void preparePreview();
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     void doTrigger() override;

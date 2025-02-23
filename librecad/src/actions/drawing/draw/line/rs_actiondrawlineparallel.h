@@ -43,7 +43,6 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView, RS2::ActionType actionType);
     ~RS_ActionDrawLineParallel() override;
-    void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
     double getDistance() const;
     void setDistance(double d);
@@ -69,8 +68,9 @@ protected:
 /** Original entity. */
     RS_Entity *entity = nullptr;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     bool doProcessCommand(int status, const QString &command) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;

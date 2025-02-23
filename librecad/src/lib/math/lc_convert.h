@@ -30,7 +30,7 @@ namespace LC_Convert{
     QString asStringAngle(double value, int precision = 10);
     QString asStringAngleDeg(double value, int precision = 10);
     bool toDouble(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
-    bool toDoubleAngle(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
+    bool parseToToDoubleAngleDegrees(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
     bool toDoubleAngleRad(const QString &strValue, double& res, double notMeaningful, bool positiveOnly);
 };
 

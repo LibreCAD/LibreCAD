@@ -53,7 +53,7 @@ namespace LC_LineMath {
 
     RS_Vector getNearestPointOnLine(const RS_Line* line, const RS_Vector& coord, bool infiniteLine);
 
-    RS_Vector calculateEndpointForAngleDirection(double angleValueDegree, const RS_Vector &startPoint, const RS_Vector &toSnapPoint);
+    RS_Vector calculateEndpointForAngleDirection(double wcsAngleRad, const RS_Vector &startPoint, const RS_Vector &toSnapPoint);
 
     RS_Vector calculateEndpointForAngleDirection(double angleValueDegree, bool angleIsRelative, const RS_Vector &fromPoint, const RS_Vector &toSnapPoint,
                                                  const RS_Vector &previousLineStart, const RS_Vector &previousLineEnd);

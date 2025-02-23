@@ -24,13 +24,12 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actionmodifymoverotate.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_modification.h"
@@ -53,32 +52,31 @@ RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate() = default;
 
 void RS_ActionModifyMoveRotate::doTrigger(bool keepSelected) {
     RS_DEBUG->print("RS_ActionModifyMoveRotate::trigger()");
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, viewport);
 	   m.moveRotate(pPoints->data, selectedEntities, false, keepSelected);
     pPoints->targetPoint = RS_Vector(false);
     finish(false);
 }
 
-void RS_ActionModifyMoveRotate::mouseMoveEventSelected(QMouseEvent *e) {
-    deletePreview();
-    RS_Vector mouse = snapPoint(e);
-    RS_DEBUG->print("RS_ActionModifyMoveRotate::mouseMoveEvent begin");
-    switch (getStatus()) {
+void RS_ActionModifyMoveRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *e){
+    RS_Vector mouse = e->snapPoint;
+    switch (status) {
         case SetReferencePoint: {
             pPoints->data.referencePoint = mouse;
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
         case SetTargetPoint: {
-            if (pPoints->data.referencePoint.valid) {
-                mouse = getSnapAngleAwarePoint(e, pPoints->data.referencePoint, mouse, true);
-                pPoints->data.offset = mouse - pPoints->data.referencePoint;
-                RS_Modification m(*preview, graphicView);
+            RS_Vector &originalRefPoint = pPoints->data.referencePoint;
+            if (originalRefPoint.valid) {
+                mouse = getSnapAngleAwarePoint(e, originalRefPoint, mouse, true);
+                pPoints->data.offset = mouse - originalRefPoint;
+                RS_Modification m(*preview, viewport);
                 m.moveRotate(pPoints->data, selectedEntities, true, false);
                 if (showRefEntitiesOnPreview) {
-                    previewRefPoint(pPoints->data.referencePoint);
+                    previewRefPoint(originalRefPoint);
                     previewRefSelectablePoint(mouse);
-                    previewRefLine(pPoints->data.referencePoint, mouse);
+                    previewRefLine(originalRefPoint, mouse);
                     previewRefPointsForMultipleCopies();
                 }
                 if (isInfoCursorForModificationEnabled()){
@@ -94,28 +92,34 @@ void RS_ActionModifyMoveRotate::mouseMoveEventSelected(QMouseEvent *e) {
             break;
         }
         case SetAngle:{
-            if (pPoints->targetPoint.valid) {
-                mouse = getSnapAngleAwarePoint(e, pPoints->targetPoint, mouse, true);
-                double angle = pPoints->targetPoint.angleTo(mouse);
-                pPoints->data.angle = angle;
-                RS_Modification m(*preview, graphicView);
+            RS_Vector &targetPoint = pPoints->targetPoint;
+            RS_Vector &originalRefPoint = pPoints->data.referencePoint;
+            if (targetPoint.valid) {
+                mouse = getSnapAngleAwarePoint(e, targetPoint, mouse, true);
+                double wcsAngle = targetPoint.angleTo(mouse);
+                double rotationAngle = RS_Math::correctAngle(toUCSBasisAngle(wcsAngle));
+                double wcsRotationAngle = adjustRelativeAngleSignByBasis(rotationAngle);
+                pPoints->data.angle = wcsRotationAngle;
+                RS_Modification m(*preview, viewport);
                 m.moveRotate(pPoints->data, selectedEntities, true);
                 if (showRefEntitiesOnPreview) {
-                    previewRefPoint(pPoints->data.referencePoint);
-                    previewRefPoint(pPoints->targetPoint);
+                    previewSnapAngleMark(targetPoint, mouse);
+
+                    previewRefPoint(originalRefPoint);
+                    previewRefPoint(targetPoint);
                     previewRefSelectablePoint(mouse);
-                    previewRefLine(pPoints->targetPoint, mouse);
-                    previewRefLine(pPoints->data.referencePoint, pPoints->targetPoint);
+                    previewRefLine(targetPoint, mouse);
+                    previewRefLine(originalRefPoint, targetPoint);
                     previewRefPointsForMultipleCopies();
                 }
                 if (isInfoCursorForModificationEnabled()){
                     LC_InfoMessageBuilder msg(tr("Moving with rotation"));
-                    msg.add(tr("Source:"), formatVector(pPoints->data.referencePoint));
-                    msg.add(tr("Target:"), formatVector(mouse));
+                    msg.add(tr("Source:"), formatVector(originalRefPoint));
+                    msg.add(tr("Target:"), formatVector(targetPoint));
                     msg.add(tr("Offset:"));
                     msg.add(formatRelative(pPoints->data.offset));
                     msg.add(formatRelativePolar(pPoints->data.offset));
-                    msg.add(tr("Angle:"), formatAngle(pPoints->data.angle));
+                    msg.add(tr("Angle:"), formatAngleRaw(rotationAngle));
                     appendInfoCursorZoneMessage(msg.toString(), 2, false);
                 }
                 updateOptions();
@@ -125,8 +129,6 @@ void RS_ActionModifyMoveRotate::mouseMoveEventSelected(QMouseEvent *e) {
         default:
             break;
     }
-    RS_DEBUG->print("RS_ActionModifyMoveRotate::mouseMoveEvent end");
-    drawPreview();
 }
 
 void RS_ActionModifyMoveRotate::previewRefPointsForMultipleCopies() {
@@ -141,21 +143,21 @@ void RS_ActionModifyMoveRotate::previewRefPointsForMultipleCopies() {
     }
 }
 
-void RS_ActionModifyMoveRotate::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
+void RS_ActionModifyMoveRotate::mouseLeftButtonReleaseEventSelected(int status, LC_MouseEvent *e) {
     switch (status){
         case SetReferencePoint:{
             fireCoordinateEventForSnap(e);
             break;
         }
         case SetTargetPoint: {
-            RS_Vector snapped = snapPoint(e);
+            RS_Vector snapped = e->snapPoint;
             snapped = getSnapAngleAwarePoint(e, pPoints->data.referencePoint, snapped);
             fireCoordinateEvent(snapped);
             break;
         }
         case SetAngle: {
             if (pPoints->targetPoint.valid) {
-                RS_Vector snapped = snapPoint(e);
+                RS_Vector snapped = e->snapPoint;
                 snapped = getSnapAngleAwarePoint(e, pPoints->targetPoint, snapped);
                 fireCoordinateEvent(snapped);
             }
@@ -166,7 +168,7 @@ void RS_ActionModifyMoveRotate::mouseLeftButtonReleaseEventSelected(int status, 
     }
 }
 
-void RS_ActionModifyMoveRotate::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionModifyMoveRotate::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deletePreview();
     switch (status) {
         case SetReferencePoint: {
@@ -216,8 +218,11 @@ void RS_ActionModifyMoveRotate::onCoordinateEvent(int status, [[maybe_unused]]bo
         }
         case SetAngle: {
             if (pPoints->targetPoint.valid){
-                double angle = pPoints->targetPoint.angleTo(pos);
-                pPoints->data.angle = angle;
+//                double angle = pPoints->targetPoint.angleTo(pos);
+                double wcsAngle = pPoints->targetPoint.angleTo(pos);
+                double rotationAngle = RS_Math::correctAngle(toUCSBasisAngle(wcsAngle));
+                double wcsRotationAngle = adjustRelativeAngleSignByBasis(rotationAngle);
+                pPoints->data.angle = wcsRotationAngle;
                 doPerformTrigger();
             }
             break;
@@ -261,7 +266,8 @@ bool RS_ActionModifyMoveRotate::doProcessCommand(int status, const QString &c) {
             double a = RS_Math::eval(c, &ok);
             if (ok){
                 accept = true;
-                pPoints->data.angle = RS_Math::deg2rad(a);
+                // relative angle is used, no need to translate
+                pPoints->data.angle = adjustRelativeAngleSignByBasis(RS_Math::deg2rad(a));
                 if (angleIsFixed) {
                     updateOptions();
                     setStatus(lastStatus);
@@ -301,11 +307,11 @@ QStringList RS_ActionModifyMoveRotate::getAvailableCommands(){
 }
 
 void RS_ActionModifyMoveRotate::setAngle(double a){
-    pPoints->data.angle = a;
+    pPoints->data.angle = adjustRelativeAngleSignByBasis(a);
 }
 
 double RS_ActionModifyMoveRotate::getAngle() const{
-    return pPoints->data.angle;
+    return adjustRelativeAngleSignByBasis(pPoints->data.angle);
 }
 
 void RS_ActionModifyMoveRotate::updateMouseButtonHintsForSelected(int status) {

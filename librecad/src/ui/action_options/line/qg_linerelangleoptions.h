@@ -32,8 +32,9 @@
 
 class RS_ActionInterface;
 class RS_ActionDrawLineRelAngle;
+
 namespace Ui {
-class Ui_LineRelAngleOptions;
+    class Ui_LineRelAngleOptions;
 }
 
 class QG_LineRelAngleOptions : public LC_ActionOptionsWidgetBase{

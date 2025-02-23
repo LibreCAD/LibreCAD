@@ -25,11 +25,12 @@
 
 #include <QWidget>
 #include "lc_actionoptionswidgetbase.h"
-#include "rs_actiondrawellipseaxis.h"
 
 namespace Ui {
     class LC_EllipseArcOptions;
 }
+
+class RS_ActionDrawEllipseAxis;
 
 class LC_EllipseArcOptions : public LC_ActionOptionsWidgetBase{
 Q_OBJECT
@@ -49,5 +50,4 @@ protected:
     std::unique_ptr<Ui::LC_EllipseArcOptions> ui;
     void setReversedToActionAndView(bool reversed);
 };
-
 #endif // LC_ELLIPSEARCOPTIONS_H

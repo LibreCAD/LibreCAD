@@ -59,8 +59,8 @@ public:
     void preparePreview() override;
     QStringList getAvailableCommands() override;
 //    void showOptions() override;
-    double getAngle() const;
-    void setAngle(double a);
+    double getUcsAngleDegrees() const;
+    void setUcsAngleDegrees(double a);
     bool hasFixedAngle() const;
 protected:
 
@@ -68,6 +68,8 @@ protected:
      * Aligned dimension data.
      */
     std::unique_ptr<RS_DimLinearData> edata;
+
+    double ucsBasisAngleDegrees = 0.0;
     /**
      * Is the angle fixed?
      */
@@ -82,6 +84,7 @@ protected:
     void setExtensionPoint2(RS_Vector p) override;
     RS_Entity *createDim(RS_EntityContainer* parent) override;
     bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 
 #endif

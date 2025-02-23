@@ -41,6 +41,7 @@ public:
     LC_ActionGroup* snap_extras;
     LC_ActionGroup* view;
     LC_ActionGroup* namedViews;
+    LC_ActionGroup* ucs;
     LC_ActionGroup* widgets;
     LC_ActionGroup* pen;
     LC_ActionGroup* infoCursor;
@@ -62,9 +63,7 @@ public:
 public slots:
     void toggleExclusiveSnapMode(bool state);
     void toggleTools(bool state);
-
     void onOptionsChanged();
-
 private:
     QMap<QString, QAction*> a_map; // should be initialized by action factory by call of loadShortcuts()
     LC_ShortcutsManager shortcutsManager;

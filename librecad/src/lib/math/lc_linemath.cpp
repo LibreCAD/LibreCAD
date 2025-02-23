@@ -120,13 +120,13 @@ RS_Vector LC_LineMath::getNearestPointOnInfiniteLine(const RS_Vector &coord, con
     RS_Vector ea = lineStartPoint-lineEndPoint;
     RS_Vector ap = coord-lineStartPoint;
 
-    if (ae.magnitude()<RS_TOLERANCE|| ea.magnitude()<RS_TOLERANCE) {
+    double magnitude = ae.magnitude();
+    if (magnitude < RS_TOLERANCE || ea.magnitude() < RS_TOLERANCE) {
         return RS_Vector(false);
     }
 
     // Orthogonal projection from both sides:
-    RS_Vector ba = ae * RS_Vector::dotP(ae, ap)
-                   / (ae.magnitude()*ae.magnitude());
+    RS_Vector ba = ae * RS_Vector::dotP(ae, ap)/ (magnitude * magnitude);
 
     return lineStartPoint+ba;
 }
@@ -140,14 +140,11 @@ RS_Vector LC_LineMath::getNearestPointOnInfiniteLine(const RS_Vector &coord, con
  * @param toSnapPoint snap point
  * @return end point for the segment
  */
-RS_Vector LC_LineMath::calculateEndpointForAngleDirection(double angleValueDegree, const RS_Vector &startPoint, const RS_Vector &toSnapPoint){
+RS_Vector LC_LineMath::calculateEndpointForAngleDirection(double wcsAngleRad, const RS_Vector &startPoint, const RS_Vector &toSnapPoint){
     RS_Vector possibleEndPoint;
-    double angle = RS_Math::deg2rad(angleValueDegree);
+
     RS_Vector infiniteTickStartPoint = startPoint;
-
-
-    RS_Vector infiniteTickVector = RS_Vector::polar(10.0, angle);
-    RS_Vector infiniteTickEndPoint = infiniteTickStartPoint + infiniteTickVector;
+    RS_Vector infiniteTickEndPoint = infiniteTickStartPoint.relative(10.0, wcsAngleRad);
     RS_Vector pointOnInfiniteTick = getNearestPointOnInfiniteLine(toSnapPoint, infiniteTickStartPoint, infiniteTickEndPoint);
 
     possibleEndPoint = pointOnInfiniteTick;

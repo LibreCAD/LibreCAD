@@ -89,13 +89,13 @@ protected:
     ShapeData createPolyline(const RS_Vector &snapPoint) override;
     void processCommandValue(double value, bool &toMainStatus) override;
     bool processCustomCommand(int status, const QString &command, bool &toMainStatus) override;
-    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
-    RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
+    bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
+    RS_Vector doGetMouseSnapPoint(LC_MouseEvent *e) override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
     void doAfterTrigger() override;
-    void doBack(QMouseEvent *pEvent, int status) override;
+    void doBack(LC_MouseEvent *pEvent, int status) override;
     void doProcessCoordinateEvent(const RS_Vector &vector, bool zero, int status) override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
     void doFinish(bool updateTB) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     int doGetStatusForInitialSnapToRelativeZero() override;
@@ -103,7 +103,7 @@ protected:
     void doUpdateMouseButtonHints(int status) override;
     void calculateCornersBySize(RS_Vector size);
     double getActualInnerAngle() const;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
 };
 
 #endif //LIBRECAD_MASTER_LC_ACTIONDRAWLINERECTANGLEREL_H

@@ -65,7 +65,7 @@ void RS_ActionEditUndo::trigger(){
     graphic->addBlockNotification();
     graphic->setModified(true);
     document->updateInserts();
-    graphicView->redraw(RS2::RedrawDrawing);
+    redrawDrawing();
     finish(false);
     updateSelectionWidget();
 }

@@ -28,17 +28,20 @@
 #include "lc_viewslist.h"
 #include "lc_namedviewslistoptions.h"
 #include "rs.h"
+#include "lc_ucslist.h"
 
 class LC_NamedViewsModel:public QAbstractTableModel {
     Q_OBJECT
+
 public:
 
     explicit LC_NamedViewsModel(LC_NamedViewsListOptions *modelOptions, QObject * parent = nullptr);
 
     ~LC_NamedViewsModel() override;
-    void setViewsList(LC_ViewList *viewsList,RS2::LinearFormat format, int precision, RS2::Unit drawingUnit);
 
+    void setViewsList(LC_ViewList *viewsList,RS2::LinearFormat format, RS2::AngleFormat angleFormat,int precision, int anglePrec, RS2::Unit drawingUnit);
     QModelIndex parent(const QModelIndex &child) const override;
+
     int rowCount(const QModelIndex &parent) const override;
     int columnCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex &index, int role) const override;
@@ -47,7 +50,12 @@ public:
     int translateColumn(int column) const;
     void fillViewsList(QList<LC_View *> &list) const;
     QIcon getTypeIcon(LC_View *view) const;
+    QIcon getUCSTypeIcon(LC_View *view) const;
+    QIcon getGridTypeIcon(LC_View *view) const;
     QModelIndex getIndexForView(LC_View* view) const;
+    void updateViewsUCSNames(LC_UCSList *ucsList);
+
+    void clear();
     int count(){
         return views.count();
     }
@@ -55,21 +63,49 @@ public:
    * Columns that are shown in the table
    */
     enum COLUMNS{
-        ICON,
+        ICON_TYPE,
+        ICON_GRID_TYPE,
+        ICON_UCS_TYPE,
         NAME,
-        INFO,
+        VIEW_INFO,
+        UCS_INFO,
         LAST
     };
 
 protected:
+    struct ViewItem{
+        LC_View* view;
+        QIcon typeIcon;
+        QIcon gridTypeIcon;
+        QIcon ucsTypeIcon;
+        QString name;
+        QString viewInfo;
+        QString ucsInfo;
+        QString tooltip;
+        QString displayName;
+    };
+
+
+    RS2::AngleFormat angleFormat;
     RS2::LinearFormat linearFormat;
     int prec;
+    int anglePrec;
     RS2::Unit unit;
     LC_ViewList* viewsList {nullptr};
-    QList<LC_View*> views;
+    QList<ViewItem*> views;
     QIcon iconViewPaperSpace;
     QIcon iconViewDrawingSpace;
+    QIcon iconWCS;
+    QIcon iconUCS;
+    QIcon iconGridOrtho;
+    QIcon iconGridISOTop;
+    QIcon iconGridISOLeft;
+    QIcon iconGridISORight;
     LC_NamedViewsListOptions* options {nullptr};
+    QString getUCSInfo(LC_UCS *ucs) const;
+    QString getGridViewType(int orthoType);
+    ViewItem* createViewItem(LC_View *view);
+    void setupViewItem(LC_View *view, LC_NamedViewsModel::ViewItem *result);
 };
 
 #endif // LC_NAMEDVIEWSMODEL_H

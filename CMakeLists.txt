@@ -96,7 +96,7 @@ include_directories(librecad/src/actions/dock_widgets/block)
 include_directories(librecad/src/actions/dock_widgets/library)
 include_directories(librecad/src/actions/dock_widgets/layer)
 include_directories(librecad/src/actions/dock_widgets/entity_info)
-
+include_directories(librecad/src/actions/dock_widgets/ucs_list)
 
 include_directories(librecad/src/actions/file)
 include_directories(librecad/src/actions/options)
@@ -118,6 +118,8 @@ include_directories(librecad/src/lib/engine/overlays/references)
 include_directories(librecad/src/lib/engine/overlays/info_cursor)
 include_directories(librecad/src/lib/engine/overlays/overlay_box)
 include_directories(librecad/src/lib/engine/overlays/crosshair)
+include_directories(librecad/src/lib/engine/overlays/ucs_mark)
+include_directories(librecad/src/lib/engine/overlays/angles_base)
 include_directories(librecad/src/lib/engine/document)
 include_directories(librecad/src/lib/engine/document/blocks)
 include_directories(librecad/src/lib/engine/document/layers)
@@ -133,6 +135,9 @@ include_directories(librecad/src/lib/filters)
 include_directories(librecad/src/lib/generators)
 include_directories(librecad/src/lib/gui)
 include_directories(librecad/src/lib/gui/grid)
+include_directories(librecad/src/lib/gui/render)
+include_directories(librecad/src/lib/gui/render/widget)
+include_directories(librecad/src/lib/gui/render/headless)
 include_directories(librecad/src/lib/information)
 include_directories(librecad/src/lib/math)
 include_directories(librecad/src/lib/modification)
@@ -206,6 +211,7 @@ include_directories(librecad/src/ui/dock_widgets/block_widget)
 include_directories(librecad/src/ui/dock_widgets/library_widget)
 include_directories(librecad/src/ui/dock_widgets/layer_widget)
 include_directories(librecad/src/ui/dock_widgets/views_list)
+include_directories(librecad/src/ui/dock_widgets/ucs_list)
 #Temporary disabled for build
 #include_directories(plugins/align)
 #include_directories(plugins/asciifile)
@@ -743,21 +749,18 @@ set(SOURCES
         librecad/src/lib/gui/rs_coordinateevent.h
         librecad/src/lib/gui/rs_dialogfactory.cpp
         librecad/src/lib/gui/rs_dialogfactory.h
-        librecad/src/lib/gui/rs_dialogfactoryadapter.h
         librecad/src/lib/gui/rs_dialogfactoryinterface.h
         librecad/src/lib/gui/rs_eventhandler.cpp
         librecad/src/lib/gui/rs_eventhandler.h
         librecad/src/lib/gui/rs_graphicview.cpp
         librecad/src/lib/gui/rs_graphicview.h
-        librecad/src/lib/gui/rs_grid.cpp
-        librecad/src/lib/gui/rs_grid.h
+		librecad/src/lib/gui/grid/rs_grid.cpp
+		librecad/src/lib/gui/grid/rs_grid.h
         librecad/src/lib/gui/rs_linetypepattern.cpp
         librecad/src/lib/gui/rs_linetypepattern.h
         librecad/src/lib/gui/rs_mainwindowinterface.h
-        librecad/src/lib/gui/rs_painter.cpp
-        librecad/src/lib/gui/rs_painter.h
-        librecad/src/lib/gui/rs_staticgraphicview.cpp
-        librecad/src/lib/gui/rs_staticgraphicview.h
+		librecad/src/lib/gui/render/rs_painter.cpp
+		librecad/src/lib/gui/render/rs_painter.h
         librecad/src/lib/information/rs_infoarea.cpp
         librecad/src/lib/information/rs_infoarea.h
         librecad/src/lib/information/rs_information.cpp
@@ -1267,7 +1270,6 @@ set(SOURCES
 		librecad/src/lib/gui/grid/lc_gridsystem.h
 		librecad/src/lib/gui/grid/lc_gridsystem.cpp
 		librecad/src/lib/gui/grid/lc_isometricgrid.cpp
-		librecad/src/lib/engine/overlays/crosshair/lc_crosshair.cpp
 		librecad/src/ui/main/lc_releasechecker.h
 		librecad/src/ui/main/lc_releasechecker.cpp
 		librecad/src/ui/dialogs/main/lc_dlgnewversionavailable.h
@@ -1366,8 +1368,79 @@ set(SOURCES
 		librecad/src/ui/action_options/misc/lc_drawboundingboxoptions.cpp
 		librecad/src/lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.h
 		librecad/src/lib/engine/overlays/info_cursor/lc_cursoroverlayinfo.cpp
+		librecad/src/lib/engine/overlays/crosshair/lc_crosshair.cpp
 		librecad/src/lib/engine/undo/lc_undoablerelzero.h
 		librecad/src/lib/engine/undo/lc_undoablerelzero.cpp
+		librecad/src/lib/engine/document/ucs/lc_ucslist.h
+		librecad/src/lib/engine/document/ucs/lc_ucslist.cpp
+		librecad/src/actions/dock_widgets/ucs_list/lc_actionucscreate.h
+		librecad/src/actions/dock_widgets/ucs_list/lc_actionucscreate.cpp
+		librecad/src/lib/engine/overlays/ucs_mark/lc_ucs_mark.h
+		librecad/src/lib/engine/overlays/ucs_mark/lc_ucs_mark.cpp
+		librecad/src/lib/engine/overlays/ucs_mark/lc_ucs_mark.h
+		librecad/src/lib/engine/overlays/ucs_mark/lc_ucs_mark.cpp
+		librecad/src/ui/action_options/other/lc_ucssetoptions.h
+		librecad/src/ui/action_options/other/lc_ucssetoptions.cpp
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistwidget.h
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistoptions.h
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistoptions.cpp
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistmodel.h
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp
+		librecad/src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.h
+		librecad/src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.cpp
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistbutton.h
+		librecad/src/ui/dock_widgets/ucs_list/lc_ucslistbutton.cpp
+		librecad/src/ui/components/status_bar/lc_ucsstatewidget.h
+		librecad/src/ui/components/status_bar/lc_ucsstatewidget.cpp
+		librecad/src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.h
+		librecad/src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp
+		librecad/src/lib/gui/lc_coordinates_mapper.cpp
+		librecad/src/lib/gui/lc_coordinates_mapper.h
+		librecad/src/lib/gui/lc_coordinates_mapper.h
+		librecad/src/lib/gui/render/widget/lc_printpreviewviewrenderer.h
+		librecad/src/lib/gui/render/widget/lc_printpreviewviewrenderer.cpp
+		librecad/src/lib/gui/render/widget/lc_graphicviewrenderer.h
+		librecad/src/lib/gui/render/widget/lc_graphicviewrenderer.cpp
+		librecad/src/lib/gui/lc_graphicviewport.h
+		librecad/src/lib/gui/lc_graphicviewport.cpp
+		librecad/src/lib/gui/render/lc_graphicviewportrenderer.h
+		librecad/src/lib/gui/render/lc_graphicviewportrenderer.cpp
+		librecad/src/lib/engine/overlays/lc_overlaysmanager.h
+		librecad/src/lib/engine/overlays/lc_overlaysmanager.cpp
+		librecad/src/lib/gui/render/widget/lc_widgetviewportrenderer.h
+		librecad/src/lib/gui/render/widget/lc_widgetviewportrenderer.cpp
+		librecad/src/lib/gui/render/headless/lc_printviewportrenderer.h
+		librecad/src/lib/gui/render/headless/lc_printviewportrenderer.cpp
+		librecad/src/lib/gui/lc_graphicviewportlistener.h
+		librecad/src/lib/gui/lc_graphicviewportlistener.cpp
+		librecad/src/lib/engine/overlays/lc_overlayentity.h
+		librecad/src/lib/engine/lc_drawable.cpp
+		librecad/src/lib/engine/lc_drawable.h
+		librecad/src/lib/engine/overlays/lc_overlayentitiescontainer.h
+		librecad/src/lib/engine/overlays/lc_overlayentitiescontainer.cpp
+		librecad/src/lib/engine/overlays/ucs_mark/lc_overlayrelativezero.h
+		librecad/src/lib/engine/overlays/ucs_mark/lc_overlayrelativezero.cpp
+		librecad/src/lib/engine/overlays/ucs_mark/lc_overlayrelativezero.h
+		librecad/src/lib/engine/overlays/ucs_mark/lc_overlayrelativezero.h
+		librecad/src/lib/engine/overlays/ucs_mark/lc_overlayrelativezero.h
+		librecad/src/lib/engine/overlays/ucs_mark/lc_overlayucszero.h
+		librecad/src/lib/engine/overlays/ucs_mark/lc_overlayucszero.cpp
+		librecad/src/lib/actions/lc_overlayboxaction.h
+		librecad/src/lib/actions/lc_overlayboxaction.cpp
+		librecad/src/lib/engine/overlays/lc_overlayentity.cpp
+		librecad/src/ui/view/lc_printpreviewview.h
+		librecad/src/ui/view/lc_printpreviewview.cpp
+		librecad/src/lib/engine/overlays/angles_base/lc_overlayanglesbasemark.h
+        librecad/src/lib/engine/overlays/angles_base/lc_overlayanglesbasemark.cpp
+		librecad/src/ui/components/status_bar/lc_anglesbasiswidget.h
+		librecad/src/ui/components/status_bar/lc_anglesbasiswidget.cpp
+		librecad/src/ui/components/status_bar/lc_anglesbasiswidget.h
+		librecad/src/ui/components/status_bar/lc_anglesbasiswidget.h
+		librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.h
+		librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.cpp
+		librecad/src/lib/engine/utils/lc_rectregion.h
+		librecad/src/lib/engine/utils/lc_rectregion.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

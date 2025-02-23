@@ -111,17 +111,15 @@ void RS_ActionBlocksInsert::trigger() {
         creation.createInsert(data.get());
     }
 
-    graphicView->redraw(RS2::RedrawDrawing);
+    redrawDrawing();
 
     //finish();
 }
 
-void RS_ActionBlocksInsert::mouseMoveEvent(QMouseEvent* e) {
-    deletePreview();
-    switch (getStatus()) {
+void RS_ActionBlocksInsert::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    switch (status) {
         case SetTargetPoint: {
-            data->insertionPoint = snapPoint(e);
-
+            data->insertionPoint = e->snapPoint;
             if (block) {
 
                 //preview->addAllFrom(*block);
@@ -137,11 +135,10 @@ void RS_ActionBlocksInsert::mouseMoveEvent(QMouseEvent* e) {
         default:
             break;
     }
-    drawPreview();
 }
 
 void RS_ActionBlocksInsert::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
-    fireCoordinateEventForSnap(e);
+    fireCoordinateEvent(snapPoint(e));
 }
 
 void RS_ActionBlocksInsert::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {

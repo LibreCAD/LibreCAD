@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class LC_ActionModifyBreakDivide;
 namespace Ui {
-class LC_ModifyBreakDivideOptions;
+    class LC_ModifyBreakDivideOptions;
 }
 
 class LC_ModifyBreakDivideOptions :public LC_ActionOptionsWidgetBase{

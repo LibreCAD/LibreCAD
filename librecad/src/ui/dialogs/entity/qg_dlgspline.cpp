@@ -40,9 +40,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgSpline::QG_DlgSpline(QWidget* parent)
-    : LC_Dialog(parent, "SplineProperties"){
+QG_DlgSpline::QG_DlgSpline(QWidget *parent, LC_GraphicViewport *pViewport, RS_Spline * spline)
+    :LC_EntityPropertiesDlg(parent, "SplineProperties", pViewport){
     setupUi(this);
+    setEntity(spline);
 }
 
 /*
@@ -53,8 +54,8 @@ void QG_DlgSpline::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgSpline::setSpline(RS_Spline& e) {
-    spline = &e;
+void QG_DlgSpline::setEntity(RS_Spline* e) {
+    spline = e;
 
     RS_Graphic* graphic = spline->getGraphic();
     if (graphic) {
@@ -71,7 +72,8 @@ void QG_DlgSpline::setSpline(RS_Spline& e) {
     s.setNum(spline->getDegree());
     cbDegree->setCurrentIndex( cbDegree->findText(s) );
 
-    cbClosed->setChecked(spline->isClosed());
+    toUIBool(spline->isClosed(), cbClosed);
+
     // fixme - sand - refactor to common function
     if (LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false)){
         lId->setText(QString("ID: %1").arg(spline->getId()));
@@ -81,10 +83,12 @@ void QG_DlgSpline::setSpline(RS_Spline& e) {
     }
 }
 
-void QG_DlgSpline::updateSpline() {
+void QG_DlgSpline::updateEntity() {
     spline->setDegree(RS_Math::round(RS_Math::eval(cbDegree->currentText())));
+
     spline->setClosed(cbClosed->isChecked());
+
     spline->setPen(wPen->getPen());
-    spline->setLayer(cbLayer->currentText());
+    spline->setLayer(cbLayer->getLayer());
     spline->update();
 }

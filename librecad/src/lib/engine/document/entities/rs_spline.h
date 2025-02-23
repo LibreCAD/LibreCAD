@@ -146,17 +146,12 @@ public:
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void revertDirection() override;
 
-    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+    void draw(RS_Painter* painter) override;
     const std::vector<RS_Vector>& getControlPoints() const;
-
     friend std::ostream& operator << (std::ostream& os, const RS_Spline& l);
-
     void calculateBorders() override;
-
     void fillStrokePoints(int splineSegments, std::vector<RS_Vector>& points);
-
     friend class RS_FilterDXFRW;
-
 private:
     std::vector<double> knot(size_t num, size_t order) const;
     void rbspline(size_t npts, size_t k, size_t p1,

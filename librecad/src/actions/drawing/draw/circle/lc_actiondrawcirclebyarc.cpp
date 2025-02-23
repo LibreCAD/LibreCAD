@@ -167,7 +167,7 @@ RS_EllipseData LC_ActionDrawCircleByArc::createEllipseData(RS_Ellipse *ellipseAr
     return result;
 }
 
-bool LC_ActionDrawCircleByArc::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
+bool LC_ActionDrawCircleByArc::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, int status){
     return status == SetArc;
 }
 
@@ -175,9 +175,9 @@ void LC_ActionDrawCircleByArc::drawSnapper() {
    // disable snapper
 }
 
-void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
+void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
 
-    RS_Entity *en = catchEntityOnPreview(e, circleType, RS2::ResolveAll);
+    RS_Entity *en = catchAndDescribe(e, circleType, RS2::ResolveAll);
     if (en != nullptr){
         highlightHover(en);
         int rtti = en->rtti();
@@ -217,7 +217,7 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]QMouseEv
     }
 }
 
-void LC_ActionDrawCircleByArc::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status,[[maybe_unused]] const RS_Vector &snapPoint){
+void LC_ActionDrawCircleByArc::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, int status,[[maybe_unused]] const RS_Vector &snapPoint){
     // just trigger on entity selection
     if (status == SetArc){
         trigger();

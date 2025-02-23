@@ -22,6 +22,7 @@
 
 #include "lc_infodist2options.h"
 #include "ui_lc_infodist2options.h"
+#include "rs_actioninfodist2.h"
 
 LC_InfoDist2Options::LC_InfoDist2Options()
     : LC_ActionOptionsWidget(nullptr)

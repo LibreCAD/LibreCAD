@@ -29,6 +29,7 @@
 #include "rs_settings.h"
 #include "rs_vector.h"
 #include "rs_units.h"
+#include "lc_graphicviewport.h"
 
 /*
  *  Constructs a QG_CoordinateWidget as a child of 'parent', with the
@@ -44,7 +45,7 @@ QG_CoordinateWidget::QG_CoordinateWidget(QWidget* parent, const char* name, Qt::
     lCoord1b->setText("");
     lCoord2b->setText("");
 
-    graphic = NULL;
+    graphic = nullptr;
     prec = 4;
     format = RS2::Decimal;
     aprec = 2;
@@ -54,8 +55,7 @@ QG_CoordinateWidget::QG_CoordinateWidget(QWidget* parent, const char* name, Qt::
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_CoordinateWidget::~QG_CoordinateWidget()
-{
+QG_CoordinateWidget::~QG_CoordinateWidget(){
     // no need to delete child widgets, Qt does it all for us
 }
 
@@ -67,16 +67,32 @@ void QG_CoordinateWidget::languageChange(){
     retranslateUi(this);
 }
 
-void QG_CoordinateWidget::setGraphic(RS_Graphic* graphic) {
-    this->graphic = graphic;
-    if (graphic != nullptr) {
-        setCoordinates(RS_Vector(0.0, 0.0), RS_Vector(0.0, 0.0), true);
+void QG_CoordinateWidget::setGraphic(RS_Graphic* g, RS_GraphicView *gv) {
+    graphic = g;
+    graphicView = gv;
+    viewport = nullptr;
+    if (gv != nullptr){
+        viewport = gv->getViewPort();
+    }
+    if (g != nullptr) {
+//        setCoordinates(graphicView->toWorld(RS_Vector(0.0, 0.0)), graphicView->toWorld(RS_Vector(0.0, 0.0)), true);
+        setCoordinates(0.0, 0.0, 0.0, 0.0, true);
     }
 }
 
-void QG_CoordinateWidget::setCoordinates(const RS_Vector& abs,
-                                         const RS_Vector& rel, bool updateFormat) {
-    setCoordinates(abs.x, abs.y, rel.x, rel.y, updateFormat);
+void QG_CoordinateWidget::setCoordinates(const RS_Vector& wcsAbs, const RS_Vector& wcsDelta, bool updateFormat) {
+    double ucsX, ucsY, ucsDeltaX, ucsDeltaY;
+    if (viewport != nullptr){        
+        viewport->toUCS(wcsAbs, ucsX, ucsY);
+        viewport->toUCSDelta(wcsDelta, ucsDeltaX, ucsDeltaY);
+    }
+    else{
+        ucsX = wcsAbs.x;
+        ucsY = wcsAbs.y;
+        ucsDeltaX = wcsDelta.x;
+        ucsDeltaY = wcsDelta.y;
+    }
+    setCoordinates(ucsX, ucsY, ucsDeltaX, ucsDeltaY, updateFormat);
 }
 
 void QG_CoordinateWidget::clearContent(){
@@ -86,8 +102,8 @@ void QG_CoordinateWidget::clearContent(){
     lCoord2b->setText("@  0 < 0");
 }
 
-void QG_CoordinateWidget::setCoordinates(double x, double y,
-        double rx, double ry, bool updateFormat) {
+void QG_CoordinateWidget::setCoordinates(double ucsX, double ucsY,
+                                         double ucsDeltaX, double ucsDeltaY, bool updateFormat) {
 
     if (graphic != nullptr) {
         if (updateFormat) {
@@ -98,52 +114,48 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
         }
 
         if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true)){
-            x  = RS_Units::convert(x);
-            y  = RS_Units::convert(y);
-            rx = RS_Units::convert(rx);
-            ry = RS_Units::convert(ry);
+            ucsX  = RS_Units::convert(ucsX);
+            ucsY  = RS_Units::convert(ucsY);
+            ucsDeltaX = RS_Units::convert(ucsDeltaX);
+            ucsDeltaY = RS_Units::convert(ucsDeltaY);
         }
 
         // abs / rel coordinates:
-        QString absX = RS_Units::formatLinear(x,
-                                               graphic->getUnit(),
-                                               format, prec);
-        QString absY = RS_Units::formatLinear(y,
-                                               graphic->getUnit(),
-                                               format, prec);
-        QString relX = RS_Units::formatLinear(rx,
-                                               graphic->getUnit(),
-                                               format, prec);
-        QString relY = RS_Units::formatLinear(ry,
-                                               graphic->getUnit(),
-                                               format, prec);
+        RS2::Unit unit = graphic->getUnit();
+        QString absX = RS_Units::formatLinear(ucsX, unit, format, prec);
+        QString absY = RS_Units::formatLinear(ucsY, unit, format, prec);
+        QString relX = RS_Units::formatLinear(ucsDeltaX, unit, format, prec);
+        QString relY = RS_Units::formatLinear(ucsDeltaY, unit, format, prec);
 
         lCoord1->setText(absX + " , " + absY);
         lCoord2->setText("@  " + relX + " , " + relY);
 
         // polar coordinates:
         RS_Vector v;
-        v = RS_Vector(x, y);
+        v = RS_Vector(ucsX, ucsY);
         QString str;
-        QString rStr = RS_Units::formatLinear(v.magnitude(),
-                                               graphic->getUnit(),
-                                               format, prec);
-        QString aStr = RS_Units::formatAngle(v.angle(),
-                                               aformat, aprec);
+        QString rStr = RS_Units::formatLinear(v.magnitude(),unit,format, prec);
+        double ucsAngle = v.angle();
+        if (viewport != nullptr) {            
+            ucsAngle = viewport->toBasisUCSAngle(ucsAngle);
+        }
+
+        QString aStr = RS_Units::formatAngle(ucsAngle, aformat, aprec);
 
         str = rStr + " < " + aStr;
         lCoord1b->setText(str);
 
-        v = RS_Vector(rx, ry);
-        rStr = RS_Units::formatLinear(v.magnitude(),
-                                               graphic->getUnit(),
-                                               format, prec);
-        aStr = RS_Units::formatAngle(v.angle(),
-                                               aformat, aprec);
+        v = RS_Vector(ucsDeltaX, ucsDeltaY);
+        rStr = RS_Units::formatLinear(v.magnitude(),unit,format, prec);
+        double relUcsAngle = v.angle();
+        if (viewport != nullptr) {
+            relUcsAngle = viewport->toBasisUCSAngle(relUcsAngle);
+        }
+        aStr = RS_Units::formatAngle(relUcsAngle, aformat, aprec);
 
         lCoord2b->setText("@  " + rStr + " < " + aStr);
 
-        absoluteCoordinates = RS_Vector( x,  y, 0.0);
-        relativeCoordinates = RS_Vector(rx, ry, 0.0);
+        absoluteCoordinates = RS_Vector(ucsX, ucsY, 0.0);
+        relativeCoordinates = RS_Vector(ucsDeltaX, ucsDeltaY, 0.0);
     }
 }

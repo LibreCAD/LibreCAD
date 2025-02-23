@@ -126,7 +126,7 @@ void QG_PolylineOptions::setReversedToActionAndView(bool reversed){
 
 void QG_PolylineOptions::setAngleToActionAndView(const QString& strVal){
     double angle;
-    if (toDoubleAngle(strVal, angle, 0.0, true)){
+    if (toDoubleAngleDegrees(strVal, angle, 0.0, true)){
         if (angle > 359.999){
             angle = 359.999;
         }

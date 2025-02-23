@@ -29,9 +29,9 @@
 
 class QString;
 
+class LC_GraphicViewport;
 class RS_EntityContainer;
 class RS_Graphic;
-class RS_GraphicView;
 class RS_Vector;
 class RS_Entity;
 
@@ -46,38 +46,24 @@ class RS_Entity;
 class RS_Selection {
 public:
     RS_Selection(RS_EntityContainer& entityContainer,
-                 RS_GraphicView* graphicView=nullptr);
-
+                 LC_GraphicViewport* graphicView=nullptr);
     void selectSingle(RS_Entity* e);
     void selectAll(bool select=true);
-    void deselectAll() {
-        selectAll(false);
-    }
+    void deselectAll() {selectAll(false);}
     void invertSelection();
-    void selectWindow(enum RS2::EntityType typeToSelect, const RS_Vector& v1, const RS_Vector& v2,
-                      bool select=true, bool cross=false);
-    void selectWindow(const QList<RS2::EntityType> &typesToSelect, const RS_Vector& v1, const RS_Vector& v2,
-                      bool select=true, bool cross=false);
-    void deselectWindow(enum RS2::EntityType typeToSelect,const RS_Vector& v1, const RS_Vector& v2) {
-        selectWindow(typeToSelect,v1, v2, false);
-    }
-    void selectIntersected(const RS_Vector& v1, const RS_Vector& v2,
-                      bool select=true);
-    void deselectIntersected(const RS_Vector& v1, const RS_Vector& v2) {
-		selectIntersected(v1, v2, false);
-	}
+    void selectWindow(enum RS2::EntityType typeToSelect, const RS_Vector& v1, const RS_Vector& v2,bool select=true, bool cross=false);
+    void selectWindow(const QList<RS2::EntityType> &typesToSelect, const RS_Vector& v1, const RS_Vector& v2,bool select=true, bool cross=false);
+    void deselectWindow(enum RS2::EntityType typeToSelect,const RS_Vector& v1, const RS_Vector& v2) {selectWindow(typeToSelect,v1, v2, false);}
+    void selectIntersected(const RS_Vector& v1, const RS_Vector& v2,bool select=true);
+    void deselectIntersected(const RS_Vector& v1, const RS_Vector& v2) {selectIntersected(v1, v2, false);}
     void selectContour(RS_Entity* e);
-	
     void selectLayer(RS_Entity* e);
     void selectLayer(const QString& layerName, bool select=true);
-    void deselectLayer(QString& layerName) {
-		selectLayer(layerName, false);
-	}
-
+    void deselectLayer(QString& layerName) {selectLayer(layerName, false);}
 protected:
     RS_EntityContainer* container = nullptr;
     RS_Graphic* graphic = nullptr;
-    RS_GraphicView* graphicView = nullptr;
+    LC_GraphicViewport* graphicView = nullptr;
 };
 
 #endif

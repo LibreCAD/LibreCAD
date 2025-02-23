@@ -202,17 +202,3 @@ void RS_AtomicEntity::moveSelectedRef(const RS_Vector& ref, const RS_Vector& off
         moveRef(ref, offset);
     }
 }
-
-void RS_AtomicEntity::updateDashOffset(RS_Painter& painter, RS_GraphicView& view, double& patternOffset) const{
-    // Adjust dash offset
-    RS_Pen pen = painter.getPen();
-    if (pen.getLineType() == RS2::SolidLine /*|| view.getGraphic() == nullptr*/)
-        return;
-
-    // factor from model space to GUI
-    const double toMm = view.getDefaultWidthFactor();
-
-//    pen.setDashOffset(patternOffset * toMm);
-//    painter.setPen(pen); // fixme - review which is set there!!! duplication of setPenForEntity??
-    patternOffset -= getLength() * toMm;
-}

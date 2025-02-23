@@ -56,7 +56,7 @@ protected:
     void updateMouseButtonHintsForSelection() override;
     void doTrigger(bool selected) override;
     bool isAllowTriggerOnEmptySelection() override;
-    void finishMouseMoveOnSelection(QMouseEvent *event) override;
+    void finishMouseMoveOnSelection(LC_MouseEvent *event) override;
 };
 
 #endif

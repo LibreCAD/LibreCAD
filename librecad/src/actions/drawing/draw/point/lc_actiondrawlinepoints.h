@@ -111,9 +111,9 @@ protected:
     bool doProceedCommand(int status, const QString &qString) override;
     bool doProcessCommandValue(int status, const QString &c) override;
     const RS_Vector& getStartPointForAngleSnap() const override;
-    void doBack(QMouseEvent *pEvent, int status) override;
+    void doBack(LC_MouseEvent *pEvent, int status) override;
     bool isStartPointValid() const override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     bool doCheckMayTrigger() override;
     void doAfterTrigger() override;

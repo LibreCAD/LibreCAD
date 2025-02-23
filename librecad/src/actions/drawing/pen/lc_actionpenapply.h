@@ -39,7 +39,6 @@ public:
     };
     LC_ActionPenApply(RS_EntityContainer& container,RS_GraphicView& graphicView, bool copy);
     void init(int status) override;
-    void mouseMoveEvent(QMouseEvent* e) override;
     void finish(bool updateTB) override;
 private:
     // entity that might be used as source for pen applying
@@ -48,8 +47,9 @@ private:
     bool copyMode;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void updateMouseButtonHints() override;
 };
 

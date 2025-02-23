@@ -23,16 +23,16 @@
 #ifndef LC_MODIFYMIRROROPTIONS_H
 #define LC_MODIFYMIRROROPTIONS_H
 
-#include "rs_actionmodifymirror.h"
 #include "lc_actionoptionswidgetbase.h"
 
+class RS_ActionModifyMirror;
+
 namespace Ui {
-class LC_ModifyMirrorOptions;
+    class LC_ModifyMirrorOptions;
 }
 
 class LC_ModifyMirrorOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     explicit LC_ModifyMirrorOptions();
     ~LC_ModifyMirrorOptions() override;

@@ -57,8 +57,8 @@ public:
     int getLineSnapMode() const{return lineSnapMode;};
     void setTickSnapMode(int mode) {tickSnapMode = mode;};
     int getTickSnapMode() const {return tickSnapMode;};
-    void setTickAngle(double a){tickAngle = a;};
-    double getTickAngle() const {return tickAngle;};
+    void setTickAngle(double a){ tickAngleDegrees = a;};
+    double getTickAngle() const {return tickAngleDegrees;};
     void setTickLength(double len){tickLength = len;};
     double getTickLength() const {return tickLength;};
     void setTickOffset(double o){tickOffset = o;};
@@ -87,7 +87,7 @@ private:
      * angle used for drawing line (absolute or relative).
      * Alternative action mode uses alternative angle (mirrored original) instead of original one
      */
-    double tickAngle = 0;
+    double tickAngleDegrees = 0;
     /**
      * Length of tick if it is fixed
      */
@@ -105,7 +105,6 @@ private:
      * Distance (offset) from original line snap-point to which intersection line will be shifted
      */
     double snapDistance = 0;
-
 
     /**
      * indicates that angle specified by options is relative (i.e between original line and drawn line).
@@ -136,13 +135,13 @@ private:
     TickData* prepareLineData(RS_Line* targetLine, const RS_Vector& tickSnapPosition, const RS_Vector& tickEndPosition, bool alternateAngle);
 protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
     void doAfterTrigger() override;
     RS2::CursorType doGetMouseCursor(int status) override;
-    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
+    bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
     bool doCheckMayTrigger() override;
     void performTriggerDeletions() override;
     void divideOriginalLine(TickData *pData, QList<RS_Entity *> &list);

@@ -29,14 +29,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef QG_MODIFYOFFSETOPTIONS_H
 #define QG_MODIFYOFFSETOPTIONS_H
 
-
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionModifyOffset;
 
 namespace Ui {
-class Ui_ModifyOffsetOptions;
+    class Ui_ModifyOffsetOptions;
 }
 
 class QG_ModifyOffsetOptions : public LC_ActionOptionsWidgetBase{

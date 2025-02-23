@@ -24,75 +24,37 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_OVERLAYBOX_H
 #define RS_OVERLAYBOX_H
 
 #include <iosfwd>
 #include "rs_atomicentity.h"
+#include "lc_overlayentity.h"
 
 /**
  * Holds the data that defines a line.
  */
-struct RS_OverlayBoxData {
-    /**
-     * Default constructor. Leaves the data object uninitialized.
-     */
-	RS_OverlayBoxData() = default;
 
-    RS_OverlayBoxData(const RS_Vector& corner1, const RS_Vector& corner2)
-                     : corner1(corner1), corner2(corner2) {}
-
-    RS_Vector corner1;
-    RS_Vector corner2;
+struct LC_OverlayBoxOptions{
+    RS_Color m_colorBoxLine;
+    RS_Color m_colorBoxFill;
+    RS_Color m_colorLineInverted;
+    RS_Color m_colorBoxFillInverted;
+    void loadSettings();
 };
-
-std::ostream& operator << (std::ostream& os, const RS_OverlayBoxData& ld);
 
 /**
  * Class for a line entity.
  *
  * @author R. van Twisk
  */
-class RS_OverlayBox : public RS_AtomicEntity {
+class RS_OverlayBox : public LC_OverlayDrawable {
 public:
-    RS_OverlayBox(RS_EntityContainer* parent, const RS_OverlayBoxData& d);
-    RS_Entity* clone() const override;
-
-    /**	@return RS2::EntityLine */
-    RS2::EntityType rtti() const override{
-        return RS2::EntityOverlayBox;
-    }
-    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
-
-    /** @return Start point of the entity */
-    RS_Vector getCorner1() const {
-        return data.corner1;
-    }
-    /** @return End point of the entity */
-    RS_Vector getCorner2() const {
-        return data.corner2;
-    }
-    /** @return Copy of data that defines the line. */
-    RS_OverlayBoxData getData() const {
-        return data;
-    }
-
-    /** We should make a separate drawing mechanism for overlays and not use entities */
-    void move(const RS_Vector& /*offset*/)override{}
-    void rotate(const RS_Vector& /*center*/, const double& /*angle*/)override{}
-    void rotate(const RS_Vector& /*center*/, const RS_Vector& /*angleVector*/)override{}
-    void scale(const RS_Vector& /*center*/, const RS_Vector& /*factor*/)override{}
-    void mirror(const RS_Vector& /*axisPoint1*/, const RS_Vector& /*axisPoint2*/)override{}
-    void calculateBorders() override{}
-    RS_Vector getNearestEndpoint(const RS_Vector&, double*)const override{return {};}
-    RS_Vector getNearestPointOnEntity(const RS_Vector&, bool, double*, RS_Entity**)const override{return {};}
-    RS_Vector getNearestCenter(const RS_Vector&, double*)const override{return {};}
-    RS_Vector getNearestMiddle(const RS_Vector&, double*,int)const override{return {};}
-    RS_Vector getNearestDist(double, const RS_Vector&, double*)const override{return {};}
-    double getDistanceToPoint(const RS_Vector&, RS_Entity**, RS2::ResolveLevel, double)const override{return -1;}//is -1 right here
-    friend std::ostream& operator << (std::ostream& os, const RS_OverlayBox& l);
+    RS_OverlayBox(const RS_Vector &corner1, const RS_Vector &corner2, LC_OverlayBoxOptions *options);
+    void draw(RS_Painter* painter) override;
 protected:
-    RS_OverlayBoxData data;
+    RS_Vector corner1;
+    RS_Vector corner2;
+    LC_OverlayBoxOptions* options;
 };
 #endif

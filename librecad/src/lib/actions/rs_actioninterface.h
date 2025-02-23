@@ -33,6 +33,7 @@
 #include "rs.h"
 #include "rs_snapper.h"
 #include "lc_modifiersinfo.h"
+#include "rs_math.h"
 
 class QInputEvent;
 class QKeyEvent;
@@ -46,6 +47,10 @@ class QAction;
 class QString;
 class LC_ActionOptionsWidget; // todo - think about depencency - options in in ui, while this action in lib... quite artificial separation, actually
 
+namespace{
+   const double DEFAULT_SNAP_ANGLE_STEP =  RS_Math::deg2rad(15.0);
+}
+
 /**
  * This is the interface that must be implemented for all
  * action classes. Action classes handle actions such
@@ -58,6 +63,7 @@ class LC_ActionOptionsWidget; // todo - think about depencency - options in in u
 //fixme - actually, inheritance from snapper is rather bad design... not all actions (say, file open or print-preview) should be
 // inherited from snapper - only ones that really work with drawing should be snap-aware
 class RS_ActionInterface : public RS_Snapper {
+Q_OBJECT
 public:
     RS_ActionInterface(const char* name,
                        RS_EntityContainer& container,
@@ -126,13 +132,9 @@ protected:
      * Predecessor of this action or NULL.
      */
     RS_ActionInterface* predecessor = nullptr;
-
-
     RS2::ActionType actionType = RS2::ActionNone;
-
     std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
-
-    double snapToAngleStep = 15.0;
+    double snapToAngleStep = DEFAULT_SNAP_ANGLE_STEP;
 
     QString msgAvailableCommands();
     void setActionType(RS2::ActionType actionType);
@@ -163,6 +165,8 @@ protected:
 
     virtual void onMouseLeftButtonRelease(int status, QMouseEvent * e);
     virtual void onMouseRightButtonRelease(int status, QMouseEvent * e);
+    virtual void onMouseLeftButtonPress(int status, QMouseEvent * e);
+    virtual void onMouseRightButtonPress(int status, QMouseEvent * e);
 
     void updateSnapAngleStep();
     /**
@@ -180,9 +184,9 @@ protected:
     virtual QString prepareCommand(RS_CommandEvent *e) const;
 
     void commandMessage(const QString &msg) const;
+    void commandPrompt(const QString &msg) const;
 
     void fireCoordinateEvent(const RS_Vector& coord);
-    void fireCoordinateEventForSnap(QMouseEvent *e);
 
     virtual void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos);
     void initPrevious(int status);
@@ -194,7 +198,7 @@ protected:
     void undoCycleReplace(RS_Entity *entityToReplace, RS_Entity* entityReplacing);
     void undoCycleEnd() const;
     void undoCycleStart() const;
-
     void setPenAndLayerToActive(RS_Entity* e);
+
 };
 #endif

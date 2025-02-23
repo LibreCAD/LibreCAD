@@ -24,6 +24,7 @@
 #define LC_CURSOROVERLAYINFO_H
 
 #include "rs_point.h"
+#include "lc_overlayentity.h"
 
 struct  LC_InfoCursorOptions{
     int offset = 10;
@@ -75,7 +76,6 @@ public:
         msg.append("\n");
     }
 };
-
 
 
 struct LC_InfoCursorData{
@@ -134,6 +134,7 @@ protected:
 struct LC_InfoCursorOverlayPrefs{
     bool enabled = true;
     bool showAbsolutePosition = false;
+    bool showAbsolutePositionWCS = false;
     bool showRelativePositionDistAngle = false;
     bool showRelativePositionDeltas = true;
     bool showCommandPrompt = false;
@@ -145,26 +146,26 @@ struct LC_InfoCursorOverlayPrefs{
     bool multiLine = false;
     bool showCurrentActionName = true;
     LC_InfoCursorOptions options = LC_InfoCursorOptions();
+
+    void loadSettings();
 };
 
-class LC_InfoCursor:public RS_Point
+class LC_OverlayInfoCursor:public LC_OverlayDrawable
 {
 public:
-    LC_InfoCursor(RS_EntityContainer *parent, const RS_Vector &coord, LC_InfoCursorOptions* cursorOverlaySettings);
+    LC_OverlayInfoCursor(const RS_Vector &coord, LC_InfoCursorOptions* cursorOverlaySettings);
     void setZonesData(LC_InfoCursorData *data);
-    void draw(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
+    void draw(RS_Painter *painter) override;
     void clear();
     LC_InfoCursorData* getData(){return zonesData;}
-
     LC_InfoCursorData *getZonesData() const;
-
     LC_InfoCursorOptions *getOptions() const;
-
     void setOptions(LC_InfoCursorOptions *options);
-
+    void setPos(const RS_Vector wPos){wcsPos = wPos;};
 protected:
     LC_InfoCursorData* zonesData = nullptr;
     LC_InfoCursorOptions* options = nullptr;
+    RS_Vector wcsPos;
 };
 
 #endif // LC_CURSOROVERLAYINFO_H

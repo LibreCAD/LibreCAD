@@ -61,7 +61,7 @@ void QC_ActionGetEnt::setMessage(QString msg){
 
 void QC_ActionGetEnt::trigger() {
     if (en) {
-        RS_Selection s(*container, graphicView);
+        RS_Selection s(*container, viewport);
         s.selectSingle(en);
         completed = true;
         updateMouseButtonHints();

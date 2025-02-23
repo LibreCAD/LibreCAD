@@ -29,6 +29,7 @@
 #include "rs_actionlayersedit.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_layer.h"
@@ -61,8 +62,7 @@ void RS_ActionLayersEdit::trigger() {
     finish(false);
 
     graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
-
-    graphicView->redraw(RS2::RedrawDrawing);
+    redrawDrawing();
 }
 
 void RS_ActionLayersEdit::init(int status) {

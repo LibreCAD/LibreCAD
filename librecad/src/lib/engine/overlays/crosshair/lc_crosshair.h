@@ -24,8 +24,9 @@
 #define LC_CROSSHAIR_H
 
 #include "rs_point.h"
+#include "lc_overlayentity.h"
 
-class LC_Crosshair:public RS_Point{
+class LC_Crosshair:public LC_OverlayDrawable{
 public:
     enum IndicatorShape{
         Circle,
@@ -42,23 +43,23 @@ public:
         NoLines
     };
 
-    LC_Crosshair(RS_EntityContainer *parent, const RS_Vector &coord, int shapeType, int linesType, const RS_Pen& linesPen,int pointSize,
+    LC_Crosshair(const RS_Vector &coord, int shapeType, int linesType, const RS_Pen& linesPen,int pointSize,
                  int pointType);
-    void draw(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
+    void draw(RS_Painter *painter) override;
     void setLinesPen(const RS_Pen &linesPen);
-
     void setPointType(int pointType);
-
     void setPointSize(int pointSize);
-
+    void setShapesPen(RS_Pen &p) {shapePen = p;}
 protected:
     int linesShape;
     int indicatorShape;
     RS_Pen linesPen;
+    RS_Pen shapePen;
     int pointType;
     int pointSize;
+    RS_Vector wcsPos;
 
-    double drawIndicator(RS_Painter *painter, RS_GraphicView *view, const RS_Vector &guiPos);
+    double drawIndicator(RS_Painter *painter, double uiPosX, double uiPosY);
 
     void drawCrosshairLines(
         RS_Painter *painter, const RS_Vector &guiCoord, double offset, const RS_Vector &p1, const RS_Vector &p2, const RS_Vector &p3,

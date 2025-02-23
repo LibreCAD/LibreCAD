@@ -28,11 +28,10 @@
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 
-
 RS_ActionSelectBase::RS_ActionSelectBase(const char* name,
         RS_EntityContainer& container,
         RS_GraphicView& graphicView,QList<RS2::EntityType> entityTypeList)
-        :RS_PreviewActionInterface(name, container, graphicView),
+        :LC_OverlayBoxAction(name, container, graphicView),
         catchForSelectionEntityTypes(std::move(entityTypeList)){
 }
 
@@ -86,14 +85,13 @@ bool RS_ActionSelectBase::selectEntity(RS_Entity* entityToSelect, bool selectCon
 }
 
 void RS_ActionSelectBase::doSelectEntity(RS_Entity* entityToSelect,  [[maybe_unused]]bool selectContour) const {
-    RS_Selection s(*container, graphicView);
+    RS_Selection s(*container, viewport);
     s.selectSingle(entityToSelect);
 }
 
-RS_Entity* RS_ActionSelectBase::selectionMouseMove(QMouseEvent *event) {
+RS_Entity* RS_ActionSelectBase::selectionMouseMove(LC_MouseEvent *event) {
     RS_Entity* result = nullptr;
-    snapPoint(event);
-    auto ent = catchEntityOnPreview(event, catchForSelectionEntityTypes);
+    auto ent = catchAndDescribe(event, catchForSelectionEntityTypes, RS2::ResolveNone);
     if (ent != nullptr){
         bool selectionAllowed = isEntityAllowedToSelect(ent);
         if (selectionAllowed){
@@ -110,6 +108,6 @@ bool RS_ActionSelectBase::isShowRefPointsOnHighlight() {
 }
 
 void RS_ActionSelectBase::deselectAll(){
-    RS_Selection s(*container, graphicView);
+    RS_Selection s(*container, viewport);
     s.selectAll(false);
 }

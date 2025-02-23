@@ -1690,32 +1690,6 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     }
 }
 
-/** whether the entity's bounding box intersects with visible portion of graphic view
-//fix me, need to handle overlay container separately
-*/
-bool RS_Ellipse::isVisibleInWindow(RS_GraphicView* view) const
-{
-    RS_Vector vpMin(view->toGraph(0,view->getHeight()));
-    RS_Vector vpMax(view->toGraph(view->getWidth(),0));
-    //viewport
-    QRectF visualRect(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y);
-    QPolygonF visualBox(visualRect);
-    std::vector<RS_Vector> vps;
-    for(unsigned short i=0;i<4;i++){
-        const QPointF& vp(visualBox.at(i));
-        vps.push_back(RS_Vector(vp.x(),vp.y()));
-    }
-    //check for intersection points with viewport
-    for(unsigned short i=0;i<4;i++){
-        RS_Line line{vps.at(i),vps.at((i+1)%4)};
-        RS_Ellipse e0(nullptr, getData());
-        if( RS_Information::getIntersection(&e0, &line, true).size()>0) return true;
-    }
-    //is startpoint within viewport
-    QRectF ellipseRect(minV.x, minV.y, maxV.x - minV.x, maxV.y - minV.y);
-    return ellipseRect.intersects(visualRect);
-}
-
 /** return the equation of the entity
 for quadratic,
 
@@ -1835,7 +1809,7 @@ double RS_Ellipse::getAngleLength() const {
 
 
 double RS_Ellipse::getMajorRadius() const {
-	return data.majorP.magnitude();
+	return data.majorP.magnitude(); // fixme - renderperf - cache !!!!!
 }
 
 RS_Vector RS_Ellipse::getMajorPoint() const{
@@ -1851,18 +1825,16 @@ double RS_Ellipse::getMinorRadius() const {
 	return data.majorP.magnitude()*data.ratio;
 }
 
-void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
-    double ra = getMajorRadius()*view->getFactor().x;
-    double rb = data.ratio*ra;
-    double centerX = view->toGuiX(data.center.x);
-    double centerY = view->toGuiY(data.center.y);
+void RS_Ellipse::draw(RS_Painter* painter) {
     // Adjust dash offset
-    updateDashOffset(*painter, *view, patternOffset);
+    painter->updateDashOffset(this);
     if (data.isArc){
-        painter->drawEllipseArc(centerX, centerY, ra, rb, data.angleDegrees, data.startAngleDegrees, data.otherAngleDegrees, data.angularLength, data.reversed);
+        painter->drawEllipseArcWCS(data.center, getMajorRadius(), data.ratio, data.angleDegrees,
+                                data.startAngleDegrees, data.otherAngleDegrees,
+                                data.angularLength, data.reversed);
     }
     else {
-        painter->drawEllipse(centerX, centerY,ra, rb, data.angleDegrees);
+        painter->drawEllipseWCS(data.center, getMajorRadius(), data.ratio, data.angleDegrees);
     }
 }
 

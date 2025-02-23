@@ -28,6 +28,7 @@
 #include "rs_actionlayersadd.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 
 RS_ActionLayersAdd::RS_ActionLayersAdd(RS_EntityContainer& container,
@@ -38,10 +39,10 @@ void RS_ActionLayersAdd::trigger() {
     RS_DEBUG->print("add layer");
 
     if (graphic) {
-        RS_Layer* layer = RS_DIALOGFACTORY->requestNewLayerDialog(
-            graphic->getLayerList());
-        if (layer)
+        RS_Layer* layer = RS_DIALOGFACTORY->requestNewLayerDialog(graphic->getLayerList());
+        if (layer != nullptr) {
             graphic->addLayer(layer);
+        }
         graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
     }
     finish(false);

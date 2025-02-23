@@ -44,119 +44,119 @@ public:
     /**
      * Constructor.
      */
-	RS_AtomicEntity(RS_EntityContainer* parent=nullptr);
+    RS_AtomicEntity(RS_EntityContainer* parent=nullptr);
 
     /**
      * @return false because entities made from subclasses are
      *  atomic entities.
      */
-	bool isContainer() const override;
+    bool isContainer() const override;
 
     /**
      * @return true because entities made from subclasses are
      *  atomic entities.
      */
-	bool isAtomic() const override;
+    bool isAtomic() const override;
 
     /**
      * @return Always 1 for atomic entities.
      */
-	unsigned count() const override;
+    unsigned count() const override;
 
     /**
      * @return Always 1 for atomic entities.
      */
-	unsigned countDeep() const override;
+    unsigned countDeep() const override;
 
     /**
      * Implementation must return the endpoint of the entity or
      * an invalid vector if the entity has no endpoint.
      */
-	RS_Vector getEndpoint() const override;
+    RS_Vector getEndpoint() const override;
 
     /**
      * Implementation must return the startpoint of the entity or
      * an invalid vector if the entity has no startpoint.
      */
-	RS_Vector getStartpoint() const override;
+    RS_Vector getStartpoint() const override;
 
     /**
      * Implementation must return the angle in which direction the entity starts.
      */
-	double getDirection1() const override;
+    double getDirection1() const override;
 
     /**
      * Implementation must return the angle in which direction the entity starts the opposite way.
      */
-	double getDirection2() const override;
+    double getDirection2() const override;
 
-	RS_Vector getCenter() const override;
-	double getRadius() const override;
-	/**
-    * return the nearest center for snapping
-    * @param coord Coordinate (typically a mouse coordinate)
-    * @param dist Pointer to a value which will contain the measured
-    * distance between 'coord' and the closest center point. The passed
-    * pointer can also be NULL in which case the distance will be
-    * lost.
-    *
-    * @return The closest center point.
-    */
-   RS_Vector getNearestCenter(const RS_Vector& /*coord*/,
-									  double* /*dist*/) const override;
+    RS_Vector getCenter() const override;
+    double getRadius() const override;
+/**
+   * return the nearest center for snapping
+   * @param coord Coordinate (typically a mouse coordinate)
+   * @param dist Pointer to a value which will contain the measured
+   * distance between 'coord' and the closest center point. The passed
+   * pointer can also be NULL in which case the distance will be
+   * lost.
+   *
+   * @return The closest center point.
+   */
+    RS_Vector getNearestCenter(const RS_Vector& /*coord*/,
+                               double* /*dist*/) const override;
 
     /**
      * (De-)selects startpoint.
      */
-	virtual void setStartpointSelected(bool select);
+    virtual void setStartpointSelected(bool select);
 
     /**
      * (De-)selects endpoint.
      */
-	virtual void setEndpointSelected(bool select);
-	virtual bool isTangent(const RS_CircleData& /* circleData */) const;
+    virtual void setEndpointSelected(bool select);
+    virtual bool isTangent(const RS_CircleData& /* circleData */) const;
 
     /**
      * @return True if the entities startpoint is selected.
      */
-	bool isStartpointSelected() const;
+    bool isStartpointSelected() const;
 
     /**
      * @return True if the entities endpoint is selected.
      */
-	bool isEndpointSelected() const;
+    bool isEndpointSelected() const;
 
-	void revertDirection() override;
+    void revertDirection() override;
 
     /**
      * Implementation must create offset of the entity to
      * the given direction and distance
      */
-	bool offset(const RS_Vector& /*position*/, const double& /*distance*/) override {return false;};
+    bool offset(const RS_Vector& /*position*/, const double& /*distance*/) override {return false;};
 
     /**
      * Implementation must move the startpoint of the entity to
      * the given position.
      */
-	virtual void moveStartpoint(const RS_Vector& /*pos*/);
+    virtual void moveStartpoint(const RS_Vector& /*pos*/);
 
     /**
      * Implementation must move the endpoint of the entity to
      * the given position.
      */
-	virtual void moveEndpoint(const RS_Vector& /*pos*/);
+    virtual void moveEndpoint(const RS_Vector& /*pos*/);
 
     /**
      * Implementation must trim the startpoint of the entity to
      * the given position.
      */
-	virtual void trimStartpoint(const RS_Vector& pos);
+    virtual void trimStartpoint(const RS_Vector& pos);
 
     /**
      * Implementation must trim the endpoint of the entity to
      * the given position.
      */
-	virtual void trimEndpoint(const RS_Vector& pos);
+    virtual void trimEndpoint(const RS_Vector& pos);
 
     /**
      * Implementation must return which ending of the entity will
@@ -164,8 +164,8 @@ public:
      * trim entity and 'trimPoint' is the point to which the entity will
      * be trimmed.
      */
-	virtual RS2::Ending getTrimPoint(const RS_Vector& /*coord*/,
-									 const RS_Vector& /*trimPoint*/);
+    virtual RS2::Ending getTrimPoint(const RS_Vector& /*coord*/,
+                                     const RS_Vector& /*trimPoint*/);
 
     /**
      * Implementation must trim the entity in the case of multiple
@@ -173,26 +173,16 @@ public:
      * trimCoord indicts the trigger trim position
      * trimSol contains intersections
      * */
-	virtual RS_Vector prepareTrim(const RS_Vector& /*trimCoord*/,
-								  const RS_VectorSolutions& /*trimSol*/);
+    virtual RS_Vector prepareTrim(const RS_Vector& /*trimCoord*/,
+                                  const RS_VectorSolutions& /*trimSol*/);
 
-	virtual void reverse();
+    virtual void reverse();
 
-	void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset) override;
+    void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset) override;
     RS_Entity& shear([[maybe_unused]] double k) override
     {
         return *this;
     }
-
-protected:
-    /**
-     * @brief updateDashOffset update dash offset for rendering line styles
-     * @param painter - painter
-     * @param view - graphic view
-     * @param patternOffset - dash pattern offset
-     */
-    virtual void updateDashOffset(RS_Painter& painter, RS_GraphicView& view, double& patternOffset) const;
 };
-
 
 #endif

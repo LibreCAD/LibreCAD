@@ -104,11 +104,11 @@ protected:
     GapData* gapData = nullptr;
 
     LC_ActionOptionsWidget* createOptionsWidget() override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     RS_Vector obtainLineSnapPointForMode(const RS_Line *targetLine, const RS_Vector &snap) const;
     GapData *prepareGapData(RS_Line *line, const RS_Vector &snap, const RS_Vector &startPoint) const;
     void performTriggerDeletions() override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
     bool doCheckMayTrigger() override;
     void doAfterTrigger() override;
     bool isSetActivePenAndLayerOnTrigger() override;

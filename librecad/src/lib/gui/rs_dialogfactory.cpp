@@ -27,17 +27,23 @@
 
 #include "rs_dialogfactory.h"
 #include "rs_debug.h"
+#include "rs_dialogfactoryinterface.h"
 
 /**
  * Private constructor.
  */
 RS_DialogFactory::RS_DialogFactory():
-	factoryObject{nullptr}
+    factoryObject{nullptr}
 {
-	RS_DEBUG->print("RS_DialogFacgory::RS_DialogFactory");
-	RS_DEBUG->print("RS_DialogFacgory::RS_DialogFactory: OK");
+    RS_DEBUG->print("RS_DialogFacgory::RS_DialogFactory");
+    RS_DEBUG->print("RS_DialogFacgory::RS_DialogFactory: OK");
+
+    factoryAdapter = new RS_DialogFactoryInterface();
 }
 
+RS_DialogFactory::~RS_DialogFactory() {
+    delete factoryAdapter;
+}
 
 
 /**
@@ -45,8 +51,8 @@ RS_DialogFactory::RS_DialogFactory():
  */
 RS_DialogFactory* RS_DialogFactory::instance()
 {
-	static RS_DialogFactory* uniqueInstance = new RS_DialogFactory{};
-	return uniqueInstance;
+    static auto* uniqueInstance = new RS_DialogFactory{};
+    return uniqueInstance;
 }
 
 
@@ -68,14 +74,14 @@ void RS_DialogFactory::setFactoryObject(RS_DialogFactoryInterface* fo) {
  */
 RS_DialogFactoryInterface* RS_DialogFactory::getFactoryObject()
 {
-	return factoryObject ? factoryObject : &factoryAdapter;
+	return factoryObject ? factoryObject : factoryAdapter;
 }
 
 
 
 void RS_DialogFactory::commandMessage(const QString& m) {
-	RS_DEBUG->print("RS_DialogFactory::commandMessage");
+    RS_DEBUG->print("RS_DialogFactory::commandMessage");
 
-	if (factoryObject)
-		factoryObject->commandMessage(m);
+    if (factoryObject)
+        factoryObject->commandMessage(m);
 }

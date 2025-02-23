@@ -32,8 +32,13 @@ LC_ActionModifyAlignSingle::LC_ActionModifyAlignSingle( RS_EntityContainer &cont
 }
 
 void LC_ActionModifyAlignSingle::init(int status) {
-    RS_PreviewActionInterface::init(status);
-//    showOptions();
+    if (viewport->hasUCS()){
+        commandMessage(tr("Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active."));
+        finish();
+    }
+    else {
+        RS_PreviewActionInterface::init(status);
+    }
 }
 
 void LC_ActionModifyAlignSingle::doTrigger() {
@@ -61,18 +66,16 @@ void LC_ActionModifyAlignSingle::doTrigger() {
     drawPreview();
 }
 
-void LC_ActionModifyAlignSingle::mouseMoveEvent(QMouseEvent *e) {
-    deletePreview();
-    deleteHighlights();
-    RS_Vector snap = snapPoint(e);
-    switch (getStatus()){
+void LC_ActionModifyAlignSingle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
+    switch (status){
         case SetRefPoint:{
             RS_Vector min;
             RS_Vector max;
             bool showPreview = true;
             switch (alignType) {
                 case LC_Align::ENTITY: {
-                    RS_Entity *entity = catchEntityOnPreview(snap);
+                    RS_Entity *entity = catchAndDescribe(snap);
                     if (entity != nullptr) {
                         min = entity->getMin();
                         max = entity->getMax();
@@ -128,7 +131,7 @@ void LC_ActionModifyAlignSingle::mouseMoveEvent(QMouseEvent *e) {
                 highlightSelected(baseAlignEntity);
             }
 
-            RS_Entity* entity = catchEntityOnPreview(e);
+            RS_Entity* entity = catchAndDescribe(e);
             RS_Vector offset;
             if (entity != nullptr){
                 highlightHover(entity);
@@ -156,8 +159,6 @@ void LC_ActionModifyAlignSingle::mouseMoveEvent(QMouseEvent *e) {
             break;
         }
     }
-    drawPreview();
-    drawHighlights();
 }
 
 QString LC_ActionModifyAlignSingle::prepareInfoCursorMessage(double verticalRef, bool drawVertical, double horizontalRef, bool drawHorizontal) {
@@ -192,33 +193,32 @@ QString LC_ActionModifyAlignSingle::prepareInfoCursorMessage(double verticalRef,
 }
 
 void LC_ActionModifyAlignSingle::previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef) {
+    // NOTE:
+    // AS Action so far do not support UCS, coordinates below will be in WCS despite used methods.
+    RS_Vector wcsLeftBottom = viewport->getUCSViewLeftBottom();
+    RS_Vector wcsRightTop = viewport->getUCSViewRightTop();
     if (drawVertical) {
-        double g0 = graphicView->toGraphY(0);
-        double gHeight = graphicView->toGraphY(graphicView->getHeight());
-        previewRefConstructionLine({verticalRef, g0}, {verticalRef, gHeight});
+        previewRefConstructionLine({verticalRef, wcsLeftBottom.y}, {verticalRef, wcsRightTop.y});
     }
-
     if (drawHorizontal) {
-        double g0 = graphicView->toGraphX(0);
-        double gWidth = graphicView->toGraphX(graphicView->getWidth());
-        previewRefConstructionLine({g0, horizontalRef}, {gWidth, horizontalRef});
+        previewRefConstructionLine({wcsLeftBottom.x, horizontalRef}, {wcsRightTop.x, horizontalRef});
     }
 }
 
 void LC_ActionModifyAlignSingle::previewAlignRefPoint(const RS_Vector &min, const RS_Vector &max) {
     double verticalRef;
     bool drawVertical  = LC_Align::getVerticalRefCoordinate(min, max, hAlign, verticalRef);
+    RS_Vector wcsLeftBottom = viewport->getUCSViewLeftBottom();
+    RS_Vector wcsRightTop = viewport->getUCSViewRightTop();
     if (drawVertical) {
-        double g0 = this->graphicView->toGraphY(0);
-        double gHeight = this->graphicView->toGraphY(this->graphicView->getHeight());
-        this->previewRefConstructionLine({verticalRef, g0}, {verticalRef, gHeight});
+        // NOTE:: works properly for WCS only
+        previewRefConstructionLine({verticalRef, wcsLeftBottom.y}, {verticalRef, wcsRightTop.y});
     }
     double horizontalRef;
     bool drawHorizontal = LC_Align::getHorizontalRefCoordinate(min, max, vAlign, horizontalRef);
     if (drawHorizontal) {
-        double g0 = this->graphicView->toGraphX(0);
-        double gWidth = this->graphicView->toGraphX(this->graphicView->getWidth());
-        this->previewRefConstructionLine({g0, horizontalRef}, {gWidth, horizontalRef});
+        // NOTE:: works properly for WCS only
+        previewRefConstructionLine({wcsLeftBottom.x, horizontalRef}, {wcsRightTop.x, horizontalRef});
     }
 }
 
@@ -254,13 +254,13 @@ void LC_ActionModifyAlignSingle::updateMouseButtonHints() {
     }
 }
 
-void LC_ActionModifyAlignSingle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
-    RS_Vector snap = snapPoint(e);
+void LC_ActionModifyAlignSingle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    RS_Vector snap = e->snapPoint;
     switch (status){
         case SetRefPoint:{
             switch (alignType) {
                 case LC_Align::ENTITY:{
-                    RS_Entity *entity = catchEntity(e);
+                    RS_Entity *entity = catchEntityByEvent(e);
                     if (entity != nullptr) {
                         baseAlignEntity = entity;
                         alignMin = entity->getMin();
@@ -287,10 +287,10 @@ void LC_ActionModifyAlignSingle::onMouseLeftButtonRelease(int status, QMouseEven
             break;
         }
         case SelectEntity:{
-            RS_Entity* entity = catchEntity(e);
+            RS_Entity* entity = catchEntityByEvent(e);
             if (entity != nullptr){
                 entityToAlign = entity;
-                finishActionAfterTrigger = isControl(e);
+                finishActionAfterTrigger = e->isControl;
                 trigger();
             }
             break;
@@ -300,7 +300,7 @@ void LC_ActionModifyAlignSingle::onMouseLeftButtonRelease(int status, QMouseEven
     }
 }
 
-void LC_ActionModifyAlignSingle::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionModifyAlignSingle::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     switch (status){
         case SetRefPoint:{
             setStatus(-1);

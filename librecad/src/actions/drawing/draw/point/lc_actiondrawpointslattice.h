@@ -31,7 +31,6 @@ public:
     LC_ActionDrawPointsLattice(RS_EntityContainer &container,
                                RS_GraphicView &graphicView);
 
-    void mouseMoveEvent(QMouseEvent *event) override;
     int getColumnPointsCount() const;
     void setColumnPointsCount(int pointsByX);
     int getRowPointsCount() const;
@@ -41,13 +40,14 @@ public:
     void setAdjustLastPointToFirst(bool adjustLastPointToFirst);
 protected:
     LC_ActionOptionsWidget *createOptionsWidget() override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-protected:
+
     enum State{
         SetPoint1,
         SetPoint2,

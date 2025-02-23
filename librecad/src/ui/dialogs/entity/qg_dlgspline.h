@@ -27,25 +27,21 @@
 #define QG_DLGSPLINE_H
 
 #include "ui_qg_dlgspline.h"
-#include "lc_dialog.h"
+#include "lc_entitypropertiesdlg.h"
 
 class RS_Spline;
 
-class QG_DlgSpline : public LC_Dialog, public Ui::QG_DlgSpline{
+class QG_DlgSpline : public LC_EntityPropertiesDlg, public Ui::QG_DlgSpline{
     Q_OBJECT
-
 public:
-    QG_DlgSpline(QWidget* parent = nullptr);
+    QG_DlgSpline(QWidget *parent, LC_GraphicViewport *pViewport, RS_Spline * spline);
 public slots:
-    virtual void setSpline( RS_Spline & e );
-    virtual void updateSpline();
-
+    void updateEntity() override;
 protected slots:
     virtual void languageChange();
-
-private:
+protected:
     RS_Spline* spline = nullptr;
-
+    void setEntity(RS_Spline *e);
 };
 
 #endif // QG_DLGSPLINE_H

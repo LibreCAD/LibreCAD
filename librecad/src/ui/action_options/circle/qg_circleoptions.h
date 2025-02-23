@@ -53,5 +53,4 @@ protected:
     std::unique_ptr<Ui::Ui_CircleOptions> ui;
     void setRadiusToActionAndVIew(QString val);
 };
-
 #endif // QG_CIRCLEOPTIONS_H

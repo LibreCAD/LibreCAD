@@ -32,9 +32,11 @@
 
 class RS_ActionInterface;
 class RS_ActionDrawLineAngle;
+
 namespace Ui {
     class Ui_LineAngleOptions;
 }
+
 class QG_LineAngleOptions:public LC_ActionOptionsWidgetBase {
 Q_OBJECT
 
@@ -49,13 +51,16 @@ public slots:
     void onAngleEditingFinished();
     void onLengthEditingFinished();
     void onSnapPointCurrentIndexChanged(int number);
+    void onAnglesBasisToggled(bool val);
     void languageChange() override;
 private:
     std::unique_ptr<Ui::Ui_LineAngleOptions> ui;
     RS_ActionDrawLineAngle *action = nullptr;
     void setAngleToActionAndView(QString val);
     void setSnapPointToActionAndView(int val);
-    void setLengthToActionAndVeiw(QString val);
+    void setLengthToActionAndView(QString val);
+
+    void setToAngleBasis(bool val);
 };
 
 #endif // QG_LINEANGLEOPTIONS_H

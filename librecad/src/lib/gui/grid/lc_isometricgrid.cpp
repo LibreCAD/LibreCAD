@@ -21,8 +21,10 @@
  ******************************************************************************/
 
 #include "lc_isometricgrid.h"
-#include "rs_graphicview.h"
 #include "rs_math.h"
+#include "lc_lattice.h"
+#include "rs_painter.h"
+#include "lc_graphicviewport.h"
 
 LC_IsometricGrid::LC_IsometricGrid(LC_GridSystem::LC_GridOptions *options, int iso_projection):LC_GridSystem(options) {
     if (iso_projection >= ISO_LEFT && iso_projection < ISO_LAST) {
@@ -445,7 +447,7 @@ void LC_IsometricGrid::createGridLines(const RS_Vector &min, const RS_Vector &ma
 #include "lc_defaults.h"
 #endif
 
-void LC_IsometricGrid::drawMetaGridLines(RS_Painter *painter, RS_GraphicView *view) {
+void LC_IsometricGrid::drawMetaGridLines(RS_Painter *painter, LC_GraphicViewport *view) {
     doDrawLines(painter, view, metaGridLattice);
 
 #ifdef DEBUG_ISO_META

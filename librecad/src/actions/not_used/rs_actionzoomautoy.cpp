@@ -33,7 +33,7 @@ RS_ActionZoomAutoY::RS_ActionZoomAutoY(RS_EntityContainer& container,
         :RS_ActionInterface("Auto zoom Y", container, graphicView) {}
 
 void RS_ActionZoomAutoY::trigger() {
-    graphicView->zoomAutoY(false);
+//    viewport->zoomAutoY(false);
     finish(false);
 }
 

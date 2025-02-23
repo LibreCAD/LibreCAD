@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_modifyalignoptions.h"
+#include "lc_actionmodifyalign.h"
 #include "ui_lc_modifyalignoptions.h"
 
 LC_ModifyAlignOptions::LC_ModifyAlignOptions()

@@ -23,11 +23,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_RECTANGLE3POINTSOPTIONS_H
 #define LC_RECTANGLE3POINTSOPTIONS_H
 
-#include "lc_actiondrawrectangle3points.h"
 #include "lc_actionoptionswidgetbase.h"
 
+class LC_ActionDrawRectangle3Points;
+
 namespace Ui {
-class LC_Rectangle3PointsOptions;
+    class LC_Rectangle3PointsOptions;
 }
 
 class LC_Rectangle3PointsOptions : public LC_ActionOptionsWidgetBase{
@@ -51,10 +52,9 @@ protected slots:
     void onBaseAngleFixedClicked(bool value);
     void onEdgesIndexChanged(int index);
 protected:
-    void doSetAction(RS_ActionInterface *a, bool update) override;
-private:
-    LC_ActionDrawRectangle3Points* action;
+    LC_ActionDrawRectangle3Points* action = nullptr;
     Ui::LC_Rectangle3PointsOptions *ui;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
     void setSnapToCornerArcCenter(bool value);
     void setUsePolylineToActionAndView(bool value);
     void setRadiusToActionAnView(const QString& value);

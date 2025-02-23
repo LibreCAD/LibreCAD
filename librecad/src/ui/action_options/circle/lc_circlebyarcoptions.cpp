@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_circlebyarcoptions.h"
 #include "ui_lc_circlebyarcoptions.h"
+#include "lc_actiondrawcirclebyarc.h"
 
 LC_CircleByArcOptions::LC_CircleByArcOptions() :
     LC_ActionOptionsWidgetBase(RS2::ActionDrawCircleByArc, "Draw","CircleByArc"),

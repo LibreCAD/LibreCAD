@@ -177,6 +177,8 @@ void QG_DlgOptionsDrawing::init() {
     cbDimTxSty->init();
 }
 
+#define TO_MM(v) RS_Units::convert(2.5, RS2::Millimeter, unit)
+
 /**
  * Sets the graphic and updates the GUI to match the drawing.
  */
@@ -260,7 +262,6 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
         rbOrthogonalGrid->setChecked(true);
     }
 
-
     *spacing = graphic->getVariableVector("$GRIDUNIT",
                                           {0.0, 0.0});
 
@@ -276,30 +277,18 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
     LC_GROUP("Appearance");
     {
         bool state = LC_GET_BOOL("ScaleGrid");
-        if (state) {
-            lGridStateScaling->setText(tr("ON"));
-        } else {
-            lGridStateScaling->setText(tr("OFF"));
-        }
+        lGridStateScaling->setText(state? tr("ON"): tr("OFF"));
+
         state = LC_GET_BOOL("UnitlessGrid");
-        if (state) {
-            lGridStateUnitless->setText(tr("ON"));
-        } else {
-            lGridStateUnitless->setText(tr("OFF"));
-        }
+        lGridStateUnitless->setText(state? tr("ON"): tr("OFF"));
+
         state = LC_GET_BOOL("GridDraw");
-        if (state) {
-            lGridStateDrawGrid->setText(tr("ON"));
-        } else {
-            lGridStateDrawGrid->setText(tr("OFF"));
-        }
+        lGridStateDrawGrid->setText(state? tr("ON"): tr("OFF"));
+
         state = LC_GET_BOOL("metaGridDraw");
-        if (state) {
-            lGridStateDrawMetaGrid->setText(tr("ON"));
-        } else {
-            lGridStateDrawMetaGrid->setText(tr("OFF"));
-        }
+        lGridStateDrawMetaGrid->setText(state? tr("ON"): tr("OFF"));
     }
+
     cbXSpacing->setEnabled(cbGridOn->isChecked() && rbOrthogonalGrid->isChecked());
     cbYSpacing->setEnabled(cbGridOn->isChecked());
 
@@ -314,34 +303,25 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
     double dimscale = graphic->getVariableDouble("$DIMSCALE", 1.0);
     cbDimScale->setEditText(QString("%1").arg(dimscale));
 
-    double dimtxt = graphic->getVariableDouble("$DIMTXT",
-                                               RS_Units::convert(2.5, RS2::Millimeter, unit));
-    //RLZ    cbDimTextHeight->setCurrentText(QString("%1").arg(dimtxt));
+    double dimtxt = graphic->getVariableDouble("$DIMTXT", TO_MM(2.5));
     cbDimTextHeight->setEditText(QString("%1").arg(dimtxt));
 
     // dimension extension line extension:
-    double dimexe = graphic->getVariableDouble("$DIMEXE",
-                                               RS_Units::convert(1.25, RS2::Millimeter, unit));
-    //RLZ    cbDimExe->setCurrentText(QString("%1").arg(dimexe));
+    double dimexe = graphic->getVariableDouble("$DIMEXE", TO_MM(1.25));
     cbDimExe->setEditText(QString("%1").arg(dimexe));
 
     // dimension extension line offset:
-    double dimexo = graphic->getVariableDouble("$DIMEXO",
-                                               RS_Units::convert(0.625, RS2::Millimeter, unit));
-    //RLZ    cbDimExo->setCurrentText(QString("%1").arg(dimexo));
+    double dimexo = graphic->getVariableDouble("$DIMEXO", TO_MM(0.625));
     cbDimExo->setEditText(QString("%1").arg(dimexo));
 
     // dimension line gap:
-    double dimgap = graphic->getVariableDouble("$DIMGAP",
-                                               RS_Units::convert(0.625, RS2::Millimeter, unit));
-    //RLZ    cbDimGap->setCurrentText(QString("%1").arg(dimgap));
+    double dimgap = graphic->getVariableDouble("$DIMGAP", TO_MM(0.625));
     cbDimGap->setEditText(QString("%1").arg(dimgap));
 
     // dimension arrow size:
-    double dimasz = graphic->getVariableDouble("$DIMASZ",
-                                               RS_Units::convert(2.5, RS2::Millimeter, unit));
-    //RLZ    cbDimAsz->setCurrentText(QString("%1").arg(dimasz));
+    double dimasz = graphic->getVariableDouble("$DIMASZ", TO_MM(2.5));
     cbDimAsz->setEditText(QString("%1").arg(dimasz));
+
     // dimension tick size:
     double dimtsz = graphic->getVariableDouble("$DIMTSZ", 0.);
     cbDimTsz->setEditText(QString("%1").arg(dimtsz));
@@ -355,8 +335,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
     cbDimLwD->init(true, false);
     cbDimLwE->init(true, false);
     // fixed extension length:
-    double dimfxl = graphic->getVariableDouble("$DIMFXL",
-                                               RS_Units::convert(1.0, RS2::Millimeter, unit));
+    double dimfxl = graphic->getVariableDouble("$DIMFXL",TO_MM(1.0));
     cbDimFxL->setValue(dimfxl);
     int dimfxlon = graphic->getVariableInt("$DIMFXLON", 0);
     if (dimfxlon > 0) {
@@ -367,12 +346,12 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
         cbDimFxLon->setChecked(false);
     }
     int dimlwd = graphic->getVariableInt("$DIMLWD", -2); //default ByBlock
-    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLWD="<<dimlwd;
+//    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLWD="<<dimlwd;
     RS2::LineWidth lineWidth = RS2::intToLineWidth(dimlwd);
     cbDimLwD->setWidth(lineWidth);
     int dimlwe = graphic->getVariableInt("$DIMLWE", -2); //default ByBlock
     cbDimLwE->setWidth(RS2::intToLineWidth(dimlwe));
-    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLwe="<<dimlwe;
+//    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLwe="<<dimlwe;
 
 
     // Dimensions / length format:
@@ -429,8 +408,6 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
     cbEncoding->setEditText(encoding);
     */
 
-
-
     // Paper margins
     bool block = true;
     leMarginLeft->blockSignals(block);
@@ -451,7 +428,6 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
 
     updatePaperSize();
     updateUnitLabels();
-
     updatePaperPreview();
 
     // Number of pages
@@ -550,6 +526,14 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
     int joinStyle = graphic->getGraphicVariableInt("$JOINSTYLE", 1);
     cbLineJoin ->setCurrentIndex(joinStyle);
 
+    // angles system setup
+    double baseAngle = graphic->getAnglesBase();
+    leAngleBaseZero->setText(QString("%1").arg(RS_Math::rad2deg(baseAngle)));
+
+    bool anglesAreCounterClockwise = graphic->areAnglesCounterClockWise();
+    rbAngleBasePositive->setChecked(anglesAreCounterClockwise);
+    rbAngleBaseNegative->setChecked(!anglesAreCounterClockwise);
+
     initVariables();
 }
 
@@ -563,10 +547,10 @@ void QG_DlgOptionsDrawing::initVariables(){
         if (name.startsWith("$")){
             name = name.mid(1);
         }
-        QTableWidgetItem *nameItem = new QTableWidgetItem(name);
+        auto *nameItem = new QTableWidgetItem(name);
         tabVariables->setItem(row, 0, nameItem);
 
-        QTableWidgetItem* codeItem = new QTableWidgetItem(QString("%1").arg(it.value().getCode()));
+        auto* codeItem = new QTableWidgetItem(QString("%1").arg(it.value().getCode()));
         tabVariables->setItem(row, 1, codeItem);
 
         QString str = "";
@@ -738,12 +722,12 @@ void QG_DlgOptionsDrawing::validate() {
         RS2::LineWidth dimLwDLineWidth = cbDimLwD->getWidth();
         int lineWidthDValue = RS2::lineWidthToInt(dimLwDLineWidth);
                 graphic->addVariable("$DIMLWD", lineWidthDValue, 70);
-    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLWD="<<lineWidthDValue;
+//    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLWD="<<lineWidthDValue;
 
         RS2::LineWidth dimLwELineWidth = cbDimLwE->getWidth();
         int lineWidthEValue = RS2::lineWidthToInt(dimLwELineWidth);
         graphic->addVariable("$DIMLWE", lineWidthEValue, 70);
-    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLWE="<<lineWidthEValue;
+//    LC_ERR<<__func__<<"() line "<<__LINE__<<": DIMLWE="<<lineWidthEValue;
 
         graphic->addVariable("$DIMFXL", cbDimFxL->value(), 40);
         graphic->addVariable("$DIMFXLON", cbDimFxLon->isChecked() ? 1 : 0, 70);
@@ -860,7 +844,17 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->addVariable("$JOINSTYLE", cbLineJoin ->currentIndex(), DXF_FORMAT_GC_JoinStyle);
         graphic->addVariable("$ENDCAPS", cbLineCap->currentIndex(), DXF_FORMAT_GC_Endcaps);
 
-// indicate graphic is modified and requires save
+        // angles system
+
+        double baseAngle = RS_Math::eval(leAngleBaseZero->text(), &ok);
+        if (ok){
+            double baseAngleRad = RS_Math::deg2rad(baseAngle);
+            graphic->setAnglesBase(baseAngleRad);
+        }
+        bool anglesCounterClockwise = rbAngleBasePositive->isChecked();
+        graphic->setAnglesCounterClockwise(anglesCounterClockwise);
+
+        // indicate graphic is modified and requires save
         graphic->setModified(true);
     }
     accept();
