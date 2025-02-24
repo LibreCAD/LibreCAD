@@ -735,19 +735,31 @@ BUILTIN("boundp")
 BUILTIN("car")
 {
     CHECK_ARGS_IS(1);
+#if 0
+    // clojure?
+    if (*argsBegin == lcl::nilValue()) {
+        return lcl::list(new lclValueVec(0));
+    }
+#endif
     ARG(lclSequence, seq);
-
-    LCL_CHECK(0 < seq->count(), "Index out of range");
+    if(!seq->count())
+    {
+        return lcl::nilValue();
+    }
 
     return seq->first();
 }
 
+#if 0
 BUILTIN("cadr")
 {
     CHECK_ARGS_IS(1);
     ARG(lclSequence, seq);
 
-    LCL_CHECK(1 < seq->count(), "Index out of range");
+    if(0 < seq->count())
+    {
+        return lcl::nilValue();
+    }
 
     return seq->item(1);
 }
@@ -761,20 +773,29 @@ BUILTIN("caddr")
 
     return seq->item(2);
 }
+#endif
 
 BUILTIN("cdr")
 {
     CHECK_ARGS_IS(1);
+
     if (*argsBegin == lcl::nilValue()) {
         return lcl::list(new lclValueVec(0));
     }
+
     ARG(lclSequence, seq);
+
+    if(!seq->count())
+    {
+        return lcl::nilValue();
+    }
+
     if (seq->isDotted()) {
             return seq->dotted();
     }
+
     return seq->rest();
 }
-
 
 BUILTIN("chr")
 {

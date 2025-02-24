@@ -6,6 +6,7 @@
 #include "Types.h"
 #include "lisp.h"
 #include "rs_color.h"
+#include "rs_dxfcolor.h"
 
 #include <math.h>
 #include <iostream>
@@ -3528,7 +3529,7 @@ QColor getDclQColor(int c)
     QColor color = Qt::black;
     if ((c < 257) && (c > -1))
     {
-        return dclQColor[c];
+        return RS_DXFColor::toQColor(c);
     }
 
     if ((c < 0) && (c > -1002))

@@ -19,6 +19,8 @@
 #include <QKeySequence>
 #include <QShortcut>
 
+#include <regex>
+
 #define MAX_FUNC 22
 
 static const char* lclEvalFunctionTable[MAX_FUNC] = {
@@ -215,9 +217,52 @@ lclValuePtr EVAL(lclValuePtr ast, lclEnvPtr env)
                     }
                     return value == 3 ? lcl::falseValue() : lcl::trueValue();
                 }
+
+                static const std::regex cadrRegex("^c(a[ad]{1,}|d[ad]{1,})r$");
+                if(std::regex_match(special.c_str(), cadrRegex))
+                {
+                    checkArgsAtLeast(special.c_str(), 1, argCount);
+                    QString fooName = "[";
+                    fooName += special.c_str();
+                    fooName +=  "] eval:";
+
+                    std::string newList;
+
+                    special.erase(0, 1);
+                    special.pop_back();
+
+                    if(special.at(special.size() - 1) == 'a')
+                    {
+                        newList = "(car ";
+                    }
+                    else
+                    {
+                        newList = "(cdr ";
+                    }
+                    newList += list->item(1).ptr()->print(true);
+                    newList += ")";
+                    special.pop_back();
+
+                    std::string::reverse_iterator itr = special.rbegin();
+
+                    while (itr != special.rend())
+                    {
+                        if (*itr++ == 'a')
+                        {
+                            newList = "(car" + newList + ")";
+                        }
+                        else
+                        {
+                            newList = "(cdr" + newList + ")";
+                        }
+                    }
+                    qDebug() << fooName << newList.c_str();
+                    return EVAL(readStr(newList), NULL);
+                }
 #if 0
-                if (special == "bla") {
-                    checkArgsAtLeast("bla", 2, argCount);
+                if (special == "bla" && ) {
+
+                    checkArgsAtLeast("bla", 1, argCount);
                     return lcl::nilValue();
                 }
 #endif

@@ -149,6 +149,7 @@ include_directories(librecad/src/ui)
 include_directories(librecad/src/ui/dialogs)
 include_directories(librecad/src/ui/dialogs/actions)
 include_directories(librecad/src/ui/dialogs/actions/modify)
+include_directories(librecad/src/ui/dialogs/color)
 include_directories(librecad/src/ui/dialogs/settings/device_options)
 include_directories(librecad/src/ui/dialogs/settings/options_device)
 include_directories(librecad/src/ui/dialogs/settings/options_general)
@@ -617,6 +618,7 @@ set(SOURCES
 		librecad/src/lib/engine/document/entities/lc_rect.h
 		librecad/src/lib/engine/document/entities/lc_splinepoints.cpp
 		librecad/src/lib/engine/document/entities/lc_splinepoints.h
+		librecad/src/lib/engine/utils/rs_dxfcolor.h
 		librecad/src/lib/engine/utils/lc_rtree.cpp
 		librecad/src/lib/engine/utils/lc_rtree.h
 		librecad/src/lib/engine/undo/lc_undosection.cpp
@@ -951,6 +953,12 @@ set(SOURCES
 		librecad/src/ui/dialogs/actions/modify/qg_dlgmove.h
 		librecad/src/ui/dialogs/actions/modify/qg_dlgmoverotate.cpp
 		librecad/src/ui/dialogs/actions/modify/qg_dlgmoverotate.h
+		librecad/src/ui/dialogs/color/qg_colordlg.cpp
+		librecad/src/ui/dialogs/color/qg_colordlg.h
+		librecad/src/ui/dialogs/color/qg_colorwell.cpp
+		librecad/src/ui/dialogs/color/qg_colorwell.h
+		librecad/src/ui/dialogs/color/qg_truecolordlg.cpp
+		librecad/src/ui/dialogs/color/qg_truecolordlg.h
 		librecad/src/ui/dialogs/entity/qg_dlgmtext.cpp
 		librecad/src/ui/dialogs/entity/qg_dlgmtext.h
 		librecad/src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp

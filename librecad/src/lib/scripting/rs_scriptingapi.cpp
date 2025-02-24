@@ -41,6 +41,7 @@
 #include "qc_applicationwindow.h"
 
 #include "qg_actionhandler.h"
+#include "qg_colordlg.h"
 
 #include "intern/qc_actiongetrad.h"
 #include "intern/qc_actiongetdist.h"
@@ -51,7 +52,6 @@
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QFileDialog>
-#include <QColorDialog>
 
 #include <QFile>
 #include <QTextStream>
@@ -961,17 +961,7 @@ bool RS_ScriptingApi::getKeyword(CommandEdit *cmdline, const char *msg, std::str
 
 bool RS_ScriptingApi::colorDialog(int color, bool by, int &res)
 {
-    Q_UNUSED(by);
-
-    QColor c = QColorDialog::getColor(Qt::white);
-    if (c.isValid())
-    {
-        qDebug() << "[RS_ScriptingApi::colorDialog]" << c;
-        qDebug() << "[RS_ScriptingApi::colorDialog]" << color;
-        res = color;
-    }
-
-    return 0;
+    return QG_ColorDlg::getIndexColor(res, nullptr, color, by);
 }
 
 bool RS_ScriptingApi::entdel(unsigned int id)

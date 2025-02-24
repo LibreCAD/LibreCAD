@@ -219,6 +219,7 @@ INCLUDEPATH += \
     ui/dialogs \
     ui/dialogs/actions \
     ui/dialogs/actions/modify \
+    ui/dialogs/color \
     ui/dialogs/modify \
     ui/dialogs/entity \
     ui/dialogs/file \
@@ -365,6 +366,7 @@ HEADERS += \
     lib/engine/undo/rs_undoable.h \
     lib/engine/undo/rs_undocycle.h \
     lib/engine/rs_units.h \
+    lib/engine/utils/rs_dxfcolor.h \
     lib/engine/utils/rs_utility.h \
     lib/engine/document/variables/rs_variable.h \
     lib/engine/document/variables/rs_variabledict.h \
@@ -1101,6 +1103,9 @@ HEADERS += ui/action_options/circle/lc_circlebyarcoptions.h \
     ui/dialogs/actions/modify/qg_dlgrotate2.h \
     ui/dialogs/actions/modify/qg_dlgscale.h \
     ui/dialogs/actions/qg_layerdialog.h \
+    ui/dialogs/color/qg_colordlg.h \
+    ui/dialogs/color/qg_colorwell.h \
+    ui/dialogs/color/qg_truecolordlg.h \
     ui/dialogs/entity/LC_DlgParabola.h \
     ui/dialogs/entity/lc_dlgsplinepoints.h \
     ui/dialogs/entity/qg_blockdialog.h \
@@ -1303,6 +1308,9 @@ SOURCES += ui/action_options/circle/lc_circlebyarcoptions.cpp \
     ui/dialogs/actions/modify/qg_dlgrotate2.cpp \
     ui/dialogs/actions/modify/qg_dlgscale.cpp \
     ui/dialogs/actions/qg_layerdialog.cpp \
+    ui/dialogs/color/qg_colordlg.cpp \
+    ui/dialogs/color/qg_colorwell.cpp \
+    ui/dialogs/color/qg_truecolordlg.cpp \
     ui/dialogs/entity/LC_DlgParabola.cpp \
     ui/dialogs/entity/lc_dlgsplinepoints.cpp \
     ui/dialogs/entity/qg_blockdialog.cpp \
