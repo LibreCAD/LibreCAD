@@ -293,9 +293,8 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
         if (edge->getLength() > RS_TOLERANCE)
             edgeLength = std::min({edgeLength, std::max(edge->getLength(), edge->getStartpoint().distanceTo(edge->getEndpoint()))});
 
-    if (edgeLength >= RS_MAXDOUBLE - 1.) {
+    if (edgeLength >= RS_MAXDOUBLE)
         assert(!"Contour size too large");
-    }
 
     // draw a small circle around the current end point
     RS_Circle circle{nullptr, {m_data->vertex, edgeLength * 0.01}};
@@ -307,20 +306,23 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
     // find the angle for the current edge
     CutPair current = getCut(m_data->current);
     // The current edge must intersect with the small circle
-    assert(std::get<bool>(current));
+    if (!std::get<bool>(current))
+        throw "no intersection";
     std::vector<CutPair> cuts;
     for (RS_Entity* edge: edges) {
         CutPair cut = getCut(edge);
         if (std::get<bool>(cut))
             cuts.push_back(cut);
     }
+    if (cuts.empty())
+        throw "no cut found";
 
     // find the minimum left turning angle to get the next outermost edge
     std::sort(cuts.begin(), cuts.end(),
               [a0=std::get<double>(current)](const CutPair& cut0, const CutPair& cut1){
-                using namespace RS_Math;
-                return getAngleDifference(a0, std::get<double>(cut0)) < getAngleDifference(a0, std::get<double>(cut1));
-    });
+                  using namespace RS_Math;
+                  return getAngleDifference(a0, std::get<double>(cut0)) < getAngleDifference(a0, std::get<double>(cut1));
+              });
     return std::get<RS_Entity*>(cuts.front());
 }
 
