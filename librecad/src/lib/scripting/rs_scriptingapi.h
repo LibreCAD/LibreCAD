@@ -67,6 +67,7 @@ public:
 
     int loadDialog(const char *filename);
     int startDialog();
+    int trueColorDialog(int tcolor, int color, bool by, int &tres, int &res);
 
     double getDoubleDlg(const char *prompt);
     const std::string getStrDlg(const char *prompt);

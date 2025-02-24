@@ -108,7 +108,7 @@ QG_ColorDlg::QG_ColorDlg(QWidget *parent, int options, int initial, const QColor
             noButton = true;
         }
 
-        trueTypeWidget = new QG_TrueColorDlg(m_initial, this, noButton);
+        trueTypeWidget = new QColorDialog(m_initial, this);
         trueTypeWidget->setOption(QColorDialog::NoButtons);
 
         trueTypeWidget->setWindowFlags(Qt::Widget);
@@ -326,14 +326,12 @@ int QG_ColorDlg::validIndexColor(const QString &text)
 
     if (text == tr("BYLAYER"))
     {
-        // ###FIXME
         return 256;
     }
 
     if (text == tr("BYBLOCK"))
     {
-        // ###FIXME
-        return 257;
+        return 0;
     }
 
     for (unsigned int i = 0; i < MAX_DXF_IDX_NAME_COLOR; i++)

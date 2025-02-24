@@ -964,6 +964,11 @@ bool RS_ScriptingApi::colorDialog(int color, bool by, int &res)
     return QG_ColorDlg::getIndexColor(res, nullptr, color, by);
 }
 
+int RS_ScriptingApi::trueColorDialog(int tcolor, int color, bool by, int &tres, int &res)
+{
+    return QG_ColorDlg::getTrueColor(tres, res, nullptr, tcolor, color, by);
+}
+
 bool RS_ScriptingApi::entdel(unsigned int id)
 {
     auto& appWin = QC_ApplicationWindow::getAppWindow();

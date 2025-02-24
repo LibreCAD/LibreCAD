@@ -957,8 +957,6 @@ set(SOURCES
 		librecad/src/ui/dialogs/color/qg_colordlg.h
 		librecad/src/ui/dialogs/color/qg_colorwell.cpp
 		librecad/src/ui/dialogs/color/qg_colorwell.h
-		librecad/src/ui/dialogs/color/qg_truecolordlg.cpp
-		librecad/src/ui/dialogs/color/qg_truecolordlg.h
 		librecad/src/ui/dialogs/entity/qg_dlgmtext.cpp
 		librecad/src/ui/dialogs/entity/qg_dlgmtext.h
 		librecad/src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp

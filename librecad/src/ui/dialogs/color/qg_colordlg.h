@@ -9,10 +9,10 @@
 #include <QPushButton>
 #include <QDialogButtonBox>
 #include <QColor>
+#include <QColorDialog>
 #include <QCloseEvent>
 
 #include "qg_colorwell.h"
-#include "qg_truecolordlg.h"
 
 class QG_ColorDlgOptions
 {
@@ -51,9 +51,29 @@ public:
             return false;
     }
 
-    static QColor getTrueTypeColor(QWidget *parent = nullptr, QColor initial=QColor(Qt::white), bool buttons=true)
+    static int getTrueColor(int &tresult, int &result, QWidget *parent = nullptr, int tinitial=-1, int initial=-1, bool buttons=true)
     {
-        QColor color = QG_TrueColorDlg::getColor(initial, parent, "", buttons);
+        int opt = 0;
+        opt |= QG_ColorDlgOptions::tab;
+
+        if(!buttons)
+        {
+            opt |= QG_ColorDlgOptions::NoButton;
+        }
+
+        QG_ColorDlg dlg(parent, opt, initial);
+        if (dlg.exec())
+        {
+            result = dlg.getIndex();
+            return 1;
+        }
+        else
+            return 0;
+    }
+
+    static QColor getTrueTypeColor(QWidget *parent = nullptr, QColor initial=QColor(Qt::white))
+    {
+        QColor color = QColorDialog::getColor(initial, parent, "");
         return color;
     }
 
