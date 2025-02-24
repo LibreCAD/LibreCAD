@@ -25,22 +25,30 @@
 **********************************************************************/
 
 #include <cmath>
-#include "rs_arc.h"
 
-#include "rs_line.h"
-#include "rs_linetypepattern.h"
-#include "rs_information.h"
-#include "rs_math.h"
-#include "rs_graphicview.h"
-#include "rs_painter.h"
 #include "lc_quadratic.h"
-#include "rs_painterqt.h"
-#include "rs_debug.h"
 #include "lc_rect.h"
+#include "lc_splinepoints.h"
+#include "rs_arc.h"
+#include "rs_debug.h"
+#include "rs_graphicview.h"
+#include "rs_information.h"
+#include "rs_line.h"
+#include "rs_math.h"
+#include "rs_painter.h"
+#include "rs_painterqt.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
+
+namespace {
+// Issue #2035 : arc render precision
+// tiny arcs: arc with angular length smaller than this cutoff will be rendered as a lc_splinepoints
+constexpr double g_tinyArcAngle = 1e-2;
+// number of points used to render the arc as a lc_splinepoints
+constexpr int g_tinyArcPoints = 6;
+}
 
 RS_ArcData::RS_ArcData(const RS_Vector& _center,
 					   double _radius,
@@ -895,7 +903,8 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
 /** find the visible part of the arc, and call drawVisible() to draw */
 void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
                   double& patternOffset) {
-	if (!( painter && view)) return;
+    if (painter == nullptr || view == nullptr)
+        return;
 
     //only draw the visible portion of line
     RS_Vector vpMin(view->toGraph(0,view->getHeight()));
@@ -925,14 +934,16 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 			auto ap1=getTangentDirection(vp).angle();
 			auto ap2=line.getTangentDirection(vp).angle();
             //ignore tangent points, because the arc doesn't cross over
-            if( fabs( remainder(ap2 - ap1, M_PI) ) < RS_TOLERANCE_ANGLE) continue;
-            crossPoints.push_back(
-                        RS_Math::getAngleDifference(baseAngle, getCenter().angleTo(vp))
-                        );
+            if (std::abs(std::remainder(ap2 - ap1, M_PI) ) >= RS_TOLERANCE_ANGLE)
+                crossPoints.push_back(
+                    RS_Math::getAngleDifference(baseAngle, getCenter().angleTo(vp))
+                    );
         }
     }
-    if(vpStart.isInWindowOrdered(vpMin, vpMax)) crossPoints.push_back(0.);
-    if(vpEnd.isInWindowOrdered(vpMin, vpMax)) crossPoints.push_back(getAngleLength());
+    if (vpStart.isInWindowOrdered(vpMin, vpMax))
+        crossPoints.push_back(0.);
+    if (vpEnd.isInWindowOrdered(vpMin, vpMax))
+        crossPoints.push_back(getAngleLength());
 
     //sorting
     std::sort(crossPoints.begin(),crossPoints.end());
@@ -962,13 +973,23 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
     // Adjust dash offset
     updateDashOffset(*painter, *view, patternOffset);
 
-    RS_Vector cp=view->toGui(getCenter());
-    double ra=getRadius()*view->getFactor().x;
-
-    painter->drawArc(cp,
-                     ra,
-                     getAngle1(), getAngle2(),
-                     isReversed());
+    const double angularLength = RS_Math::getAngleDifference(getAngle1(), getAngle2());
+    if (angularLength <= RS_TOLERANCE_ANGLE || angularLength >= g_tinyArcAngle) {
+        painter->drawArc(view->toGui(getCenter()),
+                         view->toGuiDX(getRadius()),
+                         getAngle1(),
+                         getAngle2(),
+                         isReversed());
+    } else {
+        // Issue #2035: when zoomed in, the QPainter arc rendering is not precise enough
+        // The fix: render a tiny arc (angular length cutoff: g_tinyArcAngle) as lc_splinepoints
+        LC_SplinePointsData data;
+        for (int i = 0; i <= g_tinyArcPoints; ++i) {
+            const double angle = (getAngle1() * i  + getAngle2() * (g_tinyArcPoints - i))/g_tinyArcPoints;
+            data.controlPoints.push_back(view->toGui(getCenter() + RS_Vector{angle} * getRadius()));
+        }
+        painter->drawSplinePoints(data);
+    }
 }
 
 
