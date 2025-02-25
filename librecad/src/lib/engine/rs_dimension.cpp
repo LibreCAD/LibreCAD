@@ -458,11 +458,12 @@ void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
     double distance = p1.distanceTo(p2);
     // arrow size:
     double arrowSize = getArrowSize()*dimscale;
-    const bool showArrow = arrowSize >= 1e-6 * p1.distanceTo(p2);
 
     // do we have to put the arrows outside of the line?
     bool outsideArrows = (distance<arrowSize*2.5);
 
+    // arrow angles:
+    double arrowAngle1, arrowAngle2;
 
     RS_Pen pen(getDimensionLineColor(),
            getDimensionLineWidth(),
@@ -475,8 +476,8 @@ void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
     addEntity(dimensionLine);
 
     // Text label:
-    RS_MTextData textData{};
-    RS_Vector textPos{};
+    RS_MTextData textData;
+    RS_Vector textPos;
     double dimAngle1 = dimensionLine->getAngle1();
     bool corrected = false;
     double textAngle = RS_Math::makeAngleReadable(dimAngle1, true, &corrected);
@@ -515,8 +516,9 @@ void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
     text->setLayer(nullptr);
 
     // move text to the side:
+    RS_Vector distH;
     if (text->getUsedTextWidth()>distance) {
-        auto distH = RS_Vector::polar(text->getUsedTextWidth()/2.0
+        distH.setPolar(text->getUsedTextWidth()/2.0
                        +distance/2.0+dimgap, textAngle);
         text->move(distH);
     }
@@ -524,10 +526,12 @@ void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
     addEntity(text);
 
     // add arrows
-    // arrow angles:
-    double arrowAngle1 = outsideArrows ? dimensionLine->getAngle1() : dimensionLine->getAngle2();
-    double arrowAngle2 = outsideArrows ? dimensionLine->getAngle2() : dimensionLine->getAngle1();
-    if (!outsideArrows && showArrow)  {
+    if (outsideArrows==false) {
+        arrowAngle1 = dimensionLine->getAngle2();
+        arrowAngle2 = dimensionLine->getAngle1();
+    } else {
+        arrowAngle1 = dimensionLine->getAngle1();
+        arrowAngle2 = dimensionLine->getAngle2();
 
         // extend dimension line outside arrows
         RS_Vector dir = RS_Vector::polar(arrowSize*2, arrowAngle2);
@@ -538,11 +542,12 @@ void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
     if(dimtsz < 0.01) {
         //display arrow
         // Arrows:
-        RS_SolidData sd{};
+        RS_SolidData sd;
+        RS_Solid* arrow;
 
-        if (arrow1 && showArrow) {
+        if (arrow1) {
             // arrow 1
-            auto arrow = new RS_Solid(this, sd);
+            arrow = new RS_Solid(this, sd);
             arrow->shapeArrow(p1,
                               arrowAngle1,
                               arrowSize);
@@ -551,9 +556,9 @@ void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
             addEntity(arrow);
         }
 
-        if (arrow2 && showArrow) {
+        if (arrow2) {
             // arrow 2:
-            auto arrow = new RS_Solid(this, sd);
+            arrow = new RS_Solid(this, sd);
             arrow->shapeArrow(p2,
                               arrowAngle2,
                               arrowSize);
@@ -565,11 +570,12 @@ void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
         //display ticks
         // Arrows:
 
+        RS_Line* tick;
         RS_Vector tickVector = RS_Vector::polar(dimtsz,arrowAngle1 + M_PI*0.25); //tick is 45 degree away
 
         if (arrow1) {
             // tick 1
-            auto tick = new RS_Line(this, p1-tickVector, p1+tickVector);
+            tick = new RS_Line(this, p1-tickVector, p1+tickVector);
             tick->setPen(pen);
             tick->setLayer(nullptr);
             addEntity(tick);
@@ -577,7 +583,7 @@ void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
 
         if (arrow2) {
             // tick 2:
-            auto tick = new RS_Line(this, p2-tickVector, p2+tickVector);
+            tick = new RS_Line(this, p2-tickVector, p2+tickVector);
             tick->setPen(pen);
             tick->setLayer(nullptr);
             addEntity(tick);
