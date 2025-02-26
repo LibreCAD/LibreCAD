@@ -521,6 +521,81 @@ BUILTIN("acad_colordlg")
                                         result) ? lcl::integer(result) : lcl::nilValue();
 }
 
+BUILTIN("acad_truecolordlg")
+{
+    int args = CHECK_ARGS_BETWEEN(1, 3);
+    int tcolor = -1, color = -1, tbycolor = -1, bycolor = -1;
+    bool allowbylayer = true;
+    ARG(lclSequence, seq);
+
+    if(!seq->isDotted())
+        return lcl::nilValue();
+
+    const lclInteger* gc = DYNAMIC_CAST(lclInteger, seq->item(0));
+    const lclInteger* c = DYNAMIC_CAST(lclInteger, seq->item(2));
+
+    if(gc->value() == 52)
+        color = c->value();
+
+    if(gc->value() == 420)
+        tcolor = c->value();
+
+    if (args >= 2 && NIL_PTR)
+    {
+        allowbylayer = false;
+    }
+
+    if (args == 3)
+    {
+        ARG(lclSequence, byColor);
+        const lclInteger* bygc = DYNAMIC_CAST(lclInteger, byColor->item(0));
+        const lclInteger* byc = DYNAMIC_CAST(lclInteger, byColor->item(2));
+
+        if(bygc->value() == 52)
+            bycolor = byc->value();
+
+        if(byc->value() == 420)
+            tbycolor = byc->value();
+    }
+
+    int result, tresult;
+    bool take = RS_SCRIPTINGAPI->trueColorDialog(tresult,
+                                                 result,
+                                                 tcolor,
+                                                 color,
+                                                 allowbylayer,
+                                                 tbycolor,
+                                                 bycolor
+                                                 );
+
+    if (take)
+    {
+        lclValueVec* list = new lclValueVec(0);
+
+        if (result != -1)
+        {
+            lclValueVec* dotted = new lclValueVec(3);
+            dotted->at(0) = new lclInteger(52);
+            dotted->at(1) = new lclSymbol(".");
+            dotted->at(2) = new lclInteger(result);
+            list->push_back(new lclList(dotted));
+        }
+
+        if (tresult != -1)
+        {
+            lclValueVec* tdotted = new lclValueVec(3);
+            tdotted->at(0) = new lclInteger(420);
+            tdotted->at(1) = new lclSymbol(".");
+            tdotted->at(2) = new lclInteger(tresult);
+            list->push_back(new lclList(tdotted));
+        }
+
+        return lcl::list(list);
+    }
+
+    return lcl::nilValue();
+}
+
 BUILTIN("action_tile") {
     CHECK_ARGS_IS(2);
     ARG(lclString, id);

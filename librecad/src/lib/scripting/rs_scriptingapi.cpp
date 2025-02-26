@@ -964,9 +964,9 @@ bool RS_ScriptingApi::colorDialog(int color, bool by, int &res)
     return QG_ColorDlg::getIndexColor(res, nullptr, color, by);
 }
 
-int RS_ScriptingApi::trueColorDialog(int tcolor, int color, bool by, int &tres, int &res)
+bool RS_ScriptingApi::trueColorDialog(int &tres, int &res, int tcolor, int color, bool by, int tbycolor, int bycolor)
 {
-    return QG_ColorDlg::getTrueColor(tres, res, nullptr, tcolor, color, by);
+    return QG_ColorDlg::getTrueColor(tres, res, nullptr, tcolor, color, by, tbycolor, bycolor);
 }
 
 bool RS_ScriptingApi::entdel(unsigned int id)

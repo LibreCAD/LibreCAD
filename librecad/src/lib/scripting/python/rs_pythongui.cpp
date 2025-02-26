@@ -61,6 +61,79 @@ PyObject* RS_PythonGui::acadColorDlg(int color, bool by)
                                         result) ? Py_BuildValue("i", result) : Py_None;
 }
 
+PyObject *acadTrueColorDlg(PyObject *color, bool allowbylayer, PyObject *byColor)
+{
+    if (color == Py_None)
+    {
+        Py_RETURN_NONE;
+    }
+
+    int tcolor = -1, icolor = -1, tbycolor = -1, bycolor = -1;
+
+    int gc, col, result, tresult;;
+
+    if (!PyArg_ParseTuple(color, "ii", &gc, &col)) {
+        Py_RETURN_NONE;
+    }
+
+    if(gc == 52)
+    {
+        icolor = col;
+    }
+
+    if(gc == 402)
+    {
+        tcolor = col;
+    }
+
+    if (byColor != Py_None)
+    {
+        if (!PyArg_ParseTuple(byColor, "ii", &gc, &col)) {
+            Py_RETURN_NONE;
+        }
+
+        if(gc == 52)
+        {
+            bycolor = col;
+        }
+
+        if(gc == 402)
+        {
+            tbycolor = col;
+        }
+    }
+
+    bool take = RS_SCRIPTINGAPI->trueColorDialog(tresult,
+                                                 result,
+                                                 tcolor,
+                                                 icolor,
+                                                 allowbylayer,
+                                                 tbycolor,
+                                                 bycolor
+                                                 );
+
+    if (take)
+    {
+        if (tresult != -1 && result != -1)
+        {
+            Py_BuildValue("((ii)(ii))", 52, result, 402, tresult);
+        }
+
+
+        else if (result != -1)
+        {
+            Py_BuildValue("((ii))", 52, result);
+        }
+
+        else if (tresult != -1)
+        {
+            Py_BuildValue("((ii))", 402, tresult);
+        }
+    }
+
+    Py_RETURN_NONE;
+}
+
 PyObject* RS_PythonGui::getString(bool cr, const char *prompt) const
 {
     std::string result;

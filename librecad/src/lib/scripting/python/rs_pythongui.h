@@ -54,6 +54,7 @@ public:
     RS_Vector getCorner(const char *prompt = "", const RS_Vector &basePoint=RS_Vector()) const;
 
     PyObject *acadColorDlg(int color=0, bool by=true);
+    PyObject *acadTrueColorDlg(PyObject *color=Py_None, bool allowbylayer=true, PyObject *byColor=Py_None);
     PyObject *getDist(const char *prompt = "", const RS_Vector &basePoint=RS_Vector()) const;
     PyObject *getFiled(const char *title = "", const char *def = "", const char *ext = "", int flags=0);
     PyObject *getOrient(const char *prompt = "", const RS_Vector &basePoint=RS_Vector()) const;

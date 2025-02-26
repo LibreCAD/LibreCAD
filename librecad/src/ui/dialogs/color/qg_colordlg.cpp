@@ -1,4 +1,5 @@
 #include "qg_colordlg.h"
+#include "rs_filterdxfrw.h"
 
 #include <QVBoxLayout>
 #include <QLabel>
@@ -102,12 +103,6 @@ QG_ColorDlg::QG_ColorDlg(QWidget *parent, int options, int initial, const QColor
     if (QG_ColorDlgOptions::TrueType & m_options)
     {
         mode = 2;
-        bool noButton = false;
-        if (!(QG_ColorDlgOptions::NoButton & m_options))
-        {
-            noButton = true;
-        }
-
         trueTypeWidget = new QColorDialog(m_initial, this);
         trueTypeWidget->setOption(QColorDialog::NoButtons);
 
@@ -133,6 +128,11 @@ QG_ColorDlg::QG_ColorDlg(QWidget *parent, int options, int initial, const QColor
         tabWidget->addTab(trueTypeWidget, tr("True Color"));
 
         connect(tabWidget, &QTabWidget::currentChanged, this, &QG_ColorDlg::currentTabChanged);
+
+        if (m_initial != QColor())
+        {
+            tabWidget->setCurrentIndex(1);
+        }
 
         mainLayout->addWidget(tabWidget);
     }
@@ -199,7 +199,9 @@ void QG_ColorDlg::accept()
         }
         else
         {
+            RS_Color color(m_qcolor);
             m_qcolor = trueTypeWidget->selectedColor();
+            RS_FilterDXFRW::colorToNumber(color, &index);
         }
         QDialog::accept();
     }
@@ -257,7 +259,7 @@ void QG_ColorDlg::colorButtonChanged(int color)
     else {}
 }
 
-void QG_ColorDlg::currentTabChanged(int index)
+void QG_ColorDlg::currentTabChanged(int /*index*/)
 {
 #if 0
     //resize();
@@ -283,18 +285,37 @@ void QG_ColorDlg::setIndex(int color)
 {
     if (m_options & QG_ColorDlgOptions::DXFIndex)
     {
-        RS_DXFColor c(color);
+        if (color == 256)
+        {
+            indexLabel->setText(tr("Index color: ") + "256");
+            edit->setText(tr("BYLAYER"));
+            rgbNumLabel->setText("");
+            colorButton->setColor(7);
+        }
 
-        indexLabel->setText(tr("Index color: ") + QString::number(c.color()));
-        edit->setText(tr(c.getName()));
+        if (color == 0)
+        {
+            indexLabel->setText(tr("Index color: ") + "0");
+            edit->setText(tr("BYBLOCK"));
+            rgbNumLabel->setText("");
+            colorButton->setColor(7);
+        }
+        else
+        {
+            RS_DXFColor c(color);
 
-        rgbNumLabel->setText(QString::number(c.r())
-                             + ", "
-                             + QString::number(c.g())
-                             + ", "
-                             + QString::number(c.b())
-                             );
-        colorButton->setColor(color);
+            indexLabel->setText(tr("Index color: ") + QString::number(c.color()));
+            edit->setText(tr(c.getName()));
+
+            rgbNumLabel->setText(QString::number(c.r())
+                                 + ", "
+                                 + QString::number(c.g())
+                                 + ", "
+                                 + QString::number(c.b())
+                                 );
+            colorButton->setColor(color);
+        }
+
         index = color;
     }
 }

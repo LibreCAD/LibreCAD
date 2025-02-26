@@ -3,7 +3,7 @@
 
 #include <QColor>
 
-#define MAX_DXF_IDX_COLOR 257
+#define MAX_DXF_IDX_COLOR 256
 #define MAX_DXF_IDX_NAME_COLOR 10
 #define MAX_SHADE_COLOR 6
 #define MAX_NAME_COLOR 10
@@ -17,7 +17,7 @@ typedef struct dxfrgb {
 class RS_DXFColor
 {
 public:
-    RS_DXFColor(int col = 255) : m_color( (col >= 0 && col < 256) ? col : 255 ) { }
+    RS_DXFColor(int col = 255) : m_color( (col >= 0 && col < MAX_DXF_IDX_COLOR) ? col : 255 ) { }
     void setColor(int color) { m_color = color; }
 
     bool hasName()
@@ -397,8 +397,7 @@ private:
         { 80,  80,  80,  },
         { 105, 105, 105, },
         { 130, 130, 130, },
-        { 190, 190, 190, },
-        { 255, 255, 255, }
+        { 190, 190, 190, }
     };
 
     static constexpr int solidPal[120]

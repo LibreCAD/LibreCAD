@@ -12,6 +12,7 @@
 #include <QColorDialog>
 #include <QCloseEvent>
 
+#include "rs_color.h"
 #include "qg_colorwell.h"
 
 class QG_ColorDlgOptions
@@ -20,7 +21,7 @@ public:
     static const int NoButton = 2;
     static const int DXFIndex = 4;
     static const int TrueType = 8;
-    static const int tab = 4|8;
+    static const int Tab = 4|8;
 };
 
 class QG_ColorDlg : public QDialog
@@ -28,7 +29,7 @@ class QG_ColorDlg : public QDialog
     Q_OBJECT
 
 public:
-    QG_ColorDlg(QWidget *parent = nullptr, int options = QG_ColorDlgOptions::tab, int initial=7, const QColor qinitial=QColor(Qt::white));
+    QG_ColorDlg(QWidget *parent = nullptr, int options = QG_ColorDlgOptions::Tab, int initial=7, const QColor qinitial=QColor());
     ~QG_ColorDlg();
 
     static bool getIndexColor(int &result, QWidget *parent = nullptr, int initial=7, bool buttons=true)
@@ -51,24 +52,36 @@ public:
             return false;
     }
 
-    static int getTrueColor(int &tresult, int &result, QWidget *parent = nullptr, int tinitial=-1, int initial=-1, bool buttons=true)
+    static bool getTrueColor(int &tresult, int &result, QWidget *parent = nullptr, int tinitial=-1, int initial=-1, bool buttons=true, int tbyinitial=-1, int byinitial=-1)
     {
         int opt = 0;
-        opt |= QG_ColorDlgOptions::tab;
+        opt |= QG_ColorDlgOptions::Tab;
 
         if(!buttons)
         {
             opt |= QG_ColorDlgOptions::NoButton;
         }
 
-        QG_ColorDlg dlg(parent, opt, initial);
+        QG_ColorDlg dlg(parent, opt, initial, tinitial > -1 ? QColor(tinitial >> 16, tinitial >> 8 & 0xFF, tinitial & 0xFF) : QColor());
         if (dlg.exec())
         {
+            tresult = dlg.getTrueType().rgb();
             result = dlg.getIndex();
-            return 1;
+
+            if (byinitial != -1 && (dlg.getIndex() == 0 || dlg.getIndex() == 256))
+            {
+                result = byinitial;
+            }
+
+            if (tbyinitial != -1 && (dlg.getIndex() == 0 || dlg.getIndex() == 256))
+            {
+                tresult = tbyinitial;
+            }
+
+            return true;
         }
         else
-            return 0;
+            return false;
     }
 
     static QColor getTrueTypeColor(QWidget *parent = nullptr, QColor initial=QColor(Qt::white))
@@ -80,7 +93,7 @@ public:
     static QColor getColor(QWidget *parent = nullptr, QColor initial=QColor(Qt::white), bool buttons=true)
     {
         int opt = 0;
-        opt |= QG_ColorDlgOptions::tab;
+        opt |= QG_ColorDlgOptions::Tab;
 
         if(!buttons)
         {
