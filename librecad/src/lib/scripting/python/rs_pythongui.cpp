@@ -61,7 +61,7 @@ PyObject* RS_PythonGui::acadColorDlg(int color, bool by)
                                         result) ? Py_BuildValue("i", result) : Py_None;
 }
 
-PyObject *acadTrueColorDlg(PyObject *color, bool allowbylayer, PyObject *byColor)
+PyObject* RS_PythonGui::acadTrueColorDlg(PyObject *color, bool allowbylayer, PyObject *byColor)
 {
     if (color == Py_None)
     {

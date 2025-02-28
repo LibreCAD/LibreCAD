@@ -1329,56 +1329,106 @@ BUILTIN("entget")
                     case RS2::EntityPolyline:
                     {
                         RS_Polyline* pl = (RS_Polyline*)e;
-
-                        lclValueVec *name = new lclValueVec(3);
-                        name->at(0) = lcl::integer(0);
-                        name->at(1) = lcl::symbol(".");
-                        name->at(2) = lcl::string("LWPOLYLINE");
-                        entity->insert(entity->begin(), lcl::list(name));
-                        entity->insert(entity->begin(), lcl::list(ename));
-
-                        lclValueVec *acdbL = new lclValueVec(3);
-                        acdbL->at(0) = lcl::integer(100);
-                        acdbL->at(1) = lcl::symbol(".");
-                        acdbL->at(2) = lcl::string("AcDbPolyline");
-                        entity->push_back(lcl::list(acdbL));
+                        bool is3d = false;
 
                         for (auto &v : pl->getRefPoints())
                         {
-                            lclValueVec *pnt = new lclValueVec(3);
-                            pnt->at(0) = lcl::integer(10);
-                            pnt->at(1) = lcl::ldouble(v.x);
-                            pnt->at(2) = lcl::ldouble(v.y);
-                            entity->push_back(lcl::list(pnt));
-
-                            lclValueVec *startWidth = new lclValueVec(3);
-                            startWidth->at(0) = lcl::integer(40);
-                            startWidth->at(1) = lcl::symbol(".");
-                            startWidth->at(2) = lcl::ldouble(0.0);
-                            entity->push_back(lcl::list(startWidth));
-
-                            lclValueVec *endWidth = new lclValueVec(3);
-                            endWidth->at(0) = lcl::integer(41);
-                            endWidth->at(1) = lcl::symbol(".");
-                            endWidth->at(2) = lcl::ldouble(0.0);
-                            entity->push_back(lcl::list(endWidth));
-
-                            lclValueVec *bulgeWidth = new lclValueVec(3);
-                            bulgeWidth->at(0) = lcl::integer(42);
-                            bulgeWidth->at(1) = lcl::symbol(".");
-                            bulgeWidth->at(2) = lcl::ldouble(0.0);
-                            entity->push_back(lcl::list(bulgeWidth));
+                            if(v.z != 0.0)
+                            {
+                                is3d = true;
+                                break;
+                            }
                         }
 
-                        entity->push_back(lcl::list(extrDir));
+                        if (is3d)
+                        {
+                            lclValueVec *name = new lclValueVec(3);
+                            name->at(0) = lcl::integer(0);
+                            name->at(1) = lcl::symbol(".");
+                            name->at(2) = lcl::string("POLYLINE");
+                            entity->insert(entity->begin(), lcl::list(name));
+                            entity->insert(entity->begin(), lcl::list(ename));
 
-                        return lcl::list(entity);
+                            lclValueVec *acdbL = new lclValueVec(3);
+                            acdbL->at(0) = lcl::integer(100);
+                            acdbL->at(1) = lcl::symbol(".");
+                            acdbL->at(2) = lcl::string("AcDb3dPolyline");
+                            entity->push_back(lcl::list(acdbL));
+
+                            lclValueVec *flag = new lclValueVec(3);
+                            flag->at(0) = lcl::integer(70);
+                            flag->at(1) = lcl::symbol(".");
+                            int fl = 0;
+                            fl |= 8;
+                            if (pl->isClosed())
+                            {
+                                fl |= 1;
+                            }
+                            flag->at(2) = lcl::integer(fl);
+                            entity->push_back(lcl::list(flag));
+
+                            entity->push_back(lcl::list(extrDir));
+                        }
+                        else
+                        {
+                            lclValueVec *name = new lclValueVec(3);
+                            name->at(0) = lcl::integer(0);
+                            name->at(1) = lcl::symbol(".");
+                            name->at(2) = lcl::string("LWPOLYLINE");
+                            entity->insert(entity->begin(), lcl::list(name));
+                            entity->insert(entity->begin(), lcl::list(ename));
+
+                            lclValueVec *acdbL = new lclValueVec(3);
+                            acdbL->at(0) = lcl::integer(100);
+                            acdbL->at(1) = lcl::symbol(".");
+                            acdbL->at(2) = lcl::string("AcDbPolyline");
+                            entity->push_back(lcl::list(acdbL));
+
+                            for (auto &v : pl->getRefPoints())
+                            {
+                                lclValueVec *pnt = new lclValueVec(3);
+                                pnt->at(0) = lcl::integer(10);
+                                pnt->at(1) = lcl::ldouble(v.x);
+                                pnt->at(2) = lcl::ldouble(v.y);
+                                entity->push_back(lcl::list(pnt));
+
+                                lclValueVec *startWidth = new lclValueVec(3);
+                                startWidth->at(0) = lcl::integer(40);
+                                startWidth->at(1) = lcl::symbol(".");
+                                startWidth->at(2) = lcl::ldouble(0.0);
+                                entity->push_back(lcl::list(startWidth));
+
+                                lclValueVec *endWidth = new lclValueVec(3);
+                                endWidth->at(0) = lcl::integer(41);
+                                endWidth->at(1) = lcl::symbol(".");
+                                endWidth->at(2) = lcl::ldouble(0.0);
+                                entity->push_back(lcl::list(endWidth));
+
+                                lclValueVec *bulgeWidth = new lclValueVec(3);
+                                bulgeWidth->at(0) = lcl::integer(42);
+                                bulgeWidth->at(1) = lcl::symbol(".");
+                                bulgeWidth->at(2) = lcl::ldouble(0.0);
+                                entity->push_back(lcl::list(bulgeWidth));
+                            }
+
+                            if (pl->isClosed())
+                            {
+                                lclValueVec *flag = new lclValueVec(3);
+                                flag->at(0) = lcl::integer(70);
+                                flag->at(1) = lcl::symbol(".");
+                                flag->at(2) = lcl::integer(1);
+                                entity->push_back(lcl::list(flag));
+                            }
+
+                            entity->push_back(lcl::list(extrDir));
+
+                            return lcl::list(entity);
+                        }
                     }
                         break;
 
                     case RS2::EntityArc:
                     {
-
                         RS_Arc* a = (RS_Arc*)e;
 #if 0
                         a->getStartpoint();
@@ -1518,6 +1568,8 @@ BUILTIN("entget")
 
                     case RS2::EntityDimAligned:
                     {
+                        RS_DimAligned* dal = (RS_DimAligned*)e;
+
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
@@ -1531,19 +1583,56 @@ BUILTIN("entget")
                         acdbL->at(2) = lcl::string("AcDbAlignedDimension");
                         entity->push_back(lcl::list(acdbL));
 
+                        lclValueVec *insertpnt = new lclValueVec(4);
+                        insertpnt->at(0) = lcl::integer(10);
+                        insertpnt->at(1) = lcl::ldouble(dal->getDefinitionPoint().x);
+                        insertpnt->at(2) = lcl::ldouble(dal->getDefinitionPoint().y);
+                        insertpnt->at(3) = lcl::ldouble(dal->getDefinitionPoint().z);
+                        entity->push_back(lcl::list(insertpnt));
+
+                        lclValueVec *midpnt = new lclValueVec(4);
+                        midpnt->at(0) = lcl::integer(11);
+                        midpnt->at(1) = lcl::ldouble(dal->getMiddleOfText().x);
+                        midpnt->at(2) = lcl::ldouble(dal->getMiddleOfText().y);
+                        midpnt->at(3) = lcl::ldouble(dal->getMiddleOfText().z);
+                        entity->push_back(lcl::list(midpnt));
+
+                        lclValueVec *defpnt1 = new lclValueVec(4);
+                        defpnt1->at(0) = lcl::integer(13);
+                        defpnt1->at(1) = lcl::ldouble(dal->getExtensionPoint1().x);
+                        defpnt1->at(2) = lcl::ldouble(dal->getExtensionPoint1().y);
+                        defpnt1->at(3) = lcl::ldouble(dal->getExtensionPoint1().z);
+                        entity->push_back(lcl::list(defpnt1));
+
+                        lclValueVec *defpnt2 = new lclValueVec(4);
+                        defpnt2->at(0) = lcl::integer(14);
+                        defpnt2->at(1) = lcl::ldouble(dal->getExtensionPoint2().x);
+                        defpnt2->at(2) = lcl::ldouble(dal->getExtensionPoint2().y);
+                        defpnt2->at(3) = lcl::ldouble(dal->getExtensionPoint2().z);
+                        entity->push_back(lcl::list(defpnt2));
+
+                        lclValueVec *linespace = new lclValueVec(3);
+                        linespace->at(0) = lcl::integer(41);
+                        linespace->at(1) = lcl::symbol(".");
+                        linespace->at(2) = lcl::ldouble(dal->getLineSpacingFactor());
+                        entity->push_back(lcl::list(linespace));
+
+
 #if 0
-                        RS_DimAligned* dal = (RS_DimAligned*)e;
                         dal->getDefinitionPoint();
                         dal->getExtensionPoint1();
                         dal->getExtensionPoint2();
                         dal->getText().toLatin1().data();
                         dal->getLabel().toLatin1().data();
 #endif
+
                     }
                         break;
 
                     case RS2::EntityDimAngular:
                     {
+                        RS_DimAngular* da = (RS_DimAngular*)e;
+
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
@@ -1556,12 +1645,56 @@ BUILTIN("entget")
                         acdbL->at(1) = lcl::symbol(".");
                         acdbL->at(2) = lcl::string("AcDb3PointAngularDimension");
                         entity->push_back(lcl::list(acdbL));
-#if 0
-                        RS_DimAngular* da = (RS_DimAngular*)e;
 
-                        da->getDefinitionPoint();
-                        da->getExtensionPoint1();
-                        da->getExtensionPoint2();
+                        lclValueVec *insertpnt = new lclValueVec(4);
+                        insertpnt->at(0) = lcl::integer(10);
+                        insertpnt->at(1) = lcl::ldouble(da->getDefinitionPoint().x);
+                        insertpnt->at(2) = lcl::ldouble(da->getDefinitionPoint().y);
+                        insertpnt->at(3) = lcl::ldouble(da->getDefinitionPoint().z);
+                        entity->push_back(lcl::list(insertpnt));
+
+                        lclValueVec *midpnt = new lclValueVec(4);
+                        midpnt->at(0) = lcl::integer(11);
+                        midpnt->at(1) = lcl::ldouble(da->getMiddleOfText().x);
+                        midpnt->at(2) = lcl::ldouble(da->getMiddleOfText().y);
+                        midpnt->at(3) = lcl::ldouble(da->getMiddleOfText().z);
+                        entity->push_back(lcl::list(midpnt));
+
+                        lclValueVec *defpnt1 = new lclValueVec(4);
+                        defpnt1->at(0) = lcl::integer(13);
+                        defpnt1->at(1) = lcl::ldouble(da->getDefinitionPoint1().x);
+                        defpnt1->at(2) = lcl::ldouble(da->getDefinitionPoint1().y);
+                        defpnt1->at(3) = lcl::ldouble(da->getDefinitionPoint1().z);
+                        entity->push_back(lcl::list(defpnt1));
+
+                        lclValueVec *defpnt2 = new lclValueVec(4);
+                        defpnt2->at(0) = lcl::integer(14);
+                        defpnt2->at(1) = lcl::ldouble(da->getDefinitionPoint2().x);
+                        defpnt2->at(2) = lcl::ldouble(da->getDefinitionPoint2().y);
+                        defpnt2->at(3) = lcl::ldouble(da->getDefinitionPoint2().z);
+                        entity->push_back(lcl::list(defpnt2));
+
+                        lclValueVec *defpnt3 = new lclValueVec(4);
+                        defpnt3->at(0) = lcl::integer(13);
+                        defpnt3->at(1) = lcl::ldouble(da->getDefinitionPoint3().x);
+                        defpnt3->at(2) = lcl::ldouble(da->getDefinitionPoint3().y);
+                        defpnt3->at(3) = lcl::ldouble(da->getDefinitionPoint3().z);
+                        entity->push_back(lcl::list(defpnt3));
+
+                        lclValueVec *defpnt4 = new lclValueVec(4);
+                        defpnt4->at(0) = lcl::integer(14);
+                        defpnt4->at(1) = lcl::ldouble(da->getDefinitionPoint4().x);
+                        defpnt4->at(2) = lcl::ldouble(da->getDefinitionPoint4().y);
+                        defpnt4->at(3) = lcl::ldouble(da->getDefinitionPoint4().z);
+                        entity->push_back(lcl::list(defpnt4));
+
+                        lclValueVec *linespace = new lclValueVec(3);
+                        linespace->at(0) = lcl::integer(41);
+                        linespace->at(1) = lcl::symbol(".");
+                        linespace->at(2) = lcl::ldouble(da->getLineSpacingFactor());
+                        entity->push_back(lcl::list(linespace));
+
+#if 0
                         da->getText().toLatin1().data();
                         da->getLabel().toLatin1().data();
 #endif
@@ -1570,6 +1703,8 @@ BUILTIN("entget")
 
                     case RS2::EntityDimLinear:
                     {
+                        RS_DimLinear* d = (RS_DimLinear*)e;
+
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
@@ -1582,11 +1717,49 @@ BUILTIN("entget")
                         acdbL->at(1) = lcl::symbol(".");
                         acdbL->at(2) = lcl::string("AcDbAlignedDimension");
                         entity->push_back(lcl::list(acdbL));
+
+                        lclValueVec *insertpnt = new lclValueVec(4);
+                        insertpnt->at(0) = lcl::integer(10);
+                        insertpnt->at(1) = lcl::ldouble(d->getDefinitionPoint().x);
+                        insertpnt->at(2) = lcl::ldouble(d->getDefinitionPoint().y);
+                        insertpnt->at(3) = lcl::ldouble(d->getDefinitionPoint().z);
+                        entity->push_back(lcl::list(insertpnt));
+
+                        lclValueVec *midpnt = new lclValueVec(4);
+                        midpnt->at(0) = lcl::integer(11);
+                        midpnt->at(1) = lcl::ldouble(d->getMiddleOfText().x);
+                        midpnt->at(2) = lcl::ldouble(d->getMiddleOfText().y);
+                        midpnt->at(3) = lcl::ldouble(d->getMiddleOfText().z);
+                        entity->push_back(lcl::list(midpnt));
+
+                        lclValueVec *defpnt1 = new lclValueVec(4);
+                        defpnt1->at(0) = lcl::integer(13);
+                        defpnt1->at(1) = lcl::ldouble(d->getExtensionPoint1().x);
+                        defpnt1->at(2) = lcl::ldouble(d->getExtensionPoint1().y);
+                        defpnt1->at(3) = lcl::ldouble(d->getExtensionPoint1().z);
+                        entity->push_back(lcl::list(defpnt1));
+
+                        lclValueVec *defpnt2 = new lclValueVec(4);
+                        defpnt2->at(0) = lcl::integer(14);
+                        defpnt2->at(1) = lcl::ldouble(d->getExtensionPoint2().x);
+                        defpnt2->at(2) = lcl::ldouble(d->getExtensionPoint2().y);
+                        defpnt2->at(3) = lcl::ldouble(d->getExtensionPoint2().z);
+                        entity->push_back(lcl::list(defpnt2));
+
+                        lclValueVec *radius = new lclValueVec(3);
+                        radius->at(0) = lcl::integer(50);
+                        radius->at(1) = lcl::symbol(".");
+                        radius->at(2) = lcl::ldouble(d->getRadius());
+                        entity->push_back(lcl::list(radius));
+
+                        lclValueVec *linespace = new lclValueVec(3);
+                        linespace->at(0) = lcl::integer(41);
+                        linespace->at(1) = lcl::symbol(".");
+                        linespace->at(2) = lcl::ldouble(d->getLineSpacingFactor());
+                        entity->push_back(lcl::list(linespace));
+
+
 #if 0
-                        RS_DimLinear* d = (RS_DimLinear*)e;
-                        d->getDefinitionPoint();
-                        d->getExtensionPoint1();
-                        d->getExtensionPoint2();
                         d->getText().toLatin1().data();
                         d->getLabel().toLatin1().data();
 #endif
@@ -1600,6 +1773,8 @@ BUILTIN("entget")
 
                 case RS2::EntityDimRadial:
                     {
+                        RS_DimRadial* dr = (RS_DimRadial*)e;
+
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
@@ -1612,12 +1787,34 @@ BUILTIN("entget")
                         acdbL->at(1) = lcl::symbol(".");
                         acdbL->at(2) = lcl::string("AcDbRadialDimension");
                         entity->push_back(lcl::list(acdbL));
-#if 0
-                        RS_DimRadial* dr = (RS_DimRadial*)e;
 
-                        dr->getDefinitionPoint();
-                        dr->getExtensionPoint1();
-                        dr->getExtensionPoint2();
+                        lclValueVec *insertpnt = new lclValueVec(4);
+                        insertpnt->at(0) = lcl::integer(10);
+                        insertpnt->at(1) = lcl::ldouble(dr->getDefinitionPoint().x);
+                        insertpnt->at(2) = lcl::ldouble(dr->getDefinitionPoint().y);
+                        insertpnt->at(3) = lcl::ldouble(dr->getDefinitionPoint().z);
+                        entity->push_back(lcl::list(insertpnt));
+
+                        lclValueVec *midpnt = new lclValueVec(4);
+                        midpnt->at(0) = lcl::integer(11);
+                        midpnt->at(1) = lcl::ldouble(dr->getMiddleOfText().x);
+                        midpnt->at(2) = lcl::ldouble(dr->getMiddleOfText().y);
+                        midpnt->at(3) = lcl::ldouble(dr->getMiddleOfText().z);
+                        entity->push_back(lcl::list(midpnt));
+
+                        lclValueVec *radius = new lclValueVec(3);
+                        radius->at(0) = lcl::integer(40);
+                        radius->at(1) = lcl::symbol(".");
+                        radius->at(2) = lcl::ldouble(dr->getRadius());
+                        entity->push_back(lcl::list(radius));
+
+                        lclValueVec *linespace = new lclValueVec(3);
+                        linespace->at(0) = lcl::integer(41);
+                        linespace->at(1) = lcl::symbol(".");
+                        linespace->at(2) = lcl::ldouble(dr->getLineSpacingFactor());
+                        entity->push_back(lcl::list(linespace));
+
+#if 0
                         dr->getText().toLatin1().data();
                         dr->getLabel().toLatin1().data();
 #endif
@@ -1626,6 +1823,8 @@ BUILTIN("entget")
 
                     case RS2::EntityDimDiametric:
                     {
+                        RS_DimDiametric* dd = (RS_DimDiametric*)e;
+
                         lclValueVec *name = new lclValueVec(3);
                         name->at(0) = lcl::integer(0);
                         name->at(1) = lcl::symbol(".");
@@ -1638,12 +1837,33 @@ BUILTIN("entget")
                         acdbL->at(1) = lcl::symbol(".");
                         acdbL->at(2) = lcl::string("AcDbDiametricDimension");
                         entity->push_back(lcl::list(acdbL));
-#if 0
-                        RS_DimRadial* dr = (RS_DimRadial*)e;
 
-                        dr->getDefinitionPoint();
-                        dr->getExtensionPoint1();
-                        dr->getExtensionPoint2();
+                        lclValueVec *insertpnt = new lclValueVec(4);
+                        insertpnt->at(0) = lcl::integer(10);
+                        insertpnt->at(1) = lcl::ldouble(dd->getDefinitionPoint().x);
+                        insertpnt->at(2) = lcl::ldouble(dd->getDefinitionPoint().y);
+                        insertpnt->at(3) = lcl::ldouble(dd->getDefinitionPoint().z);
+                        entity->push_back(lcl::list(insertpnt));
+
+                        lclValueVec *midpnt = new lclValueVec(4);
+                        midpnt->at(0) = lcl::integer(11);
+                        midpnt->at(1) = lcl::ldouble(dd->getMiddleOfText().x);
+                        midpnt->at(2) = lcl::ldouble(dd->getMiddleOfText().y);
+                        midpnt->at(3) = lcl::ldouble(dd->getMiddleOfText().z);
+                        entity->push_back(lcl::list(midpnt));
+
+                        lclValueVec *radius = new lclValueVec(3);
+                        radius->at(0) = lcl::integer(40);
+                        radius->at(1) = lcl::symbol(".");
+                        radius->at(2) = lcl::ldouble(dd->getRadius());
+                        entity->push_back(lcl::list(radius));
+
+                        lclValueVec *linespace = new lclValueVec(3);
+                        linespace->at(0) = lcl::integer(41);
+                        linespace->at(1) = lcl::symbol(".");
+                        linespace->at(2) = lcl::ldouble(dd->getLineSpacingFactor());
+                        entity->push_back(lcl::list(linespace));
+#if 0
                         dr->getText().toLatin1().data();
                         dr->getLabel().toLatin1().data();
 #endif
