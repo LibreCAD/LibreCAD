@@ -1,0 +1,39 @@
+<RCC>
+    <qresource prefix="/colors">
+        <file>color00.png</file>
+        <file>color07.png</file>
+    </qresource>
+    <qresource prefix="/cursors">
+        <file>cur_cad_bmp.png</file>
+        <file>cur_del_bmp.png</file>
+        <file>cur_glass_bmp.png</file>
+        <file>cur_hand_bmp.png</file>
+        <file>cur_select_bmp.png</file>
+    </qresource>
+    <qresource prefix="/linetypes">
+        <file alias="linetype00.lci">linetype00.svg</file>
+        <file alias="linetype01.lci">linetype01.svg</file>
+        <file alias="linetype02.lci">linetype02.svg</file>
+        <file alias="linetype03.lci">linetype03.svg</file>
+        <file alias="linetype04.lci">linetype04.svg</file>
+        <file alias="linetype05.lci">linetype05.svg</file>
+        <file alias="linetype06.lci">linetype06.svg</file>
+        <file alias="linetype07.lci">linetype07.svg</file>
+        <file alias="width00.lci">width00.svg</file>
+        <file alias="width01.lci">width01.svg</file>
+        <file alias="width02.lci">width02.svg</file>
+        <file alias="width03.lci">width03.svg</file>
+        <file alias="width04.lci">width04.svg</file>
+        <file alias="width05.lci">width05.svg</file>
+        <file alias="width06.lci">width06.svg</file>
+        <file alias="width07.lci">width07.svg</file>
+        <file alias="width08.lci">width08.svg</file>
+        <file alias="width09.lci">width09.svg</file>
+        <file alias="width10.lci">width10.svg</file>
+        <file alias="width11.lci">width11.svg</file>
+        <file alias="width12.lci">width12.svg</file>
+    </qresource>
+    <qresource prefix="/controls">
+        <file>colorxx.png</file>
+    </qresource>
+</RCC>
