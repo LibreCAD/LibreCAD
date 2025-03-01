@@ -42,11 +42,9 @@
 #endif
 
 namespace {
-// Issue #2035 : arc render precision
-// tiny arcs: arc with angular length smaller than this cutoff will be rendered as a lc_splinepoints
-constexpr double g_tinyArcAngle = 1e-1;
-// number of points used to render the arc as a lc_splinepoints
-constexpr int g_tinyArcPoints = 15;
+// Issue #2035: if the arc radius in GUI is larger than the viewport size by this factor,
+// the arc is considered a tiny arc, and tiny arcs are rendered as spline
+constexpr int g_tinyArcRadiusFactor = 10.;
 }
 
 RS_ArcData::RS_ArcData(const RS_Vector& _center,
@@ -997,18 +995,35 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
     updateDashOffset(*painter, *view, patternOffset);
 
     const double angularLength = RS_Math::getAngleDifference(getAngle1(), getAngle2());
-    if (angularLength <= RS_TOLERANCE_ANGLE || angularLength >= g_tinyArcAngle) {
+    const double radiusGui = view->toGuiDX(getRadius());
+
+    // Issue #2035: when the arc radius is much larger than the viewport size, QPainter::arcTo()
+    // rendering precision may fail to maintain pixel-level precisions.
+    // Only call painter->drawArcEntity(), which is based on QPainter::arcTo(), if the arc center
+    // close to the viewport sizes.
+    if (int(radiusGui) <= g_tinyArcRadiusFactor * (painter->getWidth() + painter->getHeight())) {
         painter->drawArcEntity(view->toGui(getCenter()),
-                         view->toGuiDX(getRadius()),
-                         view->toGuiDX(getRadius()),
+                         radiusGui,
+                         radiusGui,
                          RS_Math::rad2deg(getAngle1()),
                          RS_Math::rad2deg(angularLength));
     } else {
-        // Issue #2035: when zoomed in, the QPainter arc rendering is not precise enough
-        // The fix: render a tiny arc (angular length cutoff: g_tinyArcAngle) as lc_splinepoints
+        // Issue #2035
+        // Estimate the rendering error by using a quadratic bezier to render an arc. The bezier
+        // curve(lc_splinepoints) is defined by a set of equidistant arc points
+        // Second order error of bezier approximation:
+        // r sin^4(dA/2)/2
+        // with the radius r, and dA as the line segment spanning angle around the arc center
+        // for maximum error up to 1 pixel: 1 > r sin^4(dA/2)/2,
+        // dA < 2 (2/r)^{1/4}
+        // The number of points needed is by angularLength/dA
+        const double dA = 2. * std::pow(2./radiusGui, 1./4.);
+        int arcPoints = int(std::ceil(angularLength/dA));
+        // At minimum control points: 4
+        arcPoints = std::max(3, arcPoints);
         std::vector<RS_Vector> uiPoints;
-        for (int i = 0; i <= g_tinyArcPoints; ++i) {
-            const double angle = (getAngle1() * i  + getAngle2() * (g_tinyArcPoints - i))/g_tinyArcPoints;
+        for (int i = 0; i <= arcPoints; ++i) {
+            const double angle = (getAngle1() * i  + getAngle2() * (arcPoints - i))/arcPoints;
             uiPoints.push_back(view->toGui(getCenter() + RS_Vector{angle} * getRadius()));
         }
         painter->drawSplinePoints(uiPoints, false);
