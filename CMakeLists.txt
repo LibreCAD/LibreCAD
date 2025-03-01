@@ -51,12 +51,14 @@ include_directories(${MIN_GW_PATH_PREFIX}\\include\\QtSvg)
 
 include_directories(${Boost_INCLUDE_DIRS})
 
-include_directories(librecad/res/actions)
-include_directories(librecad/res/extui)
+#include_directories(desktop/res_old/actions)
+#include_directories(desktop/res_old/extui)
 include_directories(librecad/res/icons)
-include_directories(librecad/res/main)
-include_directories(librecad/res/ui)
+include_directories(librecad/res/images)
+include_directories(librecad/res/controls)
+#include_directories(desktop/res_old/ui)
 include_directories(libraries/jwwlib/src)
+include_directories(libraries/lciconengine)
 include_directories(libraries/libdxfrw/src)
 include_directories(libraries/libdxfrw/src/intern)
 include_directories(libraries/muparser/include)
@@ -187,7 +189,6 @@ include_directories(librecad/src/ui/action_options/image)
 include_directories(librecad/src/ui/action_options/misc)
 include_directories(librecad/src/ui/action_options/insert)
 include_directories(librecad/src/ui/action_options/other)
-#include_directories(librecad/src/ui/not_used)
 include_directories(librecad/src/ui/actions)
 include_directories(librecad/src/ui/components)
 include_directories(librecad/src/ui/components/comboboxes)
@@ -222,13 +223,16 @@ include_directories(librecad/src/ui/dock_widgets/ucs_list)
 #include_directories(plugins/plotequation)
 #include_directories(plugins/sameprop)
 #include_directories(plugins/sample)
+#include_directories(librecad/src/ui/not_used)
 
 set(SOURCES
-        librecad/res/actions/actions.qrc
-        librecad/res/extui/extui.qrc
-        librecad/res/ui/ui.qrc
+#		desktop/res_old/actions/actions.qrc
+#        desktop/res_old/extui/extui.qrc
+#        librecad/res/ui/ui.qrc
+		librecad/res/images/images.qrc
+		librecad/res/controls/controls.qrc
         librecad/res/icons/icons.qrc
-        librecad/res/main/main.qrc
+#        librecad/res/main/main.qrc
         libraries/jwwlib/src/dl_attributes.h
         libraries/jwwlib/src/dl_codes.h
         libraries/jwwlib/src/dl_creationinterface.h
@@ -440,8 +444,6 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/text/rs_actiondrawtext.h
 		librecad/src/actions/drawing/edit/rs_actioneditcopy.cpp
 		librecad/src/actions/drawing/edit/rs_actioneditcopy.h
-		librecad/src/actions/not_used/rs_actioneditpaste.cpp
-		librecad/src/actions/not_used/rs_actioneditpaste.h
 		librecad/src/actions/drawing/edit/rs_actioneditundo.cpp
 		librecad/src/actions/drawing/edit/rs_actioneditundo.h
 		librecad/src/actions/file/rs_actionfilenew.cpp
@@ -496,8 +498,6 @@ set(SOURCES
 		librecad/src/actions/drawing/modify/rs_actionmodifydelete.h
 		librecad/src/actions/drawing/modify/rs_actionmodifydeletefree.cpp
 		librecad/src/actions/drawing/modify/rs_actionmodifydeletefree.h
-		librecad/src/actions/not_used/rs_actionmodifydeletequick.cpp
-		librecad/src/actions/not_used/rs_actionmodifydeletequick.h
 		librecad/src/actions/drawing/modify/rs_actionmodifyentity.cpp
 		librecad/src/actions/drawing/modify/rs_actionmodifyentity.h
 		librecad/src/actions/drawing/modify/rs_actionmodifyexplodetext.cpp
@@ -566,18 +566,12 @@ set(SOURCES
 		librecad/src/actions/drawing/selection/rs_actionselectwindow.h
 		librecad/src/actions/drawing/rel_zero/rs_actionsetrelativezero.cpp
 		librecad/src/actions/drawing/rel_zero/rs_actionsetrelativezero.h
-		librecad/src/actions/not_used/rs_actionsetsnapmode.cpp
-		librecad/src/actions/not_used/rs_actionsetsnapmode.h
-		librecad/src/actions/not_used/rs_actionsetsnaprestriction.cpp
-		librecad/src/actions/not_used/rs_actionsetsnaprestriction.h
 		librecad/src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp
 		librecad/src/actions/drawing/snap/rs_actionsnapintersectionmanual.h
 		librecad/src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp
 		librecad/src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.h
 		librecad/src/actions/drawing/zoom/rs_actionzoomauto.cpp
 		librecad/src/actions/drawing/zoom/rs_actionzoomauto.h
-		librecad/src/actions/not_used/rs_actionzoomautoy.cpp
-		librecad/src/actions/not_used/rs_actionzoomautoy.h
 		librecad/src/actions/drawing/zoom/rs_actionzoomin.cpp
 		librecad/src/actions/drawing/zoom/rs_actionzoomin.h
 		librecad/src/actions/drawing/zoom/rs_actionzoompan.cpp
@@ -728,9 +722,6 @@ set(SOURCES
         librecad/src/lib/fileio/rs_fileio.cpp
         librecad/src/lib/fileio/rs_fileio.h
         librecad/src/lib/filters/rs_filtercxf.cpp
-#        librecad/src/lib/filters/rs_filtercxf.h
-#        librecad/src/lib/filters/rs_filterdxf.cpp
-#        librecad/src/lib/filters/rs_filterdxf.h
         librecad/src/lib/filters/rs_filterdxf1.cpp
         librecad/src/lib/filters/rs_filterdxf1.h
         librecad/src/lib/filters/rs_filterdxfrw.cpp
@@ -795,10 +786,6 @@ set(SOURCES
         librecad/src/main/console_dxf2png.h
         librecad/src/main/doc_plugin_interface.cpp
         librecad/src/main/doc_plugin_interface.h
-	#librecad/src/main/emu_c99.cpp
-	#librecad/src/main/emu_c99.h
-#        librecad/src/main/helpbrowser.cpp
-#        librecad/src/main/helpbrowser.h
         librecad/src/main/lc_application.cpp
         librecad/src/main/lc_application.h
         librecad/src/main/main.cpp
@@ -809,8 +796,6 @@ set(SOURCES
 		librecad/src/ui/main/qc_applicationwindow.h
         librecad/src/main/qc_dialogfactory.cpp
         librecad/src/main/qc_dialogfactory.h
-#        librecad/src/main/qc_graphicview.cpp
-#        librecad/src/main/qc_graphicview.h
 		librecad/src/ui/main/qc_mdiwindow.cpp
 		librecad/src/ui/main/qc_mdiwindow.h
         librecad/src/plugins/intern/qc_actiongetent.cpp
@@ -821,10 +806,6 @@ set(SOURCES
         librecad/src/plugins/intern/qc_actiongetselect.h
         librecad/src/plugins/document_interface.h
         librecad/src/plugins/qc_plugininterface.h
-#        librecad/src/test/lc_simpletests.cpp
-#        librecad/src/test/lc_simpletests.h
-#        librecad/src/ui/forms/lc_cadtoolbarinterface.cpp
-#        librecad/src/ui/forms/lc_cadtoolbarinterface.h
 		librecad/src/ui/dialogs/entity/lc_dlgsplinepoints.cpp
 		librecad/src/ui/dialogs/entity/lc_dlgsplinepoints.h
 		librecad/src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp
@@ -839,30 +820,6 @@ set(SOURCES
 		librecad/src/ui/action_options/modify/qg_beveloptions.h
 		librecad/src/ui/dialogs/entity/qg_blockdialog.cpp
 		librecad/src/ui/dialogs/entity/qg_blockdialog.h
-#        librecad/src/ui/forms/qg_cadtoolbar.cpp
-#        librecad/src/ui/forms/qg_cadtoolbar.h
-#        librecad/src/ui/forms/qg_cadtoolbararcs.cpp
-#        librecad/src/ui/forms/qg_cadtoolbararcs.h
-#        librecad/src/ui/forms/qg_cadtoolbarcircles.cpp
-#        librecad/src/ui/forms/qg_cadtoolbarcircles.h
-#        librecad/src/ui/forms/qg_cadtoolbardim.cpp
-#        librecad/src/ui/forms/qg_cadtoolbardim.h
-#        librecad/src/ui/forms/qg_cadtoolbarellipses.cpp
-#        librecad/src/ui/forms/qg_cadtoolbarellipses.h
-#        librecad/src/ui/forms/qg_cadtoolbarinfo.cpp
-#        librecad/src/ui/forms/qg_cadtoolbarinfo.h
-#        librecad/src/ui/forms/qg_cadtoolbarlines.cpp
-#        librecad/src/ui/forms/qg_cadtoolbarlines.h
-#        librecad/src/ui/forms/qg_cadtoolbarmain.cpp
-#        librecad/src/ui/forms/qg_cadtoolbarmain.h
-#        librecad/src/ui/forms/qg_cadtoolbarmodify.cpp
-#        librecad/src/ui/forms/qg_cadtoolbarmodify.h
-#        librecad/src/ui/forms/qg_cadtoolbarpolylines.cpp
-#        librecad/src/ui/forms/qg_cadtoolbarpolylines.h
-#        librecad/src/ui/forms/qg_cadtoolbarselect.cpp
-#        librecad/src/ui/forms/qg_cadtoolbarselect.h
-#        librecad/src/ui/forms/qg_cadtoolbarsplines.cpp
-#        librecad/src/ui/forms/qg_cadtoolbarsplines.h
 		librecad/src/ui/action_options/circle/qg_circleoptions.cpp
 		librecad/src/ui/action_options/circle/qg_circleoptions.h
 		librecad/src/ui/action_options/circle/qg_circletan2options.cpp
@@ -873,8 +830,6 @@ set(SOURCES
 		librecad/src/ui/components/status_bar/qg_coordinatewidget.h
 		librecad/src/ui/dialogs/entity/qg_dimensionlabeleditor.cpp
 		librecad/src/ui/dialogs/entity/qg_dimensionlabeleditor.h
-		#[[	librecad/src/ui/not_used/qg_dimlinearoptions.cpp
-            librecad/src/ui/not_used/qg_dimlinearoptions.h]]
 		librecad/src/ui/action_options/dimensions/qg_dimoptions.cpp
 		librecad/src/ui/action_options/dimensions/qg_dimoptions.h
 		librecad/src/ui/dialogs/entity/qg_dlgarc.cpp
@@ -915,8 +870,6 @@ set(SOURCES
 		librecad/src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.h
 		librecad/src/ui/dialogs/file/export/qg_dlgoptionsmakercam.cpp
 		librecad/src/ui/dialogs/file/export/qg_dlgoptionsmakercam.h
-#        librecad/src/ui/forms/qg_dlgoptionsvariables.cpp
-#        librecad/src/ui/forms/qg_dlgoptionsvariables.h
 		librecad/src/ui/dialogs/entity/qg_dlgpoint.cpp
 		librecad/src/ui/dialogs/entity/qg_dlgpoint.h
 		librecad/src/ui/dialogs/entity/qg_dlgpolyline.cpp
@@ -953,8 +906,6 @@ set(SOURCES
 		librecad/src/ui/action_options/line/qg_lineparalleloptions.h
 		librecad/src/ui/action_options/line/qg_lineparallelthroughoptions.cpp
 		librecad/src/ui/action_options/line/qg_lineparallelthroughoptions.h
-        librecad/src/ui/not_used/qg_linepolygon2options.cpp
-        librecad/src/ui/not_used/qg_linepolygon2options.h
 		librecad/src/ui/action_options/polygon/qg_linepolygonoptions.cpp
 		librecad/src/ui/action_options/polygon/qg_linepolygonoptions.h
 		librecad/src/ui/action_options/line/qg_linerelangleoptions.cpp
@@ -1001,12 +952,6 @@ set(SOURCES
 		librecad/src/ui/components/comboboxes/comboboxoption.h
 		librecad/src/ui/dialogs/entity/LC_DlgParabola.h
 		librecad/src/ui/dialogs/entity/LC_DlgParabola.cpp
-#        librecad/src/ui/generic/customtoolbarcreator.cpp
-#        librecad/src/ui/generic/customtoolbarcreator.h
-#        librecad/src/ui/generic/customwidgetcreator.cpp
-#        librecad/src/ui/generic/customwidgetcreator.h
-#		librecad/src/ui/not_used/linklist.cpp
-#		librecad/src/ui/not_used/linklist.h
 		librecad/src/ui/components/textfileviewer.cpp
 		librecad/src/ui/components/textfileviewer.h
 		librecad/src/ui/components/creators/widgetcreator.cpp
@@ -1017,8 +962,6 @@ set(SOURCES
 		librecad/src/ui/actions/lc_actiongroupmanager.h
 		librecad/src/ui/view/lc_centralwidget.cpp
 		librecad/src/ui/view/lc_centralwidget.h
-#		librecad/src/ui/not_used/lc_customtoolbar.cpp
-#		librecad/src/ui/not_used/lc_customtoolbar.h
 		librecad/src/ui/dialogs/settings/options_device/lc_deviceoptions.cpp
 		librecad/src/ui/dialogs/settings/options_device/lc_deviceoptions.h
 		librecad/src/ui/dock_widgets/lc_dockwidget.cpp
@@ -1065,7 +1008,6 @@ set(SOURCES
 		librecad/src/ui/dock_widgets/library_widget/qg_librarywidget.h
 		librecad/src/ui/components/comboboxes/qg_linetypebox.cpp
 		librecad/src/ui/components/comboboxes/qg_linetypebox.h
-#		librecad/src/ui/not_used/qg_mainwindowinterface.h
 		librecad/src/ui/components/comboboxes/qg_patternbox.cpp
 		librecad/src/ui/components/comboboxes/qg_patternbox.h
 		librecad/src/ui/components/toolbars/qg_pentoolbar.cpp
@@ -1441,6 +1383,12 @@ set(SOURCES
 		librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.cpp
 		librecad/src/lib/engine/utils/lc_rectregion.h
 		librecad/src/lib/engine/utils/lc_rectregion.cpp
+		librecad/src/ui/dialogs/settings/options_widget/lc_iconengineshared.cpp
+		librecad/src/ui/dialogs/settings/options_widget/lc_iconengineshared.cpp
+		librecad/src/ui/dialogs/settings/options_widget/lc_iconcolorsoptions.h
+		librecad/src/ui/dialogs/settings/options_widget/lc_iconcolorsoptions.cpp
+		librecad/src/ui/dialogs/settings/options_widget/lc_iconcolorsoptions.h
+		librecad/src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.cpp
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
@@ -1465,6 +1413,71 @@ set(SOURCES
 #        plugins/sample/sample.h
 
         #        tools/ttf2lff/main.cpp )
+
+
+		#        librecad/src/ui/generic/customtoolbarcreator.cpp
+		#        librecad/src/ui/generic/customtoolbarcreator.h
+		#        librecad/src/ui/generic/customwidgetcreator.cpp
+		#        librecad/src/ui/generic/customwidgetcreator.h
+		#		librecad/src/ui/not_used/linklist.cpp
+		#		librecad/src/ui/not_used/linklist.h
+		#		librecad/src/ui/not_used/lc_customtoolbar.cpp
+		#		librecad/src/ui/not_used/lc_customtoolbar.h
+		#		librecad/src/ui/not_used/qg_mainwindowinterface.h
+		#        librecad/src/ui/not_used/qg_linepolygon2options.cpp
+		#        librecad/src/ui/not_used/qg_linepolygon2options.h
+		#        librecad/src/ui/forms/qg_dlgoptionsvariables.cpp
+		#        librecad/src/ui/forms/qg_dlgoptionsvariables.h
+		#[[	librecad/src/ui/not_used/qg_dimlinearoptions.cpp
+            librecad/src/ui/not_used/qg_dimlinearoptions.h]]
+		#        librecad/src/ui/forms/qg_cadtoolbar.cpp
+		#        librecad/src/ui/forms/qg_cadtoolbar.h
+		#        librecad/src/ui/forms/qg_cadtoolbararcs.cpp
+		#        librecad/src/ui/forms/qg_cadtoolbararcs.h
+		#        librecad/src/ui/forms/qg_cadtoolbarcircles.cpp
+		#        librecad/src/ui/forms/qg_cadtoolbarcircles.h
+		#        librecad/src/ui/forms/qg_cadtoolbardim.cpp
+		#        librecad/src/ui/forms/qg_cadtoolbardim.h
+		#        librecad/src/ui/forms/qg_cadtoolbarellipses.cpp
+		#        librecad/src/ui/forms/qg_cadtoolbarellipses.h
+		#        librecad/src/ui/forms/qg_cadtoolbarinfo.cpp
+		#        librecad/src/ui/forms/qg_cadtoolbarinfo.h
+		#        librecad/src/ui/forms/qg_cadtoolbarlines.cpp
+		#        librecad/src/ui/forms/qg_cadtoolbarlines.h
+		#        librecad/src/ui/forms/qg_cadtoolbarmain.cpp
+		#        librecad/src/ui/forms/qg_cadtoolbarmain.h
+		#        librecad/src/ui/forms/qg_cadtoolbarmodify.cpp
+		#        librecad/src/ui/forms/qg_cadtoolbarmodify.h
+		#        librecad/src/ui/forms/qg_cadtoolbarpolylines.cpp
+		#        librecad/src/ui/forms/qg_cadtoolbarpolylines.h
+		#        librecad/src/ui/forms/qg_cadtoolbarselect.cpp
+		#        librecad/src/ui/forms/qg_cadtoolbarselect.h
+		#        librecad/src/ui/forms/qg_cadtoolbarsplines.cpp
+		#        librecad/src/ui/forms/qg_cadtoolbarsplines.h
+		#        librecad/src/test/lc_simpletests.cpp
+		#        librecad/src/test/lc_simpletests.h
+		#        librecad/src/ui/forms/lc_cadtoolbarinterface.cpp
+		#        librecad/src/ui/forms/lc_cadtoolbarinterface.h
+		#        librecad/src/main/qc_graphicview.cpp
+		#        librecad/src/main/qc_graphicview.h
+		#librecad/src/main/emu_c99.cpp
+		#librecad/src/main/emu_c99.h
+		#        librecad/src/main/helpbrowser.cpp
+		#        librecad/src/main/helpbrowser.h
+		#        librecad/src/lib/filters/rs_filtercxf.h
+		#        librecad/src/lib/filters/rs_filterdxf.cpp
+		#        librecad/src/lib/filters/rs_filterdxf.h
+		#		librecad/src/actions/not_used/rs_actionsetsnapmode.cpp
+		#		librecad/src/actions/not_used/rs_actionsetsnapmode.h
+		#		librecad/src/actions/not_used/rs_actionsetsnaprestriction.cpp
+		#		librecad/src/actions/not_used/rs_actionsetsnaprestriction.h
+		#		librecad/src/actions/not_used/rs_actionzoomautoy.cpp
+		#		librecad/src/actions/not_used/rs_actionzoomautoy.h
+		#		librecad/src/actions/not_used/rs_actionmodifydeletequick.cpp
+		#		librecad/src/actions/not_used/rs_actionmodifydeletequick.h
+		#		librecad/src/actions/not_used/rs_actioneditpaste.cpp
+		#		librecad/src/actions/not_used/rs_actioneditpaste.h
+
 )
 
 
@@ -1663,6 +1676,28 @@ set(TS_FILES
 
 qt_add_translations(librecad TS_FILE_DIR ${TS_DIR} TS_FILES ${TS_FILES})
 install(TARGETS librecad RUNTIME DESTINATION bin)
+
+set(PLUGIN_SOURCES
+	../libraries/lciconendine/src/lc_svgiconengineplugin.cpp
+	../libraries/lciconendine/lc_svgiconengine.h
+	../libraries/lciconendine/lc_svgiconengine.h
+)
+
+#qt_internal_add_plugin(QSvgIconPlugin
+#		OUTPUT_NAME lc_svgicon
+#		PLUGIN_TYPE iconengines
+#		SOURCES
+#		../libraries/lciconendine/src/lc_svgiconengineplugin.cpp
+#		../libraries/lciconendine/lc_svgiconengine.h
+#		../libraries/lciconendine/lc_svgiconengine.h
+#		LIBRARIES
+#		Qt::Core
+#		Qt::CorePrivate
+#		Qt::Gui
+#		Qt::GuiPrivate
+#		Qt::Svg
+#)
+
 #set(autouic_options
 #		--connections string
 #)

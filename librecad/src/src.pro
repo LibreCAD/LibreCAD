@@ -58,7 +58,7 @@ unix {
         VERSION=$$system(echo "$${LC_VERSION}" | sed -e 's/\-.*//g')
         QMAKE_INFO_PLIST = Info.plist.app
         DEFINES += QC_APPDIR="\"LibreCAD\""
-        ICON = ../res/main/librecad.icns
+        ICON = ../res/images/librecad.icns
         contains(DISABLE_POSTSCRIPT, false) {
             QMAKE_POST_LINK = /bin/sh $$_PRO_FILE_PWD_/../../scripts/postprocess-osx.sh $$OUT_PWD/$${DESTDIR}/$${TARGET}.app/ $$[QT_INSTALL_BINS];
             QMAKE_POST_LINK += /usr/libexec/PlistBuddy -c \"Set :CFBundleGetInfoString string $${TARGET} $${LC_VERSION}\" $$OUT_PWD/$${DESTDIR}/$${TARGET}.app/Contents/Info.plist;
@@ -67,7 +67,7 @@ unix {
     else {
         TARGET = librecad
         DEFINES += QC_APPDIR="\"librecad\""
-        RC_FILE = ../res/main/librecad.icns
+        RC_FILE = ../res/images/librecad.icns
         contains(DISABLE_POSTSCRIPT, false) {
             QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
         }
@@ -85,7 +85,7 @@ win32 {
         LC_VERSION = $$system( \"$$MSYSGIT_DIR/git.exe\" describe || echo "$${LC_VERSION}")
     }
 
-    RC_FILE = ../res/main/librecad.rc
+    RC_FILE = ../res/images/librecad.rc
     contains(DISABLE_POSTSCRIPT, false) {
         QMAKE_POST_LINK = "$$_PRO_FILE_PWD_/../../scripts/postprocess-win.bat" $$LC_VERSION
     }
@@ -100,6 +100,7 @@ LIBS += -L../../generated/lib  \
     -ljwwlib
 
 INCLUDEPATH += \
+    ../../libraries/lciconengine \
     ../../libraries/libdxfrw/src \
     ../../libraries/jwwlib/src \
     cmd \
@@ -248,12 +249,18 @@ INCLUDEPATH += \
     plugins \
     ../res
 
-RESOURCES += ../res/extui/extui.qrc
-RESOURCES += ../res/actions/actions.qrc
+
 RESOURCES += ../res/icons/icons.qrc
-RESOURCES += ../res/ui/ui.qrc
-RESOURCES += ../res/main/main.qrc
+RESOURCES += ../res/controls/controls.qrc
+RESOURCES += ../res/images/images.qrc
 RESOURCES += ../../licenses/licenses.qrc
+
+# RESOURCES += ../res/ui/ui.qrc
+# RESOURCES += ../res/main/main.qrc
+# RESOURCES += ../res/extui/extui.qrc
+# RESOURCES += ../res/actions/actions.qrc
+
+
 
 # ################################################################################
 # Library
@@ -388,7 +395,8 @@ HEADERS += \
     lib/gui/lc_graphicviewport.h \
     lib/gui/lc_graphicviewportlistener.h \
     lib/gui/render/headless/lc_printviewportrenderer.h \
-    lib/gui/render/lc_graphicviewportrenderer.h \    
+    lib/gui/render/lc_graphicviewportrenderer.h \
+    ui/dialogs/settings/options_widget/lc_dlgiconssetup.h \
     lib/gui/render/widget/lc_graphicviewrenderer.cpp \
     lib/gui/render/widget/lc_printpreviewviewrenderer.cpp \
     lib/gui/render/widget/lc_widgetviewportrenderer.cpp \
@@ -410,6 +418,7 @@ HEADERS += \
     ui/dialogs/entity/lc_entitypropertiesdlg.h \
     ui/dialogs/main/lc_dlgabout.h \
     ui/dialogs/main/lc_dlgnewversionavailable.h \
+    ui/dialogs/settings/options_widget/lc_iconcolorsoptions.h \
     ui/dock_widgets/ucs_list/lc_dlgucslistoptions.h \
     ui/dock_widgets/ucs_list/lc_dlgucsproperties.h \
     ui/dock_widgets/ucs_list/lc_ucslistbutton.h \
@@ -462,7 +471,7 @@ HEADERS += \
     ui/components/status_bar/lc_relzerocoordinateswidget.h \
     ui/dialogs/lc_dialog.h \
     ui/main/lc_mdiapplicationwindow.h
-    
+
 SOURCES += \
     actions/dock_widgets/ucs_list/lc_actionucscreate.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp \
@@ -499,7 +508,8 @@ SOURCES += \
     lib/engine/utils/lc_rectregion.cpp \
     lib/gui/lc_graphicviewport.cpp \
     lib/gui/lc_graphicviewportlistener.cpp \
-    lib/gui/render/headless/lc_printviewportrenderer.cpp \    
+    lib/gui/render/headless/lc_printviewportrenderer.cpp \
+    ui/dialogs/settings/options_widget/lc_dlgiconssetup.cpp \
     lib/gui/render/lc_graphicviewportrenderer.cpp \
     lib/gui/render/widget/lc_graphicviewrenderer.cpp \
     lib/gui/render/widget/lc_printpreviewviewrenderer.cpp \
@@ -605,6 +615,7 @@ SOURCES += \
     ui/dialogs/entity/lc_entitypropertiesdlg.cpp \
     ui/dialogs/main/lc_dlgabout.cpp \
     ui/dialogs/main/lc_dlgnewversionavailable.cpp \
+    ui/dialogs/settings/options_widget/lc_iconcolorsoptions.cpp \
     ui/dock_widgets/ucs_list/lc_dlgucslistoptions.cpp \
     ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp \
     ui/dock_widgets/ucs_list/lc_ucslistbutton.cpp \
@@ -1140,6 +1151,7 @@ HEADERS += ui/action_options/circle/lc_circlebyarcoptions.h \
     ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.h \
     ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.h \
     ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.h \
+    ui/dialogs/settings/options_widget/lc_iconengineshared.h \
     ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.h \
     ui/dialogs/settings/shortcuts/lc_shortcutbutton.h \
     ui/dialogs/settings/shortcuts/lc_shortcutstreemodel.h \
@@ -1326,6 +1338,7 @@ SOURCES += ui/action_options/circle/lc_circlebyarcoptions.cpp \
     ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp \
     ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp \
     ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp \
+    ui/dialogs/settings/options_widget/lc_iconengineshared.cpp \
     ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp \
     ui/dialogs/settings/shortcuts/lc_shortcutbutton.cpp \
     ui/dialogs/settings/shortcuts/lc_shortcutstreemodel.cpp \
@@ -1470,7 +1483,6 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/components/status_bar/qg_mousewidget.ui \
        ui/components/status_bar/qg_selectionwidget.ui \
        ui/components/textfileviewer.ui \
-       ui/components/toolbars/qg_snaptoolbar.ui \
        ui/dialogs/actions/modify/qg_dlgmirror.ui \
        ui/dialogs/actions/modify/qg_dlgmove.ui \
        ui/dialogs/actions/modify/qg_dlgmoverotate.ui \
@@ -1507,6 +1519,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui \
        ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui \
        ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui \
+       ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui \
        ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui \
        ui/dock_widgets/command_line/qg_commandwidget.ui \
        ui/dock_widgets/entity_info/lc_quickinfowidget.ui \
@@ -1520,12 +1533,13 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui \
        ui/dock_widgets/ucs_list/lc_ucslistwidget.ui \
        ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui \
-       ui/dock_widgets/views_list/lc_namedviewslistwidget.ui \
-       ui/not_used/customtoolbarcreator.ui \
-       ui/not_used/customwidgetcreator.ui \
-       ui/not_used/qg_dimlinearoptions.ui \
-       ui/not_used/qg_dlgoptionsvariables.ui \
-       ui/not_used/qg_linepolygon2options.ui
+       ui/dock_widgets/views_list/lc_namedviewslistwidget.ui
+       # ui/not_used/customtoolbarcreator.ui \
+       # ui/not_used/customwidgetcreator.ui \
+       # ui/not_used/qg_dimlinearoptions.ui \
+       # ui/not_used/qg_dlgoptionsvariables.ui \
+       # ui/not_used/qg_snaptoolbar.ui \
+       # ui/not_used/qg_linepolygon2options.ui
 
 
 # ################################################################################
