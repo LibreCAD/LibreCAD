@@ -62,8 +62,8 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>:/extui/char_pm.png</normaloff>:/extui/char_pm.png</iconset>
+         <iconset resource="../../../../res/icons/icons.qrc">
+          <normaloff>:/icons/char_pm.lci</normaloff>:/icons/char_pm.lci</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -86,8 +86,8 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+         <iconset resource="../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -117,8 +117,9 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../res/ui/ui.qrc"/>
-  <include location="../../../res/extui/extui.qrc"/>
+  <include location="../../../../res/controls/controls.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>
 </ui>
