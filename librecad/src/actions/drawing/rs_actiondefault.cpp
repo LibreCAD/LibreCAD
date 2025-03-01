@@ -249,15 +249,11 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
         case Neutral: {
             deleteSnapper();
             highlightHoveredEntities(e);
-            if (infoCursorOverlayPrefs && infoCursorOverlayPrefs->enabled){
+            if (infoCursorOverlayPrefs->enabled){
                 if (!isShowEntityDescriptionOnHighlight()) {
                     infoCursorOverlayData.setZone2("");
                 }
                 RS_Snapper::forceUpdateInfoCursor(mouse);
-            }
-            else
-            {
-                qCritical() << "[RS_ActionDefault::mouseMoveEvent] ###FIXME infoCursorOverlayPrefs == NULL!!";
             }
             break;
         }
