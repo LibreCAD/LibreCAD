@@ -628,7 +628,7 @@ SOURCES += \
     lib/scripting/lisp/Environment.h \
     lib/scripting/lisp/lisp.cpp \
     lib/scripting/lisp/Reader.cpp \
-    lib/scripting/lisp/String.cpp \
+    lib/scripting/lisp/lstring.cpp \
     lib/scripting/lisp/Types.cpp \
     lib/scripting/lisp/Validation.cpp \
     lib/scripting/python/rs_pythoncore.cpp \

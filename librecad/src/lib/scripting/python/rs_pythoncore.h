@@ -44,6 +44,7 @@ public:
     void command(const char *cmd);
     PyObject *entlast() const;
     PyObject *entdel(const std::string &ename) const;
+    PyObject *entget(const std::string &ename) const;
     PyObject *entsel(const char* prompt = "") const;
 
     RS_Document *getDocument() const;

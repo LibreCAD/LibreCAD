@@ -100,3 +100,136 @@ PyObject *RS_PythonCore::entsel(const char* prompt) const
                                                                        result.y,
                                                                        result.z) : Py_None;
 }
+
+/*
+ * static PyObject* foo(PyObject* self, PyObject* args){
+    PyObect* list = PyList_New(100);
+    for(int i = 0; i < 100; i++)
+        PyList_SetItem(list, i, Py_BuildValue("i", 42));
+    return list;
+* }
+*/
+
+PyObject *RS_PythonCore::entget(const std::string &ename) const
+{
+    unsigned int id = RS_SCRIPTINGAPI->getEntityId(ename);
+
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    RS_GraphicView* graphicView = appWin->getGraphicView();
+    RS_EntityContainer* entityContainer = graphicView->getContainer();
+
+    if(entityContainer->count())
+    {
+        for (auto e: *entityContainer) {
+            if (e->getId() == id)
+            {
+#if 0
+                RS_Pen pen = e->getPen(false);
+
+                lclValueVec *entity = new lclValueVec;
+
+                lclValueVec *ename = new lclValueVec(3);
+                ename->at(0) = lcl::integer(-1);
+                ename->at(1) = lcl::symbol(".");
+                ename->at(2) = lcl::ename(en->value());
+
+                lclValueVec *ebname = new lclValueVec(3);
+                ebname->at(0) = lcl::integer(330);
+                ebname->at(1) = lcl::symbol(".");
+                ebname->at(2) = lcl::ename(e->getParent()->getId());
+                entity->push_back(lcl::list(ebname));
+
+                lclValueVec *handle = new lclValueVec(3);
+                handle->at(0) = lcl::integer(5);
+                handle->at(1) = lcl::symbol(".");
+                handle->at(2) = lcl::string(en->valueStr());
+                entity->push_back(lcl::list(handle));
+
+                enum RS2::LineType lineType = pen.getLineType();
+                if(lineType != RS2::LineByLayer)
+                {
+                    lclValueVec *lType = new lclValueVec(3);
+                    lType->at(0) = lcl::integer(6);
+                    lType->at(1) = lcl::symbol(".");
+                    lType->at(2) = lcl::string(RS_FilterDXFRW::lineTypeToName(pen.getLineType()).toStdString());
+                    entity->push_back(lcl::list(lType));
+                }
+
+                enum RS2::LineWidth lineWidth = pen.getWidth();
+                if(lineWidth != RS2::WidthByLayer)
+                {
+                    lclValueVec *lWidth = new lclValueVec(3);
+                    lWidth->at(0) = lcl::integer(48);
+                    lWidth->at(1) = lcl::symbol(".");
+
+                    int width = static_cast<int>(lineWidth);
+                    if (width < 0)
+                    {
+                        lWidth->at(2) = lcl::integer(width);
+                    }
+                    else
+                    {
+                        lWidth->at(2) = lcl::ldouble(double(width) / 100.0);
+                    }
+                    entity->push_back(lcl::list(lWidth));
+
+                }
+
+                RS_Color color = pen.getColor();
+                if(!color.isByLayer())
+                {
+                    int exact_rgb;
+                    lclValueVec *col = new lclValueVec(3);
+                    col->at(0) = lcl::integer(62);
+                    col->at(1) = lcl::symbol(".");
+                    col->at(2) = lcl::integer(RS_FilterDXFRW::colorToNumber(color, &exact_rgb));
+                    entity->push_back(lcl::list(col));
+                }
+
+                lclValueVec *acdb = new lclValueVec(3);
+                acdb->at(0) = lcl::integer(100);
+                acdb->at(1) = lcl::symbol(".");
+                acdb->at(2) = lcl::string("AcDbEntity");
+
+                lclValueVec *mspace = new lclValueVec(3);
+                mspace->at(0) = lcl::integer(67);
+                mspace->at(1) = lcl::symbol(".");
+                mspace->at(2) = lcl::integer(0);
+
+                lclValueVec *layoutTabName = new lclValueVec(3);
+                layoutTabName->at(0) = lcl::integer(100);
+                layoutTabName->at(1) = lcl::symbol(".");
+                layoutTabName->at(2) = lcl::string("Model");
+
+                lclValueVec *layer = new lclValueVec(3);
+                layer->at(0) = lcl::integer(8);
+                layer->at(1) = lcl::symbol(".");
+                layer->at(2) = lcl::string(e->getLayer()->getName().toStdString());
+
+                lclValueVec *extrDir = new lclValueVec(4);
+                extrDir->at(0) = lcl::integer(210);
+                extrDir->at(1) = lcl::ldouble(0.0);
+                extrDir->at(2) = lcl::ldouble(0.0);
+                extrDir->at(3) = lcl::ldouble(1.0);
+
+                entity->push_back(lcl::list(acdb));
+                entity->push_back(lcl::list(mspace));
+                entity->push_back(lcl::list(layoutTabName));
+                entity->push_back(lcl::list(layer));
+#endif
+                switch (e->rtti())
+                {
+                    case RS2::EntityPoint:
+                    {
+                    }
+                    break;
+                default:
+                    break;
+                }
+
+            }
+        }
+    }
+
+    Py_RETURN_NONE;
+}
