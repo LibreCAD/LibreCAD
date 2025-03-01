@@ -1,324 +1,348 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>camera.svg</file>
-        <file>cursor.svg</file>
-        <file>dockwidgets_bottom.svg</file>
-        <file>dockwidgets_floating.svg</file>
-        <file>dockwidgets_left.svg</file>
-        <file>dockwidgets_right.svg</file>
-        <file>dockwidgets_top.svg</file>
-        <file>bevel.svg</file>
-        <file>draft.svg</file>
-        <file>fillet.svg</file>
-        <file>restr_hor.svg</file>
-        <file>restr_ortho.svg</file>
-        <file>restr_ver.svg</file>
-        <file>grid.svg</file>
-        <file>rotate.svg</file>
-        <file>rotate2.svg</file>
-        <file>redraw.svg</file>
-        <file>zoom_auto.svg</file>
-        <file>zoom_in.svg</file>
-        <file>zoom_out.svg</file>
-        <file>zoom_previous.svg</file>
-        <file>zoom_window.svg</file>
-        <file>copy.svg</file>
-        <file>drawing_settings.svg</file>
-        <file>new_from_template.svg</file>
-        <file>new.svg</file>
-        <file>open.svg</file>
-        <file>paste.svg</file>
-        <file>print_preview.svg</file>
-        <file>print.svg</file>
-        <file>save_as.svg</file>
-        <file>save.svg</file>
-        <file>settings.svg</file>
-        <file>redo.svg</file>
-        <file>undo.svg</file>
-        <file>text.svg</file>
-        <file>mtext.svg</file>
-        <file>hatch.svg</file>
-        <file>create_block.svg</file>
-        <file>points.svg</file>
-        <file>create_toolbar.svg</file>
-        <file>create_menu.svg</file>
-        <file>exclusive.svg</file>
-        <file>snap_center.svg</file>
-        <file>snap_distance.svg</file>
-        <file>snap_endpoints.svg</file>
-        <file>snap_entity.svg</file>
-        <file>snap_free.svg</file>
-        <file>snap_grid.svg</file>
-        <file>snap_intersection.svg</file>
-        <file>snap_middle.svg</file>
-        <file>snap_middle_manual.svg</file>
-        <file>lock_rel_zero.svg</file>
-        <file>set_rel_zero.svg</file>
-        <file>arc_3_points.svg</file>
-        <file>arc_center_point_angle.svg</file>
-        <file>arc_concentric.svg</file>
-        <file>arc_continuation.svg</file>
-        <file>circle_2_points_radius.svg</file>
-        <file>circle_2_points.svg</file>
-        <file>circle_3_points.svg</file>
-        <file>circle_center_point.svg</file>
-        <file>circle_center_radius.svg</file>
-        <file>circle_concentric.svg</file>
-        <file>circle_inscribed.svg</file>
-        <file>circle_tangential_2circles_point.svg</file>
-        <file>circle_tangential_2circles_radius.svg</file>
-        <file>circle_tangential_2points.svg</file>
-        <file>circle_tangential_3entities.svg</file>
-        <file>circle.svg</file>
-        <file>dim_vertical.svg</file>
-        <file>ellipse_4_points.svg</file>
-        <file>ellipse_arc_axis.svg</file>
-        <file>ellipse_axis.svg</file>
-        <file>ellipse_center_3_points.svg</file>
-        <file>ellipse_foci_point.svg</file>
-        <file>ellipse_inscribed.svg</file>
-        <file>ellipses.svg</file>
-        <file>line_2p.svg</file>
-        <file>line_angle.svg</file>
-        <file>line_bisector.svg</file>
-        <file>line_freehand.svg</file>
-        <file>line_horizontal.svg</file>
-        <file>line_parallel_p.svg</file>
-        <file>line_parallel.svg</file>
-        <file>line_perpendicular.svg</file>
-        <file>line_polygon_cen_cor.svg</file>
-        <file>line_polygon_cor_cor.svg</file>
-        <file>line_rectangle.svg</file>
-        <file>line_relative_angle.svg</file>
-        <file>line_tangent_cc.svg</file>
-        <file>line_tangent_pc.svg</file>
-        <file>line_tangent_perpendicular.svg</file>
-        <file>line_vertical.svg</file>
-        <file>line.svg</file>
-        <file>select.svg</file>
-        <file>spline_points.svg</file>
-        <file>spline.svg</file>
-        <file>angle_line_to_line.svg</file>
-        <file>attributes.svg</file>
-        <file>dim_aligned.svg</file>
-        <file>dim_angular.svg</file>
-        <file>dim_diametric.svg</file>
-        <file>dim_horizontal.svg</file>
-        <file>dim_leader.svg</file>
-        <file>dim_linear.svg</file>
-        <file>dim_radial.svg</file>
-        <file>dim_arc.svg</file>
-        <file>distance_point_to_entity.svg</file>
-        <file>distance_point_to_point.svg</file>
-        <file>divide.svg</file>
-        <file>explode_text_to_letters.svg</file>
-        <file>explode.svg</file>
-        <file>measure.svg</file>
-        <file>mirror.svg</file>
-        <file>move_copy.svg</file>
-        <file>move_rotate.svg</file>
-        <file>offset.svg</file>
-        <file>polygonal_area.svg</file>
-        <file>properties.svg</file>
-        <file>scale.svg</file>
-        <file>stretch.svg</file>
-        <file>trim_value.svg</file>
-        <file>trim.svg</file>
-        <file>trim2.svg</file>
-        <file>deselect_all.svg</file>
-        <file>deselect_intersected_entities.svg</file>
-        <file>deselect_window.svg</file>
-        <file>select_all.svg</file>
-        <file>select_entity.svg</file>
-        <file>select_intersected_entities.svg</file>
-        <file>select_inverted.svg</file>
-        <file>select_window.svg</file>
-        <file>delete.svg</file>
-        <file>delete_freehand.svg</file>
-        <file>total_length_selected_entities.svg</file>
-        <file>zoom_pan.svg</file>
-        <file>order.svg</file>
-        <file>up.svg</file>
-        <file>down.svg</file>
-        <file>downmost.svg</file>
-        <file>upmost.svg</file>
-        <file>deselect_contour.svg</file>
-        <file>deselect_layer.svg</file>
-        <file>cut.svg</file>
-        <file>trim_segments.svg</file>
-        <file>snap_exclusive.svg</file>
-        <file>rename_active_block.svg</file>
-        <file>remove.svg</file>
-        <file>quit.svg</file>
-        <file>polylines.svg</file>
-        <file>polylines_polyline.svg</file>
-        <file>insert_node.svg</file>
-        <file>insert_active_block.svg</file>
-        <file>import.svg</file>
-        <file>export.svg</file>
-        <file>export_pdf.svg</file>
-        <file>export_image.svg</file>
-        <file>delete_node.svg</file>
-        <file>delete_between_nodes.svg</file>
-        <file>create_polyline_from_existing_segments.svg</file>
-        <file>create_equidistant_polyline.svg</file>
-        <file>construction_layer.svg</file>
-        <file>close.svg</file>
-        <file>append_node.svg</file>
-        <file>add.svg</file>
-        <file>revert_direction.svg</file>
-        <file>modify.svg</file>
-        <file>icons.qrc</file>
-        <file>invisible.svg</file>
-        <file>visible.svg</file>
-        <file>locked.svg</file>
-        <file>unlocked.svg</file>
-        <file>mouse.svg</file>
-        <file>fit_to_page.svg</file>
-        <file>center_to_page.svg</file>
-        <file>multi_pages.svg</file>
-        <file>black_n_white_mode.svg</file>
-        <file>mtext_align_bottomcenter.svg</file>
-        <file>mtext_align_bottomleft.svg</file>
-        <file>mtext_align_bottomright.svg</file>
-        <file>mtext_align_middlecenter.svg</file>
-        <file>mtext_align_middleleft.svg</file>
-        <file>mtext_align_middleright.svg</file>
-        <file>mtext_align_topcenter.svg</file>
-        <file>mtext_align_topleft.svg</file>
-        <file>mtext_align_topright.svg</file>
-        <file>text_align_baselinecenter.svg</file>
-        <file>text_align_baselineleft.svg</file>
-        <file>text_align_baselineright.svg</file>
-        <file>text_align_bottomcenter.svg</file>
-        <file>text_align_bottomleft.svg</file>
-        <file>text_align_bottomright.svg</file>
-        <file>text_align_middlecenter.svg</file>
-        <file>text_align_middleleft.svg</file>
-        <file>text_align_middleright.svg</file>
-        <file>text_align_topcenter.svg</file>
-        <file>text_align_topleft.svg</file>
-        <file>text_align_topright.svg</file>
-        <file>point_dot.svg</file>
-        <file>point_dot_circle.svg</file>
-        <file>point_dot_square.svg</file>
-        <file>point_dot_circle_square.svg</file>
-        <file>point_blank.svg</file>
-        <file>point_blank_circle.svg</file>
-        <file>point_blank_square.svg</file>
-        <file>point_blank_circle_square.svg</file>
-        <file>point_cross.svg</file>
-        <file>point_cross_circle.svg</file>
-        <file>point_cross_square.svg</file>
-        <file>point_cross_circle_square.svg</file>
-        <file>point_plus.svg</file>
-        <file>point_plus_circle.svg</file>
-        <file>point_plus_square.svg</file>
-        <file>point_plus_circle_square.svg</file>
-        <file>point_tick.svg</file>
-        <file>point_tick_circle.svg</file>
-        <file>point_tick_square.svg</file>
-        <file>point_tick_circle_square.svg</file>
-        <file>options.svg</file>
-        <file>line_polygon_cen_tan.svg</file>
-        <file>noconstruction.svg</file>
-        <file>noprint.svg</file>
-        <file>close_all.svg</file>
-        <file>save_all.svg</file>
-        <file>scaleLineWidth.svg</file>
-        <file>parabola_4_points.svg</file>
-        <file>parabola_focus_directrix.svg</file>
-        <file>pen_apply.svg</file>
-        <file>pen_copy.svg</file>
-        <file>cross_circle.svg</file>
-        <file>cross_circle1.svg</file>
-        <file>line_rel.svg</file>
-        <file>line_rel_x.svg</file>
-        <file>line_rel_y.svg</file>
-        <file>line_angle_rel.svg</file>
-        <file>line_ortho_rel.svg</file>
-        <file>slice_divide.svg</file>
-        <file>circle_by_arc.svg</file>
-        <file>line_join.svg</file>
-        <file>line_points.svg</file>
-        <file>duplicate.svg</file>
-        <file>line_to_ortho.svg</file>
-        <file>rectangle_1_point.svg</file>
-        <file>rectangle_2_points.svg</file>
-        <file>rectangle_3_points.svg</file>
-        <file>line_polygon_star.svg</file>
-        <file>slice_divide_circle.svg</file>
-        <file>break_out_trim.svg</file>
-        <file>line_gap.svg</file>
-        <file>distance_entity_to_point.svg</file>
-        <file>state-shift_no.svg</file>
-        <file>state-shift_yes.svg</file>
-        <file>state_ctrl_yes.svg</file>
-        <file>paste_transform.svg</file>
-        <file>angle_3_points.svg</file>
-        <file>page_landscape.svg</file>
-        <file>page_portait.svg</file>
-        <file>shortcuts_settings.svg</file>
-        <file>ellipse_1_point.svg</file>
-        <file>ellipse_arc_1_point.svg</file>
-        <file>dim_baseline.svg</file>
-        <file>dim_continue.svg</file>
-        <file>grid_ortho.svg</file>
-        <file>grid_iso_top.svg</file>
-        <file>grid_iso_left.svg</file>
-        <file>grid_iso_right.svg</file>
-        <file>draftLineWidth.svg</file>
-        <file>anti_aliasing.svg</file>
-        <file>polyline_arc_to_lines.svg</file>
-        <file>polyline_segment_type.svg</file>
-        <file>arc_2p_radius.svg</file>
-        <file>arc_2p_angle.svg</file>
-        <file>arc_2p_length.svg</file>
-        <file>arc_2p_height.svg</file>
-        <file>arc_center_point_chord.svg</file>
-        <file>arc_center_point_anglelen.svg</file>
-        <file>spline_points_add.svg</file>
-        <file>spline_points_remove.svg</file>
-        <file>spline_points_insert.svg</file>
-        <file>nview_visible.svg</file>
-        <file>nview_add.svg</file>
-        <file>spline_explode.svg</file>
-        <file>spline_from_polyline.svg</file>
-        <file>spline_points_remove_two.svg</file>
-        <file>points_lattice.svg</file>
-        <file>select_points.svg</file>
-        <file>paste_to_points.svg</file>
-        <file>points_middle.svg</file>
-        <file>line_middle.svg</file>
-        <file>bounding_box.svg</file>
-        <file>halign_middle.svg</file>
-        <file>valign_middle.svg</file>
-        <file>valign_top.svg</file>
-        <file>valign_bottom.svg</file>
-        <file>halign_right.svg</file>
-        <file>halign_left.svg</file>
-        <file>no_align.svg</file>
-        <file>align_one.svg</file>
-        <file>line_polygon_size_size.svg</file>
-        <file>align_ref.svg</file>
-        <file>info_cursor_enable.svg</file>
-        <file>info_cursor_entity.svg</file>
-        <file>info_cursor_zone1.svg</file>
-        <file>info_cursor_zone2.svg</file>
-        <file>info_cursor_zone3.svg</file>
-        <file>info_cursor_zone4.svg</file>
-        <file>info_cursor_zone2_entity.svg</file>
-        <file>entity_description_info.svg</file>
-        <file>set_ucs.svg</file>
-        <file>ucs_add.svg</file>
-        <file>ucs_ucs.svg</file>
-        <file>ucs_wcs.svg</file>
-        <file>ucs_preview.svg</file>
-        <file>ucs_set.svg</file>
-        <file>ucs_set_wcs.svg</file>
-        <file>dirpos.svg</file>
-        <file>dirneg.svg</file>
-        <file>dirpos_plus.svg</file>
-        <file>dirneg_plus.svg</file>
+        <file alias="add.lci">add.svg</file>
+        <file alias="align_as_group.lci">align_as_group.svg</file>
+        <file alias="align_one.lci">align_one.svg</file>
+        <file alias="align_ref.lci">align_ref.svg</file>
+        <file alias="angle_3_points.lci">angle_3_points.svg</file>
+        <file alias="angle_line_to_line.lci">angle_line_to_line.svg</file>
+        <file alias="anti_aliasing.lci">anti_aliasing.svg</file>
+        <file alias="append_node.lci">append_node.svg</file>
+        <file alias="arc_2p_angle.lci">arc_2p_angle.svg</file>
+        <file alias="arc_2p_height.lci">arc_2p_height.svg</file>
+        <file alias="arc_2p_length.lci">arc_2p_length.svg</file>
+        <file alias="arc_2p_radius.lci">arc_2p_radius.svg</file>
+        <file alias="arc_3_points.lci">arc_3_points.svg</file>
+        <file alias="arc_center_point_angle.lci">arc_center_point_angle.svg</file>
+        <file alias="arc_center_point_anglelen.lci">arc_center_point_anglelen.svg</file>
+        <file alias="arc_center_point_chord.lci">arc_center_point_chord.svg</file>
+        <file alias="arc_concentric.lci">arc_concentric.svg</file>
+        <file alias="arc_continuation.lci">arc_continuation.svg</file>
+        <file alias="attributes.lci">attributes.svg</file>
+        <file alias="back.lci">back.svg</file>
+        <file alias="bevel.lci">bevel.svg</file>
+        <file alias="black_n_white_mode.lci">black_n_white_mode.svg</file>
+        <file alias="bounding_box.lci">bounding_box.svg</file>
+        <file alias="break_out_trim.lci">break_out_trim.svg</file>
+        <file alias="camera.lci">camera.svg</file>
+        <file alias="center_to_page.lci">center_to_page.svg</file>
+        <file alias="char_diameter.lci">char_diameter.svg</file>
+        <file alias="char_pm.lci">char_pm.svg</file>
+        <file alias="circle.lci">circle.svg</file>
+        <file alias="circle_2_points.lci">circle_2_points.svg</file>
+        <file alias="circle_2_points_radius.lci">circle_2_points_radius.svg</file>
+        <file alias="circle_3_points.lci">circle_3_points.svg</file>
+        <file alias="circle_by_arc.lci">circle_by_arc.svg</file>
+        <file alias="circle_center_point.lci">circle_center_point.svg</file>
+        <file alias="circle_center_radius.lci">circle_center_radius.svg</file>
+        <file alias="circle_concentric.lci">circle_concentric.svg</file>
+        <file alias="circle_inscribed.lci">circle_inscribed.svg</file>
+        <file alias="circle_tangential_2circles_point.lci">circle_tangential_2circles_point.svg</file>
+        <file alias="circle_tangential_2circles_radius.lci">circle_tangential_2circles_radius.svg</file>
+        <file alias="circle_tangential_2points.lci">circle_tangential_2points.svg</file>
+        <file alias="circle_tangential_3entities.lci">circle_tangential_3entities.svg</file>
+        <file alias="close.lci">close.svg</file>
+        <file alias="close_all.lci">close_all.svg</file>
+        <file alias="construction_layer.lci">construction_layer.svg</file>
+        <file alias="copy.lci">copy.svg</file>
+        <file alias="create_block.lci">create_block.svg</file>
+        <file alias="create_equidistant_polyline.lci">create_equidistant_polyline.svg</file>
+        <file alias="create_menu.lci">create_menu.svg</file>
+        <file alias="create_polyline_from_existing_segments.lci">create_polyline_from_existing_segments.svg</file>
+        <file alias="create_toolbar.lci">create_toolbar.svg</file>
+        <file alias="cross_circle.lci">cross_circle.svg</file>
+        <file alias="cross_circle1.lci">cross_circle1.svg</file>
+        <file alias="cursor.lci">cursor.svg</file>
+        <file alias="cut.lci">cut.svg</file>
+        <file alias="delete.lci">delete.svg</file>
+        <file alias="delete_between_nodes.lci">delete_between_nodes.svg</file>
+        <file alias="delete_freehand.lci">delete_freehand.svg</file>
+        <file alias="delete_node.lci">delete_node.svg</file>
+        <file alias="deselect_all.lci">deselect_all.svg</file>
+        <file alias="deselect_contour.lci">deselect_contour.svg</file>
+        <file alias="deselect_intersected_entities.lci">deselect_intersected_entities.svg</file>
+        <file alias="deselect_layer.lci">deselect_layer.svg</file>
+        <file alias="deselect_window.lci">deselect_window.svg</file>
+        <file alias="dim_aligned.lci">dim_aligned.svg</file>
+        <file alias="dim_angular.lci">dim_angular.svg</file>
+        <file alias="dim_arc.lci">dim_arc.svg</file>
+        <file alias="dim_baseline.lci">dim_baseline.svg</file>
+        <file alias="dim_continue.lci">dim_continue.svg</file>
+        <file alias="dim_diametric.lci">dim_diametric.svg</file>
+        <file alias="dim_horizontal.lci">dim_horizontal.svg</file>
+        <file alias="dim_leader.lci">dim_leader.svg</file>
+        <file alias="dim_linear.lci">dim_linear.svg</file>
+        <file alias="dim_radial.lci">dim_radial.svg</file>
+        <file alias="dim_vertical.lci">dim_vertical.svg</file>
+        <file alias="dirneg.lci">dirneg.svg</file>
+        <file alias="dirneg_plus.lci">dirneg_plus.svg</file>
+        <file alias="dirpos.lci">dirpos.svg</file>
+        <file alias="dirpos_plus.lci">dirpos_plus.svg</file>
+        <file alias="distance_entity_to_point.lci">distance_entity_to_point.svg</file>
+        <file alias="distance_point_to_entity.lci">distance_point_to_entity.svg</file>
+        <file alias="distance_point_to_point.lci">distance_point_to_point.svg</file>
+        <file alias="divide.lci">divide.svg</file>
+        <file alias="dockwidgets_bottom.lci">dockwidgets_bottom.svg</file>
+        <file alias="dockwidgets_floating.lci">dockwidgets_floating.svg</file>
+        <file alias="dockwidgets_left.lci">dockwidgets_left.svg</file>
+        <file alias="dockwidgets_right.lci">dockwidgets_right.svg</file>
+        <file alias="dockwidgets_top.lci">dockwidgets_top.svg</file>
+        <file alias="document.lci">document.svg</file>
+        <file alias="down.lci">down.svg</file>
+        <file alias="downmost.lci">downmost.svg</file>
+        <file alias="draft.lci">draft.svg</file>
+        <file alias="draftLineWidth.lci">draftLineWidth.svg</file>
+        <file alias="drawing_settings.lci">drawing_settings.svg</file>
+        <file alias="duplicate.lci">duplicate.svg</file>
+        <file alias="edit_clear.lci">edit_clear.svg</file>
+        <file alias="ellipse_1_point.lci">ellipse_1_point.svg</file>
+        <file alias="ellipse_4_points.lci">ellipse_4_points.svg</file>
+        <file alias="ellipse_arc_1_point.lci">ellipse_arc_1_point.svg</file>
+        <file alias="ellipse_arc_axis.lci">ellipse_arc_axis.svg</file>
+        <file alias="ellipse_axis.lci">ellipse_axis.svg</file>
+        <file alias="ellipse_center_3_points.lci">ellipse_center_3_points.svg</file>
+        <file alias="ellipse_foci_point.lci">ellipse_foci_point.svg</file>
+        <file alias="ellipse_inscribed.lci">ellipse_inscribed.svg</file>
+        <file alias="ellipses.lci">ellipses.svg</file>
+        <file alias="entity_description_info.lci">entity_description_info.svg</file>
+        <file alias="entity_properties_select.lci">entity_properties_select.svg</file>
+        <file alias="exclusive.lci">exclusive.svg</file>
+        <file alias="explode.lci">explode.svg</file>
+        <file alias="explode_text_to_letters.lci">explode_text_to_letters.svg</file>
+        <file alias="export.lci">export.svg</file>
+        <file alias="export_image.lci">export_image.svg</file>
+        <file alias="export_pdf.lci">export_pdf.svg</file>
+        <file alias="fileopen.lci">fileopen.svg</file>
+        <file alias="fillet.lci">fillet.svg</file>
+        <file alias="fit_to_page.lci">fit_to_page.svg</file>
+        <file alias="folderclosed.lci">folderclosed.svg</file>
+        <file alias="grid.lci">grid.svg</file>
+        <file alias="grid_iso_left.lci">grid_iso_left.svg</file>
+        <file alias="grid_iso_right.lci">grid_iso_right.svg</file>
+        <file alias="grid_iso_top.lci">grid_iso_top.svg</file>
+        <file alias="grid_ortho.lci">grid_ortho.svg</file>
+        <file alias="halign_left.lci">halign_left.svg</file>
+        <file alias="halign_middle.lci">halign_middle.svg</file>
+        <file alias="halign_right.lci">halign_right.svg</file>
+        <file alias="hatch.lci">hatch.svg</file>
+        <file alias="import.lci">import.svg</file>
+        <file alias="info_cursor_enable.lci">info_cursor_enable.svg</file>
+        <file alias="info_cursor_entity.lci">info_cursor_entity.svg</file>
+        <file alias="info_cursor_zone1.lci">info_cursor_zone1.svg</file>
+        <file alias="info_cursor_zone2.lci">info_cursor_zone2.svg</file>
+        <file alias="info_cursor_zone2_entity.lci">info_cursor_zone2_entity.svg</file>
+        <file alias="info_cursor_zone3.lci">info_cursor_zone3.svg</file>
+        <file alias="info_cursor_zone4.lci">info_cursor_zone4.svg</file>
+        <file alias="insert_active_block.lci">insert_active_block.svg</file>
+        <file alias="insert_node.lci">insert_node.svg</file>
+        <file alias="invisible.lci">invisible.svg</file>
+        <file alias="line.lci">line.svg</file>
+        <file alias="line_2p.lci">line_2p.svg</file>
+        <file alias="line_angle.lci">line_angle.svg</file>
+        <file alias="line_angle_rel.lci">line_angle_rel.svg</file>
+        <file alias="line_bisector.lci">line_bisector.svg</file>
+        <file alias="line_freehand.lci">line_freehand.svg</file>
+        <file alias="line_gap.lci">line_gap.svg</file>
+        <file alias="line_horizontal.lci">line_horizontal.svg</file>
+        <file alias="line_join.lci">line_join.svg</file>
+        <file alias="line_middle.lci">line_middle.svg</file>
+        <file alias="line_ortho_rel.lci">line_ortho_rel.svg</file>
+        <file alias="line_parallel.lci">line_parallel.svg</file>
+        <file alias="line_parallel_p.lci">line_parallel_p.svg</file>
+        <file alias="line_perpendicular.lci">line_perpendicular.svg</file>
+        <file alias="line_points.lci">line_points.svg</file>
+        <file alias="line_polygon_cen_cor.lci">line_polygon_cen_cor.svg</file>
+        <file alias="line_polygon_cen_tan.lci">line_polygon_cen_tan.svg</file>
+        <file alias="line_polygon_cor_cor.lci">line_polygon_cor_cor.svg</file>
+        <file alias="line_polygon_size_size.lci">line_polygon_size_size.svg</file>
+        <file alias="line_polygon_star.lci">line_polygon_star.svg</file>
+        <file alias="line_rectangle.lci">line_rectangle.svg</file>
+        <file alias="line_rel.lci">line_rel.svg</file>
+        <file alias="line_rel_x.lci">line_rel_x.svg</file>
+        <file alias="line_rel_y.lci">line_rel_y.svg</file>
+        <file alias="line_relative_angle.lci">line_relative_angle.svg</file>
+        <file alias="line_tangent_cc.lci">line_tangent_cc.svg</file>
+        <file alias="line_tangent_pc.lci">line_tangent_pc.svg</file>
+        <file alias="line_tangent_perpendicular.lci">line_tangent_perpendicular.svg</file>
+        <file alias="line_to_ortho.lci">line_to_ortho.svg</file>
+        <file alias="line_vertical.lci">line_vertical.svg</file>
+        <file alias="lock_rel_zero.lci">lock_rel_zero.svg</file>
+        <file alias="locked.lci">locked.svg</file>
+        <file alias="measure.lci">measure.svg</file>
+        <file alias="mirror.lci">mirror.svg</file>
+        <file alias="modify.lci">modify.svg</file>
+        <file alias="mouse.lci">mouse.svg</file>
+        <file alias="move_copy.lci">move_copy.svg</file>
+        <file alias="move_rotate.lci">move_rotate.svg</file>
+        <file alias="mtext.lci">mtext.svg</file>
+        <file alias="mtext_align_bottomcenter.lci">mtext_align_bottomcenter.svg</file>
+        <file alias="mtext_align_bottomcenter.lci">mtext_align_bottomcenter.svg</file>
+        <file alias="mtext_align_bottomright.lci">mtext_align_bottomright.svg</file>
+        <file alias="mtext_align_middlecenter.lci">mtext_align_middlecenter.svg</file>
+        <file alias="mtext_align_middleleft.lci">mtext_align_middleleft.svg</file>
+        <file alias="mtext_align_middleright.lci">mtext_align_middleright.svg</file>
+        <file alias="mtext_align_topcenter.lci">mtext_align_topcenter.svg</file>
+        <file alias="mtext_align_topleft.lci">mtext_align_topleft.svg</file>
+        <file alias="mtext_align_topright.lci">mtext_align_topright.svg</file>
+        <file alias="multi_pages.lci">multi_pages.svg</file>
+        <file alias="new.lci">new.svg</file>
+        <file alias="new_from_template.lci">new_from_template.svg</file>
+        <file alias="no_align.lci">no_align.svg</file>
+        <file alias="noconstruction.lci">noconstruction.svg</file>
+        <file alias="noprint.lci">noprint.svg</file>
+        <file alias="not_visible.lci">not_visible.svg</file>
+        <file alias="not_visible_all.lci">not_visible_all.svg</file>
+        <file alias="nview_add.lci">nview_add.svg</file>
+        <file alias="nview_visible.lci">nview_visible.svg</file>
+        <file alias="offset.lci">offset.svg</file>
+        <file alias="open.lci">open.svg</file>
+        <file alias="options.lci">options.svg</file>
+        <file alias="order.lci">order.svg</file>
+        <file alias="page_landscape.lci">page_landscape.svg</file>
+        <file alias="page_portait.lci">page_portait.svg</file>
+        <file alias="parabola_4_points.lci">parabola_4_points.svg</file>
+        <file alias="parabola_focus_directrix.lci">parabola_focus_directrix.svg</file>
+        <file alias="paste.lci">paste.svg</file>
+        <file alias="paste_to_points.lci">paste_to_points.svg</file>
+        <file alias="paste_transform.lci">paste_transform.svg</file>
+        <file alias="pen_2_current.lci">pen_2_current.svg</file>
+        <file alias="pen_apply.lci">pen_apply.svg</file>
+        <file alias="pen_apply_to_selection.lci">pen_apply_to_selection.svg</file>
+        <file alias="pen_copy.lci">pen_copy.svg</file>
+        <file alias="pen_fill_by_current.lci">pen_fill_by_current.svg</file>
+        <file alias="pen_pick_entity.lci">pen_pick_entity.svg</file>
+        <file alias="pen_pick_layer.lci">pen_pick_layer.svg</file>
+        <file alias="pen_pick_resolved.lci">pen_pick_resolved.svg</file>
+        <file alias="pen_to_layer.lci">pen_to_layer.svg</file>
+        <file alias="pick_coordinates.lci">pick_coordinates.svg</file>
+        <file alias="point_blank.lci">point_blank.svg</file>
+        <file alias="point_blank_circle.lci">point_blank_circle.svg</file>
+        <file alias="point_blank_circle_square.lci">point_blank_circle_square.svg</file>
+        <file alias="point_blank_square.lci">point_blank_square.svg</file>
+        <file alias="point_cross.lci">point_cross.svg</file>
+        <file alias="point_cross_circle.lci">point_cross_circle.svg</file>
+        <file alias="point_cross_circle_square.lci">point_cross_circle_square.svg</file>
+        <file alias="point_cross_square.lci">point_cross_square.svg</file>
+        <file alias="point_dot.lci">point_dot.svg</file>
+        <file alias="point_dot_circle.lci">point_dot_circle.svg</file>
+        <file alias="point_dot_circle_square.lci">point_dot_circle_square.svg</file>
+        <file alias="point_dot_square.lci">point_dot_square.svg</file>
+        <file alias="point_plus.lci">point_plus.svg</file>
+        <file alias="point_plus_circle.lci">point_plus_circle.svg</file>
+        <file alias="point_plus_circle_square.lci">point_plus_circle_square.svg</file>
+        <file alias="point_plus_square.lci">point_plus_square.svg</file>
+        <file alias="point_tick.lci">point_tick.svg</file>
+        <file alias="point_tick_circle.lci">point_tick_circle.svg</file>
+        <file alias="point_tick_circle_square.lci">point_tick_circle_square.svg</file>
+        <file alias="point_tick_square.lci">point_tick_square.svg</file>
+        <file alias="points.lci">points.svg</file>
+        <file alias="points_lattice.lci">points_lattice.svg</file>
+        <file alias="points_middle.lci">points_middle.svg</file>
+        <file alias="polygonal_area.lci">polygonal_area.svg</file>
+        <file alias="polyline_arc_to_lines.lci">polyline_arc_to_lines.svg</file>
+        <file alias="polyline_segment_type.lci">polyline_segment_type.svg</file>
+        <file alias="polylines.lci">polylines.svg</file>
+        <file alias="polylines_polyline.lci">polylines_polyline.svg</file>
+        <file alias="print.lci">print.svg</file>
+        <file alias="print_preview.lci">print_preview.svg</file>
+        <file alias="properties.lci">properties.svg</file>
+        <file alias="quit.lci">quit.svg</file>
+        <file alias="rectangle_1_point.lci">rectangle_1_point.svg</file>
+        <file alias="rectangle_2_points.lci">rectangle_2_points.svg</file>
+        <file alias="rectangle_3_points.lci">rectangle_3_points.svg</file>
+        <file alias="redo.lci">redo.svg</file>
+        <file alias="redraw.lci">redraw.svg</file>
+        <file alias="remove.lci">remove.svg</file>
+        <file alias="rename_active_block.lci">rename_active_block.svg</file>
+        <file alias="restr_hor.lci">restr_hor.svg</file>
+        <file alias="restr_ortho.lci">restr_ortho.svg</file>
+        <file alias="restr_ver.lci">restr_ver.svg</file>
+        <file alias="restrict_nothing.lci">restrict_nothing.svg</file>
+        <file alias="revert_direction.lci">revert_direction.svg</file>
+        <file alias="rotate.lci">rotate.svg</file>
+        <file alias="rotate2.lci">rotate2.svg</file>
+        <file alias="save.lci">save.svg</file>
+        <file alias="save_all.lci">save_all.svg</file>
+        <file alias="save_as.lci">save_as.svg</file>
+        <file alias="scale.lci">scale.svg</file>
+        <file alias="scaleLineWidth.lci">scaleLineWidth.svg</file>
+        <file alias="select.lci">select.svg</file>
+        <file alias="select_all.lci">select_all.svg</file>
+        <file alias="select_by_pen_drawing.lci">select_by_pen_drawing.svg</file>
+        <file alias="select_by_pen_resolved.lci">select_by_pen_resolved.svg</file>
+        <file alias="select_entity.lci">select_entity.svg</file>
+        <file alias="select_intersected_entities.lci">select_intersected_entities.svg</file>
+        <file alias="select_inverted.lci">select_inverted.svg</file>
+        <file alias="select_points.lci">select_points.svg</file>
+        <file alias="select_window.lci">select_window.svg</file>
+        <file alias="set_rel_zero.lci">set_rel_zero.svg</file>
+        <file alias="set_ucs.lci">set_ucs.svg</file>
+        <file alias="settings.lci">settings.svg</file>
+        <file alias="shortcuts_settings.lci">shortcuts_settings.svg</file>
+        <file alias="slice_divide.lci">slice_divide.svg</file>
+        <file alias="slice_divide_circle.lci">slice_divide_circle.svg</file>
+        <file alias="snap_center.lci">snap_center.svg</file>
+        <file alias="snap_distance.lci">snap_distance.svg</file>
+        <file alias="snap_endpoints.lci">snap_endpoints.svg</file>
+        <file alias="snap_entity.lci">snap_entity.svg</file>
+        <file alias="snap_exclusive.lci">snap_exclusive.svg</file>
+        <file alias="snap_free.lci">snap_free.svg</file>
+        <file alias="snap_grid.lci">snap_grid.svg</file>
+        <file alias="snap_intersection.lci">snap_intersection.svg</file>
+        <file alias="snap_middle.lci">snap_middle.svg</file>
+        <file alias="snap_middle_manual.lci">snap_middle_manual.svg</file>
+        <file alias="spline.lci">spline.svg</file>
+        <file alias="spline_explode.lci">spline_explode.svg</file>
+        <file alias="spline_from_polyline.lci">spline_from_polyline.svg</file>
+        <file alias="spline_points.lci">spline_points.svg</file>
+        <file alias="spline_points_add.lci">spline_points_add.svg</file>
+        <file alias="spline_points_insert.lci">spline_points_insert.svg</file>
+        <file alias="spline_points_remove.lci">spline_points_remove.svg</file>
+        <file alias="spline_points_remove_two.lci">spline_points_remove_two.svg</file>
+        <file alias="state-shift_no.lci">state-shift_no.svg</file>
+        <file alias="state-shift_yes.lci">state-shift_yes.svg</file>
+        <file alias="state_ctrl_yes.lci">state_ctrl_yes.svg</file>
+        <file alias="stretch.lci">stretch.svg</file>
+        <file alias="text.lci">text.svg</file>
+        <file alias="text_align_baselinecenter.lci">text_align_baselinecenter.svg</file>
+        <file alias="text_align_baselineleft.lci">text_align_baselineleft.svg</file>
+        <file alias="text_align_baselineright.lci">text_align_baselineright.svg</file>
+        <file alias="text_align_bottomcenter.lci">text_align_bottomcenter.svg</file>
+        <file alias="text_align_bottomleft.lci">text_align_bottomleft.svg</file>
+        <file alias="text_align_bottomright.lci">text_align_bottomright.svg</file>
+        <file alias="text_align_middlecenter.lci">text_align_middlecenter.svg</file>
+        <file alias="text_align_middleleft.lci">text_align_middleleft.svg</file>
+        <file alias="text_align_middleright.lci">text_align_middleright.svg</file>
+        <file alias="text_align_topcenter.lci">text_align_topcenter.svg</file>
+        <file alias="text_align_topleft.lci">text_align_topleft.svg</file>
+        <file alias="text_align_topright.lci">text_align_topright.svg</file>
+        <file alias="tolerance1.lci">tolerance1.svg</file>
+        <file alias="tolerance2.lci">tolerance2.svg</file>
+        <file alias="total_length_selected_entities.lci">total_length_selected_entities.svg</file>
+        <file alias="trim.lci">trim.svg</file>
+        <file alias="trim2.lci">trim2.svg</file>
+        <file alias="trim_segments.lci">trim_segments.svg</file>
+        <file alias="trim_value.lci">trim_value.svg</file>
+        <file alias="ucs_add.lci">ucs_add.svg</file>
+        <file alias="ucs_preview.lci">ucs_preview.svg</file>
+        <file alias="ucs_set.lci">ucs_set.svg</file>
+        <file alias="ucs_set_wcs.lci">ucs_set_wcs.svg</file>
+        <file alias="ucs_ucs.lci">ucs_ucs.svg</file>
+        <file alias="ucs_wcs.lci">ucs_wcs.svg</file>
+        <file alias="undo.lci">undo.svg</file>
+        <file alias="unlocked.lci">unlocked.svg</file>
+        <file alias="up.lci">up.svg</file>
+        <file alias="upmost.lci">upmost.svg</file>
+        <file alias="valign_bottom.lci">valign_bottom.svg</file>
+        <file alias="valign_middle.lci">valign_middle.svg</file>
+        <file alias="valign_top.lci">valign_top.svg</file>
+        <file alias="visible.lci">visible.svg</file>
+        <file alias="visible_all.lci">visible_all.svg</file>
+        <file alias="zoom_auto.lci">zoom_auto.svg</file>
+        <file alias="zoom_in.lci">zoom_in.svg</file>
+        <file alias="zoom_out.lci">zoom_out.svg</file>
+        <file alias="zoom_pan.lci">zoom_pan.svg</file>
+        <file alias="zoom_previous.lci">zoom_previous.svg</file>
+        <file alias="zoom_window.lci">zoom_window.svg</file>
     </qresource>
 </RCC>
