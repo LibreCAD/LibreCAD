@@ -225,7 +225,6 @@ include_directories(librecad/src/ui/editor)
 
 set(SOURCES
         librecad/res/actions/actions.qrc
-        librecad/res/editor/librepad.qrc
         librecad/res/extui/extui.qrc
         librecad/res/ui/ui.qrc
         librecad/res/icons/icons.qrc
@@ -792,9 +791,9 @@ set(SOURCES
         librecad/src/lib/scripting/lisp/LCL.h
         librecad/src/lib/scripting/lisp/RefCountedPtr.h
         librecad/src/lib/scripting/lisp/StaticList.h
-        librecad/src/lib/scripting/lisp/String.cpp
+        librecad/src/lib/scripting/lisp/lstring.cpp
         librecad/src/lib/scripting/lisp/Types.cpp
-        librecad/src/lib/scripting/lisp/String.h
+        librecad/src/lib/scripting/lisp/lstring.h
         librecad/src/lib/scripting/lisp/Types.h
         librecad/src/lib/scripting/lisp/Validation.cpp
         librecad/src/lib/scripting/python/rs_pythoncore.cpp
@@ -847,8 +846,8 @@ set(SOURCES
 #        librecad/src/main/qc_graphicview.h
 		librecad/src/ui/main/qc_mdiwindow.cpp
         librecad/src/ui/main/qc_mdiwindow.h
-        librecad/src/plugins/intern/qc_actionentget.cpp
-        librecad/src/plugins/intern/qc_actionentget.h
+        librecad/src/plugins/intern/qc_actionentsel.cpp
+        librecad/src/plugins/intern/qc_actionentsel.h
         librecad/src/plugins/intern/qc_actiongetcorner.cpp
         librecad/src/plugins/intern/qc_actiongetcorner.h
         librecad/src/plugins/intern/qc_actiongetdist.cpp
@@ -1111,12 +1110,8 @@ set(SOURCES
 		librecad/src/ui/dock_widgets/command_line/qg_commandhistory.h
 		librecad/src/ui/dock_widgets/lsp_command_line/qg_lsp_commandedit.cpp
 		librecad/src/ui/dock_widgets/lsp_command_line/qg_lsp_commandedit.h
-		librecad/src/ui/dock_widgets/lsp_command_line/qg_lsp_commandhistory.cpp
-		librecad/src/ui/dock_widgets/lsp_command_line/qg_lsp_commandhistory.h
 		librecad/src/ui/dock_widgets/py_command_line/qg_py_commandedit.cpp
 		librecad/src/ui/dock_widgets/py_command_line/qg_py_commandedit.h
-		librecad/src/ui/dock_widgets/py_command_line/qg_py_commandhistory.cpp
-		librecad/src/ui/dock_widgets/py_command_line/qg_py_commandhistory.h
 		librecad/src/ui/dialogs/qg_dialogfactory.cpp
 		librecad/src/ui/dialogs/qg_dialogfactory.h
 		librecad/src/ui/dialogs/file/qg_filedialog.cpp
@@ -1238,6 +1233,8 @@ set(SOURCES
 		librecad/src/ui/components/lc_plaintextedit.h
 		librecad/src/ui/components/commandedit.h
 		librecad/src/ui/components/commandedit.cpp
+        librecad/src/ui/components/commandhistory.h
+         librecad/src/ui/components/commandhistory.cpp
 		librecad/src/actions/drawing/info/lc_actioninfoproperties.cpp
 		librecad/src/actions/dock_widgets/entity_info/lc_actioninfopickcoordinates.cpp
 		librecad/src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.h
