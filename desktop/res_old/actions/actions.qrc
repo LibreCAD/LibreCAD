@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/actions">
-        <file>configure.png</file>
+        <file>back.png</file>
         <file>drawingprefs.png</file>
         <file>editcopy.png</file>
         <file>editcopy2.png</file>
@@ -24,9 +24,11 @@
         <file>filesave2.png</file>
         <file>filesaveas.png</file>
         <file>redo2.png</file>
+        <file>state_ctrl.png</file>
+        <file>state_shift.png</file>
         <file>undo2.png</file>
-        <file>viewdraft.png</file>
         <file>view_grid.svg</file>
+        <file>viewdraft.png</file>
         <file>zoomauto.png</file>
         <file>zoomin.png</file>
         <file>zoomout.png</file>
@@ -34,8 +36,5 @@
         <file>zoomprevious.png</file>
         <file>zoomredraw.png</file>
         <file>zoomwindow.png</file>
-        <file>back.png</file>
-        <file>state_ctrl.png</file>
-        <file>state_shift.png</file>
     </qresource>
 </RCC>

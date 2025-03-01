@@ -50,8 +50,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../../res/extui/extui.qrc">
-       <normaloff>:/extui/snapendpoint.png</normaloff>:/extui/snapendpoint.png</iconset>
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/snap_endpoints.lci</normaloff>:/icons/snap_endpoints.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -67,8 +67,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../../res/extui/extui.qrc">
-       <normaloff>:/extui/snapmiddle.png</normaloff>:/extui/snapmiddle.png</iconset>
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/snap_middle.lci</normaloff>:/icons/snap_middle.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -84,8 +84,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../../res/extui/extui.qrc">
-       <normaloff>:/extui/snapcenter.png</normaloff>:/extui/snapcenter.png</iconset>
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/snap_center.lci</normaloff>:/icons/snap_center.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -101,8 +101,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../../res/extui/extui.qrc">
-       <normaloff>:/extui/snapintersection.png</normaloff>:/extui/snapintersection.png</iconset>
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/snap_intersection.lci</normaloff>:/icons/snap_intersection.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -118,8 +118,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../../res/extui/extui.qrc">
-       <normaloff>:/extui/snaponentity.png</normaloff>:/extui/snaponentity.png</iconset>
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/snap_entity.lci</normaloff>:/icons/snap_entity.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -135,8 +135,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../../res/extui/extui.qrc">
-       <normaloff>:/extui/snapdist.png</normaloff>:/extui/snapdist.png</iconset>
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/snap_distance.lci</normaloff>:/icons/snap_distance.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -169,8 +169,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../../res/extui/extui.qrc">
-       <normaloff>:/extui/snapgrid.png</normaloff>:/extui/snapgrid.png</iconset>
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/snap_grid.lci</normaloff>:/icons/snap_grid.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -186,8 +186,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../../res/extui/extui.qrc">
-       <normaloff>:/extui/restricthorizontal.png</normaloff>:/extui/restricthorizontal.png</iconset>
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/restr_hor.lci</normaloff>:/icons/restr_hor.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -203,8 +203,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../../res/extui/extui.qrc">
-       <normaloff>:/extui/restrictvertical.png</normaloff>:/extui/restrictvertical.png</iconset>
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/restr_ver.lci</normaloff>:/icons/restr_ver.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -262,6 +262,8 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
   <include location="../../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
