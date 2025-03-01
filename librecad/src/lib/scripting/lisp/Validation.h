@@ -4,7 +4,7 @@
 #ifdef DEVELOPER
 
 #include "lisp.h"
-#include "String.h"
+#include "lstring.h"
 #include <iostream>
 
 //if (!(condition)) { try { throw STRF(__VA_ARGS__); } catch (const char* e) { std::cerr << e << std::endl; } } else { }

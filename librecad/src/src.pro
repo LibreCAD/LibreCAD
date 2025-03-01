@@ -441,7 +441,7 @@ HEADERS += \
     lib/scripting/lisp/lisp_version.h \
     lib/scripting/lisp/RefCountedPtr.h \
     lib/scripting/lisp/StaticList.h \
-    lib/scripting/lisp/String.h \
+    lib/scripting/lisp/lstring.h \
     lib/scripting/lisp/Types.h \
     lib/scripting/lisp/Validation.h \
     lib/scripting/python/rs_pythoncore.h \

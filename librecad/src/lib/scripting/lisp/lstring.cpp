@@ -2,7 +2,7 @@
 #ifdef DEVELOPER
 
 #include "Debug.h"
-#include "String.h"
+#include "lstring.h"
 
 #include <stdarg.h>
 #include <stdio.h>

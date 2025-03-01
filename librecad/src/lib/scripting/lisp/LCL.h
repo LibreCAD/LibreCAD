@@ -5,7 +5,7 @@
 
 #include "Debug.h"
 #include "RefCountedPtr.h"
-#include "String.h"
+#include "lstring.h"
 #include "Validation.h"
 #include <sstream>
 
