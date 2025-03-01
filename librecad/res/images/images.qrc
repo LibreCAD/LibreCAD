@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>librecad.png</file>
+        <file>intro_librecad.png</file>
+        <file>librecad01_alpha.png</file>
+        <file>librecad01_beta.png</file>
+        <file>librecad01_rc.png</file>
+        <file>librecad01_release.png</file>
+        <file>splash_librecad.png</file>
+        <file>splash_librecad_alpha.png</file>
+        <file>splash_librecad_beta.png</file>
+    </qresource>
+</RCC>
