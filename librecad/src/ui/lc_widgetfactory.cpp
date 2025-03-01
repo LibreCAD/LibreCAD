@@ -361,21 +361,21 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
 
 }
 
-void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size){
-    auto* line = leftDocWidget(tr("Line"), "Line", line_actions, columns, icon_size);
-    auto* point = leftDocWidget(tr("Point"), "Point", point_actions, columns, icon_size);
-    auto* shape = leftDocWidget(tr("Polygon"), "Polygon", shape_actions, columns, icon_size);
-    auto* circle = leftDocWidget(tr("Circle"), "Circle", circle_actions, columns, icon_size);
-    auto* curve = leftDocWidget(tr("Arc"), "Curve", curve_actions, columns, icon_size);
-    auto* spline = leftDocWidget(tr("Spline"), "Spline", spline_actions, columns, icon_size);
-    auto* ellipse = leftDocWidget(tr("Ellipse"), "Ellipse", ellipse_actions, columns, icon_size);
-    auto* polyline = leftDocWidget(tr("Polyline"), "Polyline", polyline_actions, columns, icon_size);
-    auto* select = leftDocWidget(tr("Select"), "Select", select_actions, columns, icon_size);
-    auto* dimension = leftDocWidget(tr("Dimension"), "Dimension", dimension_actions, columns, icon_size);
-    auto* other = leftDocWidget(tr("Other"), "Other", other_drawing_actions, columns, icon_size);
-    auto* modify = leftDocWidget(tr("Modify"), "Modify", modify_actions, columns, icon_size);
-    auto* info = leftDocWidget(tr("Info"), "Info", info_actions, columns, icon_size);
-    auto* order = leftDocWidget(tr("Order"), "Order", order_actions, columns, icon_size);
+void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size, bool flatButtons){
+    auto* line = leftDocWidget(tr("Line"), "Line", line_actions, columns, icon_size, flatButtons);
+    auto* point = leftDocWidget(tr("Point"), "Point", point_actions, columns, icon_size, flatButtons);
+    auto* shape = leftDocWidget(tr("Polygon"), "Polygon", shape_actions, columns, icon_size, flatButtons);
+    auto* circle = leftDocWidget(tr("Circle"), "Circle", circle_actions, columns, icon_size, flatButtons);
+    auto* curve = leftDocWidget(tr("Arc"), "Curve", curve_actions, columns, icon_size, flatButtons);
+    auto* spline = leftDocWidget(tr("Spline"), "Spline", spline_actions, columns, icon_size, flatButtons);
+    auto* ellipse = leftDocWidget(tr("Ellipse"), "Ellipse", ellipse_actions, columns, icon_size, flatButtons);
+    auto* polyline = leftDocWidget(tr("Polyline"), "Polyline", polyline_actions, columns, icon_size, flatButtons);
+    auto* select = leftDocWidget(tr("Select"), "Select", select_actions, columns, icon_size, flatButtons);
+    auto* dimension = leftDocWidget(tr("Dimension"), "Dimension", dimension_actions, columns, icon_size, flatButtons);
+    auto* other = leftDocWidget(tr("Other"), "Other", other_drawing_actions, columns, icon_size, flatButtons);
+    auto* modify = leftDocWidget(tr("Modify"), "Modify", modify_actions, columns, icon_size, flatButtons);
+    auto* info = leftDocWidget(tr("Info"), "Info", info_actions, columns, icon_size, flatButtons);
+    auto* order = leftDocWidget(tr("Order"), "Order", order_actions, columns, icon_size, flatButtons);
 
     main_window->addDockWidget(Qt::LeftDockWidgetArea, line);
     main_window->tabifyDockWidget(line, polyline);
@@ -407,6 +407,8 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
         pen_palette->setFocusPolicy(Qt::NoFocus);
         connect(pen_palette, SIGNAL(escape()), main_window, SLOT(slotFocus()));
 //        connect(main_window, SIGNAL(windowsChanged(bool)), pen_palette, SLOT(setEnabled(bool)));
+
+        connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, pen_palette, &LC_PenPaletteWidget::updateWidgetSettings);
         dock_pen_palette ->setWidget(pen_palette);
     }
     auto* dock_layer = new QDockWidget(main_window);
@@ -419,6 +421,8 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
 //    connect(main_window, SIGNAL(windowsChanged(bool)), layer_widget, SLOT(setEnabled(bool)));
     dock_layer->setWidget(layer_widget);
 
+    connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, layer_widget, &QG_LayerWidget::updateWidgetSettings);
+
     auto* dock_views = new QDockWidget(main_window);
     dock_views->setWindowTitle(tr("Named Views"));
     dock_views->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
@@ -426,6 +430,8 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     named_views_widget = new LC_NamedViewsListWidget("View", dock_views);
     named_views_widget->setFocusPolicy(Qt::NoFocus);
     dock_views->setWidget(named_views_widget);
+
+    connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, named_views_widget, &LC_NamedViewsListWidget::updateWidgetSettings);
 
     auto* dock_ucss = new QDockWidget(main_window);
     dock_ucss->setWindowTitle(tr("UCSs"));
@@ -435,6 +441,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     ucs_widget->setFocusPolicy(Qt::NoFocus);
     dock_ucss->setWidget(ucs_widget);
 
+    connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, ucs_widget, &LC_UCSListWidget::updateWidgetSettings);
     connect(ucs_widget, &LC_UCSListWidget::ucsListChanged, named_views_widget, &LC_NamedViewsListWidget::onUcsListChanged);
 
     QDockWidget* dock_layer_tree = nullptr;
@@ -449,6 +456,8 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
 //        connect(main_window, SIGNAL(windowsChanged(bool)), layer_tree_widget, SLOT(setEnabled(bool)));
         layer_tree_widget->setVisible(false);
         dock_layer_tree->setWidget(layer_tree_widget);
+
+        connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, layer_tree_widget, &LC_LayerTreeWidget::updateWidgetSettings);
     }
 
     QDockWidget* dock_quick_info = nullptr;
@@ -458,12 +467,10 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     dock_quick_info->setObjectName("quick_entity_info");
     quick_info_widget = new LC_QuickInfoWidget(dock_quick_info, ag_manager->getActionsMap());
     quick_info_widget->setFocusPolicy(Qt::NoFocus);
-//    quick_info_widget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    //connect(quick_info_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
-//    connect(main_window, SIGNAL(windowsChanged(bool)), quick_info_widget, SLOT(setEnabled(bool)));
     quick_info_widget->setVisible(false);
     dock_quick_info->setWidget(quick_info_widget);
 
+    connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, quick_info_widget, &LC_QuickInfoWidget::updateWidgetSettings);
 
     auto* dock_block = new QDockWidget(main_window);
     dock_block->setWindowTitle(tr("Block List"));
@@ -472,7 +479,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     block_widget = new QG_BlockWidget(action_handler, dock_block, "Block");
     block_widget->setFocusPolicy(Qt::NoFocus);
     connect(block_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
-//    connect(main_window, SIGNAL(windowsChanged(bool)), block_widget, SLOT(setEnabled(bool)));
+    connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, block_widget, &QG_BlockWidget::updateWidgetSettings);
     dock_block->setWidget(block_widget);
 
     auto* dock_library = new QDockWidget(main_window);
@@ -483,8 +490,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     library_widget->setActionHandler(action_handler);
     library_widget->setFocusPolicy(Qt::NoFocus);
     connect(library_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
-//    connect(main_window, SIGNAL(windowsChanged(bool)),
-//            (QObject*) library_widget->getInsertButton(), SLOT(setEnabled(bool)));
+    connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, library_widget, &QG_LibraryWidget::updateWidgetSettings);
     dock_library->setWidget(library_widget);
     dock_library->resize(240, 400);
 
@@ -493,8 +499,6 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     dock_command->setObjectName("command_dockwidget");
     command_widget = new QG_CommandWidget(dock_command, "Command");
     command_widget->setActionHandler(action_handler);
-    // command_widget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-//    connect(main_window, SIGNAL(windowsChanged(bool)), command_widget, SLOT(setEnabled(bool)));
     connect(command_widget->leCommand, SIGNAL(escape()), main_window, SLOT(setFocus()));
     dock_command->setWidget(command_widget);
 
@@ -673,20 +677,20 @@ QToolBar *LC_WidgetFactory::createCategoriesToolbar() {
     auto *toolbar = createGenericToolbar(tr("Categories"), "Categories",
                                          QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding), {});
 
-    toolButton(toolbar, tr("Lines"), ":/icons/line.svg", line_actions);
-    toolButton(toolbar, tr("Points"), ":/icons/points.svg", point_actions);
-    toolButton(toolbar, tr("Polygons"), ":/icons/circle.svg", circle_actions);
-    toolButton(toolbar, tr("Arcs"), ":/icons/arc_center_point_angle.svg", curve_actions);
-    toolButton(toolbar, tr("Splines"), ":/icons/spline_points.svg", spline_actions);
-    toolButton(toolbar, tr("Polygons"), ":/icons/rectangle_2_points.svg", shape_actions);
-    toolButton(toolbar, tr("Ellipses"), ":/icons/ellipses.svg", ellipse_actions);
-    toolButton(toolbar, tr("PolyLines"), ":/icons/polylines.svg", polyline_actions);
-    toolButton(toolbar, tr("Select"), ":/icons/select.svg", select_actions);
-    toolButton(toolbar, tr("Dimensions"), ":/icons/dim_horizontal.svg", dimension_actions);
-    toolButton(toolbar, tr("Other"), ":/icons/text.svg", other_drawing_actions);
-    toolButton(toolbar, tr("Modify"), ":/icons/move_rotate.svg", modify_actions);
-    toolButton(toolbar, tr("Measure"), ":/icons/measure.svg", info_actions);
-    toolButton(toolbar, tr("Order"), ":/icons/order.svg", order_actions);
+    toolButton(toolbar, tr("Lines"), ":/icons/line.lci", line_actions);
+    toolButton(toolbar, tr("Points"), ":/icons/points.lci", point_actions);
+    toolButton(toolbar, tr("Polygons"), ":/icons/circle.lci", circle_actions);
+    toolButton(toolbar, tr("Arcs"), ":/icons/arc_center_point_angle.lci", curve_actions);
+    toolButton(toolbar, tr("Splines"), ":/icons/spline_points.lci", spline_actions);
+    toolButton(toolbar, tr("Polygons"), ":/icons/rectangle_2_points.lci", shape_actions);
+    toolButton(toolbar, tr("Ellipses"), ":/icons/ellipses.lci", ellipse_actions);
+    toolButton(toolbar, tr("PolyLines"), ":/icons/polylines.lci", polyline_actions);
+    toolButton(toolbar, tr("Select"), ":/icons/select.lci", select_actions);
+    toolButton(toolbar, tr("Dimensions"), ":/icons/dim_horizontal.lci", dimension_actions);
+    toolButton(toolbar, tr("Other"), ":/icons/text.lci", other_drawing_actions);
+    toolButton(toolbar, tr("Modify"), ":/icons/move_rotate.lci", modify_actions);
+    toolButton(toolbar, tr("Measure"), ":/icons/measure.lci", info_actions);
+    toolButton(toolbar, tr("Order"), ":/icons/order.lci", order_actions);
 
     toolbar->setProperty("_group", 1);
 
@@ -706,12 +710,12 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         ""
     });
 
-    subMenu(file_menu, tr("Import"),"import", ":/icons/import.svg", {
+    subMenu(file_menu, tr("Import"),"import", ":/icons/import.lci", {
         "DrawImage",
         "BlocksImport"
     });
 
-    subMenu(file_menu, tr("Export"),"export", ":/icons/export.svg", {
+    subMenu(file_menu, tr("Export"),"export", ":/icons/export.lci", {
         "FileExportMakerCam",
         "FilePrintPDF",
         "FileExport"
@@ -787,7 +791,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     });
 
 
-    /*auto views_restore_menu = */subMenu(view_menu, tr("&Views Restore"), "view_restore", ":/icons/nview_visible.svg",
+    /*auto views_restore_menu = */subMenu(view_menu, tr("&Views Restore"), "view_restore", ":/icons/nview_visible.lci",
                                       {"ZoomViewRestore1",
                                        "ZoomViewRestore2",
                                        "ZoomViewRestore3",
@@ -796,20 +800,20 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
 
 
     auto tools = menu(tr("&Tools"), "tools", menu_bar);
-    subMenuWithActions(tools, tr("&Line"), "line", ":/icons/line.svg", line_actions);
-    subMenuWithActions(tools, tr("Poin&t"), "line", ":/icons/points.svg", point_actions);
-    subMenuWithActions(tools, tr("&Circle"), "circle", ":/icons/circle.svg", circle_actions);
-    subMenuWithActions(tools, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.svg", curve_actions);
-    subMenuWithActions(tools, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.svg", shape_actions);
-    subMenuWithActions(tools, tr("Splin&e"), "spline", ":/icons/spline_points.svg", spline_actions);
-    subMenuWithActions(tools, tr("&Ellipse"), "ellipse", ":/icons/ellipses.svg", ellipse_actions);
-    subMenuWithActions(tools, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.svg", polyline_actions);
-    subMenuWithActions(tools, tr("&Select"), "select", ":/icons/select.svg", select_actions);
-    subMenuWithActions(tools, tr("Dime&nsion"), "dimension", ":/icons/dim_horizontal.svg", dimension_actions);
-    subMenuWithActions(tools, tr("Ot&her"), "other", ":/icons/text.svg", other_drawing_actions);
-    subMenuWithActions(tools, tr("&Modify"), "modify", ":/icons/move_rotate.svg", modify_actions);
-    subMenuWithActions(tools, tr("&Info"), "info", ":/icons/measure.svg", info_actions);
-    subMenuWithActions(tools, tr("&Order"), "order", ":/icons/order.svg", order_actions);
+    subMenuWithActions(tools, tr("&Line"), "line", ":/icons/line.lci", line_actions);
+    subMenuWithActions(tools, tr("Poin&t"), "line", ":/icons/points.lci", point_actions);
+    subMenuWithActions(tools, tr("&Circle"), "circle", ":/icons/circle.lci", circle_actions);
+    subMenuWithActions(tools, tr("&Arc"), "curve", ":/icons/arc_center_point_angle.lci", curve_actions);
+    subMenuWithActions(tools, tr("Poly&gon"), "polygon", ":/icons/rectangle_1_point.lci", shape_actions);
+    subMenuWithActions(tools, tr("Splin&e"), "spline", ":/icons/spline_points.lci", spline_actions);
+    subMenuWithActions(tools, tr("&Ellipse"), "ellipse", ":/icons/ellipses.lci", ellipse_actions);
+    subMenuWithActions(tools, tr("&Polyline"), "polyline", ":/icons/polylines_polyline.lci", polyline_actions);
+    subMenuWithActions(tools, tr("&Select"), "select", ":/icons/select.lci", select_actions);
+    subMenuWithActions(tools, tr("Dime&nsion"), "dimension", ":/icons/dim_horizontal.lci", dimension_actions);
+    subMenuWithActions(tools, tr("Ot&her"), "other", ":/icons/text.lci", other_drawing_actions);
+    subMenuWithActions(tools, tr("&Modify"), "modify", ":/icons/move_rotate.lci", modify_actions);
+    subMenuWithActions(tools, tr("&Info"), "info", ":/icons/measure.lci", info_actions);
+    subMenuWithActions(tools, tr("&Order"), "order", ":/icons/order.lci", order_actions);
 
     windows_menu = menu(tr("&Drawings"),"drawings", menu_bar, {
         "Fullscreen" // temp way to show this menu on OS X
@@ -829,7 +833,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     });
 
 
-    auto help_about = new QAction(QIcon(":/main/librecad.png"), tr("About"), main_window);
+    auto help_about = new QAction(QIcon(":/images/librecad.png"), tr("About"), main_window);
     connect(help_about, SIGNAL(triggered()), main_window, SLOT(showAboutWindow()));
 
     auto license = new QAction(QObject::tr("License"), main_window);
@@ -1106,12 +1110,15 @@ void  LC_WidgetFactory::fillActionsList(QList<QAction *> &list, const std::vecto
     }
 }
 
-LC_DockWidget* LC_WidgetFactory::leftDocWidget(const QString& title, const char* name, const QList<QAction*> &actions, int columns, int iconSize){
+LC_DockWidget* LC_WidgetFactory::leftDocWidget(const QString& title, const char* name, const QList<QAction*> &actions, int columns, int iconSize, bool flatButtons){
     auto* result = new LC_DockWidget(main_window);
     result->setObjectName("dock_" + QString(name).toLower());
     result->setWindowTitle(title);
-    result->add_actions(actions, columns, iconSize);
+    result->add_actions(actions, columns, iconSize, flatButtons);
     result->hide();
+
+    connect(main_window, &QC_ApplicationWindow::widgetSettingsChanged, result, &LC_DockWidget::updateWidgetSettings);
+
     return result;
 }
 
@@ -1249,6 +1256,10 @@ void LC_WidgetFactory::initStatusBar() {
 */
     }
     connect(main_window->anglesBasisWidget, &LC_AnglesBasisWidget::clicked, main_window, &QC_ApplicationWindow::slotShowDrawingOptionsUnits);
+
+    connect(main_window, &QC_ApplicationWindow::iconsRefreshed, main_window->ucsStateWidget, &LC_UCSStateWidget::onIconsRefreshed);
+    connect(main_window, &QC_ApplicationWindow::iconsRefreshed, main_window->anglesBasisWidget, &LC_AnglesBasisWidget::onIconsRefreshed);
+    connect(main_window, &QC_ApplicationWindow::iconsRefreshed, main_window->mouseWidget, &QG_MouseWidget::onIconsRefreshed);
 }
 
 

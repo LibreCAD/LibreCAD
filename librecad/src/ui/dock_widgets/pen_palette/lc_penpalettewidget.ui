@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>371</width>
+    <width>648</width>
     <height>204</height>
    </rect>
   </property>
@@ -49,8 +49,11 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../res/extui/extui.qrc">
-         <normaloff>:/extui/relzeromove.png</normaloff>:/extui/relzeromove.png</iconset>
+        <iconset resource="../../../../res/icons/icons.qrc">
+         <normaloff>:/icons/pen_pick_resolved.lci</normaloff>:/icons/pen_pick_resolved.lci</iconset>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -63,8 +66,11 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../res/extui/extui.qrc">
-         <normaloff>:/extui/selectsingle.png</normaloff>:/extui/selectsingle.png</iconset>
+        <iconset resource="../../../../res/icons/icons.qrc">
+         <normaloff>:/icons/pen_pick_entity.lci</normaloff>:/icons/pen_pick_entity.lci</iconset>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -77,8 +83,11 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../res/extui/extui.qrc">
-         <normaloff>:/extui/selectinvert.png</normaloff>:/extui/selectinvert.png</iconset>
+        <iconset resource="../../../../res/icons/icons.qrc">
+         <normaloff>:/icons/select_by_pen_drawing.lci</normaloff>:/icons/select_by_pen_drawing.lci</iconset>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -91,8 +100,11 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../res/extui/extui.qrc">
-         <normaloff>:/extui/selectinters.png</normaloff>:/extui/selectinters.png</iconset>
+        <iconset resource="../../../../res/icons/icons.qrc">
+         <normaloff>:/icons/select_by_pen_resolved.lci</normaloff>:/icons/select_by_pen_resolved.lci</iconset>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -108,8 +120,11 @@
         <string>Save</string>
        </property>
        <property name="icon">
-        <iconset resource="../../../../res/actions/actions.qrc">
-         <normaloff>:/actions/filesave.png</normaloff>:/actions/filesave.png</iconset>
+        <iconset resource="../../../../res/icons/icons.qrc">
+         <normaloff>:/icons/save.lci</normaloff>:/icons/save.lci</iconset>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -122,8 +137,11 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../res/extui/extui.qrc">
-         <normaloff>:/extui/selectdoubles.png</normaloff>:/extui/selectdoubles.png</iconset>
+        <iconset resource="../../../../res/icons/icons.qrc">
+         <normaloff>:/icons/pen_apply_to_selection.lci</normaloff>:/icons/pen_apply_to_selection.lci</iconset>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -136,8 +154,11 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../res/actions/actions.qrc">
-         <normaloff>:/actions/editredo.png</normaloff>:/actions/editredo.png</iconset>
+        <iconset resource="../../../../res/icons/icons.qrc">
+         <normaloff>:/icons/pen_fill_by_current.lci</normaloff>:/icons/pen_fill_by_current.lci</iconset>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -150,8 +171,11 @@
         <string>to current</string>
        </property>
        <property name="icon">
-        <iconset resource="../../../../res/actions/actions.qrc">
-         <normaloff>:/actions/editundo.png</normaloff>:/actions/editundo.png</iconset>
+        <iconset resource="../../../../res/icons/icons.qrc">
+         <normaloff>:/icons/pen_2_current.lci</normaloff>:/icons/pen_2_current.lci</iconset>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -164,8 +188,11 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../res/extui/extui.qrc">
-         <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
+        <iconset resource="../../../../res/icons/icons.qrc">
+         <normaloff>:/icons/back.lci</normaloff>:/icons/back.lci</iconset>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -178,8 +205,11 @@
         <string>Pick from Active Layer</string>
        </property>
        <property name="icon">
-        <iconset resource="../../../../res/extui/extui.qrc">
-         <normaloff>:/extui/selectlayer.png</normaloff>:/extui/selectlayer.png</iconset>
+        <iconset resource="../../../../res/icons/icons.qrc">
+         <normaloff>:/icons/pen_pick_layer.lci</normaloff>:/icons/pen_pick_layer.lci</iconset>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -192,8 +222,11 @@
         <string>Apply To Layer</string>
        </property>
        <property name="icon">
-        <iconset resource="../../../../res/ui/ui.qrc">
-         <normaloff>:/ui/layeredit.png</normaloff>:/ui/layeredit.png</iconset>
+        <iconset resource="../../../../res/icons/icons.qrc">
+         <normaloff>:/icons/pen_to_layer.lci</normaloff>:/icons/pen_to_layer.lci</iconset>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -207,7 +240,10 @@
        </property>
        <property name="icon">
         <iconset resource="../../../../res/icons/icons.qrc">
-         <normaloff>:/icons/remove.svg</normaloff>:/icons/remove.svg</iconset>
+         <normaloff>:/icons/remove.lci</normaloff>:/icons/remove.lci</iconset>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -454,8 +490,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../../res/actions/actions.qrc">
-       <normaloff>:/actions/configure.png</normaloff>:/actions/configure.png</iconset>
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/settings.lci</normaloff>:/icons/settings.lci</iconset>
      </property>
     </widget>
    </item>
@@ -537,10 +573,6 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../../res/extui/extui.qrc"/>
-  <include location="../../../../res/ui/ui.qrc"/>
-  <include location="../../../../res/actions/actions.qrc"/>
-  <include location="../../../../res/icons/icons.qrc"/>
   <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>

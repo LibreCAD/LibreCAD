@@ -74,7 +74,19 @@ QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, Qt::WindowFlag
 
     lLeftButton->setText("");
     lRightButton->setText("");
-    lMousePixmap->setPixmap(QPixmap(":/icons/mouse.svg")/*.scaled(height, height)*/);
+    lMousePixmap->setPixmap(QPixmap(":/icons/mouse.lci")/*.scaled(height, height)*/);
+}
+
+void QG_MouseWidget::updatePixmap(QString iconName, QLabel *label){
+    int width = label->pixmap().width();
+    int height = label->pixmap().height();
+    label->setPixmap(QIcon(iconName).pixmap(width, height));
+}
+
+void QG_MouseWidget::onIconsRefreshed(){
+    updatePixmap(":/icons/mouse.lci", lMousePixmap);
+    updatePixmap(":/icons/state-shift_yes.lci", lblShift);
+    updatePixmap(":/icons/state_ctrl_yes.lci", lblCtrl);
 }
 
 /*

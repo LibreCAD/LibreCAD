@@ -305,8 +305,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../../../../res/main/main.qrc">
-            <normaloff>:/main/fileopen.png</normaloff>:/main/fileopen.png</iconset>
+           <iconset resource="../../../../res/icons/icons.qrc">
+            <normaloff>:/icons/fileopen.lci</normaloff>:/icons/fileopen.lci</iconset>
           </property>
          </widget>
         </item>
@@ -349,7 +349,8 @@
   <tabstop>leDPI</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../../res/main/main.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>

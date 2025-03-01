@@ -296,11 +296,11 @@ void createViewRenderer();
 QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc)
     :RS_GraphicView(parent, {})
     ,device("Mouse")
-    ,curCad(new QCursor(QPixmap(":ui/cur_cad_bmp.png"), g_hotspotXY, g_hotspotXY))
-    ,curDel(new QCursor(QPixmap(":ui/cur_del_bmp.png"), g_hotspotXY, g_hotspotXY))
-    ,curSelect(new QCursor(QPixmap(":ui/cur_select_bmp.png"), g_hotspotXY, g_hotspotXY))
-    ,curMagnifier(new QCursor(QPixmap(":ui/cur_glass_bmp.png"), g_hotspotXY, g_hotspotXY))
-    ,curHand(new QCursor(QPixmap(":ui/cur_hand_bmp.png"), g_hotspotXY, g_hotspotXY))
+    ,curCad(new QCursor(QPixmap(":cursors/cur_cad_bmp.png"), g_hotspotXY, g_hotspotXY))
+    ,curDel(new QCursor(QPixmap(":cursors/cur_del_bmp.png"), g_hotspotXY, g_hotspotXY))
+    ,curSelect(new QCursor(QPixmap(":cursors/cur_select_bmp.png"), g_hotspotXY, g_hotspotXY))
+    ,curMagnifier(new QCursor(QPixmap(":cursors/cur_glass_bmp.png"), g_hotspotXY, g_hotspotXY))
+    ,curHand(new QCursor(QPixmap(":cursors/cur_hand_bmp.png"), g_hotspotXY, g_hotspotXY))
     ,isSmoothScrolling(false)
     , m_panData{std::make_unique<AutoPanData>()}
     , m_ucsHighlightData{std::make_unique<UCSHighlightData>()}
@@ -574,10 +574,10 @@ void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu){
     }
     QAction* action = (insert != nullptr) ?
                 // For an insert, show the menu entry to edit the block instead
-                new QAction(QIcon(":/ui/blockedit.png"),
+                new QAction(QIcon(":/icons/properties.lci"),
                             QString{"%1: %2"}.arg(tr("Edit Block")).arg(insert->getName().left(g_MaxBlockNameLength)),
                             &contextMenu) :
-                new QAction(QIcon(":/extui/modifyentity.png"),
+                new QAction(QIcon(":/icons/properties.lci"),
                             tr("Edit Properties"), &contextMenu);
 
     contextMenu.addAction(action);

@@ -48,7 +48,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/page_landscape.svg</normaloff>:/icons/page_landscape.svg</iconset>
+       <normaloff>:/icons/page_landscape.lci</normaloff>:/icons/page_landscape.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -65,7 +65,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/page_portait.svg</normaloff>:/icons/page_portait.svg</iconset>
+       <normaloff>:/icons/page_portait.lci</normaloff>:/icons/page_portait.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -82,7 +82,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/drawing_settings.svg</normaloff>:/icons/drawing_settings.svg</iconset>
+       <normaloff>:/icons/drawing_settings.lci</normaloff>:/icons/drawing_settings.lci</iconset>
      </property>
     </widget>
    </item>
@@ -176,7 +176,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/scaleLineWidth.svg</normaloff>:/icons/scaleLineWidth.svg</iconset>
+       <normaloff>:/icons/scaleLineWidth.lci</normaloff>:/icons/scaleLineWidth.lci</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -205,7 +205,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/black_n_white_mode.svg</normaloff>:/icons/black_n_white_mode.svg</iconset>
+       <normaloff>:/icons/black_n_white_mode.lci</normaloff>:/icons/black_n_white_mode.lci</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -241,7 +241,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/center_to_page.svg</normaloff>:/icons/center_to_page.svg</iconset>
+       <normaloff>:/icons/center_to_page.lci</normaloff>:/icons/center_to_page.lci</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -267,7 +267,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/zoom_auto.svg</normaloff>:/icons/zoom_auto.svg</iconset>
+       <normaloff>:/icons/zoom_auto.lci</normaloff>:/icons/zoom_auto.lci</iconset>
      </property>
     </widget>
    </item>
@@ -294,7 +294,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/fit_to_page.svg</normaloff>:/icons/fit_to_page.svg</iconset>
+       <normaloff>:/icons/fit_to_page.lci</normaloff>:/icons/fit_to_page.lci</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -373,7 +373,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../../../res/icons/icons.qrc">
-          <normaloff>:/icons/multi_pages.svg</normaloff>:/icons/multi_pages.svg</iconset>
+          <normaloff>:/icons/multi_pages.lci</normaloff>:/icons/multi_pages.lci</iconset>
         </property>
         <property name="iconSize">
          <size>

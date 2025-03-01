@@ -40,10 +40,13 @@ public:
     void update(RS_Graphic* graphic);
 signals:
     void clicked();
+public slots:
+    void onIconsRefreshed();
 protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     QIcon iconClockwise;
     QIcon iconCounterClockwise;
+    bool counterclockwise  = false;
 private:
     Ui::LC_AnglesBasisWidget *ui;
     int iconSize = 24;

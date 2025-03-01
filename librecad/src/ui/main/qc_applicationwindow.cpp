@@ -106,10 +106,10 @@
 #include "lc_printviewportrenderer.h"
 
 #ifndef QC_APP_ICON
-# define QC_APP_ICON ":/main/librecad.png"
+# define QC_APP_ICON ":/images/librecad.png"
 #endif
 #ifndef QC_ABOUT_ICON
-# define QC_ABOUT_ICON ":/main/intro_librecad.png"
+# define QC_ABOUT_ICON ":/images/intro_librecad.png"
 #endif
 
 /*	- Window Title Bar Extra (character) Size.
@@ -197,26 +197,30 @@ QC_ApplicationWindow::QC_ApplicationWindow():
 
     connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
             this, SLOT(slotWindowActivated(QMdiSubWindow*)));
-    // fixme - settings
-    settings.beginGroup("Widgets");
-    bool custom_size = settings.value("AllowToolbarIconSize", 0).toBool();
-    int icon_size = custom_size ? settings.value("ToolbarIconSize", 24).toInt() : 24;
-    settings.endGroup();
 
-    if (custom_size) {
-        setIconSize(QSize(icon_size, icon_size));
-    }
+    LC_GROUP("Widgets");
+    {
+        bool custom_size = LC_GET_BOOL("AllowToolbarIconSize", false);
+        int icon_size = custom_size ? LC_GET_INT("ToolbarIconSize", 24) : 24;
 
-    if (enable_left_sidebar){
-        int leftSidebarColumnsCount = settings.value("Widgets/LeftToolbarColumnsCount", 5).toInt();
-        widget_factory.createLeftSidebar(leftSidebarColumnsCount, icon_size);
+        if (custom_size) {
+            setIconSize(QSize(icon_size, icon_size));
+        }
+
+        if (enable_left_sidebar){
+            int leftSidebarColumnsCount = settings.value("Widgets/LeftToolbarColumnsCount", 5).toInt();
+            int leftSidebarIconSize = settings.value("Widgets/LeftToolbarIconSize", 24).toInt();
+            bool flatIcons = settings.value("Widgets/LeftToolbarFlatIcons", 24).toInt();
+            widget_factory.createLeftSidebar(leftSidebarColumnsCount, leftSidebarIconSize, flatIcons);
+        }
+        if (enable_cad_toolbars) {
+            widget_factory.createCADToolbars();
+        }
+        widget_factory.createRightSidebar(actionHandler);
+        widget_factory.createCategoriesToolbar();
+        widget_factory.createStandardToolbars(actionHandler);
     }
-    if (enable_cad_toolbars) {
-        widget_factory.createCADToolbars();
-    }
-    widget_factory.createRightSidebar(actionHandler);
-    widget_factory.createCategoriesToolbar();
-    widget_factory.createStandardToolbars(actionHandler);
+    LC_GROUP_END();
 
     settings.beginGroup("CustomToolbars");
     foreach (auto key, settings.childKeys())
@@ -1346,7 +1350,7 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
         w->setWindowTitle(title + draft_string);
     }
 
-    w->setWindowIcon(QIcon(":/main/document.png"));
+    w->setWindowIcon(QIcon(":/icons/document.lci"));
 
     RS_DEBUG->print("  adding listeners");
     RS_Graphic *graphic = w->getDocument()->getGraphic();
@@ -2280,7 +2284,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                 parent->addChildWindow(w);
 
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
-                w->setWindowIcon(QIcon(":/main/document.png"));
+                w->setWindowIcon(QIcon(":/icons/document.lci"));
                 QG_GraphicView *gv = w->getGraphicView();
                 gv->device = settings.value("Hardware/Device", "Mouse").toString();
 //                gv->setBackground(RS_Color(255, 255, 255));
@@ -2889,7 +2893,6 @@ QMenu *QC_ApplicationWindow::createPopupMenu() {
 
 void QC_ApplicationWindow::toggleFullscreen(bool checked) {
     // author: ravas
-
     checked ? showFullScreen() : showMaximized();
 }
 
@@ -2917,6 +2920,7 @@ void QC_ApplicationWindow::widgetOptionsDialog() {
     LC_WidgetOptionsDialog dlg;
 
     if (dlg.exec() == QDialog::Accepted) {
+        fireWidgetSettingsChanged();
     }
 }
 
@@ -2958,7 +2962,6 @@ bool QC_ApplicationWindow::loadStyleSheet(QString path) {
 
 void QC_ApplicationWindow::reloadStyleSheet() {
     // author: ravas
-
     loadStyleSheet(style_sheet_path);
 }
 
@@ -3392,4 +3395,12 @@ void QC_ApplicationWindow::slotRedockWidgets() {
     const QList<QDockWidget *> dockwidgets = findChildren<QDockWidget *>();
     for (auto *dockwidget: dockwidgets)
         dockwidget->setFloating(false);
+}
+
+void QC_ApplicationWindow::fireIconsRefresh(){
+    emit iconsRefreshed();
+}
+
+void QC_ApplicationWindow::fireWidgetSettingsChanged(){
+    emit widgetSettingsChanged();
 }

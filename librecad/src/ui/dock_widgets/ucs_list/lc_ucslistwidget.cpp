@@ -32,6 +32,7 @@
 #include "lc_dlgucslistoptions.h"
 #include "lc_ucslistbutton.h"
 #include "lc_graphicviewport.h"
+#include "rs_settings.h"
 
 LC_UCSListWidget::LC_UCSListWidget(const QString& title, QWidget *parent)
     : QWidget(parent)
@@ -45,6 +46,7 @@ LC_UCSListWidget::LC_UCSListWidget(const QString& title, QWidget *parent)
     loadOptions();
     createModel();
     updateButtonsState();
+    updateWidgetSettings();
 }
 
 LC_UCSListWidget::~LC_UCSListWidget(){
@@ -618,4 +620,20 @@ LC_UCS *LC_UCSListWidget::getActiveUCS() {
 
 void LC_UCSListWidget::setStateWidget(LC_UCSStateWidget *stateWidget) {
     ucsStateWidget = stateWidget;
+}
+
+void LC_UCSListWidget::updateWidgetSettings(){
+    LC_GROUP("Widgets"); {
+        bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
+        int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);
+
+        QSize size(iconSize, iconSize);
+
+        QList<QToolButton *> widgets = this->findChildren<QToolButton *>();
+        foreach(QToolButton *w, widgets) {
+            w->setAutoRaise(flatIcons);
+            w->setIconSize(size);
+        }
+    }
+    LC_GROUP_END();
 }

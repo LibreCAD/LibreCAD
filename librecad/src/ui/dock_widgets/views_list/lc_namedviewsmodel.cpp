@@ -25,15 +25,15 @@
 
 
 LC_NamedViewsModel::LC_NamedViewsModel(LC_NamedViewsListOptions *modelOptions, QObject *parent):QAbstractTableModel(parent), options(modelOptions) {
-    iconViewPaperSpace = QIcon(":/icons/page_portait.svg");
-    iconViewDrawingSpace = QIcon(":/icons/center_to_page.svg");
+    iconViewPaperSpace = QIcon(":/icons/page_portait.lci");
+    iconViewDrawingSpace = QIcon(":/icons/center_to_page.lci");
 
-    iconWCS = QIcon(":/icons/ucs_wcs.svg");
-    iconUCS = QIcon(":/icons/ucs_ucs.svg");
-    iconGridOrtho = QIcon(":/icons/grid_ortho.svg");
-    iconGridISOTop = QIcon(":/icons/grid_iso_top.svg");
-    iconGridISOLeft = QIcon(":/icons/grid_iso_left.svg");
-    iconGridISORight = QIcon(":/icons/grid_iso_right.svg");
+    iconWCS = QIcon(":/icons/ucs_wcs.lci");
+    iconUCS = QIcon(":/icons/ucs_ucs.lci");
+    iconGridOrtho = QIcon(":/icons/grid_ortho.lci");
+    iconGridISOTop = QIcon(":/icons/grid_iso_top.lci");
+    iconGridISOLeft = QIcon(":/icons/grid_iso_left.lci");
+    iconGridISORight = QIcon(":/icons/grid_iso_right.lci");
 }
 
 LC_NamedViewsModel::~LC_NamedViewsModel() {

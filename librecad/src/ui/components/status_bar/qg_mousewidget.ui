@@ -130,7 +130,7 @@
          <enum>Qt::PlainText</enum>
         </property>
         <property name="pixmap">
-         <pixmap resource="../../../../res/icons/icons.qrc">:/icons/state-shift_yes.svg</pixmap>
+         <pixmap resource="../../../../res/icons/icons.qrc">:/icons/state-shift_yes.lci</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -173,7 +173,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="../../../../res/icons/icons.qrc">:/icons/state_ctrl_yes.svg</pixmap>
+         <pixmap resource="../../../../res/icons/icons.qrc">:/icons/state_ctrl_yes.lci</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -270,7 +270,7 @@ p, li { white-space: pre-wrap; }
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../../../../res/icons/icons.qrc">:/icons/mouse.svg</pixmap>
+      <pixmap resource="../../../../res/icons/icons.qrc">:/icons/mouse.lci</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>

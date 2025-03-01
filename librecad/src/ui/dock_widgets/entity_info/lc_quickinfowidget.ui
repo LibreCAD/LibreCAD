@@ -61,8 +61,8 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../../../../res/extui/extui.qrc">
-             <normaloff>:/extui/menuselect.png</normaloff>:/extui/menuselect.png</iconset>
+            <iconset resource="../../../../res/icons/icons.qrc">
+             <normaloff>:/icons/entity_properties_select.lci</normaloff>:/icons/entity_properties_select.lci</iconset>
            </property>
           </widget>
          </item>
@@ -76,7 +76,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../../res/icons/icons.qrc">
-             <normaloff>:/icons/select_entity.svg</normaloff>:/icons/select_entity.svg</iconset>
+             <normaloff>:/icons/select_entity.lci</normaloff>:/icons/select_entity.lci</iconset>
            </property>
           </widget>
          </item>
@@ -89,8 +89,8 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../../../../res/ui/ui.qrc">
-             <normaloff>:/ui/blockedit.png</normaloff>:/ui/blockedit.png</iconset>
+            <iconset resource="../../../../res/icons/icons.qrc">
+             <normaloff>:/icons/properties.lci</normaloff>:/icons/properties.lci</iconset>
            </property>
           </widget>
          </item>
@@ -107,7 +107,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../../res/icons/icons.qrc">
-             <normaloff>:/icons/copy.svg</normaloff>:/icons/copy.svg</iconset>
+             <normaloff>:/icons/copy.lci</normaloff>:/icons/copy.lci</iconset>
            </property>
           </widget>
          </item>
@@ -120,8 +120,8 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../../../../res/main/main.qrc">
-             <normaloff>:/main/editclear.png</normaloff>:/main/editclear.png</iconset>
+            <iconset resource="../../../../res/icons/icons.qrc">
+             <normaloff>:/icons/edit_clear.lci</normaloff>:/icons/edit_clear.lci</iconset>
            </property>
           </widget>
          </item>
@@ -137,8 +137,8 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../../../../res/extui/extui.qrc">
-             <normaloff>:/extui/polylineadd.png</normaloff>:/extui/polylineadd.png</iconset>
+            <iconset resource="../../../../res/icons/icons.qrc">
+             <normaloff>:/icons/pick_coordinates.lci</normaloff>:/icons/pick_coordinates.lci</iconset>
            </property>
           </widget>
          </item>
@@ -221,7 +221,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../../res/icons/icons.qrc">
-             <normaloff>:/icons/settings.svg</normaloff>:/icons/settings.svg</iconset>
+             <normaloff>:/icons/settings.lci</normaloff>:/icons/settings.lci</iconset>
            </property>
           </widget>
          </item>
@@ -265,11 +265,8 @@ p, li { white-space: pre-wrap; }
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../../res/extui/extui.qrc"/>
-  <include location="../../../../res/main/main.qrc"/>
   <include location="../../../../res/icons/icons.qrc"/>
   <include location="../../../../res/icons/icons.qrc"/>
-  <include location="../../../../res/ui/ui.qrc"/>
  </resources>
  <connections/>
 </ui>

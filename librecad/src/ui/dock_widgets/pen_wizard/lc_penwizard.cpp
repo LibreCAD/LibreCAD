@@ -29,11 +29,14 @@
 
 #include "colorwizard.h"
 #include "lc_penwizard.h"
+
+#include <QToolButton>
+
 #include "qc_mdiwindow.h"
 #include "qg_graphicview.h"
 #include "rs_entity.h"
 #include "rs_graphic.h"
-
+#include "rs_settings.h"
 
 LC_PenWizard::LC_PenWizard(const QString& title, QWidget* parent)
     : QDockWidget(title, parent)
@@ -54,6 +57,8 @@ LC_PenWizard::LC_PenWizard(const QString& title, QWidget* parent)
             this, &LC_PenWizard::selectByColor);
     connect(color_wiz, &ColorWizard::colorDoubleClicked,
             this, &LC_PenWizard::setActivePenColor);
+
+    updateWidgetSettings();
 }
 
 void LC_PenWizard::setColorForSelected(QColor color)
@@ -73,8 +78,7 @@ void LC_PenWizard::setColorForSelected(QColor color)
     mdi_win->getGraphicView()->redraw(RS2::RedrawDrawing);
 }
 
-void LC_PenWizard::selectByColor(QColor color)
-{
+void LC_PenWizard::selectByColor(QColor color){
     auto graphic = mdi_win->getGraphic();
     foreach (auto e, graphic->getEntityList())
     {
@@ -86,15 +90,29 @@ void LC_PenWizard::selectByColor(QColor color)
     mdi_win->getGraphicView()->redraw(RS2::RedrawDrawing);
 }
 
-void LC_PenWizard::setActivePenColor(QColor color)
-{
+void LC_PenWizard::setActivePenColor(QColor color){
     auto graphic = mdi_win->getGraphic();
     auto pen = graphic->getActivePen();
     pen.setColor(RS_Color(color));
     graphic->setActivePen(pen);
 }
 
-void LC_PenWizard::setMdiWindow(QC_MDIWindow* mdiWindow)
-{
+void LC_PenWizard::setMdiWindow(QC_MDIWindow* mdiWindow){
     mdi_win = mdiWindow;
+}
+
+void LC_PenWizard::updateWidgetSettings(){
+    LC_GROUP("Widgets"); {
+        bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
+        int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);
+
+        QSize size(iconSize, iconSize);
+
+        QList<QToolButton *> widgets = this->findChildren<QToolButton *>();
+        foreach(QToolButton *w, widgets) {
+            w->setAutoRaise(flatIcons);
+            w->setIconSize(size);
+        }
+    }
+    LC_GROUP_END();
 }

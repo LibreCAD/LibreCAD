@@ -26,20 +26,21 @@
 #include "lc_layertreemodel_options.h"
 
 LC_LayerTreeModel::LC_LayerTreeModel(QObject * parent, LC_LayerTreeModelOptions *ops) :QAbstractItemModel(parent) {
-    layerVisible = QIcon(":/icons/visible.svg");
-    layerHidden = QIcon(":/icons/invisible.svg");
-    layerDefreeze = QIcon(":/icons/unlocked.svg");
-    layerFreeze = QIcon(":/icons/locked.svg");
-    layerPrint = QIcon(":/icons/print.svg");
-    layerNoPrint = QIcon(":/icons/noprint.svg");
-    layerConstruction = QIcon(":/icons/construction_layer.svg");
-    layerNoConstruction = QIcon(":/icons/noconstruction.svg");
+    layerVisible = QIcon(":/icons/visible.lci");
+//    layerHidden = QIcon(":/icons/invisible.lci");
+    layerHidden = QIcon(":/icons/not_visible.lci");
+    layerDefreeze = QIcon(":/icons/unlocked.lci");
+    layerFreeze = QIcon(":/icons/locked.lci");
+    layerPrint = QIcon(":/icons/print.lci");
+    layerNoPrint = QIcon(":/icons/noprint.lci");
+    layerConstruction = QIcon(":/icons/construction_layer.lci");
+    layerNoConstruction = QIcon(":/icons/noconstruction.lci");
 
-    iconLayerVirtual = QIcon(":/icons/copy.svg");
-    iconLayerDimensional = QIcon(":/icons/dim_horizontal.svg");
-    iconLayerActual = QIcon(":/icons/line_rectangle.svg");
-    iconLayerAlternatePosition = QIcon(":/icons/rotate.svg");
-    iconLayerInformationalNotes = QIcon(":/icons/mtext.svg");
+    iconLayerVirtual = QIcon(":/icons/copy.lci");
+    iconLayerDimensional = QIcon(":/icons/dim_horizontal.lci");
+    iconLayerActual = QIcon(":/icons/line_rectangle.lci");
+    iconLayerAlternatePosition = QIcon(":/icons/rotate.lci");
+    iconLayerInformationalNotes = QIcon(":/icons/mtext.lci");
 
     rootItem = new LC_LayerTreeItem();
 

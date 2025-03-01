@@ -26,12 +26,14 @@
 #include "rs_math.h"
 
 LC_UCSListModel::LC_UCSListModel(LC_UCSListOptions *modelOptions, QObject *parent):QAbstractTableModel(parent), options(modelOptions) {
-    iconWCS = QIcon(":/icons/ucs_wcs.svg");
-    iconUCS = QIcon(":/icons/ucs_ucs.svg");
-    iconGridOrtho = QIcon(":/icons/grid_ortho.svg");
-    iconGridISOTop = QIcon(":/icons/grid_iso_top.svg");
-    iconGridISOLeft = QIcon(":/icons/grid_iso_left.svg");
-    iconGridISORight = QIcon(":/icons/grid_iso_right.svg");
+    QString icon = ":/icons/ucs_wcs.lci";
+    iconWCS = QIcon(icon);
+    // iconWCS = QIcon(":/icons/ucs_wcs.svg.p");
+    // iconUCS = QIcon(":/icons/ucs_ucs.svg");
+    iconGridOrtho = QIcon(":/icons/grid_ortho.lci");
+    iconGridISOTop = QIcon(":/icons/grid_iso_top.lci");
+    iconGridISOLeft = QIcon(":/icons/grid_iso_left.lci");
+    iconGridISORight = QIcon(":/icons/grid_iso_right.lci");
 }
 
 LC_UCSListModel::~LC_UCSListModel() {

@@ -101,6 +101,7 @@ public slots:
     void addLayer();
     void toggleFlatView();
     void removeEmptyLayers();
+    void updateWidgetSettings();
 protected:
     void update();
     void keyPressEvent(QKeyEvent *e) override;

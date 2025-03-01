@@ -132,8 +132,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../../../res/ui/ui.qrc">
-          <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+         <iconset resource="../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
         </property>
        </widget>
       </item>
@@ -153,8 +153,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../../../res/ui/ui.qrc">
-          <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+         <iconset resource="../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
         </property>
        </widget>
       </item>
@@ -201,8 +201,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../../../res/ui/ui.qrc">
-          <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+         <iconset resource="../../../../res/controls/controls.qrc">
+          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
         </property>
        </widget>
       </item>
@@ -264,8 +264,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../res/actions/actions.qrc">
-         <normaloff>:/actions/fileopen.png</normaloff>:/actions/fileopen.png</iconset>
+        <iconset resource="../../../../res/icons/icons.qrc">
+         <normaloff>:/icons/fileopen.lci</normaloff>:/icons/fileopen.lci</iconset>
        </property>
       </widget>
      </item>
@@ -357,8 +357,8 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../../res/ui/ui.qrc"/>
-  <include location="../../../../res/actions/actions.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/controls/controls.qrc"/>
  </resources>
  <connections>
   <connection>

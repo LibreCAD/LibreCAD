@@ -30,8 +30,8 @@ LC_AnglesBasisWidget::LC_AnglesBasisWidget(QWidget *parent,const char* name)
     , ui(new Ui::LC_AnglesBasisWidget){
     setObjectName(name);
     ui->setupUi(this);
-    iconClockwise = QIcon(":/icons/dirneg_plus.svg");
-    iconCounterClockwise = QIcon(":/icons/dirpos_plus.svg");
+    iconClockwise = QIcon(":/icons/dirneg_plus.lci");
+    iconCounterClockwise = QIcon(":/icons/dirpos_plus.lci");
 }
 
 LC_AnglesBasisWidget::~LC_AnglesBasisWidget(){
@@ -67,7 +67,12 @@ void LC_AnglesBasisWidget::update(QString angle, bool counterclockwise) {
         icon = iconClockwise;
         tooltip = tr("Positive angles direction is clockwise.");
     }
+    this->counterclockwise = counterclockwise;
     ui->lblBaseAngle->setText(angle);
     ui->lblPositiveDirection->setPixmap(icon.pixmap(iconSize));
     ui->lblPositiveDirection->setToolTip(tooltip);
+}
+
+void LC_AnglesBasisWidget::onIconsRefreshed(){
+    ui->lblPositiveDirection->setPixmap(counterclockwise ? iconCounterClockwise.pixmap(iconSize) : iconClockwise.pixmap(iconSize));
 }

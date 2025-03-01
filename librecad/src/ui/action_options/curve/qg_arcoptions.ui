@@ -60,7 +60,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/dirneg.svg</normaloff>:/icons/dirneg.svg</iconset>
+       <normaloff>:/icons/dirneg.lci</normaloff>:/icons/dirneg.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -89,7 +89,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/dirpos.svg</normaloff>:/icons/dirpos.svg</iconset>
+       <normaloff>:/icons/dirpos.lci</normaloff>:/icons/dirpos.lci</iconset>
      </property>
      <property name="checked">
       <bool>true</bool>

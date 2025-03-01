@@ -32,61 +32,61 @@
 
 namespace {
 std::tuple<QString, QString, RS2::LineWidth> g_boxItems[] = {
-    {":ui/width00.png", QObject::tr("-Unchanged-"),
+    {":linetypes/width00.lci", QObject::tr("-Unchanged-"),
      RS2::WidthUnchanged /*utilitytypefornotchangedlinewidthduringediting*/},
-    {":ui/width00.png", QObject::tr("ByLayer"),
+    {":linetypes/width00.lci", QObject::tr("ByLayer"),
      RS2::WidthByLayer /**<Linewidthdefinedbylayernotentity.*/},
-    {":ui/width00.png", QObject::tr("ByBlock"),
+    {":linetypes/width00.lci", QObject::tr("ByBlock"),
      RS2::WidthByBlock /**<Linewidthdefinedbyblocknotentity.*/},
-    {":ui/width01.png", QObject::tr("Default"),
+    {":linetypes/width01.lci", QObject::tr("Default"),
      RS2::WidthDefault /**<Linewidthdefaultstothepredefinedlinewidth.*/},
-    {":ui/width01.png", QObject::tr("0.00mm"),
+    {":linetypes/width01.lci", QObject::tr("0.00mm"),
      RS2::Width00 /**<Width1.(0.00mm)*/},
-    {":ui/width01.png", QObject::tr("0.05mm"),
+    {":linetypes/width01.lci", QObject::tr("0.05mm"),
      RS2::Width01 /**<Width2.(0.05mm)*/},
-    {":ui/width01.png", QObject::tr("0.09mm"),
+    {":linetypes/width01.lci", QObject::tr("0.09mm"),
      RS2::Width02 /**<Width3.(0.09mm)*/},
-    {":ui/width01.png", QObject::tr("0.13mmISO"),
+    {":linetypes/width01.lci", QObject::tr("0.13mmISO"),
      RS2::Width03 /**<Width4.(0.13mm)*/},
-    {":ui/width01.png", QObject::tr("0.15mm"),
+    {":linetypes/width01.lci", QObject::tr("0.15mm"),
      RS2::Width04 /**<Width5.(0.15mm)*/},
-    {":ui/width01.png", QObject::tr("0.18mmISO"),
+    {":linetypes/width01.lci", QObject::tr("0.18mmISO"),
      RS2::Width05 /**<Width6.(0.18mm)*/},
-    {":ui/width01.png", QObject::tr("0.20mm"),
+    {":linetypes/width01.lci", QObject::tr("0.20mm"),
      RS2::Width06 /**<Width7.(0.20mm)*/},
-    {":ui/width01.png", QObject::tr("0.25mmISO"),
+    {":linetypes/width01.lci", QObject::tr("0.25mmISO"),
      RS2::Width07 /**<Width8.(0.25mm)*/},
-    {":ui/width01.png", QObject::tr("0.30mm"),
+    {":linetypes/width01.lci", QObject::tr("0.30mm"),
      RS2::Width08 /**<Width9.(0.30mm)*/},
-    {":ui/width03.png", QObject::tr("0.35mmISO"),
+    {":linetypes/width03.lci", QObject::tr("0.35mmISO"),
      RS2::Width09 /**<Width10.(0.35mm)*/},
-    {":ui/width03.png", QObject::tr("0.40mm"),
+    {":linetypes/width03.lci", QObject::tr("0.40mm"),
      RS2::Width10 /**<Width11.(0.40mm)*/},
-    {":ui/width04.png", QObject::tr("0.50mmISO"),
+    {":linetypes/width04.lci", QObject::tr("0.50mmISO"),
      RS2::Width11 /**<Width12.(0.50mm)*/},
-    {":ui/width05.png", QObject::tr("0.53mm"),
+    {":linetypes/width05.lci", QObject::tr("0.53mm"),
      RS2::Width12 /**<Width13.(0.53mm)*/},
-    {":ui/width05.png", QObject::tr("0.60mm"),
+    {":linetypes/width05.lci", QObject::tr("0.60mm"),
      RS2::Width13 /**<Width14.(0.60mm)*/},
-    {":ui/width06.png", QObject::tr("0.70mmISO"),
+    {":linetypes/width06.lci", QObject::tr("0.70mmISO"),
      RS2::Width14 /**<Width15.(0.70mm)*/},
-    {":ui/width07.png", QObject::tr("0.80mm"),
+    {":linetypes/width07.lci", QObject::tr("0.80mm"),
      RS2::Width15 /**<Width16.(0.80mm)*/},
-    {":ui/width08.png", QObject::tr("0.90mm"),
+    {":linetypes/width08.lci", QObject::tr("0.90mm"),
      RS2::Width16 /**<Width17.(0.90mm)*/},
-    {":ui/width09.png", QObject::tr("1.00mmISO"),
+    {":linetypes/width09.lci", QObject::tr("1.00mmISO"),
      RS2::Width17 /**<Width18.(1.00mm)*/},
-    {":ui/width10.png", QObject::tr("1.06mm"),
+    {":linetypes/width10.lci", QObject::tr("1.06mm"),
      RS2::Width18 /**<Width19.(1.06mm)*/},
-    {":ui/width10.png", QObject::tr("1.20mm"),
+    {":linetypes/width10.lci", QObject::tr("1.20mm"),
      RS2::Width19 /**<Width20.(1.20mm)*/},
-    {":ui/width12.png", QObject::tr("1.40mmISO"),
+    {":linetypes/width12.lci", QObject::tr("1.40mmISO"),
      RS2::Width20 /**<Width21.(1.40mm)*/},
-    {":ui/width12.png", QObject::tr("1.58mm"),
+    {":linetypes/width12.lci", QObject::tr("1.58mm"),
      RS2::Width21 /**<Width22.(1.58mm)*/},
-    {":ui/width12.png", QObject::tr("2.00mmISO"),
+    {":linetypes/width12.lci", QObject::tr("2.00mmISO"),
      RS2::Width22 /**<Width23.(2.00mm)*/},
-    {":ui/width12.png", QObject::tr("2.11mm"),
+    {":linetypes/width12.lci", QObject::tr("2.11mm"),
      RS2::Width23 /**<Width24.(2.11mm)*/}
 };
 }
@@ -191,55 +191,55 @@ void QG_WidthBox::setLayerWidth(RS2::LineWidth w) {
         switch(w) {
         default:
         case RS2::Width00:
-            pixmap = QPixmap(":ui/width00.png");
+            pixmap = QPixmap(":linetypes/width00.lci");
             break;
         case RS2::Width01:
         case RS2::Width02:
-            pixmap = QPixmap(":ui/width01.png");
+            pixmap = QPixmap(":linetypes/width01.lci");
             break;
         case RS2::Width03:
         case RS2::Width04:
-            pixmap = QPixmap(":ui/width02.png");
+            pixmap = QPixmap(":linetypes/width02.lci");
             break;
         case RS2::Width05:
         case RS2::Width06:
-            pixmap = QPixmap(":ui/width03.png");
+            pixmap = QPixmap(":linetypes/width03.lci");
             break;
         case RS2::Width07:
         case RS2::Width08:
-            pixmap = QPixmap(":ui/width04.png");
+            pixmap = QPixmap(":linetypes/width04.lci");
             break;
         case RS2::Width09:
         case RS2::Width10:
-            pixmap = QPixmap(":ui/width05.png");
+            pixmap = QPixmap(":linetypes/width05.lci");
             break;
         case RS2::Width11:
         case RS2::Width12:
-            pixmap = QPixmap(":ui/width06.png");
+            pixmap = QPixmap(":linetypes/width06.lci");
             break;
         case RS2::Width13:
         case RS2::Width14:
-            pixmap = QPixmap(":ui/width07.png");
+            pixmap = QPixmap(":linetypes/width07.lci");
             break;
         case RS2::Width15:
         case RS2::Width16:
-            pixmap = QPixmap(":ui/width08.png");
+            pixmap = QPixmap(":linetypes/width08.lci");
             break;
         case RS2::Width17:
         case RS2::Width18:
-            pixmap = QPixmap(":ui/width09.png");
+            pixmap = QPixmap(":linetypes/width09.lci");
             break;
         case RS2::Width19:
         case RS2::Width20:
-            pixmap = QPixmap(":ui/width10.png");
+            pixmap = QPixmap(":linetypes/width10.lci");
             break;
         case RS2::Width21:
         case RS2::Width22:
-            pixmap = QPixmap(":ui/width11.png");
+            pixmap = QPixmap(":linetypes/width11.lci");
             break;
         case RS2::Width23:
             //case RS2::Width24:
-            pixmap = QPixmap(":ui/width12.png");
+            pixmap = QPixmap(":linetypes/width12.lci");
             break;
         }
 

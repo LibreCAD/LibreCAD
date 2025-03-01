@@ -111,9 +111,7 @@ private:
     void initReferencePoints();
     void updateLPtSzUnits();
     void saveReferencePoints();
-    QString selectFolder(const char* title);
-
-
+    QString selectFolder(const QString& title);
 };
 
 #endif // QG_DLGOPTIONSGENERAL_H

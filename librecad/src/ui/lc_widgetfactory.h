@@ -44,7 +44,7 @@ public:
     void createStandardToolbars(QG_ActionHandler* action_handler);
     void createCADToolbars();
     void createMenus(QMenuBar* menu_bar);
-    void createLeftSidebar(int columns, int icon_size);
+    void createLeftSidebar(int columns, int icon_size, bool flatButtons);
     void createRightSidebar(QG_ActionHandler* action_handler);
     void initStatusBar();
 
@@ -95,7 +95,7 @@ private:
 
     bool allowTearOffMenus = true;
 
-    LC_DockWidget *leftDocWidget(const QString& title, const char* name, const QList<QAction *> &actions, int columns, int iconSize);
+    LC_DockWidget *leftDocWidget(const QString& title, const char* name, const QList<QAction *> &actions, int columns, int iconSize, bool flatButtons);
     QToolBar *createGenericToolbar(const QString& title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames);
     void addToTop(QToolBar *toolbar);
     void addToBottom(QToolBar *toolbar);

@@ -40,6 +40,8 @@
 
 #include "qg_librarywidget.h"
 
+#include <QToolButton>
+
 #include "qg_actionhandler.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_debug.h"
@@ -105,6 +107,8 @@ QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::Window
     connect(bInsert, SIGNAL(clicked()), this, SLOT(insert()));
     connect(bRefresh, SIGNAL(clicked()), this, SLOT(refresh()));
     connect(bRebuild, SIGNAL(clicked()), this, SLOT(buildTree()));
+
+    updateWidgetSettings();
 }
 
 QG_LibraryWidget::~QG_LibraryWidget() = default;
@@ -234,7 +238,7 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
 
         // Create new item if no existing was found:
 		if (!newItem) {
-                newItem = new QStandardItem(QIcon(":/ui/folderclosed.png"), lDirectory);
+                newItem = new QStandardItem(QIcon(":/icons/folderclosed.lci"), lDirectory);
                 item->setChild(item->rowCount(), newItem);
         }
         appendTree(newItem, directory+QDir::separator()+lDirectory);
@@ -250,7 +254,7 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
 void QG_LibraryWidget::expandView( QModelIndex idx ){
     QStandardItem * item = dirModel->itemFromIndex ( idx );
     if (item != nullptr)
-        item->setIcon(QIcon(":/ui/folderopen.png"));
+        item->setIcon(QIcon(":/icons/fileopen.lci"));
 }
 
 /**
@@ -261,7 +265,7 @@ void QG_LibraryWidget::expandView( QModelIndex idx ){
 void QG_LibraryWidget::collapseView( QModelIndex idx ){
     QStandardItem * item = dirModel->itemFromIndex ( idx );
     if (item != nullptr)
-        item->setIcon(QIcon(":/ui/folderclosed.png"));
+        item->setIcon(QIcon(":/icons/folderclosed.lci"));
 }
 
 /**
@@ -469,4 +473,20 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     writePng(pngPath, std::move(buffer));
     LC_LOG << "Writing to " << pngPath << " OK";
     return pngPath;
+}
+
+void QG_LibraryWidget::updateWidgetSettings(){
+    LC_GROUP("Widgets"); {
+        bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
+        int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);
+
+        QSize size(iconSize, iconSize);
+
+        QList<QToolButton *> widgets = this->findChildren<QToolButton *>();
+        foreach(QToolButton *w, widgets) {
+            w->setAutoRaise(flatIcons);
+            w->setIconSize(size);
+        }
+    }
+    LC_GROUP_END();
 }

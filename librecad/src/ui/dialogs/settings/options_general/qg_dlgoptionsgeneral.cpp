@@ -930,7 +930,7 @@ void QG_DlgOptionsGeneral::set_color(QComboBox *combo, QColor custom) {
     QColorDialog dlg;
     dlg.setCustomColor(0, custom.rgb());
 
-    QColor color = dlg.getColor(current, this, "Select Color", QColorDialog::DontUseNativeDialog);
+    QColor color = dlg.getColor(current, this, tr("Select Color"), QColorDialog::DontUseNativeDialog);
     if (color.isValid()) {
         combo->lineEdit()->setText(color.name());
     }
@@ -1055,13 +1055,13 @@ void QG_DlgOptionsGeneral::on_pb_clear_all_clicked() {
                                   QMessageBox::Yes | QMessageBox::No);
     if (reply == QMessageBox::Yes) {
         RS_SETTINGS->clear_all();
-        QMessageBox::information(this, "info", "You must restart LibreCAD to see the changes.");
+        QMessageBox::information(this, "info", tr("You must restart LibreCAD to see the changes."));
     }
 }
 
 void QG_DlgOptionsGeneral::on_pb_clear_geometry_clicked() {
     RS_SETTINGS->clear_geometry();
-    QMessageBox::information(this, "info", "You must restart LibreCAD to see the changes.");
+    QMessageBox::information(this, "info", tr("You must restart LibreCAD to see the changes."));
 }
 
 void QG_DlgOptionsGeneral::setVariableFile() {
@@ -1077,37 +1077,37 @@ void QG_DlgOptionsGeneral::setVariableFile() {
  * \date 2016-286
  */
 void QG_DlgOptionsGeneral::setFontsFolder() {
-    QString folder = selectFolder("Select Fonts Folder");
+    QString folder = selectFolder(tr("Select Fonts Folder"));
     if (folder != nullptr) {
         lePathFonts->setText(QDir::toNativeSeparators(folder));
     }
 }
 
 void QG_DlgOptionsGeneral::setTranslationsFolder() {
-    QString folder = selectFolder("Select Translations Folder");
+    QString folder = selectFolder(tr("Select Translations Folder"));
     if (folder != nullptr) {
         lePathTranslations->setText(QDir::toNativeSeparators(folder));
     }
 }
 
 void QG_DlgOptionsGeneral::setHatchPatternsFolder() {
-    QString folder = selectFolder("Select Hatch Patterns Folder");
+    QString folder = selectFolder(tr("Select Hatch Patterns Folder"));
     if (folder != nullptr) {
         lePathHatch->setText(QDir::toNativeSeparators(folder));
     }
 }
 void QG_DlgOptionsGeneral::setShortcutsMappingsFoler() {
-    QString folder = selectFolder("Select Shortcuts Mappings Folder");
+    QString folder = selectFolder(tr("Select Shortcuts Mappings Folder"));
     if (folder != nullptr) {
         leShortcutsMappingDirectory->setText(QDir::toNativeSeparators(folder));
     }
 }
 
-QString QG_DlgOptionsGeneral::selectFolder(const char* title) {
+QString QG_DlgOptionsGeneral::selectFolder(const QString& title) {
     QString folder = nullptr;
     QFileDialog dlg(this);
     if (title != nullptr) {
-        QString dlgTitle = tr(title);
+        QString dlgTitle = title;
         dlg.setWindowTitle(dlgTitle);
     }
     dlg.setFileMode(QFileDialog::Directory);

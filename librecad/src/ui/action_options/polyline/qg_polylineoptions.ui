@@ -128,7 +128,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/line.svg</normaloff>:/icons/line.svg</iconset>
+       <normaloff>:/icons/line.lci</normaloff>:/icons/line.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -148,7 +148,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/arc_continuation.svg</normaloff>:/icons/arc_continuation.svg</iconset>
+       <normaloff>:/icons/arc_continuation.lci</normaloff>:/icons/arc_continuation.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -168,7 +168,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/arc_2p_radius.svg</normaloff>:/icons/arc_2p_radius.svg</iconset>
+       <normaloff>:/icons/arc_2p_radius.lci</normaloff>:/icons/arc_2p_radius.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -188,7 +188,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/arc_2p_length.svg</normaloff>:/icons/arc_2p_length.svg</iconset>
+       <normaloff>:/icons/arc_2p_length.lci</normaloff>:/icons/arc_2p_length.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -208,7 +208,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/arc_2p_angle.svg</normaloff>:/icons/arc_2p_angle.svg</iconset>
+       <normaloff>:/icons/arc_2p_angle.lci</normaloff>:/icons/arc_2p_angle.lci</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -313,7 +313,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../../../res/icons/icons.qrc">
-          <normaloff>:/icons/dirneg.svg</normaloff>:/icons/dirneg.svg</iconset>
+          <normaloff>:/icons/dirneg.lci</normaloff>:/icons/dirneg.lci</iconset>
         </property>
        </widget>
       </item>
@@ -327,7 +327,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../../../res/icons/icons.qrc">
-          <normaloff>:/icons/dirpos.svg</normaloff>:/icons/dirpos.svg</iconset>
+          <normaloff>:/icons/dirpos.lci</normaloff>:/icons/dirpos.lci</iconset>
         </property>
         <property name="checked">
          <bool>true</bool>

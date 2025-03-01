@@ -76,8 +76,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../../res/extui/extui.qrc">
-              <normaloff>:/extui/char_diameter.png</normaloff>:/extui/char_diameter.png</iconset>
+             <iconset resource="../../../../res/icons/icons.qrc">
+              <normaloff>:/icons/char_diameter.lci</normaloff>:/icons/char_diameter.lci</iconset>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -203,7 +203,8 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../../../res/extui/extui.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
+  <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>
  <slots>

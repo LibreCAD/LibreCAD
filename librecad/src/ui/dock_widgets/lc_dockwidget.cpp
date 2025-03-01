@@ -31,27 +31,61 @@
 
 #include "lc_dockwidget.h"
 
+#include "rs_settings.h"
+
+// fixme - sand - add support of flex layout, with it potentially will be possible to support something ribbon-like
+// oh - just have and options (hor/ver orientation)
+
 LC_DockWidget::LC_DockWidget(QWidget* parent)
     : QDockWidget(parent)
     , frame(new QFrame(this))
     , grid(new QGridLayout)
 {
-	frame->setContentsMargins(0,0,0,0);
-	setWidget(frame);
+    frame->setContentsMargins(0, 0, 0, 0);
+    setWidget(frame);
 
-    grid->setSpacing(2);
-	grid->setContentsMargins(1,1,1,1);
-	frame->setLayout(grid);
+    // grid->setSpacing(2);
+    grid->setSpacing(0);
+    // grid->setContentsMargins(1, 1, 1, 1);
+    grid->setContentsMargins(0, 0, 0, 0);
+    frame->setLayout(grid);
 }
 
-void LC_DockWidget::add_actions(const QList<QAction*>& list, int columns, int icon_size)
-{
-	for (auto const& item: list)
-    {
-		QToolButton* toolbutton = new QToolButton(this);
+void LC_DockWidget::add_actions(const QList<QAction *> &list, int columns, int icon_size, bool flatButton){
+	for (auto const &item: list) {
+		auto *toolbutton = new QToolButton(this);
 		toolbutton->setDefaultAction(item);
+		toolbutton->setAutoRaise(flatButton);
 		toolbutton->setIconSize(QSize(icon_size, icon_size));
 		int const count = grid->count();
-		grid->addWidget(toolbutton, count/columns, count%columns);
-    }
+		grid->addWidget(toolbutton, count / columns, count % columns);
+	}
+}
+
+void LC_DockWidget::updateWidgetSettings(){
+	LC_GROUP("Widgets"); {
+		int leftToolbarColumnsCount = LC_GET_INT("LeftToolbarColumnsCount", 5);
+		bool leftToolbarFlatIcons = LC_GET_BOOL("LeftToolbarFlatIcons", true);
+		int leftToolbarIconSize = LC_GET_INT("LeftToolbarIconSize", 24);
+
+		QSize size(leftToolbarIconSize, leftToolbarIconSize);
+
+		QList<QToolButton *> widgets = frame->findChildren<QToolButton *>();
+
+		QGridLayout* newGrid = new QGridLayout();
+		newGrid->setSpacing(0);
+		newGrid->setContentsMargins(0, 0, 0, 0);
+
+		foreach(QToolButton *w, widgets) {
+			w->setAutoRaise(leftToolbarFlatIcons);
+			w->setIconSize(size);
+			grid->removeWidget(w);
+			int const count = newGrid->count();
+			newGrid->addWidget(w, count / leftToolbarColumnsCount, count % leftToolbarColumnsCount);
+		}
+		delete frame->layout();
+		frame->setLayout(newGrid);
+		grid = newGrid;
+	}
+	LC_GROUP_END();
 }

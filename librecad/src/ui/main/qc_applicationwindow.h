@@ -125,6 +125,9 @@ public:
         }
     }
 
+    void fireIconsRefresh();
+    void fireWidgetSettingsChanged();
+
 public slots:
     void relayAction(QAction* q_action);
     void slotFocus();
@@ -271,6 +274,8 @@ signals:
     void signalEnableRelativeZeroSnaps(const bool);
     void showEntityDescriptionOnHoverChanged(bool show);
     void showInfoCursorSettingChanged(bool enabled);
+    void iconsRefreshed();
+    void widgetSettingsChanged();
 public:
     /**
      * @return Pointer to application window.

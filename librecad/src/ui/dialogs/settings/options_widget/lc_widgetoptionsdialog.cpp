@@ -23,19 +23,41 @@
 */
 
 #include "lc_widgetoptionsdialog.h"
+#include "lc_iconengineshared.h"
 #include "rs_settings.h"
 #include "qc_applicationwindow.h"
 #include <QFileDialog>
 #include <QStyleFactory>
 #include <QStatusBar>
+#include <QApplication>
+#include <QColorDialog>
+#include <QMessageBox>
+#include <QPixmapCache>
 
+#include "lc_dlgiconssetup.h"
+/**
+     *Fixme - sand - add preview for icon colors changes
+     *
+     * so far, when widget options dialog is invoked (in modal), applyIconColors has no effect during open dialog.
+     * this method is called, yet due to some reasons that are not clear for me, icons are rendered using old colors.
+     *
+     * Only on closing the dialog, icons are rendered with specified colors. At least, such behavior is uner Win.
+     *
+     * P.S - of course, it's possible to illustrate colors via custom widget and SvgRenderer (and replacing colors in svg here, in addition to
+     * iconengine. However, it might be an overkill - that implementation may be added if there will be no more important features to do.
+     */
 LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
     : LC_Dialog(parent, "WidgetOptions"){
     setupUi(this);
-    connect(stylesheet_button, SIGNAL(released()),
-            this, SLOT(chooseStyleSheet()));
+    connect(stylesheet_button,&QPushButton::released, this, &LC_WidgetOptionsDialog::chooseStyleSheet);
 
-    LC_GROUP_GUARD("Widgets");{
+    connect(pbMain, &QToolButton::clicked, this, &LC_WidgetOptionsDialog::onpbMainClicked);
+    connect(pbAccent, &QToolButton::clicked, this, &LC_WidgetOptionsDialog::onpbAccentClicked);
+    connect(pbBack, &QToolButton::clicked, this, &LC_WidgetOptionsDialog::onpbBackClicked);
+
+    connect(pbAdvancedIcons, &QPushButton::clicked, this, &LC_WidgetOptionsDialog::showAdvancedSetup);
+
+    LC_GROUP("Widgets");{
         bool allow_style = LC_GET_BOOL("AllowStyle", false);
         style_checkbox->setChecked(allow_style);
         style_combobox->addItems(QStyleFactory::keys());
@@ -74,7 +96,20 @@ LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
 
         int leftToolbarColumnsCount = LC_GET_INT("LeftToolbarColumnsCount", 5);
         left_toobar_columns_spinbox->setValue(leftToolbarColumnsCount);
+
+        bool leftToolbarFlatIcons = LC_GET_BOOL("LeftToolbarFlatIcons", true);
+        cbLeftTBFlatButtons->setChecked(leftToolbarFlatIcons);
+
+        int leftToolbarIconSize = LC_GET_INT("LeftToolbarIconSize", 24);
+        sbLeftTBIconSize->setValue(leftToolbarIconSize);
+
+        bool dockWidgetsFlatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
+        cbDockWidgetsFlatButtons->setChecked(dockWidgetsFlatIcons);
+
+        int docWidgetsIconSize = LC_GET_INT("DockWidgetsIconSize", 16);
+        sbDocWidgtetIconSize->setValue(docWidgetsIconSize);
     }
+    LC_GROUP_END();
 
     bool useClassicalStatusBar = LC_GET_ONE_BOOL("Startup", "UseClassicStatusBar", false);
 
@@ -83,8 +118,92 @@ LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
     statusbar_fontsize_checkbox->setEnabled(useClassicalStatusBar);
     statusbar_fontsize_spinbox->setEnabled(useClassicalStatusBar);
 
-//    lClassicStatusBarOnly->setVisible(!useClassicalStatusBar);
+    iconColorsOptions.loadSettings();
+    iconColorsOptions.mark();
 
+    QString iconsOverrideDir = iconColorsOptions.getIconsOverridesDir();
+    leIconsOverrideDir->setText(iconsOverrideDir);
+
+    updateUIByOptions();
+    connect(cbIconColorMain->lineEdit(), &QLineEdit::textEdited, this, &LC_WidgetOptionsDialog::onMainIconColorChanged);
+    connect(cbIconColorAccent->lineEdit(), &QLineEdit::textEdited, this, &LC_WidgetOptionsDialog::onAccentIconColorChanged);
+    connect(cbIconColorBack->lineEdit(), &QLineEdit::textEdited, this, &LC_WidgetOptionsDialog::onBackIconColorChanged);
+
+    connect(tbOverridesDir, &QToolButton::clicked, this, &LC_WidgetOptionsDialog::setIconsOverrideFoler);
+
+//    lClassicStatusBarOnly->setVisible(!useClassicalStatusBar);
+}
+
+void LC_WidgetOptionsDialog::setIconsOverrideFoler() {
+    QString folder = selectFolder(tr("Select Shortcuts Mappings Folder"));
+    if (folder != nullptr) {
+        leIconsOverrideDir->setText(QDir::toNativeSeparators(folder));
+    }
+}
+
+QString LC_WidgetOptionsDialog::selectFolder(QString title) {
+    QString folder = nullptr;
+    QFileDialog dlg(this);
+    if (title != nullptr) {
+        QString dlgTitle = title;
+        dlg.setWindowTitle(dlgTitle);
+    }
+    dlg.setFileMode(QFileDialog::Directory);
+    dlg.setOption(QFileDialog::ShowDirsOnly);
+
+    if (dlg.exec()) {
+        folder = dlg.selectedFiles()[0];
+    }
+    return folder;
+}
+
+void LC_WidgetOptionsDialog::updateUIByOptions(){
+    QString colorMain = iconColorsOptions.getColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Main);
+    QString colorAccent = iconColorsOptions.getColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Accent);
+    QString colorBack = iconColorsOptions.getColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Background);
+
+    cbIconColorMain->setCurrentText(colorMain);
+    cbIconColorAccent->setCurrentText(colorAccent);
+    cbIconColorBack->setCurrentText(colorBack);
+}
+
+void LC_WidgetOptionsDialog::onpbMainClicked() {
+    set_color(cbIconColorMain);
+}
+
+void LC_WidgetOptionsDialog::onpbAccentClicked() {
+    set_color(cbIconColorAccent);
+}
+
+void LC_WidgetOptionsDialog::onpbBackClicked() {
+    set_color(cbIconColorBack);
+}
+
+void LC_WidgetOptionsDialog::onMainIconColorChanged(const QString &value){
+    iconColorsOptions.setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Main, value);
+    applyIconColors();
+}
+
+void LC_WidgetOptionsDialog::onAccentIconColorChanged(const QString &value){
+    iconColorsOptions.setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Accent, value);
+    applyIconColors();
+}
+
+void LC_WidgetOptionsDialog::onBackIconColorChanged(const QString &value){
+    iconColorsOptions.setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Background, value);
+    applyIconColors();
+}
+
+void LC_WidgetOptionsDialog::set_color(QComboBox *combo) {
+    QColor current = QColor::fromString(combo->lineEdit()->text());
+
+    QColorDialog dlg;
+    // dlg.setCustomColor(0, custom.rgb());
+
+    QColor color = dlg.getColor(current, this, tr("Select Color"), QColorDialog::DontUseNativeDialog);
+    if (color.isValid()) {
+        combo->lineEdit()->setText(color.name());
+    }
 }
 
 void LC_WidgetOptionsDialog::accept() {
@@ -135,15 +254,84 @@ void LC_WidgetOptionsDialog::accept() {
 
         int columnCount = left_toobar_columns_spinbox->value();
         LC_SET("LeftToolbarColumnsCount", columnCount);
+
+        LC_SET("LeftToolbarFlatIcons", cbLeftTBFlatButtons->isChecked());
+        LC_SET("LeftToolbarIconSize", sbLeftTBIconSize->value());
+
+        LC_SET("DockWidgetsFlatIcons", cbDockWidgetsFlatButtons->isChecked());
+        LC_SET("DockWidgetsIconSize", sbDocWidgtetIconSize->value());
     }
+
+    iconColorsOptions.setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Main, cbIconColorMain->currentText());
+    iconColorsOptions.setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Accent, cbIconColorAccent->currentText());
+    iconColorsOptions.setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::Background, cbIconColorBack->currentText());
+
+    QString iconsOverrideDir = leIconsOverrideDir->text();
+    iconColorsOptions.setIconsOverridesDir(iconsOverrideDir);
+
+    /*LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_MAIN,-1,-1, "#000");
+    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_ACCENT,-1,-1, "#c7c7c7");
+    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,-1,-1, "#e2e2e2");
+
+    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Active,QIcon::State::On, "#fff");
+    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Active,QIcon::State::Off, "#000");
+
+    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Normal,QIcon::State::On, "#f00");
+    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Normal,QIcon::State::Off, "#ff0");
+
+    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Selected,QIcon::State::On, "#0f0");
+    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Selected,QIcon::State::Off, "#0ff");
+
+    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Disabled,QIcon::State::On, "#00f");
+    LC_SVGIconEngineAPI::setColorAppProperty(LC_SVGIconEngineAPI::KEY_COLOR_BG,QIcon::Mode::Disabled,QIcon::State::Off, "#f0f");*/
+
+    applyIconColors();
+    iconColorsOptions.save();
+
+    if (iconColorsOptions.isIconOverridesChanged()) {
+        QMessageBox::warning(this, tr("Preferences"),
+                             tr("Icons overrides directory changed. Please restart the application to apply."));
+    }
+
     LC_Dialog::accept();
 }
 
-void LC_WidgetOptionsDialog::chooseStyleSheet()
-{
+void LC_WidgetOptionsDialog::reject(){
+    iconColorsOptions.restore();
+    applyIconColors();
+    LC_Dialog::reject();
+}
+
+void LC_WidgetOptionsDialog::showAdvancedSetup(){
+    LC_DlgIconsSetup dlg(this);
+    LC_IconColorsOptions copy = LC_IconColorsOptions(iconColorsOptions);
+    dlg.setIconsOptions(&copy);
+    if (dlg.exec() == QDialog::Accepted){
+        iconColorsOptions.apply(copy);
+        updateUIByOptions();
+    }
+}
+
+/**
+ * NOTE: This method properly called only on closing of the dialog. Calling it when modal dialog is open, does lead to clearing pixmap cached and invalidation
+ * of icons (and so re-expanding templates in icon engine) at least under Windows. Don't have idea why it's so...
+ */
+
+void LC_WidgetOptionsDialog::applyIconColors(){
+    iconColorsOptions.applyOptions();
+    QPixmapCache::clear();
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
+    if (appWindow != nullptr) {
+        appWindow->fireIconsRefresh();
+    }
+    appWindow->update();
+    appWindow->repaint();
+    QApplication::processEvents();
+}
+
+void LC_WidgetOptionsDialog::chooseStyleSheet(){
     QString path = QFileDialog::getOpenFileName(this);
-    if (!path.isEmpty())
-    {
+    if (!path.isEmpty()){
         stylesheet_field->setText(QDir::toNativeSeparators(path));
     }
 }

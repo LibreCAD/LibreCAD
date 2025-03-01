@@ -42,6 +42,8 @@
 #include "console_dxf2png.h"
 #include "lc_application.h"
 #include "main.h"
+
+#include "lc_iconcolorsoptions.h"
 #include "qc_applicationwindow.h"
 #include "qg_dlginitial.h"
 #include "rs_debug.h"
@@ -62,6 +64,7 @@ namespace
  // fixme - sand - refactor and split to several specialized functions
 int main(int argc, char** argv)
 {
+
     QT_REQUIRE_VERSION(argc, argv, "5.2.1");
 
     // Check first two arguments in order to decide if we want to run librecad
@@ -95,6 +98,15 @@ int main(int argc, char** argv)
     QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
 
     RS_Settings::init(app.organizationName(), app.applicationName());
+
+    LC_IconColorsOptions iconColorsOptions;
+    iconColorsOptions.loadSettings();
+    iconColorsOptions.applyOptions();
+
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
+    if (appWindow != nullptr) {
+        appWindow->fireIconsRefresh();
+    }
 
     QGuiApplication::setDesktopFileName("librecad.desktop");
 
@@ -234,7 +246,7 @@ int main(int argc, char** argv)
     if (first_load){
         RS_DEBUG->print("main: show initial config dialog..");
         QG_DlgInitial di(nullptr);
-        QPixmap pxm(":/main/intro_librecad.png");
+        QPixmap pxm(":/images/intro_librecad.png");
         di.setPixmap(pxm);
         if (di.exec()) {
             unit = LC_GET_ONE_STR("Defaults", "Unit", "None");
@@ -492,7 +504,7 @@ QPixmap getSplashImage(const std::unique_ptr<QSplashScreen>& splash, const QStri
         if (splash == nullptr)
             return {};
 
-        QPixmap pixmapSplash(":/main/splash_librecad.png");
+        QPixmap pixmapSplash(":/images/splash_librecad.png");
         QPainter painter(&pixmapSplash);
         const double factorX = pixmapSplash.width()/542.;
         const double factorY = pixmapSplash.height()/337.;

@@ -13,9 +13,12 @@ public:
     explicit LC_UCSStateWidget(QWidget *parent,const char* name);
     ~LC_UCSStateWidget();
     void update(QIcon icon, QString ucsName, QString ucsInfo);
+public slots:
+    void onIconsRefreshed();
 private:
     Ui::LC_UCSStateWidget *ui;
     int iconSize = 24;
+    QIcon savedIcon;
 };
 
 #endif // LC_UCSSTATEWIDGET_H

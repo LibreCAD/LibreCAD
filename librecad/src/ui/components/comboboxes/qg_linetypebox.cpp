@@ -71,41 +71,41 @@ void QG_LineTypeBox::init(bool showByLayer, bool showUnchanged, bool showNoPen) 
     this->showUnchanged = showUnchanged;
 
     if (showUnchanged) {
-        addItem(QIcon(":ui/linetype00.png"), tr("- Unchanged -"), RS2::LineTypeUnchanged);
+        addItem(QIcon(":linetypes/linetype00.lci"), tr("- Unchanged -"), RS2::LineTypeUnchanged);
     }
 
     if (showByLayer) {
-        addItem(QIcon(":ui/linetype00.png"), tr("By Layer"), RS2::LineByLayer);
-        addItem(QIcon(":ui/linetype00.png"), tr("By Block"), RS2::LineByBlock);
+        addItem(QIcon(":linetypes/linetype00.lci"), tr("By Layer"), RS2::LineByLayer);
+        addItem(QIcon(":linetypes/linetype00.lci"), tr("By Block"), RS2::LineByBlock);
     }
     if (showNoPen) {
-        addItem(QIcon(":ui/linetype00.png"), tr("No Pen"), RS2::NoPen);
+        addItem(QIcon(":linetypes/linetype00.lci"), tr("No Pen"), RS2::NoPen);
     }
-    addItem(QIcon(":ui/linetype01.png"), tr("Continuous"), RS2::SolidLine);
-    addItem(QIcon(":ui/linetype02.png"), tr("Dot"),RS2::DotLine);
-    addItem(QIcon(":ui/linetype02.png"), tr("Dot (tiny)"),RS2::DotLineTiny);
-    addItem(QIcon(":ui/linetype02.png"), tr("Dot (small)"), RS2::DotLine2);
-    addItem(QIcon(":ui/linetype02.png"), tr("Dot (large)"), RS2::DotLineX2);
-    addItem(QIcon(":ui/linetype03.png"), tr("Dash"),RS2::DashLine);
-    addItem(QIcon(":ui/linetype03.png"), tr("Dash (tiny)"),RS2::DashLineTiny);
-    addItem(QIcon(":ui/linetype03.png"), tr("Dash (small)"),RS2::DashLine2);
-    addItem(QIcon(":ui/linetype03.png"), tr("Dash (large)"),RS2::DashLineX2);
-    addItem(QIcon(":ui/linetype04.png"), tr("Dash Dot"),RS2::DashDotLine);
-    addItem(QIcon(":ui/linetype04.png"), tr("Dash Dot (tiny)"),RS2::DashDotLineTiny);
-    addItem(QIcon(":ui/linetype04.png"), tr("Dash Dot (small)"),RS2::DashDotLine2);
-    addItem(QIcon(":ui/linetype04.png"), tr("Dash Dot (large)"),RS2::DashDotLineX2);
-    addItem(QIcon(":ui/linetype05.png"), tr("Divide"),RS2::DivideLine);
-    addItem(QIcon(":ui/linetype05.png"), tr("Divide (tiny)"),RS2::DivideLineTiny);
-    addItem(QIcon(":ui/linetype05.png"), tr("Divide (small)"),RS2::DivideLine2);
-    addItem(QIcon(":ui/linetype05.png"), tr("Divide (large)"),RS2::DivideLineX2);
-    addItem(QIcon(":ui/linetype06.png"), tr("Center"),RS2::CenterLine);
-    addItem(QIcon(":ui/linetype06.png"), tr("Center (tiny)"),RS2::CenterLineTiny);
-    addItem(QIcon(":ui/linetype06.png"), tr("Center (small)"),RS2::CenterLine2);
-    addItem(QIcon(":ui/linetype06.png"), tr("Center (large)"),RS2::CenterLineX2);
-    addItem(QIcon(":ui/linetype07.png"), tr("Border"),RS2::BorderLine);
-    addItem(QIcon(":ui/linetype07.png"), tr("Border (tiny)"),RS2::BorderLineTiny);
-    addItem(QIcon(":ui/linetype07.png"), tr("Border (small)"),RS2::BorderLine2);
-    addItem(QIcon(":ui/linetype07.png"), tr("Border (large)"),RS2::BorderLineX2);
+    addItem(QIcon(":linetypes/linetype01.lci"), tr("Continuous"), RS2::SolidLine);
+    addItem(QIcon(":linetypes/linetype02.lci"), tr("Dot"),RS2::DotLine);
+    addItem(QIcon(":linetypes/linetype02.lci"), tr("Dot (tiny)"),RS2::DotLineTiny);
+    addItem(QIcon(":linetypes/linetype02.lci"), tr("Dot (small)"), RS2::DotLine2);
+    addItem(QIcon(":linetypes/linetype02.lci"), tr("Dot (large)"), RS2::DotLineX2);
+    addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash"),RS2::DashLine);
+    addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash (tiny)"),RS2::DashLineTiny);
+    addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash (small)"),RS2::DashLine2);
+    addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash (large)"),RS2::DashLineX2);
+    addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot"),RS2::DashDotLine);
+    addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot (tiny)"),RS2::DashDotLineTiny);
+    addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot (small)"),RS2::DashDotLine2);
+    addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot (large)"),RS2::DashDotLineX2);
+    addItem(QIcon(":linetypes/linetype05.lci"), tr("Divide"),RS2::DivideLine);
+    addItem(QIcon(":linetypes/linetype05.lci"), tr("Divide (tiny)"),RS2::DivideLineTiny);
+    addItem(QIcon(":linetypes/linetype05.lci"), tr("Divide (small)"),RS2::DivideLine2);
+    addItem(QIcon(":linetypes/linetype05.lci"), tr("Divide (large)"),RS2::DivideLineX2);
+    addItem(QIcon(":linetypes/linetype06.lci"), tr("Center"),RS2::CenterLine);
+    addItem(QIcon(":linetypes/linetype06.lci"), tr("Center (tiny)"),RS2::CenterLineTiny);
+    addItem(QIcon(":linetypes/linetype06.lci"), tr("Center (small)"),RS2::CenterLine2);
+    addItem(QIcon(":linetypes/linetype06.lci"), tr("Center (large)"),RS2::CenterLineX2);
+    addItem(QIcon(":linetypes/linetype07.lci"), tr("Border"),RS2::BorderLine);
+    addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (tiny)"),RS2::BorderLineTiny);
+    addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (small)"),RS2::BorderLine2);
+    addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (large)"),RS2::BorderLineX2);
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotLineTypeChanged(int)));
@@ -168,23 +168,23 @@ void QG_LineTypeBox::setLayerLineType(RS2::LineType t) {
         QPixmap pixmap;
         switch(t) {
             case RS2::NoPen:
-                pixmap = QPixmap(":ui/linetype00.png");
+                pixmap = QPixmap(":linetypes/linetype00.lci");
                 break;
             default:
             case RS2::SolidLine:
-                pixmap = QPixmap(":ui/linetype01.png");
+                pixmap = QPixmap(":linetypes/linetype01.lci");
                 break;
             case RS2::DashLine:
-                pixmap = QPixmap(":ui/linetype02.png");
+                pixmap = QPixmap(":linetypes/linetype02.lci");
                 break;
             case RS2::DotLine:
-                pixmap = QPixmap(":ui/linetype03.png");
+                pixmap = QPixmap(":linetypes/linetype03.lci");
                 break;
             case RS2::DashDotLine:
-                pixmap = QPixmap(":ui/linetype04.png");
+                pixmap = QPixmap(":linetypes/linetype04.lci");
                 break;
             case RS2::DivideLine:
-                pixmap = QPixmap(":ui/linetype05.png");
+                pixmap = QPixmap(":linetypes/linetype05.lci");
                 break;
         }
 
