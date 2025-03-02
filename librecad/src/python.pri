@@ -36,7 +36,7 @@ win32 {
     SWIG_OUT_DIR ~= s,/,\\,g
     SWIG_OUT_PYTHON ~= s,/,\\,g
 
-    PYTHON_PATH = C:\Programs\Python\Python313
+    PYTHON_PATH = C:\Program Files\Python313
     PYTHON_INCLUDE = $${PYTHON_PATH}\include
     PYTHON_LIB = $${PYTHON_PATH}\libs\python313.lib
 
