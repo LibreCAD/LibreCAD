@@ -31,7 +31,7 @@ void LC_PenPaletteOptions:: loadFromSettings(){
 
     LC_PenPaletteOptions defaults;
 
-    LC_GROUP_GUARD("PenPaletteWidget");
+    LC_GROUP_GUARD("Widget.PenPalette");
     {
         activeItemBGColor = QColor(LC_GET_STR("activeItemBgColor", defaults.activeItemBGColor.name()));
         matchedItemColor = QColor(LC_GET_STR("matchedItemBgColor", defaults.matchedItemColor.name()));
@@ -66,7 +66,7 @@ void LC_PenPaletteOptions:: loadFromSettings(){
 void LC_PenPaletteOptions::saveToSettings(){
     LC_PenPaletteOptions defaults;
 
-    LC_GROUP_GUARD("PenPaletteWidget");
+    LC_GROUP_GUARD("Widget.PenPalette");
     {
         LC_SET("activeItemBgColor", activeItemBGColor.name());
         LC_SET("matchedItemBgColor", matchedItemColor.name());
