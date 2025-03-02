@@ -23,7 +23,7 @@ GENERATED_DIR = ../../generated/librecad
 include(../../common.pri)
 include(./boost.pri)
 include(./muparser.pri)
-include(./entity.pri)
+include(./python.pri)
 
 CONFIG += qt \
     warn_on \
@@ -76,9 +76,6 @@ unix {
         }
         DEFINES -=  QT_NO_SHORTCUT
     }
-    QT_CONFIG -= no-pkg-config
-    CONFIG += link_pkgconfig
-    PKGCONFIG += python3-embed
 }
 win32 {
     TARGET = LibreCAD

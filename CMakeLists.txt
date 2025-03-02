@@ -33,7 +33,7 @@ add_compile_definitions(LC_VERSION=2.2.2.3-alpha)
 add_compile_definitions(LC_PRERELEASE=true)
 
 
-find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Core5Compat Network REQUIRED)
+find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Network REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 #qt_standard_project_setup()
