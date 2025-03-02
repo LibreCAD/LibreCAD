@@ -26,7 +26,7 @@
 LC_NamedViewsListOptions::LC_NamedViewsListOptions() {}
 
 void LC_NamedViewsListOptions::load() {
-    LC_GROUP_GUARD("ViewsList");
+    LC_GROUP_GUARD("Widget.ViewsList");
     {
        showViewInfoToolTip = LC_GET_BOOL("ShowTooltip", true);
        showColumnIconType = LC_GET_BOOL("ShowIconType", true);
@@ -42,7 +42,7 @@ void LC_NamedViewsListOptions::load() {
 }
 
 void LC_NamedViewsListOptions::save() const {
-    LC_GROUP_GUARD("ViewsList");
+    LC_GROUP_GUARD("Widget.ViewsList");
     {
         LC_SET("ShowTooltip", showViewInfoToolTip);
         LC_SET("ConfirmDelete", askForDeletionConfirmation);
