@@ -39,10 +39,15 @@ public:
     void mark();
     void restore();
     bool isIconOverridesChanged();
+    void getAvailableStyles(QStringList &list);
     void resetToDefaults();
     void apply(LC_IconColorsOptions &other);
     void setIconsOverridesDir(QString path) {iconOverridesDir = path;};
     QString getIconsOverridesDir() {return iconOverridesDir;};
+    bool loadFromFile(QString styleName);
+    QString loadStyleNameFromFile(QString styleName);
+    QString getNameOfStyleFile(const QString &name) const;
+    bool saveToFile(const QString &styleName) const;
 protected:
     QHash<int, QString> colors;
     QHash<int, QString> colorsMarkCopy;
@@ -54,6 +59,14 @@ protected:
     void loadColor(LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state, LC_SVGIconEngineAPI::ColorType type, QString defaultValue);
     void saveColor(LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state, LC_SVGIconEngineAPI::ColorType type);
     void applyColor(LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state, LC_SVGIconEngineAPI::ColorType type);
+    void exportColor(LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state, LC_SVGIconEngineAPI::ColorType type, QJsonArray &array) const;
+    const QString getTypeStr(LC_SVGIconEngineAPI::ColorType type) const;
+    const QString getStateStr(LC_SVGIconEngineAPI::IconState state) const;
+    const QString getModeStr(LC_SVGIconEngineAPI::IconMode mode) const;
+
+    bool parseIconMode(const QString &val, LC_SVGIconEngineAPI::IconMode &mode);
+    bool parseIconState(const QString &val, LC_SVGIconEngineAPI::IconState &state);
+    bool parseColorType(const QString &val, LC_SVGIconEngineAPI::ColorType &type);
 };
 
 #endif // LC_ICONCOLORSOPTIONS_H
