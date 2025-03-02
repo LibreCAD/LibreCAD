@@ -40,13 +40,15 @@
 
 #include "rs_filterdxfrw.h"
 
-#include <stdio.h>
+#ifndef _WIN32
 #include <termios.h>
-#include <unistd.h>
 #include <sys/ioctl.h>
 #include <sys/select.h>
-#include <math.h>
+#endif
 
+#include <stdio.h>
+#include <unistd.h>
+#include <math.h>
 #include <cstdlib>
 #include <cctype>
 #include <climits>
@@ -333,6 +335,11 @@ bool compareNat(const String& a, const String& b)
     std::getline(issa, anew);
     std::getline(issb, bnew);
     return (compareNat(anew, bnew));
+}
+
+bool compareNatPath(const std::filesystem::path& a, const std::filesystem::path& b)
+{
+    return compareNat(a.string(), b.string());
 }
 
 template <typename TP>
@@ -5870,11 +5877,11 @@ BUILTIN("vl-directory-files")
             }
         }
     }
-    std::sort(sorted_by_name.begin(), sorted_by_name.end(), compareNat);
+    std::sort(sorted_by_name.begin(), sorted_by_name.end(), compareNatPath);
     items = new lclValueVec(len);
     len = 0;
     for (const auto & filename : sorted_by_name) {
-        items->at(len) = lcl::string(filename);
+        items->at(len) = lcl::string(filename.string());
         len++;
     }
     return items->size() ? lcl::list(items) : lcl::nilValue();
@@ -5976,7 +5983,7 @@ BUILTIN("vl-file-size")
     try {
         [[maybe_unused]] auto size = std::filesystem::file_size(path->value().c_str());
         char str[50];
-        sprintf(str, "%ld", size);
+        sprintf(str, "%lld", size);
         return lcl::string(str);
     }
     catch (std::filesystem::filesystem_error&) {}
@@ -6018,7 +6025,7 @@ BUILTIN("vl-filename-base")
     ARG(lclString, path);
 
     const std::filesystem::path p(path->value());
-    return lcl::string(p.stem());
+    return lcl::string(p.stem().string());
 }
 
 BUILTIN("vl-filename-directory")
@@ -6045,7 +6052,7 @@ BUILTIN("vl-filename-extension")
         return lcl::nilValue();
     }
 
-    return lcl::string(p.extension());
+    return lcl::string(p.extension().string());
 }
 
 BUILTIN("vl-filename-mktemp")
@@ -6054,9 +6061,9 @@ BUILTIN("vl-filename-mktemp")
     char num[4];
     sprintf(num, "%03x", ++tmpFileCount);
     String filename = "tmpfile_";
-    String path;
+    std::filesystem::path path("");
     std::filesystem::path p(std::filesystem::temp_directory_path());
-     std::filesystem::path d("");
+    std::filesystem::path d("");
 
     filename +=  + num;
     path = p / filename;
@@ -6064,7 +6071,7 @@ BUILTIN("vl-filename-mktemp")
     if (count > 0) {
         ARG(lclString, pattern);
         p = pattern->value().c_str();
-        filename = p.stem();
+        filename = p.stem().string();
         filename +=  + num;
         if (!p.has_root_path()) {
             path = std::filesystem::temp_directory_path() / d;
@@ -6073,7 +6080,7 @@ BUILTIN("vl-filename-mktemp")
             path = p.root_path() / p.relative_path().remove_filename();
         }
         if (p.has_extension()) {
-            filename += p.extension();
+            filename += p.extension().string();
         }
         path += filename;
     }
@@ -6086,7 +6093,7 @@ BUILTIN("vl-filename-mktemp")
         ARG(lclString, extension);
         path += extension->value();
     }
-    return lcl::string(path);
+    return lcl::string(path.string());
 }
 
 BUILTIN("vl-mkdir")

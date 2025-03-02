@@ -6,11 +6,15 @@
 #define LISP_STR_HELPER(x) #x
 #define LISP_STR(x) LISP_STR_HELPER(x)
 
-#ifdef __GNUG__
-#define COMPILER "GCC"
+#ifndef _WIN64
+#define USED_COMPILER "GCC"
 #define HOST "linux"
 #else
-#define COMPILER "MSC"
+#ifdef __GNUG__
+#define USED_COMPILER "GCC"
+#else
+#define USED_COMPILER "MSVC"
+#endif
 #define HOST "windows"
 #endif
 
@@ -33,7 +37,7 @@
     LISP_STR(LISP_PATCHLEVEL)
 
 #define LISP_VERSION_STR_HELPER(rel, build, date, time) \
-    "LibreLisp " rel " (" build ", " date ", " time ") [" COMPILER " " __VERSION__ "] on " HOST
+    "LibreLisp " rel " (" build ", " date ", " time ") [" USED_COMPILER " " __VERSION__ "] on " HOST
 
 #define LISP_VERSION_STR \
     LISP_VERSION_STR_HELPER(__LISP__,LISP_BUILD,__DATE__,__TIME__)
