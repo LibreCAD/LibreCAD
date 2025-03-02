@@ -34,7 +34,7 @@ void LC_UCSListOptions::load() {
     }
     LC_GROUP_END();
 
-    LC_GROUP_GUARD("UCSList");
+    LC_GROUP_GUARD("Widget.UCSList");
     {
         showViewInfoToolTip = LC_GET_BOOL("ShowTooltip", true);
         showColumnTypeIcon = LC_GET_BOOL("ShowColumnTypeIcon", false);
@@ -54,7 +54,7 @@ void LC_UCSListOptions::save() const{
         LC_SET("UCSHighlightBlinkDelay",highlightBlinksDelay);
     }
     LC_GROUP_END();
-    LC_GROUP_GUARD("UCSList");
+    LC_GROUP_GUARD("Widget.UCSList");
     {
         LC_SET("ShowTooltip", showViewInfoToolTip);
         LC_SET("ShowColumnTypeIcon", showColumnTypeIcon);
